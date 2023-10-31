@@ -19,4 +19,4 @@ with source_data as (
 
 select *
 from source_data
-where id is 1
+where id is not null
