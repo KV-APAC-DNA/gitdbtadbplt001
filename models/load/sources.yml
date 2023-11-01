@@ -1,0 +1,7 @@
+version: 2
+sources:
+  - name: demo_source
+    database: PROD_DNA_LOAD
+    schema: demo_schema_source
+    tables:
+      - name: demo_table
