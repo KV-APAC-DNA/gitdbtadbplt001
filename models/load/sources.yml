@@ -1,7 +1,18 @@
 version: 2
+
 sources:
-  - name: demo_source
-    database: PROD_DNA_LOAD
-    schema: demo_schema_source
+  - name: arsadpprd001
+    database: DEV_DNA_LOAD
+    schema: ARSADPPRD001_SOURCE
+    quoting:
+      identifier: true
     tables:
-      - name: demo_table
+      - name: edw_perfect_store_rebase_wt
+      - name: itg_cbd_gt_customer
+      - name: itg_cbd_gt_customer_snapshot
+      - name: itg_cbd_gt_sales_report_fact
+      - name: sdl_cbd_gt_sales_report_fact
+      - name: sdl_cbd_gt_sales_report_fact_temp
+      - name: wks_cbd_gt_sales_report_fact_flag_incl
+      - name: wks_cbd_gt_sales_report_fact_pre_load
+
