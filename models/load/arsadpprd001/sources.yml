@@ -5,6 +5,8 @@ sources:
     database: DEV_DNA_LOAD
     schema: ARSADPPRD001_SOURCE
     quoting:
+      database: false
+      schema: false
       identifier: true
     tables:
       - name: edw_perfect_store_rebase_wt
