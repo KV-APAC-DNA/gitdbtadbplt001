@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: arsadpprd001
+    database: DEV_DNA_LOAD
+    schema: ARSADPPRD001_SOURCE
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    tables:
+      - name: edw_perfect_store_rebase_wt
+      - name: itg_cbd_gt_customer
+      - name: itg_cbd_gt_customer_snapshot
+      - name: itg_cbd_gt_sales_report_fact
+      - name: sdl_cbd_gt_sales_report_fact
+      - name: sdl_cbd_gt_sales_report_fact_temp
+      - name: wks_cbd_gt_sales_report_fact_flag_incl
+      - name: wks_cbd_gt_sales_report_fact_pre_load
+
