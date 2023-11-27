@@ -35,7 +35,9 @@ models:
   DNA_CORE_ASP:
     access:
       materialized: view
+      transient: false
       schema: CORE_ACCESS
     integration:
       materialized: table
+      transient: false
       schema: CORE_INTEGRATION 
