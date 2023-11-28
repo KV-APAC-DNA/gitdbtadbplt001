@@ -62,20 +62,35 @@ where per_str.country       = reb_wt.country
 
    
 --Insert into rg_edw.EDW_PERFECT_STORE_KPI_DATA 
-DISPLAY 
+DISPLAY_REM
 as 
 (
-select per_st.*
-  from WKS_EDW_PERFECT_STORE_HASH per_st
-          where  kpi in ('PROMO COMPLIANCE','PLANOGRAM COMPLIANCE','DISPLAY COMPLIANCE') 
-             and country in ('Hong Kong','Korea','Taiwan')
-minus
-select per_str.*
-  from WKS_EDW_PERFECT_STORE_HASH per_str
-          where  kpi in ('PROMO COMPLIANCE','PLANOGRAM COMPLIANCE','DISPLAY COMPLIANCE') 
-           and REF_VALUE = 1 
-           --and nvl(kpi_chnl_wt,0) > 0  
-            and country in ('Hong Kong','Korea','Taiwan')
+    select per_st.*
+    from WKS_EDW_PERFECT_STORE_HASH per_st
+            where  kpi in ('PROMO COMPLIANCE','PLANOGRAM COMPLIANCE','DISPLAY COMPLIANCE') 
+                and country in ('Hong Kong','Korea','Taiwan')
+    minus
+    select per_str.*
+    from WKS_EDW_PERFECT_STORE_HASH per_str
+            where  kpi in ('PROMO COMPLIANCE','PLANOGRAM COMPLIANCE','DISPLAY COMPLIANCE') 
+            and REF_VALUE = 1 
+            --and nvl(kpi_chnl_wt,0) > 0  
+                and country in ('Hong Kong','Korea','Taiwan')
+) ,
+
+DISPLAY 
+as 
+( select *
+       ,null as total_weight
+       ,null as calc_weight
+       ,null as weight_msl
+       ,null as weight_oos
+       ,null as weight_soa
+       ,null as weight_sos
+       ,null as weight_promo
+       ,null as weight_planogram
+       ,null as weight_display
+    from DISPLAY_REM
 ),
 
 --Insert into rg_edw.EDW_PERFECT_STORE_KPI_DATA
@@ -102,7 +117,7 @@ where per_str.country       = reb_wt.country
  ),
 
 --Insert into rg_edw.EDW_PERFECT_STORE_KPI_DATA 
-SOS_SOA as 
+SOS_SOA_REM as 
 (
 select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
   from WKS_EDW_PERFECT_STORE_HASH 
@@ -112,6 +127,21 @@ minus
 select * 
   from wks_perfect_store_sos_soa_mnth
 ) 
+,
+SOS_SOA as
+( 
+    select * 
+        ,null as total_weight
+       ,null as calc_weight
+       ,null as weight_msl
+       ,null as weight_oos
+       ,null as weight_soa
+       ,null as weight_sos
+       ,null as weight_promo
+       ,null as weight_planogram
+       ,null as weight_display
+      from SOS_SOA_REM
+)
 ,
 
 --Final CTE
