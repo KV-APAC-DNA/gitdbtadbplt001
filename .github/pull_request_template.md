@@ -47,6 +47,7 @@ forgotten – it is meant as a helpful tool rather than hoops to jump through.
 Put an `x` in all the items that apply, make notes next to any that haven't been
 addressed, and remove any items that are not relevant to this PR.
 -->
+- [ ] I confirmed and have no doubts that there are no confidential data, sensitive details and credentials in my code.
 - [ ] My pull request represents one logical piece of work.
 - [ ] My commits are related to the pull request and look clean.
 - [ ] My SQL follows the [dbt Labs style guide](https://docs.getdbt.com/guides/best-practices/how-we-style/0-how-we-style-our-dbt-projects).
