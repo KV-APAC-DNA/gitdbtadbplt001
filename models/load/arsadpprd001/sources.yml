@@ -16,3 +16,10 @@ sources:
       - name: os_itg_itg_cbd_gt_sales_report_fact
       - name: os_sdl_sdl_cbd_gt_sales_report_fact
       - name: rg_wks_wks_edw_perfect_store_hash
+        columns:
+          - name:  country 
+            quote: true
+            tests:
+              - not_null
+                  
+                    

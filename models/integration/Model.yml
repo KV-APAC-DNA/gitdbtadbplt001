@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: EDW_PERFECT_STORE_REBASE_WT_BASE
+    description: The Table has the all the perfect store KPI base lined 
+    columns:
+      - name: country
+        description: '{{ doc("Market")}}' 
+        tests:
+          - accepted_values:
+              values: ['Taiwan','Hong Kong','Korea' ]
+      - name: kpi
+        description: KPI values MSL, OOS
+        tests:
+          - not_null           
+      - name: state
+        description: state
+        tests:
+          - not_null:
+             config:
+               severity: error
+               error_if: ">1000000000"
+               warn_if: ">1000"
+
+                  
+                      
+               
