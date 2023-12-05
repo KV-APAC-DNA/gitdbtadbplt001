@@ -39,3 +39,5 @@ models:
     integration:
       materialized: table
       schema: CORE_INTEGRATION 
+      arsadpprd001_raw:
+        materialized: view

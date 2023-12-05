@@ -1,0 +1,162 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
+
+--- Insert data of aggregated Perfect store KPI data ---
+
+--Import CTE
+with  BASE_MSL as
+(
+  SELECT 'MSL COMPLIANCE' AS DATASET,
+                   CUSTOMERID,
+                   SALESPERSONID,
+                   'PERFECT STORE SCORE' AS KPI,
+                   SCHEDULEDDATE,
+                   LATESTDATE,
+                   FISC_YR,
+                   FISC_PER,
+                   MERCHANDISER_NAME,
+                   CUSTOMERNAME,
+                   COUNTRY,
+                   STATE,
+                   PARENT_CUSTOMER,
+                   RETAIL_ENVIRONMENT,
+                   CHANNEL,
+                   RETAILER,
+                   BUSINESS_UNIT,
+                   PRIORITY_STORE_FLAG,
+                   KPI_CHNL_WT,
+                   CHANNEL_WEIGHTAGE,
+                   SALIENCE_VAL,
+                   ACTUAL_VALUE,
+                   REF_VALUE,
+                   ROUND(ACTUAL_VALUE*WEIGHT_MSL,4) AS KPI_ACTUAL_WT_VAL,
+                   REF_VALUE AS KPI_REF_VAL,
+                   ROUND(REF_VALUE*WEIGHT_MSL,4) AS KPI_REF_WT_VAL,
+				   PHOTO_URL,
+                   STORE_GRADE
+            FROM  {{ ref('EDW_PERFECT_STORE_KPI_DATA') }}   
+            WHERE UPPER(KPI) = 'MSL COMPLIANCE'
+			AND   UPPER(COUNTRY) <> 'INDIA'
+),
+
+--Logical CTE
+intermediate as 
+(    SELECT DATASET,
+             CUSTOMERID,
+             SALESPERSONID,
+             KPI,
+             TO_CHAR(SCHEDULEDDATE,'YYYYMM') AS YM,
+             LATESTDATE,
+             FISC_YR,
+             FISC_PER,
+             MERCHANDISER_NAME,
+             CUSTOMERNAME,
+             COUNTRY,
+             STATE,
+             PARENT_CUSTOMER,
+             RETAIL_ENVIRONMENT,
+             CHANNEL,
+             RETAILER,
+             BUSINESS_UNIT,
+             PRIORITY_STORE_FLAG,
+             MAX(KPI_CHNL_WT) AS KPI_CHNL_WT,
+             MAX(CHANNEL_WEIGHTAGE) AS CHANNEL_WEIGHTAGE,
+             MAX(SALIENCE_VAL) AS SALIENCE_VAL,
+             SUM(ACTUAL_VALUE) AS ACTUAL_VALUE,
+             SUM(REF_VALUE) AS REF_VALUE,
+             SUM(KPI_ACTUAL_WT_VAL) AS KPI_ACTUAL_WT_VAL,
+             SUM(KPI_REF_VAL) AS KPI_REF_VAL,
+             SUM(KPI_REF_WT_VAL) AS KPI_REF_WT_VAL,
+			 PHOTO_URL,
+             STORE_GRADE
+      FROM  BASE_MSL 
+      GROUP BY DATASET,
+               CUSTOMERID,
+               SALESPERSONID,
+               KPI,
+               TO_CHAR(SCHEDULEDDATE,'YYYYMM'),
+               LATESTDATE,
+               FISC_YR,
+               FISC_PER,
+               MERCHANDISER_NAME,
+               CUSTOMERNAME,
+               COUNTRY,
+               STATE,
+               PARENT_CUSTOMER,
+               RETAIL_ENVIRONMENT,
+               CHANNEL,
+               RETAILER,
+               BUSINESS_UNIT,
+               PRIORITY_STORE_FLAG,
+			   PHOTO_URL,
+               STORE_GRADE
+),
+------- MSL Data ---------
+--Final CTE 
+final as 
+(
+SELECT  null as	hashkey,
+        null as	hash_row,
+        DATASET,
+       CUSTOMERID,
+       SALESPERSONID,
+       null as	visitid,
+        null as	questiontext,
+        null as	productid,
+       KPI,
+       TO_DATE(YM|| '15','YYYYMMDD') AS SCHEDULEDDATE,
+       LATESTDATE,
+       FISC_YR,
+       FISC_PER,
+       MERCHANDISER_NAME,
+       CUSTOMERNAME,
+       COUNTRY,
+       STATE,
+       PARENT_CUSTOMER,
+       RETAIL_ENVIRONMENT,
+       CHANNEL,
+       RETAILER,
+       BUSINESS_UNIT,
+       null as	eannumber,
+        null as	matl_num,
+        null as	prod_hier_l1,
+        null as	prod_hier_l2,
+        null as	prod_hier_l3,
+        null as	prod_hier_l4,
+        null as	prod_hier_l5,
+        null as	prod_hier_l6,
+        null as	prod_hier_l7,
+        null as	prod_hier_l8,
+        null as	prod_hier_l9,
+        null as	ques_type,
+        null as	y_n_flag,
+       PRIORITY_STORE_FLAG,
+       null as	add_info,
+        null as	response,
+        null as	response_score,
+       KPI_CHNL_WT,
+       CHANNEL_WEIGHTAGE,
+       null as	       weight_msl,
+        null as	       weight_oos,
+        null as	       weight_soa,
+        null as	       weight_sos,
+        null as	       weight_promo,
+        null as	       weight_planogram,
+        null as	       weight_display,
+        null as	       mkt_share,
+       SALIENCE_VAL,
+       ACTUAL_VALUE,
+       REF_VALUE,
+       KPI_ACTUAL_WT_VAL,
+       KPI_REF_VAL,
+       KPI_REF_WT_VAL,
+	   PHOTO_URL,
+  STORE_GRADE
+FROM intermediate
+)
+
+SELECT *
+  FROM final
