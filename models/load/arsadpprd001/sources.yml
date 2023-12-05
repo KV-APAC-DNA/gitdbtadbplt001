@@ -9,7 +9,6 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: DEV_wks_edw_perfect_store_hash
       - name: in_edw_edw_rpt_sales_details_increment
       - name: os_itg_itg_cbd_gt_customer
       - name: os_itg_itg_cbd_gt_customer_snapshot
