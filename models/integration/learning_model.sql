@@ -1,1 +1,5 @@
-select * from {{ ref('stg_arsadpprd001_raw__rg_wks_wks_edw_perfect_store_hash') }} limit 10
+select 1 as id
+union all
+select null as id
+union all
+select 2 as id
