@@ -1,0 +1,1 @@
+select * from {{ ref('stg_arsadpprd001_raw__rg_wks_wks_edw_perfect_store_hash') }} limit 10
