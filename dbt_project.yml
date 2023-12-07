@@ -41,7 +41,3 @@ models:
       schema: CORE_INTEGRATION 
       arsadpprd001_raw:
         materialized: view
-
-tests:
-dbt_project_evaluator:
-    +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'warn') }}"
