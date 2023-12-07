@@ -2,3 +2,6 @@ models:
   - name: itg_sg_scan_data_marketplace
     config:
       schema: "{% if target.name=='prod' -%}oseitg_integration{%- else -%}{{target.schema}}{%- endif -%}"
+  - name: edw_sg_scan_data_marketplace_demo
+    config:
+      schema: "{% if target.name=='prod' -%}oseedw_integration{%- else -%}{{target.schema}}{%- endif -%}"
