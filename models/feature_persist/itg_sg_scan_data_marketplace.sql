@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy='delet+insert',
+        incremental_strategy='delete+insert',
         unique_key=['trx_date']
     )
 }}
