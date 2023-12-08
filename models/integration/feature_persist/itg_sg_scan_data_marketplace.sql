@@ -23,7 +23,7 @@ with sdl_sg_scan_data_marketplace as (
     "crtd_dttm" as crtd_dttm,
     "file_name" as file_name,
     "run_id" as run_id
-    from {{ source('ose_raw', 'sdl_sg_scan_data_marketplace') }}
+    from {{ source('OSESDL_RAW', 'SDL_SG_SCAN_DATA_MARKETPLACE') }}
 ),
 final as (
     select 

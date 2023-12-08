@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: itg_sg_scan_data_marketplace
+    description: something about itg_sg_scan_data_marketplace
+  - name: edw_sg_scan_data_marketplace_demo
+    description: something about edw_sg_scan_data_marketplace_demo

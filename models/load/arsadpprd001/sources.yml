@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: arsadpprd001_raw
-    database: dev_dna_load
+    database: "{{env_var('DBT_ENV_DB')}}"
     schema: arsadpprd001_raw
     quoting:
       database: false

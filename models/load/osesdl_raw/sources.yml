@@ -1,0 +1,11 @@
+version: 2
+sources:
+  - name:  OSESDL_RAW
+    database: "{{env_var('DBT_ENV_DB')}}"
+    schema:  OSESDL_RAW
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: SDL_SG_SCAN_DATA_MARKETPLACE

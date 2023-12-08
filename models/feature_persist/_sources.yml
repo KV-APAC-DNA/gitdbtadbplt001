@@ -1,7 +1,0 @@
-sources:
-  - name: ose_raw
-    schema: osesdl_raw
-    database: "{% if target.name=='dev' -%}DEV_DNA_LOAD{%- else -%}PROD_DNA_LOAD{%- endif -%}"
-    tables:
-      - name: sdl_sg_scan_data_marketplace
-        
