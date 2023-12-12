@@ -38,6 +38,4 @@ models:
       schema: CORE_ACCESS
     integration:
       materialized: table
-      schema: CORE_INTEGRATION 
-      arsadpprd001_raw:
-        materialized: view
+      schema: CORE_INTEGRATION
