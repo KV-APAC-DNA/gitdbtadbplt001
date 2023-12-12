@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: arsadpprd001_raw
+    database: "{{env_var('DBT_ENV_DB')}}"
+    schema: arsadpprd001_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: in_edw_edw_rpt_sales_details_increment
+      - name: os_itg_itg_cbd_gt_customer
+      - name: os_itg_itg_cbd_gt_customer_snapshot
+      - name: os_itg_itg_cbd_gt_sales_report_fact
+      - name: os_sdl_sdl_cbd_gt_sales_report_fact
+      - name: rg_wks_wks_edw_perfect_store_hash
+        columns:
+          - name: country
+            quote: true
+            tests:
+              - not_null
