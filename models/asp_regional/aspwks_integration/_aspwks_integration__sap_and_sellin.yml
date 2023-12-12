@@ -1,0 +1,142 @@
+models:
+  - name: aspwks_integration__wks_edw_calendar_dim
+    config: 
+      alias: wks_edw_calendar_dim
+  - name: aspwks_integration__wks_edw_code_descriptions
+    config: 
+      alias: wks_edw_code_descriptions
+  - name: aspwks_integration__wks_edw_company_dim
+    config: 
+      alias: wks_edw_company_dim
+  - name: aspwks_integration__wks_edw_customer_base_dim
+    config: 
+      alias: wks_edw_customer_base_dim
+  - name: aspwks_integration__wks_edw_customer_sales_dim
+    config: 
+      alias: wks_edw_customer_sales_dim
+  - name: aspwks_integration__wks_edw_dstrbtn_chnl
+    config: 
+      alias: wks_edw_dstrbtn_chnl
+  - name: aspwks_integration__wks_edw_ecc_marm
+    config: 
+      alias: wks_edw_ecc_marm
+  - name: aspwks_integration__wks_edw_ecc_standard_cost
+    config: 
+      alias: wks_edw_ecc_standard_cost
+  - name: aspwks_integration__wks_edw_material_typ
+    config: 
+      alias: wks_edw_material_typ
+  - name: aspwks_integration__wks_edw_prod_hier
+    config: 
+      alias: wks_edw_prod_hier
+  - name: aspwks_integration__wks_edw_profit_center_dim
+    config: 
+      alias: wks_edw_profit_center_dim
+  - name: aspwks_integration__wks_edw_sales_org_dim
+    config: 
+      alias: wks_edw_sales_org_dim
+  - name: aspwks_integration__wks_itg_base_prod_text
+    config: 
+      alias: wks_itg_base_prod_text
+  - name: aspwks_integration__wks_itg_brnd_text
+    config: 
+      alias: wks_itg_brnd_text
+  - name: aspwks_integration__wks_itg_code_descriptions
+    config: 
+      alias: wks_itg_code_descriptions
+  - name: aspwks_integration__wks_itg_comp
+    config: 
+      alias: wks_itg_comp
+  - name: aspwks_integration__wks_itg_company_code_text
+    config: 
+      alias: wks_itg_company_code_text
+  - name: aspwks_integration__wks_itg_country_code_text
+    config: 
+      alias: wks_itg_country_code_text
+  - name: aspwks_integration__wks_itg_crncy_exch
+    config: 
+      alias: wks_itg_crncy_exch
+  - name: aspwks_integration__wks_itg_cust_base
+    config: 
+      alias: wks_itg_cust_base
+  - name: aspwks_integration__wks_itg_cust_sls
+    config: 
+      alias: wks_itg_cust_sls
+  - name: aspwks_integration__wks_itg_cust_sls_attr
+    config: 
+      alias: wks_itg_cust_sls_attr
+  - name: aspwks_integration__wks_itg_cust_text
+    config: 
+      alias: wks_itg_cust_text
+  - name: aspwks_integration__wks_itg_dstrbtn_chnl
+    config: 
+      alias: wks_itg_dstrbtn_chnl
+  - name: aspwks_integration__wks_itg_ecc_marm
+    config: 
+      alias: wks_itg_ecc_marm
+  - name: aspwks_integration__wks_itg_material_dim
+    config: 
+      alias: wks_itg_material_dim
+  - name: aspwks_integration__wks_itg_material_typ
+    config: 
+      alias: wks_itg_material_typ
+  - name: aspwks_integration__wks_itg_matl_base
+    config: 
+      alias: wks_itg_matl_base
+  - name: aspwks_integration__wks_itg_matl_text
+    config: 
+      alias: wks_itg_matl_text
+  - name: aspwks_integration__wks_itg_mega_brnd_text
+    config: 
+      alias: wks_itg_mega_brnd_text
+  - name: aspwks_integration__wks_itg_needstates_text
+    config: 
+      alias: wks_itg_needstates_text
+  - name: aspwks_integration__wks_itg_prft_ctr
+    config: 
+      alias: wks_itg_prft_ctr
+  - name: aspwks_integration__wks_itg_prft_ctr_text
+    config: 
+      alias: wks_itg_prft_ctr_text
+  - name: aspwks_integration__wks_itg_prod_hier
+    config: 
+      alias: wks_itg_prod_hier
+  - name: aspwks_integration__wks_itg_put_up_text
+    config: 
+      alias: wks_itg_put_up_text
+  - name: aspwks_integration__wks_itg_sales_org
+    config: 
+      alias: wks_itg_sales_org
+  - name: aspwks_integration__wks_itg_sales_org_text
+    config: 
+      alias: wks_itg_sales_org_text
+  - name: aspwks_integration__wks_itg_sls_grp_text
+    config: 
+      alias: wks_itg_sls_grp_text
+  - name: aspwks_integration__wks_itg_sls_off_text
+    config: 
+      alias: wks_itg_sls_off_text
+  - name: aspwks_integration__wks_itg_strongholds_text
+    config: 
+      alias: wks_itg_strongholds_text
+  - name: aspwks_integration__wks_itg_time
+    config: 
+      alias: wks_itg_time
+  - name: aspwks_integration__wks_itg_varnt_text
+    config: 
+      alias: wks_itg_varnt_text
+  - name: aspwks_integration__wks_material_dim
+    config: 
+      alias: wks_material_dim
+  - name: aspwks_integration__wks_sap_mara_extract
+    config: 
+      alias: wks_sap_mara_extract
+  - name: aspwks_integration__wks_sdl_dstrbtn_chnl
+    config: 
+      alias: wks_sdl_dstrbtn_chnl
+  - name: aspwks_integration__wks_sdl_material_typ
+    config: 
+      alias: wks_sdl_material_typ
+  - name: aspwks_integration__wks_sdl_prod_hier
+    config: 
+      alias: wks_sdl_prod_hier

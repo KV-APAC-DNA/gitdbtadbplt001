@@ -1,0 +1,102 @@
+version: 1
+
+models:
+  - name: aspitg_integration__itg_base_prod_text
+    config:
+      alias: itg_base_prod_text
+  - name: aspitg_integration__itg_brnd_text
+    config:
+      alias: itg_brnd_text
+  - name: aspitg_integration__itg_code_descriptions
+    config:
+      alias: itg_code_descriptions
+  - name: aspitg_integration__itg_comp
+    config:
+      alias: ITG_COMP
+  - name: aspitg_integration__itg_comp_text
+    config:
+      alias: itg_comp_text
+  - name: aspitg_integration__itg_crncy_exch
+    config:
+      alias: itg_crncy_exch
+  - name: aspitg_integration__itg_ctry_cd_text
+    config:
+      alias: itg_ctry_cd_text
+  - name: aspitg_integration__itg_cust_base
+    config:
+      alias: itg_cust_base
+  - name: aspitg_integration__itg_cust_sls
+    config:
+      alias: itg_cust_sls
+  - name: aspitg_integration__itg_cust_sls_attr
+    config:
+      alias: itg_cust_sls_attr
+  - name: aspitg_integration__itg_cust_text
+    config:
+      alias: itg_cust_text
+  - name: aspitg_integration__itg_dstrbtn_chnl
+    config:
+      alias: itg_dstrbtn_chnl
+  - name: aspitg_integration__itg_ecc_marm
+    config:
+      alias: itg_ecc_marm
+  - name: aspitg_integration__itg_ecc_standard_cost
+    config:
+      alias: itg_ecc_standard_cost
+  - name: aspitg_integration__itg_edw_material_dim_updt
+    config:
+      alias: itg_edw_material_dim_updt
+  - name: aspitg_integration__itg_material_base
+    config:
+      alias: ITG_MATERIAL_BASE
+  - name: aspitg_integration__itg_material_dim
+    config:
+      alias: itg_material_dim
+  - name: aspitg_integration__itg_material_typ
+    config:
+      alias: itg_material_typ
+  - name: aspitg_integration__itg_matl_base
+    config:
+      alias: ITG_MATL_BASE
+  - name: aspitg_integration__itg_matl_text
+    config:
+      alias: ITG_MATL_TEXT
+  - name: aspitg_integration__itg_mega_brnd_text
+    config:
+      alias: itg_mega_brnd_text
+  - name: aspitg_integration__itg_needstates_text
+    config:
+      alias: itg_needstates_text
+  - name: aspitg_integration__itg_prft_ctr
+    config:
+      alias: itg_prft_ctr
+  - name: aspitg_integration__itg_prft_ctr_text
+    config:
+      alias: itg_prft_ctr_text
+  - name: aspitg_integration__itg_prod_hier
+    config:
+      alias: itg_prod_hier
+  - name: aspitg_integration__itg_put_up_text
+    config:
+      alias: itg_put_up_text
+  - name: aspitg_integration__itg_sls_grp_text
+    config:
+      alias: itg_sls_grp_text
+  - name: aspitg_integration__itg_sls_off_text
+    config:
+      alias: itg_sls_off_text
+  - name: aspitg_integration__itg_sls_org
+    config:
+      alias: itg_sls_org
+  - name: aspitg_integration__itg_sls_org_text
+    config:
+      alias: itg_sls_org_text
+  - name: aspitg_integration__itg_strongholds_text
+    config:
+      alias: itg_strongholds_text
+  - name: aspitg_integration__itg_time
+    config:
+      alias: itg_time
+  - name: aspitg_integration__itg_varnt_text
+    config:
+      alias: itg_varnt_text

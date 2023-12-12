@@ -41,3 +41,16 @@ models:
       schema: CORE_INTEGRATION 
       arsadpprd001_raw:
         materialized: view
+    asp_regional:
+      aspedw_access:
+        materialized: view
+        schema: ASPEDW_ACCESS
+      aspint_integration:
+        materialized: table
+        schema: ASPITG_INTEGRATION
+      aspedw_integration:
+        materialized: table
+        schema: ASPEDW_INTEGRATION
+      aspwks_integration:
+        materialized: table
+        schema: ASPWKS_INTEGRATION
