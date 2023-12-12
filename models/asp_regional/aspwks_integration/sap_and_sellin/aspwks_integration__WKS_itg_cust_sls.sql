@@ -1,0 +1,81 @@
+{{
+    config(
+        alias= "wks_itg_cust_sls",
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+        materialized="view",
+        tags=[""]
+    )
+}}
+
+with sources as(
+    SELECT mandt,
+        kunnr,
+        vkorg,
+        vtweg,
+        spart,
+        ernam,
+        erdat,
+        begru,
+        loevm,
+        versg,
+        aufsd,
+        kalks,
+        kdgrp,
+        bzirk,
+        konda,
+        pltyp,
+        awahr,
+        inco1,
+        inco2,
+        lifsd,
+        autlf,
+        antlf,
+        kztlf,
+        kzazu,
+        chspl,
+        lprio,
+        eikto,
+        vsbed,
+        faksd,
+        mrnkz,
+        perfk,
+        perrl,
+        kvakz,
+        kvawt,
+        waers,
+        klabc,
+        ktgrd,
+        vwerk,
+        vkgrp,
+        vkbur,
+        vsort,
+        kvgr1,
+        kvgr2,
+        kvgr3,
+        kvgr4,
+        kvgr5,
+        bokre,
+        boidt,
+        kurst,
+        prfre,
+        prat1,
+        prat2,
+        prat3,
+        prat4,
+        prat5,
+        prat6,
+        prat7,
+        prat8,
+        prat9,
+        prata,
+        zterm,
+        zzsalesrep,
+        current_timestamp() as UPDT_DTTM
+    FROM {{ ref('aspitg_integration__stg_sdl_sap_ecc_customer_sales') }}
+),
+
+final as(
+    select * from sources
+)
+
+select * from final
