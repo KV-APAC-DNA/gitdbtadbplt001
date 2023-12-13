@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: ASPSDL_RAW
-    database: DEV_DNA_LOAD
-    schema: ASPSDL_RAW
+  - name: aspsdl_raw
+    database: dev_dna_load
+    schema: aspsdl_raw
     quoting:
       database: false
       schema: false
