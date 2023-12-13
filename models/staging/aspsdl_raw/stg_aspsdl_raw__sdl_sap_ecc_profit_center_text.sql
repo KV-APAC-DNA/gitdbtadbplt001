@@ -1,8 +1,8 @@
 {{
     config(
-        materialized='view',
-        alias='stg_sdl_sap_ecc_profit_center_text',
-        tags=['']
+        materialized="view",
+        alias="stg_sdl_sap_ecc_profit_center_text",
+        tags=[""]
     )
 }}
 

@@ -1,70 +1,70 @@
 {{
     config(
-        materialized='table',
-        alias='wks_itg_cust_sls_attr'
+        alias="wks_itg_cust_sls_attr",
+        tags=[""]
     )
 }}
 
 with 
 
-sdl_cust_sls_attr as (
+source as (
 
     select * from {{ ref('stg_aspsdl_raw__sdl_cust_sls_attr') }}
 ),
 
 final as (
-    SELECT
-    SRC.division,
-    SRC.distr_chan,
-    SRC.salesorg,
-    SRC.cust_sales,
-    SRC.accnt_asgn,
-    SRC.cust_cla,
-    SRC.cust_group,
-    SRC.cust_grp1,
-    SRC.cust_grp2,
-    SRC.cust_grp3,
-    SRC.cust_grp4,
-    SRC.cust_grp5,
-    SRC.c_ctr_area,
-    SRC.incoterms,
-    SRC.incoterms2,
-    SRC.plant,
-    SRC.pmnttrms,
-    SRC.sales_dist,
-    SRC.sales_grp,
-    SRC.sales_off,
-    SRC.cur_sls_emp,
-    SRC.lcl_cust_grp_1,
-    SRC.lcl_cust_grp_2,
-    SRC.lcl_cust_grp_3,
-    SRC.lcl_cust_grp_4,
-    SRC.lcl_cust_grp_5,
-    SRC.lcl_cust_grp_6,
-    SRC.lcl_cust_grp_7,
-    SRC.lcl_cust_grp_8,
-    SRC.customer,
-    SRC.prc_proc,
-    SRC.prc_grp,
-    SRC.prc_lst_type,
-    SRC.shpg_con,
-    SRC.par_del,
-    SRC.max_num_pa,
-    SRC.prnt_cust_key,
-    SRC.bnr_key,
-    SRC.bnr_frmt_key,
-    SRC.go_to_mdl_key,
-    SRC.chnl_key,
-    SRC.sub_chnl_key,
-    SRC.segmt_key,
-    SRC.cust_set_1,
-    SRC.cust_set_2,
-    SRC.cust_set_3,
-    SRC.cust_set_4,
-    SRC.cust_set_5,
-    -- CURRENT_TIMESTAMP() AS TGT_CRT_DTTM,
-    UPDT_DTTM
-  FROM sdl_cust_sls_attr AS SRC
+    select
+    division,
+    distr_chan,
+    salesorg,
+    cust_sales,
+    accnt_asgn,
+    cust_cla,
+    cust_group,
+    cust_grp1,
+    cust_grp2,
+    cust_grp3,
+    cust_grp4,
+    cust_grp5,
+    c_ctr_area,
+    incoterms,
+    incoterms2,
+    plant,
+    pmnttrms,
+    sales_dist,
+    sales_grp,
+    sales_off,
+    cur_sls_emp,
+    lcl_cust_grp_1,
+    lcl_cust_grp_2,
+    lcl_cust_grp_3,
+    lcl_cust_grp_4,
+    lcl_cust_grp_5,
+    lcl_cust_grp_6,
+    lcl_cust_grp_7,
+    lcl_cust_grp_8,
+    customer,
+    prc_proc,
+    prc_grp,
+    prc_lst_type,
+    shpg_con,
+    par_del,
+    max_num_pa,
+    prnt_cust_key,
+    bnr_key,
+    bnr_frmt_key,
+    go_to_mdl_key,
+    chnl_key,
+    sub_chnl_key,
+    segmt_key,
+    cust_set_1,
+    cust_set_2,
+    cust_set_3,
+    cust_set_4,
+    cust_set_5,
+    -- current_timestamp() as tgt_crt_dttm,
+    updt_dttm as updt_dttm
+  from source
 )
 
 select * from final

@@ -1,8 +1,8 @@
 {{
     config(
-        materialized='view',
-        alias='stg_sdl_ecc_standard_cost',
-        tags=['']
+        materialized="view",
+        alias="stg_sdl_ecc_standard_cost",
+        tags=[""]
     )
 }}
 

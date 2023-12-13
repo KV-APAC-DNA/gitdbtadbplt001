@@ -1,24 +1,24 @@
 {{
     config(
-        alias='itg_cust_sls_attr',
+        alias="itg_cust_sls_attr",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized='incremental',
-        incremental_strategy = 'merge',
-        unique_key=['division','distr_chan','salesorg','cust_sales'],
-        merge_exclude_columns = ['CRT_DTTM'],
-        tags=['']
+        materialized="incremental",
+        incremental_strategy = "merge",
+        unique_key=["division","distr_chan","salesorg","cust_sales"],
+        merge_exclude_columns = ["crt_dttm"],
+        tags=[""]
     )
 }}
 
 with 
 
-wks_cust_sls_attr as (
+source as (
 
     select * from {{ ref('aspwks_integration__wks_itg_cust_sls_attr') }}
 ),
 
 final as (
-    SELECT
+    select
     division,
     distr_chan,
     salesorg,
@@ -67,9 +67,9 @@ final as (
     cust_set_3,
     cust_set_4,
     cust_set_5,
-    CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) AS CRT_DTTM,
-    CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) AS UPDT_DTTM
-  FROM wks_itg_cust_sls_attr
+    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    current_timestamp()::timestamp_ntz(9) as updt_dttm
+  FROM source
 )
 
 select * from final

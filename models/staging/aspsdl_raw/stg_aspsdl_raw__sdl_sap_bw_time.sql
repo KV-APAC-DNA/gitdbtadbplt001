@@ -1,8 +1,8 @@
 {{
     config(
-        materialized='view',
-        alias='stg_sdl_sap_bw_time',
-        tags=['']
+        materialized="view",
+        alias="stg_sdl_sap_bw_time",
+        tags=[""]
     )
 }}
 
