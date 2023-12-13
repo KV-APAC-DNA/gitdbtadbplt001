@@ -42,8 +42,9 @@ final as (
     max_stack,
     capause,
     uom_ctgry,
-    -- tgt.crt_dttm as tgt_crt_dttm,
-    updt_dttm as updt_dttm,
+    -- null as tgt_crt_dttm,
+    updt_dttm as updt_dttm
+    --null as chng_flg
   from source
 )
 
