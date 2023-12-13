@@ -1,6 +1,6 @@
 {{
   config(
-    alias="itg_comp",
+    alias="itg_comp_text",
     materialized="incremental",
     incremental_strategy="merge",
     unique_key=["co_cd"],
@@ -10,7 +10,7 @@
 with
 source as
 (
-  select * from {{ ref('aspwks_integration__wks_itg_comp') }}
+  select * from {{ ref('aspwks_integration__wks_itg_company_code_text') }}
 ),
 
 final as
@@ -18,12 +18,7 @@ final as
   select
     mandt as clnt,
     bukrs as co_cd,
-    land1 as ctry_key,
-    waers as crncy_key,
-    ktopl as chrt_acct,
-    kkber as crdt_cntrl_area,
-    periv as fisc_yr_vrnt,
-    rcomp as company,
+    txtmd as com_cd_nm,
     current_timestamp() as crt_dttm,
     current_timestamp() as updt_dttm
   from source

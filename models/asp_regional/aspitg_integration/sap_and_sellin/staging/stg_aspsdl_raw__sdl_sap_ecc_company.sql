@@ -1,12 +1,18 @@
-with 
+{{
+    config(
+        alias="sdl_sap_ecc_company",
+        materialized="view"
+    )
+}}
 
+with 
 source as (
 
     select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_company') }}
 
 ),
 
-renamed as (
+final as (
 
     select
         mandt,
@@ -19,9 +25,7 @@ renamed as (
         rcomp,
         crt_dttm,
         updt_dttm
-
-    from source
-
+        from source
 )
 
-select * from renamed
+select * from final
