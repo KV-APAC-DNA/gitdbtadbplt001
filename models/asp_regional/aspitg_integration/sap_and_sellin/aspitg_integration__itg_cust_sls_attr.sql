@@ -2,7 +2,6 @@
     config(
         alias='itg_cust_sls_attr',
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        transient=False,
         materialized='incremental',
         incremental_strategy = 'merge',
         unique_key=['division','distr_chan','salesorg','cust_sales'],
