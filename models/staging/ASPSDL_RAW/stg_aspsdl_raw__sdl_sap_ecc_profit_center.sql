@@ -1,7 +1,8 @@
 {{
     config(
         materialized='view',
-        alias='stg_sdl_sap_ecc_profit_center_text'
+        alias='stg_sdl_sap_ecc_profit_center',
+        tags=['']
     )
 }}
 
@@ -9,20 +10,19 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_profit_center_text') }}
+    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_profit_center') }}
 
 ),
 
 final as (
 
     select
-        langu,
         kokrs,
         prctr,
         dateto,
         datefrom,
-        txtsh,
-        txtmd,
+        verak,
+        waers,
         crt_dttm,
         updt_dttm
 

@@ -9,7 +9,7 @@ with
 
 sdl_cust_sls_attr as (
 
-    select * from {{ ref('stg_ASPSDL_RAW__sdl_cust_sls_attr') }}
+    select * from {{ ref('stg_aspsdl_raw__sdl_cust_sls_attr') }}
 ),
 
 final as (

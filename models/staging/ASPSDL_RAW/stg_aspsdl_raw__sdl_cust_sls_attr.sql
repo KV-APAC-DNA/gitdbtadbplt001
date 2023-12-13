@@ -1,7 +1,8 @@
 {{
     config(
         materialized='view',
-        alias='stg_sdl_cust_sls_attr'
+        alias='stg_sdl_cust_sls_attr',
+        tags=['']
     )
 }}
 

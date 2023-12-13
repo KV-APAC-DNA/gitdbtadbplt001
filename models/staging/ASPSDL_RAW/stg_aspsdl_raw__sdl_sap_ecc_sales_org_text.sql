@@ -1,7 +1,8 @@
 {{
     config(
         materialized='view',
-        alias='stg_sdl_sap_ecc_sales_org_text'
+        alias='stg_sdl_sap_ecc_sales_org_text',
+        tags=['']
     )
 }}
 
