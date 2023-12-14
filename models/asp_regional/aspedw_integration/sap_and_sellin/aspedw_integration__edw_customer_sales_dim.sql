@@ -43,7 +43,7 @@ itg_cust_sls_attr as (
         cust_set_3,
         cust_set_4,
         cust_set_5
-    from {{ source('aspsdl_raw', 'itg_cust_sls_attr') }}
+    from {{ ref('aspitg_integration__itg_cust_sls_attr') }}
 ),
 final as ( 
     select 
