@@ -1,6 +1,6 @@
 {{
     config(
-        alias="wks_edw_ecc_standard_cost",
+        alias="wks_itg_ecc_standard_cost",
         tags=[""]
     )
 }}
@@ -9,7 +9,7 @@ with
 
 source as (
 
-    select * from {{ ref('aspitg_integration__itg_ecc_standard_cost') }}
+    select * from {{ ref('aspitg_integration__stg_sdl_ecc_standard_cost') }}
 ),
 
 final as (
@@ -123,9 +123,8 @@ final as (
     mbrue,
     oklas,
     oippinv,
-    -- null as tgt_crt_dttm,
+    -- current_timestamp() as tgt_crt_dttm,
     updt_dttm as updt_dttm
-    --null as chng_flg
   from source
 )
 
