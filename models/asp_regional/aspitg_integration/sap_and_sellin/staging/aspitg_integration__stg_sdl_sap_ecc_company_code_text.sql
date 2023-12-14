@@ -1,6 +1,6 @@
 {{
     config(
-        alias="sdl_sap_ecc_customer_text",
+        alias="stg_sdl_sap_ecc_company_code_text",
         materialized="view"
     )
 }}
@@ -8,7 +8,7 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_customer_text') }}
+    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_company_code_text') }}
 
 ),
 
@@ -16,7 +16,7 @@ final as (
 
     select
         mandt,
-        kunnr,
+        bukrs,
         txtmd,
         crt_dttm,
         updt_dttm

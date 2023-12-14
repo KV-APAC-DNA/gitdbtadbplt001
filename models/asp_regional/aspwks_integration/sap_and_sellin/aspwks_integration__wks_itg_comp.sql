@@ -12,7 +12,7 @@
 
 with
     source as 
-        (select * from {{ ref('stg_aspsdl_raw__sdl_sap_ecc_company') }}
+        (select * from {{ ref('aspitg_integration__stg_sdl_sap_ecc_company') }}
         ),
 
     final as (

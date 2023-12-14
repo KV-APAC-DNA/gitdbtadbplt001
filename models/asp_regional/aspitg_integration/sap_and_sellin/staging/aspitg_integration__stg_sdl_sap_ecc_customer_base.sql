@@ -1,6 +1,6 @@
 {{
     config(
-        alias="sdl_sap_ecc_customer_base",
+        alias="stg_sdl_sap_ecc_customer_base",
         materialized="view"
     )
 }}

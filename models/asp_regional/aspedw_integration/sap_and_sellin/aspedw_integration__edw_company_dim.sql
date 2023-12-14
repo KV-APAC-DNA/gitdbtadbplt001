@@ -1,0 +1,33 @@
+-- {{
+--     config(
+--         alias="edw_company_dim",
+--         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+--         materialized="incremental",
+--         incremental_strategy = "merge",
+--         unique_key=["co_cd"],
+--         merge_exclude_columns = ["crt_dttm"],
+--         tags=[""]
+--     )
+-- }}
+-- with 
+-- source as (
+--     select * from {{ ref('aspwks_integration__wks_edw_company_dim') }}
+-- ),
+-- final as (
+--     select
+--     clnt,
+--     co_cd,
+--     ctry_key,
+--     ctry_nm,
+--     crncy_key,
+--     chrt_acct,
+--     crdt_cntrl_area,
+--     fisc_yr_vrnt,
+--     company,
+--     company_nm,
+--     current_timestamp()::timestamp_ntz(9) as crt_dttm,
+--     current_timestamp()::timestamp_ntz(9) as updt_dttm
+--   from source
+-- )
+
+-- select * from final

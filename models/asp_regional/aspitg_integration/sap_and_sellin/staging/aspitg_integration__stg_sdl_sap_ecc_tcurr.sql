@@ -1,6 +1,6 @@
 {{
     config(
-        alias="sdl_sap_ecc_tcurr",
+        alias="stg_sdl_sap_ecc_tcurr",
         materialized="view"
     )
 }}

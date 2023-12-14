@@ -1,6 +1,6 @@
 {{
     config(
-        alias="sdl_sap_bw_country_code_text",
+        alias="stg_sdl_sap_bw_country_code_text",
         materialized="view"
     )
 }}
