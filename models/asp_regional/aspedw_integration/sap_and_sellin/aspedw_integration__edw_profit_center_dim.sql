@@ -4,12 +4,13 @@
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy = "merge",
-        unique_key=["cntl_area","prft_ctr","vld_to_dt"],
+        unique_key=["prft_ctr"],
         merge_exclude_columns = ["crt_dttm"],
         tags=[""]
     )
 }}
 -- LTRIM(edw_profit_center_dim.prft_ctr, 0) = LTRIM(WKS_edw_profit_center_dim.prft_ctr, 0)
+-- unique_key=["cntl_area","prft_ctr","vld_to_dt"],
 
 with 
 
@@ -30,7 +31,10 @@ final as (
     prsn_resp,
     crncy_key,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    null as need_stat_shrt_desc,
+    null as strng_hold_shrt_desc,
+    null as rflt
   from source
 )
 

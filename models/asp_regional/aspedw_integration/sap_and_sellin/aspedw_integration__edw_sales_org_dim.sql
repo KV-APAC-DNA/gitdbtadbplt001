@@ -24,7 +24,7 @@ final as (
     sls_org_nm,
     stats_crncy,
     sls_org_co_cd,
-    cust_no_intco_bill,
+    cust_no_intco_bill as cust_num_intco_bill,
     ctry_key,
     crncy_key,
     fisc_yr_vrnt,
