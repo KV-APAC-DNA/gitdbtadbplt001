@@ -1,7 +1,8 @@
 {{
     config(
         alias="stg_sdl_sap_ecc_customer_base",
-        materialized="view"
+        materialized="view",
+        tags=["daily","sap_ecc"]
     )
 }}
 with 

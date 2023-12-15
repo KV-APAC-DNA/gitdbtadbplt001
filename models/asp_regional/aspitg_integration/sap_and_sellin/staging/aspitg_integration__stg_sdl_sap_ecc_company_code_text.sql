@@ -1,7 +1,8 @@
 {{
     config(
         alias="stg_sdl_sap_ecc_company_code_text",
-        materialized="view"
+        materialized="view",
+        tags=["daily","sap_ecc"]
     )
 }}
 with 

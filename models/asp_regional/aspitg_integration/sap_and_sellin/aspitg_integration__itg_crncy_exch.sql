@@ -4,7 +4,7 @@
     materialized="incremental",
     incremental_strategy="merge",
     unique_key=["clnt", "ex_rt_typ", "from_crncy", "to_crncy", "vld_from"],
-    tags= [""]
+    tags= ["daily"]
   )
 }}
 with

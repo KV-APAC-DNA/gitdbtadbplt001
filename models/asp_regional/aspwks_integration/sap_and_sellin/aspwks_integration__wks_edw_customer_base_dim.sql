@@ -6,7 +6,7 @@
         incremental_strategy="merge",
         unique_key=["cust_num_1"],
         merge_exclude_columns=["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 with

@@ -2,7 +2,7 @@
     config(
         alias="wks_itg_crncy_exch",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 with

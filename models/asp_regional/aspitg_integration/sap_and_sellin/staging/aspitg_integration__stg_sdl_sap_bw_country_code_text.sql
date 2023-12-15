@@ -1,7 +1,8 @@
 {{
     config(
         alias="stg_sdl_sap_bw_country_code_text",
-        materialized="view"
+        materialized="view",
+        tags=["daily","sap_bw"]
     )
 }}
 with 
