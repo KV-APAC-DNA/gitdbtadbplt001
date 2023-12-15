@@ -85,6 +85,8 @@ final as (
         prsn_resp,
         crncy_key,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
+        -- strng_hold,--not being used
+        -- need_stat, --not being used
     from final_temp
 )
 
