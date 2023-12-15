@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["mandt","matnr","bwkey","bwtar"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

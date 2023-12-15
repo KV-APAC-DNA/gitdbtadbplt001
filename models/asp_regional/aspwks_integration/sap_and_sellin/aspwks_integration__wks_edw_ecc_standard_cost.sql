@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_edw_ecc_standard_cost",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

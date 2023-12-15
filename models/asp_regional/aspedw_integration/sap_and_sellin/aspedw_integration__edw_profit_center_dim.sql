@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["prft_ctr"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 -- LTRIM(edw_profit_center_dim.prft_ctr, 0) = LTRIM(WKS_edw_profit_center_dim.prft_ctr, 0)

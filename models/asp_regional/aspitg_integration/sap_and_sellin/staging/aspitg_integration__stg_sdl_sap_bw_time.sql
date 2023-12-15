@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="stg_sdl_sap_bw_time",
-        tags=[""]
+        tags=["daily","SAP_BW"]
     )
 }}
 

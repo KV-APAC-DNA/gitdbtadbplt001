@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["matl_no","alt_unt"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

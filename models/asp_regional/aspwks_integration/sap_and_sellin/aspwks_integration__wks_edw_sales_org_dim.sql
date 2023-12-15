@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_edw_sales_org_dim",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

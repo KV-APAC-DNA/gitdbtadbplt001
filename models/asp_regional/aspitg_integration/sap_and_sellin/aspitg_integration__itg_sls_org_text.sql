@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["clnt","lang_key","sls_org"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

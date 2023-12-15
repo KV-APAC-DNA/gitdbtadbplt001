@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_itg_ecc_marm",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

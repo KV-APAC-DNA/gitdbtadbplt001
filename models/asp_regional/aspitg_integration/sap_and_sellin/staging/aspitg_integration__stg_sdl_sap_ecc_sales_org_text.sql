@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="stg_sdl_sap_ecc_sales_org_text",
-        tags=[""]
+        tags=["daily","SAP_ECC"]
     )
 }}
 

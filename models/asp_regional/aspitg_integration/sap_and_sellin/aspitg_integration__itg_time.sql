@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["cal_day","fisc_yr_vrnt"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

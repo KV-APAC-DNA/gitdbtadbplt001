@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["lang_key","cntl_area","prft_ctr","vld_to_dt","vld_from_dt"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

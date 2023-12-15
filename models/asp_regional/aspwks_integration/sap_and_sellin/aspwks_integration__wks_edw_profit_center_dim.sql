@@ -2,7 +2,7 @@
     config(
         alias="wks_edw_profit_center_dim",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

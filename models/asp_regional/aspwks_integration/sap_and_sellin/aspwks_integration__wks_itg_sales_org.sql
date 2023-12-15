@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_itg_sales_org",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

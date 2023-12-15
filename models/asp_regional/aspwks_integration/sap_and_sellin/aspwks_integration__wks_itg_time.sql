@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_itg_time",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

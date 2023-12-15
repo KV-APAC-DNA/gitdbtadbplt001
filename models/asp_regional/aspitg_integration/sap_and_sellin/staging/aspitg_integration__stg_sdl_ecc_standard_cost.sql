@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="stg_sdl_ecc_standard_cost",
-        tags=[""]
+        tags=["daily","SAP_ECC"]
     )
 }}
 

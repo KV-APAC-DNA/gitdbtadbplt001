@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_itg_prft_ctr_text",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 
