@@ -3,7 +3,7 @@
         alias= "wks_itg_strongholds_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="view",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

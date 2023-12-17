@@ -6,7 +6,7 @@
         incremental_strategy= "merge",
         unique_key=  ['zstrong'],
         merge_exclude_columns=["CRT_DTTM"],
-        tags= [""]
+        tags= ["daily"]
     )
 }}
 

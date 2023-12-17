@@ -1,7 +1,7 @@
 {{
     config(
         alias="wks_itg_cust_sls_attr",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

@@ -6,7 +6,7 @@
         incremental_strategy= "merge",
         unique_key=  ['mandt','spras','vkbur'],
         merge_exclude_columns=["CRT_DTTM"],
-        tags= [""]
+        tags= ["daily"]
     )
 }}
 

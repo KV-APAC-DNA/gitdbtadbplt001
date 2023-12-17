@@ -6,7 +6,7 @@
         incremental_strategy = "merge",
         unique_key=["division","distr_chan","salesorg","cust_sales"],
         merge_exclude_columns = ["crt_dttm"],
-        tags=[""]
+        tags=["daily"]
     )
 }}
 

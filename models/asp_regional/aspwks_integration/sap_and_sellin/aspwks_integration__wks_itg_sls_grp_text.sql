@@ -3,7 +3,7 @@
         alias= "wks_itg_sls_grp_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="view",
-        tags=[""]
+        tags=["daily"]
     )
 }}
 
