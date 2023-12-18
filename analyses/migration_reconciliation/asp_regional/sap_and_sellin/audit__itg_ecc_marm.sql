@@ -7,7 +7,6 @@
             identifier='itg_ecc_marm'
         ),
         b_relation=ref('aspitg_integration__itg_ecc_marm'),
-        exclude_columns=['updt_dttm','crt_dttm'], 
         primary_key=c_pk
     )
 }}

@@ -7,7 +7,6 @@
             identifier='edw_ecc_marm'
         ),
         b_relation=ref('aspedw_integration__edw_ecc_marm'),
-        exclude_columns=['updt_dttm','crt_dttm'], 
         primary_key=c_pk
     )
 }}

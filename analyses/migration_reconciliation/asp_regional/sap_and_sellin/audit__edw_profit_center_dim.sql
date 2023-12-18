@@ -7,7 +7,6 @@
             identifier='edw_profit_center_dim'
         ),
         b_relation=ref('aspedw_integration__edw_profit_center_dim'),
-        exclude_columns=['updt_dttm','crt_dttm'], 
         primary_key=c_pk
     )
 }}

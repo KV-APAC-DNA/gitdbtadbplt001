@@ -7,7 +7,6 @@
             identifier='itg_time'
         ),
         b_relation=ref('aspitg_integration__itg_time'),
-        exclude_columns=['updt_dttm','crt_dttm'], 
         primary_key=c_pk
     )
 }}

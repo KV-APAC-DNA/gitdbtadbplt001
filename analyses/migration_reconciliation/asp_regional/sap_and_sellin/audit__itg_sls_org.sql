@@ -7,7 +7,6 @@
             identifier='itg_sls_org'
         ),
         b_relation=ref('aspitg_integration__itg_sls_org'),
-        exclude_columns=['updt_dttm','crt_dttm'], 
         primary_key=c_pk
     )
 }}
