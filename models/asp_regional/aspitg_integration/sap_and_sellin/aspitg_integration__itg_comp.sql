@@ -24,8 +24,8 @@ final as
     kkber as crdt_cntrl_area,
     periv as fisc_yr_vrnt,
     rcomp as company,
-    current_timestamp() as crt_dttm,
-    current_timestamp() as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
 )
 select * from final

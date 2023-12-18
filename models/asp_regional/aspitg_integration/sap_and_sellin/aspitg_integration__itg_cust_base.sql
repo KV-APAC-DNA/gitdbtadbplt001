@@ -148,8 +148,8 @@ ccc03 as natl_scty_ind,
 ccc04 as missile_tech_ind,
 cassd as cent_sls_blk_cust,
 knurl as unifm_rsrs_lctr,
-current_timestamp() as crt_dttm,
-current_timestamp() as updt_dttm
+current_timestamp()::timestamp_ntz(9) as crt_dttm,
+current_timestamp()::timestamp_ntz(9) as updt_dttm
 from source
 )
 select * from final

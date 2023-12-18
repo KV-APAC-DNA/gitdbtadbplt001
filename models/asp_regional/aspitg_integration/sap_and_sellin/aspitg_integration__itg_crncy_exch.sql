@@ -24,8 +24,8 @@ final as
     ex_rt,
     from_ratio,
     to_ratio,
-    current_timestamp() as crt_dttm,
-    current_timestamp() as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
 )
 select * from final
