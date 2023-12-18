@@ -1,7 +1,7 @@
 {{
     config(
         materialized="view",
-        alias="stg_sdl_sap_ecc_sales_org",
+        alias="vw_stg_sdl_sap_ecc_sales_org_text",
         tags=["daily","SAP_ECC"]
     )
 }}
@@ -10,7 +10,7 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_sales_org') }}
+    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_sales_org_text') }}
 
 ),
 
@@ -18,13 +18,9 @@ final as (
 
     select
         mandt,
+        spras,
         vkorg,
-        waers,
-        bukrs,
-        kunnr,
-        land1,
-        waers1,
-        periv,
+        vtext,
         crt_dttm,
         updt_dttm
 

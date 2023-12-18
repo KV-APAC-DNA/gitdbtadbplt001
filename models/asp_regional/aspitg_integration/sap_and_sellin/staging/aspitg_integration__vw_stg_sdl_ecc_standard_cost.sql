@@ -1,7 +1,7 @@
 {{
     config(
         materialized="view",
-        alias="stg_sdl_ecc_standard_cost",
+        alias="vw_stg_sdl_ecc_standard_cost",
         tags=["daily","SAP_ECC"]
     )
 }}

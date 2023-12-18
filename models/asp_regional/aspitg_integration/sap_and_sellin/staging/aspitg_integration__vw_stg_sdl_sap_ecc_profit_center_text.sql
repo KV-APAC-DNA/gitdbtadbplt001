@@ -1,7 +1,7 @@
 {{
     config(
         materialized="view",
-        alias="stg_sdl_sap_ecc_profit_center_text",
+        alias="vw_stg_sdl_sap_ecc_profit_center_text",
         tags=["daily","SAP_ECC"]
     )
 }}

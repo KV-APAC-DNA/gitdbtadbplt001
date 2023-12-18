@@ -9,7 +9,7 @@ with
 
 source as (
 
-    select * from {{ ref('aspitg_integration__stg_sdl_ecc_standard_cost') }}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_ecc_standard_cost') }}
 ),
 
 final as (
