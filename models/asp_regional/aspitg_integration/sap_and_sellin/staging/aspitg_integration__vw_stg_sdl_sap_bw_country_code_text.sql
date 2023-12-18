@@ -1,23 +1,24 @@
 {{
     config(
-        alias="stg_sdl_sap_ecc_customer_text",
+        alias="vw_stg_sdl_sap_bw_country_code_text",
         materialized="view",
-        tags=["daily","sap_ecc"]
+        tags=["daily","sap_bw"]
     )
 }}
 with 
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_customer_text') }}
+    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_country_code_text') }}
 
 ),
 
 final as (
 
     select
-        mandt,
-        kunnr,
+        country,
+        langu,
+        txtsh,
         txtmd,
         crt_dttm,
         updt_dttm

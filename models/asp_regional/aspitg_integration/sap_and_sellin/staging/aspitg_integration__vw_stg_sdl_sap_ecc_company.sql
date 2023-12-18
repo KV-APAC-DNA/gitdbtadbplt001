@@ -1,15 +1,15 @@
 {{
     config(
-        alias="stg_sdl_sap_ecc_company_code_text",
+        alias="vw_stg_sdl_sap_ecc_company",
         materialized="view",
         tags=["daily","sap_ecc"]
     )
 }}
-with 
 
+with 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_company_code_text') }}
+    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_company') }}
 
 ),
 
@@ -18,12 +18,15 @@ final as (
     select
         mandt,
         bukrs,
-        txtmd,
+        land1,
+        waers,
+        ktopl,
+        kkber,
+        periv,
+        rcomp,
         crt_dttm,
         updt_dttm
-
-    from source
-
+        from source
 )
 
 select * from final

@@ -1,6 +1,6 @@
 {{
     config(
-        alias="stg_sdl_sap_ecc_customer_base",
+        alias="vw_stg_sdl_sap_ecc_customer_base",
         materialized="view",
         tags=["daily","sap_ecc"]
     )

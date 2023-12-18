@@ -8,7 +8,7 @@
 
 with
     source as 
-        (select * from {{ ref('aspitg_integration__stg_sdl_sap_ecc_customer_base') }}
+        (select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_customer_base') }}
         ),
 
     final as (
