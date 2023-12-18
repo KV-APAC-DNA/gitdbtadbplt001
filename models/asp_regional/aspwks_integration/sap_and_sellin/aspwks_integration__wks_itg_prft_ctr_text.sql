@@ -21,7 +21,6 @@ final as (
     datefrom,
     txtsh,
     txtmd,
-    -- current_timestamp() as tgt_crt_dttm,
     updt_dttm as updt_dttm
   from source
 )

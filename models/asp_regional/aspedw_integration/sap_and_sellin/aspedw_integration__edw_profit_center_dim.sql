@@ -5,7 +5,7 @@
         materialized="incremental",
         incremental_strategy = "merge",
         unique_key=["prft_ctr"],
-        merge_exclude_columns = ["crt_dttm"],
+        merge_exclude_columns = ["crt_dttm","rflt","strng_hold_shrt_desc","need_stat_shrt_desc"],
         tags=["daily"]
     )
 }}
