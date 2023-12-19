@@ -42,10 +42,12 @@ models:
       arsadpprd001_raw:
         materialized: view
     asp_regional:
+      config:
+        +enabled: true
       aspedw_access:
         materialized: view
         schema: ASPEDW_ACCESS
-      aspint_integration:
+      aspitg_integration:
         materialized: table
         schema: ASPITG_INTEGRATION
       aspedw_integration:

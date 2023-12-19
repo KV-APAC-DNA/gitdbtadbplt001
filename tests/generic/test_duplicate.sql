@@ -16,3 +16,4 @@
     having count(*) >1
 {% endif %}
 {% endtest %}
+
