@@ -45,15 +45,12 @@ models:
       aspedw_access:
         materialized: view
         schema: ASPEDW_ACCESS
-        transient: false
       aspitg_integration:
         materialized: table
         schema: ASPITG_INTEGRATION
-        transient: false
       aspedw_integration:
         materialized: table
         schema: ASPEDW_INTEGRATION
-        transient: false
       aspwks_integration:
         materialized: table
         schema: ASPWKS_INTEGRATION
