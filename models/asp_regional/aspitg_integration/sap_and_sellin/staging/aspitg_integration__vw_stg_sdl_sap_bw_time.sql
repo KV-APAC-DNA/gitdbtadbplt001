@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="vw_stg_sdl_sap_bw_time",
-        tags=["daily","SAP_BW"]
+        tags=["daily","sap_bw"]
     )
 }}
 
