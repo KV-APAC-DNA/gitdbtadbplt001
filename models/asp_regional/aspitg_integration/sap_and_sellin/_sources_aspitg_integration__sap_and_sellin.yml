@@ -366,7 +366,6 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-
       - name: sdl_material_dim
         columns:
           - name: matl_num
@@ -1604,7 +1603,6 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-
       - name: sdl_sap_ecc_variant_text
         columns:
           - name: mandt
