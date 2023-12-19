@@ -100,3 +100,10 @@ models:
   - name: aspitg_integration__itg_varnt_text
     config:
       alias: itg_varnt_text
+  - name: aspitg_integration__itg_mds_ap_company_dim
+    config:
+      alias: itg_mds_ap_company_dim
+  - name : aspitg_integration__itg_crncy_conv
+    config:
+      alias: itg_crncy_conv
+  

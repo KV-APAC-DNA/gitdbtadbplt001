@@ -42,6 +42,8 @@ models:
       arsadpprd001_raw:
         materialized: view
     asp_regional:
+      config:
+        +enabled: true
       aspedw_access:
         materialized: view
         schema: ASPEDW_ACCESS
