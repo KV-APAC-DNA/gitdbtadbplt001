@@ -106,4 +106,3 @@ models:
   - name : aspitg_integration__itg_crncy_conv
     config:
       alias: itg_crncy_conv
-  
