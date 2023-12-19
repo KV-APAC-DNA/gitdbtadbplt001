@@ -1619,7 +1619,9 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
+
       - name: sdl_mds_ap_company_dim
+      
   - name: snapaspitg_integration
     database: dev_dna_core
     schema: snapaspitg_integration
