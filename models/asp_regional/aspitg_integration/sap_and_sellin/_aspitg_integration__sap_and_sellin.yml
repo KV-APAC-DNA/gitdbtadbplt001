@@ -104,27 +104,62 @@ models:
     tests:
       - test_duplicate:
           group_by_columns: ['mandt','matnr','bwkey','bwtar']
+          name: vw_stg_sdl_ecc_standard_cost_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_ecc_standard_cost_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_bw_time
     tests:
       - test_duplicate:
           group_by_columns: ['calday','fiscvarnt']
+          name: vw_stg_sdl_sap_bw_time_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_bw_time_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_marm
     tests:
       - test_duplicate:
           group_by_columns: ['matnr','meinh']
+          name: vw_stg_sdl_sap_ecc_marm_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_ecc_marm_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center
     tests:
       - test_duplicate:
           group_by_columns: ['kokrs','prctr','dateto','datefrom']
+          name: vw_stg_sdl_sap_ecc_profit_center_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_ecc_profit_center_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center_text
     tests:
       - test_duplicate:
           group_by_columns: ['langu','kokrs','prctr','dateto','datefrom']
+          name: vw_stg_sdl_sap_ecc_profit_center_text_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_ecc_profit_center_text_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org
     tests:
       - test_duplicate:
           group_by_columns: ['mandt','vkorg']
+          name: vw_stg_sdl_sap_ecc_sales_org_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_ecc_sales_org_duplicate_test
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org_text
     tests:
       - test_duplicate:
           group_by_columns: ['spras','mandt','vkorg']
+          name: vw_stg_sdl_sap_ecc_sales_org_text_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: tratbl_vw_stg_sdl_sap_ecc_sales_org_text_duplicate_test
