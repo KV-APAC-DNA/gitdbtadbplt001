@@ -2,7 +2,7 @@
     config(
         alias= "wks_edw_customer_sales_dim",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="view",
+        materialized="table",
         tags=["daily"]
     )
 }}

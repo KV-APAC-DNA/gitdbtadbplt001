@@ -74,8 +74,8 @@ with sources as(
             prata as prod_attr_id10,
             zterm as pymt_key_term,
             zzsalesrep as persnl_num,
-            current_timestamp() AS CRT_DTTM,
-            current_timestamp() AS UPDT_DTTM
+            current_timestamp()::timestamp_ntz(9) as CRT_DTTM,
+            current_timestamp()::timestamp_ntz(9) as UPDT_DTTM
         FROM {{ ref('aspwks_integration__WKS_itg_cust_sls') }}
 ),
 --logical CTE

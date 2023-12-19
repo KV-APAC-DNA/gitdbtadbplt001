@@ -1,7 +1,7 @@
 {{
     config(
         materialized="view",
-        alias="stg_sdl_sap_bw_strongholds_text",
+        alias="vw_stg_sdl_sap_bw_strongholds_text",
         tags=[""]
     )
 }}

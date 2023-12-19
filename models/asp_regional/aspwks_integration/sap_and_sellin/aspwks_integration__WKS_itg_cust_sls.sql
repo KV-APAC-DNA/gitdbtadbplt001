@@ -2,7 +2,7 @@
     config(
         alias= "wks_itg_cust_sls",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="view",
+        materialized="table",
         tags=["daily"]
     )
 }}
@@ -10,7 +10,7 @@
 --import CTE
 with sources as(
     SELECT *
-    FROM {{ ref('aspitg_integration__stg_sdl_sap_ecc_customer_sales') }}
+    FROM {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_customer_sales') }}
 ),
 --logical CTE
 final as(

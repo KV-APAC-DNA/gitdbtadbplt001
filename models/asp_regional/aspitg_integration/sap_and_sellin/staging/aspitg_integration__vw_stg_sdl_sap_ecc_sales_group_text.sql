@@ -1,6 +1,6 @@
 {{
     config(
-        alias= "stg_sdl_sap_ecc_sales_group_text",
+        alias= "vw_stg_sdl_sap_ecc_sales_group_text",
         materialized="view",
         tags=[""]
     )

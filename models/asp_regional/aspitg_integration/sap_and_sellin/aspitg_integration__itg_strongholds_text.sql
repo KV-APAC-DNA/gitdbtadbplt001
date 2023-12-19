@@ -17,8 +17,8 @@ with sources as (
        langu as language_key,
        txtsh as short_desc,
        txtmd as medium_desc,
-            current_timestamp() as CRT_DTTM,
-            current_timestamp() as UPDT_DTTM
+            current_timestamp()::timestamp_ntz(9) as CRT_DTTM,
+            current_timestamp()::timestamp_ntz(9) as UPDT_DTTM
         FROM {{ ref('aspwks_integration__wks_itg_strongholds_text') }}
 ),
 

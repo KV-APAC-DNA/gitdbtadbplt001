@@ -9,7 +9,7 @@ with
 
 source as (
 
-    select * from {{ ref('aspitg_integration__stg_sdl_cust_sls_attr') }}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_cust_sls_attr') }}
 ),
 
 final as (
