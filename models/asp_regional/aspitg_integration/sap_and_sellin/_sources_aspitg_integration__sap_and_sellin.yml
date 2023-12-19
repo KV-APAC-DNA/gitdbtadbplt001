@@ -126,14 +126,7 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-        tests:
-          - duplicate_records:
-            group_by_columns: ['division','distr_chan','salesorg','cust_sales']
-            name: vw_stg_sdl_cust_sls_attr_duplicate_test
-            config:
-              store_failures: true
-              schema: aspwks_integration
-              table_name: TRATBL_vw_stg_sdl_cust_sls_attr_duplicate_test
+        
       - name: sdl_dstrbtn_chnl
         columns:
           - name: distr_chan

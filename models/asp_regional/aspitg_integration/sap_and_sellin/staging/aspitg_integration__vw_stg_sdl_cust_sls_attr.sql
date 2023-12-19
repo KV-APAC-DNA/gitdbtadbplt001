@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="vw_stg_sdl_cust_sls_attr",
-        tags=[""]
+        tags=["sap_ecc"]
     )
 }}
 

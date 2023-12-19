@@ -2,7 +2,7 @@
     config(
         alias= "vw_stg_sdl_sap_ecc_sales_office_text",
         materialized="view",
-        tags=[""]
+        tags=["sap_ecc"]
     )
 }}
 

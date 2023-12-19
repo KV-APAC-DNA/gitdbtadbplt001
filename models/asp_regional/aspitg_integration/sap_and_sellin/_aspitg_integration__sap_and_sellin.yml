@@ -100,3 +100,64 @@ models:
   - name: aspitg_integration__itg_varnt_text
     config:
       alias: itg_varnt_text
+
+  - name: aspitg_integration__vw_stg_sdl_cust_sls_attr
+    config:
+      alias: vw_stg_sdl_cust_sls_attr
+    tests:
+      - test_duplicate:
+          group_by_columns: ["division","distr_chan","salesorg","cust_sales"]
+          name: vw_stg_sdl_cust_sls_attr_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: TRATBL_vw_stg_sdl_cust_sls_attr_duplicate_test
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_strongholds_text
+    config:
+      alias: vw_stg_sdl_sap_bw_strongholds_text
+    tests:
+      - test_duplicate:
+          group_by_columns: ['zstrong','langu']
+          name: vw_stg_sdl_sap_bw_strongholds_text_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: TRATBL_vw_sdl_sap_bw_strongholds_text_duplicate_test  
+
+  - name: aspitg_integration__vw_stg_sdl_sap_ecc_customer_sales
+    config:
+      alias: vw_stg_sdl_sap_ecc_customer_sales
+    tests:
+      - test_duplicate:
+          group_by_columns: ['kunnr','vkorg','vtweg','spart']
+          name: vw_stg_sdl_sap_ecc_customer_sales_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: TRATBL_vw_sdl_sap_ecc_customer_sales_duplicate_test
+
+  - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_group_text
+    config:
+      alias: vw_stg_sdl_sap_ecc_sales_group_text
+    tests:
+      - test_duplicate:
+          group_by_columns: ['mandt','spras','vkgrp']
+          name: vw_stg_sdl_sap_ecc_sales_group_text_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: TRATBL_vw_sdl_sap_ecc_sales_group_text_duplicate_test
+
+
+  - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_office_text
+    config:
+      alias: vw_stg_sdl_sap_ecc_sales_office_text
+    tests:
+      - test_duplicate:
+          group_by_columns: ['mandt','spras','vkbur']
+          name: vw_stg_sdl_sap_ecc_sales_office_text_duplicate_test
+          config:
+            store_failures: true
+            schema: aspwks_integration
+            table_name: TRATBL_vw_sdl_sap_ecc_sales_office_text_duplicate_test

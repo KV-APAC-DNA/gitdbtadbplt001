@@ -2,7 +2,7 @@
     config(
         materialized="view",
         alias="vw_stg_sdl_sap_bw_strongholds_text",
-        tags=[""]
+        tags=["sap_bw"]
     )
 }}
 
