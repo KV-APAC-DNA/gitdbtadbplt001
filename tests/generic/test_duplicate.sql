@@ -1,4 +1,4 @@
-{% test duplicate_records(model,group_by_columns=None)%}
+{% test test_duplicate(model,group_by_columns=None)%}
 {% if group_by_columns!=None %}
     select
         'Duplicate records present' AS failure_reason,
