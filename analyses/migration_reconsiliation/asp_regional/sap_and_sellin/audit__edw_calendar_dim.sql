@@ -1,0 +1,8 @@
+
+{{compare_snapshot_static(
+        primary_key=["cal_day","fisc_yr_vrnt"],
+        src_database='DEV_DNA_CORE',
+        src_schema='snapaspedw_integration',
+        src_table='edw_calendar_dim',
+        tgt_model=ref('aspedw_integration__edw_calendar_dim')
+    )}}
