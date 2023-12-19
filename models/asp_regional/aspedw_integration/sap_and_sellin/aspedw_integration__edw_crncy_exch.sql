@@ -12,7 +12,7 @@
 
 with 
 source as (
-    select * from {{ ref('aspwks_integration__wks_itg_crncy_exch') }}
+    select * from {{ ref('aspwks_integration__wks_edw_crncy_exch') }}
 ),
 final as (
     select
