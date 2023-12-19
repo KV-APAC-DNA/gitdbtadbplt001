@@ -36,8 +36,8 @@ with
       a.to_crncy,
       a.vld_from,
       a.ex_rt,
-      case when a.ex_rt_typ = 'bwar' then b.from_ratio else a.from_ratio end as from_ratio,
-      case when a.ex_rt_typ = 'bwar' then b.to_ratio else a.to_ratio end as to_ratio,
+      case when a.ex_rt_typ = 'BWAR' then b.from_ratio else a.from_ratio end as from_ratio,
+      case when a.ex_rt_typ = 'BWAR' then b.to_ratio else a.to_ratio end as to_ratio,
       a.updt_dttm
     from itg_crncy_exch as a
     left outer join (
