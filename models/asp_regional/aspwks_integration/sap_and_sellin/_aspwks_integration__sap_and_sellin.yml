@@ -140,4 +140,3 @@ models:
   - name: aspwks_integration__wks_sdl_prod_hier
     config: 
       alias: wks_sdl_prod_hier
-  
