@@ -35,7 +35,7 @@ with
             current_timestamp()::timestamp_ntz(9) as updt_dttm
     from itg_comp as src
     left outer join itg_ctry_cd_text as a
-    on a.ctry_key = src.ctry_key and a.lang_key = 'e'
+    on a.ctry_key = src.ctry_key and a.lang_key = 'E'
     left outer join itg_comp_text as b
     on b.co_cd = src.co_cd
     )
