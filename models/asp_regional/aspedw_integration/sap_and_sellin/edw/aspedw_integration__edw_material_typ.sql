@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "edw_material_typ",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["matl_type","langu"],
-        merge_exclude_columns= ["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns= ["crt_dttm"]
     )
 }}
 

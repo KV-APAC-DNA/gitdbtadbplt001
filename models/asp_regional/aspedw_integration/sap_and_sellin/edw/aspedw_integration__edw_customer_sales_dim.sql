@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "edw_customer_sales_dim",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy= "merge",
         unique_key=  ['cust_num','sls_org','dstr_chnl', 'div'],
-        merge_exclude_columns=["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns=["crt_dttm"]
     )
 }}
 

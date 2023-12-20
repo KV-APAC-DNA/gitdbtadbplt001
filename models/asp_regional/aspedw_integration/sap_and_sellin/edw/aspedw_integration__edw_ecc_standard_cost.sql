@@ -1,12 +1,10 @@
 {{
     config(
-        alias="edw_ecc_standard_cost",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy = "merge",
         unique_key=["mandt","matnr","bwkey","bwtar"],
-        merge_exclude_columns = ["crt_dttm"],
-        tags=["daily"]
+        merge_exclude_columns = ["crt_dttm"]
     )
 }}
 

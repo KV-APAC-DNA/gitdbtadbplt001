@@ -1,43 +1,56 @@
 models:
   - name: aspedw_integration__edw_calendar_dim
     config:
-      alias: edw_calendar_dim  
+      alias: edw_calendar_dim
+      tags: ["daily","sap_ecc_master"]  
   - name: aspedw_integration__edw_code_descriptions
     config:
       alias: edw_code_descriptions
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_company_dim
     config:
       alias: edw_company_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_crncy_exch
     config:
       alias: edw_crncy_exch
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_customer_base_dim
     config:
       alias: edw_customer_base_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_customer_sales_dim
     config:
       alias: edw_customer_sales_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_dstrbtn_chnl
     config:
       alias: edw_dstrbtn_chnl
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_ecc_marm
     config:
       alias: edw_ecc_marm
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_ecc_standard_cost
     config:
       alias: edw_ecc_standard_cost
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_material_dim
     config:
       alias: edw_material_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_material_typ
     config:
       alias: edw_material_typ
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_prod_hier
     config:
       alias: edw_prod_hier
   - name: aspedw_integration__edw_profit_center_dim
     config:
       alias: edw_profit_center_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_sales_org_dim
     config:
       alias: edw_sales_org_dim
+      tags: ["daily","sap_ecc_master"]
