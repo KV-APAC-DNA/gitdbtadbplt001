@@ -5,7 +5,7 @@
         materialized="incremental",
         incremental_strategy= "merge",
         unique_key=  ['cust_num','sls_org','dstr_chnl', 'div'],
-        merge_exclude_columns=["CRT_DTTM"],
+        merge_exclude_columns=["crt_dttm"],
         tags= ["daily"]
     )
 }}
@@ -45,7 +45,7 @@ itg_cust_sls_attr as (
         cust_set_5
     from {{ ref('aspitg_integration__itg_cust_sls_attr') }}
 ),
-final as ( 
+transformed as ( 
     select 
         wks_edw_customer_sales_dim.clnt,
         wks_edw_customer_sales_dim.cust_no as cust_num,
@@ -145,4 +145,117 @@ final as (
     and itg_cust_sls_attr.cust_sales=wks_edw_customer_sales_dim.cust_no
 )
 
-select * from final
+{% if is_incremental() %}
+,
+filtered_csd as (
+    select * from {{ this }} as csd where concat(cust_num,'_',sls_org,'_',dstr_chnl,'_',div) not in (select concat(cust_num,'_',sls_org,'_',dstr_chnl,'_',div) from transformed)
+),
+transformed_csd as (
+    select 
+        filtered_csd.clnt,
+        filtered_csd.cust_num,
+        filtered_csd.sls_org,
+        filtered_csd.dstr_chnl,
+        filtered_csd.div,
+        filtered_csd.obj_crt_prsn,
+        filtered_csd.rec_crt_dt,
+        filtered_csd.auth_grp,
+        filtered_csd.cust_del_flag,
+        filtered_csd.cust_stat_grp,
+        filtered_csd.cust_ord_blk,
+        filtered_csd.prc_pcdr_asgn,
+        filtered_csd.cust_grp,
+        filtered_csd.sls_dstrc,
+        filtered_csd.prc_grp,
+        filtered_csd.prc_list_typ,
+        filtered_csd.ord_prob_itm,
+        filtered_csd.incoterm1,
+        filtered_csd.incoterm2,
+        filtered_csd.cust_delv_blk,
+        filtered_csd.cmplt_delv_sls_ord,
+        filtered_csd.max_no_prtl_delv_allw_itm,
+        filtered_csd.prtl_delv_itm_lvl,
+        filtered_csd.ord_comb_in,
+        filtered_csd.btch_splt_allw,
+        filtered_csd.delv_prir,
+        filtered_csd.vend_acct_num,
+        filtered_csd.shipping_cond,
+        filtered_csd.bill_blk_cust,
+        filtered_csd.man_invc_maint,
+        filtered_csd.invc_dt,
+        filtered_csd.invc_list_sched,
+        filtered_csd.cost_est_in,
+        filtered_csd.val_lmt_cost_est,
+        filtered_csd.crncy_key,
+        filtered_csd.cust_clas,
+        filtered_csd.acct_asgnmt_grp,
+        filtered_csd.delv_plnt,
+        filtered_csd.sls_grp,
+        filtered_csd.sls_grp_desc,
+        filtered_csd.sls_ofc,
+        filtered_csd.sls_ofc_desc,
+        filtered_csd.itm_props,
+        filtered_csd.cust_grp1,
+        filtered_csd.cust_grp2,
+        filtered_csd.cust_grp3,
+        filtered_csd.cust_grp4,
+        filtered_csd.cust_grp5,
+        filtered_csd.cust_rebt_in,
+        filtered_csd.rebt_indx_cust_strt_prd,
+        filtered_csd.exch_rt_typ,
+        filtered_csd.prc_dtrmn_id,
+        filtered_csd.prod_attr_id1,
+        filtered_csd.prod_attr_id2,
+        filtered_csd.prod_attr_id3,
+        filtered_csd.prod_attr_id4,
+        filtered_csd.prod_attr_id5,
+        filtered_csd.prod_attr_id6,
+        filtered_csd.prod_attr_id7,
+        filtered_csd.prod_attr_id8,
+        filtered_csd.prod_attr_id9,
+        filtered_csd.prod_attr_id10,
+        filtered_csd.pymt_key_term,
+        filtered_csd.persnl_num,
+        current_timestamp()  as crt_dttm ,
+        current_timestamp()  as updt_dttm,
+        itg_cust_sls_attr.cur_sls_emp, 
+        itg_cust_sls_attr.lcl_cust_grp_1, 
+        itg_cust_sls_attr.lcl_cust_grp_2, 
+        itg_cust_sls_attr.lcl_cust_grp_3, 
+        itg_cust_sls_attr.lcl_cust_grp_4, 
+        itg_cust_sls_attr.lcl_cust_grp_5, 
+        itg_cust_sls_attr.lcl_cust_grp_6, 
+        itg_cust_sls_attr.lcl_cust_grp_7, 
+        itg_cust_sls_attr.lcl_cust_grp_8, 
+        itg_cust_sls_attr.prc_proc, 
+        itg_cust_sls_attr.par_del, 
+        itg_cust_sls_attr.max_num_pa, 
+        itg_cust_sls_attr.prnt_cust_key, 
+        itg_cust_sls_attr.bnr_key, 
+        itg_cust_sls_attr.bnr_frmt_key, 
+        itg_cust_sls_attr.go_to_mdl_key, 
+        itg_cust_sls_attr.chnl_key, 
+        itg_cust_sls_attr.sub_chnl_key, 
+        itg_cust_sls_attr.segmt_key, 
+        itg_cust_sls_attr.cust_set_1, 
+        itg_cust_sls_attr.cust_set_2, 
+        itg_cust_sls_attr.cust_set_3, 
+        itg_cust_sls_attr.cust_set_4, 
+        itg_cust_sls_attr.cust_set_5
+    from filtered_csd
+    left join itg_cust_sls_attr on 
+    filtered_csd.div=itg_cust_sls_attr.division
+    and itg_cust_sls_attr.distr_chan=filtered_csd.dstr_chnl
+    and itg_cust_sls_attr.salesorg=filtered_csd.sls_org
+    and itg_cust_sls_attr.cust_sales=filtered_csd.cust_num
+)
+{% endif %}
+
+--Final select
+select * from transformed
+
+--Union logic added here to compensate update on records which exist in edw_customer_sales_dim and not in wks_edw_customer_sales_dim
+{% if is_incremental() %}
+union 
+select * from transformed_csd
+{% endif %}
