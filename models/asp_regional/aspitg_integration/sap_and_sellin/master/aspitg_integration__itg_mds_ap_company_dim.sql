@@ -19,8 +19,7 @@ final as
     ctry_key,
     ctry_group,
     cluster,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as crt_dttm
   from source
 )
 select * from final
