@@ -1,9 +1,11 @@
 {{
   config(
     alias="itg_mds_ap_company_dim",
-    tags= [""]
+    tags= ["daily"]
   )
 }}
+
+
 with
 source as (
 
