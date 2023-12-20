@@ -3,7 +3,7 @@
     audit_helper.compare_all_columns(
         a_relation=api.Relation.create(
             database='dev_dna_core',
-            schema='asing012_workspace',
+            schema='snapaspedw_integration',
             identifier='edw_crncy_exch'
         ),
         b_relation=ref('aspedw_integration__edw_crncy_exch'),
