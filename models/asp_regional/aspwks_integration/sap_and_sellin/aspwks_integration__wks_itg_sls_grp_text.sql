@@ -20,8 +20,8 @@ final as(
         spras,
         vkgrp,
         bezei,
-        CRT_DTTM,
-        UPDT_DTTM
+        crt_dttm,
+        updt_dttm
      from sources
 )
 --final select
