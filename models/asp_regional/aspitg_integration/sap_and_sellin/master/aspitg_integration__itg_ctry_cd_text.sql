@@ -1,10 +1,10 @@
 {{
   config(
-    alias="itg_ctry_cd_text",
+    sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
     materialized="incremental",
     incremental_strategy="merge",
     unique_key=["ctry_key", "lang_key"],
-    tags= ["daily"]
+    merge_exclude_columns=["crt_dttm"]
   )
 }}
 with
@@ -16,12 +16,12 @@ source as
 final as
 (
   select
-    country as ctry_key,
-    langu as lang_key,
-    txtsh as shrt_desc,
-    txtmd as med_desc,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+        country as ctry_key,
+        langu as lang_key,
+        txtsh as shrt_desc,
+        txtmd as med_desc,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
 )
 select * from final

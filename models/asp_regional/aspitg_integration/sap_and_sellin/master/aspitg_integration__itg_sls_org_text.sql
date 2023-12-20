@@ -1,12 +1,10 @@
 {{
     config(
-        alias="itg_sls_org_text",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy = "merge",
         unique_key=["clnt","lang_key","sls_org"],
-        merge_exclude_columns = ["crt_dttm"],
-        tags=["daily"]
+        merge_exclude_columns = ["crt_dttm"]
     )
 }}
 
@@ -19,12 +17,12 @@ source as (
 
 final as (
     select
-    mandt as clnt,
-    spras as lang_key,
-    vkorg as sls_org,
-    vtext as sls_org_nm,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+        mandt as clnt,
+        spras as lang_key,
+        vkorg as sls_org,
+        vtext as sls_org_nm,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
   FROM source
 )
 

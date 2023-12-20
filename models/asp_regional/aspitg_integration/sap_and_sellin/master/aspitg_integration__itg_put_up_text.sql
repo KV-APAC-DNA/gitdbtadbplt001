@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "itg_put_up_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["clnt","lang_key","put_up"],
-        merge_exclude_columns= ["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns= ["crt_dttm"]
     )
 }}
 

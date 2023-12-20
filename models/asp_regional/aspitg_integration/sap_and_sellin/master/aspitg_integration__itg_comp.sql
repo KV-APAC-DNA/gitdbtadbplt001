@@ -1,10 +1,10 @@
 {{
   config(
-    alias="itg_comp",
+    sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
     materialized="incremental",
     incremental_strategy="merge",
     unique_key=["co_cd"],
-    tags= ["daily"]
+    merge_exclude_columns=["crt_dttm"]
   )
 }}
 with
@@ -16,16 +16,16 @@ source as
 final as
 (
   select
-    mandt as clnt,
-    bukrs as co_cd,
-    land1 as ctry_key,
-    waers as crncy_key,
-    ktopl as chrt_acct,
-    kkber as crdt_cntrl_area,
-    periv as fisc_yr_vrnt,
-    rcomp as company,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
-  from source
+        mandt as clnt,
+        bukrs as co_cd,
+        land1 as ctry_key,
+        waers as crncy_key,
+        ktopl as chrt_acct,
+        kkber as crdt_cntrl_area,
+        periv as fisc_yr_vrnt,
+        rcomp as company,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
+    from source
 )
 select * from final

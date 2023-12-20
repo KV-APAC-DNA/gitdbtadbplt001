@@ -1,12 +1,10 @@
 {{
     config(
-        alias="itg_ecc_marm",
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy = "merge",
         unique_key=["matl_no","alt_unt"],
-        merge_exclude_columns = ["crt_dttm"],
-        tags=["daily"]
+        merge_exclude_columns = ["crt_dttm"]
     )
 }}
 

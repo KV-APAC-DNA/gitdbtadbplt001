@@ -4,111 +4,145 @@ models:
   - name: aspitg_integration__itg_base_prod_text
     config:
       alias: itg_base_prod_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_brnd_text
     config:
       alias: itg_brnd_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_code_descriptions
     config:
       alias: itg_code_descriptions
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_comp
     config:
       alias: itg_comp
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_comp_text
     config:
       alias: itg_comp_text
   - name: aspitg_integration__itg_crncy_exch
     config:
       alias: itg_crncy_exch
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_ctry_cd_text
     config:
       alias: itg_ctry_cd_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_cust_base
     config:
       alias: itg_cust_base
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_cust_sls
     config:
       alias: itg_cust_sls
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_cust_sls_attr
     config:
       alias: itg_cust_sls_attr
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_cust_text
     config:
       alias: itg_cust_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_dstrbtn_chnl
     config:
       alias: itg_dstrbtn_chnl
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_ecc_marm
     config:
       alias: itg_ecc_marm
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_ecc_standard_cost
     config:
       alias: itg_ecc_standard_cost
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_edw_material_dim_updt
     config:
       alias: itg_edw_material_dim_updt
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_material_base
     config:
       alias: itg_material_base
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_material_dim
     config:
       alias: itg_material_dim
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_material_typ
     config:
       alias: itg_material_typ
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_matl_base
     config:
       alias: itg_matl_base
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_matl_text
     config:
       alias: itg_matl_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_mega_brnd_text
     config:
       alias: itg_mega_brnd_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_needstates_text
     config:
       alias: itg_needstates_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_prft_ctr
     config:
       alias: itg_prft_ctr
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_prft_ctr_text
     config:
       alias: itg_prft_ctr_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_prod_hier
     config:
       alias: itg_prod_hier
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_put_up_text
     config:
       alias: itg_put_up_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_sls_grp_text
     config:
       alias: itg_sls_grp_text
   - name: aspitg_integration__itg_sls_off_text
     config:
       alias: itg_sls_off_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_sls_org
     config:
       alias: itg_sls_org
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_sls_org_text
     config:
       alias: itg_sls_org_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_strongholds_text
     config:
       alias: itg_strongholds_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_time
     config:
       alias: itg_time
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_varnt_text
     config:
       alias: itg_varnt_text
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__itg_mds_ap_company_dim
     config:
       alias: itg_mds_ap_company_dim
+      tags: ["daily","sap_ecc_master"]
   - name : aspitg_integration__itg_crncy_conv
     config:
       alias: itg_crncy_conv
+      tags: ["daily","sap_ecc_master"]
   - name: a_exception_aspitg_integration__vw_stg_sdl_sap_mara_extract
     config:
       alias: vw_stg_sdl_sap_mara_extract
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt",  "matnr",  "ersda",  "ernam",  "laeda",  "aenam",  "vpsta",  "pstat",  "lvorm",  "mtart",  "mbrsh",  "matkl",  "bismt",  "meins",  "bstme",  "zeinr",  "zeiar",  "zeivr",  "zeifo",  "aeszn",  "blatt",  "blanz",  "ferth",  "formt",  "groes",  "wrkst",  "normt",  "labor",  "ekwsl",  "brgew",  "ntgew",  "gewei",  "volum",  "voleh",  "behvo",  "raube",  "tempb",  "disst",  "tragr",  "stoff",  "spart",  "kunnr",  "eannr",  "wesch",  "bwvor",  "bwscl",  "saiso",  "etiar",  "etifo",  "entar",  "ean11",  "numtp",  "laeng",  "breit",  "hoehe",  "meabm",  "prdha",  "aeklk",  "cadkz",  "qmpur",  "ergew",  "ergei",  "ervol",  "ervoe",  "gewto",  "volto",  "vabme",  "kzrev",  "kzkfg",  "xchpf",  "vhart",  "fuelg",  "stfak",  "magrv",  "begru",  "datab",  "liqdt",  "saisj",  "plgtp",  "mlgut",  "extwg",  "satnr",  "attyp",  "kzkup",  "kznfm",  "pmata",  "mstae",  "mstav",  "mstde",  "mstdv",  "taklv",  "rbnrm",  "mhdrz",  "mhdhb",  "mhdlp",  "inhme",  "inhal",  "vpreh",  "etiag",  "inhbr",  "cmeth",  "cuobf",  "kzumw",  "kosch",  "sprof",  "nrfhg",  "mfrpn",  "mfrnr",  "bmatn",  "mprof",  "kzwsm",  "saity",  "profl",  "ihivi",  "iloos",  "serlv",  "kzgvh",  "xgchp",  "kzeff",  "compl",  "iprkz",  "rdmhd",  "przus",  "mtpos_mara",  "bflme",  "zz_mvgr4",  "zz_mvgr5",  "zz_mvgr1",  "zz_mvgr2",  "zz_mvgr3",  "zz_technology",  "zz_color",  "zz_stack_factor",  "zz_mfgsource",  "zz_fornum",  "zz_fran",  "zz_brand",  "zz_sbrand",  "zz_variant",  "zz_svariant",  "zz_flav",  "zz_ingr",  "zz_appl",  "zz_leng",  "zz_shape",  "zz_spf",  "zz_cover",  "zz_form",  "zz_size",  "zz_char",  "zz_pack",  "zz_attrib13",  "zz_attrib14",  "zz_sku",  "zz_relabel",  "zz_prodkey",  "zz_proddesc1",  "zz_proddesc2",  "zz_rootcode",  "zz_rootdesc1",  "zz_rootdesc2",  "ztranfran_zfrandesc",  "ztranfran_flag",  "ztranfran_dflag",  "ztranfran_crdat",  "ztranfran_crname",  "ztranfran_aedtm",  "ztranfran_uname",  "ztranbrand_zbrandesc",  "ztranbrand_flag",  "ztranbrand_dflag",  "ztranbrand_crdat",  "ztranbrand_crname",  "ztranbrand_aedtm",  "ztranbrand_uname",  "ztransbrand_zsbrandesc",  "ztransbrand_flag",  "ztransbrand_dflag",  "ztransbrand_crdat",  "ztransbrand_crname",  "ztransbrand_aedtm",  "ztransbrand_uname",  "ztranvariant_zvardesc",  "ztranvariant_flag",  "ztranvariant_dflag",  "ztranvariant_crdat",  "ztranvariant_crname",  "ztranvariant_aedtm",  "ztranvariant_uname",  "ztransvariant_zsvardesc",  "ztransvariant_flag",  "ztransvariant_dflag",  "ztransvariant_crdat",  "ztransvariant_crname",  "ztransvariant_aedtm",  "ztransvariant_uname",  "ztranflav_zflavdesc",  "ztranflav_flag",  "ztranflav_dflag",  "ztranflav_crdat",  "ztranflav_crname",  "ztranflav_aedtm",  "ztranflav_uname",  "ztraningr_zingrdesc",  "ztraningr_flag",  "ztraningr_dflag",  "ztraningr_crdat",  "ztraningr_crname",  "ztraningr_aedtm",  "ztraningr_uname",  "ztranappl_zappldesc",  "ztranappl_flag",  "ztranappl_dflag",  "ztranappl_crdat",  "ztranappl_crname",  "ztranappl_aedtm",  "ztranappl_uname",  "ztranleng_zlengdesc",  "ztranleng_flag",  "ztranleng_dflag",  "ztranleng_crdat",  "ztranleng_crname",  "ztranleng_aedtm",  "ztranleng_uname",  "ztranshape_zzshapedesc",  "ztranshape_flag",  "ztranshape_dflag",  "ztranshape_crdat",  "ztranshape_crname",  "ztranshape_aedtm",  "ztranshape_uname",  "ztranspf_zzspfdesc",  "ztranspf_flag",  "ztranspf_dflag",  "ztranspf_crdat",  "ztranspf_crname",  "ztranspf_aedtm",  "ztranspf_uname",  "ztrancover_zcoverdesc",  "ztrancover_flag",  "ztrancover_dflag",  "ztrancover_crdat",  "ztrancover_crname",  "ztrancover_aedtm",  "ztrancover_uname",  "ztranform_zzformdesc",  "ztranform_flag",  "ztranform_dflag",  "ztranform_crdat",  "ztranform_crname",  "ztranform_aedtm",  "ztranform_uname",  "ztransize_zsizedesc",  "ztransize_flag",  "ztransize_dflag",  "ztransize_crdat",  "ztransize_crname",  "ztransize_aedtm",  "ztransize_uname",  "ztranchar_zchardesc",  "ztranchar_flag",  "ztranchar_dflag",  "ztranchar_crdat",  "ztranchar_crname",  "ztranchar_aedtm",  "ztranchar_uname",  "ztranpack_zpackdesc",  "ztranpack_flag",  "ztranpack_dflag",  "ztranpack_crdat",  "ztranpack_crname",  "ztranpack_aedtm",  "ztranpack_uname",  "ztranattrib13_zattrib13desc",  "ztranattrib13_flag",  "ztranattrib13_dflag",  "ztranattrib13_crdat",  "ztranattrib13_crname",  "ztranattrib13_aedtm",  "ztranattrib13_uname",  "ztranattrib14_zattrib14desc",  "ztranattrib14_flag",  "ztranattrib14_dflag",  "ztranattrib14_crdat",  "ztranattrib14_crname",  "ztranattrib14_aedtm",  "ztranattrib14_uname",  "ztransku_zskudesc",  "ztransku_flag",  "ztransku_dflag",  "ztransku_crdat",  "ztransku_crname",  "ztransku_aedtm",  "ztransku_uname",  "ztranrelabel_zrelabeldesc",  "ztranrelabel_flag",  "ztranrelabel_dflag",  "ztranrelabel_crdat",  "ztranrelabel_crname",  "ztranrelabel_aedtm"]
@@ -119,6 +153,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_code_descriptions
     config:
       alias: vw_stg_sdl_code_descriptions
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["source_type",  "code_type",  "code"]
@@ -129,6 +164,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_dstrbtn_chnl
     config:
       alias: vw_stg_sdl_dstrbtn_chnl
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["distr_chan","langu"]
@@ -139,6 +175,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_material_dim
     config:
       alias: vw_stg_sdl_material_dim
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["matl_num"]
@@ -149,6 +186,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_material_typ
     config:
       alias: vw_stg_sdl_material_typ
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["matl_type","langu"]
@@ -159,6 +197,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_prod_hier
     config:
       alias: vw_stg_sdl_prod_hier
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["prod_hier","langu"]
@@ -169,6 +208,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_bw_needstates_text
     config:
       alias: vw_stg_sdl_sap_bw_needstates_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["zneed","langu"]
@@ -179,6 +219,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_bw_time
     config:
       alias: vw_stg_sdl_sap_bw_time
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["calday","fiscvarnt"]
@@ -189,6 +230,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_base_product_text
     config:
       alias: vw_stg_sdl_sap_ecc_base_product_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr1"]
@@ -199,6 +241,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_brand_text
     config:
       alias: vw_stg_sdl_sap_ecc_brand_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr5"]
@@ -209,6 +252,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_material_text
     config:
       alias: vw_stg_sdl_sap_ecc_material_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["matnr","spras"]
@@ -219,6 +263,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_mega_brand_text
     config:
       alias: vw_stg_sdl_sap_ecc_mega_brand_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr4"]
@@ -229,6 +274,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_put_up_text
     config:
       alias: vw_stg_sdl_sap_ecc_put_up_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr3"]
@@ -239,6 +285,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_variant_text
     config:
       alias: vw_stg_sdl_sap_ecc_variant_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr2"]
@@ -249,9 +296,11 @@ models:
   - name: aspitg_intgeration__vw_stg_sdl_sap_ecc_material_base
     config:
       alias: vw_stg_sdl_sap_ecc_material_base
+      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__vw_stg_sdl_ecc_standard_cost
     config:
       alias: vw_stg_sdl_ecc_standard_cost
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","matnr","bwkey","bwtar"]
@@ -262,6 +311,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_marm
     config:
       alias: vw_stg_sdl_sap_ecc_marm
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["matnr","meinh"]
@@ -272,6 +322,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center
     config:
       alias: vw_stg_sdl_sap_ecc_profit_center
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["kokrs","prctr","dateto","datefrom"]
@@ -282,6 +333,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center_text
     config:
       alias: vw_stg_sdl_sap_ecc_profit_center_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["langu","kokrs","prctr","dateto","datefrom"]
@@ -292,6 +344,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org
     config:
       alias: vw_stg_sdl_sap_ecc_sales_org
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","vkorg"]
@@ -302,6 +355,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org_text
     config:
       alias: vw_stg_sdl_sap_ecc_sales_org_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["spras","mandt","vkorg"]
@@ -312,6 +366,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_cust_sls_attr
     config:
       alias: vw_stg_sdl_cust_sls_attr
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["division","distr_chan","salesorg","cust_sales"]
@@ -322,6 +377,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_bw_strongholds_text
     config:
       alias: vw_stg_sdl_sap_bw_strongholds_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["zstrong","langu"]
@@ -332,6 +388,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_customer_sales
     config:
       alias: vw_stg_sdl_sap_ecc_customer_sales
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["kunnr","vkorg","vtweg","spart"]
@@ -342,6 +399,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_group_text
     config:
       alias: vw_stg_sdl_sap_ecc_sales_group_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","spras","vkgrp"]
@@ -352,6 +410,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_office_text
     config:
       alias: vw_stg_sdl_sap_ecc_sales_office_text
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","spras","vkbur"]
@@ -362,6 +421,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_country_code_text
     config:
       alias: vw_stg_sdl_sap_bw_country_code_text
+      tags: ["daily","sap_ecc_master"]
     tests:
        - test_duplicate:
              group_by_columns: ["country","langu"]
@@ -372,6 +432,7 @@ models:
   - name : aspitg_integration__vw_stg_vw_stg_sdl_sap_ecc_company
     config: 
       alias: vw_stg_vw_stg_sdl_sap_ecc_company
+      tags: ["daily","sap_ecc_master"]
     tests:
        - test_duplicate:
              group_by_columns: ["bukrs"]
@@ -382,6 +443,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_company_code_text
     config:
       alias: vw_stg_vw_stg_sdl_sap_ecc_company
+      tags: ["daily","sap_ecc_master"]
     tests:
       - test_duplicate:
             group_by_columns: ["bukrs"]
@@ -392,6 +454,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_customer_base
     config:
       alias: vw_stg_sdl_sap_ecc_customer_base
+      tags: ["daily","sap_ecc_master"]
     tests:
      - test_duplicate:
            group_by_columns: ["kunnr"]
@@ -402,6 +465,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_customer_text
     config:
       alias: vw_stg_sdl_sap_ecc_customer_text
+      tags: ["daily","sap_ecc_master"]
     tests:
      - test_duplicate:
            group_by_columns: ["kunnr"]
@@ -412,6 +476,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_tcurr
     config:
       alias: vw_stg_sdl_sap_ecc_tcurr
+      tags: ["daily","sap_ecc_master"]
     tests:
      - test_duplicate:
            group_by_columns: ["mandt","kurst","fcurr","tcurr","gdatu"]

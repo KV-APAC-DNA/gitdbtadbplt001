@@ -1,10 +1,10 @@
 {{
   config(
-    alias="itg_crncy_exch",
-    materialized="incremental",
-    incremental_strategy="merge",
-    unique_key=["clnt", "ex_rt_typ", "from_crncy", "to_crncy", "vld_from"],
-    tags= ["daily"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+        materialized="incremental",
+        incremental_strategy="merge",
+        unique_key=["clnt", "ex_rt_typ", "from_crncy", "to_crncy", "vld_from"],
+        merge_exclude_columns=["crt_dttm"]
   )
 }}
 with

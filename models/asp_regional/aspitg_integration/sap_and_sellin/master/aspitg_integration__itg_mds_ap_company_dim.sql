@@ -1,7 +1,6 @@
 {{
   config(
-    alias="itg_mds_ap_company_dim",
-    tags= ["daily"]
+    sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
   )
 }}
 

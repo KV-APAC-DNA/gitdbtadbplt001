@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "itg_matl_base",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["matl_num"],
-        merge_exclude_columns= ["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns= ["crt_dttm"]
     )
 }}
 

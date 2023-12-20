@@ -1,9 +1,6 @@
 {{
     config(
-        alias="itg_material_base",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table",
-        tags= ["daily"]
     )
 }}
 

@@ -1,10 +1,3 @@
-{{
-    config(
-        alias= "itg_edw_material_dim_updt",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
 
 --Import CTE
 with source as (

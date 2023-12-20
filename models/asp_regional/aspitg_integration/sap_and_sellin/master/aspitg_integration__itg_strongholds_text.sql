@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "itg_strongholds_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy= "merge",
         unique_key=  ['strongholds'],
-        merge_exclude_columns=["CRT_DTTM"],
-        tags= ["daily"]
+        merge_exclude_columns=["crt_dttm"]
     )
 }}
 

@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "itg_sls_grp_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy= "merge",
         unique_key=  ['clnt','lang_key','sls_grp'],
-        merge_exclude_columns=["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns=["crt_dttm"]
     )
 }}
 

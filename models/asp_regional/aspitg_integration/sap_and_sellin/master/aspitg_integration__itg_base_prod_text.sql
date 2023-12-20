@@ -1,12 +1,10 @@
 {{
     config(
-        alias= "itg_base_prod_text",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["clnt","lang_key","base_prod"],
-        merge_exclude_columns= ["crt_dttm"],
-        tags= ["daily"]
+        merge_exclude_columns= ["crt_dttm"]
     )
 }}
 
@@ -26,7 +24,7 @@ final as (
         bezei as base_prod_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
-  from source
+    from source
 )
 
 --Final select
