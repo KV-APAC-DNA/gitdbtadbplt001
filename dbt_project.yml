@@ -45,14 +45,19 @@ models:
       config:
         +enabled: true
       aspedw_access:
-        materialized: view
-        schema: ASPEDW_ACCESS
+        +materialized: view
+        +schema: ASPEDW_ACCESS
       aspitg_integration:
-        materialized: table
-        schema: ASPITG_INTEGRATION
+        +materialized: table
+        +schema: ASPITG_INTEGRATION
+        +transient: false
+        sap_and_sellin:
+          staging:
+            +materialized: view
       aspedw_integration:
-        materialized: table
-        schema: ASPEDW_INTEGRATION
+        +materialized: table
+        +transient: false
+        +schema: ASPEDW_INTEGRATION
       aspwks_integration:
-        materialized: table
-        schema: ASPWKS_INTEGRATION
+        +materialized: table
+        +schema: ASPWKS_INTEGRATION
