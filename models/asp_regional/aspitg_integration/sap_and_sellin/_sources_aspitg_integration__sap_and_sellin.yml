@@ -1622,7 +1622,6 @@ sources:
       - name: sdl_mds_ap_company_dim
 
   - name: aspitg_integration
-    database: "{{ env_var('DBT_ENV_DB') }}"
     schema: aspitg_integration
     quoting:
       database: false
