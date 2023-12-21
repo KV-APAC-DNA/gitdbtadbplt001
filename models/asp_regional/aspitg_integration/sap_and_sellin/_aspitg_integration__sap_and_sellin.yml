@@ -241,7 +241,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_brand_text
     config:
       alias: vw_stg_sdl_sap_ecc_brand_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr5"]
@@ -252,7 +252,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_material_text
     config:
       alias: vw_stg_sdl_sap_ecc_material_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
             group_by_columns: ["matnr","spras"]
@@ -263,7 +263,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_mega_brand_text
     config:
       alias: vw_stg_sdl_sap_ecc_mega_brand_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr4"]
@@ -274,7 +274,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_put_up_text
     config:
       alias: vw_stg_sdl_sap_ecc_put_up_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr3"]
@@ -285,7 +285,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_variant_text
     config:
       alias: vw_stg_sdl_sap_ecc_variant_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
             group_by_columns: ["mandt","spras","mvgr2"]
@@ -296,7 +296,7 @@ models:
   - name: aspitg_intgeration__vw_stg_sdl_sap_ecc_material_base
     config:
       alias: vw_stg_sdl_sap_ecc_material_base
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
   - name: aspitg_integration__vw_stg_sdl_ecc_standard_cost
     config:
       alias: vw_stg_sdl_ecc_standard_cost
@@ -311,7 +311,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_marm
     config:
       alias: vw_stg_sdl_sap_ecc_marm
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["matnr","meinh"]
@@ -322,7 +322,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center
     config:
       alias: vw_stg_sdl_sap_ecc_profit_center
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["kokrs","prctr","dateto","datefrom"]
@@ -333,7 +333,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_profit_center_text
     config:
       alias: vw_stg_sdl_sap_ecc_profit_center_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["langu","kokrs","prctr","dateto","datefrom"]
@@ -344,7 +344,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org
     config:
       alias: vw_stg_sdl_sap_ecc_sales_org
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","vkorg"]
@@ -355,7 +355,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_ecc_sales_org_text
     config:
       alias: vw_stg_sdl_sap_ecc_sales_org_text
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["spras","mandt","vkorg"]
@@ -366,7 +366,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_cust_sls_attr
     config:
       alias: vw_stg_sdl_cust_sls_attr
-      tags: ["daily","sap_ecc_master",sap_ecc"]
+      tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
       - test_duplicate:
           group_by_columns: ["division","distr_chan","salesorg","cust_sales"]
