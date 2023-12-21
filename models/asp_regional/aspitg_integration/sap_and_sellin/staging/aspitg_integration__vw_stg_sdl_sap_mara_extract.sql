@@ -5,7 +5,7 @@ For now we are hard coding the database and schema name.
 */
 --Import CTE
 with source as (
-    select * from dev_dna_core.aspwks_integration.wks_sap_mara_extract
+    select * from aspwks_integration.wks_sap_mara_extract
 ),
 
 --Logical CTE
