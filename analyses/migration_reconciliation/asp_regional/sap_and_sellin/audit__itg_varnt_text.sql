@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 
 {{compare_snapshot_static(
         primary_key=["clnt","lang_key","varnt"],

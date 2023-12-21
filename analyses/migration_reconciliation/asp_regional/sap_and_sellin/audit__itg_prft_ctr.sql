@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 {% set c_pk= "md5(concat(cntl_area,'_',prft_ctr,'_',vld_to_dt,'_',vld_from_dt))"%}
 {{
     audit_helper.compare_all_columns(

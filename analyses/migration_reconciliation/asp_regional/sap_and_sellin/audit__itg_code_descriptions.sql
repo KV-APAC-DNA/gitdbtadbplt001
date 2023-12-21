@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 {{compare_snapshot_static(
         primary_key=["source_type","code_type","code"],
         src_database='DEV_DNA_CORE',

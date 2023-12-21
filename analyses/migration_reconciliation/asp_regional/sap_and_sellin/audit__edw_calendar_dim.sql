@@ -1,4 +1,8 @@
-
+{{
+    config(
+        tags=["audits"]
+    )
+}}
 {{compare_snapshot_static(
         primary_key=["cal_day","fisc_yr_vrnt"],
         src_database='DEV_DNA_CORE',

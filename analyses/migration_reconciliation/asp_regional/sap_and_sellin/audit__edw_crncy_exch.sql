@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 {% set c_pk= "md5(concat(clnt,'_', ex_rt_typ, '_',from_crncy,'_', to_crncy,'_', vld_from))"%}
 {{
     audit_helper.compare_all_columns(

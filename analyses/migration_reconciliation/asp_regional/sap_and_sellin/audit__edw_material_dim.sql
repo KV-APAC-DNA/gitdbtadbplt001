@@ -1,4 +1,8 @@
-
+{{
+    config(
+        tags=["audits"]
+    )
+}}
 
 
 {{compare_snapshot_static(

@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 {% set c_pk= "md5(concat(cal_day,'_',fisc_yr_vrnt))"%}
 {{
     audit_helper.compare_all_columns(

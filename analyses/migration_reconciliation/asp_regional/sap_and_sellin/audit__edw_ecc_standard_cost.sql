@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 {% set c_pk= "md5(concat(mandt,'_',matnr,'_',bwkey,'_',bwtar))"%}
 {{
     audit_helper.compare_all_columns(

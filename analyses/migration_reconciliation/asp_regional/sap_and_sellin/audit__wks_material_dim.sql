@@ -1,3 +1,9 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
 
 
 {% set c_pk= "md5(concat(matl_num))"%}

@@ -1,3 +1,10 @@
+{{
+    config(
+        tags=["audits"]
+    )
+}}
+
+
 {% set c_pk= "md5(concat(CUST_NUM,'_',SLS_ORG,'_',DSTR_CHNL,'_',DIV))"%}
 {{
     audit_helper.compare_all_columns(
