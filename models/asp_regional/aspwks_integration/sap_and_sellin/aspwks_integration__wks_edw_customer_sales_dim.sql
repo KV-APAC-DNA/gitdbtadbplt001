@@ -1,30 +1,44 @@
 {{
     config(
-        alias= "wks_edw_customer_sales_dim",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="table",
-        tags=["daily"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 
 --import CTE
-with sources as(
-     select A.*,
-                itg_sls_grp_text.DE as sls_grp_desc,
-                itg_sls_off_text.DE as sls_ofc_desc
-            from {{ ref('aspitg_integration__itg_cust_sls') }} A
-                left outer join {{ ref('aspitg_integration__itg_sls_grp_text') }} itg_sls_grp_text on A.sls_grp = itg_sls_grp_text.sls_grp
-                and itg_sls_grp_text.lang_key = 'E'
-                left outer join {{ ref('aspitg_integration__itg_sls_off_text') }} itg_sls_off_text on A.sls_ofc = itg_sls_off_text.sls_off
-                and itg_sls_off_text.lang_key = 'E'
+
+with itg_cust_sls as (
+    select * from {{ ref('aspitg_integration__itg_cust_sls') }}
 ),
 
-sources2 as(
-   SELECT clnt,
-        src.cust_no,
-        src.sls_org,
-        src.dstr_chnl,
-        src.div,
+itg_sls_grp_text as (
+    select * from {{ ref('aspitg_integration__itg_sls_grp_text') }}
+),
+
+itg_sls_off_text as (
+    select * from {{ ref('aspitg_integration__itg_sls_off_text') }}
+),
+
+--Logical CTE
+transformed as(
+     select 
+        itg_cust_sls.*,
+        itg_sls_grp_text.DE as sls_grp_desc,
+        itg_sls_off_text.DE as sls_ofc_desc
+    from itg_cust_sls
+    left outer join {{ ref('aspitg_integration__itg_sls_grp_text') }} itg_sls_grp_text on itg_cust_sls.sls_grp = itg_sls_grp_text.sls_grp
+        and itg_sls_grp_text.lang_key = 'E'
+    left outer join {{ ref('aspitg_integration__itg_sls_off_text') }} itg_sls_off_text on itg_cust_sls.sls_ofc = itg_sls_off_text.sls_off
+        and itg_sls_off_text.lang_key = 'E'
+),
+
+--Final CTE
+final as(
+   select 
+        clnt,
+        cust_no,
+        sls_org,
+        dstr_chnl,
+        div,
         obj_crt_prsn,
         rec_crt_dt,
         auth_grp,
@@ -84,15 +98,9 @@ sources2 as(
         prod_attr_id10,
         pymt_key_term,
         persnl_num,
-        CRT_DTTM,
-        UPDT_DTTM
-    FROM (
-            sources
-        )src
-),
---logical CTE
-final as(
-    select * from sources2
+        updt_dttm
+    from transformed
 )
+
 --final select
 select * from final

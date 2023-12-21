@@ -1,12 +1,3 @@
-{{
-    config(
-        alias= "wks_material_dim",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
-
-
 with itg_material_base as (
     select * from {{ ref('aspitg_integration__itg_material_base') }}
 ),

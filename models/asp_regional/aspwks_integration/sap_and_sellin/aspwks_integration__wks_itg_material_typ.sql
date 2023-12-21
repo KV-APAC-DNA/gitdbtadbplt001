@@ -1,11 +1,3 @@
-{{
-    config(
-        alias= "wks_itg_material_typ",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ ref('aspitg_integration__vw_stg_sdl_material_typ') }}

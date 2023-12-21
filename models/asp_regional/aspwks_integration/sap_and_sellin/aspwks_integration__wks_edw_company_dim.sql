@@ -1,12 +1,6 @@
 {{
     config(
-        alias="wks_edw_company_dim",
-        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="incremental",
-        incremental_strategy="merge",
-        unique_key=["ctry_key","co_cd"],
-        merge_exclude_columns=["crt_dttm"],
-        tags=["daily"]
+        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 with

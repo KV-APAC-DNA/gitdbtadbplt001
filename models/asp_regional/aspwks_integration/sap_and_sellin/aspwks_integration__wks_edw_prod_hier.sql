@@ -1,11 +1,3 @@
-{{
-    config(
-        alias= "wks_edw_prod_hier",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
-
 
 --Import CTE
 with source as (

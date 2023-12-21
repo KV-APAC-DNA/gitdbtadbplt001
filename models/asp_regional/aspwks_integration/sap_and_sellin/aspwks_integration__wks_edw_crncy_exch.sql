@@ -1,12 +1,6 @@
 {{
     config(
-        alias="wks_edw_crncy_exch",
-        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="incremental",
-        incremental_strategy="merge",
-        unique_key=["clnt","vld_from","ex_rt_typ", "from_crncy", "to_crncy"],
-        merge_exclude_columns=["crt_dttm"],
-        tags=["daily"]
+        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 

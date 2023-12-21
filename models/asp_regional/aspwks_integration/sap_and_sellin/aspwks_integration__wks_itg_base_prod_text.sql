@@ -1,15 +1,7 @@
-{{
-    config(
-        alias= "wks_itg_base_prod_text",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
-
-
 --Import CTE
 with source as (
-    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_base_product_text') }}
+    select *
+    from {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_base_product_text') }}
 ),
 
 --Logical CTE
@@ -17,14 +9,14 @@ with source as (
 --Final CTE
 final as (
     select
-    mandt,
-    spras,
-    mvgr1,
-    bezei,
-    --tgt.crt_dttm as tgt_crt_dttm,
-    updt_dttm
+        mandt,
+        spras,
+        mvgr1,
+        bezei,
+        --tgt.crt_dttm as tgt_crt_dttm,
+        updt_dttm
     --case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
-  from source
+    from source
 )
 
 --Final select

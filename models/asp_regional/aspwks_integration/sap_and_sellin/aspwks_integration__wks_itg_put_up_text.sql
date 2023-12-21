@@ -1,14 +1,7 @@
-{{
-    config(
-        alias= "wks_itg_put_up_text",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
-    )
-}}
-
 --Import CTE
 with source as (
-    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_put_up_text') }}
+    select *
+    from {{ ref('aspitg_integration__vw_stg_sdl_sap_ecc_put_up_text') }}
 ),
 
 --Logical CTE
@@ -27,4 +20,4 @@ final as (
 )
 
 --Final select
-select * from final 
+select * from final

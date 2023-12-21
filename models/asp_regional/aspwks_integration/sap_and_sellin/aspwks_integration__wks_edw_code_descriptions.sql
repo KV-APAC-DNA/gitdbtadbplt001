@@ -1,8 +1,6 @@
 {{
     config(
-        alias= "wks_edw_code_descriptions",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 

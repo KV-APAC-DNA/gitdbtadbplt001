@@ -1,8 +1,6 @@
 {{
     config(
-        alias= "wks_edw_calendar_dim",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 

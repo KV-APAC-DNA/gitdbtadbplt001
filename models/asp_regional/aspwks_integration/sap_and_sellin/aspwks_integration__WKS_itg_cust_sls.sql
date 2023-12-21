@@ -1,9 +1,7 @@
 {{
     config(
-        alias= "wks_itg_cust_sls",
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="table",
-        tags=["daily"]
+        materialized="table"
     )
 }}
 
@@ -79,7 +77,7 @@ final as(
         antlf,
         updt_dttm,
         crt_dttm
-     from sources
+    from sources
 )
 --final select
 select * from final

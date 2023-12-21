@@ -1,12 +1,3 @@
-{{
-    config(
-        alias= "wks_itg_sls_grp_text",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="table",
-        tags=["daily"]
-    )
-}}
-
 --import CTE
 
 with sources as(
@@ -20,7 +11,7 @@ final as(
         spras,
         vkgrp,
         bezei,
-        crt_dttm,
+        --crt_dttm,
         updt_dttm
      from sources
 )

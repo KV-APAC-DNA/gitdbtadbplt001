@@ -1,9 +1,3 @@
-{{
-    config(
-        alias= "wks_edw_dstrbtn_chnl",
-        tags= ["daily"]
-    )
-}}
 
 --Import CTE
 with source as (

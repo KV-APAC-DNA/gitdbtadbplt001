@@ -1,21 +1,20 @@
 {{
     config(
-        alias= "wks_itg_needstates_text",
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        tags= ["daily"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 
 --Import CTE
 with source as (
-    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_needstates_text') }}
+    select *
+    from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_needstates_text') }}
 ),
 
 --Logical CTE
 
 --Final CTE
 final as (
-    SELECT
+    select
         zneed,
         langu,
         txtsh,
@@ -23,7 +22,7 @@ final as (
         --tgt.crt_dttm as tgt_crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
         --case when tgt.crt_dttm is null then 'I' else 'U' end as chng_flg
-    FROM source
+    from source
 )
 
 --Final select
