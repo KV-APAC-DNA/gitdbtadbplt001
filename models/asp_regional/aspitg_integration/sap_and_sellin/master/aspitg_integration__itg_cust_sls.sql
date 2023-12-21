@@ -10,7 +10,7 @@
 
 --import CTE
 with source as(
-    select * from {{ ref('aspwks_integration__WKS_itg_cust_sls') }}
+    select * from {{ ref('aspwks_integration__wks_itg_cust_sls') }}
 ),
 --logical CTE
 final as(

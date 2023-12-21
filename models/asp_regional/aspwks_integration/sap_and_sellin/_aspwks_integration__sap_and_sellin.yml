@@ -187,3 +187,7 @@ models:
     config: 
       alias: wks_sdl_prod_hier
       tags: ["daily","sap_ecc_master"]
+  - name: aspwks_integration__wks_itg_ecc_standard_cost
+    config: 
+      alias: wks_itg_ecc_standard_cost
+      tags: ["daily","sap_ecc_master"]
