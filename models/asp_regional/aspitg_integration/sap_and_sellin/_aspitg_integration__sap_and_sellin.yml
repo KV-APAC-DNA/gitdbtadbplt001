@@ -135,10 +135,6 @@ models:
     config:
       alias: itg_mds_ap_company_dim
       tags: ["daily","sap_ecc_master"]
-  - name : aspitg_integration__itg_crncy_conv
-    config:
-      alias: itg_crncy_conv
-      tags: ["daily","sap_ecc_master"]
   - name: aspitg_integration__vw_stg_sdl_sap_mara_extract
     config:
       alias: vw_stg_sdl_sap_mara_extract
@@ -429,9 +425,9 @@ models:
              config:
                store_failures: true
                schema: aspwks_integration
-  - name : aspitg_integration__vw_stg_vw_stg_sdl_sap_ecc_company
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_company
     config: 
-      alias: vw_stg_vw_stg_sdl_sap_ecc_company
+      alias: vw_stg_sdl_sap_ecc_company
       tags: ["daily","sap_ecc_master","sap_ecc"]
     tests:
        - test_duplicate:

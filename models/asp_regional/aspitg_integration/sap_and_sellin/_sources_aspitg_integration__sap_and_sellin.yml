@@ -1622,6 +1622,8 @@ sources:
       - name: sdl_mds_ap_company_dim
 
   - name: aspitg_integration
+    # Hardcoded database name here for now
+    database: dev_dna_core
     schema: aspitg_integration
     quoting:
       database: false

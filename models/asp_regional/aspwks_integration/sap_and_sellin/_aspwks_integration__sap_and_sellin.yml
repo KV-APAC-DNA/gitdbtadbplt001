@@ -175,18 +175,6 @@ models:
     config: 
       alias: wks_sap_mara_extract
       tags: ["daily","sap_ecc_master"]
-  - name: aspwks_integration__wks_sdl_dstrbtn_chnl
-    config: 
-      alias: wks_sdl_dstrbtn_chnl
-      tags: ["daily","sap_ecc_master"]
-  - name: aspwks_integration__wks_sdl_material_typ
-    config: 
-      alias: wks_sdl_material_typ
-      tags: ["daily","sap_ecc_master"]
-  - name: aspwks_integration__wks_sdl_prod_hier
-    config: 
-      alias: wks_sdl_prod_hier
-      tags: ["daily","sap_ecc_master"]
   - name: aspwks_integration__wks_itg_ecc_standard_cost
     config: 
       alias: wks_itg_ecc_standard_cost
