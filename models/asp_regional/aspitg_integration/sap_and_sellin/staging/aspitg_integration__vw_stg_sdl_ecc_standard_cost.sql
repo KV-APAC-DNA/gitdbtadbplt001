@@ -1,10 +1,3 @@
-{{
-    config(
-        materialized="view",
-        alias="vw_stg_sdl_ecc_standard_cost",
-        tags=["daily","sap_ecc"]
-    )
-}}
 
 with 
 

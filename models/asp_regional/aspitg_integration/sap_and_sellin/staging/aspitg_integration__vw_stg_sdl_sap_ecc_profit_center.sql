@@ -1,10 +1,4 @@
-{{
-    config(
-        materialized="view",
-        alias="vw_stg_sdl_sap_ecc_profit_center",
-        tags=["daily","sap_ecc"]
-    )
-}}
+
 
 with 
 

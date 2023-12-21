@@ -1,11 +1,7 @@
-{{
-    config(
-        alias= "vw_stg_sdl_sap_mara_extract",
-        materialized= "view",
-        tags= ["daily","sap_ecc"]
-    )
-}}
-
+/*
+This model is an exception for now as data from sap coming directly in wks table.
+Once the cdl table is avaialable the definition of this model will change.
+*/
 --Import CTE
 with source as (
     select * from aspwks_integration.wks_sap_mara_extract

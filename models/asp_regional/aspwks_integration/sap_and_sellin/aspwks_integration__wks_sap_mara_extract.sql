@@ -1,6 +1,6 @@
 --Import CTE
 with source as (
-    select * from {{ ref('a_exception_aspitg_integration__vw_stg_sdl_sap_mara_extract') }}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_mara_extract') }}
 ),
 
 --Logical CTE

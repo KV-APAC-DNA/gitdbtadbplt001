@@ -1,10 +1,3 @@
-{{
-    config(
-        materialized="view",
-        alias="vw_stg_sdl_sap_ecc_marm",
-        tags=["daily","sap_ecc"]
-    )
-}}
 
 with 
 

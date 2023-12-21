@@ -1,11 +1,3 @@
-{{
-    config(
-        alias= "vw_stg_sdl_sap_ecc_brand_text",
-        materialized= "view",
-        tags= ["daily","sap_ecc"]
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_brand_text') }}

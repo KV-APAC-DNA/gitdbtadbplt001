@@ -1,10 +1,3 @@
-{{
-    config(
-        alias= "vw_stg_sdl_sap_ecc_variant_text",
-        materialized= "view",
-        tags= ["daily","sap_ecc"]
-    )
-}}
 
 --Import CTE
 with source as (

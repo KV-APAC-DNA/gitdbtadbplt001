@@ -1,12 +1,4 @@
-{{
-    config(
-        materialized="view",
-        alias="vw_stg_sdl_cust_sls_attr",
-        tags=["sap_ecc"]
-    )
-}}
-
-with 
+with
 
 source as (
 

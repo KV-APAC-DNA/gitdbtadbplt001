@@ -1,10 +1,4 @@
-{{
-    config(
-        alias="vw_stg_sdl_sap_ecc_company",
-        materialized="view",
-        tags=["daily","sap_ecc"]
-    )
-}}
+
 
 with 
 source as (
