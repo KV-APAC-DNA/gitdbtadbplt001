@@ -1,0 +1,1632 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_sap_bw_zocopa10
+#       - name: sdl_code_descriptions
+#         columns:
+#           - name: source_type
+#             data_type: varchar
+#           - name: code_type
+#             data_type: varchar
+#           - name: code
+#             data_type: varchar
+#           - name: code_desc
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_cust_sls_attr
+#         columns:
+#           - name: division
+#             data_type: varchar
+#           - name: distr_chan
+#             data_type: varchar
+#           - name: salesorg
+#             data_type: varchar
+#           - name: cust_sales
+#             data_type: varchar
+#           - name: accnt_asgn
+#             data_type: varchar
+#           - name: cust_cla
+#             data_type: varchar
+#           - name: cust_group
+#             data_type: varchar
+#           - name: cust_grp1
+#             data_type: varchar
+#           - name: cust_grp2
+#             data_type: varchar
+#           - name: cust_grp3
+#             data_type: varchar
+#           - name: cust_grp4
+#             data_type: varchar
+#           - name: cust_grp5
+#             data_type: varchar
+#           - name: c_ctr_area
+#             data_type: varchar
+#           - name: incoterms
+#             data_type: varchar
+#           - name: incoterms2
+#             data_type: varchar
+#           - name: plant
+#             data_type: varchar
+#           - name: pmnttrms
+#             data_type: varchar
+#           - name: sales_dist
+#             data_type: varchar
+#           - name: sales_grp
+#             data_type: varchar
+#           - name: sales_off
+#             data_type: varchar
+#           - name: cur_sls_emp
+#             data_type: number
+#           - name: lcl_cust_grp_1
+#             data_type: varchar
+#           - name: lcl_cust_grp_2
+#             data_type: varchar
+#           - name: lcl_cust_grp_3
+#             data_type: varchar
+#           - name: lcl_cust_grp_4
+#             data_type: varchar
+#           - name: lcl_cust_grp_5
+#             data_type: varchar
+#           - name: lcl_cust_grp_6
+#             data_type: varchar
+#           - name: lcl_cust_grp_7
+#             data_type: varchar
+#           - name: lcl_cust_grp_8
+#             data_type: varchar
+#           - name: customer
+#             data_type: varchar
+#           - name: prc_proc
+#             data_type: varchar
+#           - name: prc_grp
+#             data_type: varchar
+#           - name: prc_lst_type
+#             data_type: varchar
+#           - name: shpg_con
+#             data_type: varchar
+#           - name: par_del
+#             data_type: varchar
+#           - name: max_num_pa
+#             data_type: varchar
+#           - name: prnt_cust_key
+#             data_type: varchar
+#           - name: bnr_key
+#             data_type: varchar
+#           - name: bnr_frmt_key
+#             data_type: varchar
+#           - name: go_to_mdl_key
+#             data_type: varchar
+#           - name: chnl_key
+#             data_type: varchar
+#           - name: sub_chnl_key
+#             data_type: varchar
+#           - name: segmt_key
+#             data_type: varchar
+#           - name: cust_set_1
+#             data_type: varchar
+#           - name: cust_set_2
+#             data_type: varchar
+#           - name: cust_set_3
+#             data_type: varchar
+#           - name: cust_set_4
+#             data_type: varchar
+#           - name: cust_set_5
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_dstrbtn_chnl
+#         columns:
+#           - name: distr_chan
+#             data_type: varchar
+#           - name: langu
+#             data_type: varchar
+#           - name: txtsh
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_ecc_standard_cost
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: matnr
+#             data_type: varchar
+#           - name: bwkey
+#             data_type: varchar
+#           - name: bwtar
+#             data_type: varchar
+#           - name: lvorm
+#             data_type: varchar
+#           - name: lbkum
+#             data_type: number
+#           - name: salk3
+#             data_type: number
+#           - name: vprsv
+#             data_type: varchar
+#           - name: verpr
+#             data_type: number
+#           - name: stprs
+#             data_type: number
+#           - name: peinh
+#             data_type: number
+#           - name: bklas
+#             data_type: varchar
+#           - name: salkv
+#             data_type: number
+#           - name: vmkum
+#             data_type: number
+#           - name: vmsal
+#             data_type: number
+#           - name: vmvpr
+#             data_type: varchar
+#           - name: vmver
+#             data_type: number
+#           - name: vmstp
+#             data_type: number
+#           - name: vmpei
+#             data_type: number
+#           - name: vmbkl
+#             data_type: varchar
+#           - name: vmsav
+#             data_type: number
+#           - name: vjkum
+#             data_type: number
+#           - name: vjsal
+#             data_type: number
+#           - name: vjvpr
+#             data_type: varchar
+#           - name: vjver
+#             data_type: number
+#           - name: vjstp
+#             data_type: number
+#           - name: vjpei
+#             data_type: number
+#           - name: vjbkl
+#             data_type: varchar
+#           - name: vjsav
+#             data_type: number
+#           - name: lfgja
+#             data_type: number
+#           - name: lfmon
+#             data_type: number
+#           - name: bwtty
+#             data_type: varchar
+#           - name: stprv
+#             data_type: number
+#           - name: laepr
+#             data_type: date
+#           - name: zkprs
+#             data_type: number
+#           - name: zkdat
+#             data_type: date
+#           - name: timestamps
+#             data_type: number
+#           - name: bwprs
+#             data_type: number
+#           - name: bwprh
+#             data_type: number
+#           - name: vjbws
+#             data_type: number
+#           - name: vjbwh
+#             data_type: number
+#           - name: vvjsl
+#             data_type: number
+#           - name: vvjlb
+#             data_type: number
+#           - name: vvmlb
+#             data_type: number
+#           - name: vvsal
+#             data_type: number
+#           - name: zplpr
+#             data_type: number
+#           - name: zplp1
+#             data_type: number
+#           - name: zplp2
+#             data_type: number
+#           - name: zplp3
+#             data_type: number
+#           - name: zpld1
+#             data_type: date
+#           - name: zpld2
+#             data_type: date
+#           - name: zpld3
+#             data_type: date
+#           - name: pperz
+#             data_type: number
+#           - name: pperl
+#             data_type: number
+#           - name: pperv
+#             data_type: number
+#           - name: kalkz
+#             data_type: varchar
+#           - name: kalkl
+#             data_type: varchar
+#           - name: kalkv
+#             data_type: varchar
+#           - name: kalsc
+#             data_type: varchar
+#           - name: xlifo
+#             data_type: varchar
+#           - name: mypol
+#             data_type: varchar
+#           - name: bwph1
+#             data_type: number
+#           - name: bwps1
+#             data_type: number
+#           - name: abwkz
+#             data_type: number
+#           - name: pstat
+#             data_type: varchar
+#           - name: kaln1
+#             data_type: number
+#           - name: kalnr
+#             data_type: number
+#           - name: bwva1
+#             data_type: varchar
+#           - name: bwva2
+#             data_type: varchar
+#           - name: bwva3
+#             data_type: varchar
+#           - name: vers1
+#             data_type: number
+#           - name: vers2
+#             data_type: number
+#           - name: vers3
+#             data_type: number
+#           - name: hrkft
+#             data_type: varchar
+#           - name: kosgr
+#             data_type: varchar
+#           - name: pprdz
+#             data_type: number
+#           - name: pprdl
+#             data_type: number
+#           - name: pprdv
+#             data_type: number
+#           - name: pdatz
+#             data_type: number
+#           - name: pdatl
+#             data_type: number
+#           - name: pdatv
+#             data_type: number
+#           - name: ekalr
+#             data_type: varchar
+#           - name: vplpr
+#             data_type: number
+#           - name: mlmaa
+#             data_type: varchar
+#           - name: mlast
+#             data_type: varchar
+#           - name: lplpr
+#             data_type: number
+#           - name: vksal
+#             data_type: number
+#           - name: hkmat
+#             data_type: varchar
+#           - name: sperw
+#             data_type: varchar
+#           - name: kziwl
+#             data_type: varchar
+#           - name: wlinl
+#             data_type: date
+#           - name: abciw
+#             data_type: varchar
+#           - name: bwspa
+#             data_type: number
+#           - name: lplpx
+#             data_type: number
+#           - name: vplpx
+#             data_type: number
+#           - name: fplpx
+#             data_type: number
+#           - name: lbwst
+#             data_type: varchar
+#           - name: vbwst
+#             data_type: varchar
+#           - name: fbwst
+#             data_type: varchar
+#           - name: eklas
+#             data_type: varchar
+#           - name: qklas
+#             data_type: varchar
+#           - name: mtuse
+#             data_type: varchar
+#           - name: mtorg
+#             data_type: varchar
+#           - name: ownpr
+#             data_type: varchar
+#           - name: xbewm
+#             data_type: varchar
+#           - name: bwpei
+#             data_type: number
+#           - name: mbrue
+#             data_type: varchar
+#           - name: oklas
+#             data_type: varchar
+#           - name: oippinv
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_material_dim
+#         columns:
+#           - name: matl_num
+#             data_type: varchar
+#           - name: base_uom
+#             data_type: varchar
+#           - name: basic_matl
+#             data_type: varchar
+#           - name: createdon
+#             data_type: varchar
+#           - name: division
+#             data_type: varchar
+#           - name: eanupc
+#             data_type: varchar
+#           - name: gross_wt
+#             data_type: number
+#           - name: logsys
+#             data_type: varchar
+#           - name: manufactor
+#             data_type: varchar
+#           - name: manu_matnr
+#             data_type: varchar
+#           - name: matl_cat
+#             data_type: varchar
+#           - name: matl_group
+#             data_type: varchar
+#           - name: matl_type
+#             data_type: varchar
+#           - name: net_weight
+#             data_type: number
+#           - name: po_unit
+#             data_type: varchar
+#           - name: prod_hier
+#             data_type: varchar
+#           - name: rt_sups
+#             data_type: varchar
+#           - name: size_dim
+#             data_type: varchar
+#           - name: unit_dim
+#             data_type: varchar
+#           - name: unit_of_wt
+#             data_type: varchar
+#           - name: volume
+#             data_type: number
+#           - name: volumeunit
+#             data_type: varchar
+#           - name: height
+#             data_type: number
+#           - name: lenght
+#             data_type: number
+#           - name: width
+#             data_type: number
+#           - name: bic_zz_mvgr1
+#             data_type: varchar
+#           - name: bic_zz_mvgr2
+#             data_type: varchar
+#           - name: bic_zz_mvgr3
+#             data_type: varchar
+#           - name: bic_zz_mvgr4
+#             data_type: varchar
+#           - name: bic_zz_mvgr5
+#             data_type: varchar
+#           - name: prodh1
+#             data_type: varchar
+#           - name: prodh2
+#             data_type: varchar
+#           - name: prodh3
+#             data_type: varchar
+#           - name: prodh4
+#             data_type: varchar
+#           - name: prodh5
+#             data_type: varchar
+#           - name: prodh6
+#             data_type: varchar
+#           - name: bic_zmerciapl
+#             data_type: varchar
+#           - name: ch_on
+#             data_type: varchar
+#           - name: createdby
+#             data_type: varchar
+#           - name: datefrom
+#             data_type: varchar
+#           - name: del_flag
+#             data_type: varchar
+#           - name: ean_numtyp
+#             data_type: varchar
+#           - name: bic_yuomcnvf
+#             data_type: number
+#           - name: bic_ztragr
+#             data_type: varchar
+#           - name: bic_zxchpf
+#             data_type: varchar
+#           - name: bic_zpur_key
+#             data_type: varchar
+#           - name: bic_zhaz_mat
+#             data_type: varchar
+#           - name: bic_zstr_cond
+#             data_type: varchar
+#           - name: bic_zmhdrz
+#             data_type: varchar
+#           - name: bic_zmhdhb
+#             data_type: varchar
+#           - name: bic_zqmpur
+#             data_type: varchar
+#           - name: bic_zmstav
+#             data_type: varchar
+#           - name: bic_zskutec
+#             data_type: varchar
+#           - name: bic_zmjrtec
+#             data_type: varchar
+#           - name: bic_zz_color
+#             data_type: number
+#           - name: bic_zz_stack
+#             data_type: number
+#           - name: bic_ztaklv
+#             data_type: varchar
+#           - name: extmatlgrp
+#             data_type: varchar
+#           - name: bic_zvpsta
+#             data_type: varchar
+#           - name: bic_zpstat
+#             data_type: varchar
+#           - name: bic_zoldmatl
+#             data_type: varchar
+#           - name: std_descr
+#             data_type: varchar
+#           - name: bic_zferth
+#             data_type: varchar
+#           - name: bic_zmsource
+#             data_type: varchar
+#           - name: bic_zbramin
+#             data_type: varchar
+#           - name: bic_zprodseg
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_material_typ
+#         columns:
+#           - name: matl_type
+#             data_type: varchar
+#           - name: langu
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_prod_hier
+#         columns:
+#           - name: prod_hier
+#             data_type: varchar
+#           - name: langu
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_bw_country_code_text
+#         columns:
+#           - name: country
+#             data_type: varchar
+#           - name: langu
+#             data_type: varchar
+#           - name: txtsh
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_bw_needstates_text
+#         columns:
+#           - name: zneed
+#             data_type: number
+#           - name: langu
+#             data_type: varchar
+#           - name: txtsh
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_bw_strongholds_text
+#         columns:
+#           - name: zstrong
+#             data_type: number
+#           - name: langu
+#             data_type: varchar
+#           - name: txtsh
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_bw_time
+#         columns:
+#           - name: calday
+#             data_type: date
+#           - name: fiscvarnt
+#             data_type: varchar
+#           - name: weekday1
+#             data_type: number
+#           - name: calweek
+#             data_type: number
+#           - name: calmonth
+#             data_type: number
+#           - name: calmonth2
+#             data_type: number
+#           - name: calquart1
+#             data_type: number
+#           - name: calquarter
+#             data_type: number
+#           - name: halfyear1
+#             data_type: number
+#           - name: calyear
+#             data_type: number
+#           - name: fiscper
+#             data_type: number
+#           - name: fiscper3
+#             data_type: number
+#           - name: fiscyear
+#             data_type: number
+#           - name: recordmode
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_base_product_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: mvgr1
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_brand_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: mvgr5
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_company
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: bukrs
+#             data_type: varchar
+#           - name: land1
+#             data_type: varchar
+#           - name: waers
+#             data_type: varchar
+#           - name: ktopl
+#             data_type: varchar
+#           - name: kkber
+#             data_type: varchar
+#           - name: periv
+#             data_type: varchar
+#           - name: rcomp
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_company_code_text
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: bukrs
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_customer_base
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: kunnr
+#             data_type: varchar
+#           - name: adrnr
+#             data_type: varchar
+#           - name: anred
+#             data_type: varchar
+#           - name: aufsd
+#             data_type: varchar
+#           - name: bahne
+#             data_type: varchar
+#           - name: bahns
+#             data_type: varchar
+#           - name: bbbnr
+#             data_type: number
+#           - name: bbsnr
+#             data_type: number
+#           - name: begru
+#             data_type: varchar
+#           - name: brsch
+#             data_type: varchar
+#           - name: bubkz
+#             data_type: number
+#           - name: datlt
+#             data_type: varchar
+#           - name: erdat
+#             data_type: date
+#           - name: ernam
+#             data_type: varchar
+#           - name: exabl
+#             data_type: varchar
+#           - name: faksd
+#             data_type: varchar
+#           - name: fiskn
+#             data_type: varchar
+#           - name: knazk
+#             data_type: varchar
+#           - name: knrza
+#             data_type: varchar
+#           - name: konzs
+#             data_type: varchar
+#           - name: ktokd
+#             data_type: varchar
+#           - name: kukla
+#             data_type: varchar
+#           - name: land1
+#             data_type: varchar
+#           - name: lifnr
+#             data_type: varchar
+#           - name: lifsd
+#             data_type: varchar
+#           - name: locco
+#             data_type: varchar
+#           - name: loevm
+#             data_type: varchar
+#           - name: name1
+#             data_type: varchar
+#           - name: name2
+#             data_type: varchar
+#           - name: name3
+#             data_type: varchar
+#           - name: name4
+#             data_type: varchar
+#           - name: niels
+#             data_type: varchar
+#           - name: ort01
+#             data_type: varchar
+#           - name: ort02
+#             data_type: varchar
+#           - name: pfach
+#             data_type: varchar
+#           - name: pstl2
+#             data_type: varchar
+#           - name: pstlz
+#             data_type: varchar
+#           - name: regio
+#             data_type: varchar
+#           - name: counc
+#             data_type: varchar
+#           - name: cityc
+#             data_type: varchar
+#           - name: rpmkr
+#             data_type: varchar
+#           - name: sortl
+#             data_type: varchar
+#           - name: sperr
+#             data_type: varchar
+#           - name: spras
+#             data_type: varchar
+#           - name: stcd1
+#             data_type: varchar
+#           - name: stcd2
+#             data_type: varchar
+#           - name: stkza
+#             data_type: varchar
+#           - name: stkzu
+#             data_type: varchar
+#           - name: stras
+#             data_type: varchar
+#           - name: telbx
+#             data_type: varchar
+#           - name: telf1
+#             data_type: varchar
+#           - name: telf2
+#             data_type: varchar
+#           - name: telfx
+#             data_type: varchar
+#           - name: teltx
+#             data_type: varchar
+#           - name: telx1
+#             data_type: varchar
+#           - name: lzone
+#             data_type: varchar
+#           - name: xcpdk
+#             data_type: varchar
+#           - name: xzemp
+#             data_type: varchar
+#           - name: vbund
+#             data_type: varchar
+#           - name: stceg
+#             data_type: varchar
+#           - name: dear1
+#             data_type: varchar
+#           - name: dear2
+#             data_type: varchar
+#           - name: dear3
+#             data_type: varchar
+#           - name: dear4
+#             data_type: varchar
+#           - name: dear5
+#             data_type: varchar
+#           - name: dear6
+#             data_type: varchar
+#           - name: gform
+#             data_type: varchar
+#           - name: bran1
+#             data_type: varchar
+#           - name: bran2
+#             data_type: varchar
+#           - name: bran3
+#             data_type: varchar
+#           - name: bran4
+#             data_type: varchar
+#           - name: bran5
+#             data_type: varchar
+#           - name: ekont
+#             data_type: varchar
+#           - name: umsat
+#             data_type: varchar
+#           - name: umjah
+#             data_type: number
+#           - name: uwaer
+#             data_type: varchar
+#           - name: jmzah
+#             data_type: number
+#           - name: jmjah
+#             data_type: number
+#           - name: katr1
+#             data_type: varchar
+#           - name: katr2
+#             data_type: varchar
+#           - name: katr3
+#             data_type: varchar
+#           - name: katr4
+#             data_type: varchar
+#           - name: katr5
+#             data_type: varchar
+#           - name: katr6
+#             data_type: varchar
+#           - name: katr7
+#             data_type: varchar
+#           - name: katr8
+#             data_type: varchar
+#           - name: katr9
+#             data_type: varchar
+#           - name: katr10
+#             data_type: varchar
+#           - name: stkzn
+#             data_type: varchar
+#           - name: umsa1
+#             data_type: varchar
+#           - name: txjcd
+#             data_type: varchar
+#           - name: mcod1
+#             data_type: varchar
+#           - name: mcod2
+#             data_type: varchar
+#           - name: mcod3
+#             data_type: varchar
+#           - name: periv
+#             data_type: varchar
+#           - name: abrvw
+#             data_type: varchar
+#           - name: inspbydebi
+#             data_type: varchar
+#           - name: inspatdebi
+#             data_type: varchar
+#           - name: ktocd
+#             data_type: varchar
+#           - name: pfort
+#             data_type: varchar
+#           - name: werks
+#             data_type: varchar
+#           - name: dtams
+#             data_type: varchar
+#           - name: dtaws
+#             data_type: varchar
+#           - name: duefl
+#             data_type: varchar
+#           - name: hzuor
+#             data_type: number
+#           - name: sperz
+#             data_type: varchar
+#           - name: etikg
+#             data_type: varchar
+#           - name: civve
+#             data_type: varchar
+#           - name: milve
+#             data_type: varchar
+#           - name: kdkg1
+#             data_type: varchar
+#           - name: kdkg2
+#             data_type: varchar
+#           - name: kdkg3
+#             data_type: varchar
+#           - name: kdkg4
+#             data_type: varchar
+#           - name: kdkg5
+#             data_type: varchar
+#           - name: xknza
+#             data_type: varchar
+#           - name: fityp
+#             data_type: varchar
+#           - name: stcdt
+#             data_type: varchar
+#           - name: stcd3
+#             data_type: varchar
+#           - name: stcd4
+#             data_type: varchar
+#           - name: xicms
+#             data_type: varchar
+#           - name: xxipi
+#             data_type: varchar
+#           - name: xsubt
+#             data_type: varchar
+#           - name: cfopc
+#             data_type: varchar
+#           - name: txlw1
+#             data_type: varchar
+#           - name: txlw2
+#             data_type: varchar
+#           - name: ccc01
+#             data_type: varchar
+#           - name: ccc02
+#             data_type: varchar
+#           - name: ccc03
+#             data_type: varchar
+#           - name: ccc04
+#             data_type: varchar
+#           - name: cassd
+#             data_type: varchar
+#           - name: knurl
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_customer_sales
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: kunnr
+#             data_type: varchar
+#           - name: vkorg
+#             data_type: varchar
+#           - name: vtweg
+#             data_type: varchar
+#           - name: spart
+#             data_type: varchar
+#           - name: ernam
+#             data_type: varchar
+#           - name: erdat
+#             data_type: date
+#           - name: begru
+#             data_type: varchar
+#           - name: loevm
+#             data_type: varchar
+#           - name: versg
+#             data_type: varchar
+#           - name: aufsd
+#             data_type: varchar
+#           - name: kalks
+#             data_type: varchar
+#           - name: kdgrp
+#             data_type: varchar
+#           - name: bzirk
+#             data_type: varchar
+#           - name: konda
+#             data_type: varchar
+#           - name: pltyp
+#             data_type: varchar
+#           - name: awahr
+#             data_type: number
+#           - name: inco1
+#             data_type: varchar
+#           - name: inco2
+#             data_type: varchar
+#           - name: lifsd
+#             data_type: varchar
+#           - name: autlf
+#             data_type: varchar
+#           - name: antlf
+#             data_type: number
+#           - name: kztlf
+#             data_type: varchar
+#           - name: kzazu
+#             data_type: varchar
+#           - name: chspl
+#             data_type: varchar
+#           - name: lprio
+#             data_type: number
+#           - name: eikto
+#             data_type: varchar
+#           - name: vsbed
+#             data_type: varchar
+#           - name: faksd
+#             data_type: varchar
+#           - name: mrnkz
+#             data_type: varchar
+#           - name: perfk
+#             data_type: varchar
+#           - name: perrl
+#             data_type: varchar
+#           - name: kvakz
+#             data_type: varchar
+#           - name: kvawt
+#             data_type: number
+#           - name: waers
+#             data_type: varchar
+#           - name: klabc
+#             data_type: varchar
+#           - name: ktgrd
+#             data_type: varchar
+#           - name: vwerk
+#             data_type: varchar
+#           - name: vkgrp
+#             data_type: varchar
+#           - name: vkbur
+#             data_type: varchar
+#           - name: vsort
+#             data_type: varchar
+#           - name: kvgr1
+#             data_type: varchar
+#           - name: kvgr2
+#             data_type: varchar
+#           - name: kvgr3
+#             data_type: varchar
+#           - name: kvgr4
+#             data_type: varchar
+#           - name: kvgr5
+#             data_type: varchar
+#           - name: bokre
+#             data_type: varchar
+#           - name: boidt
+#             data_type: date
+#           - name: kurst
+#             data_type: varchar
+#           - name: prfre
+#             data_type: varchar
+#           - name: prat1
+#             data_type: varchar
+#           - name: prat2
+#             data_type: varchar
+#           - name: prat3
+#             data_type: varchar
+#           - name: prat4
+#             data_type: varchar
+#           - name: prat5
+#             data_type: varchar
+#           - name: prat6
+#             data_type: varchar
+#           - name: prat7
+#             data_type: varchar
+#           - name: prat8
+#             data_type: varchar
+#           - name: prat9
+#             data_type: varchar
+#           - name: prata
+#             data_type: varchar
+#           - name: zterm
+#             data_type: varchar
+#           - name: zzsalesrep
+#             data_type: number
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_customer_text
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: kunnr
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_marm
+#         columns:
+#           - name: matnr
+#             data_type: varchar
+#           - name: meinh
+#             data_type: varchar
+#           - name: umrez
+#             data_type: number
+#           - name: umren
+#             data_type: number
+#           - name: eannr
+#             data_type: varchar
+#           - name: ean11
+#             data_type: varchar
+#           - name: numtp
+#             data_type: varchar
+#           - name: laeng
+#             data_type: number
+#           - name: breit
+#             data_type: number
+#           - name: hoehe
+#             data_type: number
+#           - name: meabm
+#             data_type: varchar
+#           - name: volum
+#             data_type: varchar
+#           - name: voleh
+#             data_type: varchar
+#           - name: brgew
+#             data_type: number
+#           - name: gewei
+#             data_type: varchar
+#           - name: mesub
+#             data_type: varchar
+#           - name: atinn
+#             data_type: number
+#           - name: mesrt
+#             data_type: number
+#           - name: xfhdw
+#             data_type: varchar
+#           - name: xbeww
+#             data_type: varchar
+#           - name: kzwso
+#             data_type: varchar
+#           - name: msehi
+#             data_type: varchar
+#           - name: bflme_marm
+#             data_type: varchar
+#           - name: gtin_variant
+#             data_type: varchar
+#           - name: nest_ftr
+#             data_type: number
+#           - name: max_stack
+#             data_type: number
+#           - name: capause
+#             data_type: number
+#           - name: ty2tq
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_material_base
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: matnr
+#             data_type: varchar
+#           - name: ersda
+#             data_type: date
+#           - name: ernam
+#             data_type: varchar
+#           - name: laeda
+#             data_type: date
+#           - name: aenam
+#             data_type: varchar
+#           - name: vpsta
+#             data_type: varchar
+#           - name: pstat
+#             data_type: varchar
+#           - name: lvorm
+#             data_type: varchar
+#           - name: mtart
+#             data_type: varchar
+#           - name: mbrsh
+#             data_type: varchar
+#           - name: matkl
+#             data_type: varchar
+#           - name: bismt
+#             data_type: varchar
+#           - name: meins
+#             data_type: varchar
+#           - name: bstme
+#             data_type: varchar
+#           - name: zeinr
+#             data_type: varchar
+#           - name: zeiar
+#             data_type: varchar
+#           - name: zeivr
+#             data_type: varchar
+#           - name: zeifo
+#             data_type: varchar
+#           - name: aeszn
+#             data_type: varchar
+#           - name: blatt
+#             data_type: varchar
+#           - name: blanz
+#             data_type: number
+#           - name: ferth
+#             data_type: varchar
+#           - name: formt
+#             data_type: varchar
+#           - name: groes
+#             data_type: varchar
+#           - name: wrkst
+#             data_type: varchar
+#           - name: normt
+#             data_type: varchar
+#           - name: labor
+#             data_type: varchar
+#           - name: ekwsl
+#             data_type: varchar
+#           - name: brgew
+#             data_type: number
+#           - name: ntgew
+#             data_type: number
+#           - name: gewei
+#             data_type: varchar
+#           - name: volum
+#             data_type: number
+#           - name: voleh
+#             data_type: varchar
+#           - name: behvo
+#             data_type: varchar
+#           - name: raube
+#             data_type: varchar
+#           - name: tempb
+#             data_type: varchar
+#           - name: disst
+#             data_type: varchar
+#           - name: tragr
+#             data_type: varchar
+#           - name: stoff
+#             data_type: varchar
+#           - name: spart
+#             data_type: varchar
+#           - name: kunnr
+#             data_type: varchar
+#           - name: eannr
+#             data_type: varchar
+#           - name: wesch
+#             data_type: number
+#           - name: bwvor
+#             data_type: varchar
+#           - name: bwscl
+#             data_type: varchar
+#           - name: saiso
+#             data_type: varchar
+#           - name: etiar
+#             data_type: varchar
+#           - name: etifo
+#             data_type: varchar
+#           - name: entar
+#             data_type: varchar
+#           - name: ean11
+#             data_type: varchar
+#           - name: numtp
+#             data_type: varchar
+#           - name: laeng
+#             data_type: number
+#           - name: breit
+#             data_type: number
+#           - name: hoehe
+#             data_type: number
+#           - name: meabm
+#             data_type: varchar
+#           - name: prdha
+#             data_type: varchar
+#           - name: aeklk
+#             data_type: varchar
+#           - name: cadkz
+#             data_type: varchar
+#           - name: qmpur
+#             data_type: varchar
+#           - name: ergew
+#             data_type: number
+#           - name: ergei
+#             data_type: varchar
+#           - name: ervol
+#             data_type: number
+#           - name: ervoe
+#             data_type: varchar
+#           - name: gewto
+#             data_type: number
+#           - name: volto
+#             data_type: number
+#           - name: vabme
+#             data_type: varchar
+#           - name: kzrev
+#             data_type: varchar
+#           - name: kzkfg
+#             data_type: varchar
+#           - name: xchpf
+#             data_type: varchar
+#           - name: vhart
+#             data_type: varchar
+#           - name: fuelg
+#             data_type: number
+#           - name: stfak
+#             data_type: number
+#           - name: magrv
+#             data_type: varchar
+#           - name: begru
+#             data_type: varchar
+#           - name: datab
+#             data_type: date
+#           - name: liqdt
+#             data_type: date
+#           - name: saisj
+#             data_type: varchar
+#           - name: plgtp
+#             data_type: varchar
+#           - name: mlgut
+#             data_type: varchar
+#           - name: extwg
+#             data_type: varchar
+#           - name: satnr
+#             data_type: varchar
+#           - name: attyp
+#             data_type: varchar
+#           - name: kzkup
+#             data_type: varchar
+#           - name: kznfm
+#             data_type: varchar
+#           - name: pmata
+#             data_type: varchar
+#           - name: mstae
+#             data_type: varchar
+#           - name: mstav
+#             data_type: varchar
+#           - name: mstde
+#             data_type: date
+#           - name: mstdv
+#             data_type: date
+#           - name: taklv
+#             data_type: varchar
+#           - name: rbnrm
+#             data_type: varchar
+#           - name: mhdrz
+#             data_type: number
+#           - name: mhdhb
+#             data_type: number
+#           - name: mhdlp
+#             data_type: number
+#           - name: inhme
+#             data_type: varchar
+#           - name: inhal
+#             data_type: number
+#           - name: vpreh
+#             data_type: number
+#           - name: etiag
+#             data_type: varchar
+#           - name: inhbr
+#             data_type: number
+#           - name: cmeth
+#             data_type: varchar
+#           - name: cuobf
+#             data_type: number
+#           - name: kzumw
+#             data_type: varchar
+#           - name: kosch
+#             data_type: varchar
+#           - name: sprof
+#             data_type: varchar
+#           - name: nrfhg
+#             data_type: varchar
+#           - name: mfrpn
+#             data_type: varchar
+#           - name: mfrnr
+#             data_type: varchar
+#           - name: bmatn
+#             data_type: varchar
+#           - name: mprof
+#             data_type: varchar
+#           - name: kzwsm
+#             data_type: varchar
+#           - name: saity
+#             data_type: varchar
+#           - name: profl
+#             data_type: varchar
+#           - name: ihivi
+#             data_type: varchar
+#           - name: iloos
+#             data_type: varchar
+#           - name: serlv
+#             data_type: varchar
+#           - name: kzgvh
+#             data_type: varchar
+#           - name: xgchp
+#             data_type: varchar
+#           - name: kzeff
+#             data_type: varchar
+#           - name: compl
+#             data_type: number
+#           - name: iprkz
+#             data_type: varchar
+#           - name: rdmhd
+#             data_type: varchar
+#           - name: przus
+#             data_type: varchar
+#           - name: mtpos_mara
+#             data_type: varchar
+#           - name: bflme
+#             data_type: varchar
+#           - name: zz_mvgr1
+#             data_type: varchar
+#           - name: zz_mvgr2
+#             data_type: varchar
+#           - name: zz_mvgr3
+#             data_type: varchar
+#           - name: zz_mvgr4
+#             data_type: varchar
+#           - name: zz_mvgr5
+#             data_type: varchar
+#           - name: zz_technology
+#             data_type: varchar
+#           - name: zz_color
+#             data_type: varchar
+#           - name: zz_stack_factor
+#             data_type: varchar
+#           - name: zz_mfgsource
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_material_text
+#         columns:
+#           - name: matnr
+#             data_type: varchar
+#           - name: spras
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_mega_brand_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: mvgr4
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_profit_center
+#         columns:
+#           - name: kokrs
+#             data_type: varchar
+#           - name: prctr
+#             data_type: varchar
+#           - name: dateto
+#             data_type: date
+#           - name: datefrom
+#             data_type: date
+#           - name: verak
+#             data_type: varchar
+#           - name: waers
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_profit_center_text
+#         columns:
+#           - name: langu
+#             data_type: varchar
+#           - name: kokrs
+#             data_type: varchar
+#           - name: prctr
+#             data_type: varchar
+#           - name: dateto
+#             data_type: date
+#           - name: datefrom
+#             data_type: date
+#           - name: txtsh
+#             data_type: varchar
+#           - name: txtmd
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_put_up_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: mvgr3
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_sales_group_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: vkgrp
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_sales_office_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: vkbur
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_sales_org
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: vkorg
+#             data_type: varchar
+#           - name: waers
+#             data_type: varchar
+#           - name: bukrs
+#             data_type: varchar
+#           - name: kunnr
+#             data_type: varchar
+#           - name: land1
+#             data_type: varchar
+#           - name: waers1
+#             data_type: varchar
+#           - name: periv
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_sales_org_text
+#         columns:
+#           - name: mandt
+#             data_type: varchar
+#           - name: spras
+#             data_type: varchar
+#           - name: vkorg
+#             data_type: varchar
+#           - name: vtext
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_tcurr
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: kurst
+#             data_type: varchar
+#           - name: fcurr
+#             data_type: varchar
+#           - name: tcurr
+#             data_type: varchar
+#           - name: gdatu
+#             data_type: varchar
+#           - name: ukurs
+#             data_type: number
+#           - name: ffact
+#             data_type: number
+#           - name: tfact
+#             data_type: number
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+
+#       - name: sdl_sap_ecc_variant_text
+#         columns:
+#           - name: mandt
+#             data_type: number
+#           - name: spras
+#             data_type: varchar
+#           - name: mvgr2
+#             data_type: varchar
+#           - name: bezei
+#             data_type: varchar
+#           - name: crt_dttm
+#             data_type: timestamp_ntz
+#           - name: updt_dttm
+#             data_type: timestamp_ntz
+#       - name: sdl_mds_ap_company_dim
+
+#   - name: aspitg_integration
+#     schema: aspitg_integration
+#     quoting:
+#       database: false
+#       schema: false
+#       identifier: false
+#     tables:
+#     - name : itg_crncy_conv 
