@@ -6,9 +6,7 @@
     )
 }}
 
-with 
-
-source as (
+with source as (
 
     select * from {{ source('aspsdl_raw', 'sdl_cust_sls_attr') }}
 
