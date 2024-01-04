@@ -1,0 +1,671 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_sap_bw_0account
+        columns:
+          - name: chrt_accts
+            data_type: varchar
+          - name: account
+            data_type: varchar
+          - name: objvers
+            data_type: varchar
+          - name: changed
+            data_type: varchar
+          - name: bal_flag
+            data_type: varchar
+          - name: cstel_flag
+            data_type: varchar
+          - name: glacc_flag
+            data_type: varchar
+          - name: logsys
+            data_type: varchar
+          - name: sem_posit
+            data_type: varchar
+          - name: zbravol1
+            data_type: varchar
+          - name: zbravol2
+            data_type: varchar
+          - name: zbravol3
+            data_type: varchar
+          - name: zbravol4
+            data_type: varchar
+          - name: zbravol5
+            data_type: varchar
+          - name: glacctext
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_bw_dna_material_bomlist
+        columns:
+          - name: zbomno
+            data_type: varchar
+          - name: plant
+            data_type: varchar
+          - name: material
+            data_type: varchar
+          - name: component
+            data_type: varchar
+          - name: createdon
+            data_type: varchar
+          - name: validfrom
+            data_type: varchar
+          - name: validto
+            data_type: varchar
+          - name: zvlfromc
+            data_type: varchar
+          - name: zvltoi
+            data_type: varchar
+          - name: id_credat
+            data_type: varchar
+          - name: zcoqty
+            data_type: varchar
+          - name: comp_scrap
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: recordmode
+            data_type: varchar
+          - name: zhdqty
+            data_type: varchar
+          - name: unit
+            data_type: varchar
+          - name: matl_type
+            data_type: varchar
+          - name: zmat_type
+            data_type: varchar
+          - name: salesorg
+            data_type: varchar
+          - name: zstlan
+            data_type: varchar
+          - name: zstlal
+            data_type: varchar
+          - name: zstlst
+            data_type: varchar
+          - name: zz_tp
+            data_type: varchar
+          - name: zz_cp
+            data_type: varchar
+          - name: zfmnge
+            data_type: varchar
+          - name: zausch
+            data_type: varchar
+          - name: zuposz
+            data_type: varchar
+          - name: zmaktx
+            data_type: varchar
+          - name: zupmng
+            data_type: varchar
+          - name: zlosbs
+            data_type: varchar
+          - name: zlosvn
+            data_type: varchar
+          - name: znlfzt
+            data_type: varchar
+          - name: zverti
+            data_type: varchar
+          - name: znlfzv
+            data_type: varchar
+          - name: znlfmv
+            data_type: varchar
+          - name: zzausch
+            data_type: varchar
+          - name: zavoau
+            data_type: varchar
+          - name: znlfzv1
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_bw_material_plant_text
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: mat_plant
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_bw_material_sales_text
+        columns:
+          - name: salesorg
+            data_type: varchar
+          - name: distr_chan
+            data_type: varchar
+          - name: mat_sales
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: crt_dttm
+            data_type: date
+          - name: updt_dttm
+            data_type: date
+
+      - name: sdl_sap_bw_plant_attr
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: logsys
+            data_type: varchar
+          - name: purch_org
+            data_type: varchar
+          - name: region
+            data_type: varchar
+          - name: comp_code
+            data_type: varchar
+          - name: factcal_id
+            data_type: varchar
+          - name: zmarclust
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_bw_plant_text
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: txtlg
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_ecc_account_text
+        columns:
+          - name: chrt_accts
+            data_type: varchar
+          - name: account
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtsh
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_ecc_material_plant
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: mat_plant
+            data_type: varchar
+          - name: abckey
+            data_type: varchar
+          - name: del_flag
+            data_type: varchar
+          - name: dismm
+            data_type: varchar
+          - name: gr_pr_time
+            data_type: number
+          - name: mrp_contrl
+            data_type: varchar
+          - name: stge_pd_un
+            data_type: varchar
+          - name: plnd_delry
+            data_type: number
+          - name: prodsched
+            data_type: varchar
+          - name: co_area
+            data_type: varchar
+          - name: profit_ctr
+            data_type: varchar
+          - name: pur_group
+            data_type: varchar
+          - name: replentime
+            data_type: number
+          - name: rpa_qtyuom
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: val_class
+            data_type: varchar
+          - name: currency
+            data_type: varchar
+          - name: g_avv040
+            data_type: number
+          - name: zsproctyp
+            data_type: varchar
+          - name: zminlot
+            data_type: number
+          - name: zrndgval
+            data_type: number
+          - name: material
+            data_type: varchar
+          - name: vendor
+            data_type: varchar
+          - name: zproctyp
+            data_type: varchar
+          - name: zprdcssor
+            data_type: varchar
+          - name: zbaseqtyb
+            data_type: number
+          - name: zcostlotb
+            data_type: number
+          - name: zladgr
+            data_type: varchar
+          - name: zitark
+            data_type: varchar
+          - name: zavl_chk
+            data_type: varchar
+          - name: zmmppstat
+            data_type: varchar
+          - name: zkautb
+            data_type: varchar
+          - name: stocktype
+            data_type: varchar
+          - name: zsrlt_ind
+            data_type: varchar
+          - name: zusequ
+            data_type: varchar
+          - name: zdisgr
+            data_type: varchar
+          - name: zreord
+            data_type: number
+          - name: zfxhor
+            data_type: number
+          - name: zlfrhy
+            data_type: varchar
+          - name: zlotsz
+            data_type: varchar
+          - name: zbstma
+            data_type: number
+          - name: zbstfe
+            data_type: number
+          - name: zmabst
+            data_type: number
+          - name: ztakzt
+            data_type: varchar
+          - name: zkzech
+            data_type: varchar
+          - name: zlgpro
+            data_type: varchar
+          - name: zrgekz
+            data_type: varchar
+          - name: zlgfsb
+            data_type: varchar
+          - name: zplan_cal
+            data_type: varchar
+          - name: zfhori
+            data_type: varchar
+          - name: eisbe_qty
+            data_type: number
+          - name: zrwpro
+            data_type: varchar
+          - name: zper_ind
+            data_type: varchar
+          - name: zstrgr
+            data_type: varchar
+          - name: zvrmod
+            data_type: varchar
+          - name: zvint1
+            data_type: number
+          - name: zvint2
+            data_type: number
+          - name: zaltsl
+            data_type: varchar
+          - name: zfrtme
+            data_type: varchar
+          - name: zsfcpf
+            data_type: varchar
+          - name: undelivtol
+            data_type: varchar
+          - name: ovdelivtol
+            data_type: varchar
+          - name: zausme
+            data_type: varchar
+          - name: zabcin
+            data_type: varchar
+          - name: zins_int
+            data_type: varchar
+          - name: zssqss
+            data_type: varchar
+          - name: zcert_typ
+            data_type: varchar
+          - name: zqssys
+            data_type: varchar
+          - name: zsobsk
+            data_type: varchar
+          - name: zawsls
+            data_type: varchar
+          - name: price_ctrl
+            data_type: varchar
+          - name: price_avg
+            data_type: number
+          - name: zdevalind
+            data_type: number
+          - name: zekalr
+            data_type: varchar
+          - name: origingrp
+            data_type: varchar
+          - name: zorig_ind
+            data_type: varchar
+          - name: zpln_prc
+            data_type: number
+          - name: zpln_prc1
+            data_type: number
+          - name: zpprc1dat
+            data_type: date
+          - name: zkosgr
+            data_type: varchar
+          - name: price_unit
+            data_type: number
+          - name: zmrp_ctl
+            data_type: varchar
+          - name: zlaunchd
+            data_type: date
+          - name: znpi_ind
+            data_type: varchar
+          - name: zprv_prc
+            data_type: number
+          - name: zpln_prc2
+            data_type: number
+          - name: zpprc2dat
+            data_type: date
+          - name: zpln_prc3
+            data_type: number
+          - name: zpprc3dat
+            data_type: date
+          - name: zlaunchw
+            data_type: number
+          - name: zlaunchmt
+            data_type: number
+          - name: zskuseg
+            data_type: varchar
+          - name: zsuccecsr
+            data_type: varchar
+          - name: zsui_ind
+            data_type: varchar
+          - name: ztmarkup
+            data_type: number
+          - name: zimarkup
+            data_type: number
+          - name: zmdactind
+            data_type: varchar
+          - name: zsnp_plnr
+            data_type: varchar
+          - name: ztrp_plnr
+            data_type: varchar
+          - name: ztlb_swch
+            data_type: varchar
+          - name: zmin_stck
+            data_type: varchar
+          - name: zmax_stck
+            data_type: varchar
+          - name: zrfs_ind
+            data_type: varchar
+          - name: zexpiry
+            data_type: varchar
+          - name: zdmd_plnr
+            data_type: varchar
+          - name: zdmd_prof
+            data_type: varchar
+          - name: zday_supl
+            data_type: varchar
+          - name: zmin_shlf
+            data_type: varchar
+          - name: zgi_prcet
+            data_type: varchar
+          - name: zppds_hzn
+            data_type: varchar
+          - name: zserv_lev
+            data_type: number
+          - name: zzncost
+            data_type: varchar
+          - name: zmmstd
+            data_type: date
+          - name: zpstat
+            data_type: varchar
+          - name: zrondval
+            data_type: number
+          - name: zsnpph
+            data_type: varchar
+          - name: zsnpphp
+            data_type: varchar
+          - name: zsstkres
+            data_type: varchar
+          - name: zstkth
+            data_type: varchar
+          - name: zstkthp
+            data_type: varchar
+          - name: zreglic
+            data_type: varchar
+          - name: zmsdpsbm
+            data_type: varchar
+          - name: zschkhor
+            data_type: number
+          - name: zreqctyp
+            data_type: number
+          - name: zreqcflg
+            data_type: varchar
+          - name: zpegpmax
+            data_type: number
+          - name: zdplpu
+            data_type: varchar
+          - name: zdplfsso
+            data_type: varchar
+          - name: zdplfsfc
+            data_type: varchar
+          - name: zatdsp
+            data_type: varchar
+          - name: zatddm
+            data_type: varchar
+          - name: zpegstatg
+            data_type: number
+          - name: zfedem
+            data_type: number
+          - name: zdplfs
+            data_type: varchar
+          - name: zsnppullh
+            data_type: number
+          - name: zsnppushh
+            data_type: number
+          - name: apo_prdcst
+            data_type: number
+          - name: zfutmax
+            data_type: number
+          - name: zpastmax
+            data_type: number
+          - name: apo_scost
+            data_type: number
+          - name: unit
+            data_type: varchar
+          - name: apo_bstfe
+            data_type: number
+          - name: apo_lsexct
+            data_type: varchar
+          - name: zpervr
+            data_type: varchar
+          - name: apo_numper
+            data_type: number
+          - name: zppdshozn
+            data_type: number
+          - name: zz_expiry
+            data_type: varchar
+          - name: apo_pplnnr
+            data_type: varchar
+          - name: zsnpshipf
+            data_type: varchar
+          - name: zlapen
+            data_type: number
+          - name: zmaxla
+            data_type: number
+          - name: zndpen
+            data_type: number
+          - name: zprodh
+            data_type: number
+          - name: znpi_indr
+            data_type: number
+          - name: zkstdcst
+            data_type: number
+          - name: id_credat
+            data_type: date
+          - name: zprdtype
+            data_type: number
+          - name: zparent
+            data_type: varchar
+          - name: zcpy_hist
+            data_type: varchar
+          - name: zabc
+            data_type: varchar
+          - name: zfc_indc
+            data_type: varchar
+          - name: zjitind
+            data_type: varchar
+          - name: zrpltm_s
+            data_type: number
+          - name: zminstk_s
+            data_type: varchar
+          - name: zmaxstk_s
+            data_type: varchar
+          - name: zdayspl_s
+            data_type: varchar
+          - name: zservlv_s
+            data_type: number
+          - name: zfedem_s
+            data_type: number
+          - name: fiscvarnt
+            data_type: varchar
+          - name: zcostyear
+            data_type: number
+          - name: zfutstpr
+            data_type: number
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_sap_ecc_material_sales
+        columns:
+          - name: salesorg
+            data_type: varchar
+          - name: distr_chan
+            data_type: varchar
+          - name: mat_sales
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: matl_grp_1
+            data_type: varchar
+          - name: prod_hier
+            data_type: varchar
+          - name: prov_group
+            data_type: varchar
+          - name: rebate_grp
+            data_type: varchar
+          - name: ph_refnr
+            data_type: varchar
+          - name: del_flag
+            data_type: varchar
+          - name: matl_grp_2
+            data_type: varchar
+          - name: matl_grp_3
+            data_type: varchar
+          - name: matl_grp_4
+            data_type: varchar
+          - name: matl_grp_5
+            data_type: varchar
+          - name: mat_stgrp
+            data_type: varchar
+          - name: rt_assgrad
+            data_type: varchar
+          - name: af_vasmg
+            data_type: varchar
+          - name: af_prind
+            data_type: varchar
+          - name: zpredecsr
+            data_type: varchar
+          - name: zskuid
+            data_type: varchar
+          - name: zprallocd
+            data_type: varchar
+          - name: zpackpcs
+            data_type: number
+          - name: zean
+            data_type: varchar
+          - name: zoldmatl
+            data_type: varchar
+          - name: zd_plant
+            data_type: varchar
+          - name: zchdcind
+            data_type: varchar
+          - name: zprc_grp
+            data_type: varchar
+          - name: accnt_asgn
+            data_type: varchar
+          - name: zitm_cgrp
+            data_type: varchar
+          - name: zmin_qty
+            data_type: number
+          - name: zmin_dqty
+            data_type: number
+          - name: zdel_unit
+            data_type: number
+          - name: zschme
+            data_type: varchar
+          - name: zvrkme
+            data_type: varchar
+          - name: zlaunchd
+            data_type: date
+          - name: znpi_ind
+            data_type: varchar
+          - name: zlmat_gr1
+            data_type: varchar
+          - name: zlmat_gr2
+            data_type: varchar
+          - name: zlmat_gr3
+            data_type: varchar
+          - name: zlmat_gr4
+            data_type: varchar
+          - name: zlmat_gr5
+            data_type: varchar
+          - name: zlmat_gr6
+            data_type: varchar
+          - name: znpi_indr
+            data_type: number
+          - name: zcpy_hist
+            data_type: varchar
+          - name: zabc
+            data_type: varchar
+          - name: zfc_indc
+            data_type: varchar
+          - name: zprdtype
+            data_type: number
+          - name: zparent
+            data_type: varchar
+          - name: crt_dttm
+            data_type: timestamp_ntz
+          - name: updt_dttm
+            data_type: timestamp_ntz
