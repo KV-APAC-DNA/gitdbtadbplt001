@@ -669,3 +669,11 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
+  - name: aspedw_integration
+    schema: snapaspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : edw_sap_matl_num_ean_mapping 
