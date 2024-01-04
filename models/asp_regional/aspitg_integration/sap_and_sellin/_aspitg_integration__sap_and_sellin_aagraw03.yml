@@ -1,0 +1,102 @@
+version: 1
+
+models:
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_0account
+    config: 
+      alias: vw_stg_sdl_sap_bw_0account
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["chrt_accts","account","objvers"]
+             name: TRATBL_vw_stg_sdl_sap_bw_0account_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_dna_material_bomlist
+    config: 
+      alias: vw_stg_sdl_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","zbomno","material","component","createdon","validfrom","validto","zvlfromc","zvltoi"]
+             name: TRATBL_vw_stg_sdl_sap_bw_dna_material_bomlist_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_material_plant_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_material_plant_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","mat_plant","langu"]
+             name: TRATBL_vw_stg_sdl_sap_bw_material_plant_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_material_sales_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_material_sales_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["salesorg","distr_chan","mat_sales","langu"]
+             name: TRATBL_vw_stg_sdl_sap_bw_material_sales_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_attr
+    config: 
+      alias: vw_stg_sdl_sap_bw_plant_attr
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant"]
+             name: TRATBL_vw_stg_sdl_sap_bw_plant_attr_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_plant_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant"]
+             name: TRATBL_vw_stg_sdl_sap_bw_plant_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_account_text
+    config: 
+      alias: vw_stg_sdl_sap_ecc_account_text
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["chrt_accts","account","langu"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_account_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_plant
+    config: 
+      alias: vw_stg_sdl_sap_ecc_material_plant
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","mat_plant"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_material_plant_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_sales
+    config: 
+      alias: vw_stg_sdl_sap_ecc_material_sales
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["salesorg","distr_chan","mat_sales"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_material_sales_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
