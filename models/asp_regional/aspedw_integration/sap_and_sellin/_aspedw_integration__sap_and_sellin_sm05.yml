@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_inventory_fact
+    config:
+      alias: edw_inventory_fact
+      tags: ["daily","sap_ecc_master"]  
