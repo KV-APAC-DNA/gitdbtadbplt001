@@ -3,22 +3,22 @@ models:
     config:
       alias: edw_copa_trans_fact
       tags: ["daily","sap_ecc_master"]  
-#   - name: aspedw_integration__edw_code_descriptions
-#     config:
-#       alias: edw_code_descriptions
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_company_dim
-#     config:
-#       alias: edw_company_dim
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_crncy_exch
-#     config:
-#       alias: edw_crncy_exch
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_customer_base_dim
-#     config:
-#       alias: edw_customer_base_dim
-#       tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__edw_gch_geographyhierarchy
+    config:
+      alias: edw_gch_geographyhierarchy
+      tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__edw_gch_customerhierarchy
+    config:
+      alias: edw_gch_customerhierarchy
+      tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__edw_gch_producthierarchy
+    config:
+      alias: edw_gch_producthierarchy
+      tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__edw_edw_account_ciw_dim
+    config:
+      alias: edw_account_ciw_dim
+      tags: ["daily","sap_ecc_master"]
 #   - name: aspedw_integration__edw_customer_sales_dim
 #     config:
 #       alias: edw_customer_sales_dim

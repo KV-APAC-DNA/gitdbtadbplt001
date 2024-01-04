@@ -2,19 +2,19 @@ models:
   - name: aspwks_integration__WKS_itg_copa_trans 
     config: 
       alias: WKS_itg_copa_trans
-      tags: ["daily","sap_ecc_master"]
-#   - name: aspwks_integration__wks_edw_code_descriptions
-#     config: 
-#       alias: wks_edw_code_descriptions
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspwks_integration__wks_edw_company_dim
-#     config: 
-#       alias: wks_edw_company_dim
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspwks_integration__wks_edw_customer_base_dim
-#     config: 
-#       alias: wks_edw_customer_base_dim
-#       tags: ["daily","sap_ecc_master"]
+      tags: ["daily",""]
+  - name: aspwks_integration__wks_edw_gch_geographyhierarchy
+    config: 
+      alias: wks_edw_gch_geographyhierarchy
+      tags: ["daily",""]
+  - name: aspwks_integration__wks_edw_gch_customerhierarchy
+    config: 
+      alias: wks_edw_gch_customerhierarchy
+      tags: ["daily",""]
+  - name: aspwks_integration__wks_edw_gch_producthierarchy
+    config: 
+      alias: wks_edw_gch_producthierarchy
+      tags: ["daily",""]
 #   - name: aspwks_integration__wks_edw_customer_sales_dim
 #     config: 
 #       alias: wks_edw_customer_sales_dim

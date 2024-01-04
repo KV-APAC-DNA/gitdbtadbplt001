@@ -4,19 +4,19 @@ models:
   - name: aspitg_integration__vw_stg_sdl_sap_bw_zocopa10
     config:
       alias: sdl_sap_bw_zocopa10
-      tags: ["daily","sap_ecc_master","sap_ecc"]
+      tags: ["daily","",""]
   - name: aspitg_integration__itg_copa_trans
     config:
       alias: itg_copa_trans
-      tags: ["daily","sap_ecc_master","sap_ecc"]
-  # - name: aspitg_integration__itg_base_prod_text
-  #   config:
-  #     alias: itg_base_prod_text
-  #     tags: ["daily","sap_ecc_master"]
-  # - name: aspitg_integration__itg_brnd_text
-  #   config:
-  #     alias: itg_brnd_text
-  #     tags: ["daily","sap_ecc_master"]
+      tags: ["daily","",""]
+  - name: aspitg_integration__itg_mds_ap_greenlight_skus
+    config:
+      alias: itg_mds_ap_greenlight_skus
+      tags: ["daily",""]
+  - name: aspitg_integration__itg_account_attr_ciw
+    config:
+      alias: itg_account_attr_ciw
+      tags: ["daily",""]
   # - name: aspitg_integration__itg_code_descriptions
   #   config:
   #     alias: itg_code_descriptions
