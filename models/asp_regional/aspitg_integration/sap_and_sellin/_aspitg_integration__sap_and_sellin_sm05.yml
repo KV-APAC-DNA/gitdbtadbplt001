@@ -21,3 +21,19 @@ models:
     config:
       alias: itg_invnt
       tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_zc_sd
+    config:
+      alias: vw_stg_sdl_sap_bw_zc_sd
+      tags: ["daily","sap_ecc_master"]
+
+
+  - name: aspitg_integration__itg_invc_sls
+    config:
+      alias: itg_invc_sls
+      tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__sdl_sap_bw_delivery
+    config:
+      alias: vw_stg_sdl_sap_bw_delivery
+      tags: ["daily","sap_ecc_master"]

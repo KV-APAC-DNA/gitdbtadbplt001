@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: aspsdl_raw
-    database: "{{ env_var('DBT_ENV_DB') }}"
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: aspsdl_raw
     quoting:
       database: false
@@ -11,3 +11,5 @@ sources:
     tables:
       - name: sdl_sap_bw_copa17
       - name: sdl_sap_bw_inventory
+      - name: sdl_sap_bw_zc_sd
+      - name: sdl_sap_bw_delivery

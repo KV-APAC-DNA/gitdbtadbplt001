@@ -18,3 +18,13 @@ models:
     config: 
       alias: wks_edw_inventory_fact
       tags: ["daily","sap_ecc_master"]
+
+  - name: aspwks_integration__wks_itg_invc_sls
+    config: 
+      alias: wks_itg_invc_sls
+      tags: ["daily","sap_ecc_master"]
+
+  - name: aspwks_integration__wks_edw_invc_fact
+    config: 
+      alias: wks_edw_invc_fact
+      tags: ["daily","sap_ecc_master"]
