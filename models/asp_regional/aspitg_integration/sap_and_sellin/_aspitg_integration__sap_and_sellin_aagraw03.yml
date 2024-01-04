@@ -100,3 +100,39 @@ models:
              config:
                store_failures: true
                schema: aspwks_integration
+  - name: aspitg_integration__itg_acct
+    config:
+      alias: itg_acct
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_acct_text
+    config:
+      alias: itg_acct_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_plnt
+    config:
+      alias: itg_matl_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_plnt_text
+    config:
+      alias: itg_matl_plnt_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_sls
+    config:
+      alias: itg_matl_sls
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_sls_text
+    config:
+      alias: itg_matl_sls_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_plnt
+    config:
+      alias: itg_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_plnt_text
+    config:
+      alias: itg_plnt_text
+      tags: ["daily","sap_bw_master"]   
+  - name: aspitg_integration__itg_sap_bw_dna_material_bomlist
+    config:
+      alias: itg_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master"]                                               
