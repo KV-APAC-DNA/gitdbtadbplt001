@@ -2,7 +2,7 @@
     config(
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="table",
-        transient=true
+        transient=false
     )
 }}
 
