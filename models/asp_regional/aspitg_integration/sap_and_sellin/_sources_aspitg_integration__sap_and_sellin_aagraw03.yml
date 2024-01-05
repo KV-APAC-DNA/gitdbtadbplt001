@@ -9,6 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_sap_ecc_material_plant
+      - name: sdl_sap_ecc_material_sales
       - name: sdl_sap_ecc_account_text
         columns:
           - name: chrt_accts
