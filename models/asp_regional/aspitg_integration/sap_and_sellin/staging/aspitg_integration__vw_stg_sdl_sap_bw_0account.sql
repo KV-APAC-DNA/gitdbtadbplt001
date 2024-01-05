@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_0account') }}
+    select * from {{ source('bwa_access', 'bwa_account_attr') }}
 
 ),
 
@@ -11,22 +11,21 @@ final as (
     select
         chrt_accts,
         account,
-        objvers,
-        changed,
+        'A' as objvers,
+        '' as changed,
         bal_flag,
         cstel_flag,
         glacc_flag,
         logsys,
         sem_posit,
-        zbravol1,
-        zbravol2,
-        zbravol3,
-        zbravol4,
-        zbravol5,
-        glacctext,
-        crt_dttm,
-        updt_dttm
-
+        bic_zbravol1 as _bic_zbravol1,
+        bic_zbravol2 as _bic_zbravol2,
+        bic_zbravol3 as _bic_zbravol3,
+        bic_zbravol4 as _bic_zbravol4,
+        bic_zbravol5 as _bic_zbravol5,
+        bic_zbravol6 as glacctext,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 
 )

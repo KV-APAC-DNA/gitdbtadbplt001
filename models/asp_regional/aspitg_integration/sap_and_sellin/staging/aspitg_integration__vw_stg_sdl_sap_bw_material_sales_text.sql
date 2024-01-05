@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_material_sales_text') }}
+    select * from {{ source('bwa_access', 'bwa_material_sales_text') }}
 
 ),
 
@@ -14,8 +14,8 @@ final as (
         mat_sales,
         langu,
         txtmd,
-        crt_dttm,
-        updt_dttm
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
 
     from source
 

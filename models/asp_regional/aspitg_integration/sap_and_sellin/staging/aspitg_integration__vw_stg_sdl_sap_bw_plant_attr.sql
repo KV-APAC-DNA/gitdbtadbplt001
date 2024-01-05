@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_plant_attr') }}
+    select * from {{ source('bwa_access', 'bwa_plant_attr') }}
 
 ),
 
@@ -16,9 +16,9 @@ final as (
         region,
         comp_code,
         factcal_id,
-        zmarclust,
-        crt_dttm,
-        updt_dttm
+        bic_zmarclust as zmarclust,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
 
     from source
 
