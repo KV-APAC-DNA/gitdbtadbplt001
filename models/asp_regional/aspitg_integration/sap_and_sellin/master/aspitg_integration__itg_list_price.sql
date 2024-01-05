@@ -1,0 +1,36 @@
+with source as(
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_price_list') }}
+),
+final as(
+    SELECT
+  SDL.SLS_ORG,
+  SDL.MATERIAL,
+  SDL.COND_REC_NO,
+  SDL.MATL_GRP,
+  SDL.VALID_TO,
+  SDL.KNART,
+  SDL.DT_FROM,
+  CAST(SDL.AMOUNT AS DECIMAL(20, 4)) AS AMOUNT,
+  SDL.CURRENCY,
+  SDL.UNIT,
+  SDL.RECORD_MODE,
+  SDL.COMP_CD,
+  SDL.PRICE_UNIT,
+  SDL.ZCURRFPA,
+  SDL.CDL_DTTM,
+  CURRENT_TIMESTAMP(),
+  CURRENT_TIMESTAMP(),
+  SDL.file_name
+FROM source AS SDL
+--LEFT JOIN {{ ref('aspitg_integration__itg_list_price') }} AS ITG
+  ON TRIM(SDL.SLS_ORG) = TRIM(ITG.SLS_ORG)
+  AND LTRIM(SDL.MATERIAL, 0) = LTRIM(ITG.MATERIAL, 0)
+  AND ITG.COND_REC_NO = ITG.COND_REC_NO
+  AND TO_DATE(SDL.VALID_TO, 'YYYYMMDD') = TO_DATE(ITG.VALID_TO, 'YYYYMMDD')
+  AND TO_DATE(SDL.DT_FROM, 'YYYYMMDD') = TO_DATE(ITG.DT_FROM, 'YYYYMMDD')
+  AND SDL.AMOUNT = ITG.AMOUNT
+WHERE
+  ITG.MATERIAL IS NULL;
+)
+
+select * from final

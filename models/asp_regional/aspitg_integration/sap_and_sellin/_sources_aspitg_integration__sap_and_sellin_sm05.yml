@@ -13,3 +13,13 @@ sources:
       - name: sdl_sap_bw_inventory
       - name: sdl_sap_bw_zc_sd
       - name: sdl_sap_bw_delivery
+
+  - name: BWA_ACCESS
+    database: DEV_CDL_APACIBS
+    schema: BWA_ACCESS
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: BWA_LIST_PRICE

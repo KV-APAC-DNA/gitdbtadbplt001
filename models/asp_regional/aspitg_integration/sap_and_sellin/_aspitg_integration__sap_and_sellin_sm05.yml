@@ -37,3 +37,8 @@ models:
     config:
       alias: vw_stg_sdl_sap_bw_delivery
       tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_price_list
+    config:
+      alias: vw_stg_sdl_sap_bw_price_list
+      tags: ["daily","sap_ecc_master"]
