@@ -8,3 +8,8 @@ models:
     config:
       alias: edw_invoice_fact
       tags: ["daily","sap_ecc_master"]  
+
+  - name: aspedw_integration__edw_material_uom
+    config:
+      alias: edw_material_uom
+      tags: ["daily","sap_ecc_master"]  

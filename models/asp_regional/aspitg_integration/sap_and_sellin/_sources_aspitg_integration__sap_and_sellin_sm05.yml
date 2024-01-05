@@ -13,6 +13,7 @@ sources:
       - name: sdl_sap_bw_inventory
       - name: sdl_sap_bw_zc_sd
       - name: sdl_sap_bw_delivery
+      - name: sdl_sap_billing_condition
 
   - name: BWA_ACCESS
     database: DEV_CDL_APACIBS
@@ -23,3 +24,14 @@ sources:
       identifier: false
     tables:
       - name: BWA_LIST_PRICE
+      - name: BWA_MATERIAL_UOM
+
+  - name: SNAPASPITG_INTEGRATION
+    database: DEV_DNA_CORE
+    schema: SNAPASPITG_INTEGRATION
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_crncy_mult

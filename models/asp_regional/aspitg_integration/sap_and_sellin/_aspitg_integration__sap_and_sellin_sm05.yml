@@ -42,3 +42,24 @@ models:
     config:
       alias: vw_stg_sdl_sap_bw_price_list
       tags: ["daily","sap_ecc_master"]
+
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_material_uom
+    config:
+      alias: vw_stg_sdl_sap_bw_material_uom
+      tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__itg_material_uom
+    config:
+      alias: itg_material_uom
+      tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_billing_condition
+    config:
+      alias: vw_stg_sdl_sap_billing_condition
+      tags: ["daily","sap_ecc_master"]
+
+  - name: aspitg_integration__itg_sap_billing_condition
+    config:
+      alias: itg_sap_billing_condition
+      tags: ["daily","sap_ecc_master"]
