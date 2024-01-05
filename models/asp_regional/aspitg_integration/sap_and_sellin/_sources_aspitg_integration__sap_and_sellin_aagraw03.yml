@@ -670,7 +670,7 @@ sources:
           - name: updt_dttm
             data_type: timestamp_ntz
   - name: aspedw_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: dev_dna_core
     schema: aspedw_integration
     quoting:
       database: false
