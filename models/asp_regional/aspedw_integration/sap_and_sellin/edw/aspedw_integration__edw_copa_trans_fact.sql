@@ -14,6 +14,11 @@ source as (
     select * from {{ ref('aspitg_integration__itg_copa_trans') }}
 ),
  
+edw_acct_hier as (
+    select * from {{ source('asing012_workspace', 'edw_acct_hier') }}
+),
+
+ 
 final as (
     select
     co_cd,
@@ -24,8 +29,8 @@ final as (
     cust_num,
     div,
     plnt,
-    chrt_acct,
-    acct_num,
+    A.chrt_acct,
+    A.acct_num,
     dstr_chnl,
     fisc_yr_var,
     vers,
@@ -63,23 +68,24 @@ final as (
     matl_sls,
     prod_hier,
     mgmt_entity,
-    (fx_amt_cntl_area_crncy * multiplication_factor) AS fx_amt_cntl_area_crncy,
-    (amt_cntl_area_crncy * multiplication_factor) AS amt_cntl_area_crncy,
+    fx_amt_cntl_area_crncy * multiplication_factor as fx_amt_cntl_area_crncy,
+    amt_cntl_area_crncy * multiplication_factor as amt_cntl_area_crncy,
     crncy_key,
-    (amt_obj_crncy * multiplication_factor) AS amt_obj_crncy,
+    amt_obj_crncy * multiplication_factor as amt_obj_crncy,
     obj_crncy_co_obj,
-    (grs_amt_trans_crncy * multiplication_factor) AS grs_amt_trans_crncy,
+    grs_amt_trans_crncy * multiplication_factor as grs_amt_trans_crncy,
     crncy_key_trans_crncy,
-    (qty * multiplication_factor) AS qty,
+    qty * multiplication_factor as qty,
     uom,
-    (sls_vol * multiplication_factor) AS sls_vol,
+    sls_vol * multiplication_factor as sls_vol,
     un_sls_vol,
     measure_name,
     measure_code,
-    --A.crt_dttm,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source
+  from source as a
+  inner join edw_acct_hier as b
+    on ltrim(rtrim(a.acct_num)) = ltrim(rtrim(b.acct_num))
 )
 
 select * from final

@@ -2,39 +2,39 @@ models:
   - name: aspedw_integration__edw_copa_trans_fact
     config:
       alias: edw_copa_trans_fact
-      tags: ["daily","sap_ecc_master"]  
+      tags: ["daily",""]  
   - name: aspedw_integration__edw_gch_geographyhierarchy
     config:
       alias: edw_gch_geographyhierarchy
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily",""]
   - name: aspedw_integration__edw_gch_customerhierarchy
     config:
       alias: edw_gch_customerhierarchy
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily",""]
   - name: aspedw_integration__edw_gch_producthierarchy
     config:
       alias: edw_gch_producthierarchy
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily",""]
   - name: aspedw_integration__edw_edw_account_ciw_dim
     config:
       alias: edw_account_ciw_dim
-      tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_customer_sales_dim
-#     config:
-#       alias: edw_customer_sales_dim
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_dstrbtn_chnl
-#     config:
-#       alias: edw_dstrbtn_chnl
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_ecc_marm
-#     config:
-#       alias: edw_ecc_marm
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_ecc_standard_cost
-#     config:
-#       alias: edw_ecc_standard_cost
-#       tags: ["daily","sap_ecc_master"]
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_billing_fact
+    config:
+      alias: edw_billing_fact
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_sales_order_fact
+    config:
+      alias: edw_sales_order_fact
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_material_plant_dim
+    config:
+      alias: edw_material_plant_dim
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_plant_dim
+    config:
+      alias: edw_plant_dim
+      tags: ["daily",""]
 #   - name: aspedw_integration__edw_material_dim
 #     config:
 #       alias: edw_material_dim

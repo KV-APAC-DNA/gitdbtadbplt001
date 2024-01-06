@@ -16,6 +16,34 @@ sources:
       - name: sdl_gcch_cust_hier
       - name: sdl_gcgh_geo_hier
       - name: sdl_account_attr_ciw
+      - name: sdl_sap_bw_billing
+      - name: sdl_sap_bw_sales
+  - name: aspitg_integration
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : itg_crncy_mult
+      - name : edw_code_descriptions_manual
+  - name: asing012_workspace 
+    schema: asing012_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : edw_acct_hier
+  - name: snapaspedw_integration 
+    schema: snapaspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : edw_material_plant_dim
+      - name : edw_plant_dim
 
 #       - name: sdl_code_descriptions
 #         columns:

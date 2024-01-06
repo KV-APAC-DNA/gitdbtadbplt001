@@ -1,10 +1,6 @@
 version: 1
 
 models:
-  - name: aspitg_integration__vw_stg_sdl_sap_bw_zocopa10
-    config:
-      alias: sdl_sap_bw_zocopa10
-      tags: ["daily","",""]
   - name: aspitg_integration__itg_copa_trans
     config:
       alias: itg_copa_trans
@@ -17,17 +13,18 @@ models:
     config:
       alias: itg_account_attr_ciw
       tags: ["daily",""]
-  # - name: aspitg_integration__itg_code_descriptions
-  #   config:
-  #     alias: itg_code_descriptions
-  #     tags: ["daily","sap_ecc_master"]
-  # - name: aspitg_integration__itg_comp
-  #   config:
-  #     alias: itg_comp
-  #     tags: ["daily","sap_ecc_master"]
-  # - name: aspitg_integration__itg_comp_text
-  #   config:
-  #     alias: itg_comp_text
+  - name: aspitg_integration__itg_billing_fact
+    config:
+      alias: itg_billing_fact
+      tags: ["daily","sap_bw","rg_s3_to_dna_billing"]
+  - name: aspitg_integration__itg_crncy_mult 
+    config:
+      alias: itg_crncy_mult 
+      tags: ["daily","sap_bw","rg_s3_to_dna_billing"]
+  - name: aspitg_integration__itg_sales_order_fact
+    config:
+      alias: itg_sales_order_fact
+      tags: ["daily","sap_bw","sales_rg_sap_to_dna_s3_framework"]
   # - name: aspitg_integration__itg_crncy_exch
   #   config:
   #     alias: itg_crncy_exch
