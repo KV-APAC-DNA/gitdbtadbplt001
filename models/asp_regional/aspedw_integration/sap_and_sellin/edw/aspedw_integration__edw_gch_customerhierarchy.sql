@@ -1,8 +1,7 @@
 {{
     config(
         sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table",
-        transient= false
+        materialized= "table"
     )
 }}
 
@@ -60,8 +59,8 @@ final as (
   load_key,
   current_timestamp()::timestamp_ntz(9) as crt_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm,
-  null as null,
-  null as null
+  primary_format,
+  distributor_attribute
   from source)
 
 
