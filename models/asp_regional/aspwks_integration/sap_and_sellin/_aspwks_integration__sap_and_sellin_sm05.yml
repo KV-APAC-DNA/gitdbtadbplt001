@@ -2,29 +2,34 @@ models:
   - name: aspwks_integration__wks_itg_copa17_trans
     config: 
       alias: wks_itg_copa17_trans
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
   
   - name: aspwks_integration__wks_edw_copa_plan_fact
     config: 
       alias: wks_edw_copa_plan_fact
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
 
   - name: aspwks_integration__wks_itg_invnt
     config: 
       alias: wks_itg_invnt
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
   
   - name: aspwks_integration__wks_edw_inventory_fact
     config: 
       alias: wks_edw_inventory_fact
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
 
   - name: aspwks_integration__wks_itg_invc_sls
     config: 
       alias: wks_itg_invc_sls
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
 
   - name: aspwks_integration__wks_edw_invc_fact
     config: 
       alias: wks_edw_invc_fact
-      tags: ["daily","sap_ecc_master"]
+      tags: ["daily","sap_bw"]
+
+  - name: aspwks_integration__wks_edw_list_price
+    config: 
+      alias: wks_edw_list_price
+      tags: ["daily","sap_bw"]

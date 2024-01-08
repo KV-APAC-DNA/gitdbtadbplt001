@@ -1,19 +1,26 @@
+{{
+    config(
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+    )
+}}
+
+
 with source as(
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_material_uom') }}
 ),
 final as(
-    SELECT
-  MATERIAL,
-  UNIT,
-  BASE_UOM,
-  RECORDMODE as RECORD_MODE,
-  CAST(UOMZ1D AS DECIMAL(20, 4)) AS UOMZ1D,
-  CAST(UOMN1D AS DECIMAL(20, 4)) AS UOMN1D,
-  CDL_DTTM,
-  CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) AS CRTD_DTTM,
-  CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) AS UPDT_DTTM,
+  select
+  material,
+  unit,
+  base_uom,
+  recordmode as record_mode,
+  CAST(uomz1d AS DECIMAL(20, 4)) AS uomz1d,
+  CAST(uomn1d AS DECIMAL(20, 4)) AS uomn1d,
+  cdl_dttm,
+  current_timestamp()::TIMESTAMP_NTZ(9) AS crtd_dttm,
+  current_timestamp()::TIMESTAMP_NTZ(9) AS updt_dttm,
   file_name
-FROM source
+  from source
 )
 
 select * from final

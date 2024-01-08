@@ -3,7 +3,12 @@
         sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
-
+with source as(
+    select * from {{ ref('aspitg_integration__itg_copa17_trans') }}
+),
+edw_acct_hier as(
+select * from DEV_DNA_CORE.SM05_WORKSPACE.EDW_ACCT_HIER
+)
 SELECT
     fisc_yr_per,
     fisc_yr_vrnt,
@@ -144,9 +149,9 @@ SELECT
       THEN 'QTR4'
       ELSE 'YTD'
     END AS Freq
-  FROM {{ ref('aspitg_integration__itg_copa17_trans') }} as itg_copa17_trans
-  INNER JOIN rg_edw.edw_acct_hier AS B
-    ON LTRIM(RTRIM(rg_itg.itg_copa17_trans.acct_num)) = LTRIM(RTRIM(B.acct_num))
+  FROM source as itg_copa17_trans
+  INNER JOIN edw_acct_hier AS B
+    ON LTRIM(RTRIM(itg_copa17_trans.acct_num)) = LTRIM(RTRIM(B.acct_num))
   GROUP BY
     fisc_yr_per,
     fisc_yr_vrnt,

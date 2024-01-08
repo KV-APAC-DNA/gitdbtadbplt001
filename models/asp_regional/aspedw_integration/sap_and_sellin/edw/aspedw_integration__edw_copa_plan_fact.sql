@@ -6,7 +6,7 @@
 
 
 with source as(
-    select * from {{ ref('aspwks_integration__wks_edw_invc_fact') }}
+    select * from {{ ref('aspwks_integration__wks_edw_copa_plan_fact') }}
 ),
 final as(
 SELECT
@@ -15,5 +15,4 @@ SELECT
     current_timestamp()::timestamp_ntz(9) AS upd_dttm
   FROM source AS A
 )
-
 select * from final
