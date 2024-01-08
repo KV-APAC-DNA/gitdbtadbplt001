@@ -74,78 +74,78 @@ SELECT
     CASE
       WHEN vers = '000'
       THEN 'BP'
-      WHEN CAST(vers AS INT) IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+      WHEN CAST(vers as int) IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
       THEN 'RF'
-      WHEN CAST(vers AS INT) IN (101, 102, 104, 105, 107, 109, 111, 112)
+      WHEN CAST(vers as int) IN (101, 102, 104, 105, 107, 109, 111, 112)
       THEN 'LE'
-      WHEN CAST(vers AS INT) IN (103)
+      WHEN CAST(vers as int) IN (103)
       THEN 'MU'
-      WHEN CAST(vers AS INT) IN (106)
+      WHEN CAST(vers as int) IN (106)
       THEN 'JU'
-      WHEN CAST(vers AS INT) IN (108)
+      WHEN CAST(vers as int) IN (108)
       THEN 'SU'
-      WHEN CAST(vers AS INT) IN (110)
+      WHEN CAST(vers as int) IN (110)
       THEN 'NU'
-      WHEN CAST(vers AS INT) IN (521)
+      WHEN CAST(vers as int) IN (521)
       THEN 'PBP1'
-      WHEN CAST(vers AS INT) IN (522)
+      WHEN CAST(vers as int) IN (522)
       THEN 'PBP2'
-      WHEN CAST(vers AS INT) IN (523)
+      WHEN CAST(vers as int) IN (523)
       THEN 'PBP3'
-      WHEN CAST(vers AS INT) IN (550)
+      WHEN CAST(vers as int) IN (550)
       THEN 'SMT'
-      WHEN CAST(vers AS INT) IN (600)
+      WHEN CAST(vers as int) IN (600)
       THEN 'PPI'
-      WHEN CAST(vers AS INT) IN (800)
+      WHEN CAST(vers as int) IN (800)
       THEN 'PACV'
-      WHEN CAST(vers AS INT) IN (801)
+      WHEN CAST(vers as int) IN (801)
       THEN 'FR'
-      WHEN CAST(vers AS INT) IN (900)
+      WHEN CAST(vers as int) IN (900)
       THEN 'WIAS00'
-      WHEN CAST(vers AS INT) IN (901)
+      WHEN CAST(vers as int) IN (901)
       THEN 'WIS1'
-      WHEN CAST(vers AS INT) IN (902)
+      WHEN CAST(vers as int) IN (902)
       THEN 'WIS2'
-      WHEN CAST(vers AS INT) IN (903)
+      WHEN CAST(vers as int) IN (903)
       THEN 'WIS3'
-      WHEN CAST(vers AS INT) IN (999)
+      WHEN CAST(vers as int) IN (999)
       THEN 'MIV'
       WHEN vers IN ('PMS')
       THEN 'M&SM'
       ELSE 'NOT DEFINED'
     END AS catagory,
     CASE
-      WHEN CAST(vers AS INT) IN (1, 101)
+      WHEN CAST(vers as int) IN (1, 101)
       THEN 'Jan'
-      WHEN CAST(vers AS INT) IN (2, 102)
+      WHEN CAST(vers as int) IN (2, 102)
       THEN 'Feb'
-      WHEN CAST(vers AS INT) IN (3)
+      WHEN CAST(vers as int) IN (3)
       THEN 'Mar'
-      WHEN CAST(vers AS INT) IN (4, 104)
+      WHEN CAST(vers as int) IN (4, 104)
       THEN 'Apr'
-      WHEN CAST(vers AS INT) IN (5, 105)
+      WHEN CAST(vers as int) IN (5, 105)
       THEN 'May'
-      WHEN CAST(vers AS INT) IN (6)
+      WHEN CAST(vers as int) IN (6)
       THEN 'Jun'
-      WHEN CAST(vers AS INT) IN (7, 107)
+      WHEN CAST(vers as int) IN (7, 107)
       THEN 'Jul'
-      WHEN CAST(vers AS INT) IN (8)
+      WHEN CAST(vers as int) IN (8)
       THEN 'Aug'
-      WHEN CAST(vers AS INT) IN (9, 109)
+      WHEN CAST(vers as int) IN (9, 109)
       THEN 'Sep'
-      WHEN CAST(vers AS INT) IN (10)
+      WHEN CAST(vers as int) IN (10)
       THEN 'Oct'
-      WHEN CAST(vers AS INT) IN (11, 111)
+      WHEN CAST(vers as int) IN (11, 111)
       THEN 'Nov'
-      WHEN CAST(vers AS INT) IN (12, 112)
+      WHEN CAST(vers as int) IN (12, 112)
       THEN 'Dec'
-      WHEN CAST(vers AS INT) IN (103)
+      WHEN CAST(vers as int) IN (103)
       THEN 'QTR1'
-      WHEN CAST(vers AS INT) IN (106)
+      WHEN CAST(vers as int) IN (106)
       THEN 'QTR2'
-      WHEN CAST(vers AS INT) IN (108)
+      WHEN CAST(vers as int) IN (108)
       THEN 'QTR3'
-      WHEN CAST(vers AS INT) IN (110)
+      WHEN CAST(vers as int) IN (110)
       THEN 'QTR4'
       ELSE 'YTD'
     END AS Freq

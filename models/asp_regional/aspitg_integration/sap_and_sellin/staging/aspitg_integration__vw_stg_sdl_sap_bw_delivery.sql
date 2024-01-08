@@ -104,7 +104,7 @@ final as(
   zdelqtybu,
   zdlqtycse,
   cdl_dttm as cdl_dttm,
-  current_timestamp()::timestamp_ntz(9) as CURR_DT,
+  current_timestamp()::timestamp_ntz(9) as curr_dt,
   NULL as File_name
   FROM source
 )

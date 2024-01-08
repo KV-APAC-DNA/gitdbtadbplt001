@@ -90,7 +90,7 @@ transformed_2 as (
 ),
 final as (
     select 
-        concat(transformed.material,'_',transformed.sls_org,'_',transformed.cond_rec_no,'_',transformed.dt_from,'_',transformed.valid_to) as c_pk,
+       -- concat(transformed.material,'_',transformed.sls_org,'_',transformed.cond_rec_no,'_',transformed.dt_from,'_',transformed.valid_to) as c_pk,
         transformed.sls_org,
         transformed.material,
         transformed.cond_rec_no,

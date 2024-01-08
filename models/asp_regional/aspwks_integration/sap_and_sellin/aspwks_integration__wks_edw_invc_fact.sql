@@ -16,7 +16,7 @@ final as(
     cust_no,
     delv_doc_crt_dt,
     dstr_chnl,
-    DIV,
+    div,
     doc_crt_dt,
     doc_dt,
     good_iss_dt,
@@ -72,14 +72,14 @@ final as(
     SUM(unspp_val) AS unspp_val,
     SUM(vol_delv) AS vol_delv,
     SUM(vol_ord) AS vol_ord,
-    itg_invc_sls.cal_day,
+    itg_invc_sls.cal_day as cal_day,
     base_uom,
     curr_key,
     doc_curr,
     sls_unit,
     CASE
       WHEN edw_calendar_dim.fisc_per IS NULL
-      THEN CAST(itg_invc_sls.fisc_yr AS INT)
+      THEN CAST(itg_invc_sls.fisc_yr as int)
       ELSE edw_calendar_dim.fisc_per
     END AS fisc_yr,
     itg_invc_sls.fisc_yr AS fisc_yr_src

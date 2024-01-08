@@ -86,7 +86,7 @@ final as(
   kappl,
   acrn_id,
   recordmode,
-  CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) as crt_dttm,
+  current_timestamp()::timestamp_ntz(9) as crt_dttm,
   NULL as source_file_name,
   NULL as File_name
   from source

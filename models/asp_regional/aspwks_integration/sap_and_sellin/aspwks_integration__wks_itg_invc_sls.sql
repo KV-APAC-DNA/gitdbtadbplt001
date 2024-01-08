@@ -79,7 +79,7 @@ final as(
     doc_currcy,
     sales_unit,
     fiscper,
-    UPDT_DTTM
+    updt_dttm
   FROM source
 
 )

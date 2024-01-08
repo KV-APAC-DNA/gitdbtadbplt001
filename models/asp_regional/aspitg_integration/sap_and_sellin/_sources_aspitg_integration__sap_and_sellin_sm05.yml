@@ -15,20 +15,20 @@ sources:
       - name: sdl_sap_bw_delivery
       - name: sdl_sap_billing_condition
 
-  - name: BWA_ACCESS
-    database: DEV_CDL_APACIBS
-    schema: BWA_ACCESS
+  - name: bwa_access
+    database: dev_cdl_apacibs
+    schema: bwa_access
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: BWA_LIST_PRICE
-      - name: BWA_MATERIAL_UOM
+      - name: bwa_list_price
+      - name: bwa_material_uom
 
-  - name: SNAPASPITG_INTEGRATION
-    database: DEV_DNA_CORE
-    schema: SNAPASPITG_INTEGRATION
+  - name: snapaspitg_integration
+    database: dev_dna_core
+    schema: snapaspitg_integration
     quoting:
       database: false
       schema: false

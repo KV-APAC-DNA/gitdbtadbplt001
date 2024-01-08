@@ -1,18 +1,74 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-    )
-}}
-
 
 with source as(
     select * from {{ ref('aspwks_integration__wks_edw_copa_plan_fact') }}
 ),
 final as(
-SELECT
-    A.*,
+    SELECT
+    fisc_yr_per as fisc_yr_per,
+    fisc_yr_vrnt as fisc_yr_vrnt,
+    fisc_yr as fisc_yr,
+    cal_day as cal_day,
+    pstng_per as pstng_per,
+    cal_yr_mo as cal_yr_mo,
+    cal_yr as cal_yr,
+    vers as vers,
+    val_type as val_type,
+    co_cd as co_cd,
+    cntl_area as cntl_area,
+    prft_ctr as prft_ctr,
+    sls_emp_hist as sls_emp_hist,
+    sls_org as sls_org,
+    sls_grp as sls_grp,
+    sls_off as sls_ofc,
+    cust_grp as cust_grp,
+    dstn_chnl as dstn_chnl,
+    sls_dstrc as sls_dstrc,
+    cust as cust_num,
+    matl as matl_num,
+    cust_sls_view as cust_sls_view,
+    div as div,
+    plnt as plnt,
+    mercia_ref as mercia_ref,
+    b3_base_prod as b3_base_prod,
+    b4_vrnt as b4_vrnt,
+    b5_put_up as b5_put_up,
+    b1_mega_brnd as b1_mega_brnd,
+    b2_brnd as b2_brnd,
+    rgn as rgn,
+    ctry as ctry_key,
+    prod_minor as prod_minor,
+    prod_maj as prod_maj,
+    prod_fran as prod_fran,
+    fran as fran,
+    fran_grp as fran_grp,
+    oper_grp as oper_grp,
+    fisc_qtr as fisc_qtr,
+    matl2 as matl2,
+    bill_type as bill_typ,
+    fisc_wk as fisc_wk,
+    amt_grp_crcy as amt_grp_crcy,
+    amt_obj_crcy as amt_obj_crcy,
+    crncy as crncy_key,
+    obj_crncy as obj_crncy,
+    acct_num as acct_num,
+    chrt_of_acct as chrt_acct,
+    mgmt_entity as mgmt_entity,
+    sls_prsn_respons as sls_prsn_respons,
+    busn_area as busn_area,
+    ga as ga,
+    tc as tc,
+    matl_plnt_view as matl_plnt_view,
+    qty as qty,
+    uom as uom,
+    sls_vol_ieu as sls_vol_ieu,
+    un_sls_vol__ieu as un_sls_vol__ieu,
+    bpt_dstn_chnl as bpt_dstn_chnl,
+    measure_name as acct_hier_desc,
+    measure_code as acct_hier_shrt_desc,
+    catagory as category,
+    freq as freq,
     current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-    current_timestamp()::timestamp_ntz(9) AS upd_dttm
-  FROM source AS A
+    current_timestamp()::timestamp_ntz(9) AS updt_dttm
+  FROM source
 )
 select * from final

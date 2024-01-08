@@ -1,5 +1,5 @@
 with source as(
-    select * from {{ source('BWA_ACCESS', 'BWA_MATERIAL_UOM') }}
+    select * from {{ source('bwa_access', 'bwa_material_uom') }}
 ),
 final as(
     SELECT
@@ -9,8 +9,8 @@ final as(
   recordmode,
   uomz1d,
   uomn1d,
-  _INGESTIONTIMESTAMP_ as CDL_DTTM,
-   CURRENT_TIMESTAMP()::TIMESTAMP_NTZ(9) as CURR_DT,
+  _ingestiontimestamp_ as cdl_dttm,
+   current_timestamp()::timestamp_ntz(9) as curr_dt,
   NULL as File_Name
 FROM source
 )

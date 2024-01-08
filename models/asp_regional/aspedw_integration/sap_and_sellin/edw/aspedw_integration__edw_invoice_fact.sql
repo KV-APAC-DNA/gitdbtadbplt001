@@ -1,19 +1,86 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-    )
-}}
 
 
 with source as(
     select * from {{ ref('aspwks_integration__wks_edw_invc_fact') }}
 ),
 final as(
-SELECT
-    A.*,
+    SELECT
+    act_delv_dt as act_delv_dt,
+    act_good_iss_dt as act_good_iss_dt,
+    bill_to_prty as bill_to_prty,
+    bill_dt as bill_dt,
+    bill_ty as bill_typ,
+    bill_doc as bill_doc,
+    cmpy_cd as co_cd,
+    cust_no as cust_num,
+    delv_doc_crt_dt as delv_doc_crt_dt,
+    dstr_chnl as dstr_chnl,
+    div as div,
+    doc_crt_dt as doc_crt_dt,
+    doc_dt as doc_dt,
+    good_iss_dt as good_iss_dt,
+    mat as matl_num,
+    mat_avail_dt as mat_avail_dt,
+    ord_rsn as ord_rsn,
+    ovrl_rej_sts as ovrl_rej_sts,
+    ovrl_sts_crd_chk as ovrl_sts_crd_chk,
+    payer as payer,
+    plant as plnt,
+    prec_doc_itm as prec_doc_itm,
+    prec_doc_num as prec_doc_num,
+    proof_delv_dt as proof_delv_dt,
+    rsn_cd_key as rsn_cd_key,
+    rsn_rej as rsn_rej,
+    rlse_dt_cr_mgmt as rlse_dt_cr_mgmt,
+    rqst_delv_dt as rqst_delv_dt,
+    route as route,
+    sls_doc as sls_doc,
+    sls_doc_cat as sls_doc_cat,
+    sls_doc_itm as sls_doc_itm,
+    sls_doc_typ as sls_doc_typ,
+    sls_emp_hist as sls_emp_hist,
+    sls_org as sls_org,
+    sls_doc_itm_cat as sls_doc_itm_cat,
+    ship_to_prty as ship_to_prty,
+    sold_to_prty as sold_to_prty,
+    bill_qty_cse as bill_qty_cse,
+    bill_qty_pc as bill_qty_pc,
+    bill_qty_difot as bill_qty_difot,
+    bill_qty_otif as bill_qty_otif,
+    bill_qty_sls_uom as bill_qty_sls_uom,
+    cnfrm_qty_difot as cnfrm_qty_difot,
+    cnfrm_qty_pc as cnfrm_qty_pc,
+    delv_qty_cse as delv_qty_cse,
+    delv_qty_pc as delv_qty_pc,
+    delv_qty_sls_uom as delv_qty_sls_uom,
+    est_nts as est_nts,
+    nts_bill as nts_bill,
+    net_invc_sls as net_invc_sls,
+    fut_sls_qty as fut_sls_qty,
+    gros_trd_sls as gros_trd_sls,
+    net_amt as net_amt,
+    net_prc as net_prc,
+    net_bill_val as net_bill_val,
+    net_ord_val as net_ord_val,
+    ord_qty_cse as ord_qty_cse,
+    ord_qty_pc as ord_qty_pc,
+    ord_pc_qty as ord_pc_qty,
+    ord_sls_qty as ord_sls_qty,
+    tran_ldtm as tran_ldtm,
+    unspp_qty as unspp_qty,
+    unspp_val as unspp_val,
+    vol_delv as vol_delv,
+    vol_ord as vol_ord,
+    cal_day as cal_day,
+    base_uom as base_uom,
+    curr_key as curr_key,
+    doc_curr as doc_curr,
+    sls_unit as sls_unit,
+    fisc_yr as fisc_yr,
+    fisc_yr_src as fisc_yr_src,
     current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-    current_timestamp()::timestamp_ntz(9) AS upd_dttm
-  FROM source AS A
+    current_timestamp()::timestamp_ntz(9) AS updt_dttm
+  FROM source
 )
 
 select * from final

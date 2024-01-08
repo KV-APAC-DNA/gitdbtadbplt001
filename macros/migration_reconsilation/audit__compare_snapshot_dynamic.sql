@@ -1,7 +1,12 @@
 {% macro audit__compare_snapshot_dynamic() %}
 {% set input_list=[
     ['DEV_DNA_CORE','snapaspitg_integration','itg_copa17_trans',ref('aspitg_integration__itg_copa17_trans'),"md5(concat(fisc_yr_per,'_',vers))"],
-    ['DEV_DNA_CORE','snapaspitg_integration','itg_invnt',ref('aspitg_integration__itg_base_prod_text'),"md5(concat(clnt,'_',lang_key,'_',base_prod))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_invnt',ref('aspitg_integration__itg_invnt'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_invc_sls',ref('aspitg_integration__itg_invc_sls'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_list_price',ref('aspitg_integration__itg_list_price'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_material_uom',ref('aspitg_integration__itg_material_uom'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_sap_billing_condition',ref('aspitg_integration__itg_sap_billing_condition'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_delivery_fact',ref('aspitg_integration__itg_delivery_fact'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
 ]
 %}
 --drop table if exists {{target.schema}}.model_validations;

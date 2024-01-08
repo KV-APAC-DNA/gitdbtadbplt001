@@ -5,7 +5,7 @@
 }}
 
 with source as(
-    select * from {{ source('BWA_ACCESS', 'BWA_LIST_PRICE') }}
+    select * from {{ source('bwa_access', 'bwa_list_price') }}
 ),
 final as(
  SELECT
@@ -24,7 +24,7 @@ final as(
   price_unit as price_unit,
   bic_zcurrfpa as zcurrfpa,
   _ingestiontimestamp_ as cdl_dttm,
-  current_timestamp()::TIMESTAMP_NTZ(9) as crt_dttm,
+  current_timestamp()::timestamp_ntz(9) as crt_dttm,
   NULL as file_name
   FROM source
 

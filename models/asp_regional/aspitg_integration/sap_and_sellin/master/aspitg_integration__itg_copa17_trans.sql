@@ -1,9 +1,8 @@
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy= "merge",
-        unique_key=  ['fisc_yr_per','vers'],
+        unique_key=  ["fisc_yr_per","vers"],
         merge_exclude_columns=["crt_dttm"]
     )
 }}

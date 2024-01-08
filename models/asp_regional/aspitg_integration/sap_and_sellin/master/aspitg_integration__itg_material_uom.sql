@@ -14,11 +14,11 @@ final as(
   unit,
   base_uom,
   recordmode as record_mode,
-  CAST(uomz1d AS DECIMAL(20, 4)) AS uomz1d,
-  CAST(uomn1d AS DECIMAL(20, 4)) AS uomn1d,
+  CAST(uomz1d as decimal(20, 4)) as uomz1d,
+  CAST(uomn1d as decimal(20, 4)) as uomn1d,
   cdl_dttm,
-  current_timestamp()::TIMESTAMP_NTZ(9) AS crtd_dttm,
-  current_timestamp()::TIMESTAMP_NTZ(9) AS updt_dttm,
+  current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+  current_timestamp()::timestamp_ntz(9) as updt_dttm,
   file_name
   from source
 )

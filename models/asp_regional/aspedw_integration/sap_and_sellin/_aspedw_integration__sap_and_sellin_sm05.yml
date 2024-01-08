@@ -23,3 +23,8 @@ models:
     config:
       alias: edw_delivery_fact
       tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_list_price
+    config:
+      alias: edw_list_price
+      tags: ["daily","sap_bw"]  
