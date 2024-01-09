@@ -130,14 +130,16 @@ sources:
           - name: updt_dttm
             data_type: timestamp_ntz
   - name: aspedw_integration
-    database: dev_dna_core
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-    - name : edw_sap_matl_num_ean_mapping
+      - name: edw_sap_matl_num_ean_mapping
+      - name: edw_account_jjplbw_hier
+      - name: edw_account_xref
   - name: bwa_access
     database: dev_cdl_apacibs
     schema: bwa_access

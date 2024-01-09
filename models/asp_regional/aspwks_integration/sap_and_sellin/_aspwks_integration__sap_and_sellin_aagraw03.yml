@@ -1,3 +1,5 @@
+version: 2
+
 models:
   - name: aspwks_integration__wks_itg_acct
     config: 

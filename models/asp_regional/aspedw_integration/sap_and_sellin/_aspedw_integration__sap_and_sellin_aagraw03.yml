@@ -23,3 +23,6 @@ models:
     config:
       alias: edw_sap_matl_num_ean_mapping
       tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_acct_hier
+    config:
+      alias: edw_acct_hier
