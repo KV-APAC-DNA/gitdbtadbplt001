@@ -53,6 +53,8 @@ sources:
       - name : edw_code_descriptions_manual
       - name : edw_subchnl_retail_env_mapping
       - name : edw_material_sales_dim
+      - name : edw_invoice_fact
+
   - name:  bwa_access
     schema: bwa_access
     database: dev_cdl_apacibs
@@ -62,7 +64,17 @@ sources:
       identifier: false
     tables:
       - name : bwa_account_attr
-    
+  
+  - name: snapaspitg_integration 
+    schema: snapaspitg_integration
+    database: dev_dna_core
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : itg_otif_glbl_con_reporting
+      - name : itg_mds_ap_sales_ops_map
 
 #       - name: sdl_code_descriptions
 #         columns:

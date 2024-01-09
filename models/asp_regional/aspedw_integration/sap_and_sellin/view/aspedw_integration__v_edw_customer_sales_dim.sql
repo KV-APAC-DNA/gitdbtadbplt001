@@ -1,6 +1,7 @@
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+        materialized= "view"
     )
 }}
 

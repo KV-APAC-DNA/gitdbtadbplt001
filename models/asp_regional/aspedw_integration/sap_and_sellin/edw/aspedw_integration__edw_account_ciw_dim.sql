@@ -1,10 +1,6 @@
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "incremental",
-        incremental_strategy= "merge",
-        unique_key= [],
-        merge_exclude_columns= ["crt_dttm"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 
@@ -45,6 +41,12 @@ zciwhl3 as ciw_acct_l3,
 zciwhl4 as ciw_acct_l4,
 zciwhl5 as ciw_acct_l5,
 zciwhl6 as ciw_acct_l6,
+null as bravo_acct_l1_txt,
+null as bravo_acct_l2_txt,
+null as bravo_acct_l3_txt,
+null as bravo_acct_l4_txt,
+null as bravo_acct_l5_txt,
+null as bravo_acct_l6_txt,
 a.ciw_acct_hier_nm as ciw_acct_l1_txt,
 b.ciw_acct_hier_nm as ciw_acct_l2_txt,
 c.ciw_acct_hier_nm as ciw_acct_l3_txt,

@@ -43,17 +43,18 @@ models:
     config:
       alias: edw_material_sales_dim
       tags: ["daily",""]
-#   - name: aspedw_integration__edw_material_typ
-#     config:
-#       alias: edw_material_typ
-#       tags: ["daily","sap_ecc_master"]
-#   - name: aspedw_integration__edw_prod_hier
-#     config:
-#       alias: edw_prod_hier
-#   - name: aspedw_integration__edw_profit_center_dim
-#     config:
-#       alias: edw_profit_center_dim
-#       tags: ["daily","sap_ecc_master"]
+  
+  - name: aspedw_integration__v_rpt_customer_segmentation
+    config:
+      alias: v_rpt_customer_segmentation
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_code_descriptions_manual
+    config:
+      alias: edw_code_descriptions_manual
+  - name: aspedw_integration__edw_customer_segmentation
+    config:
+      alias: edw_customer_segmentation
+      tags: ["daily",""]
 #   - name: aspedw_integration__edw_sales_org_dim
 #     config:
 #       alias: edw_sales_org_dim

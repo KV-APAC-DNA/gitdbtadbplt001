@@ -15,11 +15,34 @@ with source as (
 --Final CTE
 final as (
     select
-*,
-current_timestamp()::timestamp_ntz(9) as crt_dttm,
-current_timestamp()::timestamp_ntz(9) as updt_dttm
+    chrt_accts,
+	account ,
+	objvers,
+	changed ,
+	bal_flag,
+	cstel_flag ,
+	glacc_flag,
+	logsys ,
+	sem_posit ,
+	zbravol1 ,
+	zbravol2 ,
+	zbravol3 ,
+	zbravol4 ,
+	zbravol5 ,
+	zbravol6 ,
+	zciwhl1 ,
+	zciwhl2 ,
+	zciwhl3 ,
+	zciwhl4 ,
+	zciwhl5 ,
+	zciwhl6 ,
+	zpb_gl_ty ,
+	--filename ,
+	--run_id ,
+	current_timestamp()::timestamp_ntz(9) as crtd_dttm 
     from source
 )
+   
 
 --Final select
 select * from final 

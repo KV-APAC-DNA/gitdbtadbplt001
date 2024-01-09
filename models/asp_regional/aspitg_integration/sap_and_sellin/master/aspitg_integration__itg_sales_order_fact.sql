@@ -153,7 +153,7 @@ select
   ztarqtybu,
   zhighritm,
   cdl_dttm,
-  current_timestamp()::timestamp_ntz(9) as crt_dttm,
+  current_timestamp()::timestamp_ntz(9) as crtd_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm,
   file_name
   from source

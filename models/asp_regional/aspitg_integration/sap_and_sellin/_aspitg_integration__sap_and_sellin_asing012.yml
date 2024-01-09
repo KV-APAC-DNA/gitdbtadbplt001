@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 models:
   - name: aspitg_integration__itg_copa_trans
@@ -25,14 +25,14 @@ models:
     config:
       alias: itg_sales_order_fact
       tags: ["daily","sap_bw","sales_rg_sap_to_dna_s3_framework"]
-  # - name: aspitg_integration__itg_crncy_exch
-  #   config:
-  #     alias: itg_crncy_exch
-  #     tags: ["daily","sap_ecc_master"]
-  # - name: aspitg_integration__itg_ctry_cd_text
-  #   config:
-  #     alias: itg_ctry_cd_text
-  #     tags: ["daily","sap_ecc_master"]
+  - name: aspitg_integration__itg_otif_glbl_con_reporting
+    config:
+      alias: itg_otif_glbl_con_reporting
+      tags: ["daily"]
+  - name: aspitg_integration__itg_mds_ap_sales_ops_map
+    config:
+      alias: itg_mds_ap_sales_ops_map
+      tags: ["daily"]
   # - name: aspitg_integration__itg_cust_base
   #   config:
   #     alias: itg_cust_base
