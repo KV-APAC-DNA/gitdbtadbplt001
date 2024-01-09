@@ -4,15 +4,15 @@ models:
   - name: aspitg_integration__itg_copa_trans
     config:
       alias: itg_copa_trans
-      tags: ["daily","",""]
+      tags: ["daily","j_sap_bw_txn_copa10_wrapper"]
   - name: aspitg_integration__itg_mds_ap_greenlight_skus
     config:
       alias: itg_mds_ap_greenlight_skus
-      tags: ["daily",""]
+      tags: ["daily","rg_greenlight_mds"]
   - name: aspitg_integration__itg_account_attr_ciw
     config:
       alias: itg_account_attr_ciw
-      tags: ["daily",""]
+      tags: ["daily","J_RG_Account_attr_CIW_Dim"]
   - name: aspitg_integration__itg_billing_fact
     config:
       alias: itg_billing_fact
@@ -28,11 +28,11 @@ models:
   - name: aspitg_integration__itg_otif_glbl_con_reporting
     config:
       alias: itg_otif_glbl_con_reporting
-      tags: ["daily"]
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
   - name: aspitg_integration__itg_mds_ap_sales_ops_map
     config:
       alias: itg_mds_ap_sales_ops_map
-      tags: ["daily"]
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
   # - name: aspitg_integration__itg_cust_base
   #   config:
   #     alias: itg_cust_base
