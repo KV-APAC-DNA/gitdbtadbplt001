@@ -73,3 +73,23 @@ models:
     config:
       alias: itg_sap_billing_condition
       tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_delivery
+    config:
+      alias: sdl_raw_sap_bw_delivery
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_material_uom
+    config:
+      alias: sdl_raw_sap_bw_material_uom
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_price_list
+    config:
+      alias: sdl_raw_sap_bw_price_list
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_billing_condition
+    config:
+      alias: sdl_raw_sap_billing_condition
+      tags: ["daily","sap_bw"]

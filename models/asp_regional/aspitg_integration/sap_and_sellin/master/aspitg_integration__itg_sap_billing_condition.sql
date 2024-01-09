@@ -1,3 +1,13 @@
+{{
+    config(
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
+        materialized="incremental",
+        incremental_strategy="delete+insert",
+        unique_key=["file_name"]
+    )
+}}
+
+
 with source as(
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_billing_condition') }}
 ),
@@ -67,11 +77,11 @@ final as(
   x.knclass,
   x.knorigin,
   x.kntyp,
-  (
+  CAST((
     x.knval * POWER(10, (
       2 - x.currdec
     ))
-  ) AS knval,
+  ) as NUMBER) AS knval,
   x.kprice,
   x.kinak,
   x.kstat,

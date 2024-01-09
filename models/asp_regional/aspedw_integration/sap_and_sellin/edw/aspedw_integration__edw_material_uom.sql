@@ -16,7 +16,7 @@ final as(
   record_mode,
   cast(uomz1d as decimal(20, 4)) as uomz1d,
   cast(uomn1d as decimal(20, 4)) as uomn1d,
-  cdl_dttm,
+  CAST(cdl_dttm AS TEXT) as cdl_dttm,
   current_timestamp()::timestamp_ntz(9) as crtd_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

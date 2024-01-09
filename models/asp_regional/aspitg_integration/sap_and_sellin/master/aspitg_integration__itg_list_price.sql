@@ -25,7 +25,7 @@ final as(
   comp_cd,
   price_unit,
   zcurrfpa,
-  cdl_dttm,
+  CAST(cdl_dttm AS TEXT) as cdl_dttm,
   current_timestamp()::timestamp_ntz(9) as crtd_dttm, 
   current_timestamp()::timestamp_ntz(9) as updt_dttm,
   null as file_name
