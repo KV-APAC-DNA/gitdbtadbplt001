@@ -1,10 +1,6 @@
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "incremental",
-        incremental_strategy= "merge",
-        unique_key= [],
-        merge_exclude_columns= ["crt_dttm"]
+        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     )
 }}
 

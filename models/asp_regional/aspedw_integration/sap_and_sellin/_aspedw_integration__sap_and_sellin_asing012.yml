@@ -35,10 +35,14 @@ models:
     config:
       alias: edw_plant_dim
       tags: ["daily",""]
-#   - name: aspedw_integration__edw_material_dim
-#     config:
-#       alias: edw_material_dim
-#       tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__v_intrm_reg_crncy_exch_fiscper
+    config:
+      alias: v_intrm_reg_crncy_exch_fiscper
+      tags: ["daily",""]
+  - name: aspedw_integration__edw_material_sales_dim
+    config:
+      alias: edw_material_sales_dim
+      tags: ["daily",""]
 #   - name: aspedw_integration__edw_material_typ
 #     config:
 #       alias: edw_material_typ

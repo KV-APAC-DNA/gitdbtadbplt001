@@ -17,8 +17,8 @@ with source as (
 
 --Final CTE
 final as (
-    select
-        request_number as request_number,
+select
+request_number as request_number,
 data_packet as data_packet,
 data_record as data_record,
 comp_code as co_cd,
@@ -79,10 +79,9 @@ quantity as qty,
 unit as uom,
 zqtyieu as sls_vol,
 zunitieu as un_sls_vol,
-
-        current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source
+current_timestamp()::timestamp_ntz(9) as crt_dttm,
+current_timestamp()::timestamp_ntz(9) as updt_dttm
+from source
 )
 
 --Final select

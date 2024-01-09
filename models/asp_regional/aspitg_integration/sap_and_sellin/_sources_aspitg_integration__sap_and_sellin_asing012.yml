@@ -18,6 +18,7 @@ sources:
       - name: sdl_account_attr_ciw
       - name: sdl_sap_bw_billing
       - name: sdl_sap_bw_sales
+      - name: sdl_material_pka_mara_extract
   - name: aspitg_integration
     schema: aspitg_integration
     quoting:
@@ -29,14 +30,19 @@ sources:
       - name : edw_code_descriptions_manual
   - name: asing012_workspace 
     schema: asing012_workspace
+    database: dev_dna_core
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
     - name : edw_acct_hier
+    - name : itg_ciw_acct_hier_name_mapping
+    - name : edw_account_dim
+
   - name: snapaspedw_integration 
     schema: snapaspedw_integration
+    database: dev_dna_core
     quoting:
       database: false
       schema: false
@@ -44,6 +50,19 @@ sources:
     tables:
       - name : edw_material_plant_dim
       - name : edw_plant_dim
+      - name : edw_code_descriptions_manual
+      - name : edw_subchnl_retail_env_mapping
+      - name : edw_material_sales_dim
+  - name:  bwa_access
+    schema: bwa_access
+    database: dev_cdl_apacibs
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : bwa_account_attr
+    
 
 #       - name: sdl_code_descriptions
 #         columns:
