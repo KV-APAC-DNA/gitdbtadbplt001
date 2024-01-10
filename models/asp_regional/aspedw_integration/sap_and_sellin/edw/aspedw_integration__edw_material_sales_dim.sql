@@ -23,7 +23,7 @@ edw_sap_matl_num_ean_mapping as (
 
 transformed as (
     select
-        src.sls_org :: varchar(4) as src,
+        src.sls_org :: varchar(4) as sls_org,
         dstr_chnl :: varchar(2) as dstr_chnl,
         matl :: varchar(18) as matl_num,
         base_unit :: varchar(3) as base_unit,
