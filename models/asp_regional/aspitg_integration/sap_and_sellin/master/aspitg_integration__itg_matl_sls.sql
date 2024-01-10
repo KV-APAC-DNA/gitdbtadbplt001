@@ -65,8 +65,8 @@ final as (
         zfc_indc as fcst_indc_apo,
         zprdtype as prod_type_apo,
         zparent as mstr_cd,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
 )
 

@@ -22,8 +22,8 @@ final as (
         mat_sales as mat_sls,
         langu as lang_key,
         txtmd as med_desc,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
 )
 
