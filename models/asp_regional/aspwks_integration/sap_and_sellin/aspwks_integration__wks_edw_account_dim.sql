@@ -7,7 +7,7 @@ itg_acct_text as (
 ),
 
 --Join
-edw_account_dim_temp as (
+transformed as (
     select
         chrt_acct,
         acct_num,
@@ -24,14 +24,15 @@ edw_account_dim_temp as (
         bravo_acct_l3,
         bravo_acct_l4,
         bravo_acct_l5,
-        fin_stat_itm
+        fin_stat_itm,
         -- tgt.crt_dttm as tgt_crt_dttm,
-        -- updt_dttm,
+        updt_dttm
         -- case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
-    from (select a.*, b.med_desc as acct_nm
-    from itg_acct as a
-    left outer join itg_acct_text as b 
-    on a.chrt_acct=b.chrt_acct and a.acct_num=b.acct_num and b.lang_key='E')
+    from 
+    (select a.*, b.med_desc as acct_nm
+        from itg_acct as a
+        left outer join itg_acct_text as b 
+            on a.chrt_acct=b.chrt_acct and a.acct_num=b.acct_num and b.lang_key='E')
 ),
 
 final as (
@@ -52,8 +53,8 @@ final as (
         bravo_acct_l4,
         bravo_acct_l5,
         fin_stat_itm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from edw_account_dim_temp
+        updt_dttm
+    from transformed
 )
 
 select * from final

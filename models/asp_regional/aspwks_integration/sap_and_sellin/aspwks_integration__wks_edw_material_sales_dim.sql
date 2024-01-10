@@ -7,7 +7,7 @@ itg_matl_sls_text as (
 ),
 
 --Join
-edw_material_sales_dim_temp as (
+transformed as (
     select
         sls_org,
         dstr_chnl,
@@ -57,14 +57,15 @@ edw_material_sales_dim_temp as (
         fcst_indc_apo,
         prod_type_apo,
         mstr_cd,
-        med_desc
+        med_desc,
         -- tgt.crt_dttm as tgt_crt_dttm,
-        -- updt_dttm,
+        updt_dttm
         -- case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
-    from (select a.*, b.med_desc as med_desc
-    from itg_matl_sls as a
-    left outer join itg_matl_sls_text as b 
-    on a.sls_org=b.sls_org and a.dstr_chnl=b.dstn_chnl and a.matl=b.mat_sls and b.lang_key='E')
+    from 
+    (select a.*, b.med_desc as med_desc
+        from itg_matl_sls as a
+        left outer join itg_matl_sls_text as b 
+            on a.sls_org=b.sls_org and a.dstr_chnl=b.dstn_chnl and a.matl=b.mat_sls and b.lang_key='E')
 ),
 
 final as (
@@ -118,8 +119,8 @@ final as (
         prod_type_apo,
         mstr_cd,
         med_desc,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from edw_material_sales_dim_temp
+        updt_dttm
+    from transformed
 )
 
 select * from final

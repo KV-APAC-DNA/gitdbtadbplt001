@@ -7,7 +7,7 @@ itg_matl_plnt_text as (
 ),
 
 --Join
-edw_material_plant_dim_temp as (
+transformed as (
     select
         plnt,
         matl_plnt_view,
@@ -182,14 +182,15 @@ edw_material_plant_dim_temp as (
         fisc_yr_vrnt,
         cost_yr,
         fut_std_prc,
-        med_desc
+        med_desc,
         -- tgt.crt_dttm as tgt_crt_dttm,
-        -- updt_dttm,
+        updt_dttm
         -- case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
-    from (select a.*, b.med_desc as med_desc
-    from itg_matl_plnt as a
-    left outer join itg_matl_plnt_text as b 
-    on a.plnt=b.plnt and a.matl_plnt_view=b.plnt_mat and b.lang_key='E')
+    from 
+    (select a.*, b.med_desc as med_desc
+        from itg_matl_plnt as a
+        left outer join itg_matl_plnt_text as b 
+            on a.plnt=b.plnt and a.matl_plnt_view=b.plnt_mat and b.lang_key='E')
 ),
 
 final as (
@@ -368,8 +369,8 @@ final as (
         cost_yr,
         fut_std_prc,
         med_desc,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from edw_material_plant_dim_temp
+        updt_dttm
+    from transformed
 )
 
 select * from final

@@ -7,7 +7,7 @@ itg_plnt_text as (
 ),
 
 --Join
-edw_plant_dim_temp as (
+transformed as (
     select
         plnt,
         plnt_nm,
@@ -17,9 +17,9 @@ edw_plant_dim_temp as (
         rgn,
         co_cd,
         fctry_cal,
-        mkt_clus
+        mkt_clus,
         -- tgt.crt_dttm as tgt_crt_dttm,
-        -- updt_dttm,
+        updt_dttm
         -- case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
     from (select a.*, b.med_desc as plnt_nm
     from itg_plnt as a
@@ -38,8 +38,8 @@ final as (
         co_cd,
         fctry_cal,
         mkt_clus,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from edw_plant_dim_temp
+        updt_dttm
+    from transformed
 )
 
 select * from final
