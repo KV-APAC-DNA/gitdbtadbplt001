@@ -11,124 +11,7 @@ sources:
     tables:
       - name: sdl_sap_ecc_material_plant
       - name: sdl_sap_ecc_material_sales
-      - name: sdl_sap_ecc_account_text
-        columns:
-          - name: chrt_accts
-            data_type: varchar
-          - name: account
-            data_type: varchar
-          - name: langu
-            data_type: varchar
-          - name: txtsh
-            data_type: varchar
-          - name: txtmd
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
 
-      
-          - name: salesorg
-            data_type: varchar
-          - name: distr_chan
-            data_type: varchar
-          - name: mat_sales
-            data_type: varchar
-          - name: base_uom
-            data_type: varchar
-          - name: matl_grp_1
-            data_type: varchar
-          - name: prod_hier
-            data_type: varchar
-          - name: prov_group
-            data_type: varchar
-          - name: rebate_grp
-            data_type: varchar
-          - name: ph_refnr
-            data_type: varchar
-          - name: del_flag
-            data_type: varchar
-          - name: matl_grp_2
-            data_type: varchar
-          - name: matl_grp_3
-            data_type: varchar
-          - name: matl_grp_4
-            data_type: varchar
-          - name: matl_grp_5
-            data_type: varchar
-          - name: mat_stgrp
-            data_type: varchar
-          - name: rt_assgrad
-            data_type: varchar
-          - name: af_vasmg
-            data_type: varchar
-          - name: af_prind
-            data_type: varchar
-          - name: zpredecsr
-            data_type: varchar
-          - name: zskuid
-            data_type: varchar
-          - name: zprallocd
-            data_type: varchar
-          - name: zpackpcs
-            data_type: number
-          - name: zean
-            data_type: varchar
-          - name: zoldmatl
-            data_type: varchar
-          - name: zd_plant
-            data_type: varchar
-          - name: zchdcind
-            data_type: varchar
-          - name: zprc_grp
-            data_type: varchar
-          - name: accnt_asgn
-            data_type: varchar
-          - name: zitm_cgrp
-            data_type: varchar
-          - name: zmin_qty
-            data_type: number
-          - name: zmin_dqty
-            data_type: number
-          - name: zdel_unit
-            data_type: number
-          - name: zschme
-            data_type: varchar
-          - name: zvrkme
-            data_type: varchar
-          - name: zlaunchd
-            data_type: date
-          - name: znpi_ind
-            data_type: varchar
-          - name: zlmat_gr1
-            data_type: varchar
-          - name: zlmat_gr2
-            data_type: varchar
-          - name: zlmat_gr3
-            data_type: varchar
-          - name: zlmat_gr4
-            data_type: varchar
-          - name: zlmat_gr5
-            data_type: varchar
-          - name: zlmat_gr6
-            data_type: varchar
-          - name: znpi_indr
-            data_type: number
-          - name: zcpy_hist
-            data_type: varchar
-          - name: zabc
-            data_type: varchar
-          - name: zfc_indc
-            data_type: varchar
-          - name: zprdtype
-            data_type: number
-          - name: zparent
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -148,6 +31,30 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: bwa_account_text
+        columns:
+          - name: chrt_accts
+            data_type: varchar
+          - name: account
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtsh
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
       - name: bwa_material_plant
         columns:
           - name: plant
@@ -508,7 +415,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-            
       - name: bwa_plant_text
         columns:
           - name: plant
@@ -529,7 +435,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-
       - name: bwa_plant_attr
         columns:
           - name: plant
@@ -560,7 +465,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-
       - name: bwa_material_sales_text
         columns:
           - name: salesorg
@@ -585,7 +489,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-
       - name: bwa_material_plant_text
         columns:
           - name: plant
@@ -608,7 +511,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-
       - name: bwa_dna_material_bomlist
         columns:
           - name: bic_zbomno
@@ -699,7 +601,6 @@ sources:
             data_type: timestamp_ntz
           - name: _deleted_
             data_type: varchar
-
       - name: bwa_account_attr
         columns:
           - name: chrt_accts
