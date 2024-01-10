@@ -45,9 +45,9 @@ transformed as (
         sku_id :: varchar(2) as sku_id,
         prodt_alloc_det_proc :: varchar(18) as prodt_alloc_det_proc,
         num_pcs_in,
-        case when src.sls_org in ('320A', '320S', '321A') then map.ean_num :: varchar(18) 
-            else src.ean_num :: varchar(18)
-        end as ean_num,
+        case when src.sls_org in ('320A', '320S', '321A') then map.ean_num
+            else src.ean_num
+        end :: varchar(18)as ean_num,
         old_matl_num :: varchar(18) as old_matl_num,
         delv_plnt :: varchar(4) as delv_plnt,
         cash_disc_ind :: varchar(1) as cash_disc_ind,
