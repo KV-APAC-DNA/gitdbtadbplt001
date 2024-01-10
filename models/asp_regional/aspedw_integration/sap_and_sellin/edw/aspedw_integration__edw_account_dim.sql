@@ -19,7 +19,7 @@ final as (
     select
         chrt_acct :: varchar(4) as chrt_acct,
         acct_num :: varchar(10) as acct_num,
-        acct_nm as acct_nm,
+        acct_nm :: varchar(5000) as acct_nm,
         obj_ver :: varchar(1) as obj_ver,
         chg_flg :: varchar(1) as chg_flg,
         bal_flag :: varchar(1) as bal_flag,
