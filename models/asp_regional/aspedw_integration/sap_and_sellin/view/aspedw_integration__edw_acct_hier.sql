@@ -89,53 +89,17 @@ bravo_acct_l5 as (
           (length(cast((bravo_acct_l5) as text)) <> 0)
 ),
 acct_hier_dim_derived as(
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from bravo_acct_l1
+    select * from bravo_acct_l1
     union all
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from bravo_acct_l2
+    select * from bravo_acct_l2
     union all
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from bravo_acct_l3
+    select * from bravo_acct_l3
     union all
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from bravo_acct_l4
+    select * from bravo_acct_l4
     union all
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from bravo_acct_l5
+    select * from bravo_acct_l5
     union all
-    select 
-        chrt_acct,
-        acct_num,
-        acct_nm,
-        acct_col,
-        bravo_acct_no
-    from edw_account_jjplbw_hier
+    select * from edw_account_jjplbw_hier
 ),
 
 acct_hier_dim_transformed as (
@@ -149,16 +113,14 @@ acct_hier_dim_transformed as (
         b.measure_name,
         b.multiplication_factor
     from acct_hier_dim_derived as a
-  join edw_account_xref as b
-    on (((upper(cast((a.acct_col) as text)) = upper(cast((b.lookup_col_name) as text)))
+    join edw_account_xref as b
+        on (((upper(cast((a.acct_col) as text)) = upper(cast((b.lookup_col_name) as text)))
         and (cast((a.bravo_acct_no) as text) = cast((b.lookup_value) as text))))
 ),
 
 
 final as (
-    select
-        *
-    from acct_hier_dim_transformed 
+    select * from acct_hier_dim_transformed 
 )
 
 select * from final
