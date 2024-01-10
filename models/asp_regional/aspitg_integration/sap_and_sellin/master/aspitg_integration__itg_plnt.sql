@@ -17,14 +17,14 @@ source as (
 
 final as (
     select
-    plant as plnt,
-    country as ctry,
-    logsys as src_sys,
-    purch_org as prchsng_org,
-    region as rgn,
-    comp_code as co_cd,
-    factcal_id as fctry_cal,
-    zmarclust as mkt_clus,
+    plant :: varchar(4) as plnt,
+    country :: varchar(3) as ctry,
+    logsys :: varchar(10) as src_sys,
+    purch_org :: varchar(4) as prchsng_org,
+    region :: varchar(3) as rgn,
+    comp_code :: varchar(4) as co_cd,
+    factcal_id :: varchar(2) as fctry_cal,
+    zmarclust :: varchar(2) as mkt_clus,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

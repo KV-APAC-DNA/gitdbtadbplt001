@@ -17,9 +17,9 @@ source as (
 
 final as (
     select
-        plant as plnt,
-        txtmd as med_desc,
-        txtlg as long_desc,
+        plant :: varchar(4) as plnt,
+        txtmd :: varchar(40) as med_desc,
+        txtlg :: varchar(60) as long_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

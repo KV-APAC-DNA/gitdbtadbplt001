@@ -17,11 +17,11 @@ source as (
 
 final as (
     select
-    chrt_accts as chrt_acct,
-    account as acct_num,
-    langu as lang_key,
-    txtsh as shrt_desc,
-    txtmd as med_desc,
+    chrt_accts :: varchar(4) as chrt_acct,
+    account :: varchar(10) as acct_num,
+    langu :: varchar(2) as lang_key,
+    txtsh :: varchar(50) as shrt_desc,
+    txtmd :: varchar(100) as med_desc,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
