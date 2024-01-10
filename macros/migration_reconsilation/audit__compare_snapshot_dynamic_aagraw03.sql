@@ -43,6 +43,6 @@ with {{item[2]}} as (
         )
     }}
 )
-select "{{item[2]}}" as model_name,* from {{item[2]}};
+select '{{item[2]}}' as model_name,* from {{item[2]}};
 {% endfor %}
 {% endmacro %}
