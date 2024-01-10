@@ -37,10 +37,6 @@ models:
     config: 
       alias: wks_sap_bw_dna_material_bomlist
       tags: ["daily","sap_bw_master"]
-  - name: aspwks_integration__wks_edw_account_dim
-    config: 
-      alias: wks_edw_account_dim
-      tags: ["daily","sap_bw_master"]
   - name: aspwks_integration__wks_edw_material_plant_dim
     config: 
       alias: wks_edw_material_plant_dim
@@ -52,4 +48,8 @@ models:
   - name: aspwks_integration__wks_edw_plant_dim
     config: 
       alias: wks_edw_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_edw_account_dim
+    config: 
+      alias: wks_edw_account_dim
       tags: ["daily","sap_bw_master"]
