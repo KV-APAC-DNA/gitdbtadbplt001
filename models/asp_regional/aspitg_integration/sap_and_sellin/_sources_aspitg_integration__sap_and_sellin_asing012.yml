@@ -1,0 +1,90 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_sap_bw_zocopa10
+      - name: sdl_mds_ap_greenlight_skus
+      - name: sdl_gcph_brand
+      - name: sdl_gcph_category
+      - name: sdl_gcch_cust_hier
+      - name: sdl_gcgh_geo_hier
+      - name: sdl_account_attr_ciw
+      - name: sdl_sap_bw_billing
+      - name: sdl_sap_bw_sales
+      - name: sdl_material_pka_mara_extract
+  - name: aspitg_integration
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : itg_crncy_mult
+      - name : edw_code_descriptions_manual
+      - name : itg_ciw_acct_hier_name_mapping
+  - name: asing012_workspace 
+    schema: asing012_workspace
+    database: dev_dna_core
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : edw_acct_hier
+    - name : itg_ciw_acct_hier_name_mapping
+    - name : edw_account_dim
+
+  - name: snapaspedw_integration 
+    schema: snapaspedw_integration
+    database: dev_dna_core
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : edw_material_plant_dim
+      - name : edw_plant_dim
+      - name : edw_code_descriptions_manual
+      - name : edw_subchnl_retail_env_mapping
+      - name : edw_material_sales_dim
+      - name : edw_invoice_fact
+
+  - name:  bwa_access
+    schema: bwa_access
+    database: dev_cdl_apacibs
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : bwa_account_attr
+  
+  - name: snapaspitg_integration 
+    schema: snapaspitg_integration
+    database: dev_dna_core
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : itg_otif_glbl_con_reporting
+      - name : itg_mds_ap_sales_ops_map
+
+  - name: aspedw_integration 
+    schema: aspedw_integration
+    database: dev_dna_core
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : edw_code_descriptions_manual
+      - name : edw_subchnl_retail_env_mapping
+

@@ -1,0 +1,49 @@
+models:
+  - name: aspedw_integration__edw_copa_trans_fact
+    config:
+      alias: edw_copa_trans_fact
+      tags: ["daily","j_sap_bw_txn_copa10_wrapper","sap_bw"]  
+  - name: aspedw_integration__edw_gch_geographyhierarchy
+    config:
+      alias: edw_gch_geographyhierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspedw_integration__edw_gch_customerhierarchy
+    config:
+      alias: edw_gch_customerhierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspedw_integration__edw_gch_producthierarchy
+    config:
+      alias: edw_gch_producthierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspedw_integration__edw_account_ciw_dim
+    config:
+      alias: edw_account_ciw_dim
+      tags: ["daily","J_RG_Account_attr_CIW_Dim","sap_bw"]
+  - name: aspedw_integration__edw_billing_fact
+    config:
+      alias: edw_billing_fact
+      tags: ["daily","rg_s3_to_dna_billing","sap_bw"]
+  - name: aspedw_integration__edw_sales_order_fact
+    config:
+      alias: edw_sales_order_fact
+      tags: ["daily","sales_rg_sap_to_dna_s3_framework","sap_bw"]
+  
+
+  - name: aspedw_integration__v_intrm_reg_crncy_exch_fiscper
+    config:
+      alias: v_intrm_reg_crncy_exch_fiscper
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+
+  
+  - name: aspedw_integration__v_rpt_customer_segmentation
+    config:
+      alias: v_rpt_customer_segmentation
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+  - name: aspedw_integration__edw_customer_segmentation
+    config:
+      alias: edw_customer_segmentation
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+  - name: aspedw_integration__edw_product_key_attributes
+    config:
+      alias: edw_product_key_attributes
+      tags: ["daily","pka_datamart"]

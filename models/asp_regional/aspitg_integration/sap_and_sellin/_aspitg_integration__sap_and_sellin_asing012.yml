@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_copa_trans
+    config:
+      alias: itg_copa_trans
+      tags: ["daily","j_sap_bw_txn_copa10_wrapper","sap_bw"]
+  - name: aspitg_integration__itg_mds_ap_greenlight_skus
+    config:
+      alias: itg_mds_ap_greenlight_skus
+      tags: ["daily","rg_greenlight_mds"]
+  - name: aspitg_integration__itg_account_attr_ciw
+    config:
+      alias: itg_account_attr_ciw
+      tags: ["daily","J_RG_Account_attr_CIW_Dim","sap_bw"]
+  - name: aspitg_integration__itg_billing_fact
+    config:
+      alias: itg_billing_fact
+      tags: ["daily","sap_bw","rg_s3_to_dna_billing","sap_bw"]
+  - name: aspitg_integration__itg_crncy_mult 
+    config:
+      alias: itg_crncy_mult 
+      tags: ["daily","sap_bw","rg_s3_to_dna_billing"]
+  - name: aspitg_integration__itg_sales_order_fact
+    config:
+      alias: itg_sales_order_fact
+      tags: ["daily","sap_bw","sales_rg_sap_to_dna_s3_framework","sap_bw"]
+  - name: aspitg_integration__itg_otif_glbl_con_reporting
+    config:
+      alias: itg_otif_glbl_con_reporting
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+  - name: aspitg_integration__itg_mds_ap_sales_ops_map
+    config:
+      alias: itg_mds_ap_sales_ops_map
+      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+
+  
+
+  - name: aspitg_integration__vw_sdl_account_attr_ciw
+    config:
+     alias: vw_stg_sdl_account_attr_ciw
+     tags: ["daily","sap_bw"]
+    tests:
+     - test_duplicate:
+        group_by_columns: ["chrt_accts","account","objvers"]
+        name: vw_stg_sdl_account_attr_ciw_duplicate_test
+        config:
+         store_failures: true
+         schema: aspwks_integration
+         table_name: TRATBL_vw_stg_sdl_account_attr_ciw_duplicate_test
+  
