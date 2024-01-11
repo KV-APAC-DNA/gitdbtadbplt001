@@ -10,10 +10,10 @@ with source as (
 ),
 edw_account_dim as 
 (
-    select * from {{ source('asing012_workspace' , 'edw_account_dim') }}
+    select * from {{ ref('aspedw_integration__edw_account_dim') }}
 ),
 itg_ciw_acct_hier_name_mapping as (
-    select * from {{ source('asing012_workspace' , 'itg_ciw_acct_hier_name_mapping')}}
+    select * from {{ source('aspitg_integration' , 'itg_ciw_acct_hier_name_mapping')}}
 ),
 --Logical CTE
 

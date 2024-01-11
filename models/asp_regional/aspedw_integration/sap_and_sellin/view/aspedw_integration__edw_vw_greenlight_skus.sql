@@ -23,7 +23,7 @@ edw_material_sales_dim as (
 ),
 
 final as(
-SELECT
+select
   ms.sls_org,
   ms.dstr_chnl,
   LTRIM(ms.matl_num, CAST((

@@ -1,7 +1,7 @@
 {% macro audit__compare_snapshot_dynamic() %}
 {% set input_list=[
     ['DEV_DNA_CORE','snapaspitg_integration','itg_copa_trans',ref('aspitg_integration__itg_copa_trans'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
-]
+    ]
 %}
 --drop table if exists {{target.schema}}.model_validations;
 create table if not exists {{target.schema}}.model_validations(

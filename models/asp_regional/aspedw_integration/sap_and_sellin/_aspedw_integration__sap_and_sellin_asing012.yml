@@ -27,30 +27,17 @@ models:
     config:
       alias: edw_sales_order_fact
       tags: ["daily","sales_rg_sap_to_dna_s3_framework","sap_bw"]
-  - name: aspedw_integration__edw_material_plant_dim
-    config:
-      alias: edw_material_plant_dim
-      tags: ["daily",""]
-  - name: aspedw_integration__edw_plant_dim
-    config:
-      alias: edw_plant_dim
-      tags: ["daily",""]
+  
+
   - name: aspedw_integration__v_intrm_reg_crncy_exch_fiscper
     config:
       alias: v_intrm_reg_crncy_exch_fiscper
       tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
-  - name: aspedw_integration__edw_material_sales_dim
-    config:
-      alias: edw_material_sales_dim
-      tags: ["daily",""]
+
   
   - name: aspedw_integration__v_rpt_customer_segmentation
     config:
       alias: v_rpt_customer_segmentation
-      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
-  - name: aspedw_integration__edw_code_descriptions_manual
-    config:
-      alias: edw_code_descriptions_manual
       tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
   - name: aspedw_integration__edw_customer_segmentation
     config:

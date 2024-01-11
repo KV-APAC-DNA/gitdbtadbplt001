@@ -37,7 +37,7 @@ edw_dstrbtn_chnl as (
     select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_invoice_fact as (
-    select * from {{ source('snapaspedw_integration' ,'edw_invoice_fact') }}
+    select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 itg_otif_glbl_con_reporting as (
     select * from {{ ref('aspitg_integration__itg_otif_glbl_con_reporting') }}
@@ -47,7 +47,7 @@ itg_mds_ap_sales_ops_map as (
 ),
 
 final as(
-    SELECT
+    select
   copa."datasource",
   copa.fisc_yr,
   copa.fisc_yr_per,
@@ -58,7 +58,7 @@ final as(
   copa.sls_org,
   sls_org_dim.sls_org_nm,
   copa.dstr_chnl,
-  dist_chnl_dim.txtsh AS dstr_chnl_nm,
+  dist_chnl_dim.txtsh as dstr_chnl_nm,
   copa."CLUSTER",
   copa.obj_crncy_co_obj,
   cust_sales."parent customer",

@@ -15,18 +15,18 @@ edw_code_descriptions as (
 ),
 edw_subchnl_retail_env_mapping as 
 (
-   select * from {{ source('snapaspedw_integration','edw_subchnl_retail_env_mapping')}}
+   select * from {{ source('aspedw_integration','edw_subchnl_retail_env_mapping')}}
 ),
 edw_code_descriptions_manual as 
 (
-   select * from {{ source('snapaspedw_integration','edw_code_descriptions_manual')}}
+   select * from {{ source('aspedw_integration','edw_code_descriptions_manual')}}
 ),
 --Logical CTE
 
 -- Final CTE
 final as (
     (
-  SELECT
+  select
     cus_sales.clnt,
     cus_sales.cust_num,
     cus_sales.sls_org,
