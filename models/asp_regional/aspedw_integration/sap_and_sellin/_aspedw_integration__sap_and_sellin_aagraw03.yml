@@ -1,0 +1,28 @@
+models:
+  - name: aspedw_integration__edw_account_dim
+    config:
+      alias: edw_account_dim
+      tags: ["daily","sap_bw_master"]  
+  - name: aspedw_integration__edw_material_plant_dim
+    config:
+      alias: edw_material_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_material_sales_dim
+    config:
+      alias: edw_material_sales_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_plant_dim
+    config:
+      alias: edw_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_sap_bw_dna_material_bomlist
+    config:
+      alias: edw_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_sap_matl_num_ean_mapping
+    config:
+      alias: edw_sap_matl_num_ean_mapping
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_acct_hier
+    config:
+      alias: edw_acct_hier

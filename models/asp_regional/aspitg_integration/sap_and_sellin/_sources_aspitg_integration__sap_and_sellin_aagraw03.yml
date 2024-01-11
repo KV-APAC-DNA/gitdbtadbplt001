@@ -1,0 +1,765 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_sap_ecc_material_plant
+      - name: sdl_sap_ecc_material_sales
+
+  - name: aspedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_sap_matl_num_ean_mapping
+      - name: edw_account_jjplbw_hier
+      - name: edw_account_xref
+  - name: bwa_access
+    database: dev_cdl_apacibs
+    schema: bwa_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: bwa_account_text
+        columns:
+          - name: chrt_accts
+            data_type: varchar
+          - name: account
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtsh
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_material_plant
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: mat_plant
+            data_type: varchar
+          - name: abckey
+            data_type: varchar
+          - name: del_flag
+            data_type: varchar
+          - name: dismm
+            data_type: varchar
+          - name: gr_pr_time
+            data_type: varchar
+          - name: mrp_contrl
+            data_type: varchar
+          - name: stge_pd_un
+            data_type: varchar
+          - name: plnd_delry
+            data_type: varchar
+          - name: prodsched
+            data_type: varchar
+          - name: co_area
+            data_type: varchar
+          - name: profit_ctr
+            data_type: varchar
+          - name: pur_group
+            data_type: varchar
+          - name: replentime
+            data_type: varchar
+          - name: rpa_qtyuom
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: val_class
+            data_type: varchar
+          - name: currency
+            data_type: varchar
+          - name: g_avv040
+            data_type: varchar
+          - name: bic_zsproctyp
+            data_type: varchar
+          - name: bic_zminlot
+            data_type: varchar
+          - name: bic_zrndgval
+            data_type: varchar
+          - name: material
+            data_type: varchar
+          - name: vendor
+            data_type: varchar
+          - name: bic_zproctyp
+            data_type: varchar
+          - name: bic_zprdcssor
+            data_type: varchar
+          - name: bic_zbaseqtyb
+            data_type: varchar
+          - name: bic_zcostlotb
+            data_type: varchar
+          - name: bic_zladgr
+            data_type: varchar
+          - name: bic_zitark
+            data_type: varchar
+          - name: bic_zavl_chk
+            data_type: varchar
+          - name: bic_zmmppstat
+            data_type: varchar
+          - name: bic_zkautb
+            data_type: varchar
+          - name: stocktype
+            data_type: varchar
+          - name: bic_zsrlt_ind
+            data_type: varchar
+          - name: bic_zusequ
+            data_type: varchar
+          - name: bic_zdisgr
+            data_type: varchar
+          - name: bic_zreord
+            data_type: varchar
+          - name: bic_zfxhor
+            data_type: varchar
+          - name: bic_zlfrhy
+            data_type: varchar
+          - name: bic_zlotsz
+            data_type: varchar
+          - name: bic_zbstma
+            data_type: varchar
+          - name: bic_zbstfe
+            data_type: varchar
+          - name: bic_zmabst
+            data_type: varchar
+          - name: bic_ztakzt
+            data_type: varchar
+          - name: bic_zkzech
+            data_type: varchar
+          - name: bic_zlgpro
+            data_type: varchar
+          - name: bic_zrgekz
+            data_type: varchar
+          - name: bic_zlgfsb
+            data_type: varchar
+          - name: bic_zplan_cal
+            data_type: varchar
+          - name: bic_zfhori
+            data_type: varchar
+          - name: eisbe_qty
+            data_type: varchar
+          - name: bic_zrwpro
+            data_type: varchar
+          - name: bic_zper_ind
+            data_type: varchar
+          - name: bic_zstrgr
+            data_type: varchar
+          - name: bic_zvrmod
+            data_type: varchar
+          - name: bic_zvint1
+            data_type: varchar
+          - name: bic_zvint2
+            data_type: varchar
+          - name: bic_zaltsl
+            data_type: varchar
+          - name: bic_zfrtme
+            data_type: varchar
+          - name: bic_zsfcpf
+            data_type: varchar
+          - name: undelivtol
+            data_type: varchar
+          - name: ovdelivtol
+            data_type: varchar
+          - name: bic_zausme
+            data_type: varchar
+          - name: bic_zabcin
+            data_type: varchar
+          - name: bic_zins_int
+            data_type: varchar
+          - name: bic_zssqss
+            data_type: varchar
+          - name: bic_zcert_typ
+            data_type: varchar
+          - name: bic_zqssys
+            data_type: varchar
+          - name: bic_zsobsk
+            data_type: varchar
+          - name: bic_zawsls
+            data_type: varchar
+          - name: price_ctrl
+            data_type: varchar
+          - name: price_avg
+            data_type: varchar
+          - name: bic_zdevalind
+            data_type: varchar
+          - name: bic_zekalr
+            data_type: varchar
+          - name: origingrp
+            data_type: varchar
+          - name: bic_zorig_ind
+            data_type: varchar
+          - name: bic_zpln_prc
+            data_type: varchar
+          - name: bic_zpln_prc1
+            data_type: varchar
+          - name: bic_zpprc1dat
+            data_type: varchar
+          - name: bic_zkosgr
+            data_type: varchar
+          - name: price_unit
+            data_type: varchar
+          - name: bic_zmrp_ctl
+            data_type: varchar
+          - name: bic_zlaunchd
+            data_type: varchar
+          - name: bic_znpi_ind
+            data_type: varchar
+          - name: bic_zprv_prc
+            data_type: varchar
+          - name: bic_zpln_prc2
+            data_type: varchar
+          - name: bic_zpprc2dat
+            data_type: varchar
+          - name: bic_zpln_prc3
+            data_type: varchar
+          - name: bic_zpprc3dat
+            data_type: varchar
+          - name: bic_zlaunchw
+            data_type: varchar
+          - name: bic_zlaunchmt
+            data_type: varchar
+          - name: bic_zskuseg
+            data_type: varchar
+          - name: bic_zsuccecsr
+            data_type: varchar
+          - name: bic_zsui_ind
+            data_type: varchar
+          - name: bic_ztmarkup
+            data_type: varchar
+          - name: bic_zimarkup
+            data_type: varchar
+          - name: bic_zmdactind
+            data_type: varchar
+          - name: bic_zsnp_plnr
+            data_type: varchar
+          - name: bic_ztrp_plnr
+            data_type: varchar
+          - name: bic_ztlb_swch
+            data_type: varchar
+          - name: bic_zmin_stck
+            data_type: varchar
+          - name: bic_zmax_stck
+            data_type: varchar
+          - name: bic_zrfs_ind
+            data_type: varchar
+          - name: bic_zexpiry
+            data_type: varchar
+          - name: bic_zdmd_plnr
+            data_type: varchar
+          - name: bic_zdmd_prof
+            data_type: varchar
+          - name: bic_zday_supl
+            data_type: varchar
+          - name: bic_zmin_shlf
+            data_type: varchar
+          - name: bic_zgi_prcet
+            data_type: varchar
+          - name: bic_zppds_hzn
+            data_type: varchar
+          - name: bic_zserv_lev
+            data_type: varchar
+          - name: bic_zzncost
+            data_type: varchar
+          - name: bic_zmmstd
+            data_type: varchar
+          - name: bic_zpstat
+            data_type: varchar
+          - name: bic_zrondval
+            data_type: varchar
+          - name: bic_zsnpph
+            data_type: varchar
+          - name: bic_zsnpphp
+            data_type: varchar
+          - name: bic_zsstkres
+            data_type: varchar
+          - name: bic_zstkth
+            data_type: varchar
+          - name: bic_zstkthp
+            data_type: varchar
+          - name: bic_zreglic
+            data_type: varchar
+          - name: bic_zmsdpsbm
+            data_type: varchar
+          - name: bic_zschkhor
+            data_type: varchar
+          - name: bic_zreqctyp
+            data_type: varchar
+          - name: bic_zreqcflg
+            data_type: varchar
+          - name: bic_zpegpmax
+            data_type: varchar
+          - name: bic_zdplpu
+            data_type: varchar
+          - name: bic_zdplfsso
+            data_type: varchar
+          - name: bic_zdplfsfc
+            data_type: varchar
+          - name: bic_zatdsp
+            data_type: varchar
+          - name: bic_zatddm
+            data_type: varchar
+          - name: bic_zpegstatg
+            data_type: varchar
+          - name: bic_zfedem
+            data_type: varchar
+          - name: bic_zdplfs
+            data_type: varchar
+          - name: bic_zsnppullh
+            data_type: varchar
+          - name: bic_zsnppushh
+            data_type: varchar
+          - name: apo_prdcst
+            data_type: varchar
+          - name: bic_zfutmax
+            data_type: varchar
+          - name: bic_zpastmax
+            data_type: varchar
+          - name: apo_scost
+            data_type: varchar
+          - name: unit
+            data_type: varchar
+          - name: apo_bstfe
+            data_type: varchar
+          - name: apo_lsexct
+            data_type: varchar
+          - name: bic_zpervr
+            data_type: varchar
+          - name: apo_numper
+            data_type: varchar
+          - name: bic_zppdshozn
+            data_type: varchar
+          - name: bic_zz_expiry
+            data_type: varchar
+          - name: apo_pplnnr
+            data_type: varchar
+          - name: bic_zsnpshipf
+            data_type: varchar
+          - name: bic_zlapen
+            data_type: varchar
+          - name: bic_zmaxla
+            data_type: varchar
+          - name: bic_zndpen
+            data_type: varchar
+          - name: bic_zprodh
+            data_type: varchar
+          - name: bic_znpi_indr
+            data_type: varchar
+          - name: bic_zkstdcst
+            data_type: varchar
+          - name: id_credat
+            data_type: varchar
+          - name: bic_zprdtype
+            data_type: varchar
+          - name: bic_zparent
+            data_type: varchar
+          - name: bic_zcpy_hist
+            data_type: varchar
+          - name: bic_zabc
+            data_type: varchar
+          - name: bic_zfc_indc
+            data_type: varchar
+          - name: bic_zjitind
+            data_type: varchar
+          - name: bic_zrpltm_s
+            data_type: varchar
+          - name: bic_zminstk_s
+            data_type: varchar
+          - name: bic_zmaxstk_s
+            data_type: varchar
+          - name: bic_zdayspl_s
+            data_type: varchar
+          - name: bic_zservlv_s
+            data_type: varchar
+          - name: bic_zfedem_s
+            data_type: varchar
+          - name: fiscvarnt
+            data_type: varchar
+          - name: bic_zcostyear
+            data_type: varchar
+          - name: bic_zfutstpr
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_plant_text
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: txtlg
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_plant_attr
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: logsys
+            data_type: varchar
+          - name: purch_org
+            data_type: varchar
+          - name: region
+            data_type: varchar
+          - name: comp_code
+            data_type: varchar
+          - name: factcal_id
+            data_type: varchar
+          - name: bic_zmarclust
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_material_sales_text
+        columns:
+          - name: salesorg
+            data_type: varchar
+          - name: distr_chan
+            data_type: varchar
+          - name: mat_sales
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_material_plant_text
+        columns:
+          - name: plant
+            data_type: varchar
+          - name: mat_plant
+            data_type: varchar
+          - name: langu
+            data_type: varchar
+          - name: txtmd
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_dna_material_bomlist
+        columns:
+          - name: bic_zbomno
+            data_type: varchar
+          - name: plant
+            data_type: varchar
+          - name: material
+            data_type: varchar
+          - name: component
+            data_type: varchar
+          - name: createdon
+            data_type: varchar
+          - name: validfrom
+            data_type: varchar
+          - name: validto
+            data_type: varchar
+          - name: bic_zvlfromc
+            data_type: varchar
+          - name: bic_zvltoi
+            data_type: varchar
+          - name: id_credat
+            data_type: varchar
+          - name: bic_zcoqty
+            data_type: varchar
+          - name: comp_scrap
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: recordmode
+            data_type: varchar
+          - name: bic_zhdqty
+            data_type: varchar
+          - name: unit
+            data_type: varchar
+          - name: matl_type
+            data_type: varchar
+          - name: bic_zmat_type
+            data_type: varchar
+          - name: salesorg
+            data_type: varchar
+          - name: bic_zstlan
+            data_type: varchar
+          - name: bic_zstlal
+            data_type: varchar
+          - name: bic_zstlst
+            data_type: varchar
+          - name: bic_zz_tp
+            data_type: varchar
+          - name: bic_zz_cp
+            data_type: varchar
+          - name: bic_zfmnge
+            data_type: varchar
+          - name: bic_zausch
+            data_type: varchar
+          - name: bic_zuposz
+            data_type: varchar
+          - name: bic_zmaktx
+            data_type: varchar
+          - name: bic_zupmng
+            data_type: varchar
+          - name: bic_zlosbs
+            data_type: varchar
+          - name: bic_zlosvn
+            data_type: varchar
+          - name: bic_znlfzt
+            data_type: varchar
+          - name: bic_zverti
+            data_type: varchar
+          - name: bic_znlfzv
+            data_type: varchar
+          - name: bic_znlfmv
+            data_type: varchar
+          - name: bic_zzausch
+            data_type: varchar
+          - name: bic_zavoau
+            data_type: varchar
+          - name: bic_znlfzv1
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_account_attr
+        columns:
+          - name: chrt_accts
+            data_type: varchar
+          - name: account
+            data_type: varchar
+          - name: bal_flag
+            data_type: varchar
+          - name: cstel_flag
+            data_type: varchar
+          - name: glacc_flag
+            data_type: varchar
+          - name: logsys
+            data_type: varchar
+          - name: sem_posit
+            data_type: varchar
+          - name: bic_zbravol1
+            data_type: varchar
+          - name: bic_zbravol2
+            data_type: varchar
+          - name: bic_zbravol3
+            data_type: varchar
+          - name: bic_zbravol4
+            data_type: varchar
+          - name: bic_zbravol5
+            data_type: varchar
+          - name: bic_zbravol6
+            data_type: varchar
+          - name: bic_zciwhl1
+            data_type: varchar
+          - name: bic_zciwhl2
+            data_type: varchar
+          - name: bic_zciwhl3
+            data_type: varchar
+          - name: bic_zciwhl4
+            data_type: varchar
+          - name: bic_zciwhl5
+            data_type: varchar
+          - name: bic_zciwhl6
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar
+      - name: bwa_material_sales
+        columns:
+          - name: salesorg
+            data_type: varchar
+          - name: distr_chan
+            data_type: varchar
+          - name: mat_sales
+            data_type: varchar
+          - name: base_uom
+            data_type: varchar
+          - name: matl_grp_1
+            data_type: varchar
+          - name: prod_hier
+            data_type: varchar
+          - name: prov_group
+            data_type: varchar
+          - name: rebate_grp
+            data_type: varchar
+          - name: ph_refnr
+            data_type: varchar
+          - name: del_flag
+            data_type: varchar
+          - name: matl_grp_2
+            data_type: varchar
+          - name: matl_grp_3
+            data_type: varchar
+          - name: matl_grp_4
+            data_type: varchar
+          - name: matl_grp_5
+            data_type: varchar
+          - name: mat_stgrp
+            data_type: varchar
+          - name: rt_assgrad
+            data_type: varchar
+          - name: af_vasmg
+            data_type: varchar
+          - name: af_prind
+            data_type: varchar
+          - name: bic_zpredecsr
+            data_type: varchar
+          - name: bic_zskuid
+            data_type: varchar
+          - name: bic_zprallocd
+            data_type: varchar
+          - name: bic_zpackpcs
+            data_type: varchar
+          - name: bic_zean
+            data_type: varchar
+          - name: bic_zoldmatl
+            data_type: varchar
+          - name: bic_zd_plant
+            data_type: varchar
+          - name: bic_zchdcind
+            data_type: varchar
+          - name: bic_zprc_grp
+            data_type: varchar
+          - name: accnt_asgn
+            data_type: varchar
+          - name: bic_zitm_cgrp
+            data_type: varchar
+          - name: bic_zmin_qty
+            data_type: varchar
+          - name: bic_zmin_dqty
+            data_type: varchar
+          - name: bic_zdel_unit
+            data_type: varchar
+          - name: bic_zschme
+            data_type: varchar
+          - name: bic_zvrkme
+            data_type: varchar
+          - name: bic_zlaunchd
+            data_type: varchar
+          - name: bic_znpi_ind
+            data_type: varchar
+          - name: bic_zlmat_gr1
+            data_type: varchar
+          - name: bic_zlmat_gr2
+            data_type: varchar
+          - name: bic_zlmat_gr3
+            data_type: varchar
+          - name: bic_zlmat_gr4
+            data_type: varchar
+          - name: bic_zlmat_gr5
+            data_type: varchar
+          - name: bic_zlmat_gr6
+            data_type: varchar
+          - name: bic_znpi_indr
+            data_type: varchar
+          - name: bic_zcpy_hist
+            data_type: varchar
+          - name: bic_zabc
+            data_type: varchar
+          - name: bic_zfc_indc
+            data_type: varchar
+          - name: bic_zprdtype
+            data_type: varchar
+          - name: bic_zparent
+            data_type: varchar
+          - name: _ingestion_sequence_
+            data_type: varchar
+          - name: _ingestiontimestamp_
+            data_type: timestamp_ntz
+          - name: _pk_
+            data_type: varchar
+          - name: _upt_
+            data_type: timestamp_ntz
+          - name: _createtime_
+            data_type: timestamp_ntz
+          - name: _deleted_
+            data_type: varchar

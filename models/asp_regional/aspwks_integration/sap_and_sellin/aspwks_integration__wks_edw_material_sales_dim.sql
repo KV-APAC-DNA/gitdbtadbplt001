@@ -1,0 +1,126 @@
+with itg_matl_sls as (
+    select * from {{ ref('aspitg_integration__itg_matl_sls') }}
+),
+
+itg_matl_sls_text as (
+    select * from {{ ref('aspitg_integration__itg_matl_sls_text') }}
+),
+
+--Join
+transformed as (
+    select
+        sls_org,
+        dstr_chnl,
+        matl,
+        base_unit,
+        matl_grp_1,
+        prod_hierarchy,
+        commsn_grp,
+        vol_rebt_grp,
+        pharma_cent_no,
+        del_fl,
+        matl_grp_2,
+        matl_grp_3,
+        matl_grp_4,
+        matl_grp_5,
+        matl_stats_grp,
+        asrtmnt_grade,
+        afs_vas_matl_grp,
+        afs_prc_in,
+        predecessor,
+        sku_id,
+        prodt_alloc_det_proc,
+        num_pcs_in,
+        ean_num,
+        old_matl_num,
+        delv_plnt,
+        cash_disc_ind,
+        prc_grp_mat,
+        acct_asgn_grp,
+        itm_cat_grp,
+        min_ordr_qty,
+        min_delv_qty,
+        delv_unit,
+        delv_uom,
+        sls_unit,
+        launch_dt,
+        npi_in,
+        lcl_mat_grp_1,
+        lcl_mat_grp_2,
+        lcl_mat_grp_3,
+        lcl_mat_grp_4,
+        lcl_mat_grp_5,
+        lcl_mat_grp_6,
+        npi_in_apo,
+        copy_hist,
+        prod_classftn,
+        fcst_indc_apo,
+        prod_type_apo,
+        mstr_cd,
+        med_desc,
+        -- tgt.crt_dttm as tgt_crt_dttm,
+        updt_dttm
+        -- case when tgt.crt_dttm is null then 'i' else 'u' end as chng_flg
+    from 
+    (select a.*, b.med_desc as med_desc
+        from itg_matl_sls as a
+        left outer join itg_matl_sls_text as b 
+            on a.sls_org=b.sls_org and a.dstr_chnl=b.dstn_chnl and a.matl=b.mat_sls and b.lang_key='E')
+),
+
+final as (
+    select
+        sls_org,
+        dstr_chnl,
+        matl,
+        base_unit,
+        matl_grp_1,
+        prod_hierarchy,
+        commsn_grp,
+        vol_rebt_grp,
+        pharma_cent_no,
+        del_fl,
+        matl_grp_2,
+        matl_grp_3,
+        matl_grp_4,
+        matl_grp_5,
+        matl_stats_grp,
+        asrtmnt_grade,
+        afs_vas_matl_grp,
+        afs_prc_in,
+        predecessor,
+        sku_id,
+        prodt_alloc_det_proc,
+        num_pcs_in,
+        ean_num,
+        old_matl_num,
+        delv_plnt,
+        cash_disc_ind,
+        prc_grp_mat,
+        acct_asgn_grp,
+        itm_cat_grp,
+        min_ordr_qty,
+        min_delv_qty,
+        delv_unit,
+        delv_uom,
+        sls_unit,
+        launch_dt,
+        npi_in,
+        lcl_mat_grp_1,
+        lcl_mat_grp_2,
+        lcl_mat_grp_3,
+        lcl_mat_grp_4,
+        lcl_mat_grp_5,
+        lcl_mat_grp_6,
+        npi_in_apo,
+        copy_hist,
+        prod_classftn,
+        fcst_indc_apo,
+        prod_type_apo,
+        mstr_cd,
+        med_desc,
+        updt_dttm
+    from transformed
+)
+
+select * from final
