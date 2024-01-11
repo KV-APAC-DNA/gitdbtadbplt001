@@ -135,6 +135,95 @@ models:
     config:
       alias: itg_mds_ap_company_dim
       tags: ["daily","sap_ecc_master"]
+  - name: aspitg_integration__itg_mds_log
+    config:
+      alias: itg_mds_log
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_dso
+    config:
+      alias: itg_mds_ap_dso
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_otif
+    config:
+      alias: itg_mds_ap_otif
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_sales_ops_map
+    config:
+      alias: itg_mds_ap_sales_ops_map
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_ecom_oneview_config
+    config:
+      alias: itg_mds_ap_ecom_oneview_config
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_ps_market_coverage
+    config:
+      alias: itg_mds_rg_ps_market_coverage
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_ecom_digital_shelf_customer_mapping
+    config:
+      alias: itg_mds_rg_ecom_digital_shelf_customer_mapping
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_tih_distributor_closure
+    config:
+      alias: itg_mds_rg_tih_distributor_closure
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_ecom_product
+    config:
+      alias: itg_mds_rg_ecom_product
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_sku_benchmarks
+    config:
+      alias: itg_mds_rg_sku_benchmarks
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_sfmc_gender
+    config:
+      alias: itg_mds_rg_sfmc_gender
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_rg_sfmc_attributes
+    config:
+      alias: itg_mds_rg_sfmc_attributes
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_lookup_category_mapping
+    config:
+      alias: itg_lookup_category_mapping
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_ecom_digital_salesweight
+    config:
+      alias: itg_ecom_digital_salesweight
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_okr_actuals
+    config:
+      alias: itg_mds_ap_okr_actuals
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_okr_targets
+    config:
+      alias: itg_mds_ap_okr_targets
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_company_dim
+    config:
+      alias: itg_mds_ap_company_dim
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_ap_customer360_config
+    config:
+      alias: itg_mds_ap_customer360_config
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_custgp_portfolio_mapping
+    config:
+      alias: itg_mds_custgp_portfolio_mapping
+      tags: ["daily","rg_mds_dna"]
+  - name: aspitg_integration__itg_mds_pre_apsc_master
+    config:
+      alias: itg_mds_pre_apsc_master
+      tags: ["daily","rg_mds_dna"]
+  - name: aspedw_integration__edw_ecomm_plan
+    config:
+      alias: edw_ecomm_plan
+      tags: ["daily","rg_mds_dna"]
+  - name: aspedw_integration__edw_profit_center_franchise_mapping
+    config:
+      alias: edw_profit_center_franchise_mapping
+      tags: ["daily","rg_mds_dna"]
+
   - name: aspitg_integration__vw_stg_sdl_sap_mara_extract
     config:
       alias: vw_stg_sdl_sap_mara_extract

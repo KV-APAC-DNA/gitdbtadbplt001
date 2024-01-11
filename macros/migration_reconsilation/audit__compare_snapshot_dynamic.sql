@@ -1,6 +1,8 @@
 {% macro audit__compare_snapshot_dynamic() %}
+
 {% set input_list=[
-['DEV_DNA_CORE','snapaspedw_integration','edw_list_price',ref('aspedw_integration__edw_list_price'),"md5(concat(sls_org,'_',material,'_',cond_rec_no,'_',cdl_dttm))"]    
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_material_base',ref('aspitg_integration__itg_material_base'),"md5(concat(matl_num))"],
+    ['DEV_DNA_CORE','snapaspitg_integration','itg_base_prod_text',ref('aspitg_integration__itg_base_prod_text'),"md5(concat(clnt,'_',lang_key,'_',base_prod))"]
 ]
 %}
 --drop table if exists {{target.schema}}.model_validations;
@@ -32,4 +34,5 @@ with {{item[2]}} as (
 )
 select '{{item[2]}}' as model_name,* from {{item[2]}};
 {% endfor %}
+
 {% endmacro %}

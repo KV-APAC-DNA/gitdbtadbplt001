@@ -1,0 +1,67 @@
+with 
+
+source as (
+
+    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_material_sales') }}
+
+),
+
+final as (
+
+    select
+        salesorg,
+        distr_chan,
+        mat_sales,
+        base_uom,
+        matl_grp_1,
+        prod_hier,
+        prov_group,
+        rebate_grp,
+        ph_refnr,
+        del_flag,
+        matl_grp_2,
+        matl_grp_3,
+        matl_grp_4,
+        matl_grp_5,
+        mat_stgrp,
+        rt_assgrad,
+        af_vasmg,
+        af_prind,
+        zpredecsr,
+        zskuid,
+        zprallocd,
+        zpackpcs,
+        zean,
+        zoldmatl,
+        zd_plant,
+        zchdcind,
+        zprc_grp,
+        accnt_asgn,
+        zitm_cgrp,
+        zmin_qty,
+        zmin_dqty,
+        zdel_unit,
+        zschme,
+        zvrkme,
+        zlaunchd,
+        znpi_ind,
+        zlmat_gr1,
+        zlmat_gr2,
+        zlmat_gr3,
+        zlmat_gr4,
+        zlmat_gr5,
+        zlmat_gr6,
+        znpi_indr,
+        zcpy_hist,
+        zabc,
+        zfc_indc,
+        zprdtype,
+        zparent,
+        crt_dttm,
+        updt_dttm
+
+    from source
+
+)
+
+select * from final
