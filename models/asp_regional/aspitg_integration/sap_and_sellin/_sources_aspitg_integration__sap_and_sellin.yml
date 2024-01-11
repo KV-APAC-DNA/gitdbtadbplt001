@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: aspsdl_raw
-    database: "{{ env_var('DBT_ENV_DB') }}"
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: aspsdl_raw
     quoting:
       database: false
@@ -1581,7 +1581,6 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-
       - name: sdl_sap_ecc_tcurr
         columns:
           - name: mandt
@@ -1620,6 +1619,1046 @@ sources:
           - name: updt_dttm
             data_type: timestamp_ntz
       - name: sdl_mds_ap_company_dim
+      - name: sdl_rg_mds_log
+        columns:
+          - name: status
+            data_type: varchar
+          - name: result
+            data_type: varchar
+          - name: job_name
+            data_type: varchar
+          - name: query
+            data_type: varchar
+          - name: crtd_dttm
+            data_type: timestamp_ntz
+
+      - name: sdl_mds_ap_dso
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: mrc_code
+            data_type: varchar
+          - name: mrc_desc
+            data_type: varchar
+          - name: year
+            data_type: number
+          - name: month
+            data_type: number
+          - name: gts
+            data_type: number
+          - name: gross_account_receivable
+            data_type: number
+          - name: jnj_days
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_otif
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: numerator
+            data_type: number
+          - name: denominator
+            data_type: number
+          - name: year
+            data_type: number
+          - name: month
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_sales_ops_map
+        columns:
+          - name: changetrackingmask
+            data_type: number
+          - name: code
+            data_type: varchar
+          - name: dataset
+            data_type: varchar
+          - name: destination_cluster
+            data_type: varchar
+          - name: destination_market
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: source_cluster
+            data_type: varchar
+          - name: source_market
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+
+      - name: sdl_mds_ap_ecom_oneview_config
+        columns:
+          - name: changetrackingmask
+            data_type: number
+          - name: code
+            data_type: varchar
+          - name: column_name
+            data_type: varchar
+          - name: dataset
+            data_type: varchar
+          - name: dataset_area
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: filter_value
+            data_type: varchar
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+
+      - name: sdl_mds_rg_ecom_plan
+        columns:
+          - name: brand
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: cluster
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: fisc_month
+            data_type: number
+          - name: fisc_year
+            data_type: number
+          - name: fiscal_quarter
+            data_type: varchar
+          - name: franchise
+            data_type: varchar
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: need_state
+            data_type: varchar
+          - name: sub_country
+            data_type: varchar
+          - name: target_ori
+            data_type: number
+          - name: type
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+
+      - name: sdl_mds_rg_profit_center_franchise_mapping
+        columns:
+          - name: changetrackingmask
+            data_type: number
+          - name: code
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: need_state
+            data_type: varchar
+          - name: prod_minor
+            data_type: varchar
+          - name: prod_minor_desc
+            data_type: varchar
+          - name: profit_center
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: franchise_l1
+            data_type: varchar
+          - name: franchise_l2
+            data_type: varchar
+          - name: franchise_l3
+            data_type: varchar
+          - name: franchise_l4
+            data_type: varchar
+          - name: prod_need_state
+            data_type: varchar
+
+      - name: sdl_mds_rg_ps_market_coverage
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: channel
+            data_type: varchar
+          - name: coverage
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
+        columns:
+          - name: changetrackingmask
+            data_type: number
+          - name: channel
+            data_type: varchar
+          - name: cluster
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: data_provider
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: group_customer
+            data_type: varchar
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: online_store
+            data_type: varchar
+          - name: re
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+
+      - name: sdl_mds_rg_tih_distributor_closure
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: closemonth
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_rg_sfmc_gender
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: gender_mapped_code
+            data_type: varchar
+          - name: gender_mapped_name
+            data_type: varchar
+          - name: gender_mapped_id
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_rg_sfmc_attributes
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: subject
+            data_type: varchar
+          - name: original_value
+            data_type: varchar
+          - name: mapped_value
+            data_type: varchar
+          - name: market
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_price_tracker_category_mapping
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: stronghold
+            data_type: varchar
+          - name: harmonized_category
+            data_type: varchar
+          - name: input_category
+            data_type: varchar
+          - name: input_sub_category
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_rg_ecom_digital_salesweight
+        columns:
+          - name: changetrackingmask
+            data_type: number
+          - name: code
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: eretailer
+            data_type: varchar
+          - name: id
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: market
+            data_type: varchar
+          - name: muid
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: validationstatus
+            data_type: varchar
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: salesweight
+            data_type: varchar
+
+      - name: sdl_mds_ap_okr_actuals
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: fisc_yr_code
+            data_type: varchar
+          - name: fisc_yr_name
+            data_type: varchar
+          - name: fisc_yr_id
+            data_type: number
+          - name: pyramid_code
+            data_type: varchar
+          - name: pyramid_name
+            data_type: varchar
+          - name: pyramid_id
+            data_type: number
+          - name: cluster_code
+            data_type: varchar
+          - name: cluster_name
+            data_type: varchar
+          - name: cluster_id
+            data_type: number
+          - name: market_code
+            data_type: varchar
+          - name: market_name
+            data_type: varchar
+          - name: market_id
+            data_type: number
+          - name: segment_code
+            data_type: varchar
+          - name: segment_name
+            data_type: varchar
+          - name: segment_id
+            data_type: number
+          - name: brand_code
+            data_type: varchar
+          - name: brand_name
+            data_type: varchar
+          - name: brand_id
+            data_type: number
+          - name: kpi_code
+            data_type: varchar
+          - name: kpi_name
+            data_type: varchar
+          - name: kpi_id
+            data_type: number
+          - name: actual_type_code
+            data_type: varchar
+          - name: actual_type_name
+            data_type: varchar
+          - name: actual_type_id
+            data_type: number
+          - name: ytd
+            data_type: number
+          - name: year_actual
+            data_type: number
+          - name: q1_actual
+            data_type: number
+          - name: q2_actual
+            data_type: number
+          - name: q3_actual
+            data_type: number
+          - name: q4_actual
+            data_type: number
+          - name: jan_actual
+            data_type: number
+          - name: feb_actual
+            data_type: number
+          - name: mar_actual
+            data_type: number
+          - name: apr_actual
+            data_type: number
+          - name: may_actual
+            data_type: number
+          - name: june_actual
+            data_type: number
+          - name: july_actual
+            data_type: number
+          - name: august_actual
+            data_type: number
+          - name: september_actual
+            data_type: number
+          - name: october_actual
+            data_type: number
+          - name: november_actual
+            data_type: number
+          - name: december_actual
+            data_type: number
+          - name: nts_grwng_share_size
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_okr_targets
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: fisc_yr_code
+            data_type: varchar
+          - name: fisc_yr_name
+            data_type: varchar
+          - name: fisc_yr_id
+            data_type: number
+          - name: pyramid_code
+            data_type: varchar
+          - name: pyramid_name
+            data_type: varchar
+          - name: pyramid_id
+            data_type: number
+          - name: cluster_code
+            data_type: varchar
+          - name: cluster_name
+            data_type: varchar
+          - name: cluster_id
+            data_type: number
+          - name: market_code
+            data_type: varchar
+          - name: market_name
+            data_type: varchar
+          - name: market_id
+            data_type: number
+          - name: segment_code
+            data_type: varchar
+          - name: segment_name
+            data_type: varchar
+          - name: segment_id
+            data_type: number
+          - name: brand_code
+            data_type: varchar
+          - name: brand_name
+            data_type: varchar
+          - name: brand_id
+            data_type: number
+          - name: kpi_code
+            data_type: varchar
+          - name: kpi_name
+            data_type: varchar
+          - name: kpi_id
+            data_type: number
+          - name: target_type_code
+            data_type: varchar
+          - name: target_type_name
+            data_type: varchar
+          - name: target_type_id
+            data_type: number
+          - name: ytd
+            data_type: number
+          - name: year_target
+            data_type: number
+          - name: q1_target
+            data_type: number
+          - name: q2_target
+            data_type: number
+          - name: q3_target
+            data_type: number
+          - name: q4_target
+            data_type: number
+          - name: jan_target
+            data_type: number
+          - name: feb_target
+            data_type: number
+          - name: mar_target
+            data_type: number
+          - name: apr_target
+            data_type: number
+          - name: may_target
+            data_type: number
+          - name: june_target
+            data_type: number
+          - name: july_target
+            data_type: number
+          - name: august_target
+            data_type: number
+          - name: september_target
+            data_type: number
+          - name: october_target
+            data_type: number
+          - name: november_target
+            data_type: number
+          - name: december_target
+            data_type: number
+          - name: nts_grwng_share_size
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+      - name: sdl_mds_ap_customer360_config
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: param_value
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_profit_center_ppm
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: year_code
+            data_type: varchar
+          - name: year_name
+            data_type: varchar
+          - name: year_id
+            data_type: number
+          - name: profit_centre
+            data_type: varchar
+          - name: profit_centre_description
+            data_type: varchar
+          - name: market_ppm_code
+            data_type: varchar
+          - name: market_ppm_name
+            data_type: varchar
+          - name: market_ppm_id
+            data_type: number
+          - name: region_ppm_code
+            data_type: varchar
+          - name: region_ppm_name
+            data_type: varchar
+          - name: region_ppm_id
+            data_type: number
+          - name: market_code
+            data_type: varchar
+          - name: market_name
+            data_type: varchar
+          - name: market_id
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_ap_pre_apsc_master
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: materialnumber
+            data_type: varchar
+          - name: materialdescription
+            data_type: varchar
+          - name: pre-apsc per pc
+            data_type: number
+          - name: market_code
+            data_type: varchar
+          - name: market_name
+            data_type: varchar
+          - name: market_id
+            data_type: number
+          - name: month_code
+            data_type: varchar
+          - name: month_name
+            data_type: varchar
+          - name: month_id
+            data_type: number
+          - name: year_code
+            data_type: varchar
+          - name: year_name
+            data_type: varchar
+          - name: year_id
+            data_type: number
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_sap_bw_price_list
+        columns:
+          - name: sls_org
+            data_type: varchar
+          - name: material
+            data_type: varchar
+          - name: cond_rec_no
+            data_type: varchar
+          - name: matl_grp
+            data_type: varchar
+          - name: valid_to
+            data_type: varchar
+          - name: knart
+            data_type: varchar
+          - name: dt_from
+            data_type: varchar
+          - name: amount
+            data_type: varchar
+          - name: currency
+            data_type: varchar
+          - name: unit
+            data_type: varchar
+          - name: record_mode
+            data_type: varchar
+          - name: comp_cd
+            data_type: varchar
+          - name: price_unit
+            data_type: varchar
+          - name: zcurrfpa
+            data_type: varchar
+          - name: cdl_dttm
+            data_type: varchar
+          - name: curr_dt
+            data_type: timestamp_ntz
+          - name: file_name
+            data_type: varchar
 
   - name: aspitg_integration
     schema: aspitg_integration
@@ -1629,3 +2668,12 @@ sources:
       identifier: false
     tables:
     - name : itg_crncy_conv 
+
+  - name: aspedw_integration
+    schema: aspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : edw_okr_brand_map 
