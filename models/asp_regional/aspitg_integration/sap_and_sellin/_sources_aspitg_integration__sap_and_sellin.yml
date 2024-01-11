@@ -2676,4 +2676,6 @@ sources:
       schema: false
       identifier: false
     tables:
+    - name : itg_crncy_conv 
     - name : edw_okr_brand_map 
+
