@@ -18,23 +18,23 @@ edw_calendar_dim as (
 -- Final CTE
 final as (
 (
-	SELECT derived_table1.ex_rt_typ
+	select derived_table1.ex_rt_typ
 	,derived_table1.from_crncy
 	,derived_table1.to_crncy
 	,derived_table1.vld_from
 	,derived_table1.ex_rt
-	,derived_table1.fisc_per FROM (
-	SELECT a.ex_rt_typ
+	,derived_table1.fisc_per from (
+	select a.ex_rt_typ
 		,a.from_crncy
 		,a.to_crncy
 		,calmonthstartdate.vld_from
 		,a.ex_rt
 		,calmonthstartdate.fisc_per
-		,RANK() OVER (
-			PARTITION BY a.from_crncy
+		,rank() over (
+			partition by a.from_crncy
 			,a.to_crncy
-			,calmonthstartdate.fisc_per ORDER BY calmonthstartdate.vld_from DESC
-			) AS latest_ex_rt_by_fisc_per
+			,calmonthstartdate.fisc_per order by calmonthstartdate.vld_from desc
+			) as latest_ex_rt_by_fisc_per
 	FROM 
 		(
 			SELECT drvd_crncy.ex_rt_typ
