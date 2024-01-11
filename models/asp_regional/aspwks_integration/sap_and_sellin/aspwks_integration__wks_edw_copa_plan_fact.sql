@@ -7,7 +7,7 @@ with source as(
     select * from {{ ref('aspitg_integration__itg_copa17_trans') }}
 ),
 edw_acct_hier as(
-select * from DEV_DNA_CORE.SM05_WORKSPACE.EDW_ACCT_HIER
+select * from {{ ref('aspedw_integration__edw_acct_hier') }}
 )
 SELECT
     fisc_yr_per,
