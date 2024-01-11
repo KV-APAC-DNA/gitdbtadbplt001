@@ -179,3 +179,83 @@ models:
     config: 
       alias: wks_itg_ecc_standard_cost
       tags: ["daily","sap_ecc_master"]
+  - name: aspwks_integration__wks_itg_copa17_trans
+    config: 
+      alias: wks_itg_copa17_trans
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_edw_copa_plan_fact
+    config: 
+      alias: wks_edw_copa_plan_fact
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_itg_invnt
+    config: 
+      alias: wks_itg_invnt
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_edw_inventory_fact
+    config: 
+      alias: wks_edw_inventory_fact
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_itg_invc_sls
+    config: 
+      alias: wks_itg_invc_sls
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_edw_invc_fact
+    config: 
+      alias: wks_edw_invc_fact
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_edw_list_price
+    config: 
+      alias: wks_edw_list_price
+      tags: ["daily","sap_bw"]
+  - name: aspwks_integration__wks_itg_acct
+    config: 
+      alias: wks_itg_acct
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_acct_text
+    config: 
+      alias: wks_itg_acct_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_material_sales
+    config: 
+      alias: wks_itg_material_sales
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_matl_plnt
+    config: 
+      alias: wks_itg_matl_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_matl_plnt_text
+    config: 
+      alias: wks_itg_matl_plnt_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_matl_sls_text
+    config: 
+      alias: wks_itg_matl_sls_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_plant_text
+    config: 
+      alias: wks_itg_plant_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_plnt
+    config: 
+      alias: wks_itg_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_sap_bw_dna_material_bomlist
+    config: 
+      alias: wks_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_edw_material_plant_dim
+    config: 
+      alias: wks_edw_material_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_edw_material_sales_dim
+    config: 
+      alias: wks_edw_material_sales_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_edw_plant_dim
+    config: 
+      alias: wks_edw_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_edw_account_dim
+    config: 
+      alias: wks_edw_account_dim
+      tags: ["daily","sap_bw_master"]

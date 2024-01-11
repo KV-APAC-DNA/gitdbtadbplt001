@@ -1,11 +1,12 @@
 {% macro audit__compare_snapshot_dynamic() %}
 
 {% set input_list=[
-    ['DEV_DNA_CORE','snapaspitg_integration','itg_material_base',ref('aspitg_integration__itg_material_base'),"md5(concat(matl_num))"],
-    ['DEV_DNA_CORE','snapaspitg_integration','itg_base_prod_text',ref('aspitg_integration__itg_base_prod_text'),"md5(concat(clnt,'_',lang_key,'_',base_prod))"]
+    ['DB_NAME','snapaspitg_integration','itg_material_base',ref('aspitg_integration__itg_material_base'),"md5(concat(matl_num))"],
+    ['DB_NAME','snapaspitg_integration','itg_base_prod_text',ref('aspitg_integration__itg_base_prod_text'),"md5(concat(clnt,'_',lang_key,'_',base_prod))"]
 ]
 %}
 --drop table if exists {{target.schema}}.model_validations;
+{% set db=env_var('DBT_ENV_CORE_DB') %}
 create table if not exists {{target.schema}}.model_validations(
     model_name  text,
     column_name  text,
@@ -23,7 +24,7 @@ with {{item[2]}} as (
     {{
         audit_helper.compare_all_columns(
             a_relation=api.Relation.create(
-                database=item[0],
+                database=db,
                 schema=item[1],
                 identifier=item[2]
             ),
@@ -34,5 +35,4 @@ with {{item[2]}} as (
 )
 select '{{item[2]}}' as model_name,* from {{item[2]}};
 {% endfor %}
-
 {% endmacro %}

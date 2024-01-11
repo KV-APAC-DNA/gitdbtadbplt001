@@ -24,7 +24,7 @@
         )
         {% if select_columns!=None %}
         select 
-                
+             Distinct   
             'Duplicate records present' AS failure_reason,
             {%- for item in select_columns %}
                 trim({{item}}) as {{item}}

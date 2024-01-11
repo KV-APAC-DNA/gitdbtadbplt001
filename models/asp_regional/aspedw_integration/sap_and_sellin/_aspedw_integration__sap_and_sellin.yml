@@ -54,3 +54,59 @@ models:
     config:
       alias: edw_sales_org_dim
       tags: ["daily","sap_ecc_master"]
+  - name: aspedw_integration__edw_account_dim
+    config:
+      alias: edw_account_dim
+      tags: ["daily","sap_bw_master"]  
+  - name: aspedw_integration__edw_material_plant_dim
+    config:
+      alias: edw_material_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_material_sales_dim
+    config:
+      alias: edw_material_sales_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_plant_dim
+    config:
+      alias: edw_plant_dim
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_sap_bw_dna_material_bomlist
+    config:
+      alias: edw_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_sap_matl_num_ean_mapping
+    config:
+      alias: edw_sap_matl_num_ean_mapping
+      tags: ["daily","sap_bw_master"]
+  - name: aspedw_integration__edw_acct_hier
+    config:
+      alias: edw_acct_hier
+  - name: aspedw_integration__edw_inventory_fact
+    config:
+      alias: edw_inventory_fact
+      tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_invoice_fact
+    config:
+      alias: edw_invoice_fact
+      tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_material_uom
+    config:
+      alias: edw_material_uom
+      tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_copa_plan_fact
+    config:
+      alias: edw_copa_plan_fact
+      tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_delivery_fact
+    config:
+      alias: edw_delivery_fact
+      tags: ["daily","sap_bw"]  
+
+  - name: aspedw_integration__edw_list_price
+    config:
+      alias: edw_list_price
+      tags: ["daily","sap_bw"] 

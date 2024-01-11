@@ -569,3 +569,230 @@ models:
            config:
              store_failures: true
              schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_0account
+    config: 
+      alias: vw_stg_sdl_sap_bw_0account
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["chrt_accts","account","objvers"]
+             name: TRATBL_vw_stg_sdl_sap_bw_0account_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_dna_material_bomlist
+    config: 
+      alias: vw_stg_sdl_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","zbomno","material","component","createdon","validfrom","validto","zvlfromc","zvltoi"]
+             name: TRATBL_vw_stg_sdl_sap_bw_dna_material_bomlist_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_material_plant_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_material_plant_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","mat_plant","langu"]
+             name: TRATBL_vw_stg_sdl_sap_bw_material_plant_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_material_sales_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_material_sales_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["salesorg","distr_chan","mat_sales","langu"]
+             name: TRATBL_vw_stg_sdl_sap_bw_material_sales_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_attr
+    config: 
+      alias: vw_stg_sdl_sap_bw_plant_attr
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant"]
+             name: TRATBL_vw_stg_sdl_sap_bw_plant_attr_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_text
+    config: 
+      alias: vw_stg_sdl_sap_bw_plant_text
+      tags: ["daily","sap_bw_master","sap_bw"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant"]
+             name: TRATBL_vw_stg_sdl_sap_bw_plant_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_account_text
+    config: 
+      alias: vw_stg_sdl_sap_ecc_account_text
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["chrt_accts","account","langu"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_account_text_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_plant
+    config: 
+      alias: vw_stg_sdl_sap_ecc_material_plant
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["plant","mat_plant"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_material_plant_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_sales
+    config: 
+      alias: vw_stg_sdl_sap_ecc_material_sales
+      tags: ["daily","sap_bw_master","sap_ecc"]
+    tests:
+       - test_duplicate:
+             group_by_columns: ["salesorg","distr_chan","mat_sales"]
+             name: TRATBL_vw_stg_sdl_sap_ecc_material_sales_duplicate_test
+             config:
+               store_failures: true
+               schema: aspwks_integration
+  - name: aspitg_integration__itg_acct
+    config:
+      alias: itg_acct
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_acct_text
+    config:
+      alias: itg_acct_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_plnt
+    config:
+      alias: itg_matl_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_plnt_text
+    config:
+      alias: itg_matl_plnt_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_sls
+    config:
+      alias: itg_matl_sls
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_matl_sls_text
+    config:
+      alias: itg_matl_sls_text
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_plnt
+    config:
+      alias: itg_plnt
+      tags: ["daily","sap_bw_master"]
+  - name: aspitg_integration__itg_plnt_text
+    config:
+      alias: itg_plnt_text
+      tags: ["daily","sap_bw_master"]   
+  - name: aspitg_integration__itg_sap_bw_dna_material_bomlist
+    config:
+      alias: itg_sap_bw_dna_material_bomlist
+      tags: ["daily","sap_bw_master"]    
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_copa17
+    config:
+      alias: vw_stg_sdl_sap_bw_copa17
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__itg_copa17_trans
+    config:
+      alias: itg_copa17_trans
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_inventory
+    config:
+      alias: vw_stg_sdl_sap_bw_inventory
+      tags: ["daily","sap_bw"]
+
+
+  - name: aspitg_integration__itg_invnt
+    config:
+      alias: itg_invnt
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_zc_sd
+    config:
+      alias: vw_stg_sdl_sap_bw_zc_sd
+      tags: ["daily","sap_bw"]
+
+
+  - name: aspitg_integration__itg_invc_sls
+    config:
+      alias: itg_invc_sls
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_delivery
+    config:
+      alias: vw_stg_sdl_sap_bw_delivery
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__itg_delivery_fact
+    config:
+      alias: itg_delivery_fact
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_price_list
+    config:
+      alias: vw_stg_sdl_sap_bw_price_list
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__itg_list_price
+    config:
+      alias: itg_list_price
+      tags: ["daily","sap_bw"]
+
+
+  - name: aspitg_integration__vw_stg_sdl_sap_bw_material_uom
+    config:
+      alias: vw_stg_sdl_sap_bw_material_uom
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__itg_material_uom
+    config:
+      alias: itg_material_uom
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__vw_stg_sdl_sap_billing_condition
+    config:
+      alias: vw_stg_sdl_sap_billing_condition
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__itg_sap_billing_condition
+    config:
+      alias: itg_sap_billing_condition
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_delivery
+    config:
+      alias: sdl_raw_sap_bw_delivery
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_material_uom
+    config:
+      alias: sdl_raw_sap_bw_material_uom
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_bw_price_list
+    config:
+      alias: sdl_raw_sap_bw_price_list
+      tags: ["daily","sap_bw"]
+
+  - name: aspitg_integration__sdl_raw_sap_billing_condition
+    config:
+      alias: sdl_raw_sap_billing_condition
+      tags: ["daily","sap_bw"]

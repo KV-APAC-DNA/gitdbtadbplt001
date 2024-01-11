@@ -1,4 +1,4 @@
-{% macro audit__compare_snapshot_dynamic() %}
+{% macro audit__compare_snapshot_dynamic_aagraw03() %}
 {% set input_list=[
     ['DEV_DNA_CORE','snapaspedw_integration','edw_account_dim',ref('aspedw_integration__edw_account_dim'),"md5(concat(chrt_acct,'_',acct_num,'_',obj_ver))"],
     ['DEV_DNA_CORE','snapaspedw_integration','edw_material_plant_dim',ref('aspedw_integration__edw_material_plant_dim'),"md5(concat(plnt,'_',matl_plnt_view))"],
@@ -17,6 +17,7 @@
 ]
 %}
 --drop table if exists {{target.schema}}.model_validations;
+{% set db=env_var('DBT_ENV_CORE_DB') %}
 create table if not exists {{target.schema}}.model_validations(
     model_name  text,
     column_name  text,
@@ -34,7 +35,7 @@ with {{item[2]}} as (
     {{
         audit_helper.compare_all_columns(
             a_relation=api.Relation.create(
-                database=item[0],
+                database=db,
                 schema=item[1],
                 identifier=item[2]
             ),
