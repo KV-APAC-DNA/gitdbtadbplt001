@@ -1,16 +1,7 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table"
-    )
-}}
-
 
 with source as (
     select * from {{ ref('aspedw_integration__v_rpt_customer_segmentation') }}
 ),
-
-
 
 final as (
   select 
@@ -50,5 +41,5 @@ current_timestamp()::timestamp_ntz(9) as crt_dttm
 )
 
 
---Final select
+--Final selectv
 select * from final 

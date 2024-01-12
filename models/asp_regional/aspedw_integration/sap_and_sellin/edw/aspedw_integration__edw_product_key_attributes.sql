@@ -1,10 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table"
-    )
-}}
-
 --Import CTE
 with 
 edw_material_dim as (

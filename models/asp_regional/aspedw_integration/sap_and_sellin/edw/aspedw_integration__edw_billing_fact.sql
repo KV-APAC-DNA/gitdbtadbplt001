@@ -95,7 +95,7 @@ payer::varchar(50) as payer,
     else subtotal_5 * power(10, (
       2 - currdec
     ))
-  end as subtotal_5,
+  end::number(20,4) as subtotal_5,
   numerator,
   case when mul.currdec is null then cost else cost * power(10, (
     2 - currdec

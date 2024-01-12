@@ -1,8 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-    )
-}}
 
 --Import CTE
 with itg_sales_order_fact as (
