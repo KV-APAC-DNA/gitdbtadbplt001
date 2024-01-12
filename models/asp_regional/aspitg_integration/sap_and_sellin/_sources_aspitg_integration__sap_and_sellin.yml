@@ -1701,7 +1701,7 @@ sources:
 
 
   - name: bwa_access
-    database: dev_cdl_apacibs
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
     schema: bwa_access
     quoting:
       database: false

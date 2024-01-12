@@ -1,10 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table"
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ ref('aspitg_integration__vw_stg_sdl_account_attr_ciw') }}

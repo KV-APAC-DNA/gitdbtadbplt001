@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ ref('aspwks_integration__wks_sap_mara_extract') }}

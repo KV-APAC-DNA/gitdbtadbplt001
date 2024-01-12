@@ -48,6 +48,7 @@ models:
   - name: aspedw_integration__edw_prod_hier
     config:
       alias: edw_prod_hier
+      tags: ["daily","sap_ecc_master"]
   - name: aspedw_integration__edw_profit_center_dim
     config:
       alias: edw_profit_center_dim
@@ -59,94 +60,95 @@ models:
   - name: aspedw_integration__edw_account_dim
     config:
       alias: edw_account_dim
-      tags: ["daily","sap_bw_master"]  
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]  
   - name: aspedw_integration__edw_material_plant_dim
     config:
       alias: edw_material_plant_dim
-      tags: ["daily","sap_bw_master"]
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]
   - name: aspedw_integration__edw_material_sales_dim
     config:
       alias: edw_material_sales_dim
-      tags: ["daily","sap_bw_master"]
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]
   - name: aspedw_integration__edw_plant_dim
     config:
       alias: edw_plant_dim
-      tags: ["daily","sap_bw_master"]
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]
   - name: aspedw_integration__edw_sap_bw_dna_material_bomlist
     config:
       alias: edw_sap_bw_dna_material_bomlist
-      tags: ["daily","sap_bw_master"]
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]
   - name: aspedw_integration__edw_sap_matl_num_ean_mapping
     config:
       alias: edw_sap_matl_num_ean_mapping
-      tags: ["daily","sap_bw_master"]
+      tags: ["mon_tues_wed_thurs_fri_sat","sap_bw_master"]
   - name: aspedw_integration__edw_acct_hier
     config:
       alias: edw_acct_hier
+      tags: ["daily","sap_bw_trxn"]
   - name: aspedw_integration__edw_inventory_fact
     config:
       alias: edw_inventory_fact
-      tags: ["daily","sap_bw"]  
+      tags: ["daily","sap_bw_trxn"]  
   - name: aspedw_integration__edw_invoice_fact
     config:
       alias: edw_invoice_fact
-      tags: ["daily","sap_bw"]  
+      tags: ["daily","sap_bw_trxn"]  
   - name: aspedw_integration__edw_material_uom
     config:
       alias: edw_material_uom
-      tags: ["daily","sap_bw"]  
+      tags: ["daily","rg_s3_to_dna"]  
   - name: aspedw_integration__edw_copa_plan_fact
     config:
       alias: edw_copa_plan_fact
-      tags: ["daily","sap_bw"]  
+      tags: ["daily","sap_bw_trxn"]  
   - name: aspedw_integration__edw_delivery_fact
     config:
       alias: edw_delivery_fact
-      tags: ["daily","sap_bw"]  
+      tags: ["daily","rg_s3_to_dna"]  
   - name: aspedw_integration__edw_list_price
     config:
       alias: edw_list_price
-      tags: ["daily","sap_bw"] 
+      tags: ["daily","rg_s3_to_dna"] 
   - name: aspedw_integration__edw_copa_trans_fact
     config:
       alias: edw_copa_trans_fact
-      tags: ["daily","j_sap_bw_txn_copa10_wrapper","sap_bw"]  
+      tags: ["daily","sap_bw_trxn"]  
   - name: aspedw_integration__edw_gch_geographyhierarchy
     config:
       alias: edw_gch_geographyhierarchy
-      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+      tags: ["daily","commercial_hier"]
   - name: aspedw_integration__edw_gch_customerhierarchy
     config:
       alias: edw_gch_customerhierarchy
-      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+      tags: ["daily","commercial_hier"]
   - name: aspedw_integration__edw_gch_producthierarchy
     config:
       alias: edw_gch_producthierarchy
-      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+      tags: ["daily","commercial_hier"]
   - name: aspedw_integration__edw_account_ciw_dim
     config:
       alias: edw_account_ciw_dim
-      tags: ["daily","J_RG_Account_attr_CIW_Dim","sap_bw"]
+      tags: ["mon_tues_wed_thurs_fri_sat","account_attr_ciw"]
   - name: aspedw_integration__edw_billing_fact
     config:
       alias: edw_billing_fact
-      tags: ["daily","rg_s3_to_dna_billing","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
   - name: aspedw_integration__edw_sales_order_fact
     config:
       alias: edw_sales_order_fact
-      tags: ["daily","sales_rg_sap_to_dna_s3_framework","sap_bw"]
+      tags: ["daily","rg_sap_to_dna"]
   - name: aspedw_integration__v_intrm_reg_crncy_exch_fiscper
     config:
       alias: v_intrm_reg_crncy_exch_fiscper
-      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+      tags: ["daily","customer_segmentation"]
   - name: aspedw_integration__v_rpt_customer_segmentation
     config:
       alias: v_rpt_customer_segmentation
-      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+      tags: ["daily","customer_segmentation"]
   - name: aspedw_integration__edw_customer_segmentation
     config:
       alias: edw_customer_segmentation
-      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+      tags: ["daily","customer_segmentation"]
   - name: aspedw_integration__edw_product_key_attributes
     config:
       alias: edw_product_key_attributes

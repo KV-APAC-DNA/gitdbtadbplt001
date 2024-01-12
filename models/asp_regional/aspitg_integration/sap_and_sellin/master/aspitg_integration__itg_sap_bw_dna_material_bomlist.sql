@@ -1,11 +1,3 @@
-{{
-    config(
-        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="table",
-        transient=false
-    )
-}}
-
 with 
 
 source as (

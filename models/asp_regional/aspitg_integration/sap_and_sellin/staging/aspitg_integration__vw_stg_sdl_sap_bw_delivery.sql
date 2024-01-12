@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-    )
-}}
-
 with source as(
     select * from {{ source('aspsdl_raw', 'sdl_sap_bw_delivery') }}
 ),

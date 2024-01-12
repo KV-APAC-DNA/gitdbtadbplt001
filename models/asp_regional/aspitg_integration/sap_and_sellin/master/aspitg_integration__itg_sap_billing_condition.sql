@@ -1,6 +1,5 @@
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy="delete+insert",
         unique_key=["file_name"]

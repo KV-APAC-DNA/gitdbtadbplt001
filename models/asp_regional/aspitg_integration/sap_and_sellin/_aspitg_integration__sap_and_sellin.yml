@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 models:
   - name: aspitg_integration__itg_base_prod_text
@@ -131,82 +131,6 @@ models:
     config:
       alias: itg_varnt_text
       tags: ["daily","sap_ecc_master"]
-  - name: aspitg_integration__itg_mds_log
-    config:
-      alias: itg_mds_log
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_dso
-    config:
-      alias: itg_mds_ap_dso
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_otif
-    config:
-      alias: itg_mds_ap_otif
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_ecom_oneview_config
-    config:
-      alias: itg_mds_ap_ecom_oneview_config
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_ps_market_coverage
-    config:
-      alias: itg_mds_rg_ps_market_coverage
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_ecom_digital_shelf_customer_mapping
-    config:
-      alias: itg_mds_rg_ecom_digital_shelf_customer_mapping
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_tih_distributor_closure
-    config:
-      alias: itg_mds_rg_tih_distributor_closure
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_ecom_product
-    config:
-      alias: itg_mds_rg_ecom_product
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_sku_benchmarks
-    config:
-      alias: itg_mds_rg_sku_benchmarks
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_sfmc_gender
-    config:
-      alias: itg_mds_rg_sfmc_gender
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_rg_sfmc_attributes
-    config:
-      alias: itg_mds_rg_sfmc_attributes
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_lookup_category_mapping
-    config:
-      alias: itg_lookup_category_mapping
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_ecom_digital_salesweight
-    config:
-      alias: itg_ecom_digital_salesweight
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_okr_actuals
-    config:
-      alias: itg_mds_ap_okr_actuals
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_okr_targets
-    config:
-      alias: itg_mds_ap_okr_targets
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_company_dim
-    config:
-      alias: itg_mds_ap_company_dim
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_ap_customer360_config
-    config:
-      alias: itg_mds_ap_customer360_config
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_custgp_portfolio_mapping
-    config:
-      alias: itg_mds_custgp_portfolio_mapping
-      tags: ["daily","rg_mds_dna"]
-  - name: aspitg_integration__itg_mds_pre_apsc_master
-    config:
-      alias: itg_mds_pre_apsc_master
-      tags: ["daily","rg_mds_dna"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_mara_extract
     config:
@@ -556,7 +480,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_0account
     config: 
       alias: vw_stg_sdl_sap_bw_0account
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["chrt_accts","account","objvers"]
@@ -567,7 +491,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_dna_material_bomlist
     config: 
       alias: vw_stg_sdl_sap_bw_dna_material_bomlist
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["plant","zbomno","material","component","createdon","validfrom","validto","zvlfromc","zvltoi"]
@@ -578,7 +502,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_material_plant_text
     config: 
       alias: vw_stg_sdl_sap_bw_material_plant_text
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["plant","mat_plant","langu"]
@@ -589,7 +513,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_material_sales_text
     config: 
       alias: vw_stg_sdl_sap_bw_material_sales_text
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["salesorg","distr_chan","mat_sales","langu"]
@@ -600,7 +524,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_attr
     config: 
       alias: vw_stg_sdl_sap_bw_plant_attr
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["plant"]
@@ -611,7 +535,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_bw_plant_text
     config: 
       alias: vw_stg_sdl_sap_bw_plant_text
-      tags: ["daily","sap_bw_master","sap_bw"]
+      tags: ["daily","sap_bw_master","sap_bw","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["plant"]
@@ -622,7 +546,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_account_text
     config: 
       alias: vw_stg_sdl_sap_ecc_account_text
-      tags: ["daily","sap_bw_master","sap_ecc"]
+      tags: ["daily","sap_bw_master","sap_ecc","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["chrt_accts","account","langu"]
@@ -633,7 +557,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_plant
     config: 
       alias: vw_stg_sdl_sap_ecc_material_plant
-      tags: ["daily","sap_bw_master","sap_ecc"]
+      tags: ["daily","sap_bw_master","sap_ecc","mon_tues_wed_thurs_fri_sat"]
     tests:
        - test_duplicate:
           group_by_columns: ["plant","mat_plant"]
@@ -644,7 +568,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_material_sales
     config: 
       alias: vw_stg_sdl_sap_ecc_material_sales
-      tags: ["daily","sap_bw_master","sap_ecc"]
+      tags: ["daily","sap_bw_master","sap_ecc","mon_tues_wed_thurs_fri_sat"]
     tests:
       - test_duplicate:
           group_by_columns: ["salesorg","distr_chan","mat_sales"]
@@ -655,165 +579,158 @@ models:
   - name: aspitg_integration__itg_acct
     config:
       alias: itg_acct
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_acct_text
     config:
       alias: itg_acct_text
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_matl_plnt
     config:
       alias: itg_matl_plnt
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_matl_plnt_text
     config:
       alias: itg_matl_plnt_text
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_matl_sls
     config:
       alias: itg_matl_sls
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_matl_sls_text
     config:
       alias: itg_matl_sls_text
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_plnt
     config:
       alias: itg_plnt
-      tags: ["daily","sap_bw_master"]
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_plnt_text
     config:
       alias: itg_plnt_text
-      tags: ["daily","sap_bw_master"]   
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]   
   - name: aspitg_integration__itg_sap_bw_dna_material_bomlist
     config:
       alias: itg_sap_bw_dna_material_bomlist
-      tags: ["daily","sap_bw_master"]    
+      tags: ["daily","sap_bw_master","mon_tues_wed_thurs_fri_sat"]    
   - name: aspitg_integration__vw_stg_sdl_sap_bw_copa17
     config:
       alias: vw_stg_sdl_sap_bw_copa17
-      tags: ["daily","sap_bw"]
+      tags: ["daily","sap_bw_trxn","sap_bw"]
 
   - name: aspitg_integration__itg_copa17_trans
     config:
       alias: itg_copa17_trans
-      tags: ["daily","sap_bw"]
+      tags: ["daily","sap_bw_trxn"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_bw_inventory
     config:
       alias: vw_stg_sdl_sap_bw_inventory
-      tags: ["daily","sap_bw"]
-
+      tags: ["daily","sap_bw_trxn","sap_bw"]
 
   - name: aspitg_integration__itg_invnt
     config:
       alias: itg_invnt
-      tags: ["daily","sap_bw"]
+      tags: ["daily","sap_bw_trxn"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_bw_zc_sd
     config:
       alias: vw_stg_sdl_sap_bw_zc_sd
-      tags: ["daily","sap_bw"]
-
+      tags: ["daily","sap_bw_trxn","sap_bw"]
 
   - name: aspitg_integration__itg_invc_sls
     config:
       alias: itg_invc_sls
-      tags: ["daily","sap_bw"]
+      tags: ["daily","sap_bw_trxn"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_bw_delivery
     config:
       alias: vw_stg_sdl_sap_bw_delivery
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
 
   - name: aspitg_integration__itg_delivery_fact
     config:
       alias: itg_delivery_fact
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_bw_price_list
     config:
       alias: vw_stg_sdl_sap_bw_price_list
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
 
   - name: aspitg_integration__itg_list_price
     config:
       alias: itg_list_price
-      tags: ["daily","sap_bw"]
-
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_bw_material_uom
     config:
       alias: vw_stg_sdl_sap_bw_material_uom
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
 
   - name: aspitg_integration__itg_material_uom
     config:
       alias: itg_material_uom
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__vw_stg_sdl_sap_billing_condition
     config:
       alias: vw_stg_sdl_sap_billing_condition
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
 
   - name: aspitg_integration__itg_sap_billing_condition
     config:
       alias: itg_sap_billing_condition
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__sdl_raw_sap_bw_delivery
     config:
       alias: sdl_raw_sap_bw_delivery
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__sdl_raw_sap_bw_material_uom
     config:
       alias: sdl_raw_sap_bw_material_uom
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__sdl_raw_sap_bw_price_list
     config:
       alias: sdl_raw_sap_bw_price_list
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__sdl_raw_sap_billing_condition
     config:
       alias: sdl_raw_sap_billing_condition
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
 
   - name: aspitg_integration__itg_copa_trans
     config:
       alias: itg_copa_trans
-      tags: ["daily","j_sap_bw_txn_copa10_wrapper","sap_bw"]
-  - name: aspitg_integration__itg_mds_ap_greenlight_skus
-    config:
-      alias: itg_mds_ap_greenlight_skus
-      tags: ["daily","rg_greenlight_mds"]
+      tags: ["daily","sap_bw_txn"]
   - name: aspitg_integration__itg_account_attr_ciw
     config:
       alias: itg_account_attr_ciw
-      tags: ["daily","J_RG_Account_attr_CIW_Dim","sap_bw"]
+      tags: ["account_attr_ciw","mon_tues_wed_thurs_fri_sat"]
   - name: aspitg_integration__itg_billing_fact
     config:
       alias: itg_billing_fact
-      tags: ["daily","sap_bw","rg_s3_to_dna_billing","sap_bw"]
+      tags: ["daily","rg_s3_to_dna"]
   - name: aspitg_integration__itg_crncy_mult 
     config:
       alias: itg_crncy_mult 
-      tags: ["daily","sap_bw","rg_s3_to_dna_billing"]
+      tags: ["daily","rg_s3_to_dna"]
   - name: aspitg_integration__itg_sales_order_fact
     config:
       alias: itg_sales_order_fact
-      tags: ["daily","sap_bw","sales_rg_sap_to_dna_s3_framework","sap_bw"]
+      tags: ["daily",rg_sap_to_dna"]
   - name: aspitg_integration__itg_mds_ap_sales_ops_map
     config:
       alias: itg_mds_ap_sales_ops_map
-      tags: ["daily","Customer_Segmentation_Datamart_Refresh"]
+      tags: ["daily","customer_segmentation"]
 
   - name: aspitg_integration__vw_stg_sdl_account_attr_ciw
     config:
       alias: vw_stg_sdl_account_attr_ciw
-      tags: ["daily","sap_bw"]
+      tags: ["account_attr_ciw","mon_tues_wed_thurs_fri_sat","sap_bw"]
     tests:
       - test_duplicate:
           group_by_columns: ["chrt_accts","account","objvers"]
@@ -825,36 +742,28 @@ models:
   - name: aspitg_integration__vw_stg_sdl_gcch_cust_hier
     config:
       alias: vw_stg_sdl_gcch_cust_hier
-      tags: ["daily","gch_hierarchy","global_commercial_hierarchy"]
+      tags: ["daily","commercial_hier","gch_hierarchy"]
   - name: aspitg_integration__vw_stg_sdl_gcgh_geo_hier
     config:
       alias: vw_stg_sdl_gcgh_geo_hier
-      tags: ["daily","gch_hierarchy","global_commercial_hierarchy"]
+      tags: ["daily","commercial_hier","gch_hierarchy"]
   - name: aspitg_integration__vw_stg_sdl_gcph_brand
     config:
       alias: vw_stg_sdl_gcph_brand
-      tags: ["daily","gch_hierarchy","global_commercial_hierarchy"]
+      tags: ["daily","commercial_hier","gch_hierarchy"]
   - name: aspitg_integration__vw_stg_sdl_gcph_category
     config:
       alias: vw_stg_sdl_gcph_category
-      tags: ["daily","gch_hierarchy","global_commercial_hierarchy"]
-  - name: aspitg_integration__vw_stg_sdl_material_pka_mara_extract
-    config:
-      alias: vw_stg_sdl_material_pka_mara_extract
-      tags: ["daily"]
-  - name: aspitg_integration__vw_stg_sdl_mds_ap_greenlight_skus
-    config:
-      alias: vw_stg_sdl_mds_ap_greenlight_skus
-      tags: ["daily","rg_mds_dna"]
+      tags: ["daily","commercial_hier","gch_hierarchy"]
   - name: aspitg_integration__vw_stg_sdl_sap_bw_billing
     config:
       alias: vw_stg_sdl_sap_bw_billing
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
   - name: aspitg_integration__vw_stg_sdl_sap_bw_sales
     config:
       alias: vw_stg_sdl_sap_bw_sales
-      tags: ["daily","sap_bw"]
+      tags: ["daily","rg_s3_to_dna","sap_bw"]
   - name: aspitg_integration__vw_stg_sdl_sap_bw_zocopa10
     config:
       alias: vw_stg_sdl_sap_bw_zocopa10
-      tags: ["daily","sap_bw"]
+      tags: ["daily","sap_bw_trxn","sap_bw"]

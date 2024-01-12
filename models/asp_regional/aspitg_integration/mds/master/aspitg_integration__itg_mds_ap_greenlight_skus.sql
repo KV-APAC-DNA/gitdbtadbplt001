@@ -1,13 +1,6 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table"
-        )
-}}
-
 --Import CTE
 with source as (
-    select * from {{ ref('aspitg_integration__vw_stg_sdl_mds_ap_greenlight_skus') }}
+    select * from {{ source('aspsdl_raw', 'sdl_mds_ap_greenlight_skus') }}
 ),
 
 --Logical CTE

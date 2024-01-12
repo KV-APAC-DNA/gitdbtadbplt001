@@ -1,6 +1,5 @@
 {{
     config(
-        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
         materialized="incremental",
         incremental_strategy = "merge",
         unique_key=["division","distr_chan","salesorg","cust_sales"],
