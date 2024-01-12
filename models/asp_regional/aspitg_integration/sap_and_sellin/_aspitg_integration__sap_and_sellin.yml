@@ -767,3 +767,11 @@ models:
     config:
       alias: vw_stg_sdl_sap_bw_zocopa10
       tags: ["daily","sap_bw_trxn","sap_bw"]
+  - name: aspitg_integration__sdl_raw_account_attr_ciw
+    config:
+      alias: sdl_raw_account_attr_ciw
+      tags: ["account_attr_ciw","mon_tues_wed_thurs_fri_sat"]
+  - name: aspitg_integration__sdl_raw_sap_bw_billing
+    config:
+      alias: sdl_raw_sap_bw_billing
+      tags: ["daily","rg_s3_to_dna"]

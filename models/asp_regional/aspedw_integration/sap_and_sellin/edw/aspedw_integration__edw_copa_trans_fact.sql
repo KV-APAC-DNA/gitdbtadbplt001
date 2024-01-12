@@ -1,9 +1,7 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy = "merge",
-        unique_key=["acct_num"],
-        merge_exclude_columns = ["crt_dttm"]
+        incremental_strategy = "append"
     )
 }}
 
@@ -85,6 +83,10 @@ current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source as a
   inner join edw_acct_hier as b
     on ltrim(rtrim(a.acct_num)) = ltrim(rtrim(b.acct_num))
+ {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where a.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+ {% endif %}
 )
 
 select * from final

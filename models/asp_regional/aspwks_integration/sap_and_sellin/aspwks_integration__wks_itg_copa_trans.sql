@@ -76,5 +76,4 @@ final as (
     from source
 
 )
-
 select * from final

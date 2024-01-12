@@ -153,3 +153,11 @@ models:
     config:
       alias: edw_product_key_attributes
       tags: ["daily","pka_datamart"]
+  - name: aspedw_integration__edw_vw_greenlight_skus
+    config:
+      alias: edw_vw_greenlight_skus
+      tags: ["daily","rg_greenlight_mds"]
+  - name: aspedw_integration__v_edw_customer_sales_dim
+    config:
+      alias: v_edw_customer_sales_dim
+      tags: ["daily","customer_segmentation"]

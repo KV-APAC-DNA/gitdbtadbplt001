@@ -275,3 +275,7 @@ models:
     config: 
       alias: wks_edw_gch_producthierarchy
       tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspwks_integration__wks_edw_crncy_exch
+    config: 
+      alias: wks_edw_crncy_exch
+      tags: ["daily","sap_ecc_master"]

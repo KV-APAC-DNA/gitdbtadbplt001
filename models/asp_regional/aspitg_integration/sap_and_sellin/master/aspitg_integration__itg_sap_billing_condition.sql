@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["file_name"]
+        unique_key=["source_file_name"]
     )
 }}
 
@@ -81,7 +81,7 @@ final as(
         2 - x.currdec
         ))
     ) as NUMBER(17,3)) AS knval,
-    x.kprice::NUMBER(173) as kprice,
+    x.kprice::NUMBER(17,3) as kprice,
     x.kinak::VARCHAR(1) as kinak,
     x.kstat::VARCHAR(1) as kstat,
     x.storno::VARCHAR(1) as storno,
@@ -92,8 +92,8 @@ final as(
     x.eanupc::VARCHAR(18) as eanupc,
     x.createdby::VARCHAR(12) as createdby,
     x.serv_date::VARCHAR(8) as serv_date,
-    x.inv_qty::NUMBER(173) as inv_qty,
-    x.actual_quantity_pc::NUMBER(173) as actual_quantity_pc,
+    x.inv_qty::NUMBER(17,3) as inv_qty,
+    x.actual_quantity_pc::NUMBER(17,3) as actual_quantity_pc,
     x.forwagent::VARCHAR(10) as forwagent,
     x.salesemply::VARCHAR(8) as salesemply,
     x.sales_unit::VARCHAR(3) as sales_unit,
