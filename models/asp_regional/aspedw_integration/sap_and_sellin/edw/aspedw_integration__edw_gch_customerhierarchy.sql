@@ -1,10 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "table"
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ ref('aspwks_integration__wks_edw_gch_customerhierarchy') }}

@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "view"
-    )
-}}
 
 --Import CTE
 with edw_crncy_exch as (

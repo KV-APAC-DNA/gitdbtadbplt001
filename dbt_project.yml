@@ -44,6 +44,7 @@ models:
     asp_regional:
       config:
         +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       aspedw_access:
         +materialized: view
         +schema: ASPEDW_ACCESS
@@ -58,6 +59,9 @@ models:
         +materialized: table
         +transient: false
         +schema: ASPEDW_INTEGRATION
+        sap_and_sellin:
+          view:
+            +materialized: view
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION

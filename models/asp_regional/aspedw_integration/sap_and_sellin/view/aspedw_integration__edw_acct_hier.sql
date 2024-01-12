@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header="ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized="view"
-    )
-}}
 
 with
 edw_account_dim as (

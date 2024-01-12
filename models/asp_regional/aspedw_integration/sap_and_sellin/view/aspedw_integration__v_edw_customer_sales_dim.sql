@@ -1,10 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "view"
-    )
-}}
-
 --Import CTE
 with edw_customer_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}

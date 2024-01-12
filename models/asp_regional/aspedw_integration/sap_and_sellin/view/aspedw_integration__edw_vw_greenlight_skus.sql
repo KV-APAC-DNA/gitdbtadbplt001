@@ -1,10 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-        materialized= "view"
-    )
-}}
-
 
 with edw_material_dim as (
     select * from {{ ref('aspedw_integration__edw_material_dim') }}
