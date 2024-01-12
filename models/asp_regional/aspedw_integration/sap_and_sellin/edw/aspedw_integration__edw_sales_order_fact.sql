@@ -37,35 +37,35 @@ incoterms::varchar(20) as incoterms,
     else subtotal_4 * power(10, (
       2 - currdec
     ))
-  end as subtotal_4,
+  end::number(20,4) as subtotal_4,
   case
     when mul.currdec is null
     then subtotal_5
     else subtotal_5 * power(10, (
       2 - currdec
     ))
-  end as subtotal_5,
+  end::number(20,4) as subtotal_5,
   case
     when mul.currdec is null
     then net_price
     else net_price * power(10, (
       2 - currdec
     ))
-  end as net_price,
+  end::number(20,4) as net_price,
   case
     when mul.currdec is null
     then net_value
     else net_value * power(10, (
       2 - currdec
     ))
-  end as net_value,
+  end::number(20,4) as net_value,
   net_wt_ap,
   cond_unit::varchar(20) as cond_unit,
   unit_of_wt::varchar(20) as unit_of_wt,
   order_curr::varchar(20) as order_curr,
   stat_curr::varchar(20) as stat_curr,
   loc_currcy::varchar(20) as loc_currcy,
-  target_qty::varchar(20) as target_qty,
+  target_qty::number(20,4) as target_qty,
   case
     when mul.currdec is null
     then targ_value
@@ -86,7 +86,7 @@ incoterms::varchar(20) as incoterms,
   target_qu::varchar(30) as target_qu,
   case when mul.currdec is null then cost else cost * power(10, (
     2 - currdec
-  )) end as cost,
+  )) end::number(20,4) as cost,
   volume_ap::number(20,4) as volume_ap,
   volume_unit::varchar(30) as volume_unit,
   exchg_stat::number(20,4) as exchg_stat,
@@ -104,14 +104,14 @@ incoterms::varchar(20) as incoterms,
     else subtotal_6 * power(10, (
       2 - currdec
     ))
-  end as subtotal_6,
+  end::number(20,4) as subtotal_6,
   case
     when mul.currdec is null
     then subtotal_3
     else subtotal_3 * power(10, (
       2 - currdec
     ))
-  end as subtotal_3,
+  end::number(20,4) as subtotal_3,
   wbs_elemt::varchar(100) as wbs_elemt,
   refer_doc::varchar(30) as refer_doc,
   case
@@ -120,14 +120,14 @@ incoterms::varchar(20) as incoterms,
     else subtotal_2 * power(10, (
       2 - currdec
     ))
-  end as subtotal_2,
+  end::number(20,4) as subtotal_2,
   case
     when mul.currdec is null
     then subtotal_1
     else subtotal_1 * power(10, (
       2 - currdec
     ))
-  end as subtotal_1,
+  end::number(20,4) as subtotal_1,
 doc_currcy::varchar(30) as doc_currcy,
 cml_or_qty::number(20,4) as cml_or_qty,
 cml_cd_qty::number(20,4) as cml_cd_qty,

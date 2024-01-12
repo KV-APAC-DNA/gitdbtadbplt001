@@ -60,8 +60,7 @@ final as (
   productdesc,
   rootcode,
   rootcodedes,
-current_timestamp()::timestamp_ntz(9) as crt_dttm,
-current_timestamp()::timestamp_ntz(9) as updt_dttm
+current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
 )
 

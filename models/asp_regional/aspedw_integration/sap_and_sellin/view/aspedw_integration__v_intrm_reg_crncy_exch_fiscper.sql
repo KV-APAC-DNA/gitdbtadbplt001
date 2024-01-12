@@ -37,267 +37,264 @@ final as (
 			) as latest_ex_rt_by_fisc_per
 	FROM 
 		(
-			SELECT drvd_crncy.ex_rt_typ
+			select drvd_crncy.ex_rt_typ
 				,drvd_crncy.from_crncy
 				,drvd_crncy.to_crncy
-				,cal.fisc_yr AS "year"
-				,MAX(CAST((
-							CASE 
-								WHEN (
-										(CAST((drvd_crncy.to_crncy) AS TEXT) = CAST((CAST('USD' AS VARCHAR)) AS TEXT))
-										AND (
+				,cal.fisc_yr as "year"
+				,max(cast((
+							case 
+								when (
+										(cast((drvd_crncy.to_crncy) as text) = cast((cast('USD' as varchar)) as text))
+										and (
 											(
-												(CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('IDR' AS VARCHAR)) AS TEXT))
-												OR (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('KRW' AS VARCHAR)) AS TEXT))
+												(cast((drvd_crncy.from_crncy) as text) = cast((cast('IDR' as varchar)) as text))
+												or (cast((drvd_crncy.from_crncy) as text) = cast((cast('KRW' as varchar)) as text))
 												)
-											OR (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('VND' AS VARCHAR)) AS TEXT))
+											or (cast((drvd_crncy.from_crncy) as text) = cast((cast('VND' as varchar)) as text))
 											)
 										)
-									THEN (drvd_crncy.ex_rt / CAST((CAST((1000) AS DECIMAL)) AS DECIMAL(18, 0)))
-								WHEN (
-										(CAST((drvd_crncy.to_crncy) AS TEXT) = CAST((CAST('USD' AS VARCHAR)) AS TEXT))
-										AND (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('JPY' AS VARCHAR)) AS TEXT))
+									then (drvd_crncy.ex_rt / cast((cast((1000) as decimal)) as decimal(18, 0)))
+								when (
+										(cast((drvd_crncy.to_crncy) as text) = cast((cast('USD' as varchar)) as text))
+										and (cast((drvd_crncy.from_crncy) as text) = cast((cast('JPY' as varchar)) as text))
 										)
-									THEN (drvd_crncy.ex_rt / CAST((CAST((100) AS DECIMAL)) AS DECIMAL(18, 0)))
-								ELSE drvd_crncy.ex_rt
-								END
-							) AS DECIMAL(20, 10))) AS ex_rt
-			FROM (
+									then (drvd_crncy.ex_rt / cast((cast((100) as decimal)) as decimal(18, 0)))
+								else drvd_crncy.ex_rt
+								end
+							) as decimal(20, 10))) as ex_rt
+			from (
 				(
-					SELECT DISTINCT edw_crncy_exch.ex_rt_typ
+					select distinct edw_crncy_exch.ex_rt_typ
 						,edw_crncy_exch.from_crncy
 						,edw_crncy_exch.to_crncy
-						,TO_DATE(CAST((CAST(((CAST((CAST((99999999) AS DECIMAL)) AS DECIMAL(18, 0)) - CAST((CAST((edw_crncy_exch.vld_from) AS DECIMAL)) AS DECIMAL(18, 0)))) AS VARCHAR)) AS TEXT), CAST((CAST('YYYYMMDD' AS VARCHAR)) AS TEXT)) AS vld_from
+						,to_date(cast((cast(((cast((cast((99999999) as decimal)) as decimal(18, 0)) - cast((cast((edw_crncy_exch.vld_from) as decimal)) as decimal(18, 0)))) as varchar)) as text), cast((cast('YYYYMMDD' as varchar)) as text)) as vld_from
 						,edw_crncy_exch.ex_rt
 						,edw_crncy_exch.from_ratio
 						,edw_crncy_exch.to_ratio
-					FROM edw_crncy_exch AS edw_crncy_exch
-					WHERE (
+					from edw_crncy_exch as edw_crncy_exch
+					where (
 							(
 								(
-									(CAST((edw_crncy_exch.ex_rt_typ) AS TEXT) = CAST((CAST('BWAR' AS VARCHAR)) AS TEXT))
-									AND (CAST((edw_crncy_exch.from_crncy) AS TEXT) <> CAST((CAST('LKR' AS VARCHAR)) AS TEXT))
+									(cast((edw_crncy_exch.ex_rt_typ) as text) = cast((cast('BWAR' as varchar)) as text))
+									and (cast((edw_crncy_exch.from_crncy) as text) <> cast((cast('LKR' as varchar)) as text))
 									)
-								AND (CAST((edw_crncy_exch.from_crncy) AS TEXT) <> CAST((CAST('BDT' AS VARCHAR)) AS TEXT))
+								and (cast((edw_crncy_exch.from_crncy) as text) <> cast((cast('BDT' as varchar)) as text))
 								)
-							AND (CAST((edw_crncy_exch.from_crncy) AS TEXT) <> CAST((CAST('NZD' AS VARCHAR)) AS TEXT))
+							and (cast((edw_crncy_exch.from_crncy) as text) <> cast((cast('NZD' as varchar)) as text))
 							)
-					) AS drvd_crncy JOIN edw_calendar_dim AS cal
-					ON (
+					) as drvd_crncy join edw_calendar_dim as cal
+					on (
 							(
 								(drvd_crncy.vld_from = cal.cal_day)
-								AND (CAST((cal.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
+								and (cast((cal.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
 								)
 							)
 				)
-			GROUP BY drvd_crncy.ex_rt_typ
+			group by drvd_crncy.ex_rt_typ
 				,drvd_crncy.from_crncy
 				,drvd_crncy.to_crncy
-				,SUBSTRING(CAST((CAST((drvd_crncy.vld_from) AS VARCHAR)) AS TEXT), 1, 4)
+				,substring(cast((cast((drvd_crncy.vld_from) as varchar)) as text), 1, 4)
 				,cal.fisc_yr
-			) AS a JOIN (
-			SELECT edw_calendar_dim.fisc_yr AS "year"
+			) as a join (
+			select edw_calendar_dim.fisc_yr as "year"
 				,edw_calendar_dim.fisc_per
-				,MIN(edw_calendar_dim.cal_day) AS vld_from
-			FROM edw_calendar_dim
-			WHERE (CAST((edw_calendar_dim.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
-			GROUP BY edw_calendar_dim.fisc_yr
+				,min(edw_calendar_dim.cal_day) as vld_from
+			from edw_calendar_dim
+			where (cast((edw_calendar_dim.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
+			group by edw_calendar_dim.fisc_yr
 				,edw_calendar_dim.fisc_per
-			) AS calmonthstartdate
-			ON (
+			) as calmonthstartdate
+			on (
 					(
 						(a."year" = calmonthstartdate."year")
-						AND (calmonthstartdate.vld_from <= TO_VARIANT(CURRENT_DATE ())::VARCHAR)
+						and (calmonthstartdate.vld_from <= to_variant(current_date ())::varchar)
 						)
 					)
 		)
-	 AS derived_table1 WHERE (derived_table1.latest_ex_rt_by_fisc_per = 1)
+	 as derived_table1 where (derived_table1.latest_ex_rt_by_fisc_per = 1)
 
-UNION ALL
+union all
 	
-	SELECT DISTINCT edw_crncy_exch.ex_rt_typ
+	select distinct edw_crncy_exch.ex_rt_typ
 	,edw_crncy_exch.from_crncy
-	,edw_crncy_exch.from_crncy AS to_crncy
+	,edw_crncy_exch.from_crncy as to_crncy
 	,calmonthstartdate.vld_from
-	,1 AS ex_rt
-	,calmonthstartdate.fisc_per FROM (
-	edw_crncy_exch AS edw_crncy_exch JOIN (
-		SELECT edw_calendar_dim.fisc_yr AS "year"
+	,1 as ex_rt
+	,calmonthstartdate.fisc_per from (
+	edw_crncy_exch as edw_crncy_exch join (
+		select edw_calendar_dim.fisc_yr as "year"
 			,edw_calendar_dim.fisc_per
-			,MIN(edw_calendar_dim.cal_day) AS vld_from
-		FROM edw_calendar_dim
-		WHERE (
-				(CAST((edw_calendar_dim.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
-				AND (edw_calendar_dim.cal_day <= TO_VARIANT(CURRENT_DATE ())::VARCHAR)
+			,min(edw_calendar_dim.cal_day) as vld_from
+		from edw_calendar_dim
+		where (
+				(cast((edw_calendar_dim.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
+				and (edw_calendar_dim.cal_day <= to_variant(current_date ())::varchar)
 				)
-		GROUP BY edw_calendar_dim.fisc_yr
+		group by edw_calendar_dim.fisc_yr
 			,edw_calendar_dim.fisc_per
-		) AS calmonthstartdate
-		ON ((1 = 1))
-	) WHERE (CAST((edw_crncy_exch.ex_rt_typ) AS TEXT) = CAST((CAST('BWAR' AS VARCHAR)) AS TEXT))
+		) as calmonthstartdate
+		on ((1 = 1))
+	) where (cast((edw_crncy_exch.ex_rt_typ) as text) = cast((cast('BWAR' as varchar)) as text))
 	)
 
-UNION ALL
+union all
 
-SELECT drvd_crncy.ex_rt_typ
+select drvd_crncy.ex_rt_typ
 	,drvd_crncy.from_crncy
 	,drvd_crncy.to_crncy
 	,drvd_crncy.vld_from
-	,CAST((
-			CASE 
-				WHEN (
-						(CAST((drvd_crncy.to_crncy) AS TEXT) = CAST((CAST('USD' AS VARCHAR)) AS TEXT))
-						AND (
+	,cast((
+			case 
+				when (
+						(cast((drvd_crncy.to_crncy) as text) = cast((cast('USD' as varchar)) as text))
+						and (
 							(
-								(CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('IDR' AS VARCHAR)) AS TEXT))
-								OR (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('KRW' AS VARCHAR)) AS TEXT))
+								(cast((drvd_crncy.from_crncy) as text) = cast((cast('IDR' as varchar)) as text))
+								or (cast((drvd_crncy.from_crncy) as text) = cast((cast('KRW' as varchar)) as text))
 								)
-							OR (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('VND' AS VARCHAR)) AS TEXT))
+							or (cast((drvd_crncy.from_crncy) as text) = cast((cast('VND' as varchar)) as text))
 							)
 						)
-					THEN (drvd_crncy.ex_rt / CAST((CAST((1000) AS DECIMAL)) AS DECIMAL(18, 0)))
-				WHEN (
-						(CAST((drvd_crncy.to_crncy) AS TEXT) = CAST((CAST('USD' AS VARCHAR)) AS TEXT))
-						AND (CAST((drvd_crncy.from_crncy) AS TEXT) = CAST((CAST('JPY' AS VARCHAR)) AS TEXT))
+					then (drvd_crncy.ex_rt / cast((cast((1000) as decimal)) as decimal(18, 0)))
+				when (
+						(cast((drvd_crncy.to_crncy) as text) = cast((cast('USD' as varchar)) as text))
+						and (cast((drvd_crncy.from_crncy) as text) = cast((cast('JPY' as varchar)) as text))
 						)
-					THEN (drvd_crncy.ex_rt / CAST((CAST((100) AS DECIMAL)) AS DECIMAL(18, 0)))
-				ELSE drvd_crncy.ex_rt
-				END
-			) AS DECIMAL(20, 10)) AS ex_rt
+					then (drvd_crncy.ex_rt / cast((cast((100) as decimal)) as decimal(18, 0)))
+				else drvd_crncy.ex_rt
+				end
+			) as decimal(20, 10)) as ex_rt
 	,drvd_crncy.fisc_per
-FROM (
-	SELECT DISTINCT edw_crncy_exch.ex_rt_typ
+from (
+	select distinct edw_crncy_exch.ex_rt_typ
 		,edw_crncy_exch.from_crncy
 		,edw_crncy_exch.to_crncy
 		,edw_crncy_exch.vld_from
 		,edw_crncy_exch.ex_rt
 		,edw_crncy_exch.fisc_per
-		,RANK() OVER (
-			PARTITION BY edw_crncy_exch.from_crncy
+		,rank() over (
+			partition by edw_crncy_exch.from_crncy
 			,edw_crncy_exch.to_crncy
-			,edw_crncy_exch.fisc_per ORDER BY edw_crncy_exch.vld_from
-			) AS latest_ex_rt_by_fisc_per
-	FROM (
-		SELECT a.ex_rt_typ
+			,edw_crncy_exch.fisc_per order by edw_crncy_exch.vld_from
+			) as latest_ex_rt_by_fisc_per
+	from (
+		select a.ex_rt_typ
 			,a.from_crncy
 			,a.to_crncy
 			,a.ex_rt
 			,a.vld_from
 			,b.fisc_per
-		FROM (
+		from (
 			(
-				SELECT a.ex_rt_typ
+				select a.ex_rt_typ
 					,a.from_crncy
 					,a.to_crncy
 					,a.ex_rt
-					,TO_DATE(CAST((CAST(((CAST((CAST((99999999) AS DECIMAL)) AS DECIMAL(18, 0)) - CAST((CAST((a.vld_from) AS DECIMAL)) AS DECIMAL(18, 0)))) AS VARCHAR)) AS TEXT), CAST((CAST('YYYYMMDD' AS VARCHAR)) AS TEXT)) AS vld_from
-				FROM edw_crncy_exch AS a
-				WHERE (
-						(CAST((a.ex_rt_typ) AS TEXT) = CAST((CAST('BWAR' AS VARCHAR)) AS TEXT))
-						AND (
+					,to_date(cast((cast(((cast((cast((99999999) as decimal)) as decimal(18, 0)) - cast((cast((a.vld_from) as decimal)) as decimal(18, 0)))) as varchar)) as text), cast((cast('YYYYMMDD' as varchar)) as text)) as vld_from
+				from edw_crncy_exch as a
+				where (
+						(cast((a.ex_rt_typ) as text) = cast((cast('BWAR' as varchar)) as text))
+						and (
 							(
-								(CAST((a.from_crncy) AS TEXT) = CAST((CAST('LKR' AS VARCHAR)) AS TEXT))
-								OR (CAST((a.from_crncy) AS TEXT) = CAST((CAST('BDT' AS VARCHAR)) AS TEXT))
+								(cast((a.from_crncy) as text) = cast((cast('LKR' as varchar)) as text))
+								or (cast((a.from_crncy) as text) = cast((cast('BDT' as varchar)) as text))
 								)
-							OR (CAST((a.from_crncy) AS TEXT) = CAST((CAST('NZD' AS VARCHAR)) AS TEXT))
+							or (cast((a.from_crncy) as text) = cast((cast('NZD' as varchar)) as text))
 							)
 						)
-				) AS a JOIN edw_calendar_dim AS b
-				ON ((a.vld_from = b.cal_day))
+				) as a join edw_calendar_dim as b
+				on ((a.vld_from = b.cal_day))
 			)
-		WHERE (CAST((b.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
+		where (cast((b.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
 		
-		UNION ALL
+		union all
 		
-		SELECT ex.ex_rt_typ
+		select ex.ex_rt_typ
 			,ex.from_crncy
 			,ex.to_crncy
 			,ex.ex_rt
 			,ex.vld_from
 			,c.fisc_per
-		FROM (
+		from (
 			(
-				SELECT a.ex_rt_typ
+				select a.ex_rt_typ
 					,a.from_crncy
 					,a.to_crncy
 					,a.ex_rt
 					,a.vld_from
 					,b.fisc_per
-				FROM (
+				from (
 					(
-						SELECT a.ex_rt_typ
+						select a.ex_rt_typ
 							,a.from_crncy
 							,a.to_crncy
 							,a.ex_rt
 							,a.vld_from
-						FROM (
+						from (
 							(
-								SELECT edw_crncy_exch.ex_rt_typ
+								select edw_crncy_exch.ex_rt_typ
 									,edw_crncy_exch.from_crncy
 									,edw_crncy_exch.to_crncy
 									,edw_crncy_exch.ex_rt
-									,TO_DATE(CAST((CAST(((CAST((CAST((99999999) AS DECIMAL)) AS DECIMAL(18, 0)) - CAST((CAST((edw_crncy_exch.vld_from) AS DECIMAL)) AS DECIMAL(18, 0)))) AS VARCHAR)) AS TEXT), CAST((CAST('YYYYMMDD' AS VARCHAR)) AS TEXT)) AS vld_from
-								FROM edw_crncy_exch
-								WHERE (
-										(CAST((edw_crncy_exch.ex_rt_typ) AS TEXT) = CAST((CAST('BWAR' AS VARCHAR)) AS TEXT))
-										AND (
+									,to_date(cast((cast(((cast((cast((99999999) as decimal)) as decimal(18, 0)) - cast((cast((edw_crncy_exch.vld_from) as decimal)) as decimal(18, 0)))) as varchar)) as text), cast((cast('YYYYMMDD' as varchar)) as text)) as vld_from
+								from edw_crncy_exch
+								where (
+										(cast((edw_crncy_exch.ex_rt_typ) as text) = cast((cast('BWAR' as varchar)) as text))
+										and (
 											(
-												(CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('LKR' AS VARCHAR)) AS TEXT))
-												OR (CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('BDT' AS VARCHAR)) AS TEXT))
+												(cast((edw_crncy_exch.from_crncy) as text) = cast((cast('LKR' as varchar)) as text))
+												or (cast((edw_crncy_exch.from_crncy) as text) = cast((cast('BDT' as varchar)) as text))
 												)
-											OR (CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('NZD' AS VARCHAR)) AS TEXT))
+											or (cast((edw_crncy_exch.from_crncy) as text) = cast((cast('NZD' as varchar)) as text))
 											)
 										)
-								) AS a JOIN (
-								SELECT edw_crncy_exch.from_crncy
+								) as a join (
+								select edw_crncy_exch.from_crncy
 									,edw_crncy_exch.to_crncy
-									,MAX(TO_DATE(CAST((CAST(((CAST((CAST((99999999) AS DECIMAL)) AS DECIMAL(18, 0)) - CAST((CAST((edw_crncy_exch.vld_from) AS DECIMAL)) AS DECIMAL(18, 0)))) AS VARCHAR)) AS TEXT), CAST((CAST('YYYYMMDD' AS VARCHAR)) AS TEXT))) AS vld_from
-								FROM edw_crncy_exch
-								WHERE (
-										(CAST((edw_crncy_exch.ex_rt_typ) AS TEXT) = CAST((CAST('BWAR' AS VARCHAR)) AS TEXT))
-										AND (
+									,max(to_date(cast((cast(((cast((cast((99999999) as decimal)) as decimal(18, 0)) - cast((cast((edw_crncy_exch.vld_from) as decimal)) as decimal(18, 0)))) as varchar)) as text), cast((cast('YYYYMMDD' as varchar)) as text))) as vld_from
+								from edw_crncy_exch
+								where (
+										(cast((edw_crncy_exch.ex_rt_typ) as text) = cast((cast('BWAR' as varchar)) as text))
+										and (
 											(
-												(CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('LKR' AS VARCHAR)) AS TEXT))
-												OR (CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('BDT' AS VARCHAR)) AS TEXT))
+												(cast((edw_crncy_exch.from_crncy) as text) = cast((cast('LKR' as varchar)) as text))
+												or (cast((edw_crncy_exch.from_crncy) as text) = cast((cast('BDT' as varchar)) as text))
 												)
-											OR (CAST((edw_crncy_exch.from_crncy) AS TEXT) = CAST((CAST('NZD' AS VARCHAR)) AS TEXT))
+											or (cast((edw_crncy_exch.from_crncy) as text) = cast((cast('NZD' as varchar)) as text))
 											)
 										)
-								GROUP BY edw_crncy_exch.from_crncy
+								group by edw_crncy_exch.from_crncy
 									,edw_crncy_exch.to_crncy
-								) AS b
-								ON (
+								) as b
+								on (
 										(
 											(
-												(CAST((a.from_crncy) AS TEXT) = CAST((b.from_crncy) AS TEXT))
-												AND (CAST((a.to_crncy) AS TEXT) = CAST((b.to_crncy) AS TEXT))
+												(cast((a.from_crncy) as text) = cast((b.from_crncy) as text))
+												and (cast((a.to_crncy) as text) = cast((b.to_crncy) as text))
 												)
-											AND (a.vld_from = b.vld_from)
+											and (a.vld_from = b.vld_from)
 											)
 										)
 							)
-						) AS a JOIN edw_calendar_dim AS b
-						ON ((a.vld_from = b.cal_day))
+						) as a join edw_calendar_dim as b
+						on ((a.vld_from = b.cal_day))
 					)
-				WHERE (CAST((b.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
-				) AS ex JOIN (
-				SELECT DISTINCT edw_calendar_dim.fisc_per
-				FROM edw_calendar_dim
-				WHERE (
-						(CAST((edw_calendar_dim.fisc_yr_vrnt) AS TEXT) = CAST((CAST('J1' AS VARCHAR)) AS TEXT))
-						AND (edw_calendar_dim.cal_day <= TO_VARIANT(CURRENT_DATE ())::VARCHAR)
+				where (cast((b.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
+				) as ex join (
+				select distinct edw_calendar_dim.fisc_per
+				from edw_calendar_dim
+				where (
+						(cast((edw_calendar_dim.fisc_yr_vrnt) as text) = cast((cast('J1' as varchar)) as text))
+						and (edw_calendar_dim.cal_day <= to_variant(current_date ())::varchar)
 						)
-				) AS c
-				ON ((ex.fisc_per < c.fisc_per))
+				) as c
+				on ((ex.fisc_per < c.fisc_per))
 			)
-		) AS edw_crncy_exch
-	) AS drvd_crncy
-WHERE (drvd_crncy.latest_ex_rt_by_fisc_per = 1)
-  
---   current_timestamp()::timestamp_ntz(9) as crt_dttm,
---   current_timestamp()::timestamp_ntz(9) as updt_dttm
+		) as edw_crncy_exch
+	) as drvd_crncy
+where (drvd_crncy.latest_ex_rt_by_fisc_per = 1)
 )
 
 
---Final select
+--final select
 select * from final 

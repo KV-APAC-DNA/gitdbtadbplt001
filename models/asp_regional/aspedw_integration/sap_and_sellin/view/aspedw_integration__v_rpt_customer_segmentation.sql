@@ -5,7 +5,6 @@
     )
 }}
 
-
 with edw_company_dim as (
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
@@ -25,7 +24,7 @@ edw_vw_greenlight_skus as (
     select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
 edw_code_descriptions_manual as (
-    select * from {{ ref('aspedw_integration__edw_code_descriptions_manual') }}
+    select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}
 ),
 edw_customer_base_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
@@ -40,7 +39,7 @@ edw_invoice_fact as (
     select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 itg_otif_glbl_con_reporting as (
-    select * from {{ ref('aspitg_integration__itg_otif_glbl_con_reporting') }}
+    select * from {{ source('aspitg_integration', 'itg_otif_glbl_con_reporting') }}
 ),
 itg_mds_ap_sales_ops_map as (
     select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
@@ -59,7 +58,7 @@ final as(
   sls_org_dim.sls_org_nm,
   copa.dstr_chnl,
   dist_chnl_dim.txtsh as dstr_chnl_nm,
-  copa."CLUSTER",
+  copa."CLUSTER" as "cluster",
   copa.obj_crncy_co_obj,
   cust_sales."parent customer",
   cust_sales.banner,
@@ -70,968 +69,969 @@ final as(
   cust_sales.retail_env,
   copa.cust_num,
   cust_dim.cust_nm AS customer_name,
-  CASE
-    WHEN (
-      CAST((
+  Case
+    when (
+      cast((
         copa.co_cd
-      ) AS TEXT) = CAST((
-        CAST('703A' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) = cast((
+        cast('703A' as varchar)
+      ) as text)
     )
-    THEN CAST('SE001' AS VARCHAR)
-    ELSE cust_sales.segmt_key
-  END AS segmt_key,
-  CASE
-    WHEN (
-      CAST((
+    then cast('SE001' as varchar)
+    else cust_sales.segmt_key
+  end as segmt_key,
+  case
+    when (
+      cast((
         copa.co_cd
-      ) AS TEXT) = CAST((
-        CAST('703A' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) = cast((
+        cast('703A' as varchar)
+      ) as text)
     )
-    THEN CAST('Lead' AS VARCHAR)
-    ELSE code_desc.code_desc
-  END AS segment,
-  COALESCE(gn.greenlight_sku_flag, CAST('N/A' AS VARCHAR)) AS greenlight_sku_flag,
-  SUM(copa.nts_usd) AS nts_usd,
-  SUM(copa.nts_lcy) AS nts_lcy,
-  SUM(copa.gts_usd) AS gts_usd,
-  SUM(copa.gts_lcy) AS gts_lcy,
-  SUM(copa.numerator) AS numerator,
-  SUM(copa.denominator) AS denominator
-FROM (
+    then cast('Lead' as varchar)
+    else code_desc.code_desc
+  end as segment,
+  coalesce(gn.greenlight_sku_flag, cast('N/A' as varchar)) as greenlight_sku_flag,
+  sum(copa.nts_usd) as nts_usd,
+  sum(copa.nts_lcy) as nts_lcy,
+  sum(copa.gts_usd) as gts_usd,
+  sum(copa.gts_lcy) as gts_lcy,
+  sum(copa.numerator) as numerator,
+  sum(copa.denominator) as denominator
+from (
   (
     (
       (
         (
           (
             (
-              SELECT
-                CAST('Sellin' AS VARCHAR) AS "datasource",
+              select
+                cast('Sellin' as varchar) as "datasource",
                 copa.fisc_yr,
                 copa.fisc_yr_per,
-                TO_DATE(
+                to_date(
                   (
                     (
-                      SUBSTRING(CAST((
-                        CAST((
+                      substring(cast((
+                        cast((
                           copa.fisc_yr_per
-                        ) AS VARCHAR)
-                      ) AS TEXT), 6, 8) || CAST((
-                        CAST('01' AS VARCHAR)
-                      ) AS TEXT)
-                    ) || SUBSTRING(CAST((
-                      CAST((
+                        ) as varchar)
+                      ) as text), 6, 8) || cast((
+                        cast('01' as varchar)
+                      ) as text)
+                    ) || substring(cast((
+                      cast((
                         copa.fisc_yr_per
-                      ) AS VARCHAR)
-                    ) AS TEXT), 1, 4)
+                      ) as varchar)
+                    ) as text), 1, 4)
                   ),
-                  CAST((
-                    CAST('MMDDYYYY' AS VARCHAR)
-                  ) AS TEXT)
-                ) AS fisc_day,
-                CASE
-                  WHEN (
+                  cast((
+                    cast('MMDDYYYY' as varchar)
+                  ) as text)
+                ) as fisc_day,
+                case
+                  when (
                     (
                       (
                         (
                           (
                             (
                               (
-                                LTRIM(
-                                  CAST((
+                                ltrim(
+                                  cast((
                                     copa.cust_num
-                                  ) AS TEXT),
-                                  CAST((
-                                    CAST((
+                                  ) as text),
+                                  cast((
+                                    cast((
                                       0
-                                    ) AS VARCHAR)
-                                  ) AS TEXT)
-                                ) = CAST((
-                                  CAST('134559' AS VARCHAR)
-                                ) AS TEXT)
+                                    ) as varchar)
+                                  ) as text)
+                                ) = cast((
+                                  cast('134559' as varchar)
+                                ) as text)
                               )
-                              OR (
-                                LTRIM(
-                                  CAST((
+                              or (
+                                ltrim(
+                                  cast((
                                     copa.cust_num
-                                  ) AS TEXT),
-                                  CAST((
-                                    CAST((
+                                  ) as text),
+                                  cast((
+                                    cast((
                                       0
-                                    ) AS VARCHAR)
-                                  ) AS TEXT)
-                                ) = CAST((
-                                  CAST('134106' AS VARCHAR)
-                                ) AS TEXT)
+                                    ) as varchar)
+                                  ) as text)
+                                ) = cast((
+                                  cast('134106' as varchar)
+                                ) as text)
                               )
                             )
-                            OR (
-                              LTRIM(
-                                CAST((
+                            or (
+                              ltrim(
+                                cast((
                                   copa.cust_num
-                                ) AS TEXT),
-                                CAST((
-                                  CAST((
+                                ) as text),
+                                cast((
+                                  cast((
                                     0
-                                  ) AS VARCHAR)
-                                ) AS TEXT)
-                              ) = CAST((
-                                CAST('134258' AS VARCHAR)
-                              ) AS TEXT)
+                                  ) as varchar)
+                                ) as text)
+                              ) = cast((
+                                cast('134258' as varchar)
+                              ) as text)
                             )
                           )
-                          OR (
-                            LTRIM(
-                              CAST((
+                          or (
+                            ltrim(
+                              cast((
                                 copa.cust_num
-                              ) AS TEXT),
-                              CAST((
-                                CAST((
+                              ) as text),
+                              cast((
+                                cast((
                                   0
-                                ) AS VARCHAR)
-                              ) AS TEXT)
-                            ) = CAST((
-                              CAST('134855' AS VARCHAR)
-                            ) AS TEXT)
+                                ) as varchar)
+                              ) as text)
+                            ) = cast((
+                              cast('134855' as varchar)
+                            ) as text)
                           )
                         )
-                        AND (
-                          LTRIM(
-                            CAST((
+                        and (
+                          ltrim(
+                            cast((
                               copa.acct_num
-                            ) AS TEXT),
-                            CAST((
-                              CAST((
+                            ) as text),
+                            cast((
+                              cast((
                                 0
-                              ) AS VARCHAR)
-                            ) AS TEXT)
-                          ) <> CAST((
-                            CAST('403185' AS VARCHAR)
-                          ) AS TEXT)
+                              ) as varchar)
+                            ) as text)
+                          ) <> cast((
+                            cast('403185' as varchar)
+                          ) as text)
                         )
                       )
-                      AND (
-                        CAST((
+                      and (
+                        cast((
                           mat.mega_brnd_desc
-                        ) AS TEXT) <> CAST((
-                          CAST('Vogue Int\' l ' AS VARCHAR)
-                        ) AS TEXT)
+                        ) as text) <> cast((
+                          cast('Vogue Int\' l ' as varchar)
+                        ) as text)
                       )
                     )
-                    AND (
+                    and (
                       copa.fisc_yr = 2018
                     )
                   )
-                  THEN CAST(' China Selfcare ' AS VARCHAR)
-                  ELSE cmp.ctry_group
-                END AS ctry_nm,
+                  then cast(' China Selfcare ' as varchar)
+                  else cmp.ctry_group
+                end as ctry_nm,
                 copa.matl_num,
                 copa.co_cd,
                 cmp.company_nm,
                 copa.sls_org,
                 copa.dstr_chnl,
-                CASE
-                  WHEN (
+                case
+                  when (
                     (
                       (
                         (
                           (
                             (
                               (
-                                LTRIM(
-                                  CAST((
+                                ltrim(
+                                  cast((
                                     copa.cust_num
-                                  ) AS TEXT),
-                                  CAST((
-                                    CAST((
+                                  ) as text),
+                                  cast((
+                                    cast((
                                       0
-                                    ) AS VARCHAR)
-                                  ) AS TEXT)
-                                ) = CAST((
-                                  CAST(' 134559 ' AS VARCHAR)
-                                ) AS TEXT)
+                                    ) as varchar)
+                                  ) as text)
+                                ) = cast((
+                                  cast(' 134559 ' as varchar)
+                                ) as text)
                               )
-                              OR (
-                                LTRIM(
-                                  CAST((
+                              or (
+                                ltrim(
+                                  cast((
                                     copa.cust_num
-                                  ) AS TEXT),
-                                  CAST((
-                                    CAST((
+                                  ) as text),
+                                  cast((
+                                    cast((
                                       0
-                                    ) AS VARCHAR)
-                                  ) AS TEXT)
-                                ) = CAST((
-                                  CAST(' 134106 ' AS VARCHAR)
+                                    ) as varchar)
+                                  ) as text)
+                                ) = cast((
+                                  cast(' 134106 ' as varchar)
                                 ) AS TEXT)
                               )
                             )
-                            OR (
-                              LTRIM(
-                                CAST((
+                            or (
+                              ltrim(
+                                cast((
                                   copa.cust_num
-                                ) AS TEXT),
-                                CAST((
-                                  CAST((
+                                ) as text),
+                                cast((
+                                  cast((
                                     0
-                                  ) AS VARCHAR)
-                                ) AS TEXT)
-                              ) = CAST((
-                                CAST(' 134258 ' AS VARCHAR)
-                              ) AS TEXT)
+                                  ) as varchar)
+                                ) as text)
+                              ) = cast((
+                                cast(' 134258 ' as varchar)
+                              ) as text)
                             )
                           )
-                          OR (
-                            LTRIM(
-                              CAST((
+                          or (
+                            ltrim(
+                              cast((
                                 copa.cust_num
-                              ) AS TEXT),
-                              CAST((
-                                CAST((
+                              ) as text),
+                              cast((
+                                cast((
                                   0
-                                ) AS VARCHAR)
-                              ) AS TEXT)
-                            ) = CAST((
-                              CAST(' 134855 ' AS VARCHAR)
-                            ) AS TEXT)
+                                ) as varchar)
+                              ) as text)
+                            ) = cast((
+                              cast(' 134855 ' as varchar)
+                            ) as text)
                           )
                         )
-                        AND (
-                          LTRIM(
-                            CAST((
+                        and (
+                          ltrim(
+                            cast((
                               copa.acct_num
-                            ) AS TEXT),
-                            CAST((
-                              CAST((
+                            ) as text),
+                            cast((
+                              cast((
                                 0
-                              ) AS VARCHAR)
-                            ) AS TEXT)
-                          ) <> CAST((
-                            CAST(' 403185 ' AS VARCHAR)
-                          ) AS TEXT)
+                              ) as varchar)
+                            ) as text)
+                          ) <> cast((
+                            cast(' 403185 ' as varchar)
+                          ) as text)
                         )
                       )
-                      AND (
-                        CAST((
+                      and (
+                        cast((
                           mat.mega_brnd_desc
-                        ) AS TEXT) <> CAST((
-                          CAST(' Vogue Int\'l' AS VARCHAR)
-                        ) AS TEXT)
+                        ) as text) <> cast((
+                          cast(' Vogue Int\'l' as varchar)
+                        ) as text)
                       )
                     )
-                    AND (
+                    and (
                       copa.fisc_yr = 2018
                     )
                   )
-                  THEN CAST('China' AS VARCHAR)
-                  ELSE cmp."CLUSTER"
-                END AS "CLUSTER",
-                CASE
-                  WHEN (
-                    CAST((
+                  then cast('China' as varchar)
+                  else cmp."CLUSTER"
+                end as "CLUSTER",
+                case
+                  when (
+                    cast((
                       cmp.ctry_group
-                    ) AS TEXT) = CAST((
-                      CAST('India' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('India' as varchar)
+                    ) as text)
                   )
-                  THEN CAST('INR' AS VARCHAR)
-                  WHEN (
-                    CAST((
+                  then cast('INR' as varchar)
+                  when (
+                    cast((
                       cmp.ctry_group
-                    ) AS TEXT) = CAST((
-                      CAST('Philippines' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('Philippines' as varchar)
+                    ) as text)
                   )
-                  THEN CAST('PHP' AS VARCHAR)
-                  WHEN (
+                  then cast('PHP' as varchar)
+                  when (
                     (
-                      CAST((
+                      cast((
                         cmp.ctry_group
-                      ) AS TEXT) = CAST((
-                        CAST('China Selfcare' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('China Selfcare' as varchar)
+                      ) as text)
                     )
-                    OR (
-                      CAST((
+                    or (
+                      cast((
                         cmp.ctry_group
-                      ) AS TEXT) = CAST((
-                        CAST('China Personal Care' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('China Personal Care' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN CAST('RMB' AS VARCHAR)
-                  ELSE copa.obj_crncy_co_obj
-                END AS obj_crncy_co_obj,
+                  then cast('RMB' as varchar)
+                  else copa.obj_crncy_co_obj
+                end as obj_crncy_co_obj,
                 copa.div,
                 copa.cust_num,
-                CASE
-                  WHEN (
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('NTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('NTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST((
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS nts_usd,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as nts_usd,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('NTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('NTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CASE
-                          WHEN (
+                      ) as text) = cast((
+                        case
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('India' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('India' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'India' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'India' is null
                               )
                             )
                           )
-                          THEN CAST('INR' AS VARCHAR)
-                          WHEN (
+                          then cast('INR' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('Philippines' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('Philippines' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'Philippines' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'Philippines' is null
                               )
                             )
                           )
-                          THEN CAST('PHP' AS VARCHAR)
-                          WHEN (
+                          then cast('PHP' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Selfcare' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Selfcare' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'China Selfcare' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'China Selfcare' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          WHEN (
+                          then cast('RMB' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Personal Care' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Personal Care' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
+                                cmp.ctry_group is null
                               ) AND (
-                                'China Personal Care' IS NULL
+                                'China Personal Care' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          ELSE copa.obj_crncy_co_obj
-                        END
-                      ) AS TEXT)
+                          then cast('RMB' as varchar)
+                          else copa.obj_crncy_co_obj
+                        end
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST((
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS nts_lcy,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as nts_lcy,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('GTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('GTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST((
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS gts_usd,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as gts_usd,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('GTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('GTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CASE
-                          WHEN (
+                      ) as text) = cast((
+                        case
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('India' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('India' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'India' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'India' is null
                               )
                             )
                           )
-                          THEN CAST('INR' AS VARCHAR)
-                          WHEN (
+                          then cast('INR' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('Philippines' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('Philippines' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'Philippines' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'Philippines' is null
                               )
                             )
                           )
-                          THEN CAST('PHP' AS VARCHAR)
-                          WHEN (
+                          then cast('PHP' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Selfcare' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Selfcare' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'China Selfcare' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'China Selfcare' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          WHEN (
+                          then cast('RMB' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Personal Care' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Personal Care' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'China Personal Care' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'China Personal Care' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          ELSE copa.obj_crncy_co_obj
-                        END
-                      ) AS TEXT)
+                          then cast('RMB' as varchar)
+                          else copa.obj_crncy_co_obj
+                        end
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST((
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS gts_lcy,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as gts_lcy,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('EQ' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('EQ' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST((
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS eq_usd,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as eq_usd,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('EQ' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('EQ' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CASE
-                          WHEN (
+                      ) as text) = cast((
+                        case
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('India' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('India' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'India' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'India' is null
                               )
                             )
                           )
-                          THEN CAST('INR' AS VARCHAR)
-                          WHEN (
+                          then cast('INR' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('Philippines' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('Philippines' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'Philippines' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'Philippines' is null
                               )
                             )
                           )
-                          THEN CAST('PHP' AS VARCHAR)
-                          WHEN (
+                          then cast('PHP' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Selfcare' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Selfcare' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'China Selfcare' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'China Selfcare' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          WHEN (
+                         
+                          then cast('RMB' as varchar)
+                          when (
                             (
-                              CAST((
+                              cast((
                                 cmp.ctry_group
-                              ) AS TEXT) = CAST((
-                                CAST('China Personal Care' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('China Personal Care' as varchar)
+                              ) as text)
                             )
-                            OR (
+                            or (
                               (
-                                cmp.ctry_group IS NULL
-                              ) AND (
-                                'China Personal Care' IS NULL
+                                cmp.ctry_group is null
+                              ) and (
+                                'China Personal Care' is null
                               )
                             )
                           )
-                          THEN CAST('RMB' AS VARCHAR)
-                          ELSE copa.obj_crncy_co_obj
-                        END
-                      ) AS TEXT)
+                          then cast('RMB' as varchar)
+                          else copa.obj_crncy_co_obj
+                        end
+                      ) as text)
                     )
                   )
-                  THEN SUM((
+                  then sum((
                     copa.amt_obj_crncy * exch_rate.ex_rt
                   ))
-                  ELSE CAST((
-                    CAST(NULL AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS eq_lcy,
-                CASE
-                  WHEN (
-                    CAST((
+                  else cast((
+                    cast(null as decimal)
+                  ) as decimal(18, 0))
+                end as eq_lcy,
+                case
+                  when (
+                    cast((
                       cmp.ctry_group
-                    ) AS TEXT) = CAST((
-                      CAST('India' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('India' as varchar)
+                    ) as text)
                   )
-                  THEN CAST('INR' AS VARCHAR)
-                  WHEN (
-                    CAST((
+                  then cast('INR' as varchar)
+                  when (
+                    cast((
                       cmp.ctry_group
-                    ) AS TEXT) = CAST((
-                      CAST('Philippines' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('Philippines' as varchar)
+                    ) as text)
                   )
-                  THEN CAST('PHP' AS VARCHAR)
-                  WHEN (
+                  then cast('PHP' as varchar)
+                  when (
                     (
-                      CAST((
+                      cast((
                         cmp.ctry_group
-                      ) AS TEXT) = CAST((
-                        CAST('China Selfcare' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('China Selfcare' as varchar)
+                      ) as text)
                     )
-                    OR (
-                      CAST((
+                    or (
+                      cast((
                         cmp.ctry_group
-                      ) AS TEXT) = CAST((
-                        CAST('China Personal Care' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('China Personal Care' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN CAST('RMB' AS VARCHAR)
-                  ELSE exch_rate.from_crncy
-                END AS from_crncy,
+                  then cast('RMB' as varchar)
+                  else exch_rate.from_crncy
+                end as from_crncy,
                 exch_rate.to_crncy,
-                CASE
-                  WHEN (
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('NTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('NTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM(copa.qty)
-                  ELSE CAST((
-                    CAST((
+                  then sum(copa.qty)
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS nts_qty,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as nts_qty,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('GTS' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('GTS' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM(copa.qty)
-                  ELSE CAST((
-                    CAST((
+                  then sum(copa.qty)
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS gts_qty,
-                CASE
-                  WHEN (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as gts_qty,
+                case
+                  when (
                     (
-                      CAST((
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('EQ' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('EQ' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         exch_rate.to_crncy
-                      ) AS TEXT) = CAST((
-                        CAST('USD' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('USD' as varchar)
+                      ) as text)
                     )
                   )
-                  THEN SUM(copa.qty)
-                  ELSE CAST((
-                    CAST((
+                  then sum(copa.qty)
+                  else cast((
+                    cast((
                       0
-                    ) AS DECIMAL)
-                  ) AS DECIMAL(18, 0))
-                END AS eq_qty,
-                0 AS numerator,
-                0 AS denominator
-              FROM (
+                    ) as decimal)
+                  ) as decimal(18, 0))
+                end as eq_qty,
+                0 as numerator,
+                0 as denominator
+              from (
                 (
                   (
-                    edw_copa_trans_fact AS copa
-                      LEFT JOIN edw_company_dim AS cmp
-                        ON (
+                    edw_copa_trans_fact as copa
+                      left join edw_company_dim as cmp
+                        on (
                           (
-                            CAST((
+                            cast((
                               copa.co_cd
-                            ) AS TEXT) = CAST((
+                            ) as text) = cast((
                               cmp.co_cd
-                            ) AS TEXT)
+                            ) as text)
                           )
                         )
                   )
-                  LEFT JOIN edw_material_dim AS mat
-                    ON (
+                  left join edw_material_dim as mat
+                    on (
                       (
-                        CAST((
+                        cast((
                           copa.matl_num
-                        ) AS TEXT) = CAST((
+                        ) as text) = cast((
                           mat.matl_num
-                        ) AS TEXT)
+                        ) as text)
                       )
                     )
                 )
-                LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
-                  ON (
+                left join v_intrm_reg_crncy_exch_fiscper as exch_rate
+                  on (
                     (
                       (
                         (
-                          CAST((
+                          cast((
                             copa.obj_crncy_co_obj
-                          ) AS TEXT) = CAST((
+                          ) as text) = cast((
                             exch_rate.from_crncy
-                          ) AS TEXT)
+                          ) as text)
                         )
-                        AND (
+                        and (
                           copa.fisc_yr_per = exch_rate.fisc_per
                         )
                       )
-                      AND CASE
-                        WHEN (
-                          CAST((
+                      and case
+                        when (
+                          cast((
                             exch_rate.to_crncy
-                          ) AS TEXT) <> CAST((
-                            CAST('USD' AS VARCHAR)
-                          ) AS TEXT)
+                          ) as text) <> cast((
+                            cast('USD' as varchar)
+                          ) as text)
                         )
-                        THEN (
-                          CAST((
+                        then (
+                          cast((
                             exch_rate.to_crncy
-                          ) AS TEXT) = CAST((
-                            CASE
-                              WHEN (
+                          ) as text) = cast((
+                            case
+                              when (
                                 (
-                                  CAST((
+                                  cast((
                                     cmp.ctry_group
-                                  ) AS TEXT) = CAST((
-                                    CAST('India' AS VARCHAR)
-                                  ) AS TEXT)
+                                  ) as text) = cast((
+                                    cast('India' as varchar)
+                                  ) as text)
                                 )
-                                OR (
+                                or (
                                   (
-                                    cmp.ctry_group IS NULL
-                                  ) AND (
-                                    'India' IS NULL
+                                    cmp.ctry_group is null
+                                  ) and (
+                                    'India' is null
                                   )
                                 )
                               )
-                              THEN CAST('INR' AS VARCHAR)
-                              WHEN (
+                              then cast('INR' as varchar)
+                              when (
                                 (
-                                  CAST((
+                                  cast((
                                     cmp.ctry_group
-                                  ) AS TEXT) = CAST((
-                                    CAST('Philippines' AS VARCHAR)
-                                  ) AS TEXT)
+                                  ) as text) = cast((
+                                    cast('Philippines' as varchar)
+                                  ) as text)
                                 )
-                                OR (
+                                or (
                                   (
-                                    cmp.ctry_group IS NULL
-                                  ) AND (
-                                    'Philippines' IS NULL
+                                    cmp.ctry_group is null
+                                  ) and (
+                                    'Philippines' is null
                                   )
                                 )
                               )
-                              THEN CAST('PHP' AS VARCHAR)
-                              WHEN (
+                              then cast('php' as varchar)
+                              when (
                                 (
-                                  CAST((
+                                  cast((
                                     cmp.ctry_group
-                                  ) AS TEXT) = CAST((
-                                    CAST('China Selfcare' AS VARCHAR)
-                                  ) AS TEXT)
+                                  ) as text) = cast((
+                                    cast('China Selfcare' as varchar)
+                                  ) as text)
                                 )
-                                OR (
+                                or (
                                   (
-                                    cmp.ctry_group IS NULL
-                                  ) AND (
-                                    'China Selfcare' IS NULL
+                                    cmp.ctry_group is null
+                                  ) and (
+                                    'China Selfcare' is null
                                   )
                                 )
                               )
-                              THEN CAST('RMB' AS VARCHAR)
-                              WHEN (
+                              then cast('RMB' as varchar)
+                              when (
                                 (
-                                  CAST((
+                                  cast((
                                     cmp.ctry_group
-                                  ) AS TEXT) = CAST((
-                                    CAST('China Personal Care' AS VARCHAR)
-                                  ) AS TEXT)
+                                  ) as text) = cast((
+                                    cast('China Personal Care' as varchar)
+                                  ) as text)
                                 )
-                                OR (
+                                or (
                                   (
-                                    cmp.ctry_group IS NULL
-                                  ) AND (
-                                    'China Personal Care' IS NULL
+                                    cmp.ctry_group is null
+                                  ) and (
+                                    'China Personal Care' is null
                                   )
                                 )
                               )
-                              THEN CAST('RMB' AS VARCHAR)
-                              ELSE copa.obj_crncy_co_obj
-                            END
-                          ) AS TEXT)
+                              then cast('RMB' as varchar)
+                              else copa.obj_crncy_co_obj
+                            end
+                          ) as text)
                         )
-                        ELSE (
-                          CAST((
+                        else (
+                          cast((
                             exch_rate.to_crncy
-                          ) AS TEXT) = CAST((
-                            CAST('USD' AS VARCHAR)
-                          ) AS TEXT)
+                          ) as text) = cast((
+                            cast('USD' as varchar)
+                          ) as text)
                         )
-                      END
+                      end
                     )
                   )
               )
-              WHERE
+              where
                 (
                   (
                     (
                       (
-                        CAST((
+                        cast((
                           copa.acct_hier_shrt_desc
-                        ) AS TEXT) = CAST((
-                          CAST('GTS' AS VARCHAR)
-                        ) AS TEXT)
+                        ) as text) = cast((
+                          cast('GTS' as varchar)
+                        ) as text)
                       )
-                      OR (
-                        CAST((
+                      or (
+                        cast((
                           copa.acct_hier_shrt_desc
-                        ) AS TEXT) = CAST((
-                          CAST('NTS' AS VARCHAR)
-                        ) AS TEXT)
+                        ) as text) = cast((
+                          cast('NTS' as varchar)
+                        ) as text)
                       )
                     )
-                    OR (
-                      CAST((
+                    or (
+                      cast((
                         copa.acct_hier_shrt_desc
-                      ) AS TEXT) = CAST((
-                        CAST('EQ' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('EQ' as varchar)
+                      ) as text)
                     )
                   )
-                  AND (
-                    CAST((CAST((copa.fisc_yr_per) AS VARCHAR))AS TEXT) >= (
+                  and (
+                    cast((cast((copa.fisc_yr_per) as varchar))as text) >= (
                       (
                         (
-                          CAST(
+                          cast(
                             (
-                              DATE_PART(YEAR, CURRENT_TIMESTAMP())-2::VARCHAR
-                            ) AS TEXT) 
+                              date_part(year, current_timestamp())-2::varchar
+                            ) as text) 
                           || 
-                          CAST(
+                          cast(
                             (
-                              0::VARCHAR
+                              0::varchar
                               ) 
-                            AS TEXT)
-                        ) || CAST(
+                            as text)
+                        ) || cast(
                             (
-                              0::VARCHAR
+                              0::varchar
                               ) 
-                            AS TEXT)
-                      ) || CAST(
+                            as text)
+                      ) || cast(
                             (
-                              1::VARCHAR
+                              1::varchar
                               ) 
-                            AS TEXT)
+                            as text)
                     )
                   )
                 )
-              GROUP BY
+              group by
                 1,
                 copa.fisc_yr,
                 copa.fisc_yr_per,
@@ -1051,171 +1051,171 @@ FROM (
                 cmp."CLUSTER",
                 mat.mega_brnd_desc
             ) AS copa
-            LEFT JOIN v_edw_customer_sales_dim AS cust_sales
-              ON (
+            left join v_edw_customer_sales_dim as cust_sales
+              on (
                 (
                   (
                     (
                       (
-                        CAST((
+                        cast((
                           copa.sls_org
-                        ) AS TEXT) = CAST((
+                        ) as text) = cast((
                           cust_sales.sls_org
-                        ) AS TEXT)
+                        ) as text)
                       )
-                      AND (
-                        CAST((
+                      and (
+                        cast((
                           copa.dstr_chnl
-                        ) AS TEXT) = CAST((
+                        ) as text) = cast((
                           cust_sales.dstr_chnl
-                        ) AS TEXT)
+                        ) as text)
                       )
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         copa.div
-                      ) AS TEXT) = CAST((
+                      ) as text) = cast((
                         cust_sales.div
-                      ) AS TEXT)
+                      ) as text)
                     )
                   )
-                  AND (
-                    CAST((
+                  and (
+                    cast((
                       copa.cust_num
-                    ) AS TEXT) = CAST((
+                    ) as text) = cast((
                       cust_sales.cust_num
-                    ) AS TEXT)
+                    ) as text)
                   )
                 )
               )
           )
-          LEFT JOIN EDW_VW_GREENLIGHT_SKUS AS gn
-            ON (
+          left join edw_vw_greenlight_skus as gn
+            on (
               (
                 (
                   (
-                    LTRIM(
-                      CAST((
+                    ltrim(
+                      cast((
                         copa.matl_num
-                      ) AS TEXT),
-                      CAST((
-                        CAST((
+                      ) as text),
+                      cast((
+                        cast((
                           0
-                        ) AS VARCHAR)
-                      ) AS TEXT)
-                    ) = LTRIM(gn.matl_num, CAST((
-                      CAST((
+                        ) as varchar)
+                      ) as text)
+                    ) = ltrim(gn.matl_num, cast((
+                      cast((
                         0
-                      ) AS VARCHAR)
-                    ) AS TEXT))
+                      ) as varchar)
+                    ) as text))
                   )
-                  AND (
-                    CAST((
+                  and (
+                    cast((
                       copa.sls_org
-                    ) AS TEXT) = CAST((
+                    ) as text) = cast((
                       gn.sls_org
-                    ) AS TEXT)
+                    ) as text)
                   )
                 )
-                AND (
-                  CAST((
+                and (
+                  cast((
                     copa.dstr_chnl
-                  ) AS TEXT) = CAST((
+                  ) as text) = cast((
                     gn.dstr_chnl
-                  ) AS TEXT)
+                  ) as text)
                 )
               )
             )
         )
-        LEFT JOIN edw_code_descriptions_manual AS code_desc
-          ON (
+        left join edw_code_descriptions_manual as code_desc
+          on (
             (
               (
-                CAST((
+                cast((
                   code_desc.code
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   cust_sales.segmt_key
-                ) AS TEXT)
+                ) as text)
               )
-              AND (
-                CAST((
+              and (
+                cast((
                   code_desc.code_type
-                ) AS TEXT) = CAST((
-                  CAST('Customer Segmentation Key' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('Customer Segmentation Key' as varchar)
+                ) as text)
               )
             )
           )
       )
-      LEFT JOIN edw_customer_base_dim AS cust_dim
-        ON (
+      left join edw_customer_base_dim as cust_dim
+        on (
           (
-            CAST((
+            cast((
               copa.cust_num
-            ) AS TEXT) = CAST((
+            ) as text) = cast((
               cust_dim.cust_num
-            ) AS TEXT)
+            ) as text)
           )
         )
     )
-    LEFT JOIN edw_sales_org_dim AS sls_org_dim
-      ON (
+    left join edw_sales_org_dim as sls_org_dim
+      on (
         (
-          CAST((
+          cast((
             copa.sls_org
-          ) AS TEXT) = CAST((
+          ) as text) = cast((
             sls_org_dim.sls_org
-          ) AS TEXT)
+          ) as text)
         )
       )
   )
-  LEFT JOIN edw_dstrbtn_chnl AS dist_chnl_dim
-    ON (
+  left join edw_dstrbtn_chnl as dist_chnl_dim
+    on (
       (
-        CAST((
+        cast((
           copa.dstr_chnl
-        ) AS TEXT) = CAST((
+        ) as text) = cast((
           dist_chnl_dim.distr_chan
-        ) AS TEXT)
+        ) as text)
       )
     )
 )
-WHERE
+where
   (
     (
       (
         (
-          CAST((
+          cast((
             copa.ctry_nm
-          ) AS TEXT) <> CAST((
-            CAST('OTC' AS VARCHAR)
-          ) AS TEXT)
+          ) as text) <> cast((
+            cast('OTC' as varchar)
+          ) as text)
         )
-        AND (
-          CAST((
+        and (
+          cast((
             copa.ctry_nm
-          ) AS TEXT) <> CAST((
-            CAST('India' AS VARCHAR)
-          ) AS TEXT)
+          ) as text) <> cast((
+            cast('India' as varchar)
+          ) as text)
         )
       )
-      AND (
-        CAST((
+      and (
+        cast((
           copa.ctry_nm
-        ) AS TEXT) <> CAST((
-          CAST('Japan' AS VARCHAR)
-        ) AS TEXT)
+        ) as text) <> cast((
+          cast('Japan' as varchar)
+        ) as text)
       )
     )
-    AND (
-      CAST((
+    and (
+      cast((
         copa.ctry_nm
-      ) AS TEXT) <> CAST((
-        CAST('APSC Regional' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) <> cast((
+        cast('APSC Regional' as varchar)
+      ) as text)
     )
   )
-GROUP BY
+group by
   copa."datasource",
   copa.fisc_yr,
   copa.fisc_yr_per,
@@ -1244,81 +1244,81 @@ GROUP BY
   code_desc.code_desc,
   gn.greenlight_sku_flag
 UNION ALL
-SELECT
-  "map".dataset AS "datasource",
-  CAST((
+Select
+  "map".dataset as "datasource",
+  cast((
     otif.fiscal_yr
-  ) AS DECIMAL(18, 0)) AS fisc_yr,
-  CAST((
+  ) as decimal(18, 0)) as fisc_yr,
+  cast((
     (
       (
-        TO_CHAR(
-          CAST(CAST((
-            TO_DATE(
+        to_char(
+          cast(cast((
+            to_date(
               (
-                LEFT(CAST((
+                left(cast((
                   otif.fiscal_yr_mo
-                ) AS TEXT), 4) || RIGHT(CAST((
+                ) as text), 4) || right(cast((
                   otif.fiscal_yr_mo
-                ) AS TEXT), 2)
+                ) as text), 2)
               ),
-              CAST((
-                CAST('YYYYMM' AS VARCHAR)
-              ) AS TEXT)
+              cast((
+                cast('YYYYMM' as varchar)
+              ) as text)
             )
-          ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-          CAST((
-            CAST('YYYY' AS VARCHAR)
-          ) AS TEXT)
-        ) || CAST((
-          CAST('0' AS VARCHAR)
-        ) AS TEXT)
-      ) || TO_CHAR(
-        CAST(CAST((
-          TO_DATE(
+          ) as timestampntz) as timestampntz),
+          cast((
+            cast('YYYY' as varchar)
+          ) as text)
+        ) || cast((
+          cast('0' as varchar)
+        ) as text)
+      ) || to_char(
+        cast(cast((
+          to_date(
             (
-              LEFT(CAST((
+              left(cast((
                 otif.fiscal_yr_mo
-              ) AS TEXT), 4) || RIGHT(CAST((
+              ) as text), 4) || right(cast((
                 otif.fiscal_yr_mo
-              ) AS TEXT), 2)
+              ) as text), 2)
             ),
-            CAST((
-              CAST('YYYYMM' AS VARCHAR)
-            ) AS TEXT)
+            cast((
+              cast('YYYYMM' as varchar)
+            ) as text)
           )
-        ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST((
-          CAST('MM' AS VARCHAR)
-        ) AS TEXT)
+        ) as timestampntz) as timestampntz),
+        cast((
+          cast('MM' as varchar)
+        ) as text)
       )
     )
-  ) AS INT) AS fisc_yr_per,
-  TO_DATE(
+  ) as int) as fisc_yr_per,
+  to_date(
     (
       (
-        RIGHT(CAST((
+        right(cast((
           otif.fiscal_yr_mo
-        ) AS TEXT), 2) || CAST((
-          CAST('01' AS VARCHAR)
-        ) AS TEXT)
-      ) || LEFT(CAST((
+        ) as text), 2) || cast((
+          cast('01' as varchar)
+        ) as text)
+      ) || left(cast((
         otif.fiscal_yr_mo
-      ) AS TEXT), 4)
+      ) as text), 4)
     ),
-    CAST((
-      CAST('MMDDYYYY' AS VARCHAR)
-    ) AS TEXT)
-  ) AS fisc_day,
-  "map".destination_market AS ctry_nm,
+    cast((
+      cast('MMDDYYYY' as varchar)
+    ) as text)
+  ) as fisc_day,
+  "map".destination_market as ctry_nm,
   inv.co_cd,
   cmp.company_nm,
-  otif.salesorg AS sls_org,
+  otif.salesorg as sls_org,
   sls_org_dim.sls_org_nm,
   inv.dstr_chnl,
-  dist_chnl_dim.txtsh AS dstr_chnl_nm,
+  dist_chnl_dim.txtsh as dstr_chnl_nm,
   "map".destination_cluster AS "CLUSTER",
-  CAST(NULL AS VARCHAR) AS obj_crncy_co_obj,
+  cast(null as varchar) as obj_crncy_co_obj,
   cust_sales."parent customer",
   cust_sales.banner,
   cust_sales."banner format",
@@ -1327,37 +1327,37 @@ SELECT
   cust_sales."sub channel",
   cust_sales.retail_env,
   inv.cust_num,
-  cust_dim.cust_nm AS customer_name,
-  CASE
-    WHEN (
-      CAST((
+  cust_dim.cust_nm as customer_name,
+  case
+    when (
+      cast((
         inv.co_cd
-      ) AS TEXT) = CAST((
-        CAST('703A' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) = cast((
+        cast('703A' as varchar)
+      ) as text)
     )
-    THEN CAST('SE001' AS VARCHAR)
-    ELSE cust_sales.segmt_key
-  END AS segmt_key,
-  CASE
-    WHEN (
-      CAST((
+    then cast('SE001' as varchar)
+    else cust_sales.segmt_key
+  end as segmt_key,
+  case
+    when (
+      cast((
         inv.co_cd
-      ) AS TEXT) = CAST((
-        CAST('703A' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) = cast((
+        cast('703A' as varchar)
+      ) as text)
     )
-    THEN CAST('Lead' AS VARCHAR)
-    ELSE code_desc.code_desc
-  END AS segment,
-  COALESCE(gn.greenlight_sku_flag, CAST('N/A' AS VARCHAR)) AS greenlight_sku_flag,
-  0 AS nts_usd,
-  0 AS nts_lcy,
-  0 AS gts_usd,
-  0 AS gts_lcy,
-  SUM(otif.numerator_unit_otifd_delivery) AS numerator,
-  SUM(otif.denom_unit_otifd) AS denominator
-FROM (
+    then cast('Lead' as varchar)
+    else code_desc.code_desc
+  end as segment,
+  coalesce(gn.greenlight_sku_flag, cast('N/A' as varchar)) as greenlight_sku_flag,
+  0 as nts_usd,
+  0 as nts_lcy,
+  0 as gts_usd,
+  0 as gts_lcy,
+  sum(otif.numerator_unit_otifd_delivery) as numerator,
+  sum(otif.denom_unit_otifd) as denominator
+from (
   (
     (
       (
@@ -1367,37 +1367,37 @@ FROM (
               (
                 (
                   itg_otif_glbl_con_reporting AS otif
-                    LEFT JOIN itg_mds_ap_sales_ops_map AS "map"
-                      ON (
+                    left join itg_mds_ap_sales_ops_map as "map"
+                      on (
                         (
                           (
                             (
-                              CAST((
+                              cast((
                                 otif.country
-                              ) AS TEXT) = CAST((
+                              ) as text) = cast((
                                 "map".source_market
-                              ) AS TEXT)
+                              ) as text)
                             )
-                            AND (
-                              CAST((
+                            and (
+                              cast((
                                 otif.cluster_name
-                              ) AS TEXT) = CAST((
+                              ) as text) = cast((
                                 "map".source_cluster
-                              ) AS TEXT)
+                              ) as text)
                             )
                           )
-                          AND (
-                            CAST((
+                          and (
+                            cast((
                               "map".dataset
-                            ) AS TEXT) = CAST((
-                              CAST('OTIF-D' AS VARCHAR)
-                            ) AS TEXT)
+                            ) as text) = cast((
+                              cast('OTIF-D' as varchar)
+                            ) as text)
                           )
                         )
                       )
                 )
-                LEFT JOIN (
-                  SELECT DISTINCT
+                Left join (
+                  select distinct
                     edw_invoice_fact.co_cd,
                     edw_invoice_fact.dstr_chnl,
                     edw_invoice_fact.div,
@@ -1405,186 +1405,186 @@ FROM (
                     edw_invoice_fact.sls_doc,
                     edw_invoice_fact.cust_num,
                     edw_invoice_fact.matl_num
-                  FROM edw_invoice_fact
-                ) AS inv
-                  ON (
+                  from edw_invoice_fact
+                ) as inv
+                  on (
                     (
                       (
                         (
                           (
-                            CAST((
+                            cast((
                               otif.doc_number
-                            ) AS TEXT) = CAST((
+                            ) as text) = cast((
                               inv.sls_doc
-                            ) AS TEXT)
+                            ) as text)
                           )
-                          AND (
-                            CAST((
+                          and (
+                            cast((
                               otif.salesorg
-                            ) AS TEXT) = CAST((
+                            ) as text) = cast((
                               inv.sls_org
-                            ) AS TEXT)
+                            ) as text)
                           )
                         )
-                        AND (
-                          CAST((
+                        and (
+                          cast((
                             otif.sold_to_nbr
-                          ) AS TEXT) = CAST((
+                          ) as text) = cast((
                             inv.cust_num
-                          ) AS TEXT)
+                          ) as text)
                         )
                       )
-                      AND (
-                        CAST((
+                      and (
+                        cast((
                           otif.material
-                        ) AS TEXT) = CAST((
+                        ) as text) = cast((
                           inv.matl_num
-                        ) AS TEXT)
+                        ) as text)
                       )
                     )
                   )
               )
-              LEFT JOIN edw_company_dim AS cmp
-                ON (
+              left join edw_company_dim as cmp
+                on (
                   (
-                    CAST((
+                    cast((
                       inv.co_cd
-                    ) AS TEXT) = CAST((
+                    ) as text) = cast((
                       cmp.co_cd
-                    ) AS TEXT)
+                    ) as text)
                   )
                 )
             )
-            LEFT JOIN edw_customer_base_dim AS cust_dim
-              ON (
+            left join edw_customer_base_dim as cust_dim
+              on (
                 (
-                  CAST((
+                  cast((
                     inv.cust_num
-                  ) AS TEXT) = CAST((
+                  ) as text) = cast((
                     cust_dim.cust_num
-                  ) AS TEXT)
+                  ) as text)
                 )
               )
           )
-          LEFT JOIN edw_sales_org_dim AS sls_org_dim
-            ON (
+          left join edw_sales_org_dim as sls_org_dim
+            on (
               (
-                CAST((
+                cast((
                   otif.salesorg
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   sls_org_dim.sls_org
-                ) AS TEXT)
+                ) as text)
               )
             )
         )
-        LEFT JOIN edw_dstrbtn_chnl AS dist_chnl_dim
-          ON (
+        left join edw_dstrbtn_chnl as dist_chnl_dim
+          on (
             (
-              CAST((
+              cast((
                 inv.dstr_chnl
-              ) AS TEXT) = CAST((
+              ) as text) = cast((
                 dist_chnl_dim.distr_chan
-              ) AS TEXT)
+              ) as text)
             )
           )
       )
-      LEFT JOIN EDW_VW_GREENLIGHT_SKUS AS gn
-        ON (
+      left join edw_vw_greenlight_skus as gn
+        on (
           (
             (
               (
-                LTRIM(
-                  CAST((
+                ltrim(
+                  cast((
                     otif.material
-                  ) AS TEXT),
-                  CAST((
-                    CAST((
+                  ) as text),
+                  cast((
+                    cast((
                       0
-                    ) AS VARCHAR)
-                  ) AS TEXT)
-                ) = LTRIM(gn.matl_num, CAST((
-                  CAST((
+                    ) as varchar)
+                  ) as text)
+                ) = ltrim(gn.matl_num, cast((
+                  cast((
                     0
-                  ) AS VARCHAR)
-                ) AS TEXT))
+                  ) as varchar)
+                ) as text))
               )
-              AND (
-                CAST((
+              and (
+                cast((
                   otif.salesorg
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   gn.sls_org
-                ) AS TEXT)
+                ) as text)
               )
             )
-            AND (
-              CAST((
+            and (
+              cast((
                 inv.dstr_chnl
-              ) AS TEXT) = CAST((
+              ) as text) = cast((
                 gn.dstr_chnl
-              ) AS TEXT)
+              ) as text)
             )
           )
         )
     )
-    LEFT JOIN v_edw_customer_sales_dim AS cust_sales
-      ON (
+    left join v_edw_customer_sales_dim as cust_sales
+      on (
         (
           (
             (
               (
-                CAST((
+                cast((
                   otif.salesorg
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   cust_sales.sls_org
-                ) AS TEXT)
+                ) as text)
               )
-              AND (
-                CAST((
+              and (
+                cast((
                   otif.sold_to_nbr
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   cust_sales.cust_num
-                ) AS TEXT)
+                ) as text)
               )
             )
-            AND (
-              CAST((
+            and (
+              cast((
                 inv.dstr_chnl
-              ) AS TEXT) = CAST((
+              ) as text) = cast((
                 cust_sales.dstr_chnl
-              ) AS TEXT)
+              ) as text)
             )
           )
-          AND (
-            CAST((
+          and (
+            cast((
               inv.div
-            ) AS TEXT) = CAST((
+            ) as text) = cast((
               cust_sales.div
-            ) AS TEXT)
+            ) as text)
           )
         )
       )
   )
-  LEFT JOIN edw_code_descriptions_manual AS code_desc
-    ON (
+  left join edw_code_descriptions_manual as code_desc
+    on (
       (
         (
-          CAST((
+          cast((
             code_desc.code
-          ) AS TEXT) = CAST((
+          ) as text) = cast((
             cust_sales.segmt_key
-          ) AS TEXT)
+          ) as text)
         )
-        AND (
-          CAST((
+        and (
+          cast((
             code_desc.code_type
-          ) AS TEXT) = CAST((
-            CAST('Customer Segmentation Key' AS VARCHAR)
-          ) AS TEXT)
+          ) as text) = cast((
+            cast('Customer Segmentation Key' as varchar)
+          ) as text)
         )
       )
     )
 )
-WHERE
+where
   (
     (
       (
@@ -1595,152 +1595,152 @@ WHERE
                 (
                   (
                     (
-                      CAST((
+                      cast((
                         otif."REGION"
-                      ) AS TEXT) = CAST((
-                        CAST('APAC' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) = cast((
+                        cast('APAC' as varchar)
+                      ) as text)
                     )
-                    AND (
-                      CAST((
+                    and (
+                      cast((
                         otif.country
-                      ) AS TEXT) <> CAST((
-                        CAST('JP' AS VARCHAR)
-                      ) AS TEXT)
+                      ) as text) <> cast((
+                        cast('JP' as varchar)
+                      ) as text)
                     )
                   )
-                  AND (
-                    CAST((
+                  and (
+                    cast((
                       otif.no_charge_ind
-                    ) AS TEXT) = CAST((
-                      CAST('Revenue' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('Revenue' as varchar)
+                    ) as text)
                   )
                 )
-                AND (
-                  otif.denom_unit_otifd <> CAST((
-                    CAST((
-                      CAST((
+                and (
+                  otif.denom_unit_otifd <> cast((
+                    cast((
+                      cast((
                         0
-                      ) AS DECIMAL)
-                    ) AS DECIMAL(18, 0))
-                  ) AS DECIMAL(21, 2))
+                      ) as decimal)
+                    ) as decimal(18, 0))
+                  ) as decimal(21, 2))
                 )
               )
-              AND (
-                CAST((
+              and (
+                cast((
                   otif.affiliate_flag
-                ) AS TEXT) = CAST((
-                  CAST('0' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('0' as varchar)
+                ) as text)
               )
             )
-            AND (
-              CAST(
+            and (
+              cast(
 
-                  (DATE_PART(YEAR, CURRENT_TIMESTAMP())) - 3 :: VARCHAR
-               AS TEXT) < CAST((
+                  (date_part(year, current_timestamp())) - 3 :: varchar
+               as text) < cast((
                 otif.fiscal_yr
-              ) AS TEXT)
+              ) as text)
             )
           )
-          AND (
-            CAST((
+          and (
+            cast((
               "map".destination_market
-            ) AS TEXT) <> CAST((
-              CAST('OTC' AS VARCHAR)
-            ) AS TEXT)
+            ) as text) <> cast((
+              cast('OTC' as varchar)
+            ) as text)
           )
         )
-        AND (
-          CAST((
+        and (
+          cast((
             "map".destination_market
-          ) AS TEXT) <> CAST((
-            CAST('India' AS VARCHAR)
-          ) AS TEXT)
+          ) as text) <> cast((
+            cast('India' as varchar)
+          ) as text)
         )
       )
-      AND (
-        CAST((
+      and (
+        cast((
           "map".destination_market
-        ) AS TEXT) <> CAST((
-          CAST('Japan' AS VARCHAR)
-        ) AS TEXT)
+        ) as text) <> cast((
+          cast('Japan' as varchar)
+        ) as text)
       )
     )
-    AND (
-      CAST((
+    and (
+      cast((
         "map".destination_market
-      ) AS TEXT) <> CAST((
-        CAST('APSC Regional' AS VARCHAR)
-      ) AS TEXT)
+      ) as text) <> cast((
+        cast('APSC Regional' as varchar)
+      ) as text)
     )
   )
-GROUP BY
+group by
   "map".dataset,
-  CAST((
+  cast((
     otif.fiscal_yr
-  ) AS DECIMAL(18, 0)),
-  CAST((
+  ) as decimal(18, 0)),
+  cast((
     (
       (
-        TO_CHAR(
-          CAST(CAST((
-            TO_DATE(
+        to_char(
+          cast(cast((
+            to_date(
               (
-                LEFT(CAST((
+                left(cast((
                   otif.fiscal_yr_mo
-                ) AS TEXT), 4) || RIGHT(CAST((
+                ) as text), 4) || right(cast((
                   otif.fiscal_yr_mo
-                ) AS TEXT), 2)
+                ) as text), 2)
               ),
-              CAST((
-                CAST('YYYYMM' AS VARCHAR)
-              ) AS TEXT)
+              cast((
+                cast('YYYYMM' as varchar)
+              ) as text)
             )
-          ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-          CAST((
-            CAST('YYYY' AS VARCHAR)
-          ) AS TEXT)
-        ) || CAST((
-          CAST('0' AS VARCHAR)
-        ) AS TEXT)
-      ) || TO_CHAR(
-        CAST(CAST((
-          TO_DATE(
+          ) as timestampntz) as timestampntz),
+          cast((
+            cast('YYYY' as varchar)
+          ) as text)
+        ) || cast((
+          cast('0' as varchar)
+        ) as text)
+      ) || to_char(
+        cast(cast((
+          to_date(
             (
-              LEFT(CAST((
+              left(cast((
                 otif.fiscal_yr_mo
-              ) AS TEXT), 4) || RIGHT(CAST((
+              ) as text), 4) || right(cast((
                 otif.fiscal_yr_mo
-              ) AS TEXT), 2)
+              ) as text), 2)
             ),
-            CAST((
-              CAST('YYYYMM' AS VARCHAR)
-            ) AS TEXT)
+            cast((
+              cast('YYYYMM' as varchar)
+            ) as text)
           )
-        ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST((
-          CAST('MM' AS VARCHAR)
-        ) AS TEXT)
+        ) as timestampntz) as timestampntz),
+        cast((
+          cast('MM' as varchar)
+        ) as text)
       )
     )
-  ) AS INT),
-  TO_DATE(
+  ) as int),
+  to_date(
     (
       (
-        RIGHT(CAST((
+        right(cast((
           otif.fiscal_yr_mo
-        ) AS TEXT), 2) || CAST((
-          CAST('01' AS VARCHAR)
-        ) AS TEXT)
-      ) || LEFT(CAST((
+        ) as text), 2) || cast((
+          cast('01' as varchar)
+        ) as text)
+      ) || left(cast((
         otif.fiscal_yr_mo
-      ) AS TEXT), 4)
+      ) as text), 4)
     ),
-    CAST((
-      CAST('MMDDYYYY' AS VARCHAR)
-    ) AS TEXT)
+    cast((
+      cast('MMDDYYYY' as varchar)
+    ) as text)
   ),
   "map".destination_market,
   inv.co_cd,
@@ -1763,9 +1763,6 @@ GROUP BY
   cust_sales.segmt_key,
   code_desc.code_desc,
   gn.greenlight_sku_flag
-
-
-  
 )
 
 select * from final

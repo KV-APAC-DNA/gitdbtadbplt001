@@ -1,0 +1,116 @@
+version: 2
+
+sources:  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_in_ecom_product
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: dataset
+            data_type: varchar
+          - name: cust_attr_1
+            data_type: varchar
+          - name: cust_attr_2
+            data_type: varchar
+          - name: upc
+            data_type: varchar
+          - name: sku_name
+            data_type: varchar
+          - name: prod_attr_1
+            data_type: varchar
+          - name: prod_attr_2
+            data_type: varchar
+          - name: prod_attr_3
+            data_type: varchar
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar
+
+      - name: sdl_mds_in_sku_benchmarks
+        columns:
+          - name: id
+            data_type: number
+          - name: muid
+            data_type: varchar
+          - name: versionname
+            data_type: varchar
+          - name: versionnumber
+            data_type: number
+          - name: version_id
+            data_type: number
+          - name: versionflag
+            data_type: varchar
+          - name: name
+            data_type: varchar
+          - name: code
+            data_type: varchar
+          - name: changetrackingmask
+            data_type: number
+          - name: jj_upc
+            data_type: varchar
+          - name: jj_sku_description
+            data_type: varchar
+          - name: jj_packsize
+            data_type: number
+          - name: jj_target
+            data_type: number
+          - name: variance
+            data_type: number
+          - name: comp_upc
+            data_type: varchar
+          - name: comp_sku_description
+            data_type: varchar
+          - name: comp_packsize
+            data_type: number
+          - name: valid_from
+            data_type: timestamp_ntz
+          - name: valid_to
+            data_type: timestamp_ntz
+          - name: enterdatetime
+            data_type: timestamp_ntz
+          - name: enterusername
+            data_type: varchar
+          - name: enterversionnumber
+            data_type: number
+          - name: lastchgdatetime
+            data_type: timestamp_ntz
+          - name: lastchgusername
+            data_type: varchar
+          - name: lastchgversionnumber
+            data_type: number
+          - name: validationstatus
+            data_type: varchar

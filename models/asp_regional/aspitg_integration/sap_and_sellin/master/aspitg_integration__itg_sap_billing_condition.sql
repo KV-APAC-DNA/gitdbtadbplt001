@@ -196,7 +196,7 @@ FROM (
     currx.currkey,
     CASE WHEN CAST(LENGTH(currx.currkey) AS INT) > 0 THEN currx.currdec ELSE 2 END AS currdec
   FROM source AS sbc
-  LEFT JOIN {{ source('snapaspitg_integration', 'itg_crncy_mult') }} AS currx
+  LEFT JOIN {{ source('aspitg_integration', 'itg_crncy_mult') }} AS currx
     ON sbc.loc_currcy = currx.currkey
   LEFT JOIN {{ ref('aspedw_integration__edw_material_uom') }} AS emu
     ON LTRIM(sbc.material, 0) = LTRIM(emu.material, 0) AND sbc.sales_unit = emu.unit

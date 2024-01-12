@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-    )
-}}
-
 --Import CTE
 with itg_billing_fact as (
     select * from {{ ref('aspitg_integration__itg_billing_fact') }}
@@ -40,7 +34,7 @@ payer::varchar(50) as payer,
     else rebate_bas * power(10, (
       2 - currdec
     ))
-  end as rebate_bas,
+  end::number(20,4) as rebate_bas,
   no_inv_it,
   case
     when mul.currdec is null
@@ -48,35 +42,35 @@ payer::varchar(50) as payer,
     else subtotal_1 * power(10, (
       2 - currdec
     ))
-  end as subtotal_1,
+  end::number(20,4) as subtotal_1,
   case
     when mul.currdec is null
     then subtotal_3
     else subtotal_3 * power(10, (
       2 - currdec
     ))
-  end as subtotal_3,
+  end::number(20,4) as subtotal_3,
   case
     when mul.currdec is null
     then subtotal_4
     else subtotal_4 * power(10, (
       2 - currdec
     ))
-  end as subtotal_4,
+  end::number(20,4) as subtotal_4,
   case
     when mul.currdec is null
     then subtotal_2
     else subtotal_2 * power(10, (
       2 - currdec
     ))
-  end as subtotal_2,
+  end::number(20,4) as subtotal_2,
   case
     when mul.currdec is null
     then netval_inv
     else netval_inv * power(10, (
       2 - currdec
     ))
-  end as netval_inv,
+  end::number(20,4) as netval_inv,
   exchg_stat,
   zblqtycse,
   exratexacc,
@@ -86,15 +80,15 @@ payer::varchar(50) as payer,
     else subtotal_6 * power(10, (
       2 - currdec
     ))
-  end as subtotal_6,
+  end::number(20,4) as subtotal_6,
   case
     when mul.currdec is null
     then gross_val
     else gross_val * power(10, (
       2 - currdec
     ))
-  end as gross_val,
-  unit_of_wt,
+  end::number(20,4) as gross_val,
+  unit_of_wt::varchar(20) as unit_of_wt,
   case
     when mul.currdec is null
     then subtotal_5
@@ -105,7 +99,7 @@ payer::varchar(50) as payer,
   numerator,
   case when mul.currdec is null then cost else cost * power(10, (
     2 - currdec
-  )) end as cost,
+  )) end::number(20,4) as cost,
   plant::VARCHAR(30) as plant,
   volume_dl::number(20,4) as volume_dl,
   loc_currcy::VARCHAR(30) as loc_currcy,
@@ -118,7 +112,7 @@ payer::varchar(50) as payer,
     else cshdsc_bas * power(10, (
       2 - currdec
     ))
-  end as cshdsc_bas,
+  end::number(20,4) as cshdsc_bas,
   net_wgt_dl,
   case
     when mul.currdec is null
@@ -126,7 +120,7 @@ payer::varchar(50) as payer,
     else tax_amt * power(10, (
       2 - currdec
     ))
-  end as tax_amt,
+  end::number(20,4) as tax_amt,
   rate_type::varchar(30) as rate_type,
 sls_org::varchar(20) as sls_org,
 exrate_acc::number(20,4) as exrate_acc,
@@ -192,7 +186,7 @@ oi_ebeln::varchar(100) as oi_ebeln,
 oi_ebelp::varchar(100) as oi_ebelp,
 zsd_pod::varchar(100) as zsd_pod,
 cdl_dttm::varchar(255) as cdl_dttm,
-current_timestamp()::timestamp_ntz(9) as crt_dttm,
+current_timestamp()::timestamp_ntz(9) as crtd_dttm,
 current_timestamp()::timestamp_ntz(9) as updt_dttm
 from itg_billing_fact as biil_ft, itg_crncy_mult as mul
 where

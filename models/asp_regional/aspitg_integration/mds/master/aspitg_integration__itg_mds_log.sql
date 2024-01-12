@@ -31,8 +31,8 @@ transformed as(
 final as (
     select 
         cntry_cd::varchar(10) as cntry_cd, 
-        result::varchar(255) as result, 
-        table_name::varchar(1000) as table_name, 
+        table_name::varchar(255) as table_name, 
+        result::varchar(1000) as result, 
         status::varchar(50) as status, 
         rec_count::number(18,0) as rec_count, 
         crtd_dt 

@@ -259,3 +259,19 @@ models:
     config: 
       alias: wks_edw_account_dim
       tags: ["daily","sap_bw_master"]
+  - name: aspwks_integration__wks_itg_copa_trans 
+    config: 
+      alias: wks_itg_copa_trans
+      tags: ["daily","j_sap_bw_txn_copa10_wrapper"]
+  - name: aspwks_integration__wks_edw_gch_geographyhierarchy
+    config: 
+      alias: wks_edw_gch_geographyhierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspwks_integration__wks_edw_gch_customerhierarchy
+    config: 
+      alias: wks_edw_gch_customerhierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]
+  - name: aspwks_integration__wks_edw_gch_producthierarchy
+    config: 
+      alias: wks_edw_gch_producthierarchy
+      tags: ["daily","Global_Commercial_Hierarchy_Wrapper"]

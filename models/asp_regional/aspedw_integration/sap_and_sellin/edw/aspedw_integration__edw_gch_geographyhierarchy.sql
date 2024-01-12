@@ -16,8 +16,8 @@ with source as (
 --Final CTE
 final as (
     select
-"REGION"::varchar(50) as region,
-"CLUSTER"::varchar(30) as cluster,
+"REGION"::varchar(50) as "region",
+"CLUSTER"::varchar(30) as "cluster",
 subcluster::varchar(30) as subcluster,
 market::varchar(30) as market,
 country_code_iso2::varchar(10) as country_code_iso2,

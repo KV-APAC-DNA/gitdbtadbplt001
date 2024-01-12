@@ -1,6 +1,7 @@
+--Overwriding default SQL header as we dont want to change timezone to Singapore
 {{
     config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+        sql_header= ""
     )
 }}
 
@@ -22,7 +23,7 @@ final as (
 select
 chrt_accts::varchar(4) as chrt_acct,
 account::varchar(10) as acct_num, 
-g.acct_nm::varchar(100) as acct_nm,
+g.acct_nm::varchar(5000) as acct_nm,
 objvers::varchar(1) as obj_ver,
 changed::varchar(1) as chg_flg,
 source.bal_flag::varchar(1) as bal_flag,

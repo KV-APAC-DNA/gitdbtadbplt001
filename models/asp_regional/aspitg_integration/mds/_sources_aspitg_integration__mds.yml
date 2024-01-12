@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_ap_greenlight_skus
+      - name: sdl_mds_ap_company_dim
+      - name: sdl_rg_mds_log
+      - name: sdl_mds_ap_dso
+      - name: sdl_mds_ap_otif   
+      - name: sdl_mds_ap_sales_ops_map
+      - name: sdl_mds_ap_ecom_oneview_config
+      - name: sdl_mds_rg_ecom_plan
+      - name: sdl_mds_rg_profit_center_franchise_mapping
+      - name: sdl_mds_rg_ps_market_coverage
+      - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
+      - name: sdl_mds_rg_tih_distributor_closure
+      - name: sdl_mds_rg_sfmc_gender
+      - name: sdl_mds_rg_sfmc_attributes
+      - name: sdl_mds_ap_price_tracker_category_mapping
+      - name: sdl_mds_rg_ecom_digital_salesweight
+      - name: sdl_mds_ap_okr_actuals
+      - name: sdl_mds_ap_okr_targets
+      - name: sdl_mds_ap_customer360_config
+      - name: sdl_mds_ap_profit_center_ppm
+      - name: sdl_mds_ap_pre_apsc_master 

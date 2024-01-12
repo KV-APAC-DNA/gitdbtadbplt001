@@ -1,4 +1,4 @@
-{% macro audit__compare_snapshot_dynamic() %}
+{% macro audit__compare_snapshot_dynamic_asing012() %}
 {% set input_list=[
     ['DEV_DNA_CORE','snapaspitg_integration','itg_copa_trans',ref('aspitg_integration__itg_copa_trans'),"md5(concat(request_number,'_',data_packet,'_',data_record))"]
     ]

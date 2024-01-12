@@ -1,4 +1,8 @@
-
+{{
+    config(
+        sql_header= ""
+    )
+}}
 with source as(
     select * from {{ ref('aspwks_integration__wks_edw_copa_plan_fact') }}
 ),

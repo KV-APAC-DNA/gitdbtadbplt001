@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-    )
-}}
-
 --Import CTE
 with source as (
     select * from {{ source('aspsdl_raw', 'sdl_mds_rg_ecom_plan') }}
@@ -28,7 +22,7 @@ final as (
         franchise::varchar(200) as franchise,
         need_state::varchar(40) as need_state,
         type::varchar(20) as type,
-        target_ori::NUMBER(31,2) as target_ori 
+        target_ori::number(31,2) as target_ori 
     from source
 )
 

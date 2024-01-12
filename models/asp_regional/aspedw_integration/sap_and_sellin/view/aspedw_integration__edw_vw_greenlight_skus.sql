@@ -26,11 +26,7 @@ final as(
 select
   ms.sls_org,
   ms.dstr_chnl,
-  LTRIM(ms.matl_num, CAST((
-    CAST((
-      0
-    ) AS VARCHAR)
-  ) AS TEXT)) AS matl_num,
+  ltrim(ms.matl_num, cast((cast((0) as varchar)) as text)) as matl_num,
   ms.base_unit,
   ms.matl_grp_1,
   ms.prod_hierarchy,
@@ -49,115 +45,115 @@ select
   ms.lcl_matl_grp_6,
   ms.mstr_cd,
   ms.med_desc,
-  COALESCE(m.base_uom_cd, CAST('N/A' AS VARCHAR)) AS sap_base_uom_cd,
-  COALESCE(m.prch_uom_cd, CAST('N/A' AS VARCHAR)) AS sap_prchse_uom_cd,
-  COALESCE(m.matl_desc, CAST('N/A' AS VARCHAR)) AS matl_desc,
-  COALESCE(m.matl_grp_cd, CAST('N/A' AS VARCHAR)) AS matl_grp_cd,
-  COALESCE(m.prod_base, CAST('N/A' AS VARCHAR)) AS sap_base_prod_cd,
-  COALESCE(m.base_prod_desc, CAST('N/A' AS VARCHAR)) AS base_prod_desc,
-  COALESCE(m.mega_brnd_cd, CAST('N/A' AS VARCHAR)) AS sap_mega_brnd_cd,
-  COALESCE(m.mega_brnd_desc, CAST('N/A' AS VARCHAR)) AS mega_brnd_desc,
-  COALESCE(m.brnd_cd, CAST('N/A' AS VARCHAR)) AS sap_brnd_cd,
-  COALESCE(m.brnd_desc, CAST('N/A' AS VARCHAR)) AS brnd_desc,
-  COALESCE(m.vrnt, CAST('N/A' AS VARCHAR)) AS sap_vrnt_cd,
-  COALESCE(m.varnt_desc, CAST('N/A' AS VARCHAR)) AS varnt_desc,
-  COALESCE(m.put_up, CAST('N/A' AS VARCHAR)) AS sap_put_up_cd,
-  COALESCE(m.put_up_desc, CAST('N/A' AS VARCHAR)) AS put_up_desc,
-  COALESCE(m.prod_hier_cd, CAST('N/A' AS VARCHAR)) AS prod_hier_cd,
-  COALESCE(m.prodh1, CAST('N/A' AS VARCHAR)) AS prodh1,
-  COALESCE(m.prodh1_txtmd, CAST('N/A' AS VARCHAR)) AS prodh1_txtmd,
-  COALESCE(m.prodh2, CAST('N/A' AS VARCHAR)) AS prodh2,
-  COALESCE(m.prodh2_txtmd, CAST('N/A' AS VARCHAR)) AS prodh2_txtmd,
-  COALESCE(m.prodh3, CAST('N/A' AS VARCHAR)) AS prodh3,
-  COALESCE(m.prodh3_txtmd, CAST('N/A' AS VARCHAR)) AS prodh3_txtmd,
-  COALESCE(m.prodh4, CAST('N/A' AS VARCHAR)) AS prodh4,
-  COALESCE(m.prodh4_txtmd, CAST('N/A' AS VARCHAR)) AS prodh4_txtmd,
-  COALESCE(m.prodh5, CAST('N/A' AS VARCHAR)) AS prodh5,
-  COALESCE(m.prodh5_txtmd, CAST('N/A' AS VARCHAR)) AS prodh5_txtmd,
-  COALESCE(m.prodh6, CAST('N/A' AS VARCHAR)) AS prodh6,
-  COALESCE(m.prodh6_txtmd, CAST('N/A' AS VARCHAR)) AS prodh6_txtmd,
-  COALESCE(m.matl_type_cd, CAST('N/A' AS VARCHAR)) AS matl_type_cd,
-  COALESCE(m.matl_type_desc, CAST('N/A' AS VARCHAR)) AS matl_type_desc,
-  COALESCE(m.pka_franchise_cd, CAST('N/A' AS VARCHAR)) AS pka_franchise_cd,
-  COALESCE(m.pka_franchise_desc, CAST('N/A' AS VARCHAR)) AS pka_franchise_desc,
-  COALESCE(m.pka_brand_cd, CAST('N/A' AS VARCHAR)) AS pka_brand_cd,
-  COALESCE(m.pka_brand_desc, CAST('N/A' AS VARCHAR)) AS pka_brand_desc,
-  COALESCE(m.pka_sub_brand_cd, CAST('N/A' AS VARCHAR)) AS pka_sub_brand_cd,
-  COALESCE(m.pka_sub_brand_desc, CAST('N/A' AS VARCHAR)) AS pka_sub_brand_desc,
-  COALESCE(m.pka_variant_cd, CAST('N/A' AS VARCHAR)) AS pka_variant_cd,
-  COALESCE(m.pka_variant_desc, CAST('N/A' AS VARCHAR)) AS pka_variant_desc,
-  COALESCE(m.pka_sub_variant_cd, CAST('N/A' AS VARCHAR)) AS pka_sub_variant_cd,
-  COALESCE(m.pka_sub_variant_desc, CAST('N/A' AS VARCHAR)) AS pka_sub_variant_desc,
-  COALESCE(m.pka_flavor_cd, CAST('N/A' AS VARCHAR)) AS pka_flavor_cd,
-  COALESCE(m.pka_flavor_desc, CAST('N/A' AS VARCHAR)) AS pka_flavor_desc,
-  COALESCE(m.pka_ingredient_cd, CAST('N/A' AS VARCHAR)) AS pka_ingredient_cd,
-  COALESCE(m.pka_ingredient_desc, CAST('N/A' AS VARCHAR)) AS pka_ingredient_desc,
-  COALESCE(m.pka_application_cd, CAST('N/A' AS VARCHAR)) AS pka_application_cd,
-  COALESCE(m.pka_application_desc, CAST('N/A' AS VARCHAR)) AS pka_application_desc,
-  COALESCE(m.pka_length_cd, CAST('N/A' AS VARCHAR)) AS pka_length_cd,
-  COALESCE(m.pka_length_desc, CAST('N/A' AS VARCHAR)) AS pka_length_desc,
-  COALESCE(m.pka_shape_cd, CAST('N/A' AS VARCHAR)) AS pka_shape_cd,
-  COALESCE(m.pka_shape_desc, CAST('N/A' AS VARCHAR)) AS pka_shape_desc,
-  COALESCE(m.pka_spf_cd, CAST('N/A' AS VARCHAR)) AS pka_spf_cd,
-  COALESCE(m.pka_spf_desc, CAST('N/A' AS VARCHAR)) AS pka_spf_desc,
-  COALESCE(m.pka_cover_cd, CAST('N/A' AS VARCHAR)) AS pka_cover_cd,
-  COALESCE(m.pka_cover_desc, CAST('N/A' AS VARCHAR)) AS pka_cover_desc,
-  COALESCE(m.pka_form_cd, CAST('N/A' AS VARCHAR)) AS pka_form_cd,
-  COALESCE(m.pka_form_desc, CAST('N/A' AS VARCHAR)) AS pka_form_desc,
-  COALESCE(m.pka_size_cd, CAST('N/A' AS VARCHAR)) AS pka_size_cd,
-  COALESCE(m.pka_size_desc, CAST('N/A' AS VARCHAR)) AS pka_size_desc,
-  COALESCE(m.pka_character_cd, CAST('N/A' AS VARCHAR)) AS pka_character_cd,
-  COALESCE(m.pka_character_desc, CAST('N/A' AS VARCHAR)) AS pka_character_desc,
-  COALESCE(m.pka_package_cd, CAST('N/A' AS VARCHAR)) AS pka_package_cd,
-  COALESCE(m.pka_package_desc, CAST('N/A' AS VARCHAR)) AS pka_package_desc,
-  COALESCE(m.pka_attribute_13_cd, CAST('N/A' AS VARCHAR)) AS pka_attribute_13_cd,
-  COALESCE(m.pka_attribute_13_desc, CAST('N/A' AS VARCHAR)) AS pka_attribute_13_desc,
-  COALESCE(m.pka_attribute_14_cd, CAST('N/A' AS VARCHAR)) AS pka_attribute_14_cd,
-  COALESCE(m.pka_attribute_14_desc, CAST('N/A' AS VARCHAR)) AS pka_attribute_14_desc,
-  COALESCE(m.pka_sku_identification_cd, CAST('N/A' AS VARCHAR)) AS pka_sku_identification_cd,
-  COALESCE(m.pka_sku_identification_desc, CAST('N/A' AS VARCHAR)) AS pka_sku_identification_desc,
-  COALESCE(m.pka_one_time_relabeling_cd, CAST('N/A' AS VARCHAR)) AS pka_one_time_relabeling_cd,
-  COALESCE(m.pka_one_time_relabeling_desc, CAST('N/A' AS VARCHAR)) AS pka_one_time_relabeling_desc,
-  COALESCE(m.pka_product_key, CAST('N/A' AS VARCHAR)) AS pka_product_key,
-  COALESCE(m.pka_product_key_description, CAST('N/A' AS VARCHAR)) AS pka_product_key_description,
-  COALESCE(m.pka_product_key_description_2, CAST('N/A' AS VARCHAR)) AS pka_product_key_description_2,
-  COALESCE(m.pka_root_code, CAST('N/A' AS VARCHAR)) AS pka_root_code,
-  COALESCE(m.pka_root_code_desc_1, CAST('N/A' AS VARCHAR)) AS pka_root_code_desc_1,
-  COALESCE(s.sls_org_nm, CAST('N/A' AS VARCHAR)) AS sls_org_nm,
-  COALESCE(s.sls_org_co_cd, CAST('N/A' AS VARCHAR)) AS sls_org_co_cd,
-  COALESCE(s.ctry_key, CAST('N/A' AS VARCHAR)) AS ctry_key,
-  COALESCE(s.crncy_key, CAST('N/A' AS VARCHAR)) AS crncy_key,
-  COALESCE(c.co_cd, CAST('N/A' AS VARCHAR)) AS co_cd,
-  COALESCE(c.ctry_nm, CAST('N/A' AS VARCHAR)) AS ctry_nm,
-  COALESCE(c.ctry_group, CAST('N/A' AS VARCHAR)) AS ctry_group,
-  COALESCE(c."CLUSTER", CAST('N/A' AS VARCHAR)) AS "CLUSTER",
-  COALESCE(g.market, CAST('N/A' AS VARCHAR)) AS market,
-  COALESCE(g.material_description, CAST('N/A' AS VARCHAR)) AS material_description,
-  COALESCE(g.product_key_description, CAST('N/A' AS VARCHAR)) AS product_key_description,
-  COALESCE(g.brand_name, CAST('N/A' AS VARCHAR)) AS brand_name,
-  COALESCE(g.package, CAST('N/A' AS VARCHAR)) AS package,
-  COALESCE(g.product_key, CAST('N/A' AS VARCHAR)) AS product_key,
-  COALESCE(g.greenlight_sku_flag, CAST('N/A' AS VARCHAR)) AS greenlight_sku_flag,
-  COALESCE(g.red_sku_flag, CAST('N/A' AS VARCHAR)) AS red_sku_flag,
-  COALESCE(g.root_code, CAST('N/A' AS VARCHAR)) AS root_code
-FROM (
+  coalesce(m.base_uom_cd, cast('N/A' as varchar)) as sap_base_uom_cd,
+  coalesce(m.prch_uom_cd, cast('N/A' as varchar)) as sap_prchse_uom_cd,
+  coalesce(m.matl_desc, cast('N/A' as varchar)) as matl_desc,
+  coalesce(m.matl_grp_cd, cast('N/A' as varchar)) as matl_grp_cd,
+  coalesce(m.prod_base, cast('N/A' as varchar)) as sap_base_prod_cd,
+  coalesce(m.base_prod_desc, cast('N/A' as varchar)) as base_prod_desc,
+  coalesce(m.mega_brnd_cd, cast('N/A' as varchar)) as sap_mega_brnd_cd,
+  coalesce(m.mega_brnd_desc, cast('N/A' as varchar)) as mega_brnd_desc,
+  coalesce(m.brnd_cd, cast('N/A' as varchar)) as sap_brnd_cd,
+  coalesce(m.brnd_desc, cast('N/A' as varchar)) as brnd_desc,
+  coalesce(m.vrnt, cast('N/A' as varchar)) as sap_vrnt_cd,
+  coalesce(m.varnt_desc, cast('N/A' as varchar)) as varnt_desc,
+  coalesce(m.put_up, cast('N/A' as varchar)) as sap_put_up_cd,
+  coalesce(m.put_up_desc, cast('N/A' as varchar)) as put_up_desc,
+  coalesce(m.prod_hier_cd, cast('N/A' as varchar)) as prod_hier_cd,
+  coalesce(m.prodh1, cast('N/A' as varchar)) as prodh1,
+  coalesce(m.prodh1_txtmd, cast('N/A' as varchar)) as prodh1_txtmd,
+  coalesce(m.prodh2, cast('N/A' as varchar)) as prodh2,
+  coalesce(m.prodh2_txtmd, cast('N/A' as varchar)) as prodh2_txtmd,
+  coalesce(m.prodh3, cast('N/A' as varchar)) as prodh3,
+  coalesce(m.prodh3_txtmd, cast('N/A' as varchar)) as prodh3_txtmd,
+  coalesce(m.prodh4, cast('N/A' as varchar)) as prodh4,
+  coalesce(m.prodh4_txtmd, cast('N/A' as varchar)) as prodh4_txtmd,
+  coalesce(m.prodh5, cast('N/A' as varchar)) as prodh5,
+  coalesce(m.prodh5_txtmd, cast('N/A' as varchar)) as prodh5_txtmd,
+  coalesce(m.prodh6, cast('N/A' as varchar)) as prodh6,
+  coalesce(m.prodh6_txtmd, cast('N/A' as varchar)) as prodh6_txtmd,
+  coalesce(m.matl_type_cd, cast('N/A' as varchar)) as matl_type_cd,
+  coalesce(m.matl_type_desc, cast('N/A' as varchar)) as matl_type_desc,
+  coalesce(m.pka_franchise_cd, cast('N/A' as varchar)) as pka_franchise_cd,
+  coalesce(m.pka_franchise_desc, cast('N/A' as varchar)) as pka_franchise_desc,
+  coalesce(m.pka_brand_cd, cast('N/A' as varchar)) as pka_brand_cd,
+  coalesce(m.pka_brand_desc, cast('N/A' as varchar)) as pka_brand_desc,
+  coalesce(m.pka_sub_brand_cd, cast('N/A' as varchar)) as pka_sub_brand_cd,
+  coalesce(m.pka_sub_brand_desc, cast('N/A' as varchar)) as pka_sub_brand_desc,
+  coalesce(m.pka_variant_cd, cast('N/A' as varchar)) as pka_variant_cd,
+  coalesce(m.pka_variant_desc, cast('N/A' as varchar)) as pka_variant_desc,
+  coalesce(m.pka_sub_variant_cd, cast('N/A' as varchar)) as pka_sub_variant_cd,
+  coalesce(m.pka_sub_variant_desc, cast('N/A' as varchar)) as pka_sub_variant_desc,
+  coalesce(m.pka_flavor_cd, cast('N/A' as varchar)) as pka_flavor_cd,
+  coalesce(m.pka_flavor_desc, cast('N/A' as varchar)) as pka_flavor_desc,
+  coalesce(m.pka_ingredient_cd, cast('N/A' as varchar)) as pka_ingredient_cd,
+  coalesce(m.pka_ingredient_desc, cast('N/A' as varchar)) as pka_ingredient_desc,
+  coalesce(m.pka_application_cd, cast('N/A' as varchar)) as pka_application_cd,
+  coalesce(m.pka_application_desc, cast('N/A' as varchar)) as pka_application_desc,
+  coalesce(m.pka_length_cd, cast('N/A' as varchar)) as pka_length_cd,
+  coalesce(m.pka_length_desc, cast('N/A' as varchar)) as pka_length_desc,
+  coalesce(m.pka_shape_cd, cast('N/A' as varchar)) as pka_shape_cd,
+  coalesce(m.pka_shape_desc, cast('N/A' as varchar)) as pka_shape_desc,
+  coalesce(m.pka_spf_cd, cast('N/A' as varchar)) as pka_spf_cd,
+  coalesce(m.pka_spf_desc, cast('N/A' as varchar)) as pka_spf_desc,
+  coalesce(m.pka_cover_cd, cast('N/A' as varchar)) as pka_cover_cd,
+  coalesce(m.pka_cover_desc, cast('N/A' as varchar)) as pka_cover_desc,
+  coalesce(m.pka_form_cd, cast('N/A' as varchar)) as pka_form_cd,
+  coalesce(m.pka_form_desc, cast('N/A' as varchar)) as pka_form_desc,
+  coalesce(m.pka_size_cd, cast('N/A' as varchar)) as pka_size_cd,
+  coalesce(m.pka_size_desc, cast('N/A' as varchar)) as pka_size_desc,
+  coalesce(m.pka_character_cd, cast('N/A' as varchar)) as pka_character_cd,
+  coalesce(m.pka_character_desc, cast('N/A' as varchar)) as pka_character_desc,
+  coalesce(m.pka_package_cd, cast('N/A' as varchar)) as pka_package_cd,
+  coalesce(m.pka_package_desc, cast('N/A' as varchar)) as pka_package_desc,
+  coalesce(m.pka_attribute_13_cd, cast('N/A' as varchar)) as pka_attribute_13_cd,
+  coalesce(m.pka_attribute_13_desc, cast('N/A' as varchar)) as pka_attribute_13_desc,
+  coalesce(m.pka_attribute_14_cd, cast('N/A' as varchar)) as pka_attribute_14_cd,
+  coalesce(m.pka_attribute_14_desc, cast('N/A' as varchar)) as pka_attribute_14_desc,
+  coalesce(m.pka_sku_identification_cd, cast('N/A' as varchar)) as pka_sku_identification_cd,
+  coalesce(m.pka_sku_identification_desc, cast('N/A' as varchar)) as pka_sku_identification_desc,
+  coalesce(m.pka_one_time_relabeling_cd, cast('N/A' as varchar)) as pka_one_time_relabeling_cd,
+  coalesce(m.pka_one_time_relabeling_desc, cast('N/A' as varchar)) as pka_one_time_relabeling_desc,
+  coalesce(m.pka_product_key, cast('N/A' as varchar)) as pka_product_key,
+  coalesce(m.pka_product_key_description, cast('N/A' as varchar)) as pka_product_key_description,
+  coalesce(m.pka_product_key_description_2, cast('N/A' as varchar)) as pka_product_key_description_2,
+  coalesce(m.pka_root_code, cast('N/A' as varchar)) as pka_root_code,
+  coalesce(m.pka_root_code_desc_1, cast('N/A' as varchar)) as pka_root_code_desc_1,
+  coalesce(s.sls_org_nm, cast('N/A' as varchar)) as sls_org_nm,
+  coalesce(s.sls_org_co_cd, cast('N/A' as varchar)) as sls_org_co_cd,
+  coalesce(s.ctry_key, cast('N/A' as varchar)) as ctry_key,
+  coalesce(s.crncy_key, cast('N/A' as varchar)) as crncy_key,
+  coalesce(c.co_cd, cast('N/A' as varchar)) as co_cd,
+  coalesce(c.ctry_nm, cast('N/A' as varchar)) as ctry_nm,
+  coalesce(c.ctry_group, cast('N/A' as varchar)) as ctry_group,
+  coalesce(c."CLUSTER", cast('N/A' as varchar)) as "cluster",
+  coalesce(g.market, cast('N/A' as varchar)) as market,
+  coalesce(g.material_description, cast('N/A' as varchar)) as material_description,
+  coalesce(g.product_key_description, cast('N/A' as varchar)) as product_key_description,
+  coalesce(g.brand_name, cast('N/A' as varchar)) as brand_name,
+  coalesce(g.package, cast('N/A' as varchar)) as package,
+  coalesce(g.product_key, cast('N/A' as varchar)) as product_key,
+  coalesce(g.greenlight_sku_flag, cast('N/A' as varchar)) as greenlight_sku_flag,
+  coalesce(g.red_sku_flag, cast('N/A' as varchar)) as red_sku_flag,
+  coalesce(g.root_code, cast('N/A' as varchar)) as root_code
+from (
   (
     (
       (
         (
-          SELECT DISTINCT
+          select distinct
             edw_material_sales_dim.sls_org,
             edw_material_sales_dim.dstr_chnl,
-            LTRIM(
-              CAST((
+            ltrim(
+              cast((
                 edw_material_sales_dim.matl_num
-              ) AS TEXT),
-              CAST((
-                CAST((
+              ) as text),
+              cast((
+                cast((
                   0
-                ) AS VARCHAR)
-              ) AS TEXT)
-            ) AS matl_num,
+                ) as varchar)
+              ) as text)
+            ) as matl_num,
             edw_material_sales_dim.base_unit,
             edw_material_sales_dim.matl_grp_1,
             edw_material_sales_dim.prod_hierarchy,
@@ -176,171 +172,171 @@ FROM (
             edw_material_sales_dim.lcl_matl_grp_6,
             edw_material_sales_dim.mstr_cd,
             edw_material_sales_dim.med_desc
-          FROM edw_material_sales_dim
-          WHERE
+          from edw_material_sales_dim
+          where
             (
-              TRIM(CAST((
+              trim(cast((
                 edw_material_sales_dim.matl_num
-              ) AS TEXT)) <> CAST((
-                CAST('' AS VARCHAR)
-              ) AS TEXT)
+              ) as text)) <> cast((
+                cast('' as varchar)
+              ) as text)
             )
-        ) AS ms
-        LEFT JOIN edw_material_dim AS m
-          ON (
+        ) as ms
+        left join edw_material_dim as m
+          on (
             (
-              LTRIM(CAST((
+              ltrim(cast((
                 m.matl_num
-              ) AS TEXT), CAST((
-                CAST((
+              ) as text), cast((
+                cast((
                   0
-                ) AS VARCHAR)
-              ) AS TEXT)) = LTRIM(ms.matl_num, CAST((
-                CAST((
+                ) as varchar)
+              ) as text)) = ltrim(ms.matl_num, cast((
+                cast((
                   0
-                ) AS VARCHAR)
-              ) AS TEXT))
+                ) as varchar)
+              ) as text))
             )
           )
       )
-      LEFT JOIN edw_sales_org_dim AS s
-        ON (
+      left join edw_sales_org_dim as s
+        on (
           (
-            CAST((
+            cast((
               s.sls_org
-            ) AS TEXT) = CAST((
+            ) as text) = cast((
               ms.sls_org
-            ) AS TEXT)
+            ) as text)
           )
         )
     )
-    LEFT JOIN edw_company_dim AS c
-      ON (
+    left join edw_company_dim as c
+      on (
         (
-          CAST((
+          cast((
             c.co_cd
-          ) AS TEXT) = CAST((
+          ) as text) = cast((
             s.sls_org_co_cd
-          ) AS TEXT)
+          ) as text)
         )
       )
   )
-  LEFT JOIN itg_mds_ap_greenlight_skus AS g
-    ON (
+  left join itg_mds_ap_greenlight_skus as g
+    on (
       (
         (
-          CASE
-            WHEN (
+          case
+            when (
               (
-                UPPER(CAST((
+                upper(cast((
                   g.market
-                ) AS TEXT)) = CAST((
-                  CAST('CHINA OTC' AS VARCHAR)
-                ) AS TEXT)
+                ) as text)) = cast((
+                  cast('CHINA OTC'  as varchar)
+                ) as text)
               )
-              OR (
+              or (
                 (
-                  UPPER(CAST((
+                  upper(cast((
                     g.market
-                  ) AS TEXT)) IS NULL
-                ) AND (
-                  'CHINA OTC' IS NULL
+                  ) as text)) is null
+                ) and (
+                  'CHINA OTC' is null
                 )
               )
             )
-            THEN CAST((
-              CAST('OTC' AS VARCHAR)
-            ) AS TEXT)
-            WHEN (
+            then cast((
+              cast('OTC' as varchar)
+            ) as text)
+            when (
               (
-                UPPER(CAST((
+                upper(cast((
                   g.market
-                ) AS TEXT)) = CAST((
-                  CAST('CHINA SKINCARE' AS VARCHAR)
-                ) AS TEXT)
+                ) as text)) = cast((
+                  cast('CHINA SIKNCARE' as varchar)
+                ) as text)
               )
-              OR (
+              or (
                 (
-                  UPPER(CAST((
+                  upper(cast((
                     g.market
-                  ) AS TEXT)) IS NULL
+                  ) as text)) is null
                 )
-                AND (
-                  'CHINA SKINCARE' IS NULL
+                and (
+                  'CHINA SIKNCARE' is null
                 )
               )
             )
-            THEN CAST((
-              CAST('CHINA' AS VARCHAR)
-            ) AS TEXT)
-            ELSE UPPER(CAST((
+            then cast((
+              cast('CHINA' as varchar)
+            ) as text)
+            else upper(cast((
               g.market
-            ) AS TEXT))
-          END = CASE
-            WHEN (
+            ) as text))
+          end = case
+            when (
               (
-                UPPER(CAST((
+                upper(cast((
                   c.ctry_group
-                ) AS TEXT)) = CAST((
-                  CAST('AUSTRALIA' AS VARCHAR)
-                ) AS TEXT)
+                ) as text)) = cast((
+                  cast('AUSTRALIA' as varchar)
+                ) as text)
               )
-              OR (
+              or (
                 (
-                  UPPER(CAST((
+                  upper(cast((
                     c.ctry_group
-                  ) AS TEXT)) IS NULL
+                  ) as text)) is null
                 )
-                AND (
-                  'AUSTRALIA' IS NULL
+                and (
+                  'AUSTRALIA' is null
                 )
               )
             )
-            THEN CAST((
-              CAST('PACIFIC' AS VARCHAR)
-            ) AS TEXT)
-            WHEN (
+            then cast((
+              cast('PACIFIC' as varchar)
+            ) as text)
+            when (
               (
-                UPPER(CAST((
+                upper(cast((
                   c.ctry_group
-                ) AS TEXT)) = CAST((
-                  CAST('NEW ZEALAND' AS VARCHAR)
-                ) AS TEXT)
+                ) as text)) = cast((
+                  cast('NEW ZEALAND' as varchar)
+                ) as text)
               )
-              OR (
+              or (
                 (
-                  UPPER(CAST((
+                  upper(cast((
                     c.ctry_group
-                  ) AS TEXT)) IS NULL
+                  ) as text)) is null
                 )
-                AND (
-                  'NEW ZEALAND' IS NULL
+                and (
+                  'NEW ZEALAND' is null
                 )
               )
             )
-            THEN CAST((
-              CAST('PACIFIC' AS VARCHAR)
-            ) AS TEXT)
-            ELSE UPPER(CAST((
+            then cast((
+              cast('PACIFIC' as varchar)
+            ) as text)
+            else upper(cast((
               c.ctry_group
-            ) AS TEXT))
-          END
+            ) as text))
+          end
         )
-        AND (
-          LTRIM(
-            CAST((
+        and (
+          ltrim(
+            cast((
               g.material_number
-            ) AS TEXT),
-            CAST((
-              CAST((
+            ) as text),
+            cast((
+              cast((
                 0
-              ) AS VARCHAR)
-            ) AS TEXT)
-          ) = LTRIM(ms.matl_num, CAST((
-            CAST((
+              ) as varchar)
+            ) as text)
+          ) = ltrim(ms.matl_num, cast((
+            cast((
               0
-            ) AS VARCHAR)
-          ) AS TEXT))
+            ) as varchar)
+          ) as text))
         )
       )
     )

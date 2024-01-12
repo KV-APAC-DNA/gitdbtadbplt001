@@ -35,7 +35,7 @@ ctgy_suggestedclassificationscore::number(15,10) as ctgy_suggestedclassification
 brnd_finalclassificationpath::varchar(256) as brnd_finalclassificationpath,
 ctgy_finalclassificationpath::varchar(256) as ctgy_finalclassificationpath,
 materialnumber::varchar(128) as materialnumber,
-region::varchar(50) as region,
+region::varchar(50) as "region",
 gcph_franchise::varchar(30) as gcph_franchise,
 gcph_brand::varchar(80) as gcph_brand,
 gcph_subbrand::varchar(100) as gcph_subbrand,

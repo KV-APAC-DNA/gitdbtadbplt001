@@ -1,4 +1,4 @@
-{% macro test_duplicate(model,group_by_columns=None,select_columns=None,need_counts='yes')%}
+{% test test_duplicate(model,group_by_columns=None,select_columns=None,need_counts='yes')%}
 
 {% if group_by_columns!=None %}
     {% set c_pk = "md5(concat(" + group_by_columns|join(",'_',") + "))" %} 
@@ -39,4 +39,4 @@
     
 {% endif %}
     
-{% endmacro %}
+{% endtest %}
