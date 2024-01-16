@@ -38,4 +38,30 @@ models:
       schema: CORE_ACCESS
     integration:
       materialized: table
-      schema: CORE_INTEGRATION
+      schema: CORE_INTEGRATION 
+      arsadpprd001_raw:
+        materialized: view
+    asp_regional:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      aspedw_access:
+        +materialized: view
+        +schema: ASPEDW_ACCESS
+      aspitg_integration:
+        +materialized: table
+        +schema: ASPITG_INTEGRATION
+        +transient: false
+        sap_and_sellin:
+          staging:
+            +materialized: view
+      aspedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: ASPEDW_INTEGRATION
+        sap_and_sellin:
+          view:
+            +materialized: view
+      aspwks_integration:
+        +materialized: table
+        +schema: ASPWKS_INTEGRATION
