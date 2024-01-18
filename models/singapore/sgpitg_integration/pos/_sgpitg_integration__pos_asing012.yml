@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_watsons
+    config:
+      alias: itg_sg_scan_data_watsons
+      tags: ["",""]
+
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_dfi
+    config:
+      alias: itg_sg_scan_data_dfi
+      tags: ["",""]
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_guardian
+    config:
+      alias: itg_sg_scan_data_guardian
+      tags: ["",""]
+
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_marketplace
+    config:
+      alias: itg_sg_scan_data_marketplace
+      tags: ["",""]
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_scommerce
+    config:
+      alias: itg_sg_scan_data_scommerce 
+      tags: ["",""]
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_redmart
+    config:
+      alias: itg_sg_scan_data_redmart
+      tags: ["",""]
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_ntuc
+    config:
+      alias: itg_sg_scan_data_ntuc
+      tags: ["",""]
+
+models:
+  - name: sgpitg_integration__itg_sg_scan_data_amazon
+    config:
+      alias: itg_sg_scan_data_amazon
+      tags: ["",""]
+
+
