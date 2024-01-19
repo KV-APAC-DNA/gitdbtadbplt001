@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  # - name: aspitg_integration__itg_mds_log
+  #   config:
+  #     alias: itg_mds_log
+  #     tags: ["","travel_retail"]
+  - name: aspitg_integration__itg_rg_travel_retail_channel_mapping
+    config:
+      alias: itg_brnditg_rg_travel_retail_channel_mapping_text
+      tags: ["","travel_retail"]
+  - name: aspitg_integration__itg_rg_travel_retail_nts_target
+    config:
+      alias: itg_rg_travel_retail_nts_target
+      tags: ["","travel_retail"]
+  - name: aspitg_integration__itg_rg_travel_retail_product_mapping
+    config:
+      alias: itg_rg_travel_retail_product_mapping
+      tags: ["","travel_retail"]
+  - name: aspitg_integration__itg_rg_travel_retail_sellout
+    config:
+      alias: itg_rg_travel_retail_sellout
+  

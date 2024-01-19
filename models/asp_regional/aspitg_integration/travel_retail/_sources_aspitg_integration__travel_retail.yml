@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_apac_dcl_customers
+      - name: sdl_mds_apac_dcl_products
+      - name: sdl_mds_apac_dcl_targets
+      - name: sdl_rg_travel_retail_cdfg
+      - name: sdl_rg_travel_retail_cnsc
+      - name: sdl_rg_travel_retail_dfs
+      - name: sdl_rg_travel_retail_dfs_hainan
+      - name: sdl_rg_travel_retail_dufry_hainan
+      - name: sdl_rg_travel_retail_lstr
+      - name: sdl_rg_travel_retail_sales_stock
+      - name: sdl_rg_travel_retail_shilla
+
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : wks_apac_dcl_targets_header
