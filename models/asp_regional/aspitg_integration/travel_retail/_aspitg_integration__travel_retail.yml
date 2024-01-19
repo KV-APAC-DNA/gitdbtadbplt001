@@ -20,4 +20,5 @@ models:
   - name: aspitg_integration__itg_rg_travel_retail_sellout
     config:
       alias: itg_rg_travel_retail_sellout
+      tags: ["","travel_retail"]
   
