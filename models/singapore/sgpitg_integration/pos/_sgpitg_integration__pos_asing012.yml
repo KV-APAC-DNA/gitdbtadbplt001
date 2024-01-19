@@ -4,44 +4,44 @@ models:
   - name: sgpitg_integration__itg_sg_scan_data_watsons
     config:
       alias: itg_sg_scan_data_watsons
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 
 models:
   - name: sgpitg_integration__itg_sg_scan_data_dfi
     config:
       alias: itg_sg_scan_data_dfi
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 models:
   - name: sgpitg_integration__itg_sg_scan_data_guardian
     config:
       alias: itg_sg_scan_data_guardian
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 
 models:
   - name: sgpitg_integration__itg_sg_scan_data_marketplace
     config:
       alias: itg_sg_scan_data_marketplace
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 models:
   - name: sgpitg_integration__itg_sg_scan_data_scommerce
     config:
       alias: itg_sg_scan_data_scommerce 
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 models:
   - name: sgpitg_integration__itg_sg_scan_data_redmart
     config:
       alias: itg_sg_scan_data_redmart
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 models:
   - name: sgpitg_integration__itg_sg_scan_data_ntuc
     config:
       alias: itg_sg_scan_data_ntuc
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 
 models:
   - name: sgpitg_integration__itg_sg_scan_data_amazon
     config:
       alias: itg_sg_scan_data_amazon
-      tags: ["",""]
+      tags: ["sg_transaction_scan",""]
 
 

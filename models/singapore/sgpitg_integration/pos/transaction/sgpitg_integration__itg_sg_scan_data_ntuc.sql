@@ -8,7 +8,7 @@
 
 --import CTE
 with source as (
-    select * from {{ source('snaposesdl_raw','sdl_sg_scan_data_ntuc') }}
+    select * from {{ source('sgpsdl_raw','sdl_sg_scan_data_ntuc') }}
 ),
 
 edw_calendar_dim as (

@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: snaposesdl_raw
+  - name: sgpsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: sgpsdl_raw
     quoting:
       database: false
       schema: false
@@ -17,4 +17,14 @@ sources:
       - name: sdl_sg_scan_data_redmart
       - name: sdl_sg_scan_data_ntuc 
       - name: sdl_sg_scan_data_amazon
+  
+  - name: oseedw_access
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: oseedw_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : edw_vw_os_time_dim
       
