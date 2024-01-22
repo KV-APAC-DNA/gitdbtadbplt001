@@ -3,8 +3,6 @@ with source as (
     select * from {{ source('aspsdl_raw', 'sdl_mds_apac_dcl_products') }}
 ),
 
---Logical CTE
-
 --Final CTE
 final as (
     select
