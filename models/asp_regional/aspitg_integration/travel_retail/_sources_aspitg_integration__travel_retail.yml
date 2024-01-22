@@ -9,9 +9,11 @@ sources:
       schema: false
       identifier: false
     tables:
+      # can be in mds sources file
       - name: sdl_mds_apac_dcl_customers
       - name: sdl_mds_apac_dcl_products
       - name: sdl_mds_apac_dcl_targets
+      # sdl
       - name: sdl_rg_travel_retail_cdfg
       - name: sdl_rg_travel_retail_cnsc
       - name: sdl_rg_travel_retail_dfs
