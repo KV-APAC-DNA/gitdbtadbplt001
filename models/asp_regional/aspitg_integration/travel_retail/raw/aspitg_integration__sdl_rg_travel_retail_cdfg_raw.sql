@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dufry_hainan') }}
+    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cdfg') }}
 ),
 final as(
     select * from source

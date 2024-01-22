@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='incremental',
+        materialized="incremental",
         incremental_strategy= "append"
     )
 }}
