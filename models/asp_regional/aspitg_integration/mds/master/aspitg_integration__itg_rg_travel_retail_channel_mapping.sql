@@ -6,7 +6,7 @@ with source as (
 --Final CTE
 final as (
     select 
-        trim (sales_channel_name) :: varchar(100) as ales_channel,
+        trim (sales_channel_name) :: varchar(100) as sales_channel,
         trim(sales_location_name) :: varchar(100) as sales_location,
         trim(cust_num) :: varchar(30) as cust_num,
         trim(name) :: varchar(255) as cust_nm,
