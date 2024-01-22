@@ -7,7 +7,7 @@ models:
   #     tags: ["","travel_retail"]
   - name: aspitg_integration__itg_rg_travel_retail_channel_mapping
     config:
-      alias: itg_brnditg_rg_travel_retail_channel_mapping_text
+      alias: itg_rg_travel_retail_channel_mapping
       tags: ["","travel_retail"]
   - name: aspitg_integration__itg_rg_travel_retail_nts_target
     config:
