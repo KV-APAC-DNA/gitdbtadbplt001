@@ -32,3 +32,5 @@ sources:
       identifier: false
     tables:
     - name : wks_apac_dcl_targets_header
+    - name : wks_rg_travel_retail_inventory_excl_sku
+    - name : wks_rg_travel_retail_inventory
