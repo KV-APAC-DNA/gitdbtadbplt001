@@ -9,12 +9,18 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_mds_apac_dcl_customers
+        tags: ["mds","travel_retail_mds"]
+      - name: sdl_mds_apac_dcl_products
+        tags: ["mds","travel_retail_mds"]
+      - name: sdl_mds_apac_dcl_targets
+        tags: ["mds","travel_retail_mds"]
       - name: sdl_mds_ap_greenlight_skus
         tags: ["mds","rg_mds_dna"]
       - name: sdl_mds_ap_company_dim
         tags: ["mds","rg_mds_dna"]
       - name: sdl_rg_mds_log
-        tags: ["mds","rg_mds_dna"]
+        tags: ["mds","rg_mds_dna","travel_retail_mds"]
       - name: sdl_mds_ap_dso
         tags: ["mds","rg_mds_dna"]
       - name: sdl_mds_ap_otif
