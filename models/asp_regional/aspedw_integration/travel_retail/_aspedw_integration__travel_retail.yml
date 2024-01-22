@@ -4,8 +4,8 @@ models:
   - name: aspedw_integration__edw_rg_travel_retail
     config:
       alias: edw_rg_travel_retail
-      tags: ["","travel_retail"]  
+      tags: ["daily","travel_retail"]  
   - name: aspedw_integration__edw_rpt_rg_travel_retail
     config:
       alias: edw_rpt_rg_travel_retail
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail"]
