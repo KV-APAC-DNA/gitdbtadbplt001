@@ -1,55 +1,39 @@
 version: 2
 
 models:
-  # - name: aspitg_integration__itg_mds_log
-  #   config:
-  #     alias: itg_mds_log
-  #     tags: ["","travel_retail"]
-  - name: aspitg_integration__itg_rg_travel_retail_channel_mapping
-    config:
-      alias: itg_rg_travel_retail_channel_mapping
-      tags: ["","travel_retail"]
-  - name: aspitg_integration__itg_rg_travel_retail_nts_target
-    config:
-      alias: itg_rg_travel_retail_nts_target
-      tags: ["","travel_retail"]
-  - name: aspitg_integration__itg_rg_travel_retail_product_mapping
-    config:
-      alias: itg_rg_travel_retail_product_mapping
-      tags: ["","travel_retail"]
   - name: aspitg_integration__itg_rg_travel_retail_sellout
     config:
       alias: itg_rg_travel_retail_sellout
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail"]
   - name: aspitg_integration__sdl_raw_rg_travel_retail_lstr
     config:
       alias: sdl_raw_rg_travel_retail_lstr
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_lstr"]
   - name: aspitg_integration__sdl_raw_rg_travel_retail_dufry_hainan
     config:
       alias: sdl_raw_rg_travel_retail_dufry_hainan
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_dufry_hainan"]
   - name: aspitg_integration__sdl_rg_travel_retail_shilla_raw
     config:
       alias: sdl_rg_travel_retail_shilla_raw
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_shilla"]
   - name: aspitg_integration__sdl_rg_travel_retail_dfs_raw
     config:
       alias: sdl_rg_travel_retail_dfs_raw
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_dfs"]
   - name: aspitg_integration__sdl_raw_rg_travel_retail_dfs_hainan
     config:
       alias: sdl_raw_rg_travel_retail_dfs_hainan
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_dfs_hainan"]
   - name: aspitg_integration__sdl_raw_rg_travel_retail_cnsc
     config:
       alias: sdl_raw_rg_travel_retail_cnsc
-      tags: ["","travel_retail"]
+      tags: ["daily","travel_retail_cnsc"]
   - name: aspitg_integration__sdl_rg_travel_retail_cdfg_raw
     config:
       alias: sdl_rg_travel_retail_cdfg_raw
-      tags: ["","travel_retail"]  
+      tags: ["daily","travel_retail_cdfg"]  
   - name: aspitg_integration__sdl_rg_travel_retail_sales_stock_raw
     config:
       alias: sdl_rg_travel_retail_sales_stock_raw
-      tags: ["","travel_retail"]  
+      tags: ["daily","travel_retail_sales_stock"]  
