@@ -2,12 +2,12 @@
 with dt as (
     select * from {{ source('aspsdl_raw', 'sdl_mds_apac_dcl_targets') }}
 ),
-with th as (
+th as (
     select * from {{ source('aspwks_integration', 'wks_apac_dcl_targets_header') }}
 ),
 
 --Logical CTE
-with jan as (
+jan as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -36,7 +36,7 @@ with jan as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with feb as (
+feb as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -65,7 +65,7 @@ with feb as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with mar as (
+mar as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -94,7 +94,7 @@ with mar as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with apr as (
+apr as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -123,7 +123,7 @@ with apr as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with may as (
+may as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -152,7 +152,7 @@ with may as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with jun as (
+jun as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -181,7 +181,7 @@ with jun as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with jul as (
+jul as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -210,7 +210,7 @@ with jul as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with aug as (
+aug as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -239,7 +239,7 @@ with aug as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with sep as (
+sep as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -268,7 +268,7 @@ with sep as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with oct as (
+oct as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -297,7 +297,7 @@ with oct as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with nov as (
+nov as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -326,7 +326,7 @@ with nov as (
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
 ),
-with dec as (
+dec as (
     select
         upper(trim(target_type_code))::varchar(10) as target_type,
         upper(trim(target_type_name))::varchar(50) as target_type_name,
@@ -393,7 +393,7 @@ final as (
         ctry_cd,
         country_name,
         crncy_cd,
-        sales_channel,
+        sales_channel_name as sales_channel,
         nts_tgt,
         crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
