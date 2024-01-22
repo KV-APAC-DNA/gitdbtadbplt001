@@ -49,3 +49,7 @@ models:
     config:
       alias: sdl_rg_travel_retail_cdfg_raw
       tags: ["","travel_retail"]  
+  - name: aspitg_integration__sdl_rg_travel_retail_sales_stock_raw
+    config:
+      alias: sdl_rg_travel_retail_sales_stock_raw
+      tags: ["","travel_retail"]  
