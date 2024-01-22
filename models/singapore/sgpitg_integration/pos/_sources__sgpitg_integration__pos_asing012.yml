@@ -17,6 +17,7 @@ sources:
       - name: sdl_sg_scan_data_redmart
       - name: sdl_sg_scan_data_ntuc 
       - name: sdl_sg_scan_data_amazon
+      
   
   - name: oseedw_access
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_mds_sg_store_master
+    config:
+      alias: itg_mds_sg_store_master
+      tags: ["",""]
+
+models:
+  - name: sgpitg_integration__itg_mds_sg_product_mapping
+    config:
+      alias: itg_mds_sg_product_mapping
+      tags: ["",""]
