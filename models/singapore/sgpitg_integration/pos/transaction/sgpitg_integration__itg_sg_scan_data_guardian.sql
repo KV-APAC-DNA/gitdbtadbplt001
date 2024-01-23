@@ -43,7 +43,7 @@ final as (
         cast(salesamount as decimal(14, 4)) as sales_amount,
         inventoryonhand::NUMBER(10,0) as inventory_on_hand,
         case when sg_grdn.barcode is null then 'NA' else sg_grdn.barcode end::varchar(255) as barcode,
-        cdl_dttm::varchar(255) as ascdl_dttm ,
+        cdl_dttm::varchar(255) as cdl_dttm ,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         file_name::varchar(255) as file_name,

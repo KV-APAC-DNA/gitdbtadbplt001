@@ -21,8 +21,8 @@ final as (
         trx_date::date as trx_date,
         left(trx_date, 4)::varchar(20) as year,
         cal.cal_mo_1::varchar(23) as mnth_id,
-        left(trx_date, 4)
-        || lpad(substring(attribute2, 7), 2, 0)::varchar(20) as week,
+        cast(left(trx_date, 4)
+        || lpad(substring(attribute2, 7), 2, 0) as varchar(20)) as week,
         vendor_code::varchar(100) as vendor_code,
         vendor_name::varchar(255) as vendor_name,
         dept_code::varchar(50) as dept_code,

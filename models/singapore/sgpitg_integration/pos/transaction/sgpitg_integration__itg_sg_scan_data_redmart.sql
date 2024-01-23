@@ -43,7 +43,7 @@ final as (
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         file_name::varchar(255) as file_name,
-        run_id::varchar(255) as run_id
+        run_id::number(14,0) as run_id
     from source as sg_rdm
     left join edw_calendar_dim as cal
         on sg_rdm.trx_date = cal.cal_day
