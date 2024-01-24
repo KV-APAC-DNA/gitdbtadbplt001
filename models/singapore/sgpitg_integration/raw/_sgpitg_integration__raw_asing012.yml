@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_watsons
+    config:
+      alias: sdl_raw_sg_scan_data_watsons
+      tags: ["sg_transaction_scan",""]
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_dfi
+    config:
+      alias: sdl_raw_sg_scan_data_dfi
+      tags: ["sg_transaction_scan",""]
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_guardian
+    config:
+      alias: sdl_raw_sg_scan_data_guardian
+      tags: ["sg_transaction_scan",""]
+
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_marketplace
+    config:
+      alias: sdl_raw_sg_scan_data_marketplace
+      tags: ["sg_transaction_scan",""]
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_scommerce
+    config:
+      alias: sdl_raw_sg_scan_data_scommerce 
+      tags: ["sg_transaction_scan",""]
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_redmart
+    config:
+      alias: sdl_raw_sg_scan_data_redmart
+      tags: ["sg_transaction_scan",""]
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_ntuc
+    config:
+      alias: sdl_raw_sg_scan_data_ntuc
+      tags: ["sg_transaction_scan",""]
+
+
+  - name: sgpitg_integration__sdl_raw_sg_scan_data_amazon
+    config:
+      alias: sdl_raw_sg_scan_data_amazon
+      tags: ["sg_transaction_scan",""]
+      
+
+  
