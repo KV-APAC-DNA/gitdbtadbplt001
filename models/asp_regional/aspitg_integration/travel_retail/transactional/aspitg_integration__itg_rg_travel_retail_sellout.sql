@@ -22,6 +22,15 @@ sales_stock as (
 shilla as (
     select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_shilla') }}
 ),
+cdfg as (
+    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cdfg') }}
+),
+cnsc as (
+    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cnsc') }}
+),
+dfs as (
+    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dfs') }}
+),
 
 --Logical CTE
 trans_dfs_hainan as (
@@ -188,8 +197,8 @@ trans_shilla as (
     ean,
     null as rsp,
     upper(location_name) as door_name,
-    coalesce(try_cast(sls_qty as int), 0) as sls_qty,
-    coalesce(try_cast(sls_amt as decimal(21, 5)), 0) as sls_amt,
+    coalesce(cast(sls_qty as int), 0) as sls_qty,
+    coalesce(cast(sls_amt as decimal(21, 5)), 0) as sls_amt,
     null as stock_qty,
     null as stock_amt,
     current_timestamp() as crt_dttm,
@@ -203,6 +212,112 @@ trans_shilla as (
     md5(concat(coalesce(year_month::varchar,''),'_',coalesce(upper(retailer_name),''),'_',coalesce(upper(ctry_cd),''))) as hash_key
     from shilla
 ),
+trans_cdfg as (
+    select
+    case
+        when upper(location_name) in ('HTB', 'BEIJING AIRPORT', 'HAIKOU BUGOU', 'MEMBERS')
+        then 'CN'
+        when upper(location_name) = 'CAMBODIA DOWNTOWN'
+        then 'CM'
+        else null
+    end as ctry_cd,
+    case
+        when upper(location_name) in ('HTB', 'BEIJING AIRPORT', 'HAIKOU BUGOU', 'MEMBERS')
+        then 'RMB'
+        when upper(location_name) = 'CAMBODIA DOWNTOWN'
+        then 'KHR'
+        else null
+    end as crncy_cd,
+    upper(retailer_name) as retailer_name,
+    cast(substring(year_month, 1, 4) as int) as year,
+    cast(substring(year_month, 5, 6) as int) as month,
+    year_month,
+    null as brand,
+    null as sku,
+    description as product_description,
+    dcl_code,
+    barcode as ean,
+    null as rsp,
+    upper(location_name) as door_name,
+    coalesce(cast(sls_qty as int), 0) as sls_qty,
+    null as sls_amt,
+    coalesce(cast(stock_qty as int), 0) as stock_qty,
+    null as stock_amt,
+    current_timestamp() as crt_dttm,
+    current_timestamp() as updt_dttm,
+    null as store_sls_qty,
+    null as store_sls_amt,
+    null as ecommerce_sls_qty,
+    null as ecommerce_sls_amt,
+    null as membership_sls_qty,
+    null as membership_sls_amt,
+    md5(concat(coalesce(year_month::varchar,''),'_',coalesce(upper(retailer_name),''),'_',coalesce(upper(ctry_cd),''))) as hash_key
+    from cdfg
+),
+trans_cnsc as (
+    select
+    'CN' as ctry_cd,
+    'RMB' as crncy_cd,
+    upper(retailer_name) as retailer_name,
+    cast(substring(yearmo, 1, 4) as int) as year,
+    cast(substring(yearmo, 5, 6) as int) as month,
+    yearmo as year_month,
+    brand,
+    material_code as sku,
+    product_description,
+    dcl_code,
+    ean,
+    null as rsp,
+    upper(door_name) as door_name,
+    coalesce(sales_qty, 0) as sls_qty,
+    coalesce(sales_amount, 0) as sls_amt,
+    coalesce(inventory_qty, 0) as stock_qty,
+    null as stock_amt,
+    current_timestamp() as crt_dttm,
+    current_timestamp() as updt_dttm,
+    coalesce(store_sales, 0) as store_sls_qty,
+    coalesce(total_store_sales, 0) as store_sls_amt,
+    coalesce(no_of_ecommerce_sales, 0) as ecommerce_sls_qty,
+    coalesce(total_ecommerce_sales, 0) as ecommerce_sls_amt,
+    coalesce(membership_sls_qty, 0) as membership_sls_qty,
+    coalesce(membership_sls_amt, 0) as membership_sls_amt,
+    md5(concat(coalesce(year_month::varchar,''),'_',coalesce(upper(retailer_name),''),'_',coalesce(upper(ctry_cd),''))) as hash_key
+    from cnsc
+),
+trans_dfs as (
+    select
+    'HK' as ctry_cd,
+    'HKD' as crncy_cd,
+    upper(retailer_name) as retailer_name,
+    cast(substring(year_month, 1, 4) as int) as year,
+    cast(substring(year_month, 5, 6) as int) as month,
+    year_month,
+    brand,
+    common_sku as sku,
+    style as product_description,
+    case
+        when vendor_style like '%D40%'
+        then split_part(vendor_style, '_', 2)
+        else vendor_style
+    end as dcl_code,
+    null as ean,
+    null as rsp,
+    upper(location_name) as door_name,
+    coalesce(cast(sls_qty as int), 0) as sls_qty,
+    coalesce(cast(sls_amt as decimal(21, 5)), 0) as sls_amt,
+    coalesce(cast(soh_qty as int), 0) as stock_qty,
+    null as stock_amt,
+    current_timestamp() as crt_dttm,
+    current_timestamp() as updt_dttm,
+    null as store_sls_qty,
+    null as store_sls_amt,
+    null as ecommerce_sls_qty,
+    null as ecommerce_sls_amt,
+    null as membership_sls_qty,
+    null as membership_sls_amt,
+    md5(concat(coalesce(year_month::varchar,''),'_',coalesce(upper(retailer_name),''),'_',coalesce(upper(ctry_cd),''))) as hash_key
+    from dfs
+),
 transformed as (
     select * from trans_dfs_hainan
     union all
@@ -213,6 +328,12 @@ transformed as (
     select * from trans_sales_stock
     union all
     select * from trans_shilla
+    union all
+    select * from trans_cdfg
+    union all
+    select * from trans_cnsc
+    union all
+    select * from trans_dfs
 ),
 --Final CTE
 final as (
