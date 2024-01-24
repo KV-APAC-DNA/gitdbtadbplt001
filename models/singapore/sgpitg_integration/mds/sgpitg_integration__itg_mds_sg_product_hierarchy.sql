@@ -1,4 +1,10 @@
-{{ config(materialized='table') }}
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['material']
+    )
+}}
 
 with source as (
     select * from {{ source('sgpsdl_raw','sdl_mds_sg_product_hierarchy') }}
