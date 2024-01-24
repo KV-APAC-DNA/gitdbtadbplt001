@@ -21,8 +21,6 @@ sources:
       - name: sdl_sg_scan_data_dfi
       - name: sdl_sg_scan_data_guardian
       - name: sdl_sg_scan_data_marketplace
-        config:
-          alias: sdl_sg_scan_data_marketplace
         tests:
           - test_null:
               not_null_columns: ["order_creation_date","file_name"]
@@ -31,8 +29,6 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_sg_scan_data_scommerce
-        config:
-          alias: sdl_sg_scan_data_scommerce
         tests:
           - test_null:
               not_null_columns: ["date_id","file_name"]
@@ -41,8 +37,6 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_sg_scan_data_redmart
-        config:
-          alias: sdl_sg_scan_data_redmart
         tests:
           - test_null:
               not_null_columns: ["trx_date","file_name"]
@@ -51,8 +45,6 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_sg_scan_data_ntuc 
-        config:
-          alias: sdl_sg_scan_data_ntuc
         tests:
           - test_null:
               not_null_columns: ["trx_date","file_name"]
@@ -61,8 +53,6 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_sg_scan_data_amazon
-        config:
-          alias: sdl_sg_scan_data_amazon
         tests:
           - test_null:
               not_null_columns: ["year","file_name"]
@@ -72,13 +62,5 @@ sources:
                 schema: sgpwks_integration
       
   
-  - name: oseedw_access
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: oseedw_access
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-    - name : edw_vw_os_time_dim
+
       

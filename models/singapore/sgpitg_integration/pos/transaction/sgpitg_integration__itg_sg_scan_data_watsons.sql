@@ -12,7 +12,7 @@ with source as (
 ),
 
 edw_vw_os_time_dim as (
-    select * from {{ source('oseedw_access','edw_vw_os_time_dim') }}
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 
 final as (
