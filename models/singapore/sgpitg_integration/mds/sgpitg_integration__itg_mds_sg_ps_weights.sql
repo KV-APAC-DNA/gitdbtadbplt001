@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+
 with source as (
     select * from {{ source('sgpsdl_raw','sdl_mds_sg_ps_weights') }}
 ),
