@@ -8,9 +8,12 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_mds_sg_store_master
-      - name : sdl_mds_sg_product_mapping
+      
       - name : sdl_mds_sg_ps_targets
+        tags: ["Mds","sg_mds_to_dna_refresh"]
       - name : sdl_mds_sg_ps_weights
+        tags: ["Mds","sg_mds_to_dna_refresh"]
       - name : sdl_mds_sg_customer_hierarchy
+        tags: ["Mds","sg_mds_to_dna_refresh"]
       - name : sdl_mds_sg_product_hierarchy
+        tags: ["Mds","sg_mds_to_dna_refresh"]
