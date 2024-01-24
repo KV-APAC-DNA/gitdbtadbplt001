@@ -31,7 +31,7 @@ jan as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.jan) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.jan, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -60,7 +60,7 @@ feb as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.feb) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.feb, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -89,7 +89,7 @@ mar as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.mar) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.mar, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -118,7 +118,7 @@ apr as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.apr) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.apr, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -147,7 +147,7 @@ may as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.may) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.may, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -176,7 +176,7 @@ jun as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.jun) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.jun, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -205,7 +205,7 @@ jul as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.jul) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.jul, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -234,7 +234,7 @@ aug as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.aug) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.aug, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -263,7 +263,7 @@ sep as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.sep) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.sep, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -292,7 +292,7 @@ oct as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.oct) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.oct, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -321,7 +321,7 @@ nov as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.nov) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.nov, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -350,7 +350,7 @@ dec as (
             then 'TWD'
         end :: varchar(3) as crncy_cd,
         trim(sales_channel_name)::varchar(50) as sales_channel_name,
-        coalesce(cast(trim(dt.dec) as decimal(21, 5)), 0) as nts_tgt,
+        coalesce(dt.dec, 0) as nts_tgt,
         trim(enterdatetime)::timestamp_ntz(9) as crt_dttm
     from dt
     join th on upper(trim(dt.target_type_code)) = upper(th.target_type)
@@ -394,7 +394,7 @@ final as (
         country_name,
         crncy_cd,
         sales_channel_name as sales_channel,
-        nts_tgt,
+        truncate(nts_tgt,5)::number(21,5) as nts_tgt,
         crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from transformed
