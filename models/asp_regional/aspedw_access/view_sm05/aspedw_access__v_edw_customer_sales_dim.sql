@@ -5,12 +5,10 @@ edw_code_descriptions as(
     select * from {{ ref('aspedw_integration__edw_code_descriptions') }}    
 ),
 edw_code_descriptions_manual as(
-    select * from dev_dna_core.aspedw_integration.edw_code_descriptions_manual
-        
+    select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}    
 ),
 edw_subchnl_retail_env_mapping as(
-    select * from dev_dna_core.aspedw_integration.edw_subchnl_retail_env_mapping
-
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 transformed as(
 (
