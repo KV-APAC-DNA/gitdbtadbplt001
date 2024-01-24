@@ -6,7 +6,7 @@ models:
       alias: itg_mds_sg_store_master
       tags: ["sg_sellin_and_scan_datamart",""]
 
-models:
+
   - name: sgpitg_integration__itg_mds_sg_product_mapping
     config:
       alias: itg_mds_sg_product_mapping

@@ -10,13 +10,66 @@ sources:
       identifier: false
     tables:
       - name: sdl_sg_scan_data_watsons
+        tests:
+          - test_null:
+              not_null_columns: ["barcode","file_name"]
+              name: TRATBL_sdl_sg_scan_data_watsons_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
+        
       - name: sdl_sg_scan_data_dfi
       - name: sdl_sg_scan_data_guardian
       - name: sdl_sg_scan_data_marketplace
+        config:
+          alias: sdl_sg_scan_data_marketplace
+        tests:
+          - test_null:
+              not_null_columns: ["order_creation_date","file_name"]
+              name: TRATBL_sdl_sg_scan_data_marketplace_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
       - name: sdl_sg_scan_data_scommerce
+        config:
+          alias: sdl_sg_scan_data_scommerce
+        tests:
+          - test_null:
+              not_null_columns: ["date_id","file_name"]
+              name: TRATBL_sdl_sg_scan_data_scommerce_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
       - name: sdl_sg_scan_data_redmart
+        config:
+          alias: sdl_sg_scan_data_redmart
+        tests:
+          - test_null:
+              not_null_columns: ["trx_date","file_name"]
+              name: TRATBL_sdl_sg_scan_data_redmart_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
       - name: sdl_sg_scan_data_ntuc 
+        config:
+          alias: sdl_sg_scan_data_ntuc
+        tests:
+          - test_null:
+              not_null_columns: ["trx_date","file_name"]
+              name: TRATBL_sdl_sg_scan_data_ntuc_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
       - name: sdl_sg_scan_data_amazon
+        config:
+          alias: sdl_sg_scan_data_amazon
+        tests:
+          - test_null:
+              not_null_columns: ["year","file_name"]
+              name: TRATBL_sdl_sg_scan_data_amazon_null_test
+              config:
+                store_failures: true
+                schema: sgpwks_integration
       
   
   - name: oseedw_access
