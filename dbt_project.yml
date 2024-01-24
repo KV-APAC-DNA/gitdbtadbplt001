@@ -41,10 +41,6 @@ models:
       schema: CORE_INTEGRATION 
       arsadpprd001_raw:
         materialized: view
-    singapore:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     asp_regional:
       config:
         +enabled: true
