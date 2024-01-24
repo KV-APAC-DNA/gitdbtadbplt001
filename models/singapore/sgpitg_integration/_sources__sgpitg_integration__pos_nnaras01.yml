@@ -1,9 +1,9 @@
 version: 2
 sources:
-  - name: SNAPOSEITG_INTEGRATION
+  - name: snaposeitg_integration
     #sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: SNAPOSEITG_INTEGRATION
+    schema: snaposeitg_integration
     #sgpitg_integration
     quoting:
       database: false
@@ -11,18 +11,16 @@ sources:
       identifier: false
     tables:
       - name: itg_sg_pos_sales_fact
-      
-  
-  - name: idnedw_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: idnedw_integration
+  - name: oseedw_access
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: oseedw_access
     quoting:
       database: false
       schema: false
       identifier: false
-    tables:   
-      - name: edw_customer_dim
-     # - name: vw_edw_reg_exch_rate
-      #- name: edw_vw_os_time_dim
-      #- name: edw_vw_greenlight_skus
-
+    tables:
+      - name: edw_vw_os_time_dim
+      
+  
+  
+ 
