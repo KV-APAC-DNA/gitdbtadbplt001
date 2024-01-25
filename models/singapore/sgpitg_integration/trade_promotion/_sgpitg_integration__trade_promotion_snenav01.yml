@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_tp_closed_month
+    config:
+      alias: itg_sg_tp_closed_month
+      tags: ["daily", "sg_transaction_sellout"]
+    tests:
+      - null_check:
+            not_null_columns: ["customer"]
+            select_columns: ["file_name","sheet_name","month_number","sales_rep","custmer_l1","customer","customer_code","channel","franchise","brand","brand_profit_center","promo_type","gl_account","description","requested_date","month_of_activity","promo_start_date","promo_end_date","committed_accrual_w_o_gst","tp_number","zp_cmm_invoice","retailers_billing","jnj_actuals_w_o_gst","cn_number","tp_date","jnj_total_committed_w_o_gst","jnj_total_unclaimed_w_o_gst","reversed_accrued_amt","month_of_reversal","supporting","month_of_doc_scanning","remarks","working_sc","conso_pr","create_pr","payment_ref","cdl_dttm","crtd_dttm","updt_dttm","run_id"]
+            name: TRATBL_itg_sg_tp_closed_month_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+  - name: sgpitg_integration__sdl_raw_sg_tp_closed_month
+    config:
+      alias: sdl_raw_sg_tp_closed_month
+      tags: ["daily", "sg_transaction_sellout"]
+  - name: sgpitg_integration__itg_sg_tp_closed_year_bal
+    config:
+      alias: itg_sg_tp_closed_year_bal
+      tags: ["daily", "sg_transaction_sellout"]
+    tests:
+      - null_check:
+            not_null_columns: ["customer"]
+            select_columns: ["file_name","sheet_name","month_number","sales_rep","customer_l1","customer","customer_code","channel","franchise","brand","brand_profit_center","promo_type","gl_account","description","requested_date","month_of_activity","promo_start_date","promo_end_date","committed_or_accrual_wo_gst","tp_number","zp_cmm_invoice","retailers_billing","jnj_actuals_wo_gst","month_of_actual","cn_number","cn_date","reversal_amount","outstanding_accrual","jnj_total_committed_wo_gst","jnj_total_unclaimed_wo_gst","comments_or_reversed_accrued_amt","month_of_reversal","supporting","tp_impact","left_accrual","month_of_doc_scanning","remarks","working_sc","conso_pr","create_pr","payment_ref","cdl_dttm","crtd_dttm","updt_dttm","run_id"]
+            name: TRATBL_itg_sg_tp_closed_year_bal_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+  - name: sgpitg_integration__sdl_raw_sg_tp_closed_year_bal
+    config:
+      alias: sdl_raw_sg_tp_closed_year_bal
+      tags: ["daily", "sg_transaction_sellout"]
+    
+  

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_ciw_mapping
+    config:
+      alias: itg_sg_ciw_mapping
+      tags: ["daily", "sg_master_sellout"]

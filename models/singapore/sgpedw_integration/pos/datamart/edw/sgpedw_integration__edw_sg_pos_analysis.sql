@@ -1,0 +1,59 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
+with edw_vw_sg_pos_analysis as(
+    select * from {{ ref('sgpedw_integration__edw_vw_sg_pos_analysis') }}
+),
+final as
+(
+    select 
+    sap_cntry_cd::varchar(2) as sap_cntry_cd,
+	sap_cntry_nm::varchar(9) as sap_cntry_nm,
+	jj_year::number(18,0) as jj_year,
+	jj_qtr::varchar(14) as jj_qtr,
+	jj_mnth_id::varchar(23) as jj_mnth_id,
+	jj_mnth_no::number(18,0) as jj_mnth_no,
+	jj_yr_week_no::varchar(20) as jj_yr_week_no,
+	cust_cd::varchar(50) as cust_cd,
+	retail_env::varchar(50) as retail_env,
+	sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+	sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+	sap_bnr_key::varchar(12) as sap_bnr_key,
+	sap_bnr_desc::varchar(50) as sap_bnr_desc,
+	sap_bnr_frmt_key::varchar(12) as sap_bnr_frmt_key,
+	sap_bnr_frmt_desc::varchar(50) as sap_bnr_frmt_desc,
+	item_cd::varchar(300) as item_cd,
+	item_desc::varchar(500) as item_desc,
+	sap_matl_num::varchar(255) as sap_matl_num,
+	sap_mat_desc::varchar(100) as sap_mat_desc,
+	bar_cd::varchar(255) as bar_cd,
+	master_code::varchar(255) as master_code,
+	cust_brnch_cd::varchar(300) as cust_brnch_cd,
+	gph_region::varchar(50) as gph_region,
+	gph_reg_frnchse::varchar(100) as gph_reg_frnchse,
+	gph_reg_frnchse_grp::varchar(50) as gph_reg_frnchse_grp,
+	gph_prod_frnchse::varchar(30) as gph_prod_frnchse,
+	gph_prod_brnd::varchar(30) as gph_prod_brnd,
+	gph_prod_sub_brnd::varchar(100) as gph_prod_sub_brnd,
+	gph_prod_vrnt::varchar(100) as gph_prod_vrnt,
+	gph_prod_needstate::varchar(50) as gph_prod_needstate,
+	gph_prod_ctgry::varchar(50) as gph_prod_ctgry,
+	gph_prod_subctgry::varchar(50) as gph_prod_subctgry,
+	gph_prod_sgmnt::varchar(50) as gph_prod_sgmnt,
+	gph_prod_subsgmnt::varchar(100) as gph_prod_subsgmnt,
+	gph_prod_put_up_cd::varchar(10) as gph_prod_put_up_cd,
+	gph_prod_put_up_desc::varchar(100) as gph_prod_put_up_desc,
+	gph_prod_size::varchar(20) as gph_prod_size,
+	gph_prod_size_uom::varchar(20) as gph_prod_size_uom,
+	currency::varchar(5) as currency,
+	pos_qty::float as pos_qty,
+	pos_gross_val::float as pos_gross_val,
+	pos_net_val::float as pos_net_val,
+	jj_qty_pc::number(22,6) as jj_qty_pc,
+	pos_gross_jj_val::number(38,15) as pos_gross_jj_val,
+	pos_net_jj_val::number(38,15) as pos_net_jj_val
+    from edw_vw_sg_pos_analysis
+)
+select * from final

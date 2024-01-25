@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_zuellig_customer_mapping
+    config:
+      alias: itg_sg_zuellig_customer_mapping
+      tags: ["daily", "sg_master_sellout"]
+    tests:
+      - null_check:
+            not_null_columns: ["regional_banner"]
+            select_columns: ["zuellig_customer","regional_banner","merchandizing","cdl_dttm","crtd_dttm","updt_dttm","file_name","run_id"]
+            name: TRATBL_itg_sg_zuellig_customer_mapping_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+  - name: sgpitg_integration__itg_sg_zuellig_product_mapping
+    config:
+      alias: itg_sg_zuellig_product_mapping
+      tags: ["daily", "sg_master_sellout"]
+    tests:
+      - null_check:
+            not_null_columns: ["jj_code","brand"]
+            select_columns: ["zp_material","zp_item_code","jj_code","item_name","brand","cdl_dttm","crtd_dttm","updt_dttm","file_name","run_id"]
+            name: TRATBL_itg_sg_zuellig_product_mapping_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration         
+  - name: sgpitg_integration__itg_sg_zuellig_sellout
+    config:
+      alias: itg_sg_zuellig_sellout
+      tags: ["hourly", "sg_master_sellout"]
+  - name: sgpitg_integration__sdl_raw_sg_zuellig_sellout
+    config:
+      alias: sdl_raw_sg_zuellig_sellout
+      tags: ["daily", "sg_transaction_sellout"]
