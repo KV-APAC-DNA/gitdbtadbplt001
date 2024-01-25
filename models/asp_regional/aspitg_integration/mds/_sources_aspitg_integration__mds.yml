@@ -11,10 +11,53 @@ sources:
     tables:
       - name: sdl_mds_apac_dcl_customers
         tags: ["mds","travel_retail_mds"]
+        tests:
+          - test_null:
+              not_null_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
+              select_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
+              name: TRATBL_sdl_mds_apac_dcl_customers_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+          - test_duplicate:
+              group_by_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
+              select_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"] 
+              name: TRATBL_sdl_mds_apac_dcl_customers_duplicate_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
       - name: sdl_mds_apac_dcl_products
         tags: ["mds","travel_retail_mds"]
+        tests:
+          - test_null:
+              not_null_columns: ["country_code",'"dcl code"','"sap code"','"sales channel_name"']
+              name: TRATBL_sdl_mds_apac_dcl_products_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+          - test_duplicate:
+              group_by_columns: ["country_code",'"dcl code"','"sales channel_name"']
+              select_columns: ["country_code",'"dcl code"','"sales channel_name"'] 
+              name: TRATBL_sdl_mds_apac_dcl_products_duplicate_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
       - name: sdl_mds_apac_dcl_targets
         tags: ["mds","travel_retail_mds"]
+        tests:
+          - test_null:
+              not_null_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
+              name: TRATBL_sdl_mds_apac_dcl_targets_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+          - test_duplicate:
+              group_by_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
+              select_columns: ["target_type_code","country_code","sales_channel_name","year_code"] 
+              name: TRATBL_sdl_mds_apac_dcl_targets_duplicate_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
       - name: sdl_mds_ap_greenlight_skus
         tags: ["mds","rg_mds_dna"]
       - name: sdl_mds_ap_company_dim
