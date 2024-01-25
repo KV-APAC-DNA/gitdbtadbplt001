@@ -1,5 +1,5 @@
 with edw_vw_os_time_dim as (
-    select * from {{ source('oseedw_access','edw_vw_os_time_dim') }}
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_crncy_exch as (
     select * from {{ ref('aspedw_integration__edw_crncy_exch') }}

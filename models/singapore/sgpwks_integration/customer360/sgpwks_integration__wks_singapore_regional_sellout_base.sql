@@ -1,9 +1,8 @@
 with itg_sg_pos_sales_fact as (
-    select * from {{ source('snaposeitg_integration', 'itg_sg_pos_sales_fact') }}
+    select * from {{ ref('sgpitg_integration__itg_sg_pos_sales_fact') }}
 ),
 itg_mds_ap_customer360_config as (
     select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
---     select * from dev_dna_core.apahil01_workspace.itg_mds_ap_customer360_config
 ),
 base as 
 (

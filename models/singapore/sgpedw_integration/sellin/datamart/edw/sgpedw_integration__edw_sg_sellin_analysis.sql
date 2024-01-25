@@ -1,8 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
 with source as
 (
     select * from {{ ref('sgpedw_integration__edw_vw_sg_sellin_analysis') }}

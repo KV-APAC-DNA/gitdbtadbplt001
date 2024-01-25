@@ -1,8 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
 with edw_list_price as
 (
     select * from {{ ref('aspedw_integration__edw_list_price') }}

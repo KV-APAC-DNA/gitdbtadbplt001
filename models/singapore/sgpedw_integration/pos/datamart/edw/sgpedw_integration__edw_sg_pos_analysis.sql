@@ -1,8 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
 with edw_vw_sg_pos_analysis as(
     select * from {{ ref('sgpedw_integration__edw_vw_sg_pos_analysis') }}
 ),

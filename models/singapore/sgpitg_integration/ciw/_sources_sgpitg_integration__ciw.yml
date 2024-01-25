@@ -9,6 +9,5 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_sg_zuellig_customer_mapping
-      - name: sdl_sg_zuellig_product_mapping
-      - name: sdl_sg_zuellig_sellout
+      - name: sdl_sg_ciw_mapping
+        tags: ["daily", "sg_master_sellout"]
