@@ -20,7 +20,7 @@ final as (
   sheet_name::varchar(255) as sheet_name,
   month_number::varchar(255) as month_number,
   sales_rep::varchar(255) as sales_rep,
-  custmer_l1::varchar(255) as custmer_l1,
+  custmer_l1::varchar(255) as customer_l1,
   customer::varchar(255) as customer,
   customer_code::varchar(255) as customer_code,
   channel::varchar(255) as channel,
