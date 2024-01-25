@@ -461,7 +461,7 @@ derived_table1 as
 
         (
             (
-                (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                 AND 
                 (
                     CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -514,7 +514,7 @@ derived_table2_temp1 as
             (
                 (
                 (
-                    (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                     AND 
                     (
                         CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -615,7 +615,7 @@ derived_table2_temp2 as
             (
                 (
                 (
-                    (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                     AND 
                     (
                         CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -720,7 +720,7 @@ derived_table3_temp1 as(
             (
                 (
                 (
-                    (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                     AND 
                     (
                         CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -825,7 +825,7 @@ derived_table3_temp2 as
             (
                 (
                 (
-                    (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                     AND 
                     (
                         CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -987,7 +987,7 @@ derived_table5_temp1 as
 
     (
         (
-            (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+            (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
             AND 
             (
                 CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
@@ -1040,7 +1040,7 @@ derived_table5_temp2 as
             (
                 (
                     (
-                        (UPPER(CAST((t1.custmer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
+                        (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
                         AND 
                         (
                             CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
