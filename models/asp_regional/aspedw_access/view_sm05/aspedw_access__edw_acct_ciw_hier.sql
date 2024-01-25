@@ -829,6 +829,21 @@ FROM (
   )
 ) AS derived_table1
 
+),
+final as(
+    select 	
+    chrt_acct as "chrt_acct",
+    acct_num as "acct_num",
+    acct_nm as "acct_nm",
+    ciw_desc as "ciw_desc",
+    ciw_code as "ciw_code",
+    ciw_bucket as "ciw_bucket",
+    ciw_acct_col as "ciw_acct_col",
+    ciw_acct_no as "ciw_acct_no",
+    ciw_acct_nm as "ciw_acct_nm",
+    measure_code as "measure_code",
+    measure_name as "measure_name",
+    multiplication_factor as "multiplication_factor" 
+    from tranformed
 )
-
-select * from tranformed
+select * from final
