@@ -69,7 +69,9 @@ filter_1 as (
         market_min_date,
         market_product_min_date,
         rn_cus,
-        rn_mkt
+        rn_mkt,
+        crtd_dttm,
+	    updt_dttm
       /* sellout_value_invoice_price, */ /* sellout_value_invoice_price_usd, */ /* null as npd_flag_market_level, */ /* null as npd_flag_parent_customer_level   	   */
       from wks_singapore_regional_sellout_npd
       
@@ -152,13 +154,13 @@ final as
     data_source::varchar(3) as data_source,
     soldto_code::varchar(200) as soldto_code,
     distributor_code::varchar(200) as distributor_code,
-    distributor_name::varchar(10) as distributor_nam,
+    distributor_name::varchar(10) as distributor_name,
     store_code::varchar(300) as store_code,
     store_name::varchar(300) as store_name,
     store_type::varchar(200) as store_type,
-    distributor_additional_attribute1::varchar(2) as distributor_additional_attribute,
-    distributor_additional_attribute2::varchar(2) as distributor_additional_attribute,
-    distributor_additional_attribute3::varchar(2) as distributor_additional_attribute,
+    distributor_additional_attribute1::varchar(2) as distributor_additional_attribute1,
+    distributor_additional_attribute2::varchar(2) as distributor_additional_attribute2,
+    distributor_additional_attribute3::varchar(2) as distributor_additional_attribute3,
     sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
     sap_parent_customer_description::varchar(75) as sap_parent_customer_description,
     sap_customer_channel_key::varchar(12) as sap_customer_channel_key,
@@ -201,9 +203,8 @@ final as
     sellout_sales_quantity::numeric(38,0) as sellout_sales_quantity,
     sellout_sales_value::numeric(38,6) as sellout_sales_value,
     sellout_sales_value_usd::numeric(38,11) as sellout_sales_value_usd,
-    master_code::varchar(255) as master_code,
     sellout_value_list_price::numeric(18,0) as sellout_value_list_price,		
-    sellout_value_list_price_usd::numeric(18,0) as sellout_value_list_price_usd
+    sellout_value_list_price_usd::numeric(18,0) as sellout_value_list_price_usd,
     customer_min_date::date as customer_min_date,		
     customer_product_min_date::date as customer_product_min_date,	
     market_min_date::date as market_min_date,		
@@ -219,5 +220,5 @@ final as
     selling_price::numeric(38,6) as selling_price,		
     cnt_mkt::numeric(18,0) as cnt_mkt
     from transformed
-),
+)
 select * from final

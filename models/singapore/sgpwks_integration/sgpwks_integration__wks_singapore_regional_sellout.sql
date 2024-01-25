@@ -479,7 +479,7 @@ select
   data_source::varchar(3) as data_source,
   soldto_code::varchar(200) as soldto_code,
   distributor_code::varchar(200) as distributor_code,
-  distributor_name::varchar(10) as distributor_nam,
+  distributor_name::varchar(10) as distributor_name,
   store_code::varchar(300) as store_code,
   store_name::varchar(300) as store_name,
   store_type::varchar(200) as store_type,
