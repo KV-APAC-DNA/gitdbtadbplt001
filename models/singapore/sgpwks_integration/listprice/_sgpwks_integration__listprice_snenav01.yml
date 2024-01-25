@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpwks_integration__wks_sg_listprice
+    config:
+      alias: wks_sg_listprice
+      tags: ["daily",""]

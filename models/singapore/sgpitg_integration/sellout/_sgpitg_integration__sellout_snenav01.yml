@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_zuellig_customer_mapping
+    config:
+      alias: itg_sg_zuellig_customer_mapping
+      tags: ["daily", "sg_master_sellout"]
+    tests:
+      - test_null:
+            not_null_columns: ["regional_banner"]
+            select_columns: ["file_name","regional_banner"]
+            name: TRATBL_itg_sg_zuellig_customer_mapping_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+      - test_duplicate:
+            group_by_columns: ["regional_banner"]
+            count_column: "distinct merchandizing"
+            name: TRATBL_itg_sg_zuellig_customer_mapping_duplicate_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+      - test_lookup:
+            select_columns: ["file_name","regional_banner"]
+            column: "upper(regional_banner)" 
+            lookup_column: "upper(key)"
+            lookup_table: "{{ source('sgpitg_integration', 'itg_sg_constant_key_value') }} "
+            lookup_filter: "data_category_cd = '3'"
+            additional_filter: "not upper(regional_banner) in ( select distinct upper(sap_bnr_frmt_desc) from snenav01_workspace.edw_vw_sg_customer_dim  where sap_cntry_cd = 'SG')"
+            name: TRATBL_itg_sg_zuellig_customer_mapping_lookup_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+  - name: sgpitg_integration__itg_sg_zuellig_product_mapping
+    config:
+      alias: itg_sg_zuellig_product_mapping
+      tags: ["daily", "sg_master_sellout"]
+    tests:
+      - test_null:
+            not_null_columns: ["jj_code","brand"]
+            select_columns: ["file_name","jj_code"]
+            name: TRATBL_itg_sg_zuellig_product_mapping_null_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+      - test_lookup:
+            select_columns: ["file_name","jj_code"]
+            column: "ltrim(jj_code, '0')"
+            lookup_column: "ltrim(sap_matl_num, '0')"
+            lookup_table: "{{ ref('sgpedw_integration__edw_vw_sg_material_dim') }} "
+            lookup_filter: "cntry_key = 'SG'"
+            name: TRATBL_itg_sg_zuellig_product_mapping_lookup_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration         
+  - name: sgpitg_integration__itg_sg_zuellig_sellout
+    config:
+      alias: itg_sg_zuellig_sellout
+      tags: ["hourly", "sg_master_sellout"]
+    tests:
+      - test_lookup:
+            select_columns: ["file_name","item_code"]
+            column: "upper(ltrim(item_code, '0'))"
+            lookup_column: "upper(ltrim(zp_item_code, '0'))"
+            lookup_table: "{{ ref('sgpitg_integration__itg_sg_zuellig_product_mapping') }} "
+            name: TRATBL_itg_sg_zuellig_sellout_lookup_test
+            config:
+              store_failures: true
+              schema: sgpwks_integration
+  - name: sgpitg_integration__sdl_raw_sg_zuellig_sellout
+    config:
+      alias: sdl_raw_sg_zuellig_sellout
+      tags: ["daily", "sg_transaction_sellout"]

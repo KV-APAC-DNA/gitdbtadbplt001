@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: sgpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: sgpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_sg_zuellig_customer_mapping
+      - name: sdl_sg_zuellig_product_mapping
+      - name: sdl_sg_zuellig_sellout

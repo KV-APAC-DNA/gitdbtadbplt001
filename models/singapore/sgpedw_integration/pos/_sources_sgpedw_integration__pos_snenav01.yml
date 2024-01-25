@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: sgpitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: sgpitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_sg_pos_sales_fact
+      - name: itg_sg_constant_key_value
+    
