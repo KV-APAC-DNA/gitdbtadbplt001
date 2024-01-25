@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: aspedw_access__edw_acct_ciw_hier
+    config: 
+      alias: edw_acct_ciw_hier
+
+  - name: aspedw_access__edw_subchnl_retail_env_mapping
+    config: 
+      alias: edw_subchnl_retail_env_mapping    
+
+  - name: aspedw_access__v_edw_customer_sales_dim
+    config: 
+      alias: v_edw_customer_sales_dim
+
+  - name: aspedw_access__v_rpt_copa
+    config: 
+      alias: v_rpt_copa
+
+  - name: aspedw_access__v_rpt_copa_ciw
+    config: 
+      alias: v_rpt_copa_ciw
+
+  - name: aspedw_access__v_rpt_copa_sku
+    config: 
+      alias: v_rpt_copa_sku  
