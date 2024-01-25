@@ -1,0 +1,18 @@
+version: 2
+models:
+  - name: sgpitg_integration__itg_mds_sg_ps_targets
+    config:
+      alias: itg_mds_sg_ps_targets
+      tags: ["Mds","sg_mds_to_dna_refresh"]
+  - name: sgpitg_integration__itg_mds_sg_customer_hierarchy
+    config:
+      alias: itg_mds_sg_customer_hierarchy
+      tags: ["Mds","sg_mds_to_dna_refresh"]
+  - name: sgpitg_integration__itg_mds_sg_product_hierarchy
+    config:
+      alias: itg_mds_sg_product_hierarchy
+      tags: ["Mds","sg_mds_to_dna_refresh"]
+  - name: sgpitg_integration__itg_mds_sg_ps_weights
+    config:
+      alias: itg_mds_sg_ps_weights
+      tags: ["Mds","sg_mds_to_dna_refresh"]
