@@ -425,7 +425,7 @@ select
   item_code::varchar(300) as item_code,
   item_desc::varchar(500) as item_desc,
   sales_qty::number(10,0) as sales_qty,
-  net_sales::number(10,6) as net_sales,
+  round(net_sales,6)::decimal(14,6) as net_sales,
   bill_date::date as bill_date,
   store_name::varchar(300) as store_name,
   sold_to_code::varchar(200) as sold_to_code,

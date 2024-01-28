@@ -65,3 +65,46 @@ models:
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
+    singapore:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      sgpedw_access:
+        +materialized: view
+        +schema: SGPEDW_ACCESS
+      sgpedw_integration:
+        +materialized: table
+        +schema: SGPEDW_INTEGRATION
+        +transient: false
+        common:
+          view:
+            +materialized: view
+        currency:
+          master:
+            view:
+              +materialized: view
+        listprice:
+          master:
+            view:
+              +materialized: view
+        pos:
+          datamart:
+            view:
+              +materialized: view
+        sellin:
+          datamart:
+            view:
+              +materialized: view
+      sgpitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: SGPITG_INTEGRATION
+      sgpwks_integration:
+        +materialized: table
+        +schema: SGPWKS_INTEGRATION
+
+
+
+
+
+

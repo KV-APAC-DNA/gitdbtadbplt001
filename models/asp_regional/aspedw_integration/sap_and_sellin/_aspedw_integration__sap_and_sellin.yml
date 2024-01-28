@@ -161,3 +161,6 @@ models:
     config:
       alias: v_edw_customer_sales_dim
       tags: ["daily","customer_segmentation"]
+  - name: aspedw_integration__vw_edw_reg_exch_rate
+    config:
+      alias: vw_edw_reg_exch_rate

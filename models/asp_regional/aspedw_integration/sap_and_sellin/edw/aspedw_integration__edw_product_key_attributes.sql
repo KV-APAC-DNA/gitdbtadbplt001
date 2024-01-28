@@ -33,6 +33,20 @@ edw_copa_trans_fact as (
 -- Final CTE
 final as (
   SELECT 
+        mat.matl_num::varchar(40) as matl_num,
+        mat.matl_desc::varchar(100) as matl_desc,
+        mat.crt_on::date as crt_on,
+        cmp.ctry_nm::varchar(40) as ctry_nm,
+        --cnty.cluster,
+        mat.matl_type_cd::varchar(10) as matl_type_cd,
+        mat.matl_type_desc::varchar(40) as matl_type_desc,
+        mat.mega_brnd_cd::varchar(10) as mega_brnd_cd,
+        case
+            when upper(mat.mega_brnd_desc) like 'JOHNSON\'S%'
+            then mat.brnd_desc
+          else mat.mega_brnd_desc
+       end::varchar(100) as mega_brnd_desc,
+       mat.brnd_cd::varchar(10) as brnd_cd,
        mat.brnd_desc::varchar(100) as brnd_desc,
 mat.varnt_desc::varchar(100) as varnt_desc,
 mat.base_prod_desc::varchar(100) as base_prod_desc,
