@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_pos_cust_mstr
+    config:
+      alias: itg_my_pos_cust_mstr
+      tags: ["",""]
+
+  - name: mysitg_integration__itg_my_pos_sales_fact
+    config:
+      alias: itg_my_pos_sales_fact
+      tags: ["",""]

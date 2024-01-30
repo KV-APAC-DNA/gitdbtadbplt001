@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_afgr
+    config: 
+      alias: itg_my_afgr
+      tags: ["",""]
+  - name: mysitg_integration__itg_my_le_trgt
+    config:
+      alias: itg_my_le_trgt
+      tags: ["",""]
+  - name: mysitg_integration__itg_my_trgts
+    config:
+      alias: itg_my_trgts
+      tags: ["",""]
+
+  - name: mysitg_integration__itg_my_accruals
+    config:
+      alias: itg_my_accruals
+      tags: ["",""]

@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_customer_dim
+    config: 
+      alias: itg_my_customer_dim
+      tags: ["",""]
+  
