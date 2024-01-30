@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: myswks_integration__wks_my_mnthly_sellout_sales_fact
+    config:
+      alias: wks_my_mnthly_sellout_sales_fact
+      tags: ["",""]
+  - name: myswks_integration__wks_my_mnthly_sellout_stock_fact
+    config:
+      alias: wks_my_mnthly_sellout_stock_fact
+      tags: ["",""]
