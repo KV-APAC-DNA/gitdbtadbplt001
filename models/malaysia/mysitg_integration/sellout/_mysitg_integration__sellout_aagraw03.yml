@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_in_transit
+    config:
+      alias: itg_my_in_transit
+      tags: ["",""]
+  - name: mysitg_integration__itg_my_sellout_sales_fact
+    config:
+      alias: itg_my_sellout_sales_fact
+      tags: ["",""]
+  - name: mysitg_integration__itg_my_sellout_stock_fact
+    config:
+      alias: itg_my_sellout_stock_fact
+      tags: ["",""]
+  - name: mysitg_integration__sdl_raw_my_in_transit
+    config:
+      alias: sdl_raw_my_in_transit
+      tags: ["",""]
