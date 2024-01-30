@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: myswks_integration__wks_my_allmonths_base
+    config:
+      alias: wks_my_allmonths_base
+      tags: ["",""]
+  - name: myswks_integration__wks_my_lastnmonths
+    config:
+      alias: wks_my_lastnmonths
+      tags: ["",""]
+  - name: myswks_integration__wks_my_base_detail
+    config:
+      alias: wks_my_base_detail
+      tags: ["",""]
+  - name: myswks_integration__my_propagate_to
+    config:
+      alias: my_propagate_to
+      tags: ["",""]
+  - name: myswks_integration__my_propagate_from_to
+    config:
+      alias: my_propagate_from_to
+      tags: ["",""]

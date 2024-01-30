@@ -65,6 +65,10 @@ models:
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
+    malasiya:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
     singapore:
       config:
         +enabled: true
