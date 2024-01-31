@@ -17,3 +17,7 @@ models:
     config:
       alias: sdl_raw_my_in_transit
       tags: ["hourly","my_sellout"]
+  - name: mysitg_integration__sdl_my_monthly_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_my_monthly_sellout_sales_fact_mds_sync
+      tags: ["hourly","my_joint_monthly"]
