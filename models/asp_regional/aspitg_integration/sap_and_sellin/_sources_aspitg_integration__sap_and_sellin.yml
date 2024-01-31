@@ -1683,6 +1683,7 @@ sources:
     - name : itg_crncy_mult
     - name : itg_ciw_acct_hier_name_mapping
     - name:  itg_otif_glbl_con_reporting
+    - name:  itg_query_parameters
   
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
