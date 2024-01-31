@@ -10,6 +10,38 @@ sources:
       identifier: false
     tables:
       - name: sdl_my_in_transit
+        tags: ["hourly","my_sellout"]
+        tests:
+          - test_duplicate:
+              group_by_columns: ["bill_doc"]
+              select_columns: ["bill_doc"]
+              name: TRATBL_sdl_my_in_transit_duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
       - name: sdl_my_monthly_sellout_sales_fact
+        tags: ["hourly","my_joint_monthly"]
+        tests:
+          - test_lookup:
+              select_columns: ["filename","dstrbtr_id"]
+              column: "coalesce(upper(dstrbtr_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "dstrbtr_id!='ALL'"
+              name: TRATBL_sdl_my_monthly_sellout_sales_fact_lookup_test
+              config:
+                store_failures: true
+                schema: myswks_integration
       - name: sdl_my_monthly_sellout_stock_fact
-      - name: sdl_my_monthly_sellout_sales_fact_mds_sync
+        tags: ["hourly","my_joint_monthly"]
+        tests:
+          - test_lookup:
+              select_columns: ["filename","cust_id"]
+              column: "coalesce(upper(cust_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "cust_id!='ALL'"
+              name: TRATBL_sdl_my_monthly_sellout_stock_fact_lookup_test
+              config:
+                store_failures: true
+                schema: myswks_integration
