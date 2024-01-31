@@ -10,6 +10,8 @@ sources:
       identifier: false
     tables:
       - name: sdl_my_pos_cust_mstr
+        tags: ["my_pos","hourly"]
       - name: sdl_my_pos_sales_fact
+        tags: ["my_pos","hourly"]
         
         

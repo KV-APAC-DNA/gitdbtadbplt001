@@ -1,12 +1,26 @@
 version: 2
 
 sources:
-  - name: mysitg_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: mysitg_integration
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: itg_my_ciw_map
+    - name: sdl_my_ciw_map
+      tags: ["my_sellin","hourly"]
+      tests:
+        - test_null:
+            not_null_columns: ["acct_num","file_name"]
+            name: TRATBL_sdl_my_ciw_map_null_test
+            config:
+              store_failures: true
+              schema: myswks_integration
+        - test_duplicate:
+                group_by_columns: ["acct_num"]
+                name: TRATBL_sdl_my_ciw_map_duplicate_test
+                config:
+                  store_failures: true
+                  schema: myswks_integration

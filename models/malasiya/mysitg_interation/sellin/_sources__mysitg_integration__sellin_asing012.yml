@@ -9,11 +9,42 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_my_accruals
-      - name: sdl_my_afgr
+    - name: sdl_my_accruals
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["cust_id","file_name"]
+              name: TRATBL_sdl_my_accruals_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+    - name: sdl_my_afgr
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["afgr_num","file_name"]
+              name: TRATBL_sdl_my_afgr_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_duplicate:
+                group_by_columns: ["afgr_num"]
+                name: TRATBL_sdl_my_afgr_duplicate_test
+                config:
+                  store_failures: true
+                  schema: myswks_integration
 
-      - name: sdl_my_trgts
-      - name: sdl_my_le_trgt
+    - name: sdl_my_trgts
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["cust_id","file_name"]
+              name: TRATBL_sdl_my_trgts_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+    - name: sdl_my_le_trgt
+      tags: ["my_sellin","hourly"]
 
         
         
