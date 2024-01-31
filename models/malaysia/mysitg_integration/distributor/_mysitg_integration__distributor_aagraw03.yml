@@ -4,16 +4,16 @@ models:
   - name: mysitg_integration__itg_my_dstrbtrr_dim
     config:
       alias: itg_my_dstrbtrr_dim
-      tags: ["",""]
+      tags: ["daily","my_sellout"]
   - name: mysitg_integration__itg_my_dstrbtr_doc_type
     config:
       alias: itg_my_dstrbtr_doc_type
-      tags: ["",""]
+      tags: ["daily","my_sellout"]
   - name: mysitg_integration__sdl_raw_my_dstrbtr_doc_type
     config:
       alias: sdl_raw_my_dstrbtr_doc_type
-      tags: ["",""]
+      tags: ["daily","my_sellout"]
   - name: mysitg_integration__sdl_raw_my_dstrbtrr_dim
     config:
       alias: sdl_raw_my_dstrbtrr_dim
-      tags: ["",""]
+      tags: ["daily","my_sellout"]
