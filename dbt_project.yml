@@ -102,9 +102,11 @@ models:
       sgpwks_integration:
         +materialized: table
         +schema: SGPWKS_INTEGRATION
-
-
-
-
-
-
+    malaysia:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      mysitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: MYSITG_INTEGRATION
