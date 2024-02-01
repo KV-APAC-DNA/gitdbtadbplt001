@@ -36,3 +36,7 @@ models:
     config:
       alias: sdl_raw_my_accruals
       tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__itg_my_ciw_map
+    config:
+      alias: itg_my_ciw_map
+      tags: ["my_sellin","hourly"]

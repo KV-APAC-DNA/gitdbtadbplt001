@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('myssdl_raw','sdl_my_trgts') }}
+    select * from {{ source('myssdl_raw','sdl_my_ciw_map') }}
 ),
 final as(
     select * from source
