@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: mypedw_integration__edw_vw_os_sales_order_fact
+    config:
+      alias: edw_vw_os_sales_order_fact
