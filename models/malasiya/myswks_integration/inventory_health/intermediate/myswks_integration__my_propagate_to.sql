@@ -23,7 +23,7 @@ base as
         month <= (
         select distinct cal_mnth_id from edw_vw_os_time_dim
         where
-            cal_date = current_timestamp()::date
+            cal_date = '2024-01-18'
         )
     group by
         distributor,
@@ -53,14 +53,14 @@ final as
                             (select distinct "year", mnth_id from edw_vw_os_time_dim
                                 where mnth_id <= (
                                     select distinct mnth_id from edw_vw_os_time_dim 
-                                    where cal_date = current_timestamp()::date
+                                    where cal_date = '2024-01-18'
                                 )
                             )
                         )
                         where mnth_id = 
                         (
                         select distinct  mnth_id from edw_vw_os_time_dim
-                        where cal_date = current_timestamp()::date
+                        where cal_date = '2024-01-18'
                         )
                     )
     and (coalesce(so_value, 0) = 0 or coalesce(inv_value, 0) = 0)
@@ -69,5 +69,17 @@ final as
     max(month) over (partition by distributor, dstrbtr_grp_cd, sap_parent_customer_key order by null) as latest_month
     from base
 )
-select * from final
+select 
+    distributor::varchar(40) as distributor,
+    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
+    month::number(18,0) as month,
+    so_qty::number(38,6) as so_qty,
+    so_value::number(38,17) as so_value,
+    inv_qty::number(38,4) as inv_qty,
+    inv_value::number(38,13) as inv_value,
+    propagate_flag::varchar(1) as propagate_flag,
+    latest_month::number(18,0) as latest_month
+from final
 

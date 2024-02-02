@@ -66,7 +66,7 @@ base as
       from wks_my_lastnmonths as agg, wks_my_base as base
       where
         left(agg.month, 4) >= (
-          date_part(year, current_timestamp()) - 2
+          date_part(year, '2024-01-18'::timestamp_ntz) - 2
         )
         and agg.distributor = base.distributor(+)
         and agg.dstrbtr_grp_cd = base.dstrbtr_grp_cd(+)
@@ -79,7 +79,7 @@ base as
             cal_mnth_id as mnth_id
           from edw_vw_os_time_dim
           where
-            cal_date = current_timestamp()::date
+            cal_date = '2024-01-18'
         )
     )
     group by
@@ -141,4 +141,26 @@ final as
     where
     is_valid = 1
 )
-select * from final
+select 
+    distributor::varchar(40) as distributor,
+    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
+    matl_num::varchar(100) as matl_num,
+    month::number(18,0) as month,
+    base_matl_num::varchar(100) as base_matl_num,
+    replicated_flag::varchar(1) as replicated_flag,
+    so_qty::number(38,6) as so_qty,
+    so_value::number(38,17) as so_value,
+    inv_qty::number(38,4) as inv_qty,
+    inv_value::number(38,13) as inv_value,
+    sell_in_qty::number(38,4) as sell_in_qty,
+    sell_in_value::number(38,13) as sell_in_value,
+    last_3months_so::number(38,6) as last_3months_so,
+    last_6months_so::number(38,6) as last_6months_so,
+    last_12months_so::number(38,6) as last_12months_so,
+    last_3months_so_value::number(38,17) as last_3months_so_value,
+    last_6months_so_value::number(38,17) as last_6months_so_value,
+    last_12months_so_value::number(38,17) as last_12months_so_value,
+    last_36months_so_value::number(38,17) as last_36months_so_value
+ from final

@@ -116,4 +116,16 @@ final as
     and base.month < p_to.month
     and datediff(month,to_date(base.month||'01', 'yyyymmdd'), to_date(latest_month||'01', 'yyyymmdd')) <= 2
 )
-select * from final
+select 
+    distributor::varchar(40) as distributor,
+    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
+    latest_month::number(18,0) as latest_month,
+    propagate_to::number(18,0) as propagate_to,
+    propagate_from::number(18,0) as propagate_from,
+    so_qty::number(38,6) as so_qty,
+    inv_qty::number(38,4) as inv_qty,
+    diff_month::number(38,0) as diff_month,
+    reason::varchar(29) as reason
+from final

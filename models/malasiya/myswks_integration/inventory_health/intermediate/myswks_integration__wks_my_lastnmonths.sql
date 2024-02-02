@@ -12,7 +12,7 @@ base as
     *
     from wks_my_allmonths_base
     where
-    left(month, 4) >= (  date_part(year, current_timestamp()) - 6)
+    left(month, 4) >= (  date_part(year, '2024-01-18'::timestampntz) - 6)
 ),
 month_base3 as
 (
@@ -27,7 +27,7 @@ month_base3 as
         cal_mnth_id as mnth_id
         from edw_vw_os_time_dim
         where
-        cal_year >= ( date_part(year, current_timestamp()) - 6)
+        cal_year >= ( date_part(year, '2024-01-18'::timestampntz) - 6)
     )
 ),
 to_month3 as
@@ -74,7 +74,7 @@ month_base6 as
           from edw_vw_os_time_dim
           where
             cal_year >= (
-              date_part(year, current_timestamp()) - 6
+              date_part(year, '2024-01-18'::timestampntz) - 6
             )
         )
 ),
@@ -116,7 +116,7 @@ month_base12 as
         cal_mnth_id as mnth_id
         from edw_vw_os_time_dim
         where
-        cal_year >= (date_part(year, current_timestamp()) - 6)
+        cal_year >= (date_part(year, '2024-01-18'::timestampntz) - 6)
     )
 ),
 to_month12 as(
@@ -157,7 +157,7 @@ month_base36 as(
         from edw_vw_os_time_dim
         where
         cal_year >= (
-            date_part(year, current_timestamp()) - 6
+            date_part(year, '2024-01-18'::timestampntz) - 6
         )
     )
 ),
@@ -273,4 +273,25 @@ final as
         matl_num,
         month
 )
-select * from final
+select 
+    distributor::varchar(40) as distributor,
+    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
+    matl_num::varchar(100) as matl_num,
+    month::number(18,0) as month,
+    so_qty::number(38,6) as so_qty,
+    so_value::number(38,17) as so_value,
+    inv_qty::number(38,4) as inv_qty,
+    inv_value::number(38,13) as inv_value,
+    sell_in_qty::number(38,4) as sell_in_qty,
+    sell_in_value::number(38,13) as sell_in_value,
+    last_3months_so::number(38,6) as last_3months_so,
+    last_3months_so_value::number(38,17) as last_3months_so_value,
+    last_6months_so::number(38,6) as last_6months_so,
+    last_6months_so_value::number(38,17) as last_6months_so_value,
+    last_12months_so::number(38,6) as last_12months_so,
+    last_12months_so_value::number(38,17) as last_12months_so_value,
+    last_36months_so::number(38,6) as last_36months_so,
+    last_36months_so_value::number(38,17) as last_36months_so_value
+ from final

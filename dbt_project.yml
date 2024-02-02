@@ -69,6 +69,8 @@ models:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      myswks_integration:
+        +materialized: table
     singapore:
       config:
         +enabled: true
