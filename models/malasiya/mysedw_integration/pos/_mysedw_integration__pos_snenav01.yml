@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: mysedw_integration__edw_vw_my_pos_sales_fact
+    config:
+      alias: edw_vw_my_pos_sales_fact
+      tags: ["",""]
+  - name: mysedw_integration__edw_vw_my_pos_inventory
+    config:
+      alias: edw_vw_my_pos_inventory
+      tags: ["",""]
+  - name: mysedw_integration__edw_vw_my_si_pos_inv_analysis
+    config:
+      alias: edw_vw_my_si_pos_inv_analysis
+      tags: ["",""]

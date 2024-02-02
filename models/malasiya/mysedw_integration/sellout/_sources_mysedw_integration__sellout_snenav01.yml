@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: snenav01_workspace
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snenav01_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_my_listprice  
+        table_type: view
+        identifier: edw_my_listprice  
+  - name: mysitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: mysitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_my_sellout_sales_fact
+      - name: itg_my_customer_dim
+      - name: itg_my_dstrbtr_doc_type
+
+

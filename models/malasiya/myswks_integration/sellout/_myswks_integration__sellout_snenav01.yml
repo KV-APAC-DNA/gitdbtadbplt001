@@ -1,0 +1,8 @@
+
+version: 2
+
+models:
+  - name: myswks_integration__wks_my_sellout_for_inv_analysis
+    config:
+      alias: wks_my_sellout_for_inv_analysis
+      tags: ["",""]
