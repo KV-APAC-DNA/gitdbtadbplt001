@@ -368,5 +368,6 @@ GROUP BY
   veomd.gph_prod_vrnt,
   veomd.gph_prod_ctgry,
   veomd.gph_prod_sgmnt,
-  veomd.pka_product_key)
+  veomd.pka_product_key
+)
   select * from final

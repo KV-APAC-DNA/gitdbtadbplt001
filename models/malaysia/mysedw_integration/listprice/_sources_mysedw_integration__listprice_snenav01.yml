@@ -1,6 +1,6 @@
 version: 2
 
-sources: 
+sources:
   - name: mysitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysitg_integration
@@ -9,6 +9,6 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: itg_my_pos_sales_fact
-
+      - name: itg_my_listprice
+      - name: itg_my_listprice_daily
 

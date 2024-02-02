@@ -69,16 +69,16 @@ final as
     all_months.month
 )
 select 
-distributor::varchar(40) as distributor,
-dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
-sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
-matl_num::varchar(100) as matl_num,
-month::number(18,0) as month,
-so_qty::number(38,6) as so_qty,
-so_value::number(38,17) as so_value ,
-inv_qty::number(38,4) as inv_qty,
-inv_value::number(38,13) as inv_value,
-sell_in_qty::number(38,4) as sell_in_qty,
-sell_in_value::number(38,13) as sell_in_value
+    distributor::varchar(40) as distributor,
+    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+    sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+    sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+    matl_num::varchar(100) as matl_num,
+    month::number(18,0) as month,
+    so_qty::number(38,6) as so_qty,
+    so_value::number(38,17) as so_value ,
+    inv_qty::number(38,4) as inv_qty,
+    inv_value::number(38,13) as inv_value,
+    sell_in_qty::number(38,4) as sell_in_qty,
+    sell_in_value::number(38,13) as sell_in_value
 from final

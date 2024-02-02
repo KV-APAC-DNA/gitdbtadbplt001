@@ -2,7 +2,7 @@ with itg_my_pos_sales_fact as
 (
     select * from {{ source('mysitg_integration', 'itg_my_pos_sales_fact') }}
 ),
-with edw_vw_my_listprice as
+edw_vw_my_listprice as
 (
     select * from {{ ref('mysedw_integration__edw_vw_my_listprice') }}
 ),

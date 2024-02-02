@@ -1,17 +1,19 @@
-with edw_material_plant_dim as(
+with edw_material_plant_dim as (
     select * from {{ ref('aspedw_integration__edw_material_plant_dim') }}
 ),
-edw_material_dim as(
-    select * from {{ ref('aspedw_integration__edw_material_dim') }}
-),
-edw_gch_producthierarchy as(
-    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
-),
-edw_material_sales_dim as(
+edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
-edw_material_uom as(
+edw_material_uom as (
     select * from {{ ref('aspedw_integration__edw_material_uom') }}
+),
+edw_material_dim
+ as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
+edw_gch_producthierarchy
+ as (
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 ---logical cte---
 remu as (
@@ -330,9 +332,8 @@ my as (SELECT DISTINCT
           )
         )
     ),
-final as 
-(
-    SELECT
+final as (
+SELECT
       my.cntry_key,
       my.sap_matl_num,
       my.sap_mat_desc,
@@ -385,7 +386,7 @@ final as
       my.qty_shipper_pc,
       my.prft_ctr,
       my.shlf_life
-    FROM 
+    FROM (
        my
-  )
+  ))
 select * from final
