@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: mysitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: mysitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_my_ciw_map
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_my_gt_outletattributes
+      - name: sdl_mds_my_gt_product_mapping
+      - name: sdl_mds_my_product_master
+      - name: sdl_mds_my_customer_hierarchy
+
