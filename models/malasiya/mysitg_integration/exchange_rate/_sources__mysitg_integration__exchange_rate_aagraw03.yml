@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_my_ids_rate
+        tags: ["hourly","my_sellout"]
