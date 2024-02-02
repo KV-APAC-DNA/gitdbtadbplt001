@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: mysedw_integration__edw_vw_my_curr_dim
-    config:
-      alias: edw_vw_my_curr_dim
-      tags: ["",""]
