@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  
+  - name: mysitg_integration__itg_my_outlet_attr
+    config:
+      alias: itg_my_outlet_attr
+      tags: ['my_mds_refresh','Daily']
+  
