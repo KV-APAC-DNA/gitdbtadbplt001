@@ -23,7 +23,7 @@ base as
         month <= (
         select distinct cal_mnth_id from edw_vw_os_time_dim
         where
-            cal_date = '2024-01-18'
+            cal_date = current_timestamp()::date
         )
     group by
         distributor,
@@ -53,14 +53,14 @@ final as
                             (select distinct "year", mnth_id from edw_vw_os_time_dim
                                 where mnth_id <= (
                                     select distinct mnth_id from edw_vw_os_time_dim 
-                                    where cal_date = '2024-01-18'
+                                    where cal_date = current_timestamp()::date
                                 )
                             )
                         )
                         where mnth_id = 
                         (
                         select distinct  mnth_id from edw_vw_os_time_dim
-                        where cal_date = '2024-01-18'
+                        where cal_date = current_timestamp()::date
                         )
                     )
     and (coalesce(so_value, 0) = 0 or coalesce(inv_value, 0) = 0)

@@ -12,7 +12,7 @@ base as
     *
     from wks_my_allmonths_base
     where
-    left(month, 4) >= (  date_part(year, '2024-01-18'::timestampntz) - 6)
+    left(month, 4) >= (  date_part(year, current_timestamp()::timestampntz) - 6)
 ),
 month_base3 as
 (
@@ -27,7 +27,7 @@ month_base3 as
         cal_mnth_id as mnth_id
         from edw_vw_os_time_dim
         where
-        cal_year >= ( date_part(year, '2024-01-18'::timestampntz) - 6)
+        cal_year >= ( date_part(year, current_timestamp()::timestampntz) - 6)
     )
 ),
 to_month3 as
@@ -74,7 +74,7 @@ month_base6 as
           from edw_vw_os_time_dim
           where
             cal_year >= (
-              date_part(year, '2024-01-18'::timestampntz) - 6
+              date_part(year, current_timestamp()::timestampntz) - 6
             )
         )
 ),
@@ -116,7 +116,7 @@ month_base12 as
         cal_mnth_id as mnth_id
         from edw_vw_os_time_dim
         where
-        cal_year >= (date_part(year, '2024-01-18'::timestampntz) - 6)
+        cal_year >= (date_part(year, current_timestamp()::timestampntz) - 6)
     )
 ),
 to_month12 as(
@@ -157,7 +157,7 @@ month_base36 as(
         from edw_vw_os_time_dim
         where
         cal_year >= (
-            date_part(year, '2024-01-18'::timestampntz) - 6
+            date_part(year, current_timestamp()::timestampntz) - 6
         )
     )
 ),

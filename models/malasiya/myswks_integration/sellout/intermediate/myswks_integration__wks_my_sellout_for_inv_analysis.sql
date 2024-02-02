@@ -45,12 +45,11 @@ edw_vw_greenlight_skus as
 curr_dim as
 (
     select
-        'MY' as cntry_key,
-        'Malasiya' as cntry_nm,
+        a.cntry_key,
+        a.cntry_nm,
         a.rate_type,
         a.from_ccy,
-        case when a.to_ccy = 'SGD' then 'MYR'
-        else a.to_ccy
+        a.to_ccy
         end as to_ccy,
         a.valid_date,
         a.jj_year,

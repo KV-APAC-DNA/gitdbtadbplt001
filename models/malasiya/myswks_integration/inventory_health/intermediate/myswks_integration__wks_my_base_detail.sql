@@ -66,7 +66,7 @@ base as
       from wks_my_lastnmonths as agg, wks_my_base as base
       where
         left(agg.month, 4) >= (
-          date_part(year, '2024-01-18'::timestamp_ntz) - 2
+          date_part(year, current_timestamp()::timestamp_ntz) - 2
         )
         and agg.distributor = base.distributor(+)
         and agg.dstrbtr_grp_cd = base.dstrbtr_grp_cd(+)
@@ -79,7 +79,7 @@ base as
             cal_mnth_id as mnth_id
           from edw_vw_os_time_dim
           where
-            cal_date = '2024-01-18'
+            cal_date = current_timestamp()::date
         )
     )
     group by

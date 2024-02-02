@@ -23,7 +23,7 @@ b as(
     from edw_vw_os_time_dim 
     where
         cal_year >= (
-        date_part(year, '2024-01-18'::timestamp_ntz) - 6
+        date_part(year, current_timestamp()::timestamp_ntz) - 6
         )
 ),
 all_months as
