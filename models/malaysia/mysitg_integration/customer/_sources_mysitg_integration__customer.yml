@@ -24,5 +24,3 @@ sources:
                 config:
                   store_failures: true
                   schema: myswks_integration
-
-      

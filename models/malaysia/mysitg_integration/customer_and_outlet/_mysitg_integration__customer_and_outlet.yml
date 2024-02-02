@@ -6,4 +6,3 @@ models:
     config:
       alias: itg_my_outlet_attr
       tags: ['my_mds_refresh','Daily']
-  

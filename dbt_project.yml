@@ -126,3 +126,6 @@ models:
           master:
             view:
               +materialized: view
+      myswks_integration:
+        +materialized: table
+        +schema: MYSWKS_INTEGRATION
