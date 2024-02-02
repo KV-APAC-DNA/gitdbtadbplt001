@@ -1,5 +1,6 @@
 with edw_sales_order_fact as(
-    select * from {{ ref('mypedw_integration__edw_sales_order_fact') }}
+    select * from {{ ref('aspedw_integration__edw_vw_os_sales_order_fact') }}
+    
 ),
 
 transformed as(
@@ -101,6 +102,5 @@ GROUP BY
   edw_sales_order_fact.reason_rej,
   19,
   exchg_rate
-
 )
 select * from transformed

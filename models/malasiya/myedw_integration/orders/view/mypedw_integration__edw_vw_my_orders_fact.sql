@@ -5,7 +5,77 @@ with edw_vw_os_sales_order_fact as(
 edw_vw_os_billing_fact as(
     select * from {{ ref('mypedw_integration__edw_vw_os_billing_fact') }}
 ),
-
+from_edw_vw_os_sales_order_fact as(
+     SELECT
+      edw_vw_os_sales_order_fact.cntry_key,
+      edw_vw_os_sales_order_fact.cntry_nm,
+      edw_vw_os_sales_order_fact.doc_dt,
+      edw_vw_os_sales_order_fact.bill_dt,
+      edw_vw_os_sales_order_fact.sls_doc_num,
+      edw_vw_os_sales_order_fact.sls_doc_item,
+      edw_vw_os_sales_order_fact.doc_creation_dt,
+      edw_vw_os_sales_order_fact.doc_type,
+      edw_vw_os_sales_order_fact.sd_doc_catgy,
+      edw_vw_os_sales_order_fact.po_num,
+      edw_vw_os_sales_order_fact.sold_to,
+      edw_vw_os_sales_order_fact.matl_num,
+      edw_vw_os_sales_order_fact.sls_org,
+      edw_vw_os_sales_order_fact.base_uom,
+      edw_vw_os_sales_order_fact.purch_ord_curr,
+      edw_vw_os_sales_order_fact.req_delvry_dt,
+      edw_vw_os_sales_order_fact.rejectn_st,
+      edw_vw_os_sales_order_fact.rejectn_cd,
+      edw_vw_os_sales_order_fact.rejectn_desc,
+      edw_vw_os_sales_order_fact.exchg_rate,
+      edw_vw_os_sales_order_fact.ord_qty,
+      edw_vw_os_sales_order_fact.net_price,
+      edw_vw_os_sales_order_fact.grs_trd_sls,
+      edw_vw_os_sales_order_fact.subtotal_2,
+      edw_vw_os_sales_order_fact.subtotal_3,
+      edw_vw_os_sales_order_fact.subtotal_4,
+      edw_vw_os_sales_order_fact.net_amt,
+      edw_vw_os_sales_order_fact.est_nts
+    FROM edw_vw_os_sales_order_fact
+    WHERE
+      (
+        CAST((
+          edw_vw_os_sales_order_fact.sls_org
+        ) AS TEXT) = CAST('2100' AS TEXT)
+      )
+),
+from_edw_vw_os_billing_fact as(
+    SELECT
+      edw_vw_os_billing_fact.cntry_key,
+      edw_vw_os_billing_fact.cntry_nm,
+      edw_vw_os_billing_fact.bill_dt,
+      edw_vw_os_billing_fact.bill_num,
+      edw_vw_os_billing_fact.bill_item,
+      edw_vw_os_billing_fact.bill_type,
+      edw_vw_os_billing_fact.sls_doc_num,
+      edw_vw_os_billing_fact.sls_doc_item,
+      edw_vw_os_billing_fact.doc_curr,
+      edw_vw_os_billing_fact.sd_doc_catgy,
+      edw_vw_os_billing_fact.sold_to,
+      edw_vw_os_billing_fact.matl_num,
+      edw_vw_os_billing_fact.sls_org,
+      edw_vw_os_billing_fact.exchg_rate,
+      edw_vw_os_billing_fact.bill_qty_pc,
+      edw_vw_os_billing_fact.grs_trd_sls,
+      edw_vw_os_billing_fact.subtotal_2,
+      edw_vw_os_billing_fact.subtotal_3,
+      edw_vw_os_billing_fact.subtotal_4,
+      edw_vw_os_billing_fact.net_amt,
+      edw_vw_os_billing_fact.est_nts,
+      edw_vw_os_billing_fact.net_val,
+      edw_vw_os_billing_fact.gross_val
+    FROM edw_vw_os_billing_fact
+    WHERE
+      (
+        CAST((
+          edw_vw_os_billing_fact.sls_org
+        ) AS TEXT) = CAST('2100' AS TEXT)
+      )
+),
 transformed as(
     SELECT
   osof.doc_dt,
@@ -72,75 +142,10 @@ transformed as(
   ) AS bill_gross_val
 FROM (
   (
-    SELECT
-      edw_vw_os_sales_order_fact.cntry_key,
-      edw_vw_os_sales_order_fact.cntry_nm,
-      edw_vw_os_sales_order_fact.doc_dt,
-      edw_vw_os_sales_order_fact.bill_dt,
-      edw_vw_os_sales_order_fact.sls_doc_num,
-      edw_vw_os_sales_order_fact.sls_doc_item,
-      edw_vw_os_sales_order_fact.doc_creation_dt,
-      edw_vw_os_sales_order_fact.doc_type,
-      edw_vw_os_sales_order_fact.sd_doc_catgy,
-      edw_vw_os_sales_order_fact.po_num,
-      edw_vw_os_sales_order_fact.sold_to,
-      edw_vw_os_sales_order_fact.matl_num,
-      edw_vw_os_sales_order_fact.sls_org,
-      edw_vw_os_sales_order_fact.base_uom,
-      edw_vw_os_sales_order_fact.purch_ord_curr,
-      edw_vw_os_sales_order_fact.req_delvry_dt,
-      edw_vw_os_sales_order_fact.rejectn_st,
-      edw_vw_os_sales_order_fact.rejectn_cd,
-      edw_vw_os_sales_order_fact.rejectn_desc,
-      edw_vw_os_sales_order_fact.exchg_rate,
-      edw_vw_os_sales_order_fact.ord_qty,
-      edw_vw_os_sales_order_fact.net_price,
-      edw_vw_os_sales_order_fact.grs_trd_sls,
-      edw_vw_os_sales_order_fact.subtotal_2,
-      edw_vw_os_sales_order_fact.subtotal_3,
-      edw_vw_os_sales_order_fact.subtotal_4,
-      edw_vw_os_sales_order_fact.net_amt,
-      edw_vw_os_sales_order_fact.est_nts
-    FROM edw_vw_os_sales_order_fact
-    WHERE
-      (
-        CAST((
-          edw_vw_os_sales_order_fact.sls_org
-        ) AS TEXT) = CAST('2100' AS TEXT)
-      )
+   from_edw_vw_os_sales_order_fact
   ) AS osof
   LEFT JOIN (
-    SELECT
-      edw_vw_os_billing_fact.cntry_key,
-      edw_vw_os_billing_fact.cntry_nm,
-      edw_vw_os_billing_fact.bill_dt,
-      edw_vw_os_billing_fact.bill_num,
-      edw_vw_os_billing_fact.bill_item,
-      edw_vw_os_billing_fact.bill_type,
-      edw_vw_os_billing_fact.sls_doc_num,
-      edw_vw_os_billing_fact.sls_doc_item,
-      edw_vw_os_billing_fact.doc_curr,
-      edw_vw_os_billing_fact.sd_doc_catgy,
-      edw_vw_os_billing_fact.sold_to,
-      edw_vw_os_billing_fact.matl_num,
-      edw_vw_os_billing_fact.sls_org,
-      edw_vw_os_billing_fact.exchg_rate,
-      edw_vw_os_billing_fact.bill_qty_pc,
-      edw_vw_os_billing_fact.grs_trd_sls,
-      edw_vw_os_billing_fact.subtotal_2,
-      edw_vw_os_billing_fact.subtotal_3,
-      edw_vw_os_billing_fact.subtotal_4,
-      edw_vw_os_billing_fact.net_amt,
-      edw_vw_os_billing_fact.est_nts,
-      edw_vw_os_billing_fact.net_val,
-      edw_vw_os_billing_fact.gross_val
-    FROM edw_vw_os_billing_fact
-    WHERE
-      (
-        CAST((
-          edw_vw_os_billing_fact.sls_org
-        ) AS TEXT) = CAST('2100' AS TEXT)
-      )
+    from_edw_vw_os_billing_fact
   ) AS obf
     ON (
       (
@@ -154,5 +159,40 @@ FROM (
     )
 )
 
+),
+final as(
+    select doc_dt as "doc_dt",
+    po_num as "po_num",
+    sls_doc_num as "sls_doc_num",
+    sls_doc_item as "sls_doc_item",
+    sls_doc_type as "sls_doc_type",
+    bill_dt as "bill_dt",
+    bill_num as "bill_num",
+    bill_item as "bill_item",
+    doc_creation_dt as "doc_creation_dt",
+    sold_to as "sold_to",
+    matl_num as "matl_num",
+    req_delvry_dt as "req_delvry_dt",
+    rejectn_st as "rejectn_st",
+    rejectn_cd as "rejectn_cd",
+    rejectn_desc as "rejectn_desc",
+    ord_qty as "ord_qty",
+    ord_net_price as "ord_net_price",
+    ord_grs_trd_sls as "ord_grs_trd_sls",
+    ord_subtotal_2 as "ord_subtotal_2",
+    ord_subtotal_3 as "ord_subtotal_3",
+    ord_subtotal_4 as "ord_subtotal_4",
+    ord_net_amt as "ord_net_amt",
+    ord_est_nts as "ord_est_nts",
+    bill_qty_pc as "bill_qty_pc",
+    bill_grs_trd_sls as "bill_grs_trd_sls",
+    bill_subtotal_2 as "bill_subtotal_2",
+    bill_subtotal_3 as "bill_subtotal_3",
+    bill_subtotal_4 as "bill_subtotal_4",
+    bill_net_amt as "bill_net_amt",
+    bill_est_nts as "bill_est_nts",
+    bill_net_val as "bill_net_val",
+    bill_gross_val as "bill_gross_val"
+ from transformed
 )
-select * from transformed
+select * from final

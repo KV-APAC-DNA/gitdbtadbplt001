@@ -1,8 +1,9 @@
 with edw_copa_trans_fact as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 itg_my_ciw_map as(
-    select * from DEV_DNA_CORE.MYSITG_INTEGRATION.ITG_MY_CIW_MAP
+    select * from {{ ref('mypitg_integration__itg_my_ciw_map') }} 
+
 ),
 
 transformed as(
@@ -290,6 +291,41 @@ transformed as(
   ) AS t2
 
 
+),
+final as(
+    select co_cd as "co_cd",
+    cntry_nm as "cntry_nm",
+    pstng_dt as "pstng_dt",
+    jj_mnth_id as "jj_mnth_id",
+    item_cd as "item_cd",
+    cust_id as "cust_id",
+    sls_org as "sls_org",
+    plnt as "plnt",
+    dstr_chnl as "dstr_chnl",
+    acct_no as "acct_no",
+    bill_typ as "bill_typ",
+    sls_ofc as "sls_ofc",
+    sls_grp as "sls_grp",
+    sls_dist as "sls_dist",
+    cust_grp as "cust_grp",
+    cust_sls as "cust_sls",
+    fisc_yr as "fisc_yr",
+    pstng_per as "pstng_per",
+    base_val as "base_val",
+    sls_qty as "sls_qty",
+    ret_qty as "ret_qty",
+    sls_less_rtn_qty as "sls_less_rtn_qty",
+    gts_val as "gts_val",
+    ret_val as "ret_val",
+    gts_less_rtn_val as "gts_less_rtn_val",
+    trdng_term_val as "trdng_term_val",
+    tp_val as "tp_val",
+    trde_prmtn_val as "trde_prmtn_val",
+    off_inv_trde_prmtn_val as "off_inv_trde_prmtn_val",
+    nts_val as "nts_val",
+    nts_qty as "nts_qty",
+    cogs as "cogs"
+    from transformed
 )
 
-select * from transformed
+select * from final
