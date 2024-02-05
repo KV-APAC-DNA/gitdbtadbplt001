@@ -24,7 +24,7 @@ edw_vw_my_pos_sales_fact as
 ),
 itg_my_customer_dim as
 (
-   select * from {{ source('mysitg_integration', 'itg_my_customer_dim') }} 
+   select * from {{ ref('mysitg_integration__itg_my_customer_dim') }} 
 ),
 edw_vw_my_customer_dim as
 (
@@ -32,7 +32,7 @@ edw_vw_my_customer_dim as
 ),
 itg_my_dstrbtrr_dim as
 (
-   select * from {{ source('mysitg_integration', 'itg_my_dstrbtrr_dim') }}    
+   select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}    
 ),
 edw_vw_my_material_dim as
 (

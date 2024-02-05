@@ -9,9 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: itg_my_pos_sales_fact
       - name: itg_my_as_watsons_inventory
-      - name: itg_my_pos_cust_mstr
   - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysedw_integration

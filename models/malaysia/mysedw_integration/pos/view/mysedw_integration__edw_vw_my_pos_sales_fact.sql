@@ -1,6 +1,6 @@
 with itg_my_pos_sales_fact as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_pos_sales_fact') }}
+    select * from {{ ref('mysitg_integration__itg_my_pos_sales_fact') }}
 ),
 edw_vw_my_listprice as
 (

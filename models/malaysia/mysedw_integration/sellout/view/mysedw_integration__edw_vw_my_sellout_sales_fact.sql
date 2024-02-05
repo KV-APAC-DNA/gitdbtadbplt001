@@ -1,15 +1,18 @@
 
 with itg_my_sellout_sales_fact as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_sellout_sales_fact') }}
+    select * from {{ ref('mysitg_integration__itg_my_sellout_sales_fact') }}
 ),
 itg_my_customer_dim as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_customer_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
 itg_my_dstrbtr_doc_type as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_dstrbtr_doc_type') }}
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtr_doc_type') }}
+),
+edw_vw_my_listprice as (
+    select * from {{ref('mysedw_integration__edw_vw_my_listprice')}}
 ),
 listprice as
 (

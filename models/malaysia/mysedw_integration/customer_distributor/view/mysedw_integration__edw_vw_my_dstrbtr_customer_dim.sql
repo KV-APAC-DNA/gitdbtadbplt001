@@ -1,14 +1,14 @@
 with itg_my_dstrbtr_cust_dim as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_dstrbtr_cust_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }}
 ),
 itg_my_dstrbtrr_dim as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_dstrbtrr_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
 ),
 itg_my_customer_dim as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_customer_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
 final as
 (

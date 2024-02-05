@@ -12,10 +12,10 @@ edw_vw_os_time_dim as (
   select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_my_pos_cust_mstr as (
-  select * from {{ source('mysitg_integration', 'itg_my_pos_cust_mstr') }}
+  select * from {{ ref('mysitg_integration__itg_my_pos_cust_mstr') }}
 ),
 itg_my_customer_dim as (
-  select * from {{ source('mysitg_integration', 'itg_my_customer_dim') }}
+  select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
 td as (
       SELECT DISTINCT
