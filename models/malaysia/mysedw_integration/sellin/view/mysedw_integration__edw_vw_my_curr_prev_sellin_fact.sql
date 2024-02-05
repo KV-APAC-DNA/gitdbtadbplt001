@@ -1,5 +1,5 @@
 with edw_my_sellin_prev_dt_snpsht as(
-    select * from dev_dna_core.mysedw_integration.edw_my_sellin_prev_dt_snpsht
+    select * from {{ source('mysedw_integration', 'edw_my_sellin_prev_dt_snpsht') }}
 ),
 
 edw_vw_my_sellin_sales_fact as(

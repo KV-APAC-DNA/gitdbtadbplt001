@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: mysitg_integration
+  - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: mysitg_integration
+    schema: mysedw_integration
     quoting:
       database: false
       schema: false
