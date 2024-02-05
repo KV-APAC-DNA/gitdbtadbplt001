@@ -3,7 +3,7 @@ with edw_my_sellin_prev_dt_snpsht as(
 ),
 
 edw_vw_my_sellin_sales_fact as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_sellin_sales_fact') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_sellin_sales_fact') }}
 ),
 transformed as (
     select

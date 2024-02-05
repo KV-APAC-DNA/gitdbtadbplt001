@@ -1,26 +1,26 @@
 with edw_vw_os_curr_dim as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_curr_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_curr_dim') }}
 ),
 edw_vw_os_pos_sales_fact as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_pos_sales_fact') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_pos_sales_fact') }}
 ),
 edw_vw_os_material_dim as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_material_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_material_dim') }}
 ),
 edw_vw_os_customer_dim as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_customer_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_customer_dim') }}
 ),
 edw_vw_os_pos_material_dim as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_pos_material_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_pos_material_dim') }}
 ),
 edw_vw_os_pos_customer_dim as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_pos_customer_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_pos_customer_dim') }}
 ),
 itg_my_customer_dim as(
-    select * from {{ ref('mypitg_integration__itg_my_customer_dim') }} 
+    select * from {{ ref('mysitg_integration__itg_my_customer_dim') }} 
 ),
 itg_my_material_dim as(
-    select * from {{ ref('mypitg_integration__itg_my_material_dim') }} 
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }} 
 ),
 transformed as (
    select

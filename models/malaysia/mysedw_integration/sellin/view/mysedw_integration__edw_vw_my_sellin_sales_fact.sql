@@ -2,7 +2,7 @@ with edw_copa_trans_fact as(
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 itg_my_ciw_map as(
-    select * from {{ ref('mypitg_integration__itg_my_ciw_map') }} 
+    select * from {{ ref('mysitg_integration__itg_my_ciw_map') }} 
 
 ),
 

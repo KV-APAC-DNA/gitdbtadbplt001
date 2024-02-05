@@ -1,14 +1,14 @@
 version: 2
 
 models:
-  - name: mypedw_integration__edw_vw_my_curr_prev_sellin_fact
+  - name: mysedw_integration__edw_vw_my_curr_prev_sellin_fact
     config:
       alias: edw_vw_my_curr_prev_sellin_fact
      
-  - name: mypedw_integration__edw_vw_my_billing_fact
+  - name: mysedw_integration__edw_vw_my_billing_fact
     config:
       alias: edw_vw_my_billing_fact
 
-  - name: mypedw_integration__edw_vw_my_sellin_sales_fact
+  - name: mysedw_integration__edw_vw_my_sellin_sales_fact
     config:
       alias: edw_vw_my_sellin_sales_fact

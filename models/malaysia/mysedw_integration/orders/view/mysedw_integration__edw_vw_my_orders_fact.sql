@@ -1,9 +1,9 @@
 with edw_vw_my_sales_order_fact as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_sales_order_fact') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_sales_order_fact') }}
 ),
 
 edw_vw_my_billing_fact as(
-    select * from {{ ref('mypedw_integration__edw_vw_my_billing_fact') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_billing_fact') }}
 ),
 from_edw_vw_my_sales_order_fact as(
      SELECT
