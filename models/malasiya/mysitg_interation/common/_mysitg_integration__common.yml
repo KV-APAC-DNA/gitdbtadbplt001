@@ -1,5 +1,0 @@
-version: 2
-models:
-  - name: mysitg_integration__itg_my_ciw_map
-    config:
-      alias: itg_my_ciw_map
