@@ -1,5 +1,5 @@
 with edw_sales_order_fact as(
-    select * from {{ ref('aspedw_integration__edw_vw_os_sales_order_fact') }}
+    select * from {{ ref('aspedw_integration__edw_sales_order_fact') }}
     
 ),
 

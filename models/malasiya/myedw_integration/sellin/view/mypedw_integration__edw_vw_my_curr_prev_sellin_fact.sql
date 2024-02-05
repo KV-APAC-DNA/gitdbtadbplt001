@@ -2,8 +2,8 @@ with edw_my_sellin_prev_dt_snpsht as(
     select * from dev_dna_core.mysedw_integration.edw_my_sellin_prev_dt_snpsht
 ),
 
-edw_vw_os_sellin_sales_fact as(
-    select * from {{ ref('mypedw_integration__edw_vw_os_sellin_sales_fact') }}
+edw_vw_my_sellin_sales_fact as(
+    select * from {{ ref('mypedw_integration__edw_vw_my_sellin_sales_fact') }}
 ),
 transformed as (
     select
@@ -111,7 +111,7 @@ transformed as (
   ) AS nts_qty,
   'Y' AS is_curr
 FROM (
-  edw_vw_os_sellin_sales_fact AS vosst
+  edw_vw_my_sellin_sales_fact AS vosst
     LEFT JOIN edw_my_sellin_prev_dt_snpsht AS mspds
       ON (
         (
