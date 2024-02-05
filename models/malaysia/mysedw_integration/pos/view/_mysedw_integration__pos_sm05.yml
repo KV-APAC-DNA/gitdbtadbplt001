@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: mypedw_integration__edw_vw_my_pos_analysis
+    config:
+      alias: edw_vw_my_pos_analysis
