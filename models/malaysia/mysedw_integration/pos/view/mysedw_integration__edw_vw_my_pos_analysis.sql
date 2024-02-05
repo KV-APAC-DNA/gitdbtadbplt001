@@ -11,10 +11,10 @@ edw_vw_os_customer_dim as(
     select * from {{ ref('mysedw_integration__edw_vw_my_customer_dim') }}
 ),
 edw_vw_os_pos_material_dim as(
-    select * from {{ ref('mysedw_integration__edw_vw_my_pos_material_dim') }}
+    select * from {{ source('mysedw_integration','edw_vw_my_pos_material_dim') }}
 ),
 edw_vw_os_pos_customer_dim as(
-    select * from {{ ref('mysedw_integration__edw_vw_my_pos_customer_dim') }}
+    select * from {{ source('mysedw_integration','edw_vw_my_pos_customer_dim') }}
 ),
 itg_my_customer_dim as(
     select * from {{ ref('mysitg_integration__itg_my_customer_dim') }} 

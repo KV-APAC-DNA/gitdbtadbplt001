@@ -13,3 +13,7 @@ models:
     config:
       alias: edw_vw_my_si_pos_inv_analysis
       tags: ["",""]
+  - name: mysedw_integration__edw_vw_my_pos_analysis
+    config:
+      alias: edw_vw_my_pos_analysis
+      tags: ["",""]

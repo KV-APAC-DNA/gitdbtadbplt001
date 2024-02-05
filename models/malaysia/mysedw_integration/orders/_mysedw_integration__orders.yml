@@ -4,7 +4,9 @@ models:
   - name: mysedw_integration__edw_vw_my_sales_order_fact
     config:
       alias: edw_vw_my_sales_order_fact
+      tags: ["",""]
 
   - name: mysedw_integration__edw_vw_my_orders_fact
     config:
       alias: edw_vw_my_orders_fact
+      tags: ["",""]
