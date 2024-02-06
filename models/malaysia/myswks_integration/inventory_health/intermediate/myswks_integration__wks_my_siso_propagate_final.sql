@@ -17,7 +17,6 @@ wks_my_siso_propagate_to_existing_dtls as
 set1 as
 (
     select
-        '1' as num,
         distributor,
         dstrbtr_grp_cd,
         sap_parent_customer_key,
@@ -68,7 +67,6 @@ set1 as
 set2 as   
 (
     select
-        '2' as num,
         propagated.distributor,
         propagated.dstrbtr_grp_cd,
         propagated.sap_parent_customer_key,
@@ -116,7 +114,6 @@ set2 as
 set3 as
 (
     select 
-        '3' as num,
         propagated.distributor,
         propagated.dstrbtr_grp_cd,
         propagated.sap_parent_customer_key,
@@ -173,7 +170,6 @@ final_set as
 final as
 (
     select 
-        num,
         distributor::varchar(40) as distributor,
         dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
         sap_parent_customer_key::varchar(12) as sap_parent_customer_key,

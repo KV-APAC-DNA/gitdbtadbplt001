@@ -27,10 +27,7 @@ listprice as
       from edw_vw_my_listprice
       where
         (
-          (
-            cast((  edw_vw_my_listprice.cntry_key) as text) = cast((  cast('my' as varchar)) as text)
-          )
-          and (cast((  edw_vw_my_listprice.mnth_type) as text) = cast((  cast('jj' as varchar)) as text)
+        (cast((  edw_vw_my_listprice.mnth_type) as text) = cast((  cast('JJ' as varchar)) as text)
           )
         )
 ),

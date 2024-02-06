@@ -70,7 +70,7 @@ WHERE
       COALESCE(sipos.sold_to, CAST('NA' AS VARCHAR)) IN 
       (
         SELECT DISTINCT
-          COALESCE(b.cust_id, CAST('NA' AS VARCHAR)) AS "coalesce"
+          COALESCE(b.cust_id, CAST('NA' AS VARCHAR)) 
         FROM itg_my_pos_cust_mstr AS a, itg_my_customer_dim AS b
         WHERE
           (
@@ -139,14 +139,6 @@ veomd as
     edw_vw_my_material_dim.prft_ctr,
     edw_vw_my_material_dim.shlf_life
   FROM edw_vw_my_material_dim
-  WHERE
-    (
-      CAST((
-        edw_vw_my_material_dim.cntry_key
-      ) AS TEXT) = CAST((
-        CAST('MY' AS VARCHAR)
-      ) AS TEXT)
-    )
 ) ,
 lp_jj as
 (
@@ -169,9 +161,7 @@ lp_jj as
   FROM edw_vw_my_listprice
   WHERE
     (
-      (CAST((  edw_vw_my_listprice.cntry_key) AS TEXT) = CAST((  CAST('MY' AS VARCHAR)) AS TEXT)
-      )
-      AND (CAST((  edw_vw_my_listprice.mnth_type) AS TEXT) = CAST((  CAST('JJ' AS VARCHAR)) AS TEXT)
+       (CAST((  edw_vw_my_listprice.mnth_type) AS TEXT) = CAST((  CAST('JJ' AS VARCHAR)) AS TEXT)
       )
     )
 ) ,
@@ -196,9 +186,7 @@ lp_cal as
   FROM edw_vw_my_listprice
   WHERE
     (
-      (CAST((  edw_vw_my_listprice.cntry_key) AS TEXT) = CAST((  CAST('MY' AS VARCHAR)) AS TEXT)
-      )
-      AND (CAST((  edw_vw_my_listprice.mnth_type) AS TEXT) = CAST((  CAST('CAL' AS VARCHAR)) AS TEXT)
+    (CAST((  edw_vw_my_listprice.mnth_type) AS TEXT) = CAST((  CAST('CAL' AS VARCHAR)) AS TEXT)
       )
     )
 ),
@@ -251,7 +239,8 @@ FROM  veotd,
       edw_vw_my_pos_inventory AS inv
         LEFT JOIN  lp_cal
           ON (
-              (LTRIM(CAST((  lp_cal.item_cd) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) = LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
+              (LTRIM(CAST((  lp_cal.item_cd) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) 
+              = LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
               )
               AND
               (
@@ -263,7 +252,8 @@ FROM  veotd,
     LEFT JOIN lp_jj
       ON (
         (
-          (LTRIM(CAST((  lp_jj.item_cd) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) = LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
+          (LTRIM(CAST((  lp_jj.item_cd) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) 
+          = LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
           )
           AND (CAST((  lp_jj.yearmo) AS TEXT) = CAST((  inv.mnth_id) AS TEXT)
           )
@@ -272,7 +262,8 @@ FROM  veotd,
   )
   LEFT JOIN veomd
     ON (
-      (LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) = LTRIM(CAST((  veomd.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
+      (LTRIM(CAST((  inv.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT)) 
+      = LTRIM(CAST((  veomd.sap_matl_num) AS TEXT), CAST((  CAST('0' AS VARCHAR)) AS TEXT))
       )
     )
 )

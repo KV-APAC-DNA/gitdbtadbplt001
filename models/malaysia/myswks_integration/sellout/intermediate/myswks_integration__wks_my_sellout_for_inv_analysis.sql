@@ -1,6 +1,6 @@
 with edw_vw_my_curr_dim as
 (
-    select * from {{ ref('sgpedw_integration__edw_vw_sg_curr_dim') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_curr_dim') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -49,8 +49,7 @@ curr_dim as
         a.cntry_nm,
         a.rate_type,
         a.from_ccy,
-        a.to_ccy
-        end as to_ccy,
+        a.to_ccy,
         a.valid_date,
         a.jj_year,
         min(cast(a.jj_mnth_id as text)) as start_period,
@@ -135,11 +134,11 @@ t2 as
         and ltrim(cast(evodcd.sap_soldto_code as text), cast(cast('0' as varchar) as text)) = ltrim(cast(t1.dstrbtr_soldto_code as text), cast(cast('0' as varchar) as text))
       where
         veotd.cal_date  = t1.bill_date
-        and not (
+        and  not (
           coalesce(
             ltrim(cast(t1.dstrbtr_soldto_code as text), cast(cast('0' as varchar) as text)),
             cast(cast('0' as varchar) as text)
-          ) || coalesce(trim(cast(t1.cust_cd as text)), cast(cast('0' as varchar) as text)) in (
+          ) || coalesce(trim(cast(t1.cust_cd as text)), cast(cast('0' as varchar) as text))  in (
             select distinct
               cast(coalesce(itg_my_gt_outlet_exclusion.dstrbtr_cd, cast('0' as varchar)) as text) || cast(coalesce(itg_my_gt_outlet_exclusion.outlet_cd, cast('0' as varchar)) as text)
             from itg_my_gt_outlet_exclusion
@@ -185,8 +184,7 @@ veosf as
       CASE
         WHEN mnth_id IS NULL
         THEN NULL
-        ELSE CAST((LEFT(mnth_id, 4) || '-' || SUBSTRING(mnth_id, 5, 6) || '-01'
-        ) AS DATE)
+        ELSE CAST((LEFT(mnth_id, 4) || '-' || SUBSTRING(mnth_id, 5, 6) || '-01') AS DATE)
       END AS bill_date,
       dstrbtr_grp_cd,
       cust_cd,
@@ -201,26 +199,26 @@ veosf as
       SELECT
         CAST('SIPOS' AS VARCHAR) AS data_src,
         CASE
-          WHEN NOT a.jj_yr_week_no IS NULL
+          WHEN a.jj_yr_week_no IS NOT  NULL
           OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
           THEN b1."year"
           ELSE b2."year"
         END AS "year",
         CASE
-          WHEN NOT a.jj_yr_week_no IS NULL
-          OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
+          WHEN a.jj_yr_week_no IS NOT  NULL
+          OR (CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT))
           THEN b1.qrtr_no
           ELSE b2.qrtr_no
         END AS qrtr,
         CASE
-          WHEN NOT a.jj_yr_week_no IS NULL
-          OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
+          WHEN a.jj_yr_week_no IS NOT  NULL
+          OR (CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT))
           THEN CAST(b1.mnth_id AS INT)
           ELSE CAST(b2.mnth_id AS INT)
         END AS mnth_id,
         CASE
-          WHEN NOT a.jj_yr_week_no IS NULL
-          OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
+          WHEN a.jj_yr_week_no IS NOT  NULL
+          OR (CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT))
           THEN b1.mnth_no
           ELSE b2.mnth_no
         END AS mnth_no,
@@ -238,7 +236,7 @@ veosf as
         ON LTRIM(CAST(imcd.cust_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = UPPER(TRIM(SUBSTRING(CAST(a.cust_cd AS TEXT), 0, 7)))
       LEFT JOIN b1
         ON CASE
-                WHEN NOT a.jj_yr_week_no IS NULL OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
+                WHEN a.jj_yr_week_no IS NOT NULL OR CAST(a.jj_yr_week_no AS TEXT) <> CAST(CAST('' AS VARCHAR) AS TEXT)
                 THEN CAST(a.jj_yr_week_no AS TEXT) = b1.yr_wk
             ELSE CAST(NULL AS BOOLEAN)
             END
@@ -272,14 +270,12 @@ veocd as
     edw_vw_my_customer_dim.sap_bnr_frmt_desc,
     edw_vw_my_customer_dim.retail_env,
     CASE
-      WHEN SAP_PRNT_CUST_KEY = 'PC0004'
-      THEN 'Not Applicable'
-      ELSE TRIM(COALESCE(NULLIF(T2.REGION, ''), 'NA'))
+        WHEN SAP_PRNT_CUST_KEY = 'PC0004' THEN 'Not Applicable'
+        ELSE TRIM(NVL (NULLIF(T2.REGION, ''), 'NA'))
     END AS REGION,
     CASE
-      WHEN SAP_PRNT_CUST_KEY = 'PC0004'
-      THEN 'Not Applicable'
-      ELSE TRIM(COALESCE(NULLIF(T2.ZONE_OR_AREA, ''), 'NA'))
+        WHEN SAP_PRNT_CUST_KEY = 'PC0004' THEN 'Not Applicable'
+        ELSE TRIM(NVL (NULLIF(T2.ZONE_OR_AREA, ''), 'NA'))
     END AS ZONE_OR_AREA
   FROM edw_vw_my_customer_dim, (
     SELECT
@@ -302,25 +298,25 @@ veocd as
 veomd as
 (
   SELECT DISTINCT
-    edw_vw_my_material_dim.cntry_key,
-    edw_vw_my_material_dim.sap_matl_num,
-    edw_vw_my_material_dim.sap_mat_desc,
-    edw_vw_my_material_dim.gph_prod_frnchse,
-    edw_vw_my_material_dim.gph_prod_brnd,
-    edw_vw_my_material_dim.gph_prod_sub_brnd,
-    edw_vw_my_material_dim.gph_prod_vrnt,
-    edw_vw_my_material_dim.gph_prod_ctgry,
-    edw_vw_my_material_dim.gph_prod_subctgry,
-    edw_vw_my_material_dim.gph_prod_sgmnt,
-    edw_vw_my_material_dim.gph_prod_subsgmnt,
-    edw_vw_my_material_dim.gph_prod_put_up_desc,
+    eod.cntry_key,
+    eod.sap_matl_num,
+    eod.sap_mat_desc,
+    eod.gph_prod_frnchse,
+    eod.gph_prod_brnd,
+    eod.gph_prod_sub_brnd,
+    eod.gph_prod_vrnt,
+    eod.gph_prod_ctgry,
+    eod.gph_prod_subctgry,
+    eod.gph_prod_sgmnt,
+    eod.gph_prod_subsgmnt,
+    eod.gph_prod_put_up_desc,
     EMD.greenlight_sku_flag AS greenlight_sku_flag,
     EMD.pka_product_key AS pka_product_key,
     EMD.pka_product_key_description AS pka_product_key_description,
     EMD.product_key AS product_key,
     EMD.product_key_description AS product_key_description,
     EMD.pka_size_desc AS pka_size_desc
-  FROM edw_vw_my_material_dim
+  FROM edw_vw_my_material_dim as eod
   LEFT JOIN (
     SELECT
       *
@@ -328,7 +324,7 @@ veomd as
     WHERE
       sls_org = '2100'
   ) AS EMD
-    ON edw_vw_my_material_dim.sap_matl_num = EMD.MATL_NUM
+    ON eod.sap_matl_num = EMD.MATL_NUM
 ),
 final as
 (SELECT
@@ -369,4 +365,17 @@ GROUP BY
   veomd.gph_prod_sgmnt,
   veomd.pka_product_key
 )
-  select * from final
+  select 
+    cntry_nm::varchar(8) as cntry_nm,
+    dstrbtr_grp_cd::varchar(20) as dstrbtr_grp_cd,
+    dstrbtr_lvl3::varchar(40) as dstrbtr_lvl3,
+    sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+    pka_size_desc::varchar(30) as pka_size_desc,
+    global_prod_brand::varchar(30) as global_prod_brand,
+    global_prod_variant::varchar(100) as global_prod_variant,
+    global_prod_category::varchar(50) as global_prod_category,
+    global_prod_segment::varchar(50) as global_prod_segment,
+    pka_product_key::varchar(68) as pka_product_key,
+    to_ccy::varchar(5) as to_ccy,
+    min_date::date as min_date
+   from final
