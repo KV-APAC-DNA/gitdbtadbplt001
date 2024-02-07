@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: mysedw_integration__edw_vw_my_sellin_analysis
+    config:
+      alias: edw_vw_my_sellin_analysis
+      tags: ["daily","my_sellin_analysis"]
+  - name: mysedw_integration__edw_my_sellin_analysis
+    config:
+      alias: edw_my_sellin_analysis
+      tags: ["daily","my_sellin_analysis"]
