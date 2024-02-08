@@ -1,4 +1,3 @@
-
 with edw_vw_os_time_dim as (
               select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
@@ -7,24 +6,7 @@ itg_my_pos_sales_fact as (
 ),
 c as  (
     select distinct
-      (
-        cast((
-          cast((
-            edw_vw_os_time_dim."year"
-          ) as varchar)
-        ) as text) || right(
-          (
-            cast((
-              cast('00' as varchar)
-            ) as text) + cast((
-              cast((
-                edw_vw_os_time_dim.wk
-              ) as varchar)
-            ) as text)
-          ),
-          2
-        )
-      ) as yr_wk,
+    edw_vw_os_time_dim."year" || right('00' || edw_vw_os_time_dim.wk::text, 2 ) as yr_wk,
       edw_vw_os_time_dim.mnth_id
     from edw_vw_os_time_dim
     where
@@ -38,44 +20,11 @@ f as
             select
               min(edw_vw_os_time_dim.cal_date) as eff_str_date,
               max(edw_vw_os_time_dim.cal_date) as eff_end_date,
-              (
-                cast((
-                  cast((
-                    edw_vw_os_time_dim."year"
-                  ) as varchar)
-                ) as text) || right(
-                  (
-                    cast((
-                      cast('00' as varchar)
-                    ) as text) + cast((
-                      cast((
-                        edw_vw_os_time_dim.wk
-                      ) as varchar)
-                    ) as text)
-                  ),
-                  2
-                )
-              ) as yr_wk
+            
+    edw_vw_os_time_dim."year" || right('00' || edw_vw_os_time_dim.wk::text, 2 ) as yr_wk
             from edw_vw_os_time_dim
             group by
-              (
-                cast((
-                  cast((
-                    edw_vw_os_time_dim."year"
-                  ) as varchar)
-                ) as text) || right(
-                  (
-                    cast((
-                      cast('00' as varchar)
-                    ) as text) + cast((
-                      cast((
-                        edw_vw_os_time_dim.wk
-                      ) as varchar)
-                    ) as text)
-                  ),
-                  2
-                )
-              )
+              edw_vw_os_time_dim."year" || right('00' || edw_vw_os_time_dim.wk::text, 2 )
           
 ),
 a as 
@@ -153,7 +102,7 @@ d as (
 derived_table1 as 
   (
   select distinct
-    cast('MY' AS varchar) as cntry_cd,
+    cast('MY' as varchar) as cntry_cd,
     cast('Malaysia' as varchar) as cntry_nm,
     cast(null as varchar) as jj_mnth_id,
     b.cust_id,
@@ -443,7 +392,7 @@ select
   derived_table1.early_bk_period,
   derived_table1.eff_str_date,
   derived_table1.eff_end_date
-  from derived_table1
+from  derived_table1
 )
 
 select * from final

@@ -25,6 +25,7 @@ select
     null as city_nm,
     null as mncplty_cd,
     null as mncplty_nm
-  from source)
+  from source
+  )
 
   select * from final

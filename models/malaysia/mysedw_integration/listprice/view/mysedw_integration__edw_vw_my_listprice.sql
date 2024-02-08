@@ -5,10 +5,10 @@ with itg_my_listprice as
 
 itg_my_listprice_daily as
 (
-    select * from {{ source('mysitg_integration','itg_my_listprice_daily') }}
+    select * from {{ source('mysitg_integration__itg_my_listprice_daily') }}
 ),
 
---need to change itg model references and update yml file
+
 a as ((
 select
         max(cast((itg_my_listprice.yearmo) as text)) as max_hist

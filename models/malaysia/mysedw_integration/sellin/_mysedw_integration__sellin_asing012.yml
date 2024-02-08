@@ -4,5 +4,6 @@ models:
   - name: mysedw_integration__edw_my_sellin_prev_dt_snpsht
     config: 
       alias: edw_my_sellin_prev_dt_snpsht
+      tags: ["daily","my_sellin_analysis"]
      
   

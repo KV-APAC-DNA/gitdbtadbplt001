@@ -15,9 +15,7 @@ tbl1 as (
         trgt_type,
         trgt_val_type,
         cast(jan_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 
 ),
@@ -34,9 +32,7 @@ tbl2 as (
         trgt_type,
         trgt_val_type,
         cast(feb_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 
 ),
@@ -53,9 +49,7 @@ tbl3 as (
         trgt_type,
         trgt_val_type,
         cast(mar_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl4 as (
@@ -71,9 +65,7 @@ tbl4 as (
         trgt_type,
         trgt_val_type,
         cast(apr_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl5 as (
@@ -89,9 +81,7 @@ tbl5 as (
         trgt_type,
         trgt_val_type,
         cast(may_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl6 as (
@@ -107,9 +97,7 @@ tbl6 as (
         trgt_type,
         trgt_val_type,
         cast(jun_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl7 as (
@@ -125,9 +113,7 @@ tbl7 as (
         trgt_type,
         trgt_val_type,
         cast(jul_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl8 as (
@@ -143,9 +129,7 @@ tbl8 as (
         trgt_type,
         trgt_val_type,
         cast(aug_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl9 as (
@@ -161,9 +145,7 @@ tbl9 as (
         trgt_type,
         trgt_val_type,
         cast(sep_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl10 as (
@@ -179,9 +161,7 @@ tbl10 as (
         trgt_type,
         trgt_val_type,
         cast(oct_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl11 as (
@@ -197,9 +177,7 @@ tbl11 as (
         trgt_type,
         trgt_val_type,
         cast(nov_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 tbl12 as (
@@ -215,9 +193,7 @@ tbl12 as (
         trgt_type,
         trgt_val_type,
         cast(dec_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm,
-        curr_dt,
-        current_timestamp()
+        cdl_dttm
     from source
 ),
 transformed as (
