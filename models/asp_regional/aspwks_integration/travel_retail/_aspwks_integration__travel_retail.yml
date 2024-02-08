@@ -7,7 +7,7 @@ models:
     config: 
       alias: wks_rg_travel_retail_inventory
       tags: ["","travel_retail"]
-  - name: aspwks_integration__wks_rg_travel_retail_inventory_excl_sku
-    config: 
-      alias: wks_rg_travel_retail_inventory_excl_sku
+  - name: aspwks_integration__wks_month_tr_cal
+    config:
+      alias: wks_month_tr_cal
       tags: ["","travel_retail"]
