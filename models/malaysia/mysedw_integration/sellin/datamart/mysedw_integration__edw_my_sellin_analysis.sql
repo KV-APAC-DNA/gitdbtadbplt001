@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header= "USE WAREHOUSE DEV_DNA_CORE_APP2_WH;"
+    )
+}}
 with source as (
     select * from {{ ref('mysedw_integration__edw_vw_my_sellin_analysis') }}
 ),
