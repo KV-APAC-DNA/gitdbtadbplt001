@@ -310,7 +310,7 @@ ds_primary as (
                                 FROM edw_vw_os_time_dim a
                                 WHERE (
                                         a.cal_date_id = replace(
-                                            current_timestamp()::date,
+                                            '2024-02-06'::date,
                                             ('-'::character varying)::text,
                                             (''::character varying)::text
                                         )
@@ -321,7 +321,7 @@ ds_primary as (
                                 FROM edw_vw_os_time_dim a
                                 WHERE (
                                         replace(
-                                            current_timestamp()::date,
+                                            '2024-02-06'::date,
                                             ('-'::character varying)::text,
                                             (''::character varying)::text
                                         ) = a.cal_date_id
@@ -329,7 +329,7 @@ ds_primary as (
                             ) curr_mnth,
                             (
                                 SELECT replace(
-                                        current_timestamp()::date,
+                                        '2024-02-06'::date,
                                         ('-'::character varying)::text,
                                         (''::character varying)::text
                                     ) AS curr_dt,
@@ -378,7 +378,7 @@ ds_primary as (
                                             (
                                                 dayofweek (
                                                     (
-                                                        current_timestamp()
+                                                        '2024-02-06'
                                                     )::date
                                                 ) 
                                                 <> (0)::double precision
@@ -386,14 +386,14 @@ ds_primary as (
                                             AND (
                                                 dayofweek (
                                                     (
-                                                        current_timestamp() 
+                                                        '2024-02-06' 
                                                     )::date
                                                 )
                                                 <> (6)::double precision
                                             )
                                         ) THEN (
                                             a.cal_date_id = replace(
-                                                current_timestamp()::date,
+                                                '2024-02-06'::date,
                                                 ('-'::character varying)::text,
                                                 (''::character varying)::text
                                             )
@@ -401,7 +401,7 @@ ds_primary as (
                                         WHEN (
                                             dayofweek (
                                                 (
-                                                    current_timestamp() 
+                                                    '2024-02-06' 
                                                 )::date
                                             )
                                             = (0)::double precision
@@ -412,7 +412,7 @@ ds_primary as (
                                                         dateadd(
                                                             'day',
                                                             (- (2)::bigint),
-                                                            current_timestamp()::date
+                                                            '2024-02-06'::date
                                                         ) 
                                                     )::character varying
                                                 )::text,
@@ -423,7 +423,7 @@ ds_primary as (
                                         WHEN (
                                             dayofweek (
                                                 (
-                                                    current_timestamp()
+                                                    '2024-02-06'
                                                 )::date
                                             )
                                             = (6)::double precision
@@ -434,7 +434,7 @@ ds_primary as (
                                                         dateadd(
                                                             'day',
                                                             (- (1)::bigint),
-                                                            current_timestamp()::date
+                                                            '2024-02-06'::date
                                                         )
                                                     )::character varying
                                                 )::text,
@@ -819,7 +819,7 @@ ds_primary_null as (
                                 FROM edw_vw_os_time_dim a
                                 WHERE (
                                         a.cal_date_id = replace(
-                                            current_timestamp(),
+                                            '2024-02-06',
                                             ('-'::character varying)::text,
                                             (''::character varying)::text
                                         )
@@ -1252,7 +1252,7 @@ ds_targets as (
                             FROM edw_vw_os_time_dim a
                             WHERE (
                                     a.cal_date_id = replace(
-                                        current_timestamp(),
+                                        '2024-02-06',
                                         ('-'::character varying)::text,
                                         (''::character varying)::text
                                     )
@@ -1604,7 +1604,7 @@ ds_targets_null as (
                         FROM edw_vw_os_time_dim a
                         WHERE (
                                 a.cal_date_id = replace(
-                                    current_timestamp(),
+                                    '2024-02-06',
                                     ('-'::character varying)::text,
                                     (''::character varying)::text
                                 )
@@ -1963,7 +1963,7 @@ ds_le_targets as (
                     FROM edw_vw_os_time_dim a
                     WHERE (
                             a.cal_date_id = replace(
-                                current_timestamp(),
+                                '2024-02-06',
                                 ('-'::character varying)::text,
                                 (''::character varying)::text
                             )
@@ -2261,7 +2261,7 @@ ds_accruals as (
                 FROM edw_vw_os_time_dim a
                 WHERE (
                         a.cal_date_id = replace(
-                            current_timestamp(),
+                            '2024-02-06',
                             ('-'::character varying)::text,
                             (''::character varying)::text
                         )
@@ -2605,7 +2605,7 @@ ds_orders as (
             FROM edw_vw_os_time_dim a
             WHERE (
                     a.cal_date_id = replace(
-                        current_timestamp(),
+                        '2024-02-06',
                         ('-'::character varying)::text,
                         (''::character varying)::text
                     )
@@ -2696,7 +2696,7 @@ ds_orders as (
                                                         AND (
                                                             "substring"(
                                                                 add_months(
-                                                                    to_date(current_timestamp()),
+                                                                    to_date('2024-02-06'),
                                                                     (1)::bigint
                                                                 ),
                                                                 6,
@@ -2709,7 +2709,7 @@ ds_orders as (
                                                         )
                                                     )
                                                     AND (
-                                                        current_timestamp()::date <= a.req_delvry_dt
+                                                        '2024-02-06'::date <= a.req_delvry_dt
                                                     )
                                                 ) THEN 'Forward Month Order'::character varying
                                                 ELSE 'Open Order'::character varying
@@ -2928,7 +2928,7 @@ ds_orders as (
                                         a.bill_gross_val
                                     FROM (
                                             SELECT replace(
-                                                    current_timestamp(),
+                                                    '2024-02-06',
                                                     ('-'::character varying)::text,
                                                     (''::character varying)::text
                                                 ) AS curr_dt,
@@ -2953,7 +2953,7 @@ ds_orders as (
                                                 ) a
                                             WHERE (
                                                     a.cal_date_id = replace(
-                                                        current_timestamp(),
+                                                        '2024-02-06',
                                                         ('-'::character varying)::text,
                                                         (''::character varying)::text
                                                     )
@@ -3345,7 +3345,7 @@ ds_afgr as (
         FROM edw_vw_os_time_dim a
         WHERE (
                 a.cal_date_id = replace(
-                    current_timestamp(),
+                    '2024-02-06',
                     ('-'::character varying)::text,
                     (''::character varying)::text
                 )
