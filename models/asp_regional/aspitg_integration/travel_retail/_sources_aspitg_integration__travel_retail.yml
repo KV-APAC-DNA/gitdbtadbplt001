@@ -1,0 +1,106 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_rg_travel_retail_cdfg
+        tags: ["travel_retail_cdfg"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["retailer_name","location_name","year_month","dcl_code","barcode"]
+              name: TRATBL_sdl_rg_travel_retail_cdfg_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_cnsc
+        tags: ["travel_retail_cnsc"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code","ean"]
+              select_columns: ["filename","retailer_name","dcl_code","brand","door_name","product_description","ean","serial_number"]
+              name: TRATBL_sdl_rg_travel_retail_cnsc_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_dfs
+        tags: ["travel_retail_dfs"]
+        tests:
+          - test_null:
+              not_null_columns: ["vendor_style"]
+              select_columns: ["retailer_name","location_name","year_month","region_sku"]
+              name: TRATBL_sdl_rg_travel_retail_dfs_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_dfs_hainan
+        tags: ["travel_retail_dfs_hainan"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["filename","retailer_name","dcl_code","ean","reatiler_product_description"]
+              name: TRATBL_sdl_rg_travel_retail_dfs_hainan_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_dufry_hainan
+        tags: ["travel_retail_dufry_hainan"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["filename","retailer_name","dcl_code","ean","product_desc"]
+              name: TRATBL_sdl_rg_travel_retail_dufry_hainan_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_lstr
+        tags: ["travel_retail_lstr"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["filename","retailer_name","dcl_code","ean","english_desc"]
+              name: TRATBL_sdl_rg_travel_retail_lstr_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_sales_stock
+        tags: ["travel_retail_sales_stock"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["location_name","year","month","sap_code"]
+              name: TRATBL_sdl_rg_travel_retail_sales_stock_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+      - name: sdl_rg_travel_retail_shilla
+        tags: ["travel_retail_shilla"]
+        tests:
+          - test_null:
+              not_null_columns: ["dcl_code"]
+              select_columns: ["retailer_name","location_name","year_month","sku"]
+              name: TRATBL_sdl_rg_travel_retail_shilla_null_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
+
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : wks_apac_dcl_targets_header
+      tags: ["travel_retail"]
+    - name : wks_rg_travel_retail_inventory_excl_sku
+      tags: ["travel_retail"]
+    - name : wks_rg_travel_retail_inventory
+      tags: ["travel_retail"]
