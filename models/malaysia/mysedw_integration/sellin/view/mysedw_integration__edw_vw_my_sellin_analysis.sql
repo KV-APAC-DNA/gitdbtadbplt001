@@ -199,14 +199,14 @@ ds_primary as (
                                                                 ),
                                                                 'yyyymmdd'
                                                             )
-                                                        ) -- )
+                                                        )
                                                     )::character varying
                                                 )::text,
                                                 ('-'::character varying)::text,
                                                 (''::character varying)::text
                                             ),
                                             0,
-                                            7
+                                            6
                                         )
                                     )
                                 ) THEN curr_details.elapsed_time
@@ -239,7 +239,7 @@ ds_primary as (
                                                 (''::character varying)::text
                                             ),
                                             0,
-                                            7
+                                            6
                                         )
                                     )
                                 ) THEN 'Y'::character varying
@@ -354,7 +354,7 @@ ds_primary as (
                                         FROM (
                                                 SELECT edw_vw_os_time_dim.mnth_id,
                                                     edw_vw_os_time_dim.cal_date_id,
-                                                    dayofweek ((edw_vw_os_time_dim.cal_date_id)::date)
+                                                    dayofweek (to_date(edw_vw_os_time_dim.cal_date_id,'yyyymmdd'))
                                                     AS dow,
                                                     dense_rank() OVER(
                                                         PARTITION BY edw_vw_os_time_dim.mnth_id
@@ -363,11 +363,11 @@ ds_primary as (
                                                 FROM edw_vw_os_time_dim
                                                 WHERE (
                                                         (
-                                                            dayofweek (edw_vw_os_time_dim.cal_date_id::date)
+                                                            dayofweek (to_date(edw_vw_os_time_dim.cal_date_id,'yyyymmdd'))
                                                             <> (0)::double precision
                                                         )
                                                         AND (
-                                                            dayofweek (edw_vw_os_time_dim.cal_date_id::date)
+                                                            dayofweek (to_date(edw_vw_os_time_dim.cal_date_id,'yyyymmdd'))
                                                             <> (6)::double precision
                                                         )
                                                     )
