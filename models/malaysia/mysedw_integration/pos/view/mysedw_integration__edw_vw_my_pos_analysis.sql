@@ -1,4 +1,4 @@
-ith edw_vw_os_curr_dim as(
+with edw_vw_os_curr_dim as(
     select * from {{ ref('mysedw_integration__edw_vw_my_curr_dim') }}
 ),
 edw_vw_os_pos_sales_fact as(
