@@ -128,18 +128,18 @@ ds_primary as (
                             veocurd.from_ccy AS from_crncy,
                             veocurd.to_ccy AS to_crncy,
                             veocurd.exch_rate,
-                            ((veossf.base_val * veocurd.exch_rate))::numeric(20, 4) AS base_val,
-                            (veossf.sls_qty)::numeric(20, 4) AS sls_qty,
-                            (veossf.ret_qty)::numeric(20, 4) AS ret_qty,
-                            (veossf.sls_less_rtn_qty)::numeric(20, 4) AS sls_less_rtn_qty,
-                            ((veossf.gts_val * veocurd.exch_rate))::numeric(20, 4) AS gts_val,
-                            ((veossf.ret_val * veocurd.exch_rate))::numeric(20, 4) AS ret_val,
-                            ((veossf.gts_less_rtn_val * veocurd.exch_rate))::numeric(20, 4) AS gts_less_rtn_val,
-                            ((veossf.trdng_term_val * veocurd.exch_rate))::numeric(20, 4) AS trdng_term_val,
-                            ((veossf.tp_val * veocurd.exch_rate))::numeric(20, 4) AS tp_val,
-                            ((veossf.trde_prmtn_val * veocurd.exch_rate))::numeric(20, 4) AS trde_prmtn_val,
-                            ((veossf.nts_val * veocurd.exch_rate))::numeric(20, 4) AS nts_val,
-                            (veossf.nts_qty)::numeric(20, 4) AS nts_qty,
+                            ((veossf.base_val * veocurd.exch_rate))::number(20, 4) AS base_val,
+                            (veossf.sls_qty)::number(20, 4) AS sls_qty,
+                            (veossf.ret_qty)::number(20, 4) AS ret_qty,
+                            (veossf.sls_less_rtn_qty)::number(20, 4) AS sls_less_rtn_qty,
+                            ((veossf.gts_val * veocurd.exch_rate))::number(20, 4) AS gts_val,
+                            ((veossf.ret_val * veocurd.exch_rate))::number(20, 4) AS ret_val,
+                            ((veossf.gts_less_rtn_val * veocurd.exch_rate))::number(20, 4) AS gts_less_rtn_val,
+                            ((veossf.trdng_term_val * veocurd.exch_rate))::number(20, 4) AS trdng_term_val,
+                            ((veossf.tp_val * veocurd.exch_rate))::number(20, 4) AS tp_val,
+                            ((veossf.trde_prmtn_val * veocurd.exch_rate))::number(20, 4) AS trde_prmtn_val,
+                            ((veossf.nts_val * veocurd.exch_rate))::number(20, 4) AS nts_val,
+                            (veossf.nts_qty)::number(20, 4) AS nts_qty,
                             NULL AS po_num,
                             NULL AS sls_doc_num,
                             NULL AS sls_doc_item,
@@ -210,7 +210,7 @@ ds_primary as (
                                         )
                                     )
                                 ) THEN curr_details.elapsed_time
-                                ELSE ((1)::numeric)::numeric(18, 0)
+                                ELSE ((1)::number)::number(18, 0)
                             END AS curr_prd_elapsed,
                             CASE
                                 WHEN (
@@ -337,20 +337,20 @@ ds_primary as (
                                     a.dow,
                                     a.rank_no,
                                     a.max_day,
-                                    ((a.rank_no / a.max_day))::numeric(20, 6) AS elapsed_time
+                                    ((a.rank_no / a.max_day))::number(20, 6) AS elapsed_time
                                 FROM (
                                         SELECT derived_table1.mnth_id,
                                             derived_table1.cal_date_id,
                                             derived_table1.dow,
-                                            ((derived_table1.rank_no)::numeric)::numeric(18, 0) AS rank_no,
+                                            ((derived_table1.rank_no)::number)::number(18, 0) AS rank_no,
                                             (
                                                 (
                                                     "max"(derived_table1.rank_no) OVER(
                                                         PARTITION BY derived_table1.mnth_id
                                                         order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
                                                     )
-                                                )::numeric
-                                            )::numeric(18, 0) AS max_day
+                                                )::number
+                                            )::number(18, 0) AS max_day
                                         FROM (
                                                 SELECT edw_vw_os_time_dim.mnth_id,
                                                     edw_vw_os_time_dim.cal_date_id,
@@ -505,7 +505,7 @@ ds_primary as (
                                                             AND (
                                                                 trim((veossf1.jj_mnth_id)::text) = (
                                                                     (
-                                                                        (veotd.jj_mnth_id)::numeric(18, 0)
+                                                                        (veotd.jj_mnth_id)::number(18, 0)
                                                                     )::character varying
                                                                 )::text
                                                             )
@@ -931,7 +931,7 @@ ds_primary_null as (
                                                             AND (
                                                                 trim((veossf1.jj_mnth_id)::text) = (
                                                                     (
-                                                                        (veotd.jj_mnth_id)::numeric(18, 0)
+                                                                        (veotd.jj_mnth_id)::number(18, 0)
                                                                     )::character varying
                                                                 )::text
                                                             )
@@ -2732,7 +2732,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 = a.ord_subtotal_2)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) = ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) = ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Order Completed'::character varying
                                             WHEN (
@@ -2753,7 +2753,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 < a.ord_subtotal_2)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Order Completed'::character varying
                                             WHEN (
@@ -2774,7 +2774,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 IS NULL)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Order Completed'::character varying
                                             WHEN (
@@ -2795,7 +2795,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 IS NULL)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Order Dropped'::character varying
                                             ELSE 'NA'::character varying
@@ -2838,7 +2838,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 = a.ord_subtotal_2)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) = ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) = ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Item Fulfilled'::character varying
                                             WHEN (
@@ -2859,7 +2859,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 < a.ord_subtotal_2)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Item Partially Fulfilled'::character varying
                                             WHEN (
@@ -2880,7 +2880,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 IS NULL)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Item Dropped'::character varying
                                             WHEN (
@@ -2901,7 +2901,7 @@ ds_orders as (
                                                     AND (a.bill_subtotal_2 IS NULL)
                                                 )
                                                 AND (
-                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::numeric)::numeric(18, 0)
+                                                    (a.ord_subtotal_2 - a.bill_subtotal_2) > ((0)::number)::number(18, 0)
                                                 )
                                             ) THEN 'Item Dropped'::character varying
                                             ELSE 'NA'::character varying
@@ -3489,10 +3489,10 @@ transformed as (
 final as (
     select 
         data_src::varchar(12) as data_src,
-        jj_year::numeric(18,0) as jj_year,
+        jj_year::number(18,0) as jj_year,
         jj_qtr::varchar(14) as jj_qtr,
         jj_mnth_id::varchar(23) as jj_mnth_id,
-        jj_mnth_no::numeric(18,0) as jj_mnth_no,
+        jj_mnth_no::number(18,0) as jj_mnth_no,
         sap_cntry_cd::varchar(3) as sap_cntry_cd,
         cntry_nm::varchar(8) as cntry_nm,
         acct_no::varchar(10) as acct_no,
@@ -3521,7 +3521,7 @@ final as (
         loc_cust_nm::varchar(100) as loc_cust_nm,
         dstrbtr_grp_cd::varchar(20) as dstrbtr_grp_cd,
         dstrbtr_grp_nm::varchar(100) as dstrbtr_grp_nm,
-        ullage::numeric(20,4) as ullage,
+        ullage::number(20,4) as ullage,
         chnl::varchar(20) as chnl,
         territory::varchar(20) as territory,
         retail_env::varchar(20) as retail_env,
@@ -3553,7 +3553,7 @@ final as (
         global_prod_subsegment::varchar(100) as global_prod_subsegment,
         global_prod_size::varchar(20) as global_prod_size,
         global_prod_size_uom::varchar(20) as global_prod_size_uom,
-        sku_launch_dt::timestamp without time zone as sku_launch_dt,
+        sku_launch_dt::timestamp_ntz(9) as sku_launch_dt,
         qty_shipper_pc::varchar(100) as qty_shipper_pc,
         prft_ctr::varchar(100) as prft_ctr,
         shelf_life::varchar(100) as shelf_life,
@@ -3569,19 +3569,19 @@ final as (
         acct_type1::varchar(20) as acct_type1,
         from_crncy::varchar(5) as from_crncy,
         to_crncy::varchar(5) as to_crncy,
-        exch_rate::numeric(15,5) as exch_rate,
-        base_val::numeric(20,4) as base_val,
-        sls_qty::numeric(20,4) as sls_qty,
-        ret_qty::numeric(20,4) as ret_qty,
-        sls_less_rtn_qty::numeric(20,4) as sls_less_rtn_qty,
-        gts_val::numeric(20,4) as gts_val,
-        ret_val::numeric(20,4) as ret_val,
-        gts_less_rtn_val::numeric(20,4) as gts_less_rtn_val,
-        trdng_term_val::numeric(20,4) as trdng_term_val,
-        tp_val::numeric(20,4) as tp_val,
-        trde_prmtn_val::numeric(20,4) as trde_prmtn_val,
-        nts_val::numeric(20,4) as nts_val,
-        nts_qty::numeric(20,4) as nts_qty,
+        exch_rate::number(15,5) as exch_rate,
+        base_val::number(20,4) as base_val,
+        sls_qty::number(20,4) as sls_qty,
+        ret_qty::number(20,4) as ret_qty,
+        sls_less_rtn_qty::number(20,4) as sls_less_rtn_qty,
+        gts_val::number(20,4) as gts_val,
+        ret_val::number(20,4) as ret_val,
+        gts_less_rtn_val::number(20,4) as gts_less_rtn_val,
+        trdng_term_val::number(20,4) as trdng_term_val,
+        tp_val::number(20,4) as tp_val,
+        trde_prmtn_val::number(20,4) as trde_prmtn_val,
+        nts_val::number(20,4) as nts_val,
+        nts_qty::number(20,4) as nts_qty,
         po_num::varchar(30) as po_num,
         sls_doc_num::varchar(50) as sls_doc_num,
         sls_doc_item::varchar(50) as sls_doc_item,
@@ -3594,47 +3594,47 @@ final as (
         rejectn_st::varchar(20) as rejectn_st,
         rejectn_cd::varchar(30) as rejectn_cd,
         rejectn_desc::varchar as rejectn_desc,
-        ord_qty::numeric(38,4) as ord_qty,
-        ord_net_price::numeric(38,13) as ord_net_price,
-        ord_grs_trd_sls::numeric(38,13) as ord_grs_trd_sls,
-        ord_subtotal_2::numeric(38,13) as ord_subtotal_2,
-        ord_subtotal_3::numeric(38,13) as ord_subtotal_3,
-        ord_subtotal_4::numeric(38,13) as ord_subtotal_4,
-        ord_net_amt::numeric(38,13) as ord_net_amt,
-        ord_est_nts::numeric(38,13) as ord_est_nts,
-        missed_val::numeric(38,13) as missed_val,
-        bill_qty_pc::numeric(38,4) as bill_qty_pc,
-        bill_grs_trd_sls::numeric(38,13) as bill_grs_trd_sls,
-        bill_subtotal_2::numeric(38,13) as bill_subtotal_2,
-        bill_subtotal_3::numeric(38,13) as bill_subtotal_3,
-        bill_subtotal_4::numeric(38,13) as bill_subtotal_4,
-        bill_net_amt::numeric(38,13) as bill_net_amt,
-        bill_est_nts::numeric(38,13) as bill_est_nts,
-        bill_net_val::numeric(38,13) as bill_net_val,
-        bill_gross_val::numeric(38,13) as bill_gross_val,
+        ord_qty::number(38,4) as ord_qty,
+        ord_net_price::number(38,13) as ord_net_price,
+        ord_grs_trd_sls::number(38,13) as ord_grs_trd_sls,
+        ord_subtotal_2::number(38,13) as ord_subtotal_2,
+        ord_subtotal_3::number(38,13) as ord_subtotal_3,
+        ord_subtotal_4::number(38,13) as ord_subtotal_4,
+        ord_net_amt::number(38,13) as ord_net_amt,
+        ord_est_nts::number(38,13) as ord_est_nts,
+        missed_val::number(38,13) as missed_val,
+        bill_qty_pc::number(38,4) as bill_qty_pc,
+        bill_grs_trd_sls::number(38,13) as bill_grs_trd_sls,
+        bill_subtotal_2::number(38,13) as bill_subtotal_2,
+        bill_subtotal_3::number(38,13) as bill_subtotal_3,
+        bill_subtotal_4::number(38,13) as bill_subtotal_4,
+        bill_net_amt::number(38,13) as bill_net_amt,
+        bill_est_nts::number(38,13) as bill_est_nts,
+        bill_net_val::number(38,13) as bill_net_val,
+        bill_gross_val::number(38,13) as bill_gross_val,
         trgt_type::varchar(20) as trgt_type,
         trgt_val_type::varchar(20) as trgt_val_type,
-        trgt_val::numeric(36,11) as trgt_val,
-        accrual_val::numeric(36,11) as accrual_val,
-        le_trgt_val_wk1::numeric(36,11) as le_trgt_val_wk1,
-        le_trgt_val_wk2::numeric(36,11) as le_trgt_val_wk2,
-        le_trgt_val_wk3::numeric(36,11) as le_trgt_val_wk3,
-        le_trgt_val_wk4::numeric(36,11) as le_trgt_val_wk4,
-        le_trgt_val_wk5::numeric(36,11) as le_trgt_val_wk5,
-        curr_prd_elapsed::numeric(20,6) as curr_prd_elapsed,
+        trgt_val::number(36,11) as trgt_val,
+        accrual_val::number(36,11) as accrual_val,
+        le_trgt_val_wk1::number(36,11) as le_trgt_val_wk1,
+        le_trgt_val_wk2::number(36,11) as le_trgt_val_wk2,
+        le_trgt_val_wk3::number(36,11) as le_trgt_val_wk3,
+        le_trgt_val_wk4::number(36,11) as le_trgt_val_wk4,
+        le_trgt_val_wk5::number(36,11) as le_trgt_val_wk5,
+        curr_prd_elapsed::number(20,6) as curr_prd_elapsed,
         elapsed_flag::varchar(1) as elapsed_flag,
         is_curr::varchar(1) as is_curr,
         afgr_num::varchar(30) as afgr_num,
         cust_dn_num::varchar(100) as cust_dn_num,
         rtn_ord_num::varchar(30) as rtn_ord_num,
         afgr_bill_num::varchar(30) as afgr_bill_num,
-        dn_amt_exc_gst_val::numeric(38,9) as dn_amt_exc_gst_val,
-        afgr_amt::numeric(38,9) as afgr_amt,
-        rtn_ord_amt::numeric(38,9) as rtn_ord_amt,
-        cn_amt::numeric(38,9) as cn_amt,
+        dn_amt_exc_gst_val::number(38,9) as dn_amt_exc_gst_val,
+        afgr_amt::number(38,9) as afgr_amt,
+        rtn_ord_amt::number(38,9) as rtn_ord_amt,
+        cn_amt::number(38,9) as cn_amt,
         afgr_status::varchar(30) as afgr_status,
-        afgr_val::numeric(38,9) as afgr_val,
-        afgr_cn_diff::numeric(38,9) as afgr_cn_diff,
+        afgr_val::number(38,9) as afgr_val,
+        afgr_cn_diff::number(38,9) as afgr_cn_diff,
         cur_period_sgt::varchar(23) as cur_period_sgt
     from transformed
 ) 
