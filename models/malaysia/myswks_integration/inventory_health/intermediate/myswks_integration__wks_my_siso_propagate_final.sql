@@ -204,7 +204,7 @@ final as
         existing_last_12months_so::number(38,5) as existing_last_12months_so,
         existing_last_3months_so_value::number(38,5) as existing_last_3months_so_value,
         existing_last_6months_so_value::number(38,5) as existing_last_6months_so_value,
-        existing_last_12months_so_value::number(38,5) asexisting_last_12months_so_value
+        existing_last_12months_so_value::number(38,5) as existing_last_12months_so_value
     from final_set
 )
 select * from final
