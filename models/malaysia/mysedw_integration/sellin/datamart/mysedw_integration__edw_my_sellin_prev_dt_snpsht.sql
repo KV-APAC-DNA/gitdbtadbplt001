@@ -1,4 +1,4 @@
-with edw_vw_os_sellin_sales_fact as (
+with edw_vw_my_sellin_sales_fact as (
     select * from {{ ref('mysedw_integration__edw_vw_my_sellin_sales_fact') }}
 ),
 
@@ -35,7 +35,7 @@ final as (
         nts_val::number(38,5) as nts_val,
         nts_qty::number(38,5) as nts_qty,
         current_timestamp()::timestamp_ntz(9) as snapshot_dt
-    from edw_vw_os_sellin_sales_fact
+    from edw_vw_my_sellin_sales_fact
     where cntry_nm = 'MY'
 )
 
