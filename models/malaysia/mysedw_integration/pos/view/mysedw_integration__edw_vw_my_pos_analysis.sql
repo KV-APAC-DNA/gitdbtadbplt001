@@ -1,31 +1,31 @@
-with edw_vw_my_curr_dim as(
+ith edw_vw_os_curr_dim as(
     select * from {{ ref('mysedw_integration__edw_vw_my_curr_dim') }}
 ),
-edw_vw_my_pos_sales_fact as(
+edw_vw_os_pos_sales_fact as(
     select * from {{ ref('mysedw_integration__edw_vw_my_pos_sales_fact') }}
 ),
-edw_vw_my_material_dim as(
+edw_vw_os_material_dim as(
     select * from {{ ref('mysedw_integration__edw_vw_my_material_dim') }}
 ),
-edw_vw_my_customer_dim as(
+edw_vw_os_customer_dim as(
     select * from {{ ref('mysedw_integration__edw_vw_my_customer_dim') }}
 ),
-edw_vw_my_pos_material_dim as(
-    select * from {{ ref('mysedw_integration__edw_vw_my_pos_material_dim') }} 
+edw_vw_os_pos_material_dim as(
+    select * from {{ source('mysedw_integration','edw_vw_my_pos_material_dim') }}
 ),
-edw_vw_my_pos_customer_dim as(
-    select * from {{ ref('mysedw_integration__edw_vw_my_pos_customer_dim') }}
+edw_vw_os_pos_customer_dim as(
+    select * from {{ source('mysedw_integration','edw_vw_my_pos_customer_dim') }}
 ),
 itg_my_customer_dim as(
-   select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_customer_dim') }} 
 ),
 itg_my_material_dim as(
-    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }} 
 ),
 transformed as (
    select
   'POS' AS data_src,
-  veposf.year AS jj_year,
+  veposf."year" AS jj_year,
   veposf.qrtr AS jj_qtr,
   veposf.mnth_id AS jj_mnth_id,
   veposf.mnth_no AS jj_mnth_no,
@@ -159,12 +159,12 @@ transformed as (
   ) AS jj_pos_nts,
   immd.npi_ind AS is_npi,
   immd.npi_strt_period AS npi_str_period,
-  NULL AS npi_end_period,
-  NULL AS is_reg,
+  CAST(NULL AS UNKNOWN) AS npi_end_period,
+  CAST(NULL AS UNKNOWN) AS is_reg,
   immd.promo_reg_ind AS is_promo,
-  NULL AS promo_strt_period,
-  NULL AS promo_end_period,
-  NULL AS is_mcl,
+  CAST(NULL AS UNKNOWN) AS promo_strt_period,
+  CAST(NULL AS UNKNOWN) AS promo_end_period,
+  CAST(NULL AS UNKNOWN) AS is_mcl,
   immd.hero_ind AS is_hero
 FROM (
   SELECT
@@ -202,7 +202,7 @@ FROM (
         a.jj_mnth_id
       ) AS TEXT)) AS end_mnth_id,
       a.exch_rate
-    FROM edw_vw_my_curr_dim AS a
+    FROM edw_vw_os_curr_dim AS a
     WHERE
       (
         CAST((
@@ -225,7 +225,7 @@ FROM (
       MAX(CAST((
         a.jj_mnth_id
       ) AS TEXT)) AS max_period
-    FROM edw_vw_my_curr_dim AS a
+    FROM edw_vw_os_curr_dim AS a
     WHERE
       (
         CAST((
@@ -247,7 +247,7 @@ FROM (
                   LEFT(CAST((
                     a.jj_mnth_id
                   ) AS TEXT), 4)
-                ) AS INT) AS year,
+                ) AS INT) AS "year",
                 (
                   (
                     LEFT(CAST((
@@ -405,7 +405,7 @@ FROM (
                 a.jj_vat_amt,
                 a.jj_nts,
                 a.dept_cd
-              FROM edw_vw_my_pos_sales_fact AS a
+              FROM edw_vw_os_pos_sales_fact AS a
               WHERE
                 (
                   CAST((
@@ -417,61 +417,61 @@ FROM (
             ) AS veposf
             LEFT JOIN (
               SELECT
-                edw_vw_my_material_dim.cntry_key,
-                edw_vw_my_material_dim.sap_matl_num,
-                edw_vw_my_material_dim.sap_mat_desc,
-                edw_vw_my_material_dim.ean_num,
-                edw_vw_my_material_dim.sap_mat_type_cd,
-                edw_vw_my_material_dim.sap_mat_type_desc,
-                edw_vw_my_material_dim.sap_base_uom_cd,
-                edw_vw_my_material_dim.sap_prchse_uom_cd,
-                edw_vw_my_material_dim.sap_prod_sgmt_cd,
-                edw_vw_my_material_dim.sap_prod_sgmt_desc,
-                edw_vw_my_material_dim.sap_base_prod_cd,
-                edw_vw_my_material_dim.sap_base_prod_desc,
-                edw_vw_my_material_dim.sap_mega_brnd_cd,
-                edw_vw_my_material_dim.sap_mega_brnd_desc,
-                edw_vw_my_material_dim.sap_brnd_cd,
-                edw_vw_my_material_dim.sap_brnd_desc,
-                edw_vw_my_material_dim.sap_vrnt_cd,
-                edw_vw_my_material_dim.sap_vrnt_desc,
-                edw_vw_my_material_dim.sap_put_up_cd,
-                edw_vw_my_material_dim.sap_put_up_desc,
-                edw_vw_my_material_dim.sap_grp_frnchse_cd,
-                edw_vw_my_material_dim.sap_grp_frnchse_desc,
-                edw_vw_my_material_dim.sap_frnchse_cd,
-                edw_vw_my_material_dim.sap_frnchse_desc,
-                edw_vw_my_material_dim.sap_prod_frnchse_cd,
-                edw_vw_my_material_dim.sap_prod_frnchse_desc,
-                edw_vw_my_material_dim.sap_prod_mjr_cd,
-                edw_vw_my_material_dim.sap_prod_mjr_desc,
-                edw_vw_my_material_dim.sap_prod_mnr_cd,
-                edw_vw_my_material_dim.sap_prod_mnr_desc,
-                edw_vw_my_material_dim.sap_prod_hier_cd,
-                edw_vw_my_material_dim.sap_prod_hier_desc,
-                edw_vw_my_material_dim.gph_region,
-                edw_vw_my_material_dim.gph_prod_frnchse,
-                edw_vw_my_material_dim.gph_prod_brnd,
-                edw_vw_my_material_dim.gph_prod_sub_brnd,
-                edw_vw_my_material_dim.gph_prod_vrnt,
-                edw_vw_my_material_dim.gph_prod_needstate,
-                edw_vw_my_material_dim.gph_prod_ctgry,
-                edw_vw_my_material_dim.gph_prod_subctgry,
-                edw_vw_my_material_dim.gph_prod_sgmnt,
-                edw_vw_my_material_dim.gph_prod_subsgmnt,
-                edw_vw_my_material_dim.gph_prod_put_up_cd,
-                edw_vw_my_material_dim.gph_prod_put_up_desc,
-                edw_vw_my_material_dim.gph_prod_size,
-                edw_vw_my_material_dim.gph_prod_size_uom,
-                edw_vw_my_material_dim.launch_dt,
-                edw_vw_my_material_dim.qty_shipper_pc,
-                edw_vw_my_material_dim.prft_ctr,
-                edw_vw_my_material_dim.shlf_life
-              FROM edw_vw_my_material_dim
+                edw_vw_os_material_dim.cntry_key,
+                edw_vw_os_material_dim.sap_matl_num,
+                edw_vw_os_material_dim.sap_mat_desc,
+                edw_vw_os_material_dim.ean_num,
+                edw_vw_os_material_dim.sap_mat_type_cd,
+                edw_vw_os_material_dim.sap_mat_type_desc,
+                edw_vw_os_material_dim.sap_base_uom_cd,
+                edw_vw_os_material_dim.sap_prchse_uom_cd,
+                edw_vw_os_material_dim.sap_prod_sgmt_cd,
+                edw_vw_os_material_dim.sap_prod_sgmt_desc,
+                edw_vw_os_material_dim.sap_base_prod_cd,
+                edw_vw_os_material_dim.sap_base_prod_desc,
+                edw_vw_os_material_dim.sap_mega_brnd_cd,
+                edw_vw_os_material_dim.sap_mega_brnd_desc,
+                edw_vw_os_material_dim.sap_brnd_cd,
+                edw_vw_os_material_dim.sap_brnd_desc,
+                edw_vw_os_material_dim.sap_vrnt_cd,
+                edw_vw_os_material_dim.sap_vrnt_desc,
+                edw_vw_os_material_dim.sap_put_up_cd,
+                edw_vw_os_material_dim.sap_put_up_desc,
+                edw_vw_os_material_dim.sap_grp_frnchse_cd,
+                edw_vw_os_material_dim.sap_grp_frnchse_desc,
+                edw_vw_os_material_dim.sap_frnchse_cd,
+                edw_vw_os_material_dim.sap_frnchse_desc,
+                edw_vw_os_material_dim.sap_prod_frnchse_cd,
+                edw_vw_os_material_dim.sap_prod_frnchse_desc,
+                edw_vw_os_material_dim.sap_prod_mjr_cd,
+                edw_vw_os_material_dim.sap_prod_mjr_desc,
+                edw_vw_os_material_dim.sap_prod_mnr_cd,
+                edw_vw_os_material_dim.sap_prod_mnr_desc,
+                edw_vw_os_material_dim.sap_prod_hier_cd,
+                edw_vw_os_material_dim.sap_prod_hier_desc,
+                edw_vw_os_material_dim.gph_region,
+                edw_vw_os_material_dim.gph_prod_frnchse,
+                edw_vw_os_material_dim.gph_prod_brnd,
+                edw_vw_os_material_dim.gph_prod_sub_brnd,
+                edw_vw_os_material_dim.gph_prod_vrnt,
+                edw_vw_os_material_dim.gph_prod_needstate,
+                edw_vw_os_material_dim.gph_prod_ctgry,
+                edw_vw_os_material_dim.gph_prod_subctgry,
+                edw_vw_os_material_dim.gph_prod_sgmnt,
+                edw_vw_os_material_dim.gph_prod_subsgmnt,
+                edw_vw_os_material_dim.gph_prod_put_up_cd,
+                edw_vw_os_material_dim.gph_prod_put_up_desc,
+                edw_vw_os_material_dim.gph_prod_size,
+                edw_vw_os_material_dim.gph_prod_size_uom,
+                edw_vw_os_material_dim.launch_dt,
+                edw_vw_os_material_dim.qty_shipper_pc,
+                edw_vw_os_material_dim.prft_ctr,
+                edw_vw_os_material_dim.shlf_life
+              FROM edw_vw_os_material_dim
               WHERE
                 (
                   CAST((
-                    edw_vw_my_material_dim.cntry_key
+                    edw_vw_os_material_dim.cntry_key
                   ) AS TEXT) = CAST((
                     CAST('MY' AS VARCHAR)
                   ) AS TEXT)
@@ -500,34 +500,34 @@ FROM (
           )
           LEFT JOIN (
             SELECT
-              edw_vw_my_customer_dim.sap_cust_id,
-              edw_vw_my_customer_dim.sap_cust_nm,
-              edw_vw_my_customer_dim.sap_sls_org,
-              edw_vw_my_customer_dim.sap_cmp_id,
-              edw_vw_my_customer_dim.sap_cntry_cd,
-              edw_vw_my_customer_dim.sap_cntry_nm,
-              edw_vw_my_customer_dim.sap_addr,
-              edw_vw_my_customer_dim.sap_region,
-              edw_vw_my_customer_dim.sap_state_cd,
-              edw_vw_my_customer_dim.sap_city,
-              edw_vw_my_customer_dim.sap_post_cd,
-              edw_vw_my_customer_dim.sap_chnl_cd,
-              edw_vw_my_customer_dim.sap_chnl_desc,
-              edw_vw_my_customer_dim.sap_sls_office_cd,
-              edw_vw_my_customer_dim.sap_sls_office_desc,
-              edw_vw_my_customer_dim.sap_sls_grp_cd,
-              edw_vw_my_customer_dim.sap_sls_grp_desc,
-              edw_vw_my_customer_dim.sap_curr_cd,
-              edw_vw_my_customer_dim.gch_region,
-              edw_vw_my_customer_dim.gch_cluster,
-              edw_vw_my_customer_dim.gch_subcluster,
-              edw_vw_my_customer_dim.gch_market,
-              edw_vw_my_customer_dim.gch_retail_banner
-            FROM edw_vw_my_customer_dim
+              edw_vw_os_customer_dim.sap_cust_id,
+              edw_vw_os_customer_dim.sap_cust_nm,
+              edw_vw_os_customer_dim.sap_sls_org,
+              edw_vw_os_customer_dim.sap_cmp_id,
+              edw_vw_os_customer_dim.sap_cntry_cd,
+              edw_vw_os_customer_dim.sap_cntry_nm,
+              edw_vw_os_customer_dim.sap_addr,
+              edw_vw_os_customer_dim.sap_region,
+              edw_vw_os_customer_dim.sap_state_cd,
+              edw_vw_os_customer_dim.sap_city,
+              edw_vw_os_customer_dim.sap_post_cd,
+              edw_vw_os_customer_dim.sap_chnl_cd,
+              edw_vw_os_customer_dim.sap_chnl_desc,
+              edw_vw_os_customer_dim.sap_sls_office_cd,
+              edw_vw_os_customer_dim.sap_sls_office_desc,
+              edw_vw_os_customer_dim.sap_sls_grp_cd,
+              edw_vw_os_customer_dim.sap_sls_grp_desc,
+              edw_vw_os_customer_dim.sap_curr_cd,
+              edw_vw_os_customer_dim.gch_region,
+              edw_vw_os_customer_dim.gch_cluster,
+              edw_vw_os_customer_dim.gch_subcluster,
+              edw_vw_os_customer_dim.gch_market,
+              edw_vw_os_customer_dim.gch_retail_banner
+            FROM edw_vw_os_customer_dim
             WHERE
               (
                 CAST((
-                  edw_vw_my_customer_dim.sap_cntry_cd
+                  edw_vw_os_customer_dim.sap_cntry_cd
                 ) AS TEXT) = CAST((
                   CAST('MY' AS VARCHAR)
                 ) AS TEXT)
@@ -549,25 +549,25 @@ FROM (
         )
         LEFT JOIN (
           SELECT
-            edw_vw_my_pos_material_dim.item_cd,
+            edw_vw_os_pos_material_dim.item_cd,
             MAX(CAST((
-              edw_vw_my_pos_material_dim.item_nm
+              edw_vw_os_pos_material_dim.item_nm
             ) AS TEXT)) AS item_nm,
-            edw_vw_my_pos_material_dim.cust_cd,
-            edw_vw_my_pos_material_dim.sap_item_cd
-          FROM edw_vw_my_pos_material_dim
+            edw_vw_os_pos_material_dim.cust_cd,
+            edw_vw_os_pos_material_dim.sap_item_cd
+          FROM edw_vw_os_pos_material_dim
           WHERE
             (
               CAST((
-                edw_vw_my_pos_material_dim.cntry_cd
+                edw_vw_os_pos_material_dim.cntry_cd
               ) AS TEXT) = CAST((
                 CAST('MY' AS VARCHAR)
               ) AS TEXT)
             )
           GROUP BY
-            edw_vw_my_pos_material_dim.item_cd,
-            edw_vw_my_pos_material_dim.cust_cd,
-            edw_vw_my_pos_material_dim.sap_item_cd
+            edw_vw_os_pos_material_dim.item_cd,
+            edw_vw_os_pos_material_dim.cust_cd,
+            edw_vw_os_pos_material_dim.sap_item_cd
         ) AS vopmd
           ON (
             (
@@ -617,32 +617,32 @@ FROM (
       )
       LEFT JOIN (
         SELECT
-          edw_vw_my_pos_customer_dim.cntry_cd,
-          edw_vw_my_pos_customer_dim.cntry_nm,
-          edw_vw_my_pos_customer_dim.cust_cd,
-          edw_vw_my_pos_customer_dim.cust_nm,
-          edw_vw_my_pos_customer_dim.sold_to,
-          edw_vw_my_pos_customer_dim.brnch_cd,
-          edw_vw_my_pos_customer_dim.brnch_nm,
-          edw_vw_my_pos_customer_dim.brnch_frmt,
-          edw_vw_my_pos_customer_dim.brnch_typ,
-          edw_vw_my_pos_customer_dim.dept_cd,
-          edw_vw_my_pos_customer_dim.dept_nm,
-          edw_vw_my_pos_customer_dim.address1,
-          edw_vw_my_pos_customer_dim.address2,
-          edw_vw_my_pos_customer_dim.region_cd,
-          edw_vw_my_pos_customer_dim.region_nm,
-          edw_vw_my_pos_customer_dim.prov_cd,
-          edw_vw_my_pos_customer_dim.prov_nm,
-          edw_vw_my_pos_customer_dim.city_cd,
-          edw_vw_my_pos_customer_dim.city_nm,
-          edw_vw_my_pos_customer_dim.mncplty_cd,
-          edw_vw_my_pos_customer_dim.mncplty_nm
-        FROM edw_vw_my_pos_customer_dim
+          edw_vw_os_pos_customer_dim.cntry_cd,
+          edw_vw_os_pos_customer_dim.cntry_nm,
+          edw_vw_os_pos_customer_dim.cust_cd,
+          edw_vw_os_pos_customer_dim.cust_nm,
+          edw_vw_os_pos_customer_dim.sold_to,
+          edw_vw_os_pos_customer_dim.brnch_cd,
+          edw_vw_os_pos_customer_dim.brnch_nm,
+          edw_vw_os_pos_customer_dim.brnch_frmt,
+          edw_vw_os_pos_customer_dim.brnch_typ,
+          edw_vw_os_pos_customer_dim.dept_cd,
+          edw_vw_os_pos_customer_dim.dept_nm,
+          edw_vw_os_pos_customer_dim.address1,
+          edw_vw_os_pos_customer_dim.address2,
+          edw_vw_os_pos_customer_dim.region_cd,
+          edw_vw_os_pos_customer_dim.region_nm,
+          edw_vw_os_pos_customer_dim.prov_cd,
+          edw_vw_os_pos_customer_dim.prov_nm,
+          edw_vw_os_pos_customer_dim.city_cd,
+          edw_vw_os_pos_customer_dim.city_nm,
+          edw_vw_os_pos_customer_dim.mncplty_cd,
+          edw_vw_os_pos_customer_dim.mncplty_nm
+        FROM edw_vw_os_pos_customer_dim
         WHERE
           (
             CAST((
-              edw_vw_my_pos_customer_dim.cntry_cd
+              edw_vw_os_pos_customer_dim.cntry_cd
             ) AS TEXT) = CAST((
               CAST('MY' AS VARCHAR)
             ) AS TEXT)
