@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_tp_closed_month
+    config:
+      alias: itg_sg_tp_closed_month
+      tags: ["daily", "sg_transaction_sellout"]
+    
+  - name: sgpitg_integration__sdl_raw_sg_tp_closed_month
+    config:
+      alias: sdl_raw_sg_tp_closed_month
+      tags: ["daily", "sg_transaction_sellout"]
+  - name: sgpitg_integration__itg_sg_tp_closed_year_bal
+    config:
+      alias: itg_sg_tp_closed_year_bal
+      tags: ["daily", "sg_transaction_sellout"]
+    
+  - name: sgpitg_integration__sdl_raw_sg_tp_closed_year_bal
+    config:
+      alias: sdl_raw_sg_tp_closed_year_bal
+      tags: ["daily", "sg_transaction_sellout"]
+    
+  

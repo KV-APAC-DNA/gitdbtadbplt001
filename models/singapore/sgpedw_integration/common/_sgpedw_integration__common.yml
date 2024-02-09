@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: sgpedw_integration__edw_vw_sg_material_dim
+    config:
+      alias: edw_vw_sg_material_dim
+      tags: ["daily","sg_sellin_and_scan_datamart"]
+  - name: sgpedw_integration__edw_vw_os_time_dim
+    config:
+      alias: edw_vw_os_time_dim
+      tags: ["daily","sg_sellin_and_scan_datamart"]
+  - name: sgpedw_integration__edw_vw_sg_customer_dim
+    config:
+      alias: edw_vw_sg_customer_dim
+      tags: ["daily","sg_sellin_and_scan_datamart"]
+

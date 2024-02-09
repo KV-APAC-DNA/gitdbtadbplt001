@@ -1,4 +1,4 @@
-{% test test_null(model,not_null_columns=None,select_columns=None)%}
+{% test null_check(model,not_null_columns=None,select_columns=None)%}
 {% if not_null_columns!=None %}
     select
         'KEY COLUMN IS NULL/BLANK' AS failure_reason,

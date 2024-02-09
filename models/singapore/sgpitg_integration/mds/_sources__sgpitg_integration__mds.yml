@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: sgpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: sgpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    
+      - name: sdl_mds_sg_store_master
+        tags: ["sg_sellin_and_scan_datamart","MDS"]
+      - name : sdl_mds_sg_product_mapping
+        tags: ["sg_sellin_and_scan_datamart","MDS"]
+      - name : sdl_mds_sg_ps_targets
+        tags: ["MDS","sg_mds_to_dna_refresh"]
+      - name : sdl_mds_sg_ps_weights
+        tags: ["MDS","sg_mds_to_dna_refresh"]
+      - name : sdl_mds_sg_customer_hierarchy
+        tags: ["MDS","sg_mds_to_dna_refresh"]
+      - name : sdl_mds_sg_product_hierarchy
+        tags: ["MDS","sg_mds_to_dna_refresh"]
+  
+  
+      

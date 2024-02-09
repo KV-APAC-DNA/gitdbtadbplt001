@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_zuellig_customer_mapping
+    config:
+      alias: itg_sg_zuellig_customer_mapping
+      tags: ["daily", "sg_master_sellout"]
+    
+  - name: sgpitg_integration__itg_sg_zuellig_product_mapping
+    config:
+      alias: itg_sg_zuellig_product_mapping
+      tags: ["daily", "sg_master_sellout"]
+    
+  - name: sgpitg_integration__itg_sg_zuellig_sellout
+    config:
+      alias: itg_sg_zuellig_sellout
+      tags: ["hourly", "sg_master_sellout"]
+    
+  - name: sgpitg_integration__sdl_raw_sg_zuellig_sellout
+    config:
+      alias: sdl_raw_sg_zuellig_sellout
+      tags: ["daily", "sg_transaction_sellout"]
