@@ -2709,7 +2709,7 @@ ds_orders as (
                                                         )
                                                     )
                                                     AND (
-                                                        current_timestamp()::date <= a.req_delvry_dt
+                                                        current_timestamp()::timestamp_ntz(9) <= a.req_delvry_dt
                                                     )
                                                 ) THEN 'Forward Month Order'::character varying
                                                 ELSE 'Open Order'::character varying
