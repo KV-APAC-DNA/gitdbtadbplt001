@@ -8,7 +8,7 @@ models:
   - name: mysedw_integration__edw_vw_my_pos_inventory
     config:
       alias: edw_vw_my_pos_inventory
-      tags: ["",""]
+      tags: ["j_ap_my_reg_data_refresh","hourly"]
   - name: mysedw_integration__edw_vw_my_si_pos_inv_analysis
     config:
       alias: edw_vw_my_si_pos_inv_analysis
