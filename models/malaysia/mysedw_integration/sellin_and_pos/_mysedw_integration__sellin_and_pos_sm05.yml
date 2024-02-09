@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: mysedw_integration__edw_my_sipos_analysis
-    config:
-      alias: edw_my_sipos_analysis
-     
