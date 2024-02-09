@@ -41,12 +41,12 @@ curr as (
                    year_month,
                    cust_num,
                    sales_channel,
-                   nvl(round(cast(case when (upper(identifier) = 'SELLIN' or upper(identifier) = 'SELLOUT') and upper(ctry_cd) in ('CN') and cust_num='135673'
+                   nvl(trunc(cast(case when (upper(identifier) = 'SELLIN' or upper(identifier) = 'SELLOUT') and upper(ctry_cd) in ('CN') and cust_num='135673'
                    then (sum(sellin_qty) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel) - 
-                   sum(sellout_qty) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) else '0' end as numeric(38,5)),5),0) as curr_inv_qty,
-                   NVL(ROUND(CAST(CASE WHEN (UPPER(IDENTIFIER) = 'SELLIN' or upper(identifier) = 'SELLOUT') and upper(ctry_cd) in ('CN') and cust_num='135673'
+                   sum(sellout_qty) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) else '0' end as numeric(38,6)),5),0) as curr_inv_qty,
+                   NVL(trunc(CAST(CASE WHEN (UPPER(IDENTIFIER) = 'SELLIN' or upper(identifier) = 'SELLOUT') and upper(ctry_cd) in ('CN') and cust_num='135673'
                    then (sum(sellin_value_usd) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel) - 
-                   (sum(sellout_value_usd) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)*0.35))/0.35 else '0' end as numeric(38,8)),5),0) as curr_inv_value_usd
+                   (sum(sellout_value_usd) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)*0.35))/0.35 else '0' end as numeric(38,6)),5),0) as curr_inv_value_usd
             from edw_rg_travel_retail tr1,
                 wks_month_tr_cal_excl_sku cal
             where tr1.year_month = cal.cal_mo_1
@@ -75,8 +75,8 @@ prev as (
         sales_channel,
         0 as curr_inv_qty,
         0 as curr_inv_value_usd,
-        nvl(round(cast((sum(closing_inv_qty) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) as numeric(38,5)),5),0) as opening_inv_qty,
-        nvl(round(cast((sum(closing_inv_value_usd) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) as numeric(38,8)),5),0) as opening_inv_value_usd
+        nvl(trunc(cast((sum(closing_inv_qty) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) as numeric(38,6)),5),0) as opening_inv_qty,
+        nvl(trunc(cast((sum(closing_inv_value_usd) over (partition by ctry_cd,year_month,retailer_name,cust_num,sales_channel)) as numeric(38,6)),5),0) as opening_inv_value_usd
     from {{this}} tr2,
         wks_month_tr_cal_excl_sku cal
         where tr2.year_month = cal.prev1 and upper(ctry_cd)='CN' and cust_num='135673'
