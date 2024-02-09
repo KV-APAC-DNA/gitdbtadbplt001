@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: mysedw_integration__edw_vw_my_pos_customer_dim
+    config:
+      alias: edw_vw_my_pos_customer_dim
+      tags: ["daily","my_pos_analysis"]
+
+  - name: mysedw_integration__edw_vw_my_pos_material_dim
+    config:
+      alias: edw_vw_my_pos_material_dim
+      tags: ["daily","my_pos_analysis"]
+  

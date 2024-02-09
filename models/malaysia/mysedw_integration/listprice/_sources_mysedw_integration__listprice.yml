@@ -10,5 +10,3 @@ sources:
       identifier: false
     tables:
       - name: itg_my_listprice
-      - name: itg_my_listprice_daily
-
