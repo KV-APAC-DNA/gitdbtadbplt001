@@ -38,9 +38,9 @@ edw_vw_my_material_dim as
 (
     select * from {{ ref('mysedw_integration__edw_vw_my_material_dim') }}
 ),
-edw_vw_greenlight_skus as
+edw_material_dim as
 (
-    select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 curr_dim as
 (
@@ -297,35 +297,29 @@ veocd as
 ),
 veomd as
 (
-  SELECT DISTINCT
-    eod.cntry_key,
-    eod.sap_matl_num,
-    eod.sap_mat_desc,
-    eod.gph_prod_frnchse,
-    eod.gph_prod_brnd,
-    eod.gph_prod_sub_brnd,
-    eod.gph_prod_vrnt,
-    eod.gph_prod_ctgry,
-    eod.gph_prod_subctgry,
-    eod.gph_prod_sgmnt,
-    eod.gph_prod_subsgmnt,
-    eod.gph_prod_put_up_desc,
-    EMD.greenlight_sku_flag AS greenlight_sku_flag,
-    EMD.pka_product_key AS pka_product_key,
-    EMD.pka_product_key_description AS pka_product_key_description,
-    EMD.product_key AS product_key,
-    EMD.product_key_description AS product_key_description,
-    EMD.pka_size_desc AS pka_size_desc
-  FROM edw_vw_my_material_dim as eod
-  LEFT JOIN (
-    SELECT
-      *
-    FROM edw_vw_greenlight_skus
-    WHERE
-      sls_org = '2100'
-  ) AS EMD
-    ON eod.sap_matl_num = EMD.MATL_NUM
-),
+  SELECT DISTINCT edw_vw_my_material_dim.cntry_key,
+            edw_vw_my_material_dim.sap_matl_num,
+            edw_vw_my_material_dim.sap_mat_desc,
+            edw_vw_my_material_dim.gph_prod_frnchse,
+            edw_vw_my_material_dim.gph_prod_brnd,
+            edw_vw_my_material_dim.gph_prod_sub_brnd,
+            edw_vw_my_material_dim.gph_prod_vrnt,
+            edw_vw_my_material_dim.gph_prod_ctgry,
+            edw_vw_my_material_dim.gph_prod_subctgry,
+            edw_vw_my_material_dim.gph_prod_sgmnt,
+            edw_vw_my_material_dim.gph_prod_subsgmnt,
+            edw_vw_my_material_dim.gph_prod_put_up_desc,
+            EMD.pka_product_key AS pka_product_key,
+            EMD.pka_product_key_description AS pka_product_key_description,
+            EMD.pka_product_key AS product_key,
+            EMD.pka_product_key_description AS product_key_description,
+            EMD.pka_size_desc AS pka_size_desc
+        FROM edw_vw_my_material_dim
+            LEFT JOIN (
+                SELECT * 
+                FROM edw_material_dim
+            ) EMD ON edw_vw_my_material_dim.sap_matl_num = LTRIM(EMD.MATL_NUM, '0')
+),        
 final as
 (SELECT
   'Malaysia' AS cntry_nm,

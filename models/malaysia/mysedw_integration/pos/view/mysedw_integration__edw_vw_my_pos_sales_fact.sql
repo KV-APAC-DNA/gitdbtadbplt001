@@ -48,7 +48,7 @@ vpos as
         itg_my_pos_sales_fact.so_val,
         itg_my_pos_sales_fact.sap_matl_num,
         itg_my_pos_sales_fact.file_nm,
-        cast(null as varchar) as cdl_dttm,
+        cast(NULL as varchar) as cdl_dttm,
         itg_my_pos_sales_fact.crtd_dttm,
         itg_my_pos_sales_fact.updt_dttm
       from itg_my_pos_sales_fact
@@ -57,30 +57,30 @@ final as(
     select
         'MY' as cntry_cd,
         'Malaysia' as cntry_nm,
-        null as pos_dt,
+        NULL as pos_dt,
         vpos.jj_yr_week_no,
         vpos.jj_mnth_id,
         vpos.cust_id as cust_cd,
         vpos.mt_item_cd as item_cd,
-        null as item_desc,
+        NULL as item_desc,
         vpos.sap_matl_num,
-        null as bar_cd,
-        null as master_code,
+        NULL as bar_cd,
+        NULL as master_code,
         vpos.store_cd as cust_brnch_cd,
         vpos.qty as pos_qty,
         vpos.so_val as pos_gts,
         case
         when (coalesce(vpos.qty, cast((  cast(( 0  ) as decimal)) as decimal(18, 0))) <> cast((  cast(( 0  ) as decimal)) as decimal(18, 0)))
         then (  vpos.so_val / vpos.qty)
-        else cast((  cast(null as decimal)) as decimal(18, 0))
+        else cast((  cast(NULL as decimal)) as decimal(18, 0))
         end as pos_item_prc,
-        null as pos_tax,
+        NULL as pos_tax,
         vpos.so_val as pos_nts,
         1 as conv_factor,
         vpos.qty as jj_qty_pc,
         lp.rate as jj_item_prc_per_pc,
         coalesce((  vpos.qty * lp.rate), vpos.so_val) as jj_gts,
-        null as jj_vat_amt,
+        NULL as jj_vat_amt,
         coalesce((  vpos.qty * lp.rate), vpos.so_val) as jj_nts,
         vpos.dept_cd
     from vpos

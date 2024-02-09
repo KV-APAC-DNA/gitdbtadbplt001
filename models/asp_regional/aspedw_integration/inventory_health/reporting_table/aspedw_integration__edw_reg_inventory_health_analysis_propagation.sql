@@ -16,7 +16,7 @@ final as(
         month_year::varchar(23) as month_year,
         month_number::number(18,0) as month_number,
         country_name::varchar(40) as country_name,
-        null::varchar(100) as distributor_id,
+        dstrbtr_grp_cd::varchar(100) as distributor_id,
         distributor_id_name::varchar(250) as distributor_id_name,
         franchise::varchar(50) as franchise,
         brand::varchar(50) as brand,

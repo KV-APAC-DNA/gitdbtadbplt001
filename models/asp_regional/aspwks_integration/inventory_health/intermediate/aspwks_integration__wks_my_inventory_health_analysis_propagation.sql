@@ -18,9 +18,9 @@ edw_vw_my_si_pos_inv_analysis as
 (
     select * from {{ ref('mysedw_integration__edw_vw_my_si_pos_inv_analysis') }}
 ),
-edw_vw_greenlight_skus as
+edw_material_dim as
 (
-    select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -33,6 +33,14 @@ edw_copa_trans_fact as
 edw_my_siso_analysis as
 (
    select * from {{ source('mysedw_integration', 'edw_my_siso_analysis') }} 
+),
+edw_company_dim as
+(
+   select * from {{ ref('aspedw_integration__edw_company_dim') }} 
+),
+v_edw_customer_sales_dim as
+(
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }} 
 ),
 siso as
 (
@@ -124,22 +132,17 @@ product1 as
     FROM (
         SELECT
         product.*,
-        EMD.greenlight_sku_flag AS greenlight_sku_flag,
-        EMD.pka_product_key AS pka_product_key,
-        EMD.pka_product_key_description AS pka_product_key_description,
-        EMD.product_key AS product_key,
-        EMD.product_key_description AS product_key_description,
-        EMD.pka_size_desc AS pka_size_desc,
-        ROW_NUMBER() OVER (PARTITION BY sku ORDER BY sku) AS rnk
+        EMD.pka_product_key as pka_product_key,
+        EMD.pka_product_key_description as pka_product_key_description,
+        EMD.pka_product_key as product_key,
+        EMD.pka_product_key_description as product_key_description,
+        EMD.pka_size_desc as pka_size_desc,
+        ROW_NUMBER() OVER (PARTITION BY sku ORDER BY sku ) AS rnk
         FROM  product
         LEFT JOIN (
-        SELECT
-            *
-        FROM edw_vw_greenlight_skus
-        WHERE
-            sls_org = '2100'
+        select * from edw_material_dim
         ) AS EMD
-        ON product.sku = EMD.MATL_NUM
+        ON product.sku = LTRIM(EMD.MATL_NUM, '0')
     )
     WHERE
         rnk = 1
@@ -174,7 +177,6 @@ ONSESEA AS (
         TRIM(COALESCE(NULLIF(product.pka_size_desc, ''), 'NA')) AS pka_size_desc,
         TRIM(COALESCE(NULLIF(product.SKU, ''), 'NA')) AS SKU_CD,
         TRIM(COALESCE(NULLIF(product.SKU_DESC, ''), 'NA')) AS SKU_DESCRIPTION,
-        TRIM(COALESCE(NULLIF(product.greenlight_sku_flag, ''), 'NA')) AS greenlight_sku_flag,
         TRIM(COALESCE(NULLIF(product.pka_product_key, ''), 'NA')) AS pka_product_key,
         TRIM(COALESCE(NULLIF(product.pka_product_key_description, ''), 'NA')) AS pka_product_key_description,
         TRIM(COALESCE(NULLIF(product.product_key, ''), 'NA')) AS product_key,
@@ -255,7 +257,6 @@ ONSESEA AS (
         pka_size_desc, /* GLOBAL_PUT_UP_DESC, */
         SKU,
         SKU_DESC,
-        greenlight_sku_flag,
         pka_product_key,
         pka_product_key_description,
         product_key,
@@ -289,7 +290,7 @@ ONSESEA AS (
         reason,
         replicated_flag
 ),
-REgional AS 
+Regional AS 
 (
     
     SELECT
@@ -320,6 +321,72 @@ REgional AS
         )
     )
 ),
+prestep as
+(
+    select cast(year as integer) as year,
+            qrtr_no as year_quarter,
+            month_year,
+            cast(mnth_no as integer) as month_number,
+            country_name,
+            dstrbtr_grp_cd,
+            distributor_id_name,
+            global_prod_franchise as franchise,
+            global_prod_brand as brand,
+            global_prod_sub_brand as prod_sub_brand,
+            global_prod_variant as variant,
+            global_prod_segment as segment,
+            global_prod_subsegment as prod_subsegment,
+            global_prod_category as prod_category,
+            global_prod_subcategory as prod_subcategory,
+            pka_size_desc as put_up_description,
+            sku_cd,
+            sku_description,
+            pka_product_key,
+            pka_product_key_description,
+            product_key,
+            product_key_description,
+            from_ccy,
+            to_ccy,
+            exch_rate,
+            sap_prnt_cust_key,
+            sap_prnt_cust_desc,
+            sap_cust_chnl_key,
+            sap_cust_chnl_desc,
+            sap_cust_sub_chnl_key,
+            sap_sub_chnl_desc,
+            sap_go_to_mdl_key,
+            sap_go_to_mdl_desc,
+            sap_bnr_key,
+            sap_bnr_desc,
+            sap_bnr_frmt_key,
+            sap_bnr_frmt_desc,
+            retail_env,
+            region,
+            zone_or_area,
+            round(cast(si_sls_qty as numeric(38, 5)), 5) as si_sls_qty,
+            round(cast(si_gts_val as numeric (38, 5)), 5) as si_gts_val,
+            round(cast(si_gts_val_usd as numeric(38, 5)), 5) as si_gts_val_usd,
+            round(cast (inventory_quantity as numeric(38, 5)), 5) as inventory_quantity,
+            round(cast(inventory_val as numeric(38, 5)), 5) as inventory_val,
+            round(cast (inventory_val_usd as numeric(38, 5)), 5) as inventory_val_usd,
+            round(cast (so_sls_qty as numeric(38, 5)), 5) as so_sls_qty,
+            round(cast (so_grs_trd_sls as numeric(38, 5)), 5) as so_grs_trd_sls,
+            so_grs_trd_sls_usd as so_grs_trd_sls_usd,
+            last_3months_so_qty,
+            last_6months_so_qty,
+            last_12months_so_qty,
+            last_3months_so_val,
+            last_3months_so_val_usd,
+            last_6months_so_val,
+            last_6months_so_val_usd,
+            last_12months_so_val,
+            last_12months_so_val_usd,
+            propagate_flag,
+            propagate_from,
+            reason,
+            last_36months_so_val
+        from Regional
+), 
 RegionalCurrency AS
 (
     SELECT
@@ -340,127 +407,197 @@ RegionalCurrency AS
     )
     AND to_ccy = 'USD'
 ),
-GTS AS 
-(
-    SELECT
-        ctry_key,
+sellin_all as (
+    Select ctry_key,
         obj_crncy_co_obj,
+        prnt_cust_key,
         caln_yr_mo,
         fisc_yr,
-        (CAST(gts_value AS DECIMAL(38, 15))) AS gts_value
-      FROM 
-      (
-        SELECT
-            ctry_key,
-            obj_crncy_co_obj,
-            caln_yr_mo,
-            fisc_yr,
-            SUM(amt_obj_crncy) AS GTS_value
-        FROM edw_copa_trans_fact
-        WHERE
-            TRIM(UPPER(acct_hier_shrt_desc)) = 'GTS'
-            AND fisc_yr >= (DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 2)
-            AND ctry_key IN ('MY')
-        GROUP BY
-            ctry_key,
-            obj_crncy_co_obj,
-            caln_yr_mo,
-            fisc_yr
+    (cast(gts as numeric(38, 15))) as gts
+    from (
+            select copa.ctry_key as ctry_key,
+                obj_crncy_co_obj,
+                cus_sales_extn.prnt_cust_key,
+                substring(fisc_yr_per, 1, 4) || substring(fisc_yr_per, 6, 2) as caln_yr_mo,
+                fisc_yr,
+                SUM(amt_obj_crncy) AS gts
+            from edw_copa_trans_fact copa
+                LEFT JOIN edw_company_dim cmp ON copa.co_cd = cmp.co_cd
+                LEFT JOIN v_edw_customer_sales_dim cus_sales_extn ON copa.sls_org = cus_sales_extn.sls_org
+                AND copa.dstr_chnl = cus_sales_extn.dstr_chnl::TEXT
+                AND copa.div = cus_sales_extn.div
+                AND copa.cust_num = cus_sales_extn.cust_num
+            WHERE cmp.ctry_group = 'Malaysia'
+                and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, current_timestamp) -2)
+                and copa.cust_num is not null
+                and copa.acct_hier_shrt_desc = 'GTS'
+                and amt_obj_crncy > 0
+            group by 1,
+                2,
+                3,
+                4,
+                5
+        )
+),
+available_customers as (
+    select month_year,
+        country_name,
+        sap_prnt_cust_key,
+        sap_prnt_cust_desc,
+        sum(si_gts_val) as si_gts_val,
+        sum(si_sls_qty) as si_sls_qty
+    from prestep inv
+    where country_name in ('Malaysia')
+    group by 1,
+        2,
+        3,
+        4
+    having (
+            sum(inventory_quantity) <> 0
+            or sum(inventory_val) <> 0
+        )
+    order by 1 desc,
+        2,
+        3,
+        4
+),
+GTS AS 
+(
+    Select 
+    ctry_key,
+    obj_crncy_co_obj,
+    caln_yr_mo,
+    fisc_yr,
+    sum(SI_ALL_DB_VAL) as gts_value,
+    sum(
+        case
+            when avail_customer is null then 0
+            else si_all_db_val
+        end
+    ) as si_inv_db_val
+from(
+        select a.ctry_key,
+                a.obj_crncy_co_obj,
+                a.caln_yr_mo,
+                a.fisc_yr,
+                a.prnt_cust_key as total_customer,
+                b.sap_prnt_cust_key as avail_customer,
+                sum(gts) as SI_ALL_DB_VAL
+            from sellin_all a
+                left join available_customers b on b.month_year = a.caln_yr_mo
+                and a.prnt_cust_key = b.sap_prnt_cust_key
+            group by 1,
+                2,
+                3,
+                4,
+                5,
+                6
+            order by 1 desc,
+                2,
+                3,
+                4
       )
+    group by 1,
+                    2,
+                    3,
+                    4
 ),
 COPA AS 
 (
-    SELECT
-        ctry_key,
-        obj_crncy_co_obj,
-        CAST(caln_yr_mo AS VARCHAR) AS caln_yr_mo,
-        CAST(fisc_yr AS VARCHAR) AS fisc_yr,
-        (CAST(gts_value AS DECIMAL(38, 15))) AS gts,
-      CASE WHEN ctry_key = 'MY' THEN gts_value * exch_rate END AS GTS_USD
-    FROM gts, RegionalCurrency
-    WHERE
-      GTS.obj_crncy_co_obj = RegionalCurrency.from_ccy
-      AND RegionalCurrency.MNTH_ID = (
-        SELECT
-          MAX(MNTH_ID)
-        FROM RegionalCurrency
-      )
+    Select ctry_key,
+                obj_crncy_co_obj,
+                caln_yr_mo,
+                fisc_yr,
+                (cast (gts_value as numeric(38, 5))) as gts,
+                si_inv_db_val,
+                Case
+                    when ctry_key = 'MY' then cast((gts_value * exch_rate) / 1000 as numeric(38, 5))
+                end as GTS_USD,
+                case
+                    when ctry_key = 'MY' then cast((si_inv_db_val * exch_rate) / 1000 as numeric(38, 5))
+                end as si_inv_db_val_usd
+            FROM gts,
+                RegionalCurrency
+            WHERE GTS.obj_crncy_co_obj = RegionalCurrency.from_ccy
+                AND RegionalCurrency.MNTH_ID =(
+                    Select max(MNTH_ID)
+                    from RegionalCurrency
+                )
 ),
 final as
 (
     SELECT
-        CAST(year AS INT) AS year,
-        qrtr_no AS year_quarter,
-        month_year,
-        CAST(mnth_no AS INT) AS month_number,
-        country_name,
-        dstrbtr_grp_cd,
-        distributor_id_name,
-        global_prod_franchise AS franchise,
-        global_prod_brand AS brand,
-        global_prod_sub_brand AS prod_sub_brand,
-        global_prod_variant AS variant,
-        global_prod_segment AS segment,
-        global_prod_subsegment AS prod_subsegment,
-        global_prod_category AS prod_category,
-        global_prod_subcategory AS prod_subcategory, /* global_put_up_desc as put_up_description */
-        pka_size_desc AS put_up_description,
-        sku_cd,
-        sku_description,
-        greenlight_sku_flag,
-        pka_product_key,
-        pka_product_key_description,
-        product_key,
-        product_key_description,
-        from_ccy,
-        to_ccy,
-        exch_rate,
-        sap_prnt_cust_key,
-        sap_prnt_cust_desc,
-        sap_cust_chnl_key,
-        sap_cust_chnl_desc,
-        sap_cust_sub_chnl_key,
-        sap_sub_chnl_desc,
-        sap_go_to_mdl_key,
-        sap_go_to_mdl_desc,
-        sap_bnr_key,
-        sap_bnr_desc,
-        sap_bnr_frmt_key,
-        sap_bnr_frmt_desc,
-        retail_env,
-        region,
-        zone_or_area,
-        ROUND(CAST(si_sls_qty AS DECIMAL(38, 5)), 5) AS si_sls_qty,
-        ROUND(CAST(si_gts_val AS DECIMAL(38, 5)), 5) AS si_gts_val,
-        ROUND(CAST(si_gts_val_usd AS DECIMAL(38, 5)), 5) AS si_gts_val_usd,
-        ROUND(CAST(inventory_quantity AS DECIMAL(38, 5)), 5) AS inventory_quantity,
-        ROUND(CAST(inventory_val AS DECIMAL(38, 5)), 5) AS inventory_val,
-        ROUND(CAST(inventory_val_usd AS DECIMAL(38, 5)), 5) AS inventory_val_usd,
-        ROUND(CAST(so_sls_qty AS DECIMAL(38, 5)), 5) AS so_sls_qty,
-        ROUND(CAST(so_grs_trd_sls AS DECIMAL(38, 5)), 5) AS so_grs_trd_sls,
-        so_grs_trd_sls_usd AS so_grs_trd_sls_usd,
-        ROUND(CAST(COPA.gts AS DECIMAL(38, 5)), 5) AS SI_ALL_DB_VAL,
-        ROUND(CAST(COPA.gts_usd AS DECIMAL(38, 5)), 5) AS SI_ALL_DB_VAL_USD,
-        ROUND(CAST(Regional.si_inv_db_val AS DECIMAL(38, 5)), 5) AS si_inv_db_val,
-        ROUND(CAST(Regional.si_inv_db_val_usd AS DECIMAL(38, 5)), 5) AS si_inv_db_val_usd,
-        last_3months_so_qty,
-        last_6months_so_qty,
-        last_12months_so_qty,
-        last_3months_so_val,
-        last_3months_so_val_usd,
-        last_6months_so_val,
-        last_6months_so_val_usd,
-        last_12months_so_val,
-        last_12months_so_val_usd,
-        propagate_flag,
-        propagate_from,
-        reason,
-        last_36months_so_val
-    FROM Regional, COPA
-    WHERE
-        Regional.year = COPA.fisc_yr
-        AND Regional.month_year = COPA.caln_yr_mo
-        AND Regional.from_ccy = COPA.obj_crncy_co_obj
+        cast(year as integer) as year,
+            qrtr_no as year_quarter,
+            month_year,
+            cast(mnth_no as integer) as month_number,
+            country_name,
+            dstrbtr_grp_cd,
+            distributor_id_name,
+            global_prod_franchise as franchise,
+            global_prod_brand as brand,
+            global_prod_sub_brand as prod_sub_brand,
+            global_prod_variant as variant,
+            global_prod_segment as segment,
+            global_prod_subsegment as prod_subsegment,
+            global_prod_category as prod_category,
+            global_prod_subcategory as prod_subcategory,
+            pka_size_desc as put_up_description,
+            sku_cd,
+            sku_description,
+            pka_product_key,
+            pka_product_key_description,
+            product_key,
+            product_key_description,
+            from_ccy,
+            to_ccy,
+            exch_rate,
+            sap_prnt_cust_key,
+            sap_prnt_cust_desc,
+            sap_cust_chnl_key,
+            sap_cust_chnl_desc,
+            sap_cust_sub_chnl_key,
+            sap_sub_chnl_desc,
+            sap_go_to_mdl_key,
+            sap_go_to_mdl_desc,
+            sap_bnr_key,
+            sap_bnr_desc,
+            sap_bnr_frmt_key,
+            sap_bnr_frmt_desc,
+            retail_env,
+            region,
+            zone_or_area,
+            round(cast(si_sls_qty as numeric(38, 5)), 5) as si_sls_qty,
+            round(cast(si_gts_val as numeric (38, 5)), 5) as si_gts_val,
+            round(cast(si_gts_val_usd as numeric(38, 5)), 5) as si_gts_val_usd,
+            round(cast (inventory_quantity as numeric(38, 5)), 5) as inventory_quantity,
+            round(cast(inventory_val as numeric(38, 5)), 5) as inventory_val,
+            round(cast (inventory_val_usd as numeric(38, 5)), 5) as inventory_val_usd,
+            round(cast (so_sls_qty as numeric(38, 5)), 5) as so_sls_qty,
+            round(cast (so_grs_trd_sls as numeric(38, 5)), 5) as so_grs_trd_sls,
+            so_grs_trd_sls_usd as so_grs_trd_sls_usd,
+            round(cast (COPA.gts as numeric(38, 5)), 5) as SI_ALL_DB_VAL,
+            round(cast (COPA.gts_usd as numeric (38, 5)), 5) as SI_ALL_DB_VAL_USD,
+            round(cast (COPA.si_inv_db_val as numeric(38, 5)), 5) as si_inv_db_val,
+            round(cast (COPA.si_inv_db_val_usd as numeric(38, 5)), 5) as si_inv_db_val_usd,
+            last_3months_so_qty,
+            last_6months_so_qty,
+            last_12months_so_qty,
+            last_3months_so_val,
+            last_3months_so_val_usd,
+            last_6months_so_val,
+            last_6months_so_val_usd,
+            last_12months_so_val,
+            last_12months_so_val_usd,
+            propagate_flag,
+            propagate_from,
+            reason,
+            last_36months_so_val
+        from Regional,
+            COPA
+        where Regional.year = COPA.fisc_yr
+            and Regional.month_year = COPA.caln_yr_mo
+            and Regional.from_ccy = COPA.obj_crncy_co_obj
 )
 select
     year::number(18,0) as year,

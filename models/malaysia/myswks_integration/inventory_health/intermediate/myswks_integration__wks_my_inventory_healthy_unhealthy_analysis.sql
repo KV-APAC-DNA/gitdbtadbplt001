@@ -16,9 +16,9 @@ siso as
   where sap_parent_customer_desc <> ''
 
 ),
-edw_vw_greenlight_skus as
+edw_material_dim as
 (
-    select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 
 siso_analysis as
@@ -73,16 +73,16 @@ product1 as
     from (
         select
             product.*,
-            emd.greenlight_sku_flag as greenlight_sku_flag,
-            emd.pka_product_key as pka_product_key,
-            emd.pka_product_key_description as pka_product_key_description,
-            emd.product_key as product_key,
-            emd.product_key_description as product_key_description,
-            emd.pka_size_desc as pka_size_desc,
+            EMD.pka_product_key as pka_product_key,
+            EMD.pka_product_key_description as pka_product_key_description,
+            EMD.pka_product_key as product_key,
+            EMD.pka_product_key_description as product_key_description,
+            EMD.pka_size_desc as pka_size_desc,
             row_number() over (partition by sku order by sku) as rnk
         from  product
-    left join ( select * from edw_vw_greenlight_skus where sls_org = '2100') as emd
-    on product.sku = emd.matl_num
+    left join ( Select *
+                        from edw_material_dim) as emd
+    on product.sku = LTRIM(EMD.MATL_NUM, '0')
     )
     where
     rnk = 1
