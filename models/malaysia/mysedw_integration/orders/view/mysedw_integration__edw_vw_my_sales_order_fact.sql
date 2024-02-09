@@ -1,6 +1,5 @@
 with edw_sales_order_fact as(
     select * from {{ ref('aspedw_integration__edw_sales_order_fact') }}
-    
 ),
 
 transformed as(
@@ -48,7 +47,7 @@ transformed as(
   edw_sales_order_fact.rejectn_st,
   edw_sales_order_fact.reason_rej AS rejectn_cd,
   CAST(NULL AS TEXT) AS rejectn_desc,
-  CAST(ABS(edw_sales_order_fact.exchg_rate) AS DECIMAL) AS exchg_rate,
+  ABS(edw_sales_order_fact.exchg_rate) AS exchg_rate,
   SUM(edw_sales_order_fact.zordqtybu) AS ord_qty,
   SUM(edw_sales_order_fact.net_price) AS net_price,
   SUM(edw_sales_order_fact.subtotal_1) AS grs_trd_sls,
@@ -101,6 +100,6 @@ GROUP BY
   edw_sales_order_fact.rejectn_st,
   edw_sales_order_fact.reason_rej,
   19,
-  exchg_rate
+  ABS(edw_sales_order_fact.exchg_rate)
 )
 select * from transformed
