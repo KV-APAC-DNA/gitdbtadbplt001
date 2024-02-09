@@ -3,7 +3,7 @@ with source as(
 ),
 final as(
     select data_src::varchar(14) as data_src,
-    "year"::number(18,0) as "year",
+    year::number(18,0) as year,
     qrtr_no::number(18,0) as qrtr_no,
     mnth_id::number(18,0) as mnth_id,
     mnth_no::number(18,0) as mnth_no,

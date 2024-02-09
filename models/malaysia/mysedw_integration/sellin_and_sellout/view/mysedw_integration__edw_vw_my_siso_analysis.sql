@@ -37,7 +37,7 @@ transformed as(
     (
       SELECT
         CAST('GT Sellout' AS VARCHAR) AS data_src,
-        veosf."year",
+        veosf.year,
         veosf.qrtr_no,
         veosf.mnth_id,
         veosf.mnth_no,
@@ -318,7 +318,7 @@ transformed as(
                 (
                   (
                     SELECT
-                      veotd."year",
+                      veotd.year,
                       veotd.qrtr_no,
                       veotd.mnth_id,
                       veotd.mnth_no,
@@ -359,7 +359,7 @@ transformed as(
                       SUM(t1.jj_net_trd_sls) AS jj_net_trd_sls
                     FROM (
                       SELECT DISTINCT
-                        edw_vw_os_time_dim.cal_year AS "year",
+                        edw_vw_os_time_dim.cal_year AS year,
                         edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
                         edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
                         edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
@@ -530,7 +530,7 @@ transformed as(
                         )
                       )
                     GROUP BY
-                      veotd."year",
+                      veotd.year,
                       veotd.qrtr_no,
                       veotd.mnth_id,
                       veotd.mnth_no,
@@ -823,7 +823,7 @@ transformed as(
         )
       GROUP BY
         1,
-        veosf."year",
+        veosf.year,
         veosf.qrtr_no,
         veosf.mnth_id,
         veosf.mnth_no,
@@ -939,7 +939,7 @@ transformed as(
       UNION ALL
       SELECT
         CAST('SAP BW BILLING' AS VARCHAR) AS data_src,
-        veosf."year",
+        veosf.year,
         veosf.qrtr_no,
         veosf.mnth_id,
         veosf.mnth_no,
@@ -1185,7 +1185,7 @@ transformed as(
               (
                 (
                   SELECT
-                    veotd."year",
+                    veotd.year,
                     veotd.qrtr_no,
                     veotd.mnth_id,
                     veotd.mnth_no,
@@ -1272,7 +1272,7 @@ transformed as(
                       )
                   ) AS t1, (
                     SELECT DISTINCT
-                      edw_vw_os_time_dim.cal_year AS "year",
+                      edw_vw_os_time_dim.cal_year AS year,
                       edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
                       edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
                       edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
@@ -1290,7 +1290,7 @@ transformed as(
                       ) AS TIMESTAMPNTZ)
                     )
                   GROUP BY
-                    veotd."year",
+                    veotd.year,
                     veotd.qrtr_no,
                     veotd.mnth_id,
                     veotd.mnth_no,
@@ -1492,7 +1492,7 @@ transformed as(
         )
       GROUP BY
         1,
-        veosf."year",
+        veosf.year,
         veosf.qrtr_no,
         veosf.mnth_id,
         veosf.mnth_no,
@@ -1597,7 +1597,7 @@ transformed as(
     UNION ALL
     SELECT
       'GT Inventory' AS data_src,
-      evosif."year",
+      evosif.year,
       evosif.qrtr_no,
       evosif.mnth_id,
       evosif.mnth_no,
@@ -1834,7 +1834,7 @@ transformed as(
               (
                 (
                   SELECT
-                    a."year",
+                    a.year,
                     a.qrtr_no,
                     a.mnth_id,
                     a.mnth_no,
@@ -1848,7 +1848,7 @@ transformed as(
                     a.end_stock_val
                   FROM (
                     SELECT
-                      t1."year",
+                      t1.year,
                       t1.qrtr_no,
                       t1.mnth_id,
                       t1.mnth_no,
@@ -1862,7 +1862,7 @@ transformed as(
                       SUM(t1.end_stock_val) AS end_stock_val
                     FROM (
                       SELECT
-                        veotd."year",
+                        veotd.year,
                         veotd.qrtr_no,
                         veotd.mnth_id,
                         veotd.mnth_no,
@@ -1877,7 +1877,7 @@ transformed as(
                         inv.end_stock_val
                       FROM edw_vw_my_sellout_inventory_fact AS inv, (
                         SELECT DISTINCT
-                          edw_vw_os_time_dim.cal_year AS "year",
+                          edw_vw_os_time_dim.cal_year AS year,
                           edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
                           edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
                           edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
@@ -1902,7 +1902,7 @@ transformed as(
                         )
                     ) AS t1, (
                       SELECT DISTINCT
-                        veotd.cal_year AS "year",
+                        veotd.cal_year AS year,
                         veotd.cal_qrtr_no AS qrtr_no,
                         veotd.cal_mnth_id AS mnth_id,
                         veotd.cal_mnth_no AS mnth_no,
@@ -1951,7 +1951,7 @@ transformed as(
                         t3.max_inv_dt = t1.inv_dt
                       )
                     GROUP BY
-                      t1."year",
+                      t1.year,
                       t1.qrtr_no,
                       t1.mnth_id,
                       t1.mnth_no,
@@ -2239,7 +2239,7 @@ transformed as(
   UNION ALL
   SELECT
     'GT Target' AS data_src,
-    veotd."year",
+    veotd.year,
     veotd.qrtr_no,
     veotd.mnth_id,
     veotd.mnth_no,
@@ -2411,7 +2411,7 @@ transformed as(
     NULL AS is_hero
   FROM (
     SELECT
-      edw_vw_os_time_dim.cal_year AS "year",
+      edw_vw_os_time_dim.cal_year AS year,
       edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
       edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
       edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
@@ -2781,7 +2781,7 @@ transformed as(
 UNION ALL
 SELECT
   'IN Transit' AS data_src,
-  veoint."year",
+  veoint.year,
   veoint.qrtr_no,
   veoint.mnth_id,
   veoint.mnth_no,
@@ -3019,7 +3019,7 @@ FROM (
               b.matl_num,
               b.bill_qty_pc,
               b.billing_gross_val,
-              veotd."year",
+              veotd.year,
               veotd.qrtr_no,
               veotd.mnth_id,
               veotd.mnth_no,
@@ -3048,7 +3048,7 @@ FROM (
                 edw_vw_my_billing_fact.matl_num
             ) AS b, (
               SELECT
-                edw_vw_os_time_dim.cal_year AS "year",
+                edw_vw_os_time_dim.cal_year AS year,
                 edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
                 edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
                 edw_vw_os_time_dim.cal_mnth_no AS mnth_no,

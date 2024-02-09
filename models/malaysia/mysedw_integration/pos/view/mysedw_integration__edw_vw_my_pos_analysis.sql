@@ -25,7 +25,7 @@ itg_my_material_dim as(
 transformed as (
    select
   'POS' AS data_src,
-  veposf."year" AS jj_year,
+  veposf.year AS jj_year,
   veposf.qrtr AS jj_qtr,
   veposf.mnth_id AS jj_mnth_id,
   veposf.mnth_no AS jj_mnth_no,
@@ -247,7 +247,7 @@ FROM (
                   LEFT(CAST((
                     a.jj_mnth_id
                   ) AS TEXT), 4)
-                ) AS INT) AS "year",
+                ) AS INT) AS year,
                 (
                   (
                     LEFT(CAST((
