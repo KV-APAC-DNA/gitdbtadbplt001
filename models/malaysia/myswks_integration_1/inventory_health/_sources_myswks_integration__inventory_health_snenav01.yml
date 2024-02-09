@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: myswks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: myswks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_my_base
+  - name: mysedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: mysedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_my_siso_analysis
+  

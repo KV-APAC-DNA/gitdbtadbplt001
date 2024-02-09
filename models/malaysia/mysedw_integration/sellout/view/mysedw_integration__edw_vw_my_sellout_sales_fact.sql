@@ -35,9 +35,7 @@ listprice as
     from edw_vw_my_listprice
     where
       (
-        (cast((  edw_vw_my_listprice.cntry_key) as text) = cast((  cast('MY' as varchar)) as text)
-        )
-        and (cast((  edw_vw_my_listprice.mnth_type) as text) = cast((  cast('CAL' as varchar)) as text)
+         (cast((  edw_vw_my_listprice.mnth_type) as text) = cast((  cast('CAL' as varchar)) as text)
         )
       )
 ),
@@ -52,7 +50,7 @@ final as
         imsddf.dstrbtr_prod_cd as dstrbtr_matl_num,
         imsddf.sap_matl_num,
         imsddf.ean_num as bar_cd,
-        imsddf.sls_ord_dt as bill_date,
+        imsddf.sls_ord_dt::timestamp_ntz as bill_date,
         imsddf.sls_ord_num as bill_doc,
         imsddf.sls_emp as slsmn_cd,
         null as slsmn_nm,
@@ -65,11 +63,11 @@ final as
             when (imsddf.subtotal_1 > cast((  cast((cast((0) as decimal)  ) as decimal(18, 0))) as decimal(20, 4)))
             then cast('Invoice / DN' as varchar)
             when (imsddf.subtotal_1 < cast((cast((cast((0) as decimal)) as decimal(18, 0))) as decimal(20, 4)))
-            then cast('Trade returns / CN' as varchar)
+            then cast('Trade Returns / CN' as varchar)
             else case
             when (imsddf.qty_pc >= cast((cast((cast((0) as decimal)) as decimal(18, 0))) as decimal(20, 4)))
             then cast('Invoice / DN' as varchar)
-            else cast('Trade returns / CN' as varchar)
+            else cast('Trade Returns / CN' as varchar)
             end
         end
         ) as doc_type_desc,
@@ -190,9 +188,12 @@ final as
                     (ltrim(cast((  lp.item_cd) as text), cast((  cast('0' as varchar)) as text)) 
                     = ltrim(cast((  imsddf.sap_matl_num) as text), cast((  cast('0' as varchar)) as text))
                     )
-                    and (cast((  lp.yearmo) as text)
-                    = to_char(  cast(cast((    imsddf.sls_ord_dt  ) as timestampntz) as timestampntz),  cast((    cast('YYYYMM' as varchar)  ) as text))
+                    and (
+                    (lp.yearmo)::text = to_char(
+                        (imsddf.sls_ord_dt)::timestamp without time zone,
+                        ('YYYYMM'::character varying)::text
                     )
+                )
                 )
             )
     )
