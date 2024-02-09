@@ -3,7 +3,7 @@ with wks_my_lastnmonths as
     select * from {{ ref('myswks_integration__wks_my_lastnmonths') }}
 ),
 wks_my_base as(
-    select * from {{ source('myswks_integration', 'wks_my_base') }}
+    select * from {{ ref('myswks_integration__wks_my_base') }}
 ),
 edw_vw_os_time_dim as
 (

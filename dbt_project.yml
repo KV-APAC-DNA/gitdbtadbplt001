@@ -115,13 +115,11 @@ models:
         +transient: false
         +schema: MYSEDW_INTEGRATION
         currency:
-          master:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         customer:
-          master:
-            view:
-              +materialized: view
+          view:
+            +materialized: view
         sellin:
             view:
               +materialized: view

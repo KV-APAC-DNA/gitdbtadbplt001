@@ -32,7 +32,7 @@ edw_copa_trans_fact as
 ),
 edw_my_siso_analysis as
 (
-   select * from {{ source('mysedw_integration', 'edw_my_siso_analysis') }} 
+   select * from {{ ref('mysedw_integration__edw_my_siso_analysis') }}
 ),
 edw_company_dim as
 (

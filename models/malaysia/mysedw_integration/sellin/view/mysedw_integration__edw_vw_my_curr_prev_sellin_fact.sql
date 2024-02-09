@@ -524,7 +524,7 @@ final as(
     trde_prmtn_val as trde_prmtn_val,
     nts_val as nts_val,
     nts_qty as nts_qty,
-    is_curr
+    is_curr as is_curr 
     from transformed
 )
 

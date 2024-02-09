@@ -1,6 +1,6 @@
 with edw_my_siso_analysis as
 (
-    select * from {{ source('mysedw_integration', 'edw_my_siso_analysis') }}
+    select * from {{ ref('mysedw_integration__edw_my_siso_analysis') }}
 ),
 edw_vw_my_si_pos_inv_analysis as
 (

@@ -1,6 +1,6 @@
 version: 2
 
-sources:
+sources: 
   - name: mysitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysitg_integration
@@ -9,4 +9,5 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: itg_my_gt_outlet_exclusion
+      - name: itg_my_as_watsons_inventory
+ 

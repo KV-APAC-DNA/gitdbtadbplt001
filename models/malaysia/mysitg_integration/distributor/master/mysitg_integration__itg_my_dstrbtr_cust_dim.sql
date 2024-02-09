@@ -10,7 +10,7 @@ with source as (
     select * from {{ ref('mysitg_integration__itg_my_outlet_attr') }}
 ),
 itg_my_sellout_sales_fact as (
-    select * from DEV_DNA_CORE.mysitg_integration.itg_my_sellout_sales_fact
+    select * from {{ ref('mysitg_integration__itg_my_sellout_sales_fact') }}
 ),
 union_1 as (
     select distinct

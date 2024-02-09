@@ -1,6 +1,6 @@
 with edw_vw_my_sipos_analysis as 
 ( 
-   select * from {{ source('mysedw_integration', 'edw_my_sipos_analysis') }}
+   select * from {{ ref('mysedw_integration__edw_vw_my_sipos_analysis') }}
 ),
 edw_vw_my_material_dim as ( 
   select * from {{ ref('mysedw_integration__edw_vw_my_material_dim') }}

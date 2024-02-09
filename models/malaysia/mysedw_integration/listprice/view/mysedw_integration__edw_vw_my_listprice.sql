@@ -1,6 +1,6 @@
 with itg_my_listprice as 
 (
-    select * from {{ source('mysitg_integration', 'itg_my_listprice') }}
+    select * from {{ ref('mysitg_integration__itg_my_listprice') }}
 ),
 
 itg_my_listprice_daily as
