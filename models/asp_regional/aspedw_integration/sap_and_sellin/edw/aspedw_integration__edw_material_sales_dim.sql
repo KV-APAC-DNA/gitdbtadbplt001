@@ -72,7 +72,7 @@ transformed as (
         fcst_indc_apo :: varchar(1) as fcst_indc_apo,
         prod_type_apo,
         mstr_cd :: varchar(18) as mstr_cd,
-        med_desc :: varchar(40) as med_desc,
+        med_desc :: varchar(50) as med_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
         from source as src

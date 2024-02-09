@@ -19,6 +19,6 @@ sources:
       identifier: false
     tables:
       - name: edw_my_sipos_analysis
-      - name: edw_vw_my_pos_material_dim
-      - name: edw_vw_my_pos_customer_dim
+
+
 
