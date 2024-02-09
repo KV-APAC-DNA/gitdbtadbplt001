@@ -117,8 +117,10 @@ prev as (
 {% endif %}
 merged as (
     select * from curr
+    {% if is_incremental() %}
     union all
     select * from prev
+    {% endif %}
 ),
 
 transformed as (
@@ -154,21 +156,21 @@ transformed as (
 
 final as (
     select
-        ctry_cd,
-        crncy_cd,
-        country_name,
-        retailer_name,
-        year,
-        month,
-        year_month,
-        dcl_code,
-        matl_num,
-        cust_num,
-        sales_channel,
-        opening_inv_qty,
-        closing_inv_qty,
-        opening_inv_value_usd,
-        closing_inv_value_usd
+        ctry_cd::varchar(150) as ctry_cd,
+        crncy_cd::varchar(3) as crncy_cd,
+        country_name::varchar(30) as country_name,
+        retailer_name::varchar(150) as retailer_name,
+        year::number(18,0) as year,
+        month::number(18,0) as month,
+        year_month::varchar(22) as year_month,
+        dcl_code::varchar(50) as dcl_code,
+        matl_num::varchar(30) as matl_num,
+        cust_num::varchar(30) as cust_num,
+        sales_channel::varchar(100) as sales_channel,
+        opening_inv_qty::number(38,5) as opening_inv_qty,
+        closing_inv_qty::number(38,5) as closing_inv_qty,
+        opening_inv_value_usd::number(38,5) as opening_inv_value_usd,
+        closing_inv_value_usd::number(38,5) as closing_inv_value_usd
     from transformed
 )
 select * from final
