@@ -1,6 +1,6 @@
 {{
     config(
-        transient=true    
+        transient=true
     )
 }}
 with edw_calendar_dim as (
@@ -12,7 +12,7 @@ edw_rg_travel_retail as (
 {% set query %} 
 select distinct cal_mo_1 
                  from edw_calendar_dim where cal_mo_1 >= (select min(year_month) from edw_rg_travel_retail)
-                  and cal_mo_1 <=  (select to_char(add_months (to_date(max(year_month),'YYYYMM'),1),'YYYYMM') from edw_rg_travel_retail where identifier<>'TARGET') 
+                  and cal_mo_1 <=  (select to_char(add_months (to_date(max(year_month),'YYYYMM'),1),'YYYYMM') from edw_rg_travel_retail) 
                 order by 1 
                 
 {% endset %}

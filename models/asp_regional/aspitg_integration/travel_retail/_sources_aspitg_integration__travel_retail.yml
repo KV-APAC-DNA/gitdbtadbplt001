@@ -100,7 +100,3 @@ sources:
     tables:
     - name : wks_apac_dcl_targets_header
       tags: ["travel_retail"]
-    - name : wks_rg_travel_retail_inventory_excl_sku
-      tags: ["travel_retail"]
-    - name : wks_rg_travel_retail_inventory
-      tags: ["travel_retail"]

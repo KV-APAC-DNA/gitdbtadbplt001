@@ -3,7 +3,7 @@ with edw_rg_travel_retail as (
     select * from {{ref('aspedw_integration__edw_rg_travel_retail')}}
 ),
 wks_rg_travel_retail_inventory as (
-    select * from {{source('aspwks_integration','wks_rg_travel_retail_inventory')}}
+    select * from {{ref('aspwks_integration__wks_rg_travel_retail_inventory')}}
 ),
 edw_material_dim as (
     select * from {{ref('aspedw_integration__edw_material_dim')}}
@@ -12,7 +12,7 @@ itg_rg_travel_retail_channel_mapping as (
     select * from {{ref('aspitg_integration__itg_rg_travel_retail_channel_mapping')}}
 ),
 wks_rg_travel_retail_inventory_excl_sku as (
-    select * from {{source('aspwks_integration','wks_rg_travel_retail_inventory_excl_sku')}}
+    select * from {{ref('aspwks_integration__wks_rg_travel_retail_inventory_excl_sku')}}
 ),
 
 --Logical CTE
