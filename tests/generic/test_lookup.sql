@@ -23,7 +23,11 @@
                 select distinct
                     ({{lookup_column}})
                 from  {{lookup_table}}
+<<<<<<< HEAD
                 {% if lookup_filter !=None %}
+=======
+                {%- if lookup_filter !=None -%}
+>>>>>>> fdd2b73c5777f992a1399e7deb627e00356bfae9
                 where {{lookup_filter}}
                 
     {% endif %}

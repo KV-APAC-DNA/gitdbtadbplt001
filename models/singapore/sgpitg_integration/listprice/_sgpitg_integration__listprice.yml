@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpitg_integration__itg_sg_listprice
+    config:
+      alias: itg_sg_listprice
+      tags: ["daily", "sg_listprice"]

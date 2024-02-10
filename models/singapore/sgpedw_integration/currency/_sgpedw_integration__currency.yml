@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpedw_integration__edw_vw_sg_curr_dim
+    config:
+      alias: edw_vw_sg_curr_dim
+      tags: ["daily","sg_sellin_and_scan_datamart"]
