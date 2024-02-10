@@ -1,0 +1,6 @@
+version: 2
+models:
+  - name: myswks_integration__wks_my_listprice
+    config:
+      alias: wks_my_listprice
+      tags: ['my_list_price','Daily']
