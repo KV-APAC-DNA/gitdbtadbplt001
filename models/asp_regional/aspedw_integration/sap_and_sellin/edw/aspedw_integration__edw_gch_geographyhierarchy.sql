@@ -1,7 +1,8 @@
 
 --Import CTE
 with source as (
-    select * from {{ ref('aspwks_integration__wks_edw_gch_geographyhierarchy') }}
+   select * from {{ ref('aspitg_integration__vw_stg_sdl_gcgh_geo_hier') }}
+    
 ),
 
 --Logical CTE

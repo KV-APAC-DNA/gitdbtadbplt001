@@ -429,7 +429,7 @@ models:
     tests:
     - test_duplicate:
           group_by_columns: ["bukrs"]
-          name: TRATBL_vw_stg_sdl_sap_ecc_company_duplicate_test
+          name: TRATBL_vw_stg_sdl_sap_ecc_company__duplicate_test
           config:
             store_failures: true
             schema: aspwks_integration
@@ -440,7 +440,7 @@ models:
     tests:
     - test_duplicate:
           group_by_columns: ["bukrs"]
-          name: TRATBL_vw_stg_sdl_sap_ecc_company_code_text_duplicate_test
+          name: TRATBL_vw_stg_sdl_sap_ecc_company_code_text__duplicate_test
           config:
             store_failures: true
             schema: aspwks_integration

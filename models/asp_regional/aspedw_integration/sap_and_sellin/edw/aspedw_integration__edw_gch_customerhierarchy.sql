@@ -1,6 +1,7 @@
 --Import CTE
 with source as (
-    select * from {{ ref('aspwks_integration__wks_edw_gch_customerhierarchy') }}
+   select * from {{ ref('aspitg_integration__vw_stg_sdl_gcch_cust_hier') }}
+    
 ),
 
 --Logical CTE
@@ -54,7 +55,10 @@ current_timestamp()::timestamp_ntz(9) as crt_dttm,
 current_timestamp()::timestamp_ntz(9) as updt_dttm,
 primary_format::varchar(50) as primary_format,
 distributor_attribute::varchar(50) as distributor_attribute
-  from source)
+  from source
+   where
+    not customer is null
+  )
 
 
 --Final select
