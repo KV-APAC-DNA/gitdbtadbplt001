@@ -4,15 +4,15 @@ models:
   - name: aspitg_integration__itg_rg_travel_retail_channel_mapping
     config:
       alias: itg_rg_travel_retail_channel_mapping
-      tags: ["daily","travel_retail_mds"]
+      tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
   - name: aspitg_integration__itg_rg_travel_retail_nts_target
     config:
       alias: itg_rg_travel_retail_nts_target
-      tags: ["daily","travel_retail_mds"]
+      tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
   - name: aspitg_integration__itg_rg_travel_retail_product_mapping
     config:
       alias: itg_rg_travel_retail_product_mapping
-      tags: ["daily","travel_retail_mds"]
+      tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
   - name: aspitg_integration__itg_mds_log
     config:
       alias: itg_mds_log
@@ -20,76 +20,76 @@ models:
   - name: aspitg_integration__itg_mds_ap_dso
     config:
       alias: itg_mds_ap_dso
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_otif
     config:
       alias: itg_mds_ap_otif
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_ecom_oneview_config
     config:
       alias: itg_mds_ap_ecom_oneview_config
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_ps_market_coverage
     config:
       alias: itg_mds_rg_ps_market_coverage
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_ecom_digital_shelf_customer_mapping
     config:
       alias: itg_mds_rg_ecom_digital_shelf_customer_mapping
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_tih_distributor_closure
     config:
       alias: itg_mds_rg_tih_distributor_closure
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_ecom_product
     config:
       alias: itg_mds_rg_ecom_product
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_sku_benchmarks
     config:
       alias: itg_mds_rg_sku_benchmarks
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_sfmc_gender
     config:
       alias: itg_mds_rg_sfmc_gender
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_rg_sfmc_attributes
     config:
       alias: itg_mds_rg_sfmc_attributes
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_lookup_category_mapping
     config:
       alias: itg_lookup_category_mapping
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_ecom_digital_salesweight
     config:
       alias: itg_ecom_digital_salesweight
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_okr_actuals
     config:
       alias: itg_mds_ap_okr_actuals
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_okr_targets
     config:
       alias: itg_mds_ap_okr_targets
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_company_dim
     config:
       alias: itg_mds_ap_company_dim
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_customer360_config
     config:
       alias: itg_mds_ap_customer360_config
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_custgp_portfolio_mapping
     config:
       alias: itg_mds_custgp_portfolio_mapping
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_pre_apsc_master
     config:
       alias: itg_mds_pre_apsc_master
-      tags: ["daily","rg_mds_dna"]
+      tags: [MDS,"rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_greenlight_skus
     config:
       alias: itg_mds_ap_greenlight_skus
-      tags: ["daily","rg_greenlight_mds"]
+      tags: [MDS,"rg_greenlight_mds","ingestion"]
