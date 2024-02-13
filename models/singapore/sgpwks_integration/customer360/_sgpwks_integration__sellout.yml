@@ -3,16 +3,16 @@ models:
   - name: sgpwks_integration__wks_singapore_regional_sellout_base
     config:
       alias: wks_singapore_regional_sellout_base
-      tags: ["daily","customer360"]
+      tags: ["Cutomer_360_SG","transformation"]
   - name: sgpwks_integration__wks_singapore_regional_sellout
     config:
       alias: wks_singapore_regional_sellout
-      tags: ["daily","customer360"]
+      tags: ["Cutomer_360_SG","transformation"]
   - name: sgpwks_integration__wks_singapore_regional_sellout_npd
     config:
       alias: wks_singapore_regional_sellout_npd
-      tags: ["daily","customer360"]    
+      tags: ["Cutomer_360_SG","transformation"]   
   - name: sgpwks_integration__wks_singapore_regional_sellout__offtake_npd
     config:
       alias: wks_singapore_regional_sellout_offtake_npd
-      tags: ["daily","customer360"]    
+      tags: ["Cutomer_360_SG","transformation"]   

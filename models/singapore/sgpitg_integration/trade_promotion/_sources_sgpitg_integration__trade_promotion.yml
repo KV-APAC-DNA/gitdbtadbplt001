@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_sg_tp_closed_month
+        tags: ["sg_transaction_sellout","ingestion"]
         tests:
         - test_null:
               not_null_columns: ["customer"]
@@ -29,6 +30,7 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_sg_tp_closed_year_bal
+        tags: ["sg_transaction_sellout","ingestion"]
         tests:
         - test_null:
               not_null_columns: ["customer"]

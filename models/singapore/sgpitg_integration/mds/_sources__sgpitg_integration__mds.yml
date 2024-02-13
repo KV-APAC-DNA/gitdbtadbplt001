@@ -11,17 +11,17 @@ sources:
     tables:
     
       - name: sdl_mds_sg_store_master
-        tags: ["sg_sellin_and_scan_datamart","MDS"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name : sdl_mds_sg_product_mapping
-        tags: ["sg_sellin_and_scan_datamart","MDS"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name : sdl_mds_sg_ps_targets
-        tags: ["MDS","sg_mds_to_dna_refresh"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name : sdl_mds_sg_ps_weights
-        tags: ["MDS","sg_mds_to_dna_refresh"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name : sdl_mds_sg_customer_hierarchy
-        tags: ["MDS","sg_mds_to_dna_refresh"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name : sdl_mds_sg_product_hierarchy
-        tags: ["MDS","sg_mds_to_dna_refresh"]
+        tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
   
   
       
