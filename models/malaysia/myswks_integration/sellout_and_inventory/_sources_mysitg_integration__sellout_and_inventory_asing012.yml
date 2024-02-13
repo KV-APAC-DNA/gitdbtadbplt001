@@ -1,0 +1,64 @@
+version: 2
+
+sources:
+  - name: snaposewks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snaposewks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_so_inv_133986
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133985
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133984
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133983
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133982
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133981
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_133980
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_131167
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_131166
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_131165
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_131164
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130521
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130520
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130519
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130518
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130517
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_130516
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_119025
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_119024
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_118477
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_109772
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_108565
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_108273
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_108129
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_135976
+        tags: ["my_sellout_inv_morning","hourly"]
+      - name: wks_so_inv_137021
+        tags: ["my_sellout_inv_morning","hourly"] 
+      
