@@ -1719,4 +1719,69 @@ sources:
       - name: bwa_dna_material_bomlist
       - name: bwa_account_attr
       - name: bwa_material_sales
-  
+      - name: bwa_azocalday00
+      - name: bwa_mcomp_code
+      - name: bwa_mprofit_ctr
+      - name: bwa_msalesorg
+      - name: bwa_tcomp_code
+      - name: bwa_tcountry
+      - name: bwa_tcurr
+      - name: bwa_tcustomer
+      - name: bwa_tmaterial
+      - name: bwa_tprofit_ctr
+      - name: bwa_tsales_grp
+      - name: bwa_tsales_off
+      - name: bwa_tsalesorg
+      - name: bwa_tzpcust
+      - name: bwa_tzchannel
+      - name: bwa_tzschannel
+      - name: bwa_tzbannerf
+      - name: bwa_tzbanner
+      - name: bwa_tzgotomod
+      - name: bwa_tzlcus_gr1
+      - name: bwa_tzlcus_gr2
+      - name: bwa_tzlcus_gr3
+      - name: bwa_tzlcus_gr4
+      - name: bwa_tzlcus_gr5
+      - name: bwa_tzlcus_gr6
+      - name: bwa_tzlcus_gr7
+      - name: bwa_tzlcus_gr8
+      - name: bwa_tzneed
+      - name: bwa_tzstrong
+        
+  - name: apc_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: apc_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables: 
+      - name: apc_marm
+      - name: apc_mbew
+      - name: apc_tvm1t
+      - name: apc_tvm2t
+      - name: apc_tvm3t
+      - name: apc_tvm4t
+      - name: apc_tvm5t
+      - name: apc_mara
+      - name: apc_ztranfran
+      - name: apc_ztranbrand
+      - name: apc_ztransbrand
+      - name: apc_ztranvariant
+      - name: apc_ztransvariant
+      - name: apc_ztranflav
+      - name: apc_ztraningr
+      - name: apc_ztranappl
+      - name: apc_ztranleng
+      - name: apc_ztranshape
+      - name: apc_ztranspf
+      - name: apc_ztrancover
+      - name: apc_ztranform
+      - name: apc_ztransize
+      - name: apc_ztranchar
+      - name: apc_ztranpack
+      - name: apc_ztranattrib13
+      - name: apc_ztranattrib14
+      - name: apc_ztransku
+      - name: apc_ztranrelabel

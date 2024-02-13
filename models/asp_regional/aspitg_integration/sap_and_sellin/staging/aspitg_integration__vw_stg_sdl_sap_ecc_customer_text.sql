@@ -3,19 +3,18 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_customer_text') }}
+    select * from {{ source('bwa_access', 'bwa_tcustomer') }}
 
 ),
 
 final as (
 
     select
-        mandt,
-        kunnr,
+        '888' as MANDT,
+        customer as kunnr,
         txtmd,
-        crt_dttm,
-        updt_dttm
-
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 
 )

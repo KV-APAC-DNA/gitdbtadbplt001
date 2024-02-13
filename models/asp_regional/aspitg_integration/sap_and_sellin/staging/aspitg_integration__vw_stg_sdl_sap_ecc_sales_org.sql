@@ -3,25 +3,23 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_sales_org') }}
+    select * from {{ source('bwa_access', 'bwa_msalesorg') }}
 
 ),
 
 final as (
 
-    select
-        mandt,
-        vkorg,
-        waers,
-        bukrs,
-        kunnr,
-        land1,
-        waers1,
-        periv,
-        crt_dttm,
-        updt_dttm
-
-    from source
+    select '888' as mandt,
+            salesorg as vkorg,
+            stat_curr as waers,
+            comp_code as bukrs,
+            '' as kunnr,
+            country as land1,
+            currency as waers1,
+            fiscvarnt as periv,
+            current_timestamp()::timestamp_ntz(9) as crt_dttm,
+            current_timestamp()::timestamp_ntz(9) as updt_dttm
+        from source
 
 )
 
