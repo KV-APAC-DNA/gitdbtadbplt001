@@ -15,7 +15,6 @@ sources:
       - name: sdl_gcch_cust_hier
       - name: sdl_gcgh_geo_hier
       - name: sdl_account_attr_ciw
-      - name: sdl_sap_bw_billing
       - name: sdl_sap_bw_sales
       - name: sdl_material_pka_mara_extract
       - name: sdl_code_descriptions
@@ -514,20 +513,6 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-
-      - name: sdl_material_typ
-        columns:
-          - name: matl_type
-            data_type: varchar
-          - name: langu
-            data_type: varchar
-          - name: txtmd
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
       - name: sdl_prod_hier
         columns:
           - name: prod_hier
@@ -1666,10 +1651,8 @@ sources:
       - name: sdl_sap_ecc_material_plant
       - name: sdl_sap_ecc_material_sales
       - name: sdl_sap_bw_copa17
-      - name: sdl_sap_bw_inventory
       - name: sdl_sap_bw_zc_sd
       - name: sdl_sap_bw_delivery
-      - name: sdl_sap_billing_condition
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -1748,6 +1731,10 @@ sources:
       - name: bwa_tzlcus_gr8
       - name: bwa_tzneed
       - name: bwa_tzstrong
+      - name: bwa_material_type_text
+      - name: bwa_cdl_billing
+      - name: bwa_inventory
+      - name: bwa_cdl_billing_cond
         
   - name: apc_access
     database: "{{ env_var('DBT_ENV_CDL_DB') }}"
