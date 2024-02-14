@@ -19,7 +19,7 @@ final as(
         iff(replace(price_unit,'\"','')='',null,replace(price_unit,'\"','')) as price_unit,
         iff(replace(bic_zcurrfpa,'\"','')='',null,replace(bic_zcurrfpa,'\"','')) as zcurrfpa,
         _ingestiontimestamp_ as cdl_dttm,
-        current_timestamp()::timestamp_ntz(9) as curr_dt,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
         null as file_name
     from source
 

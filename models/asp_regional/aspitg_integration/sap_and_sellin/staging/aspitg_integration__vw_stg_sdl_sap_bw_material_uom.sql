@@ -10,6 +10,7 @@ final as(
         iff(replace(uomz1d,'\"','')='',null,replace(uomz1d,'\"','')) as uomz1d,
         iff(replace(uomn1d,'\"','')='',null,replace(uomn1d,'\"','')) as uomn1d,
         null as filename,
+        _ingestiontimestamp_ as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source

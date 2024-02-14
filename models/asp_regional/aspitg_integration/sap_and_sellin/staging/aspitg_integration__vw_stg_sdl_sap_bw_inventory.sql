@@ -10,6 +10,9 @@ itg_crncy_mult as(
 --logical cte
 final as(
     select 
+        request as request_number,
+        data_packet as data_packet,
+        data_record as data_record,
         loc_currcy as loc_currcy,
         base_uom as base_uom,
         material as material,
