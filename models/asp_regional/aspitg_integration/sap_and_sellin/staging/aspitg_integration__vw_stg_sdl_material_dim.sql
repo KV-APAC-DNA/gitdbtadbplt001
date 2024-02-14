@@ -73,7 +73,10 @@ final as (
         bic_zferth,
         bic_zmsource,
         bic_zbramin,
-        bic_zprodseg
+        bic_zprodseg,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        null as filename
     from source
 )
 
