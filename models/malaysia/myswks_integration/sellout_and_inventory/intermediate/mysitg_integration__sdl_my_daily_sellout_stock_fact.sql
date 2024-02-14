@@ -102,7 +102,7 @@ wks_so_inv_137021 as
 (
     select  * from {{ ref('myswks_integration__wks_so_inv_137021') }}
 ),
-final as (
+trans as (
     select * from wks_so_inv_133986
 	union all
 	select * from wks_so_inv_133985
@@ -154,6 +154,33 @@ final as (
 	select * from wks_so_inv_135976
 	union all
 	select * from wks_so_inv_137021
+),
+final as (
+select
+distributor_id as cust_id,
+date as inv_dt,
+distributor_wh_id as dstrbtr_wh_id,
+sap_material_id as item_cd,
+product_code as dstrbtr_prod_cd,
+product_ean_code as ean_num,
+product_description as dstrbtr_prod_desc,
+quantity_available as qty,
+uom_available as uom,
+quantity_on_order as qty_on_ord,
+uom_on_order as uom_on_ord,
+quantity_committed as qty_committed,
+uom_committed as uom_committed,
+quantity_available_in_pieces as available_qty_pc,
+quantity_on_order_in_pieces as qty_on_ord_pc,
+quantity_committed_in_pieces as qty_committed_pc,
+unit_price as unit_prc,
+total_value_available as total_val,
+custom_field_1 as custom_field1,
+custom_field_2 as custom_field2,
+file_name as filename,
+current_timestamp()::timestamp_ntz(9) as curr_dt,
+null as cdl_dttm  
+from trans
 )
 
 select * from final

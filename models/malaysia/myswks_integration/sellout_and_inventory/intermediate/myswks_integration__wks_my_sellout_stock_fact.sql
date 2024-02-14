@@ -28,8 +28,32 @@ immd as (
       where t3.row_count = 1)
 ),
 final as (
-    select * from sdl_my_daily_sellout_stock_fact
-    left join immd on ltrim(immd.item_bar_cd(+),'0') = ltrim(ean_num,'0')
+select 
+source.cust_id,
+source.inv_dt,
+source.dstrbtr_wh_id,
+source.item_cd,
+source.dstrbtr_prod_cd,
+source.ean_num,
+source.dstrbtr_prod_desc,
+source.qty,
+source.uom,
+source.qty_on_ord,
+source.uom_on_ord,
+source.qty_committed,
+source.uom_committed,
+source.available_qty_pc,
+source.qty_on_ord_pc,
+source.qty_committed_pc,
+source.unit_prc,
+source.total_val,
+source.custom_field1,
+immd.item_cd as custom_field2,
+source.filename,
+source.curr_dt,
+source.cdl_dttm
+from sdl_my_daily_sellout_stock_fact as source,immd
+where ltrim(immd.item_bar_cd(+),'0') = ltrim(ean_num,'0')
 )
 
 select * from final
