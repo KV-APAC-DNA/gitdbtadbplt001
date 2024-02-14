@@ -109,6 +109,6 @@ final as(
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
     left join itg_crncy_mult curr
-		on src.currency = curr.currkey
+		on source.currency = curr.currkey
 )
 select * from final
