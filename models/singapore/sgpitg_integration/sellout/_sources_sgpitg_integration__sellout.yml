@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_sg_zuellig_customer_mapping
+        tags: ["sg_master_sellout","ingestion"]
         tests:
           - test_null:
                 not_null_columns: ["regional_banner"]
@@ -37,6 +38,7 @@ sources:
                   store_failures: true
                   schema: sgpwks_integration
       - name: sdl_sg_zuellig_product_mapping
+        tags: ["sg_master_sellout","ingestion"]
         tests:
           - test_null:
                 not_null_columns: ["jj_code","brand"]
@@ -56,6 +58,7 @@ sources:
                   store_failures: true
                   schema: sgpwks_integration         
       - name: sdl_sg_zuellig_sellout
+        tags: ["sg_master_sellout","ingestion"]
         tests:
         - test_lookup:
               select_columns: ["file_name","item_code"]
