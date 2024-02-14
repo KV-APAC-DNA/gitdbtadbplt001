@@ -6,6 +6,9 @@ itg_crncy_mult as (
 ),
 final as(
     select
+        null as datapakid,
+        null as request,
+        null as record,
         bic_zactdldte as zactdldte,
         act_gi_dte as act_gi_dte,
         billtoprty as billtoprty,

@@ -8,6 +8,13 @@ itg_crncy_mult as (
 ),
 final as (
      select
+            recordmode as recordmode,
+            bill_type as bill_type,
+            null as data_packet,
+            null as data_record,
+            prod_hier as prod_hier,
+            null as request_number,
+            salesdeal as salesdeal,
 			fiscper  as fiscper,
 			fiscvarnt as fiscvarnt,
 			fiscyear as fiscyear,
