@@ -9,7 +9,8 @@
 
 --Import CTE
 with source as (
-    select * from {{ ref('aspwks_integration__wks_edw_code_descriptions') }}
+    select * from {{ ref('aspitg_integration__itg_code_descriptions') }}
+    
 ),
 
 --Logical CTE

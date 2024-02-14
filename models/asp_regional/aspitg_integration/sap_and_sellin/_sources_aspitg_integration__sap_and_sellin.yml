@@ -15,7 +15,6 @@ sources:
       - name: sdl_gcch_cust_hier
       - name: sdl_gcgh_geo_hier
       - name: sdl_account_attr_ciw
-      - name: sdl_sap_bw_billing
       - name: sdl_sap_bw_sales
       - name: sdl_material_pka_mara_extract
       - name: sdl_code_descriptions
@@ -514,20 +513,6 @@ sources:
             data_type: timestamp_ntz
           - name: updt_dttm
             data_type: timestamp_ntz
-
-      - name: sdl_material_typ
-        columns:
-          - name: matl_type
-            data_type: varchar
-          - name: langu
-            data_type: varchar
-          - name: txtmd
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
       - name: sdl_prod_hier
         columns:
           - name: prod_hier
@@ -1666,10 +1651,8 @@ sources:
       - name: sdl_sap_ecc_material_plant
       - name: sdl_sap_ecc_material_sales
       - name: sdl_sap_bw_copa17
-      - name: sdl_sap_bw_inventory
       - name: sdl_sap_bw_zc_sd
       - name: sdl_sap_bw_delivery
-      - name: sdl_sap_billing_condition
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -1719,4 +1702,73 @@ sources:
       - name: bwa_dna_material_bomlist
       - name: bwa_account_attr
       - name: bwa_material_sales
-  
+      - name: bwa_azocalday00
+      - name: bwa_mcomp_code
+      - name: bwa_mprofit_ctr
+      - name: bwa_msalesorg
+      - name: bwa_tcomp_code
+      - name: bwa_tcountry
+      - name: bwa_tcurr
+      - name: bwa_tcustomer
+      - name: bwa_tmaterial
+      - name: bwa_tprofit_ctr
+      - name: bwa_tsales_grp
+      - name: bwa_tsales_off
+      - name: bwa_tsalesorg
+      - name: bwa_tzpcust
+      - name: bwa_tzchannel
+      - name: bwa_tzschannel
+      - name: bwa_tzbannerf
+      - name: bwa_tzbanner
+      - name: bwa_tzgotomod
+      - name: bwa_tzlcus_gr1
+      - name: bwa_tzlcus_gr2
+      - name: bwa_tzlcus_gr3
+      - name: bwa_tzlcus_gr4
+      - name: bwa_tzlcus_gr5
+      - name: bwa_tzlcus_gr6
+      - name: bwa_tzlcus_gr7
+      - name: bwa_tzlcus_gr8
+      - name: bwa_tzneed
+      - name: bwa_tzstrong
+      - name: bwa_material_type_text
+      - name: bwa_cdl_billing
+      - name: bwa_inventory
+      - name: bwa_cdl_billing_cond
+        
+  - name: apc_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: apc_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables: 
+      - name: apc_marm
+      - name: apc_mbew
+      - name: apc_tvm1t
+      - name: apc_tvm2t
+      - name: apc_tvm3t
+      - name: apc_tvm4t
+      - name: apc_tvm5t
+      - name: apc_mara
+      - name: apc_ztranfran
+      - name: apc_ztranbrand
+      - name: apc_ztransbrand
+      - name: apc_ztranvariant
+      - name: apc_ztransvariant
+      - name: apc_ztranflav
+      - name: apc_ztraningr
+      - name: apc_ztranappl
+      - name: apc_ztranleng
+      - name: apc_ztranshape
+      - name: apc_ztranspf
+      - name: apc_ztrancover
+      - name: apc_ztranform
+      - name: apc_ztransize
+      - name: apc_ztranchar
+      - name: apc_ztranpack
+      - name: apc_ztranattrib13
+      - name: apc_ztranattrib14
+      - name: apc_ztransku
+      - name: apc_ztranrelabel

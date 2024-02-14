@@ -9,9 +9,9 @@ source as (
 final as (
 
     select
-        plant,
-        txtmd,
-        txtlg,
+        plant as plant,
+        coalesce(txtmd, '') as txtmd,
+        coalesce(txtlg, '') as txtlg,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
 

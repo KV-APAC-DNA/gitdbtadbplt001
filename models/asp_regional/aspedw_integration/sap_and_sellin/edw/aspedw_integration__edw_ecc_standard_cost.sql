@@ -11,7 +11,8 @@ with
 
 source as (
 
-    select * from {{ ref('aspwks_integration__wks_edw_ecc_standard_cost') }}
+    select * from {{ ref('aspitg_integration__itg_ecc_standard_cost') }}
+     
 ),
 
 final as (

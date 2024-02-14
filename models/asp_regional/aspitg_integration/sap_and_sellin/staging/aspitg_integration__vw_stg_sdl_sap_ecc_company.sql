@@ -3,24 +3,24 @@
 with 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_company') }}
+    select * from {{ source('bwa_access', 'bwa_mcomp_code') }}
 
 ),
 
 final as (
 
     select
-        mandt,
-        bukrs,
-        land1,
-        waers,
-        ktopl,
-        kkber,
-        periv,
-        rcomp,
-        crt_dttm,
-        updt_dttm
-        from source
+        '888' as mandt,
+        comp_code as bukrs,
+        country as land1,
+        currency as waers,
+        chrt_accts as ktopl,
+        c_ctr_area as kkber,
+        fiscvarnt as periv,
+        company as rcomp,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
+    from source
 )
 
 select * from final

@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: aspedw_access__edw_acct_ciw_hier
+    config: 
+      alias: edw_acct_ciw_hier
+      tags: ["J_RG_Account_attr_CIW_Dim","transformation"]
+
+  - name: aspedw_access__edw_subchnl_retail_env_mapping
+    config: 
+      alias: edw_subchnl_retail_env_mapping
+      tags: ["sap_ecc_master_etl_framework","transformation"]    
+
+  - name: aspedw_access__v_edw_customer_sales_dim
+    config: 
+      alias: v_edw_customer_sales_dim
+      tags: ["sap_ecc_master_etl_framework","transformation"] 
+
+  - name: aspedw_access__v_rpt_copa
+    config: 
+      alias: v_rpt_copa
+      tags: ["regional_views","transformation"]
+
+  - name: aspedw_access__v_rpt_copa_ciw
+    config: 
+      alias: v_rpt_copa_ciw
+      tags: ["regional_views","transformation"]
+
+  - name: aspedw_access__v_rpt_copa_sku
+    config: 
+      alias: v_rpt_copa_sku  
+      tags: ["regional_views","transformation"]

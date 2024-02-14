@@ -4,12 +4,12 @@ models:
   - name: sgpedw_integration__edw_vw_sg_sellin_analysis
     config:
       alias: edw_vw_sg_sellin_analysis
-      tags: ["daily","sg_sellin_and_scan_datamart"]
+      tags: ["sg_sellin_and_scan_datamart","transformation"]
   - name: sgpedw_integration__edw_sg_sellin_analysis
     config:
       alias: edw_sg_sellin_analysis
-      tags: ["daily","sg_sellin_and_scan_datamart"]
+      tags: ["sg_sellin_and_scan_datamart","transformation"]
   - name: sgpedw_integration__edw_vw_sg_sellin_sales_fact
     config:
       alias: edw_vw_sg_sellin_sales_fact
-      tags: ["daily","sg_sellin_and_scan_datamart"]
+      tags: ["sg_sellin_and_scan_datamart","transformation"]
