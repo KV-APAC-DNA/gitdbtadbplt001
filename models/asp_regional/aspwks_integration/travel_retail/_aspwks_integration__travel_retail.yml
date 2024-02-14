@@ -1,0 +1,17 @@
+models:
+  - name: aspwks_integration__wks_rg_travel_retail_inventory
+    config: 
+      alias: wks_rg_travel_retail_inventory
+      tags: ["travel_retail_tableau_refresh","transformation"]
+  - name: aspwks_integration__wks_month_tr_cal
+    config:
+      alias: wks_month_tr_cal
+      tags: ["travel_retail_tableau_refresh","transformation"]
+  - name: aspwks_integration__wks_rg_travel_retail_inventory_excl_sku
+    config: 
+      alias: wks_rg_travel_retail_inventory_excl_sku
+      tags: ["travel_retail_tableau_refresh","transformation"]
+  - name: aspwks_integration__wks_month_tr_cal_excl_sku
+    config: 
+      alias: wks_month_tr_cal_excl_sku
+      tags: ["travel_retail_tableau_refresh","transformation"]

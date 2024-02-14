@@ -1,13 +1,30 @@
 --Import CTE
 with source as (
-    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_time') }}
+    select * from {{ source('bwa_access', 'bwa_azocalday00') }}
+        
 ),
 
 --Logical CTE
 
 --Final CTE
 final as (
-    select * from source
+    select TO_DATE(calday, 'YYYYMMDD') as calday,
+            fiscvarnt,
+            weekday1,
+            calweek,
+            calmonth,
+            calmonth2,
+            calquart1,
+            calquarter,
+            halfyear1,
+            calyear,
+            fiscper,
+            fiscper3,
+            fiscyear,
+            recordmode,
+            current_timestamp()::timestamp_ntz(9) as crt_dttm,
+            current_timestamp()::timestamp_ntz(9) as updt_dttm
+        from source
 )
 
 --Final select

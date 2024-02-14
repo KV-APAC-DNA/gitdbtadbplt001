@@ -1,0 +1,97 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_my_accruals
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["cust_id"]
+              name: TRATBL_sdl_my_accruals_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_lookup:
+              select_columns: ["cust_id"]
+              column: "coalesce(upper(cust_id), '&')"
+              lookup_column: "coalesce(upper(cust_id), '#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
+              filter: "cust_id <> 'ALL'"
+              name: TRATBL_sdl_my_accruals_lookup_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+    - name: sdl_my_afgr
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["afgr_num"]
+              name: TRATBL_sdl_my_afgr_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_duplicate:
+                group_by_columns: ["afgr_num"]
+                name: TRATBL_sdl_my_afgr_duplicate_test
+                config:
+                  store_failures: true
+                  schema: myswks_integration
+
+    - name: sdl_my_trgts
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_null:
+              not_null_columns: ["cust_id"]
+              name: TRATBL_sdl_my_trgts_null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_lookup:
+              select_columns: ["cust_id"]
+              column: "coalesce(upper(cust_id), '&')"
+              lookup_column: "coalesce(upper(cust_id), '#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
+              filter: "cust_id <> 'ALL'"
+              name: TRATBL_sdl_my_trgts_lookup_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+    - name: sdl_my_le_trgt
+      tags: ["my_sellin","hourly"]
+      tests:
+          - test_lookup:
+              select_columns: ["cust_id"]
+              column: "coalesce(upper(cust_id), '&')"
+              lookup_column: "coalesce(upper(cust_id), '#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
+              filter: "cust_id <> 'ALL'"
+              name: TRATBL_sdl_my_le_trgt_lookup_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+        
+    - name: sdl_my_ciw_map
+      tags: ["my_sellin","hourly"]
+      tests:
+        - test_null:
+            not_null_columns: ["acct_num"]
+            name: TRATBL_sdl_my_ciw_map_null_test
+            config:
+              store_failures: true
+              schema: myswks_integration
+        - test_duplicate:
+                group_by_columns: ["acct_num"]
+                name: TRATBL_sdl_my_ciw_map_duplicate_test
+                config:
+                  store_failures: true
+                  schema: myswks_integration
+
+        
+        
