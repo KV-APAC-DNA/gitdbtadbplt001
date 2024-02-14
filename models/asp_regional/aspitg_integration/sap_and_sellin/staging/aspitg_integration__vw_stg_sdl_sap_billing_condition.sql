@@ -86,6 +86,8 @@ final as(
         coalesce(kappl, '') as kappl,
         coalesce(acrn_id, '') as acrn_id,
         coalesce(recordmode, '') as recordmode,
+        NULL as source_file_name,
+        NULL as file_name
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
