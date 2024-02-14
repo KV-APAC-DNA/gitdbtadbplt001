@@ -1,6 +1,6 @@
 with
 
-source as (
+bwa_copa10 as (
     select * from {{ source('bwa_access', 'bwa_copa10') }}
 ),
 itg_crncy_mult as (
