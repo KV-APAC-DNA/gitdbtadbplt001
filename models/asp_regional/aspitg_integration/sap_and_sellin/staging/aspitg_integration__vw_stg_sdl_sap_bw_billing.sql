@@ -18,7 +18,7 @@ final as (
         coalesce(s_ord_item, '') as s_ord_item,
         coalesce(doc_number, '') as doc_num,
         grs_wgt_dl,
-        coalesce(inv_qty, '') as inv_qty,
+        inv_qty as inv_qty,
         bill_qty,
         coalesce(base_uom, '') as base_uom,
         exchg_rate,
