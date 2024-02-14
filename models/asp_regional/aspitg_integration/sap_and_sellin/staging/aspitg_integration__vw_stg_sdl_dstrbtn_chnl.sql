@@ -1,13 +1,18 @@
 --Import CTE
 with source as (
-    select * from {{ source('aspsdl_raw', 'sdl_dstrbtn_chnl') }}
+    select * from {{ source('bwa_access', 'bwa_distribution_channel_text') }}
 ),
-
---Logical CTE
 
 --Final CTE
 final as (
-    select * from source
+    select 
+        coalesce(distr_chan,'') as distr_chan,
+        coalesce(langu,'') as langu,
+        coalesce(txtsh,'') as txtsh,
+        coalesce(txtmd,'') as txtmd,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
+    from source
 )
 
 --Final select

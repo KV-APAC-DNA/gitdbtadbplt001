@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: bwa_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: bwa_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: bwa_material_attribute
+      - name: bwa_cdl_sales
+      - name: bwa_copa10
+      - name: bwa_cdl_delivery
+      - name: bwa_product_hierarchy_text
+      - name: bwa_copa17
+      - name: bwa_zc_sd
+      - name: bwa_customer_sales
+      - name: bwa_distribution_channel_text
+        
+  - name: apc_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: apc_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables: 
+      - name: apc_knvv
+      - name: apc_knvp
