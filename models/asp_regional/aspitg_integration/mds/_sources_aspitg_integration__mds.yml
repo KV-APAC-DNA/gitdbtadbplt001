@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_apac_dcl_customers
-        tags: ["mds","travel_retail_mds"]
+        tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
@@ -27,7 +27,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_apac_dcl_products
-        tags: ["mds","travel_retail_mds"]
+        tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["country_code",'"dcl code"','"sap code"','"sales channel_name"']
@@ -43,7 +43,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_apac_dcl_targets
-        tags: ["mds","travel_retail_mds"]
+        tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
@@ -59,21 +59,21 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_ap_greenlight_skus
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_greenlight_mds","ingestion"]
       - name: sdl_mds_ap_company_dim
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_rg_mds_log
-        tags: ["mds","rg_mds_dna","travel_retail_mds"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_dso
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_otif
-        tags: ["mds","rg_mds_dna"]   
+        tags: [MDS,"rg_mds_to_dna","ingestion"]   
       - name: sdl_mds_ap_sales_ops_map
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_ecom_oneview_config
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_rg_ecom_plan
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type","target_ori"]
@@ -89,7 +89,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_rg_profit_center_franchise_mapping
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["prod_minor","profit_center","prod_minor_desc","need_state","franchise_l1"]
@@ -105,7 +105,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_rg_ps_market_coverage
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["name", "channel", "coverage"]
@@ -121,7 +121,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["market", "online_store"]
@@ -137,22 +137,22 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_mds_rg_tih_distributor_closure
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_rg_sfmc_gender
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_rg_sfmc_attributes
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_price_tracker_category_mapping
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_rg_ecom_digital_salesweight
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_okr_actuals
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_okr_targets
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_customer360_config
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_profit_center_ppm
-        tags: ["mds","rg_mds_dna"]
+        tags: [MDS,"rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_pre_apsc_master
-        tags: ["mds","rg_mds_dna"] 
+        tags: [MDS,"rg_mds_to_dna","ingestion"]

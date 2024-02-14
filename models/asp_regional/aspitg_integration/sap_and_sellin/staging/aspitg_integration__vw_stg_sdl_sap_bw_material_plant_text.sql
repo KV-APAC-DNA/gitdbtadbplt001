@@ -12,7 +12,9 @@ final as (
         plant,
         mat_plant,
         langu,
-        txtmd,
+        iff(left(trim(txtmd),1) = '"' and right(trim(txtmd),1) = '"' ,
+        replace(substring(trim(txtmd),2,length(trim(txtmd))-2),'""','"'),
+        replace(trim(txtmd),'""','"')) as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
 

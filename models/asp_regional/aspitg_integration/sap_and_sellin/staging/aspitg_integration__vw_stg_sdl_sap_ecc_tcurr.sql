@@ -3,24 +3,23 @@ with
 
 source as (
 
-    select * from {{ source('aspsdl_raw', 'sdl_sap_ecc_tcurr') }}
+    select * from {{ source('bwa_access', 'bwa_tcurr') }}
 
 ),
 
 final as (
 
     select
-        mandt,
+        mandt::number as mandt,
         kurst,
         fcurr,
         tcurr,
         gdatu,
-        ukurs,
-        ffact,
-        tfact,
-        crt_dttm,
-        updt_dttm
-
+        case when right(ukurs, 1) = '-' then concat('-', replace(ukurs, '-', '')) else ukurs end::number(20,5) as ukurs,
+        ffact::number(20,5) as ffact,
+        tfact::number(20,5) as tfact,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 
 )

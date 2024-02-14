@@ -1,12 +1,72 @@
-
-
 --import CTE
-with sources as(
-    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_copa17') }}
+with source as(
+    select * from {{ source('bwa_access', 'bwa_copa17') }}
 ),
---logical CTE
+--logical cte
 final as(
-    select * from sources
+    select 
+        fiscper as fiscper,
+        fiscvarnt as fiscvarnt,
+        fiscyear as fiscyear,
+        calday as calday,
+        fiscper3 as fiscper3,
+        calmonth as calmonth,
+        calyear as calyear,
+        version as version,
+        vtype as vtype,
+        comp_code as comp_code,
+        co_area as co_area,
+        profit_ctr as profit_ctr,
+        salesemply as salesemply,
+        salesorg as salesorg,
+        sales_grp as sales_grp,
+        sales_off as sales_off,
+        cust_group as cust_group,
+        distr_chan as distr_chan,
+        sales_dist as sales_dist,
+        customer as customer,
+        material as material,
+        cust_sales as cust_sales,
+        division as division,
+        plant as plant,
+        bic_zmercref as zmercref,
+        bic_zz_mvgr1 as zz_mvgr1,
+        bic_zz_mvgr2 as zz_mvgr2,
+        bic_zz_mvgr3 as zz_mvgr3,
+        bic_zz_mvgr4 as zz_mvgr4,
+        bic_zz_mvgr5 as zz_mvgr5,
+        region as region,
+        country as country,
+        prodh6 as prodh6,
+        prodh5 as prodh5,
+        prodh4 as prodh4,
+        prodh3 as prodh3,
+        prodh2 as prodh2,
+        prodh1 as prodh1,
+        bic_zfis_quar as zfis_quar,
+        mat_sales as mat_sales,
+        bill_type as bill_type,
+        bic_zjjfiscwe as jjfiscwe,
+        amocac as amocac,
+        amoccc as amoccc,
+        currency as currency,
+        obj_curr as obj_curr,
+        account as account,
+        chrt_accts as chrt_accts,
+        bic_zz_wwme as zz_wwme,
+        bic_zsalesper as zsalesper,
+        bus_area as bus_area,
+        grossamttc as grossamttc,
+        curkey_tc as curkey_tc,
+        mat_plant as mat_plant,
+        quantity as quantity,
+        unit as unit,
+        bic_zqtyieu as zqtyieu,
+        bic_zunitieu as zunitieu,
+        bic_zbpt_dc as zbpt_dc,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
+    from source
 )
 --final select
 select * from final

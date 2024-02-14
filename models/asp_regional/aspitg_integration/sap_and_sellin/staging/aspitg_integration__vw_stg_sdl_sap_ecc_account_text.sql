@@ -12,13 +12,11 @@ final as (
         chrt_accts,
         account,
         langu,
-        txtsh,
-        txtmd,
+        replace(trim(txtsh),'–','') as txtsh,
+        replace(trim(txtmd),'–','') as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
-
     from source
-
 )
 
 select * from final

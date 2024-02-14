@@ -9,11 +9,13 @@ source as (
 final as (
 
     select
-        salesorg,
-        distr_chan,
-        mat_sales,
-        langu,
-        txtmd,
+        coalesce(salesorg, '') as salesorg,
+        coalesce(distr_chan,'') as distr_chan,
+        coalesce(mat_sales, '') as mat_sales,
+        coalesce(langu, '') as langu,
+        iff(left(trim(txtmd),1) = '"' and right(trim(txtmd),1) = '"',
+        coalesce(replace(substring(trim(txtmd),2,length(trim(txtmd))-2),'""','"'),''),
+        coalesce(replace(trim(txtmd),'""','"'), '')) as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
 
