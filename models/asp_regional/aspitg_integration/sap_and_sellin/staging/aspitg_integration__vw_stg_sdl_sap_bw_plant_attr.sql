@@ -9,14 +9,14 @@ source as (
 final as (
 
     select
-        plant,
-        country,
-        logsys,
-        purch_org,
-        region,
-        comp_code,
-        factcal_id,
-        bic_zmarclust as zmarclust,
+        coalesce(plant, '') as plant,
+        coalesce(country , '') as country,
+        coalesce(logsys, '') as logsys,
+        coalesce(purch_org, '') as purch_org,
+        coalesce(region, '') as region,
+        coalesce(comp_code, '') as comp_code,
+        coalesce(factcal_id, '') as factcal_id,
+        coalesce(bic_zmarclust , '') as zmarclust,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
 
