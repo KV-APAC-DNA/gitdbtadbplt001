@@ -1,0 +1,13 @@
+sources:
+  - name: mds_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: mds_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: mds_gcph_brand
+      - name: mds_gcgh_geographyhierarchy
+      - name: mds_gcch_gcgh_hierarchy
+      - name: mds_gcph_category
