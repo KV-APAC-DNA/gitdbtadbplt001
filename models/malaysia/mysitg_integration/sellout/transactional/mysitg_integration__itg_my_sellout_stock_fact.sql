@@ -2,7 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy = "delete+insert",
-        unique_key=["cust_id","inv_dt"]
+        unique_key=["cust_id","inv_dt"],
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+
     )
 }}
 
@@ -134,7 +136,7 @@ temp as
 (
     select 
        t1.cust_id,
-       to_date(inv_dt,'DD/MM/YYYY') as inv_dt,
+       inv_dt,
        dstrbtr_wh_id,
        item_cd,
        dstrbtr_prod_cd,
@@ -152,7 +154,7 @@ temp as
        cast(unit_prc as numeric(20,4)) as unit_prc,
        cast(total_val as numeric(20,4))*coalesce(t2.exchng_rate,1) as total_val,
        custom_field1,
-       custom_field2,
+       custom_field2 ,
        filename,
        t1.cdl_dttm,
        t1.curr_dt as crtd_dttm,
@@ -160,41 +162,69 @@ temp as
 from wks_my_sellout_stock_fact t1,
      itg_my_ids_exchg_rate t2
 where t2.cust_id(+) = t1.cust_id
-and   t2.yearmo(+) = substring(replace(to_date(inv_dt,'DD/MM/YYYY'),'-',''),0,7)
+and   t2.yearmo(+) = substring(replace(inv_dt,'-',''),0,7)
 ),
-
-
-
 trans as (
-    select  
-temp.CUST_ID,
-  temp.INV_DT,
-  temp.DSTRBTR_WH_ID,
-  temp.ITEM_CD,
-  temp.DSTRBTR_PROD_CD,
-  temp.EAN_NUM,
-  temp.DSTRBTR_PROD_DESC,
-  temp.QTY,
-  temp.UOM,
-  temp.QTY_ON_ORD,
-  temp.UOM_ON_ORD,
-  temp.QTY_COMMITTED,
-  temp.UOM_COMMITTED,
-  temp.AVAILABLE_QTY_PC,
-  temp.QTY_ON_ORD_PC,
-  temp.QTY_COMMITTED_PC,
-  temp.UNIT_PRC,
-  temp.TOTAL_VAL,
-  temp.CUSTOM_FIELD1,
-  nvl2(temp.custom_field2,immd.item_cd,a.item_cd) as sap_matl_num,
-  temp.FILENAME,
+  select  
+  temp.cust_id,
+  temp.inv_dt,
+  temp.dstrbtr_wh_id,
+  temp.item_cd,
+  temp.dstrbtr_prod_cd,
+  temp.ean_num,
+  temp.dstrbtr_prod_desc,
+  temp.qty,
+  temp.uom,
+  temp.qty_on_ord,
+  temp.uom_on_ord,
+  temp.qty_committed,
+  temp.uom_committed,
+  temp.available_qty_pc,
+  temp.qty_on_ord_pc,
+  temp.qty_committed_pc,
+  temp.unit_prc,
+  temp.total_val,
+  temp.custom_field1,
+  nvl(nvl(temp.custom_field2,immd.item_cd),a.item_cd) as sap_matl_num,
+  temp.filename,
   temp.cdl_dttm,
-  temp.crtd_dttm  ,
-  temp.UPDT_DTTM from temp,immd,a 
-    where ltrim(immd.item_bar_cd(+),'0') = ltrim(ean_num,'0')
-    and ltrim(a.ext_item_cd(+),'0') = ltrim(dstrbtr_prod_cd,'0') 
+  temp.crtd_dttm,
+  temp.updt_dttm from temp 
+  left join immd on
+    ltrim(temp.ean_num,'0')= ltrim(immd.item_bar_cd,'0') 
+  left join a on
+    ltrim(temp.dstrbtr_prod_cd,'0') =ltrim(a.ext_item_cd,'0') 
+)
+,
+result as (
+    select distinct
+        cust_id::varchar(50) as cust_id,
+        inv_dt::date as inv_dt,
+        dstrbtr_wh_id::varchar(50) as dstrbtr_wh_id,
+        item_cd::varchar(50) as item_cd,
+        dstrbtr_prod_cd::varchar(50) as dstrbtr_prod_cd,
+        ean_num::varchar(50) as ean_num,
+        dstrbtr_prod_desc::varchar(100) as dstrbtr_prod_desc,
+        qty::number(20,4) as qty,
+        uom::varchar(20) as uom,
+        qty_on_ord::number(20,4) as qty_on_ord,
+        uom_on_ord::varchar(100) as uom_on_ord,
+        qty_committed::number(20,4) as qty_committed,
+        uom_committed::varchar(100) as uom_committed,
+        available_qty_pc::number(20,4) as available_qty_pc,
+        qty_on_ord_pc::number(20,4) as qty_on_ord_pc,
+        qty_committed_pc::number(20,4) as qty_committed_pc,
+        unit_prc::number(20,4) as unit_prc,
+        total_val::number(20,4) as total_val,
+        custom_field1::varchar(255) as custom_field1,
+        sap_matl_num::varchar(255) as sap_matl_num,
+        filename::varchar(255) as filename,
+        cdl_dttm::varchar(255) as cdl_dttm,
+        current_timestamp::timestamp_ntz(9) as crtd_dttm,
+        current_timestamp::timestamp_ntz(9) as updt_dttm
+    from trans
 )
 
-select * from trans
+select * from result
 
 {% endif %}

@@ -1,0 +1,8 @@
+
+version: 2
+
+models:
+  - name: myswks_integration__wks_my_sellout_stock_fact
+    config:
+      alias: wks_my_sellout_stock_fact
+      tags: ["hourly","my_sellin_inv_morning"]

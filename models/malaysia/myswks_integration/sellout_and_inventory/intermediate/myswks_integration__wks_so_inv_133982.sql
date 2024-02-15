@@ -4,7 +4,7 @@ with source as
 ),
 
 final as (
-    select 
+select 
 distributor_id,
 date, 			
 distributor_wh_id  ,         
