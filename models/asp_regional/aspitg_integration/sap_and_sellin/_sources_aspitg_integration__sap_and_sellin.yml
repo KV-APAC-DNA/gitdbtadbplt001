@@ -9,13 +9,11 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_sap_bw_zocopa10
       - name: sdl_gcph_brand
       - name: sdl_gcph_category
       - name: sdl_gcch_cust_hier
       - name: sdl_gcgh_geo_hier
       - name: sdl_account_attr_ciw
-      - name: sdl_sap_bw_sales
       - name: sdl_material_pka_mara_extract
       - name: sdl_code_descriptions
         columns:
@@ -26,124 +24,6 @@ sources:
           - name: code
             data_type: varchar
           - name: code_desc
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
-      - name: sdl_cust_sls_attr
-        columns:
-          - name: division
-            data_type: varchar
-          - name: distr_chan
-            data_type: varchar
-          - name: salesorg
-            data_type: varchar
-          - name: cust_sales
-            data_type: varchar
-          - name: accnt_asgn
-            data_type: varchar
-          - name: cust_cla
-            data_type: varchar
-          - name: cust_group
-            data_type: varchar
-          - name: cust_grp1
-            data_type: varchar
-          - name: cust_grp2
-            data_type: varchar
-          - name: cust_grp3
-            data_type: varchar
-          - name: cust_grp4
-            data_type: varchar
-          - name: cust_grp5
-            data_type: varchar
-          - name: c_ctr_area
-            data_type: varchar
-          - name: incoterms
-            data_type: varchar
-          - name: incoterms2
-            data_type: varchar
-          - name: plant
-            data_type: varchar
-          - name: pmnttrms
-            data_type: varchar
-          - name: sales_dist
-            data_type: varchar
-          - name: sales_grp
-            data_type: varchar
-          - name: sales_off
-            data_type: varchar
-          - name: cur_sls_emp
-            data_type: number
-          - name: lcl_cust_grp_1
-            data_type: varchar
-          - name: lcl_cust_grp_2
-            data_type: varchar
-          - name: lcl_cust_grp_3
-            data_type: varchar
-          - name: lcl_cust_grp_4
-            data_type: varchar
-          - name: lcl_cust_grp_5
-            data_type: varchar
-          - name: lcl_cust_grp_6
-            data_type: varchar
-          - name: lcl_cust_grp_7
-            data_type: varchar
-          - name: lcl_cust_grp_8
-            data_type: varchar
-          - name: customer
-            data_type: varchar
-          - name: prc_proc
-            data_type: varchar
-          - name: prc_grp
-            data_type: varchar
-          - name: prc_lst_type
-            data_type: varchar
-          - name: shpg_con
-            data_type: varchar
-          - name: par_del
-            data_type: varchar
-          - name: max_num_pa
-            data_type: varchar
-          - name: prnt_cust_key
-            data_type: varchar
-          - name: bnr_key
-            data_type: varchar
-          - name: bnr_frmt_key
-            data_type: varchar
-          - name: go_to_mdl_key
-            data_type: varchar
-          - name: chnl_key
-            data_type: varchar
-          - name: sub_chnl_key
-            data_type: varchar
-          - name: segmt_key
-            data_type: varchar
-          - name: cust_set_1
-            data_type: varchar
-          - name: cust_set_2
-            data_type: varchar
-          - name: cust_set_3
-            data_type: varchar
-          - name: cust_set_4
-            data_type: varchar
-          - name: cust_set_5
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
-      - name: sdl_dstrbtn_chnl
-        columns:
-          - name: distr_chan
-            data_type: varchar
-          - name: langu
-            data_type: varchar
-          - name: txtsh
-            data_type: varchar
-          - name: txtmd
             data_type: varchar
           - name: crt_dttm
             data_type: timestamp_ntz
@@ -369,157 +249,6 @@ sources:
           - name: oklas
             data_type: varchar
           - name: oippinv
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
-      - name: sdl_material_dim
-        columns:
-          - name: matl_num
-            data_type: varchar
-          - name: base_uom
-            data_type: varchar
-          - name: basic_matl
-            data_type: varchar
-          - name: createdon
-            data_type: varchar
-          - name: division
-            data_type: varchar
-          - name: eanupc
-            data_type: varchar
-          - name: gross_wt
-            data_type: number
-          - name: logsys
-            data_type: varchar
-          - name: manufactor
-            data_type: varchar
-          - name: manu_matnr
-            data_type: varchar
-          - name: matl_cat
-            data_type: varchar
-          - name: matl_group
-            data_type: varchar
-          - name: matl_type
-            data_type: varchar
-          - name: net_weight
-            data_type: number
-          - name: po_unit
-            data_type: varchar
-          - name: prod_hier
-            data_type: varchar
-          - name: rt_sups
-            data_type: varchar
-          - name: size_dim
-            data_type: varchar
-          - name: unit_dim
-            data_type: varchar
-          - name: unit_of_wt
-            data_type: varchar
-          - name: volume
-            data_type: number
-          - name: volumeunit
-            data_type: varchar
-          - name: height
-            data_type: number
-          - name: lenght
-            data_type: number
-          - name: width
-            data_type: number
-          - name: bic_zz_mvgr1
-            data_type: varchar
-          - name: bic_zz_mvgr2
-            data_type: varchar
-          - name: bic_zz_mvgr3
-            data_type: varchar
-          - name: bic_zz_mvgr4
-            data_type: varchar
-          - name: bic_zz_mvgr5
-            data_type: varchar
-          - name: prodh1
-            data_type: varchar
-          - name: prodh2
-            data_type: varchar
-          - name: prodh3
-            data_type: varchar
-          - name: prodh4
-            data_type: varchar
-          - name: prodh5
-            data_type: varchar
-          - name: prodh6
-            data_type: varchar
-          - name: bic_zmerciapl
-            data_type: varchar
-          - name: ch_on
-            data_type: varchar
-          - name: createdby
-            data_type: varchar
-          - name: datefrom
-            data_type: varchar
-          - name: del_flag
-            data_type: varchar
-          - name: ean_numtyp
-            data_type: varchar
-          - name: bic_yuomcnvf
-            data_type: number
-          - name: bic_ztragr
-            data_type: varchar
-          - name: bic_zxchpf
-            data_type: varchar
-          - name: bic_zpur_key
-            data_type: varchar
-          - name: bic_zhaz_mat
-            data_type: varchar
-          - name: bic_zstr_cond
-            data_type: varchar
-          - name: bic_zmhdrz
-            data_type: varchar
-          - name: bic_zmhdhb
-            data_type: varchar
-          - name: bic_zqmpur
-            data_type: varchar
-          - name: bic_zmstav
-            data_type: varchar
-          - name: bic_zskutec
-            data_type: varchar
-          - name: bic_zmjrtec
-            data_type: varchar
-          - name: bic_zz_color
-            data_type: number
-          - name: bic_zz_stack
-            data_type: number
-          - name: bic_ztaklv
-            data_type: varchar
-          - name: extmatlgrp
-            data_type: varchar
-          - name: bic_zvpsta
-            data_type: varchar
-          - name: bic_zpstat
-            data_type: varchar
-          - name: bic_zoldmatl
-            data_type: varchar
-          - name: std_descr
-            data_type: varchar
-          - name: bic_zferth
-            data_type: varchar
-          - name: bic_zmsource
-            data_type: varchar
-          - name: bic_zbramin
-            data_type: varchar
-          - name: bic_zprodseg
-            data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-      - name: sdl_prod_hier
-        columns:
-          - name: prod_hier
-            data_type: varchar
-          - name: langu
-            data_type: varchar
-          - name: txtmd
             data_type: varchar
           - name: crt_dttm
             data_type: timestamp_ntz
@@ -938,137 +667,6 @@ sources:
             data_type: varchar
           - name: knurl
             data_type: varchar
-          - name: crt_dttm
-            data_type: timestamp_ntz
-          - name: updt_dttm
-            data_type: timestamp_ntz
-
-      - name: sdl_sap_ecc_customer_sales
-        columns:
-          - name: mandt
-            data_type: varchar
-          - name: kunnr
-            data_type: varchar
-          - name: vkorg
-            data_type: varchar
-          - name: vtweg
-            data_type: varchar
-          - name: spart
-            data_type: varchar
-          - name: ernam
-            data_type: varchar
-          - name: erdat
-            data_type: date
-          - name: begru
-            data_type: varchar
-          - name: loevm
-            data_type: varchar
-          - name: versg
-            data_type: varchar
-          - name: aufsd
-            data_type: varchar
-          - name: kalks
-            data_type: varchar
-          - name: kdgrp
-            data_type: varchar
-          - name: bzirk
-            data_type: varchar
-          - name: konda
-            data_type: varchar
-          - name: pltyp
-            data_type: varchar
-          - name: awahr
-            data_type: number
-          - name: inco1
-            data_type: varchar
-          - name: inco2
-            data_type: varchar
-          - name: lifsd
-            data_type: varchar
-          - name: autlf
-            data_type: varchar
-          - name: antlf
-            data_type: number
-          - name: kztlf
-            data_type: varchar
-          - name: kzazu
-            data_type: varchar
-          - name: chspl
-            data_type: varchar
-          - name: lprio
-            data_type: number
-          - name: eikto
-            data_type: varchar
-          - name: vsbed
-            data_type: varchar
-          - name: faksd
-            data_type: varchar
-          - name: mrnkz
-            data_type: varchar
-          - name: perfk
-            data_type: varchar
-          - name: perrl
-            data_type: varchar
-          - name: kvakz
-            data_type: varchar
-          - name: kvawt
-            data_type: number
-          - name: waers
-            data_type: varchar
-          - name: klabc
-            data_type: varchar
-          - name: ktgrd
-            data_type: varchar
-          - name: vwerk
-            data_type: varchar
-          - name: vkgrp
-            data_type: varchar
-          - name: vkbur
-            data_type: varchar
-          - name: vsort
-            data_type: varchar
-          - name: kvgr1
-            data_type: varchar
-          - name: kvgr2
-            data_type: varchar
-          - name: kvgr3
-            data_type: varchar
-          - name: kvgr4
-            data_type: varchar
-          - name: kvgr5
-            data_type: varchar
-          - name: bokre
-            data_type: varchar
-          - name: boidt
-            data_type: date
-          - name: kurst
-            data_type: varchar
-          - name: prfre
-            data_type: varchar
-          - name: prat1
-            data_type: varchar
-          - name: prat2
-            data_type: varchar
-          - name: prat3
-            data_type: varchar
-          - name: prat4
-            data_type: varchar
-          - name: prat5
-            data_type: varchar
-          - name: prat6
-            data_type: varchar
-          - name: prat7
-            data_type: varchar
-          - name: prat8
-            data_type: varchar
-          - name: prat9
-            data_type: varchar
-          - name: prata
-            data_type: varchar
-          - name: zterm
-            data_type: varchar
-          - name: zzsalesrep
-            data_type: number
           - name: crt_dttm
             data_type: timestamp_ntz
           - name: updt_dttm
@@ -1648,11 +1246,6 @@ sources:
             data_type: timestamp_ntz
           - name: file_name
             data_type: varchar
-      - name: sdl_sap_ecc_material_plant
-      - name: sdl_sap_ecc_material_sales
-      - name: sdl_sap_bw_copa17
-      - name: sdl_sap_bw_zc_sd
-      - name: sdl_sap_bw_delivery
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -1668,6 +1261,16 @@ sources:
     - name:  itg_otif_glbl_con_reporting
     - name:  itg_query_parameters
 
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name : sap_transactional_processed_files
+    
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -1691,6 +1294,15 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: bwa_material_attribute
+      - name: bwa_cdl_sales
+      - name: bwa_copa10
+      - name: bwa_cdl_delivery
+      - name: bwa_product_hierarchy_text
+      - name: bwa_copa17
+      - name: bwa_zc_sd
+      - name: bwa_customer_sales
+      - name: bwa_distribution_channel_text
       - name: bwa_list_price
       - name: bwa_material_uom
       - name: bwa_account_text
@@ -1744,6 +1356,8 @@ sources:
       schema: false
       identifier: false
     tables: 
+      - name: apc_knvv
+      - name: apc_knvp
       - name: apc_marm
       - name: apc_mbew
       - name: apc_tvm1t

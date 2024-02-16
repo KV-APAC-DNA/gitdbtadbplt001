@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["file_name"]
+        unique_key=["file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_CDL_BILLING','vw_stg_sdl_sap_bw_billing','itg_billing_fact')}}"
         )
 }}
 
@@ -10,7 +11,9 @@
 with source as (
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_billing') }}
 ),
-
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
+),
 --Logical CTE
 
 --Final CTE
@@ -18,7 +21,7 @@ final as (
   select
   bill_num::varchar(50) as bill_num,
   bill_item::varchar(50) as bill_item,
-  to_date(bill_dt, 'yyyymmdd') as bill_dt,
+  try_to_date(bill_dt, 'yyyymmdd') as bill_dt,
   bill_type::varchar(30) as bill_type,
   sold_to::varchar(50) as sold_to,
   rt_promo::varchar(100) as rt_promo,
@@ -80,10 +83,10 @@ final as (
   sls_off::varchar(50) as sls_off,
   refer_itm::varchar(50) as refer_itm,
   matl_grp_3::varchar(50) as matl_grp_3,
-  to_date(price_dt, 'yyyymmdd') as price_dt,
+  try_to_date(price_dt, 'yyyymmdd') as price_dt,
   sls_emply::varchar(100) as sls_emply,
   refer_doc::varchar(100) as refer_doc,
-  to_date(st_up_dte, 'yyyymmdd') as st_up_dte,
+  try_to_date(st_up_dte, 'yyyymmdd') as st_up_dte,
   stat_date::varchar(100) as stat_date,
   item_categ::varchar(100) as item_categ,
   prov_grp::varchar(50) as prov_grp,
@@ -100,14 +103,14 @@ final as (
   mat_entrd::varchar(50) as mat_entrd,
   batch::varchar(100) as batch,
   stor_loc::varchar(50) as stor_loc,
-  to_date(created_on, 'yyyymmdd') as created_on,
-  to_date(serv_date, 'yyyymmdd') as serv_date,
+  try_to_date(created_on, 'yyyymmdd') as created_on,
+  try_to_date(serv_date, 'yyyymmdd') as serv_date,
   cust_grp5::varchar(100) as cust_grp5,
   sls_deal::varchar(100) as sls_deal,
   bill_cat::varchar(100) as bill_cat,
   cust_grp1::varchar(100) as cust_grp1,
   cust_grp3::varchar(100)as cust_grp3,
-  to_date(trans_dt, 'yyyymmdd') as trans_dt,
+  try_to_date(trans_dt, 'yyyymmdd') as trans_dt,
   cust_grp4::varchar(100) as cust_grp4,
   cust_grp2::varchar(100) as cust_grp2,
   stat_curr::varchar(50) as stat_curr,
@@ -126,6 +129,12 @@ final as (
   current_timestamp()::timestamp_ntz(9) as updt_dttm,
   file_name::varchar(255) as file_name
   from source
+  where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_billing_fact' and sap_transactional_processed_files.act_file_name=source.file_name
+  )
 )
 
 --final select

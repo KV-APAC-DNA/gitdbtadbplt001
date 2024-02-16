@@ -29,7 +29,10 @@ union_1 as (
   current_timestamp() as crtd_dttm,
   cast(null as date) as updt_dttm
 from itg_my_sellout_sales_fact as a
-where outlet_key not in( select distinct outlet_key from {{ this }} )
+{% if is_incremental() %}
+    where outlet_key not in( select distinct outlet_key from {{ this }} )
+{% endif %}
+
 ),
 transformed as (
 select

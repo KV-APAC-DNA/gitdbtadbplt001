@@ -81,8 +81,8 @@ final as(
       WHEN edw_calendar_dim.fisc_per IS NULL
       THEN CAST(itg_invc_sls.fisc_yr as int)
       ELSE edw_calendar_dim.fisc_per
-    END AS fisc_yr,
-    itg_invc_sls.fisc_yr AS fisc_yr_src
+    END::number(18,0) AS fisc_yr,
+    itg_invc_sls.fisc_yr::number(18,0) AS fisc_yr_src
   FROM source as itg_invc_sls
   LEFT OUTER JOIN edw_calendar_dim
     ON itg_invc_sls.bill_dt = edw_calendar_dim.cal_day
