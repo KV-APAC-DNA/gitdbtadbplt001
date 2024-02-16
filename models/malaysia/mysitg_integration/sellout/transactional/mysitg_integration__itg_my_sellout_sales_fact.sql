@@ -2,8 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy = "delete+insert",
-        unique_key=["dstrbtr_id","sls_ord_dt"],
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+        unique_key=["dstrbtr_id","sls_ord_dt"]
     )
 }}
 {% set cte_to_execute = 'cte1' %}  
