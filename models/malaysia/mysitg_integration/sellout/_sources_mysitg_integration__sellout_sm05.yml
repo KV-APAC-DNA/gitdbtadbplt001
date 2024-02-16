@@ -1,0 +1,350 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_so_sales_108129
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_108129
+              config:
+                store_failures: true
+                schema: myswks_integration
+
+      - name: sdl_so_sales_108273
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_108273
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_108565
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_108565
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_109772
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_109772
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_118477
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_118477
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_119024
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_119024
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_119025
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_119025
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130516
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130516
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130517
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130517
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130518
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130518
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130519
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130519
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130520
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130520
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_130521
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_130521
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_131164
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_131164
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_131165
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_131165
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_131166
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_131166
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_131167
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_131167
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133980
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133980
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133981
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133981
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133982
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133982
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133983 
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133983
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133984
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133984
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133985
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133985
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_133986
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_133986
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_135976
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_135976
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_so_sales_137021
+        tags: ["daily","my_sellout_sales"]
+        tests:
+          - test_lookup:
+              select_columns: ["file_name","distributor_id"]
+              column: "coalesce(upper(distributor_id),'&')" 
+              lookup_column: "coalesce(upper(cust_id),'#')"
+              lookup_table: "{{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}"
+              filter: "distributor_id!='ALL'"
+              name: TRATBL_sdl_so_sales_137021
+              config:
+                store_failures: true
+                schema: myswks_integration
