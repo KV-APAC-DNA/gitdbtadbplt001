@@ -155,32 +155,61 @@ trans as (
 	union all
 	select * from wks_so_inv_137021
 ),
-final as (
+transformed as 
+(
 select
-distributor_id as cust_id,
-date as inv_dt,
-distributor_wh_id as dstrbtr_wh_id,
-sap_material_id as item_cd,
-product_code as dstrbtr_prod_cd,
-product_ean_code as ean_num,
-product_description as dstrbtr_prod_desc,
-quantity_available as qty,
-uom_available as uom,
-quantity_on_order as qty_on_ord,
-uom_on_order as uom_on_ord,
-quantity_committed as qty_committed,
-uom_committed as uom_committed,
-quantity_available_in_pieces as available_qty_pc,
-quantity_on_order_in_pieces as qty_on_ord_pc,
-quantity_committed_in_pieces as qty_committed_pc,
-unit_price as unit_prc,
-total_value_available as total_val,
-custom_field_1 as custom_field1,
-custom_field_2 as custom_field2,
-file_name as filename,
-current_timestamp()::timestamp_ntz(9) as curr_dt,
-null as cdl_dttm  
+    distributor_id::varchar(255) as cust_id,
+    date::varchar(255) as inv_dt,
+    distributor_wh_id::varchar(255) as dstrbtr_wh_id,
+    sap_material_id::varchar(255) as item_cd,
+    product_code::varchar(255) as dstrbtr_prod_cd,
+    product_ean_code::varchar(255) as ean_num,
+    product_description::varchar(255) as dstrbtr_prod_desc,
+    quantity_available::varchar(255) as qty,
+    uom_available::varchar(255) as uom,
+    quantity_on_order::varchar(255) as qty_on_ord,
+    uom_on_order::varchar(255) as uom_on_ord,
+    quantity_committed::varchar(255) as qty_committed,
+    uom_committed::varchar(255) as uom_committed,
+    quantity_available_in_pieces::varchar(255) as available_qty_pc,
+    quantity_on_order_in_pieces::varchar(255) as qty_on_ord_pc,
+    quantity_committed_in_pieces::varchar(255) as qty_committed_pc,
+    unit_price::varchar(255) as unit_prc,
+    total_value_available::varchar(255) as total_val,
+    custom_field_1::varchar(255) as custom_field1,
+    custom_field_2::varchar(255) as custom_field2,
+    file_name::varchar(255) as filename,
+    current_timestamp()::timestamp_ntz(9) as curr_dt,
+    null as cdl_dttm  
 from trans
+),
+final as 
+(   
+    select
+        cust_id,
+        inv_dt,
+        dstrbtr_wh_id,
+        item_cd,
+        dstrbtr_prod_cd,
+        ean_num,
+        dstrbtr_prod_desc,
+        qty,
+        uom,
+        qty_on_ord,
+        uom_on_ord,
+        qty_committed,
+        uom_committed,
+        available_qty_pc,
+        qty_on_ord_pc,
+        qty_committed_pc,
+        unit_prc,
+        total_val,
+        custom_field1,
+        custom_field2,
+        filename,
+        curr_dt,
+        cdl_dttm   
+    from transformed
 )
 
 select * from final

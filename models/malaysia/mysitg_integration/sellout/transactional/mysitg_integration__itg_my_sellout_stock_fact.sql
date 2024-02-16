@@ -101,28 +101,45 @@ itg_my_material_dim as (
 itg_my_material_map as (
     select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
 ),
+d as 
+(
+   select 
+        item_bar_cd,
+        min(item_cd) over (partition by item_bar_cd,status) as item_cd, 
+        status
+    from itg_my_material_dim
+),
+b as
+(
+    select distinct 
+        item_bar_cd,
+        item_cd,
+        status
+    from d
+),  
+t3 as
+( 
+   select 
+        item_bar_cd,
+        item_cd,
+        status,
+        case
+            when status = 'ACTIVE' THEN 'A'||item_bar_cd
+            when status = 'INACTIVE' THEN 'B'||item_bar_cd
+            when status = 'DISCON' THEN 'C'||item_bar_cd
+        end as flag,
+        row_number() over (partition by item_bar_cd order by flag asc) as row_count
+    from b
+),
 
-immd as (
-    (select item_bar_cd,
-             item_cd,
-             status
-      from (select item_bar_cd,
-                   item_cd,
-                   status,
-                   case
-                     when status = 'ACTIVE' THEN 'A'||item_bar_cd
-                     when status = 'INACTIVE' THEN 'B'||item_bar_cd
-                     when status = 'DISCON' THEN 'C'||item_bar_cd
-                   end as flag,
-                   row_number() over (partition by item_bar_cd order by flag asc) as row_count
-            from (select distinct item_bar_cd,
-                         item_cd,
-                         status
-                  from (select item_bar_cd,
-                               min(item_cd) over (partition by item_bar_cd,status) as item_cd, 
-                               status
-                        from itg_my_material_dim))) t3
-      where t3.row_count = 1)
+immd as 
+(
+    select 
+        item_bar_cd,
+        item_cd,
+        status
+    from  t3
+    where t3.row_count = 1
 ),
 a as ((select immm.item_cd,
              immd.item_bar_cd,
@@ -164,7 +181,8 @@ from wks_my_sellout_stock_fact t1,
 where t2.cust_id(+) = t1.cust_id
 and   t2.yearmo(+) = substring(replace(inv_dt,'-',''),0,7)
 ),
-trans as (
+trans as 
+(
   select  
   temp.cust_id,
   temp.inv_dt,
@@ -194,9 +212,9 @@ trans as (
     ltrim(temp.ean_num,'0')= ltrim(immd.item_bar_cd,'0') 
   left join a on
     ltrim(temp.dstrbtr_prod_cd,'0') =ltrim(a.ext_item_cd,'0') 
-)
-,
-result as (
+),
+result as 
+(
     select distinct
         cust_id::varchar(50) as cust_id,
         inv_dt::date as inv_dt,
@@ -223,8 +241,39 @@ result as (
         current_timestamp::timestamp_ntz(9) as crtd_dttm,
         current_timestamp::timestamp_ntz(9) as updt_dttm
     from trans
+),
+
+final as 
+(
+    select
+        cust_id,
+        inv_dt,
+        dstrbtr_wh_id,
+        item_cd,
+        dstrbtr_prod_cd,
+        ean_num,
+        dstrbtr_prod_desc,
+        qty,
+        uom,
+        qty_on_ord,
+        uom_on_ord,
+        qty_committed,
+        uom_committed,
+        available_qty_pc,
+        qty_on_ord_pc,
+        qty_committed_pc,
+        unit_prc,
+        total_val,
+        custom_field1,
+        sap_matl_num,
+        filename,
+        cdl_dttm,
+        crtd_dttm,
+        updt_dttm
+    from result
+
 )
 
-select * from result
+select * from final
 
 {% endif %}
