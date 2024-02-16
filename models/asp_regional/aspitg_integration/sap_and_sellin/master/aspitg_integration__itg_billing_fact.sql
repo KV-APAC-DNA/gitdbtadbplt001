@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["file_name"]
+        unique_key=["file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_CDL_BILLING','vw_stg_sdl_sap_bw_billing','itg_billing_fact')}}"
         )
 }}
 
@@ -10,7 +11,9 @@
 with source as (
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_billing') }}
 ),
-
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
+),
 --Logical CTE
 
 --Final CTE
@@ -126,6 +129,12 @@ final as (
   current_timestamp()::timestamp_ntz(9) as updt_dttm,
   file_name::varchar(255) as file_name
   from source
+  where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_billing_fact' and sap_transactional_processed_files.act_file_name=source.file_name
+  )
 )
 
 --final select

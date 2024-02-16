@@ -2,13 +2,17 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["source_file_name"]
+        unique_key=["source_file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_CDL_BILLING_COND','vw_stg_sdl_sap_billing_condition','itg_sap_billing_cond')}}"
     )
 }}
 
 
 with source as(
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_billing_condition') }}
+),
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
 ),
 final as(
     SELECT
@@ -199,7 +203,14 @@ FROM (
     ON sbc.loc_currcy = currx.currkey
   LEFT JOIN {{ ref('aspedw_integration__edw_material_uom') }} AS emu
     ON LTRIM(sbc.material, 0) = LTRIM(emu.material, 0) AND sbc.sales_unit = emu.unit
+    
 ) AS x
+where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_sap_billing_cond' and sap_transactional_processed_files.act_file_name=x.source_file_name
+  )
 )
 
 select * from final

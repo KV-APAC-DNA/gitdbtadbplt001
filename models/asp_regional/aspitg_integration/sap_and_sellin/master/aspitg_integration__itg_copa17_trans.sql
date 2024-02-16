@@ -1,18 +1,20 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "merge",
-        unique_key=  ["fisc_yr_per","vers"],
-        merge_exclude_columns=["crt_dttm"]
-    )
+        incremental_strategy= "delete+insert",
+        unique_key=  ["file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_COPA17','vw_stg_sdl_sap_bw_copa17','itg_copa17_trans')}}"
+        )
 }}
 
 --import CTE
 
 with source as (
-    select * from {{ ref('aspwks_integration__wks_itg_copa17_trans')}}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_copa17')}}
 ),
-
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
+),
 --Logical CTE
 
 final as(
@@ -82,6 +84,12 @@ final as(
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_copa17_trans' and sap_transactional_processed_files.act_file_name=source.file_name
+  )
 )
 --final select
 select * from final

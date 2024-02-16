@@ -68,7 +68,8 @@ final as(
         bic_zunitieu as zunitieu,
         bic_zbpt_dc as zbpt_dc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
 )
 --final select

@@ -48,7 +48,7 @@ final as (
         case 
             when mds.cluster is null then  'Not Defined'   
             else mds.cluster 
-        end as cluster,
+        end as "cluster",
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from temp_table 

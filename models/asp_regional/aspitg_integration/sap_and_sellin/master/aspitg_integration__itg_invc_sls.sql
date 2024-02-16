@@ -1,16 +1,19 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "merge",
-        unique_key=  ["request_number","data_packet","data_record"],
-        merge_exclude_columns=["crt_dttm"]
+        incremental_strategy= "delete+insert",
+        unique_key=  ["file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_ZC_SD','vw_stg_sdl_sap_bw_zc_sd','itg_invc_sls')}}"
     )
 }}
 
 --import CTE
 
 with source as (
-    select * from {{ ref('aspwks_integration__wks_itg_invc_sls')}}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_zc_sd')}}
+),
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
 ),
 final as(
     select 
@@ -90,8 +93,15 @@ final as(
     sales_unit::VARCHAR(4) as sls_unit,
     fiscper::VARCHAR(10) as fisc_yr,
     current_timestamp()::timestamp_ntz(9) as crt_dttm, 
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name
     from source
+    where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_invc_sls' and sap_transactional_processed_files.act_file_name=source.file_name
+  )
 
 )
 

@@ -87,7 +87,8 @@ final as (
 			else iff(right(bic_zfamocac,1)='-',concat('-',replace(bic_zfamocac,'-','')),bic_zfamocac) * pow(10,(2-curr2.currdec)) 
 			end as zfamocac,
             current_timestamp()::timestamp_ntz(9) as crt_dttm,
-            current_timestamp()::timestamp_ntz(9) as updt_dttm
+            current_timestamp()::timestamp_ntz(9) as updt_dttm,
+            trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
         from bwa_copa10 as src
 		left join itg_crncy_mult curr1
 				on src.obj_curr = curr1.currkey

@@ -2,13 +2,17 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["file_name"]
+        unique_key=["file_name"],
+        post_hook="{{sap_transaction_processed_files('BWA_CDL_DELIVERY','vw_stg_sdl_sap_bw_delivery','itg_delivery_fact')}}"
     )
 }}
 
 
 with source as(
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_delivery') }}
+),
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
 ),
 final as(
     select 
@@ -111,6 +115,12 @@ final as(
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     filename::VARCHAR(255) as file_name
     from source
+    where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_delivery_fact' and sap_transactional_processed_files.act_file_name=source.filename
+  )
 
 )
 select * from final
