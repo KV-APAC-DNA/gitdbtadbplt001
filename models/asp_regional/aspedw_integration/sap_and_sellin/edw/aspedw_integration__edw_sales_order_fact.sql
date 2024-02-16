@@ -216,9 +216,9 @@ current_timestamp()::timestamp_ntz(9) as crtd_dttm,
 current_timestamp()::timestamp_ntz(9) as updt_dttm
 from itg_sales_order_fact as so_ft, itg_crncy_mult as mul
 where
-  so_ft.doc_currcy = mul.currkey
+  so_ft.doc_currcy = mul.currkey(+)
 )
 
 
 --Final select
-select * from final 
+select count(*) from final 

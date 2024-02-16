@@ -6,6 +6,7 @@ source as (
 
 ),
 
+
 final as (
 
     select
@@ -18,7 +19,7 @@ final as (
         coalesce(s_ord_item, '') as s_ord_item,
         coalesce(doc_number, '') as doc_num,
         grs_wgt_dl,
-        coalesce(inv_qty, '') as inv_qty,
+        inv_qty as inv_qty,
         bill_qty,
         coalesce(base_uom, '') as base_uom,
         exchg_rate,
@@ -115,7 +116,7 @@ final as (
         coalesce(oi_ebelp, '') as oi_ebelp,
         coalesce(bic_zsd_pod, '') as zsd_pod,
         _ingestiontimestamp_ as cdl_dttm,
-        file_name,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source

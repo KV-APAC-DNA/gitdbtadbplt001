@@ -8,28 +8,28 @@
 
 --Import CTE
 with dfs_hainan as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dfs_hainan') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_dfs_hainan') }}
 ),
 dufry_hainan as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dufry_hainan') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_dufry_hainan') }}
 ),
 lstr as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_lstr') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_lstr') }}
 ),
 sales_stock as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_sales_stock') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_sales_stock') }}
 ),
 shilla as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_shilla') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_shilla') }}
 ),
 cdfg as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cdfg') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_cdfg') }}
 ),
 cnsc as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cnsc') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_cnsc') }}
 ),
 dfs as (
-    select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_dfs') }}
+    select * from {{ ref('aspwks_integration__wks_rg_travel_retail_dfs') }}
 ),
 
 --Logical CTE

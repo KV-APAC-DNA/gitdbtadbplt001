@@ -278,4 +278,4 @@ models:
   - name: aspwks_integration__wks_edw_crncy_exch
     config: 
       alias: wks_edw_crncy_exch
-      tags: ["daily","sap_ecc_master"]
+      tags: ["sap_ecc_master_etl_framework","transformation"]

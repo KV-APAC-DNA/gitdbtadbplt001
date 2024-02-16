@@ -19,7 +19,7 @@ final as (
             halfyear1,
             calyear,
             fiscper,
-            fiscper3,
+            fiscper3::int as fiscper3,
             fiscyear,
             recordmode,
             current_timestamp()::timestamp_ntz(9) as crt_dttm,

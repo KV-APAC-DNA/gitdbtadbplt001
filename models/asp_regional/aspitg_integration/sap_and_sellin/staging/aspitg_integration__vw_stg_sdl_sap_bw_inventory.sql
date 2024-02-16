@@ -133,7 +133,8 @@ final as(
         end as price_unit,
         bic_zlincount as bic_zlincount,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from bwa_inventory src
 	left join itg_crncy_mult curr1
 	on src.loc_currcy = curr1.currkey
