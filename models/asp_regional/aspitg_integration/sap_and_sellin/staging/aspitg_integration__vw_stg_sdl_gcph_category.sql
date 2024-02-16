@@ -8,14 +8,14 @@
     --Final CTE
     final as (
     select 
-    coalesce(tamr_id::number(38,0),0) as tamr_id ,
+    coalesce(try_to_number(tamr_id),0) as tamr_id ,
     coalesce(origin_source_name::varchar(256),'') as origin_source_name ,
     coalesce(origin_entity_id::varchar(256),'') as origin_entity_id ,
-    coalesce(manualclassificationid::number(18,0),0) as manualclassificationid ,
+    coalesce(try_to_number(manualclassificationid),0) as manualclassificationid ,
     coalesce(manualclassificationpath::varchar(256),'') as manualclassificationpath ,
     coalesce(suggestedclassificationid::varchar(256),'') as suggestedclassificationid ,
     coalesce(suggestedclassificationpath::varchar(256),'') as suggestedclassificationpath ,
-    coalesce(suggestedclassificationscore::number(15,10),0) as suggestedclassificationscore ,
+    coalesce(try_to_number(suggestedclassificationscore),0) as suggestedclassificationscore ,
     coalesce(unique_id::varchar(256),'') as unique_id ,
     coalesce(volume_unit::varchar(30),'') as volume_unit ,
     coalesce(regional_franchise_group::varchar(50),'') as regional_franchise_group ,
@@ -29,11 +29,11 @@
     coalesce(data_type::varchar(30),'') as data_type ,
     coalesce(base_unit::varchar(30),'') as base_unit ,
     null as division ,
-    coalesce(length::number(10,3),0) as length ,
-    coalesce(net_weight::number(10,3),0) as net_weight ,
+    coalesce(try_to_number(length),0) as length ,
+    coalesce(try_to_number(net_weight),0) as net_weight ,
     coalesce(apac_variant::varchar(256),'') as apac_variant ,
     coalesce(unit::varchar(30),'') as unit ,
-    coalesce(volume::number(10,3),0) as volume ,
+    coalesce(try_to_number(volume),0) as volume ,
     null as family ,
     coalesce(emea_gbpmgrc::varchar(100),'') as emea_gbpmgrc ,
     coalesce(material_type::varchar(30),'') as material_type ,
@@ -43,8 +43,8 @@
     coalesce(material_group::varchar(100),'') as material_group ,
     coalesce(regional_megabrand::varchar(100),'') as regional_megabrand ,
     coalesce(order_unit::varchar(30),'') as order_unit ,
-    coalesce(gross_weight::number(10,3),0) as gross_weight ,
-    coalesce(height::number(10,3),0) as height ,
+    coalesce(try_to_number(gross_weight),0) as gross_weight ,
+    coalesce(try_to_number(height),0) as height ,
     null as market ,
     coalesce(emea_gbpbgc::varchar(50),'') as emea_gbpbgc ,
     coalesce(width::varchar(100),'') as width ,
@@ -61,7 +61,7 @@
     null as cdl_datetime ,
     null as cdl_source_file ,
     null as load_key 
-    from source
+    from source where region ilike 'apac'
     )
 
     --Final select
