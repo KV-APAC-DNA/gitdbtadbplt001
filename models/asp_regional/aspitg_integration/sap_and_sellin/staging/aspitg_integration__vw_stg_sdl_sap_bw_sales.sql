@@ -142,7 +142,7 @@ final as (
         bic_zhighritm as zhighritm,
         null as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as curr_dt,
-        null as file_name
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
 )
 

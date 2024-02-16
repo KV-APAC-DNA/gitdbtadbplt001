@@ -6,6 +6,7 @@ source as (
 
 ),
 
+
 final as (
 
     select
@@ -115,7 +116,7 @@ final as (
         coalesce(oi_ebelp, '') as oi_ebelp,
         coalesce(bic_zsd_pod, '') as zsd_pod,
         _ingestiontimestamp_ as cdl_dttm,
-        file_name,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
