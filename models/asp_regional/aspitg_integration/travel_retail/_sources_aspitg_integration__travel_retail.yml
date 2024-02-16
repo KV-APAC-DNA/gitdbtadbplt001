@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_rg_travel_retail_cdfg
-        tags: ["travel_retail_cdfg"]
+        tags: ["travel_retail_cdfg","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -40,7 +40,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_cnsc
-        tags: ["travel_retail_cnsc"]
+        tags: ["travel_retail_cnsc","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code","ean"]
@@ -51,7 +51,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dfs
-        tags: ["travel_retail_dfs"]
+        tags: ["travel_retail_dfs","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["vendor_style"]
@@ -81,7 +81,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dfs_hainan
-        tags: ["travel_retail_dfs_hainan"]
+        tags: ["travel_retail_dfs_hainan","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -91,7 +91,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dufry_hainan
-        tags: ["travel_retail_dufry_hainan"]
+        tags: ["travel_retail_dufry_hainan","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -101,7 +101,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_lstr
-        tags: ["travel_retail_lstr"]
+        tags: ["travel_retail_lstr","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -111,7 +111,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_sales_stock
-        tags: ["travel_retail_sales_stock"]
+        tags: ["travel_retail_sales_stock","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -142,7 +142,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_shilla
-        tags: ["travel_retail_shilla"]
+        tags: ["travel_retail_shilla","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]

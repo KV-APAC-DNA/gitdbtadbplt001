@@ -18,32 +18,32 @@ models:
   - name: aspwks_integration__wks_rg_travel_retail_cdfg
     config:
       alias: wks_rg_travel_retail_cdfg
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_cnsc
     config:
       alias: wks_rg_travel_retail_cnsc
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_dfs
     config:
       alias: wks_rg_travel_retail_dfs
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_dfs_hainan
     config:
       alias: wks_rg_travel_retail_dfs_hainan
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_dufry_hainan
     config:
       alias: wks_rg_travel_retail_dufry_hainan
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_lstr
     config:
       alias: wks_rg_travel_retail_lstr
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_sales_stock
     config:
       alias: wks_rg_travel_retail_sales_stock
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
   - name: aspwks_integration__wks_rg_travel_retail_shilla
     config:
       alias: wks_rg_travel_retail_shilla
-      tags: ["rg_travel_retail_files","transformation"]
+      tags: ["rg_travel_retail_files","ingestion"]
