@@ -318,7 +318,7 @@ from (
                     )
                   )
                   then cast('China' as varchar)
-                  else cmp."CLUSTER"
+                  else cmp."cluster"
                 end as "CLUSTER",
                 case
                   when (
@@ -1042,7 +1042,7 @@ from (
                 exch_rate.from_crncy,
                 exch_rate.to_crncy,
                 cmp.ctry_group,
-                cmp."CLUSTER",
+                cmp."cluster",
                 mat.mega_brnd_desc
             ) AS copa
             left join v_edw_customer_sales_dim as cust_sales
