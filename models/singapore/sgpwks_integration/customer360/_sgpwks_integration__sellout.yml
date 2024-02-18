@@ -1,4 +1,4 @@
-version: 1
+version: 2
 models:
   - name: sgpwks_integration__wks_singapore_regional_sellout_base
     config:
@@ -12,7 +12,7 @@ models:
     config:
       alias: wks_singapore_regional_sellout_npd
       tags: ["Cutomer_360_SG","transformation"]   
-  - name: sgpwks_integration__wks_singapore_regional_sellout__offtake_npd
+  - name: sgpwks_integration__wks_singapore_regional_sellout_offtake_npd
     config:
       alias: wks_singapore_regional_sellout_offtake_npd
       tags: ["Cutomer_360_SG","transformation"]   
