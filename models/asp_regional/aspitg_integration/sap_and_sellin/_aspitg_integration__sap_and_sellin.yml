@@ -714,10 +714,6 @@ models:
     config:
       alias: itg_billing_fact
       tags: ["rg_s3_to_dna_billing","transformation"]
-  - name: aspitg_integration__itg_crncy_mult 
-    config:
-      alias: itg_crncy_mult 
-      tags: ["daily","rg_s3_to_dna"]
   - name: aspitg_integration__itg_sales_order_fact
     config:
       alias: itg_sales_order_fact
