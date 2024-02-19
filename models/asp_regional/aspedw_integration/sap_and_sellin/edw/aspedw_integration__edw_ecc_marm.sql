@@ -28,7 +28,7 @@ final as (
         width::number(13,3) as width,
         height::number(13,3) as height,
         unit::varchar(3) as unit,
-        volum::varchar(13) as volum,
+        volum::varchar(14) as volum,
         vol_unt::varchar(3) as vol_unt,
         gross_wt::number(13,3) as gross_wt,
         wt_unt::varchar(3) as wt_unt,
