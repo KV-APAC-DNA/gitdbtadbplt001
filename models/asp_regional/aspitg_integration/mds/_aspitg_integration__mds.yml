@@ -44,11 +44,11 @@ models:
   - name: aspitg_integration__itg_mds_rg_ecom_product
     config:
       alias: itg_mds_rg_ecom_product
-      tags: ["MDS","rg_mds_to_dna","ingestion"]
+      tags: ["MDS","",""]
   - name: aspitg_integration__itg_mds_rg_sku_benchmarks
     config:
       alias: itg_mds_rg_sku_benchmarks
-      tags: ["MDS","rg_mds_to_dna","ingestion"]
+      tags: ["MDS","",""]
   - name: aspitg_integration__itg_mds_rg_sfmc_gender
     config:
       alias: itg_mds_rg_sfmc_gender
