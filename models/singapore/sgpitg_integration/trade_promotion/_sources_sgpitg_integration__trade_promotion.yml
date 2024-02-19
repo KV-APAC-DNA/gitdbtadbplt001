@@ -25,7 +25,7 @@ sources:
               lookup_column: "upper(zuellig_customer)"
               lookup_table: "{{ ref('sgpitg_integration__itg_sg_zuellig_customer_mapping') }} "
               filter: "upper(custmer_l1) = 'ZUELLIG'"
-              name: TRATBL_sdl_sg_tp_closed_month_lookup_test
+              name: TRATBL_sdl_sg_tp_closed_month__lookup_test
               config:
                 store_failures: true
                 schema: sgpwks_integration
@@ -45,7 +45,7 @@ sources:
               lookup_column: "upper(zuellig_customer)"
               lookup_table: "{{ ref('sgpitg_integration__itg_sg_zuellig_customer_mapping') }} "
               filter: "upper(customer_l1) = 'ZUELLIG'"
-              name: TRATBL_sdl_sg_tp_closed_year_bal_lookup_test
+              name: TRATBL_sdl_sg_tp_closed_year_bal__lookup_test
               config:
                 store_failures: true
                 schema: sgpwks_integration
