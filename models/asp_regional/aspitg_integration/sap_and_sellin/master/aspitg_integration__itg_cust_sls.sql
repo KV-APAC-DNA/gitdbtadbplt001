@@ -7,12 +7,12 @@
     )
 }}
 
---import CTE
+--import cte
 with source as(
     select * from {{ ref('aspwks_integration__wks_itg_cust_sls') }}
 ),
---logical CTE
-final as(
+--logical cte
+trans as(
     select 
         mandt as clnt,
         kunnr as cust_no,
@@ -76,9 +76,77 @@ final as(
         prata as prod_attr_id10,
         zterm as pymt_key_term,
         zzsalesrep as persnl_num,
-        current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp() as crt_dttm,
+        current_timestamp() as updt_dttm
     from source
+),
+final as(
+    select
+        clnt::varchar(3) as clnt,
+        cust_no::varchar(10) as cust_no,
+        sls_org::varchar(4) as sls_org,
+        dstr_chnl::varchar(2) as dstr_chnl,
+        div::varchar(2) as div,
+        obj_crt_prsn::varchar(12) as obj_crt_prsn,
+        rec_crt_dt::date as rec_crt_dt,
+        auth_grp::varchar(4) as auth_grp,
+        cust_del_flag::varchar(1) as cust_del_flag,
+        cust_stat_grp::varchar(1) as cust_stat_grp,
+        cust_ord_blk::varchar(2) as cust_ord_blk,
+        prc_pcdr_asgn::varchar(1) as prc_pcdr_asgn,
+        cust_grp::varchar(2) as cust_grp,
+        sls_dstrc::varchar(6) as sls_dstrc,
+        prc_grp::varchar(2) as prc_grp,
+        prc_list_typ::varchar(2) as prc_list_typ,
+        ord_prob_itm::number(18,0) as ord_prob_itm,
+        incoterm1::varchar(3) as incoterm1,
+        incoterm2::varchar(28) as incoterm2,
+        cust_delv_blk::varchar(2) as cust_delv_blk,
+        cmplt_delv_sls_ord::varchar(1) as cmplt_delv_sls_ord,
+        max_no_prtl_delv_allw_itm::number(1,0) as max_no_prtl_delv_allw_itm,
+        prtl_delv_itm_lvl::varchar(1) as prtl_delv_itm_lvl,
+        ord_comb_in::varchar(1) as ord_comb_in,
+        btch_splt_allw::varchar(1) as btch_splt_allw,
+        delv_prir::number(18,0) as delv_prir,
+        vend_acct_no::varchar(12) as vend_acct_no,
+        shipping_cond::varchar(2) as shipping_cond,
+        bill_blk_cust::varchar(2) as bill_blk_cust,
+        man_invc_maint::varchar(1) as man_invc_maint,
+        invc_dt::varchar(2) as invc_dt,
+        invc_list_sched::varchar(2) as invc_list_sched,
+        cost_est_in::varchar(1) as cost_est_in,
+        val_lmt_cost_est::number(13,2) as val_lmt_cost_est,
+        crncy::varchar(5) as crncy,
+        cust_clas::varchar(2) as cust_clas,
+        acct_asgnmt_grp::varchar(2) as acct_asgnmt_grp,
+        delv_plnt::varchar(4) as delv_plnt,
+        sls_grp::varchar(3) as sls_grp,
+        sls_ofc::varchar(4) as sls_ofc,
+        itm_props::varchar(10) as itm_props,
+        cust_grp1::varchar(3) as cust_grp1,
+        cust_grp2::varchar(3) as cust_grp2,
+        cust_grp3::varchar(3) as cust_grp3,
+        cust_grp4::varchar(3) as cust_grp4,
+        cust_grp5::varchar(3) as cust_grp5,
+        cust_rebt_in::varchar(1) as cust_rebt_in,
+        rebt_indx_cust_strt_prd::date as rebt_indx_cust_strt_prd,
+        exch_rt_typ::varchar(4) as exch_rt_typ,
+        prc_dtrmn_id::varchar(1) as prc_dtrmn_id,
+        prod_attr_id1::varchar(1) as prod_attr_id1,
+        prod_attr_id2::varchar(1) as prod_attr_id2,
+        prod_attr_id3::varchar(1) as prod_attr_id3,
+        prod_attr_id4::varchar(1) as prod_attr_id4,
+        prod_attr_id5::varchar(1) as prod_attr_id5,
+        prod_attr_id6::varchar(1) as prod_attr_id6,
+        prod_attr_id7::varchar(1) as prod_attr_id7,
+        prod_attr_id8::varchar(1) as prod_attr_id8,
+        prod_attr_id9::varchar(1) as prod_attr_id9,
+        prod_attr_id10::varchar(1) as prod_attr_id10,
+        pymt_key_term::varchar(4) as pymt_key_term,
+        persnl_num::number(8,0) as persnl_num,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from trans
+
 )
---final select
 select * from final

@@ -15,7 +15,7 @@ with source as (
 --Logical CTE
 
 --Final CTE
-final as (
+trans as (
     select
         source_type,
         code_type,
@@ -24,7 +24,17 @@ final as (
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
-)
+),
 
+final as(
+    select 
+        source_type::varchar(10) as source_type,
+        code_type::varchar(50) as code_type,
+        code::varchar(15) as code,
+        code_desc::varchar(50) as code_desc,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from trans
+)
 --Final select
 select * from final

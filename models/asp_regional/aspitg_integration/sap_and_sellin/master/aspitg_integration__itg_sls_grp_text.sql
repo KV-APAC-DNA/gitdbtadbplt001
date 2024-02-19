@@ -15,7 +15,7 @@ with source as (
 
 --Logical CTE
 
-final as(
+trans as(
     select 
         mandt as clnt,
         spras as lang_key,
@@ -24,6 +24,16 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+),
+final as(
+    select 
+        clnt::number(18,0) as clnt,
+        lang_key::varchar(1) as lang_key,
+        sls_grp::varchar(3) as sls_grp,
+        de::varchar(40) as de,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from trans
 )
 --final select
 select * from final

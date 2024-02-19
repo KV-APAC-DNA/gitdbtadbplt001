@@ -24,6 +24,5 @@ sources:
         tags: ["MDS","sg_mds_to_dna_refresh","ingestion"]
       - name: sdl_mds_sg_sku_benchmarks
         tags: ["MDS","rg_mds_to_dna","ingestion"]
-  
-  
-      
+      - name: sdl_mds_sg_ecom_product
+        tags: ["MDS","rg_mds_to_dna","ingestion"]      

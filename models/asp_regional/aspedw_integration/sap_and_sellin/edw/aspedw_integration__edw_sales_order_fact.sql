@@ -221,4 +221,4 @@ where
 
 
 --Final select
-select count(*) from final 
+select * from final 
