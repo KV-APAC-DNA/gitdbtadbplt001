@@ -24,7 +24,7 @@ sources:
               column: "upper(customer)" 
               lookup_column: "upper(zuellig_customer)"
               lookup_table: "{{ ref('sgpitg_integration__itg_sg_zuellig_customer_mapping') }} "
-              filter: "upper(customer_l1) = 'ZUELLIG'"
+              filter: "upper(custmer_l1) = 'ZUELLIG'"
               name: TRATBL_sdl_sg_tp_closed_month_lookup_test
               config:
                 store_failures: true
