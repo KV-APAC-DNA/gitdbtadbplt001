@@ -15,7 +15,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_cdfg_null_test
+              name: TRATBL_sdl_rg_travel_retail_cdfg__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -25,7 +25,7 @@ sources:
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_column: "trim(dcl_code)"
               lookup_filter: "upper(ctry_cd) IN ('CM','CN')"
-              name: TRATBL_sdl_rg_travel_retail_cdfg_product_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_cdfg_product__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -35,7 +35,7 @@ sources:
               lookup_column: "upper(retailer_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) IN ('CM','CN')"
-              name: TRATBL_sdl_rg_travel_retail_cdfg_channel_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_cdfg_channel__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -46,7 +46,7 @@ sources:
               not_null_columns: ["dcl_code","ean"]
               condition: "AND"
               failure_reason: "Null present for DCL Code and EAN"
-              name: TRATBL_sdl_rg_travel_retail_cnsc_null_test
+              name: TRATBL_sdl_rg_travel_retail_cnsc__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -56,7 +56,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["vendor_style"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_dfs_null_test
+              name: TRATBL_sdl_rg_travel_retail_dfs__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -66,7 +66,7 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'HK'"
-              name: TRATBL_sdl_rg_travel_retail_dfs_product_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_dfs_product__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -76,7 +76,7 @@ sources:
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'HK'"
-              name: TRATBL_sdl_rg_travel_retail_dfs_channel_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_dfs_channel__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -86,7 +86,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_dfs_hainan_null_test
+              name: TRATBL_sdl_rg_travel_retail_dfs_hainan__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -96,7 +96,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_dufry_hainan_null_test
+              name: TRATBL_sdl_rg_travel_retail_dufry_hainan__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -106,7 +106,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_lstr_null_test
+              name: TRATBL_sdl_rg_travel_retail_lstr__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -116,7 +116,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_sales_stock_null_test
+              name: TRATBL_sdl_rg_travel_retail_sales_stock__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -126,7 +126,7 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"
-              name: TRATBL_sdl_rg_travel_retail_sales_stock_product_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_sales_stock_product__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -137,7 +137,7 @@ sources:
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"
-              name: TRATBL_sdl_rg_travel_retail_sales_stock_channel_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_sales_stock_channel__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -147,7 +147,7 @@ sources:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
               failure_reason: "Null present for DCL Code"
-              name: TRATBL_sdl_rg_travel_retail_shilla_null_test
+              name: TRATBL_sdl_rg_travel_retail_shilla__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -157,7 +157,7 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'SG'"
-              name: TRATBL_sdl_rg_travel_retail_shilla_product_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_shilla_product__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -167,7 +167,7 @@ sources:
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'SG'"
-              name: TRATBL_sdl_rg_travel_retail_shilla_channel_lookup_test
+              name: TRATBL_sdl_rg_travel_retail_shilla_channel__lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration

@@ -15,7 +15,7 @@ sources:
           - test_null:
               not_null_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
               select_columns: ["cust_num","ctry_key_code","retailer_name_code","location_name","sales_location_name","sales_channel_name"]
-              name: TRATBL_sdl_mds_apac_dcl_customers_null_test
+              name: TRATBL_sdl_mds_apac_dcl_customers__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -31,13 +31,13 @@ sources:
         tests:
           - test_null__ff:
               not_null_columns: ["country_code",'"dcl code"','"sap code"','"sales channel_name"']
-              name: TRATBL_sdl_mds_apac_dcl_products_null_test
+              name: TRATBL_sdl_mds_apac_dcl_products__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate__ff:
               group_by_columns: ["country_code",'"dcl code"','"sales channel_name"']
-              name: TRATBL_sdl_mds_apac_dcl_products_duplicate_test
+              name: TRATBL_sdl_mds_apac_dcl_products__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -46,14 +46,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
-              name: TRATBL_sdl_mds_apac_dcl_targets_null_test
+              name: TRATBL_sdl_mds_apac_dcl_targets__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
               group_by_columns: ["target_type_code","country_code","sales_channel_name","year_code"]
               select_columns: ["target_type_code","country_code","sales_channel_name","year_code"] 
-              name: TRATBL_sdl_mds_apac_dcl_targets_duplicate_test
+              name: TRATBL_sdl_mds_apac_dcl_targets__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -76,14 +76,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type","target_ori"]
-              name: TRATBL_sdl_mds_rg_ecom_plan_null_test
+              name: TRATBL_sdl_mds_rg_ecom_plan__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
               group_by_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type"]
               select_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type","target_ori"]
-              name: TRATBL_sdl_mds_rg_ecom_plan_duplicate_test
+              name: TRATBL_sdl_mds_rg_ecom_plan__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -92,14 +92,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["prod_minor","profit_center","prod_minor_desc","need_state","franchise_l1"]
-              name: TRATBL_sdl_mds_rg_profit_center_franchise_mapping_null_test
+              name: TRATBL_sdl_mds_rg_profit_center_franchise_mapping__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
               group_by_columns: ["prod_minor","profit_center","prod_minor_desc","need_state","franchise_l1"]
               need_counts: no
-              name: TRATBL_sdl_mds_rg_profit_center_franchise_mapping_duplicate_test
+              name: TRATBL_sdl_mds_rg_profit_center_franchise_mapping__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -108,14 +108,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["name", "channel", "coverage"]
-              name: TRATBL_sdl_mds_rg_ps_market_coverage_null_test
+              name: TRATBL_sdl_mds_rg_ps_market_coverage__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
               group_by_columns: ["name","channel"]
               select_columns: ["name","channel","coverage"] 
-              name: TRATBL_sdl_mds_rg_ps_market_coverage_duplicate_test
+              name: TRATBL_sdl_mds_rg_ps_market_coverage__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -124,14 +124,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["market", "online_store"]
-              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping_null_test
+              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
               group_by_columns: ["market", "online_store"]
               need_counts: no 
-              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping_duplicate_test
+              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__duplicate_test
               config:
                 store_failures: true
                 schema: aspwks_integration

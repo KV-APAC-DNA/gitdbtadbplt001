@@ -15,7 +15,7 @@ sources:
         - test_null:
               not_null_columns: ["customer"]
               select_columns: ["file_name","customer"]
-              name: TRATBL_sdl_sg_tp_closed_month_null_test
+              name: TRATBL_sdl_sg_tp_closed_month__null_test
               config:
                 store_failures: true
                 schema: sgpwks_integration
@@ -35,7 +35,7 @@ sources:
         - test_null:
               not_null_columns: ["customer"]
               select_columns: ["file_name","customer"]
-              name: TRATBL_sdl_sg_tp_closed_year_bal_null_test
+              name: TRATBL_sdl_sg_tp_closed_year_bal__null_test
               config:
                 store_failures: true
                 schema: sgpwks_integration
