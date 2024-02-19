@@ -55,7 +55,9 @@ final as (
         coalesce(bic_zcustset2,'') as cust_set_2,
         coalesce(bic_zcustset3,'') as cust_set_3,
         coalesce(bic_zcustset4,'') as cust_set_4,
-        coalesce(bic_zcustset5,'') as cust_set_5
+        coalesce(bic_zcustset5,'') as cust_set_5,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 )
 select * from final

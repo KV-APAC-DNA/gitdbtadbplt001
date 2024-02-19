@@ -5,6 +5,9 @@ with source as(
 --logical cte
 final as(
     select 
+        null as request_number,
+        null as data_record,
+        null as data_packet,
         fiscper as fiscper,
         fiscvarnt as fiscvarnt,
         fiscyear as fiscyear,
@@ -65,7 +68,8 @@ final as(
         bic_zunitieu as zunitieu,
         bic_zbpt_dc as zbpt_dc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
 )
 --final select

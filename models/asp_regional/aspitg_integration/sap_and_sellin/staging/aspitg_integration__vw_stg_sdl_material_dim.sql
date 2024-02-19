@@ -78,6 +78,7 @@ final as (
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         null as filename
     from source
+    where material <> 'NA'
 )
 
 --Final select

@@ -10,6 +10,12 @@ edw_rg_travel_retail as (
     select * from {{ ref('aspedw_integration__edw_rg_travel_retail') }}
 )
 {% set query %} 
+with edw_calendar_dim as (
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
+),
+edw_rg_travel_retail as (
+    select * from {{ ref('aspedw_integration__edw_rg_travel_retail') }}
+)
 select distinct cal_mo_1 
                  from edw_calendar_dim where cal_mo_1 >= (select min(year_month) from edw_rg_travel_retail)
                   and cal_mo_1 <=  (select to_char(add_months (to_date(max(year_month),'YYYYMM'),1),'YYYYMM') from edw_rg_travel_retail where identifier<>'TARGET') 

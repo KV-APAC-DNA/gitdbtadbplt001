@@ -16,7 +16,7 @@ final as (
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
-        where spras = 'E' and _deleted_='F'
+        where spras = 'E' and _deleted_='F' and mandt='888'
 )
 
 --Final select
