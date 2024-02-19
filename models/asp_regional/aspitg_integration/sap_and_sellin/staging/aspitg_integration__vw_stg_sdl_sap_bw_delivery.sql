@@ -99,7 +99,7 @@ final as(
         to_number(bic_zdlqtycse,38,4) as zdlqtycse,
         null as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        null as filename
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as filename
     from source
 )
 select * from final

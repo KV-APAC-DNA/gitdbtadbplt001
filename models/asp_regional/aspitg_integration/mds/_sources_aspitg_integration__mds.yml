@@ -29,15 +29,14 @@ sources:
       - name: sdl_mds_apac_dcl_products
         tags: [MDS,"rg_travel_retail_channel_product_target","ingestion"]
         tests:
-          - test_null:
+          - test_null__ff:
               not_null_columns: ["country_code",'"dcl code"','"sap code"','"sales channel_name"']
               name: TRATBL_sdl_mds_apac_dcl_products_null_test
               config:
                 store_failures: true
                 schema: aspwks_integration
-          - test_duplicate:
+          - test_duplicate__ff:
               group_by_columns: ["country_code",'"dcl code"','"sales channel_name"']
-              select_columns: ["country_code",'"dcl code"','"sales channel_name"'] 
               name: TRATBL_sdl_mds_apac_dcl_products_duplicate_test
               config:
                 store_failures: true

@@ -109,7 +109,8 @@ final as(
         sales_unit as sales_unit,
         fiscper as fiscper,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
     left join itg_crncy_mult curr
 		on source.currency = curr.currkey
