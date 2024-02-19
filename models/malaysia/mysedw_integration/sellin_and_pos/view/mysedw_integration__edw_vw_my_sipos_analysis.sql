@@ -44,7 +44,7 @@ itg_my_material_dim as
 final as (
 select
   'POS' as data_src,
-  veposf.year as jj_year,
+  veposf."year" as jj_year,
   cast((
     veposf.qrtr
   ) as varchar) as jj_qtr,

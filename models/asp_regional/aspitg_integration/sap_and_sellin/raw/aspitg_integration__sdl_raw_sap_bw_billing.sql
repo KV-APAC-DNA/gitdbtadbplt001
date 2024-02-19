@@ -7,6 +7,10 @@
 
 with source as (
      select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_billing') }} ),
+
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
+),
 final as (
     select * from source
     where not exists (
