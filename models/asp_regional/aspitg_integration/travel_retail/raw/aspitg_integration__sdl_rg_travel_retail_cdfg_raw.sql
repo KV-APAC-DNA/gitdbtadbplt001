@@ -9,7 +9,18 @@ with source as(
     select * from {{ source('aspsdl_raw', 'sdl_rg_travel_retail_cdfg') }}
 ),
 final as(
-    select * from source
+    select 	
+        LOCATION_NAME,
+        RETAILER_NAME,
+        YEAR_MONTH,
+        DCL_CODE,
+        BARCODE,
+        DESCRIPTION,
+        SLS_QTY,
+        STOCK_QTY,
+        FILENAME AS FILE_NAME,
+        current_timestamp() as CRT_DTTM 
+    from source
 )
 
 select * from final
