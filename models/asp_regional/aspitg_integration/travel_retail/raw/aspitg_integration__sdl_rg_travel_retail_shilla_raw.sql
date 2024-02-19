@@ -10,7 +10,7 @@ with source as(
 ),
 final as(
     select *,
-        current_timestamp() as crt_dttm 
+       current_timestamp()::timestamp_ntz(9) as crt_dttm 
     from source
 )
 
