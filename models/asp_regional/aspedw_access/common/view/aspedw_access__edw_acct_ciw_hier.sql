@@ -3,8 +3,8 @@ with edw_account_ciw_dim as(
 ),
 edw_account_ciw_xref as (
     select * from {{ source('aspedw_integration', 'edw_account_ciw_xref') }}
-)
-tranformed as(
+),
+tranformed as (
 SELECT
   derived_table1.chrt_acct,
   derived_table1.acct_num,
