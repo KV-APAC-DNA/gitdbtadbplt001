@@ -41,10 +41,14 @@ itg_my_material_dim as
 (
   select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
 ),
+itg_my_dstrbtrr_dim as 
+(
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
+),
 final as (
 select
   'POS' as data_src,
-  veposf."year" as jj_year,
+  veposf.year as jj_year,
   cast((
     veposf.qrtr
   ) as varchar) as jj_qtr,
@@ -291,8 +295,8 @@ from (
                       ) as text)
                     )
                   )
-                  then b1.year
-                  else b2.year
+                  then b1."year"
+                  else b2."year"
                 end as year,
                 case
                   when (
@@ -367,7 +371,7 @@ from (
                         (
                           cast((
                             cast((
-                              edw_vw_os_time_dim.year
+                              edw_vw_os_time_dim."year"
                             ) as varchar)
                           ) as text) || RIGHT(
                             (
@@ -384,7 +388,7 @@ from (
                         ) as yr_wk,
                         edw_vw_os_time_dim.wk,
                         edw_vw_os_time_dim.mnth_id,
-                        edw_vw_os_time_dim.year,
+                        edw_vw_os_time_dim."year",
                         edw_vw_os_time_dim.qrtr,
                         edw_vw_os_time_dim.mnth_no
                       from edw_vw_os_time_dim
@@ -415,7 +419,7 @@ from (
                 left join (
                   select distinct
                     edw_vw_os_time_dim.mnth_id,
-                    edw_vw_os_time_dim.year,
+                    edw_vw_os_time_dim."year",
                     edw_vw_os_time_dim.qrtr,
                     edw_vw_os_time_dim.mnth_no
                   from edw_vw_os_time_dim
@@ -1117,7 +1121,7 @@ from (
                 )
             ) as t1, (
               select distinct
-                edw_vw_os_time_dim.year,
+                edw_vw_os_time_dim."year" as year,
                 edw_vw_os_time_dim.qrtr_no,
                 edw_vw_os_time_dim.qrtr,
                 edw_vw_os_time_dim.mnth_id,
