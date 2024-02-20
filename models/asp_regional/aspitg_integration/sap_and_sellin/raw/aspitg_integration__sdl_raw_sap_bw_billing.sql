@@ -4,7 +4,6 @@
         incremental_strategy="append",
         post_hook="{{sap_transaction_processed_files('BWA_CDL_BILLING','vw_stg_sdl_sap_bw_billing','sdl_raw_sap_bw_billing')}}"
     )}}
-
 with source as (
      select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_billing') }} ),
 

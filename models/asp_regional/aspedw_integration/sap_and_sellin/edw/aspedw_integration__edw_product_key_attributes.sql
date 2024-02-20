@@ -27,7 +27,9 @@ itg_mds_ap_greenlight_skus as (
 edw_copa_trans_fact as (
    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
-
+edw_plant_dim as (
+    select * from {{ ref('aspedw_integration__edw_plant_dim') }}
+),
 --Logical CTE
 
 -- Final CTE

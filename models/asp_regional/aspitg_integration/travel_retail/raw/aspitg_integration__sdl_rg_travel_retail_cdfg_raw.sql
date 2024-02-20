@@ -18,7 +18,7 @@ final as(
         DESCRIPTION,
         SLS_QTY,
         STOCK_QTY,
-        FILENAME AS FILE_NAME,
+        file_name AS FILE_NAME,
         current_timestamp()::timestamp_ntz(9) as CRT_DTTM 
     from source
 )
