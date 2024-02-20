@@ -125,7 +125,7 @@ final as (
     select 
         act_file_name 
     from sap_transactional_processed_files 
-    where target_table_name='itg_billing_fact' and sap_transactional_processed_files.act_file_name=source.file_name
+    where target_table_name='sdl_raw_sap_bw_billing' and sap_transactional_processed_files.act_file_name=source.file_name
   )
 )
 
