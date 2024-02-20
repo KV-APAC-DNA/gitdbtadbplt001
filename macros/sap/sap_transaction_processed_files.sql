@@ -1,4 +1,4 @@
-{% macro sap_transaction_processed_files(source_table_name,source_view_name,target_table_name) %}
+{% macro sap_transaction_processed_files(model,source_table_name,source_view_name,target_table_name) %}
     
 {% set create_table %}
     create  table if not exists aspwks_integration.SAP_TRANSACTIONAL_PROCESSED_FILES (
@@ -22,7 +22,7 @@ select
     '{{source_view_name}}' as source_view_name,
     '{{target_table_name}}' as target_table_name,
     file_name as act_file_name
-from apahil01_workspace.aspitg_integration__itg_sales_order_fact
+from {{this}}
 group by act_file_name
 ),
 processed_files as (

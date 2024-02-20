@@ -82,7 +82,8 @@ final as(
     CAST(zunitieu as VARCHAR(10)) as un_sls_vol__ieu,
     CAST(zbpt_dc as VARCHAR(2)) as bpt_dstn_chnl,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm
+    current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name
     from source
     where not exists (
     select 

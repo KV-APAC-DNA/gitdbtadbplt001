@@ -18,20 +18,20 @@ source as (
 
 final as (
     select
-        lang_key,
-        cntl_area,
-        prft_ctr,
-        vld_to_dt,
-        vld_from_dt,
-        shrt_desc,
-        med_desc,
-        prsn_resp,
-        crncy_key,
+        lang_key::varchar(4) as lang_key,
+        cntl_area::varchar(10) as cntl_area,
+        prft_ctr::varchar(40) as prft_ctr,
+        vld_to_dt::date as vld_to_dt,
+        vld_from_dt::date as vld_from_dt,
+        shrt_desc::varchar(20) as shrt_desc,
+        med_desc::varchar(40) as med_desc,
+        prsn_resp::varchar(20) as prsn_resp,
+        crncy_key::varchar(5) as crncy_key,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        null as need_stat_shrt_desc,
-        null as strng_hold_shrt_desc,
-        null as rflt
+        null::varchar(100) as need_stat_shrt_desc,
+        null::varchar(100) as strng_hold_shrt_desc,
+        null::varchar(100) as rflt
   from source
 )
 

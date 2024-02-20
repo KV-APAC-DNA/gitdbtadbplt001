@@ -11,3 +11,5 @@ sources:
     tables:
       - name: sdl_mds_my_sku_benchmarks
         tags: ["MDS","rg_mds_to_dna","ingestion"]
+      - name: sdl_mds_my_ecom_product
+        tags: ["MDS","rg_mds_to_dna","ingestion"]
