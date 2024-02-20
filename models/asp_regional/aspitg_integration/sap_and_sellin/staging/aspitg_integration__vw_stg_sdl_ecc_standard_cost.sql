@@ -12,7 +12,7 @@ final as (
         MANDT,
         MATNR,
         BWKEY,
-        BWTAR,
+        trim(BWTAR) as BWTAR,
         LVORM,
         replace(LBKUM,'*','') as LBKUM,
         replace(SALK3,'*','') as SALK3,

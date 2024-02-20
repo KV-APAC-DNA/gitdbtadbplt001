@@ -55,7 +55,7 @@ models:
   - name: aspitg_integration__itg_ecc_standard_cost
     config:
       alias: itg_ecc_standard_cost
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["sap_ecc_master_etl_framework",""]
   - name: aspitg_integration__itg_edw_material_dim_updt
     config:
       alias: itg_edw_material_dim_updt
