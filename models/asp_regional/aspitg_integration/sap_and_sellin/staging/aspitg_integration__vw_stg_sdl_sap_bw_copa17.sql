@@ -5,9 +5,9 @@ with source as(
 --logical cte
 final as(
     select 
-        null as request_number,
-        null as data_record,
-        null as data_packet,
+        '' as request_number,
+        '' as data_record,
+        '' as data_packet,
         fiscper as fiscper,
         fiscvarnt as fiscvarnt,
         fiscyear as fiscyear,

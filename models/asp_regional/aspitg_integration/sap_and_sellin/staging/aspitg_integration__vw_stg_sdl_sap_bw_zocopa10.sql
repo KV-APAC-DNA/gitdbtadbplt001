@@ -10,10 +10,10 @@ final as (
      select
             recordmode as recordmode,
             bill_type as bill_type,
-            null as data_packet,
-            null as data_record,
+            '' as data_packet,
+            '' as data_record,
             prod_hier as prod_hier,
-            null as request_number,
+            '' as request_number,
             salesdeal as salesdeal,
 			fiscper  as fiscper,
 			fiscvarnt as fiscvarnt,
