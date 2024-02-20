@@ -10,7 +10,6 @@ edw_material_dim as(
 v_edw_customer_sales_dim as(
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
-
 v_intrm_reg_crncy_exch_fiscper as(
     select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
@@ -20,7 +19,6 @@ edw_acct_ciw_hier as(
 edw_account_ciw_dim as(
     select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
-
 edw_gch_producthierarchy as(
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
@@ -224,16 +222,16 @@ SELECT
   END AS "cluster",
   fact.obj_crncy_co_obj AS "obj_crncy_co_obj",
   fact.from_crncy AS "from_crncy",
-  ciw.acct_nm AS "acct_nm",
+  ciw."acct_nm" AS "acct_nm",
   LTRIM(CAST((
-    ciw.acct_num
+    ciw."acct_num"
   ) AS TEXT), CAST((
     CAST((
       0
     ) AS VARCHAR)
   ) AS TEXT)) AS "acct_num",
-  ciw.ciw_desc AS "ciw_desc",
-  ciw.ciw_bucket AS "ciw_bucket",
+  ciw."ciw_desc" AS "ciw_desc",
+  ciw."ciw_bucket" AS "ciw_bucket",
   csw.csw_desc AS "csw_desc",
   mat.mega_brnd_desc AS "b1 mega-brand",
   mat.brnd_desc AS "b2 brand",
@@ -845,7 +843,7 @@ FROM (
                         ) AS VARCHAR)
                       ) AS TEXT)
                     ) = LTRIM(CAST((
-                      ciw.acct_num
+                      ciw."acct_num"
                     ) AS TEXT), CAST((
                       CAST((
                         0
@@ -856,7 +854,7 @@ FROM (
                     CAST((
                       fact.acct_hier_shrt_desc
                     ) AS TEXT) = CAST((
-                      ciw.measure_code
+                      ciw."measure_code"
                     ) AS TEXT)
                   )
                 )
@@ -1045,10 +1043,10 @@ GROUP BY
   fact."cluster",
   fact.obj_crncy_co_obj,
   fact.from_crncy,
-  ciw.acct_nm,
-  ciw.acct_num,
-  ciw.ciw_desc,
-  ciw.ciw_bucket,
+  ciw."acct_nm",
+  ciw."acct_num",
+  ciw."ciw_desc",
+  ciw."ciw_bucket",
   csw.csw_desc,
   mat.mega_brnd_desc,
   mat.brnd_desc,

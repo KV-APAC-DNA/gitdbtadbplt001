@@ -44,7 +44,7 @@ transformed as(
   mat.prodh5_txtmd as "prod h5 product major",
   mat.prodh6_txtmd as "prod h6 product minor",
   cus_sales_extn."parent customer",
-  cus_sales_extn.banner as "banner",
+  cus_sales_extn.banner as banner,
   cus_sales_extn."banner format",
   cus_sales_extn.channel as "channel",
   cus_sales_extn."go to model",
