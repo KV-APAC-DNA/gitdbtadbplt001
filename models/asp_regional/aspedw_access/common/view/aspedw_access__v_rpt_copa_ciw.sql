@@ -22,7 +22,9 @@ edw_account_ciw_dim as(
 edw_gch_producthierarchy as(
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-
+edw_gch_customerhierarchy as (
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
 transformed as(
 SELECT
   fact.fisc_yr AS "fisc_yr",
