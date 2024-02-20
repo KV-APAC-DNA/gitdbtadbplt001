@@ -8,7 +8,17 @@ with source as(
     select * from {{ ref('aspitg_integration__vw_stg_sdl_sap_bw_material_uom') }}
 ),
 final as(
-    select * from source
+    select         
+        material,
+        unit,
+        base_uom,
+        recordmode as record_mode,
+        uomz1d,
+        uomn1d,
+        file_name,
+        cdl_dttm,
+        crt_dttm as curr_dt 
+    from source
 )
 
 select * from final

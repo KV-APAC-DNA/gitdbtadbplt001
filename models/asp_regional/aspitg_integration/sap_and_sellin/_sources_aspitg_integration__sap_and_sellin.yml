@@ -1285,6 +1285,7 @@ sources:
       - name: edw_okr_brand_map
       - name: edw_code_descriptions_manual
       - name: edw_subchnl_retail_env_mapping
+      - name: edw_account_ciw_xref
 
   - name: bwa_access
     database: "{{ env_var('DBT_ENV_CDL_DB') }}"

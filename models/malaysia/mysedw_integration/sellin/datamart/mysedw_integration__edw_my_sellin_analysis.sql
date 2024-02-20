@@ -1,6 +1,6 @@
 {{
     config(
-        sql_header= "USE WAREHOUSE DEV_DNA_CORE_APP2_WH;"
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     )
 }}
 with source as (
