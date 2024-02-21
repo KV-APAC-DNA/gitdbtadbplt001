@@ -80,7 +80,7 @@ final as (
         trim(bran5) as bran5,
         trim(ekont) as ekont,
         trim(umsat) as umsat,
-        umjah::number,
+        umjah::number as umjah,
         trim(uwaer) as uwaer,
         jmzah::number as jmzah,
         jmjah::number as jmjah,
