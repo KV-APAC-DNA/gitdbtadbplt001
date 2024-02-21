@@ -30,3 +30,8 @@ models:
     config: 
       alias: v_rpt_copa_sku  
       tags: ["regional_views","transformation"]
+
+  - name: aspedw_access__edw_product_key_attributes
+    config:
+      alias: edw_product_key_attributes
+      tags: ["pka_datamart","transformation","regional_views"]
