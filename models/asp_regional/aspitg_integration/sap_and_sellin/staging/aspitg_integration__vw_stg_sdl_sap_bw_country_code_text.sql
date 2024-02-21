@@ -17,6 +17,7 @@ final as (
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
         where langu = 'E'
+        and  _deleted_='F'
 
 )
 

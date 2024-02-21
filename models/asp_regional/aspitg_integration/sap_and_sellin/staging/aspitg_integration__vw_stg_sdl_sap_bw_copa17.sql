@@ -71,6 +71,7 @@ final as(
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
+    where _deleted_='F'
 )
 --final select
 select * from final

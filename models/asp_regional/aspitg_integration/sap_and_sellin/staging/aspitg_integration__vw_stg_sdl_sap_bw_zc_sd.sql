@@ -114,5 +114,6 @@ final as(
     from source
     left join itg_crncy_mult curr
 		on source.currency = curr.currkey
+    where _deleted_='F'
 )
 select * from final

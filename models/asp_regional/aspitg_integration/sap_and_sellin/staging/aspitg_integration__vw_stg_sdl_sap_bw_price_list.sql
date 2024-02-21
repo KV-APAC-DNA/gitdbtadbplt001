@@ -22,6 +22,7 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         null as file_name
     from source
+    where _deleted_='F'
 
 )
 select * from final

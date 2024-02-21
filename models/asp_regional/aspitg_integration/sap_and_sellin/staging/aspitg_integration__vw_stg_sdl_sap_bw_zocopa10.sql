@@ -96,5 +96,6 @@ final as (
 				on src.currency = curr2.currkey
 		left join itg_crncy_mult curr3
 				on src.curkey_tc = curr3.currkey
+        where _deleted_='F'
 )
 select * from final

@@ -79,6 +79,7 @@ final as (
         null as filename
     from source
     where material <> 'NA'
+    and _deleted_='F'
 )
 
 --Final select
