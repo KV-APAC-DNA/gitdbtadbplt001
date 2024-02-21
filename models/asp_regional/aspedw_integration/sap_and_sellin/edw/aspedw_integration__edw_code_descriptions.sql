@@ -18,10 +18,10 @@ with source as (
 --Final CTE
 final as (
     select
-        source_type,
-        code_type,
-        code,
-        code_desc,
+        source_type::varchar(10) as source_type,
+        code_type::varchar(50) as code_type,
+        code::varchar(15) as code,
+        code_desc::varchar(50) as code_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

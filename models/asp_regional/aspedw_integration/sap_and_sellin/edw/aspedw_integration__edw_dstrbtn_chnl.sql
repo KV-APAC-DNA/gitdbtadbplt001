@@ -18,10 +18,10 @@ with source as (
 --Final CTE
 final as (
     select
-        distr_chan,
-        langu,
-        txtsh,
-        txtmd,
+        distr_chan::varchar(2) as distr_chan,
+        langu::varchar(1) as langu,
+        txtsh::varchar(20) as txtsh,
+        txtmd::varchar(40) as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

@@ -27,7 +27,9 @@ itg_mds_ap_greenlight_skus as (
 edw_copa_trans_fact as (
    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
-
+edw_plant_dim as (
+    select * from {{ ref('aspedw_integration__edw_plant_dim') }}
+),
 --Logical CTE
 
 -- Final CTE
@@ -162,7 +164,7 @@ FROM (SELECT *
           ELSE replace(substring(pka_size_desc,1,regexp_instr(pka_size_desc,'[a-z]|[A-Z]') -1),',','.')
           -- ELSE REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pka_size_desc,'millilitre',''),'gram',''),'piece',''),'meter',''),'sheet',''),'spray',''),',','')
        END  AS pka_size_desc_v1,
-       CAST ( (CAST(TRIM(pka_package_desc_v1) AS INTEGER) * CAST(TRIM(pka_size_desc_v1) AS NUMERIC(38,2))) AS VARCHAR(30)) AS TS
+       CAST ( try_to_number(pka_package_desc_v1) * try_to_decimal(pka_size_desc_v1,38,2) AS VARCHAR(30)) AS TS
        -- End Add new column total_size = size*package AEBU-10288
 FROM EDW_MATERIAL_DIM
 WHERE MATL_NUM IN (SELECT DISTINCT MATL_NUM

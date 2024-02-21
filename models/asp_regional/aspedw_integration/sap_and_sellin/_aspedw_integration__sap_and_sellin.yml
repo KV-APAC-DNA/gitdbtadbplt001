@@ -160,3 +160,7 @@ models:
   - name: aspedw_integration__vw_edw_reg_exch_rate
     config:
       alias: vw_edw_reg_exch_rate
+  - name: aspedw_integration__edw_acct_ciw_hier
+    config:
+      alias: edw_acct_ciw_hier
+      tags: ["J_RG_Account_attr_CIW_Dim","transformation"]

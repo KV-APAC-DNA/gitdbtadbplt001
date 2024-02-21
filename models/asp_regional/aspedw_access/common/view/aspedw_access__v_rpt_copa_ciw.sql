@@ -10,21 +10,21 @@ edw_material_dim as(
 v_edw_customer_sales_dim as(
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
-
 v_intrm_reg_crncy_exch_fiscper as(
     select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_acct_ciw_hier as(
-    select * from {{ ref('aspedw_access__edw_acct_ciw_hier') }}
+    select * from {{ ref('aspedw_integration__edw_acct_ciw_hier') }}
 ),
 edw_account_ciw_dim as(
     select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
-
 edw_gch_producthierarchy as(
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-
+edw_gch_customerhierarchy as (
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
 transformed as(
 SELECT
   fact.fisc_yr AS "fisc_yr",
@@ -1026,7 +1026,7 @@ FROM (
         )
       )
   )
-  LEFT JOIN ASPEDW_INTEGRATION.edw_gch_customerhierarchy AS gch
+  LEFT JOIN edw_gch_customerhierarchy AS gch
     ON (
       (
         CAST((

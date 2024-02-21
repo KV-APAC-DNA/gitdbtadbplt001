@@ -939,8 +939,8 @@ FROM (
           (
             (
               (
-                ASPEDW_INTEGRATION.edw_copa_trans_fact AS copa
-                  LEFT JOIN ASPEDW_INTEGRATION.edw_calendar_dim AS calendar
+                edw_copa_trans_fact AS copa
+                  LEFT JOIN edw_calendar_dim AS calendar
                     ON (
                       (
                         calendar.cal_day = TO_DATE(
@@ -956,7 +956,7 @@ FROM (
                       )
                     )
               )
-              LEFT JOIN ASPEDW_INTEGRATION.edw_company_dim AS cmp
+              LEFT JOIN edw_company_dim AS cmp
                 ON (
                   (
                     cast((
@@ -967,7 +967,7 @@ FROM (
                   )
                 )
             )
-            LEFT JOIN ASPEDW_INTEGRATION.edw_material_dim AS mat
+            LEFT JOIN edw_material_dim AS mat
               ON (
                 (
                   cast((
@@ -978,7 +978,7 @@ FROM (
                 )
               )
           )
-          LEFT JOIN ASPEDW_ACCESS.v_intrm_reg_crncy_exch_fiscper AS exch_rate
+          LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
             ON (
               (
                 (
@@ -1297,8 +1297,8 @@ FROM (
         FROM (
           (
             (
-              ASPEDW_INTEGRATION.edw_invoice_fact AS invc
-                LEFT JOIN ASPEDW_INTEGRATION.edw_company_dim AS cmp
+              edw_invoice_fact AS invc
+                LEFT JOIN edw_company_dim AS cmp
                   ON (
                     (
                       cast((
@@ -1309,14 +1309,14 @@ FROM (
                     )
                   )
             )
-            LEFT JOIN ASPEDW_INTEGRATION.edw_calendar_dim AS cal
+            LEFT JOIN edw_calendar_dim AS cal
               ON (
                 (
                   invc.rqst_delv_dt = cal.cal_day
                 )
               )
           )
-          LEFT JOIN ASPEDW_INTEGRATION.edw_calendar_dim AS calendar1
+          LEFT JOIN edw_calendar_dim AS calendar1
             ON (
               (
                 calendar1.cal_day = TO_DATE(
@@ -1378,7 +1378,7 @@ FROM (
           invc.div,
           invc.cust_num
       ) AS main
-      LEFT JOIN ASPEDW_INTEGRATION.edw_material_dim AS mat
+      LEFT JOIN edw_material_dim AS mat
         ON (
           (
             cast((
@@ -1389,7 +1389,7 @@ FROM (
           )
         )
     )
-    JOIN ASPEDW_INTEGRATION.edw_company_dim AS company
+    JOIN edw_company_dim AS company
       ON (
         (
           cast((
@@ -1400,7 +1400,7 @@ FROM (
         )
       )
   )
-  LEFT JOIN ASPEDW_ACCESS.v_edw_customer_sales_dim AS cus_sales_extn
+  LEFT JOIN v_edw_customer_sales_dim AS cus_sales_extn
     ON (
       (
         (

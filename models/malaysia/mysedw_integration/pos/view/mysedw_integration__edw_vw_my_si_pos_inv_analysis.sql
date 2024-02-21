@@ -17,6 +17,9 @@ itg_my_pos_cust_mstr as (
 itg_my_customer_dim as (
   select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
+edw_vw_my_pos_inventory as (
+    select * from {{ ref('mysedw_integration__edw_vw_my_pos_inventory') }}
+),
 td as (
       SELECT DISTINCT
         edw_vw_os_time_dim.cal_year AS year,

@@ -1,10 +1,7 @@
 with edw_account_ciw_dim as(
     select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
-edw_account_ciw_xref as (
-    select * from {{ source('aspedw_integration', 'edw_account_ciw_xref') }}
-),
-tranformed as (
+tranformed as(
 SELECT
   derived_table1.chrt_acct,
   derived_table1.acct_num,
@@ -810,7 +807,7 @@ FROM (
           ) AS TEXT)) <> 0
         )
     ) AS a
-    JOIN edw_account_ciw_xref AS b
+    JOIN ASPEDW_INTEGRATION.edw_account_ciw_xref AS b
       ON (
         (
           (
@@ -835,18 +832,18 @@ FROM (
 ),
 final as(
     select 	
-    chrt_acct as "chrt_acct",
-    acct_num as "acct_num",
-    acct_nm as "acct_nm",
-    ciw_desc as "ciw_desc",
-    ciw_code as "ciw_code",
-    ciw_bucket as "ciw_bucket",
-    ciw_acct_col as "ciw_acct_col",
-    ciw_acct_no as "ciw_acct_no",
-    ciw_acct_nm as "ciw_acct_nm",
-    measure_code as "measure_code",
-    measure_name as "measure_name",
-    multiplication_factor as "multiplication_factor" 
+    chrt_acct as chrt_acct,
+    acct_num as acct_num,
+    acct_nm as acct_nm,
+    ciw_desc as ciw_desc,
+    ciw_code as ciw_code,
+    ciw_bucket as ciw_bucket,
+    ciw_acct_col as ciw_acct_col,
+    ciw_acct_no as ciw_acct_no,
+    ciw_acct_nm as ciw_acct_nm,
+    measure_code as measure_code,
+    measure_name as measure_name,
+    multiplication_factor as multiplication_factor 
     from tranformed
 )
 select * from final

@@ -12,7 +12,7 @@ source as
   select * from {{ ref('aspwks_integration__wks_itg_country_code_text') }}
 ),
 
-final as
+trans as
 (
   select
         country as ctry_key,
@@ -22,5 +22,15 @@ final as
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
+),
+final as(
+    select
+        ctry_key::varchar(3) as ctry_key,
+        lang_key::varchar(1) as lang_key,
+        shrt_desc::varchar(20) as shrt_desc,
+        med_desc::varchar(40) as med_desc,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from trans
 )
 select * from final

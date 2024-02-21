@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_my_sku_benchmarks
+        tags: ["MDS","rg_mds_to_dna","ingestion"]
+      - name: sdl_mds_my_ecom_product
+        tags: ["MDS","rg_mds_to_dna","ingestion"]

@@ -15,14 +15,14 @@ sources:
           - test_null:
                 not_null_columns: ["regional_banner"]
                 select_columns: ["file_name","regional_banner"]
-                name: TRATBL_sdl_sg_zuellig_customer_mapping_null_test
+                name: TRATBL_sdl_sg_zuellig_customer_mapping__null_test
                 config:
                   store_failures: true
                   schema: sgpwks_integration
           - test_duplicate:
                 group_by_columns: ["regional_banner"]
                 count_column: "distinct merchandizing"
-                name: TRATBL_sdl_sg_zuellig_customer_mapping_duplicate_test
+                name: TRATBL_sdl_sg_zuellig_customer_mapping__duplicate_test
                 config:
                   store_failures: true
                   schema: sgpwks_integration
@@ -32,8 +32,8 @@ sources:
                 lookup_column: "upper(key)"
                 lookup_table: "{{ source('sgpitg_integration', 'itg_sg_constant_key_value') }} "
                 lookup_filter: "data_category_cd = '3'"
-                additional_filter: "not upper(regional_banner) in ( select distinct upper(sap_bnr_frmt_desc) from sgpedw_integration.edw_vw_sg_customer_dim  where sap_cntry_cd = 'SG')"
-                name: TRATBL_sdl_sg_zuellig_customer_mapping_lookup_test
+                additional_filter: "not upper(regional_banner) in ( select distinct upper(sap_bnr_frmt_desc) from {{ ref('sgpedw_integration__edw_vw_sg_customer_dim') }}  where sap_cntry_cd = 'SG')"
+                name: TRATBL_sdl_sg_zuellig_customer_mapping__lookup_test
                 config:
                   store_failures: true
                   schema: sgpwks_integration
@@ -43,7 +43,7 @@ sources:
           - test_null:
                 not_null_columns: ["jj_code","brand"]
                 select_columns: ["file_name","jj_code"]
-                name: TRATBL_sdl_sg_zuellig_product_mapping_null_test
+                name: TRATBL_sdl_sg_zuellig_product_mapping__null_test
                 config:
                   store_failures: true
                   schema: sgpwks_integration
@@ -53,7 +53,7 @@ sources:
                 lookup_column: "ltrim(sap_matl_num, '0')"
                 lookup_table: "{{ ref('sgpedw_integration__edw_vw_sg_material_dim') }} "
                 lookup_filter: "cntry_key = 'SG'"
-                name: TRATBL_sdl_sg_zuellig_product_mapping_lookup_test
+                name: TRATBL_sdl_sg_zuellig_product_mapping__lookup_test
                 config:
                   store_failures: true
                   schema: sgpwks_integration         
@@ -65,7 +65,7 @@ sources:
               column: "upper(ltrim(item_code, '0'))"
               lookup_column: "upper(ltrim(zp_item_code, '0'))"
               lookup_table: "{{ ref('sgpitg_integration__itg_sg_zuellig_product_mapping') }} "
-              name: TRATBL_sdl_sg_zuellig_sellout_lookup_test
+              name: TRATBL_sdl_sg_zuellig_sellout__lookup_test
               config:
                 store_failures: true
                 schema: sgpwks_integration
