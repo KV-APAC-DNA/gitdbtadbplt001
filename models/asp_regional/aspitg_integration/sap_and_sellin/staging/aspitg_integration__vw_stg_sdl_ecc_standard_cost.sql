@@ -9,9 +9,9 @@ source as (
 
 final as (
     select 
-        MANDT,
-        MATNR,
-        BWKEY,
+        trim(MANDT) as MANDT,
+        trim(MATNR) as MATNR,
+        trim(BWKEY) as BWKEY,
         trim(BWTAR) as BWTAR,
         LVORM,
         replace(LBKUM,'*','') as LBKUM,
