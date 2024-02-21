@@ -9,7 +9,7 @@ with source as (
 --Final CTE
 final as (
 select
-tamr_id::number(18,0) as tamr_id,
+tamr_id::number(38,0) as tamr_id,
 origin_source_name::varchar(255) as origin_source_name,
 origin_entity_id::varchar(255) as origin_entity_id,
 manualclassificationid::number(18,0) as manualclassificationid,
@@ -45,7 +45,7 @@ gcgh_region::varchar(50) as gcgh_region,
 gcgh_cluster::varchar(50) as gcgh_cluster,
 gcgh_subcluster::varchar(50) as gcgh_subcluster,
 gcgh_market::varchar(50) as gcgh_market,
-gcch_customer::varchar(50) as gcch_total_enterprise,
+gcch_customer::varchar(500) as gcch_total_enterprise,
 gcch_retail_banner::varchar(50) as gcch_retail_banner,
 dateofextract::varchar(30) as dateofextract,
 cdl_datetime::varchar(30) as cdl_datetime,
