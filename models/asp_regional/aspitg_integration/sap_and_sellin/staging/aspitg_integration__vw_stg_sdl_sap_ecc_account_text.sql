@@ -16,8 +16,8 @@ without_pipe as (
         replace(trim(txtmd),'–','') as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source
-    where chrt_accts not like '%|%'
+    from source 
+    where chrt_accts not like '%|%' and _deleted_='F'
 ),
 with_pipe as (
     select
@@ -29,7 +29,7 @@ with_pipe as (
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
-    where chrt_accts like '%|%'
+    where chrt_accts like '%|%' and _deleted_='F'
 ),
 final as (
 select * from without_pipe

@@ -9,6 +9,7 @@ with source as (
 --Final CTE
 final as (
     select * from source
+    where _deleted_='F'
 )
 
 --Final select

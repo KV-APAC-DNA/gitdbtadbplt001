@@ -139,6 +139,7 @@ final as(
 	left join itg_crncy_mult curr1
 	on src.loc_currcy = curr1.currkey
     where loc_currcy != 'LOC_CURRCY'
+    and _deleted_='F'
 )
 --final select
 select * from final

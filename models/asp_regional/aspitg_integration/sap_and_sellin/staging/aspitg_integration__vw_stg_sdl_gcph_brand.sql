@@ -61,6 +61,7 @@ final as (
     null as cdl_source_file ,
     null as load_key
     from source where region ilike 'apac'
+    and _deleted_='F'
 )
 
 --Final select

@@ -7,7 +7,7 @@ with knvv as (
 
 knvp as(
     select kunnr, vkorg, vtweg, spart,pernr from {{ source('apc_access', 'apc_knvp') }}
-    where parvw = 'RG'
+    where parvw = 'RG' and _deleted_='F'
 group by kunnr, vkorg, vtweg, spart,pernr
 ),
 
@@ -84,6 +84,7 @@ final as(
         and knvv.vkorg = knvp.vkorg
         and knvv.vtweg = knvp.vtweg
         and knvv.spart = knvp.spart
+        where _deleted_='F'
 )
 --final select
 select * from final

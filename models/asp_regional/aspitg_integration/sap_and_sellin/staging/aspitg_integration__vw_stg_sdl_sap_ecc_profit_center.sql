@@ -26,6 +26,7 @@ final as (
             profit_ctr in ('0074700707', '0000000799')
             and resp_pers <> ' '
         )
+    and  _deleted_='F'
 
 )
 
