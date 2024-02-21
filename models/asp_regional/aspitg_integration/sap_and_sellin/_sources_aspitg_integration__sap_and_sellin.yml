@@ -1387,6 +1387,7 @@ sources:
       - name: apc_ztranattrib14
       - name: apc_ztransku
       - name: apc_ztranrelabel
+      - name: apc_kna1
   - name: mds_access
     database: "{{ env_var('DBT_ENV_CDL_DB') }}"
     schema: mds_access
