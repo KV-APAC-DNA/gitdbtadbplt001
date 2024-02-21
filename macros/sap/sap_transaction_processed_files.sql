@@ -1,4 +1,4 @@
-{% macro sap_transaction_processed_files(model,source_table_name,source_view_name,target_table_name) %}
+{% macro sap_transaction_processed_files(source_table_name,source_view_name,target_table_name) %}
     
 {% set create_table %}
     create  table if not exists aspwks_integration.SAP_TRANSACTIONAL_PROCESSED_FILES (
