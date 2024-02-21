@@ -1,6 +1,6 @@
 with source as (
     select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
-)
+),
 final as (
 select
 	matl_num AS "matl_num",
