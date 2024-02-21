@@ -96,6 +96,7 @@ final as (
   null as cdl_source_file ,
   null as load_key 
     from source
+    where region like 'APAC'
 )
 
 --Final select

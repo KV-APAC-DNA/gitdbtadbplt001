@@ -53,6 +53,7 @@ final as (
     coalesce(gcch_primary_format_name::varchar(50)  ,'')as primary_format ,
     null as distributor_attribute 
  from source
+  where region ilike '%APAC%'
 )
 
 --Final select
