@@ -2,8 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy = "delete+insert",
-        unique_key=["cust_id","inv_dt"],
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+        unique_key=["cust_id","inv_dt"]
 
     )
 }}
@@ -141,12 +140,16 @@ immd as
     from  t3
     where t3.row_count = 1
 ),
-a as ((select immm.item_cd,
-             immd.item_bar_cd,
-             immm.ext_item_cd
+a as 
+(
+    select 
+        immm.item_cd,
+        immd.item_bar_cd,
+        immm.ext_item_cd
       from itg_my_material_map immm,
            itg_my_material_dim immd
-      where ltrim(immm.item_cd,'0') = ltrim(immd.item_cd,'0'))
+      where ltrim(immm.item_cd,'0') = ltrim(immd.item_cd,'0')
+      qualify row_number() over (partition by immm.ext_item_cd order by null) = 1
 ),
 
 temp as 
