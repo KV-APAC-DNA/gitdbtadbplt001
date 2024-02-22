@@ -6,9 +6,9 @@
 }}
 
 with source as(
-    select * from {{ ref('myswks_integration__wks_sdl_my_afgr') }}
+    select * from {{ ref('mysitg_integration__sdl_my_daily_sellout_stock_fact') }}
 ),
-final as(
+final as (
     select * from source
 )
 
