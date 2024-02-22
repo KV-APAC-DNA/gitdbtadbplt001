@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_rg_travel_retail_cdfg
-        tags: ["travel_retail_cdfg","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -25,7 +25,7 @@ sources:
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_column: "trim(dcl_code)"
               lookup_filter: "upper(ctry_cd) IN ('CM','CN')"
-              name: TRATBL_sdl_rg_travel_retail_cdfg_product__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_cdfg__product_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -35,12 +35,12 @@ sources:
               lookup_column: "upper(retailer_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) IN ('CM','CN')"
-              name: TRATBL_sdl_rg_travel_retail_cdfg_channel__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_cdfg__channel_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_cnsc
-        tags: ["travel_retail_cnsc","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code","ean"]
@@ -51,7 +51,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dfs
-        tags: ["travel_retail_dfs","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["vendor_style"]
@@ -66,7 +66,7 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'HK'"
-              name: TRATBL_sdl_rg_travel_retail_dfs_product__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_dfs__product_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -76,12 +76,12 @@ sources:
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'HK'"
-              name: TRATBL_sdl_rg_travel_retail_dfs_channel__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_dfs__channel_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dfs_hainan
-        tags: ["travel_retail_dfs_hainan","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -91,7 +91,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_dufry_hainan
-        tags: ["travel_retail_dufry_hainan","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -101,7 +101,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_lstr
-        tags: ["travel_retail_lstr","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -111,7 +111,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_sales_stock
-        tags: ["travel_retail_sales_stock","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -126,23 +126,23 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"
-              name: TRATBL_sdl_rg_travel_retail_sales_stock_product__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_sales_stock__product_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
           - test_lookup__ff:
               failure_reason: "Missing Channel records compared with master"
-              extra_col: "case when upper(retailer_name) in ('LTJ','LTM','LTW') then 'LOTTE' when upper(retailer_name) in ('SLJ','SLM') then 'SHILLA' when upper(retailer_name) in ('SGB','SGM') then 'SSG' when upper(retailer_name) in ('HDC') then 'HDC' when upper(retailer_name) in ('DOOTA') then 'DOOTA' when upper(retailer_name) in ('HANWHA') then 'HANWHA' when upper(retailer_name) in ('DONGWHA') then 'DONGWHA' when upper(retailer_name) in ('HYUNDAI','HYUNDAI_DDM','HYUNDAI_COEX') then 'HYUNDAI' end as retailer_name_ss"
+              extra_col: "case when upper(retailer_name) in ('LTJ','LTM','LTW') then 'LOTTE' when upper(retailer_name) in ('SLJ','SLM') then 'SHILLA' when upper(retailer_name) in ('SGB','SGM') then 'SSG' when upper(retailer_name) in ('HDC') then 'HDC' when upper(retailer_name) in ('DOOTA') then 'DOOTA' when upper(retailer_name) in ('HANWHA') then 'HANWHA' when upper(retailer_name) in ('DONGWHA') then 'DONGWHA' when upper(retailer_name) in ('HYUNDAI','HYUNDAI DDM','HYUNDAI COEX') then 'HYUNDAI' end as retailer_name_ss"
               column: "(upper(retailer_name_ss),upper(location_name))"
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'KR'"
-              name: TRATBL_sdl_rg_travel_retail_sales_stock_channel__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_sales_stock__channel_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_rg_travel_retail_shilla
-        tags: ["travel_retail_shilla","ingestion"]
+        tags: ["travel_retail_files","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["dcl_code"]
@@ -157,7 +157,7 @@ sources:
               lookup_column: "trim(dcl_code)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_product_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'SG'"
-              name: TRATBL_sdl_rg_travel_retail_shilla_product__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_shilla__product_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
@@ -167,7 +167,7 @@ sources:
               lookup_column: "upper(retailer_name),upper(door_name)"
               lookup_table: "{{ ref('aspitg_integration__itg_rg_travel_retail_channel_mapping') }}"
               lookup_filter: "upper(ctry_cd) = 'SG'"
-              name: TRATBL_sdl_rg_travel_retail_shilla_channel__lookup_test
+              name: TRATBL_sdl_rg_travel_retail_shilla__channel_lookup_test
               config:
                 store_failures: true
                 schema: aspwks_integration
