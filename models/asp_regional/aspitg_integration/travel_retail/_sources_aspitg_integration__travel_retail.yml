@@ -181,4 +181,4 @@ sources:
       identifier: false
     tables:
     - name : wks_apac_dcl_targets_header
-      tags: ["travel_retail"]
+      tags: ["rg_travel_retail_channel_product_target","ingestion"]
