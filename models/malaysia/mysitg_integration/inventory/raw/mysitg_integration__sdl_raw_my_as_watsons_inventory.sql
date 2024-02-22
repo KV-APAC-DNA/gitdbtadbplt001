@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ ref('myswks_integration__wks_sdl_my_afgr') }}
+    select * from {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }}
 ),
 final as(
     select * from source
