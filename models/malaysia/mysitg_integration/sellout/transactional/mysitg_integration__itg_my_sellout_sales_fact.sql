@@ -5,9 +5,9 @@
         unique_key=["dstrbtr_id","sls_ord_dt"]
     )
 }}
-{% set cte_to_execute = 'cte1' %}  
+{% set cte_to_execute = 'my_joint_monthly' %}  
 
-{% if cte_to_execute == 'cte1' %}
+{% if cte_to_execute == 'my_joint_monthly' %}
 
 with source as (
   select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
@@ -53,7 +53,7 @@ union1 as (
 
 select * from union1
 
-{% elif cte_to_execute == 'cte2' %}
+{% elif cte_to_execute == 'my_sellout_sales' %}
 
 with source as (
   select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}

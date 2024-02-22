@@ -7,9 +7,9 @@
     )
 }}
 
-{% set cte_to_execute = 'cte2' %}
+{% set cte_to_execute = 'my_joint_monthly' %}
 
-{% if cte_to_execute == 'cte1' %}
+{% if cte_to_execute == 'my_joint_monthly' %}
 
 with source as (
     select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_stock_fact') }}
@@ -82,7 +82,7 @@ final as (
 
 select * from final
 
-{% elif cte_to_execute == 'cte2' %}
+{% elif cte_to_execute == 'my_sellout_inv' %}
 
 
 with wks_my_sellout_stock_fact as
