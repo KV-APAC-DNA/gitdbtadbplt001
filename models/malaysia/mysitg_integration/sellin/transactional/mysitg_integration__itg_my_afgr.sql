@@ -1,5 +1,5 @@
 with sdl_my_afgr as (
-    select * from {{ ref('myswks_integration__wks_sdl_my_afgr') }}
+    select * from {{ source('myssdl_raw','sdl_my_afgr') }}
 ),
 itg_my_customer_dim as (
     select * from {{ref('mysitg_integration__itg_my_customer_dim') }}
@@ -27,7 +27,7 @@ temp_table as (
     current_timestamp() as crtd_dttm
   from sdl_my_afgr as sma, itg_my_customer_dim as imcd
   where
-    imcd.cust_id(+) = sma.cust_id
+    imcd.cust_id = sma.cust_id
 ),
 
 transformed as (
@@ -81,7 +81,7 @@ select
   current_timestamp() as updt_dttm
   from temp_table
 ),
-result as (
+final as (
   select 
   cust_id::varchar(30) as cust_id,
   cust_nm::varchar(100) as cust_nm,
@@ -107,32 +107,5 @@ result as (
   current_timestamp()::timestamp_ntz(9) as crtd_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm
   from transformed
-),
-final as (
-    select 
-    cust_id,
-    cust_nm,
-    afgr_num,
-    cust_dn_num,
-    dn_amt_exc_gst_val,
-    afgr_amt,
-    dt_to_sc,
-    sc_validation,
-    rtn_ord_num,
-    rtn_ord_dt,
-    rtn_ord_amt,
-    cn_exp_issue_dt,
-    bill_num,
-    bill_dt,
-    cn_amt,
-    doc_dt,
-    afgr_status,
-    afgr_val,
-    afgr_cn_diff,
-    chnl,
-    cdl_dttm,
-    crtd_dttm,
-    updt_dttm
-from result
 )
 select * from final
