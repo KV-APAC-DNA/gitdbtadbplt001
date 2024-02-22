@@ -21,3 +21,23 @@ models:
     config:
       alias: sdl_my_monthly_sellout_sales_fact_mds_sync
       tags: ["hourly","my_joint_monthly"]
+  - name: mysitg_integration__sdl_raw_my_daily_sellout_stock_fact
+    config:
+      alias: sdl_raw_my_daily_sellout_stock_fact
+      tags: ["hourly","my_sellout_inv_morning"]
+  - name: mysitg_integration__sdl_my_daily_sellout_stock_fact
+    config:
+      alias: sdl_my_daily_sellout_stock_fact
+      tags: ["hourly","my_sellout_inv_morning"]
+  - name: mysitg_integration__sdl_my_daily_sellout_sales_fact
+    config:
+      alias: sdl_my_daily_sellout_sales_fact
+      tags: ["daily","my_sellout_sales"]
+  - name: mysitg_integration__sdl_my_daily_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_my_daily_sellout_sales_fact_mds_sync
+      tags: ["daily","my_sellout_sales"]
+  - name: mysitg_integration__sdl_raw_my_daily_sellout_sales_fact
+    config:
+      alias: sdl_raw_my_daily_sellout_sales_fact
+      tags: ["daily","my_sellout_sales"]
