@@ -15,13 +15,13 @@ sources:
           - test_duplicate:
               group_by_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]
               select_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]
-              name: TRATBL_sdl_my_as_watsons_inventory_duplicate_test
+              name: TRATBL_sdl_my_as_watsons_inventory__duplicate_test
               config:
                 store_failures: true
                 schema: myswks_integration
           - test_null:
               not_null_columns: ["matl_num"]
-              name: TRATBL_sdl_my_as_watsons_inventory_null_test
+              name: TRATBL_sdl_my_as_watsons_inventory__null_test
               config:
                 store_failures: true
                 schema: myswks_integration
