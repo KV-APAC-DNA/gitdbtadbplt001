@@ -94,7 +94,7 @@ select
 	IFF(pka_rootcode='',null,pka_rootcode) AS "pka_rootcode",
 	IFF(pka_rootcodedes='',null,pka_rootcodedes) AS "pka_rootcodedes",
 	IFF(nts_flag='',null,nts_flag) AS "nts_flag",
-	IFF(lst_nts='',null,lst_nts) AS "lst_nts",
+	IFF(lst_nts::string='',null,lst_nts) AS "lst_nts",
 	load_date AS "load_date",
 	IFF(greenlight_sku_flag='',null,greenlight_sku_flag) AS "greenlight_sku_flag",
 	IFF(total_size='',null,total_size) AS "total_size"
