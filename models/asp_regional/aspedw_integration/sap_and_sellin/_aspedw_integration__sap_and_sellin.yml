@@ -16,7 +16,7 @@ models:
   - name: aspedw_integration__edw_crncy_exch
     config:
       alias: edw_crncy_exch
-      tags: ["sap_ecc_master_etl_framework","transformation"]
+      tags: ["inactive"]
   - name: aspedw_integration__edw_customer_base_dim
     config:
       alias: edw_customer_base_dim
