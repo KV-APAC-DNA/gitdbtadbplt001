@@ -74,7 +74,7 @@ models:
   - name: aspwks_integration__wks_itg_crncy_exch
     config: 
       alias: wks_itg_crncy_exch
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["inactive"]
   - name: aspwks_integration__wks_itg_cust_base
     config: 
       alias: wks_itg_cust_base
@@ -278,4 +278,4 @@ models:
   - name: aspwks_integration__wks_edw_crncy_exch
     config: 
       alias: wks_edw_crncy_exch
-      tags: ["sap_ecc_master_etl_framework","transformation"]
+      tags: ["inactive"]
