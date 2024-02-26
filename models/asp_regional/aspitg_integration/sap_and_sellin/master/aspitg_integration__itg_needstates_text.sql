@@ -15,20 +15,26 @@ with source as (
 --Logical CTE
 
 --Final CTE
-final as (
+trans as (
     SELECT
         zneed as need_states,
         langu as language_key,
         txtsh as short_desc,
         txtmd as medium_desc,
-        -- case
-        --   when chng_flg = 'i'
-        --   then convert_timezone('sgt', current_timestamp())::timestamp_ntz(9)
-        --   else tgt_crt_dttm
-        --end as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source
+),
+final as
+(
+    select
+        need_states::number(18,0) as need_states,
+        language_key::varchar(1) as language_key,
+        short_desc::varchar(40) as short_desc,
+        medium_desc::varchar(40) as medium_desc,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from trans
 )
 
 --Final select

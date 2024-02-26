@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_afgr
+    config: 
+      alias: itg_my_afgr
+      tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__itg_my_le_trgt
+    config:
+      alias: itg_my_le_trgt
+      tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__itg_my_trgts
+    config:
+      alias: itg_my_trgts
+      tags: ["my_sellin","hourly"]
+
+  - name: mysitg_integration__itg_my_accruals
+    config:
+      alias: itg_my_accruals
+      tags: ["my_sellin","hourly"]
+  
+  - name: mysitg_integration__sdl_raw_my_afgr
+    config: 
+      alias: sdl_raw_my_afgr
+      tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__sdl_raw_my_le_trgt
+    config:
+      alias: sdl_raw_my_le_trgt
+      tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__sdl_raw_my_trgts
+    config:
+      alias: sdl_raw_my_trgts
+      tags: ["my_sellin","hourly"]
+
+  - name: mysitg_integration__sdl_raw_my_accruals
+    config:
+      alias: sdl_raw_my_accruals
+      tags: ["my_sellin","hourly"]
+  - name: mysitg_integration__itg_my_ciw_map
+    config:
+      alias: itg_my_ciw_map
+      tags: ["my_sellin","hourly"]

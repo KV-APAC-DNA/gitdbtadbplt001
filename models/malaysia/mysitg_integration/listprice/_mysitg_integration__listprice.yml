@@ -1,0 +1,11 @@
+version: 2
+models:
+  - name: mysitg_integration__itg_my_listprice_daily
+    config:
+      alias: itg_my_listprice_daily
+      tags: ['MY_list_price','daily']
+
+  - name: mysitg_integration__itg_my_listprice
+    config:
+      alias: itg_my_listprice
+      tags: ['MY_sellout','daily']    

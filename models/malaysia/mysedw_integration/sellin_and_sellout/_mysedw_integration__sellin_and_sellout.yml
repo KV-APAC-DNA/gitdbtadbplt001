@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mysedw_integration__edw_vw_my_siso_analysis
+    config:
+      alias: edw_vw_my_siso_analysis
+      tags: ["daily","my_siso_analysis"]
+
+  - name: mysedw_integration__edw_my_siso_analysis
+    config:
+      alias: edw_my_siso_analysis 
+      tags: ["daily","my_siso_analysis"]

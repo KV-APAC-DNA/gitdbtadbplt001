@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_my_pos_cust_mstr
+        tags: ["my_pos","hourly"]
+        tests:
+            - test_duplicate:
+                group_by_columns: ["cust_id","store_cd","dept_cd","store_frmt","store_type"]
+                name: TRATBL_sdl_my_pos_cust_mstr_duplicate_test
+                config:
+                  store_failures: true
+                  schema: myswks_integration
+      - name: sdl_my_pos_sales_fact
+        tags: ["my_pos","hourly"]
+        
+        

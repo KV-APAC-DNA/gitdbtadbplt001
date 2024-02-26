@@ -33,23 +33,23 @@ sdl_mds_pacific_sku_benchmarks as (
 sdl_mds_id_sku_benchmarks as (
     select * from {{ source('idnsdl_raw', 'sdl_mds_id_sku_benchmarks') }}
 ),
-
+--create thailand schema and add this in tha schemas
 sdl_mds_th_sku_benchmarks as (
     select * from {{ source('osesdl_raw', 'sdl_mds_th_sku_benchmarks') }}
 ),
-
+--create phillipines schema and add this in phl schemas
 sdl_mds_ph_sku_benchmarks as (
     select * from {{ source('osesdl_raw', 'sdl_mds_ph_sku_benchmarks') }}
 ),
 
 sdl_mds_sg_sku_benchmarks as (
-    select * from {{ source('osesdl_raw', 'sdl_mds_sg_sku_benchmarks') }}
+    select * from {{ source('sgpsdl_raw', 'sdl_mds_sg_sku_benchmarks') }}
 ),
 
 sdl_mds_my_sku_benchmarks as (
-    select * from {{ source('osesdl_raw', 'sdl_mds_my_sku_benchmarks') }}
+    select * from {{ source('myssdl_raw', 'sdl_mds_my_sku_benchmarks') }}
 ),
-
+--create vietnam schema and add this in vnm schemas
 sdl_mds_vn_sku_benchmarks as (
     select * from {{ source('osesdl_raw', 'sdl_mds_vn_sku_benchmarks') }}
 ),

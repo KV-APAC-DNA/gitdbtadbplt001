@@ -4,4 +4,4 @@ models:
   - name: sgpedw_integration__edw_vw_sg_listprice
     config:
       alias: edw_vw_sg_listprice
-      tags: ["daily","sg_sellin_and_scan_datamart"]
+      tags: ["sg_list_price","transformation"]

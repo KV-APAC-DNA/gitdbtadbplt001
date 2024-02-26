@@ -4,27 +4,27 @@ models:
   - name: sgpitg_integration__itg_mds_sg_store_master
     config:
       alias: itg_mds_sg_store_master
-      tags: ["sg_sellin_and_scan_datamart",""]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]
 
 
   - name: sgpitg_integration__itg_mds_sg_product_mapping
     config:
       alias: itg_mds_sg_product_mapping
-      tags: ["sg_sellin_and_scan_datamart",""]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]
 
   - name: sgpitg_integration__itg_mds_sg_ps_targets
     config:
       alias: itg_mds_sg_ps_targets
-      tags: [sg_mds_to_dna_refresh"]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]
   - name: sgpitg_integration__itg_mds_sg_customer_hierarchy
     config:
       alias: itg_mds_sg_customer_hierarchy
-      tags: [sg_mds_to_dna_refresh"]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]
   - name: sgpitg_integration__itg_mds_sg_product_hierarchy
     config:
       alias: itg_mds_sg_product_hierarchy
-      tags: [sg_mds_to_dna_refresh"]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]
   - name: sgpitg_integration__itg_mds_sg_ps_weights
     config:
       alias: itg_mds_sg_ps_weights
-      tags: [sg_mds_to_dna_refresh"]
+      tags: ["sg_mds_to_dna_refresh","ingestion"]

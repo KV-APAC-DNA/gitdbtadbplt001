@@ -42,7 +42,7 @@ sdl_mds_ph_ecom_product as (
 ),
 
 sdl_mds_my_ecom_product as (
-    select * from {{ source('osesdl_raw', 'sdl_mds_my_ecom_product') }}
+    select * from {{ source('myssdl_raw', 'sdl_mds_my_ecom_product') }}
 ),
 
 sdl_mds_th_ecom_product as (
@@ -50,7 +50,7 @@ sdl_mds_th_ecom_product as (
 ),
 
 sdl_mds_sg_ecom_product as (
-    select * from {{ source('osesdl_raw', 'sdl_mds_sg_ecom_product') }}
+    select * from {{ source('sgpsdl_raw', 'sdl_mds_sg_ecom_product') }}
 ),
 
 sdl_mds_vn_ecom_product as (

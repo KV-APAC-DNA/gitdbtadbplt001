@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
       - name: sdl_sg_ciw_mapping
-        tags: ["daily", "sg_master_sellout"]
+        tags: ["sg_master_sellout","ingestion"]

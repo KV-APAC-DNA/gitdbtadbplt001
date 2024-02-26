@@ -119,7 +119,7 @@ select
   coalesce(c.co_cd, cast('N/A' as varchar)) as co_cd,
   coalesce(c.ctry_nm, cast('N/A' as varchar)) as ctry_nm,
   coalesce(c.ctry_group, cast('N/A' as varchar)) as ctry_group,
-  coalesce(c."CLUSTER", cast('N/A' as varchar)) as "cluster",
+  coalesce(c."cluster", cast('N/A' as varchar)) as "cluster",
   coalesce(g.market, cast('N/A' as varchar)) as market,
   coalesce(g.material_description, cast('N/A' as varchar)) as material_description,
   coalesce(g.product_key_description, cast('N/A' as varchar)) as product_key_description,

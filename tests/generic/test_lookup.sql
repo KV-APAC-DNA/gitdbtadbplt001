@@ -23,6 +23,7 @@
                 select distinct
                     ({{lookup_column}})
                 from  {{lookup_table}}
+
                 {%- if lookup_filter !=None -%}
                 where {{lookup_filter}}
                 

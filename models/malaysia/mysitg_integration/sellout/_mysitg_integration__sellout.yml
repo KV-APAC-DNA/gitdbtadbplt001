@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: mysitg_integration__itg_my_in_transit
+    config:
+      alias: itg_my_in_transit
+      tags: ["hourly","my_sellout"]
+  - name: mysitg_integration__itg_my_sellout_sales_fact
+    config:
+      alias: itg_my_sellout_sales_fact
+      tags: ["hourly","my_joint_monthly"]
+  - name: mysitg_integration__itg_my_sellout_stock_fact
+    config:
+      alias: itg_my_sellout_stock_fact
+      tags: ["hourly","my_joint_monthly"]
+  - name: mysitg_integration__sdl_raw_my_in_transit
+    config:
+      alias: sdl_raw_my_in_transit
+      tags: ["hourly","my_sellout"]
+  - name: mysitg_integration__sdl_my_monthly_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_my_monthly_sellout_sales_fact_mds_sync
+      tags: ["hourly","my_joint_monthly"]

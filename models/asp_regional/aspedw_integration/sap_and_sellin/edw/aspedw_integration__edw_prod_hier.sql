@@ -9,7 +9,8 @@
 
 --Import CTE
 with source as (
-    select * from {{ ref('aspwks_integration__wks_edw_prod_hier') }}
+    select * from {{ ref('aspitg_integration__itg_prod_hier') }}
+    
 ),
 
 --Logical CTE
@@ -17,9 +18,9 @@ with source as (
 --Final CTE
 final as (
     select
-    prod_hier,
-    langu,
-    txtmd,
+    prod_hier::varchar(18) as prod_hier,
+    langu::varchar(1) as langu,
+    txtmd::varchar(40) as txtmd,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
   from source

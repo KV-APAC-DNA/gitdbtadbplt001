@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: chnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: aspsdl_raw
+    schema: chnsdl_raw
     quoting:
       database: false
       schema: false

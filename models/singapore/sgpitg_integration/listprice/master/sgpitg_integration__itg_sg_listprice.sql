@@ -20,7 +20,7 @@ wks_sg_listprice_1 as
     select
             item_cd,
             MAX(snapshot_dt) as snapshot_dt
-        from wks_sg_listprice
+        from wks_sg_list_price
     where
     replace(left(SNAPSHOT_DT,7),'-','') = replace(left(CURRENT_TIMESTAMP()::DATE,7),'-','')
     group by
@@ -60,7 +60,7 @@ transformed_set1 as
         max(b.snapshot_dt) as snapshot_dt,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         cast(null as date) as updt_dttm
-    from wks_sg_listprice as b,wks_sg_listprice_2 as c
+    from wks_sg_list_price as b,wks_sg_listprice_2 as c
     WHERE
     b.snapshot_dt = c.snapshot_dt
     and b.item_cd = c.item_cd
@@ -123,7 +123,7 @@ wks_sg_listprice_4 as
         jj_mnth_id,
         MAX(valid_to) as valid_to,
         MAX(valid_from) as valid_from
-    from wks_sg_listprice as a,
+    from wks_sg_list_price as a,
     wks_sg_listprice_3 as b
     WHERE
     a.item_cd = b.item_cd and a.snapshot_dt = b.snapshot_dt
@@ -152,7 +152,7 @@ transformed_set2 as
         MAX(b.snapshot_dt) as snapshot_dt,
         current_timestamp() as crtd_dttm,
         cast(null as date) as updt_dttm
-    from wks_sg_listprice as b,
+    from wks_sg_list_price as b,
     wks_sg_listprice_4 as c
     WHERE
     b.snapshot_dt = c.snapshot_dt

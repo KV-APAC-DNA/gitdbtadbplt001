@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_reg_inventory_health_analysis_propagation
+    config: 
+      alias: edw_reg_inventory_health_analysis_propagation
+      tags: ["j_ap_my_reg_data_refresh","hourly"]

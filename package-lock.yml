@@ -11,6 +11,8 @@ packages:
   version: 0.10.1
 - package: Montreal-Analytics/snowflake_utils
   version: 0.6.1
+- package: brooklyn-data/dbt_artifacts
+  version: 2.6.2
 - package: calogica/dbt_date
   version: 0.10.0
-sha1_hash: 63177ff363c5a15499d8547895b59c82db106ba8
+sha1_hash: fb2d19f7ea2d496f2a1fbfd5c61f575af17a8406

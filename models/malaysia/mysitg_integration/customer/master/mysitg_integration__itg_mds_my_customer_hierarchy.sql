@@ -1,0 +1,53 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['sold_to']
+    )
+}}
+
+
+with source as (
+    select * from {{ source('myssdl_raw','sdl_mds_my_customer_hierarchy') }}
+  
+),
+transformed as
+(
+  select
+    code as sold_to,
+    name as sold_to_desc,
+    cust_grp_code_code as cust_grp_code,
+    cust_grp_code_name as cust_grp,
+    customer,
+    channel_code as channel,
+    channel_name,
+    territory_code as territory,
+    territory_name,
+    reg_channel_code as reg_channel,
+    reg_channel_name,
+    reg_group_code as reg_group,
+    reg_group_name,
+    current_timestamp() as crt_dttm,
+    customer_segmentation_level_2_code
+  from source
+),
+final as (
+ select
+    sold_to::varchar(10) as sold_to,
+    sold_to_desc::varchar(200) as sold_to_desc,
+    cust_grp_code::varchar(10) as cust_grp_code,
+    cust_grp::varchar(50) as cust_grp,
+    customer::varchar(200) as customer,
+    channel::varchar(50) as channel,
+    channel_name::varchar(100) as channel_name,
+    territory::varchar(50) as territory,
+    territory_name::varchar(100) as territory_name,
+    reg_channel::varchar(50) as reg_channel,
+    reg_channel_name::varchar(100) as reg_channel_name,
+    reg_group::varchar(50) as reg_group,
+    reg_group_name::varchar(100) as reg_group_name,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
+    customer_segmentation_level_2_code::varchar(256) as customer_segmentation_level_2_code
+    from transformed
+    )
+select * from final

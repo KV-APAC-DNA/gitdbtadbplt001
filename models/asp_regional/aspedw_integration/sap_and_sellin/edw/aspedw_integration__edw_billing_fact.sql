@@ -190,7 +190,7 @@ current_timestamp()::timestamp_ntz(9) as crtd_dttm,
 current_timestamp()::timestamp_ntz(9) as updt_dttm
 from itg_billing_fact as biil_ft, itg_crncy_mult as mul
 where
-  biil_ft.doc_currcy = mul.currkey)
+  biil_ft.doc_currcy = mul.currkey(+))
 
 
 --Final select

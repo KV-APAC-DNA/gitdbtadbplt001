@@ -17,10 +17,10 @@ with source as (
 
 final as(
     select 
-        zstrong as strongholds,
-        langu as language_key,
-        txtsh as short_desc,
-        txtmd as medium_desc,
+        zstrong::number(18,0) as strongholds,
+        langu::varchar(1) as language_key,
+        txtsh::varchar(40) as short_desc,
+        txtmd::varchar(40) as medium_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source

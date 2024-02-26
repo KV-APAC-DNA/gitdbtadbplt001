@@ -42,10 +42,6 @@ itg_sg_zuellig_product_mapping as
 (
     select * from {{ ref('sgpitg_integration__itg_sg_zuellig_product_mapping') }}
 ),
-itg_sg_zuellig_product_mapping as
-(
-    select * from {{ ref('sgpitg_integration__itg_sg_zuellig_product_mapping') }}
-),
 edw_vw_sg_sellin_sales_fact as(
     select * from {{ ref('sgpedw_integration__edw_vw_sg_sellin_sales_fact') }}
 ),
@@ -81,7 +77,7 @@ divest as(
 
         ELSE CAST(NULL AS TEXT)
         END AS effective_period_to
-    FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+    FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
     WHERE   
     (ITG_SG_CONSTANT_KEY_VALUE.data_category_cd = 2::DECIMAL)
     AND (CAST((ITG_SG_CONSTANT_KEY_VALUE.value) AS TEXT) = CAST('Y' AS TEXT))
@@ -237,253 +233,372 @@ main as
 ),
 zsellout as
 (
-    SELECT
-        main.data_source,
-        main.sap_sls_org,
-        main.sap_cmp_id,
-        main.sap_cntry_nm,
-        main."year",
-        main.mnth_id,
-        main.sg_banner,
-        main.sap_bnr_frmt_desc,
-        main.sap_cust_nm,
-        main.sap_prnt_cust_desc,
-        main.retail_env,
-        main.merchandizing_flg,
-        main.sg_brand,
-        main.gph_reg_frnchse_grp,
-        main.gph_prod_frnchse,
-        main.gph_prod_brnd,
-        main.sales_value,
-        main.sales_units,
-        main.bonus_units,
-        main.returns_units,
-        main.returns_value,
-        main.returns_bonus_units,
-        main.jj_net_sales_value,
+    SELECT main.data_source,
+    main.sap_sls_org,
+    main.sap_cmp_id,
+    main.sap_cntry_nm,
+    main."year",
+    main.mnth_id,
+    main.sg_banner,
+    main.sap_bnr_frmt_desc,
+    main.sap_cust_nm,
+    main.sap_prnt_cust_desc,
+    main.retail_env,
+    main.merchandizing_flg,
+    main.sg_brand,
+    main.gph_reg_frnchse_grp,
+    main.gph_prod_frnchse,
+    main.gph_prod_brnd,
+    main.sales_value,
+    main.sales_units,
+    main.bonus_units,
+    main.returns_units,
+    main.returns_value,
+    main.returns_bonus_units,
+    main.jj_net_sales_value,
+    CASE
+        WHEN (
+            CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+        ) THEN main.jj_net_sales_value
+        ELSE 0::DECIMAL
+    END AS jj_net_sales_value_for_merchndsng,
+    SUM(main.jj_net_sales_value) OVER (
+        PARTITION BY main.mnth_id
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_tot_sls_val,
+    SUM(main.jj_net_sales_value) OVER (
+        PARTITION BY main.mnth_id,
+        main.sg_brand
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_prd_tot_sls_val,
+    SUM(main.jj_net_sales_value) OVER (
+        PARTITION BY main.mnth_id,
+        main.sg_banner
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_cust_tot_sls_val,
+    SUM(
         CASE
-            WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-            THEN main.jj_net_sales_value
+            WHEN (
+                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+            ) THEN main.jj_net_sales_value
             ELSE 0::DECIMAL
-        END AS jj_net_sales_value_for_merchndsng,
-        SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_tot_sls_val,
-        SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_prd_tot_sls_val,
-        SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_cust_tot_sls_val,
-        SUM(CASE
-                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                THEN main.jj_net_sales_value
-                ELSE 0::DECIMAL
-            END
-            )   OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_tot_sls_val_for_merchndsng,
-        SUM(CASE
-                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                THEN main.jj_net_sales_value
-                ELSE 0::DECIMAL
-            END
-            )   OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_prd_tot_sls_val_for_merchndsng,
-        SUM(CASE
-                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                THEN main.jj_net_sales_value
-                ELSE 0::DECIMAL
-            END
-            )   OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS jj_cust_tot_sls_val_for_merchndsng,
-
-        COALESCE
+        END
+    ) OVER (
+        PARTITION BY main.mnth_id
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_tot_sls_val_for_merchndsng,
+    SUM(
+        CASE
+            WHEN (
+                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+            ) THEN main.jj_net_sales_value
+            ELSE 0::DECIMAL
+        END
+    ) OVER (
+        PARTITION BY main.mnth_id,
+        main.sg_brand
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_prd_tot_sls_val_for_merchndsng,
+    SUM(
+        CASE
+            WHEN (
+                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+            ) THEN main.jj_net_sales_value
+            ELSE 0::DECIMAL
+        END
+    ) OVER (
+        PARTITION BY main.mnth_id,
+        main.sg_banner
+        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS jj_cust_tot_sls_val_for_merchndsng,
+    COALESCE (
         (
             (
-                (
-                SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) * CAST((1000000) AS DECIMAL)
-                ) / CASE
-                        WHEN 
-                        (
-                            SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = CAST((0) AS DECIMAL)
-                        )
-                        THEN CAST(NULL AS DECIMAL)
-                        ELSE SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-                    END
-            ),
-            CAST((0) AS DECIMAL)
-        ) AS jj_cust_sls_contrb_per_m,
-        COALESCE
+                SUM(main.jj_net_sales_value) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_banner
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                ) * CAST((1000000) AS DECIMAL)
+            ) / CASE
+                WHEN (
+                    SUM(main.jj_net_sales_value) OVER (
+                        PARTITION BY main.mnth_id
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = CAST((0) AS DECIMAL)
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM(main.jj_net_sales_value) OVER (
+                    PARTITION BY main.mnth_id
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        CAST((0) AS DECIMAL)
+    ) AS jj_cust_sls_contrb_per_m,
+    COALESCE (
         (
-            (
             (
                 main.jj_net_sales_value * CAST((1000000) AS DECIMAL)
             ) / CASE
-                    WHEN 
-                    (
-                    SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = CAST((0) AS DECIMAL)
-                    )
-                    THEN CAST(NULL AS DECIMAL)
-                    ELSE SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-                END
-            ),
-            CAST((0) AS DECIMAL)
-        ) AS jj_prod_cust_sls_contrb_per_m,
-        COALESCE
+                WHEN (
+                    SUM(main.jj_net_sales_value) OVER (
+                        PARTITION BY main.mnth_id,
+                        main.sg_brand
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = CAST((0) AS DECIMAL)
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM(main.jj_net_sales_value) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_brand
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        CAST((0) AS DECIMAL)
+    ) AS jj_prod_cust_sls_contrb_per_m,
+    COALESCE (
         (
             (
-                (
-                    main.jj_net_sales_value * CAST((1000000) AS DECIMAL)
-                ) / CASE
-                        WHEN 
-                        (
-                        SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = CAST((0) AS DECIMAL)
-                        )
-                        THEN CAST(NULL AS DECIMAL)
-                        ELSE SUM(main.jj_net_sales_value) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+                main.jj_net_sales_value * CAST((1000000) AS DECIMAL)
+            ) / CASE
+                WHEN (
+                    SUM(main.jj_net_sales_value) OVER (
+                        PARTITION BY main.mnth_id,
+                        main.sg_banner
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = CAST((0) AS DECIMAL)
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM(main.jj_net_sales_value) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_banner
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        CAST((0) AS DECIMAL)
+    ) AS jj_cust_prod_sls_contrb_per_m,
+    COALESCE (
+        (
+            (
+                SUM (
+                    CASE
+                        WHEN (
+                            CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                        ) THEN main.jj_net_sales_value
+                        ELSE 0::DECIMAL
                     END
-                ),
-            CAST((0) AS DECIMAL)
-        ) AS jj_cust_prod_sls_contrb_per_m,
-        COALESCE
-        (
-            (
-                (
-                    SUM
-                    (
+                ) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_banner
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                ) * 1000000::DECIMAL
+            ) / CASE
+                WHEN (
+                    SUM (
                         CASE
-                            WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                            THEN main.jj_net_sales_value
+                            WHEN (
+                                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                            ) THEN main.jj_net_sales_value
                             ELSE 0::DECIMAL
                         END
-                    ) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) *1000000::DECIMAL 
-                ) / CASE
-                    WHEN 
-                    (
-                        SUM
-                        (
-                            CASE
-                                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                                THEN main.jj_net_sales_value
-                                ELSE 0::DECIMAL
-                            END
-                        ) OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = 0::DECIMAL
-                    )
-                    THEN CAST(NULL AS DECIMAL)
-                    ELSE 
-                    SUM
-                    (
+                    ) OVER (
+                        PARTITION BY main.mnth_id
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = 0::DECIMAL
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM (
+                    CASE
+                        WHEN (
+                            CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                        ) THEN main.jj_net_sales_value
+                        ELSE 0::DECIMAL
+                    END
+                ) OVER (
+                    PARTITION BY main.mnth_id
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        0::DECIMAL
+    ) AS jj_cust_sls_contrb_for_merchndsng_per_m,
+    COALESCE (
+        (
+            (
+                CASE
+                    WHEN (
+                        CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                    ) THEN main.jj_net_sales_value
+                    ELSE 0::DECIMAL
+                END * 1000000::DECIMAL
+            ) / CASE
+                WHEN (
+                    SUM (
                         CASE
-                            WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                            THEN main.jj_net_sales_value
+                            WHEN (
+                                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                            ) THEN main.jj_net_sales_value
                             ELSE 0::DECIMAL
                         END
-                    ) OVER (PARTITION BY main.mnth_id order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-                END
-            ),0::DECIMAL
-        ) AS jj_cust_sls_contrb_for_merchndsng_per_m,
-        COALESCE
+                    ) OVER (
+                        PARTITION BY main.mnth_id,
+                        main.sg_brand
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = 0::DECIMAL
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM (
+                    CASE
+                        WHEN (
+                            CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                        ) THEN main.jj_net_sales_value
+                        ELSE 0::DECIMAL
+                    END
+                ) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_brand
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        0::DECIMAL
+    ) AS jj_prod_cust_sls_contrb_for_merchndsng_per_m,
+    COALESCE (
         (
             (
-                (
+                CASE
+                    WHEN (
+                        CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                    ) THEN main.jj_net_sales_value
+                    ELSE 0::DECIMAL
+                END * 1000000::DECIMAL
+            ) / CASE
+                WHEN (
+                    SUM (
+                        CASE
+                            WHEN (
+                                CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                            ) THEN main.jj_net_sales_value
+                            ELSE 0::DECIMAL
+                        END
+                    ) OVER (
+                        PARTITION BY main.mnth_id,
+                        main.sg_banner
+                        order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    ) = 0::DECIMAL
+                ) THEN CAST(NULL AS DECIMAL)
+                ELSE SUM (
                     CASE
-                        WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                        THEN main.jj_net_sales_value
-                        ELSE 0::DECIMAL
-                    END * 1000000::DECIMAL
-                ) / CASE
-                    WHEN 
-                    (
-                        SUM
-                        (
-                            CASE
-                                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                                THEN main.jj_net_sales_value
-                                ELSE 0::DECIMAL
-                            END
-                        ) OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = 0::DECIMAL
-                    )
-                    THEN CAST(NULL AS DECIMAL)
-                    ELSE SUM
-                    (
-                    CASE
-                        WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                        THEN main.jj_net_sales_value
+                        WHEN (
+                            CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT)
+                        ) THEN main.jj_net_sales_value
                         ELSE 0::DECIMAL
                     END
-                    ) OVER (PARTITION BY main.mnth_id, main.sg_brand order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-                    END
-            ),0::DECIMAL
-        ) AS jj_prod_cust_sls_contrb_for_merchndsng_per_m,
-        COALESCE
-        (
-            (
-                (
-                    CASE
-                        WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                        THEN main.jj_net_sales_value
-                        ELSE 0::DECIMAL
-                    END * 1000000::DECIMAL
-                ) / CASE
-                        WHEN 
-                        (
-                            SUM
-                            (
-                                CASE
-                                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                                THEN main.jj_net_sales_value
-                                ELSE 0::DECIMAL
-                                END
-                            ) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) = 0::DECIMAL
-                        )
-                        THEN CAST(NULL AS DECIMAL)
-                        ELSE SUM
-                        (
-                            CASE
-                                WHEN (CAST((main.merchandizing_flg) AS TEXT) = CAST('Y' AS TEXT))
-                                THEN main.jj_net_sales_value
-                                ELSE 0::DECIMAL
-                            END
-                        ) OVER (PARTITION BY main.mnth_id, main.sg_banner order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-                    END
-            ),0::DECIMAL
-        ) AS jj_cust_prod_sls_contrb_for_merchndsng_per_m
-        FROM  main
+                ) OVER (
+                    PARTITION BY main.mnth_id,
+                    main.sg_banner
+                    order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                )
+            END
+        ),
+        0::DECIMAL
+    ) AS jj_cust_prod_sls_contrb_for_merchndsng_per_m
+FROM main
 ),
 derived_table1 as
 (
-    SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
+    SELECT to_char(
+            (
+                to_date(
+                    upper((t1.month_number)::text),
+                    ('MON-YY'::character varying)::text
+                )
+            )::timestamp without time zone,
+            ('YYYYMM'::character varying)::text
+        ) AS file_period,
         (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT)) AS month_of_activity,
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer AS sheet_period,
+        upper((t1.month_of_activity)::text) AS month_of_activity,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM(t1.jnj_total_committed_w_o_gst) AS tp_val
-        FROM itg_sg_tp_closed_month AS t1
-        WHERE
-
-        (
+        sum(t1.jnj_total_committed_w_o_gst) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
-                (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                AND 
                 (
-                    CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-    CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                        = TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+                    (
+                        (
+                            upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                        )
+                        AND (
+                            (
+                                (
+                                    (
+                                        to_char(
+                                            (
+                                                to_date(
+                                                    (
+                                                        "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                                    ),
+                                                    ('MONYY'::character varying)::text
+                                                )
+                                            )::timestamp without time zone,
+                                            ('YYYYMM'::character varying)::text
+                                        )
+                                    )::integer
+                                )::character varying
+                            )::text = to_char(
+                                (
+                                    to_date(
+                                        upper((t1.month_number)::text),
+                                        ('MON-YY'::character varying)::text
+                                    )
+                                )::timestamp without time zone,
+                                ('YYYYMM'::character varying)::text
+                            )
+                        )
+                    )
+                    AND (t1.supporting IS NOT NULL)
                 )
+                AND (
+                    (t1.supporting)::text <> (''::character varying)::text
                 )
-                AND ((NOT t1.supporting IS NULL)
-                AND((CAST((t1.supporting) AS TEXT) <> CAST('' AS TEXT)))
-                )
-                AND ( UPPER(CAST((t1.month_of_activity) AS TEXT)) 
-                = UPPER(CAST((t1.month_number) AS TEXT)))
+            )
+            AND (
+                upper((t1.month_of_activity)::text) = upper((t1.month_number)::text)
+            )
         )
-        GROUP BY
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-        
-        CAST
-        (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
+    GROUP BY to_char(
+            (
+                to_date(
+                    upper((t1.month_number)::text),
+                    ('MON-YY'::character varying)::text
+                )
+            )::timestamp without time zone,
+            ('YYYYMM'::character varying)::text
         ),
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
         t1.month_of_activity,
         t1.customer,
         t1.brand,
@@ -493,624 +608,1071 @@ derived_table1 as
 ,
 derived_table2_temp1 as
 (
-    SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
+    SELECT (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
         (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT))::varchar AS month_of_activity,
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer AS sheet_period,
+        (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM(t1.jnj_total_committed_w_o_gst) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-        (
-        (
-            (
+        sum(t1.jnj_actuals_w_o_gst) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
                 (
-                (
-                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                    AND 
                     (
-                        CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-                CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                            = TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+                        (
+                            (
+                                (
+                                    (
+                                        upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                                    )
+                                    AND (
+                                        (
+                                            (
+                                                (
+                                                    to_char(
+                                                        (
+                                                            to_date(
+                                                                (
+                                                                    "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                                                ),
+                                                                ('MONYY'::character varying)::text
+                                                            )
+                                                        )::timestamp without time zone,
+                                                        ('YYYYMM'::character varying)::text
+                                                    )
+                                                )::integer
+                                            )::character varying
+                                        )::text = to_char(
+                                            (
+                                                to_date(
+                                                    upper((t1.month_number)::text),
+                                                    ('MON-YY'::character varying)::text
+                                                )
+                                            )::timestamp without time zone,
+                                            ('YYYYMM'::character varying)::text
+                                        )
+                                    )
+                                )
+                                AND (
+                                    to_char(
+                                        (
+                                            to_date(
+                                                upper((t1.month_number)::text),
+                                                ('MON-YY'::character varying)::text
+                                            )
+                                        )::timestamp without time zone,
+                                        ('MM'::character varying)::text
+                                    ) <> ('01'::character varying)::text
+                                )
+                            )
+                            AND (t1.supporting IS NOT NULL)
+                        )
+                        AND (
+                            (t1.supporting)::text <> (''::character varying)::text
+                        )
+                    )
+                    AND (
+                        (
+                            t1.committed_accrual_w_o_gst = ((0)::numeric)::numeric(17, 3)
+                        )
+                        OR (t1.committed_accrual_w_o_gst IS NULL)
                     )
                 )
-                AND 
-                (
-                    TO_CHAR
-                    (
-                    CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), 
-                    CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('MM' AS TEXT)
-                    ) <> CAST('01' AS TEXT)
-                )
-                )
-                AND 
-                (
-                    (NOT t1.supporting IS NULL)
-                    AND((CAST((t1.supporting) AS TEXT) <> CAST('' AS TEXT)))
-                )
-            )
-            AND
-            (
-                (t1.committed_accrual_w_o_gst = CAST((0) AS DECIMAL(17, 3)))
-                OR ( t1.committed_accrual_w_o_gst IS NULL)
-            )
-            )
-            AND 
-            (
-            TO_CHAR
-            (CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            ) = 
-            TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
-            )
-        )
-        AND
-        (
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            ) < 
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            )
-        )
-        )
-    GROUP BY
-     TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    ( 
-        (
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(
-                    (
-                        SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-                        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)
-                    ),
-                    CAST('MONYY' AS TEXT)
+                AND (
+                    to_char(
+                        (
+                            to_date(
+                                upper((t1.month_of_activity)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
+                    ) = to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
                     )
-                ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
+                )
             )
-        ) 
-        AS INT
-    ),
-    t1.month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+            AND (
+                to_char(
+                    (
+                        to_date(
+                            upper((t1.month_of_activity)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                ) < to_char(
+                    (
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                )
+            )
+        )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account
 ),
 derived_table2_temp2 as
 (
-    SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
+    SELECT 
         (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT))::varchar AS month_of_activity,
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer AS sheet_period,
+        (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM((CAST((-1) AS DECIMAL) * t1.jnj_actuals_w_o_gst)) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-        (
-        (
+        sum(
             (
+                (- ((1)::numeric)::numeric(18, 0)) * t1.jnj_actuals_w_o_gst
+            )
+        ) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
                 (
-                (
-                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                    AND 
                     (
-                        CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-            CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                            <> TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+                        (
+                            (
+                                (
+                                    (
+                                        upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                                    )
+                                    AND (
+                                        (
+                                            (
+                                                (
+                                                    to_char(
+                                                        (
+                                                            to_date(
+                                                                (
+                                                                    "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                                                ),
+                                                                ('MONYY'::character varying)::text
+                                                            )
+                                                        )::timestamp without time zone,
+                                                        ('YYYYMM'::character varying)::text
+                                                    )
+                                                )::integer
+                                            )::character varying
+                                        )::text <> to_char(
+                                            (
+                                                to_date(
+                                                    upper((t1.month_number)::text),
+                                                    ('MON-YY'::character varying)::text
+                                                )
+                                            )::timestamp without time zone,
+                                            ('YYYYMM'::character varying)::text
+                                        )
+                                    )
+                                )
+                                AND (
+                                    to_char(
+                                        (
+                                            to_date(
+                                                upper((t1.month_number)::text),
+                                                ('MON-YY'::character varying)::text
+                                            )
+                                        )::timestamp without time zone,
+                                        ('MM'::character varying)::text
+                                    ) <> ('01'::character varying)::text
+                                )
+                            )
+                            AND (t1.supporting IS NOT NULL)
+                        )
+                        AND (
+                            (t1.supporting)::text <> (''::character varying)::text
+                        )
+                    )
+                    AND (
+                        (
+                            t1.committed_accrual_w_o_gst = ((0)::numeric)::numeric(17, 3)
+                        )
+                        OR (t1.committed_accrual_w_o_gst IS NULL)
                     )
                 )
-                AND 
-                (
-                    TO_CHAR
-                    (
-                    CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), 
-                    CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('MM' AS TEXT)
-                    ) <> CAST('01' AS TEXT)
-                )
-                )
-                AND 
-                (
-                    (NOT t1.supporting IS NULL)
-                    AND((CAST((t1.supporting) AS TEXT) <> CAST('' AS TEXT)))
-                )
-            )
-            AND
-            (
-                (t1.committed_accrual_w_o_gst = CAST((0) AS DECIMAL(17, 3)))
-                OR ( t1.committed_accrual_w_o_gst IS NULL)
-            )
-            )
-            AND 
-            (
-            TO_CHAR
-            (CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            ) = 
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            )
-            )
-        )
-        AND
-        (
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            ) < 
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            )
-        )
-        )
-    GROUP BY
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    ( 
-        (
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(
-                    (
-                        SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-                        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)
-                    ),
-                    CAST('MONYY' AS TEXT)
+                AND (
+                    to_char(
+                        (
+                            to_date(
+                                upper((t1.month_of_activity)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
+                    ) = to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
                     )
-                ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
+                )
             )
-        ) 
-        AS INT
-    ),
-    t1.month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+            AND (
+                to_char(
+                    (
+                        to_date(
+                            upper((t1.month_of_activity)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                ) < to_char(
+                    (
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                )
+            )
+        )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account
 ),
-derived_table3_temp1 as(
-
-    SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
+derived_table3_temp1 as
+(
+    SELECT 
         (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT))::varchar AS month_of_activity,
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer AS sheet_period,
+        (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM(t1.jnj_total_committed_w_o_gst) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-        (
-        (
-            (
+        sum(t1.jnj_total_committed_w_o_gst) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
                 (
-                (
-                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                    AND 
                     (
-                        CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-        CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                            = TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+                        (
+                            (
+                                (
+                                    (
+                                        (
+                                            upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                                        )
+                                        AND (
+                                            (
+                                                (
+                                                    (
+                                                        to_char(
+                                                            (
+                                                                to_date(
+                                                                    (
+                                                                        "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                                                    ),
+                                                                    ('MONYY'::character varying)::text
+                                                                )
+                                                            )::timestamp without time zone,
+                                                            ('YYYYMM'::character varying)::text
+                                                        )
+                                                    )::integer
+                                                )::character varying
+                                            )::text = to_char(
+                                                (
+                                                    to_date(
+                                                        upper((t1.month_number)::text),
+                                                        ('MON-YY'::character varying)::text
+                                                    )
+                                                )::timestamp without time zone,
+                                                ('YYYYMM'::character varying)::text
+                                            )
+                                        )
+                                    )
+                                    AND (
+                                        to_char(
+                                            (
+                                                to_date(
+                                                    upper((t1.month_number)::text),
+                                                    ('MON-YY'::character varying)::text
+                                                )
+                                            )::timestamp without time zone,
+                                            ('MM'::character varying)::text
+                                        ) <> ('01'::character varying)::text
+                                    )
+                                )
+                                AND (t1.supporting IS NOT NULL)
+                            )
+                            AND (
+                                (t1.supporting)::text <> (''::character varying)::text
+                            )
+                        )
+                        AND (
+                            t1.committed_accrual_w_o_gst <> ((0)::numeric)::numeric(17, 3)
+                        )
+                    )
+                    AND (t1.committed_accrual_w_o_gst IS NOT NULL)
+                )
+                AND (
+                    to_char(
+                        (
+                            to_date(
+                                upper((t1.month_of_activity)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
+                    ) = to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
                     )
                 )
-                AND 
-                (
-                    TO_CHAR
+            )
+            AND (
+                to_char(
                     (
-                    CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), 
-                    CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('MM' AS TEXT)
-                    ) <> CAST('01' AS TEXT)
-                )
-                )
-                AND 
-                (
-                    (NOT t1.supporting IS NULL)
-                    AND((CAST((t1.supporting) AS TEXT) <> CAST('' AS TEXT)))
-                )
-            )
-            AND
-            (
-                (t1.committed_accrual_w_o_gst <> CAST((0) AS DECIMAL(17, 3)))
-                AND (NOT t1.committed_accrual_w_o_gst IS NULL)
-            )
-            )
-            AND 
-            (
-            TO_CHAR
-            (CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            ) = 
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            )
-            )
-        )
-        AND
-        (
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            ) < 
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            )
-        )
-        )
-    GROUP BY
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    ( 
-        (
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(
+                        to_date(
+                            upper((t1.month_of_activity)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                ) < to_char(
                     (
-                        SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-                        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)
-                    ),
-                    CAST('MONYY' AS TEXT)
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                )
+            )
+        )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
                     )
-                ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
             )
-        ) 
-        AS INT
-    ),
-    t1.month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account    
 ),
 derived_table3_temp2 as
 (
-     SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
+    SELECT 
         (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT))::varchar AS month_of_activity,
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer AS sheet_period,
+        (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM((CAST((-1) AS DECIMAL) * t1.jnj_actuals_w_o_gst)) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-        (
-        (
+        sum(
             (
+                (- ((1)::numeric)::numeric(18, 0)) * t1.jnj_total_committed_w_o_gst
+            )
+        ) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
                 (
-                (
-                    (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                    AND 
                     (
-                        CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-                CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                            <> TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+                        (
+                            (
+                                (
+                                    (
+                                        (
+                                            upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                                        )
+                                        AND (
+                                            (
+                                                (
+                                                    (
+                                                        to_char(
+                                                            (
+                                                                to_date(
+                                                                    (
+                                                                        "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                                                    ),
+                                                                    ('MONYY'::character varying)::text
+                                                                )
+                                                            )::timestamp without time zone,
+                                                            ('YYYYMM'::character varying)::text
+                                                        )
+                                                    )::integer
+                                                )::character varying
+                                            )::text <> to_char(
+                                                (
+                                                    to_date(
+                                                        upper((t1.month_number)::text),
+                                                        ('MON-YY'::character varying)::text
+                                                    )
+                                                )::timestamp without time zone,
+                                                ('YYYYMM'::character varying)::text
+                                            )
+                                        )
+                                    )
+                                    AND (
+                                        to_char(
+                                            (
+                                                to_date(
+                                                    upper((t1.month_number)::text),
+                                                    ('MON-YY'::character varying)::text
+                                                )
+                                            )::timestamp without time zone,
+                                            ('MM'::character varying)::text
+                                        ) <> ('01'::character varying)::text
+                                    )
+                                )
+                                AND (t1.supporting IS NOT NULL)
+                            )
+                            AND (
+                                (t1.supporting)::text <> (''::character varying)::text
+                            )
+                        )
+                        AND (
+                            t1.committed_accrual_w_o_gst <> ((0)::numeric)::numeric(17, 3)
+                        )
+                    )
+                    AND (t1.committed_accrual_w_o_gst IS NOT NULL)
+                )
+                AND (
+                    to_char(
+                        (
+                            to_date(
+                                upper((t1.month_of_activity)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
+                    ) = to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYY'::character varying)::text
                     )
                 )
-                AND 
-                (
-                    TO_CHAR
+            )
+            AND (
+                to_char(
                     (
-                    CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), 
-                    CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('MM' AS TEXT)
-                    ) <> CAST('01' AS TEXT)
-                )
-                )
-                AND 
-                (
-                    (NOT t1.supporting IS NULL)
-                    AND((CAST((t1.supporting) AS TEXT) <> CAST('' AS TEXT)))
-                )
-            )
-            AND
-            (
-                (t1.committed_accrual_w_o_gst <> CAST((0) AS DECIMAL(17, 3)))
-                AND ( NOT t1.committed_accrual_w_o_gst IS NULL)
-            )
-            )
-            AND 
-            (
-            TO_CHAR
-            (CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            ) = 
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYY' AS TEXT)
-            )
-            )
-        )
-        AND
-        (
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            ) < 
-            TO_CHAR
-            (
-            CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT)
-            )
-        )
-        )
-    GROUP BY
-     TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    ( 
-        (
-            TO_CHAR
-            (
-                CAST(CAST((TO_DATE(
+                        to_date(
+                            upper((t1.month_of_activity)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                ) < to_char(
                     (
-                        SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-                        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)
-                    ),
-                    CAST('MONYY' AS TEXT)
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYYMM'::character varying)::text
+                )
+            )
+        )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
                     )
-                ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
             )
-        ) 
-        AS INT
-    ),
-    t1.month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account   
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account  
 ),
 derived_table4_temp1 as
 (
-   SELECT
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST((TO_CHAR( CAST(CAST((TO_DATE(SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 4), CAST('YYYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST('YYYY' AS TEXT))) AS INT) AS sheet_year,
-        UPPER(CAST((t1.month_of_actual) AS TEXT))::varchar AS monthof_actual,
+    SELECT 
+        (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        "substring"(upper((t1.sheet_name)::text), 8, 4),
+                        ('YYYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            )
+        )::integer AS sheet_year,
+        (upper((t1.month_of_actual)::text))::character varying AS monthof_actual,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM(t1.tp_impact) AS tp_val
-    FROM itg_sg_tp_closed_year_bal AS t1
-    WHERE
-        (
-        (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-        AND 
-        (
-            UPPER(CAST((t1.month_of_actual) AS TEXT)) = UPPER(CAST((t1.month_number) AS TEXT))
+        sum(t1.tp_impact) AS tp_val
+    FROM itg_sg_tp_closed_year_bal t1
+    WHERE (
+            (
+                upper((t1.customer_l1)::text) = ('ZUELLIG'::character varying)::text
+            )
+            AND (
+                upper((t1.month_of_actual)::text) = upper((t1.month_number)::text)
+            )
         )
-        )
-    GROUP BY
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST((TO_CHAR( CAST(CAST((TO_DATE(SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 4), CAST('YYYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-    CAST('YYYY' AS TEXT))) AS INT),
-    UPPER(CAST((t1.month_of_actual) AS TEXT))::varchar,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        "substring"(upper((t1.sheet_name)::text), 8, 4),
+                        ('YYYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            )
+        )::integer,
+        (upper((t1.month_of_actual)::text))::character varying,
+        t1.customer,
+        t1.brand,
+        t1.gl_account
      
 ),
 derived_table4_temp2 as
 (
-   SELECT
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST((TO_CHAR( CAST(CAST((TO_DATE(SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 4), CAST('YYYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST('YYYY' AS TEXT))) AS INT) AS sheet_year,
-        UPPER(CAST((t1.month_of_reversal) AS TEXT))::varchar AS monthof_actual,
+   SELECT 
+        (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        "substring"(upper((t1.sheet_name)::text), 8, 4),
+                        ('YYYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            )
+        )::integer AS sheet_year,
+        (upper((t1.month_of_reversal)::text))::character varying AS monthof_actual,
         t1.customer,
         t1.brand,
         t1.gl_account,
-        SUM((CAST((-1) AS DECIMAL) * t1.comments_or_reversed_accrued_amt)) AS tp_val
-    FROM itg_sg_tp_closed_year_bal AS t1
-    WHERE
-        (
-        (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-        AND 
-        (
-            UPPER(CAST((t1.month_of_reversal) AS TEXT)) = UPPER(CAST((t1.month_number) AS TEXT))
+        sum(
+            (
+                (- ((1)::numeric)::numeric(18, 0)) * t1.comments_or_reversed_accrued_amt
+            )
+        ) AS tp_val
+    FROM itg_sg_tp_closed_year_bal t1
+    WHERE (
+            (
+                upper((t1.customer_l1)::text) = ('ZUELLIG'::character varying)::text
+            )
+            AND (
+                upper((t1.month_of_reversal)::text) = upper((t1.month_number)::text)
+            )
         )
-        )
-    GROUP BY
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST((TO_CHAR( CAST(CAST((TO_DATE(SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 4), CAST('YYYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-    CAST('YYYY' AS TEXT))) AS INT),
-    UPPER(CAST((t1.month_of_reversal) AS TEXT))::varchar,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        "substring"(upper((t1.sheet_name)::text), 8, 4),
+                        ('YYYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            )
+        )::integer,
+        (upper((t1.month_of_reversal)::text))::character varying,
+        t1.customer,
+        t1.brand,
+        t1.gl_account
      
 ),
 derived_table5_temp1 as
 (
-    SELECT
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-    CAST
-    (
-        (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST('YYYYMM' AS TEXT))) AS INT
-    ) AS sheet_period,
-    UPPER(CAST((t1.month_of_activity) AS TEXT)) AS month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account,
-    SUM(t1.jnj_total_committed_w_o_gst) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-
-    (
+    SELECT 
         (
-            (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-            AND 
-            (
-                CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-                CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                    = TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
             )
+        )::character varying AS file_period,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
             )
-            AND 
+        )::integer AS sheet_period,
+        (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account,
+        sum(t1.jnj_total_committed_w_o_gst) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
             (
-                TO_CHAR(CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity ) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('YYYY' AS TEXT)
-                ) < TO_CHAR(
-                    CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                    CAST('YYYY' AS TEXT)
+                (
+                    upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                )
+                AND (
+                    (
+                        (
+                            (
+                                to_char(
+                                    (
+                                        to_date(
+                                            (
+                                                "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                            ),
+                                            ('MONYY'::character varying)::text
+                                        )
+                                    )::timestamp without time zone,
+                                    ('YYYYMM'::character varying)::text
+                                )
+                            )::integer
+                        )::character varying
+                    )::text = to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYYMM'::character varying)::text
+                    )
                 )
             )
-    )
-    GROUP BY
-    TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    (
-        (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-        CAST('YYYYMM' AS TEXT))) AS INT
-    ),
-    t1.month_of_activity,
-    t1.customer,
-    t1.brand,
-    t1.gl_account
+            AND (
+                to_char(
+                    (
+                        to_date(
+                            upper((t1.month_of_activity)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYY'::character varying)::text
+                ) < to_char(
+                    (
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('YYYY'::character varying)::text
+                )
+            )
+        )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account
 
 ),
 derived_table5_temp2 as
 (
-     SELECT
-        TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')AS file_period,
-        CAST
-        (
-            (TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-            || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),CAST('MONYY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-            CAST('YYYYMM' AS TEXT))) AS INT
-        ) AS sheet_period,
-        UPPER(CAST((t1.month_of_activity) AS TEXT))::varchar AS month_of_activity,
-        t1.customer,
-        t1.brand,
-        t1.gl_account,
-        SUM((CAST((-1) AS DECIMAL) * t1.jnj_actuals_w_o_gst)) AS tp_val
-    FROM itg_sg_tp_closed_month AS t1
-    WHERE
-        (
+    SELECT 
+    (
+        to_char(
             (
-                (
-                    (
-                        (UPPER(CAST((t1.customer_l1) AS TEXT)) = CAST('ZUELLIG' AS TEXT))
-                        AND 
-                        (
-                            CAST((CAST((TO_CHAR(CAST(CAST((TO_DATE((SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)),
-                            CAST('MONYY' AS TEXT) )) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),CAST('YYYYMM' AS TEXT))) AS INT)) AS TEXT)
-                                <> TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM')
-                        )
-                    )
-                    AND 
-                    (
-                        TO_CHAR
-                        (
-                        CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), 
-                        CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                        CAST('MM' AS TEXT)
-                        ) <> CAST('01' AS TEXT)
-                    )
+                to_date(
+                    upper((t1.month_number)::text),
+                    ('MON-YY'::character varying)::text
                 )
-            )
-            AND
-            (
-                TO_CHAR
-                (
-                CAST(CAST((TO_DATE(UPPER(CAST((t1.month_of_activity) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
-                ) < 
-                TO_CHAR
-                (
-                CAST(CAST((TO_DATE(UPPER(CAST((t1.month_number) AS TEXT)), CAST('MON-YY' AS TEXT))) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
-                )
-            )
+            )::timestamp without time zone,
+            ('YYYYMM'::character varying)::text
         )
-    GROUP BY
-     TO_CHAR(TO_DATE(t1.month_number, 'MON-YY'), 'YYYYMM'),
-    CAST
-    ( 
-        (
-            TO_CHAR
+    )::character varying AS file_period,
+    (
+        to_char(
             (
-                CAST(CAST((TO_DATE(
+                to_date(
                     (
-                        SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 4, 3) 
-                        || SUBSTRING(UPPER(CAST((t1.sheet_name) AS TEXT)), 8, 2)
+                        "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
                     ),
-                    CAST('MONYY' AS TEXT)
-                    )
-                ) AS TIMESTAMPNTZ) AS TIMESTAMPNTZ),
-                CAST('YYYYMM' AS TEXT)
-            )
-        ) 
-        AS INT
-    ),
-    t1.month_of_activity,
+                    ('MONYY'::character varying)::text
+                )
+            )::timestamp without time zone,
+            ('YYYYMM'::character varying)::text
+        )
+    )::integer AS sheet_period,
+    (upper((t1.month_of_activity)::text))::character varying AS month_of_activity,
     t1.customer,
     t1.brand,
-    t1.gl_account   
+    t1.gl_account,
+    sum(
+        (
+            (- ((1)::numeric)::numeric(18, 0)) * t1.jnj_total_committed_w_o_gst
+        )
+    ) AS tp_val
+    FROM itg_sg_tp_closed_month t1
+    WHERE (
+            (
+            (
+                (
+                    upper((t1.custmer_l1)::text) = ('ZUELLIG'::character varying)::text
+                )
+                AND (
+                    (
+                        (
+                            (
+                                to_char(
+                                    (
+                                        to_date(
+                                            (
+                                                "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                                            ),
+                                            ('MONYY'::character varying)::text
+                                        )
+                                    )::timestamp without time zone,
+                                    ('YYYYMM'::character varying)::text
+                                )
+                            )::integer
+                        )::character varying
+                    )::text <> to_char(
+                        (
+                            to_date(
+                                upper((t1.month_number)::text),
+                                ('MON-YY'::character varying)::text
+                            )
+                        )::timestamp without time zone,
+                        ('YYYYMM'::character varying)::text
+                    )
+                )
+            )
+            AND (
+                to_char(
+                    (
+                        to_date(
+                            upper((t1.month_number)::text),
+                            ('MON-YY'::character varying)::text
+                        )
+                    )::timestamp without time zone,
+                    ('MM'::character varying)::text
+                ) <> ('01'::character varying)::text
+            )
+        )
+        AND (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_of_activity)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            ) < to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYY'::character varying)::text
+            )
+        )
+    )
+    GROUP BY (
+            to_char(
+                (
+                    to_date(
+                        upper((t1.month_number)::text),
+                        ('MON-YY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::character varying,
+        (
+            to_char(
+                (
+                    to_date(
+                        (
+                            "substring"(upper((t1.sheet_name)::text), 4, 3) || "substring"(upper((t1.sheet_name)::text), 8, 2)
+                        ),
+                        ('MONYY'::character varying)::text
+                    )
+                )::timestamp without time zone,
+                ('YYYYMM'::character varying)::text
+            )
+        )::integer,
+        t1.month_of_activity,
+        t1.customer,
+        t1.brand,
+        t1.gl_account    
 ),
 tp_brand_map as
 (
     SELECT DISTINCT
         ITG_SG_CONSTANT_KEY_VALUE.key,
         ITG_SG_CONSTANT_KEY_VALUE.value
-    FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+    FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
     WHERE
         (ITG_SG_CONSTANT_KEY_VALUE.data_category_cd = CAST((7) AS DECIMAL)) 
 ),
-tp_brand_exclusion as(
+tp_brand_exclusion as
+(
     SELECT DISTINCT
         ITG_SG_CONSTANT_KEY_VALUE.key
-    FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+    FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
     WHERE
     (
         (
@@ -1119,96 +1681,82 @@ tp_brand_exclusion as(
         AND (CAST((ITG_SG_CONSTANT_KEY_VALUE.value) AS TEXT) = CAST('Y' AS TEXT))
     )
 ),
-derived_table2 as 
-(
-    select * from derived_table2_temp1
-    UNION ALL
-    select * from derived_table2_temp2 
-),
-derived_table3 as(
-    select * from derived_table3_temp1
-    UNION ALL
-    select * from derived_table3_temp2
-),
-derived_table4 as(
-    select * from derived_table4_temp1
-    UNION ALL
-    select * from derived_table4_temp2
-),
-derived_table5 as(
-    select * from derived_table5_temp1
-    UNION ALL
-    select * from derived_table5_temp2
-),
 main2 as
 (
-  (
     (
         (
-                SELECT
-                CAST((derived_table1.file_period) AS VARCHAR) AS file_period,
-                derived_table1.customer,
-                derived_table1.brand,
-                derived_table1.gl_account,
-                derived_table1.tp_val
-            FROM derived_table1
+            (
+                SELECT (derived_table1.file_period)::character varying AS file_period,
+                    derived_table1.customer,
+                    derived_table1.brand,
+                    derived_table1.gl_account,
+                    derived_table1.tp_val
+                FROM derived_table1
+                UNION ALL
+                SELECT derived_table2.file_period,
+                    derived_table2.customer,
+                    derived_table2.brand,
+                    derived_table2.gl_account,
+                    sum(derived_table2.tp_val) AS tp_val
+                FROM (
+                        select * from derived_table2_temp1
+                        UNION ALL
+                        select * from derived_table2_temp2
+                    ) derived_table2
+                GROUP BY derived_table2.file_period,
+                    derived_table2.customer,
+                    derived_table2.brand,
+                    derived_table2.gl_account
+            )
             UNION ALL
-            SELECT
-                derived_table2.file_period,
-                derived_table2.customer,
-                derived_table2.brand,
-                derived_table2.gl_account,
-                SUM(derived_table2.tp_val) AS tp_val
-            FROM 
-            derived_table2
-            GROUP BY
-                derived_table2.file_period,
-                derived_table2.customer,
-                derived_table2.brand,
-                derived_table2.gl_account
+            SELECT derived_table3.file_period,
+                derived_table3.customer,
+                derived_table3.brand,
+                derived_table3.gl_account,
+                sum(derived_table3.tp_val) AS tp_val
+            FROM (
+                    select * from derived_table3_temp1
+                    UNION ALL
+                    select * from derived_table3_temp2
+                ) derived_table3
+            GROUP BY derived_table3.file_period,
+                derived_table3.customer,
+                derived_table3.brand,
+                derived_table3.gl_account
         )
         UNION ALL
-        SELECT
-        derived_table3.file_period,
-        derived_table3.customer,
-        derived_table3.brand,
-        derived_table3.gl_account,
-        SUM(derived_table3.tp_val) AS tp_val
-        FROM derived_table3
-        GROUP BY
-        derived_table3.file_period,
-        derived_table3.customer,
-        derived_table3.brand,
-        derived_table3.gl_account
+        SELECT derived_table4.file_period,
+            derived_table4.customer,
+            derived_table4.brand,
+            derived_table4.gl_account,
+            sum(derived_table4.tp_val) AS sum
+        FROM (
+                select * from derived_table4_temp1
+                UNION ALL
+                select * from derived_table4_temp2
+                
+            ) derived_table4
+        GROUP BY derived_table4.file_period,
+            derived_table4.customer,
+            derived_table4.brand,
+            derived_table4.gl_account
     )
     UNION ALL
-    SELECT
-        derived_table4.file_period,
-        derived_table4.customer,
-        derived_table4.brand,
-        derived_table4.gl_account,
-        SUM(derived_table4.tp_val) AS sum
-    FROM 
-    derived_table4
-    GROUP BY
-        derived_table4.file_period,
-        derived_table4.customer,
-        derived_table4.brand,
-        derived_table4.gl_account
-    )
-    UNION ALL
-    SELECT
-    derived_table5.file_period,
-    derived_table5.customer,
-    derived_table5.brand,
-    derived_table5.gl_account,
-    SUM(derived_table5.tp_val) AS sum
-    FROM  derived_table5
-    GROUP BY
-    derived_table5.file_period,
-    derived_table5.customer,
-    derived_table5.brand,
-    derived_table5.gl_account
+    SELECT derived_table5.file_period,
+        derived_table5.customer,
+        derived_table5.brand,
+        derived_table5.gl_account,
+        sum(derived_table5.tp_val) AS sum
+    FROM (
+            select * from derived_table5_temp1
+            UNION ALL
+            select * from derived_table5_temp2
+            
+        ) derived_table5
+    GROUP BY derived_table5.file_period,
+        derived_table5.customer,
+        derived_table5.brand,
+        derived_table5.gl_account
 
 )
 ,
@@ -1433,7 +1981,7 @@ custmstr_2_groupby as
             (
                 SELECT DISTINCT
                 ITG_SG_CONSTANT_KEY_VALUE.key
-                FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+                FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
                 WHERE
                 (
                     (
@@ -1485,7 +2033,7 @@ custmstr_2 as
             (
                 SELECT DISTINCT
                 ITG_SG_CONSTANT_KEY_VALUE.key
-                FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+                FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
                 WHERE
                 (
                     (
@@ -1522,7 +2070,7 @@ sellin as
                 (
                     SELECT DISTINCT
                     ITG_SG_CONSTANT_KEY_VALUE.key
-                    FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+                    FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
                     WHERE
                     (
                         (
@@ -1790,7 +2338,7 @@ zsellin_1 as
         )
         AND (CAST((zsellin.jj_mnth_id) AS TEXT) <= divest.effective_period_to)
         AND (CAST((zsellin.sg_brand) AS TEXT) = CAST((divest.key) AS TEXT))
-        WHERE divest.key IS NULL
+    WHERE divest.key IS NULL
 ),
 zsellin_zsellout as
 (
@@ -1870,10 +2418,10 @@ appr_by_cust as
         (
             (
             zsellin.base_val * 
-            CASE WHEN (zsellin.acct_no IN (SELECT DISTINCT ITG_SG_CONSTANT_KEY_VALUE.key FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE 
+            CASE WHEN (zsellin.acct_no IN (SELECT DISTINCT ITG_SG_CONSTANT_KEY_VALUE.key FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE 
                         WHERE
                         (               
-                        ITG_SG_CONSTANT_KEY_VALUE.data_category_cd = CAST((6) AS DECIMAL)   
+                        ITG_SG_CONSTANT_KEY_VALUE.data_category_cd = ((6)::numeric)::numeric(18, 0)  
                         AND 
                         CAST((ITG_SG_CONSTANT_KEY_VALUE.value) AS TEXT) = CAST('Y' AS TEXT)
                         
@@ -1919,11 +2467,11 @@ appr_by_cust as
                 zsellin.acct_no IN (
                 SELECT DISTINCT
                     ITG_SG_CONSTANT_KEY_VALUE.key
-                FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+                FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
                 WHERE
                     (
                     (
-                        ITG_SG_CONSTANT_KEY_VALUE.data_category_cd = CAST((5) AS DECIMAL)
+                        ITG_SG_CONSTANT_KEY_VALUE.data_category_cd =((5)::numeric)::numeric(18, 0)
                     )
                     AND (CAST((ITG_SG_CONSTANT_KEY_VALUE.value) AS TEXT) = CAST('Y' AS TEXT)
                     )
@@ -1987,7 +2535,7 @@ zuellig_appr_temp as
         appr_by_cust.acct_no IN (
         SELECT DISTINCT
             ITG_SG_CONSTANT_KEY_VALUE.key
-        FROM snaposeitg_integration.ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
+        FROM ITG_SG_CONSTANT_KEY_VALUE AS ITG_SG_CONSTANT_KEY_VALUE
         WHERE
             (
             (
@@ -2055,7 +2603,7 @@ zapportionment as
     tpoffinvoice.tp_val AS base_val
     FROM tpoffinvoice
     UNION ALL
-    SELECT
+    (SELECT
     zuellig_appr.co_cd,
     zuellig_appr.cntry_key,
     zuellig_appr.jj_yr,
@@ -2082,7 +2630,7 @@ zapportionment as
     FROM
     zuellig_appr
     LEFT JOIN custmstr_groupby AS customer
-    ON UPPER(CAST((customer.sap_bnr_frmt_desc) AS TEXT)) = UPPER(CAST((zuellig_appr.sg_banner) AS TEXT))
+    ON UPPER(CAST((customer.sap_bnr_frmt_desc) AS TEXT)) = UPPER(CAST((zuellig_appr.sg_banner) AS TEXT)))
             
 ),
 
@@ -2197,60 +2745,6 @@ nzsellin as
     SUM(a.ret_qty) AS ret_qty
   FROM 
     a2  AS a
-  GROUP BY
-    a.co_cd,
-    a.cntry_key,
-    a.jj_yr,
-    a.jj_mnth_id,
-    a.acct_no,
-    a.gl_description,
-    a.posted_where,
-    a.sg_brand,
-    a.gph_reg_frnchse_grp,
-    a.gph_prod_frnchse,
-    a.gph_prod_brnd,
-    a.gph_prod_sub_brnd,
-    a.sap_matl_num,
-    a.sap_mat_desc,
-    a.sap_prnt_cust_key,
-    a.sap_prnt_cust_desc,
-    a.sap_bnr_key,
-    a.sap_bnr_desc,
-    a.sap_bnr_frmt_key,
-    a.sap_bnr_frmt_desc,
-    a.sg_banner,
-    a.retail_env
-),
-nzsellin_2 as
-(
-  SELECT
-    a.co_cd,
-    a.cntry_key,
-    a.jj_yr,
-    a.jj_mnth_id,
-    a.acct_no,
-    a.gl_description,
-    a.posted_where,
-    a.sg_brand,
-    a.gph_reg_frnchse_grp,
-    a.gph_prod_frnchse,
-    a.gph_prod_brnd,
-    a.gph_prod_sub_brnd,
-    a.sap_matl_num,
-    a.sap_mat_desc,
-    MIN(CAST((a.sap_cust_nm) AS TEXT)) AS sap_cust_nm,
-    a.sap_prnt_cust_key,
-    a.sap_prnt_cust_desc,
-    a.sap_bnr_key,
-    a.sap_bnr_desc,
-    a.sap_bnr_frmt_key,
-    a.sap_bnr_frmt_desc,
-    a.sg_banner,
-    a.retail_env,
-    SUM(a.base_val) AS base_val,
-    SUM(a.sls_qty) AS sls_qty,
-    SUM(a.ret_qty) AS ret_qty
-  FROM a2 AS a
   GROUP BY
     a.co_cd,
     a.cntry_key,
@@ -2607,7 +3101,7 @@ zsellout_10 as
         nzsellin.sap_matl_num,
         nzsellin.sap_mat_desc,
         nzsellin.sls_qty AS base_value
-    FROM nzsellin_2  AS nzsellin
+    FROM  nzsellin
     WHERE
         (
         CAST((
@@ -2647,7 +3141,7 @@ zsellout_11 as
         nzsellin.sap_matl_num,
         nzsellin.sap_mat_desc,
         nzsellin.ret_qty AS base_value
-    FROM nzsellin_2 AS nzsellin
+    FROM nzsellin
     WHERE
         (
         CAST((
@@ -2689,7 +3183,7 @@ zsellout_12 as
         (
         nzsellin.sls_qty - nzsellin.ret_qty
         ) AS base_value
-  FROM nzsellin_2 AS nzsellin
+  FROM nzsellin
   WHERE
     (
       (

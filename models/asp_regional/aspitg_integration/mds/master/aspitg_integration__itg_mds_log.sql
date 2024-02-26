@@ -11,15 +11,15 @@ with source as (
 
 transformed as(
     select
-        'rg' as cntry_cd,
+        'RG' as cntry_cd,
         result as result,
         replace(replace(split_part(query, ' ', 2), ']', ''), '[', '')
             as table_name,
         case
-            when result like 'records affected%' then 'success' else 'failure'
+            when result like 'Records affected%' then 'Success' else 'Failure'
         end as status,
         case
-            when result like 'records affected%'
+            when result like 'Records affected%'
                 then cast(split_part(result, ' ', 3) as int)
         end as rec_count,
         current_timestamp()::timestamp_ntz(9) as crtd_dt

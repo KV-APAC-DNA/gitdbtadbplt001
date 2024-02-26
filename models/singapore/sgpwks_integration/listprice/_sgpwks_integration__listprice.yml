@@ -4,4 +4,4 @@ models:
   - name: sgpwks_integration__wks_sg_listprice
     config:
       alias: wks_sg_listprice
-      tags: ["daily",""]
+      tags: ["sg_list_price","transformation"]

@@ -1,6 +1,7 @@
 --Import CTE
 with source as (
-    select * from {{ ref('aspwks_integration__wks_edw_gch_customerhierarchy') }}
+   select * from {{ ref('aspitg_integration__vw_stg_sdl_gcch_cust_hier') }}
+    
 ),
 
 --Logical CTE
@@ -8,7 +9,7 @@ with source as (
 --Final CTE
 final as (
 select
-tamr_id::number(18,0) as tamr_id,
+tamr_id::number(38,0) as tamr_id,
 origin_source_name::varchar(255) as origin_source_name,
 origin_entity_id::varchar(255) as origin_entity_id,
 manualclassificationid::number(18,0) as manualclassificationid,
@@ -44,7 +45,7 @@ gcgh_region::varchar(50) as gcgh_region,
 gcgh_cluster::varchar(50) as gcgh_cluster,
 gcgh_subcluster::varchar(50) as gcgh_subcluster,
 gcgh_market::varchar(50) as gcgh_market,
-gcch_customer::varchar(50) as gcch_total_enterprise,
+gcch_customer::varchar(500) as gcch_total_enterprise,
 gcch_retail_banner::varchar(50) as gcch_retail_banner,
 dateofextract::varchar(30) as dateofextract,
 cdl_datetime::varchar(30) as cdl_datetime,
@@ -54,7 +55,10 @@ current_timestamp()::timestamp_ntz(9) as crt_dttm,
 current_timestamp()::timestamp_ntz(9) as updt_dttm,
 primary_format::varchar(50) as primary_format,
 distributor_attribute::varchar(50) as distributor_attribute
-  from source)
+  from source
+   where
+    not customer is null
+  )
 
 
 --Final select
