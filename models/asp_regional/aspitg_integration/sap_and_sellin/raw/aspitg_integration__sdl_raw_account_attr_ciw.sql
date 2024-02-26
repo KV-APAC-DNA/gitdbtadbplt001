@@ -33,6 +33,11 @@ final as (
         run_id,
         crt_dttm as crtd_dttm 
     from source
+ {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.crt_dttm > (select max(crtd_dttm) from {{ this }}) 
+ {% endif %}
+    
     -- Need to add delta logic
 )
 
