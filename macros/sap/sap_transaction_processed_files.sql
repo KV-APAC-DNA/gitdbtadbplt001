@@ -1,4 +1,4 @@
-{% macro sap_transaction_processed_files(model,source_table_name,source_view_name,target_table_name) %}
+{% macro sap_transaction_processed_files(source_table_name,source_view_name,target_table_name,file_name_column=None) %}
     
 {% set create_table %}
     create  table if not exists aspwks_integration.SAP_TRANSACTIONAL_PROCESSED_FILES (
@@ -21,7 +21,12 @@ select
     '{{source_table_name}}' as source_table_name,
     '{{source_view_name}}' as source_view_name,
     '{{target_table_name}}' as target_table_name,
-    file_name as act_file_name
+    {% if file_name_column==None %}
+        file_name 
+      {%else%}
+        {{file_name_column}}
+    {% endif %}
+        as act_file_name
 from {{this}}
 group by act_file_name
 ),

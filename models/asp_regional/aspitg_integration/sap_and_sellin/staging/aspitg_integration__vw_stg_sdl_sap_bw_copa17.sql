@@ -5,9 +5,9 @@ with source as(
 --logical cte
 final as(
     select 
-        null as request_number,
-        null as data_record,
-        null as data_packet,
+        '' as request_number,
+        '' as data_record,
+        '' as data_packet,
         fiscper as fiscper,
         fiscvarnt as fiscvarnt,
         fiscyear as fiscyear,
@@ -71,6 +71,7 @@ final as(
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as file_name
     from source
+    where _deleted_='F'
 )
 --final select
 select * from final

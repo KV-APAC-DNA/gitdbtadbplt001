@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= 'append'
+    )
+}}
+
 with edw_list_price as
 (
     select * from {{ ref('aspedw_integration__edw_list_price') }}
@@ -27,10 +34,11 @@ transformed_join as
         unit::varchar(6) as uom,
         cdl_dttm::varchar(255) as cdl_dttm,
         date_trunc('day',dateadd(day, -1, cast(current_timestamp() as timestamp_ntz)))::date as snapshot_dt,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        relp.crtd_dttm as crtd_dttm,
         cast(null as date)::timestamp_ntz(9) as updt_dttm
     from filtered_edw_list_price as relp,edw_vw_sg_material_dim as veomd
     where ltrim(veomd.sap_matl_num(+), '0') = ltrim(relp.material, '0')
+
 ),
 final as
 (
@@ -50,6 +58,10 @@ final as
         crtd_dttm,
         updt_dttm
     from transformed_join
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+    {% endif %}
 
 )
 select * from final

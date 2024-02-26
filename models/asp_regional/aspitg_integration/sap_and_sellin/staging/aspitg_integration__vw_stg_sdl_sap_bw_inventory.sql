@@ -10,9 +10,9 @@ itg_crncy_mult as(
 --logical cte
 final as(
     select 
-        null as request_number,
-        null as data_packet,
-        null as data_record,
+        '' as request_number,
+        '' as data_packet,
+        '' as data_record,
         loc_currcy,
         base_uom,
         material,
@@ -139,6 +139,7 @@ final as(
 	left join itg_crncy_mult curr1
 	on src.loc_currcy = curr1.currkey
     where loc_currcy != 'LOC_CURRCY'
+    and _deleted_='F'
 )
 --final select
 select * from final

@@ -101,5 +101,6 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         trim(split(file_name,'/')[array_size(split(file_name,'/'))-1],'"') as filename
     from source
+    where _deleted_='F'
 )
 select * from final

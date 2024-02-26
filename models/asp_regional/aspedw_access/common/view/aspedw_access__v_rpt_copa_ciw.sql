@@ -22,7 +22,9 @@ edw_account_ciw_dim as(
 edw_gch_producthierarchy as(
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-
+edw_gch_customerhierarchy as (
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
 transformed as(
 SELECT
   fact.fisc_yr AS "fisc_yr",
@@ -222,45 +224,45 @@ SELECT
   END AS "cluster",
   fact.obj_crncy_co_obj AS "obj_crncy_co_obj",
   fact.from_crncy AS "from_crncy",
-  ciw."acct_nm" AS "acct_nm",
+  ciw.acct_nm AS "acct_nm",
   LTRIM(CAST((
-    ciw."acct_num"
+    ciw.acct_num
   ) AS TEXT), CAST((
     CAST((
       0
     ) AS VARCHAR)
   ) AS TEXT)) AS "acct_num",
-  ciw."ciw_desc" AS "ciw_desc",
-  ciw."ciw_bucket" AS "ciw_bucket",
-  csw.csw_desc AS "csw_desc",
-  mat.mega_brnd_desc AS "b1 mega-brand",
-  mat.brnd_desc AS "b2 brand",
-  mat.base_prod_desc AS "b3 base product",
-  mat.varnt_desc AS "b4 variant",
-  mat.put_up_desc AS "b5 put-up",
-  fact.cust_num AS "cust_num",
-  cus_sales_extn."parent customer",
-  cus_sales_extn.banner AS "banner",
-  cus_sales_extn."banner format",
-  cus_sales_extn.channel AS "channel",
-  cus_sales_extn."go to model",
-  cus_sales_extn."sub channel",
-  cus_sales_extn.retail_env AS "retail_env",
-  gph.gcph_franchise AS "gcph_franchise",
-  gph.gcph_brand AS "gcph_brand",
-  gph.gcph_subbrand AS "gcph_subbrand",
-  gph.gcph_variant AS "gcph_variant",
-  gph.put_up_description AS "put_up_description",
-  gph.gcph_needstate AS "gcph_needstate",
-  gph.gcph_category AS "gcph_category",
-  gph.gcph_subcategory AS "gcph_subcategory",
-  gph.gcph_segment AS "gcph_segment",
-  gph.gcph_subsegment AS "gcph_subsegment",
-  gch.gcch_total_enterprise AS "gcch_total_enterprise",
-  gch.gcch_retail_banner AS "gcch_retail_banner",
-  gch.primary_format AS "gcch_primary_format",
-  gch.distributor_attribute AS "gcch_distributor_attribute",
-  fact.acct_hier_shrt_desc AS "acct_hier_shrt_desc",
+  IFF(ciw.ciw_desc='',null,ciw.ciw_desc) AS "ciw_desc",
+  IFF(ciw.ciw_bucket='',null,ciw.ciw_bucket) AS "ciw_bucket",
+  IFF(csw.csw_desc='',null,csw.csw_desc) AS "csw_desc",
+  IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) AS "b1 mega-brand",
+  IFF(mat.brnd_desc='',null,mat.brnd_desc) AS "b2 brand",
+  IFF(mat.base_prod_desc='',null,mat.base_prod_desc) AS "b3 base product",
+  IFF(mat.varnt_desc='',null,mat.varnt_desc) AS "b4 variant",
+  IFF(mat.put_up_desc='',null,mat.put_up_desc) AS "b5 put-up",
+  IFF(fact.cust_num='',null,fact.cust_num) AS "cust_num",
+  IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer") as "parent customer",
+  IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner) AS "banner",
+  IFF(cus_sales_extn."banner format"='',null,cus_sales_extn."banner format") as "banner format",
+  IFF(cus_sales_extn.channel='',null,cus_sales_extn.channel) AS "channel",
+  IFF(cus_sales_extn."go to model"='',null,cus_sales_extn."go to model") as "go to model",
+  IFF(cus_sales_extn."sub channel"='',null,cus_sales_extn."sub channel") as "sub channel",
+  IFF(cus_sales_extn.retail_env='',null,cus_sales_extn.retail_env) AS "retail_env",
+  IFF(gph.gcph_franchise='',null,gph.gcph_franchise) AS "gcph_franchise",
+  IFF(gph.gcph_brand='',null,gph.gcph_brand) AS "gcph_brand",
+  IFF(gph.gcph_subbrand='',null,gph.gcph_subbrand) AS "gcph_subbrand",
+  IFF(gph.gcph_variant='',null,gph.gcph_variant) AS "gcph_variant",
+  IFF(gph.put_up_description='',null,gph.put_up_description) AS "put_up_description",
+  IFF(gph.gcph_needstate='',null,gph.gcph_needstate) AS "gcph_needstate",
+  IFF(gph.gcph_category='',null,gph.gcph_category) AS "gcph_category",
+  IFF(gph.gcph_subcategory='',null,gph.gcph_subcategory) AS "gcph_subcategory",
+  IFF(gph.gcph_segment='',null,gph.gcph_segment) AS "gcph_segment",
+  IFF(gph.gcph_subsegment='',null,gph.gcph_subsegment) AS "gcph_subsegment",
+  IFF(gch.gcch_total_enterprise='',null,gch.gcch_total_enterprise) AS "gcch_total_enterprise",
+  IFF(gch.gcch_retail_banner='',null,gch.gcch_retail_banner) AS "gcch_retail_banner",
+  IFF(gch.primary_format='',null,gch.primary_format) AS "gcch_primary_format",
+  IFF(gch.distributor_attribute='',null,gch.distributor_attribute) AS "gcch_distributor_attribute",
+  IFF(fact.acct_hier_shrt_desc='',null,fact.acct_hier_shrt_desc) AS "acct_hier_shrt_desc",
   SUM(fact.qty) AS "qty",
   SUM(fact.amt_lcy) AS "amt_lcy",
   SUM(fact.amt_usd) AS "amt_usd"
@@ -843,7 +845,7 @@ FROM (
                         ) AS VARCHAR)
                       ) AS TEXT)
                     ) = LTRIM(CAST((
-                      ciw."acct_num"
+                      ciw.acct_num
                     ) AS TEXT), CAST((
                       CAST((
                         0
@@ -854,7 +856,7 @@ FROM (
                     CAST((
                       fact.acct_hier_shrt_desc
                     ) AS TEXT) = CAST((
-                      ciw."measure_code"
+                      ciw.measure_code
                     ) AS TEXT)
                   )
                 )
@@ -1043,10 +1045,10 @@ GROUP BY
   fact."cluster",
   fact.obj_crncy_co_obj,
   fact.from_crncy,
-  ciw."acct_nm",
-  ciw."acct_num",
-  ciw."ciw_desc",
-  ciw."ciw_bucket",
+  ciw.acct_nm,
+  ciw.acct_num,
+  ciw.ciw_desc,
+  ciw.ciw_bucket,
   csw.csw_desc,
   mat.mega_brnd_desc,
   mat.brnd_desc,

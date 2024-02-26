@@ -32,8 +32,9 @@ final as (
         '' as zpb_gl_ty,
         null as filename,
         null as run_id,
-        current_timestamp()::timestamp_ntz(9) as crt_dttm
+        _CREATETIME_::timestamp_ntz(9) as crt_dttm
     from source
+    where _deleted_='F'
 )
 
 --Final select

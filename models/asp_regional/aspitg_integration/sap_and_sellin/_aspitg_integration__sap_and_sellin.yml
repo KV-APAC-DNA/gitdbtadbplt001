@@ -23,7 +23,7 @@ models:
   - name: aspitg_integration__itg_crncy_exch
     config:
       alias: itg_crncy_exch
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["inactive"]
   - name: aspitg_integration__itg_ctry_cd_text
     config:
       alias: itg_ctry_cd_text
@@ -55,7 +55,7 @@ models:
   - name: aspitg_integration__itg_ecc_standard_cost
     config:
       alias: itg_ecc_standard_cost
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["SAP_ECC"]
   - name: aspitg_integration__itg_edw_material_dim_updt
     config:
       alias: itg_edw_material_dim_updt
@@ -293,7 +293,7 @@ models:
   - name: aspitg_integration__vw_stg_sdl_ecc_standard_cost
     config:
       alias: vw_stg_sdl_ecc_standard_cost
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["SAP_ECC"]
     tests:
       - test_duplicate:
           group_by_columns: ["mandt","matnr","bwkey","bwtar"]
@@ -469,7 +469,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_tcurr
     config:
       alias: vw_stg_sdl_sap_ecc_tcurr
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["inactive"]
     tests:
      - test_duplicate:
           group_by_columns: ["mandt","kurst","fcurr","tcurr","gdatu"]

@@ -6,9 +6,9 @@ itg_crncy_mult as (
 ),
 final as(
     select
-        null as datapakid,
-        null as request,
-        null as record,
+        '' as datapakid,
+        '' as request,
+        '' as record,
         bic_zactdldte as zactdldte,
         act_gi_dte as act_gi_dte,
         billtoprty as billtoprty,
@@ -114,5 +114,6 @@ final as(
     from source
     left join itg_crncy_mult curr
 		on source.currency = curr.currkey
+    where _deleted_='F'
 )
 select * from final

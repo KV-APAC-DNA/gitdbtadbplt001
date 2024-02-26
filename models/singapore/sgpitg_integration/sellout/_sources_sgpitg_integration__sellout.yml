@@ -32,7 +32,7 @@ sources:
                 lookup_column: "upper(key)"
                 lookup_table: "{{ source('sgpitg_integration', 'itg_sg_constant_key_value') }} "
                 lookup_filter: "data_category_cd = '3'"
-                additional_filter: "not upper(regional_banner) in ( select distinct upper(sap_bnr_frmt_desc) from sgpedw_integration.edw_vw_sg_customer_dim  where sap_cntry_cd = 'SG')"
+                additional_filter: "not upper(regional_banner) in ( select distinct upper(sap_bnr_frmt_desc) from {{ ref('sgpedw_integration__edw_vw_sg_customer_dim') }}  where sap_cntry_cd = 'SG')"
                 name: TRATBL_sdl_sg_zuellig_customer_mapping__lookup_test
                 config:
                   store_failures: true
