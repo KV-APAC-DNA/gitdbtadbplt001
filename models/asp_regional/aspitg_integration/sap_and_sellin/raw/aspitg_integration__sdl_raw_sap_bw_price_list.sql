@@ -27,6 +27,10 @@ final as (
         crt_dttm as curr_dt,
         file_name 
     from source
+ {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.crt_dttm > (select max(curr_dt) from {{ this }}) 
+ {% endif %}
 )
 
 select * from final
