@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_lcm_distributor_target_sales_re
+      tags: ["",""]
+    - name: sdl_mds_th_customer_hierarchy
+      tags: ["",""]
+    - name: sdl_mds_th_mym_product_master
+      tags: ["",""]
+    - name: sdl_mds_th_ps_weights
+      tags: ["",""]
+    - name: sdl_mds_th_distributor_cn_reason
+      tags: ["",""]
+    - name: sdl_mds_th_ref_distributor_customer_group
+      tags: ["",""]
+    - name: sdl_mds_th_ref_city
+      tags: ["",""]
+    - name: sdl_mds_th_distributor_target_sales_re
+      tags: ["",""]
+    - name: sdl_mds_th_htc_inventory
+      tags: ["",""]
+    - name: sdl_mds_th_cop
+      tags: ["",""]
+    - name: sdl_th_target_distribution
+      tags: ["",""]
+    - name: sdl_mds_th_ref_distributor_item_unit
+      tags: ["",""]

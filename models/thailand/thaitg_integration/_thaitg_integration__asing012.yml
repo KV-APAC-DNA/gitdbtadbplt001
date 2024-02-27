@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dtscnreason
+    config: 
+      alias: itg_th_dtscnreason
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_target_distribution
+    config: 
+      alias: itg_th_target_distribution
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_dtscustgroup
+    config:
+      alias: itg_th_dtscustgroup
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_dtsitemunit
+    config: 
+      alias: itg_th_dtsitemunit
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_dtssaledistrict
+    config: 
+      alias: itg_th_dtssaledistrict
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_jbp_cop
+    config:
+      alias: itg_th_jbp_cop
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_gt_target_sales_re
+    config: 
+      alias: itg_th_gt_target_sales_re
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_mds_th_ps_weights
+    config: 
+      alias: itg_mds_th_ps_weights
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_htc_inventory
+    config:
+      alias: itg_th_htc_inventory
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_mds_lcm_distributor_target_sales
+    config: 
+      alias: itg_mds_lcm_distributor_target_sales
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_mds_th_mym_product_master
+    config: 
+      alias: itg_mds_th_mym_product_master
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_mds_th_customer_hierarchy
+    config:
+      alias: itg_mds_th_customer_hierarchy
+      tags: ["th_non_tesco",""]
