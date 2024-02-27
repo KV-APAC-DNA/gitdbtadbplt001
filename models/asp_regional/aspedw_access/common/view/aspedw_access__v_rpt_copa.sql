@@ -31,7 +31,8 @@ transformed as(
   main.fisc_day as "fisc_day",
   main.ctry_nm as "ctry_nm",
   main."cluster",
-   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
+  main.obj_crncy_co_obj as "obj_crncy_co_obj"
+  IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
   IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
   IFF(mat.varnt_desc='',null,mat.varnt_desc) as "b4 variant",
