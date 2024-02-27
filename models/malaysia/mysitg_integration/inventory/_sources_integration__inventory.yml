@@ -12,15 +12,16 @@ sources:
       - name: sdl_my_as_watsons_inventory
         tags: ["monthly","j_rg_watsons_inv_ingestion"]
         tests:
-          - test_duplicate:
+          - test_duplicate__ff:
               group_by_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]
-              select_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]
+              failure_reason: "Duplicate date exists"
               name: TRATBL_sdl_my_as_watsons_inventory__duplicate_test
               config:
                 store_failures: true
                 schema: myswks_integration
-          - test_null:
+          - test_null__ff:
               not_null_columns: ["matl_num"]
+              failure_reason: "Material Code is null"
               name: TRATBL_sdl_my_as_watsons_inventory__null_test
               config:
                 store_failures: true
