@@ -1,5 +1,6 @@
 {{
     config(
+        materialized="incremental",
         incremental_strategy= 'append'
     )
 }}
@@ -57,9 +58,10 @@ final as
         crtd_dttm,
         updt_dttm
     from transformed_join
-    where crtd_dttm > (
-        select max(crtd_dttm) from {{this}}
-    )
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+    {% endif %}
 
 )
 select * from final
