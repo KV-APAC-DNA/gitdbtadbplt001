@@ -133,3 +133,18 @@ models:
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
+    thailand:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      thaitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: THAITG_INTEGRATION
+      thaedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: THAEDW_INTEGRATION
+      thawks_integration:
+        +materialized: table
+        +schema: THAWKS_INTEGRATION
