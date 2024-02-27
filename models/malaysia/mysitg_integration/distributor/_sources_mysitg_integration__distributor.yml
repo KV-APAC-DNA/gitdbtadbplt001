@@ -15,7 +15,7 @@ sources:
           - test_duplicate:
               group_by_columns: ["cust_id","doc_type","wh_id"]
               select_columns: ["cust_id","doc_type","wh_id"]
-              name: TRATBL_sdl_my_dstrbtr_doc_type_duplicate_test
+              name: TRATBL_sdl_my_dstrbtr_doc_type__duplicate_test
               config:
                 store_failures: true
                 schema: myswks_integration
@@ -24,14 +24,14 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["cust_id"]
-              name: TRATBL_sdl_my_dstrbtrr_dim_null_test
+              name: TRATBL_sdl_my_dstrbtrr_dim__null_test
               config:
                 store_failures: true
                 schema: myswks_integration
           - test_duplicate:
               group_by_columns: ["cust_id"]
               select_columns: ["cust_id"]
-              name: TRATBL_sdl_my_dstrbtrr_dim_duplicate_test
+              name: TRATBL_sdl_my_dstrbtrr_dim__duplicate_test
               config:
                 store_failures: true
                 schema: myswks_integration

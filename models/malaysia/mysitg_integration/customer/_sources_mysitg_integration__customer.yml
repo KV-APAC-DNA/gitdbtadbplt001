@@ -14,13 +14,13 @@ sources:
       tests:
         - test_null:
             not_null_columns: ["cust_id"]
-            name: TRATBL_sdl_my_customer_dim_null_test
+            name: TRATBL_sdl_my_customer_dim__null_test
             config:
               store_failures: true
               schema: myswks_integration
         - test_duplicate:
                 group_by_columns: ["cust_id"]
-                name: TRATBL_sdl_my_customer_dim_duplicate_test
+                name: TRATBL_sdl_my_customer_dim__duplicate_test
                 config:
                   store_failures: true
                   schema: myswks_integration
