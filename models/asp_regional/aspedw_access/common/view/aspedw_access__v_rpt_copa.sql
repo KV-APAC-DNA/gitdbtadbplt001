@@ -31,7 +31,8 @@ transformed as(
   main.fisc_day as "fisc_day",
   main.ctry_nm as "ctry_nm",
   main."cluster",
-   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
+  main.obj_crncy_co_obj as "obj_crncy_co_obj",
+  IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
   IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
   IFF(mat.varnt_desc='',null,mat.varnt_desc) as "b4 variant",
@@ -42,9 +43,9 @@ transformed as(
   IFF(mat.prodh4_txtmd='',null,mat.prodh4_txtmd) as "prod h4 product franchise",
   IFF(mat.prodh5_txtmd='',null,mat.prodh5_txtmd) as "prod h5 product major",
   IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd) as "prod h6 product minor",
-  IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer") as "parent customer"
+  IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer") as "parent customer",
   IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner) as "banner",
-  IFF(cus_sales_extn."banner format",null,cus_sales_extn."banner format") as "banner format"
+  IFF(cus_sales_extn."banner format",null,cus_sales_extn."banner format") as "banner format",
   IFF(cus_sales_extn.channel='',null,cus_sales_extn.channel) as "channel",
   IFF(cus_sales_extn."go to model",null,cus_sales_extn."go to model") as "go to model",
   IFF(cus_sales_extn."sub channel",null,cus_sales_extn."sub channel") as "sub channel",
