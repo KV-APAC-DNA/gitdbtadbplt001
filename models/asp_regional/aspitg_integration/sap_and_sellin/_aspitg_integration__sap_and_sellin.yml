@@ -23,7 +23,7 @@ models:
   - name: aspitg_integration__itg_crncy_exch
     config:
       alias: itg_crncy_exch
-      tags: ["inactive"]
+      tags: ["sap_ecc_master_etl_framework","ingestion"]
   - name: aspitg_integration__itg_ctry_cd_text
     config:
       alias: itg_ctry_cd_text
@@ -469,7 +469,7 @@ models:
   - name : aspitg_integration__vw_stg_sdl_sap_ecc_tcurr
     config:
       alias: vw_stg_sdl_sap_ecc_tcurr
-      tags: ["inactive"]
+      tags: ["sap_ecc_master_etl_framework","ingestion"]
     tests:
      - test_duplicate:
           group_by_columns: ["mandt","kurst","fcurr","tcurr","gdatu"]
