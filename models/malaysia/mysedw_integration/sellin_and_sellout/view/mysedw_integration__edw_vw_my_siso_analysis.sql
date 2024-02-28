@@ -31,6 +31,18 @@ edw_vw_my_sellout_inventory_fact as(
 itg_my_in_transit as(
     select * from  {{ ref('mysitg_integration__itg_my_in_transit') }}
 ),
+itg_my_dstrbtrr_dim as(
+    select * from  {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
+),
+itg_my_material_dim as(
+    select * from  {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
+itg_my_customer_dim as(
+    select * from  {{ ref('mysitg_integration__itg_my_customer_dim') }}
+),
+itg_my_trgts as(
+    select * from  {{ ref('mysitg_integration__itg_my_trgts') }}
+),
 transformed as(
     (
   (
@@ -699,7 +711,7 @@ transformed as(
                     )
                   )
               )
-              LEFT JOIN snaposeitg_integration.itg_my_dstrbtrr_dim AS imdd
+              LEFT JOIN itg_my_dstrbtrr_dim AS imdd
                 ON (
                   (
                     LTRIM(CAST((
@@ -717,7 +729,7 @@ transformed as(
                   )
                 )
             )
-            LEFT JOIN snaposeitg_integration.itg_my_material_dim AS immd
+            LEFT JOIN itg_my_material_dim AS immd
               ON (
                 (
                   LTRIM(CAST((
@@ -732,7 +744,7 @@ transformed as(
                 )
               )
           )
-          LEFT JOIN snaposeitg_integration.itg_my_customer_dim AS imcd
+          LEFT JOIN itg_my_customer_dim AS imcd
             ON (
               (
                 TRIM(CAST((
@@ -1266,7 +1278,7 @@ transformed as(
                           ) AS VARCHAR(10)) IN (
                             SELECT DISTINCT
                               itg_my_dstrbtrr_dim.cust_id
-                            FROM snaposeitg_integration.itg_my_dstrbtrr_dim
+                            FROM itg_my_dstrbtrr_dim
                           )
                         )
                       )
@@ -1434,7 +1446,7 @@ transformed as(
                   )
                 )
             )
-            LEFT JOIN snaposeitg_integration.itg_my_dstrbtrr_dim AS imdd
+            LEFT JOIN itg_my_dstrbtrr_dim AS imdd
               ON (
                 (
                   LTRIM(CAST((
@@ -1447,7 +1459,7 @@ transformed as(
                 )
               )
           )
-          LEFT JOIN snaposeitg_integration.itg_my_material_dim AS immd
+          LEFT JOIN itg_my_material_dim AS immd
             ON (
               (
                 LTRIM(CAST((
@@ -1460,7 +1472,7 @@ transformed as(
               )
             )
         )
-        LEFT JOIN snaposeitg_integration.itg_my_customer_dim AS imcd
+        LEFT JOIN itg_my_customer_dim AS imcd
           ON (
             (
               LTRIM(CAST((
@@ -2106,7 +2118,7 @@ transformed as(
                   )
                 )
             )
-            LEFT JOIN snaposeitg_integration.itg_my_dstrbtrr_dim AS imdd
+            LEFT JOIN itg_my_dstrbtrr_dim AS imdd
               ON (
                 (
                   LTRIM(CAST((
@@ -2124,7 +2136,7 @@ transformed as(
                 )
               )
           )
-          LEFT JOIN snaposeitg_integration.itg_my_material_dim AS immd
+          LEFT JOIN itg_my_material_dim AS immd
             ON (
               (
                 LTRIM(CAST((
@@ -2139,7 +2151,7 @@ transformed as(
               )
             )
         )
-        LEFT JOIN snaposeitg_integration.itg_my_customer_dim AS imcd
+        LEFT JOIN itg_my_customer_dim AS imcd
           ON (
             (
               LTRIM(CAST((
@@ -2498,8 +2510,8 @@ transformed as(
         (
           (
             (
-              snaposeitg_integration.itg_my_trgts AS imt
-                LEFT JOIN snaposeitg_integration.itg_my_dstrbtrr_dim AS imdd
+              itg_my_trgts AS imt
+                LEFT JOIN itg_my_dstrbtrr_dim AS imdd
                   ON (
                     (
                       LTRIM(CAST((
@@ -2729,7 +2741,7 @@ transformed as(
           )
         )
     )
-    LEFT JOIN snaposeitg_integration.itg_my_customer_dim AS imcd
+    LEFT JOIN itg_my_customer_dim AS imcd
       ON (
         (
           LTRIM(CAST((
@@ -3211,7 +3223,7 @@ FROM (
             )
           )
       )
-      LEFT JOIN snaposeitg_integration.itg_my_dstrbtrr_dim AS imdd
+      LEFT JOIN itg_my_dstrbtrr_dim AS imdd
         ON (
           (
             LTRIM(CAST((
@@ -3224,7 +3236,7 @@ FROM (
           )
         )
     )
-    LEFT JOIN snaposeitg_integration.itg_my_material_dim AS immd
+    LEFT JOIN itg_my_material_dim AS immd
       ON (
         (
           LTRIM(CAST((
@@ -3237,7 +3249,7 @@ FROM (
         )
       )
   )
-  LEFT JOIN snaposeitg_integration.itg_my_customer_dim AS imcd
+  LEFT JOIN itg_my_customer_dim AS imcd
     ON (
       (
         LTRIM(CAST((
