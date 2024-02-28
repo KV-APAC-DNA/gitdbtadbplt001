@@ -22,11 +22,11 @@ edw_vw_my_material_dim as(
 edw_vw_my_listprice as(
     select * from {{ ref('mysedw_integration__edw_vw_my_listprice') }}
 ),
- edw_vw_my_billing_fact as(
+edw_vw_my_billing_fact as(
     select * from {{ ref('mysedw_integration__edw_vw_my_billing_fact') }}
 ),
 edw_vw_my_sellout_inventory_fact as(
-    select * from {{ ref('mysedw_integration__edw_vw_my_sellout_sales_fact') }}
+    select * from {{ ref('mysedw_integration__edw_vw_my_sellout_inventory_fact') }}
 ),
 itg_my_in_transit as(
     select * from  {{ ref('mysitg_integration__itg_my_in_transit') }}
