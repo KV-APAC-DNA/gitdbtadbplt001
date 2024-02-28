@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_my_as_watsons_inventory
-        tags: ["monthly","j_rg_watsons_inv_ingestion"]
+        tags: ["j_rg_watsons_inv_ingestion","ingestion"]
         tests:
           - test_duplicate__ff:
               group_by_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]

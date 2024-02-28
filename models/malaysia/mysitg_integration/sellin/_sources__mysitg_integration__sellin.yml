@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_my_accruals
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["cust_id"]
@@ -29,7 +29,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
     - name: sdl_my_afgr
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["afgr_num"]
@@ -45,7 +45,7 @@ sources:
                   schema: myswks_integration
 
     - name: sdl_my_trgts
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["cust_id"]
@@ -64,7 +64,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
     - name: sdl_my_le_trgt
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_lookup:
               select_columns: ["cust_id"]
@@ -78,7 +78,7 @@ sources:
                 schema: myswks_integration
         
     - name: sdl_my_ciw_map
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["acct_num"]

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_my_customer_dim
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["cust_id"]
