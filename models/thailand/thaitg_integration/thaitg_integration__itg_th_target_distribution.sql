@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['dstrbtr_id']
+    )
+}}
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_target_distribution') }}
 ),

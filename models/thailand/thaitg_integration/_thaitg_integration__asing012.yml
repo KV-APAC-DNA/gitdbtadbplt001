@@ -49,3 +49,7 @@ models:
     config:
       alias: itg_mds_th_customer_hierarchy
       tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_dms_sellout_fact
+    config:
+      alias: itg_th_dms_sellout_fact
+      tags: ["th_mbox_old_salestool_sellout",""]

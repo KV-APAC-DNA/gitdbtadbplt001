@@ -2,18 +2,19 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','re','target','period']
+        unique_key=  ['distributorid', 'saleoffice', 'salegroup', 'target', 'period']
     )
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw','sdl_mds_lcm_distributor_target_sales_re') }}
+    select * from {{ source('thasdl_raw','sdl_mds_lcm_distributor_target_sales') }}
 ),
 trans as 
 (
 select
     upper(trim(distributorid))::varchar(10) as distributorid,
-    upper(trim(re))::varchar(20) as re,
+    upper(trim(saleoffice))::varchar(200) as saleoffice,
+    upper(trim(salegroup))::varchar(200) as salegroup,
     target::number(18,6) as target,
     trim(period)::varchar(10) as period,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
@@ -24,7 +25,8 @@ select
 final as (
 select
   distributorid,
-  re,
+  saleoffice,
+  salegroup,
   target,
   period,
   crt_dttm,
