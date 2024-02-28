@@ -1,0 +1,12 @@
+version: 2
+
+models:
+
+  - name: mysitg_integration__itg_my_as_watsons_inventory
+    config:
+      alias: itg_my_as_watsons_inventory
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]
+  - name: mysitg_integration__sdl_my_raw_as_watsons_inventory
+    config:
+      alias: sdl_my_raw_as_watsons_inventory
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]
