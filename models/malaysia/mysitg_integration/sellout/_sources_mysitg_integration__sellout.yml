@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_my_in_transit
-        tags: ["hourly","my_sellout"]
+        tags: ["my_sellout","ingestion"]
         tests:
           - test_duplicate:
               group_by_columns: ["bill_doc"]
@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_my_monthly_sellout_sales_fact
-        tags: ["hourly","my_joint_monthly"]
+        tags: ["my_joint_monthly","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["filename","dstrbtr_id"]
@@ -33,7 +33,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_my_monthly_sellout_stock_fact
-        tags: ["hourly","my_joint_monthly"]
+        tags: ["my_joint_monthly","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["filename","cust_id"]
@@ -46,7 +46,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_108129
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -60,7 +60,7 @@ sources:
                 schema: myswks_integration
 
       - name: sdl_so_sales_108273
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -73,7 +73,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_108565
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -86,7 +86,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_109772
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -99,7 +99,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_118477
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -112,7 +112,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_119024
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -125,7 +125,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_119025
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -138,7 +138,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130516
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -151,7 +151,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130517
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -164,7 +164,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130518
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -177,7 +177,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130519
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -190,7 +190,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130520
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -203,7 +203,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_130521
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -216,7 +216,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_131164
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -229,7 +229,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_131165
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -242,7 +242,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_131166
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -255,7 +255,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_131167
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -268,7 +268,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133980
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -281,7 +281,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133981
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -294,7 +294,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133982
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -307,7 +307,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133983 
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -320,7 +320,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133984
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -333,7 +333,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133985
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -346,7 +346,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_133986
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -359,7 +359,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_135976
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -372,7 +372,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_sales_137021
-        tags: ["daily","my_sellout_sales"]
+        tags: ["my_sellout_sales","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -385,7 +385,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133986
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -398,7 +398,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133985
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -412,7 +412,7 @@ sources:
                 schema: myswks_integration
         
       - name: sdl_so_inv_133984
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -425,7 +425,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133983
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -438,7 +438,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133982
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -451,7 +451,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133981
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -464,7 +464,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_133980
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -477,7 +477,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_131167
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -490,7 +490,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_131166
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -503,7 +503,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_131165
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -516,7 +516,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_131164
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -529,7 +529,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130521
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -542,7 +542,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130520
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -555,7 +555,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130519
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -568,7 +568,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130518
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -581,7 +581,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130517
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -594,7 +594,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_130516
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -607,7 +607,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_119025
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -620,7 +620,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_119024
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -633,7 +633,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_118477
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -646,7 +646,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_109772
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -659,7 +659,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_108565
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -672,7 +672,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_108273
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -685,7 +685,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_108129
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -698,7 +698,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_135976
-        tags: ["my_sellout_inv_morning","hourly"]
+        tags: ["my_sellout_inv","ingestion"]
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
@@ -711,7 +711,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_so_inv_137021
-        tags: ["my_sellout_inv_morning","hourly"] 
+        tags: ["my_sellout_inv","ingestion"] 
         tests:
           - test_lookup:
               select_columns: ["file_name","distributor_id"]
