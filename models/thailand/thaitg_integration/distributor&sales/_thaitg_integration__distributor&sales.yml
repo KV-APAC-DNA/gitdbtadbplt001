@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_target_sales
+    config:
+      alias: itg_th_target_sales
+      tags: ["daily","my_sellout_sales"]
+  - name: thaitg_integration__itg_mds_lcm_distributor_target_sales_re
+    config:
+      alias: itg_mds_lcm_distributor_target_sales_re
+      tags: ["hourly","my_sellout"]
+      

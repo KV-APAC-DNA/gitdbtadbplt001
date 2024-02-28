@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_th_htc_sellout
+        tags: ["", ""]
+        tests:
+          - test_null:
+              not_null_columns: ["distributorid","customer_code"]
+              select_columns: ["distributorid","customer_code"]
+              name: TRATBL_sdl_mds_th_htc_sellout__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+  

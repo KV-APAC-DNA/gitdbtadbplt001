@@ -7,23 +7,23 @@
 }}
 
 
-with sdl_th_target_sales as (
+with sdl_mds_th_distributor_target_sales as (
 -- select * from dev_dna_load.snaposesdl_raw.sdl_th_target_sales
-select * from {{ source('thasdl_raw', 'sdl_th_target_sales') }}
+select * from {{ source('thasdl_raw', 'sdl_mds_th_distributor_target_sales') }}
 ),
 transformed as (
 select
-  dstrbtr_id,
-  sls_office,
-  sls_grp,
-  target,
-  period,
-  tgt_date,
-  crt_date,
-  cdl_dttm,
+  trim(distributorid) as dstrbtr_id,
+  trim(saleoffice) as sls_office,
+  trim(salegroup) as sls_grp,
+  cast(trim(target) as decimal) as target,
+  trim(period) as period,
+  to_date(period::varchar, 'YYYYMM') as tgt_date,
+  null as crt_date,
+  to_char(cast(current_timestamp() as timestampntz), 'yyyymmddhh24missms') as cdl_dttm,
   current_timestamp() as curr_date,
   current_timestamp() as updt_dttm
-from sdl_th_target_sales),
+from sdl_mds_th_distributor_target_sales),
 final as (
     select
     dstrbtr_id::varchar(10) as  dstrbtr_id,

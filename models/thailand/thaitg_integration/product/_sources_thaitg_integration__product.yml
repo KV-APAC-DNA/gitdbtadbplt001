@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_th_product_master
+        tags: ["", ""]
+        tests:
+          - test_null:
+              not_null_columns: ["code"]
+              select_columns: ["code", "name2"]
+              name: TRATBL_sdl_mds_th_product_master__null_test
+              config:
+                store_failures: true
+                schema: check
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code", "name2"]
+              name: TRATBL_sdl_mds_th_product_master__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_mds_th_distributor_msl
+        tags: ["", ""]
+        tests:
+          - test_null:
+              not_null_columns: ["barcode", "artypecode_code"]
+              select_columns: ["barcode", "artypecode_code", "productname"]
+              name: TRATBL_sdl_mds_lcm_distributor_target_sales_re__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+      

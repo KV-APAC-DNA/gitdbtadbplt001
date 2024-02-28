@@ -1,46 +1,153 @@
-version: 2
+# version: 2
 
-sources:
-  - name: thasdl_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: thasdl_raw
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: sdl_th_target_sales
-        tags: ["", ""]
+# sources:
+#   - name: thasdl_raw
+#     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+#     schema: thasdl_raw
+#     quoting:
+#       database: false
+#       schema: false
+#       identifier: false
+#     tables:
+#       - name: sdl_mds_th_distributor_target_sales
+#         tags: ["", ""]
 
-      - name: sdl_mds_th_market_share_distribution
-        tags: ["", ""]
-      - name: sdl_mds_th_htc_sellout
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_gt_kpi_target
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_gt_scope
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_ref_region
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_product_master
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_distributor_list
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_ps_targets
-        tags: ["", ""]
-  
-      - name: sdl_mds_th_myanmar_customer_master
-        tags: ["", ""]
-  
-      - name: sdl_mds_lcm_distributor_target_sales_re
-        tags: ["", ""]
-      - name: sdl_mds_th_distributor_msl
-        tags: ["", ""]
-  
-     
+#       - name: sdl_mds_th_market_share_distribution
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["year_month","measure","category"]
+#               select_columns: ["year_month","measure","category"]
+#               name: TRATBL_sdl_mds_th_market_share_distribution__null_test
+#               config:
+#                 store_failures: true
+#                 schema: thawks_integration
+#           - test_duplicate:
+#               group_by_columns: ["year_month","measure","category"]
+#               select_columns: ["year_month","measure","category"]
+#               name: TRATBL_sdl_mds_th_market_share_distribution__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+      
+#       - name: sdl_mds_th_htc_sellout
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["distributorid","customer_code"]
+#               select_columns: ["distributorid","customer_code"]
+#               name: TRATBL_sdl_mds_th_htc_sellout__null_test
+#               config:
+#                 store_failures: true
+#                 schema: thawks_integration
+
+#       - name: sdl_mds_th_gt_kpi_target
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#                 not_null_columns: ["year","kpi_code","kpi_desc"]
+#                 select_columns: ["year","kpi_code","kpi_desc"]
+#                 name: TRATBL_sdl_mds_th_gt_kpi_target__null_test
+#                 config:
+#                   store_failures: true
+#                   schema: check
+#           - test_duplicate:
+#               group_by_columns: ["year","upper(kpi_code)","upper(kpi_desc)","COALESCE(UPPER(RE_CODE),'NA')"]
+#               select_columns: ["year","kpi_code","kpi_desc","re_code"]
+#               name: TRATBL_sdl_mds_th_gt_kpi_target__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+
+#       - name: sdl_mds_th_gt_scope
+#         tags: ["", ""]
+        
+
+#       - name: sdl_mds_th_ref_region
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["code"]
+#               select_columns: ["code", "name"]
+#               name: TRATBL_sdl_mds_th_ref_region__null_test
+#               config:
+#                 store_failures: true
+#                 schema: check
+#           - test_duplicate:
+#               group_by_columns: ["code"]
+#               select_columns: ["code", "name"]
+#               name: TRATBL_sdl_mds_th_ref_region__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+
+#       - name: sdl_mds_th_product_master
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["code"]
+#               select_columns: ["code", "name2"]
+#               name: TRATBL_sdl_mds_th_product_master__null_test
+#               config:
+#                 store_failures: true
+#                 schema: check
+#           - test_duplicate:
+#               group_by_columns: ["code"]
+#               select_columns: ["code", "name2"]
+#               name: TRATBL_sdl_mds_th_product_master__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+      
+
+#       - name: sdl_mds_th_distributor_list
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["code"]
+#               select_columns: ["code", "name"]
+#               name: TRATBL_sdl_mds_th_distributor_list__null_test
+#               config:
+#                 store_failures: true
+#                 schema: check
+#           - test_duplicate:
+#               group_by_columns: ["code"]
+#               select_columns: ["code", "name"]
+#               name: TRATBL_sdl_mds_th_distributor_list__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+
+#       - name: sdl_mds_th_ps_targets
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["kpi", "channel"]
+#               select_columns: ["kpi", "channel","re","attribute_1","attribute_2"]
+#               name: TRATBL_sdl_mds_th_ps_targets__null_test
+#               config:
+#                 store_failures: true
+#                 schema: check
+#           - test_duplicate:
+#               group_by_columns: ["kpi", "channel","re","attribute_1","attribute_2"]
+#               select_columns: ["kpi", "channel","re","attribute_1","attribute_2","value"]
+#               name: TRATBL_sdl_mds_th_ps_targets__duplicate_test
+#               config:
+#                 store_failures: true
+#                 schema: myswks_integration
+
+#       - name: sdl_mds_th_myanmar_customer_master
+#         tags: ["", ""]
+
+#       - name: sdl_mds_lcm_distributor_target_sales_re
+#         tags: ["", ""]
+#       - name: sdl_mds_th_distributor_msl
+#         tags: ["", ""]
+#         tests:
+#           - test_null:
+#               not_null_columns: ["barcode", "artypecode_code"]
+#               select_columns: ["barcode", "artypecode_code", "productname"]
+#               name: TRATBL_sdl_mds_lcm_distributor_target_sales_re__null_test
+#               config:
+#                 store_failures: true
+#                 schema: thawks_integration

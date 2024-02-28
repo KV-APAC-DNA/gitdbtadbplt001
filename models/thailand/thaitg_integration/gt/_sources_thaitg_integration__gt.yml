@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_th_gt_kpi_target
+        tags: ["", ""]
+        tests:
+          - test_null:
+                not_null_columns: ["year","kpi_code","kpi_desc"]
+                select_columns: ["year","kpi_code","kpi_desc"]
+                name: TRATBL_sdl_mds_th_gt_kpi_target__null_test
+                config:
+                  store_failures: true
+                  schema: check
+          - test_duplicate:
+              group_by_columns: ["year","upper(kpi_code)","upper(kpi_desc)","COALESCE(UPPER(RE_CODE),'NA')"]
+              select_columns: ["year","kpi_code","kpi_desc","re_code"]
+              name: TRATBL_sdl_mds_th_gt_kpi_target__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+
+
