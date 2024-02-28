@@ -17,3 +17,11 @@ models:
     config: 
         alias: edw_my_siso_analysis
         tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__edw_my_sipos_analysis
+    config:
+      alias: edw_my_sipos_analysis
+      tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__itg_my_sellout_sales_fact
+    config:
+      alias: itg_my_sellout_sales_fact
+      tags: ["malaysia_views","transformation"]

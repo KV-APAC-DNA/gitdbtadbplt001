@@ -10,3 +10,4 @@ models:
     config:
       alias: sdl_raw_my_as_watsons_inventory
       tags: ["j_rg_watsons_inv_ingestion","ingestion"]
+
