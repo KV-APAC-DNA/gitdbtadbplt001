@@ -18,14 +18,14 @@ models:
   - name: mysedw_integration__edw_vw_my_curr_prev_sellin_fact
     config:
       alias: edw_vw_my_curr_prev_sellin_fact
-      tags: ["daily","my_sellin_analysis"]
+      tags: ["malaysia_views","transformation"]
      
   - name: mysedw_integration__edw_vw_my_billing_fact
     config:
       alias: edw_vw_my_billing_fact
-      tags: ["daily","my_siso_analysis"]
+      tags: ["malaysia_views","transformation"]
 
   - name: mysedw_integration__edw_vw_my_sellin_sales_fact
     config:
       alias: edw_vw_my_sellin_sales_fact
-      tags: ["daily","my_sellin_analysis"]
+      tags: ["malaysia_views","transformation"]

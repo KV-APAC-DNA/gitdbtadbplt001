@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('mysitg_integration', 'itg_my_as_watsons_inventory') }}
+    select * from {{ ref('mysitg_integration__itg_my_as_watsons_inventory') }}
 ),
 final as
 (   select

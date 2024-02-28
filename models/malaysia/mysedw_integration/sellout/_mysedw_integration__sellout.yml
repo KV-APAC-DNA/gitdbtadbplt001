@@ -4,7 +4,7 @@ models:
   - name: mysedw_integration__edw_vw_my_sellout_sales_fact
     config:
       alias: edw_vw_my_sellout_sales_fact
-      tags: ["",""]
+      tags: ["malaysia_views","transformation"]
   - name: mysedw_integration__edw_my_sellout_analysis
     config:
       alias: edw_my_sellout_analysis
@@ -16,4 +16,4 @@ models:
   - name: mysedw_integration__edw_vw_my_sellout_inventory_fact
     config:
         alias: edw_vw_my_sellout_inventory_fact
-        tags: ["daily","my_siso_analysis"]
+        tags: ["malaysia_views","transformation"]

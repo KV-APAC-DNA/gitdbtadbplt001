@@ -4,25 +4,25 @@ models:
   - name: mysedw_integration__edw_vw_my_pos_sales_fact
     config:
       alias: edw_vw_my_pos_sales_fact
-      tags: ["",""]
+      tags: ["malaysia_views","transformation"]
   - name: mysedw_integration__edw_vw_my_pos_inventory
     config:
       alias: edw_vw_my_pos_inventory
-      tags: ["j_ap_my_reg_data_refresh","hourly"]
+      tags: ["malaysia_views","transformation"]
   - name: mysedw_integration__edw_vw_my_si_pos_inv_analysis
     config:
       alias: edw_vw_my_si_pos_inv_analysis
-      tags: ["",""]
+      tags: ["malaysia_views","transformation"]
 
   - name: mysedw_integration__edw_vw_my_pos_customer_dim
     config:
       alias: edw_vw_my_pos_customer_dim
-      tags: ["daily","my_pos_analysis"]
+      tags: ["malaysia_views","transformation"]
 
   - name: mysedw_integration__edw_vw_my_pos_material_dim
     config:
       alias: edw_vw_my_pos_material_dim
-      tags: ["daily","my_pos_analysis"]
+      tags: ["malaysia_views","transformation"]
 
   - name: mysedw_integration__edw_vw_my_pos_analysis
     config:
