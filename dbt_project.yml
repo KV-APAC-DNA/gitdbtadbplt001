@@ -133,3 +133,6 @@ models:
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
+      mysedw_access:
+        +materialized: view
+        +schema: MYSEDW_ACCESS
