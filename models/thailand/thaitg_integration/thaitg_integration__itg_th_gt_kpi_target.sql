@@ -1,5 +1,6 @@
 with sdl_mds_th_gt_kpi_target as (
-select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_gt_kpi_target
+-- select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_gt_kpi_target
+select * from {{ source('thasdl_raw', 'sdl_mds_th_gt_kpi_target') }}
 ),
 wks_th_gt_kpi_target_header as (
 select * from dev_dna_core.snaposewks_integration.wks_th_gt_kpi_target_header

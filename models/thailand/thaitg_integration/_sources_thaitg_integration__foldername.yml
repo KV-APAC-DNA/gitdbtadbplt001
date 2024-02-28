@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_th_target_sales
+        tags: ["", ""]
+
+      - name: sdl_mds_th_market_share_distribution
+        tags: ["", ""]
+      - name: sdl_mds_th_htc_sellout
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_gt_kpi_target
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_gt_scope
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_ref_region
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_product_master
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_distributor_list
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_ps_targets
+        tags: ["", ""]
+  
+      - name: sdl_mds_th_myanmar_customer_master
+        tags: ["", ""]
+  
+      - name: sdl_mds_lcm_distributor_target_sales_re
+        tags: ["", ""]
+      - name: sdl_mds_th_distributor_msl
+        tags: ["", ""]
+  
+     

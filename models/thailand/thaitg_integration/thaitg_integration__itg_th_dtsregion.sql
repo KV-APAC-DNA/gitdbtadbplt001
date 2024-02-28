@@ -1,6 +1,7 @@
 
 with sdl_mds_th_ref_region as (
-select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_TH_REF_REGION
+-- select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_TH_REF_REGION
+select * from {{ source('thasdl_raw', 'sdl_mds_th_ref_region') }}
 ),
 transformed as (
 select

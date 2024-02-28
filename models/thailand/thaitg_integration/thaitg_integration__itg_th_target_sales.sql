@@ -1,5 +1,15 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['distributorid','sls_office','sls_grp','period']
+    )
+}}
+
+
 with sdl_th_target_sales as (
-select * from dev_dna_load.snaposesdl_raw.sdl_th_target_sales
+-- select * from dev_dna_load.snaposesdl_raw.sdl_th_target_sales
+select * from {{ source('thasdl_raw', 'sdl_th_target_sales') }}
 ),
 transformed as (
 select

@@ -1,5 +1,6 @@
 with sdl_mds_th_gt_scope as (
-  select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_gt_scope
+--   select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_gt_scope
+select * from {{ source('thasdl_raw', 'sdl_mds_th_gt_scope') }}
   ),
 transformed as (
   select

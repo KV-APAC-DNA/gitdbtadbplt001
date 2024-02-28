@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_mds_lcm_distributor_target_sales_re
+    config:
+      alias: itg_mds_lcm_distributor_target_sales_re
+      tags: ["hourly","my_sellout"]
+  - name: thaitg_integration__itg_mds_th_myanmar_customer_master
+    config:
+      alias: itg_mds_th_myanmar_customer_master
+      tags: ["hourly","my_joint_monthly"]
+  - name: thaitg_integration__itg_mds_th_ps_targets
+    config:
+      alias: itg_mds_th_ps_targets
+      tags: ["hourly","my_joint_monthly"]
+  - name: thaitg_integration__itg_th_dtsdistributor
+    config:
+      alias: itg_th_dtsdistributor
+      tags: ["hourly","my_sellout"]
+  - name: thaitg_integration__itg_th_dtsitemmaster
+    config:
+      alias: itg_th_dtsitemmaster
+      tags: ["hourly","my_joint_monthly"]
+  - name: thaitg_integration__itg_th_dtsmcl
+    config:
+      alias: itg_th_dtsmcl
+      tags: ["hourly","my_sellout_inv_morning"]
+  - name: thaitg_integration__itg_th_dtsregion
+    config:
+      alias: itg_th_dtsregion
+      tags: ["hourly","my_sellout_inv_morning"]
+  - name: thaitg_integration__itg_th_gt_dstrbtr_control
+    config:
+      alias: itg_th_gt_dstrbtr_control
+      tags: ["daily","my_sellout_sales"]
+  - name: thaitg_integration__itg_th_gt_kpi_target
+    config:
+      alias: itg_th_gt_kpi_target
+      tags: ["daily","my_sellout_sales"]
+  - name: thaitg_integration__itg_th_htc_sellout
+    config:
+      alias: itg_th_htc_sellout
+      tags: ["daily","my_sellout_sales"]
+  - name: thaitg_integration__itg_th_jbp_market_share_dist
+    config:
+      alias: itg_th_jbp_market_share_dist
+      tags: ["daily","my_sellout_sales"]
+  - name: thaitg_integration__itg_th_target_sales
+    config:
+      alias: itg_th_target_sales
+      tags: ["daily","my_sellout_sales"]
+  
+     

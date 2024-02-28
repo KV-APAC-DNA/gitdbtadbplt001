@@ -1,6 +1,7 @@
 
 with sdl_mds_th_product_master as (
-select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_product_master
+-- select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_product_master
+select * from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }}
 ),
 transformed as (
 select

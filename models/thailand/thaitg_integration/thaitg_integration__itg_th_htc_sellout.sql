@@ -1,0 +1,111 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['distributorid','orderno','orderdate','arcode','linenumber']
+    )
+}}
+
+
+with sdl_mds_th_htc_sellout as (
+--   select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_htc_sellout
+  select * from {{ source('thasdl_raw', 'sdl_mds_th_htc_sellout') }}
+  ),
+  transformed as (
+  select
+    trim(distributorid) as distributorid,
+    trim(invoice) as orderno,
+    cast(trim(date_invoice) as timestampntz) as orderdate,
+    trim(customer_code) as arcode,
+    trim(customer_name) as arname,
+    trim(city) as city,
+    trim(region) as region,
+    trim(saledistrict) as saledistrict,
+    trim(saleoffice) as saleoffice,
+    trim(saleareacode) as salegroup,
+    trim(artypecode) as artypecode,
+    trim(saleemployee) as saleemployee,
+    trim(salename) as salename,
+    trim(product_code) as productcode,
+    trim(product_name) as productdesc,
+    trim(megabrand) as megabrand,
+    trim(brand) as brand,
+    trim(baseproduct) as baseproduct,
+    trim(variant) as variant,
+    trim(putup) as putup,
+    trim(grossprice) as grossprice,
+    trim(qty_pcs) as qty,
+    trim("sum of subamt") as subamt1,
+    trim(discount_amount) as discount,
+    trim(sub_amt_2) as subamt2,
+    trim(discount_btline) as discountbtline,
+    trim(totalbeforevat) as totalbeforevat,
+    trim(total) as total,
+    cast(trim(linenumber) as int) as linenumber,
+    cast(trim(iscancel) as int) as iscancel,
+    trim(cndocno) as cndocno,
+    trim(cnreasoncode) as cnreasoncode,
+    trim(promotioncode3) as promotionheader1,
+    trim(promotioncode4) as promotionheader2,
+    trim(promotioncode5) as promotionheader3,
+    trim(promotion_code) as promodesc1,
+    trim(promotioncode1) as promodesc2,
+    trim(promotioncode2) as promodesc3,
+    trim(promo_id) as promocode1,
+    trim(promotion_code2) as promocode2,
+    trim(promotion_code3) as promocode3,
+    trim(0) as avgdiscount,
+    '' as run_id,
+    convert_timezone('Asia/Singapore', current_timestamp()) as crt_dttm
+  from sdl_mds_th_htc_sellout
+  ),
+final as (
+    select
+    distributorid::varchar(10) as distributorid,
+    orderno::varchar(255) as orderno,
+    orderdate::timestamp_ntz(9) as orderdate,
+    arcode::varchar(20) as arcode,
+    arname::varchar(500) as arname,
+    city::varchar(255) as city,
+    region::varchar(20) as region,
+    saledistrict::varchar(200) as saledistrict,
+    saleoffice::varchar(255) as saleoffice,
+    salegroup::varchar(255) as salegroup,
+    artypecode::varchar(20) as artypecode,
+    saleemployee::varchar(255) as saleemployee,
+    salename::varchar(350) as salename,
+    productcode::varchar(25) as productcode,
+    productdesc::varchar(300) as productdesc,
+    megabrand::varchar(10) as megabrand,
+    brand::varchar(10) as brand,
+    baseproduct::varchar(20) as baseproduct,
+    variant::varchar(10) as variant,
+    putup::varchar(10) as putup,
+    grossprice::number(19,6) as grossprice,
+    qty::number(19,6) as qty,
+    subamt1::number(19,6) as subamt1,
+    discount::number(19,6) as discount,
+    subamt2::number(19,6) as subamt2,
+    discountbtline::number(19,6) as discountbtline,
+    totalbeforevat::number(19,6) as totalbeforevat,
+    total::number(19,6) as total,
+    linenumber::number(18,0) as linenumber,
+    iscancel::number(18,0) as iscancel,
+    cndocno::varchar(255) as cndocno,
+    cnreasoncode::varchar(255) as cnreasoncode,
+    promotionheader1::varchar(255) as promotionheader1,
+    promotionheader2::varchar(255) as promotionheader2,
+    promotionheader3::varchar(255) as promotionheader3,
+    promodesc1::varchar(255) as promodesc1,
+    promodesc2::varchar(255) as promodesc2,
+    promodesc3::varchar(255) as promodesc3,
+    promocode1::varchar(255) as promocode1,
+    promocode2::varchar(255) as promocode2,
+    promocode3::varchar(255) as promocode3,
+    avgdiscount::number(18,4) as avgdiscount,
+    run_id::varchar(50) as run_id,
+    crt_dttm::timestamp_ntz(9) as crt_dttm
+from transformed
+)
+select * from final
+  

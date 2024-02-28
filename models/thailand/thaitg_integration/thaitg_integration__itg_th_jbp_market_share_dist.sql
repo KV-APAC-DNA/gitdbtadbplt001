@@ -1,5 +1,6 @@
 with sdl_mds_th_market_share_distribution as (
-select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_market_share_distribution
+-- select * from dev_dna_load.snaposesdl_raw.sdl_mds_th_market_share_distribution
+select * from {{ source('thasdl_raw', 'sdl_mds_th_market_share_distribution') }}
 ),
 transformed as (
 select
