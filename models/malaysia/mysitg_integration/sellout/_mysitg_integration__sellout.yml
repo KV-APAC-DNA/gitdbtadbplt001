@@ -4,20 +4,40 @@ models:
   - name: mysitg_integration__itg_my_in_transit
     config:
       alias: itg_my_in_transit
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__itg_my_sellout_sales_fact
     config:
       alias: itg_my_sellout_sales_fact
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["my_sellout_sales","my_joint_monthly","transformation"]
   - name: mysitg_integration__itg_my_sellout_stock_fact
     config:
       alias: itg_my_sellout_stock_fact
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["my_joint_monthly","my_sellout_inv","transformation"]
   - name: mysitg_integration__sdl_raw_my_in_transit
     config:
       alias: sdl_raw_my_in_transit
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__sdl_my_monthly_sellout_sales_fact_mds_sync
     config:
       alias: sdl_my_monthly_sellout_sales_fact_mds_sync
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["my_joint_monthly","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_daily_sellout_stock_fact
+    config:
+      alias: sdl_raw_my_daily_sellout_stock_fact
+      tags: ["my_sellout_inv","transformation"]
+  - name: mysitg_integration__sdl_my_daily_sellout_stock_fact
+    config:
+      alias: sdl_my_daily_sellout_stock_fact
+      tags: ["my_sellout_inv","transformation"]
+  - name: mysitg_integration__sdl_my_daily_sellout_sales_fact
+    config:
+      alias: sdl_my_daily_sellout_sales_fact
+      tags: ["my_sellout_sales","transformation"]
+  - name: mysitg_integration__sdl_my_daily_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_my_daily_sellout_sales_fact_mds_sync
+      tags: ["my_sellout_sales","transformation"]
+  - name: mysitg_integration__sdl_raw_my_daily_sellout_sales_fact
+    config:
+      alias: sdl_raw_my_daily_sellout_sales_fact
+      tags: ["my_sellout_sales","transformation"]

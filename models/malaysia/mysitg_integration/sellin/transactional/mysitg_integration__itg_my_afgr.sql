@@ -1,5 +1,5 @@
 with sdl_my_afgr as (
-    select * from {{ source('myssdl_raw','sdl_my_afgr') }}
+    select * from {{ ref('myswks_integration__wks_sdl_my_afgr') }}
 ),
 itg_my_customer_dim as (
     select * from {{ref('mysitg_integration__itg_my_customer_dim') }}
@@ -13,14 +13,14 @@ temp_table as (
     cust_dn_num,
     cast(dn_amt_exc_gst_val as decimal(20, 4)) as dn_amt_exc_gst_val,
     cast(afgr_amt as decimal(20, 4)) as afgr_amt,
-    to_date(dt_to_sc, 'DD-MM-YYYY') as dt_to_sc,
+    to_date(dt_to_sc) as dt_to_sc,
     sc_validation,
     rtn_ord_num,
-    to_date(rtn_ord_dt, 'DD-MM-YYYY') as rtn_ord_dt,
+    to_date(rtn_ord_dt) as rtn_ord_dt,
     cast(rtn_ord_amt as decimal(20, 4)) as rtn_ord_amt,
-    to_date(cn_exp_issue_dt, 'DD-MM-YYYY') as cn_exp_issue_dt,
+    to_date(cn_exp_issue_dt) as cn_exp_issue_dt,
     bill_num,
-    to_date(bill_dt, 'DD-MM-YYYY') as bill_dt,
+    to_date(bill_dt) as bill_dt,
     cast(cn_amt as decimal(20, 4)) as cn_amt,
     imcd.chnl as chnl,
     sma.cdl_dttm,

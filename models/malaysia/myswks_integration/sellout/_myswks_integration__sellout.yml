@@ -5,4 +5,144 @@ models:
   - name: myswks_integration__wks_my_sellout_for_inv_analysis
     config:
       alias: wks_my_sellout_for_inv_analysis
-      tags: ["j_ap_my_reg_data_refresh","hourly"]
+      tags: ["j_ap_my_reg_data_refresh","transformation"]
+
+  - name: myswks_integration__wks_my_sellout_stock_fact
+    config:
+      alias: wks_my_sellout_stock_fact
+      tags: ["my_sellout_inv","transformation"]
+  
+  - name: myswks_integration__wks_my_sellout_sales_fact
+    config:
+      alias: wks_my_sellout_sales_fact
+      tags: ["my_sellout_sales","transformation"]
+
+  - name: myswks_integration__wks_so_sales_108129
+    config:
+      alias: wks_so_sales_108129
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_108273
+    config:
+      alias: wks_so_sales_108273
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_108565
+    config:
+      alias: wks_so_sales_108565
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_109772
+    config:
+      alias: wks_so_sales_109772
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_118477
+    config:
+      alias: wks_so_sales_118477
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_119024
+    config:
+      alias: wks_so_sales_119024
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_119025
+    config:
+      alias: wks_so_sales_119025
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130516
+    config:
+      alias: wks_so_sales_130516
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130517
+    config:
+      alias: wks_so_sales_130517
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130518
+    config:
+      alias: wks_so_sales_130518
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130519
+    config:
+      alias: wks_so_sales_130519
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130520
+    config:
+      alias: wks_so_sales_130520
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_130521
+    config:
+      alias: wks_so_sales_130521
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_131164
+    config:
+      alias: wks_so_sales_131164
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_131165
+    config:
+      alias: wks_so_sales_131165
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_131166
+    config:
+      alias: wks_so_sales_131166
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_131167
+    config:
+      alias: wks_so_sales_131167
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133980
+    config:
+      alias: wks_so_sales_133980
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133981
+    config:
+      alias: wks_so_sales_133981
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133982
+    config:
+      alias: wks_so_sales_133982
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133983
+    config:
+      alias: wks_so_sales_133983
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133984
+    config:
+      alias: wks_so_sales_133984
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133985
+    config:
+      alias: wks_so_sales_133985
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_133986
+    config:
+      alias: wks_so_sales_133986
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_135976
+    config:
+      alias: wks_so_sales_135976
+      tags: ["my_sellout_sales","ingestion"]
+
+  - name: myswks_integration__wks_so_sales_137021
+    config:
+      alias: wks_so_sales_137021
+      tags: ["my_sellout_sales","ingestion"]
