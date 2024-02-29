@@ -9,9 +9,11 @@
 with source as (
     select * from {{ ref('mysitg_integration__itg_my_outlet_attr') }}
 ),
+
 itg_my_sellout_sales_fact as (
     select * from {{ ref('mysitg_integration__itg_my_sellout_sales_fact') }}
 ),
+
 union_1 as (
     select distinct
   a.dstrbtr_id || a.cust_cd as outlet_key,
@@ -32,9 +34,9 @@ from itg_my_sellout_sales_fact as a
 {% if is_incremental() %}
     where outlet_key not in( select distinct outlet_key from {{ this }} )
 {% endif %}
-
 ),
-transformed as (
+
+union_2 as (
 select
   upper(trim(cust_id || outlet_id)) as outlet_key, 
   cust_id as cust_id, 
@@ -52,26 +54,8 @@ select
   null as updt_dttm 
 from source
 ),
-union_2 as 
-(
-    select  
-        outlet_key,
-        cust_id,
-        cust_nm,
-        outlet_id,
-        outlet_desc,
-        outlet_type1,
-        outlet_type2,
-        outlet_type3,
-        outlet_type4,
-        town,
-        cust_year,
-        slsmn_cd,
-        crtd_dttm,
-        updt_dttm
-    from transformed
-),
-transformed_final as
+
+union_final as
 (
     (
         select * from union_1 
@@ -83,6 +67,7 @@ union all
     )
 
 ),
+
 final as 
 ( 
     select 
@@ -100,6 +85,7 @@ final as
         slsmn_cd::varchar(50) as slsmn_cd,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm,
         updt_dttm::timestamp_ntz(9) as updt_dttm
-    from  transformed_final
+    from  union_final
 )
+
 select * from final
