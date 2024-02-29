@@ -32,6 +32,10 @@ final as (
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where source.curr_dt > (select max(crtd_dttm) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final
