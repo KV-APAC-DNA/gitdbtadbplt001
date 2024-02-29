@@ -10,10 +10,10 @@ sources:
       identifier: false
     tables:
       - name: sdl_my_as_watsons_inventory
-        tags: ["monthly","j_rg_watsons_inv_ingestion"]
+        tags: ["j_rg_watsons_inv_ingestion","ingestion"]
         tests:
           - test_duplicate__ff:
-              group_by_columns: ["cust_cd","store_cd","year","mth_id","matl_num","inv_qty_pc","inv_value","filename"]
+              group_by_columns: ["cust_cd","store_cd","year","mnth_id","matl_num","inv_qty_pc","inv_value","filename"]
               failure_reason: "Duplicate date exists"
               name: TRATBL_sdl_my_as_watsons_inventory__duplicate_test
               config:

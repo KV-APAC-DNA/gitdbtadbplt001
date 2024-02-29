@@ -54,7 +54,7 @@ final as (
   plant::varchar(30) as plant,
   cast(volume_dl as decimal(20, 4)) as volume_dl,
   loc_currcy::varchar(30) as loc_currcy,
-  cast(denomintr as decimal(20, 4)) as denomintr,
+  cast(replace(denomintr,',','') as decimal(20, 4)) as denomintr,
   volume_unit::varchar(20) as volume_unit,
   scale_qty::varchar(20)  as scale_qty,
   cast(cshdsc_bas as decimal(20, 4)) as cshdsc_bas,

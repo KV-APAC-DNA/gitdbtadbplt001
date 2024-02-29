@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['cust_id','jj_mnth_id']
+        unique_key=  ['cust_id','jj_mnth_id'],
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     )
 }}
 
@@ -31,6 +32,10 @@ final as (
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where source.curr_dt > (select max(crtd_dttm) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final

@@ -5,5 +5,5 @@ models:
   - name: myswks_integration__wks_sdl_my_afgr
     config:
       alias: wks_sdl_my_afgr 
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
 

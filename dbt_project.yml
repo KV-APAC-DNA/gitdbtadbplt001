@@ -130,9 +130,34 @@ models:
         sellin:
             view:
               +materialized: view
+        customer_distributor:
+            view:
+              +materialized: view
+        listprice:
+            view:
+              +materialized: view
+        material:
+            view:
+              +materialized: view
+        orders:
+            view:
+              +materialized: view
+        pos:
+            view:
+              +materialized: view
+        sellin_and_pos:
+            view:
+              +materialized: view
+        sellin_and_sellout:
+            view:
+              +materialized: view
+        sellout:
+            view:
+              +materialized: view
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
+<<<<<<< HEAD
     thailand:
       config:
         +enabled: true
@@ -148,3 +173,8 @@ models:
       thawks_integration:
         +materialized: table
         +schema: THAWKS_INTEGRATION
+=======
+      mysedw_access:
+        +materialized: view
+        +schema: MYSEDW_ACCESS
+>>>>>>> 9bfdddad5583320e8db061f853727e5c9361a192

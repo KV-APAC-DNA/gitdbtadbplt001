@@ -1,8 +1,3 @@
-{{
-    config(
-        materialized="table",
-    )
-}}
 with source as (
     select * from {{ source('myssdl_raw','sdl_mds_my_gt_outletattributes') }}
 ),

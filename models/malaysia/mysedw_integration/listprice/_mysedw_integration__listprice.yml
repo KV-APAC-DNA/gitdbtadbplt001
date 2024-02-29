@@ -4,4 +4,4 @@ models:
   - name: mysedw_integration__edw_vw_my_listprice
     config:
       alias: edw_vw_my_listprice
-      tags: ["daily","my_pos_analysis"]
+      tags: ["malaysia_views","transformation"]
