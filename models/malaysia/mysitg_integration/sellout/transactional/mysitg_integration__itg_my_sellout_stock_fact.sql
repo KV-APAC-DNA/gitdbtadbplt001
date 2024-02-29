@@ -216,7 +216,7 @@ trans as
   left join a on
     ltrim(temp.dstrbtr_prod_cd,'0') =ltrim(a.ext_item_cd,'0') 
 ),
-result as 
+final as 
 (
     select distinct
         cust_id::varchar(50) as cust_id,
@@ -244,39 +244,7 @@ result as
         current_timestamp::timestamp_ntz(9) as crtd_dttm,
         current_timestamp::timestamp_ntz(9) as updt_dttm
     from trans
-),
-
-final as 
-(
-    select
-        cust_id,
-        inv_dt,
-        dstrbtr_wh_id,
-        item_cd,
-        dstrbtr_prod_cd,
-        ean_num,
-        dstrbtr_prod_desc,
-        qty,
-        uom,
-        qty_on_ord,
-        uom_on_ord,
-        qty_committed,
-        uom_committed,
-        available_qty_pc,
-        qty_on_ord_pc,
-        qty_committed_pc,
-        unit_prc,
-        total_val,
-        custom_field1,
-        sap_matl_num,
-        filename,
-        cdl_dttm,
-        crtd_dttm,
-        updt_dttm
-    from result
-
 )
-
 select * from final
 
 {% endif %}
