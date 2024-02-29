@@ -9,7 +9,7 @@
 with source as(
     select * from {{ source('thasdl_raw','sdl_mds_lcm_distributor_target_sales') }}
 ),
-trans as 
+final as 
 (
 select
     upper(trim(distributorid))::varchar(10) as distributorid,
@@ -20,18 +20,6 @@ select
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
-),
-
-final as (
-select
-  distributorid,
-  saleoffice,
-  salegroup,
-  target,
-  period,
-  crt_dttm,
-  updt_dttm
-from trans
 )
 
 select * from final

@@ -10,7 +10,7 @@
 with source as(
     select * from {{ source('thasdl_raw','sdl_mds_th_htc_inventory') }}
 ),
-trans as (
+final as (
 select
   cast(trim(date) as timestamp_ntz(9)) as recdate,
   trim(company)::varchar(10) as distributorid,
@@ -23,22 +23,6 @@ select
   null as run_id,
   current_timestamp()::timestamp_ntz(9) as crt_dttm
 from source
-),
-
-final as (
-select
-  recdate,
-  distributorid,
-  whcode,
-  productcode,
-  qty,
-  amount,
-  batchno,
-  expirydate,
-  run_id,
-  crt_dttm
-from trans
-
 )
 
 select * from final

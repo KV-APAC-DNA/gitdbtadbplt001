@@ -1,7 +1,7 @@
 with source as(
     select * from {{ source('thasdl_raw','sdl_mds_th_mym_product_master') }}
 ),
-trans as (
+final as (
 select
   "item NO."::varchar(200) as item_no,
   "product description"::varchar(200) as product_description,
@@ -16,24 +16,6 @@ select
   current_timestamp()::timestamp_ntz(9) as crt_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm
 from source
-),
-
-final as (
-select
-  item_no,
-  product_description,
-  sap_code,
-  sap_name,
-  brand,
-  franchise,
-  size,
-  dz_per_case,
-  unit_per_case,
-  price_per_case_usd,
-  crt_dttm,
-  updt_dttm
-from trans
-
 )
 
 select * from final

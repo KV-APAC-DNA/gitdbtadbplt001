@@ -19,19 +19,6 @@ select
   current_timestamp()::timestamp_ntz(9) as crtd_dttm,
   current_timestamp()::timestamp_ntz(9) as updt_dttm
 from source
-),
-
-final as (
-select
-  dstrbtr_id,
-  period,
-  target,
-  updt_date,
-  prod_nm,
-  cdl_dttm,
-  crtd_dttm,
-  updt_dttm
-from trans
 )
 
 select * from final

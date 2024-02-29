@@ -9,7 +9,7 @@
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_dms_sellout_fact') }}
 ),
-trans as 
+final as 
 (
 select
   distributorid::varchar(10) as distributorid,
@@ -57,55 +57,6 @@ select
   current_timestamp()::timestamp_ntz(9) as curr_date ,
   null as run_id
   from source
-),
-
-final as (
-select
-distributorid,
-orderno,
-orderdate,
-arcode,
-arname,
-city,
-region,
-saledistrict,
-saleoffice,
-salegroup,
-artypecode,
-saleemployee,
-salename,
-productcode,
-productdesc,
-megabrand,
-brand,
-baseproduct,
-variant,
-putup,
-grossprice,
-qty,
-subamt1,
-discount,
-subamt2,
-discountbtline,
-totalbeforevat,
-total,
-linenumber,
-iscancel,
-cndocno,
-cnreasoncode,
-promotionheader1,
-promotionheader2,
-promotionheader3,
-promodesc1,
-promodesc2,
-promodesc3,
-promocode1,
-promocode2,
-promocode3,
-avgdiscount,
-curr_date,
-run_id  
-from trans
 )
 
 select * from final
