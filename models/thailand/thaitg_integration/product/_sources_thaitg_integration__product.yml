@@ -19,7 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: check
-          - test_duplicate:
+          - test_duplicate_dtsitemmaster:
               group_by_columns: ["code"]
               select_columns: ["code", "name2"]
               name: TRATBL_sdl_mds_th_product_master__duplicate_test

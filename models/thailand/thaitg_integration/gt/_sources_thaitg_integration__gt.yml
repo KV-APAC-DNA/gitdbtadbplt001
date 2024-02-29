@@ -19,12 +19,19 @@ sources:
                 config:
                   store_failures: true
                   schema: check
-          - test_duplicate:
-              group_by_columns: ["year","upper(kpi_code)","upper(kpi_desc)","COALESCE(UPPER(RE_CODE),'NA')"]
-              select_columns: ["year","kpi_code","kpi_desc","re_code"]
+          - test_duplicate_kpitgt:
+              group_by_columns: ["year","kpi_code","kpi_desc"]
+              select_columns: ["year","kpi_code","kpi_desc"]
+              coalesce_columns: ["re_code"]
               name: TRATBL_sdl_mds_th_gt_kpi_target__duplicate_test
               config:
                 store_failures: true
                 schema: myswks_integration
+          - test_lookup_year:
+              select_columns: ["year","kpi_code","kpi_desc"]
+              column: "year" 
+              lookup_column: "year"
+              lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_kpi_target') }}"
+              lookup_filter: "A.YEAR = B.YEAR AND B.RESULT = 'false'"
 
 

@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dms_inventory_fact
+    config:
+      alias: itg_th_dms_inventory_fact
+      tags: ["daily","my_sellout_sales"]
+  
+      

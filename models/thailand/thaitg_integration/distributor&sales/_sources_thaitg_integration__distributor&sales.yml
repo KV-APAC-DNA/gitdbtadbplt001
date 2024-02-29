@@ -13,3 +13,19 @@ sources:
         tags: ["", ""]
       - name: sdl_mds_th_distributor_target_sales
         tags: ["", ""]
+        tests:
+          - test_null:
+              not_null_columns: ["distributorid", "saleoffice","salegroup","period"]
+              select_columns: ["distributorid", "saleoffice","salegroup","period"]
+              name: TRATBL_sdl_mds_th_distributor_target_sales__null_test
+              config:
+                store_failures: true
+                schema: check
+          - test_duplicate_upper:
+              group_by_columns: ["distributorid", "saleoffice","salegroup","period"]
+              select_columns: ["distributorid", "saleoffice","salegroup","period"]
+              name: TRATBL_sdl_mds_th_distributor_target_sales__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+
