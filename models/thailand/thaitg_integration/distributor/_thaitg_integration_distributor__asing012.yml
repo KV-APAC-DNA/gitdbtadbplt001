@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dtscnreason
+    config: 
+      alias: itg_th_dtscnreason
+      tags: ["th_non_tesco",""]
+  - name: thaitg_integration__itg_th_dtscustgroup
+    config:
+      alias: itg_th_dtscustgroup
+      tags: ["th_non_tesco",""]

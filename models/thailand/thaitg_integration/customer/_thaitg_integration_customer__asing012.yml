@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_mds_th_customer_hierarchy
+    config:
+      alias: itg_mds_th_customer_hierarchy
+      tags: ["th_non_tesco",""]

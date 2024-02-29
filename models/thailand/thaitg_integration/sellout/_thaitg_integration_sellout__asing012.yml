@@ -1,0 +1,13 @@
+version: 2
+
+models:
+
+  - name: thaitg_integration__itg_th_dms_sellout_fact
+    config:
+      alias: itg_th_dms_sellout_fact
+      tags: ["th_mbox_old_salestool_sellout",""]
+  - name: thaitg_integration__sdl_raw_th_dms_sellout_fact
+    config:
+      alias: sdl_raw_th_dms_sellout_fact
+      tags: ["th_mbox_old_salestool_sellout",""]
+  
