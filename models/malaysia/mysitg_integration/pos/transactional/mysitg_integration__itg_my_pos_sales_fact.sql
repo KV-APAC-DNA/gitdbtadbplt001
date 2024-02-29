@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['cust_id','jj_mnth_id']
+        unique_key=  ['cust_id','jj_mnth_id'],
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     )
 }}
 
