@@ -38,6 +38,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
           - test_duplicate:
+                select_columns: ["afgr_num"]
                 group_by_columns: ["afgr_num"]
                 name: TRATBL_sdl_my_afgr__duplicate_test
                 config:
@@ -87,6 +88,7 @@ sources:
               store_failures: true
               schema: myswks_integration
         - test_duplicate:
+                select_columns: ["acct_num"]
                 group_by_columns: ["acct_num"]
                 name: TRATBL_sdl_my_ciw_map__duplicate_test
                 config:
