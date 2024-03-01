@@ -22,6 +22,7 @@ edw_code_descriptions as(
 edw_subchnl_retail_env_mapping as(
     select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
+
 a as
 (
     select cust_num,
@@ -55,6 +56,7 @@ a as
     where (sls_org)::text = '2100'::text
     group by cust_num
 ),
+
 b as
 (
     select 
@@ -64,6 +66,7 @@ b as
     where (sls_org)::text = '2100'::text
     group by cust_num
 ),
+
 final as
 (
     select 
@@ -174,4 +177,5 @@ final as
     and ((resod.sls_org_co_cd)::text = (recd.co_cd)::text)
     and ((recsd.sls_org)::text = '2100'::text)
 )
+
 select * from final
