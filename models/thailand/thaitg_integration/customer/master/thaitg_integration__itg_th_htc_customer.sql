@@ -42,7 +42,7 @@ transformed as(
         trim(branchcode) as branchcode,
         trim(branchname) as branchname,
         trim(frequencyofvisit) as frequencyofvisit,
-        null as run_id,
+        null::varchar(50) as run_id,
         current_timestamp()::timestampntz(9) crt_dttm
     from source
 ),

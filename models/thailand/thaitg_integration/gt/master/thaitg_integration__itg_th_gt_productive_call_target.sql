@@ -11,7 +11,7 @@ transformed as(
         trim(year) as year,
         trim(product) as product,
         cast(trim(target) as decimal(18, 6)) as target,
-        to_char(cast(current_timestamp()::timestampntz(9) as timestampntz), 'YYYYMMDDHH24MISSFF3') as cdl_dttm,
+        to_char(current_timestamp()::timestampntz(9)), 'YYYYMMDDHH24MISSFF3')::varchar(100) as cdl_dttm,
         current_timestamp()::timestampntz(9) as crtd_dttm,
         current_timestamp()::timestampntz(9) as updt_dttm
     from source
