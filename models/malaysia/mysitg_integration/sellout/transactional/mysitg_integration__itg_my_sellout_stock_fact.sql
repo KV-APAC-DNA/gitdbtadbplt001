@@ -7,9 +7,7 @@
     )
 }}
 
-{% set cte_to_execute = 'my_joint_monthly' %}
-
-{% if cte_to_execute == 'my_joint_monthly' %}
+{% if var("cte_to_execute")  == 'my_joint_monthly' %}
 
 with source as (
     select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_stock_fact') }}
@@ -37,8 +35,8 @@ logical as (
         cast(replace(available_qty_pc, ',', '') as decimal(20, 4)) as available_qty_pc,
         cast(replace(qty_on_ord_pc, ',', '') as decimal(20, 4)) as qty_on_ord_pc,
         cast(replace(qty_committed_pc, ',', '') as decimal(20, 4)) as qty_committed_pc,
-        cast(unit_prc as decimal(20, 4)) as unit_prc,
-        cast(total_val as decimal(20, 4)) * coalesce(imier.exchng_rate, 1) as total_val,
+        cast(replace(unit_prc, ',', '') as decimal(20, 4)) as unit_prc,
+        cast(replace(total_val, ',', '') as decimal(20, 4)) * coalesce(imier.exchng_rate, 1) as total_val,
         custom_field1,
         custom_field2 as sap_matl_num,
         filename,
@@ -82,7 +80,7 @@ final as (
 
 select * from final
 
-{% elif cte_to_execute == 'my_sellout_inv' %}
+{% elif var("cte_to_execute") == 'my_sellout_inv' %}
 
 
 with wks_my_sellout_stock_fact as
@@ -162,17 +160,17 @@ temp as
        dstrbtr_prod_cd,
        ean_num,
        dstrbtr_prod_desc,
-       cast(replace(qty,',','') as numeric(20,4)) as qty,
+       try_cast(replace(qty,',','') as numeric(20,4)) as qty,
        uom,
-       cast(replace(qty_on_ord,',','') as numeric(20,4)) as qty_on_ord,
+       try_cast(replace(qty_on_ord,',','') as numeric(20,4)) as qty_on_ord,
        uom_on_ord as uom_on_ord,
-       cast(replace(qty_committed,',','') as numeric(20,4)) as qty_committed,
+       try_cast(replace(qty_committed,',','') as numeric(20,4)) as qty_committed,
        uom_committed as uom_committed,
-       cast(replace(available_qty_pc,',','') as numeric(20,4)) as available_qty_pc,
-       cast(replace(qty_on_ord_pc,',','') as numeric(20,4)) as qty_on_ord_pc,
-       cast(replace(qty_committed_pc,',','') as numeric(20,4)) as qty_committed_pc,
-       cast(unit_prc as numeric(20,4)) as unit_prc,
-       cast(total_val as numeric(20,4))*coalesce(t2.exchng_rate,1) as total_val,
+       try_cast(replace(available_qty_pc,',','') as numeric(20,4)) as available_qty_pc,
+       try_cast(replace(qty_on_ord_pc,',','') as numeric(20,4)) as qty_on_ord_pc,
+       try_cast(replace(qty_committed_pc,',','') as numeric(20,4)) as qty_committed_pc,
+       try_cast(replace(unit_prc, ',', '') as decimal(20, 4)) as unit_prc,
+       try_cast(replace(total_val, ',', '') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_val,
        custom_field1,
        custom_field2 ,
        filename,
