@@ -1,6 +1,16 @@
 version: 2
 
 models:
+  - name: thaitg_integration__itg_mds_th_customer_hierarchy
+    config:
+      alias: itg_mds_th_customer_hierarchy
+      tags: ["th_non_tesco"]
+
+  - name: thaitg_integration__itg_mds_th_myanmar_customer_master
+    config:
+      alias: itg_mds_th_myanmar_customer_master
+      tags: ["th_non_tesco"]
+
   - name: thaitg_integration__itg_th_dms_chana_customer_dim
     config: 
       alias: itg_th_dms_chana_customer_dim

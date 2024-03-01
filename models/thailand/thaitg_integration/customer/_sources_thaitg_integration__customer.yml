@@ -9,6 +9,13 @@ sources:
       schema: false
       identifier: false
     tables:
+
+    - name: sdl_mds_th_customer_hierarchy
+      tags: ["th_non_tesco",""]
+
+    - name: sdl_mds_th_myanmar_customer_master
+      tags: ["th_non_tesco", ""]
+
     - name: sdl_mds_th_htc_customer
       tags: ["th_non_tesco"]
       tests:

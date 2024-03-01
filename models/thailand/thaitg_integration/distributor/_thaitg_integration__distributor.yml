@@ -4,11 +4,18 @@ models:
   - name: thaitg_integration__itg_th_dtsdistributor
     config:
       alias: itg_th_dtsdistributor
-      tags: ["hourly","my_sellout"]
+      tags: ["th_non_tesco"]
 
   - name: thaitg_integration__itg_th_gt_dstrbtr_control
     config:
       alias: itg_th_gt_dstrbtr_control
-      tags: ["daily","my_sellout_sales"]
+      tags: ["th_non_tesco"]
   
-      
+  - name: thaitg_integration__itg_th_dtscnreason
+    config: 
+      alias: itg_th_dtscnreason
+      tags: ["th_non_tesco"]
+  - name: thaitg_integration__itg_th_dtscustgroup
+    config:
+      alias: itg_th_dtscustgroup
+      tags: ["th_non_tesco"]      
