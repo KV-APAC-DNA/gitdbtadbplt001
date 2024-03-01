@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: thawks_integration__wks_th_gt_kpi_target_header
+    config:
+      alias: wks_th_gt_kpi_target_header
+      tags: ["th_non_tesco"]
+  

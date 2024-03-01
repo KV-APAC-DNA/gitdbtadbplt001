@@ -141,7 +141,7 @@ b as
     ltrim(sap_cust_id, 0) as sap_cust_id,
     sap_prnt_cust_key,
     sap_prnt_cust_desc
-  from edw_vw_os_customer_dim
+  from edw_vw_my_customer_dim
 ),
 final as
 (

@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_th_gt_scope
+        tags: ["th_non_tesco"]
+        tests:
+          - test_null:
+              not_null_columns: ["code"]
+              select_columns: ["code"]
+              name: TRATBL_sdl_mds_th_gt_scope__null_test
+              config:
+                store_failures: true
+                schema: check
+          - test_duplicate_upper:
+              group_by_columns: ["code"]
+              select_columns: ["code"]
+              name: TRATBL_sdl_mds_th_gt_scope__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+
+      - name: sdl_mds_th_distributor_list
+        tags: ["th_non_tesco"]
+        tests:
+          - test_null:
+              not_null_columns: ["code"]
+              select_columns: ["code", "name"]
+              name: TRATBL_sdl_mds_th_distributor_list__null_test
+              config:
+                store_failures: true
+                schema: check
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code", "name"]
+              name: TRATBL_sdl_mds_th_distributor_list__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration

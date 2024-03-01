@@ -15,7 +15,7 @@ final as (select
   imdsf.dstrbtr_prod_cd as dstrbtr_matl_num,
   imdsf.sap_matl_num,
   imdsf.ean_num as bar_cd,
-  imdsf.inv_dt,
+  imdsf.inv_dt as inv_dt,
   imdsf.available_qty_pc as soh,
   imdsf.total_val as soh_val,
   0 as jj_soh_val,
