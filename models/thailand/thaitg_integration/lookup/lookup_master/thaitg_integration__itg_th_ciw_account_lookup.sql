@@ -20,7 +20,7 @@ transformed as(
             ciw_acct_l3_txt as category,
             ciw_acct_l4_txt as account_name,
             ltrim(acct_num, 0) as account_num,
-            to_char(current_timestamp()::timestampntz(9)), 'YYYYMMDDHH24MISSFF3')::varchar(255) as cdl_dttm,
+            to_char(current_timestamp()::timestampntz(9), 'YYYYMMDDHH24MISSFF3')::varchar(255) as cdl_dttm,
             current_timestamp()::timestampntz(9) as crtd_dttm,
             current_timestamp()::timestampntz(9) as updt_dttm
     from source
