@@ -10,5 +10,6 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_ps_store
+      tags: ["th_non_tesco"]
 
 

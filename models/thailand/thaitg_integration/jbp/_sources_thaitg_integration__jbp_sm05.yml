@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_rolling_forecast
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ['"fiscal_year/period"']

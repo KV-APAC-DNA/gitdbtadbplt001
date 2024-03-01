@@ -10,5 +10,6 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_lcm_exchange_rate
+      tags: ["th_non_tesco"]
 
 

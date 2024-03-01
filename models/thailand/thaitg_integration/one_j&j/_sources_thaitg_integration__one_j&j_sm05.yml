@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_one_jnj_data
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi"]

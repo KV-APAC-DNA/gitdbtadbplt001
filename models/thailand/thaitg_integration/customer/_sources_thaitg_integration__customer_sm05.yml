@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_htc_customer
+      tags: ["th_non_tesco"]
       tests:
         - test_null:
             not_null_columns: ["code","distributorid"]
@@ -19,6 +20,7 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_th_dms_chana_customer_dim
+      tags: ["th_mbox_customer"]
       tests:
           - test_null:
               not_null_columns: ["distributorid","arcode"]
@@ -42,6 +44,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_dms_customer_dim
+      tags: ["th_mbox_customer"]
       tests:
           - test_duplicate:
               group_by_columns: ["distributorid","arcode"]

@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_npi
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ["code"]
@@ -26,7 +27,9 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_mds_th_cbd_item_master
+      tags: ["th_non_tesco"]
     - name: sdl_mds_th_distributor_product_group
+      tags: ["th_non_tesco"]
       tests:
       - test_null:
           not_null_columns: ["sap_code"]

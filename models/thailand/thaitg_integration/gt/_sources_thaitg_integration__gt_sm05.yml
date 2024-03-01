@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_gt_productive_call_target
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ["saleunit","saleid","month","year"]
@@ -36,14 +37,14 @@ sources:
                 schema: thawks_integration
 
           - test_column_lookup:
-              lpad_column: ["month"]
-              select_columns: ["saleunit","saleid","month","year"]
-              lookup_column: ["year"]
-              lookup_table: ["{{ source('thasdl_raw', 'sdl_mds_th_gt_productive_call_target') }}"]
-              lookup_filter: ["(A.YEAR || A.MONTH) = B.YEAR_MONTH AND B.RESULT = FALSE"]
-              name: TRATBL_sdl_mds_th_gt_productive_call_target__test_column_lookup
-              config:
-                store_failures: true
-                schema: thawks_integration
+                  select_columns: ["year","month","saleunit","saleid"]
+                  lpad_column: ["month"]
+                  lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_productive_call_target') }}"
+                  lookup_column: "year"
+                  lookup_filter: "(A.YEAR || A.MONTH) = B.YEAR_MONTH AND B.RESULT = FALSE)"
+                  name: TRATBL_sdl_mds_th_gt_productive_call_target__lookup_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
 
 

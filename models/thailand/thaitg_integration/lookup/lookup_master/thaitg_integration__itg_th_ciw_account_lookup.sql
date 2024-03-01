@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_ACCOUNT_CIW_DIM
+    select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
 transformed as(
     select
