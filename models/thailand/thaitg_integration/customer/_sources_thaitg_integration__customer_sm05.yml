@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_th_htc_customer
+      tests:
+        - test_null:
+            not_null_columns: ["code","distributorid"]
+            select_columns: ["code","distributorid"]
+            name: TRATBL_sdl_mds_th_htc_customer__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+    - name: sdl_th_dms_chana_customer_dim
+      tests:
+          - test_null:
+              not_null_columns: ["distributorid","arcode"]
+              select_columns: ["distributorid","arcode"]
+              name: TRATBL_sdl_th_dms_chana_customer_dim__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["distributorid","arcode"]
+              select_columns: ["distributorid","arcode"]
+              name: TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_file:
+              compare_columns: ["filename","distributorid"]
+              select_columns: ["filename","distributorid","arcode"]
+              name: TRATBL_sdl_th_dms_chana_customer_dim__test_file
+              config:
+                store_failures: true
+                schema: thawks_integration
+    - name: sdl_th_dms_customer_dim
+      tests:
+          - test_duplicate:
+              group_by_columns: ["distributorid","arcode"]
+              select_columns: ["distributorid","arcode"]
+              name: TRATBL_sdl_th_dms_customer_dim__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration

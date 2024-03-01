@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_th_dms_inventory_fact
+      tests: 
+          - test_date_format:
+                      date_column: ["expirydate"]
+                      select_columns: ["expirydate"]
+                      name: TRATBL_sdl_th_dms_inventory_fact__test_date_format
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+
+
+

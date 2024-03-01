@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_th_one_jnj_data
+      tests:
+          - test_null:
+              not_null_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi"]
+              select_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi","level_1_def","level_1","level_2_def","level_2","ref_value","actual_value","add_info"]
+              name: TRATBL_sdl_mds_th_one_jnj_data__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi","level_1_def","level_1","level_2_def","level_2","ref_value","actual_value","add_info"]
+              select_columns: ["date_level_code","date_value","sector_function_code","functional_area","subject","kpi","level_1_def","level_1","level_2_def","level_2","ref_value","actual_value","add_info"]
+              name: TRATBL_sdl_mds_th_one_jnj_data__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+
+

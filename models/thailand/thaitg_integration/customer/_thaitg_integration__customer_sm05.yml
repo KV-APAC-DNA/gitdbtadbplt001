@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dms_chana_customer_dim
+    config: 
+      alias: itg_th_dms_chana_customer_dim
+      tags: ["th_mbox_customer"]
+
+  - name: thaitg_integration__itg_th_htc_customer
+    config: 
+      alias: itg_th_htc_customer
+      tags: ["th_non_tesco"]
+
+  - name: thaitg_integration__sdl_raw_th_dms_chana_customer_dim
+    config: 
+      alias: sdl_raw_th_dms_chana_customer_dim
+      tags: ["th_mbox_customer"]
+
+  - name: thaitg_integration__sdl_raw_th_dms_customer_dim
+    config: 
+      alias: sdl_raw_th_dms_customer_dim
+      tags: ["th_mbox_customer"]
