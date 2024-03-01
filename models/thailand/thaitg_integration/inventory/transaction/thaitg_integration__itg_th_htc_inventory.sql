@@ -20,7 +20,7 @@ select
   trim(amount)::number(19,6) as amount,
   trim(lotnumber)::varchar(200) as batchno,
   cast(trim(expirydate) as timestamp_ntz(9)) as expirydate,
-  null as run_id,
+  null::varchar(50) as run_id,
   current_timestamp()::timestamp_ntz(9) as crt_dttm
 from source
 )
