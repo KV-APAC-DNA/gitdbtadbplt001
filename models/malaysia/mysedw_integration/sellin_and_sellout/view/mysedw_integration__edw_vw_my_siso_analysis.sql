@@ -43,6 +43,7 @@ itg_my_customer_dim as(
 itg_my_trgts as(
     select * from  {{ ref('mysitg_integration__itg_my_trgts') }}
 ),
+
 transformed as(
     (
   (

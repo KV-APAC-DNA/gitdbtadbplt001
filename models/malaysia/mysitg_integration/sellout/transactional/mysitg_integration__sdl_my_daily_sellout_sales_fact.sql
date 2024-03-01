@@ -1,10 +1,4 @@
- {{
-    config(
-        sql_header= "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';",
-    )
- }}
- 
- with wks_so_sales_133986 as(
+with wks_so_sales_133986 as(
     select * from {{ ref('myswks_integration__wks_so_sales_133986') }}
  ),
  wks_so_sales_133980 as(
@@ -137,33 +131,34 @@ transformed as(
 ),
 final as(
     select 
-    distributor_id::varchar(255) as dstrbtr_id,
-    sales_order_number::varchar(255) as sls_ord_num,
-    sales_order_date::varchar(255) as sls_ord_dt,
-    type::varchar(255) as type,
-    customer_code::varchar(255) as cust_cd,
-    distributor_wh_id::varchar(255) as dstrbtr_wh_id,
-    sap_material_id::varchar(255) as item_cd,
-    product_code::varchar(255) as dstrbtr_prod_cd,
-    product_ean_code::varchar(255) as ean_num,
-    product_description::varchar(255) as dstrbtr_prod_desc,
-    gross_item_price::varchar(255) as grs_prc,
-    quantity::varchar(255) as qty,
-    uom::varchar(255) as uom,
-    quantity_in_pieces::varchar(255) as qty_pc,
-    quantity_after_conversion::varchar(255) as qty_aft_conv,
-    sub_total_1::varchar(255) as subtotal_1,
-    discount::varchar(255) as discount,
-    sub_total_2::varchar(255) as subtotal_2,
-    bottom_line_discount::varchar(255) as bottom_line_dscnt,
-    total_amt_after_tax::varchar(255) as total_amt_aft_tax,
-    total_amt_before_tax::varchar(255) as total_amt_bfr_tax,
-    sales_employee::varchar(255) as sls_emp,
-    custom_field_1::varchar(255) as custom_field1,
-    custom_field_2::varchar(255) as custom_field2,
-    custom_field_3::varchar(255) as custom_field3,
-    file_name::varchar(255) as filename,            
-    current_timestamp()::timestamp_ntz(9) as curr_dt,
-    NULL as cdl_dttm from transformed
+        distributor_id::varchar(255) as dstrbtr_id,
+        sales_order_number::varchar(255) as sls_ord_num,
+        sales_order_date::varchar(255) as sls_ord_dt,
+        type::varchar(255) as type,
+        customer_code::varchar(255) as cust_cd,
+        distributor_wh_id::varchar(255) as dstrbtr_wh_id,
+        sap_material_id::varchar(255) as item_cd,
+        product_code::varchar(255) as dstrbtr_prod_cd,
+        product_ean_code::varchar(255) as ean_num,
+        product_description::varchar(255) as dstrbtr_prod_desc,
+        gross_item_price::varchar(255) as grs_prc,
+        quantity::varchar(255) as qty,
+        uom::varchar(255) as uom,
+        quantity_in_pieces::varchar(255) as qty_pc,
+        quantity_after_conversion::varchar(255) as qty_aft_conv,
+        sub_total_1::varchar(255) as subtotal_1,
+        discount::varchar(255) as discount,
+        sub_total_2::varchar(255) as subtotal_2,
+        bottom_line_discount::varchar(255) as bottom_line_dscnt,
+        total_amt_after_tax::varchar(255) as total_amt_aft_tax,
+        total_amt_before_tax::varchar(255) as total_amt_bfr_tax,
+        sales_employee::varchar(255) as sls_emp,
+        custom_field_1::varchar(255) as custom_field1,
+        custom_field_2::varchar(255) as custom_field2,
+        custom_field_3::varchar(255) as custom_field3,
+        file_name::varchar(255) as filename,            
+        current_timestamp()::timestamp_ntz(9) as curr_dt,
+        NULL as cdl_dttm 
+    from transformed
 )
 select * from final

@@ -102,7 +102,8 @@ wks_so_inv_137021 as
 (
     select  * from {{ ref('myswks_integration__wks_so_inv_137021') }}
 ),
-trans as (
+
+union_all as (
     select * from wks_so_inv_133986
 	union all
 	select * from wks_so_inv_133985
@@ -155,7 +156,8 @@ trans as (
 	union all
 	select * from wks_so_inv_137021
 ),
-transformed as 
+
+final as 
 (
 select
     distributor_id::varchar(255) as cust_id,
@@ -181,35 +183,7 @@ select
     file_name::varchar(255) as filename,
     current_timestamp()::timestamp_ntz(9) as curr_dt,
     null as cdl_dttm  
-from trans
-),
-final as 
-(   
-    select
-        cust_id,
-        inv_dt,
-        dstrbtr_wh_id,
-        item_cd,
-        dstrbtr_prod_cd,
-        ean_num,
-        dstrbtr_prod_desc,
-        qty,
-        uom,
-        qty_on_ord,
-        uom_on_ord,
-        qty_committed,
-        uom_committed,
-        available_qty_pc,
-        qty_on_ord_pc,
-        qty_committed_pc,
-        unit_prc,
-        total_val,
-        custom_field1,
-        custom_field2,
-        filename,
-        curr_dt,
-        cdl_dttm   
-    from transformed
+from union_all
 )
 
 select * from final
