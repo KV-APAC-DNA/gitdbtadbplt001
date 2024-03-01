@@ -20,4 +20,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
 
+      - name: sdl_th_dms_sellout_fact
+        tags: ["th_mbox_sellout"]
+
   

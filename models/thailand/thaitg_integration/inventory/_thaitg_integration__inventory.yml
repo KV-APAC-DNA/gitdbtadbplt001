@@ -1,6 +1,11 @@
 version: 2
 
 models:
+  - name: thaitg_integration__itg_th_htc_inventory
+    config:
+      alias: itg_th_htc_inventory
+      tags: ["th_non_tesco",""]
+
   - name: thaitg_integration__itg_th_dms_inventory_fact
     config: 
       alias: itg_th_dms_inventory_fact

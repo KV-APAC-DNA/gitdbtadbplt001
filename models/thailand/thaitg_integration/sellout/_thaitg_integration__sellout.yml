@@ -11,3 +11,10 @@ models:
       alias: sdl_raw_th_dms_sellout_fact
       tags: ["th_mbox_sellout"]
 
+  - name: thaitg_integration__itg_th_htc_sellout
+    config:
+      alias: itg_th_htc_sellout
+      tags: ["th_non_tesco"]
+
+
+

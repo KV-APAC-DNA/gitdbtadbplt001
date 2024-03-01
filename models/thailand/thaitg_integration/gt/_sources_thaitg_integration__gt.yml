@@ -1,0 +1,95 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_mds_th_distributor_target_sales_re
+      tags: ["th_non_tesco",""]
+      tests:
+          - test_null:
+              not_null_columns: ["distributorid","re_code","period"]
+              name: TRATBL_sdl_mds_th_distributor_target_sales_re__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["distributorid","re_code","period"]
+              select_columns: ["distributorid","re_code","period"]
+              name: TRATBL_sdl_mds_th_distributor_target_sales_re__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+    - name: sdl_mds_th_gt_kpi_target
+      tags: ["th_non_tesco"]
+      tests:
+        - test_null:
+              not_null_columns: ["year","kpi_code","kpi_desc"]
+              select_columns: ["year","kpi_code","kpi_desc"]
+              name: TRATBL_sdl_mds_th_gt_kpi_target__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+        - test_duplicate_kpitgt:
+            group_by_columns: ["year","kpi_code","kpi_desc"]
+            select_columns: ["year","kpi_code","kpi_desc"]
+            coalesce_columns: ["re_code"]
+            name: TRATBL_sdl_mds_th_gt_kpi_target__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_lookup_year:
+            select_columns: ["year","kpi_code","kpi_desc"]
+            column: "year" 
+            lookup_column: "year"
+            lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_kpi_target') }}"
+            lookup_filter: "A.YEAR = B.YEAR AND B.RESULT = 'false'"
+            name: TRATBL_sdl_mds_th_gt_kpi_target__lookup_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+
+    - name: sdl_mds_th_gt_productive_call_target
+      tags: ["th_non_tesco"]
+      tests:
+          - test_null:
+              not_null_columns: ["saleunit","saleid","month","year"]
+              select_columns: ["saleunit","saleid","month","year"]
+              name: TRATBL_sdl_mds_th_gt_productive_call_target__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_duplicate:
+              group_by_columns: ["saleunit","saleid","month","year"]
+              select_columns: ["saleunit","saleid","month","year"]
+              name: TRATBL_sdl_mds_th_gt_productive_call_target__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_column:
+              compare_columns: ["saleunit","saleid"]
+              select_columns: ["saleunit","saleid","month","year"]
+              name: TRATBL_sdl_mds_th_gt_productive_call_target__test_column
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_column_lookup:
+                  select_columns: ["year","month","saleunit","saleid"]
+                  lpad_column: ["month"]
+                  lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_productive_call_target') }}"
+                  lookup_column: "year"
+                  lookup_filter: "(A.YEAR || A.MONTH) = B.YEAR_MONTH AND B.RESULT = FALSE)"
+                  name: TRATBL_sdl_mds_th_gt_productive_call_target__lookup_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration

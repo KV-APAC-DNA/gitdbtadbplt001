@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_gt_target_sales_re
+    config: 
+      alias: itg_th_gt_target_sales_re
+      tags: ["th_non_tesco",""]
+
+  - name: thaitg_integration__itg_th_gt_kpi_target
+    config:
+      alias: itg_th_gt_kpi_target
+      tags: ["th_non_tesco"]
+
+  - name: thaitg_integration__itg_th_gt_productive_call_target
+    config: 
+      alias: itg_th_gt_productive_call_target
+      tags: ["th_non_tesco"]

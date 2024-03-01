@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_mds_th_ps_weights
+    config: 
+      alias: itg_mds_th_ps_weights
+      tags: ["th_non_tesco"]
+
+  - name: thaitg_integration__itg_mds_th_ps_store
+    config: 
+      alias: itg_mds_th_ps_store
+      tags: ["th_non_tesco"]
+
+  - name: thaitg_integration__itg_mds_th_ps_targets
+    config:
+      alias: itg_mds_th_ps_targets
+      tags: ["th_non_tesco"]

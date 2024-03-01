@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: thaitg_integration__itg_th_gt_productive_call_target
-    config: 
-      alias: itg_th_gt_productive_call_target
-      tags: ["th_non_tesco"]

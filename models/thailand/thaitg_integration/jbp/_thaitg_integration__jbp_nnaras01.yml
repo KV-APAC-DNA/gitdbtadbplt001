@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: thaitg_integration__itg_th_jbp_market_share_dist
-    config:
-      alias: itg_th_jbp_market_share_dist
-      tags: ["th_non_tesco"]
-  

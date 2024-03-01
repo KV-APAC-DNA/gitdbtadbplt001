@@ -1,9 +1,0 @@
-version: 2
-
-models:
-  - name: thaitg_integration__itg_th_gt_kpi_target
-    config:
-      alias: itg_th_gt_kpi_target
-      tags: ["th_non_tesco"]
-  
-      
