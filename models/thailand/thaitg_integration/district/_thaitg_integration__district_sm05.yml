@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dtsdistrict
+    config: 
+      alias: itg_th_dtsdistrict
+      tags: ["th_non_tesco"]
