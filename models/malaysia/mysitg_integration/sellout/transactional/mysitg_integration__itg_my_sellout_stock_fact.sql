@@ -6,17 +6,25 @@
 
     )
 }}
-
-{% if var("cte_to_execute")  == 'my_joint_monthly' %}
-
 with source as (
     select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_stock_fact') }}
 ),
-
 imier as (
     select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
 ),
+wks_my_sellout_stock_fact as
+(
+    select  * from {{ ref('myswks_integration__wks_my_sellout_stock_fact') }}
+),
+itg_my_material_dim as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
+itg_my_material_map as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
+)
 
+{% if var("cte_to_execute")  == 'my_joint_monthly' %}
+,
 logical as (
     select
         source.cust_id as cust_id,
@@ -82,22 +90,7 @@ select * from final
 
 {% elif var("cte_to_execute") == 'my_sellout_inv' %}
 
-
-with wks_my_sellout_stock_fact as
-(
-    select  * from {{ ref('myswks_integration__wks_my_sellout_stock_fact') }}
-),
-itg_my_ids_exchg_rate as
-(
-    select  * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
-),
-
-itg_my_material_dim as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_dim') }}
-),
-itg_my_material_map as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
-),
+,
 d as 
 (
    select 
@@ -178,7 +171,7 @@ temp as
        t1.curr_dt as crtd_dttm,
        current_timestamp()::timestamp_ntz(9)  as updt_dttm
 from wks_my_sellout_stock_fact t1,
-     itg_my_ids_exchg_rate t2
+     imier t2
 where t2.cust_id(+) = t1.cust_id
 and   t2.yearmo(+) = substring(replace(inv_dt,'-',''),0,7)
 ),
