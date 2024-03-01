@@ -19,6 +19,7 @@ sources:
               store_failures: true
               schema: myswks_integration
         - test_duplicate:
+                select_columns: ["cust_id"]
                 group_by_columns: ["cust_id"]
                 name: TRATBL_sdl_my_customer_dim__duplicate_test
                 config:

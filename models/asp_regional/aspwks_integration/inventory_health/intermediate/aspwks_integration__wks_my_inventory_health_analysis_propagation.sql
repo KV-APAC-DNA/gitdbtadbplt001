@@ -290,7 +290,7 @@ ONSESEA AS (
         reason,
         replicated_flag
 ),
-Regional AS 
+regional as 
 (
     
     SELECT
@@ -387,7 +387,7 @@ prestep as
             last_36months_so_val
         from Regional
 ), 
-RegionalCurrency AS
+regionalcurrency as
 (
     SELECT
         cntry_key,
@@ -461,7 +461,7 @@ available_customers as (
         3,
         4
 ),
-GTS AS 
+gts as 
 (
     Select 
     ctry_key,
@@ -502,7 +502,7 @@ from(
                     3,
                     4
 ),
-COPA AS 
+copa as 
 (
     Select ctry_key,
                 obj_crncy_co_obj,
@@ -516,57 +516,57 @@ COPA AS
                 case
                     when ctry_key = 'MY' then cast((si_inv_db_val * exch_rate) / 1000 as numeric(38, 5))
                 end as si_inv_db_val_usd
-            FROM gts,
-                RegionalCurrency
-            WHERE GTS.obj_crncy_co_obj = RegionalCurrency.from_ccy
-                AND RegionalCurrency.MNTH_ID =(
-                    Select max(MNTH_ID)
-                    from RegionalCurrency
+            from gts,
+                regionalcurrency
+            where gts.obj_crncy_co_obj = regionalcurrency.from_ccy
+                and regionalcurrency.mnth_id =(
+                    select max(mnth_id)
+                    from regionalcurrency
                 )
 ),
 final as
 (
-    SELECT
-        cast(year as integer) as year,
-            qrtr_no as year_quarter,
-            month_year,
-            cast(mnth_no as integer) as month_number,
-            country_name,
-            dstrbtr_grp_cd,
-            distributor_id_name,
-            global_prod_franchise as franchise,
-            global_prod_brand as brand,
-            global_prod_sub_brand as prod_sub_brand,
-            global_prod_variant as variant,
-            global_prod_segment as segment,
-            global_prod_subsegment as prod_subsegment,
-            global_prod_category as prod_category,
-            global_prod_subcategory as prod_subcategory,
-            pka_size_desc as put_up_description,
-            sku_cd,
-            sku_description,
-            pka_product_key,
-            pka_product_key_description,
-            product_key,
-            product_key_description,
-            from_ccy,
-            to_ccy,
-            exch_rate,
-            sap_prnt_cust_key,
-            sap_prnt_cust_desc,
-            sap_cust_chnl_key,
-            sap_cust_chnl_desc,
-            sap_cust_sub_chnl_key,
-            sap_sub_chnl_desc,
-            sap_go_to_mdl_key,
-            sap_go_to_mdl_desc,
-            sap_bnr_key,
-            sap_bnr_desc,
-            sap_bnr_frmt_key,
-            sap_bnr_frmt_desc,
-            retail_env,
-            region,
-            zone_or_area,
+    select
+            year::number(18,0) as year,
+            qrtr_no::varchar(14) as year_quarter,
+            month_year::varchar(21) as month_year,
+            mnth_no::number(18,0) as month_number,
+            country_name::varchar(8) as country_name,
+            dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+            distributor_id_name::varchar(40) as distributor_id_name,
+            global_prod_franchise::varchar(30) as franchise,
+            global_prod_brand::varchar(30) as brand,
+            global_prod_sub_brand::varchar(100) as prod_sub_brand,
+            global_prod_variant::varchar(100) as variant,
+            global_prod_segment::varchar(50) as segment,
+            global_prod_subsegment::varchar(100) as prod_subsegment,
+            global_prod_category::varchar(50) as prod_category,
+            global_prod_subcategory::varchar(50) as prod_subcategory,
+            pka_size_desc::varchar(30) as put_up_description,
+            sku_cd::varchar(100) as sku_cd,
+            sku_description::varchar(100) as sku_description,
+            pka_product_key::varchar(68) as pka_product_key,
+            pka_product_key_description::varchar(255) as pka_product_key_description,
+            product_key::varchar(68) as product_key,
+            product_key_description::varchar(255) as product_key_description,
+            from_ccy::varchar(3) as from_ccy,
+            to_ccy::varchar(3) as to_ccy,
+            exch_rate::number(15,5) as exch_rate,
+            sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+            sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+            sap_cust_chnl_key::varchar(12) as sap_cust_chnl_key,
+            sap_cust_chnl_desc::varchar(50) as sap_cust_chnl_desc,
+            sap_cust_sub_chnl_key::varchar(12) as sap_cust_sub_chnl_key,
+            sap_sub_chnl_desc::varchar(50) as sap_sub_chnl_desc,
+            sap_go_to_mdl_key::varchar(12) as sap_go_to_mdl_key,
+            sap_go_to_mdl_desc::varchar(50) as sap_go_to_mdl_desc,
+            sap_bnr_key::varchar(12) as sap_bnr_key,
+            sap_bnr_desc::varchar(50) as sap_bnr_desc,
+            sap_bnr_frmt_key::varchar(12) as sap_bnr_frmt_key,
+            sap_bnr_frmt_desc::varchar(50) as sap_bnr_frmt_desc,
+            retail_env::varchar(50) as retail_env,
+            region::varchar(61) as region,
+            zone_or_area::varchar(80) as zone_or_area,
             round(cast(si_sls_qty as numeric(38, 5)), 5) as si_sls_qty,
             round(cast(si_gts_val as numeric (38, 5)), 5) as si_gts_val,
             round(cast(si_gts_val_usd as numeric(38, 5)), 5) as si_gts_val_usd,
@@ -575,95 +575,28 @@ final as
             round(cast (inventory_val_usd as numeric(38, 5)), 5) as inventory_val_usd,
             round(cast (so_sls_qty as numeric(38, 5)), 5) as so_sls_qty,
             round(cast (so_grs_trd_sls as numeric(38, 5)), 5) as so_grs_trd_sls,
-            so_grs_trd_sls_usd as so_grs_trd_sls_usd,
-            round(cast (COPA.gts as numeric(38, 5)), 5) as SI_ALL_DB_VAL,
-            round(cast (COPA.gts_usd as numeric (38, 5)), 5) as SI_ALL_DB_VAL_USD,
-            round(cast (COPA.si_inv_db_val as numeric(38, 5)), 5) as si_inv_db_val,
-            round(cast (COPA.si_inv_db_val_usd as numeric(38, 5)), 5) as si_inv_db_val_usd,
-            last_3months_so_qty,
-            last_6months_so_qty,
-            last_12months_so_qty,
-            last_3months_so_val,
-            last_3months_so_val_usd,
-            last_6months_so_val,
-            last_6months_so_val_usd,
-            last_12months_so_val,
-            last_12months_so_val_usd,
-            propagate_flag,
-            propagate_from,
-            reason,
-            last_36months_so_val
-        from Regional,
-            COPA
-        where Regional.year = COPA.fisc_yr
-            and Regional.month_year = COPA.caln_yr_mo
-            and Regional.from_ccy = COPA.obj_crncy_co_obj
+            so_grs_trd_sls_usd::number(17,0) as so_grs_trd_sls_usd,
+            round(cast (copa.gts as numeric(38, 5)), 5) as si_all_db_val,
+            round(cast (copa.gts_usd as numeric (38, 5)), 5) as si_all_db_val_usd,
+            round(cast (copa.si_inv_db_val as numeric(38, 5)), 5) as si_inv_db_val,
+            round(cast (copa.si_inv_db_val_usd as numeric(38, 5)), 5) as si_inv_db_val_usd,
+            last_3months_so_qty::number(38,6) as last_3months_so_qty,
+            last_6months_so_qty::number(38,6) as last_6months_so_qty,
+            last_12months_so_qty::number(38,6) as last_12months_so_qty,
+            last_3months_so_val::number(38,17) as last_3months_so_val,
+            last_3months_so_val_usd::number(38,5) as last_3months_so_val_usd,
+            last_6months_so_val::number(38,17) as last_6months_so_val,
+            last_6months_so_val_usd::number(38,5) as last_6months_so_val_usd,
+            last_12months_so_val::number(38,17) as last_12months_so_val,
+            last_12months_so_val_usd::number(38,5) as last_12months_so_val_usd,
+            propagate_flag::varchar(1) as propagate_flag,
+            propagate_from::number(18,0) as propagate_from,
+            reason::varchar(100) as reason,
+            last_36months_so_val::number(38,17) as last_36months_so_val
+        from regional,
+            copa
+        where regional.year = copa.fisc_yr
+            and regional.month_year = copa.caln_yr_mo
+            and regional.from_ccy = copa.obj_crncy_co_obj
 )
-select
-    year::number(18,0) as year,
-    year_quarter::varchar(14) as year_quarter,
-    month_year::varchar(21) as month_year,
-    month_number::number(18,0) as month_number,
-    country_name::varchar(8) as country_name,
-    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-    distributor_id_name::varchar(40) as distributor_id_name,
-    franchise::varchar(30) as franchise,
-    brand::varchar(30) as brand,
-    prod_sub_brand::varchar(100) as prod_sub_brand,
-    variant::varchar(100) as variant,
-    segment::varchar(50) as segment,
-    prod_subsegment::varchar(100) as prod_subsegment,
-    prod_category::varchar(50) as prod_category,
-    prod_subcategory::varchar(50) as prod_subcategory,
-    put_up_description::varchar(30) as put_up_description,
-    sku_cd::varchar(100) as sku_cd,
-    sku_description::varchar(100) as sku_description,
-    pka_product_key::varchar(68) as pka_product_key,
-    pka_product_key_description::varchar(255) as pka_product_key_description,
-    product_key::varchar(68) as product_key,
-    product_key_description::varchar(255) as product_key_description,
-    from_ccy::varchar(3) as from_ccy,
-    to_ccy::varchar(3) as to_ccy,
-    exch_rate::number(15,5) as exch_rate,
-    sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
-    sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
-    sap_cust_chnl_key::varchar(12) as sap_cust_chnl_key,
-    sap_cust_chnl_desc::varchar(50) as sap_cust_chnl_desc,
-    sap_cust_sub_chnl_key::varchar(12) as sap_cust_sub_chnl_key,
-    sap_sub_chnl_desc::varchar(50) as sap_sub_chnl_desc,
-    sap_go_to_mdl_key::varchar(12) as sap_go_to_mdl_key,
-    sap_go_to_mdl_desc::varchar(50) as sap_go_to_mdl_desc,
-    sap_bnr_key::varchar(12) as sap_bnr_key,
-    sap_bnr_desc::varchar(50) as sap_bnr_desc,
-    sap_bnr_frmt_key::varchar(12) as sap_bnr_frmt_key,
-    sap_bnr_frmt_desc::varchar(50) as sap_bnr_frmt_desc,
-    retail_env::varchar(50) as retail_env,
-    region::varchar(61) as region,
-    zone_or_area::varchar(80) as zone_or_area,
-    si_sls_qty::number(38,5) as si_sls_qty,
-    si_gts_val::number(38,5) as si_gts_val,
-    si_gts_val_usd::number(38,5) as si_gts_val_usd,
-    inventory_quantity::number(38,5) as inventory_quantity,
-    inventory_val::number(38,5) as inventory_val,
-    inventory_val_usd::number(38,5) as inventory_val_usd,
-    so_sls_qty::number(38,5) as so_sls_qty,
-    so_grs_trd_sls::number(38,5) as so_grs_trd_sls,
-    so_grs_trd_sls_usd::number(17,0) as so_grs_trd_sls_usd,
-    si_all_db_val::number(38,5) as si_all_db_val,
-    si_all_db_val_usd::number(38,5) as si_all_db_val_usd,
-    si_inv_db_val::number(38,5) as si_inv_db_val,
-    si_inv_db_val_usd::number(38,5) as si_inv_db_val_usd,
-    last_3months_so_qty::number(38,6) as last_3months_so_qty,
-    last_6months_so_qty::number(38,6) as last_6months_so_qty,
-    last_12months_so_qty::number(38,6) as last_12months_so_qty,
-    last_3months_so_val::number(38,17) as last_3months_so_val,
-    last_3months_so_val_usd::number(38,5) as last_3months_so_val_usd,
-    last_6months_so_val::number(38,17) as last_6months_so_val,
-    last_6months_so_val_usd::number(38,5) as last_6months_so_val_usd,
-    last_12months_so_val::number(38,17) as last_12months_so_val,
-    last_12months_so_val_usd::number(38,5) as last_12months_so_val_usd,
-    propagate_flag::varchar(1) as propagate_flag,
-    propagate_from::number(18,0) as propagate_from,
-    reason::varchar(100) as reason,
-    last_36months_so_val::number(38,17) as last_36months_so_val
- from final
+select * from final
