@@ -157,7 +157,6 @@ models:
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
-<<<<<<< HEAD
     thailand:
       config:
         +enabled: true
@@ -173,8 +172,6 @@ models:
       thawks_integration:
         +materialized: table
         +schema: THAWKS_INTEGRATION
-=======
       mysedw_access:
         +materialized: view
         +schema: MYSEDW_ACCESS
->>>>>>> 9bfdddad5583320e8db061f853727e5c9361a192

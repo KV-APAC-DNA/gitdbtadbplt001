@@ -11,3 +11,11 @@ sources:
     tables:
       - name: sdl_th_dms_inventory_fact
         tags: ["", ""]
+        tests:
+          - test_date_format:
+                date_column: ["expirydate"]
+                select_columns: ["expirydate"]
+                name: TRATBL_sdl_mds_th_gt_kpi_target__date_format
+                config:
+                  store_failures: true
+                  schema: thawks_integration
