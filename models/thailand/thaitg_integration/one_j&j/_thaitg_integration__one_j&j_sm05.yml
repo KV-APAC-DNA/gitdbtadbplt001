@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_one_jnj_data
+    config: 
+      alias: itg_th_one_jnj_data
+      tags: ["th_non_tesco"]

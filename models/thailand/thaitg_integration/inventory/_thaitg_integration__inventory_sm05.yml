@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dms_inventory_fact
+    config: 
+      alias: itg_th_dms_inventory_fact
+      tags: ["th_mbox_inventory"]
+
+  - name: thaitg_integration__sdl_raw_th_dms_inventory_fact
+    config: 
+      alias: sdl_raw_th_dms_inventory_fact
+      tags: ["th_mbox_inventory"]
