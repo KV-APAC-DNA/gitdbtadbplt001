@@ -5,20 +5,29 @@
         unique_key=["dstrbtr_id","sls_ord_dt"]
     )
 }}
-
-{% if var("cte_to_execute") == 'my_joint_monthly' %}
-
 with source as (
   select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
 ),
 imier as (
   select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
 ),
+wks_my_sellout_sales_fact as(
+  select * from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
+),
+itg_my_material_dim as (
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
+itg_my_material_map as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
+)
+
+{% if var("cte_to_execute") == 'my_joint_monthly' %}
+,
 union1 as (
     select
         dstrbtr_id,
         sls_ord_num,
-        to_date(sls_ord_dt,'dd.mm.yyyy') as sls_ord_dt,
+        try_to_date(sls_ord_dt,'dd.mm.yyyy') as sls_ord_dt,
         type,
         cust_cd,
         dstrbtr_wh_id,
@@ -47,33 +56,18 @@ union1 as (
         current_timestamp() as updt_dttm
     from source, imier
     where imier.cust_id(+)=source.dstrbtr_id
-        and imier.yearmo(+)=replace(substring(to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
+        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
 )
 
 select * from union1
 
 {% elif var("cte_to_execute") == 'my_sellout_sales' %}
-
-with source as (
-  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
-),
-imier as (
-  select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
-),
-wks_my_sellout_sales_fact as(
-  select * from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
-),
-itg_my_material_dim as (
-    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
-),
-itg_my_material_map as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
-),
+,
 union2 as (
    select
     dstrbtr_id,
     sls_ord_num,
-    to_date(sls_ord_dt, 'DD/MM/YYYY') as sls_ord_dt,
+    try_to_date(sls_ord_dt, 'DD/MM/YYYY') as sls_ord_dt,
     type,
     cust_cd,
     dstrbtr_wh_id,
@@ -103,7 +97,7 @@ union2 as (
     from wks_my_sellout_sales_fact as t1, imier as t2
     where
     t2.cust_id(+) = t1.dstrbtr_id
-    and t2.yearmo(+) = substring(replace(to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 7)
+    and t2.yearmo(+) = substring(replace(try_to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 7)
 ),
 immd as (
   select
@@ -188,4 +182,3 @@ final as (
 )
 select * from final
 {% endif %}
-
