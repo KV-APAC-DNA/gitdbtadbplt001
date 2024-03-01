@@ -6,19 +6,25 @@
 
     )
 }}
-
-{% set cte_to_execute = 'my_joint_monthly' %}
-
-{% if cte_to_execute == 'my_joint_monthly' %}
-
 with source as (
     select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_stock_fact') }}
 ),
-
 imier as (
     select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
 ),
+wks_my_sellout_stock_fact as
+(
+    select  * from {{ ref('myswks_integration__wks_my_sellout_stock_fact') }}
+),
+itg_my_material_dim as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
+itg_my_material_map as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
+)
 
+{% if var("cte_to_execute")  == 'my_joint_monthly' %}
+,
 logical as (
     select
         source.cust_id as cust_id,
@@ -37,8 +43,8 @@ logical as (
         cast(replace(available_qty_pc, ',', '') as decimal(20, 4)) as available_qty_pc,
         cast(replace(qty_on_ord_pc, ',', '') as decimal(20, 4)) as qty_on_ord_pc,
         cast(replace(qty_committed_pc, ',', '') as decimal(20, 4)) as qty_committed_pc,
-        cast(unit_prc as decimal(20, 4)) as unit_prc,
-        cast(total_val as decimal(20, 4)) * coalesce(imier.exchng_rate, 1) as total_val,
+        cast(replace(unit_prc, ',', '') as decimal(20, 4)) as unit_prc,
+        cast(replace(total_val, ',', '') as decimal(20, 4)) * coalesce(imier.exchng_rate, 1) as total_val,
         custom_field1,
         custom_field2 as sap_matl_num,
         filename,
@@ -82,24 +88,9 @@ final as (
 
 select * from final
 
-{% elif cte_to_execute == 'my_sellout_inv' %}
+{% elif var("cte_to_execute") == 'my_sellout_inv' %}
 
-
-with wks_my_sellout_stock_fact as
-(
-    select  * from {{ ref('myswks_integration__wks_my_sellout_stock_fact') }}
-),
-itg_my_ids_exchg_rate as
-(
-    select  * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
-),
-
-itg_my_material_dim as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_dim') }}
-),
-itg_my_material_map as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
-),
+,
 d as 
 (
    select 
@@ -162,17 +153,17 @@ temp as
        dstrbtr_prod_cd,
        ean_num,
        dstrbtr_prod_desc,
-       cast(replace(qty,',','') as numeric(20,4)) as qty,
+       try_cast(replace(qty,',','') as numeric(20,4)) as qty,
        uom,
-       cast(replace(qty_on_ord,',','') as numeric(20,4)) as qty_on_ord,
+       try_cast(replace(qty_on_ord,',','') as numeric(20,4)) as qty_on_ord,
        uom_on_ord as uom_on_ord,
-       cast(replace(qty_committed,',','') as numeric(20,4)) as qty_committed,
+       try_cast(replace(qty_committed,',','') as numeric(20,4)) as qty_committed,
        uom_committed as uom_committed,
-       cast(replace(available_qty_pc,',','') as numeric(20,4)) as available_qty_pc,
-       cast(replace(qty_on_ord_pc,',','') as numeric(20,4)) as qty_on_ord_pc,
-       cast(replace(qty_committed_pc,',','') as numeric(20,4)) as qty_committed_pc,
-       cast(unit_prc as numeric(20,4)) as unit_prc,
-       cast(total_val as numeric(20,4))*coalesce(t2.exchng_rate,1) as total_val,
+       try_cast(replace(available_qty_pc,',','') as numeric(20,4)) as available_qty_pc,
+       try_cast(replace(qty_on_ord_pc,',','') as numeric(20,4)) as qty_on_ord_pc,
+       try_cast(replace(qty_committed_pc,',','') as numeric(20,4)) as qty_committed_pc,
+       try_cast(replace(unit_prc, ',', '') as decimal(20, 4)) as unit_prc,
+       try_cast(replace(total_val, ',', '') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_val,
        custom_field1,
        custom_field2 ,
        filename,
@@ -180,7 +171,7 @@ temp as
        t1.curr_dt as crtd_dttm,
        current_timestamp()::timestamp_ntz(9)  as updt_dttm
 from wks_my_sellout_stock_fact t1,
-     itg_my_ids_exchg_rate t2
+     imier t2
 where t2.cust_id(+) = t1.cust_id
 and   t2.yearmo(+) = substring(replace(inv_dt,'-',''),0,7)
 ),
@@ -216,7 +207,7 @@ trans as
   left join a on
     ltrim(temp.dstrbtr_prod_cd,'0') =ltrim(a.ext_item_cd,'0') 
 ),
-result as 
+final as 
 (
     select distinct
         cust_id::varchar(50) as cust_id,
@@ -244,39 +235,7 @@ result as
         current_timestamp::timestamp_ntz(9) as crtd_dttm,
         current_timestamp::timestamp_ntz(9) as updt_dttm
     from trans
-),
-
-final as 
-(
-    select
-        cust_id,
-        inv_dt,
-        dstrbtr_wh_id,
-        item_cd,
-        dstrbtr_prod_cd,
-        ean_num,
-        dstrbtr_prod_desc,
-        qty,
-        uom,
-        qty_on_ord,
-        uom_on_ord,
-        qty_committed,
-        uom_committed,
-        available_qty_pc,
-        qty_on_ord_pc,
-        qty_committed_pc,
-        unit_prc,
-        total_val,
-        custom_field1,
-        sap_matl_num,
-        filename,
-        cdl_dttm,
-        crtd_dttm,
-        updt_dttm
-    from result
-
 )
-
 select * from final
 
 {% endif %}

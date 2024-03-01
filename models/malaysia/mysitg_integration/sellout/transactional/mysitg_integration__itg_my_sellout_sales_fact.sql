@@ -5,21 +5,29 @@
         unique_key=["dstrbtr_id","sls_ord_dt"]
     )
 }}
-{% set cte_to_execute = 'my_joint_monthly' %}  
-
-{% if cte_to_execute == 'my_joint_monthly' %}
-
 with source as (
   select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
 ),
 imier as (
   select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
 ),
+wks_my_sellout_sales_fact as(
+  select * from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
+),
+itg_my_material_dim as (
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
+itg_my_material_map as (
+    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
+)
+
+{% if var("cte_to_execute") == 'my_joint_monthly' %}
+,
 union1 as (
     select
         dstrbtr_id,
         sls_ord_num,
-        to_date(sls_ord_dt,'dd.mm.yyyy') as sls_ord_dt,
+        try_to_date(sls_ord_dt,'dd.mm.yyyy') as sls_ord_dt,
         type,
         cust_cd,
         dstrbtr_wh_id,
@@ -48,33 +56,18 @@ union1 as (
         current_timestamp() as updt_dttm
     from source, imier
     where imier.cust_id(+)=source.dstrbtr_id
-        and imier.yearmo(+)=replace(substring(to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
+        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
 )
 
 select * from union1
 
-{% elif cte_to_execute == 'my_sellout_sales' %}
-
-with source as (
-  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
-),
-imier as (
-  select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
-),
-wks_my_sellout_sales_fact as(
-  select * from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
-),
-itg_my_material_dim as (
-    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
-),
-itg_my_material_map as (
-    select  * from {{ ref('mysitg_integration__itg_my_material_map') }}
-),
+{% elif var("cte_to_execute") == 'my_sellout_sales' %}
+,
 union2 as (
    select
     dstrbtr_id,
     sls_ord_num,
-    to_date(sls_ord_dt, 'DD/MM/YYYY') as sls_ord_dt,
+    try_to_date(sls_ord_dt, 'DD/MM/YYYY') as sls_ord_dt,
     type,
     cust_cd,
     dstrbtr_wh_id,
@@ -82,17 +75,17 @@ union2 as (
     dstrbtr_prod_cd,
     ean_num,
     dstrbtr_prod_desc,
-    cast(replace(grs_prc,',','') as decimal(20, 4)) as grs_prc,
-    cast(replace(qty,',','') as decimal(20, 4)) as qty,
+    try_cast(replace(grs_prc,',','') as decimal(20, 4)) as grs_prc,
+    try_cast(replace(qty,',','') as decimal(20, 4)) as qty,
     uom,
-    cast(replace(qty_pc,',','') as decimal(20, 4)) as qty_pc,
-    cast(replace(qty_aft_conv,',','') as decimal(20, 4)) as qty_aft_conv,
-    cast(replace(subtotal_1,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as subtotal_1,
-    cast(replace(discount,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as discount,
-    cast(replace(subtotal_2,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as subtotal_2,
-    cast(replace(bottom_line_dscnt,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as bottom_line_dscnt,
-    cast(replace(total_amt_aft_tax,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_amt_aft_tax,
-    cast(replace(total_amt_bfr_tax,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_amt_bfr_tax,
+    try_cast(replace(qty_pc,',','') as decimal(20, 4)) as qty_pc,
+    try_cast(replace(qty_aft_conv,',','') as decimal(20, 4)) as qty_aft_conv,
+    try_cast(replace(subtotal_1,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as subtotal_1,
+    try_cast(replace(discount,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as discount,
+    try_cast(replace(subtotal_2,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as subtotal_2,
+    try_cast(replace(bottom_line_dscnt,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as bottom_line_dscnt,
+    try_cast(replace(total_amt_aft_tax,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_amt_aft_tax,
+    try_cast(replace(total_amt_bfr_tax,',','') as decimal(20, 4)) * coalesce(t2.exchng_rate, 1) as total_amt_bfr_tax,
     sls_emp,
     custom_field1,
     custom_field2,
@@ -104,7 +97,7 @@ union2 as (
     from wks_my_sellout_sales_fact as t1, imier as t2
     where
     t2.cust_id(+) = t1.dstrbtr_id
-    and t2.yearmo(+) = substring(replace(to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 7)
+    and t2.yearmo(+) = substring(replace(try_to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 7)
 ),
 immd as (
   select
@@ -152,74 +145,40 @@ a as (
       qualify row_number() over (partition by immm.ext_item_cd order by null) = 1
       
 ),
-
-transformed as (
+final as (
     select  
-    union2.dstrbtr_id,
-    union2.sls_ord_num,
-    union2.sls_ord_dt AS sls_ord_dt,
-    union2.type,
-    union2.cust_cd,
-    union2.dstrbtr_wh_id,
-    union2.item_cd,
-    union2.dstrbtr_prod_cd,
-    union2.ean_num,
-    union2.dstrbtr_prod_desc,
-    union2.grs_prc,
-    union2.qty,
-    union2.uom,
-    union2.qty_pc,
-    union2.qty_aft_conv,
-    union2.subtotal_1,
-    union2.discount,
-    union2.subtotal_2,
-    union2.bottom_line_dscnt,
-    union2.total_amt_aft_tax,
-    union2.total_amt_bfr_tax,
-    union2.sls_emp,
-    union2.custom_field1,
-    union2.custom_field2,
-    nvl(nvl(union2.SAP_MATL_NUM, immd.item_cd), a.item_cd) as sap_matl_num,
-    union2.filename,
-    union2.cdl_dttm,
-    union2.crtd_dttm,
-    union2.updt_dttm from union2,immd,a 
+    union2.dstrbtr_id::varchar(50) as dstrbtr_id,
+    union2.sls_ord_num::varchar(50) as sls_ord_num,
+    union2.sls_ord_dt::date as sls_ord_dt,
+    union2.type::varchar(20) as type,
+    union2.cust_cd::varchar(50) as cust_cd,
+    union2.dstrbtr_wh_id::varchar(50) as dstrbtr_wh_id,
+    union2.item_cd::varchar(50) as item_cd,
+    union2.dstrbtr_prod_cd::varchar(50) as dstrbtr_prod_cd,
+    union2.ean_num::varchar(50) as ean_num,
+    union2.dstrbtr_prod_desc::varchar(100) as dstrbtr_prod_desc,
+    union2.grs_prc::number(20,4) as grs_prc,
+    union2.qty::number(20,4) as qty,
+    union2.uom::varchar(20) as uom,
+    union2.qty_pc::number(20,4) as qty_pc,
+    union2.qty_aft_conv::number(20,4) as qty_aft_conv,
+    union2.subtotal_1::number(20,4) as subtotal_1,
+    union2.discount::number(20,4) as discount,
+    union2.subtotal_2::number(20,4) as subtotal_2,
+    union2.bottom_line_dscnt::number(20,4) as bottom_line_dscnt,
+    union2.total_amt_aft_tax::number(20,4) as total_amt_aft_tax,
+    union2.total_amt_bfr_tax::number(20,4) as total_amt_bfr_tax,
+    union2.sls_emp::varchar(100) as sls_emp,
+    union2.custom_field1::varchar(255) as custom_field1,
+    union2.custom_field2::varchar(255) as custom_field2,
+    nvl(nvl(union2.SAP_MATL_NUM, immd.item_cd), a.item_cd)::varchar(255) as sap_matl_num,
+    union2.filename::varchar(255) as filename,
+    union2.cdl_dttm::varchar(255) as cdl_dttm,
+    union2.crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+    union2.updt_dttm::timestamp_ntz(9) as updt_dttm
+    from union2,immd,a 
     where ltrim(immd.item_bar_cd(+),'0') = ltrim(ean_num,'0')
     and ltrim(a.ext_item_cd(+),'0') = ltrim(dstrbtr_prod_cd,'0') 
-),
-final as(
-    select 
-        dstrbtr_id::varchar(50) as dstrbtr_id,
-        sls_ord_num::varchar(50) as sls_ord_num,
-        sls_ord_dt::date as sls_ord_dt,
-        type::varchar(20) as type,
-        cust_cd::varchar(50) as cust_cd,
-        dstrbtr_wh_id::varchar(50) as dstrbtr_wh_id,
-        item_cd::varchar(50) as item_cd,
-        dstrbtr_prod_cd::varchar(50) as dstrbtr_prod_cd,
-        ean_num::varchar(50) as ean_num,
-        dstrbtr_prod_desc::varchar(100) as dstrbtr_prod_desc,
-        grs_prc::number(20,4) as grs_prc,
-        qty::number(20,4) as qty,
-        uom::varchar(20) as uom,
-        qty_pc::number(20,4) as qty_pc,
-        qty_aft_conv::number(20,4) as qty_aft_conv,
-        subtotal_1::number(20,4) as subtotal_1,
-        discount::number(20,4) as discount,
-        subtotal_2::number(20,4) as subtotal_2,
-        bottom_line_dscnt::number(20,4) as bottom_line_dscnt,
-        total_amt_aft_tax::number(20,4) as total_amt_aft_tax,
-        total_amt_bfr_tax::number(20,4) as total_amt_bfr_tax,
-        sls_emp::varchar(100) as sls_emp,
-        custom_field1::varchar(255) as custom_field1,
-        custom_field2::varchar(255) as custom_field2,
-        sap_matl_num::varchar(255) as sap_matl_num,
-        filename::varchar(255) as filename,
-        cdl_dttm::varchar(255) as cdl_dttm,
-        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
-        updt_dttm::timestamp_ntz(9) as updt_dttm
-        from transformed
 )
 select * from final
 {% endif %}
-

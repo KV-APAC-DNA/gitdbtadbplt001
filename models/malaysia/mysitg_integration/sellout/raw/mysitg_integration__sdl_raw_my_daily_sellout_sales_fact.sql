@@ -39,6 +39,10 @@ final as (
         curr_dt,
         cdl_dttm
     from source
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+        where source.curr_dt > (select max(curr_dt) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final
