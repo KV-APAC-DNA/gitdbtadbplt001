@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_htc_sellout
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["distributorid","customer_code"]

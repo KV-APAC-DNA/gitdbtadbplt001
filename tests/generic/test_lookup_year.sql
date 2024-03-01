@@ -19,15 +19,17 @@
         {% endfor %}
         from {{model}}
         where 
-             trim({{column}}) in (
+        {%- for item in select_columns %}
+
+             trim({{item}}) in (
                 select distinct
-                    cast(A.{{lookup_column}} as decimal(31)) 
+                    cast(A.{{item}} as decimal(31)) 
                 from  {{lookup_table}} as A,(SELECT
-        CAST(TRIM({{column}}) AS DECIMAL(31)) AS "YEAR",
-        REGEXP_LIKE(CAST(TRIM(year) AS DECIMAL(31)), '(20)[0-9]{2}') AS RESULT
+        CAST(TRIM({{item}}) AS DECIMAL(31)) AS "YEAR",
+        REGEXP_LIKE(CAST(TRIM{{item}} AS DECIMAL(31)), '(20)[0-9]{2}') AS RESULT
       FROM {{lookup_table}}
     ) AS B 
-
+    {% endfor %}
                 {%- if lookup_filter !=None -%}
                  {% set space_before_where = ' ' %}
                  {{ space_before_where }}where {{lookup_filter}}

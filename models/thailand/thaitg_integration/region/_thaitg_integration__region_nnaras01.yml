@@ -4,5 +4,5 @@ models:
   - name: thaitg_integration__itg_th_dtsregion
     config:
       alias: itg_th_dtsregion
-      tags: ["hourly","my_sellout_inv_morning"]
+      tags: ["th_non_tesco"]
  

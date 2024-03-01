@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_market_share_distribution
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["year_month","measure","category"]

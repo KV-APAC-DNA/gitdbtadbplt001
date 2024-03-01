@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_gt_scope
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["code"]
@@ -28,7 +28,7 @@ sources:
                 schema: myswks_integration
 
       - name: sdl_mds_th_distributor_list
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["code"]

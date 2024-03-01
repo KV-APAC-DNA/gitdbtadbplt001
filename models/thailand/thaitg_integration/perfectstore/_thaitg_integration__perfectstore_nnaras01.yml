@@ -4,5 +4,5 @@ models:
   - name: thaitg_integration__itg_mds_th_ps_targets
     config:
       alias: itg_mds_th_ps_targets
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["th_non_tesco"]
  

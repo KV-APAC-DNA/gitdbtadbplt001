@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_gt_kpi_target
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
                 not_null_columns: ["year","kpi_code","kpi_desc"]

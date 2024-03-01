@@ -4,6 +4,6 @@ models:
   - name: thaitg_integration__itg_th_gt_kpi_target
     config:
       alias: itg_th_gt_kpi_target
-      tags: ["daily","my_sellout_sales"]
+      tags: ["th_non_tesco"]
   
       

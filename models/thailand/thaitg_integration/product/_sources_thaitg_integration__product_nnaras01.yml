@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_product_master
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["code"]
@@ -27,7 +27,7 @@ sources:
                 store_failures: true
                 schema: myswks_integration
       - name: sdl_mds_th_distributor_msl
-        tags: ["", ""]
+        tags: ["th_non_tesco"]
         tests:
           - test_null:
               not_null_columns: ["barcode", "artypecode_code"]

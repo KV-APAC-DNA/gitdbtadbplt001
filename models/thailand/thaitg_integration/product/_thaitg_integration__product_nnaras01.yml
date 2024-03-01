@@ -4,9 +4,9 @@ models:
   - name: thaitg_integration__itg_th_dtsitemmaster
     config:
       alias: itg_th_dtsitemmaster
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["th_non_tesco"]
   - name: thaitg_integration__itg_th_dtsmcl
     config:
       alias: itg_th_dtsmcl
-      tags: ["hourly","my_sellout_inv_morning"]
+      tags: ["th_non_tesco"]
   

@@ -5,5 +5,7 @@ models:
   - name: thaitg_integration__itg_mds_th_myanmar_customer_master
     config:
       alias: itg_mds_th_myanmar_customer_master
-      tags: ["hourly","my_joint_monthly"]
+      tags: ["th_non_tesco"]
+  
+  
   

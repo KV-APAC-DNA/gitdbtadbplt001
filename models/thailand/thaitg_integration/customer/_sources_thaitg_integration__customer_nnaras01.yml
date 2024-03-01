@@ -11,3 +11,4 @@ sources:
     tables:
       - name: sdl_mds_th_myanmar_customer_master
         tags: ["", ""]
+      

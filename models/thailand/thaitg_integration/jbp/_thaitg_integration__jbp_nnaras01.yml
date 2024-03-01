@@ -4,5 +4,5 @@ models:
   - name: thaitg_integration__itg_th_jbp_market_share_dist
     config:
       alias: itg_th_jbp_market_share_dist
-      tags: ["daily","my_sellout_sales"]
+      tags: ["th_non_tesco"]
   
