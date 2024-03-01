@@ -55,7 +55,7 @@ select
   promocode3::varchar(255) as promocode3,
   cast(avgdiscount as decimal(18, 6)) as avgdiscount,
   current_timestamp()::timestamp_ntz(9) as curr_date ,
-  null as run_id
+  run_id::number(18,0) as run_id
   from source
 )
 
