@@ -25,3 +25,11 @@ models:
     config:
       alias: itg_my_sellout_sales_fact
       tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__sdl_vw_my_monthly_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_vw_my_monthly_sellout_sales_fact_mds_sync
+      tags: ["my_joint_monthly","ingestion"]
+  - name: mysedw_access__sdl_vw_my_daily_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_vw_my_daily_sellout_sales_fact_mds_sync
+      tags: ["my_sellout_sales","transformation"]
