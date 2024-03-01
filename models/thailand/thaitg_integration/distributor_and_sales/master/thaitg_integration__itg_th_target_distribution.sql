@@ -8,7 +8,7 @@
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_target_distribution') }}
 ),
-trans as (
+final as (
 select
   dstrbtr_id::varchar(10) as dstrbtr_id,
   period::varchar(6) as period,
