@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      
+      - name: sdl_mds_th_customer_rsp
+        tags: ["j_ap_th_tesco_etl_framework"]
+
+  - name: thaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      
+      - name: itg_lookup_retention_period
+        tags: ["j_ap_th_tesco_etl_framework"]
+  - name: snaposeitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snaposeitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      
+      - name: itg_th_pos_customer_dim
+        tags: ["j_ap_th_tesco_etl_framework"]
+
+
+
+
+
+  

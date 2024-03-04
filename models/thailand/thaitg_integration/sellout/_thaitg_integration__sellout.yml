@@ -15,6 +15,7 @@ models:
     config:
       alias: itg_th_htc_sellout
       tags: ["th_non_tesco"]
+  
 
 
 

@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: thawks_integration__wks_th_watsons_base_detail
+    config:
+      alias: wks_th_watsons_base_detail
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thawks_integration__wks_th_watsons_propagate_from_to
+    config:
+      alias: wks_th_watsons_propagate_from_to
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thawks_integration__wks_th_watsons_siso_propagate_to_details
+    config:
+      alias: wks_th_watsons_siso_propagate_to_details
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thawks_integration__wks_th_watsons_siso_propagate_final
+    config:
+      alias: wks_th_watsons_siso_propagate_final
+      tags: ["j_ap_th_tesco_etl_framework"]
