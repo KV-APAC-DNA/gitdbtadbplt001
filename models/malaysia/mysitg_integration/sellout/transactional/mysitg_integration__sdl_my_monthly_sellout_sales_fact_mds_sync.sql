@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy = "delete+insert",
-        unique_key=["filename"]
+        unique_key=["filename"],
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     )}}
 
 with source as (
@@ -35,6 +36,10 @@ final as (
         filename::varchar(100) as filename,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.curr_dt > (select max(crt_dttm) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final
