@@ -49,2228 +49,2199 @@ itg_my_gt_outlet_exclusion as (
 itg_my_in_transit as (
   select * from {{ ref('mysitg_integration__itg_my_in_transit') }}
 ),
-final as (
-(
-  (
-    select
-      'GT Sellout' as data_src,
-      veosf.year,
-      veosf.qrtr_no,
-      veosf.mnth_id,
-      veosf.mnth_no,
-      veosf.mnth_nm,
-      cast((
-        substring(
-          replace(
-            cast((
-              cast((
-                ym.bill_date
-              ) as varchar)
-            ) as text),
-            cast((
-              cast('-' as varchar)
-            ) as text),
-            cast((
-              cast('' as varchar)
-            ) as text)
-          ),
-          0,
-          7
-        )
-      ) as varchar) as max_yearmo,
-      'Malaysia' as cntry_nm,
-      veosf.dstrbtr_grp_cd,
-      imcd.dstrbtr_grp_nm,
-      veosf.cust_cd as dstrbtr_cust_cd,
-      veosf.cust_nm as dstrbtr_cust_nm,
-      cast((
-        ltrim(cast((
-          imdd.cust_id
-        ) as text), cast((
-          cast('0' as varchar)
-        ) as text))
-      ) as varchar) as sap_soldto_code,
-      imdd.cust_nm as sap_soldto_nm,
-      imdd.lvl1 as dstrbtr_lvl1,
-      imdd.lvl2 as dstrbtr_lvl2,
-      imdd.lvl3 as dstrbtr_lvl3,
-      imdd.lvl4 as dstrbtr_lvl4,
-      imdd.lvl5 as dstrbtr_lvl5,
-      veosf.region_nm,
-      veosf.town_nm,
-      veosf.slsmn_cd,
-      veosf.chnl_desc,
-      veosf.sub_chnl_desc,
-      veosf.chnl_attr1_desc,
-      veosf.chnl_attr2_desc,
-      veocd.sap_state_cd,
-      veocd.sap_sls_org,
-      veocd.sap_cmp_id,
-      veocd.sap_cntry_cd,
-      veocd.sap_cntry_nm,
-      veocd.sap_addr,
-      veocd.sap_region,
-      veocd.sap_city,
-      veocd.sap_post_cd,
-      veocd.sap_chnl_cd,
-      veocd.sap_chnl_desc,
-      veocd.sap_sls_office_cd,
-      veocd.sap_sls_office_desc,
-      veocd.sap_sls_grp_cd,
-      veocd.sap_sls_grp_desc,
-      veocd.sap_curr_cd,
-      veocd.gch_region,
-      veocd.gch_cluster,
-      veocd.gch_subcluster,
-      veocd.gch_market,
-      veocd.gch_retail_banner,
-      veosf.dstrbtr_matl_num,
-      veosf.bar_cd,
-      cast((
-        ltrim(cast((
-          veomd.sap_matl_num
-        ) as text), cast((
-          cast('0' as varchar)
-        ) as text))
-      ) as varchar) as sku,
-      immd.frnchse_desc,
-      immd.brnd_desc,
-      immd.vrnt_desc,
-      immd.putup_desc,
-      immd.item_desc2,
-      veomd.sap_mat_desc as sku_desc,
-      veomd.sap_mat_type_cd,
-      veomd.sap_mat_type_desc,
-      veomd.sap_base_uom_cd,
-      veomd.sap_prchse_uom_cd,
-      veomd.sap_prod_sgmt_cd,
-      veomd.sap_prod_sgmt_desc,
-      veomd.sap_base_prod_cd,
-      veomd.sap_base_prod_desc,
-      veomd.sap_mega_brnd_cd,
-      veomd.sap_mega_brnd_desc,
-      veomd.sap_brnd_cd,
-      veomd.sap_brnd_desc,
-      veomd.sap_vrnt_cd,
-      veomd.sap_vrnt_desc,
-      veomd.sap_put_up_cd,
-      veomd.sap_put_up_desc,
-      veomd.sap_grp_frnchse_cd,
-      veomd.sap_grp_frnchse_desc,
-      veomd.sap_frnchse_cd,
-      veomd.sap_frnchse_desc,
-      veomd.sap_prod_frnchse_cd,
-      veomd.sap_prod_frnchse_desc,
-      veomd.sap_prod_mjr_cd,
-      veomd.sap_prod_mjr_desc,
-      veomd.sap_prod_mnr_cd,
-      veomd.sap_prod_mnr_desc,
-      veomd.sap_prod_hier_cd,
-      veomd.sap_prod_hier_desc,
-      veomd.gph_region as global_mat_region,
-      veomd.gph_prod_frnchse as global_prod_franchise,
-      veomd.gph_prod_brnd as global_prod_brand,
-      veomd.gph_prod_vrnt as global_prod_variant,
-      veomd.gph_prod_put_up_cd as global_prod_put_up_cd,
-      veomd.gph_prod_put_up_desc as global_put_up_desc,
-      veomd.gph_prod_sub_brnd as global_prod_sub_brand,
-      veomd.gph_prod_needstate as global_prod_need_state,
-      veomd.gph_prod_ctgry as global_prod_category,
-      veomd.gph_prod_subctgry as global_prod_subcategory,
-      veomd.gph_prod_sgmnt as global_prod_segment,
-      veomd.gph_prod_subsgmnt as global_prod_subsegment,
-      veomd.gph_prod_size as global_prod_size,
-      veomd.gph_prod_size_uom as global_prod_size_uom,
-      veocurd.from_ccy,
-      veocurd.to_ccy,
-      veocurd.exch_rate,
-      veosf.wh_id,
-      veosf.doc_type,
-      veosf.doc_type_desc,
-      veosf.bill_date,
-      veosf.bill_doc,
-      (
-        veosf.base_sls * veocurd.exch_rate
-      ) as base_sls,
-      veosf.sls_qty,
-      veosf.ret_qty,
-      veosf.uom,
-      veosf.sls_qty_pc,
-      veosf.ret_qty_pc,
-      0 as in_transit_qty,
-      lp.rate as mat_list_price,
-      (
-        veosf.grs_trd_sls * veocurd.exch_rate
-      ) as grs_trd_sls,
-      (
-        veosf.ret_val * veocurd.exch_rate
-      ) as ret_val,
-      (
-        veosf.trd_discnt * veocurd.exch_rate
-      ) as trd_discnt,
-      (
-        veosf.trd_sls * veocurd.exch_rate
-      ) as trd_sls,
-      (
-        veosf.net_trd_sls * veocurd.exch_rate
-      ) as net_trd_sls,
-      (
-        veosf.jj_grs_trd_sls * veocurd.exch_rate
-      ) as jj_grs_trd_sls,
-      (
-        veosf.jj_ret_val * veocurd.exch_rate
-      ) as jj_ret_val,
-      (
-        veosf.jj_trd_sls * veocurd.exch_rate
-      ) as jj_trd_sls,
-      (
-        veosf.jj_net_trd_sls * veocurd.exch_rate
-      ) as jj_net_trd_sls,
-      0 as in_transit_val,
-      0 as trgt_val,
-      null as inv_dt,
-      null as warehse_cd,
-      0 as end_stock_qty,
-      0 as end_stock_val_raw,
-      0 as end_stock_val,
-      immd.npi_ind as is_npi,
-      immd.npi_strt_period as npi_str_period,
-      null as npi_end_period,
-      null as is_reg,
-      immd.promo_reg_ind as is_promo,
-      null as promo_strt_period,
-      null as promo_end_period,
-      null as is_mcl,
-      immd.hero_ind as is_hero,
-      (
-        veosf.contribution * veocurd.exch_rate
-      ) as contribution
-    from (
-      select
-        max(edw_vw_my_sellout_sales_fact.bill_date) as bill_date
-      from edw_vw_my_sellout_sales_fact
-      where
-        (
-          cast((
-            edw_vw_my_sellout_sales_fact.cntry_cd
-          ) as text) = cast((
-            cast('MY' as varchar)
-          ) as text)
-        )
-    ) as ym, (
-      select
-        d.cntry_key,
-        d.cntry_nm,
-        d.rate_type,
-        d.from_ccy,
-        d.to_ccy,
-        d.valid_date,
-        d.jj_year,
-        d.start_period,
-        case
-          when (
-            d.end_mnth_id = b.max_period
-          )
-          then cast((
-            cast('209912' as varchar)
-          ) as text)
-          else d.end_mnth_id
-        end as end_period,
-        d.exch_rate
-      from (
-        select
-          a.cntry_key,
-          a.cntry_nm,
-          a.rate_type,
-          a.from_ccy,
-          a.to_ccy,
-          a.valid_date,
-          a.jj_year,
-          min(cast((
-            a.jj_mnth_id
-          ) as text)) as start_period,
-          max(cast((
-            a.jj_mnth_id
-          ) as text)) as end_mnth_id,
-          a.exch_rate
-        from edw_vw_my_curr_dim as a
-        where
-          (
-            cast((
-              a.cntry_key
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-        group by
-          a.cntry_key,
-          a.cntry_nm,
-          a.rate_type,
-          a.from_ccy,
-          a.to_ccy,
-          a.valid_date,
-          a.jj_year,
-          a.exch_rate
-      ) as d, (
-        select
-          max(cast((
-            a.jj_mnth_id
-          ) as text)) as max_period
-        from edw_vw_my_curr_dim as a
-        where
-          (
-            cast((
-              a.cntry_key
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-      ) as b
-    ) as veocurd, (
-      (
-        (
-          (
+gt_sellout as (
+    SELECT 'GT Sellout' AS data_src,
+            veosf."year",
+            veosf.qrtr_no,
+            veosf.mnth_id,
+            veosf.mnth_no,
+            veosf.mnth_nm,
             (
-              (
-                (
-                  select
-                    a.year,
-                    a.qrtr_no,
-                    a.mnth_id,
-                    a.mnth_no,
-                    a.mnth_nm,
-                    a.dstrbtr_grp_cd,
-                    a.dstrbtr_soldto_code,
-                    a.cust_cd,
-                    a.slsmn_cd,
-                    a.cust_nm,
-                    a.sap_soldto_code,
-                    a.sap_matl_num,
-                    cast((
-                      UPPER(trim(cast((
-                        a.dstrbtr_matl_num
-                      ) as text)))
-                    ) as varchar) as dstrbtr_matl_num,
-                    a.bar_cd,
-                    a.region_nm,
-                    a.town_nm,
-                    a.chnl_desc,
-                    a.sub_chnl_desc,
-                    a.chnl_attr1_desc,
-                    a.chnl_attr2_desc,
-                    a.wh_id,
-                    a.doc_type,
-                    a.doc_type_desc,
-                    a.base_sls,
-                    a.bill_date,
-                    a.bill_doc,
-                    a.sls_qty,
-                    a.ret_qty,
-                    a.uom,
-                    a.sls_qty_pc,
-                    a.ret_qty_pc,
-                    a.grs_trd_sls,
-                    a.ret_val,
-                    a.trd_discnt,
-                    a.trd_sls,
-                    a.net_trd_sls,
-                    a.jj_grs_trd_sls,
-                    a.jj_ret_val,
-                    a.jj_trd_sls,
-                    a.jj_net_trd_sls,
-                    0 as contribution
-                  from (
-                    select
-                      veotd.year,
-                      veotd.qrtr_no,
-                      veotd.mnth_id,
-                      veotd.mnth_no,
-                      veotd.mnth_nm,
-                      t1.dstrbtr_grp_cd,
-                      t1.dstrbtr_soldto_code,
-                      t1.cust_cd,
-                      t1.slsmn_cd,
-                      t1.bill_date,
-                      t1.bill_doc,
-                      evodcd.cust_nm,
-                      evodcd.sap_soldto_code,
-                      t1.sap_matl_num,
-                      t1.dstrbtr_matl_num,
-                      t1.bar_cd,
-                      evodcd.region_nm,
-                      evodcd.town_nm,
-                      evodcd.chnl_desc,
-                      evodcd.sub_chnl_desc,
-                      evodcd.chnl_attr1_desc,
-                      evodcd.chnl_attr2_desc,
-                      t1.wh_id,
-                      t1.doc_type,
-                      t1.doc_type_desc,
-                      t1.base_sls,
-                      t1.sls_qty,
-                      t1.ret_qty,
-                      t1.uom,
-                      t1.sls_qty_pc,
-                      t1.ret_qty_pc,
-                      t1.grs_trd_sls,
-                      t1.ret_val,
-                      t1.trd_discnt,
-                      t1.trd_sls,
-                      t1.net_trd_sls,
-                      t1.jj_grs_trd_sls,
-                      t1.jj_ret_val,
-                      t1.jj_trd_sls,
-                      t1.jj_net_trd_sls
-                    from (
-                      select distinct
-                        edw_vw_os_time_dim.cal_year as year,
-                        edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                        edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                        edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                        edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                        edw_vw_os_time_dim.cal_date,
-                        edw_vw_os_time_dim.cal_date_id
-                      from edw_vw_os_time_dim
-                    ) as veotd, (
-                      edw_vw_my_sellout_sales_fact as t1
-                        left join (
-                          select
-                            edw_vw_my_dstrbtr_customer_dim.cntry_cd,
-                            edw_vw_my_dstrbtr_customer_dim.cntry_nm,
-                            edw_vw_my_dstrbtr_customer_dim.dstrbtr_grp_cd,
-                            edw_vw_my_dstrbtr_customer_dim.dstrbtr_soldto_code,
-                            edw_vw_my_dstrbtr_customer_dim.sap_soldto_code,
-                            edw_vw_my_dstrbtr_customer_dim.cust_cd,
-                            edw_vw_my_dstrbtr_customer_dim.cust_nm,
-                            edw_vw_my_dstrbtr_customer_dim.alt_cust_cd,
-                            edw_vw_my_dstrbtr_customer_dim.alt_cust_nm,
-                            edw_vw_my_dstrbtr_customer_dim.addr,
-                            edw_vw_my_dstrbtr_customer_dim.area_cd,
-                            edw_vw_my_dstrbtr_customer_dim.area_nm,
-                            edw_vw_my_dstrbtr_customer_dim.state_cd,
-                            edw_vw_my_dstrbtr_customer_dim.state_nm,
-                            edw_vw_my_dstrbtr_customer_dim.region_cd,
-                            edw_vw_my_dstrbtr_customer_dim.region_nm,
-                            edw_vw_my_dstrbtr_customer_dim.prov_cd,
-                            edw_vw_my_dstrbtr_customer_dim.prov_nm,
-                            edw_vw_my_dstrbtr_customer_dim.town_cd,
-                            edw_vw_my_dstrbtr_customer_dim.town_nm,
-                            edw_vw_my_dstrbtr_customer_dim.city_cd,
-                            edw_vw_my_dstrbtr_customer_dim.city_nm,
-                            edw_vw_my_dstrbtr_customer_dim.post_cd,
-                            edw_vw_my_dstrbtr_customer_dim.post_nm,
-                            edw_vw_my_dstrbtr_customer_dim.slsmn_cd,
-                            edw_vw_my_dstrbtr_customer_dim.slsmn_nm,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_cd,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_desc,
-                            edw_vw_my_dstrbtr_customer_dim.sub_chnl_cd,
-                            edw_vw_my_dstrbtr_customer_dim.sub_chnl_desc,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_attr1_cd,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_attr1_desc,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_attr2_cd,
-                            edw_vw_my_dstrbtr_customer_dim.chnl_attr2_desc,
-                            edw_vw_my_dstrbtr_customer_dim.outlet_type_cd,
-                            edw_vw_my_dstrbtr_customer_dim.outlet_type_desc,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_cd,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_desc,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_attr1_cd,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_attr1_desc,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_attr2_cd,
-                            edw_vw_my_dstrbtr_customer_dim.cust_grp_attr2_desc,
-                            edw_vw_my_dstrbtr_customer_dim.sls_dstrct_cd,
-                            edw_vw_my_dstrbtr_customer_dim.sls_dstrct_nm,
-                            edw_vw_my_dstrbtr_customer_dim.sls_office_cd,
-                            edw_vw_my_dstrbtr_customer_dim.sls_office_desc,
-                            edw_vw_my_dstrbtr_customer_dim.sls_grp_cd,
-                            edw_vw_my_dstrbtr_customer_dim.sls_grp_desc,
-                            edw_vw_my_dstrbtr_customer_dim.STATUS
-                          from edw_vw_my_dstrbtr_customer_dim
-                          where
-                            (
-                              cast((
-                                edw_vw_my_dstrbtr_customer_dim.cntry_cd
-                              ) as text) = cast((
-                                cast('MY' as varchar)
-                              ) as text)
+                "substring"(
+                    "replace"(
+                        ((ym.bill_date)::character varying)::text,
+                        ('-'::character varying)::text,
+                        (''::character varying)::text
+                    ),
+                    0,
+                    5
+                )
+            )::character varying AS max_yearmo,
+            'Malaysia' AS cntry_nm,
+            veosf.dstrbtr_grp_cd,
+            imcd.dstrbtr_grp_nm,
+            veosf.cust_cd AS dstrbtr_cust_cd,
+            veosf.cust_nm AS dstrbtr_cust_nm,
+            (
+                ltrim(
+                    (imdd.cust_id)::text,
+                    ('0'::character varying)::text
+                )
+            )::character varying AS sap_soldto_code,
+            imdd.cust_nm AS sap_soldto_nm,
+            imdd.lvl1 AS dstrbtr_lvl1,
+            imdd.lvl2 AS dstrbtr_lvl2,
+            imdd.lvl3 AS dstrbtr_lvl3,
+            imdd.lvl4 AS dstrbtr_lvl4,
+            imdd.lvl5 AS dstrbtr_lvl5,
+            veosf.region_nm,
+            veosf.town_nm,
+            veosf.slsmn_cd,
+            veosf.chnl_desc,
+            veosf.sub_chnl_desc,
+            veosf.chnl_attr1_desc,
+            veosf.chnl_attr2_desc,
+            veocd.sap_state_cd,
+            veocd.sap_sls_org,
+            veocd.sap_cmp_id,
+            veocd.sap_cntry_cd,
+            veocd.sap_cntry_nm,
+            veocd.sap_addr,
+            veocd.sap_region,
+            veocd.sap_city,
+            veocd.sap_post_cd,
+            veocd.sap_chnl_cd,
+            veocd.sap_chnl_desc,
+            veocd.sap_sls_office_cd,
+            veocd.sap_sls_office_desc,
+            veocd.sap_sls_grp_cd,
+            veocd.sap_sls_grp_desc,
+            veocd.sap_curr_cd,
+            veocd.gch_region,
+            veocd.gch_cluster,
+            veocd.gch_subcluster,
+            veocd.gch_market,
+            veocd.gch_retail_banner,
+            veosf.dstrbtr_matl_num,
+            veosf.bar_cd,
+            (
+                ltrim(
+                    (veomd.sap_matl_num)::text,
+                    ('0'::character varying)::text
+                )
+            )::character varying AS sku,
+            immd.frnchse_desc,
+            immd.brnd_desc,
+            immd.vrnt_desc,
+            immd.putup_desc,
+            immd.item_desc2,
+            veomd.sap_mat_desc AS sku_desc,
+            veomd.sap_mat_type_cd,
+            veomd.sap_mat_type_desc,
+            veomd.sap_base_uom_cd,
+            veomd.sap_prchse_uom_cd,
+            veomd.sap_prod_sgmt_cd,
+            veomd.sap_prod_sgmt_desc,
+            veomd.sap_base_prod_cd,
+            veomd.sap_base_prod_desc,
+            veomd.sap_mega_brnd_cd,
+            veomd.sap_mega_brnd_desc,
+            veomd.sap_brnd_cd,
+            veomd.sap_brnd_desc,
+            veomd.sap_vrnt_cd,
+            veomd.sap_vrnt_desc,
+            veomd.sap_put_up_cd,
+            veomd.sap_put_up_desc,
+            veomd.sap_grp_frnchse_cd,
+            veomd.sap_grp_frnchse_desc,
+            veomd.sap_frnchse_cd,
+            veomd.sap_frnchse_desc,
+            veomd.sap_prod_frnchse_cd,
+            veomd.sap_prod_frnchse_desc,
+            veomd.sap_prod_mjr_cd,
+            veomd.sap_prod_mjr_desc,
+            veomd.sap_prod_mnr_cd,
+            veomd.sap_prod_mnr_desc,
+            veomd.sap_prod_hier_cd,
+            veomd.sap_prod_hier_desc,
+            veomd.gph_region AS global_mat_region,
+            veomd.gph_prod_frnchse AS global_prod_franchise,
+            veomd.gph_prod_brnd AS global_prod_brand,
+            veomd.gph_prod_vrnt AS global_prod_variant,
+            veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+            veomd.gph_prod_put_up_desc AS global_put_up_desc,
+            veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+            veomd.gph_prod_needstate AS global_prod_need_state,
+            veomd.gph_prod_ctgry AS global_prod_category,
+            veomd.gph_prod_subctgry AS global_prod_subcategory,
+            veomd.gph_prod_sgmnt AS global_prod_segment,
+            veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+            veomd.gph_prod_size AS global_prod_size,
+            veomd.gph_prod_size_uom AS global_prod_size_uom,
+            veocurd.from_ccy,
+            veocurd.to_ccy,
+            veocurd.exch_rate,
+            veosf.wh_id,
+            veosf.doc_type,
+            veosf.doc_type_desc,
+            veosf.bill_date,
+            veosf.bill_doc,
+            (veosf.base_sls * veocurd.exch_rate) AS base_sls,
+            veosf.sls_qty,
+            veosf.ret_qty,
+            veosf.uom,
+            veosf.sls_qty_pc,
+            veosf.ret_qty_pc,
+            0 AS in_transit_qty,
+            lp.rate AS mat_list_price,
+            (veosf.grs_trd_sls * veocurd.exch_rate) AS grs_trd_sls,
+            (veosf.ret_val * veocurd.exch_rate) AS ret_val,
+            (veosf.trd_discnt * veocurd.exch_rate) AS trd_discnt,
+            (veosf.trd_sls * veocurd.exch_rate) AS trd_sls,
+            (veosf.net_trd_sls * veocurd.exch_rate) AS net_trd_sls,
+            (veosf.jj_grs_trd_sls * veocurd.exch_rate) AS jj_grs_trd_sls,
+            (veosf.jj_ret_val * veocurd.exch_rate) AS jj_ret_val,
+            (veosf.jj_trd_sls * veocurd.exch_rate) AS jj_trd_sls,
+            (veosf.jj_net_trd_sls * veocurd.exch_rate) AS jj_net_trd_sls,
+            0 AS in_transit_val,
+            0 AS trgt_val,
+            NULL AS inv_dt,
+            NULL AS warehse_cd,
+            0 AS end_stock_qty,
+            0 AS end_stock_val_raw,
+            0 AS end_stock_val,
+            immd.npi_ind AS is_npi,
+            immd.npi_strt_period AS npi_str_period,
+            NULL AS npi_end_period,
+            NULL AS is_reg,
+            immd.promo_reg_ind AS is_promo,
+            NULL AS promo_strt_period,
+            NULL AS promo_end_period,
+            NULL AS is_mcl,
+            immd.hero_ind AS is_hero,
+            (veosf.contribution * veocurd.exch_rate) AS contribution
+        FROM (
+                SELECT "max"(EDW_VW_MY_SELLOUT_SALES_FACT.bill_date) AS bill_date
+                FROM EDW_VW_MY_SELLOUT_SALES_FACT
+                WHERE (
+                        (EDW_VW_MY_SELLOUT_SALES_FACT.cntry_cd)::text = ('MY'::character varying)::text
+                    )
+            ) ym,
+            (
+                SELECT d.cntry_key,
+                    d.cntry_nm,
+                    d.rate_type,
+                    d.from_ccy,
+                    d.to_ccy,
+                    d.valid_date,
+                    d.jj_year,
+                    d.start_period,
+                    CASE
+                        WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+                        ELSE d.end_mnth_id
+                    END AS end_period,
+                    d.exch_rate
+                FROM (
+                        SELECT a.cntry_key,
+                            a.cntry_nm,
+                            a.rate_type,
+                            a.from_ccy,
+                            a.to_ccy,
+                            a.valid_date,
+                            a.jj_year,
+                            min((a.jj_mnth_id)::text) AS start_period,
+                            "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+                            a.exch_rate
+                        FROM EDW_VW_my_CURR_DIM a
+                        WHERE (
+                                (a.cntry_key)::text = ('MY'::character varying)::text
                             )
-                        ) as evodcd
-                          on (
+                        GROUP BY a.cntry_key,
+                            a.cntry_nm,
+                            a.rate_type,
+                            a.from_ccy,
+                            a.to_ccy,
+                            a.valid_date,
+                            a.jj_year,
+                            a.exch_rate
+                    ) d,
+                    (
+                        SELECT "max"((a.jj_mnth_id)::text) AS max_period
+                        FROM EDW_VW_my_CURR_DIM a
+                        WHERE (
+                                (a.cntry_key)::text = ('MY'::character varying)::text
+                            )
+                    ) b
+            ) veocurd,
+            (
+                (
+                    (
+                        (
                             (
-                              (
                                 (
-                                  ltrim(cast((
-                                    evodcd.cust_cd
-                                  ) as text), cast((
-                                    cast('0' as varchar)
-                                  ) as text)) = ltrim(cast((
-                                    t1.cust_cd
-                                  ) as text), cast((
-                                    cast('0' as varchar)
-                                  ) as text))
+                                    (
+                                        SELECT a."year",
+                                            a.qrtr_no,
+                                            a.mnth_id,
+                                            a.mnth_no,
+                                            a.mnth_nm,
+                                            a.dstrbtr_grp_cd,
+                                            a.dstrbtr_soldto_code,
+                                            a.cust_cd,
+                                            a.slsmn_cd,
+                                            a.cust_nm,
+                                            a.sap_soldto_code,
+                                            a.sap_matl_num,
+                                            (upper(TRIM((a.dstrbtr_matl_num)::text)))::character varying AS dstrbtr_matl_num,
+                                            a.bar_cd,
+                                            a.region_nm,
+                                            a.town_nm,
+                                            a.chnl_desc,
+                                            a.sub_chnl_desc,
+                                            a.chnl_attr1_desc,
+                                            a.chnl_attr2_desc,
+                                            a.wh_id,
+                                            a.doc_type,
+                                            a.doc_type_desc,
+                                            a.base_sls,
+                                            a.bill_date,
+                                            a.bill_doc,
+                                            a.sls_qty,
+                                            a.ret_qty,
+                                            a.uom,
+                                            a.sls_qty_pc,
+                                            a.ret_qty_pc,
+                                            a.grs_trd_sls,
+                                            a.ret_val,
+                                            a.trd_discnt,
+                                            a.trd_sls,
+                                            a.net_trd_sls,
+                                            a.jj_grs_trd_sls,
+                                            a.jj_ret_val,
+                                            a.jj_trd_sls,
+                                            a.jj_net_trd_sls,
+                                            0 AS contribution
+                                        FROM (
+                                                SELECT veotd."year",
+                                                    veotd.qrtr_no,
+                                                    veotd.mnth_id,
+                                                    veotd.mnth_no,
+                                                    veotd.mnth_nm,
+                                                    t1.dstrbtr_grp_cd,
+                                                    t1.dstrbtr_soldto_code,
+                                                    t1.cust_cd,
+                                                    t1.slsmn_cd,
+                                                    t1.bill_date,
+                                                    t1.bill_doc,
+                                                    evodcd.cust_nm,
+                                                    evodcd.sap_soldto_code,
+                                                    t1.sap_matl_num,
+                                                    t1.dstrbtr_matl_num,
+                                                    t1.bar_cd,
+                                                    evodcd.region_nm,
+                                                    evodcd.town_nm,
+                                                    evodcd.chnl_desc,
+                                                    evodcd.sub_chnl_desc,
+                                                    evodcd.chnl_attr1_desc,
+                                                    evodcd.chnl_attr2_desc,
+                                                    t1.wh_id,
+                                                    t1.doc_type,
+                                                    t1.doc_type_desc,
+                                                    t1.base_sls,
+                                                    t1.sls_qty,
+                                                    t1.ret_qty,
+                                                    t1.uom,
+                                                    t1.sls_qty_pc,
+                                                    t1.ret_qty_pc,
+                                                    t1.grs_trd_sls,
+                                                    t1.ret_val,
+                                                    t1.trd_discnt,
+                                                    t1.trd_sls,
+                                                    t1.net_trd_sls,
+                                                    t1.jj_grs_trd_sls,
+                                                    t1.jj_ret_val,
+                                                    t1.jj_trd_sls,
+                                                    t1.jj_net_trd_sls
+                                                FROM (
+                                                        SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+                                                            edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                                            edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                                            edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                                            edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                                            edw_vw_os_time_dim.cal_date,
+                                                            edw_vw_os_time_dim.cal_date_id
+                                                        FROM edw_vw_os_time_dim
+                                                    ) veotd,
+                                                    (
+                                                        EDW_VW_MY_SELLOUT_SALES_FACT t1
+                                                        LEFT JOIN (
+                                                            SELECT EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_grp_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_soldto_code,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sap_soldto_code,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.addr,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_nm,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_cd,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_desc,
+                                                                EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.status
+                                                            FROM EDW_VW_MY_DSTRBTR_CUSTOMER_DIM
+                                                            WHERE (
+                                                                    (EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd)::text = ('MY'::character varying)::text
+                                                                )
+                                                        ) evodcd ON (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        ltrim(
+                                                                            (evodcd.cust_cd)::text,
+                                                                            ('0'::character varying)::text
+                                                                        ) = ltrim(
+                                                                            (t1.cust_cd)::text,
+                                                                            ('0'::character varying)::text
+                                                                        )
+                                                                    )
+                                                                    AND (
+                                                                        ltrim(
+                                                                            (evodcd.dstrbtr_grp_cd)::text,
+                                                                            ('0'::character varying)::text
+                                                                        ) = ltrim(
+                                                                            (t1.dstrbtr_grp_cd)::text,
+                                                                            ('0'::character varying)::text
+                                                                        )
+                                                                    )
+                                                                )
+                                                                AND (
+                                                                    ltrim(
+                                                                        (evodcd.sap_soldto_code)::text,
+                                                                        ('0'::character varying)::text
+                                                                    ) = ltrim(
+                                                                        (t1.dstrbtr_soldto_code)::text,
+                                                                        ('0'::character varying)::text
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                WHERE (
+                                                        (
+                                                            (
+                                                                to_date((veotd.cal_date)::timestamp without time zone) = to_date(t1.bill_date)
+                                                            )
+                                                            AND (
+                                                                (t1.cntry_cd)::text = ('MY'::character varying)::text
+                                                            )
+                                                        )
+                                                        AND (
+                                                            NOT (
+                                                                (
+                                                                    COALESCE(
+                                                                        ltrim(
+                                                                            (t1.dstrbtr_soldto_code)::text,
+                                                                            ('0'::character varying)::text
+                                                                        ),
+                                                                        ('0'::character varying)::text
+                                                                    ) || COALESCE(
+                                                                        TRIM((t1.cust_cd)::text),
+                                                                        ('0'::character varying)::text
+                                                                    )
+                                                                ) IN (
+                                                                    SELECT DISTINCT (
+                                                                            (
+                                                                                COALESCE(
+                                                                                    itg_my_gt_outlet_exclusion.dstrbtr_cd,
+                                                                                    '0'::character varying
+                                                                                )
+                                                                            )::text || (
+                                                                                COALESCE(
+                                                                                    itg_my_gt_outlet_exclusion.outlet_cd,
+                                                                                    '0'::character varying
+                                                                                )
+                                                                            )::text
+                                                                        )
+                                                                    FROM itg_my_gt_outlet_exclusion
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                            ) a
+                                        UNION ALL
+                                        SELECT trgt."year",
+                                            trgt.qrtr_no,
+                                            trgt.trgt_period AS mnth_id,
+                                            trgt.mnth_no,
+                                            trgt.mnth_nm,
+                                            NULL::character varying AS dstrbtr_grp_cd,
+                                            trgt.dstrbtr_id AS dstrbtr_soldto_code,
+                                            trgt.cust_cd,
+                                            NULL::character varying AS slsmn_cd,
+                                            evodcd.cust_nm,
+                                            trgt.dstrbtr_id AS sap_soldto_code,
+                                            trgt.sap_matl_num,
+                                            (upper(TRIM((trgt.dstrbtr_matl_num)::text)))::character varying AS dstrbtr_matl_num,
+                                            trgt.bar_cd,
+                                            evodcd.region_nm,
+                                            evodcd.town_nm,
+                                            evodcd.chnl_desc,
+                                            evodcd.sub_chnl_desc,
+                                            evodcd.chnl_attr1_desc,
+                                            evodcd.chnl_attr2_desc,
+                                            NULL::character varying AS wh_id,
+                                            NULL::character varying AS doc_type,
+                                            NULL::character varying AS doc_type_desc,
+                                            0 AS base_sls,
+                                            NULL::timestamp without time zone AS bill_date,
+                                            NULL::character varying AS bill_doc,
+                                            0 AS sls_qty,
+                                            0 AS ret_qty,
+                                            NULL::character varying AS uom,
+                                            0 AS sls_qty_pc,
+                                            0 AS ret_qty_pc,
+                                            0 AS grs_trd_sls,
+                                            0 AS ret_val,
+                                            0 AS trd_discnt,
+                                            0 AS trd_sls,
+                                            0 AS net_trd_sls,
+                                            0 AS jj_grs_trd_sls,
+                                            0 AS jj_ret_val,
+                                            0 AS jj_trd_sls,
+                                            0 AS jj_net_trd_sls,
+                                            trgt.contribution
+                                        FROM (
+                                                (
+                                                    SELECT derived_table1."year",
+                                                        derived_table1.qrtr_no,
+                                                        derived_table1.mnth_no,
+                                                        derived_table1.mnth_nm,
+                                                        derived_table1.mnth_id,
+                                                        derived_table1.trgt_period,
+                                                        derived_table1.dstrbtr_id,
+                                                        derived_table1.sap_matl_num,
+                                                        derived_table1.dstrbtr_matl_num,
+                                                        derived_table1.bar_cd,
+                                                        derived_table1.cust_cd,
+                                                        sum(derived_table1.contribution) AS contribution
+                                                    FROM (
+                                                            SELECT t1."year",
+                                                                t1.qrtr_no,
+                                                                t1.mnth_no,
+                                                                t1.mnth_nm,
+                                                                t1.mnth_id,
+                                                                t1.trgt_period,
+                                                                t1.dstrbtr_id,
+                                                                t1.sap_matl_num,
+                                                                t1.dstrbtr_matl_num,
+                                                                t1.bar_cd,
+                                                                t1.cust_cd,
+                                                                (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+                                                            FROM (
+                                                                    SELECT (
+                                                                            "substring"(
+                                                                                to_char(
+                                                                                    add_months(
+                                                                                        (
+                                                                                            to_date(
+                                                                                                ((veotd.mnth_id)::character varying)::text,
+                                                                                                ('YYYYMM'::character varying)::text
+                                                                                            )
+                                                                                        )::timestamp without time zone,
+                                                                                        (12)::bigint
+                                                                                    ),
+                                                                                    ('YYYYMM'::character varying)::text
+                                                                                ),
+                                                                                0,
+                                                                                4
+                                                                            )
+                                                                        )::integer AS "year",
+                                                                        veotd.qrtr_no,
+                                                                        veotd.mnth_no,
+                                                                        veotd.mnth_nm,
+                                                                        veotd.mnth_id,
+                                                                        (
+                                                                            to_char(
+                                                                                add_months(
+                                                                                    (
+                                                                                        to_date(
+                                                                                            ((veotd.mnth_id)::character varying)::text,
+                                                                                            ('YYYYMM'::character varying)::text
+                                                                                        )
+                                                                                    )::timestamp without time zone,
+                                                                                    (12)::bigint
+                                                                                ),
+                                                                                ('YYYYMM'::character varying)::text
+                                                                            )
+                                                                        )::integer AS trgt_period,
+                                                                        a.dstrbtr_id,
+                                                                        a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+                                                                        a.sap_matl_num,
+                                                                        a.ean_num AS bar_cd,
+                                                                        a.cust_cd,
+                                                                        a.total_amt_bfr_tax AS base_sls,
+                                                                        sum(a.total_amt_bfr_tax) OVER(
+                                                                            PARTITION BY veotd.mnth_id,
+                                                                            a.dstrbtr_id ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                                                                        ) AS total_sales
+                                                                    FROM (
+                                                                            SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+                                                                                itg_my_sellout_sales_fact.sls_ord_num,
+                                                                                itg_my_sellout_sales_fact.sls_ord_dt,
+                                                                                itg_my_sellout_sales_fact.type,
+                                                                                itg_my_sellout_sales_fact.cust_cd,
+                                                                                itg_my_sellout_sales_fact.dstrbtr_wh_id,
+                                                                                itg_my_sellout_sales_fact.item_cd,
+                                                                                itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+                                                                                itg_my_sellout_sales_fact.ean_num,
+                                                                                itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+                                                                                itg_my_sellout_sales_fact.grs_prc,
+                                                                                itg_my_sellout_sales_fact.qty,
+                                                                                itg_my_sellout_sales_fact.uom,
+                                                                                itg_my_sellout_sales_fact.qty_pc,
+                                                                                itg_my_sellout_sales_fact.qty_aft_conv,
+                                                                                itg_my_sellout_sales_fact.subtotal_1,
+                                                                                itg_my_sellout_sales_fact.discount,
+                                                                                itg_my_sellout_sales_fact.subtotal_2,
+                                                                                itg_my_sellout_sales_fact.bottom_line_dscnt,
+                                                                                itg_my_sellout_sales_fact.total_amt_aft_tax,
+                                                                                itg_my_sellout_sales_fact.total_amt_bfr_tax,
+                                                                                itg_my_sellout_sales_fact.sls_emp,
+                                                                                itg_my_sellout_sales_fact.custom_field1,
+                                                                                itg_my_sellout_sales_fact.custom_field2,
+                                                                                itg_my_sellout_sales_fact.sap_matl_num,
+                                                                                itg_my_sellout_sales_fact.filename,
+                                                                                itg_my_sellout_sales_fact.cdl_dttm,
+                                                                                itg_my_sellout_sales_fact.crtd_dttm,
+                                                                                itg_my_sellout_sales_fact.updt_dttm
+                                                                            FROM itg_my_sellout_sales_fact
+                                                                            WHERE (
+                                                                                    NOT (
+                                                                                        (
+                                                                                            COALESCE(
+                                                                                                ltrim(
+                                                                                                    (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+                                                                                                    ('0'::character varying)::text
+                                                                                                ),
+                                                                                                ('0'::character varying)::text
+                                                                                            ) || COALESCE(
+                                                                                                TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+                                                                                                ('0'::character varying)::text
+                                                                                            )
+                                                                                        ) IN (
+                                                                                            SELECT DISTINCT (
+                                                                                                    (
+                                                                                                        COALESCE(
+                                                                                                            itg_my_gt_outlet_exclusion.dstrbtr_cd,
+                                                                                                            '0'::character varying
+                                                                                                        )
+                                                                                                    )::text || (
+                                                                                                        COALESCE(
+                                                                                                            itg_my_gt_outlet_exclusion.outlet_cd,
+                                                                                                            '0'::character varying
+                                                                                                        )
+                                                                                                    )::text
+                                                                                                )
+                                                                                            FROM itg_my_gt_outlet_exclusion
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                        ) a,
+                                                                        (
+                                                                            SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+                                                                                edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                                                                edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                                                                edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                                                                edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                                                                edw_vw_os_time_dim.cal_date,
+                                                                                edw_vw_os_time_dim.cal_date_id
+                                                                            FROM edw_vw_os_time_dim
+                                                                        ) veotd
+                                                                    WHERE (
+                                                                            to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+                                                                        )
+                                                                ) t1,
+                                                                (
+                                                                    SELECT itg_my_trgts.jj_mnth_id,
+                                                                        itg_my_trgts.cust_id,
+                                                                        sum(itg_my_trgts.trgt_val) AS trgt_val
+                                                                    FROM itg_my_trgts
+                                                                    WHERE (
+                                                                            (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+                                                                        )
+                                                                    GROUP BY itg_my_trgts.jj_mnth_id,
+                                                                        itg_my_trgts.cust_id
+                                                                ) trgt
+                                                            WHERE (
+                                                                    (
+                                                                        (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+                                                                    )
+                                                                    AND (
+                                                                        (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+                                                                    )
+                                                                )
+                                                        ) derived_table1
+                                                    GROUP BY derived_table1."year",
+                                                        derived_table1.qrtr_no,
+                                                        derived_table1.mnth_no,
+                                                        derived_table1.mnth_nm,
+                                                        derived_table1.mnth_id,
+                                                        derived_table1.trgt_period,
+                                                        derived_table1.dstrbtr_id,
+                                                        derived_table1.sap_matl_num,
+                                                        derived_table1.cust_cd,
+                                                        derived_table1.dstrbtr_matl_num,
+                                                        derived_table1.bar_cd
+                                                    UNION
+                                                    SELECT derived_table1."year",
+                                                        derived_table1.qrtr_no,
+                                                        derived_table1.mnth_no,
+                                                        derived_table1.mnth_nm,
+                                                        derived_table1.mnth_id,
+                                                        derived_table1.trgt_period,
+                                                        derived_table1.dstrbtr_id,
+                                                        derived_table1.sap_matl_num,
+                                                        derived_table1.dstrbtr_matl_num,
+                                                        derived_table1.bar_cd,
+                                                        derived_table1.cust_cd,
+                                                        derived_table1.contribution
+                                                    FROM (
+                                                            SELECT trgt1."year",
+                                                                trgt1.qrtr_no,
+                                                                trgt1.mnth_no,
+                                                                trgt1.mnth_nm,
+                                                                trgt1.mnth_id,
+                                                                trgt1.trgt_period,
+                                                                trgt1.dstrbtr_id,
+                                                                trgt1.sap_matl_num,
+                                                                trgt1.dstrbtr_matl_num,
+                                                                trgt1.bar_cd,
+                                                                trgt1.cust_cd,
+                                                                trgt1.contribution,
+                                                                trgt2.trgt_period AS trgt_period_present,
+                                                                trgt2.dstrbtr_id AS dstrbtr_id_present
+                                                            FROM (
+                                                                    (
+                                                                        SELECT derived_table1."year",
+                                                                            derived_table1.qrtr_no,
+                                                                            derived_table1.mnth_no,
+                                                                            derived_table1.mnth_nm,
+                                                                            derived_table1.mnth_id,
+                                                                            derived_table1.trgt_period,
+                                                                            derived_table1.dstrbtr_id,
+                                                                            derived_table1.sap_matl_num,
+                                                                            derived_table1.dstrbtr_matl_num,
+                                                                            derived_table1.bar_cd,
+                                                                            derived_table1.cust_cd,
+                                                                            sum(derived_table1.contribution) AS contribution
+                                                                        FROM (
+                                                                                SELECT t1."year",
+                                                                                    t1.qrtr_no,
+                                                                                    t1.mnth_no,
+                                                                                    t1.mnth_nm,
+                                                                                    t1.mnth_id,
+                                                                                    t1.trgt_period,
+                                                                                    t1.dstrbtr_id,
+                                                                                    t1.sap_matl_num,
+                                                                                    t1.dstrbtr_matl_num,
+                                                                                    t1.bar_cd,
+                                                                                    t1.cust_cd,
+                                                                                    (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+                                                                                FROM (
+                                                                                        SELECT (
+                                                                                                "substring"(
+                                                                                                    to_char(
+                                                                                                        add_months(
+                                                                                                            (
+                                                                                                                to_date(
+                                                                                                                    ((veotd.mnth_id)::character varying)::text,
+                                                                                                                    ('YYYYMM'::character varying)::text
+                                                                                                                )
+                                                                                                            )::timestamp without time zone,
+                                                                                                            (0)::bigint
+                                                                                                        ),
+                                                                                                        ('YYYYMM'::character varying)::text
+                                                                                                    ),
+                                                                                                    0,
+                                                                                                    4
+                                                                                                )
+                                                                                            )::integer AS "year",
+                                                                                            veotd.qrtr_no,
+                                                                                            veotd.mnth_no,
+                                                                                            veotd.mnth_nm,
+                                                                                            veotd.mnth_id AS trgt_period,
+                                                                                            (
+                                                                                                to_char(
+                                                                                                    add_months(
+                                                                                                        (
+                                                                                                            to_date(
+                                                                                                                ((veotd.mnth_id)::character varying)::text,
+                                                                                                                ('YYYYMM'::character varying)::text
+                                                                                                            )
+                                                                                                        )::timestamp without time zone,
+                                                                                                        (- (12)::bigint)
+                                                                                                    ),
+                                                                                                    ('YYYYMM'::character varying)::text
+                                                                                                )
+                                                                                            )::integer AS mnth_id,
+                                                                                            a.dstrbtr_id,
+                                                                                            a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+                                                                                            a.sap_matl_num,
+                                                                                            a.ean_num AS bar_cd,
+                                                                                            a.cust_cd,
+                                                                                            a.total_amt_bfr_tax AS base_sls,
+                                                                                            sum(a.total_amt_bfr_tax) OVER(
+                                                                                                PARTITION BY veotd.mnth_id,
+                                                                                                a.dstrbtr_id ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                                                                                            ) AS total_sales
+                                                                                        FROM (
+                                                                                                SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+                                                                                                    itg_my_sellout_sales_fact.sls_ord_num,
+                                                                                                    itg_my_sellout_sales_fact.sls_ord_dt,
+                                                                                                    itg_my_sellout_sales_fact.type,
+                                                                                                    itg_my_sellout_sales_fact.cust_cd,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_wh_id,
+                                                                                                    itg_my_sellout_sales_fact.item_cd,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+                                                                                                    itg_my_sellout_sales_fact.ean_num,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+                                                                                                    itg_my_sellout_sales_fact.grs_prc,
+                                                                                                    itg_my_sellout_sales_fact.qty,
+                                                                                                    itg_my_sellout_sales_fact.uom,
+                                                                                                    itg_my_sellout_sales_fact.qty_pc,
+                                                                                                    itg_my_sellout_sales_fact.qty_aft_conv,
+                                                                                                    itg_my_sellout_sales_fact.subtotal_1,
+                                                                                                    itg_my_sellout_sales_fact.discount,
+                                                                                                    itg_my_sellout_sales_fact.subtotal_2,
+                                                                                                    itg_my_sellout_sales_fact.bottom_line_dscnt,
+                                                                                                    itg_my_sellout_sales_fact.total_amt_aft_tax,
+                                                                                                    itg_my_sellout_sales_fact.total_amt_bfr_tax,
+                                                                                                    itg_my_sellout_sales_fact.sls_emp,
+                                                                                                    itg_my_sellout_sales_fact.custom_field1,
+                                                                                                    itg_my_sellout_sales_fact.custom_field2,
+                                                                                                    itg_my_sellout_sales_fact.sap_matl_num,
+                                                                                                    itg_my_sellout_sales_fact.filename,
+                                                                                                    itg_my_sellout_sales_fact.cdl_dttm,
+                                                                                                    itg_my_sellout_sales_fact.crtd_dttm,
+                                                                                                    itg_my_sellout_sales_fact.updt_dttm
+                                                                                                FROM itg_my_sellout_sales_fact
+                                                                                                WHERE (
+                                                                                                        NOT (
+                                                                                                            (
+                                                                                                                COALESCE(
+                                                                                                                    ltrim(
+                                                                                                                        (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+                                                                                                                        ('0'::character varying)::text
+                                                                                                                    ),
+                                                                                                                    ('0'::character varying)::text
+                                                                                                                ) || COALESCE(
+                                                                                                                    TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+                                                                                                                    ('0'::character varying)::text
+                                                                                                                )
+                                                                                                            ) IN (
+                                                                                                                SELECT DISTINCT (
+                                                                                                                        (
+                                                                                                                            COALESCE(
+                                                                                                                                itg_my_gt_outlet_exclusion.dstrbtr_cd,
+                                                                                                                                '0'::character varying
+                                                                                                                            )
+                                                                                                                        )::text || (
+                                                                                                                            COALESCE(
+                                                                                                                                itg_my_gt_outlet_exclusion.outlet_cd,
+                                                                                                                                '0'::character varying
+                                                                                                                            )
+                                                                                                                        )::text
+                                                                                                                    )
+                                                                                                                FROM itg_my_gt_outlet_exclusion
+                                                                                                            )
+                                                                                                        )
+                                                                                                    )
+                                                                                            ) a,
+                                                                                            (
+                                                                                                SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+                                                                                                    edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                                                                                    edw_vw_os_time_dim.cal_date,
+                                                                                                    edw_vw_os_time_dim.cal_date_id
+                                                                                                FROM edw_vw_os_time_dim
+                                                                                            ) veotd
+                                                                                        WHERE (
+                                                                                                to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+                                                                                            )
+                                                                                    ) t1,
+                                                                                    (
+                                                                                        SELECT itg_my_trgts.jj_mnth_id,
+                                                                                            itg_my_trgts.cust_id,
+                                                                                            sum(itg_my_trgts.trgt_val) AS trgt_val
+                                                                                        FROM itg_my_trgts
+                                                                                        WHERE (
+                                                                                                (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+                                                                                            )
+                                                                                        GROUP BY itg_my_trgts.jj_mnth_id,
+                                                                                            itg_my_trgts.cust_id
+                                                                                    ) trgt
+                                                                                WHERE (
+                                                                                        (
+                                                                                            (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+                                                                                        )
+                                                                                        AND (
+                                                                                            (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+                                                                                        )
+                                                                                    )
+                                                                            ) derived_table1
+                                                                        GROUP BY derived_table1."year",
+                                                                            derived_table1.qrtr_no,
+                                                                            derived_table1.mnth_no,
+                                                                            derived_table1.mnth_nm,
+                                                                            derived_table1.mnth_id,
+                                                                            derived_table1.trgt_period,
+                                                                            derived_table1.dstrbtr_id,
+                                                                            derived_table1.sap_matl_num,
+                                                                            derived_table1.cust_cd,
+                                                                            derived_table1.dstrbtr_matl_num,
+                                                                            derived_table1.bar_cd
+                                                                    ) trgt1
+                                                                    LEFT JOIN (
+                                                                        SELECT derived_table1."year",
+                                                                            derived_table1.qrtr_no,
+                                                                            derived_table1.mnth_no,
+                                                                            derived_table1.mnth_nm,
+                                                                            derived_table1.mnth_id,
+                                                                            derived_table1.trgt_period,
+                                                                            derived_table1.dstrbtr_id,
+                                                                            derived_table1.sap_matl_num,
+                                                                            derived_table1.dstrbtr_matl_num,
+                                                                            derived_table1.bar_cd,
+                                                                            derived_table1.cust_cd,
+                                                                            sum(derived_table1.contribution) AS contribution
+                                                                        FROM (
+                                                                                SELECT t1."year",
+                                                                                    t1.qrtr_no,
+                                                                                    t1.mnth_no,
+                                                                                    t1.mnth_nm,
+                                                                                    t1.mnth_id,
+                                                                                    t1.trgt_period,
+                                                                                    t1.dstrbtr_id,
+                                                                                    t1.sap_matl_num,
+                                                                                    t1.dstrbtr_matl_num,
+                                                                                    t1.bar_cd,
+                                                                                    t1.cust_cd,
+                                                                                    (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+                                                                                FROM (
+                                                                                        SELECT (
+                                                                                                "substring"(
+                                                                                                    to_char(
+                                                                                                        add_months(
+                                                                                                            (
+                                                                                                                to_date(
+                                                                                                                    ((veotd.mnth_id)::character varying)::text,
+                                                                                                                    ('YYYYMM'::character varying)::text
+                                                                                                                )
+                                                                                                            )::timestamp without time zone,
+                                                                                                            (12)::bigint
+                                                                                                        ),
+                                                                                                        ('YYYYMM'::character varying)::text
+                                                                                                    ),
+                                                                                                    0,
+                                                                                                    4
+                                                                                                )
+                                                                                            )::integer AS "year",
+                                                                                            veotd.qrtr_no,
+                                                                                            veotd.mnth_no,
+                                                                                            veotd.mnth_nm,
+                                                                                            veotd.mnth_id,
+                                                                                            (
+                                                                                                to_char(
+                                                                                                    add_months(
+                                                                                                        (
+                                                                                                            to_date(
+                                                                                                                ((veotd.mnth_id)::character varying)::text,
+                                                                                                                ('YYYYMM'::character varying)::text
+                                                                                                            )
+                                                                                                        )::timestamp without time zone,
+                                                                                                        (12)::bigint
+                                                                                                    ),
+                                                                                                    ('YYYYMM'::character varying)::text
+                                                                                                )
+                                                                                            )::integer AS trgt_period,
+                                                                                            a.dstrbtr_id,
+                                                                                            a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+                                                                                            a.sap_matl_num,
+                                                                                            a.ean_num AS bar_cd,
+                                                                                            a.cust_cd,
+                                                                                            a.total_amt_bfr_tax AS base_sls,
+                                                                                            sum(a.total_amt_bfr_tax) OVER(
+                                                                                                PARTITION BY veotd.mnth_id,
+                                                                                                a.dstrbtr_id ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                                                                                            ) AS total_sales
+                                                                                        FROM (
+                                                                                                SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+                                                                                                    itg_my_sellout_sales_fact.sls_ord_num,
+                                                                                                    itg_my_sellout_sales_fact.sls_ord_dt,
+                                                                                                    itg_my_sellout_sales_fact.type,
+                                                                                                    itg_my_sellout_sales_fact.cust_cd,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_wh_id,
+                                                                                                    itg_my_sellout_sales_fact.item_cd,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+                                                                                                    itg_my_sellout_sales_fact.ean_num,
+                                                                                                    itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+                                                                                                    itg_my_sellout_sales_fact.grs_prc,
+                                                                                                    itg_my_sellout_sales_fact.qty,
+                                                                                                    itg_my_sellout_sales_fact.uom,
+                                                                                                    itg_my_sellout_sales_fact.qty_pc,
+                                                                                                    itg_my_sellout_sales_fact.qty_aft_conv,
+                                                                                                    itg_my_sellout_sales_fact.subtotal_1,
+                                                                                                    itg_my_sellout_sales_fact.discount,
+                                                                                                    itg_my_sellout_sales_fact.subtotal_2,
+                                                                                                    itg_my_sellout_sales_fact.bottom_line_dscnt,
+                                                                                                    itg_my_sellout_sales_fact.total_amt_aft_tax,
+                                                                                                    itg_my_sellout_sales_fact.total_amt_bfr_tax,
+                                                                                                    itg_my_sellout_sales_fact.sls_emp,
+                                                                                                    itg_my_sellout_sales_fact.custom_field1,
+                                                                                                    itg_my_sellout_sales_fact.custom_field2,
+                                                                                                    itg_my_sellout_sales_fact.sap_matl_num,
+                                                                                                    itg_my_sellout_sales_fact.filename,
+                                                                                                    itg_my_sellout_sales_fact.cdl_dttm,
+                                                                                                    itg_my_sellout_sales_fact.crtd_dttm,
+                                                                                                    itg_my_sellout_sales_fact.updt_dttm
+                                                                                                FROM itg_my_sellout_sales_fact
+                                                                                                WHERE (
+                                                                                                        NOT (
+                                                                                                            (
+                                                                                                                COALESCE(
+                                                                                                                    ltrim(
+                                                                                                                        (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+                                                                                                                        ('0'::character varying)::text
+                                                                                                                    ),
+                                                                                                                    ('0'::character varying)::text
+                                                                                                                ) || COALESCE(
+                                                                                                                    TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+                                                                                                                    ('0'::character varying)::text
+                                                                                                                )
+                                                                                                            ) IN (
+                                                                                                                SELECT DISTINCT (
+                                                                                                                        (
+                                                                                                                            COALESCE(
+                                                                                                                                itg_my_gt_outlet_exclusion.dstrbtr_cd,
+                                                                                                                                '0'::character varying
+                                                                                                                            )
+                                                                                                                        )::text || (
+                                                                                                                            COALESCE(
+                                                                                                                                itg_my_gt_outlet_exclusion.outlet_cd,
+                                                                                                                                '0'::character varying
+                                                                                                                            )
+                                                                                                                        )::text
+                                                                                                                    )
+                                                                                                                FROM itg_my_gt_outlet_exclusion
+                                                                                                            )
+                                                                                                        )
+                                                                                                    )
+                                                                                            ) a,
+                                                                                            (
+                                                                                                SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+                                                                                                    edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                                                                                    edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                                                                                    edw_vw_os_time_dim.cal_date,
+                                                                                                    edw_vw_os_time_dim.cal_date_id
+                                                                                                FROM edw_vw_os_time_dim
+                                                                                            ) veotd
+                                                                                        WHERE (
+                                                                                                to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+                                                                                            )
+                                                                                    ) t1,
+                                                                                    (
+                                                                                        SELECT itg_my_trgts.jj_mnth_id,
+                                                                                            itg_my_trgts.cust_id,
+                                                                                            sum(itg_my_trgts.trgt_val) AS trgt_val
+                                                                                        FROM itg_my_trgts
+                                                                                        WHERE (
+                                                                                                (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+                                                                                            )
+                                                                                        GROUP BY itg_my_trgts.jj_mnth_id,
+                                                                                            itg_my_trgts.cust_id
+                                                                                    ) trgt
+                                                                                WHERE (
+                                                                                        (
+                                                                                            (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+                                                                                        )
+                                                                                        AND (
+                                                                                            (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+                                                                                        )
+                                                                                    )
+                                                                            ) derived_table1
+                                                                        GROUP BY derived_table1."year",
+                                                                            derived_table1.qrtr_no,
+                                                                            derived_table1.mnth_no,
+                                                                            derived_table1.mnth_nm,
+                                                                            derived_table1.mnth_id,
+                                                                            derived_table1.trgt_period,
+                                                                            derived_table1.dstrbtr_id,
+                                                                            derived_table1.sap_matl_num,
+                                                                            derived_table1.cust_cd,
+                                                                            derived_table1.dstrbtr_matl_num,
+                                                                            derived_table1.bar_cd
+                                                                    ) trgt2 ON (
+                                                                        (
+                                                                            (trgt1.trgt_period = trgt2.trgt_period)
+                                                                            AND (
+                                                                                (trgt1.dstrbtr_id)::text = (trgt2.dstrbtr_id)::text
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                        ) derived_table1
+                                                    WHERE (
+                                                            (derived_table1.trgt_period_present IS NULL)
+                                                            OR (derived_table1.dstrbtr_id_present IS NULL)
+                                                        )
+                                                ) trgt
+                                                LEFT JOIN (
+                                                    SELECT EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_grp_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_soldto_code,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sap_soldto_code,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.addr,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_nm,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_cd,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_desc,
+                                                        EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.status
+                                                    FROM EDW_VW_MY_DSTRBTR_CUSTOMER_DIM
+                                                    WHERE (
+                                                            (EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd)::text = ('MY'::character varying)::text
+                                                        )
+                                                ) evodcd ON (
+                                                    (
+                                                        (
+                                                            ltrim(
+                                                                (evodcd.cust_cd)::text,
+                                                                ('0'::character varying)::text
+                                                            ) = ltrim(
+                                                                (trgt.cust_cd)::text,
+                                                                ('0'::character varying)::text
+                                                            )
+                                                        )
+                                                        AND (
+                                                            ltrim(
+                                                                (evodcd.sap_soldto_code)::text,
+                                                                ('0'::character varying)::text
+                                                            ) = ltrim(
+                                                                (trgt.dstrbtr_id)::text,
+                                                                ('0'::character varying)::text
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                    ) veosf
+                                    LEFT JOIN (
+                                        SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_addr,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_region,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_city,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+                                            EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+                                            EDW_VW_my_CUSTOMER_DIM.retail_env,
+                                            EDW_VW_my_CUSTOMER_DIM.gch_region,
+                                            EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+                                            EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+                                            EDW_VW_my_CUSTOMER_DIM.gch_market,
+                                            EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+                                        FROM EDW_VW_my_CUSTOMER_DIM
+                                        WHERE (
+                                                (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+                                            )
+                                    ) veocd ON (
+                                        (
+                                            ltrim(
+                                                (veocd.sap_cust_id)::text,
+                                                ('0'::character varying)::text
+                                            ) = ltrim(
+                                                (veosf.sap_soldto_code)::text,
+                                                ('0'::character varying)::text
+                                            )
+                                        )
+                                    )
                                 )
-                                and (
-                                  ltrim(
-                                    cast((
-                                      evodcd.dstrbtr_grp_cd
-                                    ) as text),
-                                    cast((
-                                      cast('0' as varchar)
-                                    ) as text)
-                                  ) = ltrim(cast((
-                                    t1.dstrbtr_grp_cd
-                                  ) as text), cast((
-                                    cast('0' as varchar)
-                                  ) as text))
+                                LEFT JOIN (
+                                    SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+                                        EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+                                        EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+                                        EDW_VW_my_MATERIAL_DIM.ean_num,
+                                        EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+                                        EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+                                        EDW_VW_my_MATERIAL_DIM.gph_region,
+                                        EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+                                        EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+                                        EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+                                        EDW_VW_my_MATERIAL_DIM.launch_dt,
+                                        EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+                                        EDW_VW_my_MATERIAL_DIM.prft_ctr,
+                                        EDW_VW_my_MATERIAL_DIM.shlf_life
+                                    FROM EDW_VW_my_MATERIAL_DIM
+                                    WHERE (
+                                            (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+                                        )
+                                ) veomd ON (
+                                    (
+                                        ltrim(
+                                            (veomd.sap_matl_num)::text,
+                                            ('0'::character varying)::text
+                                        ) = ltrim(
+                                            (veosf.sap_matl_num)::text,
+                                            ('0'::character varying)::text
+                                        )
+                                    )
                                 )
-                              )
-                              and (
+                            )
+                            LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+                                (
+                                    ltrim(
+                                        (imdd.cust_id)::text,
+                                        ('0'::character varying)::text
+                                    ) = ltrim(
+                                        (veosf.sap_soldto_code)::text,
+                                        ('0'::character varying)::text
+                                    )
+                                )
+                            )
+                        )
+                        LEFT JOIN itg_my_material_dim immd ON (
+                            (
                                 ltrim(
-                                  cast((
-                                    evodcd.sap_soldto_code
-                                  ) as text),
-                                  cast((
-                                    cast('0' as varchar)
-                                  ) as text)
+                                    (immd.item_cd)::text,
+                                    ('0'::character varying)::text
                                 ) = ltrim(
-                                  cast((
-                                    t1.dstrbtr_soldto_code
-                                  ) as text),
-                                  cast((
-                                    cast('0' as varchar)
-                                  ) as text)
+                                    (
+                                        COALESCE(veosf.sap_matl_num, ''::character varying)
+                                    )::text,
+                                    ('0'::character varying)::text
                                 )
-                              )
                             )
-                          )
+                        )
                     )
-                    where
-                      (
+                    LEFT JOIN itg_my_customer_dim imcd ON (
                         (
-                          (
-                           
-                              veotd.cal_date
-                             = t1.bill_date
-                          )
-                          and (
-                            cast((
-                              t1.cntry_cd
-                            ) as text) = cast((
-                              cast('MY' as varchar)
-                            ) as text)
-                          )
+                            TRIM((imcd.cust_id)::text) = TRIM((veosf.sap_soldto_code)::text)
                         )
-                        and (
-                          not (
+                    )
+                )
+                LEFT JOIN (
+                    SELECT EDW_VW_my_LISTPRICE.cntry_key,
+                        EDW_VW_my_LISTPRICE.cntry_nm,
+                        EDW_VW_my_LISTPRICE.plant,
+                        EDW_VW_my_LISTPRICE.cnty,
+                        EDW_VW_my_LISTPRICE.item_cd,
+                        EDW_VW_my_LISTPRICE.item_desc,
+                        EDW_VW_my_LISTPRICE.valid_from,
+                        EDW_VW_my_LISTPRICE.valid_to,
+                        EDW_VW_my_LISTPRICE.rate,
+                        EDW_VW_my_LISTPRICE.currency,
+                        EDW_VW_my_LISTPRICE.price_unit,
+                        EDW_VW_my_LISTPRICE.uom,
+                        EDW_VW_my_LISTPRICE.yearmo,
+                        EDW_VW_my_LISTPRICE.mnth_type,
+                        EDW_VW_my_LISTPRICE.snapshot_dt
+                    FROM EDW_VW_my_LISTPRICE
+                    WHERE (
                             (
-                              coalesce(
-                                ltrim(
-                                  cast((
-                                    t1.dstrbtr_soldto_code
-                                  ) as text),
-                                  cast((
-                                    cast('0' as varchar)
-                                  ) as text)
-                                ),
-                                cast((
-                                  cast('0' as varchar)
-                                ) as text)
-                              ) || coalesce(trim(cast((
-                                t1.cust_cd
-                              ) as text)), cast((
-                                cast('0' as varchar)
-                              ) as text))
-                            ) in (
-                              select distinct
-                                (
-                                  cast((
-                                    coalesce(itg_my_gt_outlet_exclusion.dstrbtr_cd, cast('0' as varchar))
-                                  ) as text) || cast((
-                                    coalesce(itg_my_gt_outlet_exclusion.outlet_cd, cast('0' as varchar))
-                                  ) as text)
-                                )
-                              from itg_my_gt_outlet_exclusion
+                                (EDW_VW_my_LISTPRICE.cntry_key)::text = ('MY'::character varying)::text
                             )
-                          )
+                            AND (
+                                (EDW_VW_my_LISTPRICE.mnth_type)::text = ('CAL'::character varying)::text
+                            )
                         )
-                      )
-                  ) as a
-                  union all
-                  select
-                    trgt.year,
-                    trgt.qrtr_no,
-                    trgt.trgt_period as mnth_id,
-                    trgt.mnth_no,
-                    trgt.mnth_nm,
-                    cast(null as varchar) as dstrbtr_grp_cd,
-                    trgt.dstrbtr_id as dstrbtr_soldto_code,
-                    trgt.cust_cd,
-                    cast(null as varchar) as slsmn_cd,
-                    evodcd.cust_nm,
-                    trgt.dstrbtr_id as sap_soldto_code,
-                    trgt.sap_matl_num,
-                    cast((
-                      UPPER(trim(cast((
-                        trgt.dstrbtr_matl_num
-                      ) as text)))
-                    ) as varchar) as dstrbtr_matl_num,
-                    trgt.bar_cd,
-                    evodcd.region_nm,
-                    evodcd.town_nm,
-                    evodcd.chnl_desc,
-                    evodcd.sub_chnl_desc,
-                    evodcd.chnl_attr1_desc,
-                    evodcd.chnl_attr2_desc,
-                    cast(null as varchar) as wh_id,
-                    cast(null as varchar) as doc_type,
-                    cast(null as varchar) as doc_type_desc,
-                    0 as base_sls,
-                    cast(null as timestampntz) as bill_date,
-                    cast(null as varchar) as bill_doc,
-                    0 as sls_qty,
-                    0 as ret_qty,
-                    cast(null as varchar) as uom,
-                    0 as sls_qty_pc,
-                    0 as ret_qty_pc,
-                    0 as grs_trd_sls,
-                    0 as ret_val,
-                    0 as trd_discnt,
-                    0 as trd_sls,
-                    0 as net_trd_sls,
-                    0 as jj_grs_trd_sls,
-                    0 as jj_ret_val,
-                    0 as jj_trd_sls,
-                    0 as jj_net_trd_sls,
-                    trgt.contribution
-                  from (
+                ) lp ON (
                     (
-                      select
-                        derived_table1.year,
-                        derived_table1.qrtr_no,
-                        derived_table1.mnth_no,
-                        derived_table1.mnth_nm,
-                        derived_table1.mnth_id,
-                        derived_table1.trgt_period,
-                        derived_table1.dstrbtr_id,
-                        derived_table1.sap_matl_num,
-                        derived_table1.dstrbtr_matl_num,
-                        derived_table1.bar_cd,
-                        derived_table1.cust_cd,
-                        sum(derived_table1.contribution) as contribution
-                      from (
-                        select
-                          t1.year,
-                          t1.qrtr_no,
-                          t1.mnth_no,
-                          t1.mnth_nm,
-                          t1.mnth_id,
-                          t1.trgt_period,
-                          t1.dstrbtr_id,
-                          t1.sap_matl_num,
-                          t1.dstrbtr_matl_num,
-                          t1.bar_cd,
-                          t1.cust_cd,
-                          (
-                            trgt.trgt_val * (
-                              t1.base_sls / t1.total_sales
-                            )
-                          ) as contribution
-                        from (
-                          select
-                            cast((
-                              substring(
-                                to_char(
-                                  cast(dateadd(
-                                    month,
-                                    cast((
-                                      12
-                                    ) as bigint),
-                                    cast(cast((
-                                      to_date(
-                                        cast((
-                                          cast((
-                                            veotd.mnth_id
-                                          ) as varchar)
-                                        ) as text),
-                                        cast((
-                                          cast('YYYYMM' as varchar)
-                                        ) as text)
-                                      )
-                                    ) as timestampntz) as timestampntz)
-                                  ) as timestampntz),
-                                  cast((
-                                    cast('YYYYMM' as varchar)
-                                  ) as text)
-                                ),
-                                0,
-                                5
-                              )
-                            ) as int) as year,
-                            veotd.qrtr_no,
-                            veotd.mnth_no,
-                            veotd.mnth_nm,
-                            veotd.mnth_id,
-                            cast((
-                              to_char(
-                                cast(dateadd(
-                                  month,
-                                  cast((
-                                    12
-                                  ) as bigint),
-                                  cast(cast((
-                                    to_date(
-                                      cast((
-                                        cast((
-                                          veotd.mnth_id
-                                        ) as varchar)
-                                      ) as text),
-                                      cast((
-                                        cast('YYYYMM' as varchar)
-                                      ) as text)
-                                    )
-                                  ) as timestampntz) as timestampntz)
-                                ) as timestampntz),
-                                cast((
-                                  cast('YYYYMM' as varchar)
-                                ) as text)
-                              )
-                            ) as int) as trgt_period,
-                            a.dstrbtr_id,
-                            a.dstrbtr_prod_cd as dstrbtr_matl_num,
-                            a.sap_matl_num,
-                            a.ean_num as bar_cd,
-                            a.cust_cd,
-                            a.total_amt_bfr_tax as base_sls,
-                            sum(a.total_amt_bfr_tax) OVER (PARTITION BY veotd.mnth_id, a.dstrbtr_id order by null ROWS BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING) as total_sales
-                          from (
-                            select
-                              itg_my_sellout_sales_fact.dstrbtr_id,
-                              itg_my_sellout_sales_fact.sls_ord_num,
-                              itg_my_sellout_sales_fact.sls_ord_dt,
-                              itg_my_sellout_sales_fact.type,
-                              itg_my_sellout_sales_fact.cust_cd,
-                              itg_my_sellout_sales_fact.dstrbtr_wh_id,
-                              itg_my_sellout_sales_fact.item_cd,
-                              itg_my_sellout_sales_fact.dstrbtr_prod_cd,
-                              itg_my_sellout_sales_fact.ean_num,
-                              itg_my_sellout_sales_fact.dstrbtr_prod_desc,
-                              itg_my_sellout_sales_fact.grs_prc,
-                              itg_my_sellout_sales_fact.qty,
-                              itg_my_sellout_sales_fact.uom,
-                              itg_my_sellout_sales_fact.qty_pc,
-                              itg_my_sellout_sales_fact.qty_aft_conv,
-                              itg_my_sellout_sales_fact.subtotal_1,
-                              itg_my_sellout_sales_fact.discount,
-                              itg_my_sellout_sales_fact.subtotal_2,
-                              itg_my_sellout_sales_fact.bottom_line_dscnt,
-                              itg_my_sellout_sales_fact.total_amt_aft_tax,
-                              itg_my_sellout_sales_fact.total_amt_bfr_tax,
-                              itg_my_sellout_sales_fact.sls_emp,
-                              itg_my_sellout_sales_fact.custom_field1,
-                              itg_my_sellout_sales_fact.custom_field2,
-                              itg_my_sellout_sales_fact.sap_matl_num,
-                              itg_my_sellout_sales_fact.filename,
-                              itg_my_sellout_sales_fact.cdl_dttm,
-                              itg_my_sellout_sales_fact.crtd_dttm,
-                              itg_my_sellout_sales_fact.updt_dttm
-                            from itg_my_sellout_sales_fact
-                            where
-                              (
-                                not (
-                                  (
-                                    coalesce(
-                                      ltrim(
-                                        cast((
-                                          itg_my_sellout_sales_fact.dstrbtr_id
-                                        ) as text),
-                                        cast((
-                                          cast('0' as varchar)
-                                        ) as text)
-                                      ),
-                                      cast((
-                                        cast('0' as varchar)
-                                      ) as text)
-                                    ) || coalesce(
-                                      trim(cast((
-                                        itg_my_sellout_sales_fact.cust_cd
-                                      ) as text)),
-                                      cast((
-                                        cast('0' as varchar)
-                                      ) as text)
-                                    )
-                                  ) in (
-                                    select distinct
-                                      (
-                                        cast((
-                                          coalesce(itg_my_gt_outlet_exclusion.dstrbtr_cd, cast('0' as varchar))
-                                        ) as text) || cast((
-                                          coalesce(itg_my_gt_outlet_exclusion.outlet_cd, cast('0' as varchar))
-                                        ) as text)
-                                      )
-                                    from itg_my_gt_outlet_exclusion
-                                  )
-                                )
-                              )
-                          ) as a, (
-                            select distinct
-                              edw_vw_os_time_dim.cal_year as year,
-                              edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                              edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                              edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                              edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                              edw_vw_os_time_dim.cal_date,
-                              edw_vw_os_time_dim.cal_date_id
-                            from edw_vw_os_time_dim
-                          ) as veotd
-                          where
-                            (
-                              
-                                veotd.cal_date
-                               = 
-                                a.sls_ord_dt
-                              
-                            )
-                        ) as t1, (
-                          select
-                            itg_my_trgts.jj_mnth_id,
-                            itg_my_trgts.cust_id,
-                            sum(itg_my_trgts.trgt_val) as trgt_val
-                          from itg_my_trgts
-                          where
-                            (
-                              cast((
-                                itg_my_trgts.trgt_type
-                              ) as text) = cast((
-                                cast('BP' as varchar)
-                              ) as text)
-                            )
-                          group by
-                            itg_my_trgts.jj_mnth_id,
-                            itg_my_trgts.cust_id
-                        ) as trgt
-                        where
-                          (
-                            (
-                              cast((
-                                trgt.jj_mnth_id
-                              ) as text) = cast((
-                                cast((
-                                  t1.trgt_period
-                                ) as varchar)
-                              ) as text)
-                            )
-                            and (
-                              cast((
-                                coalesce(trgt.cust_id, cast('' as varchar))
-                              ) as text) = cast((
-                                coalesce(t1.dstrbtr_id, cast('' as varchar))
-                              ) as text)
-                            )
-                          )
-                      ) as derived_table1
-                      group by
-                        derived_table1.year,
-                        derived_table1.qrtr_no,
-                        derived_table1.mnth_no,
-                        derived_table1.mnth_nm,
-                        derived_table1.mnth_id,
-                        derived_table1.trgt_period,
-                        derived_table1.dstrbtr_id,
-                        derived_table1.sap_matl_num,
-                        derived_table1.cust_cd,
-                        derived_table1.dstrbtr_matl_num,
-                        derived_table1.bar_cd
-                      UNION
-                      select
-                        derived_table1.year,
-                        derived_table1.qrtr_no,
-                        derived_table1.mnth_no,
-                        derived_table1.mnth_nm,
-                        derived_table1.mnth_id,
-                        derived_table1.trgt_period,
-                        derived_table1.dstrbtr_id,
-                        derived_table1.sap_matl_num,
-                        derived_table1.dstrbtr_matl_num,
-                        derived_table1.bar_cd,
-                        derived_table1.cust_cd,
-                        derived_table1.contribution
-                      from (
-                        select
-                          trgt1.year,
-                          trgt1.qrtr_no,
-                          trgt1.mnth_no,
-                          trgt1.mnth_nm,
-                          trgt1.mnth_id,
-                          trgt1.trgt_period,
-                          trgt1.dstrbtr_id,
-                          trgt1.sap_matl_num,
-                          trgt1.dstrbtr_matl_num,
-                          trgt1.bar_cd,
-                          trgt1.cust_cd,
-                          trgt1.contribution,
-                          trgt2.trgt_period as trgt_period_present,
-                          trgt2.dstrbtr_id as dstrbtr_id_present
-                        from (
-                          (
-                            select
-                              derived_table1.year,
-                              derived_table1.qrtr_no,
-                              derived_table1.mnth_no,
-                              derived_table1.mnth_nm,
-                              derived_table1.mnth_id,
-                              derived_table1.trgt_period,
-                              derived_table1.dstrbtr_id,
-                              derived_table1.sap_matl_num,
-                              derived_table1.dstrbtr_matl_num,
-                              derived_table1.bar_cd,
-                              derived_table1.cust_cd,
-                              sum(derived_table1.contribution) as contribution
-                            from (
-                              select
-                                t1.year,
-                                t1.qrtr_no,
-                                t1.mnth_no,
-                                t1.mnth_nm,
-                                t1.mnth_id,
-                                t1.trgt_period,
-                                t1.dstrbtr_id,
-                                t1.sap_matl_num,
-                                t1.dstrbtr_matl_num,
-                                t1.bar_cd,
-                                t1.cust_cd,
-                                (
-                                  trgt.trgt_val * (
-                                    t1.base_sls / t1.total_sales
-                                  )
-                                ) as contribution
-                              from (
-                                select
-                                  cast((
-                                    substring(
-                                      to_char(
-                                        cast(dateadd(
-                                          month,
-                                          cast((
-                                            0
-                                          ) as bigint),
-                                          cast(cast((
-                                            to_date(
-                                              cast((
-                                                cast((
-                                                  veotd.mnth_id
-                                                ) as varchar)
-                                              ) as text),
-                                              cast((
-                                                cast('YYYYMM' as varchar)
-                                              ) as text)
-                                            )
-                                          ) as timestampntz) as timestampntz)
-                                        ) as timestampntz),
-                                        cast((
-                                          cast('YYYYMM' as varchar)
-                                        ) as text)
-                                      ),
-                                      0,
-                                      5
-                                    )
-                                  ) as int) as year,
-                                  veotd.qrtr_no,
-                                  veotd.mnth_no,
-                                  veotd.mnth_nm,
-                                  veotd.mnth_id as trgt_period,
-                                  cast((
-                                    to_char(
-                                      cast(dateadd(
-                                        month,
-                                        (
-                                          -cast((
-                                            12
-                                          ) as bigint)
-                                        ),
-                                        cast(cast((
-                                          to_date(
-                                            cast((
-                                              cast((
-                                                veotd.mnth_id
-                                              ) as varchar)
-                                            ) as text),
-                                            cast((
-                                              cast('YYYYMM' as varchar)
-                                            ) as text)
-                                          )
-                                        ) as timestampntz) as timestampntz)
-                                      ) as timestampntz),
-                                      cast((
-                                        cast('YYYYMM' as varchar)
-                                      ) as text)
-                                    )
-                                  ) as int) as mnth_id,
-                                  a.dstrbtr_id,
-                                  a.dstrbtr_prod_cd as dstrbtr_matl_num,
-                                  a.sap_matl_num,
-                                  a.ean_num as bar_cd,
-                                  a.cust_cd,
-                                  a.total_amt_bfr_tax as base_sls,
-                                  sum(a.total_amt_bfr_tax) OVER (PARTITION BY veotd.mnth_id, a.dstrbtr_id order by null ROWS BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING) as total_sales
-                                from (
-                                  select
-                                    itg_my_sellout_sales_fact.dstrbtr_id,
-                                    itg_my_sellout_sales_fact.sls_ord_num,
-                                    itg_my_sellout_sales_fact.sls_ord_dt,
-                                    itg_my_sellout_sales_fact.type,
-                                    itg_my_sellout_sales_fact.cust_cd,
-                                    itg_my_sellout_sales_fact.dstrbtr_wh_id,
-                                    itg_my_sellout_sales_fact.item_cd,
-                                    itg_my_sellout_sales_fact.dstrbtr_prod_cd,
-                                    itg_my_sellout_sales_fact.ean_num,
-                                    itg_my_sellout_sales_fact.dstrbtr_prod_desc,
-                                    itg_my_sellout_sales_fact.grs_prc,
-                                    itg_my_sellout_sales_fact.qty,
-                                    itg_my_sellout_sales_fact.uom,
-                                    itg_my_sellout_sales_fact.qty_pc,
-                                    itg_my_sellout_sales_fact.qty_aft_conv,
-                                    itg_my_sellout_sales_fact.subtotal_1,
-                                    itg_my_sellout_sales_fact.discount,
-                                    itg_my_sellout_sales_fact.subtotal_2,
-                                    itg_my_sellout_sales_fact.bottom_line_dscnt,
-                                    itg_my_sellout_sales_fact.total_amt_aft_tax,
-                                    itg_my_sellout_sales_fact.total_amt_bfr_tax,
-                                    itg_my_sellout_sales_fact.sls_emp,
-                                    itg_my_sellout_sales_fact.custom_field1,
-                                    itg_my_sellout_sales_fact.custom_field2,
-                                    itg_my_sellout_sales_fact.sap_matl_num,
-                                    itg_my_sellout_sales_fact.filename,
-                                    itg_my_sellout_sales_fact.cdl_dttm,
-                                    itg_my_sellout_sales_fact.crtd_dttm,
-                                    itg_my_sellout_sales_fact.updt_dttm
-                                  from itg_my_sellout_sales_fact
-                                  where
-                                    (
-                                      not (
-                                        (
-                                          coalesce(
-                                            ltrim(
-                                              cast((
-                                                itg_my_sellout_sales_fact.dstrbtr_id
-                                              ) as text),
-                                              cast((
-                                                cast('0' as varchar)
-                                              ) as text)
-                                            ),
-                                            cast((
-                                              cast('0' as varchar)
-                                            ) as text)
-                                          ) || coalesce(
-                                            trim(cast((
-                                              itg_my_sellout_sales_fact.cust_cd
-                                            ) as text)),
-                                            cast((
-                                              cast('0' as varchar)
-                                            ) as text)
-                                          )
-                                        ) in (
-                                          select distinct
-                                            (
-                                              cast((
-                                                coalesce(itg_my_gt_outlet_exclusion.dstrbtr_cd, cast('0' as varchar))
-                                              ) as text) || cast((
-                                                coalesce(itg_my_gt_outlet_exclusion.outlet_cd, cast('0' as varchar))
-                                              ) as text)
-                                            )
-                                          from itg_my_gt_outlet_exclusion
-                                        )
-                                      )
-                                    )
-                                ) as a, (
-                                  select distinct
-                                    edw_vw_os_time_dim.cal_year as year,
-                                    edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                                    edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                                    edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                                    edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                                    edw_vw_os_time_dim.cal_date,
-                                    edw_vw_os_time_dim.cal_date_id
-                                  from edw_vw_os_time_dim
-                                ) as veotd
-                                where
-                                  (
-                                    
-                                      veotd.cal_date
-                                    = 
-                                      a.sls_ord_dt
-                                    
-                                  )
-                              ) as t1, (
-                                select
-                                  itg_my_trgts.jj_mnth_id,
-                                  itg_my_trgts.cust_id,
-                                  sum(itg_my_trgts.trgt_val) as trgt_val
-                                from itg_my_trgts
-                                where
-                                  (
-                                    cast((
-                                      itg_my_trgts.trgt_type
-                                    ) as text) = cast((
-                                      cast('BP' as varchar)
-                                    ) as text)
-                                  )
-                                group by
-                                  itg_my_trgts.jj_mnth_id,
-                                  itg_my_trgts.cust_id
-                              ) as trgt
-                              where
-                                (
-                                  (
-                                    cast((
-                                      trgt.jj_mnth_id
-                                    ) as text) = cast((
-                                      cast((
-                                        t1.trgt_period
-                                      ) as varchar)
-                                    ) as text)
-                                  )
-                                  and (
-                                    cast((
-                                      coalesce(trgt.cust_id, cast('' as varchar))
-                                    ) as text) = cast((
-                                      coalesce(t1.dstrbtr_id, cast('' as varchar))
-                                    ) as text)
-                                  )
-                                )
-                            ) as derived_table1
-                            group by
-                              derived_table1.year,
-                              derived_table1.qrtr_no,
-                              derived_table1.mnth_no,
-                              derived_table1.mnth_nm,
-                              derived_table1.mnth_id,
-                              derived_table1.trgt_period,
-                              derived_table1.dstrbtr_id,
-                              derived_table1.sap_matl_num,
-                              derived_table1.cust_cd,
-                              derived_table1.dstrbtr_matl_num,
-                              derived_table1.bar_cd
-                          ) as trgt1
-                          left join (
-                            select
-                              derived_table1.year,
-                              derived_table1.qrtr_no,
-                              derived_table1.mnth_no,
-                              derived_table1.mnth_nm,
-                              derived_table1.mnth_id,
-                              derived_table1.trgt_period,
-                              derived_table1.dstrbtr_id,
-                              derived_table1.sap_matl_num,
-                              derived_table1.dstrbtr_matl_num,
-                              derived_table1.bar_cd,
-                              derived_table1.cust_cd,
-                              sum(derived_table1.contribution) as contribution
-                            from (
-                              select
-                                t1.year,
-                                t1.qrtr_no,
-                                t1.mnth_no,
-                                t1.mnth_nm,
-                                t1.mnth_id,
-                                t1.trgt_period,
-                                t1.dstrbtr_id,
-                                t1.sap_matl_num,
-                                t1.dstrbtr_matl_num,
-                                t1.bar_cd,
-                                t1.cust_cd,
-                                (
-                                  trgt.trgt_val * (
-                                    t1.base_sls / t1.total_sales
-                                  )
-                                ) as contribution
-                              from (
-                                select
-                                  cast((
-                                    substring(
-                                      to_char(
-                                        cast(dateadd(
-                                          month,
-                                          cast((
-                                            12
-                                          ) as bigint),
-                                          cast(cast((
-                                            to_date(
-                                              cast((
-                                                cast((
-                                                  veotd.mnth_id
-                                                ) as varchar)
-                                              ) as text),
-                                              cast((
-                                                cast('YYYYMM' as varchar)
-                                              ) as text)
-                                            )
-                                          ) as timestampntz) as timestampntz)
-                                        ) as timestampntz),
-                                        cast((
-                                          cast('YYYYMM' as varchar)
-                                        ) as text)
-                                      ),
-                                      0,
-                                      5
-                                    )
-                                  ) as int) as year,
-                                  veotd.qrtr_no,
-                                  veotd.mnth_no,
-                                  veotd.mnth_nm,
-                                  veotd.mnth_id,
-                                  cast((
-                                    to_char(
-                                      cast(dateadd(
-                                        month,
-                                        cast((
-                                          12
-                                        ) as bigint),
-                                        cast(cast((
-                                          to_date(
-                                            cast((
-                                              cast((
-                                                veotd.mnth_id
-                                              ) as varchar)
-                                            ) as text),
-                                            cast((
-                                              cast('YYYYMM' as varchar)
-                                            ) as text)
-                                          )
-                                        ) as timestampntz) as timestampntz)
-                                      ) as timestampntz),
-                                      cast((
-                                        cast('YYYYMM' as varchar)
-                                      ) as text)
-                                    )
-                                  ) as int) as trgt_period,
-                                  a.dstrbtr_id,
-                                  a.dstrbtr_prod_cd as dstrbtr_matl_num,
-                                  a.sap_matl_num,
-                                  a.ean_num as bar_cd,
-                                  a.cust_cd,
-                                  a.total_amt_bfr_tax as base_sls,
-                                  sum(a.total_amt_bfr_tax) OVER (PARTITION BY veotd.mnth_id, a.dstrbtr_id order by null ROWS BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING) as total_sales
-                                from (
-                                  select
-                                    itg_my_sellout_sales_fact.dstrbtr_id,
-                                    itg_my_sellout_sales_fact.sls_ord_num,
-                                    itg_my_sellout_sales_fact.sls_ord_dt,
-                                    itg_my_sellout_sales_fact.type,
-                                    itg_my_sellout_sales_fact.cust_cd,
-                                    itg_my_sellout_sales_fact.dstrbtr_wh_id,
-                                    itg_my_sellout_sales_fact.item_cd,
-                                    itg_my_sellout_sales_fact.dstrbtr_prod_cd,
-                                    itg_my_sellout_sales_fact.ean_num,
-                                    itg_my_sellout_sales_fact.dstrbtr_prod_desc,
-                                    itg_my_sellout_sales_fact.grs_prc,
-                                    itg_my_sellout_sales_fact.qty,
-                                    itg_my_sellout_sales_fact.uom,
-                                    itg_my_sellout_sales_fact.qty_pc,
-                                    itg_my_sellout_sales_fact.qty_aft_conv,
-                                    itg_my_sellout_sales_fact.subtotal_1,
-                                    itg_my_sellout_sales_fact.discount,
-                                    itg_my_sellout_sales_fact.subtotal_2,
-                                    itg_my_sellout_sales_fact.bottom_line_dscnt,
-                                    itg_my_sellout_sales_fact.total_amt_aft_tax,
-                                    itg_my_sellout_sales_fact.total_amt_bfr_tax,
-                                    itg_my_sellout_sales_fact.sls_emp,
-                                    itg_my_sellout_sales_fact.custom_field1,
-                                    itg_my_sellout_sales_fact.custom_field2,
-                                    itg_my_sellout_sales_fact.sap_matl_num,
-                                    itg_my_sellout_sales_fact.filename,
-                                    itg_my_sellout_sales_fact.cdl_dttm,
-                                    itg_my_sellout_sales_fact.crtd_dttm,
-                                    itg_my_sellout_sales_fact.updt_dttm
-                                  from itg_my_sellout_sales_fact
-                                  where
-                                    (
-                                      not (
-                                        (
-                                          coalesce(
-                                            ltrim(
-                                              cast((
-                                                itg_my_sellout_sales_fact.dstrbtr_id
-                                              ) as text),
-                                              cast((
-                                                cast('0' as varchar)
-                                              ) as text)
-                                            ),
-                                            cast((
-                                              cast('0' as varchar)
-                                            ) as text)
-                                          ) || coalesce(
-                                            trim(cast((
-                                              itg_my_sellout_sales_fact.cust_cd
-                                            ) as text)),
-                                            cast((
-                                              cast('0' as varchar)
-                                            ) as text)
-                                          )
-                                        ) in (
-                                          select distinct
-                                            (
-                                              cast((
-                                                coalesce(itg_my_gt_outlet_exclusion.dstrbtr_cd, cast('0' as varchar))
-                                              ) as text) || cast((
-                                                coalesce(itg_my_gt_outlet_exclusion.outlet_cd, cast('0' as varchar))
-                                              ) as text)
-                                            )
-                                          from itg_my_gt_outlet_exclusion
-                                        )
-                                      )
-                                    )
-                                ) as a, (
-                                  select distinct
-                                    edw_vw_os_time_dim.cal_year as year,
-                                    edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                                    edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                                    edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                                    edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                                    edw_vw_os_time_dim.cal_date,
-                                    edw_vw_os_time_dim.cal_date_id
-                                  from edw_vw_os_time_dim
-                                ) as veotd
-                                where
-                                  (
-                                    
-                                      veotd.cal_date
-                                     = 
-                                      a.sls_ord_dt
-                                    
-                                  )
-                              ) as t1, (
-                                select
-                                  itg_my_trgts.jj_mnth_id,
-                                  itg_my_trgts.cust_id,
-                                  sum(itg_my_trgts.trgt_val) as trgt_val
-                                from itg_my_trgts
-                                where
-                                  (
-                                    cast((
-                                      itg_my_trgts.trgt_type
-                                    ) as text) = cast((
-                                      cast('BP' as varchar)
-                                    ) as text)
-                                  )
-                                group by
-                                  itg_my_trgts.jj_mnth_id,
-                                  itg_my_trgts.cust_id
-                              ) as trgt
-                              where
-                                (
-                                  (
-                                    cast((
-                                      trgt.jj_mnth_id
-                                    ) as text) = cast((
-                                      cast((
-                                        t1.trgt_period
-                                      ) as varchar)
-                                    ) as text)
-                                  )
-                                  and (
-                                    cast((
-                                      coalesce(trgt.cust_id, cast('' as varchar))
-                                    ) as text) = cast((
-                                      coalesce(t1.dstrbtr_id, cast('' as varchar))
-                                    ) as text)
-                                  )
-                                )
-                            ) as derived_table1
-                            group by
-                              derived_table1.year,
-                              derived_table1.qrtr_no,
-                              derived_table1.mnth_no,
-                              derived_table1.mnth_nm,
-                              derived_table1.mnth_id,
-                              derived_table1.trgt_period,
-                              derived_table1.dstrbtr_id,
-                              derived_table1.sap_matl_num,
-                              derived_table1.cust_cd,
-                              derived_table1.dstrbtr_matl_num,
-                              derived_table1.bar_cd
-                          ) as trgt2
-                            on (
-                              (
-                                (
-                                  trgt1.trgt_period = trgt2.trgt_period
-                                )
-                                and (
-                                  cast((
-                                    trgt1.dstrbtr_id
-                                  ) as text) = cast((
-                                    trgt2.dstrbtr_id
-                                  ) as text)
-                                )
-                              )
-                            )
-                        )
-                      ) as derived_table1
-                      where
                         (
-                          (
-                            derived_table1.trgt_period_present IS null
-                          )
-                          or (
-                            derived_table1.dstrbtr_id_present IS null
-                          )
-                        )
-                    ) as trgt
-                    left join (
-                      select
-                        edw_vw_my_dstrbtr_customer_dim.cntry_cd,
-                        edw_vw_my_dstrbtr_customer_dim.cntry_nm,
-                        edw_vw_my_dstrbtr_customer_dim.dstrbtr_grp_cd,
-                        edw_vw_my_dstrbtr_customer_dim.dstrbtr_soldto_code,
-                        edw_vw_my_dstrbtr_customer_dim.sap_soldto_code,
-                        edw_vw_my_dstrbtr_customer_dim.cust_cd,
-                        edw_vw_my_dstrbtr_customer_dim.cust_nm,
-                        edw_vw_my_dstrbtr_customer_dim.alt_cust_cd,
-                        edw_vw_my_dstrbtr_customer_dim.alt_cust_nm,
-                        edw_vw_my_dstrbtr_customer_dim.addr,
-                        edw_vw_my_dstrbtr_customer_dim.area_cd,
-                        edw_vw_my_dstrbtr_customer_dim.area_nm,
-                        edw_vw_my_dstrbtr_customer_dim.state_cd,
-                        edw_vw_my_dstrbtr_customer_dim.state_nm,
-                        edw_vw_my_dstrbtr_customer_dim.region_cd,
-                        edw_vw_my_dstrbtr_customer_dim.region_nm,
-                        edw_vw_my_dstrbtr_customer_dim.prov_cd,
-                        edw_vw_my_dstrbtr_customer_dim.prov_nm,
-                        edw_vw_my_dstrbtr_customer_dim.town_cd,
-                        edw_vw_my_dstrbtr_customer_dim.town_nm,
-                        edw_vw_my_dstrbtr_customer_dim.city_cd,
-                        edw_vw_my_dstrbtr_customer_dim.city_nm,
-                        edw_vw_my_dstrbtr_customer_dim.post_cd,
-                        edw_vw_my_dstrbtr_customer_dim.post_nm,
-                        edw_vw_my_dstrbtr_customer_dim.slsmn_cd,
-                        edw_vw_my_dstrbtr_customer_dim.slsmn_nm,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_cd,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_desc,
-                        edw_vw_my_dstrbtr_customer_dim.sub_chnl_cd,
-                        edw_vw_my_dstrbtr_customer_dim.sub_chnl_desc,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_attr1_cd,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_attr1_desc,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_attr2_cd,
-                        edw_vw_my_dstrbtr_customer_dim.chnl_attr2_desc,
-                        edw_vw_my_dstrbtr_customer_dim.outlet_type_cd,
-                        edw_vw_my_dstrbtr_customer_dim.outlet_type_desc,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_cd,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_desc,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_attr1_cd,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_attr1_desc,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_attr2_cd,
-                        edw_vw_my_dstrbtr_customer_dim.cust_grp_attr2_desc,
-                        edw_vw_my_dstrbtr_customer_dim.sls_dstrct_cd,
-                        edw_vw_my_dstrbtr_customer_dim.sls_dstrct_nm,
-                        edw_vw_my_dstrbtr_customer_dim.sls_office_cd,
-                        edw_vw_my_dstrbtr_customer_dim.sls_office_desc,
-                        edw_vw_my_dstrbtr_customer_dim.sls_grp_cd,
-                        edw_vw_my_dstrbtr_customer_dim.sls_grp_desc,
-                        edw_vw_my_dstrbtr_customer_dim.STATUS
-                      from edw_vw_my_dstrbtr_customer_dim
-                      where
-                        (
-                          cast((
-                            edw_vw_my_dstrbtr_customer_dim.cntry_cd
-                          ) as text) = cast((
-                            cast('MY' as varchar)
-                          ) as text)
-                        )
-                    ) as evodcd
-                      on (
-                        (
-                          (
-                            ltrim(cast((
-                              evodcd.cust_cd
-                            ) as text), cast((
-                              cast('0' as varchar)
-                            ) as text)) = ltrim(cast((
-                              trgt.cust_cd
-                            ) as text), cast((
-                              cast('0' as varchar)
-                            ) as text))
-                          )
-                          and (
                             ltrim(
-                              cast((
-                                evodcd.sap_soldto_code
-                              ) as text),
-                              cast((
-                                cast('0' as varchar)
-                              ) as text)
-                            ) = ltrim(cast((
-                              trgt.dstrbtr_id
-                            ) as text), cast((
-                              cast('0' as varchar)
-                            ) as text))
-                          )
+                                (lp.item_cd)::text,
+                                ('0'::character varying)::text
+                            ) = ltrim(
+                                (veosf.sap_matl_num)::text,
+                                ('0'::character varying)::text
+                            )
                         )
-                      )
-                  )
-                ) as veosf
-                left join (
-                  select
-                    edw_vw_my_customer_dim.sap_cust_id,
-                    edw_vw_my_customer_dim.sap_cust_nm,
-                    edw_vw_my_customer_dim.sap_sls_org,
-                    edw_vw_my_customer_dim.sap_cmp_id,
-                    edw_vw_my_customer_dim.sap_cntry_cd,
-                    edw_vw_my_customer_dim.sap_cntry_nm,
-                    edw_vw_my_customer_dim.sap_addr,
-                    edw_vw_my_customer_dim.sap_region,
-                    edw_vw_my_customer_dim.sap_state_cd,
-                    edw_vw_my_customer_dim.sap_city,
-                    edw_vw_my_customer_dim.sap_post_cd,
-                    edw_vw_my_customer_dim.sap_chnl_cd,
-                    edw_vw_my_customer_dim.sap_chnl_desc,
-                    edw_vw_my_customer_dim.sap_sls_office_cd,
-                    edw_vw_my_customer_dim.sap_sls_office_desc,
-                    edw_vw_my_customer_dim.sap_sls_grp_cd,
-                    edw_vw_my_customer_dim.sap_sls_grp_desc,
-                    edw_vw_my_customer_dim.sap_curr_cd,
-                    edw_vw_my_customer_dim.sap_prnt_cust_key,
-                    edw_vw_my_customer_dim.sap_prnt_cust_desc,
-                    edw_vw_my_customer_dim.sap_cust_chnl_key,
-                    edw_vw_my_customer_dim.sap_cust_chnl_desc,
-                    edw_vw_my_customer_dim.sap_cust_sub_chnl_key,
-                    edw_vw_my_customer_dim.sap_sub_chnl_desc,
-                    edw_vw_my_customer_dim.sap_go_to_mdl_key,
-                    edw_vw_my_customer_dim.sap_go_to_mdl_desc,
-                    edw_vw_my_customer_dim.sap_bnr_key,
-                    edw_vw_my_customer_dim.sap_bnr_desc,
-                    edw_vw_my_customer_dim.sap_bnr_frmt_key,
-                    edw_vw_my_customer_dim.sap_bnr_frmt_desc,
-                    edw_vw_my_customer_dim.retail_env,
-                    edw_vw_my_customer_dim.gch_region,
-                    edw_vw_my_customer_dim.gch_cluster,
-                    edw_vw_my_customer_dim.gch_subcluster,
-                    edw_vw_my_customer_dim.gch_market,
-                    edw_vw_my_customer_dim.gch_retail_banner
-                  from edw_vw_my_customer_dim
-                  where
-                    (
-                      cast((
-                        edw_vw_my_customer_dim.sap_cntry_cd
-                      ) as text) = cast((
-                        cast('MY' as varchar)
-                      ) as text)
+                        AND (
+                            (lp.yearmo)::text = ((veosf.mnth_id)::character varying)::text
+                        )
                     )
-                ) as veocd
-                  on (
-                    (
-                      ltrim(cast((
-                        veocd.sap_cust_id
-                      ) as text), cast((
-                        cast('0' as varchar)
-                      ) as text)) = ltrim(
-                        cast((
-                          veosf.sap_soldto_code
-                        ) as text),
-                        cast((
-                          cast('0' as varchar)
-                        ) as text)
-                      )
-                    )
-                  )
-              )
-              left join (
-                select
-                  edw_vw_my_material_dim.cntry_key,
-                  edw_vw_my_material_dim.sap_matl_num,
-                  edw_vw_my_material_dim.sap_mat_desc,
-                  edw_vw_my_material_dim.ean_num,
-                  edw_vw_my_material_dim.sap_mat_type_cd,
-                  edw_vw_my_material_dim.sap_mat_type_desc,
-                  edw_vw_my_material_dim.sap_base_uom_cd,
-                  edw_vw_my_material_dim.sap_prchse_uom_cd,
-                  edw_vw_my_material_dim.sap_prod_sgmt_cd,
-                  edw_vw_my_material_dim.sap_prod_sgmt_desc,
-                  edw_vw_my_material_dim.sap_base_prod_cd,
-                  edw_vw_my_material_dim.sap_base_prod_desc,
-                  edw_vw_my_material_dim.sap_mega_brnd_cd,
-                  edw_vw_my_material_dim.sap_mega_brnd_desc,
-                  edw_vw_my_material_dim.sap_brnd_cd,
-                  edw_vw_my_material_dim.sap_brnd_desc,
-                  edw_vw_my_material_dim.sap_vrnt_cd,
-                  edw_vw_my_material_dim.sap_vrnt_desc,
-                  edw_vw_my_material_dim.sap_put_up_cd,
-                  edw_vw_my_material_dim.sap_put_up_desc,
-                  edw_vw_my_material_dim.sap_grp_frnchse_cd,
-                  edw_vw_my_material_dim.sap_grp_frnchse_desc,
-                  edw_vw_my_material_dim.sap_frnchse_cd,
-                  edw_vw_my_material_dim.sap_frnchse_desc,
-                  edw_vw_my_material_dim.sap_prod_frnchse_cd,
-                  edw_vw_my_material_dim.sap_prod_frnchse_desc,
-                  edw_vw_my_material_dim.sap_prod_mjr_cd,
-                  edw_vw_my_material_dim.sap_prod_mjr_desc,
-                  edw_vw_my_material_dim.sap_prod_mnr_cd,
-                  edw_vw_my_material_dim.sap_prod_mnr_desc,
-                  edw_vw_my_material_dim.sap_prod_hier_cd,
-                  edw_vw_my_material_dim.sap_prod_hier_desc,
-                  edw_vw_my_material_dim.gph_region,
-                  edw_vw_my_material_dim.gph_reg_frnchse,
-                  edw_vw_my_material_dim.gph_reg_frnchse_grp,
-                  edw_vw_my_material_dim.gph_prod_frnchse,
-                  edw_vw_my_material_dim.gph_prod_brnd,
-                  edw_vw_my_material_dim.gph_prod_sub_brnd,
-                  edw_vw_my_material_dim.gph_prod_vrnt,
-                  edw_vw_my_material_dim.gph_prod_needstate,
-                  edw_vw_my_material_dim.gph_prod_ctgry,
-                  edw_vw_my_material_dim.gph_prod_subctgry,
-                  edw_vw_my_material_dim.gph_prod_sgmnt,
-                  edw_vw_my_material_dim.gph_prod_subsgmnt,
-                  edw_vw_my_material_dim.gph_prod_put_up_cd,
-                  edw_vw_my_material_dim.gph_prod_put_up_desc,
-                  edw_vw_my_material_dim.gph_prod_size,
-                  edw_vw_my_material_dim.gph_prod_size_uom,
-                  edw_vw_my_material_dim.launch_dt,
-                  edw_vw_my_material_dim.qty_shipper_pc,
-                  edw_vw_my_material_dim.prft_ctr,
-                  edw_vw_my_material_dim.shlf_life
-                from edw_vw_my_material_dim
-                where
-                  (
-                    cast((
-                      edw_vw_my_material_dim.cntry_key
-                    ) as text) = cast((
-                      cast('MY' as varchar)
-                    ) as text)
-                  )
-              ) as veomd
-                on (
-                  (
-                    ltrim(cast((
-                      veomd.sap_matl_num
-                    ) as text), cast((
-                      cast('0' as varchar)
-                    ) as text)) = ltrim(cast((
-                      veosf.sap_matl_num
-                    ) as text), cast((
-                      cast('0' as varchar)
-                    ) as text))
-                  )
                 )
             )
-            left join itg_my_dstrbtrr_dim as imdd
-              on (
+        WHERE (
                 (
-                  ltrim(cast((
-                    imdd.cust_id
-                  ) as text), cast((
-                    cast('0' as varchar)
-                  ) as text)) = ltrim(
-                    cast((
-                      veosf.sap_soldto_code
-                    ) as text),
-                    cast((
-                      cast('0' as varchar)
-                    ) as text)
-                  )
+                    ((veosf.mnth_id)::character varying)::text >= veocurd.start_period
                 )
-              )
-          )
-          left join itg_my_material_dim as immd
-            on (
-              (
-                ltrim(cast((
-                  immd.item_cd
-                ) as text), cast((
-                  cast('0' as varchar)
-                ) as text)) = ltrim(
-                  cast((
-                    coalesce(veosf.sap_matl_num, cast('' as varchar))
-                  ) as text),
-                  cast((
-                    cast('0' as varchar)
-                  ) as text)
+                AND (
+                    ((veosf.mnth_id)::character varying)::text <= veocurd.end_period
                 )
-              )
             )
-        )
-        left join itg_my_customer_dim as imcd
-          on (
+),
+target as (
+    SELECT 'Target' AS data_src,
+            veotd."year",
+            veotd.qrtr_no,
+            veotd.mnth_id,
+            veotd.mnth_no,
+            veotd.mnth_nm,
+            NULL AS max_yearmo,
+            'Malaysia' AS cntry_nm,
+            imcd.dstrbtr_grp_cd,
+            imcd.dstrbtr_grp_nm,
+            NULL AS dstrbtr_cust_cd,
+            NULL AS dstrbtr_cust_nm,
             (
-              trim(cast((
-                imcd.cust_id
-              ) as text)) = trim(cast((
-                veosf.sap_soldto_code
-              ) as text))
-            )
-          )
-      )
-      left join (
-        select
-          edw_vw_my_listprice.cntry_key,
-          edw_vw_my_listprice.cntry_nm,
-          edw_vw_my_listprice.plant,
-          edw_vw_my_listprice.cnty,
-          edw_vw_my_listprice.item_cd,
-          edw_vw_my_listprice.item_desc,
-          edw_vw_my_listprice.valid_from,
-          edw_vw_my_listprice.valid_to,
-          edw_vw_my_listprice.rate,
-          edw_vw_my_listprice.currency,
-          edw_vw_my_listprice.price_unit,
-          edw_vw_my_listprice.uom,
-          edw_vw_my_listprice.yearmo,
-          edw_vw_my_listprice.mnth_type,
-          edw_vw_my_listprice.snapshot_dt
-        from edw_vw_my_listprice
-        where
-          (
+                ltrim(
+                    (imdd.cust_id)::text,
+                    ('0'::character varying)::text
+                )
+            )::character varying AS sap_soldto_code,
+            imdd.cust_nm AS sap_soldto_nm,
+            imdd.lvl1 AS dstrbtr_lvl1,
+            imdd.lvl2 AS dstrbtr_lvl2,
+            imdd.lvl3 AS dstrbtr_lvl3,
+            imdd.lvl4 AS dstrbtr_lvl4,
+            imdd.lvl5 AS dstrbtr_lvl5,
+            NULL AS region_nm,
+            NULL AS town_nm,
+            NULL AS slsmn_cd,
+            NULL AS chnl_desc,
+            NULL AS sub_chnl_desc,
+            NULL AS chnl_attr1_desc,
+            NULL AS chnl_attr2_desc,
+            veocd.sap_state_cd,
+            veocd.sap_sls_org,
+            veocd.sap_cmp_id,
+            veocd.sap_cntry_cd,
+            veocd.sap_cntry_nm,
+            veocd.sap_addr,
+            veocd.sap_region,
+            veocd.sap_city,
+            veocd.sap_post_cd,
+            veocd.sap_chnl_cd,
+            veocd.sap_chnl_desc,
+            veocd.sap_sls_office_cd,
+            veocd.sap_sls_office_desc,
+            veocd.sap_sls_grp_cd,
+            veocd.sap_sls_grp_desc,
+            veocd.sap_curr_cd,
+            veocd.gch_region,
+            veocd.gch_cluster,
+            veocd.gch_subcluster,
+            veocd.gch_market,
+            veocd.gch_retail_banner,
+            NULL AS dstrbtr_matl_num,
+            NULL AS bar_cd,
+            NULL AS sku,
+            NULL AS frnchse_desc,
+            NULL AS brnd_desc,
+            NULL AS vrnt_desc,
+            NULL AS putup_desc,
+            NULL AS item_desc2,
+            NULL AS sku_desc,
+            NULL AS sap_mat_type_cd,
+            NULL AS sap_mat_type_desc,
+            NULL AS sap_base_uom_cd,
+            NULL AS sap_prchse_uom_cd,
+            NULL AS sap_prod_sgmt_cd,
+            NULL AS sap_prod_sgmt_desc,
+            NULL AS sap_base_prod_cd,
+            NULL AS sap_base_prod_desc,
+            NULL AS sap_mega_brnd_cd,
+            NULL AS sap_mega_brnd_desc,
+            NULL AS sap_brnd_cd,
+            NULL AS sap_brnd_desc,
+            NULL AS sap_vrnt_cd,
+            NULL AS sap_vrnt_desc,
+            NULL AS sap_put_up_cd,
+            NULL AS sap_put_up_desc,
+            NULL AS sap_grp_frnchse_cd,
+            NULL AS sap_grp_frnchse_desc,
+            NULL AS sap_frnchse_cd,
+            NULL AS sap_frnchse_desc,
+            NULL AS sap_prod_frnchse_cd,
+            NULL AS sap_prod_frnchse_desc,
+            NULL AS sap_prod_mjr_cd,
+            NULL AS sap_prod_mjr_desc,
+            NULL AS sap_prod_mnr_cd,
+            NULL AS sap_prod_mnr_desc,
+            NULL AS sap_prod_hier_cd,
+            NULL AS sap_prod_hier_desc,
+            NULL AS global_mat_region,
+            CASE
+                WHEN (
+                    (imt.sub_segment)::text = ('ALL'::character varying)::text
+                ) THEN veomd.gph_prod_frnchse
+                ELSE veomd1.gph_prod_frnchse
+            END AS global_prod_franchise,
+            CASE
+                WHEN (
+                    (imt.sub_segment)::text = ('ALL'::character varying)::text
+                ) THEN veomd.gph_prod_brnd
+                ELSE veomd1.gph_prod_brnd
+            END AS global_prod_brand,
+            NULL AS global_prod_variant,
+            NULL AS global_prod_put_up_cd,
+            NULL AS global_put_up_desc,
+            NULL AS global_prod_sub_brand,
+            NULL AS global_prod_need_state,
+            NULL AS global_prod_category,
+            NULL AS global_prod_subcategory,
+            NULL AS global_prod_segment,
+            veomd1.gph_prod_subsgmnt AS global_prod_subsegment,
+            NULL AS global_prod_size,
+            NULL AS global_prod_size_uom,
+            veocurd.from_ccy,
+            veocurd.to_ccy,
+            veocurd.exch_rate,
+            NULL AS wh_id,
+            NULL AS doc_type,
+            NULL AS doc_type_desc,
+            NULL AS bill_date,
+            NULL AS bill_doc,
+            0 AS base_sls,
+            0 AS sls_qty,
+            0 AS ret_qty,
+            NULL AS uom,
+            0 AS sls_qty_pc,
+            0 AS ret_qty_pc,
+            0 AS in_transit_qty,
+            0 AS mat_list_price,
+            0 AS grs_trd_sls,
+            0 AS ret_val,
+            0 AS trd_discnt,
+            0 AS trd_sls,
+            0 AS net_trd_sls,
+            0 AS jj_grs_trd_sls,
+            0 AS jj_ret_val,
+            0 AS jj_trd_sls,
+            0 AS jj_net_trd_sls,
+            0 AS in_transit_val,
+            (imt.trgt_val * veocurd.exch_rate) AS trgt_val,
+            NULL AS inv_dt,
+            NULL AS warehse_cd,
+            0 AS end_stock_qty,
+            0 AS end_stock_val_raw,
+            0 AS end_stock_val,
+            NULL AS is_npi,
+            NULL AS npi_str_period,
+            NULL AS npi_end_period,
+            NULL AS is_reg,
+            NULL AS is_promo,
+            NULL AS promo_strt_period,
+            NULL AS promo_end_period,
+            NULL AS is_mcl,
+            NULL AS is_hero,
+            0 AS contribution
+        FROM (
+                SELECT edw_vw_os_time_dim.cal_year AS "year",
+                    edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                    edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                    edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                    edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm
+                FROM edw_vw_os_time_dim
+                GROUP BY edw_vw_os_time_dim.cal_year,
+                    edw_vw_os_time_dim.cal_qrtr_no,
+                    edw_vw_os_time_dim.cal_mnth_id,
+                    edw_vw_os_time_dim.cal_mnth_no,
+                    edw_vw_os_time_dim.cal_mnth_nm
+            ) veotd,
             (
-              cast((
-                edw_vw_my_listprice.cntry_key
-              ) as text) = cast((
-                cast('MY' as varchar)
-              ) as text)
-            )
-            and (
-              cast((
-                edw_vw_my_listprice.mnth_type
-              ) as text) = cast((
-                cast('CAL' as varchar)
-              ) as text)
-            )
-          )
-      ) as lp
-        on (
-          (
-            (
-              ltrim(cast((
-                lp.item_cd
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text)) = ltrim(cast((
-                veosf.sap_matl_num
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text))
-            )
-            and (
-              cast((
-                lp.yearmo
-              ) as text) = cast((
-                cast((
-                  veosf.mnth_id
-                ) as varchar)
-              ) as text)
-            )
-          )
-        )
-    )
-    where
-      (
-        (
-          cast((
-            cast((
-              veosf.mnth_id
-            ) as varchar)
-          ) as text) >= veocurd.start_period
-        )
-        and (
-          cast((
-            cast((
-              veosf.mnth_id
-            ) as varchar)
-          ) as text) <= veocurd.end_period
-        )
-      )
-    union all
-    select
-      'Target' as data_src,
-      veotd.year,
-      veotd.qrtr_no,
-      veotd.mnth_id,
-      veotd.mnth_no,
-      veotd.mnth_nm,
-      null as max_yearmo,
-      'Malaysia' as cntry_nm,
-      imcd.dstrbtr_grp_cd,
-      imcd.dstrbtr_grp_nm,
-      null as dstrbtr_cust_cd,
-      null as dstrbtr_cust_nm,
-      cast((
-        ltrim(cast((
-          imdd.cust_id
-        ) as text), cast((
-          cast('0' as varchar)
-        ) as text))
-      ) as varchar) as sap_soldto_code,
-      imdd.cust_nm as sap_soldto_nm,
-      imdd.lvl1 as dstrbtr_lvl1,
-      imdd.lvl2 as dstrbtr_lvl2,
-      imdd.lvl3 as dstrbtr_lvl3,
-      imdd.lvl4 as dstrbtr_lvl4,
-      imdd.lvl5 as dstrbtr_lvl5,
-      null as region_nm,
-      null as town_nm,
-      null as slsmn_cd,
-      null as chnl_desc,
-      null as sub_chnl_desc,
-      null as chnl_attr1_desc,
-      null as chnl_attr2_desc,
-      veocd.sap_state_cd,
-      veocd.sap_sls_org,
-      veocd.sap_cmp_id,
-      veocd.sap_cntry_cd,
-      veocd.sap_cntry_nm,
-      veocd.sap_addr,
-      veocd.sap_region,
-      veocd.sap_city,
-      veocd.sap_post_cd,
-      veocd.sap_chnl_cd,
-      veocd.sap_chnl_desc,
-      veocd.sap_sls_office_cd,
-      veocd.sap_sls_office_desc,
-      veocd.sap_sls_grp_cd,
-      veocd.sap_sls_grp_desc,
-      veocd.sap_curr_cd,
-      veocd.gch_region,
-      veocd.gch_cluster,
-      veocd.gch_subcluster,
-      veocd.gch_market,
-      veocd.gch_retail_banner,
-      null as dstrbtr_matl_num,
-      null as bar_cd,
-      null as sku,
-      null as frnchse_desc,
-      null as brnd_desc,
-      null as vrnt_desc,
-      null as putup_desc,
-      null as item_desc2,
-      null as sku_desc,
-      null as sap_mat_type_cd,
-      null as sap_mat_type_desc,
-      null as sap_base_uom_cd,
-      null as sap_prchse_uom_cd,
-      null as sap_prod_sgmt_cd,
-      null as sap_prod_sgmt_desc,
-      null as sap_base_prod_cd,
-      null as sap_base_prod_desc,
-      null as sap_mega_brnd_cd,
-      null as sap_mega_brnd_desc,
-      null as sap_brnd_cd,
-      null as sap_brnd_desc,
-      null as sap_vrnt_cd,
-      null as sap_vrnt_desc,
-      null as sap_put_up_cd,
-      null as sap_put_up_desc,
-      null as sap_grp_frnchse_cd,
-      null as sap_grp_frnchse_desc,
-      null as sap_frnchse_cd,
-      null as sap_frnchse_desc,
-      null as sap_prod_frnchse_cd,
-      null as sap_prod_frnchse_desc,
-      null as sap_prod_mjr_cd,
-      null as sap_prod_mjr_desc,
-      null as sap_prod_mnr_cd,
-      null as sap_prod_mnr_desc,
-      null as sap_prod_hier_cd,
-      null as sap_prod_hier_desc,
-      null as global_mat_region,
-      case
-        when (
-          cast((
-            imt.sub_segment
-          ) as text) = cast((
-            cast('ALL' as varchar)
-          ) as text)
-        )
-        then veomd.gph_prod_frnchse
-        else veomd1.gph_prod_frnchse
-      end as global_prod_franchise,
-      case
-        when (
-          cast((
-            imt.sub_segment
-          ) as text) = cast((
-            cast('ALL' as varchar)
-          ) as text)
-        )
-        then veomd.gph_prod_brnd
-        else veomd1.gph_prod_brnd
-      end as global_prod_brand,
-      null as global_prod_variant,
-      null as global_prod_put_up_cd,
-      null as global_put_up_desc,
-      null as global_prod_sub_brand,
-      null as global_prod_need_state,
-      null as global_prod_category,
-      null as global_prod_subcategory,
-      null as global_prod_segment,
-      veomd1.gph_prod_subsgmnt as global_prod_subsegment,
-      null as global_prod_size,
-      null as global_prod_size_uom,
-      veocurd.from_ccy,
-      veocurd.to_ccy,
-      veocurd.exch_rate,
-      null as wh_id,
-      null as doc_type,
-      null as doc_type_desc,
-      null as bill_date,
-      null as bill_doc,
-      0 as base_sls,
-      0 as sls_qty,
-      0 as ret_qty,
-      null as uom,
-      0 as sls_qty_pc,
-      0 as ret_qty_pc,
-      0 as in_transit_qty,
-      0 as mat_list_price,
-      0 as grs_trd_sls,
-      0 as ret_val,
-      0 as trd_discnt,
-      0 as trd_sls,
-      0 as net_trd_sls,
-      0 as jj_grs_trd_sls,
-      0 as jj_ret_val,
-      0 as jj_trd_sls,
-      0 as jj_net_trd_sls,
-      0 as in_transit_val,
-      (
-        imt.trgt_val * veocurd.exch_rate
-      ) as trgt_val,
-      null as inv_dt,
-      null as warehse_cd,
-      0 as end_stock_qty,
-      0 as end_stock_val_raw,
-      0 as end_stock_val,
-      null as is_npi,
-      null as npi_str_period,
-      null as npi_end_period,
-      null as is_reg,
-      null as is_promo,
-      null as promo_strt_period,
-      null as promo_end_period,
-      null as is_mcl,
-      null as is_hero,
-      0 as contribution
-    from (
-      select
-        edw_vw_os_time_dim.cal_year as year,
-        edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-        edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-        edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-        edw_vw_os_time_dim.cal_mnth_nm as mnth_nm
-      from edw_vw_os_time_dim
-      group by
-        edw_vw_os_time_dim.cal_year,
-        edw_vw_os_time_dim.cal_qrtr_no,
-        edw_vw_os_time_dim.cal_mnth_id,
-        edw_vw_os_time_dim.cal_mnth_no,
-        edw_vw_os_time_dim.cal_mnth_nm
-    ) as veotd, (
-      select
-        d.cntry_key,
-        d.cntry_nm,
-        d.rate_type,
-        d.from_ccy,
-        d.to_ccy,
-        d.valid_date,
-        d.jj_year,
-        d.start_period,
-        case
-          when (
-            d.end_mnth_id = b.max_period
-          )
-          then cast((
-            cast('209912' as varchar)
-          ) as text)
-          else d.end_mnth_id
-        end as end_period,
-        d.exch_rate
-      from (
-        select
-          a.cntry_key,
-          a.cntry_nm,
-          a.rate_type,
-          a.from_ccy,
-          a.to_ccy,
-          a.valid_date,
-          a.jj_year,
-          min(cast((
-            a.jj_mnth_id
-          ) as text)) as start_period,
-          max(cast((
-            a.jj_mnth_id
-          ) as text)) as end_mnth_id,
-          a.exch_rate
-        from edw_vw_my_curr_dim as a
-        where
-          (
-            cast((
-              a.cntry_key
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-        group by
-          a.cntry_key,
-          a.cntry_nm,
-          a.rate_type,
-          a.from_ccy,
-          a.to_ccy,
-          a.valid_date,
-          a.jj_year,
-          a.exch_rate
-      ) as d, (
-        select
-          max(cast((
-            a.jj_mnth_id
-          ) as text)) as max_period
-        from edw_vw_my_curr_dim as a
-        where
-          (
-            cast((
-              a.cntry_key
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-      ) as b
-    ) as veocurd, (
-      (
-        (
-          (
-            (
-              itg_my_trgts as imt
-                left join itg_my_customer_dim as imcd
-                  on (
+                SELECT d.cntry_key,
+                    d.cntry_nm,
+                    d.rate_type,
+                    d.from_ccy,
+                    d.to_ccy,
+                    d.valid_date,
+                    d.jj_year,
+                    d.start_period,
+                    CASE
+                        WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+                        ELSE d.end_mnth_id
+                    END AS end_period,
+                    d.exch_rate
+                FROM (
+                        SELECT a.cntry_key,
+                            a.cntry_nm,
+                            a.rate_type,
+                            a.from_ccy,
+                            a.to_ccy,
+                            a.valid_date,
+                            a.jj_year,
+                            min((a.jj_mnth_id)::text) AS start_period,
+                            "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+                            a.exch_rate
+                        FROM EDW_VW_my_CURR_DIM a
+                        WHERE (
+                                (a.cntry_key)::text = ('MY'::character varying)::text
+                            )
+                        GROUP BY a.cntry_key,
+                            a.cntry_nm,
+                            a.rate_type,
+                            a.from_ccy,
+                            a.to_ccy,
+                            a.valid_date,
+                            a.jj_year,
+                            a.exch_rate
+                    ) d,
                     (
-                      ltrim(cast((
-                        imcd.cust_id
-                      ) as text), cast((
-                        cast('0' as varchar)
-                      ) as text)) = ltrim(cast((
-                        imt.cust_id
-                      ) as text), cast((
-                        cast('0' as varchar)
-                      ) as text))
-                    )
-                  )
-            )
-            left join (
-              select distinct
-                edw_vw_my_material_dim.gph_prod_frnchse,
-                edw_vw_my_material_dim.gph_prod_brnd
-              from edw_vw_my_material_dim
-              where
+                        SELECT "max"((a.jj_mnth_id)::text) AS max_period
+                        FROM EDW_VW_my_CURR_DIM a
+                        WHERE (
+                                (a.cntry_key)::text = ('MY'::character varying)::text
+                            )
+                    ) b
+            ) veocurd,
+            (
                 (
-                  cast((
-                    edw_vw_my_material_dim.cntry_key
-                  ) as text) = cast((
-                    cast('MY' as varchar)
-                  ) as text)
+                    (
+                        (
+                            (
+                                itg_my_trgts imt
+                                LEFT JOIN itg_my_customer_dim imcd ON (
+                                    (
+                                        ltrim(
+                                            (imcd.cust_id)::text,
+                                            ('0'::character varying)::text
+                                        ) = ltrim(
+                                            (imt.cust_id)::text,
+                                            ('0'::character varying)::text
+                                        )
+                                    )
+                                )
+                            )
+                            LEFT JOIN (
+                                SELECT DISTINCT EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_brnd
+                                FROM EDW_VW_my_MATERIAL_DIM
+                                WHERE (
+                                        (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+                                    )
+                            ) veomd ON (
+                                CASE
+                                    WHEN (
+                                        (imt.sub_segment)::text = ('ALL'::character varying)::text
+                                    ) THEN (
+                                        TRIM(upper((veomd.gph_prod_brnd)::text)) = TRIM(upper((imt.brnd_desc)::text))
+                                    )
+                                    ELSE NULL::boolean
+                                END
+                            )
+                        )
+                        LEFT JOIN (
+                            SELECT DISTINCT EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+                                EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+                                EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt
+                            FROM EDW_VW_my_MATERIAL_DIM
+                            WHERE (
+                                    (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+                                )
+                        ) veomd1 ON (
+                            CASE
+                                WHEN (
+                                    (imt.sub_segment)::text <> ('ALL'::character varying)::text
+                                ) THEN (
+                                    (
+                                        TRIM(upper((veomd1.gph_prod_subsgmnt)::text)) = TRIM(upper((imt.sub_segment)::text))
+                                    )
+                                    AND (
+                                        TRIM(upper((veomd1.gph_prod_brnd)::text)) = TRIM(upper((imt.brnd_desc)::text))
+                                    )
+                                )
+                                ELSE NULL::boolean
+                            END
+                        )
+                    )
+                    LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+                        (
+                            ltrim(
+                                (imdd.cust_id)::text,
+                                ('0'::character varying)::text
+                            ) = ltrim(
+                                (imt.cust_id)::text,
+                                ('0'::character varying)::text
+                            )
+                        )
+                    )
                 )
-            ) as veomd
-              on (
-                case
-                  when (
-                    cast((
-                      imt.sub_segment
-                    ) as text) = cast((
-                      cast('ALL' as varchar)
-                    ) as text)
-                  )
-                  then (
-                    trim(UPPER(cast((
-                      veomd.gph_prod_brnd
-                    ) as text))) = trim(UPPER(cast((
-                      imt.brnd_desc
-                    ) as text)))
-                  )
-                  else cast(null as BOOLEAN)
-                end
-              )
-          )
-          left join (
-            select distinct
-              edw_vw_my_material_dim.gph_prod_frnchse,
-              edw_vw_my_material_dim.gph_prod_brnd,
-              edw_vw_my_material_dim.gph_prod_subsgmnt
-            from edw_vw_my_material_dim
-            where
-              (
-                cast((
-                  edw_vw_my_material_dim.cntry_key
-                ) as text) = cast((
-                  cast('MY' as varchar)
-                ) as text)
-              )
-          ) as veomd1
-            on (
-              case
-                when (
-                  cast((
-                    imt.sub_segment
-                  ) as text) <> cast((
-                    cast('ALL' as varchar)
-                  ) as text)
+                LEFT JOIN (
+                    SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+                        EDW_VW_my_CUSTOMER_DIM.sap_addr,
+                        EDW_VW_my_CUSTOMER_DIM.sap_region,
+                        EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_city,
+                        EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+                        EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+                        EDW_VW_my_CUSTOMER_DIM.retail_env,
+                        EDW_VW_my_CUSTOMER_DIM.gch_region,
+                        EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+                        EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+                        EDW_VW_my_CUSTOMER_DIM.gch_market,
+                        EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+                    FROM EDW_VW_my_CUSTOMER_DIM
+                    WHERE (
+                            (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+                        )
+                ) veocd ON (
+                    (
+                        ltrim(
+                            (veocd.sap_cust_id)::text,
+                            ('0'::character varying)::text
+                        ) = ltrim(
+                            (imt.cust_id)::text,
+                            ('0'::character varying)::text
+                        )
+                    )
                 )
-                then (
-                  (
-                    trim(UPPER(cast((
-                      veomd1.gph_prod_subsgmnt
-                    ) as text))) = trim(UPPER(cast((
-                      imt.sub_segment
-                    ) as text)))
-                  )
-                  and (
-                    trim(UPPER(cast((
-                      veomd1.gph_prod_brnd
-                    ) as text))) = trim(UPPER(cast((
-                      imt.brnd_desc
-                    ) as text)))
-                  )
-                )
-                else cast(null as BOOLEAN)
-              end
             )
-        )
-        left join itg_my_dstrbtrr_dim as imdd
-          on (
-            (
-              ltrim(cast((
-                imdd.cust_id
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text)) = ltrim(cast((
-                imt.cust_id
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text))
+        WHERE (
+                (
+                    (
+                        (
+                            (imt.trgt_type)::text = ('BP'::character varying)::text
+                        )
+                        AND (
+                            ((veotd.mnth_id)::character varying)::text = (imt.jj_mnth_id)::text
+                        )
+                    )
+                    AND ((imt.jj_mnth_id)::text >= veocurd.start_period)
+                )
+                AND ((imt.jj_mnth_id)::text <= veocurd.end_period)
             )
-          )
-      )
-      left join (
-        select
-          edw_vw_my_customer_dim.sap_cust_id,
-          edw_vw_my_customer_dim.sap_cust_nm,
-          edw_vw_my_customer_dim.sap_sls_org,
-          edw_vw_my_customer_dim.sap_cmp_id,
-          edw_vw_my_customer_dim.sap_cntry_cd,
-          edw_vw_my_customer_dim.sap_cntry_nm,
-          edw_vw_my_customer_dim.sap_addr,
-          edw_vw_my_customer_dim.sap_region,
-          edw_vw_my_customer_dim.sap_state_cd,
-          edw_vw_my_customer_dim.sap_city,
-          edw_vw_my_customer_dim.sap_post_cd,
-          edw_vw_my_customer_dim.sap_chnl_cd,
-          edw_vw_my_customer_dim.sap_chnl_desc,
-          edw_vw_my_customer_dim.sap_sls_office_cd,
-          edw_vw_my_customer_dim.sap_sls_office_desc,
-          edw_vw_my_customer_dim.sap_sls_grp_cd,
-          edw_vw_my_customer_dim.sap_sls_grp_desc,
-          edw_vw_my_customer_dim.sap_curr_cd,
-          edw_vw_my_customer_dim.sap_prnt_cust_key,
-          edw_vw_my_customer_dim.sap_prnt_cust_desc,
-          edw_vw_my_customer_dim.sap_cust_chnl_key,
-          edw_vw_my_customer_dim.sap_cust_chnl_desc,
-          edw_vw_my_customer_dim.sap_cust_sub_chnl_key,
-          edw_vw_my_customer_dim.sap_sub_chnl_desc,
-          edw_vw_my_customer_dim.sap_go_to_mdl_key,
-          edw_vw_my_customer_dim.sap_go_to_mdl_desc,
-          edw_vw_my_customer_dim.sap_bnr_key,
-          edw_vw_my_customer_dim.sap_bnr_desc,
-          edw_vw_my_customer_dim.sap_bnr_frmt_key,
-          edw_vw_my_customer_dim.sap_bnr_frmt_desc,
-          edw_vw_my_customer_dim.retail_env,
-          edw_vw_my_customer_dim.gch_region,
-          edw_vw_my_customer_dim.gch_cluster,
-          edw_vw_my_customer_dim.gch_subcluster,
-          edw_vw_my_customer_dim.gch_market,
-          edw_vw_my_customer_dim.gch_retail_banner
-        from edw_vw_my_customer_dim
-        where
-          (
-            cast((
-              edw_vw_my_customer_dim.sap_cntry_cd
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-      ) as veocd
-        on (
-          (
-            ltrim(cast((
-              veocd.sap_cust_id
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text)) = ltrim(cast((
-              imt.cust_id
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text))
-          )
-        )
-    )
-    where
-      (
+),
+gt_inventory as (
+    SELECT 'GT Inventory' AS data_src,
+        evosif."year",
+        evosif.qrtr_no,
+        evosif.mnth_id,
+        evosif.mnth_no,
+        evosif.mnth_nm,
+        NULL AS max_yearmo,
+        'Malaysia' AS cntry_nm,
+        evosif.dstrbtr_grp_cd,
+        imcd.dstrbtr_grp_nm,
+        NULL AS dstrbtr_cust_cd,
+        NULL AS dstrbtr_cust_nm,
         (
-          (
+            ltrim(
+                (imdd.cust_id)::text,
+                ('0'::character varying)::text
+            )
+        )::character varying AS sap_soldto_code,
+        imdd.cust_nm AS sap_soldto_nm,
+        imdd.lvl1 AS dstrbtr_lvl1,
+        imdd.lvl2 AS dstrbtr_lvl2,
+        imdd.lvl3 AS dstrbtr_lvl3,
+        imdd.lvl4 AS dstrbtr_lvl4,
+        imdd.lvl5 AS dstrbtr_lvl5,
+        imdd.region AS region_nm,
+        NULL AS town_nm,
+        NULL AS slsmn_cd,
+        NULL AS chnl_desc,
+        NULL AS sub_chnl_desc,
+        NULL AS chnl_attr1_desc,
+        NULL AS chnl_attr2_desc,
+        veocd.sap_state_cd,
+        veocd.sap_sls_org,
+        veocd.sap_cmp_id,
+        veocd.sap_cntry_cd,
+        veocd.sap_cntry_nm,
+        veocd.sap_addr,
+        veocd.sap_region,
+        veocd.sap_city,
+        veocd.sap_post_cd,
+        veocd.sap_chnl_cd,
+        veocd.sap_chnl_desc,
+        veocd.sap_sls_office_cd,
+        veocd.sap_sls_office_desc,
+        veocd.sap_sls_grp_cd,
+        veocd.sap_sls_grp_desc,
+        veocd.sap_curr_cd,
+        veocd.gch_region,
+        veocd.gch_cluster,
+        veocd.gch_subcluster,
+        veocd.gch_market,
+        veocd.gch_retail_banner,
+        (evosif.dstrbtr_matl_num)::character varying AS dstrbtr_matl_num,
+        evosif.bar_cd,
+        (
+            ltrim(
+                (veomd.sap_matl_num)::text,
+                ('0'::character varying)::text
+            )
+        )::character varying AS sku,
+        immd.frnchse_desc,
+        immd.brnd_desc,
+        immd.vrnt_desc,
+        immd.putup_desc,
+        immd.item_desc2,
+        veomd.sap_mat_desc AS sku_desc,
+        veomd.sap_mat_type_cd,
+        veomd.sap_mat_type_desc,
+        veomd.sap_base_uom_cd,
+        veomd.sap_prchse_uom_cd,
+        veomd.sap_prod_sgmt_cd,
+        veomd.sap_prod_sgmt_desc,
+        veomd.sap_base_prod_cd,
+        veomd.sap_base_prod_desc,
+        veomd.sap_mega_brnd_cd,
+        veomd.sap_mega_brnd_desc,
+        veomd.sap_brnd_cd,
+        veomd.sap_brnd_desc,
+        veomd.sap_vrnt_cd,
+        veomd.sap_vrnt_desc,
+        veomd.sap_put_up_cd,
+        veomd.sap_put_up_desc,
+        veomd.sap_grp_frnchse_cd,
+        veomd.sap_grp_frnchse_desc,
+        veomd.sap_frnchse_cd,
+        veomd.sap_frnchse_desc,
+        veomd.sap_prod_frnchse_cd,
+        veomd.sap_prod_frnchse_desc,
+        veomd.sap_prod_mjr_cd,
+        veomd.sap_prod_mjr_desc,
+        veomd.sap_prod_mnr_cd,
+        veomd.sap_prod_mnr_desc,
+        veomd.sap_prod_hier_cd,
+        veomd.sap_prod_hier_desc,
+        veomd.gph_region AS global_mat_region,
+        veomd.gph_prod_frnchse AS global_prod_franchise,
+        veomd.gph_prod_brnd AS global_prod_brand,
+        veomd.gph_prod_vrnt AS global_prod_variant,
+        veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+        veomd.gph_prod_put_up_desc AS global_put_up_desc,
+        veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+        veomd.gph_prod_needstate AS global_prod_need_state,
+        veomd.gph_prod_ctgry AS global_prod_category,
+        veomd.gph_prod_subctgry AS global_prod_subcategory,
+        veomd.gph_prod_sgmnt AS global_prod_segment,
+        veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+        veomd.gph_prod_size AS global_prod_size,
+        veomd.gph_prod_size_uom AS global_prod_size_uom,
+        veocurd.from_ccy,
+        veocurd.to_ccy,
+        veocurd.exch_rate,
+        NULL AS wh_id,
+        NULL AS doc_type,
+        NULL AS doc_type_desc,
+        NULL AS bill_date,
+        NULL AS bill_doc,
+        0 AS base_sls,
+        0 AS sls_qty,
+        0 AS ret_qty,
+        NULL AS uom,
+        0 AS sls_qty_pc,
+        0 AS ret_qty_pc,
+        0 AS in_transit_qty,
+        lp.rate AS mat_list_price,
+        0 AS grs_trd_sls,
+        0 AS ret_val,
+        0 AS trd_discnt,
+        0 AS trd_sls,
+        0 AS net_trd_sls,
+        0 AS jj_grs_trd_sls,
+        0 AS jj_ret_val,
+        0 AS jj_trd_sls,
+        0 AS jj_net_trd_sls,
+        0 AS in_transit_val,
+        0 AS trgt_val,
+        (to_date(evosif.inv_dt))::character varying AS inv_dt,
+        evosif.warehse_cd,
+        evosif.end_stock_qty,
+        (evosif.end_stock_val * veocurd.exch_rate) AS end_stock_val_raw,
+        (
+            (evosif.end_stock_qty * veocurd.exch_rate) * lp.rate
+        ) AS end_stock_val,
+        immd.npi_ind AS is_npi,
+        immd.npi_strt_period AS npi_str_period,
+        NULL AS npi_end_period,
+        NULL AS is_reg,
+        immd.promo_reg_ind AS is_promo,
+        NULL AS promo_strt_period,
+        NULL AS promo_end_period,
+        NULL AS is_mcl,
+        immd.hero_ind AS is_hero,
+        0 AS contribution
+    FROM (
+            SELECT d.cntry_key,
+                d.cntry_nm,
+                d.rate_type,
+                d.from_ccy,
+                d.to_ccy,
+                d.valid_date,
+                d.jj_year,
+                d.start_period,
+                CASE
+                    WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+                    ELSE d.end_mnth_id
+                END AS end_period,
+                d.exch_rate
+            FROM (
+                    SELECT a.cntry_key,
+                        a.cntry_nm,
+                        a.rate_type,
+                        a.from_ccy,
+                        a.to_ccy,
+                        a.valid_date,
+                        a.jj_year,
+                        min((a.jj_mnth_id)::text) AS start_period,
+                        "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+                        a.exch_rate
+                    FROM EDW_VW_my_CURR_DIM a
+                    WHERE (
+                            (a.cntry_key)::text = ('MY'::character varying)::text
+                        )
+                    GROUP BY a.cntry_key,
+                        a.cntry_nm,
+                        a.rate_type,
+                        a.from_ccy,
+                        a.to_ccy,
+                        a.valid_date,
+                        a.jj_year,
+                        a.exch_rate
+                ) d,
+                (
+                    SELECT "max"((a.jj_mnth_id)::text) AS max_period
+                    FROM EDW_VW_my_CURR_DIM a
+                    WHERE (
+                            (a.cntry_key)::text = ('MY'::character varying)::text
+                        )
+                ) b
+        ) veocurd,
+        (
             (
-              cast((
-                imt.trgt_type
-              ) as text) = cast((
-                cast('BP' as varchar)
-              ) as text)
+                (
+                    (
+                        (
+                            (
+                                (
+                                    SELECT veotd."year",
+                                        veotd.qrtr_no,
+                                        veotd.mnth_id,
+                                        veotd.mnth_no,
+                                        veotd.mnth_nm,
+                                        t1.warehse_cd,
+                                        t1.dstrbtr_grp_cd,
+                                        t1.dstrbtr_soldto_code,
+                                        t1.bar_cd,
+                                        t1.sap_matl_num,
+                                        TRIM((t1.dstrbtr_matl_num)::text) AS dstrbtr_matl_num,
+                                        t1.inv_dt,
+                                        t1.soh,
+                                        t1.soh_val,
+                                        t1.end_stock_qty,
+                                        t1.end_stock_val
+                                    FROM EDW_VW_my_SELLOUT_INVENTORY_FACT t1,
+                                        (
+                                            SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+                                                edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                                edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                                edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                                edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                                edw_vw_os_time_dim.cal_date,
+                                                edw_vw_os_time_dim.cal_date_id
+                                            FROM edw_vw_os_time_dim
+                                        ) veotd
+                                    WHERE (
+                                            (
+                                                (t1.cntry_cd)::text = ('MY'::character varying)::text
+                                            )
+                                            AND (
+                                                to_date((veotd.cal_date)::timestamp without time zone) = to_date(t1.inv_dt)
+                                            )
+                                        )
+                                ) evosif
+                                LEFT JOIN (
+                                    SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_addr,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_region,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_city,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+                                        EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+                                        EDW_VW_my_CUSTOMER_DIM.retail_env,
+                                        EDW_VW_my_CUSTOMER_DIM.gch_region,
+                                        EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+                                        EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+                                        EDW_VW_my_CUSTOMER_DIM.gch_market,
+                                        EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+                                    FROM EDW_VW_my_CUSTOMER_DIM
+                                    WHERE (
+                                            (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+                                        )
+                                ) veocd ON (
+                                    (
+                                        ltrim(
+                                            (veocd.sap_cust_id)::text,
+                                            ('0'::character varying)::text
+                                        ) = ltrim(
+                                            (evosif.dstrbtr_soldto_code)::text,
+                                            ('0'::character varying)::text
+                                        )
+                                    )
+                                )
+                            )
+                            LEFT JOIN (
+                                SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+                                    EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+                                    EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+                                    EDW_VW_my_MATERIAL_DIM.ean_num,
+                                    EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+                                    EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+                                    EDW_VW_my_MATERIAL_DIM.gph_region,
+                                    EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+                                    EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+                                    EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+                                    EDW_VW_my_MATERIAL_DIM.launch_dt,
+                                    EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+                                    EDW_VW_my_MATERIAL_DIM.prft_ctr,
+                                    EDW_VW_my_MATERIAL_DIM.shlf_life
+                                FROM EDW_VW_my_MATERIAL_DIM
+                                WHERE (
+                                        (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+                                    )
+                            ) veomd ON (
+                                (
+                                    ltrim(
+                                        (veomd.sap_matl_num)::text,
+                                        ('0'::character varying)::text
+                                    ) = ltrim(
+                                        (
+                                            COALESCE(evosif.sap_matl_num, ''::character varying)
+                                        )::text,
+                                        ('0'::character varying)::text
+                                    )
+                                )
+                            )
+                        )
+                        LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+                            (
+                                ltrim(
+                                    (imdd.cust_id)::text,
+                                    ('0'::character varying)::text
+                                ) = ltrim(
+                                    (evosif.dstrbtr_soldto_code)::text,
+                                    ('0'::character varying)::text
+                                )
+                            )
+                        )
+                    )
+                    LEFT JOIN itg_my_material_dim immd ON (
+                        (
+                            ltrim(
+                                (immd.item_cd)::text,
+                                ('0'::character varying)::text
+                            ) = ltrim(
+                                (evosif.sap_matl_num)::text,
+                                ('0'::character varying)::text
+                            )
+                        )
+                    )
+                )
+                LEFT JOIN itg_my_customer_dim imcd ON (
+                    (
+                        TRIM((imcd.cust_id)::text) = TRIM((evosif.dstrbtr_soldto_code)::text)
+                    )
+                )
             )
-            and (
-              cast((
-                cast((
-                  veotd.mnth_id
-                ) as varchar)
-              ) as text) = cast((
-                imt.jj_mnth_id
-              ) as text)
+            LEFT JOIN (
+                SELECT EDW_VW_my_LISTPRICE.cntry_key,
+                    EDW_VW_my_LISTPRICE.cntry_nm,
+                    EDW_VW_my_LISTPRICE.plant,
+                    EDW_VW_my_LISTPRICE.cnty,
+                    EDW_VW_my_LISTPRICE.item_cd,
+                    EDW_VW_my_LISTPRICE.item_desc,
+                    EDW_VW_my_LISTPRICE.valid_from,
+                    EDW_VW_my_LISTPRICE.valid_to,
+                    EDW_VW_my_LISTPRICE.rate,
+                    EDW_VW_my_LISTPRICE.currency,
+                    EDW_VW_my_LISTPRICE.price_unit,
+                    EDW_VW_my_LISTPRICE.uom,
+                    EDW_VW_my_LISTPRICE.yearmo,
+                    EDW_VW_my_LISTPRICE.mnth_type,
+                    EDW_VW_my_LISTPRICE.snapshot_dt
+                FROM EDW_VW_my_LISTPRICE
+                WHERE (
+                        (
+                            (EDW_VW_my_LISTPRICE.cntry_key)::text = ('MY'::character varying)::text
+                        )
+                        AND (
+                            (EDW_VW_my_LISTPRICE.mnth_type)::text = ('CAL'::character varying)::text
+                        )
+                    )
+            ) lp ON (
+                (
+                    (
+                        ltrim(
+                            (lp.item_cd)::text,
+                            ('0'::character varying)::text
+                        ) = ltrim(
+                            (evosif.sap_matl_num)::text,
+                            ('0'::character varying)::text
+                        )
+                    )
+                    AND (
+                        (lp.yearmo)::text = ((evosif.mnth_id)::character varying)::text
+                    )
+                )
             )
-          )
-          and (
-            cast((
-              imt.jj_mnth_id
-            ) as text) >= veocurd.start_period
-          )
         )
-        and (
-          cast((
-            imt.jj_mnth_id
-          ) as text) <= veocurd.end_period
+    WHERE (
+            (
+                ((evosif.mnth_id)::character varying)::text >= veocurd.start_period
+            )
+            AND (
+                ((evosif.mnth_id)::character varying)::text <= veocurd.end_period
+            )
         )
-      )
-  )
-  union all
-  select
-    'GT Inventory' as data_src,
-    evosif.year,
-    evosif.qrtr_no,
-    evosif.mnth_id,
-    evosif.mnth_no,
-    evosif.mnth_nm,
-    null as max_yearmo,
-    'Malaysia' as cntry_nm,
-    evosif.dstrbtr_grp_cd,
+),
+in_transit as (
+    SELECT 'IN Transit' AS data_src,
+    veoint."year",
+    veoint.qrtr_no,
+    veoint.mnth_id,
+    veoint.mnth_no,
+    veoint.mnth_nm,
+    NULL AS max_yearmo,
+    'Malaysia' AS cntry_nm,
+    imcd.dstrbtr_grp_cd,
     imcd.dstrbtr_grp_nm,
-    null as dstrbtr_cust_cd,
-    null as dstrbtr_cust_nm,
-    cast((
-      ltrim(cast((
-        imdd.cust_id
-      ) as text), cast((
-        cast('0' as varchar)
-      ) as text))
-    ) as varchar) as sap_soldto_code,
-    imdd.cust_nm as sap_soldto_nm,
-    imdd.lvl1 as dstrbtr_lvl1,
-    imdd.lvl2 as dstrbtr_lvl2,
-    imdd.lvl3 as dstrbtr_lvl3,
-    imdd.lvl4 as dstrbtr_lvl4,
-    imdd.lvl5 as dstrbtr_lvl5,
-    imdd.region as region_nm,
-    null as town_nm,
-    null as slsmn_cd,
-    null as chnl_desc,
-    null as sub_chnl_desc,
-    null as chnl_attr1_desc,
-    null as chnl_attr2_desc,
+    NULL AS dstrbtr_cust_cd,
+    NULL AS dstrbtr_cust_nm,
+    (
+        ltrim(
+            (imdd.cust_id)::text,
+            ('0'::character varying)::text
+        )
+    )::character varying AS sap_soldto_code,
+    imdd.cust_nm AS sap_soldto_nm,
+    imdd.lvl1 AS dstrbtr_lvl1,
+    imdd.lvl2 AS dstrbtr_lvl2,
+    imdd.lvl3 AS dstrbtr_lvl3,
+    imdd.lvl4 AS dstrbtr_lvl4,
+    imdd.lvl5 AS dstrbtr_lvl5,
+    imdd.region AS region_nm,
+    NULL AS town_nm,
+    NULL AS slsmn_cd,
+    NULL AS chnl_desc,
+    NULL AS sub_chnl_desc,
+    NULL AS chnl_attr1_desc,
+    NULL AS chnl_attr2_desc,
     veocd.sap_state_cd,
     veocd.sap_sls_org,
     veocd.sap_cmp_id,
@@ -2292,23 +2263,20 @@ final as (
     veocd.gch_subcluster,
     veocd.gch_market,
     veocd.gch_retail_banner,
-    cast((
-      evosif.dstrbtr_matl_num
-    ) as varchar) as dstrbtr_matl_num,
-    evosif.bar_cd,
-    cast((
-      ltrim(cast((
-        veomd.sap_matl_num
-      ) as text), cast((
-        cast('0' as varchar)
-      ) as text))
-    ) as varchar) as sku,
+    NULL AS dstrbtr_matl_num,
+    NULL AS bar_cd,
+    (
+        ltrim(
+            (veomd.sap_matl_num)::text,
+            ('0'::character varying)::text
+        )
+    )::character varying AS sku,
     immd.frnchse_desc,
     immd.brnd_desc,
     immd.vrnt_desc,
     immd.putup_desc,
     immd.item_desc2,
-    veomd.sap_mat_desc as sku_desc,
+    veomd.sap_mat_desc AS sku_desc,
     veomd.sap_mat_type_cd,
     veomd.sap_mat_type_desc,
     veomd.sap_base_uom_cd,
@@ -2337,946 +2305,2893 @@ final as (
     veomd.sap_prod_mnr_desc,
     veomd.sap_prod_hier_cd,
     veomd.sap_prod_hier_desc,
-    veomd.gph_region as global_mat_region,
-    veomd.gph_prod_frnchse as global_prod_franchise,
-    veomd.gph_prod_brnd as global_prod_brand,
-    veomd.gph_prod_vrnt as global_prod_variant,
-    veomd.gph_prod_put_up_cd as global_prod_put_up_cd,
-    veomd.gph_prod_put_up_desc as global_put_up_desc,
-    veomd.gph_prod_sub_brnd as global_prod_sub_brand,
-    veomd.gph_prod_needstate as global_prod_need_state,
-    veomd.gph_prod_ctgry as global_prod_category,
-    veomd.gph_prod_subctgry as global_prod_subcategory,
-    veomd.gph_prod_sgmnt as global_prod_segment,
-    veomd.gph_prod_subsgmnt as global_prod_subsegment,
-    veomd.gph_prod_size as global_prod_size,
-    veomd.gph_prod_size_uom as global_prod_size_uom,
+    veomd.gph_region AS global_mat_region,
+    veomd.gph_prod_frnchse AS global_prod_franchise,
+    veomd.gph_prod_brnd AS global_prod_brand,
+    veomd.gph_prod_vrnt AS global_prod_variant,
+    veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+    veomd.gph_prod_put_up_desc AS global_put_up_desc,
+    veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+    veomd.gph_prod_needstate AS global_prod_need_state,
+    veomd.gph_prod_ctgry AS global_prod_category,
+    veomd.gph_prod_subctgry AS global_prod_subcategory,
+    veomd.gph_prod_sgmnt AS global_prod_segment,
+    veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+    veomd.gph_prod_size AS global_prod_size,
+    veomd.gph_prod_size_uom AS global_prod_size_uom,
     veocurd.from_ccy,
     veocurd.to_ccy,
     veocurd.exch_rate,
-    null as wh_id,
-    null as doc_type,
-    null as doc_type_desc,
-    null as bill_date,
-    null as bill_doc,
-    0 as base_sls,
-    0 as sls_qty,
-    0 as ret_qty,
-    null as uom,
-    0 as sls_qty_pc,
-    0 as ret_qty_pc,
-    0 as in_transit_qty,
-    lp.rate as mat_list_price,
-    0 as grs_trd_sls,
-    0 as ret_val,
-    0 as trd_discnt,
-    0 as trd_sls,
-    0 as net_trd_sls,
-    0 as jj_grs_trd_sls,
-    0 as jj_ret_val,
-    0 as jj_trd_sls,
-    0 as jj_net_trd_sls,
-    0 as in_transit_val,
-    0 as trgt_val,
-    cast((
-     evosif.inv_dt
-    ) as varchar) as inv_dt,
-    evosif.warehse_cd,
-    evosif.end_stock_qty,
-    (
-      evosif.end_stock_val * veocurd.exch_rate
-    ) as end_stock_val_raw,
-    (
-      (
-        evosif.end_stock_qty * veocurd.exch_rate
-      ) * lp.rate
-    ) as end_stock_val,
-    immd.npi_ind as is_npi,
-    immd.npi_strt_period as npi_str_period,
-    null as npi_end_period,
-    null as is_reg,
-    immd.promo_reg_ind as is_promo,
-    null as promo_strt_period,
-    null as promo_end_period,
-    null as is_mcl,
-    immd.hero_ind as is_hero,
-    0 as contribution
-  from (
-    select
-      d.cntry_key,
-      d.cntry_nm,
-      d.rate_type,
-      d.from_ccy,
-      d.to_ccy,
-      d.valid_date,
-      d.jj_year,
-      d.start_period,
-      case
-        when (
-          d.end_mnth_id = b.max_period
-        )
-        then cast((
-          cast('209912' as varchar)
-        ) as text)
-        else d.end_mnth_id
-      end as end_period,
-      d.exch_rate
-    from (
-      select
-        a.cntry_key,
-        a.cntry_nm,
-        a.rate_type,
-        a.from_ccy,
-        a.to_ccy,
-        a.valid_date,
-        a.jj_year,
-        min(cast((
-          a.jj_mnth_id
-        ) as text)) as start_period,
-        max(cast((
-          a.jj_mnth_id
-        ) as text)) as end_mnth_id,
-        a.exch_rate
-      from edw_vw_my_curr_dim as a
-      where
-        (
-          cast((
-            a.cntry_key
-          ) as text) = cast((
-            cast('MY' as varchar)
-          ) as text)
-        )
-      group by
-        a.cntry_key,
-        a.cntry_nm,
-        a.rate_type,
-        a.from_ccy,
-        a.to_ccy,
-        a.valid_date,
-        a.jj_year,
-        a.exch_rate
-    ) as d, (
-      select
-        max(cast((
-          a.jj_mnth_id
-        ) as text)) as max_period
-      from edw_vw_my_curr_dim as a
-      where
-        (
-          cast((
-            a.cntry_key
-          ) as text) = cast((
-            cast('MY' as varchar)
-          ) as text)
-        )
-    ) as b
-  ) as veocurd, (
-    (
-      (
-        (
-          (
+    NULL AS wh_id,
+    NULL AS doc_type,
+    NULL AS doc_type_desc,
+    NULL AS bill_date,
+    NULL AS bill_doc,
+    0 AS base_sls,
+    0 AS sls_qty,
+    0 AS ret_qty,
+    NULL AS uom,
+    0 AS sls_qty_pc,
+    0 AS ret_qty_pc,
+    veoint.bill_qty_pc AS in_transit_qty,
+    0 AS mat_list_price,
+    0 AS grs_trd_sls,
+    0 AS ret_val,
+    0 AS trd_discnt,
+    0 AS trd_sls,
+    0 AS net_trd_sls,
+    0 AS jj_grs_trd_sls,
+    0 AS jj_ret_val,
+    0 AS jj_trd_sls,
+    0 AS jj_net_trd_sls,
+    (veoint.billing_gross_val * veocurd.exch_rate) AS in_transit_val,
+    0 AS trgt_val,
+    NULL AS inv_dt,
+    NULL AS warehse_cd,
+    0 AS end_stock_qty,
+    0 AS end_stock_val_raw,
+    0 AS end_stock_val,
+    NULL AS is_npi,
+    NULL AS npi_str_period,
+    NULL AS npi_end_period,
+    NULL AS is_reg,
+    NULL AS is_promo,
+    NULL AS promo_strt_period,
+    NULL AS promo_end_period,
+    NULL AS is_mcl,
+    NULL AS is_hero,
+    0 AS contribution
+FROM (
+        SELECT d.cntry_key,
+            d.cntry_nm,
+            d.rate_type,
+            d.from_ccy,
+            d.to_ccy,
+            d.valid_date,
+            d.jj_year,
+            d.start_period,
+            CASE
+                WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+                ELSE d.end_mnth_id
+            END AS end_period,
+            d.exch_rate
+        FROM (
+                SELECT a.cntry_key,
+                    a.cntry_nm,
+                    a.rate_type,
+                    a.from_ccy,
+                    a.to_ccy,
+                    a.valid_date,
+                    a.jj_year,
+                    min((a.jj_mnth_id)::text) AS start_period,
+                    "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+                    a.exch_rate
+                FROM EDW_VW_my_CURR_DIM a
+                WHERE (
+                        (a.cntry_key)::text = ('MY'::character varying)::text
+                    )
+                GROUP BY a.cntry_key,
+                    a.cntry_nm,
+                    a.rate_type,
+                    a.from_ccy,
+                    a.to_ccy,
+                    a.valid_date,
+                    a.jj_year,
+                    a.exch_rate
+            ) d,
             (
-              (
-                select
-                  veotd.year,
-                  veotd.qrtr_no,
-                  veotd.mnth_id,
-                  veotd.mnth_no,
-                  veotd.mnth_nm,
-                  t1.warehse_cd,
-                  t1.dstrbtr_grp_cd,
-                  t1.dstrbtr_soldto_code,
-                  t1.bar_cd,
-                  t1.sap_matl_num,
-                  trim(cast((
-                    t1.dstrbtr_matl_num
-                  ) as text)) as dstrbtr_matl_num,
-                  t1.inv_dt,
-                  t1.soh,
-                  t1.soh_val,
-                  t1.end_stock_qty,
-                  t1.end_stock_val
-                from edw_vw_my_sellout_inventory_fact as t1, (
-                  select distinct
-                    edw_vw_os_time_dim.cal_year as year,
-                    edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                    edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                    edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                    edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                    edw_vw_os_time_dim.cal_date,
-                    edw_vw_os_time_dim.cal_date_id
-                  from edw_vw_os_time_dim
-                ) as veotd
-                where
-                  (
+                SELECT "max"((a.jj_mnth_id)::text) AS max_period
+                FROM EDW_VW_my_CURR_DIM a
+                WHERE (
+                        (a.cntry_key)::text = ('MY'::character varying)::text
+                    )
+            ) b
+    ) veocurd,
+    (
+        (
+            (
+                (
                     (
-                      cast((
-                        t1.cntry_cd
-                      ) as text) = cast((
-                        cast('MY' as varchar)
-                      ) as text)
+                        (
+                            SELECT a.bill_doc,
+                                b.bill_num,
+                                b.sold_to,
+                                b.matl_num,
+                                b.bill_qty_pc,
+                                b.billing_gross_val,
+                                veotd."year",
+                                veotd.qrtr_no,
+                                veotd.mnth_id,
+                                veotd.mnth_no,
+                                veotd.mnth_nm
+                            FROM itg_my_in_transit a,
+                                (
+                                    SELECT EDW_VW_MY_BILLING_FACT.bill_num,
+                                        EDW_VW_MY_BILLING_FACT.sold_to,
+                                        EDW_VW_MY_BILLING_FACT.matl_num,
+                                        sum(EDW_VW_MY_BILLING_FACT.bill_qty_pc) AS bill_qty_pc,
+                                        sum(
+                                            (
+                                                EDW_VW_MY_BILLING_FACT.grs_trd_sls * abs(EDW_VW_MY_BILLING_FACT.exchg_rate)
+                                            )
+                                        ) AS billing_gross_val
+                                    FROM EDW_VW_MY_BILLING_FACT
+                                    WHERE (
+                                            EDW_VW_MY_BILLING_FACT.cntry_key = ('MY'::character varying)::text
+                                        )
+                                    GROUP BY EDW_VW_MY_BILLING_FACT.bill_num,
+                                        EDW_VW_MY_BILLING_FACT.sold_to,
+                                        EDW_VW_MY_BILLING_FACT.matl_num
+                                ) b,
+                                (
+                                    SELECT edw_vw_os_time_dim.cal_year AS "year",
+                                        edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+                                        edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+                                        edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+                                        edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+                                        edw_vw_os_time_dim.cal_date
+                                    FROM edw_vw_os_time_dim
+                                    GROUP BY edw_vw_os_time_dim.cal_year,
+                                        edw_vw_os_time_dim.cal_qrtr_no,
+                                        edw_vw_os_time_dim.cal_mnth_id,
+                                        edw_vw_os_time_dim.cal_mnth_no,
+                                        edw_vw_os_time_dim.cal_mnth_nm,
+                                        edw_vw_os_time_dim.cal_date
+                                ) veotd
+                            WHERE (
+                                    (b.bill_num = (a.bill_doc)::text)
+                                    AND (a.closing_dt = veotd.cal_date)
+                                )
+                        ) veoint
+                        LEFT JOIN (
+                            SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+                                EDW_VW_my_CUSTOMER_DIM.sap_addr,
+                                EDW_VW_my_CUSTOMER_DIM.sap_region,
+                                EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_city,
+                                EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+                                EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+                                EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+                                EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+                                EDW_VW_my_CUSTOMER_DIM.retail_env,
+                                EDW_VW_my_CUSTOMER_DIM.gch_region,
+                                EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+                                EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+                                EDW_VW_my_CUSTOMER_DIM.gch_market,
+                                EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+                            FROM EDW_VW_my_CUSTOMER_DIM
+                            WHERE (
+                                    (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+                                )
+                        ) veocd ON (
+                            (
+                                ltrim(
+                                    (veocd.sap_cust_id)::text,
+                                    ('0'::character varying)::text
+                                ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
+                            )
+                        )
                     )
-                    and (
-                      
-                        veotd.cal_date
-                      = t1.inv_dt
+                    LEFT JOIN (
+                        SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+                            EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+                            EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+                            EDW_VW_my_MATERIAL_DIM.ean_num,
+                            EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+                            EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+                            EDW_VW_my_MATERIAL_DIM.gph_region,
+                            EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+                            EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+                            EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+                            EDW_VW_my_MATERIAL_DIM.launch_dt,
+                            EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+                            EDW_VW_my_MATERIAL_DIM.prft_ctr,
+                            EDW_VW_my_MATERIAL_DIM.shlf_life
+                        FROM EDW_VW_my_MATERIAL_DIM
+                        WHERE (
+                                (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+                            )
+                    ) veomd ON (
+                        (
+                            ltrim(
+                                (veomd.sap_matl_num)::text,
+                                ('0'::character varying)::text
+                            ) = ltrim(veoint.matl_num, ('0'::character varying)::text)
+                        )
                     )
-                  )
-              ) as evosif
-              left join (
-                select
-                  edw_vw_my_customer_dim.sap_cust_id,
-                  edw_vw_my_customer_dim.sap_cust_nm,
-                  edw_vw_my_customer_dim.sap_sls_org,
-                  edw_vw_my_customer_dim.sap_cmp_id,
-                  edw_vw_my_customer_dim.sap_cntry_cd,
-                  edw_vw_my_customer_dim.sap_cntry_nm,
-                  edw_vw_my_customer_dim.sap_addr,
-                  edw_vw_my_customer_dim.sap_region,
-                  edw_vw_my_customer_dim.sap_state_cd,
-                  edw_vw_my_customer_dim.sap_city,
-                  edw_vw_my_customer_dim.sap_post_cd,
-                  edw_vw_my_customer_dim.sap_chnl_cd,
-                  edw_vw_my_customer_dim.sap_chnl_desc,
-                  edw_vw_my_customer_dim.sap_sls_office_cd,
-                  edw_vw_my_customer_dim.sap_sls_office_desc,
-                  edw_vw_my_customer_dim.sap_sls_grp_cd,
-                  edw_vw_my_customer_dim.sap_sls_grp_desc,
-                  edw_vw_my_customer_dim.sap_curr_cd,
-                  edw_vw_my_customer_dim.sap_prnt_cust_key,
-                  edw_vw_my_customer_dim.sap_prnt_cust_desc,
-                  edw_vw_my_customer_dim.sap_cust_chnl_key,
-                  edw_vw_my_customer_dim.sap_cust_chnl_desc,
-                  edw_vw_my_customer_dim.sap_cust_sub_chnl_key,
-                  edw_vw_my_customer_dim.sap_sub_chnl_desc,
-                  edw_vw_my_customer_dim.sap_go_to_mdl_key,
-                  edw_vw_my_customer_dim.sap_go_to_mdl_desc,
-                  edw_vw_my_customer_dim.sap_bnr_key,
-                  edw_vw_my_customer_dim.sap_bnr_desc,
-                  edw_vw_my_customer_dim.sap_bnr_frmt_key,
-                  edw_vw_my_customer_dim.sap_bnr_frmt_desc,
-                  edw_vw_my_customer_dim.retail_env,
-                  edw_vw_my_customer_dim.gch_region,
-                  edw_vw_my_customer_dim.gch_cluster,
-                  edw_vw_my_customer_dim.gch_subcluster,
-                  edw_vw_my_customer_dim.gch_market,
-                  edw_vw_my_customer_dim.gch_retail_banner
-                from edw_vw_my_customer_dim
-                where
-                  (
-                    cast((
-                      edw_vw_my_customer_dim.sap_cntry_cd
-                    ) as text) = cast((
-                      cast('MY' as varchar)
-                    ) as text)
-                  )
-              ) as veocd
-                on (
-                  (
-                    ltrim(cast((
-                      veocd.sap_cust_id
-                    ) as text), cast((
-                      cast('0' as varchar)
-                    ) as text)) = ltrim(
-                      cast((
-                        evosif.dstrbtr_soldto_code
-                      ) as text),
-                      cast((
-                        cast('0' as varchar)
-                      ) as text)
+                )
+                LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+                    (
+                        ltrim(
+                            (imdd.cust_id)::text,
+                            ('0'::character varying)::text
+                        ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
                     )
-                  )
                 )
             )
-            left join (
-              select
-                edw_vw_my_material_dim.cntry_key,
-                edw_vw_my_material_dim.sap_matl_num,
-                edw_vw_my_material_dim.sap_mat_desc,
-                edw_vw_my_material_dim.ean_num,
-                edw_vw_my_material_dim.sap_mat_type_cd,
-                edw_vw_my_material_dim.sap_mat_type_desc,
-                edw_vw_my_material_dim.sap_base_uom_cd,
-                edw_vw_my_material_dim.sap_prchse_uom_cd,
-                edw_vw_my_material_dim.sap_prod_sgmt_cd,
-                edw_vw_my_material_dim.sap_prod_sgmt_desc,
-                edw_vw_my_material_dim.sap_base_prod_cd,
-                edw_vw_my_material_dim.sap_base_prod_desc,
-                edw_vw_my_material_dim.sap_mega_brnd_cd,
-                edw_vw_my_material_dim.sap_mega_brnd_desc,
-                edw_vw_my_material_dim.sap_brnd_cd,
-                edw_vw_my_material_dim.sap_brnd_desc,
-                edw_vw_my_material_dim.sap_vrnt_cd,
-                edw_vw_my_material_dim.sap_vrnt_desc,
-                edw_vw_my_material_dim.sap_put_up_cd,
-                edw_vw_my_material_dim.sap_put_up_desc,
-                edw_vw_my_material_dim.sap_grp_frnchse_cd,
-                edw_vw_my_material_dim.sap_grp_frnchse_desc,
-                edw_vw_my_material_dim.sap_frnchse_cd,
-                edw_vw_my_material_dim.sap_frnchse_desc,
-                edw_vw_my_material_dim.sap_prod_frnchse_cd,
-                edw_vw_my_material_dim.sap_prod_frnchse_desc,
-                edw_vw_my_material_dim.sap_prod_mjr_cd,
-                edw_vw_my_material_dim.sap_prod_mjr_desc,
-                edw_vw_my_material_dim.sap_prod_mnr_cd,
-                edw_vw_my_material_dim.sap_prod_mnr_desc,
-                edw_vw_my_material_dim.sap_prod_hier_cd,
-                edw_vw_my_material_dim.sap_prod_hier_desc,
-                edw_vw_my_material_dim.gph_region,
-                edw_vw_my_material_dim.gph_reg_frnchse,
-                edw_vw_my_material_dim.gph_reg_frnchse_grp,
-                edw_vw_my_material_dim.gph_prod_frnchse,
-                edw_vw_my_material_dim.gph_prod_brnd,
-                edw_vw_my_material_dim.gph_prod_sub_brnd,
-                edw_vw_my_material_dim.gph_prod_vrnt,
-                edw_vw_my_material_dim.gph_prod_needstate,
-                edw_vw_my_material_dim.gph_prod_ctgry,
-                edw_vw_my_material_dim.gph_prod_subctgry,
-                edw_vw_my_material_dim.gph_prod_sgmnt,
-                edw_vw_my_material_dim.gph_prod_subsgmnt,
-                edw_vw_my_material_dim.gph_prod_put_up_cd,
-                edw_vw_my_material_dim.gph_prod_put_up_desc,
-                edw_vw_my_material_dim.gph_prod_size,
-                edw_vw_my_material_dim.gph_prod_size_uom,
-                edw_vw_my_material_dim.launch_dt,
-                edw_vw_my_material_dim.qty_shipper_pc,
-                edw_vw_my_material_dim.prft_ctr,
-                edw_vw_my_material_dim.shlf_life
-              from edw_vw_my_material_dim
-              where
+            LEFT JOIN itg_my_material_dim immd ON (
                 (
-                  cast((
-                    edw_vw_my_material_dim.cntry_key
-                  ) as text) = cast((
-                    cast('MY' as varchar)
-                  ) as text)
+                    ltrim(
+                        (immd.item_cd)::text,
+                        ('0'::character varying)::text
+                    ) = ltrim(veoint.matl_num, ('0'::character varying)::text)
                 )
-            ) as veomd
-              on (
-                (
-                  ltrim(cast((
-                    veomd.sap_matl_num
-                  ) as text), cast((
-                    cast('0' as varchar)
-                  ) as text)) = ltrim(
-                    cast((
-                      coalesce(evosif.sap_matl_num, cast('' as varchar))
-                    ) as text),
-                    cast((
-                      cast('0' as varchar)
-                    ) as text)
-                  )
-                )
-              )
-          )
-          left join itg_my_dstrbtrr_dim as imdd
-            on (
-              (
-                ltrim(cast((
-                  imdd.cust_id
-                ) as text), cast((
-                  cast('0' as varchar)
-                ) as text)) = ltrim(
-                  cast((
-                    evosif.dstrbtr_soldto_code
-                  ) as text),
-                  cast((
-                    cast('0' as varchar)
-                  ) as text)
-                )
-              )
             )
         )
-        left join itg_my_material_dim as immd
-          on (
+        LEFT JOIN itg_my_customer_dim imcd ON (
             (
-              ltrim(cast((
-                immd.item_cd
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text)) = ltrim(cast((
-                evosif.sap_matl_num
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text))
+                ltrim(
+                    (imcd.cust_id)::text,
+                    ('0'::character varying)::text
+                ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
             )
-          )
-      )
-      left join itg_my_customer_dim as imcd
-        on (
-          (
-            trim(cast((
-              imcd.cust_id
-            ) as text)) = trim(cast((
-              evosif.dstrbtr_soldto_code
-            ) as text))
-          )
         )
     )
-    left join (
-      select
-        edw_vw_my_listprice.cntry_key,
-        edw_vw_my_listprice.cntry_nm,
-        edw_vw_my_listprice.plant,
-        edw_vw_my_listprice.cnty,
-        edw_vw_my_listprice.item_cd,
-        edw_vw_my_listprice.item_desc,
-        edw_vw_my_listprice.valid_from,
-        edw_vw_my_listprice.valid_to,
-        edw_vw_my_listprice.rate,
-        edw_vw_my_listprice.currency,
-        edw_vw_my_listprice.price_unit,
-        edw_vw_my_listprice.uom,
-        edw_vw_my_listprice.yearmo,
-        edw_vw_my_listprice.mnth_type,
-        edw_vw_my_listprice.snapshot_dt
-      from edw_vw_my_listprice
-      where
+WHERE (
         (
-          (
-            cast((
-              edw_vw_my_listprice.cntry_key
-            ) as text) = cast((
-              cast('MY' as varchar)
-            ) as text)
-          )
-          and (
-            cast((
-              edw_vw_my_listprice.mnth_type
-            ) as text) = cast((
-              cast('CAL' as varchar)
-            ) as text)
-          )
+            ((veoint.mnth_id)::character varying)::text >= veocurd.start_period
         )
-    ) as lp
-      on (
-        (
-          (
-            ltrim(cast((
-              lp.item_cd
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text)) = ltrim(cast((
-              evosif.sap_matl_num
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text))
-          )
-          and (
-            cast((
-              lp.yearmo
-            ) as text) = cast((
-              cast((
-                evosif.mnth_id
-              ) as varchar)
-            ) as text)
-          )
+        AND (
+            ((veoint.mnth_id)::character varying)::text <= veocurd.end_period
         )
-      )
-  )
-  where
-    (
-      (
-        cast((
-          cast((
-            evosif.mnth_id
-          ) as varchar)
-        ) as text) >= veocurd.start_period
-      )
-      and (
-        cast((
-          cast((
-            evosif.mnth_id
-          ) as varchar)
-        ) as text) <= veocurd.end_period
-      )
     )
+),
+final as (
+    select * from gt_sellout
+    union all
+    select * from target
+    union all
+    select * from gt_inventory
+    union all
+    select * from in_transit
 )
-union all
-select
-  'IN Transit' as data_src,
-  veoint.year,
-  veoint.qrtr_no,
-  veoint.mnth_id,
-  veoint.mnth_no,
-  veoint.mnth_nm,
-  null as max_yearmo,
-  'Malaysia' as cntry_nm,
-  imcd.dstrbtr_grp_cd,
-  imcd.dstrbtr_grp_nm,
-  null as dstrbtr_cust_cd,
-  null as dstrbtr_cust_nm,
-  cast((
-    ltrim(cast((
-      imdd.cust_id
-    ) as text), cast((
-      cast('0' as varchar)
-    ) as text))
-  ) as varchar) as sap_soldto_code,
-  imdd.cust_nm as sap_soldto_nm,
-  imdd.lvl1 as dstrbtr_lvl1,
-  imdd.lvl2 as dstrbtr_lvl2,
-  imdd.lvl3 as dstrbtr_lvl3,
-  imdd.lvl4 as dstrbtr_lvl4,
-  imdd.lvl5 as dstrbtr_lvl5,
-  imdd.region as region_nm,
-  null as town_nm,
-  null as slsmn_cd,
-  null as chnl_desc,
-  null as sub_chnl_desc,
-  null as chnl_attr1_desc,
-  null as chnl_attr2_desc,
-  veocd.sap_state_cd,
-  veocd.sap_sls_org,
-  veocd.sap_cmp_id,
-  veocd.sap_cntry_cd,
-  veocd.sap_cntry_nm,
-  veocd.sap_addr,
-  veocd.sap_region,
-  veocd.sap_city,
-  veocd.sap_post_cd,
-  veocd.sap_chnl_cd,
-  veocd.sap_chnl_desc,
-  veocd.sap_sls_office_cd,
-  veocd.sap_sls_office_desc,
-  veocd.sap_sls_grp_cd,
-  veocd.sap_sls_grp_desc,
-  veocd.sap_curr_cd,
-  veocd.gch_region,
-  veocd.gch_cluster,
-  veocd.gch_subcluster,
-  veocd.gch_market,
-  veocd.gch_retail_banner,
-  null as dstrbtr_matl_num,
-  null as bar_cd,
-  cast((
-    ltrim(cast((
-      veomd.sap_matl_num
-    ) as text), cast((
-      cast('0' as varchar)
-    ) as text))
-  ) as varchar) as sku,
-  immd.frnchse_desc,
-  immd.brnd_desc,
-  immd.vrnt_desc,
-  immd.putup_desc,
-  immd.item_desc2,
-  veomd.sap_mat_desc as sku_desc,
-  veomd.sap_mat_type_cd,
-  veomd.sap_mat_type_desc,
-  veomd.sap_base_uom_cd,
-  veomd.sap_prchse_uom_cd,
-  veomd.sap_prod_sgmt_cd,
-  veomd.sap_prod_sgmt_desc,
-  veomd.sap_base_prod_cd,
-  veomd.sap_base_prod_desc,
-  veomd.sap_mega_brnd_cd,
-  veomd.sap_mega_brnd_desc,
-  veomd.sap_brnd_cd,
-  veomd.sap_brnd_desc,
-  veomd.sap_vrnt_cd,
-  veomd.sap_vrnt_desc,
-  veomd.sap_put_up_cd,
-  veomd.sap_put_up_desc,
-  veomd.sap_grp_frnchse_cd,
-  veomd.sap_grp_frnchse_desc,
-  veomd.sap_frnchse_cd,
-  veomd.sap_frnchse_desc,
-  veomd.sap_prod_frnchse_cd,
-  veomd.sap_prod_frnchse_desc,
-  veomd.sap_prod_mjr_cd,
-  veomd.sap_prod_mjr_desc,
-  veomd.sap_prod_mnr_cd,
-  veomd.sap_prod_mnr_desc,
-  veomd.sap_prod_hier_cd,
-  veomd.sap_prod_hier_desc,
-  veomd.gph_region as global_mat_region,
-  veomd.gph_prod_frnchse as global_prod_franchise,
-  veomd.gph_prod_brnd as global_prod_brand,
-  veomd.gph_prod_vrnt as global_prod_variant,
-  veomd.gph_prod_put_up_cd as global_prod_put_up_cd,
-  veomd.gph_prod_put_up_desc as global_put_up_desc,
-  veomd.gph_prod_sub_brnd as global_prod_sub_brand,
-  veomd.gph_prod_needstate as global_prod_need_state,
-  veomd.gph_prod_ctgry as global_prod_category,
-  veomd.gph_prod_subctgry as global_prod_subcategory,
-  veomd.gph_prod_sgmnt as global_prod_segment,
-  veomd.gph_prod_subsgmnt as global_prod_subsegment,
-  veomd.gph_prod_size as global_prod_size,
-  veomd.gph_prod_size_uom as global_prod_size_uom,
-  veocurd.from_ccy,
-  veocurd.to_ccy,
-  veocurd.exch_rate,
-  null as wh_id,
-  null as doc_type,
-  null as doc_type_desc,
-  null as bill_date,
-  null as bill_doc,
-  0 as base_sls,
-  0 as sls_qty,
-  0 as ret_qty,
-  null as uom,
-  0 as sls_qty_pc,
-  0 as ret_qty_pc,
-  veoint.bill_qty_pc as in_transit_qty,
-  0 as mat_list_price,
-  0 as grs_trd_sls,
-  0 as ret_val,
-  0 as trd_discnt,
-  0 as trd_sls,
-  0 as net_trd_sls,
-  0 as jj_grs_trd_sls,
-  0 as jj_ret_val,
-  0 as jj_trd_sls,
-  0 as jj_net_trd_sls,
-  (
-    veoint.billing_gross_val * veocurd.exch_rate
-  ) as in_transit_val,
-  0 as trgt_val,
-  null as inv_dt,
-  null as warehse_cd,
-  0 as end_stock_qty,
-  0 as end_stock_val_raw,
-  0 as end_stock_val,
-  null as is_npi,
-  null as npi_str_period,
-  null as npi_end_period,
-  null as is_reg,
-  null as is_promo,
-  null as promo_strt_period,
-  null as promo_end_period,
-  null as is_mcl,
-  null as is_hero,
-  0 as contribution
-from (
-  select
-    d.cntry_key,
-    d.cntry_nm,
-    d.rate_type,
-    d.from_ccy,
-    d.to_ccy,
-    d.valid_date,
-    d.jj_year,
-    d.start_period,
-    case
-      when (
-        d.end_mnth_id = b.max_period
-      )
-      then cast((
-        cast('209912' as varchar)
-      ) as text)
-      else d.end_mnth_id
-    end as end_period,
-    d.exch_rate
-  from (
-    select
-      a.cntry_key,
-      a.cntry_nm,
-      a.rate_type,
-      a.from_ccy,
-      a.to_ccy,
-      a.valid_date,
-      a.jj_year,
-      min(cast((
-        a.jj_mnth_id
-      ) as text)) as start_period,
-      max(cast((
-        a.jj_mnth_id
-      ) as text)) as end_mnth_id,
-      a.exch_rate
-    from edw_vw_my_curr_dim as a
-    where
-      (
-        cast((
-          a.cntry_key
-        ) as text) = cast((
-          cast('MY' as varchar)
-        ) as text)
-      )
-    group by
-      a.cntry_key,
-      a.cntry_nm,
-      a.rate_type,
-      a.from_ccy,
-      a.to_ccy,
-      a.valid_date,
-      a.jj_year,
-      a.exch_rate
-  ) as d, (
-    select
-      max(cast((
-        a.jj_mnth_id
-      ) as text)) as max_period
-    from edw_vw_my_curr_dim as a
-    where
-      (
-        cast((
-          a.cntry_key
-        ) as text) = cast((
-          cast('MY' as varchar)
-        ) as text)
-      )
-  ) as b
-) as veocurd, (
-  (
-    (
-      (
-        (
-          (
-            select
-              a.bill_doc,
-              b.bill_num,
-              b.sold_to,
-              b.matl_num,
-              b.bill_qty_pc,
-              b.billing_gross_val,
-              veotd.year,
-              veotd.qrtr_no,
-              veotd.mnth_id,
-              veotd.mnth_no,
-              veotd.mnth_nm
-            from itg_my_in_transit as a, (
-              select
-                edw_vw_my_billing_fact.bill_num,
-                edw_vw_my_billing_fact.sold_to,
-                edw_vw_my_billing_fact.matl_num,
-                sum(edw_vw_my_billing_fact.bill_qty_pc) as bill_qty_pc,
-                sum(
-                  (
-                    edw_vw_my_billing_fact.grs_trd_sls * ABS(edw_vw_my_billing_fact.exchg_rate)
-                  )
-                ) as billing_gross_val
-              from edw_vw_my_billing_fact
-              where
-                (
-                  edw_vw_my_billing_fact.cntry_key = cast((
-                    cast('MY' as varchar)
-                  ) as text)
-                )
-              group by
-                edw_vw_my_billing_fact.bill_num,
-                edw_vw_my_billing_fact.sold_to,
-                edw_vw_my_billing_fact.matl_num
-            ) as b, (
-              select
-                edw_vw_os_time_dim.cal_year as year,
-                edw_vw_os_time_dim.cal_qrtr_no as qrtr_no,
-                edw_vw_os_time_dim.cal_mnth_id as mnth_id,
-                edw_vw_os_time_dim.cal_mnth_no as mnth_no,
-                edw_vw_os_time_dim.cal_mnth_nm as mnth_nm,
-                edw_vw_os_time_dim.cal_date
-              from edw_vw_os_time_dim
-              group by
-                edw_vw_os_time_dim.cal_year,
-                edw_vw_os_time_dim.cal_qrtr_no,
-                edw_vw_os_time_dim.cal_mnth_id,
-                edw_vw_os_time_dim.cal_mnth_no,
-                edw_vw_os_time_dim.cal_mnth_nm,
-                edw_vw_os_time_dim.cal_date
-            ) as veotd
-            where
-              (
-                (
-                  b.bill_num = cast((
-                    a.bill_doc
-                  ) as text)
-                )
-                and (
-                  a.closing_dt = veotd.cal_date
-                )
-              )
-          ) as veoint
-          left join (
-            select
-              edw_vw_my_customer_dim.sap_cust_id,
-              edw_vw_my_customer_dim.sap_cust_nm,
-              edw_vw_my_customer_dim.sap_sls_org,
-              edw_vw_my_customer_dim.sap_cmp_id,
-              edw_vw_my_customer_dim.sap_cntry_cd,
-              edw_vw_my_customer_dim.sap_cntry_nm,
-              edw_vw_my_customer_dim.sap_addr,
-              edw_vw_my_customer_dim.sap_region,
-              edw_vw_my_customer_dim.sap_state_cd,
-              edw_vw_my_customer_dim.sap_city,
-              edw_vw_my_customer_dim.sap_post_cd,
-              edw_vw_my_customer_dim.sap_chnl_cd,
-              edw_vw_my_customer_dim.sap_chnl_desc,
-              edw_vw_my_customer_dim.sap_sls_office_cd,
-              edw_vw_my_customer_dim.sap_sls_office_desc,
-              edw_vw_my_customer_dim.sap_sls_grp_cd,
-              edw_vw_my_customer_dim.sap_sls_grp_desc,
-              edw_vw_my_customer_dim.sap_curr_cd,
-              edw_vw_my_customer_dim.sap_prnt_cust_key,
-              edw_vw_my_customer_dim.sap_prnt_cust_desc,
-              edw_vw_my_customer_dim.sap_cust_chnl_key,
-              edw_vw_my_customer_dim.sap_cust_chnl_desc,
-              edw_vw_my_customer_dim.sap_cust_sub_chnl_key,
-              edw_vw_my_customer_dim.sap_sub_chnl_desc,
-              edw_vw_my_customer_dim.sap_go_to_mdl_key,
-              edw_vw_my_customer_dim.sap_go_to_mdl_desc,
-              edw_vw_my_customer_dim.sap_bnr_key,
-              edw_vw_my_customer_dim.sap_bnr_desc,
-              edw_vw_my_customer_dim.sap_bnr_frmt_key,
-              edw_vw_my_customer_dim.sap_bnr_frmt_desc,
-              edw_vw_my_customer_dim.retail_env,
-              edw_vw_my_customer_dim.gch_region,
-              edw_vw_my_customer_dim.gch_cluster,
-              edw_vw_my_customer_dim.gch_subcluster,
-              edw_vw_my_customer_dim.gch_market,
-              edw_vw_my_customer_dim.gch_retail_banner
-            from edw_vw_my_customer_dim
-            where
-              (
-                cast((
-                  edw_vw_my_customer_dim.sap_cntry_cd
-                ) as text) = cast((
-                  cast('MY' as varchar)
-                ) as text)
-              )
-          ) as veocd
-            on (
-              (
-                ltrim(cast((
-                  veocd.sap_cust_id
-                ) as text), cast((
-                  cast('0' as varchar)
-                ) as text)) = ltrim(veoint.sold_to, cast((
-                  cast('0' as varchar)
-                ) as text))
-              )
-            )
-        )
-        left join (
-          select
-            edw_vw_my_material_dim.cntry_key,
-            edw_vw_my_material_dim.sap_matl_num,
-            edw_vw_my_material_dim.sap_mat_desc,
-            edw_vw_my_material_dim.ean_num,
-            edw_vw_my_material_dim.sap_mat_type_cd,
-            edw_vw_my_material_dim.sap_mat_type_desc,
-            edw_vw_my_material_dim.sap_base_uom_cd,
-            edw_vw_my_material_dim.sap_prchse_uom_cd,
-            edw_vw_my_material_dim.sap_prod_sgmt_cd,
-            edw_vw_my_material_dim.sap_prod_sgmt_desc,
-            edw_vw_my_material_dim.sap_base_prod_cd,
-            edw_vw_my_material_dim.sap_base_prod_desc,
-            edw_vw_my_material_dim.sap_mega_brnd_cd,
-            edw_vw_my_material_dim.sap_mega_brnd_desc,
-            edw_vw_my_material_dim.sap_brnd_cd,
-            edw_vw_my_material_dim.sap_brnd_desc,
-            edw_vw_my_material_dim.sap_vrnt_cd,
-            edw_vw_my_material_dim.sap_vrnt_desc,
-            edw_vw_my_material_dim.sap_put_up_cd,
-            edw_vw_my_material_dim.sap_put_up_desc,
-            edw_vw_my_material_dim.sap_grp_frnchse_cd,
-            edw_vw_my_material_dim.sap_grp_frnchse_desc,
-            edw_vw_my_material_dim.sap_frnchse_cd,
-            edw_vw_my_material_dim.sap_frnchse_desc,
-            edw_vw_my_material_dim.sap_prod_frnchse_cd,
-            edw_vw_my_material_dim.sap_prod_frnchse_desc,
-            edw_vw_my_material_dim.sap_prod_mjr_cd,
-            edw_vw_my_material_dim.sap_prod_mjr_desc,
-            edw_vw_my_material_dim.sap_prod_mnr_cd,
-            edw_vw_my_material_dim.sap_prod_mnr_desc,
-            edw_vw_my_material_dim.sap_prod_hier_cd,
-            edw_vw_my_material_dim.sap_prod_hier_desc,
-            edw_vw_my_material_dim.gph_region,
-            edw_vw_my_material_dim.gph_reg_frnchse,
-            edw_vw_my_material_dim.gph_reg_frnchse_grp,
-            edw_vw_my_material_dim.gph_prod_frnchse,
-            edw_vw_my_material_dim.gph_prod_brnd,
-            edw_vw_my_material_dim.gph_prod_sub_brnd,
-            edw_vw_my_material_dim.gph_prod_vrnt,
-            edw_vw_my_material_dim.gph_prod_needstate,
-            edw_vw_my_material_dim.gph_prod_ctgry,
-            edw_vw_my_material_dim.gph_prod_subctgry,
-            edw_vw_my_material_dim.gph_prod_sgmnt,
-            edw_vw_my_material_dim.gph_prod_subsgmnt,
-            edw_vw_my_material_dim.gph_prod_put_up_cd,
-            edw_vw_my_material_dim.gph_prod_put_up_desc,
-            edw_vw_my_material_dim.gph_prod_size,
-            edw_vw_my_material_dim.gph_prod_size_uom,
-            edw_vw_my_material_dim.launch_dt,
-            edw_vw_my_material_dim.qty_shipper_pc,
-            edw_vw_my_material_dim.prft_ctr,
-            edw_vw_my_material_dim.shlf_life
-          from edw_vw_my_material_dim
-          where
-            (
-              cast((
-                edw_vw_my_material_dim.cntry_key
-              ) as text) = cast((
-                cast('MY' as varchar)
-              ) as text)
-            )
-        ) as veomd
-          on (
-            (
-              ltrim(cast((
-                veomd.sap_matl_num
-              ) as text), cast((
-                cast('0' as varchar)
-              ) as text)) = ltrim(veoint.matl_num, cast((
-                cast('0' as varchar)
-              ) as text))
-            )
-          )
-      )
-      left join itg_my_dstrbtrr_dim as imdd
-        on (
-          (
-            ltrim(cast((
-              imdd.cust_id
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text)) = ltrim(veoint.sold_to, cast((
-              cast('0' as varchar)
-            ) as text))
-          )
-        )
-    )
-    left join itg_my_material_dim as immd
-      on (
-        (
-          ltrim(cast((
-            immd.item_cd
-          ) as text), cast((
-            cast('0' as varchar)
-          ) as text)) = ltrim(veoint.matl_num, cast((
-            cast('0' as varchar)
-          ) as text))
-        )
-      )
-  )
-  left join itg_my_customer_dim as imcd
-    on (
-      (
-        ltrim(cast((
-          imcd.cust_id
-        ) as text), cast((
-          cast('0' as varchar)
-        ) as text)) = ltrim(veoint.sold_to, cast((
-          cast('0' as varchar)
-        ) as text))
-      )
-    )
-)
-where
-  (
-    (
-      cast((
-        cast((
-          veoint.mnth_id
-        ) as varchar)
-      ) as text) >= veocurd.start_period
-    )
-    and (
-      cast((
-        cast((
-          veoint.mnth_id
-        ) as varchar)
-      ) as text) <= veocurd.end_period
-    )
-  )
-)
+-- final as (
+--     (
+--     (
+--         SELECT 'GT Sellout' AS data_src,
+--             veosf."year",
+--             veosf.qrtr_no,
+--             veosf.mnth_id,
+--             veosf.mnth_no,
+--             veosf.mnth_nm,
+--             (
+--                 "substring"(
+--                     "replace"(
+--                         ((ym.bill_date)::character varying)::text,
+--                         ('-'::character varying)::text,
+--                         (''::character varying)::text
+--                     ),
+--                     0,
+--                     5
+--                 )
+--             )::character varying AS max_yearmo,
+--             'Malaysia' AS cntry_nm,
+--             veosf.dstrbtr_grp_cd,
+--             imcd.dstrbtr_grp_nm,
+--             veosf.cust_cd AS dstrbtr_cust_cd,
+--             veosf.cust_nm AS dstrbtr_cust_nm,
+--             (
+--                 ltrim(
+--                     (imdd.cust_id)::text,
+--                     ('0'::character varying)::text
+--                 )
+--             )::character varying AS sap_soldto_code,
+--             imdd.cust_nm AS sap_soldto_nm,
+--             imdd.lvl1 AS dstrbtr_lvl1,
+--             imdd.lvl2 AS dstrbtr_lvl2,
+--             imdd.lvl3 AS dstrbtr_lvl3,
+--             imdd.lvl4 AS dstrbtr_lvl4,
+--             imdd.lvl5 AS dstrbtr_lvl5,
+--             veosf.region_nm,
+--             veosf.town_nm,
+--             veosf.slsmn_cd,
+--             veosf.chnl_desc,
+--             veosf.sub_chnl_desc,
+--             veosf.chnl_attr1_desc,
+--             veosf.chnl_attr2_desc,
+--             veocd.sap_state_cd,
+--             veocd.sap_sls_org,
+--             veocd.sap_cmp_id,
+--             veocd.sap_cntry_cd,
+--             veocd.sap_cntry_nm,
+--             veocd.sap_addr,
+--             veocd.sap_region,
+--             veocd.sap_city,
+--             veocd.sap_post_cd,
+--             veocd.sap_chnl_cd,
+--             veocd.sap_chnl_desc,
+--             veocd.sap_sls_office_cd,
+--             veocd.sap_sls_office_desc,
+--             veocd.sap_sls_grp_cd,
+--             veocd.sap_sls_grp_desc,
+--             veocd.sap_curr_cd,
+--             veocd.gch_region,
+--             veocd.gch_cluster,
+--             veocd.gch_subcluster,
+--             veocd.gch_market,
+--             veocd.gch_retail_banner,
+--             veosf.dstrbtr_matl_num,
+--             veosf.bar_cd,
+--             (
+--                 ltrim(
+--                     (veomd.sap_matl_num)::text,
+--                     ('0'::character varying)::text
+--                 )
+--             )::character varying AS sku,
+--             immd.frnchse_desc,
+--             immd.brnd_desc,
+--             immd.vrnt_desc,
+--             immd.putup_desc,
+--             immd.item_desc2,
+--             veomd.sap_mat_desc AS sku_desc,
+--             veomd.sap_mat_type_cd,
+--             veomd.sap_mat_type_desc,
+--             veomd.sap_base_uom_cd,
+--             veomd.sap_prchse_uom_cd,
+--             veomd.sap_prod_sgmt_cd,
+--             veomd.sap_prod_sgmt_desc,
+--             veomd.sap_base_prod_cd,
+--             veomd.sap_base_prod_desc,
+--             veomd.sap_mega_brnd_cd,
+--             veomd.sap_mega_brnd_desc,
+--             veomd.sap_brnd_cd,
+--             veomd.sap_brnd_desc,
+--             veomd.sap_vrnt_cd,
+--             veomd.sap_vrnt_desc,
+--             veomd.sap_put_up_cd,
+--             veomd.sap_put_up_desc,
+--             veomd.sap_grp_frnchse_cd,
+--             veomd.sap_grp_frnchse_desc,
+--             veomd.sap_frnchse_cd,
+--             veomd.sap_frnchse_desc,
+--             veomd.sap_prod_frnchse_cd,
+--             veomd.sap_prod_frnchse_desc,
+--             veomd.sap_prod_mjr_cd,
+--             veomd.sap_prod_mjr_desc,
+--             veomd.sap_prod_mnr_cd,
+--             veomd.sap_prod_mnr_desc,
+--             veomd.sap_prod_hier_cd,
+--             veomd.sap_prod_hier_desc,
+--             veomd.gph_region AS global_mat_region,
+--             veomd.gph_prod_frnchse AS global_prod_franchise,
+--             veomd.gph_prod_brnd AS global_prod_brand,
+--             veomd.gph_prod_vrnt AS global_prod_variant,
+--             veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+--             veomd.gph_prod_put_up_desc AS global_put_up_desc,
+--             veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+--             veomd.gph_prod_needstate AS global_prod_need_state,
+--             veomd.gph_prod_ctgry AS global_prod_category,
+--             veomd.gph_prod_subctgry AS global_prod_subcategory,
+--             veomd.gph_prod_sgmnt AS global_prod_segment,
+--             veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+--             veomd.gph_prod_size AS global_prod_size,
+--             veomd.gph_prod_size_uom AS global_prod_size_uom,
+--             veocurd.from_ccy,
+--             veocurd.to_ccy,
+--             veocurd.exch_rate,
+--             veosf.wh_id,
+--             veosf.doc_type,
+--             veosf.doc_type_desc,
+--             veosf.bill_date,
+--             veosf.bill_doc,
+--             (veosf.base_sls * veocurd.exch_rate) AS base_sls,
+--             veosf.sls_qty,
+--             veosf.ret_qty,
+--             veosf.uom,
+--             veosf.sls_qty_pc,
+--             veosf.ret_qty_pc,
+--             0 AS in_transit_qty,
+--             lp.rate AS mat_list_price,
+--             (veosf.grs_trd_sls * veocurd.exch_rate) AS grs_trd_sls,
+--             (veosf.ret_val * veocurd.exch_rate) AS ret_val,
+--             (veosf.trd_discnt * veocurd.exch_rate) AS trd_discnt,
+--             (veosf.trd_sls * veocurd.exch_rate) AS trd_sls,
+--             (veosf.net_trd_sls * veocurd.exch_rate) AS net_trd_sls,
+--             (veosf.jj_grs_trd_sls * veocurd.exch_rate) AS jj_grs_trd_sls,
+--             (veosf.jj_ret_val * veocurd.exch_rate) AS jj_ret_val,
+--             (veosf.jj_trd_sls * veocurd.exch_rate) AS jj_trd_sls,
+--             (veosf.jj_net_trd_sls * veocurd.exch_rate) AS jj_net_trd_sls,
+--             0 AS in_transit_val,
+--             0 AS trgt_val,
+--             NULL AS inv_dt,
+--             NULL AS warehse_cd,
+--             0 AS end_stock_qty,
+--             0 AS end_stock_val_raw,
+--             0 AS end_stock_val,
+--             immd.npi_ind AS is_npi,
+--             immd.npi_strt_period AS npi_str_period,
+--             NULL AS npi_end_period,
+--             NULL AS is_reg,
+--             immd.promo_reg_ind AS is_promo,
+--             NULL AS promo_strt_period,
+--             NULL AS promo_end_period,
+--             NULL AS is_mcl,
+--             immd.hero_ind AS is_hero,
+--             (veosf.contribution * veocurd.exch_rate) AS contribution
+--         FROM (
+--                 SELECT "max"(EDW_VW_MY_SELLOUT_SALES_FACT.bill_date) AS bill_date
+--                 FROM EDW_VW_MY_SELLOUT_SALES_FACT
+--                 WHERE (
+--                         (EDW_VW_MY_SELLOUT_SALES_FACT.cntry_cd)::text = ('MY'::character varying)::text
+--                     )
+--             ) ym,
+--             (
+--                 SELECT d.cntry_key,
+--                     d.cntry_nm,
+--                     d.rate_type,
+--                     d.from_ccy,
+--                     d.to_ccy,
+--                     d.valid_date,
+--                     d.jj_year,
+--                     d.start_period,
+--                     CASE
+--                         WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+--                         ELSE d.end_mnth_id
+--                     END AS end_period,
+--                     d.exch_rate
+--                 FROM (
+--                         SELECT a.cntry_key,
+--                             a.cntry_nm,
+--                             a.rate_type,
+--                             a.from_ccy,
+--                             a.to_ccy,
+--                             a.valid_date,
+--                             a.jj_year,
+--                             min((a.jj_mnth_id)::text) AS start_period,
+--                             "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+--                             a.exch_rate
+--                         FROM EDW_VW_my_CURR_DIM a
+--                         WHERE (
+--                                 (a.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                         GROUP BY a.cntry_key,
+--                             a.cntry_nm,
+--                             a.rate_type,
+--                             a.from_ccy,
+--                             a.to_ccy,
+--                             a.valid_date,
+--                             a.jj_year,
+--                             a.exch_rate
+--                     ) d,
+--                     (
+--                         SELECT "max"((a.jj_mnth_id)::text) AS max_period
+--                         FROM EDW_VW_my_CURR_DIM a
+--                         WHERE (
+--                                 (a.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                     ) b
+--             ) veocurd,
+--             (
+--                 (
+--                     (
+--                         (
+--                             (
+--                                 (
+--                                     (
+--                                         SELECT a."year",
+--                                             a.qrtr_no,
+--                                             a.mnth_id,
+--                                             a.mnth_no,
+--                                             a.mnth_nm,
+--                                             a.dstrbtr_grp_cd,
+--                                             a.dstrbtr_soldto_code,
+--                                             a.cust_cd,
+--                                             a.slsmn_cd,
+--                                             a.cust_nm,
+--                                             a.sap_soldto_code,
+--                                             a.sap_matl_num,
+--                                             (upper(TRIM((a.dstrbtr_matl_num)::text)))::character varying AS dstrbtr_matl_num,
+--                                             a.bar_cd,
+--                                             a.region_nm,
+--                                             a.town_nm,
+--                                             a.chnl_desc,
+--                                             a.sub_chnl_desc,
+--                                             a.chnl_attr1_desc,
+--                                             a.chnl_attr2_desc,
+--                                             a.wh_id,
+--                                             a.doc_type,
+--                                             a.doc_type_desc,
+--                                             a.base_sls,
+--                                             a.bill_date,
+--                                             a.bill_doc,
+--                                             a.sls_qty,
+--                                             a.ret_qty,
+--                                             a.uom,
+--                                             a.sls_qty_pc,
+--                                             a.ret_qty_pc,
+--                                             a.grs_trd_sls,
+--                                             a.ret_val,
+--                                             a.trd_discnt,
+--                                             a.trd_sls,
+--                                             a.net_trd_sls,
+--                                             a.jj_grs_trd_sls,
+--                                             a.jj_ret_val,
+--                                             a.jj_trd_sls,
+--                                             a.jj_net_trd_sls,
+--                                             0 AS contribution
+--                                         FROM (
+--                                                 SELECT veotd."year",
+--                                                     veotd.qrtr_no,
+--                                                     veotd.mnth_id,
+--                                                     veotd.mnth_no,
+--                                                     veotd.mnth_nm,
+--                                                     t1.dstrbtr_grp_cd,
+--                                                     t1.dstrbtr_soldto_code,
+--                                                     t1.cust_cd,
+--                                                     t1.slsmn_cd,
+--                                                     t1.bill_date,
+--                                                     t1.bill_doc,
+--                                                     evodcd.cust_nm,
+--                                                     evodcd.sap_soldto_code,
+--                                                     t1.sap_matl_num,
+--                                                     t1.dstrbtr_matl_num,
+--                                                     t1.bar_cd,
+--                                                     evodcd.region_nm,
+--                                                     evodcd.town_nm,
+--                                                     evodcd.chnl_desc,
+--                                                     evodcd.sub_chnl_desc,
+--                                                     evodcd.chnl_attr1_desc,
+--                                                     evodcd.chnl_attr2_desc,
+--                                                     t1.wh_id,
+--                                                     t1.doc_type,
+--                                                     t1.doc_type_desc,
+--                                                     t1.base_sls,
+--                                                     t1.sls_qty,
+--                                                     t1.ret_qty,
+--                                                     t1.uom,
+--                                                     t1.sls_qty_pc,
+--                                                     t1.ret_qty_pc,
+--                                                     t1.grs_trd_sls,
+--                                                     t1.ret_val,
+--                                                     t1.trd_discnt,
+--                                                     t1.trd_sls,
+--                                                     t1.net_trd_sls,
+--                                                     t1.jj_grs_trd_sls,
+--                                                     t1.jj_ret_val,
+--                                                     t1.jj_trd_sls,
+--                                                     t1.jj_net_trd_sls
+--                                                 FROM (
+--                                                         SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+--                                                             edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                                             edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                                             edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                                             edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                                             edw_vw_os_time_dim.cal_date,
+--                                                             edw_vw_os_time_dim.cal_date_id
+--                                                         FROM edw_vw_os_time_dim
+--                                                     ) veotd,
+--                                                     (
+--                                                         EDW_VW_MY_SELLOUT_SALES_FACT t1
+--                                                         LEFT JOIN (
+--                                                             SELECT EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_grp_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_soldto_code,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sap_soldto_code,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.addr,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_nm,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_cd,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_desc,
+--                                                                 EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.status
+--                                                             FROM EDW_VW_MY_DSTRBTR_CUSTOMER_DIM
+--                                                             WHERE (
+--                                                                     (EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd)::text = ('MY'::character varying)::text
+--                                                                 )
+--                                                         ) evodcd ON (
+--                                                             (
+--                                                                 (
+--                                                                     (
+--                                                                         ltrim(
+--                                                                             (evodcd.cust_cd)::text,
+--                                                                             ('0'::character varying)::text
+--                                                                         ) = ltrim(
+--                                                                             (t1.cust_cd)::text,
+--                                                                             ('0'::character varying)::text
+--                                                                         )
+--                                                                     )
+--                                                                     AND (
+--                                                                         ltrim(
+--                                                                             (evodcd.dstrbtr_grp_cd)::text,
+--                                                                             ('0'::character varying)::text
+--                                                                         ) = ltrim(
+--                                                                             (t1.dstrbtr_grp_cd)::text,
+--                                                                             ('0'::character varying)::text
+--                                                                         )
+--                                                                     )
+--                                                                 )
+--                                                                 AND (
+--                                                                     ltrim(
+--                                                                         (evodcd.sap_soldto_code)::text,
+--                                                                         ('0'::character varying)::text
+--                                                                     ) = ltrim(
+--                                                                         (t1.dstrbtr_soldto_code)::text,
+--                                                                         ('0'::character varying)::text
+--                                                                     )
+--                                                                 )
+--                                                             )
+--                                                         )
+--                                                     )
+--                                                 WHERE (
+--                                                         (
+--                                                             (
+--                                                                 to_date((veotd.cal_date)::timestamp without time zone) = to_date(t1.bill_date)
+--                                                             )
+--                                                             AND (
+--                                                                 (t1.cntry_cd)::text = ('MY'::character varying)::text
+--                                                             )
+--                                                         )
+--                                                         AND (
+--                                                             NOT (
+--                                                                 (
+--                                                                     COALESCE(
+--                                                                         ltrim(
+--                                                                             (t1.dstrbtr_soldto_code)::text,
+--                                                                             ('0'::character varying)::text
+--                                                                         ),
+--                                                                         ('0'::character varying)::text
+--                                                                     ) || COALESCE(
+--                                                                         TRIM((t1.cust_cd)::text),
+--                                                                         ('0'::character varying)::text
+--                                                                     )
+--                                                                 ) IN (
+--                                                                     SELECT DISTINCT (
+--                                                                             (
+--                                                                                 COALESCE(
+--                                                                                     itg_my_gt_outlet_exclusion.dstrbtr_cd,
+--                                                                                     '0'::character varying
+--                                                                                 )
+--                                                                             )::text || (
+--                                                                                 COALESCE(
+--                                                                                     itg_my_gt_outlet_exclusion.outlet_cd,
+--                                                                                     '0'::character varying
+--                                                                                 )
+--                                                                             )::text
+--                                                                         )
+--                                                                     FROM itg_my_gt_outlet_exclusion
+--                                                                 )
+--                                                             )
+--                                                         )
+--                                                     )
+--                                             ) a
+--                                         UNION ALL
+--                                         SELECT trgt."year",
+--                                             trgt.qrtr_no,
+--                                             trgt.trgt_period AS mnth_id,
+--                                             trgt.mnth_no,
+--                                             trgt.mnth_nm,
+--                                             NULL::character varying AS dstrbtr_grp_cd,
+--                                             trgt.dstrbtr_id AS dstrbtr_soldto_code,
+--                                             trgt.cust_cd,
+--                                             NULL::character varying AS slsmn_cd,
+--                                             evodcd.cust_nm,
+--                                             trgt.dstrbtr_id AS sap_soldto_code,
+--                                             trgt.sap_matl_num,
+--                                             (upper(TRIM((trgt.dstrbtr_matl_num)::text)))::character varying AS dstrbtr_matl_num,
+--                                             trgt.bar_cd,
+--                                             evodcd.region_nm,
+--                                             evodcd.town_nm,
+--                                             evodcd.chnl_desc,
+--                                             evodcd.sub_chnl_desc,
+--                                             evodcd.chnl_attr1_desc,
+--                                             evodcd.chnl_attr2_desc,
+--                                             NULL::character varying AS wh_id,
+--                                             NULL::character varying AS doc_type,
+--                                             NULL::character varying AS doc_type_desc,
+--                                             0 AS base_sls,
+--                                             NULL::timestamp without time zone AS bill_date,
+--                                             NULL::character varying AS bill_doc,
+--                                             0 AS sls_qty,
+--                                             0 AS ret_qty,
+--                                             NULL::character varying AS uom,
+--                                             0 AS sls_qty_pc,
+--                                             0 AS ret_qty_pc,
+--                                             0 AS grs_trd_sls,
+--                                             0 AS ret_val,
+--                                             0 AS trd_discnt,
+--                                             0 AS trd_sls,
+--                                             0 AS net_trd_sls,
+--                                             0 AS jj_grs_trd_sls,
+--                                             0 AS jj_ret_val,
+--                                             0 AS jj_trd_sls,
+--                                             0 AS jj_net_trd_sls,
+--                                             trgt.contribution
+--                                         FROM (
+--                                                 (
+--                                                     SELECT derived_table1."year",
+--                                                         derived_table1.qrtr_no,
+--                                                         derived_table1.mnth_no,
+--                                                         derived_table1.mnth_nm,
+--                                                         derived_table1.mnth_id,
+--                                                         derived_table1.trgt_period,
+--                                                         derived_table1.dstrbtr_id,
+--                                                         derived_table1.sap_matl_num,
+--                                                         derived_table1.dstrbtr_matl_num,
+--                                                         derived_table1.bar_cd,
+--                                                         derived_table1.cust_cd,
+--                                                         sum(derived_table1.contribution) AS contribution
+--                                                     FROM (
+--                                                             SELECT t1."year",
+--                                                                 t1.qrtr_no,
+--                                                                 t1.mnth_no,
+--                                                                 t1.mnth_nm,
+--                                                                 t1.mnth_id,
+--                                                                 t1.trgt_period,
+--                                                                 t1.dstrbtr_id,
+--                                                                 t1.sap_matl_num,
+--                                                                 t1.dstrbtr_matl_num,
+--                                                                 t1.bar_cd,
+--                                                                 t1.cust_cd,
+--                                                                 (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+--                                                             FROM (
+--                                                                     SELECT (
+--                                                                             "substring"(
+--                                                                                 to_char(
+--                                                                                     add_months(
+--                                                                                         (
+--                                                                                             to_date(
+--                                                                                                 ((veotd.mnth_id)::character varying)::text,
+--                                                                                                 ('YYYYMM'::character varying)::text
+--                                                                                             )
+--                                                                                         )::timestamp without time zone,
+--                                                                                         (12)::bigint
+--                                                                                     ),
+--                                                                                     ('YYYYMM'::character varying)::text
+--                                                                                 ),
+--                                                                                 0,
+--                                                                                 4
+--                                                                             )
+--                                                                         )::integer AS "year",
+--                                                                         veotd.qrtr_no,
+--                                                                         veotd.mnth_no,
+--                                                                         veotd.mnth_nm,
+--                                                                         veotd.mnth_id,
+--                                                                         (
+--                                                                             to_char(
+--                                                                                 add_months(
+--                                                                                     (
+--                                                                                         to_date(
+--                                                                                             ((veotd.mnth_id)::character varying)::text,
+--                                                                                             ('YYYYMM'::character varying)::text
+--                                                                                         )
+--                                                                                     )::timestamp without time zone,
+--                                                                                     (12)::bigint
+--                                                                                 ),
+--                                                                                 ('YYYYMM'::character varying)::text
+--                                                                             )
+--                                                                         )::integer AS trgt_period,
+--                                                                         a.dstrbtr_id,
+--                                                                         a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+--                                                                         a.sap_matl_num,
+--                                                                         a.ean_num AS bar_cd,
+--                                                                         a.cust_cd,
+--                                                                         a.total_amt_bfr_tax AS base_sls,
+--                                                                         sum(a.total_amt_bfr_tax) OVER(
+--                                                                             PARTITION BY veotd.mnth_id,
+--                                                                             a.dstrbtr_id
+--                                                                             ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+--                                                                         ) AS total_sales
+--                                                                     FROM (
+--                                                                             SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+--                                                                                 itg_my_sellout_sales_fact.sls_ord_num,
+--                                                                                 itg_my_sellout_sales_fact.sls_ord_dt,
+--                                                                                 itg_my_sellout_sales_fact.type,
+--                                                                                 itg_my_sellout_sales_fact.cust_cd,
+--                                                                                 itg_my_sellout_sales_fact.dstrbtr_wh_id,
+--                                                                                 itg_my_sellout_sales_fact.item_cd,
+--                                                                                 itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+--                                                                                 itg_my_sellout_sales_fact.ean_num,
+--                                                                                 itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+--                                                                                 itg_my_sellout_sales_fact.grs_prc,
+--                                                                                 itg_my_sellout_sales_fact.qty,
+--                                                                                 itg_my_sellout_sales_fact.uom,
+--                                                                                 itg_my_sellout_sales_fact.qty_pc,
+--                                                                                 itg_my_sellout_sales_fact.qty_aft_conv,
+--                                                                                 itg_my_sellout_sales_fact.subtotal_1,
+--                                                                                 itg_my_sellout_sales_fact.discount,
+--                                                                                 itg_my_sellout_sales_fact.subtotal_2,
+--                                                                                 itg_my_sellout_sales_fact.bottom_line_dscnt,
+--                                                                                 itg_my_sellout_sales_fact.total_amt_aft_tax,
+--                                                                                 itg_my_sellout_sales_fact.total_amt_bfr_tax,
+--                                                                                 itg_my_sellout_sales_fact.sls_emp,
+--                                                                                 itg_my_sellout_sales_fact.custom_field1,
+--                                                                                 itg_my_sellout_sales_fact.custom_field2,
+--                                                                                 itg_my_sellout_sales_fact.sap_matl_num,
+--                                                                                 itg_my_sellout_sales_fact.filename,
+--                                                                                 itg_my_sellout_sales_fact.cdl_dttm,
+--                                                                                 itg_my_sellout_sales_fact.crtd_dttm,
+--                                                                                 itg_my_sellout_sales_fact.updt_dttm
+--                                                                             FROM itg_my_sellout_sales_fact
+--                                                                             WHERE (
+--                                                                                     NOT (
+--                                                                                         (
+--                                                                                             COALESCE(
+--                                                                                                 ltrim(
+--                                                                                                     (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+--                                                                                                     ('0'::character varying)::text
+--                                                                                                 ),
+--                                                                                                 ('0'::character varying)::text
+--                                                                                             ) || COALESCE(
+--                                                                                                 TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+--                                                                                                 ('0'::character varying)::text
+--                                                                                             )
+--                                                                                         ) IN (
+--                                                                                             SELECT DISTINCT (
+--                                                                                                     (
+--                                                                                                         COALESCE(
+--                                                                                                             itg_my_gt_outlet_exclusion.dstrbtr_cd,
+--                                                                                                             '0'::character varying
+--                                                                                                         )
+--                                                                                                     )::text || (
+--                                                                                                         COALESCE(
+--                                                                                                             itg_my_gt_outlet_exclusion.outlet_cd,
+--                                                                                                             '0'::character varying
+--                                                                                                         )
+--                                                                                                     )::text
+--                                                                                                 )
+--                                                                                             FROM itg_my_gt_outlet_exclusion
+--                                                                                         )
+--                                                                                     )
+--                                                                                 )
+--                                                                         ) a,
+--                                                                         (
+--                                                                             SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+--                                                                                 edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                                                                 edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                                                                 edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                                                                 edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                                                                 edw_vw_os_time_dim.cal_date,
+--                                                                                 edw_vw_os_time_dim.cal_date_id
+--                                                                             FROM edw_vw_os_time_dim
+--                                                                         ) veotd
+--                                                                     WHERE (
+--                                                                             to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+--                                                                         )
+--                                                                 ) t1,
+--                                                                 (
+--                                                                     SELECT itg_my_trgts.jj_mnth_id,
+--                                                                         itg_my_trgts.cust_id,
+--                                                                         sum(itg_my_trgts.trgt_val) AS trgt_val
+--                                                                     FROM itg_my_trgts
+--                                                                     WHERE (
+--                                                                             (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+--                                                                         )
+--                                                                     GROUP BY itg_my_trgts.jj_mnth_id,
+--                                                                         itg_my_trgts.cust_id
+--                                                                 ) trgt
+--                                                             WHERE (
+--                                                                     (
+--                                                                         (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+--                                                                     )
+--                                                                     AND (
+--                                                                         (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+--                                                                     )
+--                                                                 )
+--                                                         ) derived_table1
+--                                                     GROUP BY derived_table1."year",
+--                                                         derived_table1.qrtr_no,
+--                                                         derived_table1.mnth_no,
+--                                                         derived_table1.mnth_nm,
+--                                                         derived_table1.mnth_id,
+--                                                         derived_table1.trgt_period,
+--                                                         derived_table1.dstrbtr_id,
+--                                                         derived_table1.sap_matl_num,
+--                                                         derived_table1.cust_cd,
+--                                                         derived_table1.dstrbtr_matl_num,
+--                                                         derived_table1.bar_cd
+--                                                     UNION
+--                                                     SELECT derived_table1."year",
+--                                                         derived_table1.qrtr_no,
+--                                                         derived_table1.mnth_no,
+--                                                         derived_table1.mnth_nm,
+--                                                         derived_table1.mnth_id,
+--                                                         derived_table1.trgt_period,
+--                                                         derived_table1.dstrbtr_id,
+--                                                         derived_table1.sap_matl_num,
+--                                                         derived_table1.dstrbtr_matl_num,
+--                                                         derived_table1.bar_cd,
+--                                                         derived_table1.cust_cd,
+--                                                         derived_table1.contribution
+--                                                     FROM (
+--                                                             SELECT trgt1."year",
+--                                                                 trgt1.qrtr_no,
+--                                                                 trgt1.mnth_no,
+--                                                                 trgt1.mnth_nm,
+--                                                                 trgt1.mnth_id,
+--                                                                 trgt1.trgt_period,
+--                                                                 trgt1.dstrbtr_id,
+--                                                                 trgt1.sap_matl_num,
+--                                                                 trgt1.dstrbtr_matl_num,
+--                                                                 trgt1.bar_cd,
+--                                                                 trgt1.cust_cd,
+--                                                                 trgt1.contribution,
+--                                                                 trgt2.trgt_period AS trgt_period_present,
+--                                                                 trgt2.dstrbtr_id AS dstrbtr_id_present
+--                                                             FROM (
+--                                                                     (
+--                                                                         SELECT derived_table1."year",
+--                                                                             derived_table1.qrtr_no,
+--                                                                             derived_table1.mnth_no,
+--                                                                             derived_table1.mnth_nm,
+--                                                                             derived_table1.mnth_id,
+--                                                                             derived_table1.trgt_period,
+--                                                                             derived_table1.dstrbtr_id,
+--                                                                             derived_table1.sap_matl_num,
+--                                                                             derived_table1.dstrbtr_matl_num,
+--                                                                             derived_table1.bar_cd,
+--                                                                             derived_table1.cust_cd,
+--                                                                             sum(derived_table1.contribution) AS contribution
+--                                                                         FROM (
+--                                                                                 SELECT t1."year",
+--                                                                                     t1.qrtr_no,
+--                                                                                     t1.mnth_no,
+--                                                                                     t1.mnth_nm,
+--                                                                                     t1.mnth_id,
+--                                                                                     t1.trgt_period,
+--                                                                                     t1.dstrbtr_id,
+--                                                                                     t1.sap_matl_num,
+--                                                                                     t1.dstrbtr_matl_num,
+--                                                                                     t1.bar_cd,
+--                                                                                     t1.cust_cd,
+--                                                                                     (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+--                                                                                 FROM (
+--                                                                                         SELECT (
+--                                                                                                 "substring"(
+--                                                                                                     to_char(
+--                                                                                                         add_months(
+--                                                                                                             (
+--                                                                                                                 to_date(
+--                                                                                                                     ((veotd.mnth_id)::character varying)::text,
+--                                                                                                                     ('YYYYMM'::character varying)::text
+--                                                                                                                 )
+--                                                                                                             )::timestamp without time zone,
+--                                                                                                             (0)::bigint
+--                                                                                                         ),
+--                                                                                                         ('YYYYMM'::character varying)::text
+--                                                                                                     ),
+--                                                                                                     0,
+--                                                                                                     4
+--                                                                                                 )
+--                                                                                             )::integer AS "year",
+--                                                                                             veotd.qrtr_no,
+--                                                                                             veotd.mnth_no,
+--                                                                                             veotd.mnth_nm,
+--                                                                                             veotd.mnth_id AS trgt_period,
+--                                                                                             (
+--                                                                                                 to_char(
+--                                                                                                     add_months(
+--                                                                                                         (
+--                                                                                                             to_date(
+--                                                                                                                 ((veotd.mnth_id)::character varying)::text,
+--                                                                                                                 ('YYYYMM'::character varying)::text
+--                                                                                                             )
+--                                                                                                         )::timestamp without time zone,
+--                                                                                                         (- (12)::bigint)
+--                                                                                                     ),
+--                                                                                                     ('YYYYMM'::character varying)::text
+--                                                                                                 )
+--                                                                                             )::integer AS mnth_id,
+--                                                                                             a.dstrbtr_id,
+--                                                                                             a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+--                                                                                             a.sap_matl_num,
+--                                                                                             a.ean_num AS bar_cd,
+--                                                                                             a.cust_cd,
+--                                                                                             a.total_amt_bfr_tax AS base_sls,
+--                                                                                             sum(a.total_amt_bfr_tax) OVER(
+--                                                                                                 PARTITION BY veotd.mnth_id,
+--                                                                                                 a.dstrbtr_id
+--                                                                                                 ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+--                                                                                             ) AS total_sales
+--                                                                                         FROM (
+--                                                                                                 SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+--                                                                                                     itg_my_sellout_sales_fact.sls_ord_num,
+--                                                                                                     itg_my_sellout_sales_fact.sls_ord_dt,
+--                                                                                                     itg_my_sellout_sales_fact.type,
+--                                                                                                     itg_my_sellout_sales_fact.cust_cd,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_wh_id,
+--                                                                                                     itg_my_sellout_sales_fact.item_cd,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+--                                                                                                     itg_my_sellout_sales_fact.ean_num,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+--                                                                                                     itg_my_sellout_sales_fact.grs_prc,
+--                                                                                                     itg_my_sellout_sales_fact.qty,
+--                                                                                                     itg_my_sellout_sales_fact.uom,
+--                                                                                                     itg_my_sellout_sales_fact.qty_pc,
+--                                                                                                     itg_my_sellout_sales_fact.qty_aft_conv,
+--                                                                                                     itg_my_sellout_sales_fact.subtotal_1,
+--                                                                                                     itg_my_sellout_sales_fact.discount,
+--                                                                                                     itg_my_sellout_sales_fact.subtotal_2,
+--                                                                                                     itg_my_sellout_sales_fact.bottom_line_dscnt,
+--                                                                                                     itg_my_sellout_sales_fact.total_amt_aft_tax,
+--                                                                                                     itg_my_sellout_sales_fact.total_amt_bfr_tax,
+--                                                                                                     itg_my_sellout_sales_fact.sls_emp,
+--                                                                                                     itg_my_sellout_sales_fact.custom_field1,
+--                                                                                                     itg_my_sellout_sales_fact.custom_field2,
+--                                                                                                     itg_my_sellout_sales_fact.sap_matl_num,
+--                                                                                                     itg_my_sellout_sales_fact.filename,
+--                                                                                                     itg_my_sellout_sales_fact.cdl_dttm,
+--                                                                                                     itg_my_sellout_sales_fact.crtd_dttm,
+--                                                                                                     itg_my_sellout_sales_fact.updt_dttm
+--                                                                                                 FROM itg_my_sellout_sales_fact
+--                                                                                                 WHERE (
+--                                                                                                         NOT (
+--                                                                                                             (
+--                                                                                                                 COALESCE(
+--                                                                                                                     ltrim(
+--                                                                                                                         (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+--                                                                                                                         ('0'::character varying)::text
+--                                                                                                                     ),
+--                                                                                                                     ('0'::character varying)::text
+--                                                                                                                 ) || COALESCE(
+--                                                                                                                     TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+--                                                                                                                     ('0'::character varying)::text
+--                                                                                                                 )
+--                                                                                                             ) IN (
+--                                                                                                                 SELECT DISTINCT (
+--                                                                                                                         (
+--                                                                                                                             COALESCE(
+--                                                                                                                                 itg_my_gt_outlet_exclusion.dstrbtr_cd,
+--                                                                                                                                 '0'::character varying
+--                                                                                                                             )
+--                                                                                                                         )::text || (
+--                                                                                                                             COALESCE(
+--                                                                                                                                 itg_my_gt_outlet_exclusion.outlet_cd,
+--                                                                                                                                 '0'::character varying
+--                                                                                                                             )
+--                                                                                                                         )::text
+--                                                                                                                     )
+--                                                                                                                 FROM itg_my_gt_outlet_exclusion
+--                                                                                                             )
+--                                                                                                         )
+--                                                                                                     )
+--                                                                                             ) a,
+--                                                                                             (
+--                                                                                                 SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+--                                                                                                     edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                                                                                     edw_vw_os_time_dim.cal_date,
+--                                                                                                     edw_vw_os_time_dim.cal_date_id
+--                                                                                                 FROM edw_vw_os_time_dim
+--                                                                                             ) veotd
+--                                                                                         WHERE (
+--                                                                                                 to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+--                                                                                             )
+--                                                                                     ) t1,
+--                                                                                     (
+--                                                                                         SELECT itg_my_trgts.jj_mnth_id,
+--                                                                                             itg_my_trgts.cust_id,
+--                                                                                             sum(itg_my_trgts.trgt_val) AS trgt_val
+--                                                                                         FROM itg_my_trgts
+--                                                                                         WHERE (
+--                                                                                                 (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+--                                                                                             )
+--                                                                                         GROUP BY itg_my_trgts.jj_mnth_id,
+--                                                                                             itg_my_trgts.cust_id
+--                                                                                     ) trgt
+--                                                                                 WHERE (
+--                                                                                         (
+--                                                                                             (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+--                                                                                         )
+--                                                                                         AND (
+--                                                                                             (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+--                                                                                         )
+--                                                                                     )
+--                                                                             ) derived_table1
+--                                                                         GROUP BY derived_table1."year",
+--                                                                             derived_table1.qrtr_no,
+--                                                                             derived_table1.mnth_no,
+--                                                                             derived_table1.mnth_nm,
+--                                                                             derived_table1.mnth_id,
+--                                                                             derived_table1.trgt_period,
+--                                                                             derived_table1.dstrbtr_id,
+--                                                                             derived_table1.sap_matl_num,
+--                                                                             derived_table1.cust_cd,
+--                                                                             derived_table1.dstrbtr_matl_num,
+--                                                                             derived_table1.bar_cd
+--                                                                     ) trgt1
+--                                                                     LEFT JOIN (
+--                                                                         SELECT derived_table1."year",
+--                                                                             derived_table1.qrtr_no,
+--                                                                             derived_table1.mnth_no,
+--                                                                             derived_table1.mnth_nm,
+--                                                                             derived_table1.mnth_id,
+--                                                                             derived_table1.trgt_period,
+--                                                                             derived_table1.dstrbtr_id,
+--                                                                             derived_table1.sap_matl_num,
+--                                                                             derived_table1.dstrbtr_matl_num,
+--                                                                             derived_table1.bar_cd,
+--                                                                             derived_table1.cust_cd,
+--                                                                             sum(derived_table1.contribution) AS contribution
+--                                                                         FROM (
+--                                                                                 SELECT t1."year",
+--                                                                                     t1.qrtr_no,
+--                                                                                     t1.mnth_no,
+--                                                                                     t1.mnth_nm,
+--                                                                                     t1.mnth_id,
+--                                                                                     t1.trgt_period,
+--                                                                                     t1.dstrbtr_id,
+--                                                                                     t1.sap_matl_num,
+--                                                                                     t1.dstrbtr_matl_num,
+--                                                                                     t1.bar_cd,
+--                                                                                     t1.cust_cd,
+--                                                                                     (trgt.trgt_val * (t1.base_sls / t1.total_sales)) AS contribution
+--                                                                                 FROM (
+--                                                                                         SELECT (
+--                                                                                                 "substring"(
+--                                                                                                     to_char(
+--                                                                                                         add_months(
+--                                                                                                             (
+--                                                                                                                 to_date(
+--                                                                                                                     ((veotd.mnth_id)::character varying)::text,
+--                                                                                                                     ('YYYYMM'::character varying)::text
+--                                                                                                                 )
+--                                                                                                             )::timestamp without time zone,
+--                                                                                                             (12)::bigint
+--                                                                                                         ),
+--                                                                                                         ('YYYYMM'::character varying)::text
+--                                                                                                     ),
+--                                                                                                     0,
+--                                                                                                     4
+--                                                                                                 )
+--                                                                                             )::integer AS "year",
+--                                                                                             veotd.qrtr_no,
+--                                                                                             veotd.mnth_no,
+--                                                                                             veotd.mnth_nm,
+--                                                                                             veotd.mnth_id,
+--                                                                                             (
+--                                                                                                 to_char(
+--                                                                                                     add_months(
+--                                                                                                         (
+--                                                                                                             to_date(
+--                                                                                                                 ((veotd.mnth_id)::character varying)::text,
+--                                                                                                                 ('YYYYMM'::character varying)::text
+--                                                                                                             )
+--                                                                                                         )::timestamp without time zone,
+--                                                                                                         (12)::bigint
+--                                                                                                     ),
+--                                                                                                     ('YYYYMM'::character varying)::text
+--                                                                                                 )
+--                                                                                             )::integer AS trgt_period,
+--                                                                                             a.dstrbtr_id,
+--                                                                                             a.dstrbtr_prod_cd AS dstrbtr_matl_num,
+--                                                                                             a.sap_matl_num,
+--                                                                                             a.ean_num AS bar_cd,
+--                                                                                             a.cust_cd,
+--                                                                                             a.total_amt_bfr_tax AS base_sls,
+--                                                                                             sum(a.total_amt_bfr_tax) OVER(
+--                                                                                                 PARTITION BY veotd.mnth_id,
+--                                                                                                 a.dstrbtr_id
+--                                                                                                 ORDER BY NULL ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+--                                                                                             ) AS total_sales
+--                                                                                         FROM (
+--                                                                                                 SELECT itg_my_sellout_sales_fact.dstrbtr_id,
+--                                                                                                     itg_my_sellout_sales_fact.sls_ord_num,
+--                                                                                                     itg_my_sellout_sales_fact.sls_ord_dt,
+--                                                                                                     itg_my_sellout_sales_fact.type,
+--                                                                                                     itg_my_sellout_sales_fact.cust_cd,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_wh_id,
+--                                                                                                     itg_my_sellout_sales_fact.item_cd,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_prod_cd,
+--                                                                                                     itg_my_sellout_sales_fact.ean_num,
+--                                                                                                     itg_my_sellout_sales_fact.dstrbtr_prod_desc,
+--                                                                                                     itg_my_sellout_sales_fact.grs_prc,
+--                                                                                                     itg_my_sellout_sales_fact.qty,
+--                                                                                                     itg_my_sellout_sales_fact.uom,
+--                                                                                                     itg_my_sellout_sales_fact.qty_pc,
+--                                                                                                     itg_my_sellout_sales_fact.qty_aft_conv,
+--                                                                                                     itg_my_sellout_sales_fact.subtotal_1,
+--                                                                                                     itg_my_sellout_sales_fact.discount,
+--                                                                                                     itg_my_sellout_sales_fact.subtotal_2,
+--                                                                                                     itg_my_sellout_sales_fact.bottom_line_dscnt,
+--                                                                                                     itg_my_sellout_sales_fact.total_amt_aft_tax,
+--                                                                                                     itg_my_sellout_sales_fact.total_amt_bfr_tax,
+--                                                                                                     itg_my_sellout_sales_fact.sls_emp,
+--                                                                                                     itg_my_sellout_sales_fact.custom_field1,
+--                                                                                                     itg_my_sellout_sales_fact.custom_field2,
+--                                                                                                     itg_my_sellout_sales_fact.sap_matl_num,
+--                                                                                                     itg_my_sellout_sales_fact.filename,
+--                                                                                                     itg_my_sellout_sales_fact.cdl_dttm,
+--                                                                                                     itg_my_sellout_sales_fact.crtd_dttm,
+--                                                                                                     itg_my_sellout_sales_fact.updt_dttm
+--                                                                                                 FROM itg_my_sellout_sales_fact
+--                                                                                                 WHERE (
+--                                                                                                         NOT (
+--                                                                                                             (
+--                                                                                                                 COALESCE(
+--                                                                                                                     ltrim(
+--                                                                                                                         (itg_my_sellout_sales_fact.dstrbtr_id)::text,
+--                                                                                                                         ('0'::character varying)::text
+--                                                                                                                     ),
+--                                                                                                                     ('0'::character varying)::text
+--                                                                                                                 ) || COALESCE(
+--                                                                                                                     TRIM((itg_my_sellout_sales_fact.cust_cd)::text),
+--                                                                                                                     ('0'::character varying)::text
+--                                                                                                                 )
+--                                                                                                             ) IN (
+--                                                                                                                 SELECT DISTINCT (
+--                                                                                                                         (
+--                                                                                                                             COALESCE(
+--                                                                                                                                 itg_my_gt_outlet_exclusion.dstrbtr_cd,
+--                                                                                                                                 '0'::character varying
+--                                                                                                                             )
+--                                                                                                                         )::text || (
+--                                                                                                                             COALESCE(
+--                                                                                                                                 itg_my_gt_outlet_exclusion.outlet_cd,
+--                                                                                                                                 '0'::character varying
+--                                                                                                                             )
+--                                                                                                                         )::text
+--                                                                                                                     )
+--                                                                                                                 FROM itg_my_gt_outlet_exclusion
+--                                                                                                             )
+--                                                                                                         )
+--                                                                                                     )
+--                                                                                             ) a,
+--                                                                                             (
+--                                                                                                 SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+--                                                                                                     edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                                                                                     edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                                                                                     edw_vw_os_time_dim.cal_date,
+--                                                                                                     edw_vw_os_time_dim.cal_date_id
+--                                                                                                 FROM edw_vw_os_time_dim
+--                                                                                             ) veotd
+--                                                                                         WHERE (
+--                                                                                                 to_date((veotd.cal_date)::timestamp without time zone) = to_date((a.sls_ord_dt)::timestamp without time zone)
+--                                                                                             )
+--                                                                                     ) t1,
+--                                                                                     (
+--                                                                                         SELECT itg_my_trgts.jj_mnth_id,
+--                                                                                             itg_my_trgts.cust_id,
+--                                                                                             sum(itg_my_trgts.trgt_val) AS trgt_val
+--                                                                                         FROM itg_my_trgts
+--                                                                                         WHERE (
+--                                                                                                 (itg_my_trgts.trgt_type)::text = ('BP'::character varying)::text
+--                                                                                             )
+--                                                                                         GROUP BY itg_my_trgts.jj_mnth_id,
+--                                                                                             itg_my_trgts.cust_id
+--                                                                                     ) trgt
+--                                                                                 WHERE (
+--                                                                                         (
+--                                                                                             (trgt.jj_mnth_id)::text = ((t1.trgt_period)::character varying)::text
+--                                                                                         )
+--                                                                                         AND (
+--                                                                                             (COALESCE(trgt.cust_id, ''::character varying))::text = (COALESCE(t1.dstrbtr_id, ''::character varying))::text
+--                                                                                         )
+--                                                                                     )
+--                                                                             ) derived_table1
+--                                                                         GROUP BY derived_table1."year",
+--                                                                             derived_table1.qrtr_no,
+--                                                                             derived_table1.mnth_no,
+--                                                                             derived_table1.mnth_nm,
+--                                                                             derived_table1.mnth_id,
+--                                                                             derived_table1.trgt_period,
+--                                                                             derived_table1.dstrbtr_id,
+--                                                                             derived_table1.sap_matl_num,
+--                                                                             derived_table1.cust_cd,
+--                                                                             derived_table1.dstrbtr_matl_num,
+--                                                                             derived_table1.bar_cd
+--                                                                     ) trgt2 ON (
+--                                                                         (
+--                                                                             (trgt1.trgt_period = trgt2.trgt_period)
+--                                                                             AND (
+--                                                                                 (trgt1.dstrbtr_id)::text = (trgt2.dstrbtr_id)::text
+--                                                                             )
+--                                                                         )
+--                                                                     )
+--                                                                 )
+--                                                         ) derived_table1
+--                                                     WHERE (
+--                                                             (derived_table1.trgt_period_present IS NULL)
+--                                                             OR (derived_table1.dstrbtr_id_present IS NULL)
+--                                                         )
+--                                                 ) trgt
+--                                                 LEFT JOIN (
+--                                                     SELECT EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_grp_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.dstrbtr_soldto_code,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sap_soldto_code,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.alt_cust_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.addr,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.area_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.state_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.region_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.prov_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.town_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.city_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.post_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.slsmn_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sub_chnl_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr1_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.chnl_attr2_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.outlet_type_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr1_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cust_grp_attr2_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_dstrct_nm,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_office_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_cd,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.sls_grp_desc,
+--                                                         EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.status
+--                                                     FROM EDW_VW_MY_DSTRBTR_CUSTOMER_DIM
+--                                                     WHERE (
+--                                                             (EDW_VW_MY_DSTRBTR_CUSTOMER_DIM.cntry_cd)::text = ('MY'::character varying)::text
+--                                                         )
+--                                                 ) evodcd ON (
+--                                                     (
+--                                                         (
+--                                                             ltrim(
+--                                                                 (evodcd.cust_cd)::text,
+--                                                                 ('0'::character varying)::text
+--                                                             ) = ltrim(
+--                                                                 (trgt.cust_cd)::text,
+--                                                                 ('0'::character varying)::text
+--                                                             )
+--                                                         )
+--                                                         AND (
+--                                                             ltrim(
+--                                                                 (evodcd.sap_soldto_code)::text,
+--                                                                 ('0'::character varying)::text
+--                                                             ) = ltrim(
+--                                                                 (trgt.dstrbtr_id)::text,
+--                                                                 ('0'::character varying)::text
+--                                                             )
+--                                                         )
+--                                                     )
+--                                                 )
+--                                             )
+--                                     ) veosf
+--                                     LEFT JOIN (
+--                                         SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_addr,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_region,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_city,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+--                                             EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+--                                             EDW_VW_my_CUSTOMER_DIM.retail_env,
+--                                             EDW_VW_my_CUSTOMER_DIM.gch_region,
+--                                             EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+--                                             EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+--                                             EDW_VW_my_CUSTOMER_DIM.gch_market,
+--                                             EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+--                                         FROM EDW_VW_my_CUSTOMER_DIM
+--                                         WHERE (
+--                                                 (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+--                                             )
+--                                     ) veocd ON (
+--                                         (
+--                                             ltrim(
+--                                                 (veocd.sap_cust_id)::text,
+--                                                 ('0'::character varying)::text
+--                                             ) = ltrim(
+--                                                 (veosf.sap_soldto_code)::text,
+--                                                 ('0'::character varying)::text
+--                                             )
+--                                         )
+--                                     )
+--                                 )
+--                                 LEFT JOIN (
+--                                     SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.ean_num,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_region,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+--                                         EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+--                                         EDW_VW_my_MATERIAL_DIM.launch_dt,
+--                                         EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+--                                         EDW_VW_my_MATERIAL_DIM.prft_ctr,
+--                                         EDW_VW_my_MATERIAL_DIM.shlf_life
+--                                     FROM EDW_VW_my_MATERIAL_DIM
+--                                     WHERE (
+--                                             (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+--                                         )
+--                                 ) veomd ON (
+--                                     (
+--                                         ltrim(
+--                                             (veomd.sap_matl_num)::text,
+--                                             ('0'::character varying)::text
+--                                         ) = ltrim(
+--                                             (veosf.sap_matl_num)::text,
+--                                             ('0'::character varying)::text
+--                                         )
+--                                     )
+--                                 )
+--                             )
+--                             LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+--                                 (
+--                                     ltrim(
+--                                         (imdd.cust_id)::text,
+--                                         ('0'::character varying)::text
+--                                     ) = ltrim(
+--                                         (veosf.sap_soldto_code)::text,
+--                                         ('0'::character varying)::text
+--                                     )
+--                                 )
+--                             )
+--                         )
+--                         LEFT JOIN itg_my_material_dim immd ON (
+--                             (
+--                                 ltrim(
+--                                     (immd.item_cd)::text,
+--                                     ('0'::character varying)::text
+--                                 ) = ltrim(
+--                                     (
+--                                         COALESCE(veosf.sap_matl_num, ''::character varying)
+--                                     )::text,
+--                                     ('0'::character varying)::text
+--                                 )
+--                             )
+--                         )
+--                     )
+--                     LEFT JOIN itg_my_customer_dim imcd ON (
+--                         (
+--                             TRIM((imcd.cust_id)::text) = TRIM((veosf.sap_soldto_code)::text)
+--                         )
+--                     )
+--                 )
+--                 LEFT JOIN (
+--                     SELECT EDW_VW_my_LISTPRICE.cntry_key,
+--                         EDW_VW_my_LISTPRICE.cntry_nm,
+--                         EDW_VW_my_LISTPRICE.plant,
+--                         EDW_VW_my_LISTPRICE.cnty,
+--                         EDW_VW_my_LISTPRICE.item_cd,
+--                         EDW_VW_my_LISTPRICE.item_desc,
+--                         EDW_VW_my_LISTPRICE.valid_from,
+--                         EDW_VW_my_LISTPRICE.valid_to,
+--                         EDW_VW_my_LISTPRICE.rate,
+--                         EDW_VW_my_LISTPRICE.currency,
+--                         EDW_VW_my_LISTPRICE.price_unit,
+--                         EDW_VW_my_LISTPRICE.uom,
+--                         EDW_VW_my_LISTPRICE.yearmo,
+--                         EDW_VW_my_LISTPRICE.mnth_type,
+--                         EDW_VW_my_LISTPRICE.snapshot_dt
+--                     FROM EDW_VW_my_LISTPRICE
+--                     WHERE (
+--                             (
+--                                 (EDW_VW_my_LISTPRICE.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                             AND (
+--                                 (EDW_VW_my_LISTPRICE.mnth_type)::text = ('CAL'::character varying)::text
+--                             )
+--                         )
+--                 ) lp ON (
+--                     (
+--                         (
+--                             ltrim(
+--                                 (lp.item_cd)::text,
+--                                 ('0'::character varying)::text
+--                             ) = ltrim(
+--                                 (veosf.sap_matl_num)::text,
+--                                 ('0'::character varying)::text
+--                             )
+--                         )
+--                         AND (
+--                             (lp.yearmo)::text = ((veosf.mnth_id)::character varying)::text
+--                         )
+--                     )
+--                 )
+--             )
+--         WHERE (
+--                 (
+--                     ((veosf.mnth_id)::character varying)::text >= veocurd.start_period
+--                 )
+--                 AND (
+--                     ((veosf.mnth_id)::character varying)::text <= veocurd.end_period
+--                 )
+--             )
+--         UNION ALL
+--         SELECT 'Target' AS data_src,
+--             veotd."year",
+--             veotd.qrtr_no,
+--             veotd.mnth_id,
+--             veotd.mnth_no,
+--             veotd.mnth_nm,
+--             NULL AS max_yearmo,
+--             'Malaysia' AS cntry_nm,
+--             imcd.dstrbtr_grp_cd,
+--             imcd.dstrbtr_grp_nm,
+--             NULL AS dstrbtr_cust_cd,
+--             NULL AS dstrbtr_cust_nm,
+--             (
+--                 ltrim(
+--                     (imdd.cust_id)::text,
+--                     ('0'::character varying)::text
+--                 )
+--             )::character varying AS sap_soldto_code,
+--             imdd.cust_nm AS sap_soldto_nm,
+--             imdd.lvl1 AS dstrbtr_lvl1,
+--             imdd.lvl2 AS dstrbtr_lvl2,
+--             imdd.lvl3 AS dstrbtr_lvl3,
+--             imdd.lvl4 AS dstrbtr_lvl4,
+--             imdd.lvl5 AS dstrbtr_lvl5,
+--             NULL AS region_nm,
+--             NULL AS town_nm,
+--             NULL AS slsmn_cd,
+--             NULL AS chnl_desc,
+--             NULL AS sub_chnl_desc,
+--             NULL AS chnl_attr1_desc,
+--             NULL AS chnl_attr2_desc,
+--             veocd.sap_state_cd,
+--             veocd.sap_sls_org,
+--             veocd.sap_cmp_id,
+--             veocd.sap_cntry_cd,
+--             veocd.sap_cntry_nm,
+--             veocd.sap_addr,
+--             veocd.sap_region,
+--             veocd.sap_city,
+--             veocd.sap_post_cd,
+--             veocd.sap_chnl_cd,
+--             veocd.sap_chnl_desc,
+--             veocd.sap_sls_office_cd,
+--             veocd.sap_sls_office_desc,
+--             veocd.sap_sls_grp_cd,
+--             veocd.sap_sls_grp_desc,
+--             veocd.sap_curr_cd,
+--             veocd.gch_region,
+--             veocd.gch_cluster,
+--             veocd.gch_subcluster,
+--             veocd.gch_market,
+--             veocd.gch_retail_banner,
+--             NULL AS dstrbtr_matl_num,
+--             NULL AS bar_cd,
+--             NULL AS sku,
+--             NULL AS frnchse_desc,
+--             NULL AS brnd_desc,
+--             NULL AS vrnt_desc,
+--             NULL AS putup_desc,
+--             NULL AS item_desc2,
+--             NULL AS sku_desc,
+--             NULL AS sap_mat_type_cd,
+--             NULL AS sap_mat_type_desc,
+--             NULL AS sap_base_uom_cd,
+--             NULL AS sap_prchse_uom_cd,
+--             NULL AS sap_prod_sgmt_cd,
+--             NULL AS sap_prod_sgmt_desc,
+--             NULL AS sap_base_prod_cd,
+--             NULL AS sap_base_prod_desc,
+--             NULL AS sap_mega_brnd_cd,
+--             NULL AS sap_mega_brnd_desc,
+--             NULL AS sap_brnd_cd,
+--             NULL AS sap_brnd_desc,
+--             NULL AS sap_vrnt_cd,
+--             NULL AS sap_vrnt_desc,
+--             NULL AS sap_put_up_cd,
+--             NULL AS sap_put_up_desc,
+--             NULL AS sap_grp_frnchse_cd,
+--             NULL AS sap_grp_frnchse_desc,
+--             NULL AS sap_frnchse_cd,
+--             NULL AS sap_frnchse_desc,
+--             NULL AS sap_prod_frnchse_cd,
+--             NULL AS sap_prod_frnchse_desc,
+--             NULL AS sap_prod_mjr_cd,
+--             NULL AS sap_prod_mjr_desc,
+--             NULL AS sap_prod_mnr_cd,
+--             NULL AS sap_prod_mnr_desc,
+--             NULL AS sap_prod_hier_cd,
+--             NULL AS sap_prod_hier_desc,
+--             NULL AS global_mat_region,
+--             CASE
+--                 WHEN (
+--                     (imt.sub_segment)::text = ('ALL'::character varying)::text
+--                 ) THEN veomd.gph_prod_frnchse
+--                 ELSE veomd1.gph_prod_frnchse
+--             END AS global_prod_franchise,
+--             CASE
+--                 WHEN (
+--                     (imt.sub_segment)::text = ('ALL'::character varying)::text
+--                 ) THEN veomd.gph_prod_brnd
+--                 ELSE veomd1.gph_prod_brnd
+--             END AS global_prod_brand,
+--             NULL AS global_prod_variant,
+--             NULL AS global_prod_put_up_cd,
+--             NULL AS global_put_up_desc,
+--             NULL AS global_prod_sub_brand,
+--             NULL AS global_prod_need_state,
+--             NULL AS global_prod_category,
+--             NULL AS global_prod_subcategory,
+--             NULL AS global_prod_segment,
+--             veomd1.gph_prod_subsgmnt AS global_prod_subsegment,
+--             NULL AS global_prod_size,
+--             NULL AS global_prod_size_uom,
+--             veocurd.from_ccy,
+--             veocurd.to_ccy,
+--             veocurd.exch_rate,
+--             NULL AS wh_id,
+--             NULL AS doc_type,
+--             NULL AS doc_type_desc,
+--             NULL AS bill_date,
+--             NULL AS bill_doc,
+--             0 AS base_sls,
+--             0 AS sls_qty,
+--             0 AS ret_qty,
+--             NULL AS uom,
+--             0 AS sls_qty_pc,
+--             0 AS ret_qty_pc,
+--             0 AS in_transit_qty,
+--             0 AS mat_list_price,
+--             0 AS grs_trd_sls,
+--             0 AS ret_val,
+--             0 AS trd_discnt,
+--             0 AS trd_sls,
+--             0 AS net_trd_sls,
+--             0 AS jj_grs_trd_sls,
+--             0 AS jj_ret_val,
+--             0 AS jj_trd_sls,
+--             0 AS jj_net_trd_sls,
+--             0 AS in_transit_val,
+--             (imt.trgt_val * veocurd.exch_rate) AS trgt_val,
+--             NULL AS inv_dt,
+--             NULL AS warehse_cd,
+--             0 AS end_stock_qty,
+--             0 AS end_stock_val_raw,
+--             0 AS end_stock_val,
+--             NULL AS is_npi,
+--             NULL AS npi_str_period,
+--             NULL AS npi_end_period,
+--             NULL AS is_reg,
+--             NULL AS is_promo,
+--             NULL AS promo_strt_period,
+--             NULL AS promo_end_period,
+--             NULL AS is_mcl,
+--             NULL AS is_hero,
+--             0 AS contribution
+--         FROM (
+--                 SELECT edw_vw_os_time_dim.cal_year AS "year",
+--                     edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                     edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                     edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                     edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm
+--                 FROM edw_vw_os_time_dim
+--                 GROUP BY edw_vw_os_time_dim.cal_year,
+--                     edw_vw_os_time_dim.cal_qrtr_no,
+--                     edw_vw_os_time_dim.cal_mnth_id,
+--                     edw_vw_os_time_dim.cal_mnth_no,
+--                     edw_vw_os_time_dim.cal_mnth_nm
+--             ) veotd,
+--             (
+--                 SELECT d.cntry_key,
+--                     d.cntry_nm,
+--                     d.rate_type,
+--                     d.from_ccy,
+--                     d.to_ccy,
+--                     d.valid_date,
+--                     d.jj_year,
+--                     d.start_period,
+--                     CASE
+--                         WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+--                         ELSE d.end_mnth_id
+--                     END AS end_period,
+--                     d.exch_rate
+--                 FROM (
+--                         SELECT a.cntry_key,
+--                             a.cntry_nm,
+--                             a.rate_type,
+--                             a.from_ccy,
+--                             a.to_ccy,
+--                             a.valid_date,
+--                             a.jj_year,
+--                             min((a.jj_mnth_id)::text) AS start_period,
+--                             "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+--                             a.exch_rate
+--                         FROM EDW_VW_my_CURR_DIM a
+--                         WHERE (
+--                                 (a.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                         GROUP BY a.cntry_key,
+--                             a.cntry_nm,
+--                             a.rate_type,
+--                             a.from_ccy,
+--                             a.to_ccy,
+--                             a.valid_date,
+--                             a.jj_year,
+--                             a.exch_rate
+--                     ) d,
+--                     (
+--                         SELECT "max"((a.jj_mnth_id)::text) AS max_period
+--                         FROM EDW_VW_my_CURR_DIM a
+--                         WHERE (
+--                                 (a.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                     ) b
+--             ) veocurd,
+--             (
+--                 (
+--                     (
+--                         (
+--                             (
+--                                 itg_my_trgts imt
+--                                 LEFT JOIN itg_my_customer_dim imcd ON (
+--                                     (
+--                                         ltrim(
+--                                             (imcd.cust_id)::text,
+--                                             ('0'::character varying)::text
+--                                         ) = ltrim(
+--                                             (imt.cust_id)::text,
+--                                             ('0'::character varying)::text
+--                                         )
+--                                     )
+--                                 )
+--                             )
+--                             LEFT JOIN (
+--                                 SELECT DISTINCT EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_brnd
+--                                 FROM EDW_VW_my_MATERIAL_DIM
+--                                 WHERE (
+--                                         (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+--                                     )
+--                             ) veomd ON (
+--                                 CASE
+--                                     WHEN (
+--                                         (imt.sub_segment)::text = ('ALL'::character varying)::text
+--                                     ) THEN (
+--                                         TRIM(upper((veomd.gph_prod_brnd)::text)) = TRIM(upper((imt.brnd_desc)::text))
+--                                     )
+--                                     ELSE NULL::boolean
+--                                 END
+--                             )
+--                         )
+--                         LEFT JOIN (
+--                             SELECT DISTINCT EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+--                                 EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+--                                 EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt
+--                             FROM EDW_VW_my_MATERIAL_DIM
+--                             WHERE (
+--                                     (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+--                                 )
+--                         ) veomd1 ON (
+--                             CASE
+--                                 WHEN (
+--                                     (imt.sub_segment)::text <> ('ALL'::character varying)::text
+--                                 ) THEN (
+--                                     (
+--                                         TRIM(upper((veomd1.gph_prod_subsgmnt)::text)) = TRIM(upper((imt.sub_segment)::text))
+--                                     )
+--                                     AND (
+--                                         TRIM(upper((veomd1.gph_prod_brnd)::text)) = TRIM(upper((imt.brnd_desc)::text))
+--                                     )
+--                                 )
+--                                 ELSE NULL::boolean
+--                             END
+--                         )
+--                     )
+--                     LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+--                         (
+--                             ltrim(
+--                                 (imdd.cust_id)::text,
+--                                 ('0'::character varying)::text
+--                             ) = ltrim(
+--                                 (imt.cust_id)::text,
+--                                 ('0'::character varying)::text
+--                             )
+--                         )
+--                     )
+--                 )
+--                 LEFT JOIN (
+--                     SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_addr,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_region,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_city,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+--                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+--                         EDW_VW_my_CUSTOMER_DIM.retail_env,
+--                         EDW_VW_my_CUSTOMER_DIM.gch_region,
+--                         EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+--                         EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+--                         EDW_VW_my_CUSTOMER_DIM.gch_market,
+--                         EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+--                     FROM EDW_VW_my_CUSTOMER_DIM
+--                     WHERE (
+--                             (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+--                         )
+--                 ) veocd ON (
+--                     (
+--                         ltrim(
+--                             (veocd.sap_cust_id)::text,
+--                             ('0'::character varying)::text
+--                         ) = ltrim(
+--                             (imt.cust_id)::text,
+--                             ('0'::character varying)::text
+--                         )
+--                     )
+--                 )
+--             )
+--         WHERE (
+--                 (
+--                     (
+--                         (
+--                             (imt.trgt_type)::text = ('BP'::character varying)::text
+--                         )
+--                         AND (
+--                             ((veotd.mnth_id)::character varying)::text = (imt.jj_mnth_id)::text
+--                         )
+--                     )
+--                     AND ((imt.jj_mnth_id)::text >= veocurd.start_period)
+--                 )
+--                 AND ((imt.jj_mnth_id)::text <= veocurd.end_period)
+--             )
+--     )
+--     UNION ALL
+--     SELECT 'GT Inventory' AS data_src,
+--         evosif."year",
+--         evosif.qrtr_no,
+--         evosif.mnth_id,
+--         evosif.mnth_no,
+--         evosif.mnth_nm,
+--         NULL AS max_yearmo,
+--         'Malaysia' AS cntry_nm,
+--         evosif.dstrbtr_grp_cd,
+--         imcd.dstrbtr_grp_nm,
+--         NULL AS dstrbtr_cust_cd,
+--         NULL AS dstrbtr_cust_nm,
+--         (
+--             ltrim(
+--                 (imdd.cust_id)::text,
+--                 ('0'::character varying)::text
+--             )
+--         )::character varying AS sap_soldto_code,
+--         imdd.cust_nm AS sap_soldto_nm,
+--         imdd.lvl1 AS dstrbtr_lvl1,
+--         imdd.lvl2 AS dstrbtr_lvl2,
+--         imdd.lvl3 AS dstrbtr_lvl3,
+--         imdd.lvl4 AS dstrbtr_lvl4,
+--         imdd.lvl5 AS dstrbtr_lvl5,
+--         imdd.region AS region_nm,
+--         NULL AS town_nm,
+--         NULL AS slsmn_cd,
+--         NULL AS chnl_desc,
+--         NULL AS sub_chnl_desc,
+--         NULL AS chnl_attr1_desc,
+--         NULL AS chnl_attr2_desc,
+--         veocd.sap_state_cd,
+--         veocd.sap_sls_org,
+--         veocd.sap_cmp_id,
+--         veocd.sap_cntry_cd,
+--         veocd.sap_cntry_nm,
+--         veocd.sap_addr,
+--         veocd.sap_region,
+--         veocd.sap_city,
+--         veocd.sap_post_cd,
+--         veocd.sap_chnl_cd,
+--         veocd.sap_chnl_desc,
+--         veocd.sap_sls_office_cd,
+--         veocd.sap_sls_office_desc,
+--         veocd.sap_sls_grp_cd,
+--         veocd.sap_sls_grp_desc,
+--         veocd.sap_curr_cd,
+--         veocd.gch_region,
+--         veocd.gch_cluster,
+--         veocd.gch_subcluster,
+--         veocd.gch_market,
+--         veocd.gch_retail_banner,
+--         (evosif.dstrbtr_matl_num)::character varying AS dstrbtr_matl_num,
+--         evosif.bar_cd,
+--         (
+--             ltrim(
+--                 (veomd.sap_matl_num)::text,
+--                 ('0'::character varying)::text
+--             )
+--         )::character varying AS sku,
+--         immd.frnchse_desc,
+--         immd.brnd_desc,
+--         immd.vrnt_desc,
+--         immd.putup_desc,
+--         immd.item_desc2,
+--         veomd.sap_mat_desc AS sku_desc,
+--         veomd.sap_mat_type_cd,
+--         veomd.sap_mat_type_desc,
+--         veomd.sap_base_uom_cd,
+--         veomd.sap_prchse_uom_cd,
+--         veomd.sap_prod_sgmt_cd,
+--         veomd.sap_prod_sgmt_desc,
+--         veomd.sap_base_prod_cd,
+--         veomd.sap_base_prod_desc,
+--         veomd.sap_mega_brnd_cd,
+--         veomd.sap_mega_brnd_desc,
+--         veomd.sap_brnd_cd,
+--         veomd.sap_brnd_desc,
+--         veomd.sap_vrnt_cd,
+--         veomd.sap_vrnt_desc,
+--         veomd.sap_put_up_cd,
+--         veomd.sap_put_up_desc,
+--         veomd.sap_grp_frnchse_cd,
+--         veomd.sap_grp_frnchse_desc,
+--         veomd.sap_frnchse_cd,
+--         veomd.sap_frnchse_desc,
+--         veomd.sap_prod_frnchse_cd,
+--         veomd.sap_prod_frnchse_desc,
+--         veomd.sap_prod_mjr_cd,
+--         veomd.sap_prod_mjr_desc,
+--         veomd.sap_prod_mnr_cd,
+--         veomd.sap_prod_mnr_desc,
+--         veomd.sap_prod_hier_cd,
+--         veomd.sap_prod_hier_desc,
+--         veomd.gph_region AS global_mat_region,
+--         veomd.gph_prod_frnchse AS global_prod_franchise,
+--         veomd.gph_prod_brnd AS global_prod_brand,
+--         veomd.gph_prod_vrnt AS global_prod_variant,
+--         veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+--         veomd.gph_prod_put_up_desc AS global_put_up_desc,
+--         veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+--         veomd.gph_prod_needstate AS global_prod_need_state,
+--         veomd.gph_prod_ctgry AS global_prod_category,
+--         veomd.gph_prod_subctgry AS global_prod_subcategory,
+--         veomd.gph_prod_sgmnt AS global_prod_segment,
+--         veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+--         veomd.gph_prod_size AS global_prod_size,
+--         veomd.gph_prod_size_uom AS global_prod_size_uom,
+--         veocurd.from_ccy,
+--         veocurd.to_ccy,
+--         veocurd.exch_rate,
+--         NULL AS wh_id,
+--         NULL AS doc_type,
+--         NULL AS doc_type_desc,
+--         NULL AS bill_date,
+--         NULL AS bill_doc,
+--         0 AS base_sls,
+--         0 AS sls_qty,
+--         0 AS ret_qty,
+--         NULL AS uom,
+--         0 AS sls_qty_pc,
+--         0 AS ret_qty_pc,
+--         0 AS in_transit_qty,
+--         lp.rate AS mat_list_price,
+--         0 AS grs_trd_sls,
+--         0 AS ret_val,
+--         0 AS trd_discnt,
+--         0 AS trd_sls,
+--         0 AS net_trd_sls,
+--         0 AS jj_grs_trd_sls,
+--         0 AS jj_ret_val,
+--         0 AS jj_trd_sls,
+--         0 AS jj_net_trd_sls,
+--         0 AS in_transit_val,
+--         0 AS trgt_val,
+--         (to_date(evosif.inv_dt))::character varying AS inv_dt,
+--         evosif.warehse_cd,
+--         evosif.end_stock_qty,
+--         (evosif.end_stock_val * veocurd.exch_rate) AS end_stock_val_raw,
+--         (
+--             (evosif.end_stock_qty * veocurd.exch_rate) * lp.rate
+--         ) AS end_stock_val,
+--         immd.npi_ind AS is_npi,
+--         immd.npi_strt_period AS npi_str_period,
+--         NULL AS npi_end_period,
+--         NULL AS is_reg,
+--         immd.promo_reg_ind AS is_promo,
+--         NULL AS promo_strt_period,
+--         NULL AS promo_end_period,
+--         NULL AS is_mcl,
+--         immd.hero_ind AS is_hero,
+--         0 AS contribution
+--     FROM (
+--             SELECT d.cntry_key,
+--                 d.cntry_nm,
+--                 d.rate_type,
+--                 d.from_ccy,
+--                 d.to_ccy,
+--                 d.valid_date,
+--                 d.jj_year,
+--                 d.start_period,
+--                 CASE
+--                     WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+--                     ELSE d.end_mnth_id
+--                 END AS end_period,
+--                 d.exch_rate
+--             FROM (
+--                     SELECT a.cntry_key,
+--                         a.cntry_nm,
+--                         a.rate_type,
+--                         a.from_ccy,
+--                         a.to_ccy,
+--                         a.valid_date,
+--                         a.jj_year,
+--                         min((a.jj_mnth_id)::text) AS start_period,
+--                         "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+--                         a.exch_rate
+--                     FROM EDW_VW_my_CURR_DIM a
+--                     WHERE (
+--                             (a.cntry_key)::text = ('MY'::character varying)::text
+--                         )
+--                     GROUP BY a.cntry_key,
+--                         a.cntry_nm,
+--                         a.rate_type,
+--                         a.from_ccy,
+--                         a.to_ccy,
+--                         a.valid_date,
+--                         a.jj_year,
+--                         a.exch_rate
+--                 ) d,
+--                 (
+--                     SELECT "max"((a.jj_mnth_id)::text) AS max_period
+--                     FROM EDW_VW_my_CURR_DIM a
+--                     WHERE (
+--                             (a.cntry_key)::text = ('MY'::character varying)::text
+--                         )
+--                 ) b
+--         ) veocurd,
+--         (
+--             (
+--                 (
+--                     (
+--                         (
+--                             (
+--                                 (
+--                                     SELECT veotd."year",
+--                                         veotd.qrtr_no,
+--                                         veotd.mnth_id,
+--                                         veotd.mnth_no,
+--                                         veotd.mnth_nm,
+--                                         t1.warehse_cd,
+--                                         t1.dstrbtr_grp_cd,
+--                                         t1.dstrbtr_soldto_code,
+--                                         t1.bar_cd,
+--                                         t1.sap_matl_num,
+--                                         TRIM((t1.dstrbtr_matl_num)::text) AS dstrbtr_matl_num,
+--                                         t1.inv_dt,
+--                                         t1.soh,
+--                                         t1.soh_val,
+--                                         t1.end_stock_qty,
+--                                         t1.end_stock_val
+--                                     FROM EDW_VW_my_SELLOUT_INVENTORY_FACT t1,
+--                                         (
+--                                             SELECT DISTINCT edw_vw_os_time_dim.cal_year AS "year",
+--                                                 edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                                 edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                                 edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                                 edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                                 edw_vw_os_time_dim.cal_date,
+--                                                 edw_vw_os_time_dim.cal_date_id
+--                                             FROM edw_vw_os_time_dim
+--                                         ) veotd
+--                                     WHERE (
+--                                             (
+--                                                 (t1.cntry_cd)::text = ('MY'::character varying)::text
+--                                             )
+--                                             AND (
+--                                                 to_date((veotd.cal_date)::timestamp without time zone) = to_date(t1.inv_dt)
+--                                             )
+--                                         )
+--                                 ) evosif
+--                                 LEFT JOIN (
+--                                     SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_addr,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_region,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_city,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+--                                         EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+--                                         EDW_VW_my_CUSTOMER_DIM.retail_env,
+--                                         EDW_VW_my_CUSTOMER_DIM.gch_region,
+--                                         EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+--                                         EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+--                                         EDW_VW_my_CUSTOMER_DIM.gch_market,
+--                                         EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+--                                     FROM EDW_VW_my_CUSTOMER_DIM
+--                                     WHERE (
+--                                             (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+--                                         )
+--                                 ) veocd ON (
+--                                     (
+--                                         ltrim(
+--                                             (veocd.sap_cust_id)::text,
+--                                             ('0'::character varying)::text
+--                                         ) = ltrim(
+--                                             (evosif.dstrbtr_soldto_code)::text,
+--                                             ('0'::character varying)::text
+--                                         )
+--                                     )
+--                                 )
+--                             )
+--                             LEFT JOIN (
+--                                 SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.ean_num,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_region,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+--                                     EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+--                                     EDW_VW_my_MATERIAL_DIM.launch_dt,
+--                                     EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+--                                     EDW_VW_my_MATERIAL_DIM.prft_ctr,
+--                                     EDW_VW_my_MATERIAL_DIM.shlf_life
+--                                 FROM EDW_VW_my_MATERIAL_DIM
+--                                 WHERE (
+--                                         (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+--                                     )
+--                             ) veomd ON (
+--                                 (
+--                                     ltrim(
+--                                         (veomd.sap_matl_num)::text,
+--                                         ('0'::character varying)::text
+--                                     ) = ltrim(
+--                                         (
+--                                             COALESCE(evosif.sap_matl_num, ''::character varying)
+--                                         )::text,
+--                                         ('0'::character varying)::text
+--                                     )
+--                                 )
+--                             )
+--                         )
+--                         LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+--                             (
+--                                 ltrim(
+--                                     (imdd.cust_id)::text,
+--                                     ('0'::character varying)::text
+--                                 ) = ltrim(
+--                                     (evosif.dstrbtr_soldto_code)::text,
+--                                     ('0'::character varying)::text
+--                                 )
+--                             )
+--                         )
+--                     )
+--                     LEFT JOIN itg_my_material_dim immd ON (
+--                         (
+--                             ltrim(
+--                                 (immd.item_cd)::text,
+--                                 ('0'::character varying)::text
+--                             ) = ltrim(
+--                                 (evosif.sap_matl_num)::text,
+--                                 ('0'::character varying)::text
+--                             )
+--                         )
+--                     )
+--                 )
+--                 LEFT JOIN itg_my_customer_dim imcd ON (
+--                     (
+--                         TRIM((imcd.cust_id)::text) = TRIM((evosif.dstrbtr_soldto_code)::text)
+--                     )
+--                 )
+--             )
+--             LEFT JOIN (
+--                 SELECT EDW_VW_my_LISTPRICE.cntry_key,
+--                     EDW_VW_my_LISTPRICE.cntry_nm,
+--                     EDW_VW_my_LISTPRICE.plant,
+--                     EDW_VW_my_LISTPRICE.cnty,
+--                     EDW_VW_my_LISTPRICE.item_cd,
+--                     EDW_VW_my_LISTPRICE.item_desc,
+--                     EDW_VW_my_LISTPRICE.valid_from,
+--                     EDW_VW_my_LISTPRICE.valid_to,
+--                     EDW_VW_my_LISTPRICE.rate,
+--                     EDW_VW_my_LISTPRICE.currency,
+--                     EDW_VW_my_LISTPRICE.price_unit,
+--                     EDW_VW_my_LISTPRICE.uom,
+--                     EDW_VW_my_LISTPRICE.yearmo,
+--                     EDW_VW_my_LISTPRICE.mnth_type,
+--                     EDW_VW_my_LISTPRICE.snapshot_dt
+--                 FROM EDW_VW_my_LISTPRICE
+--                 WHERE (
+--                         (
+--                             (EDW_VW_my_LISTPRICE.cntry_key)::text = ('MY'::character varying)::text
+--                         )
+--                         AND (
+--                             (EDW_VW_my_LISTPRICE.mnth_type)::text = ('CAL'::character varying)::text
+--                         )
+--                     )
+--             ) lp ON (
+--                 (
+--                     (
+--                         ltrim(
+--                             (lp.item_cd)::text,
+--                             ('0'::character varying)::text
+--                         ) = ltrim(
+--                             (evosif.sap_matl_num)::text,
+--                             ('0'::character varying)::text
+--                         )
+--                     )
+--                     AND (
+--                         (lp.yearmo)::text = ((evosif.mnth_id)::character varying)::text
+--                     )
+--                 )
+--             )
+--         )
+--     WHERE (
+--             (
+--                 ((evosif.mnth_id)::character varying)::text >= veocurd.start_period
+--             )
+--             AND (
+--                 ((evosif.mnth_id)::character varying)::text <= veocurd.end_period
+--             )
+--         )
+-- )
+-- UNION ALL
+-- SELECT 'IN Transit' AS data_src,
+--     veoint."year",
+--     veoint.qrtr_no,
+--     veoint.mnth_id,
+--     veoint.mnth_no,
+--     veoint.mnth_nm,
+--     NULL AS max_yearmo,
+--     'Malaysia' AS cntry_nm,
+--     imcd.dstrbtr_grp_cd,
+--     imcd.dstrbtr_grp_nm,
+--     NULL AS dstrbtr_cust_cd,
+--     NULL AS dstrbtr_cust_nm,
+--     (
+--         ltrim(
+--             (imdd.cust_id)::text,
+--             ('0'::character varying)::text
+--         )
+--     )::character varying AS sap_soldto_code,
+--     imdd.cust_nm AS sap_soldto_nm,
+--     imdd.lvl1 AS dstrbtr_lvl1,
+--     imdd.lvl2 AS dstrbtr_lvl2,
+--     imdd.lvl3 AS dstrbtr_lvl3,
+--     imdd.lvl4 AS dstrbtr_lvl4,
+--     imdd.lvl5 AS dstrbtr_lvl5,
+--     imdd.region AS region_nm,
+--     NULL AS town_nm,
+--     NULL AS slsmn_cd,
+--     NULL AS chnl_desc,
+--     NULL AS sub_chnl_desc,
+--     NULL AS chnl_attr1_desc,
+--     NULL AS chnl_attr2_desc,
+--     veocd.sap_state_cd,
+--     veocd.sap_sls_org,
+--     veocd.sap_cmp_id,
+--     veocd.sap_cntry_cd,
+--     veocd.sap_cntry_nm,
+--     veocd.sap_addr,
+--     veocd.sap_region,
+--     veocd.sap_city,
+--     veocd.sap_post_cd,
+--     veocd.sap_chnl_cd,
+--     veocd.sap_chnl_desc,
+--     veocd.sap_sls_office_cd,
+--     veocd.sap_sls_office_desc,
+--     veocd.sap_sls_grp_cd,
+--     veocd.sap_sls_grp_desc,
+--     veocd.sap_curr_cd,
+--     veocd.gch_region,
+--     veocd.gch_cluster,
+--     veocd.gch_subcluster,
+--     veocd.gch_market,
+--     veocd.gch_retail_banner,
+--     NULL AS dstrbtr_matl_num,
+--     NULL AS bar_cd,
+--     (
+--         ltrim(
+--             (veomd.sap_matl_num)::text,
+--             ('0'::character varying)::text
+--         )
+--     )::character varying AS sku,
+--     immd.frnchse_desc,
+--     immd.brnd_desc,
+--     immd.vrnt_desc,
+--     immd.putup_desc,
+--     immd.item_desc2,
+--     veomd.sap_mat_desc AS sku_desc,
+--     veomd.sap_mat_type_cd,
+--     veomd.sap_mat_type_desc,
+--     veomd.sap_base_uom_cd,
+--     veomd.sap_prchse_uom_cd,
+--     veomd.sap_prod_sgmt_cd,
+--     veomd.sap_prod_sgmt_desc,
+--     veomd.sap_base_prod_cd,
+--     veomd.sap_base_prod_desc,
+--     veomd.sap_mega_brnd_cd,
+--     veomd.sap_mega_brnd_desc,
+--     veomd.sap_brnd_cd,
+--     veomd.sap_brnd_desc,
+--     veomd.sap_vrnt_cd,
+--     veomd.sap_vrnt_desc,
+--     veomd.sap_put_up_cd,
+--     veomd.sap_put_up_desc,
+--     veomd.sap_grp_frnchse_cd,
+--     veomd.sap_grp_frnchse_desc,
+--     veomd.sap_frnchse_cd,
+--     veomd.sap_frnchse_desc,
+--     veomd.sap_prod_frnchse_cd,
+--     veomd.sap_prod_frnchse_desc,
+--     veomd.sap_prod_mjr_cd,
+--     veomd.sap_prod_mjr_desc,
+--     veomd.sap_prod_mnr_cd,
+--     veomd.sap_prod_mnr_desc,
+--     veomd.sap_prod_hier_cd,
+--     veomd.sap_prod_hier_desc,
+--     veomd.gph_region AS global_mat_region,
+--     veomd.gph_prod_frnchse AS global_prod_franchise,
+--     veomd.gph_prod_brnd AS global_prod_brand,
+--     veomd.gph_prod_vrnt AS global_prod_variant,
+--     veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+--     veomd.gph_prod_put_up_desc AS global_put_up_desc,
+--     veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+--     veomd.gph_prod_needstate AS global_prod_need_state,
+--     veomd.gph_prod_ctgry AS global_prod_category,
+--     veomd.gph_prod_subctgry AS global_prod_subcategory,
+--     veomd.gph_prod_sgmnt AS global_prod_segment,
+--     veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+--     veomd.gph_prod_size AS global_prod_size,
+--     veomd.gph_prod_size_uom AS global_prod_size_uom,
+--     veocurd.from_ccy,
+--     veocurd.to_ccy,
+--     veocurd.exch_rate,
+--     NULL AS wh_id,
+--     NULL AS doc_type,
+--     NULL AS doc_type_desc,
+--     NULL AS bill_date,
+--     NULL AS bill_doc,
+--     0 AS base_sls,
+--     0 AS sls_qty,
+--     0 AS ret_qty,
+--     NULL AS uom,
+--     0 AS sls_qty_pc,
+--     0 AS ret_qty_pc,
+--     veoint.bill_qty_pc AS in_transit_qty,
+--     0 AS mat_list_price,
+--     0 AS grs_trd_sls,
+--     0 AS ret_val,
+--     0 AS trd_discnt,
+--     0 AS trd_sls,
+--     0 AS net_trd_sls,
+--     0 AS jj_grs_trd_sls,
+--     0 AS jj_ret_val,
+--     0 AS jj_trd_sls,
+--     0 AS jj_net_trd_sls,
+--     (veoint.billing_gross_val * veocurd.exch_rate) AS in_transit_val,
+--     0 AS trgt_val,
+--     NULL AS inv_dt,
+--     NULL AS warehse_cd,
+--     0 AS end_stock_qty,
+--     0 AS end_stock_val_raw,
+--     0 AS end_stock_val,
+--     NULL AS is_npi,
+--     NULL AS npi_str_period,
+--     NULL AS npi_end_period,
+--     NULL AS is_reg,
+--     NULL AS is_promo,
+--     NULL AS promo_strt_period,
+--     NULL AS promo_end_period,
+--     NULL AS is_mcl,
+--     NULL AS is_hero,
+--     0 AS contribution
+-- FROM (
+--         SELECT d.cntry_key,
+--             d.cntry_nm,
+--             d.rate_type,
+--             d.from_ccy,
+--             d.to_ccy,
+--             d.valid_date,
+--             d.jj_year,
+--             d.start_period,
+--             CASE
+--                 WHEN (d.end_mnth_id = b.max_period) THEN ('209912'::character varying)::text
+--                 ELSE d.end_mnth_id
+--             END AS end_period,
+--             d.exch_rate
+--         FROM (
+--                 SELECT a.cntry_key,
+--                     a.cntry_nm,
+--                     a.rate_type,
+--                     a.from_ccy,
+--                     a.to_ccy,
+--                     a.valid_date,
+--                     a.jj_year,
+--                     min((a.jj_mnth_id)::text) AS start_period,
+--                     "max"((a.jj_mnth_id)::text) AS end_mnth_id,
+--                     a.exch_rate
+--                 FROM EDW_VW_my_CURR_DIM a
+--                 WHERE (
+--                         (a.cntry_key)::text = ('MY'::character varying)::text
+--                     )
+--                 GROUP BY a.cntry_key,
+--                     a.cntry_nm,
+--                     a.rate_type,
+--                     a.from_ccy,
+--                     a.to_ccy,
+--                     a.valid_date,
+--                     a.jj_year,
+--                     a.exch_rate
+--             ) d,
+--             (
+--                 SELECT "max"((a.jj_mnth_id)::text) AS max_period
+--                 FROM EDW_VW_my_CURR_DIM a
+--                 WHERE (
+--                         (a.cntry_key)::text = ('MY'::character varying)::text
+--                     )
+--             ) b
+--     ) veocurd,
+--     (
+--         (
+--             (
+--                 (
+--                     (
+--                         (
+--                             SELECT a.bill_doc,
+--                                 b.bill_num,
+--                                 b.sold_to,
+--                                 b.matl_num,
+--                                 b.bill_qty_pc,
+--                                 b.billing_gross_val,
+--                                 veotd."year",
+--                                 veotd.qrtr_no,
+--                                 veotd.mnth_id,
+--                                 veotd.mnth_no,
+--                                 veotd.mnth_nm
+--                             FROM itg_my_in_transit a,
+--                                 (
+--                                     SELECT EDW_VW_MY_BILLING_FACT.bill_num,
+--                                         EDW_VW_MY_BILLING_FACT.sold_to,
+--                                         EDW_VW_MY_BILLING_FACT.matl_num,
+--                                         sum(EDW_VW_MY_BILLING_FACT.bill_qty_pc) AS bill_qty_pc,
+--                                         sum(
+--                                             (
+--                                                 EDW_VW_MY_BILLING_FACT.grs_trd_sls * abs(EDW_VW_MY_BILLING_FACT.exchg_rate)
+--                                             )
+--                                         ) AS billing_gross_val
+--                                     FROM EDW_VW_MY_BILLING_FACT
+--                                     WHERE (
+--                                             EDW_VW_MY_BILLING_FACT.cntry_key = ('MY'::character varying)::text
+--                                         )
+--                                     GROUP BY EDW_VW_MY_BILLING_FACT.bill_num,
+--                                         EDW_VW_MY_BILLING_FACT.sold_to,
+--                                         EDW_VW_MY_BILLING_FACT.matl_num
+--                                 ) b,
+--                                 (
+--                                     SELECT edw_vw_os_time_dim.cal_year AS "year",
+--                                         edw_vw_os_time_dim.cal_qrtr_no AS qrtr_no,
+--                                         edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
+--                                         edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
+--                                         edw_vw_os_time_dim.cal_mnth_nm AS mnth_nm,
+--                                         edw_vw_os_time_dim.cal_date
+--                                     FROM edw_vw_os_time_dim
+--                                     GROUP BY edw_vw_os_time_dim.cal_year,
+--                                         edw_vw_os_time_dim.cal_qrtr_no,
+--                                         edw_vw_os_time_dim.cal_mnth_id,
+--                                         edw_vw_os_time_dim.cal_mnth_no,
+--                                         edw_vw_os_time_dim.cal_mnth_nm,
+--                                         edw_vw_os_time_dim.cal_date
+--                                 ) veotd
+--                             WHERE (
+--                                     (b.bill_num = (a.bill_doc)::text)
+--                                     AND (a.closing_dt = veotd.cal_date)
+--                                 )
+--                         ) veoint
+--                         LEFT JOIN (
+--                             SELECT EDW_VW_my_CUSTOMER_DIM.sap_cust_id,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cust_nm,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sls_org,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cmp_id,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cntry_nm,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_addr,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_region,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_state_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_city,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_post_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_chnl_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_chnl_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sls_office_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sls_office_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sls_grp_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_curr_cd,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_prnt_cust_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cust_chnl_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_cust_sub_chnl_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_sub_chnl_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_go_to_mdl_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_bnr_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_bnr_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_key,
+--                                 EDW_VW_my_CUSTOMER_DIM.sap_bnr_frmt_desc,
+--                                 EDW_VW_my_CUSTOMER_DIM.retail_env,
+--                                 EDW_VW_my_CUSTOMER_DIM.gch_region,
+--                                 EDW_VW_my_CUSTOMER_DIM.gch_cluster,
+--                                 EDW_VW_my_CUSTOMER_DIM.gch_subcluster,
+--                                 EDW_VW_my_CUSTOMER_DIM.gch_market,
+--                                 EDW_VW_my_CUSTOMER_DIM.gch_retail_banner
+--                             FROM EDW_VW_my_CUSTOMER_DIM
+--                             WHERE (
+--                                     (EDW_VW_my_CUSTOMER_DIM.sap_cntry_cd)::text = ('MY'::character varying)::text
+--                                 )
+--                         ) veocd ON (
+--                             (
+--                                 ltrim(
+--                                     (veocd.sap_cust_id)::text,
+--                                     ('0'::character varying)::text
+--                                 ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
+--                             )
+--                         )
+--                     )
+--                     LEFT JOIN (
+--                         SELECT EDW_VW_my_MATERIAL_DIM.cntry_key,
+--                             EDW_VW_my_MATERIAL_DIM.sap_matl_num,
+--                             EDW_VW_my_MATERIAL_DIM.sap_mat_desc,
+--                             EDW_VW_my_MATERIAL_DIM.ean_num,
+--                             EDW_VW_my_MATERIAL_DIM.sap_mat_type_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_mat_type_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_base_uom_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prchse_uom_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_sgmt_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_base_prod_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_base_prod_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_mega_brnd_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_brnd_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_brnd_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_vrnt_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_vrnt_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_put_up_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_put_up_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_grp_frnchse_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_frnchse_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_frnchse_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_frnchse_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_mjr_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_mnr_desc,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_hier_cd,
+--                             EDW_VW_my_MATERIAL_DIM.sap_prod_hier_desc,
+--                             EDW_VW_my_MATERIAL_DIM.gph_region,
+--                             EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse,
+--                             EDW_VW_my_MATERIAL_DIM.gph_reg_frnchse_grp,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_frnchse,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_brnd,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_sub_brnd,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_vrnt,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_needstate,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_ctgry,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_subctgry,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_sgmnt,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_subsgmnt,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_cd,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_put_up_desc,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_size,
+--                             EDW_VW_my_MATERIAL_DIM.gph_prod_size_uom,
+--                             EDW_VW_my_MATERIAL_DIM.launch_dt,
+--                             EDW_VW_my_MATERIAL_DIM.qty_shipper_pc,
+--                             EDW_VW_my_MATERIAL_DIM.prft_ctr,
+--                             EDW_VW_my_MATERIAL_DIM.shlf_life
+--                         FROM EDW_VW_my_MATERIAL_DIM
+--                         WHERE (
+--                                 (EDW_VW_my_MATERIAL_DIM.cntry_key)::text = ('MY'::character varying)::text
+--                             )
+--                     ) veomd ON (
+--                         (
+--                             ltrim(
+--                                 (veomd.sap_matl_num)::text,
+--                                 ('0'::character varying)::text
+--                             ) = ltrim(veoint.matl_num, ('0'::character varying)::text)
+--                         )
+--                     )
+--                 )
+--                 LEFT JOIN itg_my_dstrbtrr_dim imdd ON (
+--                     (
+--                         ltrim(
+--                             (imdd.cust_id)::text,
+--                             ('0'::character varying)::text
+--                         ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
+--                     )
+--                 )
+--             )
+--             LEFT JOIN itg_my_material_dim immd ON (
+--                 (
+--                     ltrim(
+--                         (immd.item_cd)::text,
+--                         ('0'::character varying)::text
+--                     ) = ltrim(veoint.matl_num, ('0'::character varying)::text)
+--                 )
+--             )
+--         )
+--         LEFT JOIN itg_my_customer_dim imcd ON (
+--             (
+--                 ltrim(
+--                     (imcd.cust_id)::text,
+--                     ('0'::character varying)::text
+--                 ) = ltrim(veoint.sold_to, ('0'::character varying)::text)
+--             )
+--         )
+--     )
+-- WHERE (
+--         (
+--             ((veoint.mnth_id)::character varying)::text >= veocurd.start_period
+--         )
+--         AND (
+--             ((veoint.mnth_id)::character varying)::text <= veocurd.end_period
+--         )
+--     )
+-- )
 select * from final
