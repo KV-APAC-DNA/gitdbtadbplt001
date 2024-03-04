@@ -1,5 +1,4 @@
-
-with transformed as (
+with source as (
 select * from {{ ref('mysedw_integration__edw_vw_my_sellout_analysis') }}   
 ),
 final as (
@@ -144,6 +143,6 @@ final as (
 	is_mcl::varchar(1) as is_mcl,
 	is_hero::varchar(10) as is_hero,
 	contribution::number(38,29) as contribution
-    from transformed
+    from source
 )
 select * from final
