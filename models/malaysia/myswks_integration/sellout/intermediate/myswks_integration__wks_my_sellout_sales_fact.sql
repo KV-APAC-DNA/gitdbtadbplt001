@@ -22,7 +22,7 @@ immd as(
         when STATUS = 'DISCON'
         then 'C' || item_bar_cd
       end as flag,
-      row_number() over (partition by item_bar_cd order by flag asc) as row_count
+      row_number() over (partition by ltrim(item_bar_cd,'0') order by flag asc) as row_count
     from (
       select distinct
         item_bar_cd,
