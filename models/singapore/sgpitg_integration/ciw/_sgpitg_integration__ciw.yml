@@ -5,3 +5,7 @@ models:
     config:
       alias: itg_sg_ciw_mapping
       tags: ["sg_master_sellout","ingestion"]
+  - name: sgpitg_integration__sdl_raw_sg_ciw_mapping
+    config:
+      alias: itg_sg_ciw_mapping
+      tags: ["sg_master_sellout","ingestion"]
