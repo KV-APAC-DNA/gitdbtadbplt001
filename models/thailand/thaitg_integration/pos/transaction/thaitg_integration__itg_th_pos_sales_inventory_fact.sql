@@ -7,7 +7,7 @@
 }}
 with 
 itg_th_tims_transdata as(
-    select * from {{ ref('thaitg_integration__itg_th_tims_transdata') }}
+    select * from {{ source('snaposeitg_integration','itg_th_tims_transdata') }}
 ),
 edw_vw_os_customer_dim as(
     select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
@@ -82,9 +82,9 @@ trans as
         cust_dim.sap_prnt_cust_key,
         cust_dim.sap_prnt_cust_desc,
         null as supplier_code,
-        trunc(so_inv.trans_dt) as trans_date,
-        product_master.matl_num,
-        product_master.matl_name,
+        to_date(so_inv.trans_dt) as trans_dt,
+        product_master.matl_num as material_number,
+        product_master.matl_name as material_name,
         so_inv.upc as barcode,
         so_inv.brnch_no as branch_code,
         th_cust_dim.branch_nm as branch_nm,
@@ -117,6 +117,7 @@ trans as
             ) * cust_rsp.rsp
         end as stock_baht,
         so_inv.sls_baht
+        --so_inv.foc_product
         from itg_th_tims_transdata as so_inv
         left join edw_vw_os_customer_dim as cust_dim
         on cust_dim.sap_cust_id = '108832'
@@ -132,9 +133,9 @@ trans as
         and cust_rsp.valid_to >= so_inv.trans_dt
         and cust_rsp.account_name = 'Lotus'
         where
-        coalesce(so_inv.trans_dt, trunc(current_timestamp())) > (
+        coalesce(so_inv.trans_dt, to_date(current_timestamp())) > (
             select
-            date_trunc('year', current_timestamp() - retention_years * 365)
+            date_trunc('year',dateadd(year,retention_years * -1, current_timestamp()))
         from itg_lookup_retention_period
         where
         upper(table_name) = 'ITG_TH_POS_SALES_FACT'
@@ -152,11 +153,11 @@ final as
         trans_dt::date as trans_dt,
         material_number::varchar(20) as material_number,
         material_name::varchar(500) as material_name,
-        bar_code::varchar(20) as bar_code,
+        barcode::varchar(20) as bar_code,
         branch_code::varchar(20) as branch_code,
-        branch_name::varchar(200) as branch_name,
-        inventory_qty_source::number(17,4) as inventory_qty_source,
-        sales_qty_source::number(17,4) as sales_qty_source,
+        branch_nm::varchar(200) as branch_name,
+        invt_qty::number(17,4) as inventory_qty_source,
+        sls_qty::number(17,4) as sales_qty_source,
         retailer_unit_conversion::number(31,0) as retailer_unit_conversion,
         inventory_qty_converted::number(17,4) as inventory_qty_converted,
         sales_qty_converted::number(17,4) as sales_qty_converted,
@@ -164,8 +165,9 @@ final as
         inventory_gts::number(20,4) as inventory_gts,
         sales_gts::number(20,4) as sales_gts,
         customer_rsp::number(20,4) as customer_rsp,
-        inventory_baht::number(20,4) as inventory_baht,
-        sales_bah::number(20,4) as sales_bah,
+        stock_baht::number(20,4) as inventory_baht,
+        sls_baht::number(20,4) as sales_bah,
+        null::varchar(1) as foc_product
     from trans
 )
 

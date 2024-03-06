@@ -12,15 +12,15 @@ with source as(
 final as 
 (
     select
-        cast(ir_date as timestamp_ntz(9)) as trans_dt,
+        cast(ir_date as date) as trans_dt,
         article_id::float as tpn,
-        warehouse::varchar(50) as brnch_no,
+        ltrim(warehouse,0)::varchar(50) as brnch_no,
         stock::float as invt_qty,
         sales::float as sls_qty,
         sales_amount::float as sls_baht,
         eansku::varchar(50) as upc,
         spn::varchar(50) as sap_cd,
-        supplier_id::varchar(20) as ctgry_cd,
+        ltrim(supplier_id,0)::varchar(20) as ctgry_cd,
         replace(ir_date,'-','')::varchar(20) as dt_cd,
         file_name::varchar(300) as file_nm,
         folder_name::varchar(100) as folder_nm,

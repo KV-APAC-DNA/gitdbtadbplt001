@@ -91,13 +91,13 @@ trans as
     base.month as propagate_from,
     base.so_qty,
     base.inv_qty,
-    datediff(month, to_date(base.month, 'yyyymm'), to_date(latest_month, 'yyyymm')) as diff_month,
+    datediff(month,to_date(base.month || '01', 'yyyymmdd'), to_date(latest_month || '01', 'yyyymmdd')) as diff_month,
     p_to.reason
     from  p_to,  base
     where
     p_to.sap_parent_customer_key = base.sap_parent_customer_key
     and base.month < p_to.month
-    and datediff(month, to_date(base.month, 'yyyymm'), to_date(latest_month, 'yyyymm')) <= 2
+    and datediff(month,to_date(base.month || '01', 'yyyymmdd'), to_date(latest_month || '01', 'yyyymmdd')) <= 2
 ),
 
 final as 

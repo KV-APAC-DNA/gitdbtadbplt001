@@ -1,4 +1,5 @@
-with wks_th_watsons_lastnmonths as(
+with 
+wks_th_watsons_lastnmonths as(
     select * from {{ source('snaposewks_integration','wks_th_watsons_lastnmonths') }}
 ),
 wks_th_watson_base as(
@@ -52,7 +53,7 @@ trans as
             cal_mnth_id as mnth_id
         from edw_vw_os_time_dim
         where
-            cal_date = (current_timestamp()::date)
+            cal_date = current_timestamp()::date
         )
     
 ),
@@ -91,6 +92,7 @@ temp as
         sap_parent_customer_key,
         sap_parent_customer_desc,
         matl_num,
+        month,
         month,
         replicated_flag
 ),
