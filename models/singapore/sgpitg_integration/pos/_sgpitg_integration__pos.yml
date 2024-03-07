@@ -46,7 +46,7 @@ models:
   - name: sgpitg_integration__itg_sg_pos_sales_fact
     config:
       alias: itg_sg_pos_sales_fact
-      tags: ["sg_Sellin_and_scan_datamart","transformation"]
+      tags: ["sg_sellin_and_scan_datamart","transformation"]
 
   - name: sgpitg_integration__sdl_raw_sg_scan_data_watsons
     config:

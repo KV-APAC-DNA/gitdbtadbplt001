@@ -276,8 +276,8 @@ WHERE
 ),
 final as 
 ( 
-  select * from union_1 
-  union all 
+    select * from union_1 
+    union all 
     select * from union_2
 )
 select * from final

@@ -141,26 +141,26 @@ b as
     ltrim(sap_cust_id, 0) as sap_cust_id,
     sap_prnt_cust_key,
     sap_prnt_cust_desc
-  from edw_vw_os_customer_dim
+  from edw_vw_my_customer_dim
 ),
 final as
 (
 select
-  year,
-  qrtr_no,
-  mnth_id,
-  mnth_no,
-  nvl(nullif((branch),''),'NA') as distributor,
-  dstrbtr_grp_cd,
-  sap_prnt_cust_key,
-  sap_prnt_cust_desc,
-  nvl(nullif(sku,''),'NA') as matl_num,
-  sum(si_sls_qty) as si_sls_qty,
-  sum(si_gts_val) as si_gts_val,
-  sum(inventory_quantity) as inventory_quantity,
-  sum(inventory_val) as inventory_val,
-  sum(so_sls_qty) as so_sls_qty,
-  sum(so_trd_sls) as so_trd_sls
+  year::number(18,0) as year,
+  qrtr_no::varchar(14) as qrtr_no,
+  mnth_id::varchar(21) as mnth_id,
+  mnth_no::number(18,0) as mnth_no,
+  nvl(nullif((branch),''),'NA')::varchar(40) as distributor,
+  dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+  sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+  sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+  nvl(nullif(sku,''),'NA')::varchar(100) as matl_num,
+  sum(si_sls_qty)::number(38,4) as si_sls_qty,
+  sum(si_gts_val)::number(38,13) as si_gts_val,
+  sum(inventory_quantity)::number(38,4) as inventory_quantity,
+  sum(inventory_val)::number(38,13) as inventory_val,
+  sum(so_sls_qty)::number(38,6) as so_sls_qty,
+  sum(so_trd_sls)::number(38,17) as so_trd_sls
 from  a
 left join  b
   on a.dstrbtr_grp_cd = b.sap_cust_id
@@ -176,20 +176,4 @@ group by
   sap_prnt_cust_desc,
   sku
 )
-select 
-  year::number(18,0) as year,
-  qrtr_no::varchar(14) as qrtr_no,
-  mnth_id::varchar(21) as mnth_id,
-  mnth_no::number(18,0) as mnth_no,
-  distributor::varchar(40) as distributor,
-  dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-  sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
-  sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
-  matl_num::varchar(100) as matl_num,
-  si_sls_qty::number(38,4) as si_sls_qty,
-  si_gts_val::number(38,13) as si_gts_val,
-  inventory_quantity::number(38,4) as inventory_quantity,
-  inventory_val::number(38,13) as inventory_val,
-  so_sls_qty::number(38,6) as so_sls_qty,
-  so_trd_sls::number(38,17) as so_trd_sls
- from final
+select * from final
