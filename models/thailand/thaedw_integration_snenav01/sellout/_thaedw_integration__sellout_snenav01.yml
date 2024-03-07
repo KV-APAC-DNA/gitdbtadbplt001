@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaedw_integration__edw_vw_th_sellout_analysis
+    config: 
+      alias: edw_vw_th_sellout_analysis
+      tags: [""]
