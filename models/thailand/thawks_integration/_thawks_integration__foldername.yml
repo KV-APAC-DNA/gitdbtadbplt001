@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: thawks_integration__wks_th_wks_bigc
+    config:
+      alias: wks_th_wks_bigc
+      tags: ["th_non_tesco"]
+  - name: thawks_integration__wks_th_makro
+    config:
+      alias: wks_th_makro
+      tags: ["th_non_tesco"]
+
+
+
+  

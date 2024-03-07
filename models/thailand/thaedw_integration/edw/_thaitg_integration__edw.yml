@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: thaedw_integration__edw_th_inventory_analysis
+    config: 
+      alias: edw_th_inventory_analysis
+      tags: [""]
+  - name: thaedw_integration__edw_th_market_share_distribution_analysis
+    config: 
+      alias: edw_th_market_share_distribution_analysis
+      tags: [""]
+  - name: thaedw_integration__edw_th_sellout_foc_analysis
+    config: 
+      alias: edw_th_sellout_foc_analysis
+      tags: [""]
+
+
+

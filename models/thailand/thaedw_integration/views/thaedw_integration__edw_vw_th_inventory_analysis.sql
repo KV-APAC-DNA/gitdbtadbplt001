@@ -1,0 +1,77 @@
+with edw_vw_th_inventory_analysis_base_6year_filter as (
+select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_INVENTORY_ANALYSIS_BASE_6YEAR_FILTER
+),
+final as (
+SELECT
+  edw_vw_th_inventory_analysis_base_6year_filter.data_type,
+  edw_vw_th_inventory_analysis_base_6year_filter.order_date,
+  edw_vw_th_inventory_analysis_base_6year_filter.year,
+  edw_vw_th_inventory_analysis_base_6year_filter.year_quarter,
+  edw_vw_th_inventory_analysis_base_6year_filter.month_year,
+  edw_vw_th_inventory_analysis_base_6year_filter.month_number,
+  edw_vw_th_inventory_analysis_base_6year_filter.year_week_number,
+  edw_vw_th_inventory_analysis_base_6year_filter.month_week_number,
+  edw_vw_th_inventory_analysis_base_6year_filter.country_code,
+  edw_vw_th_inventory_analysis_base_6year_filter.country_name,
+  edw_vw_th_inventory_analysis_base_6year_filter.distributor_id,
+  edw_vw_th_inventory_analysis_base_6year_filter.whcode,
+  edw_vw_th_inventory_analysis_base_6year_filter.whgroup,
+  edw_vw_th_inventory_analysis_base_6year_filter.sku_code,
+  edw_vw_th_inventory_analysis_base_6year_filter.sku_description,
+  edw_vw_th_inventory_analysis_base_6year_filter.franchise,
+  edw_vw_th_inventory_analysis_base_6year_filter.brand,
+  edw_vw_th_inventory_analysis_base_6year_filter.variant,
+  edw_vw_th_inventory_analysis_base_6year_filter.segment,
+  edw_vw_th_inventory_analysis_base_6year_filter.put_up_description,
+  edw_vw_th_inventory_analysis_base_6year_filter.prod_sub_brand,
+  edw_vw_th_inventory_analysis_base_6year_filter.prod_subsegment,
+  edw_vw_th_inventory_analysis_base_6year_filter.prod_category,
+  edw_vw_th_inventory_analysis_base_6year_filter.prod_subcategory,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cust_id,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cust_nm,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sls_org,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cmp_id,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cntry_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cntry_nm,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_addr,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_region,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_state_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_city,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_post_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_chnl_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_chnl_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sls_office_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sls_office_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sls_grp_cd,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sls_grp_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_prnt_cust_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_prnt_cust_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cust_chnl_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cust_chnl_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_cust_sub_chnl_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_sub_chnl_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_go_to_mdl_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_go_to_mdl_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_bnr_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_bnr_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_bnr_frmt_key,
+  edw_vw_th_inventory_analysis_base_6year_filter.sap_bnr_frmt_desc,
+  edw_vw_th_inventory_analysis_base_6year_filter.retail_env,
+  edw_vw_th_inventory_analysis_base_6year_filter.sales_quantity,
+  edw_vw_th_inventory_analysis_base_6year_filter.return_quantity,
+  edw_vw_th_inventory_analysis_base_6year_filter.gross_trade_sales,
+  edw_vw_th_inventory_analysis_base_6year_filter.inventory_quantity,
+  edw_vw_th_inventory_analysis_base_6year_filter.amount_before_discount,
+  edw_vw_th_inventory_analysis_base_6year_filter.inventory,
+  edw_vw_th_inventory_analysis_base_6year_filter.si_gross_trade_sales_value,
+  edw_vw_th_inventory_analysis_base_6year_filter.si_tp_value,
+  edw_vw_th_inventory_analysis_base_6year_filter.si_net_trade_sales_value
+FROM edw_vw_th_inventory_analysis_base_6year_filter
+WHERE
+  (
+    edw_vw_th_inventory_analysis_base_6year_filter.year > 
+      (DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 3)
+    
+  )
+)
+select * from final
