@@ -56,7 +56,7 @@ final as
         inventory_quantity::float as inventory_quantity,
         inventory::float as inventory,
         si_sellin_target::number(38,5) as si_sellin_target,
-        si_gross_trade_sales_value::number(38,5) as si_gross_trade_sales_value,
+        si_gross_trade_sales_value::number(38,5) as si_gross_trade_sales_value
     from source
 )
 select * from final

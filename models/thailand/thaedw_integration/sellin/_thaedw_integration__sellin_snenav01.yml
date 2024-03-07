@@ -4,4 +4,4 @@ models:
   - name: thaedw_integration__edw_vw_th_sellin_sales_fact
     config: 
       alias: edw_vw_th_sellin_sales_fact
-      tags: [""]
+      tags: ["th_itg_to_edw"]

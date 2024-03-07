@@ -18,15 +18,15 @@ edw_vw_th_dstrbtr_customer_dim as
 ),
 itg_th_target_distribution as 
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_target_distribution
+    select * from {{ ref('thaitg_integration__itg_th_target_distribution') }}
 ),
 itg_th_productgrouping as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_productgrouping
+    select * from {{ ref('thaitg_integration__itg_th_productgrouping') }}
 ),
 itg_th_target_sales as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_target_sales
+    select * from {{ ref('thaitg_integration__itg_th_target_sales') }}
 ),
 edw_vw_th_customer_dim as
 (

@@ -22,5 +22,16 @@ sources:
 
       - name: sdl_th_dms_sellout_fact
         tags: ["th_mbox_sellout"]
+  - name: thaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_distributor_control
+      - name: itg_lookup_retention_period
+
 
   

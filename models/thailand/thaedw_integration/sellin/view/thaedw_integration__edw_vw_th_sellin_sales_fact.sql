@@ -1,6 +1,6 @@
 with edw_copa_trans_fact as 
 (
-    select * from DEV_DNA_CORE.snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 t2 as
 (

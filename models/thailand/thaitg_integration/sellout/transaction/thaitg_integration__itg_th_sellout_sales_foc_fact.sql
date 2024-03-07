@@ -4,7 +4,7 @@ with itg_th_dtssaletrans as
 ),
 itg_distributor_control as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_distributor_control
+    select * from {{ source('thaitg_integration', 'itg_distributor_control') }}
 ),
 itg_th_htc_sellout as
 (
@@ -12,7 +12,7 @@ itg_th_htc_sellout as
 ),
 itg_th_dtscnreason as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtscnreason
+    select * from {{ ref('thaitg_integration__itg_th_dtscnreason') }}
 ),
 itg_th_dtsitemmaster as
 (
@@ -20,11 +20,11 @@ itg_th_dtsitemmaster as
 ),
 itg_lookup_retention_period as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_lookup_retention_period
+    select * from {{ source('thaitg_integration', 'itg_lookup_retention_period') }}
 ),
 itg_th_dms_sellout_fact as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dms_sellout_fact
+    select * from {{ ref('thaitg_integration__sdl_raw_th_dms_sellout_fact') }}
 ),
 union_1 as 
 (
@@ -268,7 +268,7 @@ final as
     where nvl(order_dt, (current_timestamp()::date)) >
     (
         select date_trunc(year, current_timestamp::date - retention_years * 365)
-        from snaposeitg_integration.itg_lookup_retention_period
+        from itg_lookup_retention_period
         where upper(table_name) = 'ITG_TH_SELLOUT_SALES_FACT'
     )
 )

@@ -1,14 +1,14 @@
 with edw_th_sellout_analysis as 
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_th_sellout_analysis
+    select * from {{ ref('thaedw_integration__edw_th_sellout_analysis') }}
 ),
 itg_th_dtsmcl as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtsmcl
+    select * from {{ ref("thaitg_integration__itg_th_dtsmcl") }}
 ),
 itg_th_jbp_cop as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_jbp_cop
+    select * from {{ ref('thaitg_integration__itg_th_jbp_cop') }}
 ),
 edw_vw_th_sellout_sales_fact as
 (
@@ -40,11 +40,11 @@ edw_vw_th_sellin_sales_fact as
 ),
 itg_th_ciw_account_lookup as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_ciw_account_lookup
+    select * from {{ ref('thaitg_integration__itg_th_ciw_account_lookup') }}
 ),
 itg_th_jbp_rolling_forecast as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_jbp_rolling_forecast
+    select * from {{ ref('thaitg_integration__itg_th_jbp_rolling_forecast') }}
 ),
 edw_vw_th_customer_dim as
 (
@@ -53,7 +53,7 @@ edw_vw_th_customer_dim as
 ),
 edw_company_dim as
 (
-    select * from DEV_DNA_CORE.snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_vw_th_dstrbtr_customer_dim as
 (
@@ -717,9 +717,6 @@ sellin as
                                             edw_vw_th_customer_dim.gch_market,
                                             edw_vw_th_customer_dim.gch_retail_banner
                                         FROM edw_vw_th_customer_dim
-                                        WHERE (
-                                                (edw_vw_th_customer_dim.sap_cntry_cd)::text = ('TH'::varchar)::text
-                                            )
                                     ) cust ON (
                                         (
                                             (
@@ -749,9 +746,6 @@ sellin as
                                 SELECT DISTINCT edw_vw_th_dstrbtr_customer_dim.dstrbtr_grp_cd,
                                     edw_vw_th_dstrbtr_customer_dim.sap_soldto_code
                                 FROM edw_vw_th_dstrbtr_customer_dim
-                                WHERE (
-                                        (edw_vw_th_dstrbtr_customer_dim.cntry_cd)::text = ('TH'::varchar)::text
-                                    )
                             ) so_cust ON (
                                 (
                                     (cust.sap_cust_id)::text = (so_cust.sap_soldto_code)::text
@@ -786,10 +780,7 @@ sellin as
                                             edw_vw_th_material_dim.gph_prod_vrnt,
                                             edw_vw_th_material_dim.gph_prod_sgmnt,
                                             edw_vw_th_material_dim.gph_prod_put_up_desc
-                                        FROM edw_vw_th_material_dim edw_vw_th_material_dim
-                                        WHERE (
-                                                (edw_vw_th_material_dim.cntry_key)::text = ('TH'::varchar)::text
-                                            )
+                                        FROM edw_vw_th_material_dim
                                     ) sellin_mat
                                     LEFT JOIN (
                                         SELECT DISTINCT edw_vw_th_dstrbtr_material_dim.dstrbtr_matl_num,
@@ -803,9 +794,6 @@ sellin as
                                             edw_vw_th_dstrbtr_material_dim.is_mcl,
                                             edw_vw_th_dstrbtr_material_dim.is_hero
                                         FROM edw_vw_th_dstrbtr_material_dim
-                                        WHERE (
-                                                (edw_vw_th_dstrbtr_material_dim.cntry_cd)::text = ('TH'::varchar)::text
-                                            )
                                     ) sellout_mat ON (
                                         (
                                             (sellin_mat.sap_matl_num)::text = (sellout_mat.dstrbtr_matl_num)::text
@@ -1046,7 +1034,7 @@ ar_type_placeholder as
                                             edw_vw_th_sellout_analysis.order_date,
                                             ('mm'::varchar)::text
                                         ) AS month
-                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis
                                 ) a ON ((1 = 1))
                             )
                     ) a
@@ -1061,7 +1049,7 @@ ar_type_placeholder as
                             ) AS month,
                             edw_vw_th_sellout_analysis.ar_type_name,
                             edw_vw_th_sellout_analysis.distributor_id
-                        FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
+                        FROM edw_th_sellout_analysis
                     ) b ON (
                         (
                             (
@@ -1158,7 +1146,7 @@ franchise_placeholder as
                                 (
                                     SELECT DISTINCT edw_vw_th_sellout_analysis.franchise,
                                         edw_vw_th_sellout_analysis.distributor_id
-                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis
                                 ) b
                                 JOIN (
                                     SELECT DISTINCT to_char(
@@ -1169,7 +1157,7 @@ franchise_placeholder as
                                             edw_vw_th_sellout_analysis.order_date,
                                             ('mm'::varchar)::text
                                         ) AS month
-                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis
                                 ) a ON ((1 = 1))
                             )
                     ) a
@@ -1184,7 +1172,7 @@ franchise_placeholder as
                             ) AS month,
                             edw_vw_th_sellout_analysis.franchise,
                             edw_vw_th_sellout_analysis.distributor_id
-                        FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
+                        FROM edw_th_sellout_analysis
                     ) b ON (
                         (
                             (
