@@ -8,9 +8,9 @@ source as (
 
 final as (
     select 
-    coalesce(salesorg,'') as salesorg,
-	coalesce(distr_chan,'') as distr_chan,
-	coalesce(mat_sales,'') as mat_sales,
+    coalesce(trim(salesorg),'') as salesorg,
+	coalesce(trim(distr_chan),'') as distr_chan,
+	coalesce(trim(mat_sales),'') as mat_sales,
 	coalesce(base_uom,'') as base_uom,
 	coalesce(matl_grp_1,'') as matl_grp_1,
 	coalesce(prod_hier,'') as prod_hier,

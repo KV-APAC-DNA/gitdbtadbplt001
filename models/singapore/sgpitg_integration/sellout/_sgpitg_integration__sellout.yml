@@ -5,18 +5,23 @@ models:
     config:
       alias: itg_sg_zuellig_customer_mapping
       tags: ["sg_master_sellout","ingestion"]
-    
   - name: sgpitg_integration__itg_sg_zuellig_product_mapping
     config:
       alias: itg_sg_zuellig_product_mapping
-      tags: ["sg_master_sellout","ingestion"]
-    
+      tags: ["sg_master_sellout","ingestion"]  
   - name: sgpitg_integration__itg_sg_zuellig_sellout
     config:
       alias: itg_sg_zuellig_sellout
-      tags: ["sg_master_sellout","ingestion"]
-    
+      tags: ["sg_master_sellout","ingestion"]  
   - name: sgpitg_integration__sdl_raw_sg_zuellig_sellout
     config:
       alias: sdl_raw_sg_zuellig_sellout
+      tags: ["sg_master_sellout","ingestion"]
+  - name: sgpitg_integration__sdl_raw_sg_zuellig_customer_mapping
+    config:
+      alias: sdl_raw_sg_zuellig_customer_mapping
+      tags: ["sg_master_sellout","ingestion"]
+  - name: sgpitg_integration__sdl_raw_sg_zuellig_product_mapping
+    config:
+      alias: sdl_raw_sg_zuellig_product_mapping
       tags: ["sg_master_sellout","ingestion"]
