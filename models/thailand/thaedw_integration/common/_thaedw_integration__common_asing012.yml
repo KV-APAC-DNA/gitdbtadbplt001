@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  
+  
+  - name: thaitg_integration__edw_vw_th_sellout_sales_fact
+    config:
+      alias: edw_vw_th_sellout_sales_fact
+      tags: ["th_itg_to_edw"]
+  - name: thaitg_integration__edw_vw_th_customer_dim
+    config:
+      alias: edw_vw_th_customer_dim
+      tags: ["th_itg_to_edw"]
+  

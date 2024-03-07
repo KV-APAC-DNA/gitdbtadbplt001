@@ -1,15 +1,15 @@
 with 
 itg_th_sellout_sales_fact as 
 (
-    select * from {{ source('snaposeitg_integration', 'itg_th_sellout_sales_fact') }}
+    select * from {{ ref('thaitg_integration__itg_th_sellout_sales_fact') }}
 ),
 itg_th_dstrbtr_material_dim as 
 (
-    select * from {{ source('snaposeitg_integration', 'itg_th_dstrbtr_material_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 itg_th_dstrbtr_customer_dim as 
 (
-    select * from {{ source('snaposeitg_integration', 'itg_th_dstrbtr_customer_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 
 final as 

@@ -8,42 +8,40 @@
 
 with 
 itg_th_dms_customer_dim as (
-    select * from {{ source('snaposeitg_integration','itg_th_dms_customer_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dms_customer_dim') }}
 ),
 
 itg_th_dtsdistributor as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtsdistributor') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtsdistributor') }}
 ),
 
 itg_th_dtscustgroup as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtscustgroup') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtscustgroup') }}
 ),
 
 itg_th_dtssaledistrict as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtssaledistrict') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtssaledistrict') }}
 ),
 
 itg_th_dtsregion as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtsregion') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtsregion') }}
 ),
 
 itg_th_dtsdistrict as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtsdistrict') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtsdistrict') }}
 ),
 
 itg_th_dtssubdistrict as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtssubdistrict') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtssubdistrict') }}
 ),
 
 itg_th_gt_dstrbtr_control as (
-    select * from {{ source('snaposeitg_integration','itg_th_gt_dstrbtr_control') }}
+    select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}
 ),
 
 itg_th_dms_chana_customer_dim as (
-    select * from {{ source('snaposeitg_integration','itg_th_dms_chana_customer_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dms_chana_customer_dim') }}
 ),
-
-
 
 cust as 
 (

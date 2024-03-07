@@ -1,14 +1,14 @@
 with 
 edw_vw_os_sellout_sales_fact as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_sellout_sales_fact') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_fact') }}
 ),
 
 edw_vw_os_sellout_inventory_fact as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_sellout_inventory_fact') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellout_inventory_fact') }}
 ),
 
 itg_th_dstrbtr_material_dim as (
-    select * from {{ source('snaposeitg_integration','itg_th_dstrbtr_material_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 
 edw_vw_os_time_dim as (
@@ -16,40 +16,40 @@ edw_vw_os_time_dim as (
 ),
 
 edw_vw_os_material_dim as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_material_dim') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ),
 
 edw_vw_os_dstrbtr_customer_dim as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_dstrbtr_customer_dim') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
 ),
 
 edw_vw_os_sellin_sales_fact as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_sellin_sales_fact') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellin_sales_fact') }}
 ),
 
 edw_customer_sales_dim as (
-    select * from {{ source('snapaspedw_integration','edw_customer_sales_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 
 edw_vw_os_customer_dim as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_customer_dim') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_company_dim as (
-    select * from {{ source('snapaspedw_integration','edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 v_edw_customer_sales_dim as (
-    select * from {{ source('snapaspedw_integration','v_edw_customer_sales_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 itg_th_dtsdistributor as (
-    select * from {{ source('snaposeitg_integration','itg_th_dtsdistributor') }}
+    select * from {{ ref('thaitg_integration__itg_th_dtsdistributor') }}
 ),
 edw_vw_os_dstrbtr_material_dim as (
-    select * from {{ source('snaposeedw_integration','edw_vw_os_dstrbtr_material_dim') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
 ),
 
 sales as 
 (
-      SELECT
+      select
         sales.typ,
         sales.cntry_cd,
         sales.cntry_nm,
@@ -71,178 +71,178 @@ sales as
         sales.soh,
         sales.amt_bfr_disc,
         sales.amount_sls
-      FROM (
+      from (
         (
-          SELECT
-            CAST('Sales' AS VARCHAR) AS typ,
+          select
+            cast('Sales' as varchar) as typ,
             edw_vw_os_sellout_sales_fact.cntry_cd,
             edw_vw_os_sellout_sales_fact.cntry_nm,
             edw_vw_os_sellout_sales_fact.bill_date,
             edw_vw_os_sellout_sales_fact.dstrbtr_grp_cd,
             edw_vw_os_sellout_sales_fact.dstrbtr_matl_num,
-            CAST(NULL AS VARCHAR) AS warehse_cd,
-            CAST(NULL AS VARCHAR) AS warehse_grp,
-            SUM(edw_vw_os_sellout_sales_fact.sls_qty) AS sls_qty,
-            SUM(edw_vw_os_sellout_sales_fact.ret_qty) AS ret_qty,
-            SUM(
-              CASE
-                WHEN (
+            cast(null as varchar) as warehse_cd,
+            cast(null as varchar) as warehse_grp,
+            sum(edw_vw_os_sellout_sales_fact.sls_qty) as sls_qty,
+            sum(edw_vw_os_sellout_sales_fact.ret_qty) as ret_qty,
+            sum(
+              case
+                when (
                   (
-                    edw_vw_os_sellout_sales_fact.cn_reason_cd IS NULL
+                    edw_vw_os_sellout_sales_fact.cn_reason_cd is null
                   )
-                  OR (
-                    LEFT(CAST((
+                  or (
+                    left(cast((
                       edw_vw_os_sellout_sales_fact.cn_reason_cd
-                    ) AS TEXT), 1) <> CAST((
-                      CAST('N' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text), 1) <> cast((
+                      cast('N' as varchar)
+                    ) as text)
                   )
                 )
-                THEN CAST((
+                then cast((
                   (
                     edw_vw_os_sellout_sales_fact.grs_trd_sls + edw_vw_os_sellout_sales_fact.ret_val
                   )
-                ) AS DOUBLE)
-                ELSE CAST(NULL AS DOUBLE)
-              END
-            ) AS grs_trd_sls,
-            0 AS soh,
-            0 AS amt_bfr_disc,
-            0 AS amount_sls
-          FROM edw_vw_os_sellout_sales_fact
-          WHERE
+                ) as double)
+                else cast(null as double)
+              end
+            ) as grs_trd_sls,
+            0 as soh,
+            0 as amt_bfr_disc,
+            0 as amount_sls
+          from edw_vw_os_sellout_sales_fact
+          where
             (
-              CAST((
+              cast((
                 edw_vw_os_sellout_sales_fact.cntry_cd
-              ) AS TEXT) = CAST((
-                CAST('TH' AS VARCHAR)
-              ) AS TEXT)
+              ) as text) = cast((
+                cast('TH' as varchar)
+              ) as text)
             )
-          GROUP BY
+          group by
             edw_vw_os_sellout_sales_fact.cntry_cd,
             edw_vw_os_sellout_sales_fact.cntry_nm,
             edw_vw_os_sellout_sales_fact.bill_date,
             edw_vw_os_sellout_sales_fact.dstrbtr_grp_cd,
             edw_vw_os_sellout_sales_fact.dstrbtr_matl_num
-          UNION ALL
-          SELECT
-            CAST('Inventory' AS VARCHAR) AS typ,
-            CAST('TH' AS VARCHAR) AS cntry_cd,
-            CAST('Thailand' AS VARCHAR) AS cntry_nm,
+          union all
+          select
+            cast('Inventory' as varchar) as typ,
+            cast('TH' as varchar) as cntry_cd,
+            cast('Thailand' as varchar) as cntry_nm,
             inventory.inv_dt,
             inventory.dstrbtr_grp_cd,
             inventory.dstrbtr_matl_num,
             inventory.warehse_cd,
-            CASE
-              WHEN (
-                SUBSTRING(CAST((
+            case
+              when (
+                substring(cast((
                   inventory.warehse_cd
-                ) AS TEXT), 2, 1) = CAST((
-                  CAST('7' AS VARCHAR)
-                ) AS TEXT)
+                ) as text), 2, 1) = cast((
+                  cast('7' as varchar)
+                ) as text)
               )
-              THEN CAST('Damage Goods' AS VARCHAR)
-              WHEN (
-                CAST((
+              then cast('Damage Goods' as varchar)
+              when (
+                cast((
                   inventory.warehse_cd
-                ) AS TEXT) = CAST((
-                  CAST('V902' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('V902' as varchar)
+                ) as text)
               )
-              THEN CAST('Damage Goods' AS VARCHAR)
-              WHEN (
+              then cast('Damage Goods' as varchar)
+              when (
                 (
-                  SUBSTRING(CAST((
+                  substring(cast((
                     inventory.warehse_cd
-                  ) AS TEXT), 2, 1) <> CAST((
-                    CAST('7' AS VARCHAR)
-                  ) AS TEXT)
+                  ) as text), 2, 1) <> cast((
+                    cast('7' as varchar)
+                  ) as text)
                 )
-                OR (
-                  CAST((
+                or (
+                  cast((
                     inventory.warehse_cd
-                  ) AS TEXT) <> CAST((
-                    CAST('V902' AS VARCHAR)
-                  ) AS TEXT)
+                  ) as text) <> cast((
+                    cast('V902' as varchar)
+                  ) as text)
                 )
               )
-              THEN CAST('Normal Goods' AS VARCHAR)
-              ELSE CAST(NULL AS VARCHAR)
-            END AS warehse_grp,
-            0 AS sls_qty,
-            0 AS ret_qty,
-            0 AS net_trd_sls,
+              then cast('Normal Goods' as varchar)
+              else cast(null as varchar)
+            end as warehse_grp,
+            0 as sls_qty,
+            0 as ret_qty,
+            0 as net_trd_sls,
             inventory.soh,
             (
-              inventory.soh * CAST((
+              inventory.soh * cast((
                 itg_material.sls_prc3
-              ) AS DOUBLE)
-            ) AS amt_bfr_disc,
+              ) as double)
+            ) as amt_bfr_disc,
             (
-              CAST((
+              cast((
                 itg_material.sls_prc_credit
-              ) AS DOUBLE) * inventory.soh
-            ) AS amount_inv
-          FROM (
+              ) as double) * inventory.soh
+            ) as amount_inv
+          from (
             (
-              SELECT DISTINCT
+              select distinct
                 inventory.warehse_cd,
                 inventory.dstrbtr_grp_cd,
                 inventory.dstrbtr_matl_num,
                 inventory.inv_dt,
                 (
-                  CAST((
-                    SUM(inventory.soh)
-                  ) AS DOUBLE) / CAST((
+                  cast((
+                    sum(inventory.soh)
+                  ) as double) / cast((
                     12
-                  ) AS DOUBLE)
-                ) AS soh
-              FROM edw_vw_os_sellout_inventory_fact AS inventory
-              WHERE
+                  ) as double)
+                ) as soh
+              from edw_vw_os_sellout_inventory_fact as inventory
+              where
                 (
                   (
-                    CAST((
+                    cast((
                       inventory.cntry_cd
-                    ) AS TEXT) = CAST((
-                      CAST('TH' AS VARCHAR)
-                    ) AS TEXT)
+                    ) as text) = cast((
+                      cast('TH' as varchar)
+                    ) as text)
                   )
-                  AND (
-                    inventory.soh > CAST((
-                      CAST((
-                        CAST((
+                  and (
+                    inventory.soh > cast((
+                      cast((
+                        cast((
                           0
-                        ) AS DECIMAL)
-                      ) AS DECIMAL(18, 0))
-                    ) AS DECIMAL(22, 6))
+                        ) as decimal)
+                      ) as decimal(18, 0))
+                    ) as decimal(22, 6))
                   )
                 )
-              GROUP BY
+              group by
                 inventory.warehse_cd,
                 inventory.dstrbtr_grp_cd,
                 inventory.dstrbtr_matl_num,
                 inventory.inv_dt
-            ) AS inventory
-            LEFT JOIN (
-              SELECT DISTINCT
+            ) as inventory
+            left join (
+              select distinct
                 itg_th_dstrbtr_material_dim.item_cd,
                 itg_th_dstrbtr_material_dim.sls_prc3,
                 itg_th_dstrbtr_material_dim.sls_prc_credit
-              FROM itg_th_dstrbtr_material_dim
-            ) AS itg_material
-              ON (
+              from itg_th_dstrbtr_material_dim
+            ) as itg_material
+              on (
                 (
-                  CAST((
+                  cast((
                     inventory.dstrbtr_matl_num
-                  ) AS TEXT) = CAST((
+                  ) as text) = cast((
                     itg_material.item_cd
-                  ) AS TEXT)
+                  ) as text)
                 )
               )
           )
-        ) AS sales
-        JOIN (
-          SELECT DISTINCT
+        ) as sales
+        join (
+          select distinct
             edw_vw_os_time_dim."year",
             edw_vw_os_time_dim.qrtr,
             edw_vw_os_time_dim.mnth_id,
@@ -250,29 +250,29 @@ sales as
             edw_vw_os_time_dim.wk,
             edw_vw_os_time_dim.mnth_wk_no,
             edw_vw_os_time_dim.cal_date
-          FROM edw_vw_os_time_dim AS edw_vw_os_time_dim
-          WHERE
+          from edw_vw_os_time_dim as edw_vw_os_time_dim
+          where
             (
               (
-                edw_vw_os_time_dim."year" >(DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 6)
+                edw_vw_os_time_dim."year" >(date_part(year, current_timestamp()) - 6)
               )
-              OR (
-                edw_vw_os_time_dim."year" >(DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 6)
+              or (
+                edw_vw_os_time_dim."year" >(date_part(year, current_timestamp()) - 6)
               )
             )
-        ) AS "time"
-          ON (
+        ) as "time"
+          on (
             (
-              sales.bill_date = CAST((
+              sales.bill_date = cast((
                 "time".cal_date
-              ) AS TIMESTAMPNTZ)
+              ) as timestampntz)
             )
           )
       )
     ) ,
 matl as 
 (
-      SELECT DISTINCT
+      select distinct
         edw_vw_os_material_dim.cntry_key,
         edw_vw_os_material_dim.sap_matl_num,
         edw_vw_os_material_dim.sap_mat_desc,
@@ -282,23 +282,23 @@ matl as
         edw_vw_os_material_dim.gph_prod_vrnt,
         edw_vw_os_material_dim.gph_prod_sgmnt,
         edw_vw_os_material_dim.gph_prod_put_up_desc,
-        edw_vw_os_material_dim.gph_prod_sub_brnd AS prod_sub_brand,
-        edw_vw_os_material_dim.gph_prod_subsgmnt AS prod_subsegment,
-        edw_vw_os_material_dim.gph_prod_ctgry AS prod_category,
-        edw_vw_os_material_dim.gph_prod_subctgry AS prod_subcategory
-      FROM edw_vw_os_material_dim
-      WHERE
+        edw_vw_os_material_dim.gph_prod_sub_brnd as prod_sub_brand,
+        edw_vw_os_material_dim.gph_prod_subsgmnt as prod_subsegment,
+        edw_vw_os_material_dim.gph_prod_ctgry as prod_category,
+        edw_vw_os_material_dim.gph_prod_subctgry as prod_subcategory
+      from edw_vw_os_material_dim
+      where
         (
-          CAST((
+          cast((
             edw_vw_os_material_dim.cntry_key
-          ) AS TEXT) = CAST((
-            CAST('TH' AS VARCHAR)
-          ) AS TEXT)
+          ) as text) = cast((
+            cast('TH' as varchar)
+          ) as text)
         )
     ),
 cust as 
 (
-    SELECT
+    select
       sellout_cust.dstrbtr_grp_cd,
       sellin_cust.sap_cust_id,
       sellin_cust.sap_cust_nm,
@@ -330,43 +330,43 @@ cust as
       sellin_cust.sap_bnr_frmt_key,
       sellin_cust.sap_bnr_frmt_desc,
       sellin_cust.retail_env
-    FROM (
+    from (
       (
-        SELECT DISTINCT
+        select distinct
           edw_vw_os_dstrbtr_customer_dim.dstrbtr_grp_cd,
           edw_vw_os_dstrbtr_customer_dim.sap_soldto_code
-        FROM edw_vw_os_dstrbtr_customer_dim
-        WHERE
+        from edw_vw_os_dstrbtr_customer_dim
+        where
           (
-            CAST((
+            cast((
               edw_vw_os_dstrbtr_customer_dim.cntry_cd
-            ) AS TEXT) = CAST((
-              CAST('TH' AS VARCHAR)
-            ) AS TEXT)
+            ) as text) = cast((
+              cast('TH' as varchar)
+            ) as text)
           )
-      ) AS sellout_cust
-      JOIN edw_vw_os_customer_dim AS sellin_cust
-        ON (
+      ) as sellout_cust
+      join edw_vw_os_customer_dim as sellin_cust
+        on (
           (
-            CAST((
+            cast((
               sellout_cust.sap_soldto_code
-            ) AS TEXT) = CAST((
+            ) as text) = cast((
               sellin_cust.sap_cust_id
-            ) AS TEXT)
+            ) as text)
           )
         )
     )
   ) ,
 sellin_fact as 
 (
-              SELECT
+              select
                 edw_vw_os_sellin_sales_fact.item_cd,
                 edw_vw_os_sellin_sales_fact.cust_id,
                 edw_vw_os_sellin_sales_fact.sls_org,
-                edw_vw_os_sellin_sales_fact.sls_grp AS sap_sls_grp_cd,
-                sls_grp_lkp.sls_grp_desc AS sap_sls_grp_desc,
-                edw_vw_os_sellin_sales_fact.sls_ofc AS sap_sls_office_cd,
-                sls_ofc_lkp.sls_ofc_desc AS sap_sls_office_desc,
+                edw_vw_os_sellin_sales_fact.sls_grp as sap_sls_grp_cd,
+                sls_grp_lkp.sls_grp_desc as sap_sls_grp_desc,
+                edw_vw_os_sellin_sales_fact.sls_ofc as sap_sls_office_cd,
+                sls_ofc_lkp.sls_ofc_desc as sap_sls_office_desc,
                 edw_vw_os_sellin_sales_fact.plnt,
                 edw_vw_os_sellin_sales_fact.acct_no,
                 edw_vw_os_sellin_sales_fact.cust_grp,
@@ -374,124 +374,124 @@ sellin_fact as
                 edw_vw_os_sellin_sales_fact.pstng_per,
                 edw_vw_os_sellin_sales_fact.dstr_chnl,
                 edw_vw_os_sellin_sales_fact.jj_mnth_id,
-                SUM(edw_vw_os_sellin_sales_fact.base_val) AS base_val,
-                SUM(edw_vw_os_sellin_sales_fact.sls_qty) AS sls_qty,
-                SUM(edw_vw_os_sellin_sales_fact.ret_qty) AS ret_qty,
-                SUM(edw_vw_os_sellin_sales_fact.sls_less_rtn_qty) AS sls_less_rtn_qty,
-                SUM(edw_vw_os_sellin_sales_fact.gts_val) AS gts_val,
-                SUM(edw_vw_os_sellin_sales_fact.ret_val) AS ret_val,
-                SUM(edw_vw_os_sellin_sales_fact.gts_less_rtn_val) AS gts_less_rtn_val,
-                SUM(edw_vw_os_sellin_sales_fact.tp_val) AS tp_val,
-                SUM(edw_vw_os_sellin_sales_fact.nts_val) AS nts_val,
-                SUM(edw_vw_os_sellin_sales_fact.nts_qty) AS nts_qty
-              FROM (
+                sum(edw_vw_os_sellin_sales_fact.base_val) as base_val,
+                sum(edw_vw_os_sellin_sales_fact.sls_qty) as sls_qty,
+                sum(edw_vw_os_sellin_sales_fact.ret_qty) as ret_qty,
+                sum(edw_vw_os_sellin_sales_fact.sls_less_rtn_qty) as sls_less_rtn_qty,
+                sum(edw_vw_os_sellin_sales_fact.gts_val) as gts_val,
+                sum(edw_vw_os_sellin_sales_fact.ret_val) as ret_val,
+                sum(edw_vw_os_sellin_sales_fact.gts_less_rtn_val) as gts_less_rtn_val,
+                sum(edw_vw_os_sellin_sales_fact.tp_val) as tp_val,
+                sum(edw_vw_os_sellin_sales_fact.nts_val) as nts_val,
+                sum(edw_vw_os_sellin_sales_fact.nts_qty) as nts_qty
+              from (
                 (
-                  edw_vw_os_sellin_sales_fact AS edw_vw_os_sellin_sales_fact
-                    LEFT JOIN (
-                      SELECT DISTINCT
-                        edw_customer_sales_dim.sls_ofc AS sap_sls_office_cd,
+                  edw_vw_os_sellin_sales_fact as edw_vw_os_sellin_sales_fact
+                    left join (
+                      select distinct
+                        edw_customer_sales_dim.sls_ofc as sap_sls_office_cd,
                         edw_customer_sales_dim.sls_ofc_desc
-                      FROM edw_customer_sales_dim
-                      WHERE
+                      from edw_customer_sales_dim
+                      where
                         (
                           (
                             (
-                              CAST((
+                              cast((
                                 edw_customer_sales_dim.sls_org
-                              ) AS TEXT) = CAST((
-                                CAST('2400' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('2400' as varchar)
+                              ) as text)
                             )
-                            OR (
-                              CAST((
+                            or (
+                              cast((
                                 edw_customer_sales_dim.sls_org
-                              ) AS TEXT) = CAST((
-                                CAST('2500' AS VARCHAR)
-                              ) AS TEXT)
+                              ) as text) = cast((
+                                cast('2500' as varchar)
+                              ) as text)
                             )
                           )
-                          AND (
-                            NOT CASE
-                              WHEN (
-                                CAST((
+                          and (
+                            not case
+                              when (
+                                cast((
                                   edw_customer_sales_dim.sls_ofc
-                                ) AS TEXT) = CAST((
-                                  CAST('' AS VARCHAR)
-                                ) AS TEXT)
+                                ) as text) = cast((
+                                  cast('' as varchar)
+                                ) as text)
                               )
-                              THEN CAST(NULL AS VARCHAR)
-                              ELSE edw_customer_sales_dim.sls_ofc
-                            END IS NULL
+                              then cast(null as varchar)
+                              else edw_customer_sales_dim.sls_ofc
+                            end is null
                           )
                         )
-                    ) AS sls_ofc_lkp
-                      ON (
+                    ) as sls_ofc_lkp
+                      on (
                         (
-                          CAST((
+                          cast((
                             sls_ofc_lkp.sap_sls_office_cd
-                          ) AS TEXT) = CAST((
+                          ) as text) = cast((
                             edw_vw_os_sellin_sales_fact.sls_ofc
-                          ) AS TEXT)
+                          ) as text)
                         )
                       )
                 )
-                LEFT JOIN (
-                  SELECT DISTINCT
+                left join (
+                  select distinct
                     edw_customer_sales_dim.sls_grp,
                     edw_customer_sales_dim.sls_grp_desc
-                  FROM edw_customer_sales_dim
-                  WHERE
+                  from edw_customer_sales_dim
+                  where
                     (
                       (
                         (
-                          CAST((
+                          cast((
                             edw_customer_sales_dim.sls_org
-                          ) AS TEXT) = CAST((
-                            CAST('2400' AS VARCHAR)
-                          ) AS TEXT)
+                          ) as text) = cast((
+                            cast('2400' as varchar)
+                          ) as text)
                         )
-                        OR (
-                          CAST((
+                        or (
+                          cast((
                             edw_customer_sales_dim.sls_org
-                          ) AS TEXT) = CAST((
-                            CAST('2500' AS VARCHAR)
-                          ) AS TEXT)
+                          ) as text) = cast((
+                            cast('2500' as varchar)
+                          ) as text)
                         )
                       )
-                      AND (
-                        NOT CASE
-                          WHEN (
-                            CAST((
+                      and (
+                        not case
+                          when (
+                            cast((
                               edw_customer_sales_dim.sls_grp
-                            ) AS TEXT) = CAST((
-                              CAST('' AS VARCHAR)
-                            ) AS TEXT)
+                            ) as text) = cast((
+                              cast('' as varchar)
+                            ) as text)
                           )
-                          THEN CAST(NULL AS VARCHAR)
-                          ELSE edw_customer_sales_dim.sls_grp
-                        END IS NULL
+                          then cast(null as varchar)
+                          else edw_customer_sales_dim.sls_grp
+                        end is null
                       )
                     )
-                ) AS sls_grp_lkp
-                  ON (
+                ) as sls_grp_lkp
+                  on (
                     (
-                      CAST((
+                      cast((
                         sls_grp_lkp.sls_grp
-                      ) AS TEXT) = CAST((
+                      ) as text) = cast((
                         edw_vw_os_sellin_sales_fact.sls_grp
-                      ) AS TEXT)
+                      ) as text)
                     )
                   )
               )
-              WHERE
+              where
                 (
-                  CAST((
+                  cast((
                     edw_vw_os_sellin_sales_fact.cntry_nm
-                  ) AS TEXT) = CAST((
-                    CAST('TH' AS VARCHAR)
-                  ) AS TEXT)
+                  ) as text) = cast((
+                    cast('TH' as varchar)
+                  ) as text)
                 )
-              GROUP BY
+              group by
                 edw_vw_os_sellin_sales_fact.item_cd,
                 edw_vw_os_sellin_sales_fact.cust_id,
                 edw_vw_os_sellin_sales_fact.sls_grp,
@@ -509,22 +509,22 @@ sellin_fact as
             ) ,
 cmp as 
 (
-          SELECT
+          select
             edw_company_dim.co_cd,
             edw_company_dim.company_nm
-          FROM edw_company_dim
-          WHERE
+          from edw_company_dim
+          where
             (
-              CAST((
+              cast((
                 edw_company_dim.ctry_key
-              ) AS TEXT) = CAST((
-                CAST('TH' AS VARCHAR)
-              ) AS TEXT)
+              ) as text) = cast((
+                cast('TH' as varchar)
+              ) as text)
             )
         ) ,
 sellin_mat as 
 (
-          SELECT DISTINCT
+          select distinct
             edw_vw_os_material_dim.sap_matl_num,
             edw_vw_os_material_dim.sap_mat_desc,
             edw_vw_os_material_dim.gph_region,
@@ -533,23 +533,23 @@ sellin_mat as
             edw_vw_os_material_dim.gph_prod_vrnt,
             edw_vw_os_material_dim.gph_prod_sgmnt,
             edw_vw_os_material_dim.gph_prod_put_up_desc,
-            edw_vw_os_material_dim.gph_prod_sub_brnd AS prod_sub_brand,
-            edw_vw_os_material_dim.gph_prod_subsgmnt AS prod_subsegment,
-            edw_vw_os_material_dim.gph_prod_ctgry AS prod_category,
-            edw_vw_os_material_dim.gph_prod_subctgry AS prod_subcategory
-          FROM edw_vw_os_material_dim AS edw_vw_os_material_dim
-          WHERE
+            edw_vw_os_material_dim.gph_prod_sub_brnd as prod_sub_brand,
+            edw_vw_os_material_dim.gph_prod_subsgmnt as prod_subsegment,
+            edw_vw_os_material_dim.gph_prod_ctgry as prod_category,
+            edw_vw_os_material_dim.gph_prod_subctgry as prod_subcategory
+          from edw_vw_os_material_dim as edw_vw_os_material_dim
+          where
             (
-              CAST((
+              cast((
                 edw_vw_os_material_dim.cntry_key
-              ) AS TEXT) = CAST((
-                CAST('TH' AS VARCHAR)
-              ) AS TEXT)
+              ) as text) = cast((
+                cast('TH' as varchar)
+              ) as text)
             )
         ) ,
 sellout_mat as 
 (
-          SELECT DISTINCT
+          select distinct
             edw_vw_os_dstrbtr_material_dim.dstrbtr_matl_num,
             edw_vw_os_dstrbtr_material_dim.is_npi,
             edw_vw_os_dstrbtr_material_dim.npi_str_period,
@@ -560,19 +560,19 @@ sellout_mat as
             edw_vw_os_dstrbtr_material_dim.promo_end_period,
             edw_vw_os_dstrbtr_material_dim.is_mcl,
             edw_vw_os_dstrbtr_material_dim.is_hero
-          FROM edw_vw_os_dstrbtr_material_dim
-          WHERE
+          from edw_vw_os_dstrbtr_material_dim
+          where
             (
-              CAST((
+              cast((
                 edw_vw_os_dstrbtr_material_dim.cntry_cd
-              ) AS TEXT) = CAST((
-                CAST('TH' AS VARCHAR)
-              ) AS TEXT)
+              ) as text) = cast((
+                cast('TH' as varchar)
+              ) as text)
             )
         ),
 mat as 
 (
-      SELECT
+      select
         sellin_mat.sap_matl_num,
         sellin_mat.sap_mat_desc,
         sellin_mat.gph_region,
@@ -594,16 +594,16 @@ mat as
         sellout_mat.promo_end_period,
         sellout_mat.is_mcl,
         sellout_mat.is_hero
-      FROM (
+      from (
          sellin_mat
-        LEFT JOIN  sellout_mat
-          ON (
+        left join  sellout_mat
+          on (
             (
-              CAST((
+              cast((
                 sellin_mat.sap_matl_num
-              ) AS TEXT) = CAST((
+              ) as text) = cast((
                 sellout_mat.dstrbtr_matl_num
-              ) AS TEXT)
+              ) as text)
             )
           )
       )
@@ -612,13 +612,13 @@ mat as
 
 sellin as 
 (
-  SELECT
-    "time"."year" AS year_jnj,
-    "time".qrtr AS year_quarter_jnj,
-    "time".mnth_id AS year_month_jnj,
-    "time".mnth_no AS month_number_jnj,
-    sellin_fact.cust_id AS customer_id,
-    cmp.company_nm AS sap_company_name,
+  select
+    "time"."year" as year_jnj,
+    "time".qrtr as year_quarter_jnj,
+    "time".mnth_id as year_month_jnj,
+    "time".mnth_no as month_number_jnj,
+    sellin_fact.cust_id as customer_id,
+    cmp.company_nm as sap_company_name,
     cust.sap_cust_id,
     cust.sap_cust_nm,
     cust.sap_sls_org,
@@ -643,73 +643,73 @@ sellin as
     cust.sap_cust_sub_chnl_key,
     cust.sap_sub_chnl_desc,
     cust.sap_go_to_mdl_key,
-    cust.sap_go_to_mdl_desc AS go_to_model_description,
+    cust.sap_go_to_mdl_desc as go_to_model_description,
     cust.sap_bnr_key,
-    cust.sap_bnr_desc AS banner_description,
+    cust.sap_bnr_desc as banner_description,
     cust.sap_bnr_frmt_key,
     cust.sap_bnr_frmt_desc,
     cust.retail_env,
     so_cust.dstrbtr_grp_cd,
-    sellin_fact.plnt AS plant,
-    sellin_fact.acct_no AS account_number,
-    sellin_fact.cust_grp AS customer_group,
-    sellin_fact.cust_sls AS customer_sales,
-    sellin_fact.pstng_per AS posting_per,
-    sellin_fact.dstr_chnl AS distributor_channel,
-    sellin_fact.item_cd AS item_code,
-    mat.sap_mat_desc AS item_description,
-    mat.gph_prod_frnchse AS franchise,
-    mat.gph_prod_brnd AS brand,
-    mat.gph_prod_vrnt AS variant,
-    mat.gph_prod_sgmnt AS segment,
-    mat.gph_prod_put_up_desc AS put_up,
+    sellin_fact.plnt as plant,
+    sellin_fact.acct_no as account_number,
+    sellin_fact.cust_grp as customer_group,
+    sellin_fact.cust_sls as customer_sales,
+    sellin_fact.pstng_per as posting_per,
+    sellin_fact.dstr_chnl as distributor_channel,
+    sellin_fact.item_cd as item_code,
+    mat.sap_mat_desc as item_description,
+    mat.gph_prod_frnchse as franchise,
+    mat.gph_prod_brnd as brand,
+    mat.gph_prod_vrnt as variant,
+    mat.gph_prod_sgmnt as segment,
+    mat.gph_prod_put_up_desc as put_up,
     mat.prod_sub_brand,
     mat.prod_subsegment,
     mat.prod_category,
     mat.prod_subcategory,
-    mat.is_npi AS npi_indicator,
-    mat.npi_str_period AS npi_start_date,
-    mat.npi_end_period AS npi_end_date,
-    mat.is_reg AS reg_indicator,
-    mat.is_hero AS hero_indicator,
-    sellin_fact.base_val AS base_value,
-    sellin_fact.sls_qty AS sales_quantity,
-    sellin_fact.ret_qty AS return_quantity,
-    sellin_fact.sls_less_rtn_qty AS sales_less_return_quantity,
-    sellin_fact.gts_val AS gross_trade_sales_value,
-    sellin_fact.ret_val AS return_value,
-    sellin_fact.gts_less_rtn_val AS gross_trade_sales_less_return_value,
-    sellin_fact.tp_val AS tp_value,
-    sellin_fact.nts_val AS net_trade_sales_value,
-    sellin_fact.nts_qty AS net_trade_sales_quantity
-  FROM (
+    mat.is_npi as npi_indicator,
+    mat.npi_str_period as npi_start_date,
+    mat.npi_end_period as npi_end_date,
+    mat.is_reg as reg_indicator,
+    mat.is_hero as hero_indicator,
+    sellin_fact.base_val as base_value,
+    sellin_fact.sls_qty as sales_quantity,
+    sellin_fact.ret_qty as return_quantity,
+    sellin_fact.sls_less_rtn_qty as sales_less_return_quantity,
+    sellin_fact.gts_val as gross_trade_sales_value,
+    sellin_fact.ret_val as return_value,
+    sellin_fact.gts_less_rtn_val as gross_trade_sales_less_return_value,
+    sellin_fact.tp_val as tp_value,
+    sellin_fact.nts_val as net_trade_sales_value,
+    sellin_fact.nts_qty as net_trade_sales_quantity
+  from (
     (
       (
         (
           (
              sellin_fact
-            JOIN (
-              SELECT DISTINCT
+            join (
+              select distincT
                 edw_vw_os_time_dim."year",
                 edw_vw_os_time_dim.qrtr,
                 edw_vw_os_time_dim.mnth_id,
                 edw_vw_os_time_dim.mnth_no
-              FROM edw_vw_os_time_dim AS edw_vw_os_time_dim
-              WHERE
+              from edw_vw_os_time_dim as edw_vw_os_time_dim
+              where
                 (
-                  edw_vw_os_time_dim."year" > (DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 6)
+                  edw_vw_os_time_dim."year" > (date_part(year, current_timestamp()) - 6)
                 )
-            ) AS "time"
-              ON (
+            ) as "time"
+              on (
                 (
-                  CAST((
+                  cast((
                     sellin_fact.jj_mnth_id
-                  ) AS TEXT) = "time".mnth_id
+                  ) as text) = "time".mnth_id
                 )
               )
           )
-          LEFT JOIN (
-            SELECT
+          left join (
+            select
               edw_vw_os_customer_dim.sap_cust_id,
               edw_vw_os_customer_dim.sap_cust_nm,
               edw_vw_os_customer_dim.sap_sls_org,
@@ -736,13 +736,13 @@ sellin as
               edw_vw_os_customer_dim.sap_bnr_frmt_key,
               edw_vw_os_customer_dim.sap_bnr_frmt_desc,
               edw_vw_os_customer_dim.retail_env
-            FROM edw_vw_os_customer_dim AS edw_vw_os_customer_dim
-            WHERE
+            from edw_vw_os_customer_dim as edw_vw_os_customer_dim
+            where
               (
-                CAST((
+                cast((
                   edw_vw_os_customer_dim.sap_cntry_cd
-                ) AS TEXT) = CAST((
-                  CAST('TH' AS VARCHAR)
+                ) as text) = cast((
+                  cast('TH' AS VARCHAR)
                 ) AS TEXT)
               )
           ) AS cust
@@ -800,55 +800,55 @@ sellin as
                 CAST((
                   cust."go to model"
                 ) AS TEXT) = CAST((
-                  CAST('Indirect Accounts' AS VARCHAR)
-                ) AS TEXT)
+                  CAST('Indirect Accounts' as varchar)
+                ) as text)
               )
-              AND (
-                CAST((
+              and (
+                cast((
                   cust."sub channel"
-                ) AS TEXT) = CAST((
-                  CAST('Distributor (General)' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('Distributor (General)' as varchar)
+                ) as text)
               )
             )
-            AND (
+            and (
               (
-                CAST((
+                cast((
                   cust.sls_ofc_desc
-                ) AS TEXT) = CAST((
-                  CAST('General Trade' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('General Trade' as varchar)
+                ) as text)
               )
-              OR (
-                CAST((
+              or (
+                cast((
                   cust.sls_ofc_desc
-                ) AS TEXT) = CAST((
-                  CAST('General Trade (OTC)' AS VARCHAR)
-                ) AS TEXT)
+                ) as text) = cast((
+                  cast('General Trade (OTC)' as varchar)
+                ) as text)
               )
             )
           )
-      ) AS so_cust
-        ON (
+      ) as so_cust
+        on (
           (
-            CAST((
+            cast((
               cust.sap_cust_id
-            ) AS TEXT) = CAST((
-              CAST((
+            ) as text) = cast((
+              cast((
                 so_cust.sap_soldto_code
-              ) AS VARCHAR)
-            ) AS TEXT)
+              ) as varchar)
+            ) as text)
           )
         )
     )
-    LEFT JOIN  mat
-      ON (
+    left join  mat
+      on (
         (
-          CAST((
+          cast((
             sellin_fact.item_cd
-          ) AS TEXT) = CAST((
+          ) as text) = cast((
             mat.sap_matl_num
-          ) AS TEXT)
+          ) as text)
         )
       )
   )
@@ -856,37 +856,37 @@ sellin as
 
 final as    
 (
-SELECT
-  sales.typ AS data_type,
-  CAST((
+select
+  sales.typ as data_type,
+  cast((
     sales.bill_date
-  ) AS VARCHAR) AS order_date,
+  ) as varchar) as order_date,
   sales."year",
-  CAST((
+  cast((
     sales.qrtr
-  ) AS VARCHAR) AS year_quarter,
-  CAST((
+  ) as varchar) as year_quarter,
+  cast((
     sales.mnth_id
-  ) AS VARCHAR) AS month_year,
-  sales.mnth_no AS month_number,
-  CAST((
+  ) as varchar) as month_year,
+  sales.mnth_no as month_number,
+  cast((
     sales.wk
-  ) AS VARCHAR) AS year_week_number,
-  CAST((
+  ) as varchar) as year_week_number,
+  cast((
     sales.mnth_wk_no
-  ) AS VARCHAR) AS month_week_number,
-  sales.cntry_cd AS country_code,
-  sales.cntry_nm AS country_name,
-  sales.dstrbtr_grp_cd AS distributor_id,
-  sales.warehse_cd AS whcode,
-  sales.warehse_grp AS whgroup,
-  sales.dstrbtr_matl_num AS sku_code,
-  matl.sap_mat_desc AS sku_description,
-  matl.gph_prod_frnchse AS franchise,
-  matl.gph_prod_brnd AS brand,
-  matl.gph_prod_vrnt AS variant,
-  matl.gph_prod_sgmnt AS segment,
-  matl.gph_prod_put_up_desc AS put_up_description,
+  ) as varchar) as month_week_number,
+  sales.cntry_cd as country_code,
+  sales.cntry_nm as country_name,
+  sales.dstrbtr_grp_cd as distributor_id,
+  sales.warehse_cd as whcode,
+  sales.warehse_grp as whgroup,
+  sales.dstrbtr_matl_num as sku_code,
+  matl.sap_mat_desc as sku_description,
+  matl.gph_prod_frnchse as franchise,
+  matl.gph_prod_brnd as brand,
+  matl.gph_prod_vrnt as variant,
+  matl.gph_prod_sgmnt as segment,
+  matl.gph_prod_put_up_desc as put_up_description,
   matl.prod_sub_brand,
   matl.prod_subsegment,
   matl.prod_category,
@@ -921,70 +921,70 @@ SELECT
   cust.sap_bnr_frmt_key,
   cust.sap_bnr_frmt_desc,
   cust.retail_env,
-  sales.sls_qty AS sales_quantity,
-  sales.ret_qty AS return_quantity,
-  sales.grs_trd_sls AS gross_trade_sales,
-  sales.soh AS inventory_quantity,
-  sales.amt_bfr_disc AS amount_before_discount,
-  sales.amount_sls AS inventory,
-  0 AS si_gross_trade_sales_value,
-  0 AS si_tp_value,
-  0 AS si_net_trade_sales_value
-FROM (
+  sales.sls_qty as sales_quantity,
+  sales.ret_qty as return_quantity,
+  sales.grs_trd_sls as gross_trade_sales,
+  sales.soh as inventory_quantity,
+  sales.amt_bfr_disc as amount_before_discount,
+  sales.amount_sls as inventory,
+  0 as si_gross_trade_sales_value,
+  0 as si_tp_value,
+  0 as si_net_trade_sales_value
+from (
   (
      sales
-    LEFT JOIN  matl
-      ON (
+    left join  matl
+      on (
         (
-          UPPER(CAST((
+          upper(cast((
             sales.dstrbtr_matl_num
-          ) AS TEXT)) = UPPER(
-            LTRIM(CAST((
+          ) as text)) = upper(
+            ltrim(cast((
               matl.sap_matl_num
-            ) AS TEXT), CAST((
-              CAST('0' AS VARCHAR)
-            ) AS TEXT))
+            ) as text), cast((
+              cast('0' as varchar)
+            ) as text))
           )
         )
       )
   )
-  LEFT JOIN  cust
-    ON (
+  left join  cust
+    on (
       (
-        CAST((
+        cast((
           cust.dstrbtr_grp_cd
-        ) AS TEXT) = CAST((
+        ) as text) = cast((
           sales.dstrbtr_grp_cd
-        ) AS TEXT)
+        ) as text)
       )
     )
 )
-UNION ALL
-SELECT
-  CAST('Sellin' AS VARCHAR) AS data_type,
-  CAST(NULL AS VARCHAR) AS order_date,
-  sellin.year_jnj AS "year",
-  CAST((
+union all
+select
+  cast('Sellin' as varchar) as data_type,
+  cast(null as varchar) as order_date,
+  sellin.year_jnj as "year",
+  cast((
     sellin.year_quarter_jnj
-  ) AS VARCHAR) AS year_quarter,
-  CAST((
+  ) as varchar) as year_quarter,
+  cast((
     sellin.year_month_jnj
-  ) AS VARCHAR) AS month_year,
-  sellin.month_number_jnj AS month_number,
-  CAST(NULL AS VARCHAR) AS year_week_number,
-  CAST(NULL AS VARCHAR) AS month_week_number,
-  CAST('TH' AS VARCHAR) AS country_code,
-  CAST('Thailand' AS VARCHAR) AS country_name,
-  sellin.dstrbtr_grp_cd AS distributor_id,
-  CAST(NULL AS VARCHAR) AS whcode,
-  CAST(NULL AS VARCHAR) AS whgroup,
-  sellin.item_code AS sku_code,
-  sellin.item_description AS sku_description,
+  ) as varchar) as month_year,
+  sellin.month_number_jnj as month_number,
+  cast(null as varchar) as year_week_number,
+  cast(null as varchar) as month_week_number,
+  cast('TH' as varchar) as country_code,
+  cast('Thailand' as varchar) as country_name,
+  sellin.dstrbtr_grp_cd as distributor_id,
+  cast(null as varchar) as whcode,
+  cast(null as varchar) as whgroup,
+  sellin.item_code as sku_code,
+  sellin.item_description as sku_description,
   sellin.franchise,
   sellin.brand,
   sellin.variant,
   sellin.segment,
-  sellin.put_up AS put_up_description,
+  sellin.put_up as put_up_description,
   sellin.prod_sub_brand,
   sellin.prod_subsegment,
   sellin.prod_category,
@@ -1013,32 +1013,32 @@ SELECT
   sellin.sap_cust_sub_chnl_key,
   sellin.sap_sub_chnl_desc,
   sellin.sap_go_to_mdl_key,
-  sellin.go_to_model_description AS sap_go_to_mdl_desc,
+  sellin.go_to_model_description as sap_go_to_mdl_desc,
   sellin.sap_bnr_key,
-  sellin.banner_description AS sap_bnr_desc,
+  sellin.banner_description as sap_bnr_desc,
   sellin.sap_bnr_frmt_key,
   sellin.sap_bnr_frmt_desc,
   sellin.retail_env,
-  0 AS sales_quantity,
-  0 AS return_quantity,
-  0 AS gross_trade_sales,
-  0 AS inventory_quantity,
-  0 AS amount_before_discount,
-  0 AS inventory,
-  SUM(sellin.gross_trade_sales_value) AS si_gross_trade_sales_value,
-  SUM(sellin.tp_value) AS si_tp_value,
-  SUM(sellin.net_trade_sales_value) AS si_net_trade_sales_value
-FROM  sellin
-GROUP BY
+  0 as sales_quantity,
+  0 as return_quantity,
+  0 as gross_trade_sales,
+  0 as inventory_quantity,
+  0 as amount_before_discount,
+  0 as inventory,
+  sum(sellin.gross_trade_sales_value) as si_gross_trade_sales_value,
+  sum(sellin.tp_value) as si_tp_value,
+  sum(sellin.net_trade_sales_value) as si_net_trade_sales_value
+from  sellin
+group by
   1,
   2,
   sellin.year_jnj,
-  CAST((
+  cast((
     sellin.year_quarter_jnj
-  ) AS VARCHAR),
-  CAST((
+  ) as varchar),
+  cast((
     sellin.year_month_jnj
-  ) AS VARCHAR),
+  ) as varchar),
   sellin.month_number_jnj,
   7,
   8,

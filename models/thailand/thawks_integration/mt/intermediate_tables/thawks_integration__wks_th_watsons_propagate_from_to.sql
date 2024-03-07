@@ -1,6 +1,6 @@
 with 
 th_watsons_propagate_to as(
-    select * from {{ source('snaposewks_integration','th_watsons_propagate_to') }}
+    select * from {{ ref('thawks_integration__th_watsons_propagate_to') }}
 ),
 wks_th_watsons_base_detail as(
     select * from {{ ref('thawks_integration__wks_th_watsons_base_detail') }}

@@ -7,13 +7,13 @@
 }}
 with 
 itg_th_tims_transdata as(
-    select * from {{ source('snaposeitg_integration','itg_th_tims_transdata') }}
+    select * from {{ ref('thaitg_integration__itg_th_tims_transdata') }}
 ),
 edw_vw_os_customer_dim as(
     select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 itg_th_pos_customer_dim as(
-    select * from {{ source('snaposeitg_integration','itg_th_pos_customer_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_pos_customer_dim') }}
 ),
 edw_list_price as(
     select * from {{ ref('aspedw_integration__edw_list_price') }}
@@ -54,12 +54,14 @@ product_master as
 temp2 as 
 (
     select
-      ltrim(cast(edw_list_price.material as text), cast(cast(0 as varchar) as text)) as material,
+      ltrim(cast(edw_list_price.material as text), 
+      cast(cast(0 as varchar) as text)) as material,
       edw_list_price.amount as list_price,
       row_number() over (partition by ltrim(cast(edw_list_price.material as text), 
       cast(cast(0 as varchar) as text)) order by to_date(cast(edw_list_price.valid_to as text), 
       cast(cast('yyyymmdd' as varchar) as text)) desc, 
-      to_date(cast(edw_list_price.dt_from as text), cast(cast('yyyymmdd' as varchar) as text)) desc) as rn
+      to_date(cast(edw_list_price.dt_from as text), 
+      cast(cast('yyyymmdd' as varchar) as text)) desc) as rn
     from edw_list_price
     where
       cast(edw_list_price.sls_org as text) in ('2400')
@@ -166,7 +168,7 @@ final as
         sales_gts::number(20,4) as sales_gts,
         customer_rsp::number(20,4) as customer_rsp,
         stock_baht::number(20,4) as inventory_baht,
-        sls_baht::number(20,4) as sales_bah,
+        sls_baht::number(20,4) as sales_baht,
         null::varchar(1) as foc_product
     from trans
 )

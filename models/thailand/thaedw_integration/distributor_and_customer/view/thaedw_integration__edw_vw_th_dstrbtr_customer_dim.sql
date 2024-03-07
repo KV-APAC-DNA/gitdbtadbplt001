@@ -1,7 +1,7 @@
 with 
 itg_th_dstrbtr_customer_dim as 
 (
-        select * from  {{ source('snaposeitg_integration', 'itg_th_dstrbtr_customer_dim') }}
+    select * from  {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 final as (
     select 

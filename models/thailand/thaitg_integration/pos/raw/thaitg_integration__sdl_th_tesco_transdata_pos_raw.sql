@@ -25,11 +25,7 @@ final as
         sales_amount,
         file_name,
         folder_name,
-        current_timestamp()::timestamp_ntz(9) as crt_dttm
-    from source
-        {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        where crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
+        current_timestamp::timestamp_ntz(9) as crt_dttm
+        from source
 )
 select * from final

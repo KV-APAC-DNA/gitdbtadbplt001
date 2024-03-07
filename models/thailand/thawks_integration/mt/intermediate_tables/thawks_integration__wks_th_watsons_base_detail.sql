@@ -1,9 +1,9 @@
 with 
 wks_th_watsons_lastnmonths as(
-    select * from {{ source('snaposewks_integration','wks_th_watsons_lastnmonths') }}
+    select * from {{ ref('thawks_integration__wks_th_watsons_lastnmonths') }}
 ),
 wks_th_watson_base as(
-    select * from {{ source('snaposewks_integration','wks_th_watson_base') }}
+    select * from {{ ref('thawks_integration__wks_th_watson_base') }}
 ),
 edw_vw_os_time_dim as(
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
