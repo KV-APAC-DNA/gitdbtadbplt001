@@ -13,7 +13,10 @@ final as(
     select
         distributorid::varchar(10) as distributorid,
         orderno::varchar(255) as orderno,
-        orderdate::timestamp_ntz(9) as orderdate,
+        case 
+        when orderdate LIKE '%/%' THEN TO_CHAR(TO_DATE(orderdate, 'YYYY/MM/DD'), 'YYYY-MM-DD')
+        else orderdate
+        end as orderdate,
         arcode::varchar(20) as arcode,
         arname::varchar(500) as arname,
         city::varchar(255) as city,

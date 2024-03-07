@@ -60,3 +60,6 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+
+    - name: sdl_mds_th_customer_product_code
+      tags: ["th_mbox_customer"]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaedw_integration__edw_th_pos_analysis
+    config: 
+      alias: edw_th_pos_analysis
+      tags: ["th_itg_to_edw"]

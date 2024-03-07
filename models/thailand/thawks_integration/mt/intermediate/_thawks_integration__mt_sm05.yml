@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: thawks_integration__th_watsons_propagate_to
+    config:
+      alias: th_watsons_propagate_to
+      tags: ["th_non_tesco"]
+  

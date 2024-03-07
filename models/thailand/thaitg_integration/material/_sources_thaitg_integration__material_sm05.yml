@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_th_mt_branch_master
+      tags: ["th_non_tesco"]
+      tests:
+        - test_duplicate:
+            group_by_columns: ["1"]
+            select_columns: ["branchcode"]
+            name: TRATBL_sdl_mds_th_mt_branch_master__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
