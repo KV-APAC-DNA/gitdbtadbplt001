@@ -3,11 +3,11 @@ version: 2
 models:
   - name: thawks_integration__wks_th_watsons_siso_propagate_final
     config:
-      alias: th_mt_bigc_raw
+      alias: wks_th_watsons_siso_propagate_final
       tags: ["j_ap_th_tesco_etl_framework"]
   - name: thawks_integration__wks_th_watsons_siso_propagate_final_tbl
     config:
-      alias: th_mt_makro_raw
+      alias: wks_th_watsons_siso_propagate_final_tbl
       tags: ["j_ap_th_tesco_etl_framework"]
 
   
