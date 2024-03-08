@@ -6,7 +6,7 @@
     )
 }}
 
-with  sdl_th_mt_bigc as (
+with sdl_th_mt_bigc as (
 select * from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }}
 ),
 final as (

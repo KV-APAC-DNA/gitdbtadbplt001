@@ -1,14 +1,14 @@
 with itg_th_dstrbtr_customer_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_CUSTOMER_DIM
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 itg_th_sellout_sales_foc_fact as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_SELLOUT_SALES_FOC_FACT
+select * from {{ ref('thaitg_integration__itg_th_sellout_sales_foc_fact') }}
 ),
 itg_th_dstrbtr_material_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_material_DIM
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 final as (
-SELECT 'TH' AS cntry_cd,
+select 'TH' AS cntry_cd,
     'Thailand' AS cntry_nm,
     s.dstrbtr_id as dstrbtr_grp_cd,
     null as dstrbtr_soldto_code,

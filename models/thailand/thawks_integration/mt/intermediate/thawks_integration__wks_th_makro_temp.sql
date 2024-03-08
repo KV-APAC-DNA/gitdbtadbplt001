@@ -2,7 +2,7 @@ with wks_th_makro_test as (
   select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_TH_MAKRO
 ),
 edw_vw_os_time_dim as (
-  select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 makro_sellout as (
   select

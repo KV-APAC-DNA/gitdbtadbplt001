@@ -7,10 +7,10 @@
 }}
 
 with itg_th_dstrbtr_customer_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_CUSTOMER_DIM
+    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 itg_th_gt_dstrbtr_control as (
-select * from DEV_DNA_CORE.NNARAS01_WORKSPACE.THAITG_INTEGRATION__ITG_TH_GT_DSTRBTR_CONTROL
+select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}
 ),
 final as (
 select 

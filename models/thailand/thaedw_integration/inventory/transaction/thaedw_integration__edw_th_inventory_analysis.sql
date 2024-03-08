@@ -2,7 +2,7 @@ with EDW_VW_TH_INVENTORY_ANALYSIS as (
    select * from  {{ ref('thaedw_integration__edw_vw_th_inventory_analysis') }}
 ),
 final as (
-SELECT 
+select
 data_type::varchar(9) as data_type,
 order_date::varchar(52) as order_date,
 year::number(18,0) as year,
@@ -66,5 +66,5 @@ inventory::float as inventory,
 si_gross_trade_sales_value::number(38,5) as si_gross_trade_sales_value,
 si_tp_value::number(38,5) as si_tp_value,
 si_net_trade_sales_value::number(38,5) as si_net_trade_sales_value
-FROM EDW_VW_TH_INVENTORY_ANALYSIS)
+from EDW_VW_TH_INVENTORY_ANALYSIS)
 select * from final

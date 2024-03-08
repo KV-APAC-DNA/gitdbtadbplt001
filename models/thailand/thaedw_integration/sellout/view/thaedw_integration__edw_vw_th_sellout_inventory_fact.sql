@@ -1,5 +1,5 @@
  with itg_th_sellout_inventory_fact as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_SELLOUT_INVENTORY_FACT
+    select * from {{ ref('thaitg_integration__itg_th_sellout_inventory_fact') }}
  ),
 final as (
  select

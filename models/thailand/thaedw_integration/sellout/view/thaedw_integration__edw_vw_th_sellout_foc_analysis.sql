@@ -1,31 +1,30 @@
 with edw_vw_th_sellout_sales_foc_fact  as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_SELLOUT_SALES_FOC_FACT
+  select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_foc_fact') }}
 ),
 edw_vw_os_time_dim as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_TIME_DIM
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_os_dstrbtr_customer_dim as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_DSTRBTR_CUSTOMER_DIM
+  select * from {{ ref('thaedw_integration__edw_vw_os_dstrbtr_customer_dim') }}
 ),
 edw_vw_os_dstrbtr_material_dim as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_DSTRBTR_MATERIAL_DIM
+  select * from {{ ref('thaedw_integration__edw_vw_os_dstrbtr_material_dim') }}
 ),
 itg_th_target_distribution as (
-  select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_TARGET_DISTRIBUTION
+  select * from {{ ref('thaitg_integration__itg_th_target_distribution') }}
 ),
 itg_th_productgrouping as (
-  select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_PRODUCTGROUPING
+  select * from {{ ref('thaitg_integration__itg_th_productgrouping') }}
 ),
 itg_th_target_sales as (
-  select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_TARGET_SALES
+  select * from {{ ref('thaitg_integration__itg_th_target_sales') }}
 ),
 edw_vw_os_customer_dim as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_CUSTOMER_DIM
+  select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_vw_os_material_dim as (
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_MATERIAL_DIM
+  select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ),
-
 so_matl as 
 (
     select distinct

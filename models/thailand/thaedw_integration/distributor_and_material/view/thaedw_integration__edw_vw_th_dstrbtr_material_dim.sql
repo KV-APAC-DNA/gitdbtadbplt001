@@ -1,12 +1,12 @@
 with itg_th_dstrbtr_material_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_MATERIAL_DIM),
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
+),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
--- select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 final as (
 
-    SELECT 
+    select 
   'TH' AS cntry_cd, 
   'Thailand' AS cntry_nm, 
   NULL AS dstrbtr_grp_cd, 

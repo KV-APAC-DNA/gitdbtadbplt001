@@ -1,5 +1,5 @@
 with edw_vw_th_inventory_analysis_base_6year_filter as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_th_inventory_analysis_base_6year_filter
+select * from {{ ref('thaedw_integration__edw_vw_th_inventory_analysis_base_6year_filter') }}
 ),
 final as (
 select
