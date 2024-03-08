@@ -10,7 +10,7 @@ with source as (
 --Final CTE
 final as (
     select 
-        nvl(mandt,'') as mandt,
+        mandt as mandt,
         nvl(spras,'') as spras,
         nvl(mvgr3,'') as mvgr3,
         bezei,
