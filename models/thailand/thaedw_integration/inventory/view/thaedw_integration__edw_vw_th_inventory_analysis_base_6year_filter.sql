@@ -1,9 +1,9 @@
 with 
-edw_vw_os_sellout_sales_fact as (
+edw_vw_th_sellout_sales_fact as (
     select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_fact') }}
 ),
 
-edw_vw_os_sellout_inventory_fact as (
+edw_vw_th_sellout_inventory_fact as (
     select * from {{ ref('thaedw_integration__edw_vw_th_sellout_inventory_fact') }}
 ),
 
@@ -15,15 +15,15 @@ edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 
-edw_vw_os_material_dim as (
+edw_vw_th_material_dim as (
     select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ),
 
-edw_vw_os_dstrbtr_customer_dim as (
+edw_vw_th_dstrbtr_customer_dim as (
     select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
 ),
 
-edw_vw_os_sellin_sales_fact as (
+edw_vw_th_sellin_sales_fact as (
     select * from {{ ref('thaedw_integration__edw_vw_th_sellin_sales_fact') }}
 ),
 
@@ -31,7 +31,7 @@ edw_customer_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 
-edw_vw_os_customer_dim as (
+edw_vw_th_customer_dim as (
     select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_company_dim as (
@@ -43,7 +43,7 @@ v_edw_customer_sales_dim as (
 itg_th_dtsdistributor as (
     select * from {{ ref('thaitg_integration__itg_th_dtsdistributor') }}
 ),
-edw_vw_os_dstrbtr_material_dim as (
+edw_vw_th_dstrbtr_material_dim as (
     select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
 ),
 
@@ -75,24 +75,24 @@ sales as
         (
           select
             cast('Sales' as varchar) as typ,
-            edw_vw_os_sellout_sales_fact.cntry_cd,
-            edw_vw_os_sellout_sales_fact.cntry_nm,
-            edw_vw_os_sellout_sales_fact.bill_date,
-            edw_vw_os_sellout_sales_fact.dstrbtr_grp_cd,
-            edw_vw_os_sellout_sales_fact.dstrbtr_matl_num,
+            edw_vw_th_sellout_sales_fact.cntry_cd,
+            edw_vw_th_sellout_sales_fact.cntry_nm,
+            edw_vw_th_sellout_sales_fact.bill_date,
+            edw_vw_th_sellout_sales_fact.dstrbtr_grp_cd,
+            edw_vw_th_sellout_sales_fact.dstrbtr_matl_num,
             cast(null as varchar) as warehse_cd,
             cast(null as varchar) as warehse_grp,
-            sum(edw_vw_os_sellout_sales_fact.sls_qty) as sls_qty,
-            sum(edw_vw_os_sellout_sales_fact.ret_qty) as ret_qty,
+            sum(edw_vw_th_sellout_sales_fact.sls_qty) as sls_qty,
+            sum(edw_vw_th_sellout_sales_fact.ret_qty) as ret_qty,
             sum(
               case
                 when (
                   (
-                    edw_vw_os_sellout_sales_fact.cn_reason_cd is null
+                    edw_vw_th_sellout_sales_fact.cn_reason_cd is null
                   )
                   or (
                     left(cast((
-                      edw_vw_os_sellout_sales_fact.cn_reason_cd
+                      edw_vw_th_sellout_sales_fact.cn_reason_cd
                     ) as text), 1) <> cast((
                       cast('N' as varchar)
                     ) as text)
@@ -100,7 +100,7 @@ sales as
                 )
                 then cast((
                   (
-                    edw_vw_os_sellout_sales_fact.grs_trd_sls + edw_vw_os_sellout_sales_fact.ret_val
+                    edw_vw_th_sellout_sales_fact.grs_trd_sls + edw_vw_th_sellout_sales_fact.ret_val
                   )
                 ) as double)
                 else cast(null as double)
@@ -109,21 +109,21 @@ sales as
             0 as soh,
             0 as amt_bfr_disc,
             0 as amount_sls
-          from edw_vw_os_sellout_sales_fact
+          from edw_vw_th_sellout_sales_fact
           where
             (
               cast((
-                edw_vw_os_sellout_sales_fact.cntry_cd
+                edw_vw_th_sellout_sales_fact.cntry_cd
               ) as text) = cast((
                 cast('TH' as varchar)
               ) as text)
             )
           group by
-            edw_vw_os_sellout_sales_fact.cntry_cd,
-            edw_vw_os_sellout_sales_fact.cntry_nm,
-            edw_vw_os_sellout_sales_fact.bill_date,
-            edw_vw_os_sellout_sales_fact.dstrbtr_grp_cd,
-            edw_vw_os_sellout_sales_fact.dstrbtr_matl_num
+            edw_vw_th_sellout_sales_fact.cntry_cd,
+            edw_vw_th_sellout_sales_fact.cntry_nm,
+            edw_vw_th_sellout_sales_fact.bill_date,
+            edw_vw_th_sellout_sales_fact.dstrbtr_grp_cd,
+            edw_vw_th_sellout_sales_fact.dstrbtr_matl_num
           union all
           select
             cast('Inventory' as varchar) as typ,
@@ -197,7 +197,7 @@ sales as
                     12
                   ) as double)
                 ) as soh
-              from edw_vw_os_sellout_inventory_fact as inventory
+              from edw_vw_th_sellout_inventory_fact as inventory
               where
                 (
                   (
@@ -273,24 +273,24 @@ sales as
 matl as 
 (
       select distinct
-        edw_vw_os_material_dim.cntry_key,
-        edw_vw_os_material_dim.sap_matl_num,
-        edw_vw_os_material_dim.sap_mat_desc,
-        edw_vw_os_material_dim.gph_region,
-        edw_vw_os_material_dim.gph_prod_frnchse,
-        edw_vw_os_material_dim.gph_prod_brnd,
-        edw_vw_os_material_dim.gph_prod_vrnt,
-        edw_vw_os_material_dim.gph_prod_sgmnt,
-        edw_vw_os_material_dim.gph_prod_put_up_desc,
-        edw_vw_os_material_dim.gph_prod_sub_brnd as prod_sub_brand,
-        edw_vw_os_material_dim.gph_prod_subsgmnt as prod_subsegment,
-        edw_vw_os_material_dim.gph_prod_ctgry as prod_category,
-        edw_vw_os_material_dim.gph_prod_subctgry as prod_subcategory
-      from edw_vw_os_material_dim
+        edw_vw_th_material_dim.cntry_key,
+        edw_vw_th_material_dim.sap_matl_num,
+        edw_vw_th_material_dim.sap_mat_desc,
+        edw_vw_th_material_dim.gph_region,
+        edw_vw_th_material_dim.gph_prod_frnchse,
+        edw_vw_th_material_dim.gph_prod_brnd,
+        edw_vw_th_material_dim.gph_prod_vrnt,
+        edw_vw_th_material_dim.gph_prod_sgmnt,
+        edw_vw_th_material_dim.gph_prod_put_up_desc,
+        edw_vw_th_material_dim.gph_prod_sub_brnd as prod_sub_brand,
+        edw_vw_th_material_dim.gph_prod_subsgmnt as prod_subsegment,
+        edw_vw_th_material_dim.gph_prod_ctgry as prod_category,
+        edw_vw_th_material_dim.gph_prod_subctgry as prod_subcategory
+      from edw_vw_th_material_dim
       where
         (
           cast((
-            edw_vw_os_material_dim.cntry_key
+            edw_vw_th_material_dim.cntry_key
           ) as text) = cast((
             cast('TH' as varchar)
           ) as text)
@@ -333,19 +333,19 @@ cust as
     from (
       (
         select distinct
-          edw_vw_os_dstrbtr_customer_dim.dstrbtr_grp_cd,
-          edw_vw_os_dstrbtr_customer_dim.sap_soldto_code
-        from edw_vw_os_dstrbtr_customer_dim
+          edw_vw_th_dstrbtr_customer_dim.dstrbtr_grp_cd,
+          edw_vw_th_dstrbtr_customer_dim.sap_soldto_code
+        from edw_vw_th_dstrbtr_customer_dim
         where
           (
             cast((
-              edw_vw_os_dstrbtr_customer_dim.cntry_cd
+              edw_vw_th_dstrbtr_customer_dim.cntry_cd
             ) as text) = cast((
               cast('TH' as varchar)
             ) as text)
           )
       ) as sellout_cust
-      join edw_vw_os_customer_dim as sellin_cust
+      join edw_vw_th_customer_dim as sellin_cust
         on (
           (
             cast((
@@ -360,33 +360,33 @@ cust as
 sellin_fact as 
 (
               select
-                edw_vw_os_sellin_sales_fact.item_cd,
-                edw_vw_os_sellin_sales_fact.cust_id,
-                edw_vw_os_sellin_sales_fact.sls_org,
-                edw_vw_os_sellin_sales_fact.sls_grp as sap_sls_grp_cd,
+                edw_vw_th_sellin_sales_fact.item_cd,
+                edw_vw_th_sellin_sales_fact.cust_id,
+                edw_vw_th_sellin_sales_fact.sls_org,
+                edw_vw_th_sellin_sales_fact.sls_grp as sap_sls_grp_cd,
                 sls_grp_lkp.sls_grp_desc as sap_sls_grp_desc,
-                edw_vw_os_sellin_sales_fact.sls_ofc as sap_sls_office_cd,
+                edw_vw_th_sellin_sales_fact.sls_ofc as sap_sls_office_cd,
                 sls_ofc_lkp.sls_ofc_desc as sap_sls_office_desc,
-                edw_vw_os_sellin_sales_fact.plnt,
-                edw_vw_os_sellin_sales_fact.acct_no,
-                edw_vw_os_sellin_sales_fact.cust_grp,
-                edw_vw_os_sellin_sales_fact.cust_sls,
-                edw_vw_os_sellin_sales_fact.pstng_per,
-                edw_vw_os_sellin_sales_fact.dstr_chnl,
-                edw_vw_os_sellin_sales_fact.jj_mnth_id,
-                sum(edw_vw_os_sellin_sales_fact.base_val) as base_val,
-                sum(edw_vw_os_sellin_sales_fact.sls_qty) as sls_qty,
-                sum(edw_vw_os_sellin_sales_fact.ret_qty) as ret_qty,
-                sum(edw_vw_os_sellin_sales_fact.sls_less_rtn_qty) as sls_less_rtn_qty,
-                sum(edw_vw_os_sellin_sales_fact.gts_val) as gts_val,
-                sum(edw_vw_os_sellin_sales_fact.ret_val) as ret_val,
-                sum(edw_vw_os_sellin_sales_fact.gts_less_rtn_val) as gts_less_rtn_val,
-                sum(edw_vw_os_sellin_sales_fact.tp_val) as tp_val,
-                sum(edw_vw_os_sellin_sales_fact.nts_val) as nts_val,
-                sum(edw_vw_os_sellin_sales_fact.nts_qty) as nts_qty
+                edw_vw_th_sellin_sales_fact.plnt,
+                edw_vw_th_sellin_sales_fact.acct_no,
+                edw_vw_th_sellin_sales_fact.cust_grp,
+                edw_vw_th_sellin_sales_fact.cust_sls,
+                edw_vw_th_sellin_sales_fact.pstng_per,
+                edw_vw_th_sellin_sales_fact.dstr_chnl,
+                edw_vw_th_sellin_sales_fact.jj_mnth_id,
+                sum(edw_vw_th_sellin_sales_fact.base_val) as base_val,
+                sum(edw_vw_th_sellin_sales_fact.sls_qty) as sls_qty,
+                sum(edw_vw_th_sellin_sales_fact.ret_qty) as ret_qty,
+                sum(edw_vw_th_sellin_sales_fact.sls_less_rtn_qty) as sls_less_rtn_qty,
+                sum(edw_vw_th_sellin_sales_fact.gts_val) as gts_val,
+                sum(edw_vw_th_sellin_sales_fact.ret_val) as ret_val,
+                sum(edw_vw_th_sellin_sales_fact.gts_less_rtn_val) as gts_less_rtn_val,
+                sum(edw_vw_th_sellin_sales_fact.tp_val) as tp_val,
+                sum(edw_vw_th_sellin_sales_fact.nts_val) as nts_val,
+                sum(edw_vw_th_sellin_sales_fact.nts_qty) as nts_qty
               from (
                 (
-                  edw_vw_os_sellin_sales_fact as edw_vw_os_sellin_sales_fact
+                  edw_vw_th_sellin_sales_fact as edw_vw_th_sellin_sales_fact
                     left join (
                       select distinct
                         edw_customer_sales_dim.sls_ofc as sap_sls_office_cd,
@@ -430,7 +430,7 @@ sellin_fact as
                           cast((
                             sls_ofc_lkp.sap_sls_office_cd
                           ) as text) = cast((
-                            edw_vw_os_sellin_sales_fact.sls_ofc
+                            edw_vw_th_sellin_sales_fact.sls_ofc
                           ) as text)
                         )
                       )
@@ -478,7 +478,7 @@ sellin_fact as
                       cast((
                         sls_grp_lkp.sls_grp
                       ) as text) = cast((
-                        edw_vw_os_sellin_sales_fact.sls_grp
+                        edw_vw_th_sellin_sales_fact.sls_grp
                       ) as text)
                     )
                   )
@@ -486,24 +486,24 @@ sellin_fact as
               where
                 (
                   cast((
-                    edw_vw_os_sellin_sales_fact.cntry_nm
+                    edw_vw_th_sellin_sales_fact.cntry_nm
                   ) as text) = cast((
                     cast('TH' as varchar)
                   ) as text)
                 )
               group by
-                edw_vw_os_sellin_sales_fact.item_cd,
-                edw_vw_os_sellin_sales_fact.cust_id,
-                edw_vw_os_sellin_sales_fact.sls_grp,
-                edw_vw_os_sellin_sales_fact.sls_org,
-                edw_vw_os_sellin_sales_fact.sls_ofc,
-                edw_vw_os_sellin_sales_fact.plnt,
-                edw_vw_os_sellin_sales_fact.acct_no,
-                edw_vw_os_sellin_sales_fact.dstr_chnl,
-                edw_vw_os_sellin_sales_fact.cust_grp,
-                edw_vw_os_sellin_sales_fact.cust_sls,
-                edw_vw_os_sellin_sales_fact.pstng_per,
-                edw_vw_os_sellin_sales_fact.jj_mnth_id,
+                edw_vw_th_sellin_sales_fact.item_cd,
+                edw_vw_th_sellin_sales_fact.cust_id,
+                edw_vw_th_sellin_sales_fact.sls_grp,
+                edw_vw_th_sellin_sales_fact.sls_org,
+                edw_vw_th_sellin_sales_fact.sls_ofc,
+                edw_vw_th_sellin_sales_fact.plnt,
+                edw_vw_th_sellin_sales_fact.acct_no,
+                edw_vw_th_sellin_sales_fact.dstr_chnl,
+                edw_vw_th_sellin_sales_fact.cust_grp,
+                edw_vw_th_sellin_sales_fact.cust_sls,
+                edw_vw_th_sellin_sales_fact.pstng_per,
+                edw_vw_th_sellin_sales_fact.jj_mnth_id,
                 sls_ofc_lkp.sls_ofc_desc,
                 sls_grp_lkp.sls_grp_desc
             ) ,
@@ -525,23 +525,23 @@ cmp as
 sellin_mat as 
 (
           select distinct
-            edw_vw_os_material_dim.sap_matl_num,
-            edw_vw_os_material_dim.sap_mat_desc,
-            edw_vw_os_material_dim.gph_region,
-            edw_vw_os_material_dim.gph_prod_frnchse,
-            edw_vw_os_material_dim.gph_prod_brnd,
-            edw_vw_os_material_dim.gph_prod_vrnt,
-            edw_vw_os_material_dim.gph_prod_sgmnt,
-            edw_vw_os_material_dim.gph_prod_put_up_desc,
-            edw_vw_os_material_dim.gph_prod_sub_brnd as prod_sub_brand,
-            edw_vw_os_material_dim.gph_prod_subsgmnt as prod_subsegment,
-            edw_vw_os_material_dim.gph_prod_ctgry as prod_category,
-            edw_vw_os_material_dim.gph_prod_subctgry as prod_subcategory
-          from edw_vw_os_material_dim as edw_vw_os_material_dim
+            edw_vw_th_material_dim.sap_matl_num,
+            edw_vw_th_material_dim.sap_mat_desc,
+            edw_vw_th_material_dim.gph_region,
+            edw_vw_th_material_dim.gph_prod_frnchse,
+            edw_vw_th_material_dim.gph_prod_brnd,
+            edw_vw_th_material_dim.gph_prod_vrnt,
+            edw_vw_th_material_dim.gph_prod_sgmnt,
+            edw_vw_th_material_dim.gph_prod_put_up_desc,
+            edw_vw_th_material_dim.gph_prod_sub_brnd as prod_sub_brand,
+            edw_vw_th_material_dim.gph_prod_subsgmnt as prod_subsegment,
+            edw_vw_th_material_dim.gph_prod_ctgry as prod_category,
+            edw_vw_th_material_dim.gph_prod_subctgry as prod_subcategory
+          from edw_vw_th_material_dim as edw_vw_th_material_dim
           where
             (
               cast((
-                edw_vw_os_material_dim.cntry_key
+                edw_vw_th_material_dim.cntry_key
               ) as text) = cast((
                 cast('TH' as varchar)
               ) as text)
@@ -550,21 +550,21 @@ sellin_mat as
 sellout_mat as 
 (
           select distinct
-            edw_vw_os_dstrbtr_material_dim.dstrbtr_matl_num,
-            edw_vw_os_dstrbtr_material_dim.is_npi,
-            edw_vw_os_dstrbtr_material_dim.npi_str_period,
-            edw_vw_os_dstrbtr_material_dim.npi_end_period,
-            edw_vw_os_dstrbtr_material_dim.is_reg,
-            edw_vw_os_dstrbtr_material_dim.is_promo,
-            edw_vw_os_dstrbtr_material_dim.promo_strt_period,
-            edw_vw_os_dstrbtr_material_dim.promo_end_period,
-            edw_vw_os_dstrbtr_material_dim.is_mcl,
-            edw_vw_os_dstrbtr_material_dim.is_hero
-          from edw_vw_os_dstrbtr_material_dim
+            edw_vw_th_dstrbtr_material_dim.dstrbtr_matl_num,
+            edw_vw_th_dstrbtr_material_dim.is_npi,
+            edw_vw_th_dstrbtr_material_dim.npi_str_period,
+            edw_vw_th_dstrbtr_material_dim.npi_end_period,
+            edw_vw_th_dstrbtr_material_dim.is_reg,
+            edw_vw_th_dstrbtr_material_dim.is_promo,
+            edw_vw_th_dstrbtr_material_dim.promo_strt_period,
+            edw_vw_th_dstrbtr_material_dim.promo_end_period,
+            edw_vw_th_dstrbtr_material_dim.is_mcl,
+            edw_vw_th_dstrbtr_material_dim.is_hero
+          from edw_vw_th_dstrbtr_material_dim
           where
             (
               cast((
-                edw_vw_os_dstrbtr_material_dim.cntry_cd
+                edw_vw_th_dstrbtr_material_dim.cntry_cd
               ) as text) = cast((
                 cast('TH' as varchar)
               ) as text)
@@ -710,97 +710,97 @@ sellin as
           )
           left join (
             select
-              edw_vw_os_customer_dim.sap_cust_id,
-              edw_vw_os_customer_dim.sap_cust_nm,
-              edw_vw_os_customer_dim.sap_sls_org,
-              edw_vw_os_customer_dim.sap_cmp_id,
-              edw_vw_os_customer_dim.sap_cntry_cd,
-              edw_vw_os_customer_dim.sap_cntry_nm,
-              edw_vw_os_customer_dim.sap_addr,
-              edw_vw_os_customer_dim.sap_region,
-              edw_vw_os_customer_dim.sap_state_cd,
-              edw_vw_os_customer_dim.sap_city,
-              edw_vw_os_customer_dim.sap_post_cd,
-              edw_vw_os_customer_dim.sap_chnl_cd,
-              edw_vw_os_customer_dim.sap_chnl_desc,
-              edw_vw_os_customer_dim.sap_prnt_cust_key,
-              edw_vw_os_customer_dim.sap_prnt_cust_desc,
-              edw_vw_os_customer_dim.sap_cust_chnl_key,
-              edw_vw_os_customer_dim.sap_cust_chnl_desc,
-              edw_vw_os_customer_dim.sap_cust_sub_chnl_key,
-              edw_vw_os_customer_dim.sap_sub_chnl_desc,
-              edw_vw_os_customer_dim.sap_go_to_mdl_key,
-              edw_vw_os_customer_dim.sap_go_to_mdl_desc,
-              edw_vw_os_customer_dim.sap_bnr_key,
-              edw_vw_os_customer_dim.sap_bnr_desc,
-              edw_vw_os_customer_dim.sap_bnr_frmt_key,
-              edw_vw_os_customer_dim.sap_bnr_frmt_desc,
-              edw_vw_os_customer_dim.retail_env
-            from edw_vw_os_customer_dim as edw_vw_os_customer_dim
+              edw_vw_th_customer_dim.sap_cust_id,
+              edw_vw_th_customer_dim.sap_cust_nm,
+              edw_vw_th_customer_dim.sap_sls_org,
+              edw_vw_th_customer_dim.sap_cmp_id,
+              edw_vw_th_customer_dim.sap_cntry_cd,
+              edw_vw_th_customer_dim.sap_cntry_nm,
+              edw_vw_th_customer_dim.sap_addr,
+              edw_vw_th_customer_dim.sap_region,
+              edw_vw_th_customer_dim.sap_state_cd,
+              edw_vw_th_customer_dim.sap_city,
+              edw_vw_th_customer_dim.sap_post_cd,
+              edw_vw_th_customer_dim.sap_chnl_cd,
+              edw_vw_th_customer_dim.sap_chnl_desc,
+              edw_vw_th_customer_dim.sap_prnt_cust_key,
+              edw_vw_th_customer_dim.sap_prnt_cust_desc,
+              edw_vw_th_customer_dim.sap_cust_chnl_key,
+              edw_vw_th_customer_dim.sap_cust_chnl_desc,
+              edw_vw_th_customer_dim.sap_cust_sub_chnl_key,
+              edw_vw_th_customer_dim.sap_sub_chnl_desc,
+              edw_vw_th_customer_dim.sap_go_to_mdl_key,
+              edw_vw_th_customer_dim.sap_go_to_mdl_desc,
+              edw_vw_th_customer_dim.sap_bnr_key,
+              edw_vw_th_customer_dim.sap_bnr_desc,
+              edw_vw_th_customer_dim.sap_bnr_frmt_key,
+              edw_vw_th_customer_dim.sap_bnr_frmt_desc,
+              edw_vw_th_customer_dim.retail_env
+            from edw_vw_th_customer_dim as edw_vw_th_customer_dim
             where
               (
                 cast((
-                  edw_vw_os_customer_dim.sap_cntry_cd
+                  edw_vw_th_customer_dim.sap_cntry_cd
                 ) as text) = cast((
-                  cast('TH' AS VARCHAR)
-                ) AS TEXT)
+                  cast('TH' as varchar)
+                ) as text)
               )
-          ) AS cust
-            ON (
+          ) as cust
+            on (
               (
-                CAST((
+                cast((
                   sellin_fact.cust_id
-                ) AS TEXT) = CAST((
+                ) as text) = cast((
                   cust.sap_cust_id
-                ) AS TEXT)
+                ) as text)
               )
             )
         )
-        LEFT JOIN  cmp
-          ON (
+        left join  cmp
+          on (
             (
-              CAST((
+              cast((
                 cust.sap_cmp_id
-              ) AS TEXT) = CAST((
+              ) as text) = cast((
                 cmp.co_cd
-              ) AS TEXT)
+              ) as text)
             )
           )
       )
-      JOIN (
-        SELECT DISTINCT
-          dist.dstrbtr_id AS dstrbtr_grp_cd,
-          LTRIM(
-            CAST((
+      join (
+        select distinct
+          dist.dstrbtr_id as dstrbtr_grp_cd,
+          ltrim(
+            cast((
               cust.cust_num
-            ) AS TEXT),
-            CAST((
-              CAST((
+            ) as text),
+            cast((
+              cast((
                 0
-              ) AS VARCHAR)
-            ) AS TEXT)
-          ) AS sap_soldto_code
-        FROM (
-          v_edw_customer_sales_dim AS cust
-            LEFT JOIN itg_th_dtsdistributor AS dist
-              ON (
+              ) as varchar)
+            ) as text)
+          ) as sap_soldto_code
+        from (
+          v_edw_customer_sales_dim as cust
+            left join itg_th_dtsdistributor as dist
+              on (
                 (
-                  CAST((
+                  cast((
                     cust."parent customer"
-                  ) AS TEXT) = CAST((
+                  ) as text) = cast((
                     dist.dist_nm
-                  ) AS TEXT)
+                  ) as text)
                 )
               )
         )
-        WHERE
+        where
           (
             (
               (
-                CAST((
+                cast((
                   cust."go to model"
-                ) AS TEXT) = CAST((
-                  CAST('Indirect Accounts' as varchar)
+                ) as text) = cast((
+                  cast('Indirect Accounts' as varchar)
                 ) as text)
               )
               and (
@@ -857,237 +857,237 @@ sellin as
 final as    
 (
 select
-  sales.typ as data_type,
-  cast((
-    sales.bill_date
-  ) as varchar) as order_date,
-  sales."year",
-  cast((
-    sales.qrtr
-  ) as varchar) as year_quarter,
-  cast((
-    sales.mnth_id
-  ) as varchar) as month_year,
-  sales.mnth_no as month_number,
-  cast((
-    sales.wk
-  ) as varchar) as year_week_number,
-  cast((
-    sales.mnth_wk_no
-  ) as varchar) as month_week_number,
-  sales.cntry_cd as country_code,
-  sales.cntry_nm as country_name,
-  sales.dstrbtr_grp_cd as distributor_id,
-  sales.warehse_cd as whcode,
-  sales.warehse_grp as whgroup,
-  sales.dstrbtr_matl_num as sku_code,
-  matl.sap_mat_desc as sku_description,
-  matl.gph_prod_frnchse as franchise,
-  matl.gph_prod_brnd as brand,
-  matl.gph_prod_vrnt as variant,
-  matl.gph_prod_sgmnt as segment,
-  matl.gph_prod_put_up_desc as put_up_description,
-  matl.prod_sub_brand,
-  matl.prod_subsegment,
-  matl.prod_category,
-  matl.prod_subcategory,
-  cust.sap_cust_id,
-  cust.sap_cust_nm,
-  cust.sap_sls_org,
-  cust.sap_cmp_id,
-  cust.sap_cntry_cd,
-  cust.sap_cntry_nm,
-  cust.sap_addr,
-  cust.sap_region,
-  cust.sap_state_cd,
-  cust.sap_city,
-  cust.sap_post_cd,
-  cust.sap_chnl_cd,
-  cust.sap_chnl_desc,
-  cust.sap_sls_office_cd,
-  cust.sap_sls_office_desc,
-  cust.sap_sls_grp_cd,
-  cust.sap_sls_grp_desc,
-  cust.sap_prnt_cust_key,
-  cust.sap_prnt_cust_desc,
-  cust.sap_cust_chnl_key,
-  cust.sap_cust_chnl_desc,
-  cust.sap_cust_sub_chnl_key,
-  cust.sap_sub_chnl_desc,
-  cust.sap_go_to_mdl_key,
-  cust.sap_go_to_mdl_desc,
-  cust.sap_bnr_key,
-  cust.sap_bnr_desc,
-  cust.sap_bnr_frmt_key,
-  cust.sap_bnr_frmt_desc,
-  cust.retail_env,
-  sales.sls_qty as sales_quantity,
-  sales.ret_qty as return_quantity,
-  sales.grs_trd_sls as gross_trade_sales,
-  sales.soh as inventory_quantity,
-  sales.amt_bfr_disc as amount_before_discount,
-  sales.amount_sls as inventory,
-  0 as si_gross_trade_sales_value,
-  0 as si_tp_value,
-  0 as si_net_trade_sales_value
-from (
-  (
-     sales
-    left join  matl
-      on (
-        (
-          upper(cast((
-            sales.dstrbtr_matl_num
-          ) as text)) = upper(
-            ltrim(cast((
-              matl.sap_matl_num
-            ) as text), cast((
-              cast('0' as varchar)
-            ) as text))
-          )
+    sales.typ as data_type,
+    cast((
+        sales.bill_date
+    ) as varchar) as order_date,
+    sales."year",
+    cast((
+        sales.qrtr
+    ) as varchar) as year_quarter,
+    cast((
+        sales.mnth_id
+    ) as varchar) as month_year,
+    sales.mnth_no as month_number,
+    cast((
+        sales.wk
+    ) as varchar) as year_week_number,
+    cast((
+        sales.mnth_wk_no
+    ) as varchar) as month_week_number,
+    sales.cntry_cd as country_code,
+    sales.cntry_nm as country_name,
+    sales.dstrbtr_grp_cd as distributor_id,
+    sales.warehse_cd as whcode,
+    sales.warehse_grp as whgroup,
+    sales.dstrbtr_matl_num as sku_code,
+    matl.sap_mat_desc as sku_description,
+    matl.gph_prod_frnchse as franchise,
+    matl.gph_prod_brnd as brand,
+    matl.gph_prod_vrnt as variant,
+    matl.gph_prod_sgmnt as segment,
+    matl.gph_prod_put_up_desc as put_up_description,
+    matl.prod_sub_brand,
+    matl.prod_subsegment,
+    matl.prod_category,
+    matl.prod_subcategory,
+    cust.sap_cust_id,
+    cust.sap_cust_nm,
+    cust.sap_sls_org,
+    cust.sap_cmp_id,
+    cust.sap_cntry_cd,
+    cust.sap_cntry_nm,
+    cust.sap_addr,
+    cust.sap_region,
+    cust.sap_state_cd,
+    cust.sap_city,
+    cust.sap_post_cd,
+    cust.sap_chnl_cd,
+    cust.sap_chnl_desc,
+    cust.sap_sls_office_cd,
+    cust.sap_sls_office_desc,
+    cust.sap_sls_grp_cd,
+    cust.sap_sls_grp_desc,
+    cust.sap_prnt_cust_key,
+    cust.sap_prnt_cust_desc,
+    cust.sap_cust_chnl_key,
+    cust.sap_cust_chnl_desc,
+    cust.sap_cust_sub_chnl_key,
+    cust.sap_sub_chnl_desc,
+    cust.sap_go_to_mdl_key,
+    cust.sap_go_to_mdl_desc,
+    cust.sap_bnr_key,
+    cust.sap_bnr_desc,
+    cust.sap_bnr_frmt_key,
+    cust.sap_bnr_frmt_desc,
+    cust.retail_env,
+    sales.sls_qty as sales_quantity,
+    sales.ret_qty as return_quantity,
+    sales.grs_trd_sls as gross_trade_sales,
+    sales.soh as inventory_quantity,
+    sales.amt_bfr_disc as amount_before_discount,
+    sales.amount_sls as inventory,
+    0 as si_gross_trade_sales_value,
+    0 as si_tp_value,
+    0 as si_net_trade_sales_value
+    from (
+    (
+        sales
+        left join  matl
+        on (
+            (
+            upper(cast((
+                sales.dstrbtr_matl_num
+            ) as text)) = upper(
+                ltrim(cast((
+                matl.sap_matl_num
+                ) as text), cast((
+                cast('0' as varchar)
+                ) as text))
+            )
+            )
         )
-      )
-  )
-  left join  cust
-    on (
-      (
-        cast((
-          cust.dstrbtr_grp_cd
-        ) as text) = cast((
-          sales.dstrbtr_grp_cd
-        ) as text)
-      )
     )
-)
-union all
-select
-  cast('Sellin' as varchar) as data_type,
-  cast(null as varchar) as order_date,
-  sellin.year_jnj as "year",
-  cast((
-    sellin.year_quarter_jnj
-  ) as varchar) as year_quarter,
-  cast((
-    sellin.year_month_jnj
-  ) as varchar) as month_year,
-  sellin.month_number_jnj as month_number,
-  cast(null as varchar) as year_week_number,
-  cast(null as varchar) as month_week_number,
-  cast('TH' as varchar) as country_code,
-  cast('Thailand' as varchar) as country_name,
-  sellin.dstrbtr_grp_cd as distributor_id,
-  cast(null as varchar) as whcode,
-  cast(null as varchar) as whgroup,
-  sellin.item_code as sku_code,
-  sellin.item_description as sku_description,
-  sellin.franchise,
-  sellin.brand,
-  sellin.variant,
-  sellin.segment,
-  sellin.put_up as put_up_description,
-  sellin.prod_sub_brand,
-  sellin.prod_subsegment,
-  sellin.prod_category,
-  sellin.prod_subcategory,
-  sellin.sap_cust_id,
-  sellin.sap_cust_nm,
-  sellin.sap_sls_org,
-  sellin.sap_cmp_id,
-  sellin.sap_cntry_cd,
-  sellin.sap_cntry_nm,
-  sellin.sap_addr,
-  sellin.sap_region,
-  sellin.sap_state_cd,
-  sellin.sap_city,
-  sellin.sap_post_cd,
-  sellin.sap_chnl_cd,
-  sellin.sap_chnl_desc,
-  sellin.sap_sls_office_cd,
-  sellin.sap_sls_office_desc,
-  sellin.sap_sls_grp_cd,
-  sellin.sap_sls_grp_desc,
-  sellin.sap_prnt_cust_key,
-  sellin.sap_prnt_cust_desc,
-  sellin.sap_cust_chnl_key,
-  sellin.sap_cust_chnl_desc,
-  sellin.sap_cust_sub_chnl_key,
-  sellin.sap_sub_chnl_desc,
-  sellin.sap_go_to_mdl_key,
-  sellin.go_to_model_description as sap_go_to_mdl_desc,
-  sellin.sap_bnr_key,
-  sellin.banner_description as sap_bnr_desc,
-  sellin.sap_bnr_frmt_key,
-  sellin.sap_bnr_frmt_desc,
-  sellin.retail_env,
-  0 as sales_quantity,
-  0 as return_quantity,
-  0 as gross_trade_sales,
-  0 as inventory_quantity,
-  0 as amount_before_discount,
-  0 as inventory,
-  sum(sellin.gross_trade_sales_value) as si_gross_trade_sales_value,
-  sum(sellin.tp_value) as si_tp_value,
-  sum(sellin.net_trade_sales_value) as si_net_trade_sales_value
-from  sellin
-group by
-  1,
-  2,
-  sellin.year_jnj,
-  cast((
-    sellin.year_quarter_jnj
-  ) as varchar),
-  cast((
-    sellin.year_month_jnj
-  ) as varchar),
-  sellin.month_number_jnj,
-  7,
-  8,
-  9,
-  10,
-  sellin.dstrbtr_grp_cd,
-  12,
-  13,
-  sellin.item_code,
-  sellin.item_description,
-  sellin.franchise,
-  sellin.brand,
-  sellin.variant,
-  sellin.segment,
-  sellin.put_up,
-  sellin.prod_sub_brand,
-  sellin.prod_subsegment,
-  sellin.prod_category,
-  sellin.prod_subcategory,
-  sellin.sap_cust_id,
-  sellin.sap_cust_nm,
-  sellin.sap_sls_org,
-  sellin.sap_cmp_id,
-  sellin.sap_cntry_cd,
-  sellin.sap_cntry_nm,
-  sellin.sap_addr,
-  sellin.sap_region,
-  sellin.sap_state_cd,
-  sellin.sap_city,
-  sellin.sap_post_cd,
-  sellin.sap_chnl_cd,
-  sellin.sap_chnl_desc,
-  sellin.sap_sls_office_cd,
-  sellin.sap_sls_office_desc,
-  sellin.sap_sls_grp_cd,
-  sellin.sap_sls_grp_desc,
-  sellin.sap_prnt_cust_key,
-  sellin.sap_prnt_cust_desc,
-  sellin.sap_cust_chnl_key,
-  sellin.sap_cust_chnl_desc,
-  sellin.sap_cust_sub_chnl_key,
-  sellin.sap_sub_chnl_desc,
-  sellin.sap_go_to_mdl_key,
-  sellin.go_to_model_description,
-  sellin.sap_bnr_key,
-  sellin.banner_description,
-  sellin.sap_bnr_frmt_key,
-  sellin.sap_bnr_frmt_desc,
-  sellin.retail_env
+    left join  cust
+        on (
+        (
+            cast((
+            cust.dstrbtr_grp_cd
+            ) as text) = cast((
+            sales.dstrbtr_grp_cd
+            ) as text)
+        )
+        )
+    )
+    union all
+    select
+    cast('Sellin' as varchar) as data_type,
+    cast(null as varchar) as order_date,
+    sellin.year_jnj as "year",
+    cast((
+        sellin.year_quarter_jnj
+    ) as varchar) as year_quarter,
+    cast((
+        sellin.year_month_jnj
+    ) as varchar) as month_year,
+    sellin.month_number_jnj as month_number,
+    cast(null as varchar) as year_week_number,
+    cast(null as varchar) as month_week_number,
+    cast('TH' as varchar) as country_code,
+    cast('Thailand' as varchar) as country_name,
+    sellin.dstrbtr_grp_cd as distributor_id,
+    cast(null as varchar) as whcode,
+    cast(null as varchar) as whgroup,
+    sellin.item_code as sku_code,
+    sellin.item_description as sku_description,
+    sellin.franchise,
+    sellin.brand,
+    sellin.variant,
+    sellin.segment,
+    sellin.put_up as put_up_description,
+    sellin.prod_sub_brand,
+    sellin.prod_subsegment,
+    sellin.prod_category,
+    sellin.prod_subcategory,
+    sellin.sap_cust_id,
+    sellin.sap_cust_nm,
+    sellin.sap_sls_org,
+    sellin.sap_cmp_id,
+    sellin.sap_cntry_cd,
+    sellin.sap_cntry_nm,
+    sellin.sap_addr,
+    sellin.sap_region,
+    sellin.sap_state_cd,
+    sellin.sap_city,
+    sellin.sap_post_cd,
+    sellin.sap_chnl_cd,
+    sellin.sap_chnl_desc,
+    sellin.sap_sls_office_cd,
+    sellin.sap_sls_office_desc,
+    sellin.sap_sls_grp_cd,
+    sellin.sap_sls_grp_desc,
+    sellin.sap_prnt_cust_key,
+    sellin.sap_prnt_cust_desc,
+    sellin.sap_cust_chnl_key,
+    sellin.sap_cust_chnl_desc,
+    sellin.sap_cust_sub_chnl_key,
+    sellin.sap_sub_chnl_desc,
+    sellin.sap_go_to_mdl_key,
+    sellin.go_to_model_description as sap_go_to_mdl_desc,
+    sellin.sap_bnr_key,
+    sellin.banner_description as sap_bnr_desc,
+    sellin.sap_bnr_frmt_key,
+    sellin.sap_bnr_frmt_desc,
+    sellin.retail_env,
+    0 as sales_quantity,
+    0 as return_quantity,
+    0 as gross_trade_sales,
+    0 as inventory_quantity,
+    0 as amount_before_discount,
+    0 as inventory,
+    sum(sellin.gross_trade_sales_value) as si_gross_trade_sales_value,
+    sum(sellin.tp_value) as si_tp_value,
+    sum(sellin.net_trade_sales_value) as si_net_trade_sales_value
+    from  sellin
+    group by
+    1,
+    2,
+    sellin.year_jnj,
+    cast((
+        sellin.year_quarter_jnj
+    ) as varchar),
+    cast((
+        sellin.year_month_jnj
+    ) as varchar),
+    sellin.month_number_jnj,
+    7,
+    8,
+    9,
+    10,
+    sellin.dstrbtr_grp_cd,
+    12,
+    13,
+    sellin.item_code,
+    sellin.item_description,
+    sellin.franchise,
+    sellin.brand,
+    sellin.variant,
+    sellin.segment,
+    sellin.put_up,
+    sellin.prod_sub_brand,
+    sellin.prod_subsegment,
+    sellin.prod_category,
+    sellin.prod_subcategory,
+    sellin.sap_cust_id,
+    sellin.sap_cust_nm,
+    sellin.sap_sls_org,
+    sellin.sap_cmp_id,
+    sellin.sap_cntry_cd,
+    sellin.sap_cntry_nm,
+    sellin.sap_addr,
+    sellin.sap_region,
+    sellin.sap_state_cd,
+    sellin.sap_city,
+    sellin.sap_post_cd,
+    sellin.sap_chnl_cd,
+    sellin.sap_chnl_desc,
+    sellin.sap_sls_office_cd,
+    sellin.sap_sls_office_desc,
+    sellin.sap_sls_grp_cd,
+    sellin.sap_sls_grp_desc,
+    sellin.sap_prnt_cust_key,
+    sellin.sap_prnt_cust_desc,
+    sellin.sap_cust_chnl_key,
+    sellin.sap_cust_chnl_desc,
+    sellin.sap_cust_sub_chnl_key,
+    sellin.sap_sub_chnl_desc,
+    sellin.sap_go_to_mdl_key,
+    sellin.go_to_model_description,
+    sellin.sap_bnr_key,
+    sellin.banner_description,
+    sellin.sap_bnr_frmt_key,
+    sellin.sap_bnr_frmt_desc,
+    sellin.retail_env
 )
 
 

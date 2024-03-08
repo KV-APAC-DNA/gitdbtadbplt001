@@ -9,7 +9,7 @@ with
 itg_th_tims_transdata as(
     select * from {{ ref('thaitg_integration__itg_th_tims_transdata') }}
 ),
-edw_vw_os_customer_dim as(
+edw_vw_th_customer_dim as(
     select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 itg_th_pos_customer_dim as(
@@ -54,14 +54,14 @@ product_master as
 temp2 as 
 (
     select
-      ltrim(cast(edw_list_price.material as text), 
-      cast(cast(0 as varchar) as text)) as material,
-      edw_list_price.amount as list_price,
-      row_number() over (partition by ltrim(cast(edw_list_price.material as text), 
-      cast(cast(0 as varchar) as text)) order by to_date(cast(edw_list_price.valid_to as text), 
-      cast(cast('yyyymmdd' as varchar) as text)) desc, 
-      to_date(cast(edw_list_price.dt_from as text), 
-      cast(cast('yyyymmdd' as varchar) as text)) desc) as rn
+        ltrim(cast(edw_list_price.material as text), 
+        cast(cast(0 as varchar) as text)) as material,
+        edw_list_price.amount as list_price,
+        row_number() over (partition by ltrim(cast(edw_list_price.material as text), 
+        cast(cast(0 as varchar) as text)) order by to_date(cast(edw_list_price.valid_to as text), 
+        cast(cast('yyyymmdd' as varchar) as text)) desc, 
+        to_date(cast(edw_list_price.dt_from as text), 
+        cast(cast('yyyymmdd' as varchar) as text)) desc) as rn
     from edw_list_price
     where
       cast(edw_list_price.sls_org as text) in ('2400')
@@ -121,7 +121,7 @@ trans as
         so_inv.sls_baht
         --so_inv.foc_product
         from itg_th_tims_transdata as so_inv
-        left join edw_vw_os_customer_dim as cust_dim
+        left join edw_vw_th_customer_dim as cust_dim
         on cust_dim.sap_cust_id = '108832'
         left join  product_master
         on product_master.barcd = so_inv.upc
