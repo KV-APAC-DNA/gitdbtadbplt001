@@ -11,10 +11,10 @@ source as (
 final as (
 
     select  
-        co_area as kokrs,
-        profit_ctr as prctr,
-        TO_DATE(dateto,'YYYYMMDD') as dateto,
-        TO_DATE(datefrom,'YYYYMMDD') as datefrom,
+        nvl(co_area,'') as kokrs,
+        nvl(profit_ctr,'') as prctr,
+        TRY_TO_DATE(dateto,'YYYYMMDD') as dateto,
+        TRY_TO_DATE(datefrom,'YYYYMMDD') as datefrom,
         resp_pers as verak,
         obj_curr as waers,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,

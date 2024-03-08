@@ -11,7 +11,7 @@ final as (
 
     select
         '888' as MANDT,
-        customer as kunnr,
+        nvl(customer,'') as kunnr,
         txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

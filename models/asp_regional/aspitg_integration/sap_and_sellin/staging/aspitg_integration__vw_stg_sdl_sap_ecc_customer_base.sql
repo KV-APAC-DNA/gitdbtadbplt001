@@ -6,7 +6,7 @@ source as (
 final as (
     select
         trim(mandt) as mandt,
-        trim(kunnr) as kunnr,
+        coalesce(trim(kunnr),'') as kunnr,
         trim(adrnr) as adrnr,
         trim(anred) as anred,
         trim(aufsd) as aufsd,

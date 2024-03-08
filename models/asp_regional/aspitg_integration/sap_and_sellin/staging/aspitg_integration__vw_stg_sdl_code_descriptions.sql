@@ -160,8 +160,8 @@ select 'SAP BW' as source_type,
 --Final CTE
 final as (
     select 
-        trim(source_type) as source_type,
-        trim(code_type) as code_type,
+        coalesce(trim(source_type),'') as source_type,
+        coalesce(trim(code_type),'') as code_type,
         coalesce(trim(code),'') as code,
         code_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,

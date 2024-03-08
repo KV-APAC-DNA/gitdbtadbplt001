@@ -8,8 +8,8 @@ with source as(
 final as(
     select 
         '888' as mandt,
-        langu	as	spras,
-        sales_off as   vkbur,		
+        nvl(langu,'')	as	spras,
+        nvl(sales_off,'') as   vkbur,		
         txtsh  as bezei,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,

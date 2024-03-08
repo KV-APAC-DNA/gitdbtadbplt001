@@ -6,7 +6,7 @@ with source as (
 
 final as(
     select 
-        bic_zstrong as zstrong,
+        nvl(bic_zstrong,'') as zstrong,
         langu as langu,
         txtsh as txtsh,
         txtmd as txtmd ,
