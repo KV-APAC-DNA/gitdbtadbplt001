@@ -23,6 +23,3 @@ models:
     config:
       alias: itg_th_sellout_sales_fact
       tags: ["th_itg_to_edw"]
-
-
-

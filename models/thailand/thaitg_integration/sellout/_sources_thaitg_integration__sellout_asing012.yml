@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      
+      - name: sdl_th_tesco_transdata
+        tags: ["j_ap_th_tesco_etl_framework"]
+
+  
