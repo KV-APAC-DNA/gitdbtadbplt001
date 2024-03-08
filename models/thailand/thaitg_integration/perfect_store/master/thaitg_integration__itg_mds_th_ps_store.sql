@@ -11,7 +11,7 @@ final as(
         customer_name::varchar(200) as customer_name,
         store_code::varchar(200) as store_code,
         store_name::varchar(200) as store_name,
-        current_timestamp()::timestampntz(9) as crt_dttm
+        current_timestamp()::timestampntz(9) as crtd_dttm
     from source
 )
 select * from final

@@ -30,3 +30,8 @@ models:
     config: 
       alias: sdl_raw_th_dms_customer_dim
       tags: ["th_mbox_customer"]
+
+  - name: thaitg_integration__itg_th_pos_customer_dim
+    config: 
+      alias: itg_th_pos_customer_dim
+      tags: ["j_ap_th_tesco_etl_framework"]

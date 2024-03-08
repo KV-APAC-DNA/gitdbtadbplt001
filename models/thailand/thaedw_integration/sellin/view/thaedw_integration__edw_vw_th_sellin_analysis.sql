@@ -1,184 +1,184 @@
-with edw_vw_os_sellin_sales_fact as(
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_SELLIN_SALES_FACT
+with edw_vw_th_sellin_sales_fact as(
+  select * from {{ ref('thaedw_integration__edw_vw_th_sellin_sales_fact') }}
 ), 
 itg_th_ciw_account_lookup as(
-  select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_CIW_ACCOUNT_LOOKUP
+  select * from {{ ref('thaitg_integration__itg_th_ciw_account_lookup') }}
 ), 
 edw_customer_sales_dim as(
-  select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+  select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ), 
 edw_vw_os_time_dim as(
-  select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ), 
-edw_vw_os_customer_dim as(
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_CUSTOMER_DIM
+edw_vw_th_customer_dim as(
+  select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ), 
 edw_company_dim as(
-  select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COMPANY_DIM
+  select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ), 
-edw_vw_os_material_dim as(
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_MATERIAL_DIM
+edw_vw_th_material_dim as(
+  select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ), 
-edw_vw_os_dstrbtr_material_dim as(
-  select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_DSTRBTR_MATERIAL_DIM
+edw_vw_th_dstrbtr_material_dim as(
+  select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
 ), 
 sellin_fact as(
-  SELECT 
-    edw_vw_os_sellin_sales_fact.item_cd, 
-    edw_vw_os_sellin_sales_fact.cust_id, 
-    edw_vw_os_sellin_sales_fact.sls_org, 
-    edw_vw_os_sellin_sales_fact.sls_grp AS sap_sls_grp_cd, 
-    sls_grp_lkp.sls_grp_desc AS sap_sls_grp_desc, 
-    edw_vw_os_sellin_sales_fact.sls_ofc AS sap_sls_office_cd, 
-    sls_ofc_lkp.sls_ofc_desc AS sap_sls_office_desc, 
-    edw_vw_os_sellin_sales_fact.plnt, 
-    edw_vw_os_sellin_sales_fact.acct_no, 
-    edw_vw_os_sellin_sales_fact.cust_grp, 
-    edw_vw_os_sellin_sales_fact.cust_sls, 
-    edw_vw_os_sellin_sales_fact.pstng_per, 
-    edw_vw_os_sellin_sales_fact.dstr_chnl, 
-    edw_vw_os_sellin_sales_fact.jj_mnth_id, 
-    itg_th_ciw_account_lookup.area, 
-    itg_th_ciw_account_lookup.category, 
-    itg_th_ciw_account_lookup.account_name, 
-    "max" (
-      (
-        edw_vw_os_sellin_sales_fact.pstng_dt
-      ):: TEXT
-    ) AS max_pstng_dt, 
-    sum(
-      edw_vw_os_sellin_sales_fact.base_val
-    ) AS base_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.sls_qty
-    ) AS sls_qty, 
-    sum(
-      edw_vw_os_sellin_sales_fact.ret_qty
-    ) AS ret_qty, 
-    sum(
-      edw_vw_os_sellin_sales_fact.sls_less_rtn_qty
-    ) AS sls_less_rtn_qty, 
-    sum(
-      edw_vw_os_sellin_sales_fact.gts_val
-    ) AS gts_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.ret_val
-    ) AS ret_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.gts_less_rtn_val
-    ) AS gts_less_rtn_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.tp_val
-    ) AS tp_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.nts_val
-    ) AS nts_val, 
-    sum(
-      edw_vw_os_sellin_sales_fact.nts_qty
-    ) AS nts_qty, 
-    (
-      sum(
-        edw_vw_os_sellin_sales_fact.base_val
-      ) - sum(
-        edw_vw_os_sellin_sales_fact.nts_val
-      )
-    ) AS ciw_account_value 
-  FROM 
-    (
-      (
-        (
-          edw_vw_os_sellin_sales_fact 
-          LEFT JOIN itg_th_ciw_account_lookup ON (
+    SELECT 
+        edw_vw_th_sellin_sales_fact.item_cd, 
+        edw_vw_th_sellin_sales_fact.cust_id, 
+        edw_vw_th_sellin_sales_fact.sls_org, 
+        edw_vw_th_sellin_sales_fact.sls_grp AS sap_sls_grp_cd, 
+        sls_grp_lkp.sls_grp_desc AS sap_sls_grp_desc, 
+        edw_vw_th_sellin_sales_fact.sls_ofc AS sap_sls_office_cd, 
+        sls_ofc_lkp.sls_ofc_desc AS sap_sls_office_desc, 
+        edw_vw_th_sellin_sales_fact.plnt, 
+        edw_vw_th_sellin_sales_fact.acct_no, 
+        edw_vw_th_sellin_sales_fact.cust_grp, 
+        edw_vw_th_sellin_sales_fact.cust_sls, 
+        edw_vw_th_sellin_sales_fact.pstng_per, 
+        edw_vw_th_sellin_sales_fact.dstr_chnl, 
+        edw_vw_th_sellin_sales_fact.jj_mnth_id, 
+        itg_th_ciw_account_lookup.area, 
+        itg_th_ciw_account_lookup.category, 
+        itg_th_ciw_account_lookup.account_name, 
+        "max" (
             (
-              (
-                edw_vw_os_sellin_sales_fact.acct_no
-              ) = (
-                itg_th_ciw_account_lookup.account_num
-              )
+            edw_vw_th_sellin_sales_fact.pstng_dt
+            ):: TEXT
+        ) AS max_pstng_dt, 
+        sum(
+            edw_vw_th_sellin_sales_fact.base_val
+        ) AS base_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.sls_qty
+        ) AS sls_qty, 
+        sum(
+            edw_vw_th_sellin_sales_fact.ret_qty
+        ) AS ret_qty, 
+        sum(
+            edw_vw_th_sellin_sales_fact.sls_less_rtn_qty
+        ) AS sls_less_rtn_qty, 
+        sum(
+            edw_vw_th_sellin_sales_fact.gts_val
+        ) AS gts_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.ret_val
+        ) AS ret_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.gts_less_rtn_val
+        ) AS gts_less_rtn_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.tp_val
+        ) AS tp_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.nts_val
+        ) AS nts_val, 
+        sum(
+            edw_vw_th_sellin_sales_fact.nts_qty
+        ) AS nts_qty, 
+        (
+            sum(
+            edw_vw_th_sellin_sales_fact.base_val
+            ) - sum(
+            edw_vw_th_sellin_sales_fact.nts_val
             )
-          )
+        ) AS ciw_account_value 
+    FROM 
+    (
+        (
+        (
+            edw_vw_th_sellin_sales_fact 
+            LEFT JOIN itg_th_ciw_account_lookup ON (
+            (
+                (
+                edw_vw_th_sellin_sales_fact.acct_no
+                ) = (
+                itg_th_ciw_account_lookup.account_num
+                )
+            )
+            )
         ) 
         LEFT JOIN (
-          SELECT 
+            SELECT 
             DISTINCT edw_customer_sales_dim.sls_ofc AS sap_sls_office_cd, 
             edw_customer_sales_dim.sls_ofc_desc 
-          FROM 
+            FROM 
             edw_customer_sales_dim 
-          WHERE 
+            WHERE 
             (
-              (
                 (
-                  (edw_customer_sales_dim.sls_org):: TEXT = ('2400' :: varchar):: TEXT
+                (
+                    (edw_customer_sales_dim.sls_org):: TEXT = ('2400' :: varchar):: TEXT
                 ) 
                 OR (
-                  (edw_customer_sales_dim.sls_org):: TEXT = ('2500' :: varchar):: TEXT
+                    (edw_customer_sales_dim.sls_org):: TEXT = ('2500' :: varchar):: TEXT
                 )
-              ) 
-              AND (
+                ) 
+                AND (
                 CASE WHEN (
-                  (edw_customer_sales_dim.sls_ofc):: TEXT = ('' :: varchar):: TEXT
+                    (edw_customer_sales_dim.sls_ofc):: TEXT = ('' :: varchar):: TEXT
                 ) THEN NULL :: varchar ELSE edw_customer_sales_dim.sls_ofc END IS NOT NULL
-              )
+                )
             )
         ) sls_ofc_lkp ON (
-          (
-            (sls_ofc_lkp.sap_sls_office_cd):: TEXT = (
-              edw_vw_os_sellin_sales_fact.sls_ofc
-            ):: TEXT
-          )
-        )
-      ) 
-      LEFT JOIN (
-        SELECT 
-          DISTINCT edw_customer_sales_dim.sls_grp, 
-          edw_customer_sales_dim.sls_grp_desc 
-        FROM 
-          edw_customer_sales_dim 
-        WHERE 
-          (
             (
-              (
+            (sls_ofc_lkp.sap_sls_office_cd):: TEXT = (
+                edw_vw_th_sellin_sales_fact.sls_ofc
+            ):: TEXT
+            )
+        )
+        ) 
+        LEFT JOIN (
+        SELECT 
+            DISTINCT edw_customer_sales_dim.sls_grp, 
+            edw_customer_sales_dim.sls_grp_desc 
+        FROM 
+            edw_customer_sales_dim 
+        WHERE 
+            (
+            (
+                (
                 (edw_customer_sales_dim.sls_org)= ('2400' :: varchar)
-              ) 
-              OR (
+                ) 
+                OR (
                 (edw_customer_sales_dim.sls_org) = ('2500' :: varchar)
-              )
+                )
             ) 
             AND (
-              CASE WHEN (
+                CASE WHEN (
                 (edw_customer_sales_dim.sls_grp) = ('' :: varchar)
-              ) THEN NULL :: varchar ELSE edw_customer_sales_dim.sls_grp END IS NOT NULL
+                ) THEN NULL :: varchar ELSE edw_customer_sales_dim.sls_grp END IS NOT NULL
             )
-          )
-      ) sls_grp_lkp ON (
+            )
+        ) sls_grp_lkp ON (
         (
-          (sls_grp_lkp.sls_grp) = (
-            edw_vw_os_sellin_sales_fact.sls_grp
-          )
+            (sls_grp_lkp.sls_grp) = (
+            edw_vw_th_sellin_sales_fact.sls_grp
+            )
         )
-      )
+        )
     ) 
-  WHERE 
+    WHERE 
     (
-      (
-        edw_vw_os_sellin_sales_fact.cntry_nm
-      ) = ('TH' :: varchar)
+        (
+        edw_vw_th_sellin_sales_fact.cntry_nm
+        ) = ('TH' :: varchar)
     ) 
-  GROUP BY 
-    edw_vw_os_sellin_sales_fact.item_cd, 
-    edw_vw_os_sellin_sales_fact.cust_id, 
-    edw_vw_os_sellin_sales_fact.sls_grp, 
+    GROUP BY 
+    edw_vw_th_sellin_sales_fact.item_cd, 
+    edw_vw_th_sellin_sales_fact.cust_id, 
+    edw_vw_th_sellin_sales_fact.sls_grp, 
     sls_grp_lkp.sls_grp_desc, 
-    edw_vw_os_sellin_sales_fact.sls_ofc, 
+    edw_vw_th_sellin_sales_fact.sls_ofc, 
     sls_ofc_lkp.sls_ofc_desc, 
-    edw_vw_os_sellin_sales_fact.sls_org, 
-    edw_vw_os_sellin_sales_fact.plnt, 
-    edw_vw_os_sellin_sales_fact.acct_no, 
-    edw_vw_os_sellin_sales_fact.dstr_chnl, 
-    edw_vw_os_sellin_sales_fact.cust_grp, 
-    edw_vw_os_sellin_sales_fact.cust_sls, 
-    edw_vw_os_sellin_sales_fact.pstng_per, 
-    edw_vw_os_sellin_sales_fact.jj_mnth_id, 
+    edw_vw_th_sellin_sales_fact.sls_org, 
+    edw_vw_th_sellin_sales_fact.plnt, 
+    edw_vw_th_sellin_sales_fact.acct_no, 
+    edw_vw_th_sellin_sales_fact.dstr_chnl, 
+    edw_vw_th_sellin_sales_fact.cust_grp, 
+    edw_vw_th_sellin_sales_fact.cust_sls, 
+    edw_vw_th_sellin_sales_fact.pstng_per, 
+    edw_vw_th_sellin_sales_fact.jj_mnth_id, 
     itg_th_ciw_account_lookup.area, 
     itg_th_ciw_account_lookup.category, 
     itg_th_ciw_account_lookup.account_name
@@ -231,11 +231,7 @@ cust as(
     sellin_cust.sap_bnr_frmt_desc, 
     sellin_cust.retail_env 
   FROM 
-    edw_vw_os_customer_dim sellin_cust 
-  WHERE 
-    (
-      (sellin_cust.sap_cntry_cd) = ('TH' :: varchar)
-    )
+    edw_vw_th_customer_dim sellin_cust 
 ), 
 cmp as(
   SELECT 
@@ -250,47 +246,36 @@ cmp as(
 ), 
 sellin_mat as(
   SELECT 
-    DISTINCT edw_vw_os_material_dim.sap_matl_num, 
-    edw_vw_os_material_dim.sap_mat_desc, 
-    edw_vw_os_material_dim.gph_region, 
-    edw_vw_os_material_dim.gph_prod_frnchse, 
-    edw_vw_os_material_dim.gph_prod_brnd, 
-    edw_vw_os_material_dim.gph_prod_vrnt, 
-    edw_vw_os_material_dim.gph_prod_sgmnt, 
-    edw_vw_os_material_dim.gph_prod_put_up_desc, 
-    edw_vw_os_material_dim.gph_prod_sub_brnd AS prod_sub_brand, 
-    edw_vw_os_material_dim.gph_prod_subsgmnt AS prod_subsegment, 
-    edw_vw_os_material_dim.gph_prod_ctgry AS prod_category, 
-    edw_vw_os_material_dim.gph_prod_subctgry AS prod_subcategory 
+    DISTINCT edw_vw_th_material_dim.sap_matl_num, 
+    edw_vw_th_material_dim.sap_mat_desc, 
+    edw_vw_th_material_dim.gph_region, 
+    edw_vw_th_material_dim.gph_prod_frnchse, 
+    edw_vw_th_material_dim.gph_prod_brnd, 
+    edw_vw_th_material_dim.gph_prod_vrnt, 
+    edw_vw_th_material_dim.gph_prod_sgmnt, 
+    edw_vw_th_material_dim.gph_prod_put_up_desc, 
+    edw_vw_th_material_dim.gph_prod_sub_brnd AS prod_sub_brand, 
+    edw_vw_th_material_dim.gph_prod_subsgmnt AS prod_subsegment, 
+    edw_vw_th_material_dim.gph_prod_ctgry AS prod_category, 
+    edw_vw_th_material_dim.gph_prod_subctgry AS prod_subcategory 
   FROM 
-    edw_vw_os_material_dim 
-  WHERE 
-    (
-      (
-        edw_vw_os_material_dim.cntry_key
-      ) = ('TH' :: varchar)
-    )
+    edw_vw_th_material_dim 
 ), 
 sellout_mat as(
   SELECT 
-    DISTINCT edw_vw_os_dstrbtr_material_dim.dstrbtr_matl_num, 
-    edw_vw_os_dstrbtr_material_dim.is_npi, 
-    edw_vw_os_dstrbtr_material_dim.npi_str_period, 
-    edw_vw_os_dstrbtr_material_dim.npi_end_period, 
-    edw_vw_os_dstrbtr_material_dim.is_reg, 
-    edw_vw_os_dstrbtr_material_dim.is_promo, 
-    edw_vw_os_dstrbtr_material_dim.promo_strt_period, 
-    edw_vw_os_dstrbtr_material_dim.promo_end_period, 
-    edw_vw_os_dstrbtr_material_dim.is_mcl, 
-    edw_vw_os_dstrbtr_material_dim.is_hero 
+    DISTINCT edw_vw_th_dstrbtr_material_dim.dstrbtr_matl_num, 
+    edw_vw_th_dstrbtr_material_dim.is_npi, 
+    edw_vw_th_dstrbtr_material_dim.npi_str_period, 
+    edw_vw_th_dstrbtr_material_dim.npi_end_period, 
+    edw_vw_th_dstrbtr_material_dim.is_reg, 
+    edw_vw_th_dstrbtr_material_dim.is_promo, 
+    edw_vw_th_dstrbtr_material_dim.promo_strt_period, 
+    edw_vw_th_dstrbtr_material_dim.promo_end_period, 
+    edw_vw_th_dstrbtr_material_dim.is_mcl, 
+    edw_vw_th_dstrbtr_material_dim.is_hero 
   FROM 
-    edw_vw_os_dstrbtr_material_dim 
-  WHERE 
-    (
-      (
-        edw_vw_os_dstrbtr_material_dim.cntry_cd
-      ) = ('TH' :: varchar)
-    )
+    edw_vw_th_dstrbtr_material_dim 
+  
 ), 
 mat as(
   SELECT 

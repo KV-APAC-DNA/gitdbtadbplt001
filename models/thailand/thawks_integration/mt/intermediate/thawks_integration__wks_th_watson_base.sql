@@ -1,5 +1,5 @@
-with EDW_VW_OS_CUSTOMER_DIM as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_OS_CUSTOMER_DIM
+with edw_vw_th_customer_dim as(
+    select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 sdl_mds_th_customer_product_code as(
     select * from {{ source('thasdl_raw', 'sdl_mds_th_customer_product_code') }}
@@ -8,16 +8,16 @@ sdl_mds_th_product_master as(
     select * from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }}
 ),
 edw_list_price as(
-    select * from {{ ref('aspedw_integration__edw_list_price') }}
+  select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 wks_th_watsons as(
     select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons') }}
 ),
-EDW_BILLING_FACT as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_BILLING_FACT
+edw_billing_fact as(
+  select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_vw_os_time_dim as(
-    select * from DEV_DNA_CORE.OSEEDW_ACCESS.EDW_VW_OS_TIME_DIM 
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 a as(
     SELECT
@@ -26,9 +26,9 @@ a as(
         WHEN date IS NULL
         THEN TO_CHAR(
           CAST(TO_DATE(SUBSTRING(file_name, 1, 4) || '-' || SUBSTRING(file_name, 9, 3), 'YYYY-MON') AS TIMESTAMPNTZ),
-          'yyyymm'
+          'YYYYMM'
         )
-        ELSE TO_CHAR(CAST(TO_DATE(date, 'YYYY-MM-DD') AS TIMESTAMPNTZ), 'yyyymm')
+        ELSE TO_CHAR(CAST(TO_DATE(date, 'YYYY-MM-DD') AS TIMESTAMPNTZ), 'YYYYMM')
       END /* date, */ /* to_char(to_date(date,'YYYY-MM-DD'),'YYYYMM') as month, */ AS MONTH,
       COALESCE(NULLIF(c.matl_num, ''), 'NA') AS matl_num,
       a.item,
@@ -57,7 +57,7 @@ a as(
           code,
           retailer_unit_conversion,
           createdate,
-          ROW_NUMBER() OVER (PARTITION BY barcode ORDER BY createdate DESC NULLS LAST, code) AS rnk
+          ROW_NUMBER() OVER (PARTITION BY barcode ORDER BY createdate DESC NULLS LAST, code NULLS LAST) AS rnk
         FROM sdl_mds_th_product_master
         WHERE
           barcode <> ''
@@ -87,10 +87,10 @@ a as(
         WHEN date IS NULL
         THEN TO_CHAR(
           CAST(TO_DATE(SUBSTRING(file_name, 1, 4) || '-' || SUBSTRING(file_name, 9, 3), 'YYYY-MON') AS TIMESTAMPNTZ),
-          'yyyymm'
+          'YYYYMM'
         )
-        ELSE TO_CHAR(CAST(TO_DATE(date, 'YYYY-MM-DD') AS TIMESTAMPNTZ), 'yyyymm')
-      END, /* date, */
+        ELSE TO_CHAR(CAST(TO_DATE(date, 'YYYY-MM-DD') AS TIMESTAMPNTZ), 'YYYYMM')
+      END, 
       a.item,
       item_desc,
       b.barcode,
@@ -101,16 +101,15 @@ c as(
       sap_cust_id,
       sap_prnt_cust_key,
       sap_prnt_cust_desc
-    FROM EDW_VW_OS_CUSTOMER_DIM
-    WHERE
-      SAP_CNTRY_CD = 'TH'
+    FROM edw_vw_th_customer_dim
+
 ),
 union1 as(
   SELECT
     sap_prnt_cust_key,
     sap_prnt_cust_desc,
     CAST('108835' AS VARCHAR) AS sold_to_code,
-    mnth_id, /* null, */
+    mnth_id, 
     matl_num,
     NULL,
     NULL,
@@ -145,8 +144,8 @@ union1 as(
         LTRIM(SOLD_TO, '0') IN ('108835')
         AND SLS_ORG IN ('2400', '2500')
         AND BILL_TYPE = 'ZF2L'
-        AND CAST(TO_CHAR(CAST(BILL_DT AS TIMESTAMPNTZ), 'yyyy') AS INT) >= (
-          DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 6
+        AND CAST(TO_CHAR(CAST(BILL_DT AS TIMESTAMPNTZ), 'YYYY') AS INT) >= (
+          DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 8
         )
       GROUP BY
         BILL_DT,
@@ -168,9 +167,7 @@ union1 as(
   LEFT JOIN (
     SELECT
       *
-    FROM EDW_VW_OS_CUSTOMER_DIM
-    WHERE
-      SAP_CNTRY_CD = 'TH'
+    FROM edw_vw_th_customer_dim
   ) AS c
     ON LTRIM(T1.sold_to, 0) = LTRIM(c.sap_cust_id, 0)
   GROUP BY
@@ -180,39 +177,56 @@ union1 as(
     matl_num
 ),
 transformed as(
-SELECT
-  sap_prnt_cust_key,
-  sap_prnt_cust_desc,
-  month, /* sold_to_code,date, */
-  matl_num, /* item,item_desc,barcode, */
-  SUM(wh_soh) AS wh_soh,
-  SUM(store_total_stock) AS store_total_stock,
-  SUM(total_stock_qty_raw) AS total_stock_qty_raw,
-  SUM(total_stock_qty) AS total_stock_qty,
-  SUM(total_stock_val) AS total_stock_val,
-  SUM(sale_avg_qty_13weeks_raw) AS sale_avg_qty_13aweeks_raw,
-  SUM(sale_avg_qty_13weeks) AS sale_avg_qty_13weeks,
-  SUM(sale_avg_val_13weeks) AS sale_avg_val_13weeks,
-  SUM(sellin_qty) AS sellin_qty,
-  SUM(sellin_val) AS sellin_val
-FROM (
-  SELECT
+    SELECT
+        sap_prnt_cust_key,
+        sap_prnt_cust_desc,
+        month, 
+        matl_num, 
+        SUM(wh_soh) AS wh_soh,
+        SUM(store_total_stock) AS store_total_stock,
+        SUM(total_stock_qty_raw) AS total_stock_qty_raw,
+        SUM(total_stock_qty) AS total_stock_qty,
+        SUM(total_stock_val) AS total_stock_val,
+        SUM(sale_avg_qty_13weeks_raw) AS sale_avg_qty_13aweeks_raw,
+        SUM(sale_avg_qty_13weeks) AS sale_avg_qty_13weeks,
+        SUM(sale_avg_val_13weeks) AS sale_avg_val_13weeks,
+        SUM(sellin_qty) AS sellin_qty,
+        SUM(sellin_val) AS sellin_val
+    FROM (
+        SELECT
+            sap_prnt_cust_key,
+            sap_prnt_cust_desc,
+            a.*,
+            NULL AS sellin_qty,
+            NULL AS sellin_val
+        FROM a
+        LEFT JOIN c
+        ON CAST(a.sold_to_code AS VARCHAR(10)) = CAST(c.sap_cust_id AS VARCHAR(10))
+        UNION ALL
+        select * from union1
+    )
+    GROUP BY
     sap_prnt_cust_key,
-    sap_prnt_cust_desc,
-    a.*,
-    NULL AS sellin_qty,
-    NULL AS sellin_val
-  FROM a AS a
-  LEFT JOIN c AS c
-    ON CAST(a.sold_to_code AS VARCHAR(10)) = CAST(c.sap_cust_id AS VARCHAR(10))
-  UNION ALL
-  select * from union1
-
-)
-GROUP BY
-  sap_prnt_cust_key,
-  sap_prnt_cust_desc, /* sold_to_code,date, */
-  month,
-  matl_num
+    sap_prnt_cust_desc, 
+    month,
+    matl_num
+),
+final as(
+    select 
+    	sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+        sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+        month::varchar(23) as month,
+        matl_num::varchar(1500) as matl_num,
+        wh_soh::number(38,4) as wh_soh,
+        store_total_stock::number(38,4) as store_total_stock,
+        total_stock_qty_raw::number(38,4) as total_stock_qty_raw,
+        total_stock_qty::number(38,4) as total_stock_qty,
+        total_stock_val::number(38,8) as total_stock_val,
+        sale_avg_qty_13aweeks_raw::number(38,4) as sale_avg_qty_13aweeks_raw,
+        sale_avg_qty_13weeks::number(38,4) as sale_avg_qty_13weeks,
+        sale_avg_val_13weeks::number(38,8) as sale_avg_val_13weeks,
+        sellin_qty::number(38,4) as sellin_qty,
+        sellin_val::number(38,4) as sellin_val
+    from transformed 
  )
- select * from transformed
+select * from final

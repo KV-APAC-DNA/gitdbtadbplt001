@@ -1,17 +1,14 @@
 with edw_material_dim as(
-    select * from dev_dna_core.snapaspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_material_plant_dim as(
-    select * from dev_dna_core.snapaspedw_integration.edw_material_plant_dim
+    select * from {{ ref('aspedw_integration__edw_material_plant_dim') }}
 ),
 edw_material_sales_dim as(
-    select * from dev_dna_core.snapaspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_gch_producthierarchy as(
-    select * from dev_dna_core.snapaspedw_integration.edw_gch_producthierarchy
-),
-edw_material_plant_dim as(
-    select * from dev_dna_core.snapaspedw_integration.edw_material_plant_dim 
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 md as
 (

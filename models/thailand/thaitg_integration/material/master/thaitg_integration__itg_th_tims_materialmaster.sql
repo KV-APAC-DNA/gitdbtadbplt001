@@ -14,12 +14,12 @@ sdl_mds_th_ref_distributor_item_unit as(
     select * from {{ source('thasdl_raw', 'sdl_mds_th_ref_distributor_item_unit') }}
 ),
 b as(
- SELECT
-      *,
-      ROW_NUMBER() OVER (PARTITION BY barcode ORDER BY createdate DESC NULLS LAST, code DESC NULLS LAST) AS rnk
+    SELECT
+        *,
+        ROW_NUMBER() OVER (PARTITION BY barcode ORDER BY createdate DESC NULLS LAST, code DESC NULLS LAST) AS rnk
     FROM sdl_mds_th_product_master
     WHERE
-      barcode <> ''
+        barcode <> ''
 ),
 a as(
     SELECT * FROM b WHERE rnk = 1
