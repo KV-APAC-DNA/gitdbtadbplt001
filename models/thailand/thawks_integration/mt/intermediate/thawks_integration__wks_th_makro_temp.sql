@@ -1,5 +1,5 @@
 with wks_th_makro_test as (
-  select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_TH_MAKRO
+  select * from {{ ref('thawks_integration__wks_th_makro') }}
 ),
 edw_vw_os_time_dim as (
   select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
@@ -376,15 +376,15 @@ makro_sellout as (
     6
 )
 select
-  cal_date as trans_date,
-  cal_mnth_id,
-  location_number,
-  location_name,
-  barcode,
-  item_number,
-  item_desc,
-  0 as inventory_qty,
-  sellout_qty
+    cal_date::date as trans_date,
+    cal_mnth_id::number(18,0) as cal_mnth_id,
+    location_number::varchar(100) as location_number,
+    location_name::varchar(500) as location_name,
+    barcode::varchar(100) as barcode,
+    item_number::varchar(100) as item_number,
+    item_desc::varchar(500) as item_desc,
+    0::number(38,4) as inventory_qty,
+    sellout_qty::number(14,4) as sellout_qty 
 from time_dim
 INNER JOIN makro_sellout
   ON cast(month as INT) = cal_mnth_id AND UPPER(day_mnth) = UPPER(day)

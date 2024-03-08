@@ -1,16 +1,17 @@
 
-with wks_th_makro_temp as 
-(select * from dev_dna_core.snaposewks_integration.wks_th_makro_temp ),
+with wks_th_makro_temp as (
+    select * from {{ ref('thawks_integration__wks_th_makro_temp') }} 
+    ),
 edw_vw_os_customer_dim as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim
+select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }} 
 ),
 sdl_mds_th_product_master as (
-select * from dev_dna_load.thasdl_raw.sdl_mds_th_product_master
+select * from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }}
 ),
 edw_list_price as (
-select * from dev_dna_core.snapaspedw_integration.edw_list_price
+select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
-final as (
+transformed as (
 select
   cast(cal_mnth_id as varchar) as month,
   cust_dim.sap_prnt_cust_key,
@@ -60,7 +61,7 @@ left join (
     sap_cust_id,
     sap_prnt_cust_key,
     sap_prnt_cust_desc
-  from edw_vw_os_customER_DIM
+  from edw_vw_os_customer_dim
   where
     sap_cntry_cd = 'TH'
 ) AS cust_dim
@@ -106,5 +107,29 @@ left join (
     rn = 1
 ) as os_matl_dim
   on os_matl_dim.material = th_prod_dim.matl_num
+),
+final as (
+    select
+    month::varchar(50) as month,
+    sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+    sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+    sold_to_code::varchar(6) as sold_to_code,
+    barcode::varchar(100) as barcode,
+    matl_num::varchar(1500) as matl_num,
+    item_number::varchar(100) as item_number,
+    item_desc::varchar(500) as item_desc,
+    foc_product::varchar(1) as foc_product,
+    retailer_unit_conversion::number(31,0) as retailer_unit_conversion,
+    inventory_qty_raw::number(38,4) as inventory_qty_raw,
+    inventory_qty::number(38,4) as inventory_qty,
+    inventory_val::number(38,8) as inventory_val,
+    sellout_qty_raw::number(38,4) as sellout_qty_raw,
+    sellout_qty::number(38,4) as sellout_qty,
+    sellout_val::number(38,8) as sellout_val,
+    location_number::varchar(20) as location_number,
+    location_name::varchar(200) as location_name,
+    list_price::number(20,4) as list_price,
+    trans_date::date as trans_date
+from transformed
 )
 select * from final 
