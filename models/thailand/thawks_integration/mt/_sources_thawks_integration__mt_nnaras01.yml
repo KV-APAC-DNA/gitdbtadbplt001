@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_th_mt_bigc
+      tags: ["",""]
+    - name: sdl_th_mt_makro
+      tags: ["",""]
+    - name: sdl_mds_th_product_master
+      tags: ["",""]
+
+      
+    

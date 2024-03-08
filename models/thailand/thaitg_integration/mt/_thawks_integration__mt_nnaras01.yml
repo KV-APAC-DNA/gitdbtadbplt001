@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: thawks_integration__sdl_raw_th_mt_bigc_raw
+    config:
+      alias: th_mt_bigc_raw
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thawks_integration__sdl_raw_th_mt_makro_raw
+    config:
+      alias: th_mt_makro_raw
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thawks_integration__itg_th_mt_bigc
+    config:
+      alias: itg_th_mt_bigc
+      tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thaitg_integration__itg_th_makro_inv_so
+    config:
+      alias: itg_th_makro_inv_so
+      tags: ["j_ap_th_tesco_etl_framework"]
+  
+
+
+  
