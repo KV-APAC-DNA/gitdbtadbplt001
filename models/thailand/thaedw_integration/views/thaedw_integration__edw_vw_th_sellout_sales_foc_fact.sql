@@ -10,22 +10,22 @@ select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_material_DIM
 final as (
 SELECT 'TH' AS cntry_cd,
     'Thailand' AS cntry_nm,
-    s.dstrbtr_id AS dstrbtr_grp_cd,
-    NULL AS dstrbtr_soldto_code,
+    s.dstrbtr_id as dstrbtr_grp_cd,
+    null as dstrbtr_soldto_code,
     (
         ltrim((s.ar_cd)::text, ((0)::character varying)::text)
-    )::character varying AS cust_cd,
+    )::character varying as cust_cd,
     (
         ltrim(
             (s.prod_cd)::text,
             ((0)::character varying)::text
         )
-    )::character varying AS dstrbtr_matl_num,
+    )::character varying as dstrbtr_matl_num,
     s.product_name1,
     s.product_name2,
-    NULL AS sap_matl_num,
-    NULL AS bar_cd,
-    s.order_dt AS bill_date,
+    null as sap_matl_num,
+    null as bar_cd,
+    s.order_dt as bill_date,
     s.order_no,
     s.iscancel,
     s.grp_cd,
@@ -37,78 +37,78 @@ SELECT 'TH' AS cntry_cd,
             (s.order_no)::text,
             ((0)::character varying)::text
         )
-    )::character varying AS bill_doc,
-    c.sls_emp AS slsmn_cd,
-    c.sls_nm AS slsmn_nm,
-    NULL AS wh_id,
-    NULL AS doc_type,
-    NULL AS doc_type_desc,
-    0 AS base_sls,
-    CASE
-        WHEN (
+    )::character varying as bill_doc,
+    c.sls_emp as slsmn_cd,
+    c.sls_nm as slsmn_nm,
+    null as wh_id,
+    null as doc_type,
+    null as doc_type_desc,
+    0 as base_sls,
+    case
+        when (
             s.qty >= (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN s.qty
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS sls_qty,
-    CASE
-        WHEN (
+        ) then s.qty
+        else ((0)::numeric)::numeric(18, 0)
+    end as sls_qty,
+    case
+        when (
             s.qty < (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN s.qty
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS ret_qty,
-    'DZ' AS uom,
-    CASE
-        WHEN (
+        ) then s.qty
+        else ((0)::numeric)::numeric(18, 0)
+    end as ret_qty,
+    'DZ' as uom,
+    case
+        when (
             s.qty >= (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * ((12)::numeric)::numeric(18, 0))
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS sls_qty_pc,
-    CASE
-        WHEN (
+        ) then (s.qty * ((12)::numeric)::numeric(18, 0))
+        else ((0)::numeric)::numeric(18, 0)
+    end as sls_qty_pc,
+    case
+        when (
             s.qty < (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * ((12)::numeric)::numeric(18, 0))
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS ret_qty_pc,
-    CASE
-        WHEN (
+        ) then (s.qty * ((12)::numeric)::numeric(18, 0))
+        else ((0)::numeric)::numeric(18, 0)
+    end as ret_qty_pc,
+    case
+        when (
             s.qty >= (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * m.sls_prc_credit)
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS grs_trd_sls,
-    CASE
-        WHEN (
+        ) then (s.qty * m.sls_prc_credit)
+        else ((0)::numeric)::numeric(18, 0)
+    end as grs_trd_sls,
+    case
+        when (
             s.qty < (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * m.sls_prc_credit)
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS ret_val,
-    (s.discnt + s.discnt_bt_ln) AS trd_discnt,
-    s.discnt AS trd_discnt_item_lvl,
+        ) then (s.qty * m.sls_prc_credit)
+        else ((0)::numeric)::numeric(18, 0)
+    end as ret_val,
+    (s.discnt + s.discnt_bt_ln) as trd_discnt,
+    s.discnt as trd_discnt_item_lvl,
     s.grs_prc,
-    s.discnt_bt_ln AS trd_discnt_bill_lvl,
-    NULL::integer AS trd_sls,
-    s.total_bfr_vat AS net_trd_sls,
-    s.subamt1 AS tot_bf_discount,
+    s.discnt_bt_ln as trd_discnt_bill_lvl,
+    null::integer as trd_sls,
+    s.total_bfr_vat as net_trd_sls,
+    s.subamt1 as tot_bf_discount,
     s.cn_reason_cd,
-    s.cn_reason_en_desc AS cn_reason_desc,
-    CASE
-        WHEN (
+    s.cn_reason_en_desc as cn_reason_desc,
+    case
+        when (
             s.qty >= (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * m.sls_prc_credit)
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS jj_grs_trd_sls,
-    CASE
-        WHEN (
+        ) then (s.qty * m.sls_prc_credit)
+        else ((0)::numeric)::numeric(18, 0)
+    end as jj_grs_trd_sls,
+    case
+        when (
             s.qty < (((0)::numeric)::numeric(18, 0))::numeric(19, 6)
-        ) THEN (s.qty * m.sls_prc_credit)
-        ELSE ((0)::numeric)::numeric(18, 0)
-    END AS jj_ret_val,
-    NULL::integer AS jj_trd_sls,
-    s.total_bfr_vat AS jj_net_trd_sls,
-    s.subamt1 AS gross_sales
-FROM (
+        ) then (s.qty * m.sls_prc_credit)
+        else ((0)::numeric)::numeric(18, 0)
+    end as jj_ret_val,
+    null::integer as jj_trd_sls,
+    s.total_bfr_vat as jj_net_trd_sls,
+    s.subamt1 as gross_sales
+from (
         (
             itg_th_sellout_sales_foc_fact s
-            LEFT JOIN itg_th_dstrbtr_material_dim m ON (
+            left join itg_th_dstrbtr_material_dim m on (
                 (
                     ltrim(
                         (s.prod_cd)::text,
@@ -120,27 +120,27 @@ FROM (
                 )
             )
         )
-        LEFT JOIN (
-            SELECT itg_th_dstrbtr_customer_dim.old_cust_id,
+        left join (
+            select itg_th_dstrbtr_customer_dim.old_cust_id,
                 itg_th_dstrbtr_customer_dim.dstrbtr_id,
                 itg_th_dstrbtr_customer_dim.sls_emp,
                 itg_th_dstrbtr_customer_dim.sls_nm,
-                row_number() OVER(
-                    PARTITION BY itg_th_dstrbtr_customer_dim.old_cust_id,
+                row_number() over(
+                    partition by itg_th_dstrbtr_customer_dim.old_cust_id,
                     itg_th_dstrbtr_customer_dim.dstrbtr_id
-                    ORDER BY itg_th_dstrbtr_customer_dim.old_cust_id,
+                    order by itg_th_dstrbtr_customer_dim.old_cust_id,
                         itg_th_dstrbtr_customer_dim.dstrbtr_id
-                ) AS rn
-            FROM itg_th_dstrbtr_customer_dim
-        ) c ON (
+                ) as rn
+            from itg_th_dstrbtr_customer_dim
+        ) c on (
             (
                 (
                     (c.rn = (1)::bigint)
-                    AND (
+                    and (
                         trim((c.old_cust_id)::text) = trim((s.ar_cd)::text)
                     )
                 )
-                AND (
+                and (
                     trim((c.dstrbtr_id)::text) = trim((s.dstrbtr_id)::text)
                 )
             )

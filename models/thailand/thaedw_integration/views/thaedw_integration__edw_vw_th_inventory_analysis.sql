@@ -1,8 +1,8 @@
 with edw_vw_th_inventory_analysis_base_6year_filter as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_INVENTORY_ANALYSIS_BASE_6YEAR_FILTER
+select * from dev_dna_core.snaposeedw_integration.edw_vw_th_inventory_analysis_base_6year_filter
 ),
 final as (
-SELECT
+select
   edw_vw_th_inventory_analysis_base_6year_filter.data_type,
   edw_vw_th_inventory_analysis_base_6year_filter.order_date,
   edw_vw_th_inventory_analysis_base_6year_filter.year,
@@ -66,11 +66,11 @@ SELECT
   edw_vw_th_inventory_analysis_base_6year_filter.si_gross_trade_sales_value,
   edw_vw_th_inventory_analysis_base_6year_filter.si_tp_value,
   edw_vw_th_inventory_analysis_base_6year_filter.si_net_trade_sales_value
-FROM edw_vw_th_inventory_analysis_base_6year_filter
-WHERE
+from edw_vw_th_inventory_analysis_base_6year_filter
+where
   (
     edw_vw_th_inventory_analysis_base_6year_filter.year > 
-      (DATE_PART(YEAR, CURRENT_TIMESTAMP()) - 3)
+      (date_part(year, current_timestamp()) - 3)
     
   )
 )

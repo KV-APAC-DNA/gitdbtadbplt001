@@ -1,34 +1,34 @@
  with itg_th_sellout_inventory_fact as (
-    select * from DEV_DNA_CORE.THAITG_INTEGRATION.ITG_TH_SELLOUT_INVENTORY_FACT
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_SELLOUT_INVENTORY_FACT
  ),
 final as (
- SELECT
+ select
     'TH' AS cntry_cd,
     'Thailand' AS cntry_nm,
-    f.wh_cd AS warehse_cd,
-    f.dstrbtr_id AS dstrbtr_grp_cd,
-    NULL  AS dstrbtr_soldto_code,
-    f.prod_cd AS dstrbtr_matl_num,
-    NULL  AS sap_matl_num,
-    NULL  AS bar_cd,
-    f.rec_dt AS inv_dt,
+    f.wh_cd as warehse_cd,
+    f.dstrbtr_id as dstrbtr_grp_cd,
+    null  as dstrbtr_soldto_code,
+    f.prod_cd as dstrbtr_matl_num,
+    null  as sap_matl_num,
+    null  as bar_cd,
+    f.rec_dt as inv_dt,
     (
-      f.qty * CAST((
-        CAST((
+      f.qty * cast((
+        cast((
           12
-        ) AS DECIMAL)
-      ) AS DECIMAL(18, 0))
-    ) AS soh,
-    f.amt AS soh_val,
-    f.amt AS jj_soh_val,
-    0 AS beg_stock_qty,
-    0 AS end_stock_qty,
-    0 AS beg_stock_val,
-    0 AS end_stock_val,
-    0 AS jj_beg_stock_qty,
-    0 AS jj_end_stock_qty,
-    0 AS jj_beg_stock_val,
-    0 AS jj_end_stock_val
-  FROM itg_th_sellout_inventory_fact AS f
+        ) as decimal)
+      ) as decimal(18, 0))
+    ) as soh,
+    f.amt as soh_val,
+    f.amt as jj_soh_val,
+    0 as beg_stock_qty,
+    0 as end_stock_qty,
+    0 as beg_stock_val,
+    0 as end_stock_val,
+    0 as jj_beg_stock_qty,
+    0 as jj_end_stock_qty,
+    0 as jj_beg_stock_val,
+    0 as jj_end_stock_val
+  from itg_th_sellout_inventory_fact as f
 )
 select * from final

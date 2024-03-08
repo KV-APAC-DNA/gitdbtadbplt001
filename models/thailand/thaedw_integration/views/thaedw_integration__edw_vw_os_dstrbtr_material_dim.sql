@@ -1,8 +1,7 @@
 with itg_th_dstrbtr_material_dim as (
-select * from DEV_DNA_CORE.THAITG_INTEGRATION.ITG_TH_DSTRBTR_MATERIAL_DIM
-),
+select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_MATERIAL_DIM),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.ASPEDW_INTEGRATION__EDW_MATERIAL_SALES_DIM
+select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
 -- select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 final as (
