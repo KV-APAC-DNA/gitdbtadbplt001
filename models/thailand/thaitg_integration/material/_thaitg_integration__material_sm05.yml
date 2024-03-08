@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_tims_materialmaster
+    config: 
+      alias: itg_th_tims_materialmaster
+      tags: ["j_ap_th_tesco_etl_framework"]
+
+  - name: thaitg_integration__itg_mds_th_mt_branch_master
+    config: 
+      alias: itg_mds_th_mt_branch_master
+      tags: ["j_ap_th_tesco_etl_framework"]

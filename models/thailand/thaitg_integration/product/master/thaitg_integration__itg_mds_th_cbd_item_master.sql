@@ -41,7 +41,7 @@ transformed as(
         trim(comments) as comments,
         trim("ccd comments") as "ccd comments",
         current_timestamp()::timestampntz(9) as crt_dttm,
-        current_timestamp()::timestampntz(9) as updt_dtt
+        current_timestamp()::timestampntz(9) as updt_dttm
     from source
 ),
 final as(
@@ -84,7 +84,7 @@ final as(
 	comments::varchar(200) as comments,
 	"ccd comments"::varchar(262) as "ccd comments",
     crt_dttm as crt_dttm,
-    updt_dtt as updt_dtt
+    updt_dttm as updt_dttm
     from transformed
 )
 select * from final

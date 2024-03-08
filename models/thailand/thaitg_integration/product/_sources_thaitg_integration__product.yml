@@ -46,6 +46,13 @@ sources:
             config:
               store_failures: true
               schema: myswks_integration
+        - test_duplicate:
+            group_by_columns: ["code","barcode"]
+            select_columns: ["code","barcode"]
+            name: TRATBL_sdl_mds_th_product_master__duplicate_test2
+            config:
+              store_failures: true
+              schema: thawks_integration
     - name: sdl_mds_th_distributor_msl
       tags: ["th_non_tesco"]
       tests:
