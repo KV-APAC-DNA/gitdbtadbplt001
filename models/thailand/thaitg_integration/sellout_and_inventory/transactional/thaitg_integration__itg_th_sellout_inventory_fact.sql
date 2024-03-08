@@ -7,7 +7,7 @@
 }}
 with itg_th_dtsinventorybal as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_dtsinventorybal
+    select * from {{ source('thaitg_integration', 'itg_th_dtsinventorybal') }}
 ),
 itg_distributor_control as
 (
@@ -15,15 +15,15 @@ itg_distributor_control as
 ),
 itg_th_dms_inventory_fact as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_dms_inventory_fact
+    select * from {{ ref('thaitg_integration__itg_th_dms_inventory_fact') }}
 ),
 itg_th_htc_inventory as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_htc_inventory
+    select * from {{ ref('thaitg_integration__itg_th_htc_inventory') }}
 ),
 itg_th_dtsitemmaster as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_dtsitemmaster
+    select * from {{ ref('thaitg_integration__itg_th_dtsitemmaster') }}
 ),
 itg_lookup_retention_period as
 (

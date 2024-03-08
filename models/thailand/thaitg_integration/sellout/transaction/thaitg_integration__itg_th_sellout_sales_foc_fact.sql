@@ -1,6 +1,6 @@
 with itg_th_dtssaletrans as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtssaletrans
+    select * from {{ source('thaitg_integration', 'itg_th_dtssaletrans') }}
 ),
 itg_distributor_control as
 (
@@ -8,7 +8,7 @@ itg_distributor_control as
 ),
 itg_th_htc_sellout as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_htc_sellout
+    select * from {{ ref('thaitg_integration__itg_th_htc_sellout') }}
 ),
 itg_th_dtscnreason as
 (
@@ -16,7 +16,7 @@ itg_th_dtscnreason as
 ),
 itg_th_dtsitemmaster as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtsitemmaster
+    select * from {{ ref('thaitg_integration__itg_th_dtsitemmaster') }}
 ),
 itg_lookup_retention_period as
 (

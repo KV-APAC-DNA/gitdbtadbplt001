@@ -67,7 +67,7 @@ edw_vw_th_dstrbtr_material_dim as
 ),
 edw_gch_customerhierarchy as
 (
-    select * from DEV_DNA_CORE.snapaspedw_integration.edw_gch_customerhierarchy
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 sellout as
 (
