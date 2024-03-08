@@ -15,6 +15,14 @@ models:
     config:
       alias: itg_th_htc_sellout
       tags: ["th_non_tesco"]
+  - name: thaitg_integration__itg_th_sellout_sales_foc_fact
+    config:
+      alias: itg_th_sellout_sales_foc_fact
+      tags: ["th_itg_to_edw"]
+  - name: thaitg_integration__itg_th_sellout_sales_fact
+    config:
+      alias: itg_th_sellout_sales_fact
+      tags: ["th_itg_to_edw"]
 
 
 
