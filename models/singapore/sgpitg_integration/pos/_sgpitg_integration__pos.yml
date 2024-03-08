@@ -30,7 +30,7 @@ models:
   - name: sgpitg_integration__itg_sg_scan_data_redmart
     config:
       alias: itg_sg_scan_data_redmart
-      tags: ["sg_transaction_scan",""]
+      tags: ["sg_transaction_scan","ingestion"]
 
   - name: sgpitg_integration__itg_sg_scan_data_ntuc
     config:
