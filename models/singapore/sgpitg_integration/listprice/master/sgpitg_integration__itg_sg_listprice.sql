@@ -22,7 +22,7 @@ wks_sg_listprice_1 as
             MAX(snapshot_dt) as snapshot_dt
         from wks_sg_list_price
     where
-    replace(left(SNAPSHOT_DT,7),'-','') = replace(left(CURRENT_TIMESTAMP()::DATE,7),'-','')
+    replace(left(SNAPSHOT_DT,7),'-','') = replace(left(dateadd(day,-1,CURRENT_TIMESTAMP()::DATE),7),'-','')
     group by
     item_cd
 ),
@@ -66,7 +66,7 @@ transformed_set1 as
     and b.item_cd = c.item_cd
     and b.valid_to = c.valid_to
     and b.valid_from = c.valid_from
-    and replace(left(b.SNAPSHOT_DT,7),'-','') = replace(left(CURRENT_TIMESTAMP()::DATE,7),'-','')
+    and replace(left(b.SNAPSHOT_DT,7),'-','') = replace(left(dateadd(day,-1,CURRENT_TIMESTAMP()::DATE),7),'-','')
     group by
     b.plant,
     b.cnty,
@@ -108,7 +108,7 @@ wks_sg_listprice_3 as
         mnth_id
         from edw_vw_sg_time_dim as a
         where
-        replace(left(CURRENT_TIMESTAMP()::DATE,7),'-','') = a.cal_date_id
+        replace(dateadd(day,-1,CURRENT_TIMESTAMP()::DATE),'-','') = a.cal_date_id
     )
     group by
     item_cd,

@@ -819,7 +819,7 @@ ds_primary_null as (
                                 FROM edw_vw_os_time_dim a
                                 WHERE (
                                         a.cal_date_id = replace(
-                                            current_timestamp(),
+                                            current_timestamp()::date,
                                             ('-'::character varying)::text,
                                             (''::character varying)::text
                                         )
@@ -1252,7 +1252,7 @@ ds_targets as (
                             FROM edw_vw_os_time_dim a
                             WHERE (
                                     a.cal_date_id = replace(
-                                        current_timestamp(),
+                                        current_timestamp()::date,
                                         ('-'::character varying)::text,
                                         (''::character varying)::text
                                     )
@@ -1604,7 +1604,7 @@ ds_targets_null as (
                         FROM edw_vw_os_time_dim a
                         WHERE (
                                 a.cal_date_id = replace(
-                                    current_timestamp(),
+                                    current_timestamp()::date,
                                     ('-'::character varying)::text,
                                     (''::character varying)::text
                                 )
@@ -1963,7 +1963,7 @@ ds_le_targets as (
                     FROM edw_vw_os_time_dim a
                     WHERE (
                             a.cal_date_id = replace(
-                                current_timestamp(),
+                                current_timestamp()::date,
                                 ('-'::character varying)::text,
                                 (''::character varying)::text
                             )
@@ -2261,7 +2261,7 @@ ds_accruals as (
                 FROM edw_vw_os_time_dim a
                 WHERE (
                         a.cal_date_id = replace(
-                            current_timestamp(),
+                            current_timestamp()::date,
                             ('-'::character varying)::text,
                             (''::character varying)::text
                         )
@@ -2605,7 +2605,7 @@ ds_orders as (
             FROM edw_vw_os_time_dim a
             WHERE (
                     a.cal_date_id = replace(
-                        current_timestamp(),
+                        current_timestamp()::date,
                         ('-'::character varying)::text,
                         (''::character varying)::text
                     )
@@ -2709,7 +2709,7 @@ ds_orders as (
                                                         )
                                                     )
                                                     AND (
-                                                        current_timestamp()::timestamp_ntz(9) <= a.req_delvry_dt
+                                                        to_date(current_timestamp()::timestamp_ntz(9)) <= a.req_delvry_dt
                                                     )
                                                 ) THEN 'Forward Month Order'::character varying
                                                 ELSE 'Open Order'::character varying
@@ -2928,7 +2928,7 @@ ds_orders as (
                                         a.bill_gross_val
                                     FROM (
                                             SELECT replace(
-                                                    current_timestamp(),
+                                                    current_timestamp()::date,
                                                     ('-'::character varying)::text,
                                                     (''::character varying)::text
                                                 ) AS curr_dt,
@@ -2953,7 +2953,7 @@ ds_orders as (
                                                 ) a
                                             WHERE (
                                                     a.cal_date_id = replace(
-                                                        current_timestamp(),
+                                                        current_timestamp()::date,
                                                         ('-'::character varying)::text,
                                                         (''::character varying)::text
                                                     )
@@ -3345,7 +3345,7 @@ ds_afgr as (
         FROM edw_vw_os_time_dim a
         WHERE (
                 a.cal_date_id = replace(
-                    current_timestamp(),
+                    current_timestamp()::date,
                     ('-'::character varying)::text,
                     (''::character varying)::text
                 )
