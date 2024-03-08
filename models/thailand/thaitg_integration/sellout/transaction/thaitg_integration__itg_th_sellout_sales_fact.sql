@@ -24,7 +24,7 @@ itg_lookup_retention_period as
 ),
 itg_th_dms_sellout_fact as
 (
-    select * from {{ ref('thaitg_integration__sdl_raw_th_dms_sellout_fact') }}
+    select * from {{ ref('thaitg_integration__itg_th_dms_sellout_fact') }}
 ),
 union_1 as 
 (

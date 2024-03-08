@@ -1,11 +1,11 @@
 with edw_vw_th_sellout_sales_fact as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_sellout_sales_fact
-    where cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_fact') }}
+    
 ),
 edw_vw_th_sellout_sales_foc_fact as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_th_sellout_sales_foc_fact
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_foc_fact') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -13,8 +13,8 @@ edw_vw_os_time_dim as
 ),
 edw_vw_th_dstrbtr_customer_dim as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
-    where cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
+    
 ),
 itg_th_target_distribution as
 (
@@ -30,22 +30,21 @@ itg_th_target_sales as
 ),
 edw_vw_th_customer_dim as 
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_vw_th_dstrbtr_material_dim as 
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_dstrbtr_material_dim
-    where cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
+    
 ),
 edw_vw_th_material_dim as 
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
+    
 ),
 itg_th_dstrbtr_material_dim as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_dstrbtr_material_dim
+    select * from {{ ref('thaedw_integration__itg_th_dstrbtr_material_dim') }}
 ),
 union_1 as
 (
@@ -354,7 +353,8 @@ transformed as
     ) dstrbtr_matl_dim ON sales.dstrbtr_matl_num = dstrbtr_matl_dim.item_cd
     LEFT JOIN 
     (
-        SELECT DISTINCT 
+        SELECT 
+            DISTINCT 
             region_nm,
             prov_nm,
             city_nm,
@@ -373,7 +373,8 @@ transformed as
     ) sellout_cust ON upper(sales.cust_cd::text) = upper(sellout_cust.cust_cd::text)
     AND upper(sales.dstrbtr_grp_cd::text) = upper(sellout_cust.dstrbtr_grp_cd::text)
     LEFT JOIN (
-        SELECT target.dstrbtr_id,
+        SELECT 
+            target.dstrbtr_id,
             target.period,
             target.target,
             prodgroup.prod_cd

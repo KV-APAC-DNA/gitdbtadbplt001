@@ -1,11 +1,10 @@
 with edw_vw_th_sellin_analysis as
 (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_th_sellin_analysis
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellin_analysis') }}
 ),
 edw_vw_th_sellout_sales_fact as
 (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_sellout_sales_fact
-    where cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_fact') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -13,8 +12,7 @@ edw_vw_os_time_dim as
 ),
 edw_vw_th_dstrbtr_customer_dim as
 (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_dstrbtr_customer_dim
-    where cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
 ),
 itg_th_target_distribution as 
 (
@@ -30,17 +28,15 @@ itg_th_target_sales as
 ),
 edw_vw_th_customer_dim as
 (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_vw_th_material_dim as
 (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ),
 union_1 as
 (
-    SELECT 
+    select 
         'sellin' AS data_type,
         (year_jnj)::integer AS year_jnj,
         (year_quarter_jnj)::character varying AS year_quarter_jnj,
@@ -98,7 +94,7 @@ union_1 as
         sum(tp_value) AS si_tp_value,
         sum(net_trade_sales_value) AS si_net_trade_sales_value,
         sum(net_trade_sales_quantity) AS si_net_trade_sales_quantity
-    FROM edw_vw_th_sellin_analysis
+    from edw_vw_th_sellin_analysis
     GROUP BY 
         year_jnj,
         year_quarter_jnj,
@@ -138,7 +134,7 @@ union_1 as
 ),
 sales as
 (
-    SELECT 
+    select 
         cntry_cd,
         cntry_nm,
         bill_date,
@@ -151,42 +147,42 @@ sales as
         cn_reason_desc,
         sum
         (
-            CASE
-                WHEN 
+            case
+                when 
                 (
                     (cn_reason_cd IS NULL)
                     OR ( left((cn_reason_cd)::text,1) <> ('N'::character varying)::text)
                 ) 
-                THEN 
+                then 
                 ((grs_trd_sls + ret_val))::double precision
-                ELSE NULL::double precision
+                else NULL::double precision
             END
         ) AS grs_trd_sls,
         sum(
-            CASE
-                WHEN 
+            case
+                when 
                 (
                     ( cn_reason_cd IS NULL)
                     OR 
                     ((cn_reason_cd)::text = (''::character varying)::text)
                 ) 
-                THEN (0.0)::double precision
-                WHEN 
+                then (0.0)::double precision
+                when 
                 (
                     (cn_reason_cd)::text like ('D%'::character varying)::text
                 ) 
-                THEN (0.0)::double precision
-                WHEN 
+                then (0.0)::double precision
+                when 
                 (
                     (cn_reason_cd)::text like ('N%'::character varying)::text
                 ) 
-                THEN (net_trd_sls)::double precision
-                ELSE NULL::double precision
+                then (net_trd_sls)::double precision
+                else NULL::double precision
             END
         ) AS cn_dmgd_gds,
         sum(
-            CASE
-                WHEN 
+            case
+                when 
                 (
                     (
                         (cn_reason_cd IS NULL)
@@ -195,18 +191,18 @@ sales as
                     )
                     AND ((net_trd_sls)::double precision < (0)::double precision)
                 )
-                THEN (net_trd_sls)::double precision
-                WHEN 
+                then (net_trd_sls)::double precision
+                when 
                 (
                     (cn_reason_cd)::text like ('D%'::character varying)::text
                 ) 
-                THEN (net_trd_sls)::double precision
-                WHEN
+                then (net_trd_sls)::double precision
+                when
                 (
                     (cn_reason_cd)::text like ('N%'::character varying)::text
                 ) 
-                THEN (0.0)::double precision
-                ELSE NULL::double precision
+                then (0.0)::double precision
+                else NULL::double precision
             END
         ) AS crdt_nt_amt,
         sum(trd_discnt_item_lvl) AS trd_discnt_item_lvl,
@@ -215,8 +211,8 @@ sales as
         sum(sls_qty) AS sls_qty,
         sum(ret_qty) AS ret_qty,
         sum(
-            CASE
-                WHEN
+            case
+                when
                 (
                     (
                         cn_reason_cd IS NULL
@@ -225,13 +221,13 @@ sales as
                         left((cn_reason_cd)::text,1) <> ('N'::character varying)::text
                     )
                 ) 
-                THEN (sls_qty)::double precision
-                ELSE NULL::double precision
+                then (sls_qty)::double precision
+                else NULL::double precision
             END
         ) AS quantity_dz,
         sum(
-            CASE
-                WHEN 
+            case
+                when 
                 (
                     (
                         cn_reason_cd IS NULL
@@ -240,19 +236,19 @@ sales as
                         (cn_reason_cd)::text = (''::character varying)::text
                     )
                 )
-                THEN (net_trd_sls)::double precision
-                WHEN 
+                then (net_trd_sls)::double precision
+                when 
                 (
                     (cn_reason_cd)::text like ('D%'::character varying)::text
-                ) THEN (net_trd_sls)::double precision
-                WHEN 
+                ) then (net_trd_sls)::double precision
+                when 
                 (
                     (cn_reason_cd)::text like ('N%'::character varying)::text
-                ) THEN (0.0)::double precision
-                ELSE NULL::double precision
+                ) then (0.0)::double precision
+                else NULL::double precision
             END
         ) AS net_trd_sls
-    FROM edw_vw_th_sellout_sales_fact
+    from edw_vw_th_sellout_sales_fact
     GROUP BY cntry_cd,
         cntry_nm,
         bill_date,
@@ -267,7 +263,7 @@ sales as
 ),
 sales_2 as
 (
-    SELECT 
+    select 
         sales.cntry_cd,
         sales.cntry_nm,
         "time"."year",
@@ -292,10 +288,10 @@ sales_2 as
         sales.ret_qty,
         sales.quantity_dz,
         sales.net_trd_sls
-    FROM sales
+    from sales
     JOIN 
         (
-            SELECT edw_vw_os_time_dim.cal_year AS "year",
+            select edw_vw_os_time_dim.cal_year AS "year",
             (
                 (
                     ((edw_vw_os_time_dim.cal_year)::character varying)::text || ('/Q'::character varying)::text
@@ -305,8 +301,8 @@ sales_2 as
             edw_vw_os_time_dim.cal_mnth_id AS mnth_id,
             edw_vw_os_time_dim.cal_mnth_no AS mnth_no,
             edw_vw_os_time_dim.cal_date
-            FROM edw_vw_os_time_dim
-            WHERE 
+            from edw_vw_os_time_dim
+            where 
             (
                 (
                     edw_vw_os_time_dim."year" > date_part(year,(current_timestamp()::timestamp_ntz)) - 3
@@ -316,12 +312,12 @@ sales_2 as
                 )
             ) 
         )    
-    "time" ON 
+    "time" on 
     sales.bill_date = ("time".cal_date)::timestamp without time zone
 ),
 sellout_cust as
 (
-    SELECT DISTINCT 
+    select distinct 
         region_nm,
         prov_nm,
         city_nm,
@@ -336,32 +332,32 @@ sellout_cust as
         cust_cd,
         dstrbtr_grp_cd,
         sap_soldto_code
-    FROM edw_vw_th_dstrbtr_customer_dim
+    from edw_vw_th_dstrbtr_customer_dim
 ),
 target_distribution as
 (   
-    SELECT 
+    select 
         "target".dstrbtr_id,
         "target".period,
         "target".target,
         prodgroup.prod_cd
-    FROM itg_th_target_distribution "target",
+    from itg_th_target_distribution "target",
         itg_th_productgrouping prodgroup
-    WHERE (upper(("target".prod_nm)::text) = upper((prodgroup.prod_grp)::text))    
+    where (upper(("target".prod_nm)::text) = upper((prodgroup.prod_grp)::text))    
 ),
 target_sales as
 (
-    SELECT 
+    select 
         itg_th_target_sales.dstrbtr_id,
         itg_th_target_sales.sls_office,
         itg_th_target_sales.sls_grp,
         itg_th_target_sales.target,
         itg_th_target_sales.period
-    FROM itg_th_target_sales
+    from itg_th_target_sales
 ),
 sellin_cust as
 (
-    SELECT 
+    select 
         sap_cust_id,
         sap_cust_nm,
         sap_sls_org,
@@ -392,11 +388,11 @@ sellin_cust as
         sap_bnr_frmt_key,
         sap_bnr_frmt_desc,
         retail_env
-    FROM edw_vw_th_customer_dim sellin_cust
+    from edw_vw_th_customer_dim sellin_cust
 ),
 matl as
 (
-    SELECT DISTINCT 
+    select distinct 
         cntry_key,
         sap_matl_num,
         sap_mat_desc,
@@ -410,11 +406,11 @@ matl as
         gph_prod_subsgmnt AS prod_subsegment,
         gph_prod_ctgry AS prod_category,
         gph_prod_subctgry AS prod_subcategory
-    FROM edw_vw_th_material_dim
+    from edw_vw_th_material_dim
 ),
 union_2 as
 (
-    SELECT 
+    select 
         'sellout' AS data_type,
         sellout."year" AS year_jnj,
         (sellout.year_quarter)::character varying AS year_quarter_jnj,
@@ -472,9 +468,9 @@ union_2 as
         0 AS si_tp_value,
         0 AS si_net_trade_sales_value,
         0 AS si_net_trade_sales_quantity
-    FROM 
+    from 
     (
-        SELECT 
+        select 
             sales.bill_date AS order_date,
             sales."year",
             sales.qrtr AS year_quarter,
@@ -491,16 +487,16 @@ union_2 as
             sellout_cust.chnl_cd AS channel_code,
             sellout_cust.chnl_desc AS channel,
             sellout_cust.sls_office_cd AS sales_office_code,
-            CASE
-                WHEN (
+            case
+                when (
                     substring((sellout_cust.sls_grp_cd)::text, 2, 1) = ('1'::character varying)::text
-                ) THEN (
+                ) then (
                     (sales.dstrbtr_grp_cd)::text || (' Van'::character varying)::text
                 )
-                ELSE (
+                else (
                     (sales.dstrbtr_grp_cd)::text || (' Credit'::character varying)::text
                 )
-            END AS sales_office_name,
+            end as sales_office_name,
             sellout_cust.sls_grp_cd AS sales_group,
             sellout_cust.cust_grp_cd AS "cluster",
             sellout_cust.outlet_type_cd AS ar_type_code,
@@ -563,17 +559,17 @@ union_2 as
             sales.net_trd_sls AS net_invoice,
             target_distribution.target AS target_calls,
             target_sales.target AS target_sales
-        FROM sales_2 as sales
+        from sales_2 as sales
         LEFT JOIN  sellout_cust 
-        ON (upper((sales.cust_cd)::text) = upper((sellout_cust.cust_cd)::text))
+        on (upper((sales.cust_cd)::text) = upper((sellout_cust.cust_cd)::text))
         AND (upper((sales.dstrbtr_grp_cd)::text) = upper((sellout_cust.dstrbtr_grp_cd)::text))  
         LEFT JOIN  target_distribution 
-        ON (upper((sales.dstrbtr_matl_num)::text) = upper((target_distribution.prod_cd)::text))
+        on (upper((sales.dstrbtr_matl_num)::text) = upper((target_distribution.prod_cd)::text))
         AND (upper((sales.dstrbtr_grp_cd)::text) = upper((target_distribution.dstrbtr_id)::text))
         AND (substring(((sales.bill_date)::character varying)::text,1,4) 
         || substring(((sales.bill_date)::character varying)::text, 6,2)) 
         = (target_distribution.period)::text
-        LEFT JOIN  target_sales ON 
+        LEFT JOIN  target_sales on 
         ((sales.dstrbtr_grp_cd)::text = (target_sales.dstrbtr_id)::text)
         AND (
             substring(
@@ -588,9 +584,9 @@ union_2 as
             ) = (target_sales.period)::text
         AND (upper((sellout_cust.sls_office_cd)::text) = upper((target_sales.sls_office)::text))
         AND (upper((sellout_cust.sls_grp_cd)::text) = upper((target_sales.sls_grp)::text))
-        LEFT JOIN sellin_cust ON 
+        LEFT JOIN sellin_cust on 
         (upper((sellout_cust.sap_soldto_code)::text) = upper((sellin_cust.sap_cust_id)::text))
-        LEFT JOIN  matl ON 
+        LEFT JOIN  matl on 
         upper((sales.dstrbtr_matl_num)::text) = 
         upper(ltrim((matl.sap_matl_num)::text,('0'::character varying)::text))
             
@@ -635,7 +631,7 @@ union_2 as
 combined as
 (
     select * from union_1
-    UNION ALL
+    union all
     select * from union_2
 ),
 final as

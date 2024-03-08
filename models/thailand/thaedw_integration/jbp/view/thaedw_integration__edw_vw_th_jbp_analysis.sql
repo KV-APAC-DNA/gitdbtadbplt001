@@ -12,17 +12,15 @@ itg_th_jbp_cop as
 ),
 edw_vw_th_sellout_sales_fact as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_sellout_sales_fact
-    where cntry_cd = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_sellout_sales_fact') }}
 ),
 edw_vw_th_sellout_inventory_fact as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_sellout_inventory_fact
-    where cntry_cd = 'TH'   
+    select * from  {{ ref('thaedw_integration__edw_vw_th_sellout_inventory_fact') }} 
 ),
 itg_th_dstrbtr_material_dim as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dstrbtr_material_dim
+    select * from {{ref('thaitg_integration__itg_th_dstrbtr_material_dim')}}
 ),
 edw_vw_os_time_dim as
 (
@@ -30,13 +28,11 @@ edw_vw_os_time_dim as
 ),
 edw_vw_th_material_dim as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ),
 edw_vw_th_sellin_sales_fact as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_sellin_sales_fact
-    where cntry_nm = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_sellin_sales_fact') }}
 ),
 itg_th_ciw_account_lookup as
 (
@@ -48,8 +44,7 @@ itg_th_jbp_rolling_forecast as
 ),
 edw_vw_th_customer_dim as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 edw_company_dim as
 (
@@ -57,13 +52,11 @@ edw_company_dim as
 ),
 edw_vw_th_dstrbtr_customer_dim as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
-    where cntry_cd = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
 ),
 edw_vw_th_dstrbtr_material_dim as
 (
-    select * from DEV_DNA_CORE.snaposeedw_integration.edw_vw_os_dstrbtr_material_dim
-    where cntry_cd = 'TH'
+    select * from  {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
 ),
 edw_gch_customerhierarchy as
 (
@@ -434,7 +427,8 @@ sales_inventory as
                                     (
                                         edw_vw_os_time_dim."year" > date_part(year,(current_timestamp()::timestamp_ntz)) - 3
                                     )
-                                    OR (
+                                    OR 
+                                    (
                                         edw_vw_os_time_dim."year" > date_part(year,(current_timestamp()::timestamp_ntz)) - 3
                                     )
                                 )
