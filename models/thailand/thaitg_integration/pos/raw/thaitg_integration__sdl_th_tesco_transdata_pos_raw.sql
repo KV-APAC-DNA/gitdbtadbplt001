@@ -25,7 +25,7 @@ final as
         sales_amount,
         file_name,
         folder_name,
-        current_timestamp::timestamp_ntz(9) as crt_dttm
+        current_timestamp()::timestamp_ntz(9) as crt_dttm
         from source
 )
 select * from final
