@@ -64,7 +64,7 @@ crtd_dtm::timestamp_ntz(9) as crtd_dtm,
 from sdl_th_mt_makro
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    where crtd_dtm > (select max(crtd_dtm) from {{ this }}) 
  {% endif %} 
  )
 select * from final
