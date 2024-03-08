@@ -187,18 +187,10 @@ models:
     config: 
       alias: wks_edw_copa_plan_fact
       tags: ["j_sap_bw_trxn_copa17_wrapper","transformation"]
-  - name: aspwks_integration__wks_itg_invnt
-    config: 
-      alias: wks_itg_invnt
-      tags: ["j_sap_bw_trxn_inventory_wrapper","transformation"]
   - name: aspwks_integration__wks_edw_inventory_fact
     config: 
       alias: wks_edw_inventory_fact
       tags: ["j_sap_bw_trxn_inventory_wrapper","transformation"]
-  - name: aspwks_integration__wks_itg_invc_sls
-    config: 
-      alias: wks_itg_invc_sls
-      tags: ["J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
   - name: aspwks_integration__wks_edw_invc_fact
     config: 
       alias: wks_edw_invc_fact
@@ -259,10 +251,6 @@ models:
     config: 
       alias: wks_edw_account_dim
       tags: ["sap_bw_master_etl_framework","transformation"]
-  - name: aspwks_integration__wks_itg_copa_trans 
-    config: 
-      alias: wks_itg_copa_trans
-      tags: ["j_sap_bw_txn_copa10_wrapper","transformation"]
   - name: aspwks_integration__wks_edw_gch_geographyhierarchy
     config: 
       alias: wks_edw_gch_geographyhierarchy

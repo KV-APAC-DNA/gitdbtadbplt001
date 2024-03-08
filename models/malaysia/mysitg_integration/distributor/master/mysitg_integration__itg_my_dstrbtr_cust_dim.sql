@@ -32,7 +32,9 @@ union_1 as (
   cast(null as date) as updt_dttm
 from itg_my_sellout_sales_fact as a
 {% if is_incremental() %}
-    where outlet_key not in( select distinct outlet_key from {{ this }} )
+left join {{this}} b
+    on  upper(b.outlet_key) = upper(trim(a.dstrbtr_id||a.cust_cd))
+    where   b.outlet_key is null
 {% endif %}
 ),
 
@@ -58,8 +60,7 @@ from source
 union_final as
 (
     (
-        select * from union_1 
-        where outlet_key not in (select distinct outlet_key from union_2)
+        select * from union_1
     )
 union all
     (

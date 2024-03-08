@@ -22,6 +22,9 @@ sources:
 
       - name: sdl_th_dms_sellout_fact
         tags: ["th_mbox_sellout"]
-     
+      - name: itg_distributor_control
+      - name: itg_lookup_retention_period
+      - name: itg_th_dtssaletrans
+      - name: itg_th_dtsinventorybal
 
   
