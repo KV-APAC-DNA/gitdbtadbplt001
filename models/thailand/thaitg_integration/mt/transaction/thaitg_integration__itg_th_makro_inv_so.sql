@@ -1,4 +1,3 @@
-
 with wks_th_makro_temp as (
     select * from {{ ref('thawks_integration__wks_th_makro_temp') }} 
     ),
@@ -11,6 +10,7 @@ select * from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }}
 edw_list_price as (
 select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
+
 transformed as (
 select
   cast(cal_mnth_id as varchar) as month,
@@ -108,6 +108,7 @@ left join (
 ) as os_matl_dim
   on os_matl_dim.material = th_prod_dim.matl_num
 ),
+
 final as (
     select
     month::varchar(50) as month,

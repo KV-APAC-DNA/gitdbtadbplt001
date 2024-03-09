@@ -1,4 +1,3 @@
-
 with th_wks_bigc as 
 (select * from {{ ref('thawks_integration__wks_th_wks_bigc') }}
 ),
@@ -110,7 +109,9 @@ bigc as (
       rnk = 1
   ) as b
     on ltrim(a.barcode, 0) = b.barcd
-)
+),
+
+final (
 select
   '108830'::varchar(6) as sold_to_code,
   store_format::varchar(500) as store_format,
@@ -151,3 +152,6 @@ left join (
     rn = 1
 ) as b
   on bigc.matl_num = b.material
+)
+
+select * from final

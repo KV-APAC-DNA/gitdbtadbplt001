@@ -5,6 +5,7 @@
         unique_key=  ['dstrbtr_id', 'rec_dt', 'wh_cd', 'prod_cd']
     )
 }}
+
 with itg_th_dtsinventorybal as
 (
     select * from {{ source('thaitg_integration', 'itg_th_dtsinventorybal') }}
@@ -29,6 +30,7 @@ itg_lookup_retention_period as
 (
    select * from {{ source('thaitg_integration', 'itg_lookup_retention_period') }} 
 ),
+
 union_1 as 
 (
     select 
@@ -55,6 +57,7 @@ union_1 as
     where a.dstrbtr_id = b.dstrbtr_id (+)
         and a.rec_dt <= nvl(b.rec_dt, '9999-12-31 00:00:00')
 ),
+
 transformed as
 (
     select 
@@ -119,7 +122,8 @@ transformed as
         batchno,
         expirydate
     from itg_th_htc_inventory
-),   
+), 
+
 final as
 (
     select 
@@ -154,4 +158,5 @@ final as
         where upper(table_name) = 'ITG_TH_SELLOUT_INVENTORY_FACT'
     )
 )
+
 select * from final

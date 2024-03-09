@@ -9,11 +9,11 @@ sources:
       schema: false
       identifier: false
     tables:
-
+    - name: sdl_th_mt_watsons
+      tags: ["th_non_tesco"]
     - name: sdl_th_mt_bigc
       tags: ["",""]
     - name: sdl_th_mt_makro
       tags: ["",""]
     - name: sdl_mds_th_product_master
       tags: ["",""]
-    

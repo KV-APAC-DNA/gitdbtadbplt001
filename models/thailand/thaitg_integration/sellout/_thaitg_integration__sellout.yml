@@ -23,3 +23,7 @@ models:
     config:
       alias: itg_th_sellout_sales_fact
       tags: ["th_itg_to_edw"]
+  - name: thaitg_integration__itg_th_tims_transdata
+    config:
+      alias: itg_th_tims_transdata
+      tags: ["j_ap_th_tesco_etl_framework"]

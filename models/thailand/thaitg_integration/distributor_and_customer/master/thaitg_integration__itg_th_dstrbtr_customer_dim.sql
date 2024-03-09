@@ -91,6 +91,7 @@ select
     from 
       itg_th_dms_customer_dim
 ),
+
 trans_cust as 
 (
 select 
@@ -268,6 +269,7 @@ cust_2 as
     from 
       itg_th_dms_chana_customer_dim
 ),
+
 trans_cust_2 as 
 (
 select 
@@ -381,6 +383,7 @@ from cust_2
     trim (cust_2.billsubdist)
   )
 ),
+
 transformed as
 (
     select * from trans_cust

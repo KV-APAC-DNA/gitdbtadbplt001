@@ -12,6 +12,6 @@ final as(
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     where curr_date > (select max(curr_date) from {{ this }}) 
- {% endif %}
+     {% endif %}
 )
 select * from final

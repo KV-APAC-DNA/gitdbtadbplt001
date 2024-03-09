@@ -12,6 +12,7 @@ with itg_th_dstrbtr_customer_dim as (
 itg_th_gt_dstrbtr_control as (
 select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}
 ),
+
 final as (
 select 
 	   dateadd(hour, -1, convert_timezone('Asia/Bangkok', current_timestamp()))::timestamp_ntz(9) as snap_shot_dt,

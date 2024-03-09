@@ -12,3 +12,7 @@ models:
       alias: sdl_th_tesco_transdata_pos_raw
       tags: ["j_ap_th_tesco_etl_framework"]
 
+  - name: thaitg_integration__itg_th_pos_material_dim
+    config:
+      alias: itg_th_pos_material_dim
+      tags: ["j_ap_th_tesco_etl_framework"]

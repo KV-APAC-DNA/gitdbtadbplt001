@@ -9,7 +9,9 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_th_mt_watsons
-      tags: ["th_non_tesco"]
-
-
+      
+      - name: sdl_mds_th_customer_rsp
+        tags: ["j_ap_th_tesco_etl_framework"]
+      - name: itg_lookup_retention_period
+        tags: ["j_ap_th_tesco_etl_framework"]
+  

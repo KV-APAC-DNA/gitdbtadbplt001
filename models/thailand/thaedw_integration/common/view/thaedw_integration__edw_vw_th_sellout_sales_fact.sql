@@ -86,7 +86,7 @@ final as
 			,c.re_nm
 		from itg_th_sellout_sales_fact s 
         left join itg_th_dstrbtr_material_dim m on ((ltrim((s.prod_cd)::text, ((0)::character varying)::text) = ltrim((m.item_cd)::text, ((0)::character varying)::text)))
-				 left join itg_th_dstrbtr_customer_dim c on (
+		left join itg_th_dstrbtr_customer_dim c on (
 					(
 						(trim((c.old_cust_id)::text) = trim((s.ar_cd)::text))
 						and (trim((c.dstrbtr_id)::text) = trim((s.dstrbtr_id)::text))

@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: thaitg_integration__sdl_th_mt_watsons_raw
-    config: 
-      alias: sdl_th_mt_watsons_raw
-      tags: ["j_ap_th_tesco_etl_framework"]

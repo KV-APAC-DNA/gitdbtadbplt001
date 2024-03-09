@@ -9,9 +9,9 @@ with source as(
 ),
 final as(
     select * from source
-     {% if is_incremental() %}
+{% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     where date > (select max(date) from {{ this }}) 
- {% endif %}
+{% endif %}
 )
 select * from final
