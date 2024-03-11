@@ -45,7 +45,7 @@ sources:
             name: TRATBL_sdl_mds_th_product_master__duplicate_test
             config:
               store_failures: true
-              schema: myswks_integration
+              schema: thawks_integration
         - test_duplicate:
             group_by_columns: ["code","barcode"]
             select_columns: ["code","barcode"]

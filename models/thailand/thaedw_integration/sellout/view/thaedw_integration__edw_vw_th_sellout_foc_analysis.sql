@@ -5,10 +5,10 @@ edw_vw_os_time_dim as (
   select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_os_dstrbtr_customer_dim as (
-  select * from {{ ref('thaedw_integration__edw_vw_os_dstrbtr_customer_dim') }}
+  select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim') }}
 ),
 edw_vw_os_dstrbtr_material_dim as (
-  select * from {{ ref('thaedw_integration__edw_vw_os_dstrbtr_material_dim') }}
+  select * from {{ ref('thaedw_integration__edw_vw_th_dstrbtr_material_dim') }}
 ),
 itg_th_target_distribution as (
   select * from {{ ref('thaitg_integration__itg_th_target_distribution') }}

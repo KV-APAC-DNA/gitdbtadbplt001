@@ -25,7 +25,7 @@ sources:
               name: TRATBL_sdl_mds_th_gt_scope__duplicate_test
               config:
                 store_failures: true
-                schema: myswks_integration
+                schema: thawks_integration
 
       - name: sdl_mds_th_distributor_list
         tags: ["th_non_tesco"]
@@ -43,7 +43,7 @@ sources:
               name: TRATBL_sdl_mds_th_distributor_list__duplicate_test
               config:
                 store_failures: true
-                schema: myswks_integration
+                schema: thawks_integration
 
       - name: sdl_mds_th_distributor_cn_reason
         tags: ["th_non_tesco"]

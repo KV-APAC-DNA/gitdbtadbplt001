@@ -43,7 +43,7 @@ sources:
             name: TRATBL_sdl_mds_th_market_share_distribution__duplicate_test
             config:
               store_failures: true
-              schema: myswks_integration
+              schema: thawks_integration
 
     - name: sdl_mds_th_rolling_forecast
       tags: ["th_non_tesco"]

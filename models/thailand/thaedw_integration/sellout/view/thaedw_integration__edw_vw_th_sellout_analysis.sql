@@ -44,7 +44,7 @@ edw_vw_th_material_dim as
 ),
 itg_th_dstrbtr_material_dim as
 (
-    select * from {{ ref('thaedw_integration__itg_th_dstrbtr_material_dim') }}
+    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 union_1 as
 (

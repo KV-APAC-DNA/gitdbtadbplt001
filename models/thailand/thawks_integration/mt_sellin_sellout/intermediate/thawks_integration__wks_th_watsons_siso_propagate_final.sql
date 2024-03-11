@@ -8,7 +8,7 @@ wks_th_watsons_siso_propagate_to_details as (
   select * from {{ ref('thawks_integration__wks_th_watsons_siso_propagate_to_details') }}
 ),
 wks_th_watsons_siso_propagate_to_existing_dtls as (
-  select * from {{ ref('thawks_integration__wks_th_watsons_siso_propagate_to_existing_dtl') }}
+  select * from {{ ref('thawks_integration__wks_th_watsons_siso_propagate_to_existing_dtls') }}
 ),
 transformed as (
   select 
