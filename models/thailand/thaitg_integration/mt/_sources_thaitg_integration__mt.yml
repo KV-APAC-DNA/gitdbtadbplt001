@@ -15,5 +15,3 @@ sources:
       tags: ["",""]
     - name: sdl_th_mt_makro
       tags: ["",""]
-    - name: sdl_mds_th_product_master
-      tags: ["",""]
