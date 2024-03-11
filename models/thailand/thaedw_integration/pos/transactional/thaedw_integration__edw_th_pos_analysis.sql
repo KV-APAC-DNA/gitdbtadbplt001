@@ -1,5 +1,5 @@
 with source as(
-    select * from {{ ref('thaedw_access__edw_vw_th_pos_analysis') }}
+    select * from {{ ref('thaedw_integration__edw_vw_th_pos_analysis') }}
 ),
 final as(
     select 

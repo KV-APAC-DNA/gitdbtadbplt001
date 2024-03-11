@@ -26,7 +26,7 @@ sources:
         tags: ["j_ap_th_tesco_etl_framework"]
 
   - name: thaitg_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaitg_integration
     quoting:
       database: false
@@ -35,7 +35,6 @@ sources:
     tables:
       - name: itg_distributor_control
       - name: itg_lookup_retention_period
-        tags: ["j_ap_th_tesco_etl_framework"]
       - name: itg_th_dtssaletrans
       - name: itg_th_dtsinventorybal
   

@@ -9,7 +9,6 @@ sources:
       schema: false
       identifier: false
     tables:
-      
       - name: sdl_mds_th_customer_rsp
         tags: ["j_ap_th_tesco_etl_framework"]
   

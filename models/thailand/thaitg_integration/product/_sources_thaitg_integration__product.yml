@@ -17,6 +17,7 @@ sources:
       tests:
           - test_null:
               not_null_columns: ["code"]
+              select_columns: ["code","name2"]
               name: TRATBL_sdl_mds_th_ref_distributor_item_unit__null_test
               config:
                 store_failures: true
@@ -34,21 +35,21 @@ sources:
       tests:
         - test_null:
             not_null_columns: ["code"]
-            select_columns: ["code", "name2"]
+            select_columns: ["code", "name2","barcode"]
             name: TRATBL_sdl_mds_th_product_master__null_test
             config:
               store_failures: true
-              schema: check
+              schema: thawks_integration
         - test_duplicate_dtsitemmaster:
             group_by_columns: ["code"]
-            select_columns: ["code", "name2"]
+            select_columns: ["code", "name2","barcode"]
             name: TRATBL_sdl_mds_th_product_master__duplicate_test
             config:
               store_failures: true
               schema: thawks_integration
         - test_duplicate:
             group_by_columns: ["code","barcode"]
-            select_columns: ["code","barcode"]
+            select_columns: ["code", "name2","barcode"]
             name: TRATBL_sdl_mds_th_product_master__duplicate_test2
             config:
               store_failures: true
@@ -59,7 +60,7 @@ sources:
         - test_null:
             not_null_columns: ["barcode", "artypecode_code"]
             select_columns: ["barcode", "artypecode_code", "productname"]
-            name: TRATBL_sdl_mds_lcm_distributor_target_sales_re__null_test
+            name: TRATBL_sdl_mds_th_distributor_msl__null_test
             config:
               store_failures: true
               schema: thawks_integration

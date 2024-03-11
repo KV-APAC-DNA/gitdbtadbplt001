@@ -50,6 +50,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["code"]
+              select_columns: ["code","name","cn_en_desc"]
               name: TRATBL_sdl_mds_th_distributor_cn_reason__null_test
               config:
                 store_failures: true
@@ -66,6 +67,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["code"]
+              select_columns: ["code","name"]
               name: TRATBL_sdl_mds_th_ref_distributor_customer_group__null_test
               config:
                 store_failures: true

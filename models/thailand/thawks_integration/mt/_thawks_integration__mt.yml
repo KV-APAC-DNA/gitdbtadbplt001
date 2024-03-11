@@ -38,7 +38,7 @@ models:
   - name: thawks_integration__wks_th_watsons_allmonths_base
     config:
       alias: wks_th_watsons_allmonths_base
-      tags: ["th_non_tj_ap_th_tesco_etl_frameworkesco"]
+      tags: ["j_ap_th_tesco_etl_framework"]
 
   - name: thawks_integration__wks_th_watsons_lastnmonths
     config:

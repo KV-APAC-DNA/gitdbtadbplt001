@@ -15,6 +15,7 @@ sources:
       tests:
           - test_null:
               not_null_columns: ["code"]
+              select_columns: ["code","name"]
               name: TRATBL_sdl_mds_th_ref_city__null_test
               config:
                 store_failures: true

@@ -14,6 +14,7 @@ sources:
       tests:
           - test_null:
               not_null_columns: ["re","kpi","channel"]
+              select_columns: ["re","kpi","channel"]
               name: TRATBL_sdl_mds_th_ps_weights__null_test
               config:
                 store_failures: true
@@ -34,11 +35,11 @@ sources:
       tests:
         - test_null:
             not_null_columns: ["kpi", "channel"]
-            select_columns: ["kpi", "channel","re","attribute_1","attribute_2"]
+            select_columns: ["kpi", "channel","re","attribute_1","attribute_2","value"]
             name: TRATBL_sdl_mds_th_ps_targets__null_test
             config:
               store_failures: true
-              schema: check
+              schema: thawks_integration
         - test_duplicate:
             group_by_columns: ["kpi", "channel","re","attribute_1","attribute_2"]
             select_columns: ["kpi", "channel","re","attribute_1","attribute_2","value"]

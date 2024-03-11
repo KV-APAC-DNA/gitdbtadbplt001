@@ -8,5 +8,4 @@ sources:
       identifier: false
     tables:
       - name: wks_th_gt_kpi_target_header
-        tags: ["th_non_tesco"]
         

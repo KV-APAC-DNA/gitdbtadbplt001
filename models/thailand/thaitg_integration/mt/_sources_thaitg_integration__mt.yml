@@ -14,4 +14,4 @@ sources:
     - name: sdl_th_mt_makro
       tags: ["j_ap_th_tesco_etl_framework",""]
     - name: sdl_th_mt_bigc
-      tags: ["",""]
+      tags: ["j_ap_th_tesco_etl_framework",""]
