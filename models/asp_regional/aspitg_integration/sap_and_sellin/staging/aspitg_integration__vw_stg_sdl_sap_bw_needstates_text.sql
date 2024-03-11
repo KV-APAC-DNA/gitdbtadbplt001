@@ -8,7 +8,7 @@ with source as (
 --Final CTE
 final as (
     select 
-        bic_zneed as zneed,
+        nvl(bic_zneed,'') as zneed,
         langu as langu,
         txtsh as txtsh,
         txtmd as txtmd,

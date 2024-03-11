@@ -70,6 +70,9 @@ sources:
               group_by_columns: ["market","material_number"]
               select_columns: ["market","material_number"] 
               name: TRATBL_sdl_mds_ap_greenlight_skus__duplicate_test
+              config:
+                store_failures: true
+                schema: aspwks_integration
       - name: sdl_mds_ap_company_dim
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_rg_mds_log

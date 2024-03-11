@@ -1,3 +1,10 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
+
+
 with edw_copa_trans_fact as(
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),

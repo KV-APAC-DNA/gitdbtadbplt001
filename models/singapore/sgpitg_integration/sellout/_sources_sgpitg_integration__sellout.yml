@@ -21,6 +21,7 @@ sources:
                   schema: sgpwks_integration
           - test_duplicate:
                 group_by_columns: ["regional_banner"]
+                select_columns: ["file_name","regional_banner"]
                 count_column: "distinct merchandizing"
                 name: TRATBL_sdl_sg_zuellig_customer_mapping__duplicate_test
                 config:
