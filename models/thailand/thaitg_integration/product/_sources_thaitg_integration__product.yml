@@ -40,9 +40,10 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
-        - test_duplicate_dtsitemmaster:
+        - test_duplicate:
             group_by_columns: ["code"]
             select_columns: ["code", "name2","barcode"]
+            filter: " upper(exceptionflag)='N'"
             name: TRATBL_sdl_mds_th_product_master__duplicate_test
             config:
               store_failures: true

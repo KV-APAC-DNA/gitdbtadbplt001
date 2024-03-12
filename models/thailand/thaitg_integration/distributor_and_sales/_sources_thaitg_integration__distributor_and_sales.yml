@@ -9,26 +9,30 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_mds_lcm_distributor_target_sales
-      tags: ["th_non_tesco"]
-      tests:
+      - name: sdl_mds_lcm_distributor_target_sales
+        tags: ["th_non_tesco"]
+        tests:
           - test_null:
-              not_null_columns: ["distributorid","saleoffice","salegroup","period"]
-              select_columns: ["distributorid","saleoffice","salegroup","period"]
+              not_null_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
+              select_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
               name: TRATBL_sdl_mds_lcm_distributor_target_sales__null_test
               config:
                 store_failures: true
                 schema: thawks_integration
           - test_duplicate:
-              group_by_columns: ["distributorid","saleoffice","salegroup","period"]
-              select_columns: ["distributorid","saleoffice","salegroup","period"]
+              group_by_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
+              select_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
               name: TRATBL_sdl_mds_lcm_distributor_target_sales__duplicate_test
               config:
                 store_failures: true
                 schema: thawks_integration
-        
           - test_lookup:
-              select_columns: ["distributorid","saleoffice","salegroup","period"]
+              select_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
               lookup_column: "period, regexp_like (period,'[1-2][0-9][0-9][0-9][0-1][0-9]') as result"
               lookup_table: "{{ source('thasdl_raw','sdl_mds_lcm_distributor_target_sales') }}"
               lookup_filter: "result = true"
@@ -38,41 +42,46 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-    
-    - name: sdl_th_target_distribution
-      tags: ["th_non_tesco"]
-      
-    - name: sdl_mds_lcm_distributor_target_sales_re
-      tags: ["th_non_tesco"]
-      tests:
+
+      - name: sdl_th_target_distribution
+        tags: ["th_non_tesco"]
+
+      - name: sdl_mds_lcm_distributor_target_sales_re
+        tags: ["th_non_tesco"]
+        tests:
           - test_null:
-              not_null_columns: ["distributorid", "re","period"]
-              select_columns: ["distributorid", "re","period"]
+              not_null_columns: ["distributorid", "re", "period"]
+              select_columns: ["distributorid", "re", "period"]
               name: TRATBL_sdl_mds_lcm_distributor_target_sales_re__null_test
               config:
                 store_failures: true
                 schema: thawks_integration
           - test_duplicate:
-              group_by_columns: ["distributorid", "re","period"]
-              select_columns: ["distributorid", "re","period"]
+              group_by_columns: ["distributorid", "re", "period"]
+              select_columns: ["distributorid", "re", "period"]
               name: TRATBL_sdl_mds_lcm_distributor_target_sales_re__duplicate_test
               config:
                 store_failures: true
-                schema: thawks_integration    
-    - name: sdl_mds_th_distributor_target_sales
-      tags: ["th_non_tesco"]
-      tests:
+                schema: thawks_integration
+          
+      - name: sdl_mds_th_distributor_target_sales
+        tags: ["th_non_tesco"]
+        tests:
           - test_null:
-              not_null_columns: ["distributorid", "saleoffice","salegroup","period"]
-              select_columns: ["distributorid", "saleoffice","salegroup","period"]
+              not_null_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
+              select_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
               name: TRATBL_sdl_mds_th_distributor_target_sales__null_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_duplicate_upper:
-              group_by_columns: ["distributorid", "saleoffice","salegroup","period"]
-              select_columns: ["distributorid", "saleoffice","salegroup","period"]
+          - test_duplicate:
+              group_by_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
+              select_columns:
+                ["distributorid", "saleoffice", "salegroup", "period"]
               name: TRATBL_sdl_mds_th_distributor_target_sales__duplicate_test
               config:
                 store_failures: true
-                schema: thawks_integration    
+                schema: thawks_integration

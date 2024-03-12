@@ -1,12 +1,18 @@
-{% test test_duplicate(model,group_by_columns=None,select_columns=None,need_counts='yes',count_column=None)%}
+{% test test_duplicate(model,group_by_columns=None,select_columns=None,need_counts='yes',count_column=None,filter=None)%}
+
 
 {% if group_by_columns!=None %}
-    {% set c_pk = "md5(concat(" + group_by_columns|join(",'_',") + "))" %} 
+    {% set group_by_columns_trim = [] %}
+    {% for item in group_by_columns %}
+        {% set group_by_columns_trim_item = "coalesce(upper(trim(" + item + ")), 'NA')" %}
+        {% do group_by_columns_trim.append(group_by_columns_trim_item) %}
+    {% endfor %}
+    {% set c_pk = "md5(concat(" + group_by_columns_trim|join(",'_',") + "))" %} 
         with grouped_by as(
             select 
                 'Duplicate records present' AS failure_reason,
                 {%- for item in group_by_columns %}
-                    {{item}}
+                    coalesce(upper(trim({{item}})),'NA') as {{item}}
                     {%- if not loop.last -%},
                     {%- endif -%}
                 {%- endfor -%}
@@ -18,9 +24,12 @@
                 {% endif %}
                 {% endif %}
             from {{model}}
+            {%- if filter !=None %}
+                where {{filter}} 
+            {% endif %}
             group by 
             {% for item in group_by_columns -%}
-                {{item}}
+                coalesce(upper(trim({{item}})),'NA') 
             {%- if not loop.last -%},
             {% endif %}
             {%- endfor %}
@@ -39,7 +48,7 @@
              Distinct   
             'Duplicate records present' AS failure_reason,
             {%- for item in select_columns %}
-                trim({{item}}) as {{item}}
+                coalesce(upper(trim({{item}})),'NA') as {{item}}
                 {%- if not loop.last -%},
                 {%- endif -%}
             {%- endfor %}

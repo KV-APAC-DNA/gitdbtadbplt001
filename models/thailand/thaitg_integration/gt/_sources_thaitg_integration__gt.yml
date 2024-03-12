@@ -37,20 +37,20 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-        - test_duplicate_kpitgt:
-            group_by_columns: ["year","kpi_code","kpi_desc"]
+        - test_duplicate:
+            group_by_columns: ["year","kpi_code","kpi_desc","re_code"]
             select_columns: ["year","kpi_code","kpi_desc"]
-            coalesce_columns: ["re_code"]
+            need_counts: "no"
             name: TRATBL_sdl_mds_th_gt_kpi_target__duplicate_test
             config:
               store_failures: true
               schema: thawks_integration
-        - test_lookup_year:
+        - test_lookup:
             select_columns: ["year","kpi_code","kpi_desc"]
             column: "year" 
-            lookup_column: "year"
+            lookup_column: "cast(trim(year) as numeric(31)) as year "
             lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_kpi_target') }}"
-            lookup_filter: "A.YEAR = B.YEAR AND B.RESULT = 'false'"
+            lookup_filter: "not regexp_like(cast(trim(year) as decimal(31)),'(20)[0-9]{2}')=false"
             name: TRATBL_sdl_mds_th_gt_kpi_target__lookup_test
             config:
               store_failures: true
