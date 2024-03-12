@@ -8,7 +8,7 @@ with source as (
 --Final CTE
 final as (
     select 
-        material as matl_num,
+        nvl(material,'') as matl_num,
         base_uom,
         basic_matl,
         try_to_date(createdon,'YYYYMMDD') as createdon,

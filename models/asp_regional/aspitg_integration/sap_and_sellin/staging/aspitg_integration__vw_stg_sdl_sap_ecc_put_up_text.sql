@@ -10,9 +10,9 @@ with source as (
 --Final CTE
 final as (
     select 
-        mandt,
-        spras,
-        mvgr3,
+        mandt as mandt,
+        nvl(spras,'') as spras,
+        nvl(mvgr3,'') as mvgr3,
         bezei,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
