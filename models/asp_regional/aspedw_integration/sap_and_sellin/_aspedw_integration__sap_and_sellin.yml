@@ -176,3 +176,7 @@ models:
     config:
       alias: v_rpt_copa_sku
       tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__edw_product_mapping
+    config:
+      alias: edw_product_mapping
+      tags: ["sap_optimization","transformation"]
