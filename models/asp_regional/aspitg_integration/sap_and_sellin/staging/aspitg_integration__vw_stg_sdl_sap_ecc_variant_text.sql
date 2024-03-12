@@ -10,8 +10,8 @@ with source as (
 final as (
     select 
         mandt,
-        spras,
-        mvgr2,
+        nvl(spras,'') as spras,
+        nvl(mvgr2,'') as mvgr2,
         bezei,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

@@ -164,3 +164,15 @@ models:
     config:
       alias: edw_acct_ciw_hier
       tags: ["J_RG_Account_attr_CIW_Dim","transformation"]
+  - name: aspedw_integration__v_rpt_copa
+    config:
+      alias: v_rpt_copa
+      tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_copa_ciw
+    config:
+      alias: v_rpt_copa_ciw
+      tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_copa_sku
+    config:
+      alias: v_rpt_copa_sku
+      tags: ["regional_copa_refresh","transformation"]
