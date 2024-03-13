@@ -5,3 +5,7 @@ models:
     config:
       alias: edw_rpt_th_gt_scorecard
       tags: [""]
+  - name: thaedw_integration__edw_rpt_th_gt_scorecard_test1
+    config:
+      alias: edw_rpt_th_gt_scorecard_test1
+      tags: [""]
