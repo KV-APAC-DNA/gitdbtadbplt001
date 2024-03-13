@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['cntry_cd']
+    )
+}}
 with 
 sdl_th_sfmc_children_data as
 (

@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['cntry_cd','event_date']
+    )
+}}
 with 
 source as
 (
