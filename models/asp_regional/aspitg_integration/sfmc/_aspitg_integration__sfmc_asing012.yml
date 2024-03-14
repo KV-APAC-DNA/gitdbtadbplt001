@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_sfmc_children_data
+    config: 
+      alias: itg_sfmc_children_data
+      tags: ["th_crm_childern"]
+  
+  - name: aspitg_integration__itg_sfmc_consumer_master
+    config:
+      alias: itg_sfmc_consumer_master
+      tags: ["th_crm_consumer_master"]
+  
+  - name: aspitg_integration__itg_sfmc_consumer_master_additional
+    config:
+      alias: itg_sfmc_consumer_master_additional
+      tags: ["th_crm_consumer_master_additional"]
+  
+  - name: aspitg_integration__itg_sfmc_open_data
+    config:
+      alias: itg_sfmc_open_data
+      tags: ["th_sfmc_open"]
+  
+
+  - name: aspitg_integration__itg_jnj_consumerreach_711
+    config:
+      alias: itg_jnj_consumerreach_711
+      tags: ["j_th_perfect_store_transaction"]
+  
+  
+  - name: aspitg_integration__itg_jnj_consumerreach_sfm
+    config:
+      alias: itg_jnj_consumerreach_sfm
+      tags: ["j_th_perfect_store_transaction"]
+  
+
+  - name: aspitg_integration__itg_sfmc_unsubscribe_data
+    config:
+      alias: itg_sfmc_unsubscribe_data
+      tags: ["th_sfmc_unsubscribe"]
+  
+    

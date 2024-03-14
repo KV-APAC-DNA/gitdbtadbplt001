@@ -26,9 +26,18 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+        - test_lookup:
+              select_columns: ["parent_key"]
+              column: "upper(nvl(parent_key, ''))"
+              lookup_column: "upper(nvl(subscriber_key, ''))"
+              lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }} "
+              name: TRATBL_sdl_th_sfmc_children_data__lookup_test
+              config:
+                store_failures: true
+                schema: thawks_integration
     
     - name: sdl_th_sfmc_consumer_master
-      tags: [""]
+      tags: ["th_crm_consumer_master"]
       tests:
         - test_null:
             select_columns: ["subscriber_key"]
@@ -44,8 +53,9 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+        
     - name: sdl_th_sfmc_consumer_master_additional
-      tags: [""]
+      tags: ["th_crm_consumer_master_additional"]
       tests:
         - test_null:
             select_columns: ["subscriber_key","attribute_name","attribute_value"]
@@ -61,8 +71,17 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+        - test_lookup:
+              select_columns: ["subscriber_key"]
+              column: "upper(nvl(subscriber_key, ''))"
+              lookup_column: "upper(nvl(subscriber_key, ''))"
+              lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }} "
+              name: TRATBL_sdl_th_sfmc_consumer_master_additional__lookup_test
+              config:
+                store_failures: true
+                schema: thawks_integration
     - name: sdl_th_sfmc_open_data
-      tags: [""]
+      tags: ["th_sfmc_open"]
       tests:
         - test_null:
             select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique"]
@@ -78,8 +97,17 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
+        - test_lookup:
+              select_columns: ["subscriber_key"]
+              column: "upper(nvl(subscriber_key, ''))"
+              lookup_column: "upper(nvl(subscriber_key, ''))"
+              lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }} "
+              name: TRATBL_sdl_th_sfmc_open_data__lookup_test
+              config:
+                store_failures: true
+                schema: thawks_integration
     - name: sdl_th_sfmc_unsubscribe_data
-      tags: [""]
+      tags: ["th_sfmc_unsubscribe"]
       tests:
         - test_null:
             select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date"]
@@ -95,47 +123,13 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
-    - name: sdl_jnj_consumerreach_711
-      tags: [""]
-      tests:
-        - test_null:
-            select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-            not_null_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-            name: TRATBL_sdl_jnj_consumerreach_711__null_test
-            config:
-              store_failures: true
-              schema: thawks_integration
         - test_lookup:
-              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-              lookup_column: "cdate, regexp_like (cdate,'(20)[0-9]{2}-(01|02|03|04|05|06|07|08|09|10|11|12)-(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)') as result"
-              lookup_table: "{{ source('thasdl_raw','sdl_jnj_consumerreach_711') }}"
-              lookup_filter: "result = true"
-              column: "cdate,true"
-              failure_reason: "'CDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYY-MM-DD'"
-              name: TRATBL_sdl_jnj_consumerreach_711__lookup_test
+              select_columns: ["subscriber_key"]
+              column: "upper(nvl(subscriber_key, ''))"
+              lookup_column: "upper(nvl(subscriber_key, ''))"
+              lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }} "
+              name: TRATBL_sdl_th_sfmc_unsubscribe_data__lookup_test
               config:
                 store_failures: true
                 schema: thawks_integration
-    - name: sdl_jnj_consumerreach_sfm
-      tags: [""]
-      tests:
-        - test_null:
-            select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-            not_null_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-            name: TRATBL_sdl_jnj_consumerreach_sfm__null_test
-            config:
-              store_failures: true
-              schema: thawks_integration
-        - test_lookup:
-              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-              lookup_column: "cdate, regexp_like (cdate,'(20)[0-9]{2}-(01|02|03|04|05|06|07|08|09|10|11|12)-(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)') as result"
-              lookup_table: "{{ source('thasdl_raw','sdl_jnj_consumerreach_sfm') }}"
-              lookup_filter: "result = true"
-              column: "cdate,true"
-              failure_reason: "'CDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYY-MM-DD'"
-              name: TRATBL_sdl_jnj_consumerreach_sfm__lookup_test
-              config:
-                store_failures: true
-                schema: thawks_integration
-        
-  
+    
