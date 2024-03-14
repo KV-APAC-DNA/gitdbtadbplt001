@@ -1,30 +1,30 @@
 with itg_th_dtssaletrans as
 (
-    select * from {{ source('thaitg_integration', 'itg_th_dtssaletrans') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtssaletrans
 ),
 itg_distributor_control as
 (
-    select * from {{ source('thaitg_integration', 'itg_distributor_control') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_distributor_control
 ),
 itg_th_htc_sellout as
 (
-    select * from {{ ref('thaitg_integration__itg_th_htc_sellout') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_htc_sellout
 ),
 itg_th_dtscnreason as
 (
-    select * from {{ ref('thaitg_integration__itg_th_dtscnreason') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtscnreason
 ),
 itg_th_dtsitemmaster as
 (
-    select * from {{ ref('thaitg_integration__itg_th_dtsitemmaster') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtsitemmaster
 ),
 itg_lookup_retention_period as
 (
-    select * from {{ source('thaitg_integration', 'itg_lookup_retention_period') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_lookup_retention_period
 ),
 itg_th_dms_sellout_fact as
 (
-    select * from {{ ref('thaitg_integration__itg_th_dms_sellout_fact') }}
+    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dms_sellout_fact
 ),
 union_1 as 
 (
@@ -206,14 +206,14 @@ final as
         trim(st.order_no)::varchar(255) as order_no,
         st.order_dt::timestamp_ntz(9) as order_dt,
         st.line_num::number(18,0) as line_num,
-        trim(st.ar_cd)::varchar(20) as ar_cd,
+        trim(st.ar_cd)::varchar(10) as ar_cd,
         trim(st.ar_nm)::varchar(500) as ar_nm,
         trim(st.city)::varchar(255) as city,
         trim(st.region)::varchar(20) as region,
-        trim(st.ar_typ_cd)::varchar(20) as ar_typ_cd,
+        trim(st.ar_typ_cd)::varchar(10) as ar_typ_cd,
         trim(st.sls_dist)::varchar(200) as sls_dist,
-        trim(st.sls_office)::varchar(255) as sls_office,
-        trim(st.sls_grp)::varchar(255) as sls_grp,
+        trim(st.sls_office)::varchar(50) as sls_office,
+        trim(st.sls_grp)::varchar(10) as sls_grp,
         trim(st.sls_emp)::varchar(255) as sls_emp,
         trim(st.sls_nm)::varchar(350) as sls_nm,
         trim(st.prod_cd)::varchar(25) as prod_cd,
@@ -232,7 +232,7 @@ final as
         st.total_bfr_vat::number(19,6) as total_bfr_vat,
         st.total::number(19,6) as total,
         st.iscalcredeem::number(18,0) as iscalcredeem,
-        st.redeem_amt::number(24,6) as redeem_amt,
+        st.redeem_amt::number(19,6) as redeem_amt,
         st.iscancel::number(18,0) as iscancel,
         trim(st.cn_doc_no)::varchar(255) as cn_doc_no,
         trim(st.cn_reason_cd)::varchar(255) as cn_reason_cd,

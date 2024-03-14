@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: thasdl_raw
+    schema: snaposesdl_raw
     quoting:
       database: false
       schema: false
@@ -93,3 +93,74 @@ sources:
                   config:
                     store_failures: true
                     schema: thawks_integration
+    - name: sdl_mym_gt_sales_report_fact
+      tags: ["myanmar_file_ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["filename","item_no","customer_code","customer_name","period"]
+              select_columns: ["filename","item_no","customer_code","customer_name","period"]
+              name: TRATBL_sdl_mym_gt_sales_report_fact__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_duplicate:
+              group_by_columns: ["item_no","customer_code","period"]
+              select_columns: ["filename","item_no","customer_code","customer_name","period"]
+              name: TRATBL_sdl_mym_gt_sales_report_fact__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup:
+              select_columns: ["filename","item_no","customer_code","customer_name","period"]
+              lookup_column: "period, regexp_like(trim(substring(period,1,10)), '[0-3][0-9]/[0-1][0-9]/[1-2][0-9][0-9][0-9]') as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_mym_gt_sales_report_fact') }}"
+              lookup_filter: "result = true"
+              column: "period,true"
+              failure_reason: "'INVALID Date : Correct Format is DD/MM/YYYY'"
+              name: TRATBL_sdl_mym_gt_sales_report_fact__test_lookup
+              config:
+                store_failures: true
+                schema: thawks_integration
+    - name: sdl_la_gt_route_detail
+      tags: ["laos_file_ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["route_id","customer_id","saleunit","created_date"]
+              select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
+              name: TRATBL_sdl_la_gt_route_detail__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_duplicate:
+              group_by_columns: ["filename","route_id","customer_id","saleunit","created_date"]
+              select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
+              name: TRATBL_sdl_la_gt_route_detail__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup:
+              select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
+              lookup_column: "created_date, regexp_like(TRIM(created_date),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]') as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_route_detail') }}"
+              lookup_filter: "result = true"
+              column: "created_date,true"
+              failure_reason:  "'INVALID CREATED_DATE'"
+              name: TRATBL_sdl_la_gt_route_detail__test_lookup_created_date
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup:
+              select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
+              lookup_column: "saleunit,filename, SPLIT_PART(UPPER(TRIM(FILENAME)), '_', 2) = UPPER(TRIM(SALEUNIT)) as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_route_detail') }}"
+              lookup_filter: "result = true"
+              column: "saleunit,filename,true"
+              failure_reason:  "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
+              name: TRATBL_sdl_la_gt_route_detail__test_lookup_saleunit
+              config:
+                store_failures: true
+                schema: thawks_integration
+          
+

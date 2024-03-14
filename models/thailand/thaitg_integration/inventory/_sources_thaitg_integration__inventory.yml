@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: thasdl_raw
+    schema: snaposesdl_raw
     quoting:
       database: false
       schema: false
@@ -31,4 +31,51 @@ sources:
                       config:
                         store_failures: true
                         schema: thawks_integration
-    
+    - name: sdl_la_gt_inventory_fact
+      tags: ["laos_file_ingestion"]
+      tests:
+          - test_lookup:
+              select_columns: ["filename","recdate","expirydate"]
+              lookup_column: "recdate, regexp_like(recdate,'[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-3][0-9]') as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_inventory_fact') }}"
+              lookup_filter: "result = true"
+              column: "recdate,true"
+              failure_reason:  "'Data Format issue for recdate'"
+              name: TRATBL_sdl_la_gt_inventory_fact__test_lookup_recdate
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup:
+              select_columns: ["filename","recdate","expirydate"]
+              lookup_column: "expirydate, regexp_like(expirydate,'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]') as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_inventory_fact') }}"
+              lookup_filter: "result = true"
+              column: "expirydate,true"
+              failure_reason:  "'Data Format issue for expirydate'"
+              name: TRATBL_sdl_la_gt_inventory_fact__test_lookup_expirydate
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+
+    - name: sdl_la_gt_sellout_fact
+      tags: ["laos_file_ingestion"]
+      tests:
+          - test_duplicate:
+              group_by_columns: ["filename","distributorid","orderno","orderdate ","arcode","linenumber"]
+              select_columns: ["filename","distributorid","orderno","orderdate ","arcode","linenumber"]
+              name: TRATBL_sdl_la_gt_sellout_fact__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup:
+              select_columns: ["filename","distributorid","orderno","orderdate ","arcode","linenumber"]
+              lookup_column: "orderdate, regexp_like(orderdate,'[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-3][0-9]') as result"
+              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_sellout_fact') }}"
+              lookup_filter: "result = true"
+              column: "orderdate,true"
+              failure_reason:  "'INVALID ORDERDATE'"
+              name: TRATBL_sdl_la_gt_sellout_fact__test_lookup
+              config:
+                store_failures: true
+                schema: thawks_integration

@@ -15,3 +15,19 @@ models:
     config: 
       alias: sdl_raw_th_dms_inventory_fact
       tags: ["th_mbox_inventory"]
+  - name: thaitg_integration__sdl_raw_la_gt_inventory_fact
+    config: 
+      alias: sdl_raw_la_gt_inventory_fact
+      tags: ["laos_file_ingestion"]
+  - name: thaitg_integration__sdl_raw_la_gt_sellout_fact
+    config: 
+      alias: sdl_raw_la_gt_sellout_fact
+      tags: ["laos_file_ingestion"]
+  - name: thaitg_integration__itg_la_gt_inventory_fact
+    config: 
+      alias: itg_la_gt_inventory_fact
+      tags: ["laos_file_ingestion"]
+  - name: thaitg_integration__itg_la_gt_sellout_fact
+    config: 
+      alias: itg_la_gt_sellout_fact
+      tags: ["laos_file_ingestion"]

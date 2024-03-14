@@ -5,7 +5,7 @@ models:
   - name: thaitg_integration__itg_th_pos_sales_inventory_fact
     config:
       alias: itg_th_pos_sales_inventory_fact
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["j_ap_th_tesco_etl_framework","th_mt_7_eleven","th_mt_tops"]
 
   - name: thaitg_integration__sdl_th_tesco_transdata_pos_raw
     config:
