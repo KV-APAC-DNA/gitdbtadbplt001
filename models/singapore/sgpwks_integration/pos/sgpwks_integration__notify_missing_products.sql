@@ -14,6 +14,7 @@ final as (
         item_desc as customer_product_name,
         source,
         count(*) as record_count
-    from source where product_key is null group by 1,2,3,4,5
+    from source 
+    where product_key = '' or product_key is null group by 1,2,3,4,5
 )
 select * from final
