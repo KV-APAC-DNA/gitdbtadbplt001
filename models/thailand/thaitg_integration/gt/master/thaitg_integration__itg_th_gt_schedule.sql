@@ -1,0 +1,26 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['saleunit']
+    )
+}}
+
+with source as(
+    select * from {{ source('thasdl_raw','sdl_th_gt_schedule') }}
+),
+final as(
+    select
+        cntry_cd::varchar(5) as cntry_cd,
+        crncy_cd::varchar(5) as crncy_cd,
+        employeeid::varchar(50) as employeeid,
+        routeid::varchar(50) as routeid,
+        try_to_date(schedule_date) as schedule_date,
+        approved::varchar(10) as approved,
+        saleunit::varchar(50) as saleunit,
+        filename::varchar(100) as filename,
+        run_id::varchar(50) as run_id,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm
+    from source
+)
+select * from final

@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_sfmc_complaint_data
+    config: 
+      alias: itg_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: thaitg_integration__itg_sfmc_click_data
+    config: 
+      alias: itg_sfmc_click_data
+      tags: ["th_sfmc_click"]

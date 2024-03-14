@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_jnj_consumerreach_cvs
+    config: 
+      alias: itg_jnj_consumerreach_cvs
+      tags: ["th_sfmc_complaint"]
+

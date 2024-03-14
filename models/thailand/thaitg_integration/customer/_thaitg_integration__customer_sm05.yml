@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_mym_gt_customer
+    config:
+      alias: itg_mym_gt_customer
+      tags: ["myanmar_file_ingestion"]
+
+  - name: thaitg_integration__itg_mym_gt_customer_snapshot
+    config:
+      alias: itg_mym_gt_customer_snapshot
+      tags: ["myanmar_file_ingestion"]
+

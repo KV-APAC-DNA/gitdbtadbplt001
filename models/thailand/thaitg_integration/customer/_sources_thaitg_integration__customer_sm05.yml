@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_la_gt_customer
+      tags: ["th_non_tesco",""]
+      tests:
+          - test_null:
+              not_null_columns: ['filename','distributorid','arcode']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_file:
+              compare_columns: ['filename','distributorid']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__test_file
+              config:
+                store_failures: true
+                schema: thawks_integration

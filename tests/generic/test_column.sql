@@ -1,7 +1,7 @@
 {% test test_column(model,compare_columns=None,select_columns=None)%}
 {% if compare_columns!=None %}
     select distinct
-        'SALEUNIT IS NOT MATCHING WITH SALEID' AS failure_reason,
+       UPPER('{{compare_columns[1]}}' || ' IS NOT MATCHING WITH ' || '{{compare_columns[0]}}') AS failure_reason,
     {% if select_columns!=None %}
         {%- for item in select_columns %}
         trim({{item}}) as {{item}}
