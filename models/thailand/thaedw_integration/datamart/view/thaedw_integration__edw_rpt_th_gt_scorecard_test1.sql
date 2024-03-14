@@ -14,7 +14,7 @@ itg_th_gt_target_sales_re as (
     select * from {{ ref('thaitg_integration__itg_th_gt_target_sales_re') }}
 ),
 itg_th_target_sales as (
-    select * from {{ ref('thaitg_integration__itg_th_target_sales') }} -- issue with model - niketh
+    select * from {{ ref('thaitg_integration__itg_th_target_sales') }} 
 ),
 edw_vw_th_gt_msl_distribution as (
     select * from dev_dna_core.snenav01_workspace.thaedw_integration__edw_vw_th_gt_msl_distribution
@@ -41,7 +41,7 @@ itg_query_parameters as (
     select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 
-foc_fact_sales_re as (
+cte1 as (
                           SELECT
                             CAST('ACTUAL' AS VARCHAR) AS identifier,
                             sls.cntry_cd,
@@ -533,7 +533,7 @@ foc_fact_sales_re as (
 
             ),
 
-msl_distribution as (
+cte2 as (
       SELECT
                         CAST('ACTUAL' AS VARCHAR) AS identifier,
                         msld.cntry_cd,
@@ -888,7 +888,7 @@ msl_distribution as (
                       cust.salesareaname
 ),
 
-th_gt_schedule as 
+cte3 as 
       (    SELECT
                     CAST('ACTUAL' AS VARCHAR) AS identifier,
                     "call".cntry_cd,
@@ -5765,11 +5765,11 @@ FROM (
     SUM(COALESCE(derived_table2.total_skus, CAST((0) AS BIGINT))) AS total_skus,
     SUM(COALESCE(derived_table2.total_stores, CAST((0) AS BIGINT))) AS total_stores
   FROM (
-        select * from foc_fact_sales_re
+        select * from cte1
         UNION ALL
-        select * from msl_distribution
+        select * from cte2
         UNION ALL
-        select * from th_gt_schedule
+        select * from cte3
         UNION ALL 
         select * from cte4
         UNION ALL 
@@ -5782,15 +5782,11 @@ FROM (
       CAST((
         derived_table2."year"
       ) AS DOUBLE) >= (
-        PGDATE_PART(
-          CAST((
-            CAST('year' AS VARCHAR)
-          ) AS TEXT),
-          CAST((
+        DATE_PART(
+          year,
             to_date(CAST((
               CAST(current_timestamp AS VARCHAR)
-            ) AS TIMESTAMPNTZ))
-          ) AS TIMESTAMPNTZ)
+            ) AS TIMESTAMPNTZ)))
         ) - CAST((
           (
             SELECT
@@ -5818,7 +5814,6 @@ FROM (
           )
         ) AS DOUBLE)
       )
-    )
   GROUP BY
     derived_table2.identifier,
     derived_table2.cntry_cd,
