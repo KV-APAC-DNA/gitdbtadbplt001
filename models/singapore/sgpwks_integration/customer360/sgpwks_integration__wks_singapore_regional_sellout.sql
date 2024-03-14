@@ -8,7 +8,7 @@ wks_singapore_regional_sellout_base as (
 edw_vw_greenlight_skus as (
   select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
-product_key_attributes as (
+edw_product_key_attributes as (
   select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_gch_customerhierarchy as (

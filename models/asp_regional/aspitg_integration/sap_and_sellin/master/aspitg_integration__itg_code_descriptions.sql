@@ -19,7 +19,7 @@ trans as (
     select
         source_type,
         code_type,
-        code,
+        coalesce(code,'') as code,
         code_desc,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

@@ -19,17 +19,17 @@ models:
   - name: aspedw_access__v_rpt_copa
     config: 
       alias: v_rpt_copa
-      tags: ["regional_views","transformation"]
+      tags: ["regional_views","transformation","regional_copa_refresh"]
 
   - name: aspedw_access__v_rpt_copa_ciw
     config: 
       alias: v_rpt_copa_ciw
-      tags: ["regional_views","transformation"]
+      tags: ["regional_views","transformation","regional_copa_refresh"]
 
   - name: aspedw_access__v_rpt_copa_sku
     config: 
       alias: v_rpt_copa_sku  
-      tags: ["regional_views","transformation"]
+      tags: ["regional_views","transformation","regional_copa_refresh"]
 
   - name: aspedw_access__edw_product_key_attributes
     config:

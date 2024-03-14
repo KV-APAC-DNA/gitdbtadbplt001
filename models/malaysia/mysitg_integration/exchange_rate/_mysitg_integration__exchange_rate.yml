@@ -4,8 +4,8 @@ models:
   - name: mysitg_integration__itg_my_ids_exchg_rate
     config:
       alias: itg_my_ids_exchg_rate
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__sdl_raw_my_ids_rate
     config:
       alias: sdl_raw_my_ids_rate
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]

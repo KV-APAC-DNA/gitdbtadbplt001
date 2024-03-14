@@ -1,11 +1,10 @@
-
-with transformed as (
+with source as (
 select * from {{ ref('mysedw_integration__edw_vw_my_sellout_analysis') }}   
 ),
 final as (
     select
     data_src::varchar(12) as data_src,
-	year::number(18,0) as year,
+	"year"::number(18,0) as year,
 	qrtr_no::number(18,0) as qrtr_no,
 	mnth_id::number(18,0) as mnth_id,
 	mnth_no::number(18,0) as mnth_no,
@@ -144,6 +143,6 @@ final as (
 	is_mcl::varchar(1) as is_mcl,
 	is_hero::varchar(10) as is_hero,
 	contribution::number(38,29) as contribution
-    from transformed
+    from source
 )
 select * from final

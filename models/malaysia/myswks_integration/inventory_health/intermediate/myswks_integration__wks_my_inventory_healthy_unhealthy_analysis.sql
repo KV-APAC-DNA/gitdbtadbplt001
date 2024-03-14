@@ -90,24 +90,24 @@ product1 as
 final as
 (
     select
-        month,
-        trim(nvl(nullif(siso.dstrbtr_grp_cd, ''), 'NA')) as dstrbtr_grp_cd,
-        trim(nvl(nullif(siso.distributor, ''), 'NA')) as distributor_id_name,
-        trim(nvl(nullif(product.global_prod_brand, ''), 'NA')) as global_prod_brand,
-        trim(nvl(nullif(product.global_prod_variant, ''), 'NA')) as global_prod_variant,
-        trim(nvl(nullif(product.global_prod_segment, ''), 'NA')) as global_prod_segment,
-        trim(nvl(nullif(product.global_prod_category, ''), 'NA')) as global_prod_category,
-        trim(nvl(nullif(product.pka_size_desc, ''), 'NA')) as pka_size_desc,
-        trim(nvl(nullif(product.pka_product_key, ''), 'NA')) as pka_product_key,
-        trim(nvl(nullif(siso.sap_parent_customer_key, ''), 'NA')) as sap_parent_customer_key,
-        sum(last_3months_so_value) as last_3months_so_val,
-        sum(last_6months_so_value) as last_6months_so_val,
-        sum(last_12months_so_value) as last_12months_so_val,
-        sum(last_36months_so_value) as last_36months_so_val,
+        month::number(18,0) as month,
+        trim(nvl(nullif(siso.dstrbtr_grp_cd, ''), 'NA'))::varchar(30) as dstrbtr_grp_cd,
+        trim(nvl(nullif(siso.distributor, ''), 'NA'))::varchar(40) as distributor_id_name,
+        trim(nvl(nullif(product.global_prod_brand, ''), 'NA'))::varchar(30) as global_prod_brand,
+        trim(nvl(nullif(product.global_prod_variant, ''), 'NA'))::varchar(100) as global_prod_variant,
+        trim(nvl(nullif(product.global_prod_segment, ''), 'NA'))::varchar(50) as global_prod_segment,
+        trim(nvl(nullif(product.global_prod_category, ''), 'NA'))::varchar(50) as global_prod_category,
+        trim(nvl(nullif(product.pka_size_desc, ''), 'NA'))::varchar(30) as pka_size_desc,
+        trim(nvl(nullif(product.pka_product_key, ''), 'NA'))::varchar(68) as pka_product_key,
+        trim(nvl(nullif(siso.sap_parent_customer_key, ''), 'NA'))::varchar(12) as sap_parent_customer_key,
+        sum(last_3months_so_value)::number(38,17) as last_3months_so_val,
+        sum(last_6months_so_value)::number(38,17) as last_6months_so_val,
+        sum(last_12months_so_value)::number(38,17) as last_12months_so_val,
+        sum(last_36months_so_value)::number(38,17) as last_36months_so_val,
         case
         when nvl(last_36months_so_val, 0) > 0 and nvl(last_12months_so_val, 0) <= 0
-        then 'N'
-        else 'Y'
+        then 'N'::varchar(1)
+        else 'Y'::varchar(1)
         end as healthy_inventory
     from siso
     left join  product1 as product
@@ -125,20 +125,4 @@ final as
     pka_product_key,
     sap_parent_customer_key
 )
-select 
-    month::number(18,0) as month,
-    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-    distributor_id_name::varchar(40) as distributor_id_name,
-    global_prod_brand::varchar(30) as global_prod_brand,
-    global_prod_variant::varchar(100) as global_prod_variant,
-    global_prod_segment::varchar(50) as global_prod_segment,
-    global_prod_category::varchar(50) as global_prod_category,
-    pka_size_desc::varchar(30) as pka_size_desc,
-    pka_product_key::varchar(68) as pka_product_key,
-    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
-    last_3months_so_val::number(38,17) as last_3months_so_val,
-    last_6months_so_val::number(38,17) as last_6months_so_val,
-    last_12months_so_val::number(38,17) as last_12months_so_val,
-    last_36months_so_val::number(38,17) as last_36months_so_val,
-    healthy_inventory::varchar(1) as healthy_inventory
-from final
+select * from final

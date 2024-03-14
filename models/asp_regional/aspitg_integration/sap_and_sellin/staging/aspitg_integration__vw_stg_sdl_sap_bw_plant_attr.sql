@@ -9,7 +9,7 @@ source as (
 final as (
 
     select
-        coalesce(plant, '') as plant,
+        coalesce(trim(plant), '') as plant,
         coalesce(country , '') as country,
         coalesce(logsys, '') as logsys,
         coalesce(purch_org, '') as purch_org,

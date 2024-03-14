@@ -11,9 +11,9 @@ source as (
 final as (
 
     select 
-            LANGU,
-            CO_AREA as KOKRS,
-            PROFIT_CTR as PRCTR,
+            nvl(LANGU,'') as LANGU,
+            nvl(CO_AREA,'') as KOKRS,
+            nvl(PROFIT_CTR,'') as PRCTR,
             to_date(dateto,'YYYYmmdd') as dateto,
             to_date(datefrom,'YYYYmmdd') as datefrom,
             replace(txtsh,'–','') as txtsh,

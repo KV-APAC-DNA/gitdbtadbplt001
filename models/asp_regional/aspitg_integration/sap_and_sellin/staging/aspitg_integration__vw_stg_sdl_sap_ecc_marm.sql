@@ -10,8 +10,8 @@ source as (
 final as (
 
     select 
-        iff(matnr=' ','',matnr) as matnr,
-        iff(meinh=' ','',meinh) as meinh,
+        nvl(iff(matnr=' ','',matnr),'') as matnr,
+        nvl(iff(meinh=' ','',meinh),'') as meinh,
         iff(umrez=' ','',umrez) as umrez,
         iff(umren=' ','',umren) as umren,
         iff(eannr=' ','',eannr) as eannr,

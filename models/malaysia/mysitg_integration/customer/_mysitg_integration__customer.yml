@@ -4,12 +4,12 @@ models:
   - name: mysitg_integration__itg_my_customer_dim
     config: 
       alias: itg_my_customer_dim
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
   - name: mysitg_integration__sdl_raw_my_customer_dim
     config: 
       alias: sdl_raw_my_customer_dim
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
   - name: mysitg_integration__itg_mds_my_customer_hierarchy
     config:
       alias: itg_mds_my_customer_hierarchy
-      tags: ['my_mds_refresh','Daily']
+      tags: ["my_mds_refresh","transformation"]

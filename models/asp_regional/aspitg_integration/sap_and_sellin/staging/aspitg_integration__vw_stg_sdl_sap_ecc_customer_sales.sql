@@ -15,10 +15,10 @@ group by kunnr, vkorg, vtweg, spart,pernr
 final as(
     select
         '888' as mandt,
-        iff(knvv.kunnr=' ','',knvv.kunnr) as kunnr,
-        iff(knvv.vkorg=' ','',knvv.vkorg) as vkorg,
-        iff(knvv.vtweg=' ','',knvv.vtweg) as vtweg,
-        iff(knvv.spart=' ','',knvv.spart) as spart,
+        nvl(iff(knvv.kunnr=' ','',knvv.kunnr),'') as kunnr,
+        nvl(iff(knvv.vkorg=' ','',knvv.vkorg),'') as vkorg,
+        nvl(iff(knvv.vtweg=' ','',knvv.vtweg),'') as vtweg,
+        nvl(iff(knvv.spart=' ','',knvv.spart),'') as spart,
         iff(knvv.ernam=' ','',knvv.ernam) as ernam,
         try_to_date(knvv.erdat,'YYYYMMDD') as erdat,
         iff(knvv.begru=' ','',knvv.begru) as begru,

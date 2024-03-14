@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpwks_integration__notify_missing_products
+    config:
+      alias: notify_missing_products
+      tags: ["sg_sellin_and_scan_datamart","transformation"]

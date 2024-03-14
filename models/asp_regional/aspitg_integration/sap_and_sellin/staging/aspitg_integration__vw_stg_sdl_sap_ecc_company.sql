@@ -11,7 +11,7 @@ final as (
 
     select
         '888' as mandt,
-        comp_code as bukrs,
+        nvl(comp_code,'') as bukrs,
         country as land1,
         currency as waers,
         chrt_accts as ktopl,

@@ -6,6 +6,7 @@ edw_vw_my_listprice as
 (
     select * from {{ ref('mysedw_integration__edw_vw_my_listprice') }}
 ),
+
 listprice as
 (
       select
@@ -31,6 +32,7 @@ listprice as
           )
         )
 ),
+
 vpos as
 (
       select
@@ -53,6 +55,7 @@ vpos as
         itg_my_pos_sales_fact.updt_dttm
       from itg_my_pos_sales_fact
 ),
+
 final as(
     select
         'MY' as cntry_cd,
@@ -97,4 +100,5 @@ final as(
         
       )
 )
+
 select * from final

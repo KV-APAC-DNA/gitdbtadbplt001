@@ -8,7 +8,7 @@
                     {{item}}
                     {%- if not loop.last -%},
                     {%- endif -%}
-                {%- endfor -%}
+                {%- endfor %}
             from {{model}}
             group by 
             {% for item in group_by_columns -%}

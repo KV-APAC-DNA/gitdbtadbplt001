@@ -10,7 +10,7 @@ tbl1 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '01'
+            jj_year::text || '01'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -27,7 +27,7 @@ tbl2 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '02'
+            jj_year::text || '02'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -44,7 +44,7 @@ tbl3 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '03'
+            jj_year::text || '03'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -60,7 +60,7 @@ tbl4 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '04'
+            jj_year::text || '04'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -76,7 +76,7 @@ tbl5 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '05'
+            jj_year::text || '05'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -92,7 +92,7 @@ tbl6 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '06'
+            jj_year::text || '06'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -108,7 +108,7 @@ tbl7 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '07'
+            jj_year::text || '07'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -124,7 +124,7 @@ tbl8 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '08'
+            jj_year::text || '08'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -140,7 +140,7 @@ tbl9 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '09'
+            jj_year::text || '09'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -156,7 +156,7 @@ tbl10 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '10'
+            jj_year::text || '10'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -172,7 +172,7 @@ tbl11 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '11'
+            jj_year::text || '11'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,
@@ -188,7 +188,7 @@ tbl12 as (
         sub_segment,
         jj_year,
         (
-            jj_year + '12'
+            jj_year::text || '12'
         ) as jj_mnth_id,
         trgt_type,
         trgt_val_type,

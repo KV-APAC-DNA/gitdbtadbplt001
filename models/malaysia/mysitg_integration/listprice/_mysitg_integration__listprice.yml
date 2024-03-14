@@ -3,9 +3,9 @@ models:
   - name: mysitg_integration__itg_my_listprice_daily
     config:
       alias: itg_my_listprice_daily
-      tags: ['MY_list_price','daily']
+      tags: ["my_list_price","transformation"]
 
   - name: mysitg_integration__itg_my_listprice
     config:
       alias: itg_my_listprice
-      tags: ['MY_sellout','daily']    
+      tags: ["inactive"]

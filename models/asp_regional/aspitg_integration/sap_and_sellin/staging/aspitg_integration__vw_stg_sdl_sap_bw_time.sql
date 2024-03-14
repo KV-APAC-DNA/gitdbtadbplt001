@@ -8,8 +8,8 @@ with source as (
 
 --Final CTE
 final as (
-    select TO_DATE(calday, 'YYYYMMDD') as calday,
-            fiscvarnt,
+    select TRY_TO_DATE(calday, 'YYYYMMDD') as calday,
+            nvl(fiscvarnt,'') as fiscvarnt,
             weekday1,
             calweek,
             calmonth,

@@ -4,18 +4,18 @@ models:
   - name: mysitg_integration__itg_my_pos_cust_mstr
     config:
       alias: itg_my_pos_cust_mstr
-      tags: ["my_pos","hourly"]
+      tags: ["my_pos","ingestion"]
 
   - name: mysitg_integration__itg_my_pos_sales_fact
     config:
       alias: itg_my_pos_sales_fact
-      tags: ["my_pos","hourly"]
+      tags: ["my_pos","ingestion"]
 
   - name: mysitg_integration__sdl_raw_my_pos_cust_mstr
     config:
       alias: sdl_raw_my_pos_cust_mstr
-      tags: ["my_pos","hourly"]
+      tags: ["my_pos","ingestion"]
   - name: mysitg_integration__sdl_raw_my_pos_sales_fact
     config:
       alias: sdl_raw_my_pos_sales_fact
-      tags: ["my_pos","hourly"]
+      tags: ["my_pos","ingestion"]

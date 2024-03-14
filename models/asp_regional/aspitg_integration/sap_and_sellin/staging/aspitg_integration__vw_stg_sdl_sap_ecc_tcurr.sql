@@ -11,10 +11,10 @@ final as (
 
     select
         mandt::number as mandt,
-        kurst,
-        fcurr,
-        tcurr,
-        gdatu,
+        nvl(kurst,'') as kurst,
+        nvl(fcurr,'') as fcurr,
+        nvl(tcurr,'') as tcurr,
+        nvl(gdatu,'') as gdatu,
         case when right(ukurs, 1) = '-' then concat('-', replace(ukurs, '-', '')) else ukurs end::number(20,5) as ukurs,
         ffact::number(20,5) as ffact,
         tfact::number(20,5) as tfact,

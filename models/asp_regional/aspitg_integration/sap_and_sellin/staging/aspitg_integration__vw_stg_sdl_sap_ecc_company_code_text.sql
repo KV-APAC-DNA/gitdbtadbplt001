@@ -10,7 +10,7 @@ final as (
 
     select
         '888' as mandt,
-        comp_code as bukrs,
+        nvl(comp_code,'') as bukrs,
         txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

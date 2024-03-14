@@ -10,11 +10,11 @@ sources:
       identifier: false
     tables:
     - name: sdl_my_accruals
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["cust_id"]
-              name: TRATBL_sdl_my_accruals_null_test
+              name: TRATBL_sdl_my_accruals__null_test
               config:
                 store_failures: true
                 schema: myswks_integration
@@ -24,32 +24,33 @@ sources:
               lookup_column: "coalesce(upper(cust_id), '#')"
               lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
               filter: "cust_id <> 'ALL'"
-              name: TRATBL_sdl_my_accruals_lookup_test
+              name: TRATBL_sdl_my_accruals__lookup_test
               config:
                 store_failures: true
                 schema: myswks_integration
     - name: sdl_my_afgr
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["afgr_num"]
-              name: TRATBL_sdl_my_afgr_null_test
+              name: TRATBL_sdl_my_afgr__null_test
               config:
                 store_failures: true
                 schema: myswks_integration
           - test_duplicate:
+                select_columns: ["afgr_num"]
                 group_by_columns: ["afgr_num"]
-                name: TRATBL_sdl_my_afgr_duplicate_test
+                name: TRATBL_sdl_my_afgr__duplicate_test
                 config:
                   store_failures: true
                   schema: myswks_integration
 
     - name: sdl_my_trgts
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["cust_id"]
-              name: TRATBL_sdl_my_trgts_null_test
+              name: TRATBL_sdl_my_trgts__null_test
               config:
                 store_failures: true
                 schema: myswks_integration
@@ -59,12 +60,12 @@ sources:
               lookup_column: "coalesce(upper(cust_id), '#')"
               lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
               filter: "cust_id <> 'ALL'"
-              name: TRATBL_sdl_my_trgts_lookup_test
+              name: TRATBL_sdl_my_trgts__lookup_test
               config:
                 store_failures: true
                 schema: myswks_integration
     - name: sdl_my_le_trgt
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
           - test_lookup:
               select_columns: ["cust_id"]
@@ -72,23 +73,24 @@ sources:
               lookup_column: "coalesce(upper(cust_id), '#')"
               lookup_table: "{{ ref('mysitg_integration__itg_my_customer_dim') }} "
               filter: "cust_id <> 'ALL'"
-              name: TRATBL_sdl_my_le_trgt_lookup_test
+              name: TRATBL_sdl_my_le_trgt__lookup_test
               config:
                 store_failures: true
                 schema: myswks_integration
         
     - name: sdl_my_ciw_map
-      tags: ["my_sellin","hourly"]
+      tags: ["my_sellin","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["acct_num"]
-            name: TRATBL_sdl_my_ciw_map_null_test
+            name: TRATBL_sdl_my_ciw_map__null_test
             config:
               store_failures: true
               schema: myswks_integration
         - test_duplicate:
+                select_columns: ["acct_num"]
                 group_by_columns: ["acct_num"]
-                name: TRATBL_sdl_my_ciw_map_duplicate_test
+                name: TRATBL_sdl_my_ciw_map__duplicate_test
                 config:
                   store_failures: true
                   schema: myswks_integration

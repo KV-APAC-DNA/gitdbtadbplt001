@@ -5,11 +5,11 @@ models:
   - name: mysitg_integration__itg_my_material_dim
     config:
       alias: itg_my_material_dim
-      tags: ['my_mds_refresh','Daily']
+      tags: ["my_mds_refresh","transformation"]
   - name: mysitg_integration__itg_my_material_map
     config:
       alias: itg_my_material_map
-      tags: ['my_mds_refresh','Daily']
+      tags: ["my_mds_refresh","transformation"]
   
   
   

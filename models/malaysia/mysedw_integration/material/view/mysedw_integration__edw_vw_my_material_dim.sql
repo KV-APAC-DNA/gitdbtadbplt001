@@ -42,6 +42,7 @@ remu as (
               )
             )
         ),
+
 b as (
               SELECT
                 edw_material_sales_dim.matl_num,
@@ -65,6 +66,7 @@ b as (
               GROUP BY
                 edw_material_sales_dim.matl_num
             ) ,
+
 derived_table1 as (
                 SELECT
                   edw_material_sales_dim.matl_num,
@@ -90,6 +92,7 @@ derived_table1 as (
                   edw_material_sales_dim.ean_num,
                   edw_material_sales_dim.dstr_chnl
               ),
+
 a as (
               SELECT
                 derived_table1.matl_num,
@@ -103,6 +106,7 @@ a as (
                 derived_table1.dstr_chnl,
                 derived_table1.launch_dt
             ),
+
 rmsd as (
             SELECT
               a.matl_num,
@@ -125,6 +129,7 @@ rmsd as (
                 )
               )
           ) ,
+
 rempd as (
         SELECT DISTINCT
           edw_material_plant_dim.matl_num,
@@ -145,6 +150,7 @@ rempd as (
             )
           )
       ),
+
 my as (SELECT DISTINCT
         CAST((
           rempd.cntry_key
@@ -332,6 +338,7 @@ my as (SELECT DISTINCT
           )
         )
     ),
+
 final as (
 SELECT
       my.cntry_key,
@@ -389,4 +396,5 @@ SELECT
     FROM (
        my
   ))
+  
 select * from final

@@ -172,7 +172,7 @@ transformed as
             when (ecd.cal_mo_2 = 12) then cast('DECEMBER' as varchar)
             else cast(null as varchar)
         end as cal_mnth_nm,
-        cast((ecd.cal_day) as timestampntz) as cal_date,
+        cast((ecd.cal_day) as date) as cal_date,
         replace
         (
             cast((cast((ecd.cal_day) as varchar)) as text),

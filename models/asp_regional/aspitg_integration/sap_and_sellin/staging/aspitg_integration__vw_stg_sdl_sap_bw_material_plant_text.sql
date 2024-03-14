@@ -9,9 +9,9 @@ source as (
 final as (
 
     select
-        plant,
-        mat_plant,
-        langu,
+        nvl(plant,'') as plant,
+        nvl(mat_plant,'') as mat_plant,
+        nvl(langu,'') as langu,
         iff(left(trim(txtmd),1) = '"' and right(trim(txtmd),1) = '"' ,
         replace(substring(trim(txtmd),2,length(trim(txtmd))-2),'""','"'),
         replace(trim(txtmd),'""','"')) as txtmd,

@@ -11,7 +11,7 @@ final as (
         bravo_cd2::varchar(20) as bravo_cd2,
         bravo_desc2::varchar(100) as bravo_desc2,
         acct_type::varchar(20) as acct_type,
-        cast(acct_num as int) as acct_num,
+        acct_num::number(18,0) as acct_num,
         acct_desc::varchar(100) as acct_desc,
         acct_type1::varchar(20) as acct_type1,
         cdl_dttm::varchar(100) as cdl_dttm,

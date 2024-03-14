@@ -4,20 +4,20 @@ models:
   - name: mysitg_integration__itg_my_dstrbtr_cust_dim
     config:
       alias: itg_my_dstrbtr_cust_dim
-      tags: ['my_mds_refresh','Daily']
+      tags: ["my_mds_refresh","my_sellout_analysis","transformation"]
   - name: mysitg_integration__itg_my_dstrbtrr_dim
     config:
       alias: itg_my_dstrbtrr_dim
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__itg_my_dstrbtr_doc_type
     config:
       alias: itg_my_dstrbtr_doc_type
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__sdl_raw_my_dstrbtr_doc_type
     config:
       alias: sdl_raw_my_dstrbtr_doc_type
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]
   - name: mysitg_integration__sdl_raw_my_dstrbtrr_dim
     config:
       alias: sdl_raw_my_dstrbtrr_dim
-      tags: ["hourly","my_sellout"]
+      tags: ["my_sellout","ingestion"]

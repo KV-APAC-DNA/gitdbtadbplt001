@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: mysedw_access__edw_my_pos_analysis
+    config: 
+        alias: edw_my_pos_analysis
+        tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__edw_my_sellin_analysis
+    config: 
+        alias: edw_my_sellin_analysis
+        tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__edw_my_sellout_analysis
+    config: 
+        alias: edw_my_sellout_analysis
+        tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__edw_my_siso_analysis
+    config: 
+        alias: edw_my_siso_analysis
+        tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__edw_my_sipos_analysis
+    config:
+      alias: edw_my_sipos_analysis
+      tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__itg_my_sellout_sales_fact
+    config:
+      alias: itg_my_sellout_sales_fact
+      tags: ["malaysia_views","transformation"]
+  - name: mysedw_access__sdl_vw_my_monthly_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_vw_my_monthly_sellout_sales_fact_mds_sync
+      tags: ["my_joint_monthly","ingestion"]
+  - name: mysedw_access__sdl_vw_my_daily_sellout_sales_fact_mds_sync
+    config:
+      alias: sdl_vw_my_daily_sellout_sales_fact_mds_sync
+      tags: ["my_sellout_sales","transformation"]

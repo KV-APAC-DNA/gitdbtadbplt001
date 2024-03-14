@@ -6,8 +6,8 @@ with source as (
 
 final as (
     select
-        coalesce(plant,'') as plant,
-        coalesce(mat_plant,'') as mat_plant,
+        coalesce(trim(plant),'') as plant,
+        coalesce(trim(mat_plant),'') as mat_plant,
         coalesce(abckey,'') as abckey,
         coalesce(del_flag,'') as del_flag,
         coalesce(dismm,'') as dismm,

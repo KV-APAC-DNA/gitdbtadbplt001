@@ -10,7 +10,7 @@ source as (
 final as (
 
     select '888' as mandt,
-            salesorg as vkorg,
+            nvl(salesorg,'') as vkorg,
             stat_curr as waers,
             comp_code as bukrs,
             '' as kunnr,

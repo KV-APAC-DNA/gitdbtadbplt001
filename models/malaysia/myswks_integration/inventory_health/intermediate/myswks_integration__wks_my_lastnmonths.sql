@@ -194,26 +194,26 @@ last_36_months as
 final as 
 (
     select
-        distributor,
-        dstrbtr_grp_cd,
-        sap_prnt_cust_key as sap_parent_customer_key,
-        sap_prnt_cust_desc as sap_parent_customer_desc,
-        coalesce(nullif(matl_num, ''), 'NA') as matl_num,
-        month,
-        sum(so_qty) as so_qty,
-        sum(so_value) as so_value,
-        sum(inv_qty) as inv_qty,
-        sum(inv_value) as inv_value,
-        sum(sell_in_qty) as sell_in_qty,
-        sum(sell_in_value) as sell_in_value,
-        sum(last_3months_so) as last_3months_so,
-        sum(last_3months_so_value) as last_3months_so_value,
-        sum(last_6months_so) as last_6months_so,
-        sum(last_6months_so_value) as last_6months_so_value,
-        sum(last_12months_so) as last_12months_so,
-        sum(last_12months_so_value) as last_12months_so_value,
-        sum(last_36months_so) as last_36months_so,
-        sum(last_36months_so_value) as last_36months_so_value
+        distributor::varchar(40) as distributor,
+        dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+        sap_prnt_cust_key::varchar(12) as sap_parent_customer_key,
+        sap_prnt_cust_desc::varchar(50) as sap_parent_customer_desc,
+        coalesce(nullif(matl_num, ''), 'NA')::varchar(100) as matl_num,
+        month::number(18,0) as month,
+        sum(so_qty)::number(38,6) as so_qty,
+        sum(so_value)::number(38,17) as so_value,
+        sum(inv_qty)::number(38,4) as inv_qty,
+        sum(inv_value)::number(38,13) as inv_value,
+        sum(sell_in_qty)::number(38,4) as sell_in_qty,
+        sum(sell_in_value)::number(38,13) as sell_in_value,
+        sum(last_3months_so)::number(38,6) as last_3months_so,
+        sum(last_3months_so_value)::number(38,17) as last_3months_so_value,
+        sum(last_6months_so)::number(38,6) as last_6months_so,
+        sum(last_6months_so_value)::number(38,17) as last_6months_so_value,
+        sum(last_12months_so)::number(38,6) as last_12months_so,
+        sum(last_12months_so_value)::number(38,17) as last_12months_so_value,
+        sum(last_36months_so)::number(38,6) as last_36months_so,
+        sum(last_36months_so_value)::number(38,17) as last_36months_so_value
     from 
         (select 
         base.distributor,
@@ -273,25 +273,4 @@ final as
         matl_num,
         month
 )
-select 
-    distributor::varchar(40) as distributor,
-    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
-    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
-    matl_num::varchar(100) as matl_num,
-    month::number(18,0) as month,
-    so_qty::number(38,6) as so_qty,
-    so_value::number(38,17) as so_value,
-    inv_qty::number(38,4) as inv_qty,
-    inv_value::number(38,13) as inv_value,
-    sell_in_qty::number(38,4) as sell_in_qty,
-    sell_in_value::number(38,13) as sell_in_value,
-    last_3months_so::number(38,6) as last_3months_so,
-    last_3months_so_value::number(38,17) as last_3months_so_value,
-    last_6months_so::number(38,6) as last_6months_so,
-    last_6months_so_value::number(38,17) as last_6months_so_value,
-    last_12months_so::number(38,6) as last_12months_so,
-    last_12months_so_value::number(38,17) as last_12months_so_value,
-    last_36months_so::number(38,6) as last_36months_so,
-    last_36months_so_value::number(38,17) as last_36months_so_value
- from final
+select * from final

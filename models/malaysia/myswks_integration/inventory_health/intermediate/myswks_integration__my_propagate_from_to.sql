@@ -97,17 +97,17 @@ base as
 final as
 (
     select
-        p_to.distributor,
-        p_to.dstrbtr_grp_cd,
-        p_to.sap_parent_customer_key,
-        p_to.sap_parent_customer_desc,
-        p_to.latest_month,
-        p_to.month as propagate_to,
-        base.month as propagate_from,
-        base.so_qty,
-        base.inv_qty,
-        datediff(month,to_date(base.month||'01', 'yyyymmdd'), to_date(latest_month||'01', 'yyyymmdd')) as diff_month,
-        p_to.reason
+        p_to.distributor::varchar(40) as distributor,
+        p_to.dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
+        p_to.sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+        p_to.sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
+        p_to.latest_month::number(18,0) as latest_month,
+        p_to.month::number(18,0) as propagate_to,
+        base.month::number(18,0) as propagate_from,
+        base.so_qty::number(38,6) as so_qty,
+        base.inv_qty::number(38,4) as inv_qty,
+        datediff(month,to_date(base.month||'01', 'yyyymmdd'), to_date(latest_month||'01', 'yyyymmdd'))::number(38,0) as diff_month,
+        p_to.reason::varchar(29) as reason
     from  p_to, base
     where
     p_to.distributor = base.distributor
@@ -116,16 +116,4 @@ final as
     and base.month < p_to.month
     and datediff(month,to_date(base.month||'01', 'yyyymmdd'), to_date(latest_month||'01', 'yyyymmdd')) <= 2
 )
-select 
-    distributor::varchar(40) as distributor,
-    dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
-    sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
-    latest_month::number(18,0) as latest_month,
-    propagate_to::number(18,0) as propagate_to,
-    propagate_from::number(18,0) as propagate_from,
-    so_qty::number(38,6) as so_qty,
-    inv_qty::number(38,4) as inv_qty,
-    diff_month::number(38,0) as diff_month,
-    reason::varchar(29) as reason
-from final
+select * from final

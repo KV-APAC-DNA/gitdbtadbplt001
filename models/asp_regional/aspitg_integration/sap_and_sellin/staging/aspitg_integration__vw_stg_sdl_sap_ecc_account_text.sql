@@ -9,9 +9,9 @@ source as (
 final as (
 
     select
-        chrt_accts,
-        account,
-        langu,
+        nvl(chrt_accts,'') as chrt_accts,
+        nvl(account,'') as account,
+        nvl(langu,'') as langu,
         replace(trim(txtsh),'–','') as txtsh,
         replace(trim(txtmd),'–','') as txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,

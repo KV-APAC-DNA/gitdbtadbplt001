@@ -9,8 +9,8 @@ source as (
 final as (
 
     select
-        country,
-        langu,
+        nvl(country,'') as country,
+        nvl(langu,'') as langu,
         txtsh,
         txtmd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,

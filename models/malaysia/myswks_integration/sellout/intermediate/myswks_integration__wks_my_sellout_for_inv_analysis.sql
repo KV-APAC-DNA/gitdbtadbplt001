@@ -321,55 +321,43 @@ veomd as
             ) EMD ON edw_vw_my_material_dim.sap_matl_num = LTRIM(EMD.MATL_NUM, '0')
 ),        
 final as
-(SELECT
-  'Malaysia' AS cntry_nm,
-  TRIM(COALESCE(NULLIF(veosf.dstrbtr_grp_cd, ''), 'NA')) AS dstrbtr_grp_cd,
-  TRIM(COALESCE(NULLIF(veosf.dstrbtr_lvl3, ''), 'NA')) AS dstrbtr_lvl3,
-  TRIM(COALESCE(NULLIF(LTRIM(veocd.sap_prnt_cust_key), ''), 'NA')) AS sap_prnt_cust_key,
-  TRIM(COALESCE(NULLIF(veomd.pka_size_desc, ''), 'NA')) AS pka_size_desc,
-  TRIM(COALESCE(NULLIF(veomd.gph_prod_brnd, ''), 'NA')) AS global_prod_brand,
-  TRIM(COALESCE(NULLIF(veomd.gph_prod_vrnt, ''), 'NA')) AS global_prod_variant,
-  TRIM(COALESCE(NULLIF(veomd.gph_prod_ctgry, ''), 'NA')) AS global_prod_category,
-  TRIM(COALESCE(NULLIF(veomd.gph_prod_sgmnt, ''), 'NA')) AS global_prod_segment,
-  TRIM(COALESCE(NULLIF(veomd.pka_product_key, ''), 'NA')) AS pka_product_key,
-  veocurd.to_ccy,
-  MIN(veosf.bill_date) AS min_date
-FROM veocurd, veosf
-LEFT JOIN veocd
-  ON LTRIM(CAST(veocd.sap_cust_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.dstrbtr_grp_cd AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
-LEFT JOIN  veomd
-  ON LTRIM(CAST(veomd.sap_matl_num AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.sap_matl_num AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
-LEFT JOIN itg_my_dstrbtrr_dim AS imdd
-  ON LTRIM(CAST(imdd.cust_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.sap_soldto_code AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
-WHERE
-  CAST(CAST(veosf.mnth_id AS VARCHAR) AS TEXT) >= veocurd.start_period
-  AND CAST(CAST(veosf.mnth_id AS VARCHAR) AS TEXT) <= veocurd.end_period
-  AND veocurd.to_ccy = 'MYR'
-  AND LEFT(veosf.bill_date, 4) > (DATE_PART(YEAR, current_timestamp()) - 6)
-GROUP BY
-  veosf.dstrbtr_grp_cd,
-  veosf.dstrbtr_lvl3,
-  veocd.sap_prnt_cust_key,
-  veocurd.to_ccy,
-  veomd.gph_prod_frnchse,
-  veomd.pka_size_desc,
-  veomd.gph_prod_brnd,
-  veomd.gph_prod_vrnt,
-  veomd.gph_prod_ctgry,
-  veomd.gph_prod_sgmnt,
-  veomd.pka_product_key
+(
+    SELECT
+        'Malaysia'::varchar(8) as cntry_nm,
+        TRIM(COALESCE(NULLIF(veosf.dstrbtr_grp_cd, ''), 'NA'))::varchar(20) as dstrbtr_grp_cd,
+        TRIM(COALESCE(NULLIF(veosf.dstrbtr_lvl3, ''), 'NA'))::varchar(40) as dstrbtr_lvl3,
+        TRIM(COALESCE(NULLIF(LTRIM(veocd.sap_prnt_cust_key), ''), 'NA'))::varchar(12) as sap_prnt_cust_key,
+        TRIM(COALESCE(NULLIF(veomd.pka_size_desc, ''), 'NA'))::varchar(30) as pka_size_desc,
+        TRIM(COALESCE(NULLIF(veomd.gph_prod_brnd, ''), 'NA'))::varchar(30) as global_prod_brand,
+        TRIM(COALESCE(NULLIF(veomd.gph_prod_vrnt, ''), 'NA'))::varchar(100) as global_prod_variant,
+        TRIM(COALESCE(NULLIF(veomd.gph_prod_ctgry, ''), 'NA'))::varchar(50) as global_prod_category,
+        TRIM(COALESCE(NULLIF(veomd.gph_prod_sgmnt, ''), 'NA'))::varchar(50) as global_prod_segment,
+        TRIM(COALESCE(NULLIF(veomd.pka_product_key, ''), 'NA'))::varchar(68) as pka_product_key,
+        veocurd.to_ccy::varchar(5) as to_ccy,
+        MIN(veosf.bill_date)::date as min_date
+    FROM veocurd, veosf
+        LEFT JOIN veocd
+        ON LTRIM(CAST(veocd.sap_cust_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.dstrbtr_grp_cd AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
+        LEFT JOIN  veomd
+        ON LTRIM(CAST(veomd.sap_matl_num AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.sap_matl_num AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
+        LEFT JOIN itg_my_dstrbtrr_dim AS imdd
+        ON LTRIM(CAST(imdd.cust_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT)) = LTRIM(CAST(veosf.sap_soldto_code AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
+        WHERE
+        CAST(CAST(veosf.mnth_id AS VARCHAR) AS TEXT) >= veocurd.start_period
+        AND CAST(CAST(veosf.mnth_id AS VARCHAR) AS TEXT) <= veocurd.end_period
+        AND veocurd.to_ccy = 'MYR'
+        AND LEFT(veosf.bill_date, 4) > (DATE_PART(YEAR, current_timestamp()) - 6)
+    GROUP BY
+    veosf.dstrbtr_grp_cd,
+    veosf.dstrbtr_lvl3,
+    veocd.sap_prnt_cust_key,
+    veocurd.to_ccy,
+    veomd.gph_prod_frnchse,
+    veomd.pka_size_desc,
+    veomd.gph_prod_brnd,
+    veomd.gph_prod_vrnt,
+    veomd.gph_prod_ctgry,
+    veomd.gph_prod_sgmnt,
+    veomd.pka_product_key
 )
-  select 
-    cntry_nm::varchar(8) as cntry_nm,
-    dstrbtr_grp_cd::varchar(20) as dstrbtr_grp_cd,
-    dstrbtr_lvl3::varchar(40) as dstrbtr_lvl3,
-    sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
-    pka_size_desc::varchar(30) as pka_size_desc,
-    global_prod_brand::varchar(30) as global_prod_brand,
-    global_prod_variant::varchar(100) as global_prod_variant,
-    global_prod_category::varchar(50) as global_prod_category,
-    global_prod_segment::varchar(50) as global_prod_segment,
-    pka_product_key::varchar(68) as pka_product_key,
-    to_ccy::varchar(5) as to_ccy,
-    min_date::date as min_date
-   from final
+select * from final

@@ -10,7 +10,7 @@ with source as (
 --Final CTE
 final as (
     select 
-            material as matnr,
+            nvl(material,'') as matnr,
             langu as spras,
             txtmd as txtmd,
             current_timestamp()::timestamp_ntz(9) as crt_dttm,

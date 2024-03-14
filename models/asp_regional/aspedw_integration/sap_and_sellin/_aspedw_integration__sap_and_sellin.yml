@@ -16,7 +16,7 @@ models:
   - name: aspedw_integration__edw_crncy_exch
     config:
       alias: edw_crncy_exch
-      tags: ["inactive"]
+      tags: ["sap_ecc_master_etl_framework","transformation"]
   - name: aspedw_integration__edw_customer_base_dim
     config:
       alias: edw_customer_base_dim
@@ -164,3 +164,15 @@ models:
     config:
       alias: edw_acct_ciw_hier
       tags: ["J_RG_Account_attr_CIW_Dim","transformation"]
+  - name: aspedw_integration__v_rpt_copa
+    config:
+      alias: v_rpt_copa
+      tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_copa_ciw
+    config:
+      alias: v_rpt_copa_ciw
+      tags: ["regional_copa_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_copa_sku
+    config:
+      alias: v_rpt_copa_sku
+      tags: ["regional_copa_refresh","transformation"]

@@ -11,8 +11,8 @@ final as (
 
     select 
         '888' as mandt,
-        langu as spras,
-        salesorg as vkorg,
+        nvl(langu,'') as spras,
+        nvl(salesorg,'') as vkorg,
         txtlg as vtext,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

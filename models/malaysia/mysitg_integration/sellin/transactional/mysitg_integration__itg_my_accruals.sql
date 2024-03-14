@@ -9,7 +9,7 @@ tbl1 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '01'
+            jj_year::text || '01'
         ) as jj_mnth_id,
         file_type,
         cast(jan_val as decimal(20, 6)) as accrual_val,
@@ -23,7 +23,7 @@ tbl2 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '02'
+            jj_year::text || '02'
         ) as jj_mnth_id,
         file_type,
         cast(feb_val as decimal(20, 6)) as accrual_val,
@@ -36,7 +36,7 @@ tbl3 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '03'
+            jj_year::text || '03'
         ) as jj_mnth_id,
         file_type,
         cast(mar_val as decimal(20, 6)) as accrual_val,
@@ -49,7 +49,7 @@ tbl4 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '04'
+            jj_year::text || '04'
         ) as jj_mnth_id,
         file_type,
         cast(apr_val as decimal(20, 6)) as accrual_val,
@@ -62,7 +62,7 @@ tbl5 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '05'
+            jj_year::text || '05'
         ) as jj_mnth_id,
         file_type,
         cast(may_val as decimal(20, 6)) as accrual_val,
@@ -75,7 +75,7 @@ tbl6 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '06'
+            jj_year::text || '06'
         ) as jj_mnth_id,
         file_type,
         cast(jun_val as decimal(20, 6)) as accrual_val,
@@ -88,7 +88,7 @@ tbl7 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '07'
+            jj_year::text || '07'
         ) as jj_mnth_id,
         file_type,
         cast(jul_val as decimal(20, 6)) as accrual_val,
@@ -101,7 +101,7 @@ tbl8 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '08'
+            jj_year::text || '08'
         ) as jj_mnth_id,
         file_type,
         cast(aug_val as decimal(20, 6)) as accrual_val,
@@ -114,7 +114,7 @@ tbl9 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '09'
+            jj_year::text || '09'
         ) as jj_mnth_id,
         file_type,
         cast(sep_val as decimal(20, 6)) as accrual_val,
@@ -127,7 +127,7 @@ tbl10 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '10'
+            jj_year::text || '10'
         ) as jj_mnth_id,
         file_type,
         cast(oct_val as decimal(20, 6)) as accrual_val,
@@ -140,7 +140,7 @@ tbl11 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '11'
+            jj_year::text || '11'
         ) as jj_mnth_id,
         file_type,
         cast(nov_val as decimal(20, 6)) as accrual_val,
@@ -153,7 +153,7 @@ tbl12 as (
         cust_nm,
         jj_year,
         (
-            jj_year + '12'
+            jj_year::text || '12'
         ) as jj_mnth_id,
         file_type,
         cast(dec_val as decimal(20, 6)) as accrual_val,
