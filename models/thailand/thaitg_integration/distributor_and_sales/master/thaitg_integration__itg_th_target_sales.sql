@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','sls_office','sls_grp','period']
+        unique_key=  ['dstrbtr_id','sls_office','sls_grp','period']
     )
 }}
 with sdl_mds_th_distributor_target_sales as (
