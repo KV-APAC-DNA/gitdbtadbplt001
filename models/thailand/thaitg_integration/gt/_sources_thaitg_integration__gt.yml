@@ -83,12 +83,12 @@ sources:
                 store_failures: true
                 schema: thawks_integration
 
-          - test_column_lookup:
+          - test_lookup:
                   select_columns: ["year","month","saleunit","saleid"]
-                  lpad_column: ["month"]
                   lookup_table: "{{ source('thasdl_raw', 'sdl_mds_th_gt_productive_call_target') }}"
-                  lookup_column: "year"
-                  lookup_filter: "(A.YEAR || A.MONTH) = B.YEAR_MONTH AND B.RESULT = FALSE)"
+                  column: "(TRIM(YEAR) ||LPAD(TRIM(MONTH),2,0))"
+                  lookup_column: "(TRIM(YEAR) ||LPAD(TRIM(MONTH),2,0))"
+                  lookup_filter: "(REGEXP_LIKE((TRIM(YEAR) ||LPAD(TRIM(MONTH),2,0)) , '(20)[0-9]{2}(01|02|03|04|05|06|07|08|09|10|11|12)'))=TRUE"
                   name: TRATBL_sdl_mds_th_gt_productive_call_target__lookup_test
                   config:
                     store_failures: true
