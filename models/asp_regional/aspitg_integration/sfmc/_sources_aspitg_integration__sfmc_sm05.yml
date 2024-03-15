@@ -1,0 +1,93 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_th_sfmc_click_data 
+        tags: ["th_sfmc_click"]
+        tests:
+            - test_null:
+                not_null_columns: ['is_unique','batch_id','job_id','email_name','event_date','subscriber_key']
+                select_columns: ['batch_id','job_id','email_name','event_date','subscriber_key','url','link_name','is_unique','file_name']
+                name: TRATBL_sdl_th_sfmc_click_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                name: TRATBL_sdl_th_sfmc_click_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_click_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+      - name: sdl_th_sfmc_complaint_data
+        tags: ["th_sfmc_complaint"]
+        tests:
+            - test_null:
+                not_null_columns: ['job_id','batch_id','subscriber_key','event_date','email_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_complaint_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_complaint_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_complaint_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+      - name: sdl_th_sfmc_sent_data
+        tags: ["th_sfmc_sent_data"]
+        tests:
+            - test_null:
+                not_null_columns: ['job_id','batch_id','event_date','subscriber_key','email_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_sent_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_sent_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('thaitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_sent_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+
+
+
+      

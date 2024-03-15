@@ -1,7 +1,9 @@
-{% test test_column(model,compare_columns=None,select_columns=None)%}
+{% test test_column(model,compare_columns=None,select_columns=None,failure_reason=None)%}
 {% if compare_columns!=None %}
     select distinct
-       UPPER('{{compare_columns[1]}}' || ' IS NOT MATCHING WITH ' || '{{compare_columns[0]}}') AS failure_reason,
+       {% if failure_reason!=None %}
+      {{failure_reason}} AS failure_reason,
+        {% endif %}
     {% if select_columns!=None %}
         {%- for item in select_columns %}
         trim({{item}}) as {{item}}

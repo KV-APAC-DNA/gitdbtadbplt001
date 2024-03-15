@@ -28,6 +28,7 @@ sources:
                 schema: thawks_integration
           - test_column:
               compare_columns: ['saleunit','employeeid']
+              failure_reason: "'EMPLOYEEID IS NOT MATCHING WITH SALEUNIT'"
               select_columns: ['filename','saleunit','employeeid','routeid','schedule_date']
               name: TRATBL_sdl_th_gt_schedule__test_column
               config:
@@ -39,7 +40,7 @@ sources:
               date_column: "schedule_date"
               filter: "(odd_mon.schedule_date) = (even_mon.schedule_date) and (even_mon.schedule_date) = (feb.schedule_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
               failure_reason: "'SCHEDULE_DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
-              select_columns: ['saleunit','employeeid','routeid','schedule_date']
+              select_columns: ['filename','saleunit','employeeid','routeid','schedule_date']
               name: TRATBL_sdl_th_gt_schedule__test_date_format_odd_eve_leap
               config:
                 store_failures: true
@@ -83,6 +84,7 @@ sources:
 
 
       - name: sdl_th_gt_visit
+        tags: ["th_gt_visit"]
         tests:
             - test_null:
                 not_null_columns: ['saleunit','id_sale','id_customer','time_plan','date_plan']
@@ -101,6 +103,7 @@ sources:
                   schema: thawks_integration
             - test_column:
                 compare_columns: ['saleunit','id_sale']
+                failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
                 select_columns: ['filename','saleunit','id_sale','id_customer','date_plan','time_plan','time_visi','visit_end','visit_time']
                 name: TRATBL_sdl_th_gt_visit__test_column
                 config:

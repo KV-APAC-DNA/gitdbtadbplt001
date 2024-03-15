@@ -1,8 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid', 'arcode']
+        incremental_strategy= "append",
+        unique_key=  ['distributorid', 'arcode'],
+        pre_hook= " delete from {{this}} where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) from {{ source('thasdl_raw', 'sdl_la_gt_customer') }})"
     )
 }}
 

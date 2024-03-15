@@ -1,9 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['file_name'],
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+        incremental_strategy= "append",
+        unique_key=["file_name"],
+        pre_hook= "delete from {{this}} where file_name in (select distinct file_name from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_cvs') }})"
     )
 }}
 

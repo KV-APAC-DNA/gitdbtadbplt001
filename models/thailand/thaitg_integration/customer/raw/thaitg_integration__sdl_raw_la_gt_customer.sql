@@ -9,7 +9,7 @@ with source as(
 ),
 final as(
     select 
-           distributorid as distributorid,
+        distributorid as distributorid,
        arcode as arcode,
        arname as arname,
        araddress as araddress,

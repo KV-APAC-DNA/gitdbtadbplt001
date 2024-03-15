@@ -25,3 +25,8 @@ models:
     config: 
       alias: itg_th_mt_tops
       tags: ["th_mt_tops"]
+
+  - name: thaitg_integration__sdl_raw_th_mt_tops
+    config: 
+      alias: sdl_raw_th_mt_tops
+      tags: ["th_mt_tops"]

@@ -27,7 +27,7 @@ final as(
    from source
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where not exist (select distinct file_name from {{ this }}) 
+    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
  {% endif %}
 )
 select * from final

@@ -11,7 +11,7 @@ sources:
     tables:
 
     - name: sdl_la_gt_customer
-      tags: ["th_non_tesco",""]
+      tags: ["laos_file_ingestion"]
       tests:
           - test_null:
               not_null_columns: ['filename','distributorid','arcode']
@@ -25,6 +25,14 @@ sources:
               compare_columns: ['filename','distributorid']
               select_columns: ['filename','distributorid','arcode']
               name: TRATBL_sdl_la_gt_customer__test_file
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_duplicate:
+              group_by_columns: ['filename','distributorid','arcode']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__duplicate_test
               config:
                 store_failures: true
                 schema: thawks_integration

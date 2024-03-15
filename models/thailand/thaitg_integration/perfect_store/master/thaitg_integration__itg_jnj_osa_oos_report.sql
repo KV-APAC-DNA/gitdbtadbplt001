@@ -1,8 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['file_name']
+        incremental_strategy= "append",
+        unique_key=["file_name"],
+        pre_hook= "delete from {{this}} where file_name in (select distinct file_name from {{ source('thasdl_raw', 'sdl_jnj_osa_oos_report') }})"
     )
 }}
 
@@ -26,7 +27,7 @@ final as(
         brand::varchar(255) as brand,
         category::varchar(255) as category,
         barcode::varchar(255) as barcode,
-        sku::varchar(255) as sku,
+        trim(sku)::varchar(255) as sku,
         msl_price_tag::varchar(255) as msl_price_tag,
         oos::varchar(255) as oos,
         oos_reason::varchar(255) as oos_reason,

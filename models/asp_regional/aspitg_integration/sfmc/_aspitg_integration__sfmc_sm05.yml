@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_sfmc_complaint_data
+    config: 
+      alias: itg_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: aspitg_integration__itg_sfmc_click_data
+    config: 
+      alias: itg_sfmc_click_data
+      tags: ["th_sfmc_click"]
+
+  - name: aspitg_integration__itg_sfmc_sent_data
+    config: 
+      alias: itg_sfmc_sent_data
+      tags: ["th_sfmc_sent_data"]
+
+  - name: aspitg_integration__sdl_raw_th_sfmc_complaint_data
+    config: 
+      alias: sdl_raw_th_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: aspitg_integration__sdl_raw_th_sfmc_click_data
+    config: 
+      alias: sdl_raw_th_sfmc_click_data
+      tags: ["th_sfmc_click"]
+
+  - name: aspitg_integration__sdl_raw_th_sfmc_sent_data
+    config: 
+      alias: sdl_raw_th_sfmc_sent_data
+      tags: ["th_sfmc_sent_data"]

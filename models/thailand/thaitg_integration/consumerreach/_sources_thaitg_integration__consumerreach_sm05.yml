@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_jnj_consumerreach_cvs
+        tags: ["j_th_perfect_store_transaction"]
         tests:
             - test_null:
                 not_null_columns: ['file_name','cdate','retail','retailname','retailbranch','jjskubarcode','jjskuname']
@@ -19,13 +20,13 @@ sources:
                   store_failures: true
                   schema: thawks_integration
 
-            - test_date_format_odd_eve_leap:
+            - test_date_format_odd_eve:
                 model_nm: "{{ source('thasdl_raw', 'sdl_jnj_consumerreach_cvs') }}"
                 date_column: "cdate"
                 filter: "(odd_mon.cdate) = (even_mon.cdate) and (odd_mon.result) = (even_mon.result)"
                 failure_reason: "'CDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
                 select_columns: ['file_name','cdate','retail','retailname','retailbranch','jjskubarcode','jjskuname']
-                name: TRATBL_sdl_jnj_consumerreach_cvs__test_date_format_odd_eve_leap
+                name: TRATBL_sdl_jnj_consumerreach_cvs__test_date_format_odd_eve
                 config:
                   store_failures: true
                   schema: thawks_integration

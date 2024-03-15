@@ -77,6 +77,7 @@ sources:
 
           - test_column:
               compare_columns: ["saleunit","saleid"]
+              failure_reason: "'SALEUNIT IS NOT MATCHING WITH SALEID'"
               select_columns: ["saleunit","saleid","month","year"]
               name: TRATBL_sdl_mds_th_gt_productive_call_target__test_column
               config:

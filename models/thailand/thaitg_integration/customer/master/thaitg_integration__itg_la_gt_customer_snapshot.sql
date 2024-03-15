@@ -1,8 +1,10 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['snapshot_date']
+        incremental_strategy= "append",
+        unique_key=["snapshot_date"],
+        pre_hook= "delete from {{this}} where to_char(snapshot_date,'yyyymm') = to_char(DATEADD(day, -1, convert_timezone('Asia/Bangkok', getdate())),'yyyymm')
+                  and case when (select count(*) from {{ ref('thaitg_integration__itg_la_gt_customer') }}) > 0 then 1 else 0 end = 1 "
     )
 }}
 

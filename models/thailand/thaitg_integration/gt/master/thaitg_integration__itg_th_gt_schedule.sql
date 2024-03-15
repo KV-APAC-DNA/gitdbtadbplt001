@@ -1,10 +1,12 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['saleunit']
+        incremental_strategy= "append",
+        unique_key=  ['schedule_date','saleunit'],
+        pre_hook= "delete from {{this}} where exists( select 1 from ( select upper(trim(saleunit)) as saleunit, min(schedule_date)::date as schedule_date from {{ source('thasdl_raw','sdl_th_gt_schedule') }} group by upper(trim(saleunit)) ) as sdl where upper(trim({{this}}.saleunit)) = upper(trim(sdl.saleunit)) and {{this}}.schedule_date::date >= sdl.schedule_date::date )"
     )
 }}
+
 
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_gt_schedule') }}

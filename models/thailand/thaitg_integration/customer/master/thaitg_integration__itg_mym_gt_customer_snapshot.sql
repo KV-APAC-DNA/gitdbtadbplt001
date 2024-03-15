@@ -1,8 +1,10 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['snapshot_date_pk']
+        incremental_strategy= "append",
+        unique_key=["snapshot_date"],
+        pre_hook= "delete from {{this}} where to_char(snapshot_date,'yyyymm') = to_char(DATEADD(day, -1, convert_timezone('Asia/Yangon', current_timestamp())),'yyyymm')
+                  and case when (select count(*) from {{ ref('thaitg_integration__itg_mym_gt_customer') }}) > 0 then 1 else 0 end = 1 "
     )
 }}
 
@@ -12,7 +14,6 @@ with source as(
 final as(
     select 
         DATEADD(day, -1, convert_timezone('Asia/Yangon', current_timestamp()))::timestamp_ntz(9) as snapshot_date,
-        TO_CHAR(snapshot_date, 'YYYYMM') as snapshot_date_pk,
         dstrbtr_id::varchar(10) as dstrbtr_id,
         ar_cd::varchar(20) as ar_cd,
         old_cust_id::varchar(25) as old_cust_id,
