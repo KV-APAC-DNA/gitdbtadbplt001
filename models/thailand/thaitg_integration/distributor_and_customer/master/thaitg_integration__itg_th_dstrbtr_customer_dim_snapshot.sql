@@ -1,8 +1,11 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['snap_shot_dt_pk']
+        incremental_strategy= "append",
+        unique_key=  ['snap_shot_dt'],
+        prehook= "delete from {{this}} where to_char(snap_shot_dt,'yyyymm') = to_char(convert_timezone('Asia/Bangkok',current_timestamp()) -1,'yyyymm')
+                  and   case when (select count(*) from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}) > 0 then 1 else 0 end = 1 "
+
     )
 }}
 
@@ -10,14 +13,12 @@ with itg_th_dstrbtr_customer_dim as (
     select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 itg_th_gt_dstrbtr_control as (
-select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}
-),
+select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}),
 
 final as (
 select 
 	   dateadd(hour, -1, convert_timezone('Asia/Bangkok', current_timestamp()))::timestamp_ntz(9) as snap_shot_dt,
-	   to_char(dateadd(hour, -1, convert_timezone('Asia/Bangkok', current_timestamp())),'yyyymm')::integer as snap_shot_dt_pk,
-       cust.dstrbtr_id::varchar(10)dstrbtr_id,
+       cust.dstrbtr_id::varchar(10) as dstrbtr_id,
        cust.ar_cd::varchar(20) as ar_cd,
        cust.old_cust_id::varchar(25) as old_cust_id,
        cust.ar_nm::varchar(500) as ar_nm,
