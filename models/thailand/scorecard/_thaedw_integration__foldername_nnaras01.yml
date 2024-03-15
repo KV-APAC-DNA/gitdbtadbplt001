@@ -1,8 +1,0 @@
-ersion: 2
-
-models:
-  - name: thaedw_integration__edw_vw_la_gt_route
-    config:
-      alias: edw_vw_la_gt_route
-      tags: ["lcm_gt_scorecard_datamart_load"]
-  
