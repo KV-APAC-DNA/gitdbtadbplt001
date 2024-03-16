@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_sfmc_bounce_data
+    config:
+      alias: itg_sfmc_bounce_data
+      tags: ["th_sfmc_bounce",""]
