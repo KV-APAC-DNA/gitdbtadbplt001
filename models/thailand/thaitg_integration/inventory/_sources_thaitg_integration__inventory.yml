@@ -41,18 +41,15 @@ sources:
               lookup_filter: "result = true"
               column: "recdate,true"
               failure_reason:  "'Data Format issue for recdate'"
-              name: TRATBL_sdl_la_gt_inventory_fact__test_lookup_recdate
+              name: TRATBL_sdl_la_gt_inventory_fact__recdate_test_lookup
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_lookup:
+          - test_filter:
               select_columns: ["filename","recdate","expirydate"]
-              lookup_column: "expirydate, regexp_like(expirydate,'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]') as result"
-              lookup_table: "{{ source('thasdl_raw','sdl_la_gt_inventory_fact') }}"
-              lookup_filter: "result = true"
-              column: "expirydate,true"
-              failure_reason:  "'Data Format issue for expirydate'"
-              name: TRATBL_sdl_la_gt_inventory_fact__test_lookup_expirydate
+              failure_reason: "'Data Format issue for expirydate'"
+              where_clause: " not regexp_like(expirydate,'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"          
+              name: TRATBL_dl_la_gt_inventory_fact__expirydate__test_filter
               config:
                 store_failures: true
                 schema: thawks_integration
