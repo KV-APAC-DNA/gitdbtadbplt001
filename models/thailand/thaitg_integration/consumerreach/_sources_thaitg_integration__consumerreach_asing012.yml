@@ -20,17 +20,18 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
-        - test_lookup:
-              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-              lookup_column: "cdate, regexp_like (cdate,'(20)[0-9]{2}-(01|02|03|04|05|06|07|08|09|10|11|12)-(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)') as result"
-              lookup_table: "{{ source('thasdl_raw','sdl_jnj_consumerreach_711') }}"
-              lookup_filter: "result = true"
-              column: "cdate,true"
+        - test_date_format_odd_eve:
+              model_nm: "{{ source('thasdl_raw', 'sdl_jnj_consumerreach_711') }}"
+              date_column: "cdate"
+              filter: "(odd_mon.cdate) = (even_mon.cdate) and (odd_mon.result) = (even_mon.result)"
               failure_reason: "'CDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYY-MM-DD'"
-              name: TRATBL_sdl_jnj_consumerreach_711__lookup_test
+              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
+              name: TRATBL_sdl_jnj_consumerreach_711__test_date_format_odd_eve
               config:
                 store_failures: true
                 schema: thawks_integration
+        
+        
     - name: sdl_jnj_consumerreach_sfm
       tags: ["j_th_perfect_store_transaction"]
       tests:
@@ -41,16 +42,16 @@ sources:
             config:
               store_failures: true
               schema: thawks_integration
-        - test_lookup:
-              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
-              lookup_column: "cdate, regexp_like (cdate,'(20)[0-9]{2}-(01|02|03|04|05|06|07|08|09|10|11|12)-(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)') as result"
-              lookup_table: "{{ source('thasdl_raw','sdl_jnj_consumerreach_sfm') }}"
-              lookup_filter: "result = true"
-              column: "cdate,true"
+        
+        - test_date_format_odd_eve:
+              model_nm: "{{ source('thasdl_raw', 'sdl_jnj_consumerreach_sfm') }}"
+              date_column: "cdate"
+              filter: "(odd_mon.cdate) = (even_mon.cdate) and (odd_mon.result) = (even_mon.result)"
               failure_reason: "'CDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYY-MM-DD'"
-              name: TRATBL_sdl_jnj_consumerreach_sfm__lookup_test
+              select_columns: ["cdate","retail","retailname","retailbranch","jjskubarcode","jjskuname","file_name"]
+              name: TRATBL_sdl_jnj_consumerreach_sfm__test_date_format_odd_eve
               config:
                 store_failures: true
                 schema: thawks_integration
-        
+                
   
