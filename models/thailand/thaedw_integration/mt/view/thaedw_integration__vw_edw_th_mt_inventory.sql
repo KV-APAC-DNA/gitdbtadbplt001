@@ -136,23 +136,23 @@ FROM (
 ) AS derived_table3
 WHERE
   (
-    NOT (
+     (
       CONCAT(
-        COALESCE(CAST((
+        CAST((
           derived_table3.sold_to_code
-        ) AS TEXT), ''),
-        COALESCE(CAST((
+        ) AS TEXT),
+        CAST((
           derived_table3.barcode
-        ) AS TEXT), '')
-      ) IN (
+        ) AS TEXT)
+      ) NOT IN (
         SELECT
           CONCAT(
-            COALESCE(CAST((
+            CAST((
               itg_th_pos_sales_inventory_fact.sold_to_code
-            ) AS TEXT), ''),
-            COALESCE(CAST((
+            ) AS TEXT),
+            CAST((
               itg_th_pos_sales_inventory_fact.bar_code
-            ) AS TEXT), '')
+            ) AS TEXT)
           ) AS CONCAT
         FROM itg_th_pos_sales_inventory_fact
         WHERE
@@ -192,12 +192,12 @@ WHERE
           )
         GROUP BY
           CONCAT(
-            COALESCE(CAST((
+            CAST((
               itg_th_pos_sales_inventory_fact.sold_to_code
-            ) AS TEXT), ''),
-            COALESCE(CAST((
+            ) AS TEXT),
+            CAST((
               itg_th_pos_sales_inventory_fact.bar_code
-            ) AS TEXT), '')
+            ) AS TEXT)
           )
         HAVING
           (
@@ -213,3 +213,4 @@ WHERE
 )
 
 select * from final
+

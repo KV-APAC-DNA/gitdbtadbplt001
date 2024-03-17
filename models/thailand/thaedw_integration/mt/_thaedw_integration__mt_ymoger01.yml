@@ -5,15 +5,7 @@ models:
     config:
       alias: vw_edw_th_mt_sellout
       tags: [""]
-  - name: thaedw_integration__vw_edw_th_mt_sellout_with_snap
-    config:
-      alias: vw_edw_th_mt_sellout_with_snap
-      tags: [""]
   - name: thaedw_integration__vw_edw_th_mt_inventory
     config:
       alias: vw_edw_th_mt_inventory
-      tags: [""]
-  - name: thaedw_integration__vw_edw_th_mt_inventory_with_snap
-    config:
-      alias: vw_edw_th_mt_inventory_with_snap
       tags: [""]

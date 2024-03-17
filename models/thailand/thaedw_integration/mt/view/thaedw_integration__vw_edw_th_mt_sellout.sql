@@ -8,7 +8,6 @@ itg_th_pos_customer_dim as (
     select * from {{ ref('thaitg_integration__itg_th_pos_customer_dim') }}
 ),
 
-
 final as (
 SELECT
   derived_table2.sap_prnt_cust_key,
@@ -82,23 +81,23 @@ FROM (
           )
         )
         AND (
-          NOT (
+             (
             CONCAT(
-              COALESCE(CAST((
+              CAST((
                 inv_fact.customer
-              ) AS TEXT), ''),
-              COALESCE(CAST((
+              ) AS TEXT),
+              CAST((
                 inv_fact.branch_code
-              ) AS TEXT), '')
-            ) IN (
+              ) AS TEXT)
+            ) NOT IN (
               SELECT DISTINCT
                 CONCAT(
-                  COALESCE(CAST((
+                  CAST((
                     itg_th_pos_customer_dim.cust_cd
-                  ) AS TEXT), ''),
-                  COALESCE(CAST((
+                  ) AS TEXT),
+                  CAST((
                     itg_th_pos_customer_dim.brnch_no
-                  ) AS TEXT), '')
+                  ) AS TEXT)
                 ) AS CONCAT
               FROM itg_th_pos_customer_dim
               WHERE
@@ -136,23 +135,23 @@ FROM (
 ) AS derived_table2
 WHERE
   (
-    NOT (
+     (
       CONCAT(
-        COALESCE(CAST((
+        CAST((
           derived_table2.sold_to_code
-        ) AS TEXT), ''),
-        COALESCE(CAST((
+        ) AS TEXT),
+        CAST((
           derived_table2.barcode
-        ) AS TEXT), '')
-      ) IN (
+        ) AS TEXT)
+      ) NOT IN (
         SELECT
           CONCAT(
-            COALESCE(CAST((
+            CAST((
               itg_th_pos_sales_inventory_fact.sold_to_code
-            ) AS TEXT), ''),
-            COALESCE(CAST((
+            ) AS TEXT),
+            CAST((
               itg_th_pos_sales_inventory_fact.bar_code
-            ) AS TEXT), '')
+            ) AS TEXT)
           ) AS CONCAT
         FROM itg_th_pos_sales_inventory_fact
         WHERE
@@ -192,12 +191,12 @@ WHERE
           )
         GROUP BY
           CONCAT(
-            COALESCE(CAST((
+            CAST((
               itg_th_pos_sales_inventory_fact.sold_to_code
-            ) AS TEXT), ''),
-            COALESCE(CAST((
+            ) AS TEXT),
+            CAST((
               itg_th_pos_sales_inventory_fact.bar_code
-            ) AS TEXT), '')
+            ) AS TEXT)
           )
         HAVING
           (
