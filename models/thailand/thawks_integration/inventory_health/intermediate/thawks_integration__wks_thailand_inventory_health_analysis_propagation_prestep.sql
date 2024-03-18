@@ -20,6 +20,10 @@ vw_edw_reg_exch_rate as
 (
     select * from snapaspedw_integration.vw_edw_reg_exch_rate
 ),
+edw_vw_os_time_dim as
+(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
 onsesea as 
 (
     SELECT 
@@ -153,7 +157,7 @@ onsesea as
                     t3.sap_region,
                     row_number() over (
                         partition by sap_prnt_cust_key --,sap_prnt_cust_desc,sap_go_to_mdl_key 
-                        order by sap_prnt_cust_key, SAP_CUST_CHNL_KEY --,sap_prnt_cust_desc,sap_go_to_mdl_key
+                        order by sap_prnt_cust_key --,sap_prnt_cust_desc,sap_go_to_mdl_key
                     ) as rank
                 from 
                 (
@@ -181,7 +185,8 @@ onsesea as
         and siso.sap_parent_customer_key = t3.sap_prnt_cust_key(+)
         and ltrim(siso.matl_num, 0) = ltrim(t4.sku_cd(+), 0)
         and siso.month = cal.mnth_id
-    group by cal.year,
+    group by 
+        cal.year,
         cal.qrtr_no,
         cal.mnth_id,
         cal.mnth_no,

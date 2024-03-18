@@ -36,6 +36,10 @@ v_edw_customer_sales_dim as
 (
     select * from snapaspedw_integration.v_edw_customer_sales_dim
 ),
+edw_vw_os_time_dim as
+(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
 onsesea as 
 (
     select 

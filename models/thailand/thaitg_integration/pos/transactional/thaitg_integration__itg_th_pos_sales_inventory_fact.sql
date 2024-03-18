@@ -1,15 +1,14 @@
 with itg_th_tims_transdata as(
-    select * from snaposeitg_integration.itg_th_tims_transdata
+    select * from {{ ref('thaitg_integration__itg_th_tims_transdata') }}
 ),
 edw_vw_th_customer_dim as(
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
+    select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 itg_th_pos_customer_dim as(
-    select * from snaposeitg_integration.itg_th_pos_customer_dim
+    select * from {{ ref('thaitg_integration__itg_th_pos_customer_dim') }}
 ),
 edw_list_price as(
-    select * from snapaspedw_integration.edw_list_price
+   select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 sdl_mds_th_product_master as(
     select * from {{ source('thasdl_raw','sdl_mds_th_product_master') }}
@@ -22,19 +21,19 @@ itg_lookup_retention_period as(
 ),
 itg_th_mt_7_11 as   
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_mt_7_11
+    select * from snaposeitg_integration.itg_th_mt_7_11
 ),
 itg_th_mt_tops as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_mt_tops
+    select * from snaposeitg_integration.itg_th_mt_tops
 ),
 itg_th_mt_bigc as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_mt_bigc
+    select * from {{ ref('thaitg_integration__itg_th_mt_bigc') }}
 ),
 th_makro_inv_so as
 (
-   select * from dev_dna_core.snaposeitg_integration.th_makro_inv_so 
+   select * from {{ ref('thaitg_integration__itg_th_makro_inv_so') }}
 ),
 product_master as 
 (

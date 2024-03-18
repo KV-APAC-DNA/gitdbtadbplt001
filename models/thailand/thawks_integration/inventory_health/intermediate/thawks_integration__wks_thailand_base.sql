@@ -488,7 +488,7 @@ final as
         inventory_quantity::double precision as inventory_quantity,
         inventory_val::double precision as inventory_val,
         so_sls_qty::double precision as so_sls_qty,
-        so_grs_trd_sls::double precision as so_grs_trd_sls,
+        so_grs_trd_sls::double precision as so_grs_trd_sls
     from transformed
 )
 select * from final
