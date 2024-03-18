@@ -13,8 +13,6 @@ models:
     config:
       alias: wks_th_inventory_healthy_unhealthy_analysis
       tags: ["j_ap_th_reg_data_refresh"]
-
-
   - name: thawks_integration__wks_thailand_inventory_health_analysis_propagation_final
     config:
       alias: wks_thailand_inventory_health_analysis_propagation_final

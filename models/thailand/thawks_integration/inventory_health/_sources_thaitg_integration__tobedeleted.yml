@@ -11,3 +11,6 @@ sources:
     tables:
     
       - name: wks_thailand_base_detail
+      - name: wks_thailand_siso_propagate_final
+      - name: wks_thailand_inventory_health_analysis_propagation
+      - name: wks_th_sellout_for_inv_analysis

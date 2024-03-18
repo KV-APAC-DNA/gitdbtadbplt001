@@ -10,20 +10,6 @@ source as
 (
     select * from {{ source('thasdl_raw', 'sdl_th_sfmc_unsubscribe_data') }}
 ),
-
-
--- trans as (
--- select a.*
--- from (
---         select *,
---             min(event_date) over(order by null) as min_event_date
---         from source
---     ) a
---     inner join DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_SFMC_UNSUBSCRIBE_DATA b
---    on a.min_event_date <= b.event_date
---     and cntry_cd = 'TH'
--- ),
-
 final as
 (
     select
