@@ -15,3 +15,11 @@ models:
     config: 
       alias: itg_th_gt_productive_call_target
       tags: ["th_non_tesco"]
+  - name: thaitg_integration__itg_th_gt_route
+    config: 
+      alias: itg_th_gt_route
+      tags: ["th_gt_route","ingestion"]
+  - name: thaitg_integration__sdl_raw_th_gt_route
+    config: 
+      alias: sdl_raw_th_gt_route
+      tags: ["th_gt_route","ingestion"]

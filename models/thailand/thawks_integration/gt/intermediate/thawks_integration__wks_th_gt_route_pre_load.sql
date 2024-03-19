@@ -12,7 +12,8 @@ with wks_th_gt_route_hashkey as (
     select * from {{ source('thawks_integration', 'wks_th_gt_route_hashkey') }}
 ),
 sdl_th_gt_route as (
-    select * from {{ source('thasdl_raw', 'sdl_th_gt_route') }}
+    --select * from {{ source('thasdl_raw', 'sdl_th_gt_route') }}
+    select * from DEV_DNA_LOAD.snaposesdl_raw.sdl_th_gt_route
 )
 SELECT wks.cntry_cd,
        wks.crncy_cd,
@@ -31,9 +32,9 @@ SELECT wks.cntry_cd,
        wks.file_uploaded_date,
        wks.run_id,
        wks.crt_dttm
-FROM wks_th_gt_route_hashkey wks join
+FROM wks_th_gt_route_hashkey wks,
      sdl_th_gt_route sdl
-on wks.hashkey = sdl.hashkey
+where wks.hashkey = sdl.hashkey
 AND   COALESCE(wks.effective_start_date,'9999-12-31') <>COALESCE(sdl.last_updated_date,'9999-12-31')
 AND   UPPER(wks.flag) IN ('I','U')
 

@@ -8,5 +8,5 @@ models:
   - name: thawks_integration__wks_th_gt_route_pre_load
     config:
       alias: wks_th_gt_route_pre_load
-      tags: [""]
+      tags: ["th_gt_route","ingestion"]
   
