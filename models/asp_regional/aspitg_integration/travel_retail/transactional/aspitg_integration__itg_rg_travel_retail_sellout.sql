@@ -156,16 +156,16 @@ trans_sales_stock as (
     product_desc as product_description,
     dcl_code,
     null as ean,
-    cast(rsp as int) as rsp,
+    iff(rsp='',null,rsp) as rsp,
     upper(location_name) as door_name,
-    coalesce(cast(sls_qty as int), 0) as sls_qty,
+    coalesce(iff(sls_qty='',null,sls_qty), 0) as sls_qty,
     coalesce(
         (
             cast(sls_qty as decimal(21, 5)) * cast(rsp as decimal(21, 5))
         ),
         0
     ) as sls_amt,
-    coalesce(cast(stock_qty as int), 0) as stock_qty,
+    coalesce(iff(stock_qty='',null,stock_qty), 0) as stock_qty,
     coalesce(
         (
             cast(stock_qty as decimal(21, 5)) * cast(rsp as decimal(21, 5))
@@ -197,8 +197,8 @@ trans_shilla as (
     ean,
     null as rsp,
     upper(location_name) as door_name,
-    coalesce(cast(sls_qty as int), 0) as sls_qty,
-    coalesce(cast(sls_amt as decimal(21, 5)), 0) as sls_amt,
+    coalesce(iff(sls_qty='',null,sls_qty), 0) as sls_qty,
+    coalesce(cast(iff(sls_amt='',null,sls_amt) as decimal(21, 5)), 0) as sls_amt,
     null as stock_qty,
     null as stock_amt,
     current_timestamp() as crt_dttm,
@@ -239,9 +239,9 @@ trans_cdfg as (
     barcode as ean,
     null as rsp,
     upper(location_name) as door_name,
-    coalesce(cast(sls_qty as int), 0) as sls_qty,
+    coalesce(iff(sls_qty='',null,sls_qty), 0) as sls_qty,
     null as sls_amt,
-    coalesce(cast(stock_qty as int), 0) as stock_qty,
+    coalesce(iff(stock_qty='',null,stock_qty), 0) as stock_qty,
     null as stock_amt,
     current_timestamp() as crt_dttm,
     current_timestamp() as updt_dttm,
@@ -303,9 +303,9 @@ trans_dfs as (
     null as ean,
     null as rsp,
     upper(location_name) as door_name,
-    coalesce(cast(sls_qty as int), 0) as sls_qty,
-    coalesce(cast(sls_amt as decimal(21, 5)), 0) as sls_amt,
-    coalesce(cast(soh_qty as int), 0) as stock_qty,
+    coalesce(iff(sls_qty='',null,sls_qty), 0) as sls_qty,
+    coalesce(cast(iff(sls_amt='',null,sls_amt) as decimal(21, 5)), 0) as sls_amt,
+    coalesce(iff(soh_qty='',null,soh_qty), 0) as stock_qty,
     null as stock_amt,
     current_timestamp() as crt_dttm,
     current_timestamp() as updt_dttm,
