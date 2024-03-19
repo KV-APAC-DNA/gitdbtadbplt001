@@ -1,8 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['event_date','cntry_cd']
+        incremental_strategy= "append",
+        unique_key=["event_date"],
+        pre_hook= "delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH'"
     )
 }}
 with 

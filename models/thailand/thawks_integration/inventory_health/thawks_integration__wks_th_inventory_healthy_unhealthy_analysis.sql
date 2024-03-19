@@ -1,7 +1,7 @@
 with 
 wks_thailand_siso_propagate_final as 
 (
-    select * from {{ source('snaposewks_integration', 'wks_thailand_siso_propagate_final') }}
+    select * from {{ ref('thawks_integration__wks_thailand_siso_propagate_final') }}
 ),
 edw_vw_th_material_dim as 
 (

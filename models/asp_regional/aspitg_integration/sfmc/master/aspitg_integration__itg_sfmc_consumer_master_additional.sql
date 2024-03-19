@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ['cntry_cd']
+    )
+}}
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}

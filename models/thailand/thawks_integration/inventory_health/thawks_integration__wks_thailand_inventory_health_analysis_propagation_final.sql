@@ -10,11 +10,11 @@ wks_th_inventory_healthy_unhealthy_analysis as
 ),
 wks_thailand_inventory_health_analysis_propagation as
 (
-    select * from {{ source('snaposewks_integration','wks_thailand_inventory_health_analysis_propagation') }}
+    select * from {{ ref('thawks_integration__wks_thailand_inventory_health_analysis_propagation') }}
 ),
 wks_th_sellout_for_inv_analysis as 
 (
-    select * from {{ source('snaposewks_integration','wks_th_sellout_for_inv_analysis') }}
+    select * from {{ ref('thawks_integration__wks_th_sellout_for_inv_analysis') }}
 ),
 
 trans as 

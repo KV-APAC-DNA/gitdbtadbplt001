@@ -5,7 +5,7 @@ thailand_propagate_to as
 ),
 wks_thailand_base_detail as 
 (
-    select * from {{ source('snaposewks_integration', 'wks_thailand_base_detail') }}
+    select * from {{ ref('thawks_integration__wks_thailand_base_detail') }}
 ),
 p_to as 
 (
