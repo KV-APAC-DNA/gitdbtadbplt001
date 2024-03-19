@@ -75,10 +75,11 @@ sources:
                 store_failures: true
                 schema: thawks_integration
 
-          - test_column:
-              compare_columns: ["saleunit","saleid"]
+          - test_format:
+              where_clause: "SUBSTRING(UPPER(TRIM(SALEID)),1,3) <>UPPER(TRIM(SALEUNIT))"
+              failure_reason: "'SALEUNIT IS NOT MATCHING WITH SALEID'"
               select_columns: ["saleunit","saleid","month","year"]
-              name: TRATBL_sdl_mds_th_gt_productive_call_target__test_column
+              name: TRATBL_sdl_mds_th_gt_productive_call_target__test_format
               config:
                 store_failures: true
                 schema: thawks_integration

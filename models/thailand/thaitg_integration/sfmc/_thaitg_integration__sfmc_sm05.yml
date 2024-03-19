@@ -1,0 +1,18 @@
+version: 2
+
+models:
+
+  - name: thaitg_integration__sdl_raw_th_sfmc_complaint_data
+    config: 
+      alias: sdl_raw_th_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: thaitg_integration__sdl_raw_th_sfmc_click_data
+    config: 
+      alias: sdl_raw_th_sfmc_click_data
+      tags: ["th_sfmc_click"]
+
+  - name: thaitg_integration__sdl_raw_th_sfmc_sent_data
+    config: 
+      alias: sdl_raw_th_sfmc_sent_data
+      tags: ["th_sfmc_sent_data"]

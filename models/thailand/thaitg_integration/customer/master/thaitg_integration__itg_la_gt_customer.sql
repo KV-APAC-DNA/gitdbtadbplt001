@@ -1,13 +1,14 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','arcode']
+        incremental_strategy= "append",
+        unique_key=  ['distributorid', 'arcode'],
+        pre_hook= " delete from {{this}} where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) from {{ source('thasdl_raw', 'sdl_la_gt_customer') }})"
     )
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_th_dms_customer_dim') }}
+    select * from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
 ),
 final as(
     select 
@@ -19,7 +20,7 @@ final as(
         fax::varchar(150) as fax,
         city::varchar(500) as city,
         region::varchar(20) as region,
-        saledistrict::varchar(200) as saledistrict,
+        saledistrict::varchar(10) as saledistrict,
         saleoffice::varchar(10) as saleoffice,
         salegroup::varchar(10) as salegroup,
         artypecode::varchar(10) as artypecode,
@@ -41,15 +42,19 @@ final as(
         routestep5::varchar(10) as routestep5,
         routestep6::varchar(10) as routestep6,
         routestep7::varchar(10) as routestep7,
-        routestep8::varchar(20) as routestep8,
-        routestep9::varchar(20) as routestep9,
+        latitude::varchar(10) as latitude,
+        longitude::varchar(10) as longitude,
         routestep10::varchar(10) as routestep10,
         store::varchar(200) as store,
-        sourcefile::varchar(255) as sourcefile,
-        old_custid::varchar(25) as old_custid,
-        try_to_timestamp(modifydate) as modifydate,
-        current_timestamp()::timestamp_ntz(9) as curr_date,
-        run_id::number(18,0) as run_id
+        pricelevel::varchar(50) as pricelevel,
+        salesareaname::varchar(150) as salesareaname,
+        branchcode::varchar(50) as branchcode,
+        branchname::varchar(150) as branchname,
+        frequencyofvisit::varchar(50) as frequencyofvisit,
+        filename::varchar(50) as filename,
+        run_id::varchar(14) as run_id,
+        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 )
 select * from final
