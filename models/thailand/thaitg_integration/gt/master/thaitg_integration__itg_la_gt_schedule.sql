@@ -12,7 +12,7 @@ final as (
     select
         employee_id::varchar(50) as employee_id,
         route_id::varchar(50) as route_id,
-        schedule_date::date as schedule_date,
+        try_to_date(schedule_date,'yyyymmdd') as schedule_date,
         approved::varchar(5) as approved,
         saleunit::varchar(20) as saleunit,
         filename::varchar(50) as filename,
