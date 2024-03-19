@@ -22,7 +22,7 @@ vw_edw_reg_exch_rate as
 ),
 edw_vw_os_time_dim as
 (
-    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+    select * from snaposeedw_integration.edw_vw_os_time_dim
 ),
 onsesea as 
 (
@@ -96,7 +96,7 @@ onsesea as
         replicated_flag,
         sum(sell_in_qty) as si_sls_qty,
         sum(sell_in_value) as si_gts_val,
-        sum(sell_in_value * th_cur.exch_rate) as si_gts_val_usd,
+        (sum(sell_in_value * th_cur.exch_rate)) as si_gts_val_usd,
         sum(inv_qty) as inventory_quantity,
         sum(inv_value) as inventory_val,
         sum(inv_value * th_cur.exch_rate) as inventory_val_usd,

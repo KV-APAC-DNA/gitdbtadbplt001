@@ -18,7 +18,7 @@ edw_vw_th_customer_dim as
 ),
 wks_thailand_inventory_health_analysis_propagation_prestep as
 (
-    select * from snaposewks_integration.wks_thailand_inventory_health_analysis_propagation_prestep
+    select * from thawks_integration.wks_thailand_inventory_health_analysis_propagation_prestep
 ),
 vw_edw_reg_exch_rate as
 (
@@ -430,86 +430,81 @@ copa as (
         )
 ),
 final as
-(
-    select *
-    from 
-    (
-        select 
-            year,
-            year_quarter,
-            month_year,
-            month_number,
-            country_name,
-            distributor_id,
-            distributor_id_name,
-            franchise,
-            brand,
-            prod_sub_brand,
-            variant,
-            segment,
-            prod_subsegment,
-            prod_category,
-            prod_subcategory,
-            pka_size_desc as put_up_description,
-            sku_cd,
-            sku_description,
-            pka_product_key,
-            /*  greenlight_sku_flag, */
-            pka_product_key_description,
-            product_key,
-            product_key_description,
-            from_ccy,
-            to_ccy,
-            exch_rate,
-            sap_prnt_cust_key,
-            sap_prnt_cust_desc,
-            sap_cust_chnl_key,
-            sap_cust_chnl_desc,
-            sap_cust_sub_chnl_key,
-            sap_sub_chnl_desc,
-            sap_go_to_mdl_key,
-            sap_go_to_mdl_desc,
-            sap_bnr_key,
-            sap_bnr_desc,
-            sap_bnr_frmt_key,
-            sap_bnr_frmt_desc,
-            retail_env,
-            region,
-            zone_or_area,
-            round(cast(si_sls_qty as decimal(38, 5)), 5) as si_sls_qty,
-            round(cast(si_gts_val as decimal(38, 5)), 5) as si_gts_val,
-            round(cast(si_gts_val_usd as decimal(38, 5)), 5) as si_gts_val_usd,
-            round(cast(inventory_quantity as decimal(38, 5)), 5) as inventory_quantity,
-            round(cast(inventory_val as decimal(38, 5)), 5) as inventory_val,
-            round(cast(inventory_val_usd as decimal(38, 5)), 5) as inventory_val_usd,
-            round(cast(so_sls_qty as decimal(38, 5)), 5) as so_sls_qty,
-            round(cast(so_grs_trd_sls as decimal(38, 5)), 5) as so_grs_trd_sls,
-            so_grs_trd_sls_usd as so_grs_trd_sls_usd,
-            round(cast(copa.gts as decimal(38, 5)), 5) as si_all_db_val,
-            round(cast(copa.gts_usd as decimal(38, 5)), 5) as si_all_db_val_usd,
-            round(cast(copa.si_inv_db_val as decimal(38, 5)), 5) as si_inv_db_val,
-            round(
-                cast(copa.si_inv_db_val_usd as decimal(38, 5)),
-                5
-            ) as si_inv_db_val_usd,
-            last_3months_so_qty,
-            last_6months_so_qty,
-            last_12months_so_qty,
-            last_3months_so_val,
-            last_3months_so_val_usd,
-            last_6months_so_val,
-            last_6months_so_val_usd,
-            last_12months_so_val,
-            last_12months_so_val_usd,
-            propagate_flag,
-            propagate_from,
-            reason,
-            last_36months_so_val
-        from regional,
-            copa
-        where regional.year = copa.fisc_yr
-            and regional.month_year = copa.caln_yr_mo
-            and regional.from_ccy = copa.obj_crncy_co_obj
-    )
+( 
+    select 
+        year::number(18,0) as year,
+        year_quarter::varchar(11) as year_quarter,
+        month_year::varchar(11) as month_year,
+        month_number::number(18,0) as month_number,
+        country_name::varchar(8) as country_name,
+        distributor_id::varchar(12) as distributor_id,
+        distributor_id_name::varchar(50) as distributor_id_name,
+        franchise::varchar(30) as franchise,
+        brand::varchar(30) as brand,
+        prod_sub_brand::varchar(100) as prod_sub_brand,
+        variant::varchar(100) as variant,
+        segment::varchar(50) as segment,
+        prod_subsegment::varchar(100) as prod_subsegment,
+        prod_category::varchar(50) as prod_category,
+        prod_subcategory::varchar(50) as prod_subcategory,
+        pka_size_desc::varchar(30) as put_up_description,
+        sku_cd::varchar(40) as sku_cd,
+        sku_description::varchar(100) as sku_description,
+        pka_product_key::varchar(68) as pka_product_key,
+        pka_product_key_description::varchar(255) as pka_product_key_description,
+        product_key::varchar(68) as product_key,
+        product_key_description::varchar(255) as product_key_description,
+        from_ccy::varchar(5) as from_ccy,
+        to_ccy::varchar(5) as to_ccy,
+        exch_rate::number(15,5) as exch_rate,
+        sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
+        sap_prnt_cust_desc::varchar(50) as sap_prnt_cust_desc,
+        sap_cust_chnl_key::varchar(12) as sap_cust_chnl_key,
+        sap_cust_chnl_desc::varchar(50) as sap_cust_chnl_desc,
+        sap_cust_sub_chnl_key::varchar(12) as sap_cust_sub_chnl_key,
+        sap_sub_chnl_desc::varchar(50) as sap_sub_chnl_desc,
+        sap_go_to_mdl_key::varchar(12) as sap_go_to_mdl_key,
+        sap_go_to_mdl_desc::varchar(50) as sap_go_to_mdl_desc,
+        sap_bnr_key::varchar(12) as sap_bnr_key,
+        sap_bnr_desc::varchar(50) as sap_bnr_desc,
+        sap_bnr_frmt_key::varchar(12) as sap_bnr_frmt_key,
+        sap_bnr_frmt_desc::varchar(50) as sap_bnr_frmt_desc,
+        retail_env::varchar(50) as retail_env,
+        region::varchar(150) as region,
+        zone_or_area::varchar(150) as zone_or_area,
+        round(cast(si_sls_qty as decimal(38, 5)), 5) as si_sls_qty,
+        round(cast(si_gts_val as decimal(38, 5)), 5) as si_gts_val,
+        round(cast(si_gts_val_usd as decimal(38, 5)), 5) as si_gts_val_usd,
+        round(cast(inventory_quantity as decimal(38, 5)), 5) as inventory_quantity,
+        round(cast(inventory_val as decimal(38, 5)), 5) as inventory_val,
+        round(cast(inventory_val_usd as decimal(38, 5)), 5) as inventory_val_usd,
+        round(cast(so_sls_qty as decimal(38, 5)), 5) as so_sls_qty,
+        round(cast(so_grs_trd_sls as decimal(38, 5)), 5) as so_grs_trd_sls,
+        so_grs_trd_sls_usd::float as so_grs_trd_sls_usd,
+        round(cast(copa.gts as decimal(38, 5)), 5) as si_all_db_val,
+        round(cast(copa.gts_usd as decimal(38, 5)), 5) as si_all_db_val_usd,
+        round(cast(copa.si_inv_db_val as decimal(38, 5)), 5) as si_inv_db_val,
+        round(
+            cast(copa.si_inv_db_val_usd as decimal(38, 5)),
+            5
+        ) as si_inv_db_val_usd,
+        last_3months_so_qty::float as last_3months_so_qty,
+        last_6months_so_qty::float as last_6months_so_qty,
+        last_12months_so_qty::float as last_12months_so_qty,
+        last_3months_so_val::float as last_3months_so_val,
+        last_3months_so_val_usd::number(38,5) as last_3months_so_val_usd,
+        last_6months_so_val::float as last_6months_so_val,
+        last_6months_so_val_usd::number(38,5) as last_6months_so_val_usd,
+        last_12months_so_val::float as last_12months_so_val,
+        last_12months_so_val_usd::number(38,5) as last_12months_so_val_usd,
+        propagate_flag::varchar(1) as propagate_flag,
+        propagate_from::number(18,0) as propagate_from,
+        reason::varchar(100) as reason,
+        last_36months_so_val::float as last_36months_so_val
+    from regional,
+        copa
+    where regional.year = copa.fisc_yr
+        and regional.month_year = copa.caln_yr_mo
+        and regional.from_ccy = copa.obj_crncy_co_obj
 )
 select * from final
