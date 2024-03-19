@@ -93,6 +93,7 @@ sources:
                   config:
                     store_failures: true
                     schema: thawks_integration
+
     - name: sdl_mym_gt_sales_report_fact
       tags: ["myanmar_file_ingestion"]
       tests:
