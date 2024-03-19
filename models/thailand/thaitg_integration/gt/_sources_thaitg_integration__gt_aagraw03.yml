@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_la_gt_visit
-      tags: [""]
+      tags: ["laos_file_ingestion",""]
       tests:
           - test_duplicate__ff:
               group_by_columns: ["filename","id_sale","id_customer","date_plan","date_visi","time_visi","visit_end","saleunit","time_plan"]
@@ -72,7 +72,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_la_gt_schedule
-      tags: [""]
+      tags: ["laos_file_ingestion",""]
       tests:
           - test_duplicate:
               group_by_columns: ["filename","saleunit","employee_id","route_id","schedule_date"]
