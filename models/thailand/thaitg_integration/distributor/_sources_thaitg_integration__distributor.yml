@@ -19,7 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: check
-          - test_duplicate_upper:
+          - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
               name: TRATBL_sdl_mds_th_gt_scope__duplicate_test

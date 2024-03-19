@@ -31,14 +31,14 @@ sources:
       tests:
           - test_null:
               not_null_columns: ["filename","distributorid","arcode"]
-              select_columns: ["distributorid","arcode"]
+              select_columns: ["filename","distributorid","arcode"]
               name: TRATBL_sdl_th_dms_chana_customer_dim__null_test
               config:
                 store_failures: true
                 schema: thawks_integration
           - test_duplicate:
               group_by_columns: ["filename","distributorid","arcode"]
-              select_columns: ["distributorid","arcode"]
+              select_columns: ["filename","distributorid","arcode"]
               name: TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test
               config:
                 store_failures: true

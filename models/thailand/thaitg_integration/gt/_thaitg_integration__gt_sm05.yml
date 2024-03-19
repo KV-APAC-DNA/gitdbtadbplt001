@@ -30,3 +30,8 @@ models:
     config: 
       alias: sdl_raw_th_mt_tops
       tags: ["th_mt_tops"]
+
+  - name: thaitg_integration__sdl_raw_th_gt_msl_distribution
+    config: 
+      alias: sdl_raw_th_gt_msl_distribution
+      tags: ["th_gt_msld"]
