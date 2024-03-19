@@ -1,9 +1,10 @@
-{{ 
+{{
     config(
-            materialized="incremental",
-            incremental_strategy="delete+insert",
-            unique_key=["matl_num_pk"]
-        ) 
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=["matl_num"],
+        pre_hook= "delete from {{this}} where coalesce(ltrim(matl_num,0),'NA') in (select coalesce(ltrim(code,0),'NA') from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }})"
+    )
 }}
 
 
@@ -27,7 +28,6 @@ a as(
 transformed as(
     select
         a.code::varchar(50) as matl_num,
-        COALESCE(LTRIM(a.code, 0), 'NA')::varchar(50) as matl_num_pk,
         a.name2::varchar(500) as matl_desc,
         groupcode::varchar(50) as mega_brnd,
         typecode::varchar(50) as brnd,
