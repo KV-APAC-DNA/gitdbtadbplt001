@@ -29,7 +29,7 @@ sources:
               select_columns: ["date","sku_id","url"]
               where_clause: "not regexp_like (substring(date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
               failure_reason: "'Unexpected Date Format, expected format: YYYY-MM-DD'"
-              name: TRATBL_sdl_th_mt_price_data__lookup_test
+              name: TRATBL_sdl_th_mt_price_data__filter_test
               config:
                 store_failures: true
                 schema: thawks_integration
