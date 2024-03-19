@@ -24,45 +24,45 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "not regexp_like (trim(date_plan),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
               failure_reason: "'Invalid date_plan'"
-              name: TRATBL_sdl_la_gt_visit__date_plan_filter_test
+              name: TRATBL_sdl_la_gt_visit__date_plan_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "not regexp_like (trim(date_visi),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
               failure_reason: "'Invalid date_visi'"
-              name: TRATBL_sdl_la_gt_visit__date_visi_filter_test
+              name: TRATBL_sdl_la_gt_visit__date_visi_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "not regexp_like (trim(visit_end),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
               failure_reason: "'Invalid visit_end'"
-              name: TRATBL_sdl_la_gt_visit__visit_end_filter_test
+              name: TRATBL_sdl_la_gt_visit__visit_end_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "not regexp_like (trim(time_visi),'[0-2][0-9]:[0-5][0-9]')"
               failure_reason: "'Invalid time_visi'"
-              name: TRATBL_sdl_la_gt_visit__time_visi_filter_test
+              name: TRATBL_sdl_la_gt_visit__time_visi_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "not regexp_like (trim(visit_time),'[0-2][0-9]:[0-5][0-9]')"
               failure_reason: "'Invalid visit_time'"
-              name: TRATBL_sdl_la_gt_visit__visit_time_filter_test
+              name: TRATBL_sdl_la_gt_visit__visit_time_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               where_clause: "substring(upper(trim(id_sale)),1,3) <> upper(trim(saleunit))"
               failure_reason:  "'id_sale is not matching with saleunit'"
-              name: TRATBL_sdl_la_gt_visit__saleunit_filter_test
+              name: TRATBL_sdl_la_gt_visit__id_sale_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -83,19 +83,19 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               select_columns: ["filename","saleunit","employee_id","route_id","schedule_date"]
               where_clause: "not regexp_like (trim(schedule_date),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
               failure_reason: "'Invalid schedule_date'"
-              name: TRATBL_sdl_la_gt_schedule__schedule_date_filter_test
+              name: TRATBL_sdl_la_gt_schedule__schedule_date_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               select_columns: ["filename","saleunit","employee_id","route_id","schedule_date"]
               where_clause: "not substring(upper(trim(employee_id)),1,3) = upper(trim(saleunit))"
               failure_reason:  "'employee_id is not matching with saleunit'"
-              name: TRATBL_sdl_la_gt_schedule__saleunit_filter_test
+              name: TRATBL_sdl_la_gt_schedule__employee_id_format_test
               config:
                 store_failures: true
                 schema: thawks_integration
