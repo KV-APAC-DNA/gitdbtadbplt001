@@ -95,6 +95,8 @@ select
     target_calls::number(18,0) as target_calls,
     target_sales::number(18,0) as target_sales
     from edw_th_sellout_foc_analysis
+    where month_year <= (select extract(year from current_timestamp()) ||lpad(extract(month from current_timestamp()),2,0))
+    and   month_year >= (select extract(year from dateadd (mon,-2,current_timestamp())) ||lpad(extract(month from dateadd (mon,-2,current_timestamp())),2,0))
 )
 
 select * from final
