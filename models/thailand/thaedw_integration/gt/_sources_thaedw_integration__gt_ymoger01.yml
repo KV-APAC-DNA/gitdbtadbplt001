@@ -1,0 +1,11 @@
+sources:
+  - name: thaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_query_parameters
+        
