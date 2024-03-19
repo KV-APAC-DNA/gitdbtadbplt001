@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: thaedw_integration__edw_rpt_th_gt_scorecard
-    config:
-      alias: edw_rpt_th_gt_scorecard
-      tags: [""]

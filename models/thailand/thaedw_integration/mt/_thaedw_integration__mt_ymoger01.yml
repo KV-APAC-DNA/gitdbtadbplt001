@@ -4,8 +4,8 @@ models:
   - name: thaedw_integration__vw_edw_th_mt_sellout
     config:
       alias: vw_edw_th_mt_sellout
-      tags: [""]
+      tags: ["j_ap_th_reg_data_refresh"]
   - name: thaedw_integration__vw_edw_th_mt_inventory
     config:
       alias: vw_edw_th_mt_inventory
-      tags: [""]
+      tags: ["j_ap_th_reg_data_refresh"]

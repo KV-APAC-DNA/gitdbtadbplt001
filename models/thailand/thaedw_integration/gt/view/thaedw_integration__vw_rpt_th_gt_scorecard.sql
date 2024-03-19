@@ -1,41 +1,44 @@
 with edw_vw_th_sellout_sales_foc_fact as(
- select * from {{ ref('thaedw_integration__edw_vw_th_sellout_sales_foc_fact') }}
+ select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_SELLOUT_SALES_FOC_FACT 
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_th_dstrbtr_customer_dim as (
-    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
-),
-itg_th_dstrbtr_customer_dim_snapshot as (
-    select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim_snapshot') }}
-),
-itg_th_dstrbtr_material_dim as (
-   select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }} 
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_CUSTOMER_DIM
 ),
 itg_th_gt_dstrbtr_control as (
-    select * from {{ ref('thaitg_integration__itg_th_gt_dstrbtr_control') }}
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_GT_DSTRBTR_CONTROL
 ),
 itg_th_gt_target_sales_re as (
-    select * from {{ ref('thaitg_integration__itg_th_gt_target_sales_re') }}
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_GT_TARGET_SALES_RE
 ),
 itg_th_target_sales as (
-    select * from {{ ref('thaitg_integration__itg_th_target_sales') }}
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_TARGET_SALES
 ),
 edw_vw_th_gt_msl_distribution as (
-    select * from {{ ref('thaedw_integration__edw_vw_th_gt_msl_distribution') }}
-),
-edw_vw_th_gt_route as (
-    select * from {{ ref('thaedw_integration__edw_vw_th_gt_route') }}
-),
-edw_vw_th_gt_sales_order as (
-    select * from {{ ref('thaedw_integration__edw_vw_th_gt_sales_order') }}
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_GT_MSL_DISTRIBUTION
 ),
 edw_vw_th_gt_schedule as (
-    select * from {{ ref('thaedw_integration__edw_vw_th_gt_schedule') }}
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_GT_SCHEDULE
+),
+edw_vw_th_gt_route as (
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_GT_ROUTE
+),
+itg_th_dstrbtr_customer_dim_snapshot as (
+    select * from  DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_CUSTOMER_DIM_SNAPSHOT
 ),
 edw_vw_th_gt_visit as (
-    select * from {{ ref('thaedw_integration__edw_vw_th_gt_visit') }}
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_TH_GT_VISIT
+),
+edw_vw_th_gt_sales_order as (
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_th_gt_sales_order
+),
+itg_th_dstrbtr_material_dim as (
+   select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_DSTRBTR_MATERIAL_DIM
+),
+itg_query_parameters as (
+    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 
 cte1 as (
