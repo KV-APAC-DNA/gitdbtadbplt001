@@ -111,11 +111,11 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               select_columns: ["filename","item_no","customer_code","customer_name","period"]
               failure_reason: "'INVALID Date : Correct Format is DD/MM/YYYY'"
               where_clause: " not regexp_like(trim(substring(period,1,10)), '[0-3][0-9]/[0-1][0-9]/[1-2][0-9][0-9][0-9]')"          
-              name: TRATBL_sdl_mym_gt_sales_report_fact__test_filter
+              name: TRATBL_sdl_mym_gt_sales_report_fact__test_format
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -137,19 +137,19 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
               failure_reason:  "'INVALID CREATED_DATE'"
               where_clause: "not regexp_like(TRIM(created_date),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"         
-              name: TRATBL_sdl_la_gt_route_detail__test_filter_created_date
+              name: TRATBL_sdl_la_gt_route_detail__test_format_created_date
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_filter:
+          - test_format:
               select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
               failure_reason:  "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
               where_clause: "split_part(upper(trim(filename)), '_', 2) <> upper(trim(saleunit))"         
-              name: TRATBL_sdl_la_gt_route_detail__test_filter_sale_unit
+              name: TRATBL_sdl_la_gt_route_detail__test_format_sale_unit
               config:
                 store_failures: true
                 schema: thawks_integration

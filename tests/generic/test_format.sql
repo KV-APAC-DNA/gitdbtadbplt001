@@ -1,4 +1,4 @@
-{% test test_format(model,select_columns=None,failure_reason="'Invalid Records'",where_clause=None)%}
+{% test test_format(model,select_columns=None,failure_reason='',where_clause=None)%}
 select distinct
     {{failure_reason}} AS failure_reason,
     {% if select_columns!=None %}
