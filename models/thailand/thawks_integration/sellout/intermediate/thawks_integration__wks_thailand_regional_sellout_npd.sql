@@ -1,5 +1,5 @@
 with wks_thailand_regional_sellout as (
-select * from dev_dna_core.snaposewks_integration.wks_thailand_regional_sellout
+select * from {{ ref('thawks_integration__wks_thailand_regional_sellout') }}
 ),
 transformed as (
 select 
@@ -103,4 +103,4 @@ select
 from transformed
 
 )
-select * from final;
+select * from final

@@ -1,16 +1,17 @@
 with wks_thailand_regional_sellout_base as (
-select * from dev_dna_core.nnaras01_workspace.wks_thailand_regional_sellout_base
+select * from {{ ref('thawks_integration__wks_thailand_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as (
-select * from dev_dna_core.snenav01_workspace.sgpedw_integration__edw_vw_os_time_dim
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_os_customer_dim as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim
+select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 vw_edw_reg_exch_rate as 
-(select * from dev_dna_core.aagraw03_workspace.aspedw_integration__vw_edw_reg_exch_rate ),
+(select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
 th_product_selection as (
-select * from dev_dna_core.nnaras01_workspace.th_product_selection
+select * from {{ ref('thawks_integration__wks_th_product_selection') }}
 ),
 transformed as (
 select 

@@ -1,35 +1,35 @@
 with edw_vw_os_time_dim as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_os_time_dim
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_mds_th_mt_branch_master as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_mt_branch_master
+select * from {{ ref('thaitg_integration__itg_mds_th_mt_branch_master') }}
 ),
 itg_mds_th_customer_hierarchy as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_customer_hierarchy
+select * from {{ ref('thaitg_integration__itg_mds_th_customer_hierarchy') }}
 ),
 itg_th_pos_customer_dim as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_pos_customer_dim
+select * from {{ ref('thaitg_integration__itg_th_pos_customer_dim') }}
 ),
 itg_th_sellout_sales_fact as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_sellout_sales_fact
+select * from {{ ref('thaitg_integration__itg_th_sellout_sales_fact') }}
 ),
 itg_th_pos_sales_inventory_fact as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_pos_sales_inventory_fact
+select * from {{ ref('thaitg_integration__itg_th_pos_sales_inventory_fact') }}
 ),
 itg_th_dtsdistributor as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_dtsdistributor
+select * from {{ ref('thaitg_integration__itg_th_dtsdistributor') }}
 ),
 edw_vw_os_customer_dim as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim where sap_cntry_cd ='TH'
+select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }} where sap_cntry_cd ='TH'
 ),
 itg_th_dstrbtr_material_dim as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_dstrbtr_material_dim
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 itg_th_dstrbtr_customer_dim as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_dstrbtr_customer_dim
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from dev_dna_core.snapaspitg_integration.itg_mds_ap_customer360_config
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 union_1 as (
 select 

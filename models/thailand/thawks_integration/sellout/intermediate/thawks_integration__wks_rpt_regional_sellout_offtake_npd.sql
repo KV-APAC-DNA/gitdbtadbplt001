@@ -1,9 +1,8 @@
 with wks_thailand_regional_sellout_npd as (
-select * from dev_dna_core.snaposewks_integration.wks_thailand_regional_sellout_npd
+select * from {{ ref('thawks_integration__wks_thailand_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from dev_dna_core.snapaspitg_integration.itg_mds_ap_customer360_config
-),
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 transformed as (
 select 
   *, 
