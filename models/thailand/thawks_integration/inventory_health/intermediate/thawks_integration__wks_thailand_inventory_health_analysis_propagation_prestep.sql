@@ -157,7 +157,7 @@ onsesea as
                     t3.sap_region,
                     row_number() over (
                         partition by sap_prnt_cust_key --,sap_prnt_cust_desc,sap_go_to_mdl_key 
-                        order by sap_prnt_cust_key --,sap_prnt_cust_desc,sap_go_to_mdl_key
+                        order by sap_cust_id --,sap_prnt_cust_desc,sap_go_to_mdl_key
                     ) as rank
                 from 
                 (

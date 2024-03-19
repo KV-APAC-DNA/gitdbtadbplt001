@@ -175,7 +175,7 @@ onsesea as
                 T3.SAP_BNR_FRMT_DESC,
                 T3.RETAIL_ENV,
                 t3.sap_region,
-                ROW_NUMBER() OVER ( PARTITION BY sap_prnt_cust_key ORDER BY sap_prnt_cust_key ) AS rank
+                ROW_NUMBER() OVER ( PARTITION BY sap_prnt_cust_key ORDER BY sap_cust_id ) AS rank
             FROM 
                 (
                     SELECT *
