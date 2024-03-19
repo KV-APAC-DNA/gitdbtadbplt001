@@ -91,4 +91,4 @@ final as (
         oral_problem_eng::varchar(100) as oral_problem_eng
     from source
 )
-select * from source
+select * from final
