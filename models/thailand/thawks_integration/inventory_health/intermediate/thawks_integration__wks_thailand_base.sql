@@ -1,41 +1,38 @@
 with edw_th_inventory_analysis_base_6year_filter as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_th_inventory_analysis_base_6year_filter
+    select * from {{ref('thaedw_integration__edw_th_inventory_analysis_base_6year_filter')}}
 ),
 edw_billing_fact as
 (
-    select * from dev_dna_core.snapaspedw_integration.edw_billing_fact
+    select * from {{ref('aspedw_integration__edw_billing_fact')}}
 ),
 edw_calendar_dim as
 (
-    select * from dev_dna_core.snapaspedw_integration.edw_calendar_dim
+    select * from {{ref('aspedw_integration__edw_calendar_dim')}}
 ),
 edw_vw_th_customer_dim as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH' 
+    select * from {{ref('thaedw_integration__edw_vw_th_customer_dim')}} 
 ),
 edw_vw_th_material_dim as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from {{ref('thaedw_integration__edw_vw_th_material_dim')}}
 ),
 edw_vw_th_dstrbtr_customer_dim as
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
-        where cntry_cd = 'TH'
+    select * from {{ref('thaedw_integration__edw_vw_th_dstrbtr_customer_dim')}}
 ),
 itg_th_dtsdistributor as
 (
-    select * from dev_dna_core.snaposeitg_integration.itg_th_dtsdistributor
+    select * from {{ref('thaitg_integration__itg_th_dtsdistributor')}}
 ),
 vw_edw_th_mt_sellout as
 (
-    select * from dev_dna_core.snaposeedw_integration.vw_edw_th_mt_sellout
+    sselect * from {{ref('thaedw_integration__vw_edw_th_mt_sellout')}}
 ),
 vw_edw_th_mt_inventory as
 (
-    select * from dev_dna_core.snaposeedw_integration.vw_edw_th_mt_inventory
+    select * from {{ref('thaedw_integration__vw_edw_th_mt_inventory')}}
 ),
 edw_vw_os_time_dim as
 (

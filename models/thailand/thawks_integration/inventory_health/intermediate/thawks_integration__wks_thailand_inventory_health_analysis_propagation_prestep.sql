@@ -1,28 +1,26 @@
 with wks_thailand_siso_propagate_final as
 (
-    select * from thawks_integration.wks_thailand_siso_propagate_final
+    select * from {{ref('thawks_integration__wks_thailand_siso_propagate_final')}}
 ),
 edw_vw_th_material_dim as
 (
-    select * from snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from {{ref('thaedw_integration__edw_vw_th_material_dim')}}
 ),
 edw_material_dim as
 (
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ref('aspedw_integration__edw_material_dim')}}
 ),
 edw_vw_th_customer_dim as
 (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
+   select * from {{ref('thaedw_integration__edw_vw_th_customer_dim')}}
 ),
 vw_edw_reg_exch_rate as
 (
-    select * from snapaspedw_integration.vw_edw_reg_exch_rate
+    select * from {{ref('aspedw_integration__vw_edw_reg_exch_rate')}}
 ),
 edw_vw_os_time_dim as
 (
-    select * from snaposeedw_integration.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 onsesea as 
 (

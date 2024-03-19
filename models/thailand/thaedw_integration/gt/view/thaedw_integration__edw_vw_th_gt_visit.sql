@@ -1,6 +1,6 @@
 with source as
 (
-    select * from snaposeitg_integration.itg_th_gt_visit
+    select * from {{ref('thaitg_integration__itg_th_gt_visit')}}
 ),
 final as
 (   

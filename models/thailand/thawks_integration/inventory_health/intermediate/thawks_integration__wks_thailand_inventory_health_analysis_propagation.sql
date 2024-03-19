@@ -1,40 +1,42 @@
 with wks_thailand_siso_propagate_final as
 (
-    select * from thawks_integration.wks_thailand_siso_propagate_final
+    select * from {{ref('thawks_integration__wks_thailand_siso_propagate_final')}}
 ),
 edw_vw_th_material_dim as
 (
-    select * from snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'TH'
+    select * from {{ref('thaedw_integration__edw_vw_th_material_dim')}}
 ),
 edw_material_dim as
 (
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ref('aspedw_integration__edw_material_dim')}}
 ),
 edw_vw_th_customer_dim as
 (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'TH'
-),
-wks_thailand_inventory_health_analysis_propagation_prestep as
-(
-    select * from thawks_integration.wks_thailand_inventory_health_analysis_propagation_prestep
+   select * from {{ref('thaedw_integration__edw_vw_th_customer_dim')}}
 ),
 vw_edw_reg_exch_rate as
 (
-    select * from snapaspedw_integration.vw_edw_reg_exch_rate
+    select * from {{ref('aspedw_integration__vw_edw_reg_exch_rate')}}
+),
+edw_vw_os_time_dim as
+(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
+wks_thailand_inventory_health_analysis_propagation_prestep as
+(
+    select * from {{ref('thawks_integration__wks_thailand_inventory_health_analysis_propagation_prestep')}}
 ),
 edw_copa_trans_fact as
 (
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ref('aspedw_integration__edw_copa_trans_fact')}}
 ),
 edw_company_dim as
 (
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ref('aspedw_integration__edw_company_dim')}}
 ),
 v_edw_customer_sales_dim as
 (
-    select * from snapaspedw_integration.v_edw_customer_sales_dim
+    select * from {{ref('aspedw_integration__vw_edw_reg_ev_edw_customer_sales_dimxch_rate')}}
 ),
 edw_vw_os_time_dim as
 (
