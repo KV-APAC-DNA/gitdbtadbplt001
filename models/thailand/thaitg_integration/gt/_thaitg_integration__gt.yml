@@ -23,3 +23,16 @@ models:
     config: 
       alias: sdl_raw_th_gt_route
       tags: ["th_gt_route","ingestion"]
+  - name: thaitg_integration__itg_th_gt_route_detail
+    config: 
+      alias: itg_th_gt_route_detail
+      tags: ["th_gt_route_detail","ingestion"]
+  - name: thaitg_integration__sdl_raw_th_gt_route_detail
+    config:
+      alias: sdl_raw_th_gt_route_detail
+      tags: ["th_gt_route_detail","ingestion"]
+  - name: thaitg_integration__itg_th_gt_sales_order
+    config:
+      alias: itg_th_gt_sales_order
+      tags: ["th_gt_sales_order","ingestion"]
+  

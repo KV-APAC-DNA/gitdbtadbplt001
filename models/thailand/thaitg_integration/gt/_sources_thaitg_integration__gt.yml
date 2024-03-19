@@ -94,6 +94,8 @@ sources:
                     store_failures: true
                     schema: thawks_integration
     - name: sdl_th_gt_route
+    - name: sdl_th_gt_route_detail
+    - name: sdl_th_gt_sales_order
 
   - name: thawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -104,3 +106,5 @@ sources:
       identifier: false
     tables:
       - name: wks_th_gt_route_hashkey
+      - name: wks_th_gt_route_detail_hashkey
+      - name: wks_th_gt_sales_order_pre_load
