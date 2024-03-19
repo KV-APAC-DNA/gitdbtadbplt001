@@ -26,11 +26,11 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-          - test_column:
+          - test_format:
               where_clause: "SUBSTRING(UPPER(TRIM(EMPLOYEEID)),1,3) <>UPPER(TRIM(SALEUNIT))"
               failure_reason: "'EMPLOYEEID IS NOT MATCHING WITH SALEUNIT'"
               select_columns: ['filename','saleunit','employeeid','routeid','schedule_date']
-              name: TRATBL_sdl_th_gt_schedule__test_column
+              name: TRATBL_sdl_th_gt_schedule__test_format
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -101,11 +101,11 @@ sources:
                 config:
                   store_failures: true
                   schema: thawks_integration
-            - test_column:
+            - test_format:
                 where_clause: "SUBSTRING(UPPER(TRIM(EMPLOYEEID)),1,3) <> UPPER(TRIM(SALEUNIT))"
                 failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
                 select_columns: ['filename','saleunit','id_sale','id_customer','date_plan','time_plan','time_visi','visit_end','visit_time']
-                name: TRATBL_sdl_th_gt_visit__test_column
+                name: TRATBL_sdl_th_gt_visit__test_format
                 config:
                   store_failures: true
                   schema: thawks_integration
@@ -138,11 +138,11 @@ sources:
                 config:
                   store_failures: true
                   schema: thawks_integration
-            - test_column:
+            - test_format:
                 where_clause: "SURVEY_DATE > TO_DATE(SPLIT_PART(FILENAME,'_',2),'YYYYMMDDHH24MISSFF3')"
                 failure_reason: "'SURVEY DATE IS GREATER THAN FILE NAME'"
                 select_columns: ['filename', 'distributor_id', 'store_id', 'sales_rep_id', 'barcode', 'survey_date']
-                name: TRATBL_sdl_th_gt_msl_distribution__test_column
+                name: TRATBL_sdl_th_gt_msl_distribution__test_format
                 config:
                   store_failures: true
                   schema: thawks_integration
@@ -158,25 +158,25 @@ sources:
                   store_failures: true
                   schema: thawks_integration
 
-            - test_column:
+            - test_format:
                 where_clause: "UPPER(TRIM(NO_DISTRIBUTION)) <> 'Y' OR  UPPER(TRIM(OSA)) <> 'Y' OR  UPPER(TRIM(OOS)) <> 'Y'"
                 failure_reason: "'FLAG ''Y'' IS NOT AVAILABLE '"
                 select_columns: ['filename', 'distributor_id', 'store_id', 'sales_rep_id', 'barcode', 'survey_date']
-                name: TRATBL_sdl_th_gt_msl_distribution__test_column_flag
+                name: TRATBL_sdl_th_gt_msl_distribution__test_format_flag
                 config:
                   store_failures: true
                   schema: thawks_integration
 
-            - test_column:
+            - test_format:
                 where_clause: "(UPPER(TRIM(OOS)) = 'Y' AND (TRIM(OOS_REASON) = '' OR TRIM(OOS_REASON) IS NULL))"
                 failure_reason: "'OOS REASON NULL FOR OOS ''Y'' CONDITION'"
                 select_columns: ['filename', 'distributor_id', 'store_id', 'sales_rep_id', 'barcode', 'survey_date']
-                name: TRATBL_sdl_th_gt_msl_distribution__test_column_null_flag
+                name: TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag
                 config:
                   store_failures: true
                   schema: thawks_integration
 
-            - test_column:
+            - test_format:
                 where_clause: "(upper(trim(no_distribution)) = 'Y' and  upper(trim(osa)) = 'Y' and upper(trim(oos)) = 'Y') or (upper(trim(no_distribution)) = 'Y' and  upper(trim(osa)) = 'Y') or (upper(trim(no_distribution)) = 'Y' and  upper(trim(oos)) = 'Y') or (upper(trim(osa)) = 'Y' and  upper(trim(oos)) = 'Y')"
                 failure_reason: "'FLAG ''Y'' IS AVAILABLE FOR MULTIPLE COLUMNS'"
                 select_columns: ['filename', 'distributor_id', 'store_id', 'sales_rep_id', 'barcode', 'survey_date']
