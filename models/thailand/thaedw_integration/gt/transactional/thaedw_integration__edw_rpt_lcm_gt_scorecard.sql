@@ -1,12 +1,12 @@
 with edw_vw_rpt_lcm_gt_scorecard as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_rpt_lcm_gt_scorecard
+select * from {{ ref('thaedw_integration__edw_vw_rpt_lcm_gt_scorecard') }}
 ),
 itg_query_parameters as 
 (
-select * from dev_dna_core.snaposeitg_integration.itg_query_parameters
+select * from {{ source('thaitg_integration', 'itg_query_parameters') }}
 ),
 itg_mds_th_lcm_exchange_rate as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_lcm_exchange_rate
+select * from {{ ref('thaitg_integration__itg_mds_th_lcm_exchange_rate') }}
 ),
 
 union_1 as (select

@@ -1,65 +1,65 @@
 with itg_la_gt_sales_order_fact as (
-  select * from dev_dna_core.snaposeitg_integration.itg_la_gt_sales_order_fact 
+  select * from {{ ref('thaitg_integration__itg_la_gt_sales_order_fact') }}
 ),
 itg_la_gt_visit as (
-  select * from dev_dna_core.snaposeitg_integration.itg_la_gt_visit
+  select * from {{ ref('thaitg_integration__itg_la_gt_visit') }}
 ),
 itg_la_gt_customer as (
-  select * from dev_dna_core.snaposeitg_integration.itg_la_gt_customer
+  select * from {{ ref('thaitg_integration__itg_la_gt_customer') }}
 ),
 itg_th_dtscustgroup as (
-  select * from dev_dna_core.snaposeitg_integration.itg_th_dtscustgroup
+  select * from {{ ref('thaitg_integration__itg_th_dtscustgroup') }}
 ),
 itg_th_dstrbtr_material_dim as (
-select * from dev_dna_core.snaposeitg_integration.itg_th_dstrbtr_material_dim
+select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
 ),
 itg_la_gt_sellout_fact as (
-  select * from dev_dna_core.snaposeitg_integration.itg_la_gt_sellout_fact
+  select * from {{ ref('thaitg_integration__itg_la_gt_sellout_fact') }}
 ),
 itg_la_gt_schedule as (
-select * from dev_dna_core.snaposeitg_integration.itg_la_gt_schedule
+select * from {{ ref('thaitg_integration__itg_la_gt_schedule') }}
 ),
 edw_vw_la_gt_route as (
-select * from dev_dna_core.snaposeedw_integration.edw_vw_la_gt_route
+select * from {{ ref('thaedw_integration__edw_vw_la_gt_route') }}
 ),
 itg_la_gt_customer_snapshot as (
-select * from dev_dna_core.snaposeitg_integration.itg_la_gt_customer_snapshot
+select * from {{ ref('thaitg_integration__itg_la_gt_customer_snapshot') }}
 ),
 itg_mds_lcm_distributor_target_sales as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_lcm_distributor_target_sales
+select * from {{ ref('thaitg_integration__itg_mds_lcm_distributor_target_sales') }}
 ),
 itg_mds_lcm_distributor_target_sales_re as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_lcm_distributor_target_sales_re
+select * from {{ ref('thaitg_integration__itg_mds_lcm_distributor_target_sales_re') }}
 ),
 itg_cbd_gt_sales_report_fact as (
-select * from dev_dna_core.snaposeitg_integration.itg_cbd_gt_sales_report_fact
+select * from {{ ref('thaitg_integration__itg_cbd_gt_sales_report_fact') }}
 ),
 itg_mds_th_cbd_item_master as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_cbd_item_master
+select * from {{ ref('thaitg_integration__itg_mds_th_cbd_item_master') }}
 ),
 itg_mds_th_lcm_exchange_rate as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_lcm_exchange_rate
+select * from {{ ref('thaitg_integration__itg_mds_th_lcm_exchange_rate') }}
 ),
 itg_cbd_gt_customer_snapshot as (
-select * from dev_dna_core.snaposeitg_integration.itg_cbd_gt_customer_snapshot
+select * from {{ ref('thaitg_integration__itg_cbd_gt_customer_snapshot') }}
 ),
 itg_cbd_gt_customer as (
-select * from dev_dna_core.snaposeitg_integration.itg_cbd_gt_customer
+select * from {{ ref('thaitg_integration__itg_cbd_gt_customer') }}
 ),
 itg_mym_gt_sales_report_fact as (
-select * from dev_dna_core.snaposeitg_integration.itg_mym_gt_sales_report_fact
+select * from {{ ref('thaitg_integration__itg_mym_gt_sales_report_fact') }}
 ),
 itg_mds_th_mym_product_master as (
-select *  from dev_dna_core.snaposeitg_integration.itg_mds_th_mym_product_master
+select *  from {{ ref('thaitg_integration__itg_mds_th_mym_product_master') }}
 ),
 itg_mds_th_myanmar_customer_master as (
-select * from dev_dna_core.snaposeitg_integration.itg_mds_th_myanmar_customer_master
+select * from {{ ref('thaitg_integration__itg_mds_th_myanmar_customer_master') }}
 ),
 itg_mym_gt_customer_snapshot as (
-select * from dev_dna_core.snaposeitg_integration.itg_mym_gt_customer_snapshot
+select * from {{ ref('thaitg_integration__itg_mym_gt_customer_snapshot') }}
 ),
 itg_mym_gt_customer as (
-select * from dev_dna_core.snaposeitg_integration.itg_mym_gt_customer
+select * from {{ ref('thaitg_integration__itg_mym_gt_customer') }}
 ),
 final as (
 
