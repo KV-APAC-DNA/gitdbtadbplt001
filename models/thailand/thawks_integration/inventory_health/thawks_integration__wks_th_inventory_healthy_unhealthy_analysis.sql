@@ -73,7 +73,8 @@ select
         and coalesce(last_12months_so_val, 0) <= 0 then 'N'
         else 'Y'
     end::varchar(1) as healthy_inventory
-from  wks_thailand_siso_propagate_final as siso,t4
+from
+   (Select * from wks_thailand_siso_propagate_final) as siso,t4
 where ltrim(siso.matl_num, 0) = ltrim(t4.sku_cd(+), 0)
 group by month,
     gph_prod_brnd,
