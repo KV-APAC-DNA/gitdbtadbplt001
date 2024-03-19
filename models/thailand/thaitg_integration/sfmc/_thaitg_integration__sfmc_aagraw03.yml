@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__sdl_raw_th_sfmc_bounce_data
+    config: 
+      alias: sdl_raw_th_sfmc_bounce_data
+      tags: ["th_sfmc_bounce",""]

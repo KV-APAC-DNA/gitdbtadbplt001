@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: thaitg_integration__sdl_raw_la_gt_schedule
+    config:
+      alias: sdl_raw_la_gt_schedule
+      tags: ["laos_file_ingestion",""]
+  - name: thaitg_integration__sdl_raw_la_gt_visit
+    config: 
+      alias: sdl_raw_la_gt_visit
+      tags: ["laos_file_ingestion",""]
+  - name: thaitg_integration__itg_la_gt_schedule
+    config:
+      alias: itg_la_gt_schedule
+      tags: ["laos_file_ingestion",""]
+  - name: thaitg_integration__itg_la_gt_visit
+    config: 
+      alias: itg_la_gt_visit
+      tags: ["laos_file_ingestion",""]
