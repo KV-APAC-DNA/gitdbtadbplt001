@@ -14,9 +14,7 @@ final as(
     select
         partner_gln::varchar(20) as partner_gln,
         supplier_gln::varchar(20) as supplier_gln,
-        (
-            TO_DATE(inventory_report_date, 'YYYYMMDD') - 1
-        ) AS inventory_date,
+        try_to_date(inventory_report_date, 'YYYYMMDD') - 1 as inventory_date,
         ean_item_code::varchar(20) AS barcode,
         inventory_location::varchar(20) as inventory_location,
         unit_of_measure::varchar(30) as unit_of_measure,
