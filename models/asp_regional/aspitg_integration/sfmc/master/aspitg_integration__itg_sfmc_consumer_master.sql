@@ -24,7 +24,7 @@ final as
         address_1::varchar(255) as address_1,
         address_2::varchar(255) as address_2,
         address_city::varchar(100) as address_city,
-        trunc(address_zipcode)::varchar(30) as trunc,
+        address_zipcode::varchar(30) as address_zipcode,
         subscriber_key::varchar(100) as subscriber_key,
         website_unique_id::varchar(150) as website_unique_id,
         source::varchar(100) as source,
