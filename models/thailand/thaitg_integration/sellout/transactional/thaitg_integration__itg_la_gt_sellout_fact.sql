@@ -14,7 +14,7 @@ final as
     select
         distributorid::varchar(10) as distributorid,
         orderno::varchar(255) as orderno,
-        to_date(orderdate, 'yyyy/mm/dd')::date as orderdate,
+        try_to_date(orderdate, 'yyyy/mm/dd')::date as orderdate,
         arcode::varchar(20) as arcode,
         arname::varchar(500) as arname,
         city::varchar(255) as city,

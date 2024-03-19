@@ -1,30 +1,31 @@
+
 with itg_th_dtssaletrans as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtssaletrans
+    select * from {{ source('thaitg_integration', 'itg_th_dtssaletrans') }}
 ),
 itg_distributor_control as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_distributor_control
+    select * from {{ source('thaitg_integration', 'itg_distributor_control') }}
 ),
 itg_th_htc_sellout as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_htc_sellout
+    select * from {{ ref('thaitg_integration__itg_th_htc_sellout') }}
 ),
 itg_th_dtscnreason as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtscnreason
+    select * from {{ ref('thaitg_integration__itg_th_dtscnreason') }}
 ),
 itg_th_dtsitemmaster as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dtsitemmaster
+    select * from {{ ref('thaitg_integration__itg_th_dtsitemmaster') }}
 ),
 itg_lookup_retention_period as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_lookup_retention_period
+    select * from {{ source('thaitg_integration', 'itg_lookup_retention_period') }}
 ),
 itg_th_dms_sellout_fact as
 (
-    select * from DEV_DNA_CORE.snaposeitg_integration.itg_th_dms_sellout_fact
+    select * from {{ ref('thaitg_integration__itg_th_dms_sellout_fact') }}
 ),
 union_1 as 
 (
