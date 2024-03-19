@@ -1,6 +1,5 @@
 with source as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_children_data 
-    --ref('aspitg_integration__itg_sfmc_children_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_children_data') }}
 ),
 final as (
     select 

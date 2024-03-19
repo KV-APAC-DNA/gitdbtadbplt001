@@ -1,22 +1,17 @@
 with itg_sfmc_sent_data as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_sent_data
-    --ref('aspitg_integration__itg_sfmc_sent_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_sent_data') }}
 ),
 itg_sfmc_unsubscribe_data as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_unsubscribe_data
-    --ref('aspitg_integration__itg_sfmc_unsubscribe_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_unsubscribe_data') }}
 ),
 itg_sfmc_bounce_data as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_bounce_data
-    --ref('aspitg_integration__itg_sfmc_bounce_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_bounce_data') }}
 ),
 itg_sfmc_open_data as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_open_data
-    --ref('aspitg_integration__itg_sfmc_open_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_open_data') }}
 ),
 itg_sfmc_click_data as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_click_data
-    --ref('aspitg_integration__itg_sfmc_click_data')
+    select * from {{ ref('aspitg_integration__itg_sfmc_click_data') }}
 ),
 sent as(
     SELECT 

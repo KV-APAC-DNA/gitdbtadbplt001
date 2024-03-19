@@ -1,14 +1,11 @@
 with itg_sfmc_consumer_master as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_consumer_master
-    --ref('aspitg_integration__itg_sfmc_consumer_master')
+    select * from {{ ref('aspitg_integration__itg_sfmc_consumer_master') }}
 ),
 itg_sfmc_consumer_master_additional as (
-    select * from dev_dna_core.snaposeitg_integration.itg_sfmc_consumer_master_additional
-    --ref('aspitg_integration__itg_sfmc_consumer_master_additional')
+    select * from {{ ref('aspitg_integration__itg_sfmc_consumer_master_additional') }}
 ),
 itg_mds_rg_sfmc_attributes as (
-    select * from dev_dna_core.snapaspitg_integration.itg_mds_rg_sfmc_attributes
-    --ref('aspitg_integration__itg_mds_rg_sfmc_attributes')
+    select * from {{ ref('aspitg_integration__itg_mds_rg_sfmc_attributes') }}
 ),
 tw_final as (
     select itg_sfmc_consumer_master.cntry_cd as country_code,
