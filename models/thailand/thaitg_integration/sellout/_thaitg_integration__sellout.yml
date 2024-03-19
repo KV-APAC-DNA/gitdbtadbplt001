@@ -27,3 +27,8 @@ models:
     config:
       alias: itg_th_tims_transdata
       tags: ["j_ap_th_tesco_etl_framework"]
+  - name: thaitg_integration__sdl_raw_la_gt_sellout_fact
+    config: 
+      alias: sdl_raw_la_gt_sellout_fact
+      tags: ["laos_file_ingestion"]
+

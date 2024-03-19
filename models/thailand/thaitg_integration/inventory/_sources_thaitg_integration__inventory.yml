@@ -31,4 +31,22 @@ sources:
                       config:
                         store_failures: true
                         schema: thawks_integration
-    
+    - name: sdl_la_gt_inventory_fact
+      tags: ["laos_file_ingestion"]
+      tests:
+          - test_format:
+              select_columns: ["filename","recdate","expirydate"]
+              failure_reason: "'Data Format issue for recdate'"
+              where_clause: " not regexp_like(recdate,'[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-3][0-9]')"          
+              name: TRATBL_sdl_la_gt_inventory_fact__test_format_recdate
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_format:
+              select_columns: ["filename","recdate","expirydate"]
+              failure_reason: "'Data Format issue for expirydate'"
+              where_clause: " not regexp_like(expirydate,'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"          
+              name: TRATBL_sdl_la_gt_inventory_fact__test_format_expirydate
+              config:
+                store_failures: true
+                schema: thawks_integration
