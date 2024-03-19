@@ -24,7 +24,7 @@ final as
         qty_sold::number(18,4) as qty_sold,
         foc_qty::number(18,4) as foc_qty,
         total::number(18,4) as total_mmk,
-        to_date(substring(trim(period), 1, 10), 'dd/mm/yyyy')::date as period,
+        try_to_date(substring(trim(period), 1, 10), 'dd/mm/yyyy')::date as period,
         customer_group::varchar(100) as customer_group,
         customer_code::varchar(50) as customer_code,
         customer_name::varchar(100) as customer_name,
