@@ -12,11 +12,6 @@ edw_material_dim as
 (
     select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-siso as 
-(
-        Select *
-        from wks_thailand_siso_propagate_final
-),
 
 t4 as 
 (
@@ -78,7 +73,7 @@ select
         and coalesce(last_12months_so_val, 0) <= 0 then 'N'
         else 'Y'
     end::varchar(1) as healthy_inventory
-from  siso,t4
+from  wks_thailand_siso_propagate_final as siso,t4
 where ltrim(siso.matl_num, 0) = ltrim(t4.sku_cd(+), 0)
 group by month,
     gph_prod_brnd,
