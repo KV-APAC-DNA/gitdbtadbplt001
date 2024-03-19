@@ -1,0 +1,230 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_th_sfmc_click_data 
+        tags: ["th_sfmc_click"]
+        tests:
+            - test_null:
+                not_null_columns: ['is_unique','batch_id','job_id','email_name','event_date','subscriber_key']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                name: TRATBL_sdl_th_sfmc_click_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                name: TRATBL_sdl_th_sfmc_click_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_click_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+      - name: sdl_th_sfmc_complaint_data
+        tags: ["th_sfmc_complaint"]
+        tests:
+            - test_null:
+                not_null_columns: ['job_id','batch_id','subscriber_key','event_date','email_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_complaint_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_complaint_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_complaint_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+      - name: sdl_th_sfmc_sent_data
+        tags: ["th_sfmc_sent_data"]
+        tests:
+            - test_null:
+                not_null_columns: ['job_id','batch_id','event_date','subscriber_key','email_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_sent_data__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                name: TRATBL_sdl_th_sfmc_sent_data__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_lookup:
+                select_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                column: "upper(coalesce(subscriber_key, ''))" 
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_th_sfmc_sent_data__lookup_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+      - name: sdl_th_sfmc_bounce_data
+        tags: ["th_sfmc_bounce",""]
+        tests:
+          - test_duplicate__ff:
+              group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+              name: TRATBL_sdl_th_sfmc_bounce_data__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_null__ff:
+              not_null_columns: ["subscriber_key","event_date","email_name","job_id","batch_id"]
+              failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
+              name: TRATBL_sdl_th_sfmc_bounce_data__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_lookup__ff:
+              failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+              column: "upper(nvl(subscriber_key,''))"
+              lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+              lookup_column: "upper(nvl(subscriber_key,''))"
+              name: TRATBL_sdl_th_sfmc_bounce_data__lookup_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+  - name: sdl_th_sfmc_children_data
+    tags: ["th_crm_childern"]
+    tests:
+        - test_null__ff:
+            not_null_columns: ["parent_key","child_number"]
+            name: TRATBL_sdl_th_sfmc_children_data__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate__ff:
+            group_by_columns: ["parent_key","child_number","file_name"]
+            name: TRATBL_sdl_th_sfmc_children_data__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_lookup__ff:
+            failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+            column: "upper(nvl(parent_key, ''))"
+            lookup_column: "upper(nvl(subscriber_key, ''))"
+            lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+            name: TRATBL_sdl_th_sfmc_children_data__lookup_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+    
+  - name: sdl_th_sfmc_consumer_master
+    tags: ["th_crm_consumer_master"]
+    tests:
+        - test_null__ff:
+            not_null_columns: ["subscriber_key","brand"]
+            name: TRATBL_sdl_th_sfmc_consumer_master__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate__ff:
+            group_by_columns: ["subscriber_key","file_name"]
+            name: TRATBL_sdl_th_sfmc_consumer_master__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        
+  - name: sdl_th_sfmc_consumer_master_additional
+    tags: ["th_crm_consumer_master_additional"]
+    tests:
+        - test_null__ff:
+            not_null_columns: ["subscriber_key"]
+            name: TRATBL_sdl_th_sfmc_consumer_master_additional__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate__ff:
+            group_by_columns: ["subscriber_key","attribute_name","attribute_value","file_name"]
+            name: TRATBL_sdl_th_sfmc_consumer_master_additional__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_lookup__ff:
+            failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+            column: "upper(nvl(subscriber_key, ''))"
+            lookup_column: "upper(nvl(subscriber_key, ''))"
+            lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+            name: TRATBL_sdl_th_sfmc_consumer_master_additional__lookup_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+  - name: sdl_th_sfmc_open_data
+    tags: ["th_sfmc_open"]
+    tests:
+        - test_null__ff:
+            not_null_columns: ["job_id","batch_id","subscriber_key","event_date","email_name","is_unique"]
+            name: TRATBL_sdl_th_sfmc_open_data__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate__ff:
+            group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique","file_name"]
+            name: TRATBL_sdl_th_sfmc_open_data__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_lookup__ff:
+            failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+            column: "upper(nvl(subscriber_key, ''))"
+            lookup_column: "upper(nvl(subscriber_key, ''))"
+            lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+            name: TRATBL_sdl_th_sfmc_open_data__lookup_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+  - name: sdl_th_sfmc_unsubscribe_data
+    tags: ["th_sfmc_unsubscribe"]
+    tests:
+        - test_null__ff:
+            not_null_columns: ["job_id","batch_id","subscriber_key","email_name","event_date"]
+            name: TRATBL_sdl_th_sfmc_unsubscribe_data__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate__ff:
+            group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date","file_name"]
+            name: TRATBL_sdl_th_sfmc_unsubscribe_data__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_lookup__ff:
+              failure_reason: "SUBSCRIBER MASTER LOOK UP TABLE :"
+              column: "upper(nvl(subscriber_key, ''))"
+              lookup_column: "upper(nvl(subscriber_key, ''))"
+              lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+              name: TRATBL_sdl_th_sfmc_unsubscribe_data__lookup_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+      

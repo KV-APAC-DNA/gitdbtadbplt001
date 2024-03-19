@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: thaedw_integration__edw_vw_la_gt_route
+    config:
+      alias: edw_vw_la_gt_route
+      tags: ["lcm_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_vw_rpt_lcm_gt_scorecard
+    config:
+      alias: edw_vw_rpt_lcm_gt_scorecard
+      tags: ["lcm_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_rpt_lcm_gt_scorecard
+    config:
+      alias: edw_rpt_lcm_gt_scorecard
+      tags: ["lcm_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_vw_th_gt_msl_distribution
+    config: 
+      alias: edw_vw_th_gt_msl_distribution
+      tags: ["th_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_vw_th_gt_route
+    config: 
+      alias: edw_vw_th_gt_route
+      tags: ["th_gt_scorecard_datamart_load"] 
+  - name: thaedw_integration__edw_vw_th_gt_sales_order
+    config: 
+      alias: edw_vw_th_gt_sales_order
+      tags: ["th_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_vw_th_gt_schedule
+    config: 
+      alias: edw_vw_th_gt_schedule
+      tags: ["th_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_vw_th_gt_visit
+    config: 
+      alias: edw_vw_th_gt_visit
+      tags: ["th_gt_scorecard_datamart_load"] 
+  - name: thaedw_integration__vw_rpt_th_gt_scorecard
+    config:
+      alias: vw_rpt_th_gt_scorecard
+      tags: ["th_gt_scorecard_datamart_load"]
+  - name: thaedw_integration__edw_rpt_th_gt_scorecard
+    config:
+      alias: edw_rpt_th_gt_scorecard
+      tags: ["th_gt_scorecard_datamart_load"]  

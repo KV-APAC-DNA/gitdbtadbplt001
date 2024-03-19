@@ -1,7 +1,10 @@
 version: 2
 
 models:
-  
+  - name: thaitg_integration__sdl_raw_th_sfmc_bounce_data
+    config: 
+      alias: sdl_raw_th_sfmc_bounce_data
+      tags: ["th_sfmc_bounce",""]
   - name: thait_integration__sdl_raw_th_sfmc_children_data
     config: 
       alias: sdl_raw_th_sfmc_children_data
@@ -27,4 +30,17 @@ models:
     config:
       alias: sdl_raw_th_sfmc_unsubscribe_data
       tags: ["th_sfmc_unsubscribe"]
-    
+  - name: thaitg_integration__sdl_raw_th_sfmc_complaint_data
+    config: 
+      alias: sdl_raw_th_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: thaitg_integration__sdl_raw_th_sfmc_click_data
+    config: 
+      alias: sdl_raw_th_sfmc_click_data
+      tags: ["th_sfmc_click"]
+
+  - name: thaitg_integration__sdl_raw_th_sfmc_sent_data
+    config: 
+      alias: sdl_raw_th_sfmc_sent_data
+      tags: ["th_sfmc_sent_data"]

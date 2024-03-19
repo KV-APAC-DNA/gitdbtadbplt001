@@ -8,4 +8,3 @@ sources:
       identifier: false
     tables:
       - name: itg_query_parameters
-        tags: ["lcm_gt_scorecard_datamart_load"]

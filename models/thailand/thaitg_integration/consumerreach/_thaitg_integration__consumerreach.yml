@@ -21,5 +21,15 @@ models:
       alias: sdl_raw_jnj_consumerreach_sfm
       tags: ["j_th_perfect_store_transaction"]
 
+  - name: thaitg_integration__itg_jnj_consumerreach_cvs
+    config: 
+      alias: itg_jnj_consumerreach_cvs
+      tags: ["j_th_perfect_store_transaction"]
+  - name: thaitg_integration__sdl_raw_jnj_consumerreach_cvs
+    config: 
+      alias: itg_jnj_consumerreach_cvs
+      tags: ["j_th_perfect_store_transaction"]
+
+
   
     

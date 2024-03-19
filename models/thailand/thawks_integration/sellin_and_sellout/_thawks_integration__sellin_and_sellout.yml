@@ -9,4 +9,8 @@ models:
     config:
       alias: wks_thailand_siso_propagate_to_existing_dtls
       tags: ["j_ap_th_reg_data_refresh"]
+  - name: thawks_integration__wks_thailand_siso_propagate_final
+    config:
+      alias: wks_thailand_siso_propagate_final
+      tags: ["j_ap_th_reg_data_refresh"]
   
