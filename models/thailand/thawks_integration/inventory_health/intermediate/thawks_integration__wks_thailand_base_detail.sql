@@ -5,7 +5,7 @@ wks_thailand_lastnmonths as (
 select * from {{ ref('thawks_integration__wks_thailand_lastnmonths') }}
 ),
 wks_thailand_base as (
-select * from dev_dna_core.snaposewks_integration.wks_thailand_base
+select * from {{ ref('thawks_integration__wks_thailand_base') }}
 ),
 trans as(
   select

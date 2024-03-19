@@ -2,7 +2,7 @@ with edw_vw_os_time_dim as(
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_thailand_base as (
-select * from dev_dna_core.snaposewks_integration.wks_thailand_base
+select * from {{ ref('thawks_integration__wks_thailand_base') }}
 ),
 all_months as (
   select distinct
