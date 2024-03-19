@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_china_reg_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_hk_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_india_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_indonesia_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_kr_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_my_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_ph_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_tw_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+
+  - name: jpnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_japan_inventory_health_analysis_propagation
+        tags: ["regional_inventory_health_analysis","transformation"]
+
+  - name: pcfwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: pacific_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+
+  - name: osewks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: osewks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_thailand_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
+      - name: wks_vietnam_inventory_health_analysis_propagation_final
+        tags: ["regional_inventory_health_analysis","transformation"]
