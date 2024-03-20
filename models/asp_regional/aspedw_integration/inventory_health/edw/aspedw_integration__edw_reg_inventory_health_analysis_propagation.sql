@@ -131,7 +131,7 @@ with transformed as (
     select * from {{ source('pcfwks_integration', 'pacific_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('osewks_integration', 'wks_thailand_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('thawks_integration__wks_thailand_inventory_health_analysis_propagation_final') }}
 
     union all 
     select * from {{ source('osewks_integration', 'wks_vietnam_inventory_health_analysis_propagation_final') }}
