@@ -35,6 +35,7 @@ final as (
     {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         where source.curr_dt > (select max(crtd_dttm) from {{ this }}) 
+        and source.file_nm not in (select distinct file_nm from {{ this }})
     {% endif %}
 )
 
