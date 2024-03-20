@@ -36,7 +36,7 @@ edw_company_dim as
 ),
 v_edw_customer_sales_dim as
 (
-    select * from {{ref('aspedw_integration__vw_edw_reg_ev_edw_customer_sales_dimxch_rate')}}
+    select * from {{ref('aspedw_integration__v_edw_customer_sales_dim')}}
 ),
 edw_vw_os_time_dim as
 (

@@ -21,22 +21,27 @@ models:
       alias: itg_sfmc_open_data
       tags: ["th_sfmc_open"]
   
-
-  - name: aspitg_integration__itg_jnj_consumerreach_711
-    config:
-      alias: itg_jnj_consumerreach_711
-      tags: ["j_th_perfect_store_transaction"]
-  
-  
-  - name: aspitg_integration__itg_jnj_consumerreach_sfm
-    config:
-      alias: itg_jnj_consumerreach_sfm
-      tags: ["j_th_perfect_store_transaction"]
-  
-
   - name: aspitg_integration__itg_sfmc_unsubscribe_data
     config:
       alias: itg_sfmc_unsubscribe_data
       tags: ["th_sfmc_unsubscribe"]
   
-    
+  - name: aspitg_integration__itg_sfmc_bounce_data
+    config:
+      alias: itg_sfmc_bounce_data
+      tags: ["th_sfmc_bounce",""]
+
+  - name: aspitg_integration__itg_sfmc_complaint_data
+    config: 
+      alias: itg_sfmc_complaint_data
+      tags: ["th_sfmc_complaint"]
+
+  - name: aspitg_integration__itg_sfmc_click_data
+    config: 
+      alias: itg_sfmc_click_data
+      tags: ["th_sfmc_click"]
+
+  - name: aspitg_integration__itg_sfmc_sent_data
+    config: 
+      alias: itg_sfmc_sent_data
+      tags: ["th_sfmc_sent_data"]

@@ -10,8 +10,8 @@ edw_th_inventory_analysis_base_6year_filter as (
 itg_th_pos_sales_inventory_fact as (
   select * from {{ ref('thaitg_integration__itg_th_pos_sales_inventory_fact') }}
 ), 
-wks_th_watsons as (
-  select * from {{ ref('thawks_integration__wks_th_watsons') }}
+sdl_th_mt_watsons as (
+  select * from {{ source('thasdl_raw', 'sdl_th_mt_watsons') }}
 ), 
 sdl_mds_th_customer_product_code as (
   select * from {{ source('thasdl_raw', 'sdl_mds_th_customer_product_code') }}
@@ -177,7 +177,7 @@ transformed as (
               'NA'
             ) as matl_num 
           from 
-            wks_th_watsons a 
+            sdl_th_mt_watsons a 
             left join sdl_mds_th_customer_product_code b on a.item = b.item 
             left join (
               select 
