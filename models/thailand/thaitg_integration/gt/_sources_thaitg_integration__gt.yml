@@ -96,6 +96,7 @@ sources:
     - name: sdl_th_gt_route
     - name: sdl_th_gt_route_detail
     - name: sdl_th_gt_sales_order
+    - name: sdl_cbd_gt_sales_report_fact
 
   - name: thawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -108,3 +109,4 @@ sources:
       - name: wks_th_gt_route_hashkey
       - name: wks_th_gt_route_detail_hashkey
       - name: wks_th_gt_sales_order_pre_load
+      - name: wks_cbd_gt_sales_report_fact_pre_load

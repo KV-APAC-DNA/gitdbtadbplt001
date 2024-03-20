@@ -35,4 +35,18 @@ models:
     config:
       alias: itg_th_gt_sales_order
       tags: ["th_gt_sales_order","ingestion"]
+  - name: thaitg_integration__sdl_raw_th_gt_sales_order
+    config:
+      alias: sdl_raw_th_gt_sales_order
+      tags: ["th_gt_sales_order","ingestion"]
+
+  - name: thaitg_integration__itg_cbd_gt_sales_report_fact
+    config:
+      alias: itg_cbd_gt_sales_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thaitg_integration__sdl_raw_cbd_gt_sales_report_fact
+    config:
+      alias: sdl_raw_cbd_gt_sales_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]
+
   
