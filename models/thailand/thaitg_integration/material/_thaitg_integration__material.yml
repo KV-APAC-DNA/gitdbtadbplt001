@@ -4,9 +4,9 @@ models:
   - name: thaitg_integration__itg_th_tims_materialmaster
     config: 
       alias: itg_th_tims_materialmaster
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__itg_mds_th_mt_branch_master
     config: 
       alias: itg_mds_th_mt_branch_master
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops"]

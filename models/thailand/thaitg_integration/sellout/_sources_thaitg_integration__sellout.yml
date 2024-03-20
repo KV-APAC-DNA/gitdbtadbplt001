@@ -21,9 +21,9 @@ sources:
                 schema: thawks_integration
 
       - name: sdl_th_dms_sellout_fact
-        tags: ["th_mbox_sellout"]
+        tags: ["th_mbox_files"]
       - name: sdl_th_tesco_transdata
-        tags: ["j_ap_th_tesco_etl_framework"]
+        tags: ["tesco_mt_7_11_and_tops"]
       - name: sdl_la_gt_sellout_fact
         tags: ["laos_file_ingestion"]
         tests:

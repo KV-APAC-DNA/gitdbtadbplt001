@@ -4,12 +4,12 @@ models:
   - name: thaitg_integration__itg_th_dms_sellout_fact
     config: 
       alias: itg_th_dms_sellout_fact
-      tags: ["th_mbox_sellout"]
+      tags: ["th_mbox_files"]
 
   - name: thaitg_integration__sdl_raw_th_dms_sellout_fact
     config: 
       alias: sdl_raw_th_dms_sellout_fact
-      tags: ["th_mbox_sellout"]
+      tags: ["th_mbox_files"]
 
   - name: thaitg_integration__itg_th_htc_sellout
     config:
@@ -26,7 +26,7 @@ models:
   - name: thaitg_integration__itg_th_tims_transdata
     config:
       alias: itg_th_tims_transdata
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops"]
   - name: thaitg_integration__sdl_raw_la_gt_sellout_fact
     config: 
       alias: sdl_raw_la_gt_sellout_fact

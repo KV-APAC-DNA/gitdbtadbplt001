@@ -22,7 +22,7 @@ sources:
                 schema: thawks_integration
 
     - name: sdl_th_dms_inventory_fact
-      tags: ["th_mbox_inventory"]
+      tags: ["th_mbox_files"]
       tests: 
           - test_date_format:
                       date_column: ["expirydate"]
