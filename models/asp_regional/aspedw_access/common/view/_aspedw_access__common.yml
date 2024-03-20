@@ -35,3 +35,11 @@ models:
     config:
       alias: edw_product_key_attributes
       tags: ["pka_datamart","transformation","regional_views"]
+  - name: aspedw_access__edw_company_dim
+    config: 
+      alias: edw_company_dim
+      tags: ["regional_views","transformation"]
+  - name: aspedw_access__edw_reg_inventory_health_analysis_propagation
+    config:
+      alias: edw_reg_inventory_health_analysis_propagation
+      tags: ["regional_inventory_health_analysis","transformation"]
