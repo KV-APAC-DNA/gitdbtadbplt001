@@ -48,5 +48,17 @@ models:
     config:
       alias: sdl_raw_cbd_gt_sales_report_fact
       tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thaitg_integration__sdl_raw_la_gt_sales_order_fact
+    config:
+      alias: sdl_raw_la_gt_sales_order_fact
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__sdl_raw_la_gt_route_header
+    config:
+      alias: sdl_raw_la_gt_route_header
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__sdl_raw_la_gt_route_detail
+    config:
+      alias: sdl_raw_la_gt_route_detail
+      tags: ["laos_file_ingestion","ingestion"]
 
   
