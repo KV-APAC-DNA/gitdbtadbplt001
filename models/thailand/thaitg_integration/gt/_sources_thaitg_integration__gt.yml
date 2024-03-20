@@ -94,7 +94,77 @@ sources:
                     store_failures: true
                     schema: thawks_integration
     - name: sdl_th_gt_route
+      tests:
+          - test_null:
+                not_null_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+                select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+                name: TRATBL_sdl_th_gt_route__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+              select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+              need_counts: "no"
+              name: TRATBL_sdl_th_gt_route__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          # - test_format:
+          #   where_clause: "split_part(upper(trim(filename)),'_',2) <>upper(trim(saleunit))"
+          #   failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME: ' || 'FILENAME' || '(OR)' || 'SALEUNIT'"
+          #   select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+          #   name: TRATBL_sdl_th_gt_route__test_format
+          #   config:
+          #     store_failures: true
+          #     schema: thawks_integration
+
+          # - test_date_format_odd_eve_leap:
+          #       model_nm: "{{ source('thasdl_raw', 'sdl_th_gt_route') }}"
+          #       date_column: "LAST_UPDATED_DATE"
+          #       filter: "(odd_mon.LAST_UPDATED_DATE) = (even_mon.LAST_UPDATED_DATE) and (even_mon.LAST_UPDATED_DATE) = (feb.LAST_UPDATED_DATE) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+          #       failure_reason: "'LAST_UPDATED_DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+          #       select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+          #       name: TRATBL_sdl_th_gt_route__test_date_format_odd_eve_leap
+          #       config:
+          #         store_failures: true
+          #         schema: thawks_integration
     - name: sdl_th_gt_route_detail
+      tests:
+            - test_null:
+                  not_null_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                  select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                  name: TRATBL_sdl_th_gt_route_detail__null_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                need_counts: "no"
+                name: TRATBL_sdl_th_gt_route_detail__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            # - test_format:
+            #   where_clause: "SPLIT_PART(UPPER(TRIM(FILENAME)),'_',2) <>UPPER(TRIM(SALEUNIT))"
+            #   failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME: ' || 'FILENAME' || '(OR)' || 'SALEUNIT'"
+            #   select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+            #   name: TRATBL_sdl_th_gt_route_detail__test_format
+            #   config:
+            #     store_failures: true
+            #     schema: thawks_integration
+
+            # - test_date_format_odd_eve_leap:
+            #       model_nm: "{{ source('thasdl_raw', 'sdl_th_gt_route') }}"
+            #       date_column: "CREATED_DATE"
+            #       filter: "(odd_mon.CREATED_DATE) = (even_mon.CREATED_DATE) and (even_mon.CREATED_DATE) = (feb.CREATED_DATE) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            #       failure_reason: "'CREATED_DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+            #       select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+            #       name: TRATBL_sdl_th_gt_route_detail__test_date_format_odd_eve_leap
+            #       config:
+            #         store_failures: true
+            #         schema: thawks_integration
     - name: sdl_th_gt_sales_order
     - name: sdl_cbd_gt_sales_report_fact
     - name: sdl_la_gt_sales_order_fact
@@ -114,3 +184,5 @@ sources:
       - name: wks_th_gt_sales_order_pre_load
       - name: wks_cbd_gt_sales_report_fact_pre_load
       - name: wks_la_gt_sales_order_fact_pre_load
+      - name: wks_la_gt_route_header_hashkey
+      - name: wks_la_gt_route_detail_hashkey
