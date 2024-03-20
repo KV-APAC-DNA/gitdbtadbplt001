@@ -33,6 +33,23 @@ sources:
                         schema: thawks_integration
     
     - name: sdl_cbd_gt_inventory_report_fact
+      tests:
+                - test_null:
+                      not_null_columns: ["date","product_code","product_name","filename"]
+                      select_columns: ["date","product_code","product_name","filename"]
+                      name: TRATBL_sdl_cbd_gt_inventory_report_fact__null_test
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+                - test_duplicate:
+                    group_by_columns: ["date","product_code","product_name","filename"]
+                    select_columns: ["date","product_code","product_name","filename"]
+                    need_counts: "no"
+                    name: TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
       tags: ["cambodia_file_ingestion"]
+
     
     
