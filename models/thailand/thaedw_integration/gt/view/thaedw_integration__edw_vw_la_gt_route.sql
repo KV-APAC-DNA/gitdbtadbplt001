@@ -1,8 +1,8 @@
 with itg_la_gt_route_detail as (
-	select * from {{ ref('thaitg_integration__itg_la_gt_route_detail') }}
+	select * from dev_dna_core.thaitg_integration.itg_la_gt_route_detail
 ),
 itg_la_gt_route_header as (
-	select * from {{ ref('thaitg_integration__itg_la_gt_route_header') }}
+	select * from dev_dna_core.thaitg_integration.itg_la_gt_route_header
 ),
 final as (
 select 

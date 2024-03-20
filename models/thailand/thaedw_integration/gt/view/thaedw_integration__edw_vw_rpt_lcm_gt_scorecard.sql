@@ -1,5 +1,5 @@
 with itg_la_gt_sales_order_fact as (
-  select * from {{ ref('thaitg_integration__itg_la_gt_sales_order_fact') }}
+  select * from dev_dna_core.thaitg_integration.itg_la_gt_sales_order_fact
 ),
 itg_la_gt_visit as (
   select * from {{ ref('thaitg_integration__itg_la_gt_visit') }}
@@ -32,7 +32,7 @@ itg_mds_lcm_distributor_target_sales_re as (
 select * from {{ ref('thaitg_integration__itg_mds_lcm_distributor_target_sales_re') }}
 ),
 itg_cbd_gt_sales_report_fact as (
-select * from {{ ref('thaitg_integration__itg_cbd_gt_sales_report_fact') }}
+select * from dev_dna_core.thaitg_integration.itg_cbd_gt_sales_report_fact
 ),
 itg_mds_th_cbd_item_master as (
 select * from {{ ref('thaitg_integration__itg_mds_th_cbd_item_master') }}
@@ -41,10 +41,10 @@ itg_mds_th_lcm_exchange_rate as (
 select * from {{ ref('thaitg_integration__itg_mds_th_lcm_exchange_rate') }}
 ),
 itg_cbd_gt_customer_snapshot as (
-select * from {{ ref('thaitg_integration__itg_cbd_gt_customer_snapshot') }}
+select * from  dev_dna_core.thaitg_integration.itg_cbd_gt_customer_snapshot
 ),
 itg_cbd_gt_customer as (
-select * from {{ ref('thaitg_integration__itg_cbd_gt_customer') }}
+select * from dev_dna_core.thaitg_integration.itg_cbd_gt_customer
 ),
 itg_mym_gt_sales_report_fact as (
 select * from {{ ref('thaitg_integration__itg_mym_gt_sales_report_fact') }}

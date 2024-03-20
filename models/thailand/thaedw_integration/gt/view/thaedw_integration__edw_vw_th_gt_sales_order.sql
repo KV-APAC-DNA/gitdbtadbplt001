@@ -1,7 +1,7 @@
 
 with source as
 (
-    select * from {{ref('thaitg_integration__itg_th_gt_sales_order')}}
+    select * from dev_dna_core.thaitg_integration.itg_th_gt_sales_order
 ),
 final as
 (
