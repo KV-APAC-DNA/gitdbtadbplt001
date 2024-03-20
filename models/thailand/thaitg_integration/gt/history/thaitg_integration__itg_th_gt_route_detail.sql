@@ -1,10 +1,9 @@
-{#pre_hook="delete from {{this}} where (coalesce(upper(trim(saleunit)),'N/A')) in (select distinct (coalesce(upper(trim(saleunit)),'N/A')) from {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }} ) and AND   UPPER(flag) IN ('I','U');"#}
 
 {{
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="delete from {{this}} where (coalesce(upper(trim(saleunit)),'N/A')) in (select distinct (coalesce(upper(trim(saleunit)),'N/A')) from dev_dna_load.snaposesdl_raw.sdl_th_gt_route_detail ) AND   UPPER(flag) IN ('I','U');"
+        pre_hook="delete from {{this}} where (coalesce(upper(trim(saleunit)),'N/A')) in (select distinct (coalesce(upper(trim(saleunit)),'N/A')) from {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }}  ) AND   UPPER(flag) IN ('I','U');"
     )
 }}
 

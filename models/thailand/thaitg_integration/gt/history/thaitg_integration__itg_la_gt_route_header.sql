@@ -1,12 +1,9 @@
---pre_hook="DELETE FROM {{this}} WHERE (COALESCE(UPPER(TRIM(saleunit)),'N/A')) IN (SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A')
-                                                  --FROM {{ source('thasdl_raw', 'sdl_la_gt_route_header') }}) AND   UPPER(flag) IN ('I','U');"
-    
 
 {{
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="DELETE FROM {{this}} WHERE (COALESCE(UPPER(TRIM(saleunit)),'N/A')) IN (SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') FROM dev_dna_load.snaposesdl_raw.sdl_la_gt_route_header) AND   UPPER(flag) IN ('I','U');"
+        pre_hook="DELETE FROM {{this}} WHERE (COALESCE(UPPER(TRIM(saleunit)),'N/A')) IN (SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') FROM {{ source('thasdl_raw', 'sdl_la_gt_route_header') }}) AND   UPPER(flag) IN ('I','U');"
     )
 }}
 

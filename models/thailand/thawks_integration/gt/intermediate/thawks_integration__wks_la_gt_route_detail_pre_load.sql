@@ -9,8 +9,7 @@ with wks_la_gt_route_detail_hashkey as (
     select * from {{ source('thawks_integration', 'wks_la_gt_route_detail_hashkey') }}
 ),
 sdl_la_gt_route_detail as (
-    --select * from {{ source('thasdl_raw', 'sdl_la_gt_route_detail') }}
-    select * from DEV_DNA_LOAD.snaposesdl_raw.sdl_la_gt_route_detail
+    select * from {{ source('thasdl_raw', 'sdl_la_gt_route_detail') }}
 )
 
 SELECT wks.route_id,

@@ -2,10 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= " delete
-from {{this}}
-where to_char(snapshot_date,'yyyymm') = to_char(convert_timezone('Asia/Bangkok', dateadd(day, -1, current_timestamp())),'yyyymm')
-and   case when (select count(*) from {{ ref('thaitg_integration__itg_cbd_gt_customer') }}) > 0 then 1 else 0 end = 1; "
+        pre_hook= " delete from {{this}} where to_char(snapshot_date,'yyyymm') = to_char(convert_timezone('Asia/Bangkok', dateadd(day, -1, current_timestamp())),'yyyymm') and   case when (select count(*) from {{ ref('thaitg_integration__itg_cbd_gt_customer') }}) > 0 then 1 else 0 end = 1; "
     )
 }}
 

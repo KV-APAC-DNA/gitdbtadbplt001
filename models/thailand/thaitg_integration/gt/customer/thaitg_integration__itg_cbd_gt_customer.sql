@@ -1,9 +1,8 @@
 with itg_cbd_gt_sales_report_fact as (
-    -- select * from {{ ref('thaitg_integration__itg_cbd_gt_sales_report_fact') }}
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_CBD_GT_SALES_REPORT_FACT
+    select * from {{ ref('thaitg_integration__itg_cbd_gt_sales_report_fact') }}
 ),
 transformed as (
-select DISTINCT 'CBD' AS dstrbtr_id,
+select distinct 'CBD' AS dstrbtr_id,
 customer_code AS ar_cd,
 'N/A' AS old_cust_id,
 customer_name AS ar_nm,

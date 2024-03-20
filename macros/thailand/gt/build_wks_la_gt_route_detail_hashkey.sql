@@ -56,10 +56,10 @@ FROM
         {{schema}}.thaitg_integration__itg_la_gt_route_detail
     {% endif %}
 WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                FROM dev_dna_load.snaposesdl_raw.sdl_la_gt_route_detail)
+                                FROM {{ source('thasdl_raw', 'sdl_la_gt_route_detail') }})
 AND   UPPER(flag) IN ('I','U');
 
-                                --{{ source('thasdl_raw', 'sdl_la_gt_route_detail') }}
+                                
     {% endset %}
 
     {% do run_query(query) %}
