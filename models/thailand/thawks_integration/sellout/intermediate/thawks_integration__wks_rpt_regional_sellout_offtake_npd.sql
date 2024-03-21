@@ -3,6 +3,7 @@ select * from {{ ref('thawks_integration__wks_thailand_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as (
 select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
+),
 transformed as (
 select 
   *, 
