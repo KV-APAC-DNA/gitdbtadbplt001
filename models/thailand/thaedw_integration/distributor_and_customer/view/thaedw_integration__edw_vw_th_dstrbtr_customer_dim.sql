@@ -19,7 +19,7 @@ final as (
         ,null as area_nm
         ,null as state_cd
         ,null as state_nm
-        ,c."region" as region_cd
+        ,c.region as region_cd
         ,c.region_desc as region_nm
         ,c.bill_prvnce as prov_cd
         ,c.sls_dist_city_eng as prov_nm

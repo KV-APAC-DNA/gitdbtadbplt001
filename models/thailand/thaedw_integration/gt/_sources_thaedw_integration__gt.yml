@@ -7,5 +7,4 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: wks_th_gt_kpi_target_header
-        
+      - name: itg_query_parameters

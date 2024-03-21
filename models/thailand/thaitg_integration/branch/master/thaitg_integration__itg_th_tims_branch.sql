@@ -1,9 +1,10 @@
-{{ 
+{{
     config(
-            materialized="incremental",
-            incremental_strategy="delete+insert",
-            unique_key=["brnch_no_pk"]
-        ) 
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=["brnch_no"],
+        pre_hook= "delete from {{this}} where coalesce(ltrim(brnch_no,0),'NA') in (select coalesce(ltrim(branchcode,0),'NA') from {{ source('thasdl_raw', 'sdl_mds_th_mt_branch_master') }})"
+    )
 }}
 
 with source as(
@@ -12,7 +13,6 @@ with source as(
 transformed as(
     select
         branchcode::varchar(100) as brnch_no,
-        COALESCE(LTRIM(branchcode, 0), 'NA')::varchar(100) as brnch_no_pk,
         name::varchar(100) as branch_nm,
         branchtype_name::varchar(100) as brnch_typ,
         allstoretype_name::varchar(100) as all_str_typ,

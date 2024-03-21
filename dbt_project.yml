@@ -69,6 +69,9 @@ models:
         sap_and_sellin:
           view:
             +materialized: view
+        sfmc:
+          view:
+            +materialized: view
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
@@ -157,6 +160,9 @@ models:
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
+      mysedw_access:
+        +materialized: view
+        +schema: MYSEDW_ACCESS
     thailand:
       config:
         +enabled: true
@@ -169,9 +175,48 @@ models:
         +materialized: table
         +transient: false
         +schema: THAEDW_INTEGRATION
+        customer:
+          view:
+            +materialized: view
+        distributor_and_customer:
+          view:
+            +materialized: view
+        distributor_and_material:
+          view:
+            +materialized: view
+        gt:
+          view:
+            +materialized: view
+        inventory:
+          view:
+            +materialized: view
+        jbp:
+          view:
+            +materialized: view
+        market_share:
+          view:
+            +materialized: view
+        material:
+          view:
+            +materialized: view
+        mt:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        sellin:
+          view:
+            +materialized: view
+        sellin_and_sellout:
+          view:
+            +materialized: view
+        sellout:
+          view:
+            +materialized: view
       thawks_integration:
         +materialized: table
         +schema: THAWKS_INTEGRATION
-      mysedw_access:
+      thaedw_access:
         +materialized: view
-        +schema: MYSEDW_ACCESS
+        +schema: THAEDW_ACCESS

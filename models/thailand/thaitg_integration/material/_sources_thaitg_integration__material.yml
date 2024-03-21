@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_mt_branch_master
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
         - test_duplicate:
             group_by_columns: ["branchcode"]

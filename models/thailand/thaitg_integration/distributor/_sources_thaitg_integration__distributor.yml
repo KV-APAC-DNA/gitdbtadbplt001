@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_gt_scope
-        tags: ["th_non_tesco"]
+        tags: ["th_non_tesco","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["code"]
@@ -19,7 +19,7 @@ sources:
               config:
                 store_failures: true
                 schema: check
-          - test_duplicate_upper:
+          - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code"]
               name: TRATBL_sdl_mds_th_gt_scope__duplicate_test
@@ -28,7 +28,7 @@ sources:
                 schema: thawks_integration
 
       - name: sdl_mds_th_distributor_list
-        tags: ["th_non_tesco"]
+        tags: ["th_non_tesco","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["code"]
@@ -46,7 +46,7 @@ sources:
                 schema: thawks_integration
 
       - name: sdl_mds_th_distributor_cn_reason
-        tags: ["th_non_tesco"]
+        tags: ["th_non_tesco","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["code"]
@@ -63,7 +63,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_mds_th_ref_distributor_customer_group
-        tags: ["th_non_tesco"]
+        tags: ["th_non_tesco","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["code"]

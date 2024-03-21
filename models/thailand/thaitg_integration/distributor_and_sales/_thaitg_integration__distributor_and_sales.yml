@@ -4,17 +4,17 @@ models:
   - name: thaitg_integration__itg_mds_lcm_distributor_target_sales
     config: 
       alias: itg_mds_lcm_distributor_target_sales
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_th_target_distribution
     config: 
       alias: itg_th_target_distribution
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
 
   - name: thaitg_integration__itg_th_target_sales
     config:
       alias: itg_th_target_sales
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_mds_lcm_distributor_target_sales_re
     config:
       alias: itg_mds_lcm_distributor_target_sales_re
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]

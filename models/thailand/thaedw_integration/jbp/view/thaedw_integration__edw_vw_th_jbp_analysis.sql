@@ -1028,7 +1028,7 @@ ar_type_placeholder as
                                             edw_vw_th_sellout_analysis.order_date,
                                             ('mm'::varchar)::text
                                         ) AS month
-                                    FROM edw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
                                 ) a ON ((1 = 1))
                             )
                     ) a
@@ -1043,7 +1043,7 @@ ar_type_placeholder as
                             ) AS month,
                             edw_vw_th_sellout_analysis.ar_type_name,
                             edw_vw_th_sellout_analysis.distributor_id
-                        FROM edw_th_sellout_analysis
+                        FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
                     ) b ON (
                         (
                             (
@@ -1140,7 +1140,7 @@ franchise_placeholder as
                                 (
                                     SELECT DISTINCT edw_vw_th_sellout_analysis.franchise,
                                         edw_vw_th_sellout_analysis.distributor_id
-                                    FROM edw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
                                 ) b
                                 JOIN (
                                     SELECT DISTINCT to_char(
@@ -1151,7 +1151,7 @@ franchise_placeholder as
                                             edw_vw_th_sellout_analysis.order_date,
                                             ('mm'::varchar)::text
                                         ) AS month
-                                    FROM edw_th_sellout_analysis
+                                    FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
                                 ) a ON ((1 = 1))
                             )
                     ) a
@@ -1166,7 +1166,7 @@ franchise_placeholder as
                             ) AS month,
                             edw_vw_th_sellout_analysis.franchise,
                             edw_vw_th_sellout_analysis.distributor_id
-                        FROM edw_th_sellout_analysis
+                        FROM edw_th_sellout_analysis edw_vw_th_sellout_analysis
                     ) b ON (
                         (
                             (

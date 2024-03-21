@@ -161,7 +161,7 @@ sellout_cust as (
 ,
 "time" as  (
                   select distinct
-                    edw_vw_os_time_dim.year,
+                    edw_vw_os_time_dim."year" as year,
                     edw_vw_os_time_dim.qrtr,
                     edw_vw_os_time_dim.mnth_id,
                     edw_vw_os_time_dim.mnth_no,
@@ -172,10 +172,10 @@ sellout_cust as (
                   where
                     (
                       
-                        edw_vw_os_time_dim.year > (date_part(year,current_timestamp()) - 3)
+                        edw_vw_os_time_dim."year" > (date_part(year,current_timestamp()) - 3)
                       
                       or (
-                        edw_vw_os_time_dim.year > (date_part(year,current_timestamp()) - 3)
+                        edw_vw_os_time_dim."year" > (date_part(year,current_timestamp()) - 3)
                       )
                     )
                 ) ,

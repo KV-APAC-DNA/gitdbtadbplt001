@@ -4,10 +4,10 @@ models:
   - name: thaitg_integration__itg_th_dstrbtr_customer_dim
     config: 
       alias: itg_th_dstrbtr_customer_dim
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaitg_integration__itg_th_dstrbtr_customer_dim_snapshot
     config: 
       alias: itg_th_dstrbtr_customer_dim_snapshot
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
 
   

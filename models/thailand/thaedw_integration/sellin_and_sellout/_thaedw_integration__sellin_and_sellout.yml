@@ -4,8 +4,8 @@ models:
   - name: thaedw_integration__edw_vw_th_siso_analysis
     config: 
       alias: edw_vw_th_siso_analysis
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaedw_integration__edw_th_siso_analysis
     config: 
       alias: edw_th_siso_analysis
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]

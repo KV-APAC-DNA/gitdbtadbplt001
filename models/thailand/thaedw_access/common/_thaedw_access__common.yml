@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: thaedw_access__edw_rpt_lcm_gt_scorecard
+    config:
+      alias: edw_rpt_lcm_gt_scorecard
+      tags: ["lcm_gt_scorecard_datamart_load","transformation"]
+  - name: thaedw_access__edw_rpt_th_gt_scorecard
+    config:
+      alias: edw_rpt_th_gt_scorecard
+      tags: ["th_gt_scorecard_datamart_load","transformation"]
+  - name: thaedw_access__edw_th_inventory_analysis
+    config:
+      alias: edw_th_inventory_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_jbp_analysis
+    config:
+      alias: edw_th_jbp_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_market_share_distribution_analysis
+    config:
+      alias: edw_th_market_share_distribution_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_pos_analysis
+    config:
+      alias: edw_th_pos_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_sellin_analysis
+    config:
+      alias: edw_th_sellin_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_sellout_analysis
+    config:
+      alias: edw_th_sellout_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_sellout_foc_analysis
+    config:
+      alias: edw_th_sellout_foc_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_th_sfmc_analysis
+    config:
+      alias: edw_th_sfmc_analysis
+      tags: ["th_sfmc_analysis_refresh","transformation"]
+  - name: thaedw_access__edw_th_siso_analysis
+    config:
+      alias: edw_th_siso_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__edw_vw_rpt_th_one_view_dashboard
+    config:
+      alias: edw_vw_rpt_th_one_view_dashboard
+      tags: ["th_non_tesco","ingestion"]
+  - name: thaedw_access__edw_vw_th_inventory_ageing_analysis
+    config:
+      alias: edw_vw_th_inventory_ageing_analysis
+      tags: ["thailand_views","transformation"]

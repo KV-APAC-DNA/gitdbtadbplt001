@@ -41,13 +41,13 @@ final as(
         routestep5::varchar(10) as routestep5,
         routestep6::varchar(10) as routestep6,
         routestep7::varchar(10) as routestep7,
-        routestep8::varchar(10) as routestep8,
-        routestep9::varchar(10) as routestep9,
+        routestep8::varchar(20) as routestep8,
+        routestep9::varchar(20) as routestep9,
         routestep10::varchar(10) as routestep10,
         store::varchar(200) as store,
         sourcefile::varchar(255) as sourcefile,
-        old_custid::varchar(25) as old_custid,
-        modifydate::timestamp_ntz(9) as modifydate,
+        old_custid::varchar(500) as old_custid,
+        try_to_timestamp(modifydate) as modifydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
         run_id::number(18,0) as run_id
     from source

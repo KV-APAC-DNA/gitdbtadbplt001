@@ -2,19 +2,23 @@ version: 2
 
 models:
   
-  - name: thaitg_integration__edw_th_inventory_analysis_base_6year_filter
+  - name: thaedw_integration__edw_th_inventory_analysis_base_6year_filter
     config:
       alias: edw_th_inventory_analysis_base_6year_filter
-      tags: ["th_itg_to_edw"]
-  - name: thaitg_integration__edw_vw_th_inventory_analysis_base_6year_filter
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_integration__edw_vw_th_inventory_analysis_base_6year_filter
     config:
       alias: edw_vw_th_inventory_analysis_base_6year_filter
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaedw_integration__edw_th_inventory_analysis
     config: 
       alias: edw_th_inventory_analysis
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaedw_integration__edw_vw_th_inventory_analysis
     config: 
       alias: edw_vw_th_inventory_analysis
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_integration__edw_vw_th_inventory_ageing_analysis
+    config: 
+      alias: edw_vw_th_inventory_ageing_analysis
+      tags: ["thailand_views","transformation"]

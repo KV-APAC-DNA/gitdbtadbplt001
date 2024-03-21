@@ -4,20 +4,29 @@ models:
   - name: thaitg_integration__sdl_th_mt_watsons_raw
     config: 
       alias: sdl_th_mt_watsons_raw
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thawks_integration__sdl_raw_th_mt_bigc_raw
     config:
       alias: th_mt_bigc_raw
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thawks_integration__sdl_raw_th_mt_makro_raw
     config:
       alias: th_mt_makro_raw
-      tags: ["j_ap_th_tesco_etl_framework"]
-  - name: thawks_integration__itg_th_mt_bigc
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thaitg_integration__itg_th_mt_bigc
     config:
       alias: itg_th_mt_bigc
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thaitg_integration__itg_th_makro_inv_so
     config:
       alias: itg_th_makro_inv_so
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+
+  - name: thaitg_integration__sdl_raw_th_mt_price_data
+    config:
+      alias: sdl_raw_th_mt_price_data
+      tags: ["th_mt_daily_price_load","ingestion"]
+  - name: thaitg_integration__itg_th_mt_price_data
+    config:
+      alias: itg_th_mt_price_data
+      tags: ["th_mt_daily_price_load","ingestion"]

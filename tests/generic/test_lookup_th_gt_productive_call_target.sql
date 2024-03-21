@@ -1,4 +1,4 @@
-{% test test_column_lookup(model,select_columns=None,lpad_column=None,column=none,lookup_table=None,lookup_column=None,lookup_filter=None,filter=None,additional_filter=None)%}
+{% test test_lookup_th_gt_productive_call_target(model,select_columns=None,lpad_column=None,column=none,lookup_table=None,lookup_column=None,lookup_filter=None,filter=None,additional_filter=None)%}
 {% if select_columns!=None %}
     select
         'KEY COLUMN IS NOT PRESENT IN LOOKUP TABLE' AS failure_reason,
@@ -26,9 +26,8 @@
       FROM {{lookup_table}}
     ) AS B
         {% endfor %}
-                {%- if lookup_filter !=None -%}
-                 {% set space_before_where = ' ' %}
-                 {{ space_before_where }}where {{lookup_filter}}
+                {% if lookup_filter !=None %}
+                 where {{lookup_filter}}
                 {% endif %}
     {%- if filter !=None -%}
                 and    {{filter}}

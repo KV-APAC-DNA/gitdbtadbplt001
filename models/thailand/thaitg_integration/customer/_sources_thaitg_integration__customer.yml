@@ -11,13 +11,13 @@ sources:
     tables:
 
     - name: sdl_mds_th_customer_hierarchy
-      tags: ["th_non_tesco",""]
+      tags: ["th_non_tesco","ingestion"]
 
     - name: sdl_mds_th_myanmar_customer_master
-      tags: ["th_non_tesco", ""]
+      tags: ["th_non_tesco","ingestion"]
 
     - name: sdl_mds_th_htc_customer
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["code","distributorid"]
@@ -27,18 +27,18 @@ sources:
               store_failures: true
               schema: thawks_integration
     - name: sdl_th_dms_chana_customer_dim
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["filename","distributorid","arcode"]
-              select_columns: ["distributorid","arcode"]
+              select_columns: ["filename","distributorid","arcode"]
               name: TRATBL_sdl_th_dms_chana_customer_dim__null_test
               config:
                 store_failures: true
                 schema: thawks_integration
           - test_duplicate:
               group_by_columns: ["filename","distributorid","arcode"]
-              select_columns: ["distributorid","arcode"]
+              select_columns: ["filename","distributorid","arcode"]
               name: TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test
               config:
                 store_failures: true
@@ -51,7 +51,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_dms_customer_dim
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files","ingestion"]
       tests:
           - test_duplicate:
               group_by_columns: ["distributorid","arcode"]
@@ -62,4 +62,31 @@ sources:
                 schema: thawks_integration
 
     - name: sdl_mds_th_customer_product_code
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files","ingestion"]
+
+    - name: sdl_la_gt_customer
+      tags: ["laos_file_ingestion","ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ['filename','distributorid','arcode']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_file:
+              compare_columns: ['filename','distributorid']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__test_file
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_duplicate:
+              group_by_columns: ['filename','distributorid','arcode']
+              select_columns: ['filename','distributorid','arcode']
+              name: TRATBL_sdl_la_gt_customer__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
