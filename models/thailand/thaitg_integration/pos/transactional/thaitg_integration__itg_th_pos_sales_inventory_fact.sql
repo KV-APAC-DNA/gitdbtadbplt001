@@ -21,11 +21,11 @@ itg_lookup_retention_period as(
 ),
 itg_th_mt_7_11 as   
 (
-    select * from snaposeitg_integration.itg_th_mt_7_11
+    select * from {{ ref('thaitg_integration__itg_th_mt_7_11') }}
 ),
 itg_th_mt_tops as
 (
-    select * from snaposeitg_integration.itg_th_mt_tops
+    select * from {{ ref('thaitg_integration__itg_th_mt_tops') }}
 ),
 itg_th_mt_bigc as
 (
