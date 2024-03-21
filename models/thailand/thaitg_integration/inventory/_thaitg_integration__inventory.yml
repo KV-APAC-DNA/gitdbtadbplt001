@@ -23,3 +23,11 @@ models:
     config: 
       alias: itg_la_gt_inventory_fact
       tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__sdl_raw_cbd_gt_inventory_report_fact
+    config: 
+      alias: sdl_raw_cbd_gt_inventory_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_cbd_gt_inventory_report_fact
+    config: 
+      alias: itg_cbd_gt_inventory_report_fact
+      tags: ["cambodia_file_ingestion","ingestion"]

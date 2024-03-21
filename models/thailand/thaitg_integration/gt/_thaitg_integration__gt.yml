@@ -68,27 +68,27 @@ models:
   - name: thaitg_integration__itg_th_gt_route
     config: 
       alias: itg_th_gt_route
-      tags: ["th_gt_route","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__sdl_raw_th_gt_route
     config: 
       alias: sdl_raw_th_gt_route
-      tags: ["th_gt_route","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__itg_th_gt_route_detail
     config: 
       alias: itg_th_gt_route_detail
-      tags: ["th_gt_route_detail","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__sdl_raw_th_gt_route_detail
     config:
       alias: sdl_raw_th_gt_route_detail
-      tags: ["th_gt_route_detail","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__itg_th_gt_sales_order
     config:
       alias: itg_th_gt_sales_order
-      tags: ["th_gt_sales_order","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__sdl_raw_th_gt_sales_order
     config:
       alias: sdl_raw_th_gt_sales_order
-      tags: ["th_gt_sales_order","ingestion"]
+      tags: ["th_gt_files","ingestion"]
   - name: thaitg_integration__itg_cbd_gt_sales_report_fact
     config:
       alias: itg_cbd_gt_sales_report_fact
@@ -109,3 +109,35 @@ models:
     config:
       alias: sdl_raw_la_gt_route_detail
       tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_la_gt_route_detail
+    config: 
+      alias: itg_la_gt_route_detail
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_la_gt_route_header
+    config: 
+      alias: itg_la_gt_route_header
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_la_gt_sales_order_fact
+    config: 
+      alias: itg_la_gt_sales_order_fact
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_cbd_gt_customer
+    config: 
+      alias: itg_cbd_gt_customer
+      tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_cbd_gt_customer_snapshot
+    config: 
+      alias: itg_cbd_gt_customer_snapshot
+      tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_th_gt_msl_distribution
+    config:
+      alias: itg_th_gt_msl_distribution
+      tags: ["th_gt_files","ingestion"]
+  - name: thaitg_integration__itg_th_gt_visit
+    config:
+      alias: itg_th_gt_visit
+      tags: ["th_gt_files","ingestion"]
+  - name: thaitg_integration__sdl_raw_th_gt_visit
+    config:
+      alias: sdl_raw_th_gt_visit
+      tags: ["th_gt_files","ingestion"]

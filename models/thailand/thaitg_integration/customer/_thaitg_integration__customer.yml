@@ -50,13 +50,11 @@ models:
     config:
       alias: sdl_raw_la_gt_customer
       tags: ["laos_file_ingestion","ingestion"]
-
   - name: thaitg_integration__itg_la_gt_customer
     config:
-      alias: itg_mym_gt_customer
+      alias: itg_la_gt_customer
       tags: ["laos_file_ingestion","ingestion"]
-
   - name: thaitg_integration__itg_la_gt_customer_snapshot
     config:
-      alias: itg_mym_gt_customer_snapshot
+      alias: itg_la_gt_customer_snapshot
       tags: ["laos_file_ingestion","ingestion"]
