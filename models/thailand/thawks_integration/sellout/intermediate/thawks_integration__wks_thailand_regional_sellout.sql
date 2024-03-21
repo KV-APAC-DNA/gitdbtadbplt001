@@ -285,12 +285,12 @@ select
       )
     ):: numeric(15, 5)
   ):: numeric(38, 11) as sellout_sales_value_usd, 
-  -- trim(
-  --   nvl (
-  --     nullif(sellout.msl_product_code, ''), 
-  --     'na'
-  --   )
-  -- ) as msl_product_code, 
+  trim(
+    nvl (
+      nullif(sellout.msl_product_code, ''), 
+      'na'
+    )
+  ) as msl_product_code, 
   trim(
     nvl (
       nullif(t4.sap_mat_desc, ''), 
@@ -524,6 +524,7 @@ group by
     sellout_sales_quantity::number(38,6) as sellout_sales_quantity,
     sellout_sales_value::number(38,6) as sellout_sales_value,
     sellout_sales_value_usd::number(38,11) as sellout_sales_value_usd,
+    msl_product_code::varchar(20) as msl_product_code,
     msl_product_desc::varchar(100) as msl_product_desc,
     retail_env::varchar(600) as retail_env,
     channel::varchar(200) as channel,
