@@ -5,12 +5,4 @@ models:
     config:
       alias: wks_th_gt_kpi_target_header
       tags: ["th_non_tesco"]
-  - name: thawks_integration__wks_th_gt_route_pre_load
-    config:
-      alias: wks_th_gt_route_pre_load
-      tags: ["th_gt_route","ingestion"]
-  - name: thawks_integration__wks_th_gt_route_detail_pre_load
-    config:
-      alias: wks_th_gt_route_detail_pre_load
-      tags: ["th_gt_route_detail","ingestion"]
-  
+ 
