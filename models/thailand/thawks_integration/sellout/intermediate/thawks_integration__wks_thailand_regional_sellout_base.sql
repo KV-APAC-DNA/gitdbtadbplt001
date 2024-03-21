@@ -19,8 +19,8 @@ select * from {{ ref('thaitg_integration__itg_th_pos_sales_inventory_fact') }}
 itg_th_dtsdistributor as (
 select * from {{ ref('thaitg_integration__itg_th_dtsdistributor') }}
 ),
-edw_vw_os_customer_dim as (
-select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }} where sap_cntry_cd ='TH'
+edw_vw_th_customer_dim as (
+select * from {{ ref('thaedw_integration__edw_vw_th_customer_dim') }}
 ),
 itg_th_dstrbtr_material_dim as (
 select * from {{ ref('thaitg_integration__itg_th_dstrbtr_material_dim') }}
@@ -68,8 +68,8 @@ select
         nvl(fact.foc_product, 'NA') = 'N' 
         or fact.foc_product is null
       ) 
-      and not (
-        concat(customer, fact.branch_code) in (
+      and (
+        concat(customer, fact.branch_code) not in (
           select 
             distinct concat(cus.cust_cd, cus.brnch_no) as concat 
           from 
@@ -141,7 +141,7 @@ select
       itg_th_sellout_sales_fact sellout 
       left join edw_vw_os_time_dim b on sellout.order_dt = b.cal_date 
       left join itg_th_dtsdistributor distributor on sellout.dstrbtr_id = distributor.dstrbtr_id --left join itg_th_dstrbtr_customer_dim distributor on sellout.dstrbtr_id=distributor.dstrbtr_id
-      left join edw_vw_os_customer_dim customer on distributor.dstrbtr_cd = customer.sap_cust_id 
+      left join edw_vw_th_customer_dim customer on distributor.dstrbtr_cd = customer.sap_cust_id 
       left join itg_th_dstrbtr_material_dim mat_dim on sellout.prod_cd = mat_dim.item_cd 
       left join itg_th_dstrbtr_customer_dim cust_distributor on sellout.dstrbtr_id = cust_distributor.dstrbtr_id 
       and sellout.ar_cd = cust_distributor.ar_cd 
