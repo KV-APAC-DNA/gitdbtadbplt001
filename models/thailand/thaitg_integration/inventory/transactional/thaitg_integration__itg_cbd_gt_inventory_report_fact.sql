@@ -1,8 +1,6 @@
-
-
 with sdl_cbd_gt_inventory_report_fact as (
     select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
-)
+),
 final as (
  select 
  date::date as date,

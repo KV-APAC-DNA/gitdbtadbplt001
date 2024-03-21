@@ -422,16 +422,256 @@ sources:
                 store_failures: true
                 schema: thawks_integration
     - name: sdl_th_gt_route
+      tests:
+          - test_null:
+                not_null_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+                select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+                name: TRATBL_sdl_th_gt_route__null_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+              select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+              need_counts: "no"
+              name: TRATBL_sdl_th_gt_route__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_format:
+              where_clause: "split_part(upper(trim(filename)),'_',2) <>upper(trim(saleunit))"
+              failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME: ' || 'FILENAME' || '(OR)' || 'SALEUNIT'"
+              select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+              name: TRATBL_sdl_th_gt_route__test_format
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+          - test_date_format_odd_eve_leap:
+                model_nm: "{{ source('thasdl_raw', 'sdl_th_gt_route') }}"
+                date_column: "LAST_UPDATED_DATE"
+                filter: "(odd_mon.LAST_UPDATED_DATE) = (even_mon.LAST_UPDATED_DATE) and (even_mon.LAST_UPDATED_DATE) = (feb.LAST_UPDATED_DATE) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                failure_reason: "'LAST_UPDATED_DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+                select_columns: ["filename","saleunit","routeid","routesale","last_updated_date"]
+                name: TRATBL_sdl_th_gt_route__test_date_format_odd_eve_leap
+                config:
+                  store_failures: true
+                  schema: thawks_integration
     - name: sdl_th_gt_route_detail
+      tests:
+            - test_null:
+                  not_null_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                  select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                  name: TRATBL_sdl_th_gt_route_detail__null_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+            - test_duplicate:
+                group_by_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                need_counts: "no"
+                name: TRATBL_sdl_th_gt_route_detail__duplicate_test
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+            - test_format:
+                where_clause: "SPLIT_PART(UPPER(TRIM(FILENAME)),'_',2) <>UPPER(TRIM(SALEUNIT))"
+                failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME: ' || 'FILENAME' || '(OR)' || 'SALEUNIT'"
+                select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                name: TRATBL_sdl_th_gt_route_detail__test_format
+                config:
+                  store_failures: true
+                  schema: thawks_integration
+
+            - test_date_format_odd_eve_leap:
+                  model_nm: "{{ source('thasdl_raw', 'sdl_th_gt_route_detail') }}"
+                  date_column: "CREATED_DATE"
+                  filter: "(odd_mon.CREATED_DATE) = (even_mon.CREATED_DATE) and (even_mon.CREATED_DATE) = (feb.CREATED_DATE) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                  failure_reason: "'CREATED_DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+                  select_columns: ["filename","routeid","routeno","saleunit","customerid","created_date"]
+                  name: TRATBL_sdl_th_gt_route_detail__test_date_format_odd_eve_leap
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
     - name: sdl_th_gt_sales_order
+      tests:
+              - test_null:
+                    not_null_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                    select_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                    name: TRATBL_sdl_th_gt_sales_order__null_test
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
+              - test_duplicate:
+                  group_by_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                  select_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                  need_counts: "no"
+                  name: TRATBL_sdl_th_gt_sales_order__duplicate_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+              - test_format:
+                  where_clause: "SPLIT_PART(UPPER(TRIM(FILENAME)),'_',2) <> UPPER(TRIM(SALEUNIT))"
+                  failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME:  || FILENAME|| (OR) || SALEUNIT'"
+                  select_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                  name: TRATBL_sdl_th_gt_sales_order__test_format
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+              - test_date_format_odd_eve_leap:
+                    model_nm: "{{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}"
+                    date_column: "ORDERDATE"
+                    filter: "(odd_mon.ORDERDATE) = (even_mon.ORDERDATE) and (even_mon.ORDERDATE) = (feb.ORDERDATE) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                    failure_reason: "'ORDERDATE HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+                    select_columns: ["filename","saleunit","orderid","customer_id","productid","sales_order_line_no"]
+                    name: TRATBL_sdl_th_gt_sales_order__test_date_format_odd_eve_leap
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
     - name: sdl_cbd_gt_sales_report_fact
+      tests:
+                - test_null:
+                      not_null_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                      select_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                      name: TRATBL_sdl_cbd_gt_sales_report_fact__null_test
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+                - test_duplicate:
+                    group_by_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                    select_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                    need_counts: "no"
+                    name: TRATBL_sdl_cbd_gt_sales_report_fact__duplicate_test
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
+                - test_format:
+                    where_clause: "not regexp_like(billing_date , '[0-3][0-9]/[0-1][0-9]/[1-2][0-9][0-9][0-9]' )"
+                    failure_reason: "'INVALID Billing Date : Correct Format is DD/MM/YYYY'"
+                    select_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                    name: TRATBL_sdl_cbd_gt_sales_report_fact__test_format
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
+                - test_format:
+                    where_clause: "not regexp_like(expiry_date , '[0-3][0-9]/[0-1][0-9]/[0-9][0-9][0-9][0-9]' )"
+                    failure_reason: "'INVALID expiry Date : Correct Format is DD/MM/YYYY'"
+                    select_columns: ["filename","billing_date","order_no","sales_rep_no","customer_code","product_code","batch_no"]
+                    name: TRATBL_sdl_cbd_gt_sales_report_fact__test_format_2
+                    config:
+                      store_failures: true
+                      schema: thawks_integration
     - name: sdl_la_gt_sales_order_fact
+      tests:
+                    - test_null:
+                          not_null_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                          select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                          name: TRATBL_sdl_la_gt_sales_order_fact__null_test
+                          config:
+                            store_failures: true
+                            schema: thawks_integration
+                    - test_duplicate:
+                        group_by_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        need_counts: "no"
+                        name: TRATBL_sdl_la_gt_sales_order_fact__duplicate_test
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    - test_format:
+                        where_clause: "split_part(upper(trim(filename)),'_',2) <>upper(trim(saleunit))"
+                        failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    - test_format:
+                        where_clause: "not regexp_like(trim(orderdate), '[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-3][0-9]' )"
+                        failure_reason: "'INVALID ORDERDATE : Correct Format is YYYY/MM/DD'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format_2
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    - test_format:
+                        where_clause: "not regexp_like(trim(deliverydate), '[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]' )"
+                        failure_reason: "'INVALID DELIVERYDATE : Correct Format is YYYYMMDD'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format_3
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    -  test_format:
+                        where_clause: "not regexp_like(trim(approved_date), '[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]' )"
+                        failure_reason: "'INVALID APPROVED_DATE : Correct Format is YYYYMMDD'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format_4
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    -  test_format:
+                        where_clause: "not regexp_like(trim(ordertime), '[0-2][0-9]:[0-5][0-9]'  )"
+                        failure_reason: "'INVALID ORDERTIME : Correct Format is HH24:MM'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format_5
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                    -  test_format:
+                        where_clause: "not regexp_like(trim(approved_time), '[0-2][0-9][0-5][0-9]''  )"
+                        failure_reason: "'INVALID APPROVED_TIME : Correct Format is HH24:MM'"
+                        select_columns: ["filename","orderid","orderdate","saleunit","customer_id","productid","no"]
+                        name: TRATBL_sdl_la_gt_sales_order_fact__test_format_6
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
     - name: sdl_la_gt_route_header
-    - name: sdl_la_gt_route_detail
-          
+      tests:
+                  - test_null:
+                        not_null_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                        select_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                        name: TRATBL_sdl_la_gt_route_header__null_test
+                        config:
+                          store_failures: true
+                          schema: thawks_integration
+                  - test_duplicate:
+                      group_by_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                      select_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                      need_counts: "no"
+                      name: TRATBL_sdl_la_gt_route_header__duplicate_test
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+                  - test_format:
+                      where_clause: "split_part(upper(trim(filename)),'_',2) <>upper(trim(saleunit))"
+                      failure_reason: "'SALEUNIT IS NOT MATCHING WITH DISTRIBUTOR AVAILABLE IN FILE NAME'"
+                      select_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                      name: TRATBL_sdl_la_gt_route_header__test_format
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+                  - test_format:
+                      where_clause: "not regexp_like(trim(last_updated_date), '[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
+                      failure_reason: "'INVALID LAST_UPDATED_DATE : Expected format is YYYYMMDD'"
+                      select_columns: ["filename","route_id","routesale","saleunit","last_updated_date"]
+                      name: TRATBL_sdl_la_gt_route_header__test_format_2
+                      config:
+                        store_failures: true
+                        schema: thawks_integration          
   - name: thaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_th_gt_kpi_target_header
+
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thawks_integration
     quoting:
       database: false
       schema: false
@@ -444,4 +684,3 @@ sources:
       - name: wks_la_gt_sales_order_fact_pre_load
       - name: wks_la_gt_route_header_hashkey
       - name: wks_la_gt_route_detail_hashkey
-      - name: wks_th_gt_kpi_target_header
