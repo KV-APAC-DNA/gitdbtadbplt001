@@ -4,10 +4,8 @@ models:
   - name: thaitg_integration__itg_th_dtsregion
     config:
       alias: itg_th_dtsregion
-      tags: ["th_non_tesco"]
-
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_th_tims_region
     config:
       alias: itg_th_tims_region
-      tags: ["tesco_mt_7_11_and_tops"]
- 
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
