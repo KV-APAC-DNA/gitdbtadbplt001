@@ -11,13 +11,13 @@ edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_tb_my_curr_prev_sellin_fact as (
-    select * from DEV_DNA_CORE.YMOGER01_WORKSPACE.MYSEDW_INTEGRATION__EDW_TB_MY_CURR_PREV_SELLIN_FACT
+    select * from {{ ref('mysedw_integration__edw_tb_my_curr_prev_sellin_fact') }}
 ),
 edw_vw_my_customer_dim as (
-    select * from DEV_DNA_CORE.AAGRAW03_WORKSPACE.EDW_VW_MY_CUSTOMER_DIM
+    select * from {{ ref('mysedw_integration__edw_vw_my_customer_dim') }}
 ),
 edw_vw_my_material_dim as (
-    select * from DEV_DNA_CORE.AAGRAW03_WORKSPACE.MYSEDW_INTEGRATION__EDW_VW_MY_MATERIAL_DIM
+    select * from {{ ref('mysedw_integration__edw_vw_my_material_dim') }}
 ),
 itg_my_customer_dim as (
     select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
