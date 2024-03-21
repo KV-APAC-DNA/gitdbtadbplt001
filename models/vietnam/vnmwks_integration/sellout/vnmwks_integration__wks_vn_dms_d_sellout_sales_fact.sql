@@ -12,8 +12,7 @@ trans as(
         order_no,
         line_number
     having count(*) > 1
-)
-,
+),
 final as(
     select 
         dstrbtr_id as dstrbtr_id,
