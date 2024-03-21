@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_ps_weights
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["re","kpi","channel"]
@@ -28,10 +28,10 @@ sources:
                 schema: thawks_integration
 
     - name: sdl_mds_th_ps_store
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
 
     - name: sdl_mds_th_ps_targets
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["kpi", "channel"]
@@ -49,7 +49,7 @@ sources:
               schema: thawks_integration
 
     - name: sdl_jnj_mer_cop
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
       tests:
             - test_null:
                 not_null_columns: ['file_name','cop_date','emp_address_pc','pc_name','store_name','question','answer']
@@ -70,7 +70,7 @@ sources:
                   store_failures: true
                   schema: thawks_integration
     - name: sdl_jnj_mer_share_of_shelf
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
       tests:
             - test_null:
                 not_null_columns: ['file_name','sos_date','merchandiser_name','area','channel','account','store_name','category','agency','brand']
@@ -98,7 +98,7 @@ sources:
                   store_failures: true
                   schema: thawks_integration
     - name: sdl_jnj_osa_oos_report
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
       tests:
             - test_null:
                 not_null_columns: ['file_name','osa_oos_date','week','emp_address_pc','pc_name','area','channel','account','store_name','shop_type','brand','category','barcode','sku','msl_price_tag']

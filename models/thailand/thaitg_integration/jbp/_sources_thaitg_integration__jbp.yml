@@ -11,7 +11,7 @@ sources:
     tables:
 
     - name: sdl_mds_th_cop
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["code","year","month"]
@@ -29,7 +29,7 @@ sources:
                 schema: thawks_integration
 
     - name: sdl_mds_th_market_share_distribution
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["year_month","measure","category"]
@@ -47,7 +47,7 @@ sources:
               schema: thawks_integration
 
     - name: sdl_mds_th_rolling_forecast
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
           - test_null:
               not_null_columns: ['"fiscal_year/period"']

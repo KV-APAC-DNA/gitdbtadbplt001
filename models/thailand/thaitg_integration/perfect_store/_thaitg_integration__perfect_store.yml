@@ -4,46 +4,46 @@ models:
   - name: thaitg_integration__itg_mds_th_ps_weights
     config: 
       alias: itg_mds_th_ps_weights
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
 
   - name: thaitg_integration__itg_mds_th_ps_store
     config: 
       alias: itg_mds_th_ps_store
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","transformation"]
 
   - name: thaitg_integration__itg_mds_th_ps_targets
     config:
       alias: itg_mds_th_ps_targets
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
 
   - name: thaitg_integration__itg_jnj_mer_cop
     config: 
       alias: itg_jnj_mer_cop
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
 
 
   - name: thaitg_integration__itg_jnj_mer_share_of_shelf
     config: 
       alias: itg_jnj_mer_share_of_shelf
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
 
   - name: thaitg_integration__itg_jnj_osa_oos_report
     config: 
       alias: itg_jnj_osa_oos_report
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
 
   - name: thaitg_integration__sdl_raw_jnj_mer_cop
     config: 
       alias: sdl_raw_jnj_mer_cop
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
 
 
   - name: thaitg_integration__sdl_raw_jnj_mer_share_of_shelf
     config: 
       alias: sdl_raw_jnj_mer_share_of_shelf
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]
 
   - name: thaitg_integration__sdl_raw_jnj_osa_oos_report
     config: 
       alias: sdl_raw_jnj_osa_oos_report
-      tags: ["j_th_perfect_store_transaction"]
+      tags: ["j_th_perfect_store_transaction","ingestion"]

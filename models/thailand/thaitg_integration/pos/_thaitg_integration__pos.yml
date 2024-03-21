@@ -5,14 +5,14 @@ models:
   - name: thaitg_integration__itg_th_pos_sales_inventory_fact
     config:
       alias: itg_th_pos_sales_inventory_fact
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
 
   - name: thaitg_integration__sdl_th_tesco_transdata_pos_raw
     config:
       alias: sdl_th_tesco_transdata_pos_raw
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
 
   - name: thaitg_integration__itg_th_pos_material_dim
     config:
       alias: itg_th_pos_material_dim
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]

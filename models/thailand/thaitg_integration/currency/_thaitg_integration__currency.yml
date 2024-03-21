@@ -4,4 +4,4 @@ models:
   - name: thaitg_integration__itg_mds_th_lcm_exchange_rate
     config: 
       alias: itg_mds_th_lcm_exchange_rate
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]

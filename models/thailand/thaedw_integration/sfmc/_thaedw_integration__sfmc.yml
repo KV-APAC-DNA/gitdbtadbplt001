@@ -4,4 +4,4 @@ models:
   - name: thaedw_integration__edw_th_sfmc_analysis
     config: 
       alias: edw_th_sfmc_analysis
-      tags: ["th_sfmc_analysis_refresh"]
+      tags: ["th_sfmc_analysis_refresh","transformation"]

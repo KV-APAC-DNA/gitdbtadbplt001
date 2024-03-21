@@ -5,7 +5,7 @@ models:
   - name: thaedw_integration__edw_vw_th_dstrbtr_material_dim
     config: 
       alias: edw_vw_th_dstrbtr_material_dim
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   
 
 

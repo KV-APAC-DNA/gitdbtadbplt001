@@ -4,4 +4,4 @@ models:
   - name: thaitg_integration__itg_th_tims_branch
     config:
       alias: itg_th_tims_branch
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]

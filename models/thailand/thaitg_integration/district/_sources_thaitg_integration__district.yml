@@ -11,7 +11,7 @@ sources:
     tables:
 
     - name: sdl_mds_th_ref_city
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["code"]
@@ -29,7 +29,7 @@ sources:
                 schema: thawks_integration
 
     - name: sdl_mds_th_ref_district
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["code"]

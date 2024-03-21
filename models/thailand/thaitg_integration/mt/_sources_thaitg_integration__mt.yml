@@ -10,14 +10,14 @@ sources:
       identifier: false
     tables:
     - name: sdl_th_mt_watsons
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
     - name: sdl_th_mt_makro
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","ingestion"]
     - name: sdl_th_mt_bigc
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","ingestion"]
 
     - name: sdl_th_mt_price_data
-      tags: ["th_mt_daily_price_load"]
+      tags: ["th_mt_daily_price_load","ingestion"]
       tests:
           - test_duplicate:
               group_by_columns: ["date","sku_id","url"]
