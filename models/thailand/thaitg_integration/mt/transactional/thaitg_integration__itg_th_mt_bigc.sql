@@ -111,7 +111,7 @@ bigc as (
     on ltrim(a.barcode, 0) = b.barcd
 ),
 
-final (
+final as (
 select
   '108830'::varchar(6) as sold_to_code,
   store_format::varchar(500) as store_format,

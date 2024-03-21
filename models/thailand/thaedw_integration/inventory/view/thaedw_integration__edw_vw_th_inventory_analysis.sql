@@ -5,7 +5,7 @@ final as (
 select
   data_type,
   order_date,
-  year,
+  "year" as year,
   year_quarter,
   month_year,
   month_number,

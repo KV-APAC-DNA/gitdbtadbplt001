@@ -28,7 +28,7 @@ itg_th_dtsdistributor as
 ),
 vw_edw_th_mt_sellout as
 (
-    sselect * from {{ref('thaedw_integration__vw_edw_th_mt_sellout')}}
+    select * from {{ref('thaedw_integration__vw_edw_th_mt_sellout')}}
 ),
 vw_edw_th_mt_inventory as
 (

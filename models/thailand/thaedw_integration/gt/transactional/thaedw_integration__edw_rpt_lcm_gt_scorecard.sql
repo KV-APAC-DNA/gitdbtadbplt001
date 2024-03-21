@@ -15,8 +15,8 @@ union_1 as (select
   crncy_cd,
   cntry_nm,
   year_month,
-  year,
-  month,
+  "year" as year,
+  "month" as month,
   distributor_id,
   trim(retail_env) as store_type,
   trim(salesarea) as sales_area,
@@ -42,7 +42,7 @@ union_1 as (select
   null as exch_rate
 from edw_vw_rpt_lcm_gt_scorecard
 where
-  year >= (
+  "year" >= (
     date_part(year, current_timestamp()) - (
       select
         cast(parameter_value as int)
@@ -58,8 +58,8 @@ Group by
   crncy_cd,
   cntry_nm,
   year_month,
-  year,
-  month,
+  "year",
+  "month",
   distributor_id,
   trim(retail_env),
   trim(salesarea)
@@ -76,8 +76,8 @@ from (
     crncy_cd,
     cntry_nm,
     year_month,
-    year,
-    month,
+    "year" as year,
+    "month" as month,
     distributor_id,
     trim(retail_env) as store_type,
     trim(salesarea) as sales_area,
@@ -102,7 +102,7 @@ from (
     coalesce(sum(otif_count), 0) as otif_count
   from edw_vw_rpt_lcm_gt_scorecard
   where
-    year >= (
+    "year" >= (
       date_part(year, current_timestamp()) - (
         select
           cast(parameter_value as int)
@@ -118,8 +118,8 @@ from (
     crncy_cd,
     cntry_nm,
     year_month,
-    year,
-    month,
+    "year",
+    "month",
     distributor_id,
     trim(retail_env)  ,
     trim(salesarea) 
@@ -146,8 +146,8 @@ from (
     crncy_cd,
     cntry_nm,
     year_month,
-    year,
-    month,
+    "year" as year,
+    "month" as month,
     distributor_id,
     trim(retail_env) as store_type,
     trim(salesarea) as sales_area,
@@ -172,7 +172,7 @@ from (
     coalesce(sum(otif_count), 0) as otif_count
   from edw_vw_rpt_lcm_gt_scorecard
   where
-    year >= (
+    "year" >= (
       date_part(year, current_timestamp()) - (
         select
           cast(parameter_value as int)
@@ -188,8 +188,8 @@ from (
     crncy_cd,
     cntry_nm,
     year_month,
-    year,
-    month,
+    "year",
+    "month",
     distributor_id,
     trim(retail_env),
     trim(salesarea)

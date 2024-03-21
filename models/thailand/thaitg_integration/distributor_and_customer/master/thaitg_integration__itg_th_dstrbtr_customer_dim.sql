@@ -402,7 +402,7 @@ select
     tel_phn::varchar(150) as tel_phn,
     fax::varchar(150) as fax,
     city::varchar(500) as city,
-    region::varchar(20) as "region",
+    region::varchar(20) as region,
     ar_typ_cd::varchar(20) as ar_typ_cd,
     sls_dist::varchar(10) as sls_dist,
     sls_office::varchar(10) as sls_office,

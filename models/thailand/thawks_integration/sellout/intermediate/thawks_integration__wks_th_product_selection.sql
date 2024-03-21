@@ -6,7 +6,7 @@ edw_material_dim as (
 select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_vw_greenlight_skus as (
-select * {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
 final as (
 select 

@@ -46,7 +46,7 @@ final as(
         routestep10::varchar(10) as routestep10,
         store::varchar(200) as store,
         sourcefile::varchar(255) as sourcefile,
-        old_custid::varchar(25) as old_custid,
+        old_custid::varchar(500) as old_custid,
         try_to_timestamp(modifydate) as modifydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
         run_id::number(18,0) as run_id

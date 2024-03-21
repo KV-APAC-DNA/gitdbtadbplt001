@@ -26,7 +26,7 @@ edw_vw_os_material_dim as (
   select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
 ), 
 edw_material_dim as (
-  select * from {{ ref('thaedw_integration__edw_vw_th_material_dim') }}
+  select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ), 
 transformed as (
   select 
@@ -300,7 +300,7 @@ final as (
     segment::varchar(50) as segment,
     prod_category::varchar(50) as prod_category,
     pka_product_key::varchar(68) as pka_product_key,
-    min_date::date as date,
+    min_date::date as min_date,
     no_of_wks::varchar(2) as no_of_wks
     from transformed
 )

@@ -24,11 +24,11 @@ final as(
         email_name as email_name,
         TRIM(email_subject) as email_subject,
         file_name as file_name,
-        crt_dttm as crt_dttm
+        crtd_dttm as crtd_dttm
    from source
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    where crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
  {% endif %}
 )
 select * from final
