@@ -74,4 +74,4 @@ models:
   - name: thaitg_integration__itg_mym_gt_sales_report_fact
     config: 
       alias: itg_mym_gt_sales_report_fact
-      tags: ["myanmar_file_ingestion","ingestion"]   
+      tags: ["myanmar_file_ingestion","ingestion"]  

@@ -398,7 +398,6 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-
           - test_duplicate:
               group_by_columns: ["filename","route_id","customer_id","saleunit","created_date"]
               select_columns: ["filename","route_id","customer_id","saleunit","created_date"]
@@ -422,6 +421,14 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+    - name: sdl_th_gt_route
+    - name: sdl_th_gt_route_detail
+    - name: sdl_th_gt_sales_order
+    - name: sdl_cbd_gt_sales_report_fact
+    - name: sdl_la_gt_sales_order_fact
+    - name: sdl_la_gt_route_header
+    - name: sdl_la_gt_route_detail
+          
   - name: thaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaitg_integration
@@ -430,4 +437,11 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: wks_th_gt_route_hashkey
+      - name: wks_th_gt_route_detail_hashkey
+      - name: wks_th_gt_sales_order_pre_load
+      - name: wks_cbd_gt_sales_report_fact_pre_load
+      - name: wks_la_gt_sales_order_fact_pre_load
+      - name: wks_la_gt_route_header_hashkey
+      - name: wks_la_gt_route_detail_hashkey
       - name: wks_th_gt_kpi_target_header
