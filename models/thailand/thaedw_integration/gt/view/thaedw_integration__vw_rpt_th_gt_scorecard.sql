@@ -4462,7 +4462,7 @@ cte6 as (
 final as 
 (
 SELECT
-  derived_table3.identifier::varchar(20) as identifier,
+  derived_table3.identifier::varchar(9) as identifier,
   derived_table3.cntry_cd::varchar(5) as cntry_cd,
   derived_table3.crncy_cd::varchar(3) as crncy_cd,
   derived_table3.cntry_nm::varchar(8) as cntry_nm,
@@ -4473,7 +4473,7 @@ SELECT
   derived_table3.store_type::varchar(100) as store_type,
   derived_table3.sales_area::varchar(161) as sales_area,
   derived_table3.sell_out_actual,
-  to_number(derived_table3.gross_sell_out_actual,38,6) as gross_sell_out_actual,
+  to_number(derived_table3.gross_sell_out_actual,38,12) as gross_sell_out_actual,
   derived_table3.net_sell_out_actual,
   derived_table3.sell_out_target,
   derived_table3.msl_actual_count,
