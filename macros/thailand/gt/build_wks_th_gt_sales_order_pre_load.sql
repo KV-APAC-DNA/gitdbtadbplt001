@@ -208,12 +208,10 @@
         {% else %}
             {{schema}}.thaitg_integration__itg_th_gt_sales_order
         {% endif %}
-    WHERE orderdate >= (SELECT MIN(orderdate) FROM dev_dna_load.snaposesdl_raw.sdl_th_gt_sales_order
-    --{{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
+    WHERE orderdate >= (SELECT MIN(orderdate) FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
     )
     AND   UPPER(saleunit) IN (SELECT DISTINCT UPPER(saleunit)
-                            FROM dev_dna_load.snaposesdl_raw.sdl_th_gt_sales_order
-                            --{{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
+                            FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
                             );
     {% endset %}
 

@@ -12,8 +12,7 @@ with wks_th_gt_route_hashkey as (
     select * from {{ source('thawks_integration', 'wks_th_gt_route_hashkey') }}
 ),
 sdl_th_gt_route as (
-    --select * from {{ source('thasdl_raw', 'sdl_th_gt_route') }}
-    select * from DEV_DNA_LOAD.snaposesdl_raw.sdl_th_gt_route
+    select * from {{ source('thasdl_raw', 'sdl_th_gt_route') }}
 )
 SELECT wks.cntry_cd,
        wks.crncy_cd,

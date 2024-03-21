@@ -70,8 +70,7 @@
     {% endif %}
     
     WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                    FROM dev_dna_load.snaposesdl_raw.sdl_th_gt_route
-                                    --{{ source('thasdl_raw', 'sdl_th_gt_route') }}
+                                    FROM {{ source('thasdl_raw', 'sdl_th_gt_route') }}
                                     )
     AND   UPPER(flag) IN ('I','U'); 
     {% endset %}
