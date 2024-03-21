@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_th_htc_sellout
-        tags: ["th_non_tesco"]
+        tags: ["th_non_tesco","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["distributorid","customer_code"]
@@ -19,13 +19,12 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-
       - name: sdl_th_dms_sellout_fact
-        tags: ["th_mbox_files"]
+        tags: ["th_mbox_files","ingestion"]
       - name: sdl_th_tesco_transdata
-        tags: ["tesco_mt_7_11_and_tops"]
+        tags: ["tesco_mt_7_11_and_tops","transformation"]
       - name: sdl_la_gt_sellout_fact
-        tags: ["laos_file_ingestion"]
+        tags: ["laos_file_ingestion","ingestion"]
         tests:
           - test_duplicate:
               group_by_columns: ["filename","distributorid","orderno","orderdate ","arcode","linenumber"]
@@ -43,7 +42,6 @@ sources:
                 store_failures: true
                 schema: thawks_integration
 
-
   - name: thaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaitg_integration
@@ -56,4 +54,3 @@ sources:
       - name: itg_lookup_retention_period
       - name: itg_th_dtssaletrans
       - name: itg_th_dtsinventorybal
-  

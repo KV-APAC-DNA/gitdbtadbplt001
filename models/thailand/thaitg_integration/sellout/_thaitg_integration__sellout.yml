@@ -4,31 +4,28 @@ models:
   - name: thaitg_integration__itg_th_dms_sellout_fact
     config: 
       alias: itg_th_dms_sellout_fact
-      tags: ["th_mbox_files"]
-
+      tags: ["th_mbox_files","ingestion"]
   - name: thaitg_integration__sdl_raw_th_dms_sellout_fact
     config: 
       alias: sdl_raw_th_dms_sellout_fact
-      tags: ["th_mbox_files"]
-
+      tags: ["th_mbox_files","ingestion"]
   - name: thaitg_integration__itg_th_htc_sellout
     config:
       alias: itg_th_htc_sellout
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_th_sellout_sales_foc_fact
     config:
       alias: itg_th_sellout_sales_foc_fact
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaitg_integration__itg_th_sellout_sales_fact
     config:
       alias: itg_th_sellout_sales_fact
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]
   - name: thaitg_integration__itg_th_tims_transdata
     config:
       alias: itg_th_tims_transdata
-      tags: ["tesco_mt_7_11_and_tops"]
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thaitg_integration__sdl_raw_la_gt_sellout_fact
     config: 
       alias: sdl_raw_la_gt_sellout_fact
-      tags: ["laos_file_ingestion"]
-
+      tags: ["laos_file_ingestion","ingestion"]
