@@ -4,4 +4,4 @@ models:
   - name: thaitg_integration__itg_th_dstrbtr_material_dim
     config: 
       alias: itg_th_dstrbtr_material_dim
-      tags: ["th_itg_to_edw"]
+      tags: ["th_itg_to_edw","transformation"]

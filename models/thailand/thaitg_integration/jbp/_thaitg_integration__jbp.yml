@@ -4,12 +4,12 @@ models:
   - name: thaitg_integration__itg_th_jbp_cop
     config:
       alias: itg_th_jbp_cop
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_th_jbp_market_share_dist
     config:
       alias: itg_th_jbp_market_share_dist
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
   - name: thaitg_integration__itg_th_jbp_rolling_forecast
     config: 
       alias: itg_th_jbp_rolling_forecast
-      tags: ["th_non_tesco"]
+      tags: ["th_non_tesco","ingestion"]
