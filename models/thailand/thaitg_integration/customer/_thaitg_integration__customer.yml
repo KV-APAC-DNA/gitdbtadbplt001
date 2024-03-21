@@ -58,3 +58,7 @@ models:
     config:
       alias: itg_la_gt_customer_snapshot
       tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_th_dms_customer_dim
+    config:
+      alias: itg_th_dms_customer_dim
+      tags: ["th_mbox_files","ingestion"]
