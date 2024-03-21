@@ -11,7 +11,7 @@ sources:
     tables:
 
     - name: sdl_mds_th_ref_city
-      tags: ["th_non_tesco",""]
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ["code"]

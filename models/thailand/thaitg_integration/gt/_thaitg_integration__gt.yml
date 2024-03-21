@@ -4,59 +4,59 @@ models:
   - name: thaitg_integration__sdl_raw_la_gt_schedule
     config:
       alias: sdl_raw_la_gt_schedule
-      tags: ["laos_file_ingestion",""]
+      tags: ["laos_file_ingestion"]
   - name: thaitg_integration__sdl_raw_la_gt_visit
     config: 
       alias: sdl_raw_la_gt_visit
-      tags: ["laos_file_ingestion",""]
+      tags: ["laos_file_ingestion"]
   - name: thaitg_integration__itg_la_gt_schedule
     config:
       alias: itg_la_gt_schedule
-      tags: ["laos_file_ingestion",""]
+      tags: ["laos_file_ingestion"]
 
   - name: thaitg_integration__itg_la_gt_visit
     config: 
       alias: itg_la_gt_visit
-      tags: ["laos_file_ingestion",""]
+      tags: ["laos_file_ingestion"]
   - name: thaitg_integration__itg_th_gt_schedule
     config: 
       alias: itg_th_gt_schedule
-      tags: ["th_gt_schedule"]
+      tags: ["th_gt_files"]
 
   - name: thaitg_integration__sdl_raw_th_gt_schedule
     config: 
       alias: sdl_raw_th_gt_schedule
-      tags: ["th_gt_schedule"]
+      tags: ["th_gt_files"]
 
   - name: thaitg_integration__itg_th_mt_7_11
     config: 
       alias: itg_th_mt_7_11
-      tags: ["th_mt_7_eleven"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__sdl_raw_th_mt_7_11
     config: 
       alias: sdl_raw_th_mt_7_11
-      tags: ["th_mt_7_eleven"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__itg_th_mt_tops
     config: 
       alias: itg_th_mt_tops
-      tags: ["th_mt_tops"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__sdl_raw_th_mt_tops
     config: 
       alias: sdl_raw_th_mt_tops
-      tags: ["th_mt_tops"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__sdl_raw_th_gt_msl_distribution
     config: 
       alias: sdl_raw_th_gt_msl_distribution
-      tags: ["th_gt_msld"]   
+      tags: ["th_gt_files"]   
 
   - name: thaitg_integration__itg_th_gt_target_sales_re
     config: 
       alias: itg_th_gt_target_sales_re
-      tags: ["th_non_tesco",""]
+      tags: ["th_non_tesco"]
 
   - name: thaitg_integration__itg_th_gt_kpi_target
     config:

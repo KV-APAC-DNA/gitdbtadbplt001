@@ -9,5 +9,5 @@ models:
   - name: thaitg_integration__itg_th_tims_region
     config:
       alias: itg_th_tims_region
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops"]
  

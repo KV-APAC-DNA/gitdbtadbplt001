@@ -14,7 +14,7 @@ models:
   - name: thaitg_integration__itg_th_dms_chana_customer_dim
     config: 
       alias: itg_th_dms_chana_customer_dim
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files"]
 
   - name: thaitg_integration__itg_th_htc_customer
     config: 
@@ -24,17 +24,17 @@ models:
   - name: thaitg_integration__sdl_raw_th_dms_chana_customer_dim
     config: 
       alias: sdl_raw_th_dms_chana_customer_dim
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files"]
 
   - name: thaitg_integration__sdl_raw_th_dms_customer_dim
     config: 
       alias: sdl_raw_th_dms_customer_dim
-      tags: ["th_mbox_customer"]
+      tags: ["th_mbox_files"]
 
   - name: thaitg_integration__itg_th_pos_customer_dim
     config: 
       alias: itg_th_pos_customer_dim
-      tags: ["j_ap_th_tesco_etl_framework"]
+      tags: ["tesco_mt_7_11_and_tops"]
 
   - name: thaitg_integration__itg_mym_gt_customer
     config:

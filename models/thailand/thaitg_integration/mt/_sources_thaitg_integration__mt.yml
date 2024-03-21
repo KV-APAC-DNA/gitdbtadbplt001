@@ -12,12 +12,12 @@ sources:
     - name: sdl_th_mt_watsons
       tags: ["th_non_tesco"]
     - name: sdl_th_mt_makro
-      tags: ["j_ap_th_tesco_etl_framework",""]
+      tags: ["tesco_mt_7_11_and_tops"]
     - name: sdl_th_mt_bigc
-      tags: ["j_ap_th_tesco_etl_framework",""]
+      tags: ["tesco_mt_7_11_and_tops"]
 
     - name: sdl_th_mt_price_data
-      tags: ["th_mt_daily_price_load",""]
+      tags: ["th_mt_daily_price_load"]
       tests:
           - test_duplicate:
               group_by_columns: ["date","sku_id","url"]

@@ -4,43 +4,43 @@ models:
   - name: thaitg_integration__sdl_raw_th_sfmc_bounce_data
     config: 
       alias: sdl_raw_th_sfmc_bounce_data
-      tags: ["th_sfmc_bounce",""]
-  - name: thait_integration__sdl_raw_th_sfmc_children_data
+      tags: ["th_sfmc_files"]
+  - name: thaitg_integration__sdl_raw_th_sfmc_children_data
     config: 
       alias: sdl_raw_th_sfmc_children_data
-      tags: ["th_crm_childern"]
+      tags: ["th_crm_files"]
   
   - name: thaitg_integration__sdl_raw_th_sfmc_consumer_master
     config:
       alias: sdl_raw_th_sfmc_consumer_master
-      tags: ["th_crm_consumer_master"]
+      tags: ["th_crm_files"]
   
   - name: thaitg_integration__sdl_raw_th_sfmc_consumer_master_additional
     config:
       alias: sdl_raw_th_sfmc_consumer_master_additional
-      tags: ["th_crm_consumer_master_additional"]
+      tags: ["th_crm_files"]
   
   - name: thaitg_integration__sdl_raw_th_sfmc_open_data
     config:
       alias: sdl_raw_th_sfmc_open_data
-      tags: ["th_sfmc_open"]
+      tags: ["th_sfmc_files"]
 
   
   - name: thaitg_integration__sdl_raw_th_sfmc_unsubscribe_data
     config:
       alias: sdl_raw_th_sfmc_unsubscribe_data
-      tags: ["th_sfmc_unsubscribe"]
+      tags: ["th_sfmc_files"]
   - name: thaitg_integration__sdl_raw_th_sfmc_complaint_data
     config: 
       alias: sdl_raw_th_sfmc_complaint_data
-      tags: ["th_sfmc_complaint"]
+      tags: ["th_sfmc_files"]
 
   - name: thaitg_integration__sdl_raw_th_sfmc_click_data
     config: 
       alias: sdl_raw_th_sfmc_click_data
-      tags: ["th_sfmc_click"]
+      tags: ["th_sfmc_files"]
 
   - name: thaitg_integration__sdl_raw_th_sfmc_sent_data
     config: 
       alias: sdl_raw_th_sfmc_sent_data
-      tags: ["th_sfmc_sent_data"]
+      tags: ["th_sfmc_files"]

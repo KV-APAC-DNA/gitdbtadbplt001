@@ -10,10 +10,10 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_th_mym_product_master
-      tags: ["th_non_tesco",""]
+      tags: ["th_non_tesco"]
       
     - name: sdl_mds_th_ref_distributor_item_unit
-      tags: ["th_non_tesco",""]
+      tags: ["th_non_tesco"]
       tests:
           - test_null:
               not_null_columns: ["code"]
