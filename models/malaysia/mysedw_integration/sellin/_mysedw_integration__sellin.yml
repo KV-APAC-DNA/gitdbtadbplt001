@@ -42,3 +42,15 @@ models:
     config:
       alias: edw_tb_my_sellin_analysis_part2
       tags: ["my_sellin_analysis","transformation"]
+  - name: mysedw_integration__edw_tb_my_sellin_analysis_primarynull_source
+    config:
+      alias: edw_tb_my_sellin_analysis_primarynull_source
+      tags: ["my_sellin_analysis","transformation"]
+  - name: mysedw_integration__edw_tb_my_sellin_analysis_primarynull_intermediate
+    config:
+      alias: edw_tb_my_sellin_analysis_primarynull_intermediate
+      tags: ["my_sellin_analysis","transformation"]
+  - name: mysedw_integration__edw_tb_my_sellin_analysis_primarynull_final
+    config:
+      alias: edw_tb_my_sellin_analysis_primarynull_final
+      tags: ["my_sellin_analysis","transformation"]
