@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: thawks_integration__thailand_propagate_to
+    config:
+      alias: thailand_propagate_to
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__thailand_propagate_from_to
+    config:
+      alias: thailand_propagate_from_to
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_th_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_th_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_inventory_health_analysis_propagation_final
+    config:
+      alias: wks_thailand_inventory_health_analysis_propagation_final
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_allmonths_base
+    config:
+      alias: wks_thailand_allmonths_base
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_base_detail
+    config:
+      alias: wks_thailand_base_detail
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_lastnmonths
+    config:
+      alias: wks_thailand_lastnmonths
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_base
+    config:
+      alias: wks_thailand_base
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_inventory_health_analysis_propagation_prestep
+    config:
+      alias: wks_thailand_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: thawks_integration__wks_thailand_inventory_health_analysis_propagation
+    config:
+      alias: wks_thailand_inventory_health_analysis_propagation
+      tags: ["j_ap_th_reg_data_refresh","transformation"]

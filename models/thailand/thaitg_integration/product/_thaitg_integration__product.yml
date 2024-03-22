@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dtsitemunit
+    config: 
+      alias: itg_th_dtsitemunit
+      tags: ["th_non_tesco","ingestion"]
+  - name: thaitg_integration__itg_mds_th_mym_product_master
+    config: 
+      alias: itg_mds_th_mym_product_master
+      tags: ["th_non_tesco","transformation"]
+
+  - name: thaitg_integration__itg_th_dtsitemmaster
+    config:
+      alias: itg_th_dtsitemmaster
+      tags: ["th_non_tesco","ingestion"]
+  - name: thaitg_integration__itg_th_dtsmcl
+    config:
+      alias: itg_th_dtsmcl
+      tags: ["th_non_tesco","ingestion"]
+
+  - name: thaitg_integration__itg_th_dtsnpi
+    config: 
+      alias: itg_th_dtsnpi
+      tags: ["th_non_tesco","ingestion"]
+
+  - name: thaitg_integration__itg_mds_th_cbd_item_master
+    config: 
+      alias: itg_mds_th_cbd_item_master
+      tags: ["th_non_tesco","transformation"]
+
+  - name: thaitg_integration__itg_th_productgrouping
+    config: 
+      alias: itg_th_productgrouping
+      tags: ["th_non_tesco","ingestion"]

@@ -1,6 +1,9 @@
 with edw_account_ciw_dim as(
     select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
+edw_account_ciw_xref as (
+    select * from {{ source('aspedw_integration', 'edw_account_ciw_xref') }}
+),
 tranformed as(
 SELECT
   derived_table1.chrt_acct,
@@ -807,7 +810,7 @@ FROM (
           ) AS TEXT)) <> 0
         )
     ) AS a
-    JOIN ASPEDW_INTEGRATION.edw_account_ciw_xref AS b
+    JOIN edw_account_ciw_xref AS b
       ON (
         (
           (
