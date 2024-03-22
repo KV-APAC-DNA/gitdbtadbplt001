@@ -18,7 +18,7 @@ sources:
               name: TRATBL_sdl_mds_th_ref_region__null_test
               config:
                 store_failures: true
-                schema: check
+                schema: thawks_integration
           - test_duplicate:
               group_by_columns: ["code"]
               select_columns: ["code", "name"]
