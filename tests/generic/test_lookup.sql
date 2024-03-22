@@ -1,9 +1,9 @@
-{% test test_lookup(model,select_columns=None,column=none,lookup_table=None,lookup_column=None,lookup_filter=None,filter=None,additional_filter=None)%}
+{% test test_lookup(model,select_columns=None,column=none,lookup_table=None,lookup_column=None,lookup_filter=None,filter=None,additional_filter=None,failure_reason="'KEY COLUMN IS NOT PRESENT IN LOOKUP TABLE'")%}
 
 {% if select_columns!=None %}
 
     select 
-        'KEY COLUMN IS NOT PRESENT IN LOOKUP TABLE' AS failure_reason,
+        {{failure_reason}} as failure_reason,
         {%- for item in select_columns %}
         trim({{item}}) as {{item}}
         {%- if not loop.last -%},
@@ -21,10 +21,10 @@
         where 
             not ({{column}}) in (
                 select distinct
-                    ({{lookup_column}})
+                    {{lookup_column}}
                 from  {{lookup_table}}
 
-                {%- if lookup_filter !=None -%}
+                {%- if lookup_filter !=None %}
                 where {{lookup_filter}}
                 
     {% endif %}

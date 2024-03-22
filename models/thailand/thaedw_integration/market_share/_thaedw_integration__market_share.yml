@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  
+  - name: thaedw_integration__edw_th_market_share_distribution_analysis
+    config: 
+      alias: edw_th_market_share_distribution_analysis
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_integration__edw_vw_th_market_share_distribution
+    config: 
+      alias: edw_vw_th_market_share_distribution
+      tags: ["th_itg_to_edw","transformation"]
+  
+
+
+

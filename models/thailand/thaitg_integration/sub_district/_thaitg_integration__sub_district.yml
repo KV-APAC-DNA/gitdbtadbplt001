@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_dtssubdistrict
+    config: 
+      alias: itg_th_dtssubdistrict
+      tags: ["th_non_tesco","ingestion"]

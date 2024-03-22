@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_ciw_account_lookup
+    config: 
+      alias: itg_th_ciw_account_lookup
+      tags: ["th_non_tesco","ingestion"]

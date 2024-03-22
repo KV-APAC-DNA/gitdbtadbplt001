@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_vw_sfmc_children_data
+    config: 
+      alias: edw_vw_sfmc_children_data
+      tags: ["th_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_consumer_master
+    config:
+      alias: edw_vw_sfmc_consumer_master
+      tags: ["th_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_email_activity_fact
+    config: 
+      alias: edw_vw_sfmc_email_activity_fact
+      tags: ["th_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_th_sfmc_analysis
+    config:
+      alias: edw_vw_th_sfmc_analysis
+      tags: ["th_sfmc_analysis_refresh","transformation"]
