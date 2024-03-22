@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: thaitg_integration__itg_th_sellout_inventory_fact
+    config: 
+      alias: itg_th_sellout_inventory_fact
+      tags: ["th_itg_to_edw","transformation"]

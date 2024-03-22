@@ -1,0 +1,77 @@
+with source as (
+    select * from {{ ref('thaedw_integration__edw_vw_th_inventory_analysis_base_6year_filter') }}
+),
+final as (
+select
+  data_type,
+  order_date,
+  "year" as year,
+  year_quarter,
+  month_year,
+  month_number,
+  year_week_number,
+  month_week_number,
+  country_code,
+  country_name,
+  distributor_id,
+  whcode,
+  whgroup,
+  sku_code,
+  sku_description,
+  franchise,
+  brand,
+  variant,
+  segment,
+  put_up_description,
+  prod_sub_brand,
+  prod_subsegment,
+  prod_category,
+  prod_subcategory,
+  sap_cust_id,
+  sap_cust_nm,
+  sap_sls_org,
+  sap_cmp_id,
+  sap_cntry_cd,
+  sap_cntry_nm,
+  sap_addr,
+  sap_region,
+  sap_state_cd,
+  sap_city,
+  sap_post_cd,
+  sap_chnl_cd,
+  sap_chnl_desc,
+  sap_sls_office_cd,
+  sap_sls_office_desc,
+  sap_sls_grp_cd,
+  sap_sls_grp_desc,
+  sap_prnt_cust_key,
+  sap_prnt_cust_desc,
+  sap_cust_chnl_key,
+  sap_cust_chnl_desc,
+  sap_cust_sub_chnl_key,
+  sap_sub_chnl_desc,
+  sap_go_to_mdl_key,
+  sap_go_to_mdl_desc,
+  sap_bnr_key,
+  sap_bnr_desc,
+  sap_bnr_frmt_key,
+  sap_bnr_frmt_desc,
+  retail_env,
+  sales_quantity,
+  return_quantity,
+  gross_trade_sales,
+  inventory_quantity,
+  amount_before_discount,
+  inventory,
+  si_gross_trade_sales_value,
+  si_tp_value,
+  si_net_trade_sales_value
+from source
+where
+  (
+    year > 
+      (date_part(year, current_timestamp()) - 3)
+    
+  )
+)
+select * from final
