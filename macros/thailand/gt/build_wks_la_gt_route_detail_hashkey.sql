@@ -50,7 +50,7 @@
             run_id,
             crt_dttm
 FROM 
-{% if target=='prod' %}
+{% if target.name=='prod' %}
         thaitg_integration.itg_la_gt_route_detail
     {% else %}
         {{schema}}.thaitg_integration__itg_la_gt_route_detail
@@ -64,4 +64,7 @@ AND   UPPER(flag) IN ('I','U');
 
     {% do run_query(query) %}
 {% endmacro %}
+
+
+
 
