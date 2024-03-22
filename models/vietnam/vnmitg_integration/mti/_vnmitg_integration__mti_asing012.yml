@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_spiral_mti_offtake
+    config: 
+      alias: itg_spiral_mti_offtake
+      tags: ["vn_mti_offtake"]
+  - name: vnmitg_integration__sdl_raw_spiral_mti_offtake
+    config: 
+      alias: sdl_raw_spiral_mti_offtake
+      tags: ["vn_mti_offtake"]
+  

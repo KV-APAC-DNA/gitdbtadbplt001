@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_interface_answers
+    config: 
+      alias: itg_vn_interface_answers
+      tags: ["vn_perfect_store"]
+  - name: vnmitg_integration__itg_vn_interface_customer_visited
+    config: 
+      alias: itg_vn_interface_customer_visited
+      tags: ["vn_perfect_store"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_customer_visited
+    config: 
+      alias: sdl_raw_vn_interface_customer_visited
+      tags: ["vn_perfect_store"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_answers
+    config: 
+      alias: sdl_raw_vn_interface_answers
+      tags: ["vn_perfect_store"]

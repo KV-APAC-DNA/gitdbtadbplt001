@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: snaposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snaposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_gt_topdoor_target
+        tags: ["j_ap_dna_etl_framework_vn_td_tgt"]
+      - name: sdl_vn_dms_kpi
+        tags: ["vn_dms_master"]
+      - name: sdl_vn_mt_sellout_con_cung
+        tags: ["vn_mt_pos_transaction"]
+      - name: sdl_vn_mt_sellout_guardian
+        tags: ["vn_mt_pos_transaction"]
+      - name: sdl_vn_mt_sellout_lotte
+        tags: ["vn_mt_pos_transaction"]

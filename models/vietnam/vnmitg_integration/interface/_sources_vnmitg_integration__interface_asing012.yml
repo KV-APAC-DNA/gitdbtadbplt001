@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_interface_answers
+        tags: ["vn_perfect_store"]
+      - name: sdl_vn_interface_customer_visited
+        tags: ["vn_perfect_store"]
+      
