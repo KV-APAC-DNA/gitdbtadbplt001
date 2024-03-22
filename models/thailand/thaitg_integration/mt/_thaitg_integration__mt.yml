@@ -11,7 +11,7 @@ models:
       tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thawks_integration__sdl_raw_th_mt_makro_raw
     config:
-      alias: th_mt_makro_raw
+      alias: sdl_raw_th_mt_makro_raw
       tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thaitg_integration__itg_th_mt_bigc
     config:
