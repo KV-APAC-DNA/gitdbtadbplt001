@@ -88,7 +88,7 @@
         run_id,
         crt_dttm
         FROM
-        {% if target=='prod' %}
+        {% if target.name=='prod' %}
                     thaitg_integration.itg_cbd_gt_sales_report_fact
                 {% else %}
                     {{schema}}.thaitg_integration__itg_cbd_gt_sales_report_fact

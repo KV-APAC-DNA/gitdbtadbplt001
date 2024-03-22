@@ -196,7 +196,7 @@
         run_id,
         crt_dttm
     FROM 
-    {% if target=='prod' %}
+    {% if target.name=='prod' %}
                     thaitg_integration.itg_la_gt_sales_order_fact
                 {% else %}
                     {{schema}}.thaitg_integration__itg_la_gt_sales_order_fact
