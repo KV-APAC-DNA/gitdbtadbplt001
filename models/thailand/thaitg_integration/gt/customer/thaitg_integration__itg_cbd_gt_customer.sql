@@ -139,4 +139,4 @@ select
     updt_dttm::timestamp_ntz(9) as updt_dttm
 from transformed
 )
-select * from transformed
+select * from final
