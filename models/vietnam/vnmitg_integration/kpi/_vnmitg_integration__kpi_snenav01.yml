@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_dms_kpi_sellin_sellthrgh
+    config:
+      alias: itg_vn_dms_kpi_sellin_sellthrgh
+      tags: ["vn_dms_master",""]
+  - name: vnmitg_integration__sdl_raw_vn_dms_kpi_sellin_sellthrgh
+    config:
+      alias: sdl_raw_vn_dms_kpi_sellin_sellthrgh
+      tags: ["vn_dms_master",""]

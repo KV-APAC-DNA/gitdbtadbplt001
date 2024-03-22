@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wrk_vn_mnth_week
+    config:
+      alias: vn_dms_master
+      tags: ["vn_dms_master"]

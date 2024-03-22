@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snaposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_mt_sellout_aeon
+        tags: ["vn_mt_pos_transaction",""]
+      - name: sdl_vn_mt_sellout_bhx
+        tags: ["vn_mt_pos_transaction",""]
+
+  - name: vnmitg_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_vn_distributor_sap_sold_to_mapping

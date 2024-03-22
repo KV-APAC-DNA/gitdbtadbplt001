@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_sellin_target
+    config:
+      alias: itg_vn_mt_sellin_target
+      tags: ["vn_mt_sellin_target",""]
+  - name: vnmitg_integration__itg_vn_weekly_sellin_target
+    config:
+      alias: itg_vn_weekly_sellin_target
+      tags: ["vn_dms_sellin_weekly_target",""]
+  - name: vnmitg_integration__sdl_raw_vn_mt_sellin_target
+    config:
+      alias: sdl_raw_vn_mt_sellin_target
+      tags: ["vn_mt_sellin_target",""]
