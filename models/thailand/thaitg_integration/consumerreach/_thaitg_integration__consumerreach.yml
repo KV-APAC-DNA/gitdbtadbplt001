@@ -27,7 +27,7 @@ models:
       tags: ["j_th_perfect_store_transaction","ingestion"]
   - name: thaitg_integration__sdl_raw_jnj_consumerreach_cvs
     config: 
-      alias: itg_jnj_consumerreach_cvs
+      alias: sdl_raw_jnj_consumerreach_cvs
       tags: ["j_th_perfect_store_transaction","ingestion"]
 
 
