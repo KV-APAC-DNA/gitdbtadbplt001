@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: vnmitg_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_query_parameters
