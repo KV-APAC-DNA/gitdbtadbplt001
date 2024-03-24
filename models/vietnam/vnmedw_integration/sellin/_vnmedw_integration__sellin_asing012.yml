@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_mt_sellin_target
+    config: 
+      alias: edw_vw_vn_mt_sellin_target
+      tags: [""] 
+      # cant find jobname

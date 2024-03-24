@@ -39,7 +39,7 @@ where (
 		and (itg_vn_mt_sellin_target.mti_code is not null)
 		)
 ),
-final AS
+final as
 (
     select * from jnj 
     union all

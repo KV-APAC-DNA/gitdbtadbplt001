@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_mt_offtake_exception_report
+    config: 
+      alias: edw_vw_vn_mt_offtake_exception_report
+      tags: ["vn_mt_sellin_sellout_edw_load"]
