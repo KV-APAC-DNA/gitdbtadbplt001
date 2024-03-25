@@ -7,14 +7,14 @@
 with 
 wks_vn_oneview_rpt as 
 (
-    select * from {{ ref('vnmsdl_wks__wks_vn_oneview_rpt') }}
+    select * from {{ ref('vnmwks_integration__wks_vn_oneview_rpt') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_query_parameters as 
 (
-    select * from {{ source('vnmitg_integration', 'itg_query_parameters') }}
+    select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
 ),
 
 time_dim as 

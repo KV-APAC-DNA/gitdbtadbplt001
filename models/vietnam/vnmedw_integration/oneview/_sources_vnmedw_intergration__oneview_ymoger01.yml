@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: vnmitg_integration
+  - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: vnmsdl_raw
+    schema: sgpitg_integration
     quoting:
       database: false
       schema: false

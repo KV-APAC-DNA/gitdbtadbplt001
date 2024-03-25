@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: vnmedw_integration__wks_vn_oneview_rpt
+  - name: vnmwks_integration__wks_vn_oneview_rpt
     config:
       alias: wks_vn_oneview_rpt
       tags: ["vn_oneview_datamart_refresh",""]
