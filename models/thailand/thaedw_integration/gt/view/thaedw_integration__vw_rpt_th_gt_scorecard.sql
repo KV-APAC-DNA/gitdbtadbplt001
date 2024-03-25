@@ -38,7 +38,7 @@ edw_vw_th_gt_visit as (
     select * from {{ ref('thaedw_integration__edw_vw_th_gt_visit') }}
 ),
 itg_query_parameters as (
-    select * from {{source('sgpitg_integration','itg_query_parameters')}}
+    select * from {{source('aspitg_integration','itg_query_parameters')}}
 ),
 
 cte1 as (
