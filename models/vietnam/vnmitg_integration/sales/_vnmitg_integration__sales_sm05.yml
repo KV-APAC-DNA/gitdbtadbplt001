@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_dms_sales_org_dim
+    config: 
+      alias: itg_vn_dms_sales_org_dim
+      tags: ["my_sellin","ingestion"]

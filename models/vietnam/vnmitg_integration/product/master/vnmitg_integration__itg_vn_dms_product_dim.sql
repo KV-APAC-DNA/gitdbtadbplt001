@@ -3,12 +3,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['product_code'],
-        pre_hook= "delete from {{this}} where product_code in ( select product_code from {{ ref('vnmwks_integration__wks_vn_dms_product_dim') }} ))"
+        pre_hook= "delete from {{this}} where product_code in ( select product_code from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} )"
     )
 }}
 
 with source as(
-    select * from {{ ref('vnmwks_integration__wks_vn_dms_product_dim') }}
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }}
 ),
 final as(
     select
@@ -26,7 +26,7 @@ final as(
         variant::varchar(100) as variant,
         product_group::varchar(200) as product_group,
         TRIM(active, ',')::varchar(1) as active,
-        curr_date as crtd_dttm,
+        curr_date::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         run_id::number(14,0) as run_id
     from source

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_dms_history_saleout
+    config: 
+      alias: itg_vn_dms_history_saleout
+      tags: ["my_sellin","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_mt_sellout_coop
+    config: 
+      alias: itg_vn_mt_sellout_coop
+      tags: ["my_sellin","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_mt_sellout_mega
+    config: 
+      alias: itg_vn_mt_sellout_mega
+      tags: ["my_sellin","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_mt_sellout_vinmart
+    config: 
+      alias: itg_vn_mt_sellout_vinmart
+      tags: ["my_sellin","ingestion"]

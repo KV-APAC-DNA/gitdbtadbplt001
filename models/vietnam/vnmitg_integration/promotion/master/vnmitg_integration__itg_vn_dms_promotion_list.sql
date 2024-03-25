@@ -8,7 +8,7 @@
 }}
 
 with source as(
-    select * from {{ ref('vnmwks_integration__wks_vn_dms_promotion_list') }}
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_promotion_list') }}
 ),
 final as(
     select

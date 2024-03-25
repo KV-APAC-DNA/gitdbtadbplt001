@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_interface_branch
+    config: 
+      alias: itg_vn_interface_branch
+      tags: ["my_sellin","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_interface_ise_header
+    config: 
+      alias: itg_vn_interface_ise_header
+      tags: ["my_sellin","ingestion"]

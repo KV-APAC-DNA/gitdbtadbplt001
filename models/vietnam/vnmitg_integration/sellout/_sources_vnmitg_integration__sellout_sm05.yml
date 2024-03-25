@@ -11,3 +11,64 @@ sources:
     tables:
       - name: sdl_vn_dms_d_sellout_sales_fact
         tags: ["vn_dms_sellout"]
+
+
+      - name: sdl_vn_mt_sellout_mega
+        tests:
+          - test_null:
+                not_null_columns: ["site_no", "art_no","period"]
+                select_columns: ["filename","site_no", "art_no","period"]
+                name: TRATBL_sdl_vn_mt_sellout_mega__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["site_no", "art_no","period"]
+                select_columns: ["filename","site_no", "art_no","period"]
+                name: TRATBL_sdl_vn_mt_sellout_mega__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+
+      - name: sdl_vn_mt_sellout_coop
+        tests:
+          - test_null:
+                not_null_columns: ["sku", "store"]
+                select_columns: ["filename","sku", "store"]
+                name: TRATBL_sdl_vn_mt_sellout_coop__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["filename","sku", "store"]
+                select_columns: ["filename","sku", "store"]
+                name: TRATBL_sdl_vn_mt_sellout_coop__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_mt_sellout_vinmart
+        tests:
+          - test_null:
+                not_null_columns: ["article", "store"]
+                select_columns: ["filename","article", "store"]
+                name: TRATBL_sdl_vn_mt_sellout_vinmart__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["filename","article", "store"]
+                select_columns: ["filename","article", "store"]
+                name: TRATBL_sdl_vn_mt_sellout_vinmart__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_dms_history_saleout
+        tests:
+          - test_duplicate:
+                group_by_columns: ["user_id","rsm_name","group_jb","franchise","brand","variant","product_group","dmsproduct_group","product_code","productcodesap","dmsproductid","sku_name","tax","province","cycle"]
+                select_columns: ["user_id","rsm_name","group_jb","franchise","brand","variant","product_group","dmsproduct_group","product_code","productcodesap","dmsproductid","sku_name","tax","province","cycle"]
+                name: TRATBL_sdl_vn_dms_history_saleout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration          
+          

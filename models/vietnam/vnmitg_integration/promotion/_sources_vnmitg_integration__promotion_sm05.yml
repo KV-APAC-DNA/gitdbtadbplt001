@@ -11,3 +11,18 @@ sources:
     tables:
       - name: sdl_vn_dms_promotion_list
         tags: ["vn_dms_master"]
+        tests:
+          - test_null:
+                not_null_columns: ["dstrbtr_id","promotion_id"]
+                select_columns: ["dstrbtr_id","promotion_id","status"]
+                name: TRATBL_sdl_vn_dms_promotion_list__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["dstrbtr_id","promotion_id"]
+                select_columns: ["dstrbtr_id","promotion_id","status"]
+                name: TRATBL_sdl_vn_dms_promotion_list__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
