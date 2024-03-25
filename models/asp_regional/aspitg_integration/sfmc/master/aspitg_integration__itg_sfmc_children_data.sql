@@ -30,6 +30,10 @@ final as
     from sdl_th_sfmc_children_data isc
         left join itg_mds_rg_sfmc_gender gen on 
         upper(trim(gen.gender_raw::text)) = upper(trim(isc.child_gender::text))
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+        where isc.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final

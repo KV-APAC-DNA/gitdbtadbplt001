@@ -3,7 +3,7 @@ select * from {{ ref('thaedw_integration__edw_vw_rpt_lcm_gt_scorecard') }}
 ),
 itg_query_parameters as 
 (
-select * from {{ source('thaitg_integration', 'itg_query_parameters') }}
+select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
 ),
 itg_mds_th_lcm_exchange_rate as (
 select * from {{ ref('thaitg_integration__itg_mds_th_lcm_exchange_rate') }}
