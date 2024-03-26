@@ -1,11 +1,11 @@
 with vietnam_inventory_health_analysis_propagation as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.vietnam_inventory_health_analysis_propagation
 ),
 wks_vietnam_sellout_for_inv_analysis as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_sellout_for_inv_analysis
 ),
 wks_vietnam_inventory_healthy_unhealthy_analysis as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_inventory_healthy_unhealthy_analysis
 ),
 final as (
     SELECT inv.*,

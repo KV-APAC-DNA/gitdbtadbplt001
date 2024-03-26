@@ -1,50 +1,50 @@
 with edw_vw_os_time_dim as (
-
+    select * from dev_dna_core.SGPEDW_INTEGRATION.edw_vw_os_time_dim
 ),
 vw_edw_reg_exch_rate as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.vw_edw_reg_exch_rate
 ),
 edw_vw_vn_customer_dim as (
-
+    select * from dev_dna_core.VNMEDW_INTEGRATION.edw_vw_vn_customer_dim
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-
+    select * from dev_dna_core.VNMITG_INTEGRATION.itg_vn_distributor_sap_sold_to_mapping
 ),
 itg_vn_dms_distributor_dim as (
-
+    select * from dev_dna_core.VNMITG_INTEGRATION.itg_vn_dms_distributor_dim
 ),
 edw_material_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_dim
 ),
 edw_gch_producthierarchy as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_gch_producthierarchy
 ),
 edw_material_sales_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_sales_dim
 ),
 edw_gch_customerhierarchy as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_gch_customerhierarchy
 ),
 edw_customer_sales_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_customer_sales_dim
 ),
 edw_customer_base_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_customer_base_dim
 ),
 edw_company_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_company_dim
 ),
 edw_dstrbtn_chnl as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_dstrbtn_chnl
 ),
 edw_sales_org_dim as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_sales_org_dim
 ),
 edw_code_descriptions as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_code_descriptions
 ),
 edw_subchnl_retail_env_mapping as (
-
+    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_subchnl_retail_env_mapping
 ),
 cal AS (
     SELECT DISTINCT YEAR,

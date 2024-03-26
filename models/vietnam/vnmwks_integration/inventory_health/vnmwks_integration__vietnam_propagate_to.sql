@@ -1,8 +1,8 @@
 with EDW_VW_OS_TIME_DIM as (
-
+    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
 ),
 wks_vietnam_base_detail as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base_detail
 ),
 filtered_wvbd as (
     SELECT sap_parent_customer_key,
@@ -16,7 +16,7 @@ filtered_wvbd as (
         WHERE MONTH <= (
                 SELECT DISTINCT MNTH_ID
                 FROM EDW_VW_OS_TIME_DIM
-                WHERE cal_date = TRUNC(convert_timezone('SGT', sysdate))
+                WHERE cal_date = to_date(current_timestamp())
             )
         GROUP BY sap_parent_customer_key,
             sap_parent_customer_desc,
@@ -32,7 +32,6 @@ final as (
     inv_value,
     CASE
         WHEN month >(
-            -- mnth_id,
             SELECT third_month
             FROM (
                     SELECT mnth_id,
@@ -46,14 +45,14 @@ final as (
                             WHERE mnth_id <= (
                                     SELECT DISTINCT MNTH_ID
                                     FROM EDW_VW_OS_TIME_DIM
-                                    WHERE cal_date = TRUNC(convert_timezone('SGT', sysdate))
+                                    WHERE cal_date = to_date(current_timestamp()))
                                 )
                         )
                 )
             WHERE mnth_id = (
                     SELECT DISTINCT MNTH_ID
                     FROM EDW_VW_OS_TIME_DIM
-                    WHERE cal_date = TRUNC(convert_timezone('SGT', sysdate))
+                    WHERE cal_date = to_date(current_timestamp()))
                 )
         )
         AND (

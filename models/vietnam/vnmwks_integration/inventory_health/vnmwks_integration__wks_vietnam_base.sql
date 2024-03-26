@@ -1,8 +1,8 @@
 with EDW_VW_VN_SI_SO_INV_ANALYSIS as (
-
+    select * from EDW_VW_VN_SI_SO_INV_ANALYSIS
 ),
 edw_vw_vn_si_so_inv_analysis_dksh as (
-
+    select * from edw_vw_vn_si_so_inv_analysis_dksh
 ),
 siso as (
     SELECT JJ_MNTH_ID AS MONTH,

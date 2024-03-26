@@ -1,35 +1,35 @@
 with edw_vw_vn_sellout_sales_fact as (
-
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_SELLOUT_SALES_FACT
 ),
 edw_vw_vn_customer_dim as (
-
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_CUSTOMER_DIM
 ),
 itg_mds_vn_gt_gts_ratio as (
-
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_GT_GTS_RATIO
 ),
 itg_query_parameters as (
-
+    select * from DEV_DNA_CORE.SGPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 itg_vn_mt_sellin_dksh as (
-
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
 ),
 sdl_mds_vn_distributor_products as (
-
+    select * from DEV_DNA_LOAD.VNMSDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
 ),
 wks_dksh_unmapped as (
-
+    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_DKSH_UNMAPPED
 ),
 edw_list_price as (
-
+    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_LIST_PRICE
 ),
 itg_parameter_reg_inventory as (
-
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PARAMETER_REG_INVENTORY
 ),
 edw_gch_producthierarchy as (
-
+    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
 ),
 edw_material_sales_dim as (
-
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
 ),
 mat_prod as (
     SELECT 
@@ -55,7 +55,7 @@ mat_prod as (
         )
 ),
 trans_so as (
-    SELECT COALESCE(evvcd.sap_prnt_cust_key) AS sap_prnt_cust_key,
+    SELECT COALESCE(evvcd.sap_prnt_cust_key,'NA') AS sap_prnt_cust_key,
         ltrim(evvssf.sap_matl_num::text, '0'::text)::character varying AS sku,
         evvssf.bill_date,
         evvssf.grs_trd_sls + evvssf.ret_val SO_VALUE
@@ -89,7 +89,7 @@ trans_si as (
                     (
                         (
                             (
-                                "substring" (a.invoice_date::TEXT, 0, 5) || '-'::CHARACTER VARYING::TEXT
+                                "substring" (a.invoice_date::TEXT, 0, 4) || '-'::CHARACTER VARYING::TEXT
                             ) || "substring" (a.invoice_date::TEXT, 5, 2)
                         ) || '-'::CHARACTER VARYING::TEXT
                     ) || "substring" (a.invoice_date::TEXT, 7, 2),
@@ -111,14 +111,14 @@ trans_si as (
                         WHERE NOT (
                                 sdl_mds_vn_distributor_products.code IN (
                                     SELECT DISTINCT wks_dksh_unmapped.product_id
-                                    FROM os_wks.wks_dksh_unmapped
+                                    FROM wks_dksh_unmapped
                                 )
                             )
                             AND sdl_mds_vn_distributor_products.jnj_sap_code IS NOT NULL
                         UNION ALL
                         SELECT DISTINCT wks_dksh_unmapped.jnj_sap_code,
                             wks_dksh_unmapped.product_id
-                        FROM os_wks.wks_dksh_unmapped
+                        FROM wks_dksh_unmapped
                     ) smdp
                     LEFT JOIN (
                         SELECT lp.material,
@@ -131,7 +131,7 @@ trans_si as (
                                         0::CHARACTER VARYING::TEXT
                                     ) AS material,
                                     edw_list_price.amount AS list_price,
-                                    pg_catalog.row_number() OVER (
+                                    row_number() OVER (
                                         PARTITION BY LTRIM(
                                             edw_list_price.material::TEXT,
                                             0::CHARACTER VARYING::TEXT
@@ -163,7 +163,7 @@ trans_si as (
                 edw_vw_vn_customer_dim.sap_prnt_cust_desc
             FROM edw_vw_vn_customer_dim
         ) cust ON T1.soldto_code::TEXT = LTRIM (
-            cust.sap_cust_id (+)::TEXT,
+            cust.sap_cust_id,
             0::CHARACTER VARYING::TEXT
         )
 ),
@@ -192,7 +192,7 @@ final as (
         NVL(sap_prnt_cust_key, 'NA') AS SAP_PARENT_CUSTOMER_KEY
     FROM trans_siso A, mat_prod T4
     WHERE LTRIM(T4.SAP_MATL_NUM(+), '0') = A.MATL_NUM
-    AND left(A.bill_date, 4) > (DATE_PART(YEAR, SYSDATE) -6)
+    AND left(A.bill_date, 4) > (DATE_PART(YEAR, to_date(current_timestamp())) -6)
     GROUP BY GPH_PROD_BRND,
     GPH_PROD_VRNT,
     GPH_PROD_SGMNT,

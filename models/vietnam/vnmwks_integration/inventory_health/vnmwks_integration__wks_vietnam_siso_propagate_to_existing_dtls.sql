@@ -1,8 +1,9 @@
+select * from sbx_dna_lab1.aagraw_integration.dbt_jobs
 with wks_vietnam_base_detail as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base_detail
 ),
 vietnam_propagate_from_to as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.vietnam_propagate_from_to
 ),
 final as (
     SELECT p_from_to.sap_parent_customer_key,

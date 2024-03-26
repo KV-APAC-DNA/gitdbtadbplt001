@@ -1,8 +1,8 @@
 with wks_vietnam_base as (
-
+    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base
 ),
 edw_vw_os_time_dim as (
-
+    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
 ),
 all_months as (
     SELECT DISTINCT sap_parent_customer_key,
