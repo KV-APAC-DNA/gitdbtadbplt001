@@ -1,11 +1,4 @@
-{{
-    config(
-        post_hook = "delete  from {{this}}  where sub_channel in ('TD001-DÆ°Æ¡ng Anh','TD002-Tiáº¿n ThÃ nh')"
-    )
-}}
-
-with 
-wks_vn_oneview_rpt as 
+with wks_vn_oneview_rpt as 
 (
     select * from {{ ref('vnmwks_integration__wks_vn_oneview_rpt') }}
 ),
@@ -28,7 +21,7 @@ time_dim as
         ROW_NUMBER() OVER (PARTITION BY mnth_id ORDER BY cal_date) AS jj_mnth_day
         FROM edw_vw_os_time_dim
     where "year" >= (   
-                        select  (date_part(year,current_timestamp) - cast(2 as integer)) 
+                        select  (date_part(year,current_timestamp) - cast(parameter_value as integer)) 
                             from itg_query_parameters 
                             where country_code = 'VN' 
                         and parameter_name = 'data_load_year'
@@ -158,14 +151,14 @@ where  vw.channel = 'MT' and vw.data_type='Sell-Out Actual'
             vw.sap_matl_name,
             vw.dstrbtr_matl_num,
             vw.dstrbtr_matl_name,
-           vw.bar_code,
+            vw.bar_code,
             vw.customer_code,
             vw.customer_name,
             nvl(vw.invoice_date,time_dim.cal_date) as invoice_date,
             vw.salesman,
             vw.salesman_name,
             vw.si_gts_val,
-	    vw.si_gts_excl_dm_val,
+	        vw.si_gts_excl_dm_val,
             vw.si_nts_val,
             vw.si_mnth_tgt_by_sku,
             vw.so_net_trd_sls_loc,
@@ -299,4 +292,52 @@ where vw.channel = 'OTC' and vw.data_type='Sell-Out Actual'
 and vw.jj_mnth_id >= (select min(jj_mnth_id) from time_dim)
 )
 
-select * from final
+        select  
+            data_type,    
+            channel,
+            sub_channel,
+            jj_year,
+            jj_qrtr::varchar(14) as jj_qrtr,
+            jj_mnth_id::varchar(23) as jj_mnth_id,
+            jj_mnth_no,
+            jj_mnth_wk_no,
+            jj_mnth_day,
+            mapped_spk,
+            dstrbtr_grp_cd  ,
+            dstrbtr_name ,
+            sap_sold_to_code,
+            sap_matl_num,
+            sap_matl_name,
+            dstrbtr_matl_num,
+            dstrbtr_matl_name,
+            bar_code,
+            customer_code,
+            customer_name,
+            invoice_date,
+            salesman,
+            salesman_name,
+            si_gts_val,
+	        si_gts_excl_dm_val,
+            si_nts_val,
+            si_mnth_tgt_by_sku,
+            so_net_trd_sls_loc,
+            so_net_trd_sls_usd,
+            so_mnth_tgt,
+            so_avg_wk_tgt,
+            so_mnth_tgt_by_sku,
+            zone_manager_id,
+            zone_manager_name,
+            zone,
+            province,
+            region,
+            shop_type,
+            mt_sub_channel,
+            retail_environment,
+            group_account,
+            account,
+            franchise,
+            brand,
+            variant,
+            product_group,
+            group_jb 
+        from final

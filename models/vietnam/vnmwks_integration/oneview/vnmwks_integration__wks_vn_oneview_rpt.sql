@@ -1,11 +1,11 @@
 with itg_vn_dms_product_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_PRODUCT_DIM
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_PRODUCT_DIM
 ),
 edw_vw_vn_mt_dist_products as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
 ),
 itg_mds_vn_allchannel_siso_target_sku as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
 ),
 edw_material_dim as (
     select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
@@ -29,10 +29,40 @@ v_edw_customer_sales_dim as (
     select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.V_EDW_CUSTOMER_SALES_DIM
 ),
 edw_vw_vn_billing_fact as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_BILLING_FACT
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_BILLING_FACT
 ),
-edw_crncy_exch as (
+edw_crncy_exch_rates as (
     select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+),
+edw_vn_si_st_so_details as (
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VN_SI_ST_SO_DETAILS
+),
+itg_vn_dms_distributor_dim as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM
+),
+itg_vn_dms_customer_dim as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_CUSTOMER_DIM
+),
+edw_vw_vn_mt_sell_in_analysis as (
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_SELL_IN_ANALYSIS
+),
+itg_vn_mt_sellin_dksh as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+),
+itg_vn_mt_sellin_dksh_history as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH_HISTORY
+),
+edw_vw_vn_mt_dist_customers as (
+    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_DIST_CUSTOMERS
+),
+itg_vn_mt_customer_sales_organization as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_CUSTOMER_SALES_ORGANIZATION
+),
+itg_mds_vn_ecom_target as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_ECOM_TARGET
+),
+itg_vn_oneview_otc as (
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_ONEVIEW_OTC
 ),
 
 prod_dim as 
@@ -191,10 +221,10 @@ select * from cte1
 where parameter_value = 'MTI' and jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
 union all
 select * from cte1
-where parameter_value != 'MTI' and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
+where (parameter_value != 'MTI' or parameter_value is null) and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
 ),
 
-cte2 as
+cte2 as 
 (   
 ---------------------------------------------------------------OTC Sellin Actual--------------------------------------
 SELECT 'Sell-In Actual' AS data_type,
@@ -281,14 +311,15 @@ SELECT
   INNER JOIN time_dim ON copa.invoice_date = time_dim.cal_date 
   LEFT JOIN (SELECT derived_table1."year" || derived_table1.mnth AS mnth_id,
                  derived_table1.ex_rt, derived_table1.from_ratio,derived_table1.to_ratio
-            FROM (SELECT edw_crncy_exch.fisc_yr_per,
-                      substring(edw_crncy_exch.fisc_yr_per::CHARACTER VARYING::TEXT,1,4) AS "year",
-                          substring(edw_crncy_exch.fisc_yr_per::CHARACTER VARYING::TEXT,6,2) AS mnth,
-                           edw_crncy_exch.ex_rt,
-                           edw_crncy_exch.from_ratio,edw_crncy_exch.to_ratio
-                   FROM edw_crncy_exch
-                   WHERE edw_crncy_exch.from_crncy::TEXT = 'SGD'::CHARACTER VARYING::TEXT
-                   AND   edw_crncy_exch.to_crncy::TEXT = 'VND'::CHARACTER VARYING::TEXT) derived_table1
+            FROM (SELECT edw_crncy_exch_rates.fisc_yr_per,
+                      substring(edw_crncy_exch_rates.fisc_yr_per::CHARACTER VARYING::TEXT,1,4) AS "year",
+                          substring(edw_crncy_exch_rates.fisc_yr_per::CHARACTER VARYING::TEXT,6,2) AS mnth,
+                           edw_crncy_exch_rates.ex_rt,
+                           edw_crncy_exch_rates.from_ratio
+                           ,edw_crncy_exch_rates.to_ratio
+                   FROM edw_crncy_exch_rates
+                   WHERE edw_crncy_exch_rates.from_crncy::TEXT = 'SGD'::CHARACTER VARYING::TEXT
+                   AND   edw_crncy_exch_rates.to_crncy::TEXT = 'VND'::CHARACTER VARYING::TEXT) derived_table1
                    ) exch_rate
                     ON time_dim.mnth_id::NUMERIC::NUMERIC (18,0) = exch_rate.mnth_id::NUMERIC::NUMERIC (18,0)
   LEFT JOIN prod_dim ON prod_dim.sap_code = LTRIM(copa.matl_num, '0')    
@@ -313,7 +344,7 @@ select * from cte2
 where parameter_value = 'MTI' and jj_mnth_id in (select distinct CAST(caln_yr_mo AS varchar(23)) as jj_mnth_id from edw_copa_trans_fact where jj_mnth_id not between '202105' and '202209')
 union all 
 select * from cte2
-where parameter_value != 'MTI' and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
+where (parameter_value != 'MTI' or parameter_value is null) and jj_mnth_id = CAST(caln_yr_mo AS varchar(23))
 ),
 
 cte3 as
@@ -508,6 +539,802 @@ FROM
 	AND (si_gts_val IS NOT NULL 
   	   OR si_gts_excl_dm_val IS NOT NULL
   	   OR si_nts_val IS NOT NULL)
+),
+
+cte5 as
+(
+    select 'Sell-Out Actual' as data_type,
+            'GT' as channel,
+            so.territory_dist as sub_channel,
+            so.jj_year,
+            time_dim.qrtr as jj_qrtr,
+            so.jj_mnth_id,
+            so.jj_mnth_no,
+            so.jj_mnth_wk_no,
+            time_dim.mnth_day as jj_mnth_day,
+            so.distributor_id_report as mapped_spk,
+            so.dstrbtr_grp_cd  ,
+            so.dstrbtr_name ,
+            so.sap_sold_to_code,
+            so.sap_matl_num,
+            prod_dim.sap_matl_name,
+            so.dstrbtr_matl_num,
+            so.dstrbtr_matl_name,
+            null as bar_code,
+            so.cust_cd as customer_code,
+            cust.outlet_name as customer_name,
+            so.bill_date as invoice_date,
+            so.slsmn_cd as salesman,
+            so.slsmn_nm as salesman_name,
+            so.si_gts_val,
+            null as si_gts_excl_dm_val,
+            so.si_nts_val,
+            null as si_mnth_tgt_by_sku,
+            so.so_net_trd_sls as so_net_trd_sls_loc,
+            so.so_net_trd_sls*so.exchg_rate as so_net_trd_sls_usd,
+            so.so_mnth_tgt,
+            so.so_avg_wk_tgt,
+            null as so_mnth_tgt_by_sku,
+            so.asm_id as zone_manager_id,
+            so.asm_name as zone_manager_name,
+            null as "zone",
+            dist.province,
+            so.dstrb_region as region,
+            cust.shop_type,
+            null as mt_sub_channel,
+            null as retail_environment,
+            null as group_account,
+            null as account,
+            prod_dim.franchise,
+            prod_dim.brand,
+            prod_dim.variant,
+            prod_dim.product_group,
+            prod_dim.group_jb,
+            null as parameter_value,
+            null as caln_yr_mo
+		from edw_vn_si_st_so_details  so
+		inner join time_dim on time_dim.cal_date = so.bill_date
+		--left join os_itg.itg_vn_dms_distributor_dim dist
+        /*commented the above join and replacing with the new join that fetches distributo_IDs with the latest mapped_spk*/
+        left join (
+              SELECT territory_dist,
+                     mapped_spk,
+                     dstrbtr_id,
+                     dstrbtr_type,
+                     dstrbtr_name,
+                     asmid,
+                     region,
+			         province
+             --sls.asm_name
+              FROM       
+              (
+                SELECT territory_dist,
+                     mapped_spk,
+                     dstrbtr_id,
+                     dstrbtr_type,
+                     dstrbtr_name,
+                     asm_id as asmid,
+                     region,
+			        province,
+              Row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rn 
+              FROM itg_vn_dms_distributor_dim
+              ) where rn = 1) dist	
+		    on dist.dstrbtr_id = so.dstrbtr_grp_cd
+		left join itg_vn_dms_customer_dim cust
+		    on cust.outlet_id = so.cust_cd
+		left join prod_dim on prod_dim.sap_code = so.sap_matl_num
+		where  (so_net_trd_sls <> 0)
+),
+
+cte6 as 
+(
+    select 'Sell-Out Target' as data_type,
+            'GT' as channel,
+            so_tgt.territory_dist as sub_channel,
+            so_tgt.jj_year,
+            substring(so_tgt.jj_qrtr,6,7) as jj_qrtr,
+            so_tgt.jj_mnth_id,
+            so_tgt.jj_mnth_no,
+            so_tgt.jj_mnth_wk_no,
+            null as jj_mnth_day,
+            so_tgt.distributor_id_report as mapped_spk,
+            so_tgt.dstrbtr_grp_cd  ,
+            so_tgt.dstrbtr_name ,
+            so_tgt.sap_sold_to_code,
+            null as sap_matl_num,
+            null as sap_matl_name,
+            null as dstrbtr_matl_num,
+            null as dstrbtr_matl_name,
+            null as bar_code,
+            null as customer_code,
+            null as customer_name,
+            null as invoice_date,
+            so_tgt.slsmn_cd as salesman,
+            so_tgt.slsmn_nm as salesman_name,
+            null as si_gts_val,
+            null as si_gts_excl_dm_val,
+            null as si_nts_val,
+            null as si_mnth_tgt_by_sku,
+            null as so_net_trd_sls_loc,
+            null as so_net_trd_sls_usd,
+            so_tgt.mnth_tgt as so_mnth_tgt,
+            so_tgt.wk_tgt as so_avg_wk_tgt,
+            null as so_mnth_tgt_by_sku,
+            so_tgt.asm_id as zone_manager_id,
+            so_tgt.asm_name as zone_manager_name,
+            null as "zone",
+            dist.province,
+            dist.region,
+            null as shop_type,
+            null as mt_sub_channel,
+            null as retail_environment,
+            null as group_account,
+            null as account,
+            null as franchise,
+            null as brand,
+            null as variant,
+            null as product_group,
+            null as group_jb,
+            null as parameter_value,
+            null as caln_yr_mo
+		 from
+		(
+        select jj_year
+            ,jj_qrtr
+            ,jj_mnth_id
+            ,jj_mnth_no
+            ,jj_mnth_wk_no
+            ,territory_dist
+            ,distributor_id_report
+            ,dstrbtr_grp_cd
+            ,dstrbtr_name
+            ,sap_sold_to_code
+            ,slsmn_cd
+            ,slsmn_nm
+            ,asm_id 
+            ,asm_name
+            ,max(so_mnth_tgt) as mnth_tgt
+            ,max(so_avg_wk_tgt) as wk_tgt
+		from edw_vn_si_st_so_details
+		where slsmn_cd is not null
+		group by jj_year, jj_qrtr,jj_mnth_id, jj_mnth_no,jj_mnth_wk_no, territory_dist,distributor_id_report,dstrbtr_grp_cd,dstrbtr_name,sap_sold_to_code,
+		slsmn_cd,slsmn_nm, asm_id , asm_name
+        ) so_tgt
+		--left join os_itg.itg_vn_dms_distributor_dim dist
+ /*commented the above join and replacing with the new join that fetches distributo_IDs with the latest mapped_spk*/
+        left join (
+            SELECT territory_dist,
+             mapped_spk,
+             dstrbtr_id,
+             dstrbtr_type,
+             dstrbtr_name,
+             asmid,
+             region,
+			 province
+             --sls.asm_name
+            FROM       
+            (
+           SELECT territory_dist,
+             mapped_spk,
+             dstrbtr_id,
+             dstrbtr_type,
+             dstrbtr_name,
+             asm_id as asmid,
+             region,
+			 province,
+             Row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rn 
+            FROM itg_vn_dms_distributor_dim
+            ) where rn = 1) dist 		
+		on dist.dstrbtr_id = so_tgt.dstrbtr_grp_cd
+		where so_tgt.territory_dist  in('TD001-Dương Anh','TD002-Tiến Thành')
+),
+
+cte7 as
+(
+    select case when gt_sku_tgt.data_type = 'Sell-In' then 'Sell-In Target'
+				  else 'Sell-Out Target'
+				  end  as data_type,
+			   'GT' as channel,
+			   gt_sku_tgt.territory_dist as sub_channel,
+			   timedim."year" as jj_year,
+			   substring(timedim.qrtr,6,7) AS jj_qrtr,
+			   timedim.mnth_id AS jj_mnth_id,
+			   timedim.mnth_no AS jj_mnth_no,
+			   null as jj_mnth_wk_no,
+			   null as jj_mnth_day,
+			   null as mapped_spk,
+			   null as dstrbtr_grp_cd,
+			   null as dstrbtr_name,
+			   null as sap_sold_to_code,
+			   prod.sap_code as sap_matl_num,
+			   prod.sap_matl_name,
+			   cast(gt_sku_tgt.jnj_code as varchar) as dstrbtr_matl_num,
+			   gt_sku_tgt.description as dstrbtr_matl_name,
+			   null as bar_code,
+			   null as customer_code,
+			   null as customer_name,
+			   null as invoice_date,
+			   null as salesman,
+			   null as salesman_name,
+			   null as si_gts_val,
+			   null as si_gts_excl_dm_val,
+			   null as si_nts_val,
+			   case when gt_sku_tgt.data_type = 'Sell-In' then gt_sku_tgt.tgt else null end as si_mnth_tgt_by_sku,
+			   null as so_net_trd_sls_loc,
+			   null as so_net_trd_sls_usd,
+			   null as so_mnth_tgt,
+			   null as so_avg_wk_tgt,
+			   case when gt_sku_tgt.data_type = 'Sell-Out' then gt_sku_tgt.tgt else null end as so_mnth_tgt_by_sku,
+			   null as zone_manager_id,
+			   null as zone_manager_name,
+			   null as "zone",
+			   null as province,
+			   null as region,
+			   null as shop_type,
+			   null as mt_sub_channel,
+			   null as retail_environment,
+			   null as group_account,
+			   null as account,
+			   nvl(prod.franchise,'NA') as franchise,
+			   nvl(prod.brand,'NA') as brand,
+			   nvl(prod.variant,'NA') as variant,
+			   nvl(prod.product_group,'NA') as product_group,
+			   nvl(prod.group_jb,'NA') as group_jb,
+               null as parameter_value,
+               null as caln_yr_mo
+		 from
+		    (  
+                select cycle 
+                ,data_type
+                ,td.territory_dist 
+                ,tgt
+                ,jnj_code 
+                ,description 
+            from
+		    (
+                select cycle ,data_type,'TD002' as  territory_dist, gt_tien_thanh*1000000 as tgt, jnj_code, description 
+                from itg_mds_vn_allchannel_siso_target_sku 
+		        union all 
+		        select cycle ,data_type,'TD001' as  territory_dist, gt_duong_anh*1000000 as tgt, jnj_code, description 
+                from itg_mds_vn_allchannel_siso_target_sku 
+            )sku_tgt 
+		        left join 
+		        (select distinct territory_dist from itg_vn_dms_distributor_dim) td
+		        on substring(td.territory_dist,1,5)= sku_tgt.territory_dist)gt_sku_tgt 
+		        inner join 
+		        (   
+                    SELECT edw_vw_os_time_dim."year",
+							edw_vw_os_time_dim.qrtr,
+							edw_vw_os_time_dim.mnth_id,
+							edw_vw_os_time_dim.mnth_no
+					 FROM edw_vw_os_time_dim
+					 GROUP BY edw_vw_os_time_dim."year",
+							  edw_vw_os_time_dim.qrtr,
+							  edw_vw_os_time_dim.mnth_id,
+							  edw_vw_os_time_dim.mnth_no
+                )timedim
+		        on cast(timedim.mnth_id as numeric) = gt_sku_tgt.cycle
+		        left join  prod_dim prod on prod.sap_code = cast(gt_sku_tgt.jnj_code as varchar)
+		        where gt_sku_tgt.territory_dist in ('TD001-Dương Anh','TD002-Tiến Thành')
+),
+
+cte8 as
+(
+    select case when mt.data_source in ('JNJ','DKSH') then 'Sell-Out Actual'
+       else 'Sell-Out Target' end as data_type,
+       'MT' as channel,
+       case when (mt.data_source = 'DKSH' ) or (mt.data_type = 'DKSH') then 'MTI' 
+            when (mt.data_source = 'JNJ' ) or (mt.data_type = 'JNJ')then 'MTD'
+            else 'Invalid' end as sub_channel,
+       mt.year as jj_year,
+       substring(mt.qrtr,6,7) as jj_qrtr,
+       mt.mnth_id as jj_mnth_id,
+       mt.mnth_no as jj_mnth_no,
+       mt.mnth_wk_no as jj_mnth_wk_no,
+       time_dim.mnth_day as jj_mnth_day,
+       null as mapped_spk,
+       null as dstrbtr_grp_cd,
+       null as dstrbtr_name,
+       null as sap_sold_to_code,
+       prod.sap_code as sap_matl_num,
+       prod.sap_matl_name ,
+       mt.productid as dstrbtr_matl_num,
+       mt.product_name as dstrbtr_matl_name,
+       mt.barcode,
+       mt.custcode as customer_code,
+       mt.name as customer_name,
+       cast(mt.invoice_date as date) as invoice_date,
+       null as salesman,
+       null as salesman_name,
+       null as si_gts_val,
+	   null as si_gts_excl_dm_val,
+       null as si_nts_val,
+       null as si_mnth_tgt_by_sku,
+       case when mt.data_source = 'JNJ' then mt.gts_amt_lcy else mt.sales_amt_lcy end  as so_net_trd_sls_loc,
+       case when mt.data_source = 'JNJ'  then mt.gts_amt_usd else mt.sales_amt_usd end as so_net_trd_sls_usd,
+       mt.target_lcy as so_mnth_tgt,
+       null as so_avg_wk_tgt,
+       null as so_mnth_tgt_by_sku,
+       null as zone_manager_id,
+       mt.kam as zone_manager_name,
+       mt.zone,
+       mt.province,
+       mt.region,
+       null as shop_type,
+       mt.sub_channel as mt_sub_channel,
+       mt.retail_environment,
+       mt.group_account,
+       mt.account,
+       prod.franchise,
+       prod.brand,
+       prod.variant,
+       prod.product_group,
+       prod.group_jb,
+       null as parameter_value,
+       null as caln_yr_mo
+    from edw_vw_vn_mt_sell_in_analysis mt
+    left join time_dim on time_dim.cal_date = cast(mt.invoice_date as date)
+    left join prod_dim prod on
+    case when mt.data_source = 'JNJ' then
+    prod.sap_code = cast(mt.productid as varchar)
+    else 
+    prod.sap_code = cast(mt.jnj_sap_code as varchar) end
+    where mt.data_source <> 'COOP'
+),
+
+cte9 as 
+(
+    select case when mt_sku_tgt.data_type = 'Sell-In' then 'Sell-In Target'
+          else 'Sell-Out Target'
+          end  as data_type,
+       'MT' as channel,
+        mt_sku_tgt.sub_channel as sub_channel,
+       timedim."year" as jj_year,
+       substring(timedim.qrtr,6,7) AS jj_qrtr,
+       timedim.mnth_id AS jj_mnth_id,
+       timedim.mnth_no AS jj_mnth_no,
+       null as jj_mnth_wk_no,
+       null as jj_mnth_day,
+       null as mapped_spk,
+       null as dstrbtr_grp_cd,
+       null as dstrbtr_name,
+       null as sap_sold_to_code,
+       prod.sap_code as sap_matl_num,
+       prod.sap_matl_name,
+       cast(mt_sku_tgt.jnj_code as varchar) as dstrbtr_matl_num,
+       mt_sku_tgt.description as dstrbtr_matl_name,
+       null as bar_code,
+       null as customer_code,
+       null as customer_name,
+       null as invoice_date,
+       null as salesman,
+       null as salesman_name,
+       null as si_gts_val,
+	   null as si_gts_excl_dm_val,
+       null as si_nts_val,
+       case when mt_sku_tgt.data_type = 'Sell-In' then mt_sku_tgt.tgt else null end as si_mnth_tgt_by_sku,
+       null as so_net_trd_sls_loc,
+       null as so_net_trd_sls_usd,
+       null as so_mnth_tgt,
+       null as so_avg_wk_tgt,
+       case when mt_sku_tgt.data_type = 'Sell-Out' then mt_sku_tgt.tgt else null end as so_mnth_tgt_by_sku,
+       null as zone_manager_id,
+       null as zone_manager_name,
+       null as "zone",
+       null as province,
+       null as region,
+       null as shop_type,
+       null as mt_sub_channel,
+       null as retail_environment,
+       null as group_account,
+       null as account,
+       nvl(prod.franchise,'NA') as franchise,
+       nvl(prod.brand,'NA') as brand,
+       nvl(prod.variant,'NA') as variant,
+       nvl(prod.product_group,'NA') as product_group,
+       nvl(prod. group_jb,'NA') as group_jb,
+       null as parameter_value,
+       null as caln_yr_mo
+    from
+    (select cycle ,data_type,'MTI' as  sub_channel, dksh_mti*1000000 as tgt, jnj_code, description from itg_mds_vn_allchannel_siso_target_sku 
+    union all 
+    select cycle ,data_type,'MTD' as  sub_channel, mtd*1000000 as tgt, jnj_code, description from itg_mds_vn_allchannel_siso_target_sku)mt_sku_tgt
+    inner join 
+        (SELECT edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no
+                FROM edw_vw_os_time_dim
+                GROUP BY edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no)timedim
+        on cast(timedim.mnth_id as numeric) = mt_sku_tgt.cycle
+    left join prod_dim  prod
+        on cast(mt_sku_tgt.jnj_code as varchar) = prod.sap_code
+),
+
+cte10 as
+(
+    select 'Sell-Out Actual' as data_type,
+            'ECOM' as channel,
+            'ECOM'  as sub_channel,
+            timedim."year" as jj_year,
+            time_dim.qrtr AS jj_qrtr,
+            timedim.mnth_id AS jj_mnth_id,
+            timedim.mnth_no AS jj_mnth_no,
+            timedim.mnth_wk_no as jj_mnth_wk_no,
+            time_dim.mnth_day as jj_mnth_day,
+            null as  mapped_spk,
+            null as dstrbtr_grp_cd,
+            null as dstrbtr_name,
+            null as sap_sold_to_code,
+            gt_prod.sap_code as sap_matl_num,
+            gt_prod.sap_matl_name,
+            ecom.productid as dstrbtr_matl_num,
+            ecom.product as dstrbtr_matl_name,
+            ecom.barcode as bar_code,
+            ecom.custcode as customer_code,
+            ecom.customer as customer_name,
+            cast(ecom.invoice_date as date ) as invoice_date,
+            null as salesman,
+            null as salesman_name,
+            null as si_gts_val,
+            null as si_gts_excl_dm_val,
+            null as si_nts_val,
+            null as si_mnth_tgt_by_sku,
+            ecom.gross_amount_wo_vat as so_net_trd_sls_loc,
+            ecom.gross_amount_wo_vat*exch_rate.ex_rt as so_net_trd_sls_usd,
+            null as so_mnth_tgt,
+            null as so_avg_wk_tgt,
+            null as so_mnth_tgt_by_sku,
+            null as zone_manager_id,
+            mds.kam  as zone_manager_name,
+            ecom.zone,
+            ecom.province,
+            ecom.region,
+            null as shop_type,
+            cust.sub_channel as mt_sub_channel,
+            cust.retail_environment,
+            cust.group_account,
+            cust.account,
+            gt_prod.franchise,
+            gt_prod.brand,
+            gt_prod.variant,
+            gt_prod.product_group,
+            gt_prod.group_jb,
+            null as parameter_value,
+            null as caln_yr_mo
+    from (SELECT itg_vn_mt_sellin_dksh.productid,
+            itg_vn_mt_sellin_dksh.product,
+            itg_vn_mt_sellin_dksh.custcode,
+            itg_vn_mt_sellin_dksh.customer,
+            itg_vn_mt_sellin_dksh.province,
+            itg_vn_mt_sellin_dksh.region,
+            itg_vn_mt_sellin_dksh.zone,
+            itg_vn_mt_sellin_dksh.channel,
+            itg_vn_mt_sellin_dksh.invoice_date,
+            itg_vn_mt_sellin_dksh.gross_amount_wo_vat,
+            itg_vn_mt_sellin_dksh.barcode
+    from (SELECT dense_rank() OVER 
+            (PARTITION BY itg_vn_mt_sellin_dksh.productid
+            ,itg_vn_mt_sellin_dksh.custcode
+            ,itg_vn_mt_sellin_dksh.billing_no
+            ,itg_vn_mt_sellin_dksh.invoice_date
+            ,itg_vn_mt_sellin_dksh.order_no ORDER BY itg_vn_mt_sellin_dksh.filename DESC) AS rnk,
+             itg_vn_mt_sellin_dksh.productid,
+             itg_vn_mt_sellin_dksh.product,
+             itg_vn_mt_sellin_dksh.custcode,
+             itg_vn_mt_sellin_dksh.customer,
+             itg_vn_mt_sellin_dksh.province,
+             itg_vn_mt_sellin_dksh.region,
+             itg_vn_mt_sellin_dksh.zone,
+             itg_vn_mt_sellin_dksh.channel,
+             itg_vn_mt_sellin_dksh.invoice_date,
+             itg_vn_mt_sellin_dksh.gross_amount_wo_vat,
+             itg_vn_mt_sellin_dksh.barcode
+      FROM itg_vn_mt_sellin_dksh
+      WHERE itg_vn_mt_sellin_dksh.channel = 'ECOM') itg_vn_mt_sellin_dksh
+WHERE itg_vn_mt_sellin_dksh.rnk = 1
+UNION ALL
+SELECT  itg_vn_mt_sellin_dksh_history.productid,
+       itg_vn_mt_sellin_dksh_history.product,
+       itg_vn_mt_sellin_dksh_history.custcode,
+       itg_vn_mt_sellin_dksh_history.customer,
+       itg_vn_mt_sellin_dksh_history.province,
+       itg_vn_mt_sellin_dksh_history.region,
+       itg_vn_mt_sellin_dksh_history.zone,
+       itg_vn_mt_sellin_dksh_history.channel,
+       itg_vn_mt_sellin_dksh_history.invoice_date,
+       itg_vn_mt_sellin_dksh_history.net_amount_wo_vat,
+       itg_vn_mt_sellin_dksh_history.barcode
+FROM itg_vn_mt_sellin_dksh_history
+WHERE itg_vn_mt_sellin_dksh_history.channel = 'ECOM' ) ecom
+INNER JOIN edw_vw_os_time_dim timedim ON ecom.invoice_date = timedim.cal_date_id
+inner join time_dim on cast(ecom.invoice_date as date) = time_dim.cal_date
+left join edw_vw_vn_mt_dist_products mt_prod ON ecom.productid = mt_prod.code
+left join prod_dim gt_prod
+on gt_prod.sap_code = cast(mt_prod.jnj_sap_code as varchar)
+LEFT JOIN edw_vw_vn_mt_dist_customers cust ON ecom.custcode = cust.code
+LEFT JOIN (
+        select distinct cast(mtd_code as varchar) as customer_cd,upper(sales_supervisor) as sales_supervisor,upper(sales_man)as ss,upper(kam) as kam 
+        from  itg_vn_mt_customer_sales_organization where mti_code is null
+        and active = 'Y'
+        union all
+        select distinct cast(mti_code as varchar) as customer_cd,upper(sales_supervisor) as sales_supervisor,upper(sales_man)as ss,upper(kam) as kam 
+        from  itg_vn_mt_customer_sales_organization where mtd_code is null
+        and active = 'Y'
+    ) mds ON ecom.custcode::TEXT = mds.customer_cd::TEXT
+LEFT JOIN (SELECT derived_table1."year" || derived_table1.mnth AS mnth_id,
+                    derived_table1.ex_rt
+             FROM (SELECT edw_crncy_exch_rates.fisc_yr_per,
+                          substring(edw_crncy_exch_rates.fisc_yr_per::CHARACTER VARYING::TEXT,1,4) AS "year",
+                          substring(edw_crncy_exch_rates.fisc_yr_per::CHARACTER VARYING::TEXT,6,2) AS mnth,
+                          edw_crncy_exch_rates.ex_rt
+                   FROM edw_crncy_exch_rates
+                   WHERE edw_crncy_exch_rates.from_crncy::TEXT = 'VND'::CHARACTER VARYING::TEXT
+                   AND   edw_crncy_exch_rates.to_crncy::TEXT = 'USD'::CHARACTER VARYING::TEXT) derived_table1) exch_rate
+                    ON timedim.mnth_id::NUMERIC (18,0) = exch_rate.mnth_id::NUMERIC (18,0)
+),
+
+cte11 as 
+(
+    select 'Sell-Out Target' as data_type,
+        'ECOM' as channel,
+        'ECOM' as sub_channel,
+        timedim."year" as jj_year,
+        substring(timedim.qrtr,6,7) AS jj_qrtr,
+        timedim.mnth_id AS jj_mnth_id,
+        timedim.mnth_no AS jj_mnth_no,
+        null as jj_mnth_wk_no,
+        null as jj_mnth_day,
+        null as mapped_spk,
+        null as dstrbtr_grp_cd,
+        null as dstrbtr_name,
+        null as sap_sold_to_code,
+        null as sap_matl_num,
+        null as sap_matl_name,
+        null as dstrbtr_matl_num,
+        null as dstrbtr_matl_name,
+        null as bar_code,
+        null as customer_code,
+        null as customer_name,
+        null as invoice_date,
+        null as salesman,
+        null as salesman_name,
+        null as si_gts_val,
+        null as si_gts_excl_dm_val,
+        null as si_nts_val,
+        null as si_mnth_tgt_by_sku,
+        null as so_net_trd_sls_loc,
+        null as so_net_trd_sls_usd,
+        ecom_tgt.target*1000000 as so_mnth_tgt,
+        null as so_avg_wk_tgt,
+        null as so_mnth_tgt_by_sku,
+        null as zone_manager_id,
+        null as zone_manager_name,
+        null as "zone",
+        null as province,
+        null as region,
+        null as shop_type,
+        null as mt_sub_channel,
+        null as retail_environment,
+        null as group_account,
+        upper(ecom_tgt.platform) as account,
+        null as franchise,
+        null as brand,
+        null as variant,
+        null as product_group,
+        null as group_jb,
+        null as parameter_value,
+        null as caln_yr_mo
+    from itg_mds_vn_ecom_target ecom_tgt
+    inner join (SELECT edw_vw_os_time_dim."year",
+                    edw_vw_os_time_dim.qrtr,
+                    edw_vw_os_time_dim.mnth_id,
+                    edw_vw_os_time_dim.mnth_no
+             FROM edw_vw_os_time_dim
+             GROUP BY edw_vw_os_time_dim."year",
+                      edw_vw_os_time_dim.qrtr,
+                      edw_vw_os_time_dim.mnth_id,
+                      edw_vw_os_time_dim.mnth_no)timedim
+    on cast(timedim.mnth_id as numeric) = ecom_tgt.cycle
+),
+
+cte12 as
+(
+    select case when ecom_tgt.data_type = 'Sell-In' then 'Sell-In Target'
+          else 'Sell-Out Target'
+          end  as data_type,
+       'ECOM' as channel,
+       'ECOM' as sub_channel,
+       timedim."year" as jj_year,
+       substring(timedim.qrtr,6,7) AS jj_qrtr,
+       timedim.mnth_id AS jj_mnth_id,
+       timedim.mnth_no AS jj_mnth_no,
+       null as jj_mnth_wk_no,
+       null as jj_mnth_day,
+       null as mapped_spk,
+       null as dstrbtr_grp_cd,
+       null as dstrbtr_name,
+       null as sap_sold_to_code,
+       prod.sap_code as sap_matl_num,
+       prod.sap_matl_name,
+       cast(ecom_tgt.jnj_code as varchar) as dstrbtr_matl_num,
+       ecom_tgt.description as dstrbtr_matl_name,
+       null as bar_code,
+       null as customer_code,
+       null as customer_name,
+       null as invoice_date,
+       null as salesman,
+       null as salesman_name,
+       null as si_gts_val,
+	   null as si_gts_excl_dm_val,
+       null as si_nts_val,
+       case when ecom_tgt.data_type = 'Sell-In' then ecom_tgt.dksh_ecom*1000000 else null end as si_mnth_tgt_by_sku,
+       null as so_net_trd_sls_loc,
+       null as so_net_trd_sls_usd,
+       null as so_mnth_tgt,
+       null as so_avg_wk_tgt,
+       case when ecom_tgt.data_type = 'Sell-Out' then ecom_tgt.dksh_ecom*1000000 else null end as so_mnth_tgt_by_sku,
+       null as zone_manager_id,
+       null as zone_manager_name,
+       null as "zone",
+       null as province,
+       null as region,
+       null as shop_type,
+       null as mt_sub_channel,
+       null as retail_environment,
+       null as group_account,
+       null as account,
+       nvl(prod.franchise,'NA') as franchise,
+       nvl(prod.brand,'NA') as brand,
+       nvl(prod.variant,'NA') as variant,
+       nvl(prod.product_group,'NA') as product_group,
+       nvl(prod. group_jb,'NA') as group_jb,
+        null as parameter_value,
+        null as caln_yr_mo
+ from itg_mds_vn_allchannel_siso_target_sku ecom_tgt
+    inner join 
+    (SELECT edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no
+                FROM edw_vw_os_time_dim
+                GROUP BY edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no)timedim
+    on cast(timedim.mnth_id as numeric) = ecom_tgt.cycle
+    left join prod_dim prod
+    on cast(ecom_tgt.jnj_code as varchar) = prod.sap_code
+),
+
+cte13 as 
+(
+    select 'Sell-Out Actual' as data_type,
+		'OTC' as channel,
+		ot.channel as sub_channel,
+		timedim."year" as jj_year,
+       time_dim.qrtr AS jj_qrtr,
+       timedim.mnth_id AS jj_mnth_id,
+       timedim.mnth_no AS jj_mnth_no,
+       timedim.mnth_wk_no as jj_mnth_wk_no,
+       time_dim.mnth_day as jj_mnth_day,
+		null as mapped_spk,
+		null as dstrbtr_grp_cd  ,
+		'DKSH Gigamed' as dstrbtr_name ,
+		null as sap_sold_to_code,
+		ot.sap_matl_num,
+		prod_dim.sap_matl_name,
+		null as dstrbtr_matl_num,
+		null as dstrbtr_matl_name,
+		null as bar_code,
+		ot.kunnr as customer_code,
+		ot.name1 as customer_name,
+		CAST( CAST( billingdate AS char(8)) AS date )as invoice_date,
+		null as salesman,
+		null as salesman_name,
+		null as si_gts_val,
+		null as si_gts_excl_dm_val,
+		null as si_nts_val,
+		null as si_mnth_tgt_by_sku,
+	    cast(ot.TT as numeric(38,5))  as so_net_trd_sls_loc,
+		null as so_net_trd_sls_usd,
+		null as so_mnth_tgt,
+		null as so_avg_wk_tgt,
+		null as so_mnth_tgt_by_sku,
+		null as zone_manager_id,
+		null as zone_manager_name,
+		null as "zone",
+		ot.province as province,
+		ot.region as region,
+		null as shop_type,
+		null as mt_sub_channel,
+		ot.custgroup as retail_environment,
+		'N/A' as group_account,
+		'N/A' as account,
+		 prod_dim.franchise,
+       prod_dim.brand,
+       prod_dim.variant,
+       prod_dim.product_group,
+       prod_dim.group_jb,
+        null as parameter_value,
+        null as caln_yr_mo
+	from itg_vn_oneview_otc ot	
+    inner join edw_vw_os_time_dim timedim ON ot.billingdate = timedim.cal_date_id
+    inner join time_dim on  CAST( CAST( billingdate AS char(8)) AS date ) = time_dim.cal_date          
+	left join prod_dim on prod_dim.sap_code = ot.sap_matl_num
+	where(TT<>0)
+),
+
+cte14 as 
+(
+    select case when otc_tgt.data_type = 'Sell-In' then 'Sell-In Target'
+          else 'Sell-Out Target'
+          end  as data_type,
+       'OTC' channel,
+       'OTC' as sub_channel,
+       timedim."year" as jj_year,
+       substring(timedim.qrtr,6,7) AS jj_qrtr,
+       timedim.mnth_id AS jj_mnth_id,
+       timedim.mnth_no AS jj_mnth_no,
+       null as jj_mnth_wk_no,
+       null as jj_mnth_day,
+       null as mapped_spk,
+       null as dstrbtr_grp_cd,
+       null as dstrbtr_name,
+       null as sap_sold_to_code,
+       prod.sap_code as sap_matl_num,
+       prod.sap_matl_name,
+       cast(otc_tgt.jnj_code as varchar) as dstrbtr_matl_num,
+       otc_tgt.description as dstrbtr_matl_name,
+       null as bar_code,
+       null as customer_code,
+       null as customer_name,
+       null as invoice_date,
+       null as salesman,
+       null as salesman_name,
+       null as si_gts_val,
+	   null as si_gts_excl_dm_val,
+       null as si_nts_val,
+       case when otc_tgt.data_type = 'Sell-In' then cast(otc_tgt.otc as float)*1000000 else null end as si_mnth_tgt_by_sku,
+       null as so_net_trd_sls_loc,
+       null as so_net_trd_sls_usd,
+       null as so_mnth_tgt,
+       null as so_avg_wk_tgt,
+       case when otc_tgt.data_type = 'Sell-Out' then cast(otc_tgt.otc as float)*1000000 else null end as so_mnth_tgt_by_sku,
+       null as zone_manager_id,
+       null as zone_manager_name,
+       null as "zone",
+       null as province,
+       null as region,
+       null as shop_type,
+       null as mt_sub_channel,
+       null as retail_environment,
+       null as group_account,
+       null as account,
+       nvl(prod.franchise,'NA') as franchise,
+       nvl(prod.brand,'NA') as brand,
+       nvl(prod.variant,'NA') as variant,
+       nvl(prod.product_group,'NA') as product_group,
+       nvl(prod.group_jb,'NA') as group_jb,
+        null as parameter_value,
+        null as caln_yr_mo
+ from itg_mds_vn_allchannel_siso_target_sku otc_tgt
+    inner join 
+    (SELECT edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no
+                FROM edw_vw_os_time_dim
+                GROUP BY edw_vw_os_time_dim."year",
+                        edw_vw_os_time_dim.qrtr,
+                        edw_vw_os_time_dim.mnth_id,
+                        edw_vw_os_time_dim.mnth_no)timedim
+    on cast(timedim.mnth_id as numeric) = otc_tgt.cycle
+    left join prod_dim prod
+    on cast(otc_tgt.jnj_code as varchar) = prod.sap_code
 )
 
 
@@ -518,3 +1345,23 @@ union all
 select * from cte3
 union all
 select * from cte4
+union all
+select * from cte5
+union all
+select * from cte6
+union all
+select * from cte7
+union all
+select * from cte8
+union all
+select * from cte9
+union all
+select * from cte10
+union all
+select * from cte11
+union all
+select * from cte12
+union all
+select * from cte13
+union all
+select * from cte14
