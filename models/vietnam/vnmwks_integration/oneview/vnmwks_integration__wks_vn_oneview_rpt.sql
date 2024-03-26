@@ -976,7 +976,7 @@ cte10 as
             ecom.barcode as bar_code,
             ecom.custcode as customer_code,
             ecom.customer as customer_name,
-            cast(ecom.invoice_date as date ) as invoice_date,
+            to_date(ecom.invoice_date,'yyyymmdd') as invoice_date,
             null as salesman,
             null as salesman_name,
             null as si_gts_val,
@@ -1051,7 +1051,7 @@ SELECT  itg_vn_mt_sellin_dksh_history.productid,
 FROM itg_vn_mt_sellin_dksh_history
 WHERE itg_vn_mt_sellin_dksh_history.channel = 'ECOM' ) ecom
 INNER JOIN edw_vw_os_time_dim timedim ON ecom.invoice_date = timedim.cal_date_id
-inner join time_dim on cast(ecom.invoice_date as date) = time_dim.cal_date
+inner join time_dim on to_date(ecom.invoice_date,'yyyymmdd') = time_dim.cal_date
 left join edw_vw_vn_mt_dist_products mt_prod ON ecom.productid = mt_prod.code
 left join prod_dim gt_prod
 on gt_prod.sap_code = cast(mt_prod.jnj_sap_code as varchar)
@@ -1232,7 +1232,7 @@ cte13 as
 		null as bar_code,
 		ot.kunnr as customer_code,
 		ot.name1 as customer_name,
-		CAST( CAST( billingdate AS char(8)) AS date )as invoice_date,
+		to_date(billingdate,'yyyymmdd') as invoice_date,
 		null as salesman,
 		null as salesman_name,
 		null as si_gts_val,
@@ -1263,7 +1263,7 @@ cte13 as
         null as caln_yr_mo
 	from itg_vn_oneview_otc ot	
     inner join edw_vw_os_time_dim timedim ON ot.billingdate = timedim.cal_date_id
-    inner join time_dim on  CAST( CAST( billingdate AS char(8)) AS date ) = time_dim.cal_date          
+    inner join time_dim on to_date(billingdate,'yyyymmdd') = time_dim.cal_date          
 	left join prod_dim on prod_dim.sap_code = ot.sap_matl_num
 	where(TT<>0)
 ),
@@ -1338,30 +1338,30 @@ cte14 as
 )
 
 
-select * from cte1_filtered
+-- select * from cte1_filtered
+-- union all
+-- select * from cte2_filtered
+-- union all
+-- select * from cte3
+-- union all
+-- select * from cte4
+-- union all
+-- select * from cte5
+-- union all
+select 'cte6' nm,* from cte6
 union all
-select * from cte2_filtered
+select 'cte7' nm,* from cte7
 union all
-select * from cte3
+select 'cte8' nm,* from cte8
 union all
-select * from cte4
+select 'cte9' nm,* from cte9
 union all
-select * from cte5
+-- select * from cte10
+-- union all
+select 'cte11' nm,* from cte11
 union all
-select * from cte6
+select 'cte12' nm,* from cte12
+-- union all
+-- select * from cte13
 union all
-select * from cte7
-union all
-select * from cte8
-union all
-select * from cte9
-union all
-select * from cte10
-union all
-select * from cte11
-union all
-select * from cte12
-union all
-select * from cte13
-union all
-select * from cte14
+select 'cte14' nm,* from cte14
