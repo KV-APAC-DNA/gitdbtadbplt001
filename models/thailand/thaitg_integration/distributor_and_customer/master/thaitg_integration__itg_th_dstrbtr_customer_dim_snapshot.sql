@@ -2,8 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['snap_shot_dt'],
-        pre_hook= "delete from {{this}} where to_char(snap_shot_dt,'yyyymm') = to_char(dateadd(hour, -1, convert_timezone('Asia/Bangkok', current_timestamp())))
+        pre_hook= "delete from {{this}} where to_char(snap_shot_dt,'yyyymm') = to_char(dateadd(hour, -1, convert_timezone('Asia/Bangkok', current_timestamp())),'yyyymm')
                   and   case when (select count(*) from {{ ref('thaitg_integration__itg_th_dstrbtr_customer_dim') }}) > 0 then 1 else 0 end = 1 "
 
     )
