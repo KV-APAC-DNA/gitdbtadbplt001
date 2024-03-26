@@ -24,7 +24,7 @@ final as (
         osa as "osa",
         oos as "oos",
         oos_reason as "oos_reason",
-        valid_flag as "valid_flag",
+        valid_flag as "valid_flag"
     from source
 )
 select * from final

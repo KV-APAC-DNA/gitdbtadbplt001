@@ -1,5 +1,5 @@
 with th_wks_bigc as 
-(select * from {{ ref('thawks_integration__wks_th_wks_bigc') }}
+(select * from {{ ref('thawks_integration__th_wks_bigc') }}
 ),
 sdl_mds_th_product_master as (
 select * from {{ source('thasdl_raw', 'sdl_mds_th_product_master') }}
