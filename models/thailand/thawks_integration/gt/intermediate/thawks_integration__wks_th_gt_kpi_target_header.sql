@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('thaitg_integration', 'wks_th_gt_kpi_target_header') }}),
+    select * from {{ source('thawks_integration', 'wks_th_gt_kpi_target_header') }}),
 final as (
 select 
     cntry_cd::varchar(5) as cntry_cd,

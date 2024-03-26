@@ -2,8 +2,8 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy = "delete+insert",
-        unique_key=["hash_key"]
+        incremental_strategy = "append",
+        pre_hook="delete from {{this}} where md5(coalesce(upper(item_no),'N/A') || coalesce(upper(customer_code),'N/A') || coalesce(upper(customer_name),'N/A')) in (select md5(coalesce(upper(item_no),'N/A') || coalesce(upper(customer_code),'N/A') || coalesce(upper(customer_name),'N/A')) from {{source('thasdl_raw','sdl_mym_gt_sales_report_fact')}} )"
     )
 }}
 
@@ -15,11 +15,6 @@ final as
 (
     SELECT 
         item_no::varchar(50) as item_no,
-        md5(
-            coalesce(UPPER(item_no), 'N/A') || 
-            coalesce(upper (customer_code), 'N/A') || 
-            coalesce(upper (customer_name), 'N/A')
-        ) as hash_key,
         description::varchar(200) as description,
         qty_sold::number(18,4) as qty_sold,
         foc_qty::number(18,4) as foc_qty,
@@ -31,7 +26,7 @@ final as
         filename::varchar(50) as filename,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 )
 select * from final

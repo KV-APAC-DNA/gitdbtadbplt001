@@ -667,7 +667,6 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: wks_th_gt_kpi_target_header
       - name: itg_query_parameters
 
   - name: thawks_integration
@@ -685,3 +684,4 @@ sources:
       - name: wks_la_gt_sales_order_fact_pre_load
       - name: wks_la_gt_route_header_hashkey
       - name: wks_la_gt_route_detail_hashkey
+      - name: wks_th_gt_kpi_target_header

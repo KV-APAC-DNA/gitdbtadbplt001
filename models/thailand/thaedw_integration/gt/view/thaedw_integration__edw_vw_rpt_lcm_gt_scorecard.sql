@@ -61,6 +61,9 @@ select * from {{ ref('thaitg_integration__itg_mym_gt_customer_snapshot') }}
 itg_mym_gt_customer as (
 select * from {{ ref('thaitg_integration__itg_mym_gt_customer') }}
 ),
+edw_vw_os_time_dim as (
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
 final as (
 
 (
