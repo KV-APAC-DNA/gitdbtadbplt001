@@ -13,9 +13,9 @@ models:
     config:
       alias: wks_th_watsons_siso_propagate_to_details
       tags: ["tesco_mt_7_11_and_tops","transformation"]
-  - name: thawks_integration__wks_th_wks_bigc
+  - name: thawks_integration__th_wks_bigc
     config:
-      alias: wks_th_wks_bigc
+      alias: th_wks_bigc
       tags: ["tesco_mt_7_11_and_tops","transformation"]
   - name: thawks_integration__wks_th_makro
     config:

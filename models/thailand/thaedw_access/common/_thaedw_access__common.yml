@@ -53,3 +53,23 @@ models:
     config:
       alias: edw_vw_th_inventory_ageing_analysis
       tags: ["thailand_views","transformation"]
+  - name: thaedw_access__edw_vw_th_gt_msl_distribution
+    config:
+      alias: edw_vw_th_gt_msl_distribution
+      tags: ["th_gt_scorecard_datamart_load","transformation"]
+  - name: thaedw_access__edw_vw_th_sellout_sales_foc_fact
+    config:
+      alias: edw_vw_th_sellout_sales_foc_fact
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__itg_th_dstrbtr_customer_dim
+    config:
+      alias: itg_th_dstrbtr_customer_dim
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__itg_th_dstrbtr_material_dim
+    config:
+      alias: itg_th_dstrbtr_material_dim
+      tags: ["th_itg_to_edw","transformation"]
+  - name: thaedw_access__itg_th_sellout_inventory_fact
+    config:
+      alias: itg_th_sellout_inventory_fact
+      tags: ["th_itg_to_edw","transformation"]
