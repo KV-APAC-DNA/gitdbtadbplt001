@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }});"
+        pre_hook= "delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }});"
     )
 }}
 
