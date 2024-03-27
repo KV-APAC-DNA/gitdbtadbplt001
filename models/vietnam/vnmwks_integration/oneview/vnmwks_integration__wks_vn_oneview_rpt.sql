@@ -843,7 +843,7 @@ cte8 as
        mt.barcode,
        mt.custcode as customer_code,
        mt.name as customer_name,
-       cast(mt.invoice_date as date) as invoice_date,
+       to_date(replace(mt.invoice_date,'-',''), 'yyyymmdd') as invoice_date,
        null as salesman,
        null as salesman_name,
        null as si_gts_val,
@@ -873,7 +873,7 @@ cte8 as
        null as parameter_value,
        null as caln_yr_mo
     from edw_vw_vn_mt_sell_in_analysis mt
-    left join time_dim on time_dim.cal_date = cast(mt.invoice_date as date)
+    left join time_dim on time_dim.cal_date = to_date(replace(mt.invoice_date,'-',''), 'yyyymmdd')
     left join prod_dim prod on
     case when mt.data_source = 'JNJ' then
     prod.sap_code = cast(mt.productid as varchar)
@@ -1338,16 +1338,16 @@ cte14 as
 )
 
 
--- select * from cte1_filtered
--- union all
--- select * from cte2_filtered
--- union all
--- select * from cte3
--- union all
--- select * from cte4
--- union all
--- select * from cte5
--- union all
+select 'cte1' nm,* from cte1_filtered
+union all
+select 'cte2' nm,* from cte2_filtered
+union all
+select 'cte3' nm,* from cte3
+union all
+select 'cte4' nm,* from cte4
+union all
+select 'cte5' nm,* from cte5
+union all
 select 'cte6' nm,* from cte6
 union all
 select 'cte7' nm,* from cte7
@@ -1356,12 +1356,31 @@ select 'cte8' nm,* from cte8
 union all
 select 'cte9' nm,* from cte9
 union all
--- select * from cte10
--- union all
+select 'cte10' nm,* from cte10
+union all
 select 'cte11' nm,* from cte11
 union all
 select 'cte12' nm,* from cte12
--- union all
--- select * from cte13
+union all
+select 'cte13' nm,* from cte13
 union all
 select 'cte14' nm,* from cte14
+
+
+-- select 'cte6' nm,* from cte6
+-- union all
+-- select 'cte7' nm,* from cte7
+-- union all
+-- select 'cte8' nm,* from cte8
+-- union all
+-- select 'cte9' nm,* from cte9
+-- union all
+-- -- select * from cte10
+-- -- union all
+-- select 'cte11' nm,* from cte11
+-- union all
+-- select 'cte12' nm,* from cte12
+-- -- union all
+-- -- select * from cte13
+-- union all
+-- select 'cte14' nm,* from cte14
