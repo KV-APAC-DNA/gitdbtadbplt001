@@ -13,4 +13,6 @@ sources:
         tags: ["vn_mt_sellin_master"]
       - name: sdl_mds_vn_gt_msl_shoptype_mapping
         tags: ["vn_mt_sellin_master"]
+      - name: sdl_vn_dms_order_promotion
+        tags: ["vn_dms_order_promotion"]
       
