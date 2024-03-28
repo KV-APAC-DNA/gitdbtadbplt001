@@ -7,7 +7,7 @@
 }}
 
 with source as (
-    select * from {{ source('snaposesdl_raw','sdl_vn_gt_topdoor_target') }}
+    select * from {{ source('vnmsdl_raw','sdl_vn_gt_topdoor_target') }}
 ),
 
 final as
