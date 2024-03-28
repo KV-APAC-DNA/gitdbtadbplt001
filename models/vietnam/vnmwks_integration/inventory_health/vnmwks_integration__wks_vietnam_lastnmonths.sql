@@ -1,8 +1,8 @@
 with wks_vietnam_allmonths_base as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_allmonths_base
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_allmonths_base
 ),
 edw_vw_os_time_dim as (
-    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 last_3_months as (
     SELECT base3.sap_parent_customer_key,
@@ -14,7 +14,7 @@ last_3_months as (
                 FROM (
                         SELECT *
                         FROM wks_vietnam_allmonths_base
-                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, SYSDATE) -6)
+                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                     ) base3,
                     (
                         SELECT mnth_id,
@@ -26,10 +26,10 @@ last_3_months as (
                                         ORDER BY mnth_id
                                     ) third_month
                                 FROM (
-                                        SELECT DISTINCT YEAR,
+                                        SELECT DISTINCT "year" as year,
                                             mnth_id
                                         FROM edw_vw_os_time_dim
-                                        WHERE YEAR >= (DATE_PART(YEAR, SYSDATE) -6)
+                                        WHERE "year" >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                                     )
                             ) month_base
                     ) to_month
@@ -50,7 +50,7 @@ last_6_months as (
                 FROM (
                         SELECT *
                         FROM wks_vietnam_allmonths_base
-                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, SYSDATE) -6)
+                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                     ) base6,
                     (
                         SELECT mnth_id,
@@ -62,10 +62,10 @@ last_6_months as (
                                         ORDER BY mnth_id
                                     ) sixth_month
                                 FROM (
-                                        SELECT DISTINCT YEAR,
+                                        SELECT DISTINCT "year" as year,
                                             mnth_id
                                         FROM edw_vw_os_time_dim
-                                        WHERE YEAR >= (DATE_PART(YEAR, SYSDATE) -6)
+                                        WHERE "year" >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                                     )
                             ) month_base
                     ) to_month
@@ -86,7 +86,7 @@ last_12_months as (
                 FROM (
                         SELECT *
                         FROM wks_vietnam_allmonths_base
-                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, SYSDATE) -6)
+                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                     ) base12,
                     (
                         SELECT mnth_id,
@@ -98,10 +98,10 @@ last_12_months as (
                                         ORDER BY mnth_id
                                     ) twelfth_month
                                 FROM (
-                                        SELECT DISTINCT YEAR,
+                                        SELECT DISTINCT "year" as year,
                                             mnth_id
                                         FROM edw_vw_os_time_dim
-                                        WHERE YEAR >= (DATE_PART(YEAR, SYSDATE) -6)
+                                        WHERE "year" >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                                     )
                             ) month_base
                     ) to_month
@@ -122,7 +122,7 @@ last_36_months as (
                 FROM (
                         SELECT *
                         FROM wks_vietnam_allmonths_base
-                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, SYSDATE) -6)
+                        WHERE LEFT (MONTH, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                     ) base36,
                     (
                         SELECT mnth_id,
@@ -134,10 +134,10 @@ last_36_months as (
                                         ORDER BY mnth_id
                                     ) thirtysixth_month
                                 FROM (
-                                        SELECT DISTINCT YEAR,
+                                        SELECT DISTINCT "year" as year,
                                             mnth_id
                                         FROM edw_vw_os_time_dim
-                                        WHERE YEAR >= (DATE_PART(YEAR, SYSDATE) -6)
+                                        WHERE "year" >= (DATE_PART(YEAR, current_timestamp()::date) -6)
                                     )
                             ) month_base
                     ) to_month

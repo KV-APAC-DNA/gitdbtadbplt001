@@ -1,5 +1,5 @@
 with wks_vietnam_siso_propagate_final as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_siso_propagate_final
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_final
 ),
 edw_material_dim as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_dim

@@ -1,8 +1,8 @@
 with wks_vietnam_base as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base
 ),
 edw_vw_os_time_dim as (
-    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 all_months as (
     SELECT DISTINCT sap_parent_customer_key,
@@ -16,10 +16,10 @@ all_months as (
                 FROM wks_vietnam_base
             ) a,
             (
-                SELECT DISTINCT YEAR,
+                SELECT DISTINCT "year",
                     mnth_id
                 FROM edw_vw_os_time_dim
-                WHERE YEAR >(DATE_PART(YEAR, SYSDATE) -6)
+                WHERE "year" >(DATE_PART(YEAR, current_timestamp()::date) -6)
             ) b
     
 ),
@@ -34,7 +34,7 @@ final as (
     SUM(b.inv_value) AS inv_value,
     SUM(b.sell_in_qty) AS sell_in_qty,
     SUM(b.sell_in_value) AS sell_in_value
-    from all_months, wks_vietnam_base
+    from all_months, wks_vietnam_base b
     WHERE all_months.sap_parent_customer_key = b.sap_parent_customer_key(+)
     AND all_months.sap_parent_customer_desc = b.sap_parent_customer_desc(+)
     AND all_months.matl_num = b.matl_num(+)

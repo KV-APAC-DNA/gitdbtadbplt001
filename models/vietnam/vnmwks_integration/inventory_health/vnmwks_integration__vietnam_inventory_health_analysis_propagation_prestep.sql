@@ -1,17 +1,20 @@
 with edw_vw_os_time_dim as (
-    select * from dev_dna_core.SGPEDW_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
+wks_vietnam_siso_propagate_final as (
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_final
 ),
 vw_edw_reg_exch_rate as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.vw_edw_reg_exch_rate
 ),
 edw_vw_vn_customer_dim as (
-    select * from dev_dna_core.VNMEDW_INTEGRATION.edw_vw_vn_customer_dim
+    select * from dev_dna_core.SNAPOSEEDW_INTEGRATION.edw_vw_vn_customer_dim
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-    select * from dev_dna_core.VNMITG_INTEGRATION.itg_vn_distributor_sap_sold_to_mapping
+    select * from dev_dna_core.SNAPOSEITG_INTEGRATION.itg_vn_distributor_sap_sold_to_mapping
 ),
 itg_vn_dms_distributor_dim as (
-    select * from dev_dna_core.VNMITG_INTEGRATION.itg_vn_dms_distributor_dim
+    select * from dev_dna_core.SNAPOSEITG_INTEGRATION.itg_vn_dms_distributor_dim
 ),
 edw_material_dim as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_dim
@@ -47,7 +50,7 @@ edw_subchnl_retail_env_mapping as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.edw_subchnl_retail_env_mapping
 ),
 cal AS (
-    SELECT DISTINCT YEAR,
+    SELECT DISTINCT "year" as year,
         QRTR_NO,
         MNTH_ID,
         MNTH_NO
@@ -65,7 +68,7 @@ CURRENCY AS (
         (exch_rate / 1000) as exch_rate
     from vw_edw_reg_exch_rate
     where cntry_key = 'VN'
-        and jj_year >=(DATE_PART(YEAR, SYSDATE) -2)
+        and jj_year >=(DATE_PART(YEAR, current_timestamp()::date) -2)
 ),
 PRODUCT AS (
     SELECT DISTINCT EMD.matl_num AS SAP_MATL_NUM,
@@ -96,7 +99,7 @@ PRODUCT AS (
         EMD.pka_product_key_description as pka_product_key_description,
         EMD.pka_product_key as product_key,
         EMD.pka_product_key_description as product_key_description,
-        EGPH.REGION AS GPH_REGION,
+        EGPH."region" AS GPH_REGION,
         EGPH.regional_franchise AS GPH_REG_FRNCHSE,
         EGPH.regional_franchise_group AS GPH_REG_FRNCHSE_GRP,
         EGPH.GCPH_FRANCHISE AS GPH_PROD_FRNCHSE,
@@ -144,8 +147,8 @@ CUSTOMER AS (
         ECSD.BNR_FRMT_KEY AS SAP_BNR_FRMT_KEY,
         CDDES_BNRFMT.CODE_DESC AS SAP_BNR_FRMT_DESC,
         SUBCHNL_RETAIL_ENV.RETAIL_ENV,
-        REGZONE.REGION_NAME AS REGION,
-        REGZONE.ZONE_NAME AS ZONE_OR_AREA,
+        null AS REGION,
+        null AS ZONE_OR_AREA,
         EGCH.GCGH_REGION AS GCH_REGION,
         EGCH.GCGH_CLUSTER AS GCH_CLUSTER,
         EGCH.GCGH_SUBCLUSTER AS GCH_SUBCLUSTER,
@@ -177,12 +180,6 @@ CUSTOMER AS (
             WHERE SLS_ORG IN ('260S')
             GROUP BY CUST_NUM
         ) A,
-        (
-            SELECT DISTINCT CUSTOMER_CODE,
-                REGION_NAME,
-                ZONE_NAME
-            FROM IN_EDW.EDW_CUSTOMER_DIM
-        ) REGZONE
     WHERE EGCH.CUSTOMER (+) = ECBD.CUST_NUM
         AND ECSD.CUST_NUM = ECBD.CUST_NUM
         AND DECODE(
@@ -211,11 +208,10 @@ CUSTOMER AS (
         AND cddes_subchnl.code_type(+) = 'Sub Channel Key'
         AND CDDES_SUBCHNL.CODE(+) = ECSD.SUB_CHNL_KEY
         AND UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL(+)) = UPPER(CDDES_SUBCHNL.CODE_DESC)
-        AND LTRIM(ECSD.CUST_NUM, '0') = REGZONE.CUSTOMER_CODE(+)
 ),
 INV_SO_SI AS (
     Select *
-    from os_wks.wks_vietnam_siso_propagate_final
+    from wks_vietnam_siso_propagate_final
 ),
 base_data as (
     SELECT CAL.YEAR,
@@ -337,8 +333,8 @@ base_data as (
                         FROM (
                                 SELECT mapp.distributor_id,
                                     mapp.sap_sold_to_code,
-                                    mapp."region" AS map_region,
-                                    dist."region" AS dist_region,
+                                    mapp.region AS map_region,
+                                    dist.region AS dist_region,
                                     dist.province,
                                     mapp.sap_ship_to_code,
                                     dist.territory_dist
@@ -354,7 +350,7 @@ base_data as (
                     AND T5.SAP_PRNT_CUST_KEY(+) = T1.sap_parent_customer_key
                     AND UPPER(trim(T4.SAP_BNR_FRMT_DESC(+))) = UPPER(trim(T1.sap_parent_customer_desc))
                     AND T1.month = cal.MNTH_ID
-                    AND cal.YEAR >= (DATE_PART(YEAR, SYSDATE) -2)
+                    AND cal.YEAR >= (DATE_PART(YEAR, current_timestamp()::date) -2)
                 GROUP BY CAL.YEAR,
                     CAL.QRTR_NO,
                     CAL.MNTH_ID,

@@ -1,8 +1,8 @@
 with EDW_VW_OS_TIME_DIM as (
-    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_vietnam_base_detail as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base_detail
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base_detail
 ),
 filtered_wvbd as (
     SELECT sap_parent_customer_key,
@@ -39,20 +39,20 @@ final as (
                             ORDER BY mnth_id
                         ) third_month
                     FROM (
-                            SELECT DISTINCT YEAR,
+                            SELECT DISTINCT "year",
                                 mnth_id
                             FROM EDW_VW_OS_TIME_DIM
                             WHERE mnth_id <= (
                                     SELECT DISTINCT MNTH_ID
                                     FROM EDW_VW_OS_TIME_DIM
-                                    WHERE cal_date = to_date(current_timestamp()))
+                                    WHERE cal_date = to_date(current_timestamp())
                                 )
                         )
                 )
             WHERE mnth_id = (
                     SELECT DISTINCT MNTH_ID
                     FROM EDW_VW_OS_TIME_DIM
-                    WHERE cal_date = to_date(current_timestamp()))
+                    WHERE cal_date = to_date(current_timestamp())
                 )
         )
         AND (

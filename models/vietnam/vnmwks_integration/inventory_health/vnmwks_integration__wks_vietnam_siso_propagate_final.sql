@@ -1,14 +1,14 @@
 with wks_vietnam_base_detail as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base_detail
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base_detail
 ),
 vietnam_propagate_from_to as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.vietnam_propagate_from_to
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.vietnam_propagate_from_to
 ),
 wks_vietnam_siso_propagate_to_details as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_siso_propagate_to_details
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_to_details
 ),
 wks_vietnam_siso_propagate_to_existing_dtls as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_siso_propagate_to_existing_dtls
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_to_existing_dtls
 ),
 base as (
     SELECT sap_parent_customer_key,

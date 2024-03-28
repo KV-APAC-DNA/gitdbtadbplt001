@@ -1,8 +1,8 @@
 with EDW_VW_OS_TIME_DIM as (
-    select * from dev_dna_core.SGPEDW_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_vn_customer_dim as (
-    select * from dev_dna_core.VNMEDW_INTEGRATION.edw_vw_vn_customer_dim
+    select * from dev_dna_core.SNAPOSEEDW_INTEGRATION.edw_vw_vn_customer_dim
 ),
 vw_edw_reg_exch_rate as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.vw_edw_reg_exch_rate
@@ -46,8 +46,20 @@ edw_copa_trans_fact as (
 v_edw_customer_sales_dim as (
     select * from dev_dna_core.ASPEDW_INTEGRATION.v_edw_customer_sales_dim
 ),
+vietnam_inventory_health_analysis_propagation_prestep as (
+    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.vietnam_inventory_health_analysis_propagation_prestep
+),
+wks_vietnam_siso_propagate_final as (
+    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_final
+),
+itg_vn_dms_distributor_dim AS (
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.itg_vn_dms_distributor_dim
+),
+itg_vn_distributor_sap_sold_to_mapping as (
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.itg_vn_distributor_sap_sold_to_mapping
+),
 cal AS (
-    SELECT DISTINCT YEAR,
+    SELECT DISTINCT "year" as year,
         QRTR_NO,
         MNTH_ID,
         MNTH_NO
@@ -65,7 +77,7 @@ CURRENCY AS (
         (exch_rate / 1000) as exch_rate
     from vw_edw_reg_exch_rate
     where cntry_key = 'VN'
-        and jj_year >=(DATE_PART(YEAR, SYSDATE) -2)
+        and jj_year >=(DATE_PART(YEAR, current_timestamp()::date) -2)
 ),
 PRODUCT AS (
     SELECT DISTINCT EMD.matl_num AS SAP_MATL_NUM,
@@ -96,7 +108,7 @@ PRODUCT AS (
         EMD.pka_product_key_description as pka_product_key_description,
         EMD.pka_product_key as product_key,
         EMD.pka_product_key_description as product_key_description,
-        EGPH.REGION AS GPH_REGION,
+        EGPH."region" AS GPH_REGION,
         EGPH.regional_franchise AS GPH_REG_FRNCHSE,
         EGPH.regional_franchise_group AS GPH_REG_FRNCHSE_GRP,
         EGPH.GCPH_FRANCHISE AS GPH_PROD_FRNCHSE,
@@ -145,8 +157,8 @@ CUSTOMER AS (
         ECSD.BNR_FRMT_KEY AS SAP_BNR_FRMT_KEY,
         CDDES_BNRFMT.CODE_DESC AS SAP_BNR_FRMT_DESC,
         SUBCHNL_RETAIL_ENV.RETAIL_ENV,
-        REGZONE.REGION_NAME AS REGION,
-        REGZONE.ZONE_NAME AS ZONE_OR_AREA,
+        null AS REGION,
+        null AS ZONE_OR_AREA,
         EGCH.GCGH_REGION AS GCH_REGION,
         EGCH.GCGH_CLUSTER AS GCH_CLUSTER,
         EGCH.GCGH_SUBCLUSTER AS GCH_SUBCLUSTER,
@@ -178,12 +190,6 @@ CUSTOMER AS (
             WHERE SLS_ORG IN ('260S')
             GROUP BY CUST_NUM
         ) A,
-        (
-            SELECT DISTINCT CUSTOMER_CODE,
-                REGION_NAME,
-                ZONE_NAME
-            FROM IN_EDW.EDW_CUSTOMER_DIM
-        ) REGZONE
     WHERE EGCH.CUSTOMER (+) = ECBD.CUST_NUM
         AND ECSD.CUST_NUM = ECBD.CUST_NUM
         AND DECODE(
@@ -212,11 +218,10 @@ CUSTOMER AS (
         AND cddes_subchnl.code_type(+) = 'Sub Channel Key'
         AND CDDES_SUBCHNL.CODE(+) = ECSD.SUB_CHNL_KEY
         AND UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL(+)) = UPPER(CDDES_SUBCHNL.CODE_DESC)
-        AND LTRIM(ECSD.CUST_NUM, '0') = REGZONE.CUSTOMER_CODE(+)
 ),
 INV_SO_SI AS (
     Select *
-    from os_wks.wks_vietnam_siso_propagate_final
+    from wks_vietnam_siso_propagate_final
 ),
 base_data as (
     SELECT CAL.YEAR,
@@ -274,14 +279,14 @@ base_data as (
                     sum(last_6months_so_value) as last_6months_so_val,
                     sum(last_12months_so_value) as last_12months_so_val,
                     sum(last_36months_so_value) as last_36months_so_val,
-                    cast(
-                        (sum(last_3months_so_value) * T2.Exch_rate) as numeric(38, 5)
+                    trunc(
+                        (sum(last_3months_so_value) * T2.Exch_rate), 5
                     ) as last_3months_so_val_usd,
-                    cast(
-                        (sum(last_6months_so_value) * T2.Exch_rate) as numeric(38, 5)
+                    trunc(
+                        (sum(last_6months_so_value) * T2.Exch_rate), 5
                     ) as last_6months_so_val_usd,
-                    cast(
-                        (sum(last_12months_so_value) * T2.Exch_rate) as numeric(38, 5)
+                    trunc(
+                        (sum(last_12months_so_value) * T2.Exch_rate), 5
                     ) as last_12months_so_val_usd,
                     propagate_flag,
                     propagate_from,
@@ -289,20 +294,20 @@ base_data as (
                         when propagate_flag = 'N' then 'Not propagate'
                         else reason
                     end as reason,
-                    cast(SUM(T1.sell_in_qty) as numeric(38, 5)) AS SI_SLS_QTY,
-                    cast(SUM(T1.sell_in_value) as numeric(38, 5)) AS SI_GTS_VAL,
-                    cast(
-                        SUM(T1.sell_in_value * T2.Exch_rate) as numeric(38, 5)
+                    trunc(SUM(T1.sell_in_qty), 5) AS SI_SLS_QTY,
+                    trunc(SUM(T1.sell_in_value), 5) AS SI_GTS_VAL,
+                    trunc(
+                        SUM(T1.sell_in_value * T2.Exch_rate), 5
                     ) AS SI_GTS_VAL_USD,
-                    cast(SUM(T1.inv_qty) as numeric(38, 5)) AS INVENTORY_QUANTITY,
-                    cast(SUM(T1.inv_value) as numeric(38, 5)) AS INVENTORY_VAL,
-                    cast(
-                        SUM((T1.inv_value) * T2.EXCH_RATE) as numeric(38, 5)
+                    trunc(SUM(T1.inv_qty), 5) AS INVENTORY_QUANTITY,
+                    trunc(SUM(T1.inv_value), 5) AS INVENTORY_VAL,
+                    trunc(
+                        SUM((T1.inv_value) * T2.EXCH_RATE), 5
                     ) AS INVENTORY_VAL_USD,
-                    cast(SUM(T1.SO_QTY) as numeric(38, 5)) AS SO_SLS_QTY,
-                    cast(SUM(T1.SO_value) as numeric(38, 5)) AS SO_TRD_SLS,
-                    cast(
-                        SUM((T1.SO_value) * T2.EXCH_RATE) as numeric(38, 5)
+                    trunc(SUM(T1.SO_QTY), 5) AS SO_SLS_QTY,
+                    trunc(SUM(T1.SO_value), 5) AS SO_TRD_SLS,
+                    trunc(
+                        SUM((T1.SO_value) * T2.EXCH_RATE), 5
                     ) AS SO_TRD_SLS_USD
                 FROM INV_SO_SI T1,
                     (
@@ -340,13 +345,13 @@ base_data as (
                         FROM (
                                 SELECT mapp.distributor_id,
                                     mapp.sap_sold_to_code,
-                                    mapp."region" AS map_region,
-                                    dist."region" AS dist_region,
+                                    mapp.region AS map_region,
+                                    dist.region AS dist_region,
                                     dist.province,
                                     mapp.sap_ship_to_code,
                                     dist.territory_dist
-                                FROM os_itg.itg_vn_distributor_sap_sold_to_mapping mapp,
-                                    os_itg.itg_vn_dms_distributor_dim dist
+                                FROM itg_vn_distributor_sap_sold_to_mapping mapp,
+                                    itg_vn_dms_distributor_dim dist
                                 WHERE dist.dstrbtr_id = mapp.distributor_id
                             ) dist_dim,
                             edw_vw_vn_customer_dim cust_dim
@@ -357,7 +362,7 @@ base_data as (
                     AND T5.SAP_PRNT_CUST_KEY(+) = T1.sap_parent_customer_key
                     AND UPPER(trim(T4.SAP_BNR_FRMT_DESC(+))) = UPPER(trim(T1.sap_parent_customer_desc))
                     AND T1.month = cal.MNTH_ID
-                    AND cal.YEAR >= (DATE_PART(YEAR, SYSDATE) -2)
+                    AND cal.YEAR >= (DATE_PART(YEAR, current_timestamp()::date) -2)
                 GROUP BY CAL.YEAR,
                     CAL.QRTR_NO,
                     CAL.MNTH_ID,
@@ -438,7 +443,7 @@ RegionalCurrency AS (
         (cast(EXCH_RATE as numeric(15, 5))) as EXCH_RATE
     FROM vw_edw_reg_exch_rate
     where cntry_key = 'VN'
-        and jj_mnth_id >= (DATE_PART(YEAR, SYSDATE) -2)
+        and jj_mnth_id >= (DATE_PART(YEAR, current_timestamp()::date) -2)
         and to_ccy = 'USD'
 ),
 GTS as (
@@ -475,7 +480,7 @@ GTS as (
                             AND copa.div = cus_sales_extn.div
                             AND copa.cust_num = cus_sales_extn.cust_num
                         WHERE cmp.ctry_group = 'Vietnam'
-                            and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, SYSDATE) -2)
+                            and left(fisc_yr_per, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -2)
                             and copa.cust_num is not null
                             and copa.acct_hier_shrt_desc = 'GTS'
                             and amt_obj_crncy > 0
@@ -493,7 +498,7 @@ GTS as (
                     sap_prnt_cust_desc,
                     sum(si_gts_val) as si_gts_val,
                     sum(si_sls_qty) as si_sls_qty
-                from os_wks.vietnam_inventory_health_analysis_propagation_prestep inv
+                from vietnam_inventory_health_analysis_propagation_prestep inv
                 where cntry_nm in ('Vietnam')
                 group by 1,
                     2,
@@ -598,23 +603,23 @@ final as (
     retail_env,
     region,
     zone_or_area,
-    round(cast(si_sls_qty as numeric(38, 5)), 5) as si_sls_qty,
-    round(cast(si_gts_val as numeric (38, 5)), 5) as si_gts_val,
-    round(cast(si_gts_val_usd as numeric(38, 5)), 5) as si_gts_val_usd,
-    round(cast (inventory_quantity as numeric(38, 5)), 5) as inventory_quantity,
-    round(cast(inventory_val as numeric(38, 5)), 5) as inventory_val,
-    round(cast (inventory_val_usd as numeric(38, 5)), 5) as inventory_val_usd,
-    round(cast (so_sls_qty as numeric(38, 5)), 5) as so_sls_qty,
-    round(cast (so_trd_sls as numeric(38, 5)), 5) as so_trd_sls,
-    round(cast (SO_TRD_SLS_usd as numeric(38, 5)), 5) as so_trd_sls_usd,
-    round(cast (COVERAGE.gts as numeric(38, 5)), 5) as si_all_db_val,
-    round(cast (COVERAGE.gts_usd as numeric (38, 5)), 5) as si_all_db_val_usd,
+    round(trunc(si_sls_qty, 5), 5) as si_sls_qty,
+    round(trunc(si_gts_val, 5), 5) as si_gts_val,
+    round(trunc(si_gts_val_usd, 5), 5) as si_gts_val_usd,
+    round(trunc(inventory_quantity, 5), 5) as inventory_quantity,
+    round(trunc(inventory_val, 5), 5) as inventory_val,
+    round(trunc(inventory_val_usd, 5), 5) as inventory_val_usd,
+    round(trunc(so_sls_qty, 5), 5) as so_sls_qty,
+    round(trunc(so_trd_sls, 5), 5) as so_trd_sls,
+    round(trunc(SO_TRD_SLS_usd, 5), 5) as so_trd_sls_usd,
+    round(trunc(COVERAGE.gts, 5), 5) as si_all_db_val,
+    round(trunc(COVERAGE.gts_usd, 5), 5) as si_all_db_val_usd,
     round(
-        cast (COVERAGE.si_inv_db_val as numeric(38, 5)),
+        trunc (COVERAGE.si_inv_db_val, 5),
         5
     ) as si_inv_db_val,
     round(
-        cast (COVERAGE.si_inv_db_val_usd as numeric(38, 5)),
+        trunc (COVERAGE.si_inv_db_val_usd, 5),
         5
     ) as si_inv_db_val_usd,
     last_3months_so_qty,

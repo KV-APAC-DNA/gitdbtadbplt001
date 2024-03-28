@@ -1,11 +1,11 @@
 with wks_vietnam_lastnmonths as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_lastnmonths
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_lastnmonths
 ),
 wks_vietnam_base as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base
 ),
 edw_vw_os_time_dim as (
-    select * from dev_dna_core.SGPITG_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 transformed as (
     SELECT agg.sap_parent_customer_key,
@@ -32,7 +32,7 @@ transformed as (
             END AS replicated_flag
         FROM wks_vietnam_lastnmonths agg,
             wks_vietnam_base base
-        WHERE LEFT (agg.month, 4) >= (DATE_PART(YEAR, SYSDATE) -2)
+        WHERE LEFT (agg.month, 4) >= (DATE_PART(YEAR, current_timestamp()::date) -2)
             AND agg.sap_parent_customer_key = base.sap_parent_customer_key(+)
             AND agg.sap_parent_customer_desc = base.sap_parent_customer_desc(+)
             AND agg.matl_num = base.matl_num(+)
@@ -40,7 +40,7 @@ transformed as (
             AND agg.month <= (
                 SELECT DISTINCT mnth_id
                 FROM edw_vw_os_time_dim
-                WHERE cal_date = TRUNC(sysdate)
+                WHERE cal_date = to_date(current_timestamp())
             )
 ),
 final as (

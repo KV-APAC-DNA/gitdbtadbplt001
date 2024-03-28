@@ -2,34 +2,37 @@ with edw_vw_vn_sellout_sales_fact as (
     select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_SELLOUT_SALES_FACT
 ),
 edw_vw_vn_customer_dim as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_CUSTOMER_DIM
+    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_CUSTOMER_DIM
 ),
 itg_mds_vn_gt_gts_ratio as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_GT_GTS_RATIO
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_GT_GTS_RATIO
 ),
 itg_query_parameters as (
     select * from DEV_DNA_CORE.SGPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 itg_vn_mt_sellin_dksh as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
 ),
 sdl_mds_vn_distributor_products as (
-    select * from DEV_DNA_LOAD.VNMSDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
+    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
 ),
 wks_dksh_unmapped as (
     select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_DKSH_UNMAPPED
 ),
 edw_list_price as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_LIST_PRICE
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_LIST_PRICE
 ),
 itg_parameter_reg_inventory as (
     select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PARAMETER_REG_INVENTORY
 ),
 edw_gch_producthierarchy as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
 ),
 edw_material_sales_dim as (
     select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+),
+edw_material_dim AS (
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
 ),
 mat_prod as (
     SELECT 
@@ -162,8 +165,8 @@ trans_si as (
                 edw_vw_vn_customer_dim.sap_prnt_cust_key,
                 edw_vw_vn_customer_dim.sap_prnt_cust_desc
             FROM edw_vw_vn_customer_dim
-        ) cust ON T1.soldto_code::TEXT = LTRIM (
-            cust.sap_cust_id,
+        ) cust WHERE T1.soldto_code::TEXT = LTRIM (
+            cust.sap_cust_id(+)::TEXT,
             0::CHARACTER VARYING::TEXT
         )
 ),

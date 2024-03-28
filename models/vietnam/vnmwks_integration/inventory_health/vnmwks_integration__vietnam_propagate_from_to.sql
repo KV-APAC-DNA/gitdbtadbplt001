@@ -1,8 +1,8 @@
 with vietnam_propagate_to as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.vietnam_propagate_to
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.vietnam_propagate_to
 ),
 wks_vietnam_base_detail as (
-    select * from dev_dna_core.VNMWKS_INTEGRATION.wks_vietnam_base_detail
+    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base_detail
 ),
 p_to as (
     SELECT *,
