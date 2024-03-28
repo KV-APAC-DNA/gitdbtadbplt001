@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_weekly_sellthrough_target
+    config: 
+      alias: itg_vn_weekly_sellthrough_target
+      tags: ["vn_dms_sellthrough_weekly_target"]

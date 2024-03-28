@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_sellin_dksh_fact
+    config: 
+      alias: itg_vn_mt_sellin_dksh_fact
+      tags: ["vn_mt_sellin_fact_load"]
