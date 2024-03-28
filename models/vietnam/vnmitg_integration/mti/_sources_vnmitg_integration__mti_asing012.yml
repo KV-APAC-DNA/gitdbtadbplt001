@@ -11,5 +11,12 @@ sources:
     tables:
       - name: sdl_spiral_mti_offtake
         tags: ["vn_mti_offtake"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["customername","shopcode","supcode","year","month","barcode"]
+              name: TRATBL_sdl_spiral_mti_offtake__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
       
       

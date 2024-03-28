@@ -11,4 +11,19 @@ sources:
     tables:
       - name: sdl_vn_dms_distributor_dim
         tags: ["vn_dms_master"]
+        tests:
+          - test_null:
+              not_null_columns: ["dstrbtr_id"]
+              name: TRATBL_sdl_vn_dms_distributor_dim__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["dstrbtr_id"]
+              select_columns: ["dstrbtr_id"]
+              name: TRATBL_sdl_vn_dms_distributor_dim__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+
       

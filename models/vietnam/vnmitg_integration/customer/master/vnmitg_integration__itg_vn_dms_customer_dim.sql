@@ -39,8 +39,8 @@ select
 	trim(province, ',')::varchar(30) as province,
     to_date(to_timestamp_ntz(crt_date,'mm/dd/yyyy hh12:mi:ss pm')) as crt_date,
     to_date(to_timestamp_ntz(date_off,'mm/dd/yyyy hh12:mi:ss pm')) as date_off,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm_dttm,
+	current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     null::number(14,0) as run_id,
     shop_type::varchar(100) as  shop_type  
 from source

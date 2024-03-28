@@ -13,4 +13,18 @@ sources:
         tags: ["vn_mt_sellin_master"]
       - name: sdl_vn_dms_customer_dim
         tags: ["vn_dms_master"]
+        tests:
+          - test_null:
+              not_null_columns: ["outlet_id"]
+              name: TRATBL_sdl_vn_dms_customer_dim__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["outlet_id"]
+              select_columns: ["outlet_id"]
+              name: TRATBL_sdl_vn_dms_customer_dim__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
       

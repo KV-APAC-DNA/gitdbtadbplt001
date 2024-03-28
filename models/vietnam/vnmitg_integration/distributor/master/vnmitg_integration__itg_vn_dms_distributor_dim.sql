@@ -25,8 +25,8 @@ select
     province::varchar(100) as province,
     trim(active, ',')::varchar(5) as active,
     trim(asm_id)::varchar(50) as asm_id,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm_dttm,
+	current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     null::number(14,0) as run_id    
 from source
 )
