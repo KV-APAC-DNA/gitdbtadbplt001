@@ -9,7 +9,7 @@
 with wks_mds_vn_ecom_target as (
     select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_mds_vn_ecom_target
 
-)
+),
 final as (
 select
     cycle::number(10,0) as cycle,

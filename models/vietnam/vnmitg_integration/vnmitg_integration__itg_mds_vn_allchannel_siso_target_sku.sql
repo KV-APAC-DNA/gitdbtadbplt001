@@ -9,7 +9,7 @@
 with wks_mds_vn_allchannel_siso_target_sku as (
     select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
 
-)
+),
 final as (
 select
     cycle::number(10,0) as cycle,
