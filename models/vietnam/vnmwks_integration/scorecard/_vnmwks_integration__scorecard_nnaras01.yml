@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wks_vn_gt_scorecard_details
+    config:
+      alias: wks_vn_gt_scorecard_details
+      tags: [""]
+  

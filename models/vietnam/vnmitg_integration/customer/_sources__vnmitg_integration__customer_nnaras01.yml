@@ -9,5 +9,4 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_vn_interface_choices
-      - name: sdl_mds_vn_customer_sales_organization
+      - name: sdl_mds_vn_distributor_customers

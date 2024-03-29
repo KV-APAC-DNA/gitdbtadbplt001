@@ -283,11 +283,9 @@ wks AS (
     ) pos 
   WHERE 
     POS.rn = 1
-) 
-SELECT 
-  * 
-FROM 
-  wks 
+) ,
+transformed as (
+SELECT  * FROM wks 
 UNION ALL 
 SELECT 
   * 
@@ -304,3 +302,39 @@ WHERE
     FROM 
       wks
   )
+),
+final as (
+select 
+id::number(18,0) as id,
+muid::varchar(36) as muid,
+versionname::varchar(100) as versionname,
+versionnumber::number(18,0) as versionnumber,
+version_id::number(18,0) as version_id,
+versionflag::varchar(100) as versionflag,
+name::varchar(500) as name,
+code::varchar(500) as code,
+changetrackingmask::number(18,0) as changetrackingmask,
+jnj_sap_code::number(31,0) as jnj_sap_code,
+franchise::varchar(60) as franchise,
+brand::varchar(200) as brand,
+sku::varchar(500) as sku,
+bar_code::varchar(200) as bar_code,
+pc_per_case::number(31,2) as pc_per_case,
+price::number(31,5) as price,
+product_id_concung::varchar(200) as product_id_concung,
+enterdatetime::timestamp_ntz(9) as enterdatetime,
+enterusername::varchar(200) as enterusername,
+enterversionnumber::number(18,0) as enterversionnumber,
+lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+lastchgusername::varchar(200) as lastchgusername,
+lastchgversionnumber::number(18,0) as lastchgversionnumber,
+validationstatus::varchar(500) as validationstatus,
+effective_from::timestamp_ntz(9) as effective_from,
+effective_to::timestamp_ntz(9) as effective_to,
+active::varchar(2) as active,
+run_id::number(14,0) as run_id,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
+)
+select * from final

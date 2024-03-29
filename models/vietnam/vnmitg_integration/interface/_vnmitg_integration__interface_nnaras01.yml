@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_interface_notes
+    config:
+      alias: itg_vn_mt_dksh_cust_master
+      tags: [""]
+  - name: vnmitg_integration__itg_vn_interface_choices
+    config:
+      alias: itg_vn_mt_dksh_cust_master
+      tags: [""]
+  - name: sdl_raw_vn_interface_notes
+    config:
+      alias: sdl_raw_vn_interface_notes
+      tags: [""]
+  - name: sdl_raw_vn_interface_choices
+    config:
+      alias: sdl_raw_vn_interface_choices
+      tags: [""]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vn_gt_scorecard_details
+    config:
+      alias: edw_vn_gt_scorecard_details
+      tags: [""]

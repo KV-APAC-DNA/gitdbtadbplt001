@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_sellthrgh_sales_fact
+    config:
+      alias: edw_vw_vn_sellthrgh_sales_fact
+      tags: [""]
+
+  

@@ -250,7 +250,8 @@ wks
 				where dksh.rn = 1	  
 					
 					
-		)		
+		),
+transformed as (		
 	SELECT *
 	FROM wks
 
@@ -260,3 +261,49 @@ wks
 				
 	FROM DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master dksh
 	WHERE dksh.code NOT IN (SELECT code FROM wks)
+),
+final as (
+select 
+account_code::varchar(500) as account_code,
+account_id::number(18,0) as account_id,
+account_name::varchar(500) as account_name,
+address::varchar(200) as address,
+changetrackingmask::number(18,0) as changetrackingmask,
+code::varchar(500) as code,
+enterdatetime::timestamp_ntz(9) as enterdatetime,
+enterusername::varchar(200) as enterusername,
+enterversionnumber::number(18,0) as enterversionnumber,
+group_account_code::varchar(500) as group_account_code,
+group_account_id::number(18,0) as group_account_id,
+group_account_name::varchar(500) as group_account_name,
+id::number(18,0) as id,
+lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+lastchgusername::varchar(200) as lastchgusername,
+lastchgversionnumber::number(18,0) as lastchgversionnumber,
+muid::varchar(36) as muid,
+name::varchar(500) as name,
+province_code::varchar(500) as province_code,
+province_id::number(18,0) as province_id,
+retail_environment::varchar(200) as retail_environment,
+province_name::varchar(500) as province_name,
+region_code::varchar(500) as region_code,
+region_id::number(18,0) as region_id,
+region_name::varchar(500) as region_name,
+sub_channel_code::varchar(500) as sub_channel_code,
+sub_channel_id::number(18,0) as sub_channel_id,
+sub_channel_name::varchar(500) as sub_channel_name,
+validationstatus::varchar(500) as validationstatus,
+version_id::number(18,0) as version_id,
+versionflag::varchar(100) as versionflag,
+versionname::varchar(100) as versionname,
+versionnumber::number(18,0) as versionnumber,
+ten_st_ddp::varchar(200) as ten_st_ddp,
+effective_from::timestamp_ntz(9) as effective_from,
+effective_to::timestamp_ntz(9) as effective_to,
+active::varchar(2) as active,
+run_id::number(14,0) as run_id,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
+)
+select * from final

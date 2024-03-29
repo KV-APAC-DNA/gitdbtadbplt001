@@ -205,7 +205,8 @@ with sdl_mds_vn_distributor_products as (
 				where dksh.rn = 1	  
 					
 					
-		)		
+		),
+transformed as (
 	SELECT *
 	FROM wks
 
@@ -215,3 +216,40 @@ with sdl_mds_vn_distributor_products as (
 				
 	FROM {{this}} dksh
 	WHERE dksh.code NOT IN (SELECT code FROM wks)
+),
+final as (
+select
+id::number(18,0) as id,
+muid::varchar(36) as muid,
+versionname::varchar(100) as versionname,
+versionnumber::number(18,0) as versionnumber,
+version_id::number(18,0) as version_id,
+versionflag::varchar(100) as versionflag,
+name::varchar(500) as name,
+code::varchar(500) as code,
+changetrackingmask::number(18,0) as changetrackingmask,
+barcode::number(31,0) as barcode,
+jnj_sap_code::number(31,0) as jnj_sap_code,
+enterdatetime::timestamp_ntz(9) as enterdatetime,
+enterusername::varchar(200) as enterusername,
+enterversionnumber::number(18,0) as enterversionnumber,
+lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+lastchgusername::varchar(200) as lastchgusername,
+lastchgversionnumber::number(18,0) as lastchgversionnumber,
+validationstatus::varchar(500) as validationstatus,
+base_bundle::varchar(500) as base_bundle,
+category::varchar(500) as category,
+franchise::varchar(500) as franchise,
+product_name::varchar(500) as product_name,
+size::varchar(400) as size,
+sub_brand::varchar(400) as sub_brand,
+sub_category::varchar(500) as sub_category,
+effective_from::timestamp_ntz(9) as effective_from,
+effective_to::timestamp_ntz(9) as effective_to,
+active::varchar(2) as active,
+run_id::number(14,0) as run_id,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
+)
+select * from final

@@ -7,7 +7,7 @@
     )
 }}
 with sdl_vn_interface_choices as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_VN_INTERFACE_CHOICES
+    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_INTERFACE_CHOICES
 ),
 final as (
 select

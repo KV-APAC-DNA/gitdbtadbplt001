@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vn_mt_sellin_sellout_analysis
+    config:
+      alias: edw_vn_mt_sellin_sellout_analysis
+      tags: [""]
+
+  - name: vnmedw_integration__edw_vn_si_st_so_details
+    config:
+      alias: edw_vn_si_st_so_details
+      tags: [""]
+  
+  - name: vnmedw_integration__edw_vw_vn_mt_sellin_sellout_analysis
+    config:
+      alias: edw_vw_vn_mt_sellin_sellout_analysis
+      tags: [""]
+
+  - name: vnmedw_integration__edw_vw_vn_si_st_so
+    config:
+      alias: edw_vw_vn_si_st_so
+      tags: [""]

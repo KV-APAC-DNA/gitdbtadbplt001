@@ -34,17 +34,17 @@ union_1 as (
                 sales_org.versionnumber,
                 sales_org.effective_from,
                 CASE WHEN sales_org.effective_to = to_date('2999-12-01','YYYY-MM-DD')
-                            THEN to_date(EXTRACT(month FROM CURRENT_DATE) - 1 || '-'|| EXTRACT(year FROM CURRENT_DATE), 'MM-YYYY')
+                            THEN to_date(extract(month from CURRENT_DATE) - 1 || '-'|| extract(year from CURRENT_DATE), 'MM-YYYY')
                     ELSE sales_org.effective_to
                 END AS effective_to,
                'N' AS active,
                 sales_org.run_id,
                 sales_org.crtd_dttm,
                 sales_org.updt_dttm
-                FROM (SELECT itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                              FROM sdl_mds_vn_customer_sales_organization sdl,
+                from (select itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                              from sdl_mds_vn_customer_sales_organization sdl,
                                    {{this}} itg
-                              WHERE sdl.lastchgdatetime != itg.lastchgdatetime
+                              where sdl.lastchgdatetime != itg.lastchgdatetime
                               AND datediff(month, itg.effective_from, sdl.lastchgdatetime) > 0
                               AND   nvl(sdl.mti_code, sdl.mtd_code)=nvl(itg.mti_code, itg.mtd_code)
                               ) sales_org
@@ -81,16 +81,16 @@ union_2 as (
                 sales_org.versionflag,
                 sales_org.versionname,
                 sales_org.versionnumber,
-                to_date(EXTRACT(month FROM CURRENT_DATE)|| '-'|| EXTRACT(year FROM CURRENT_DATE),'MM-YYYY') AS effective_from,
+                to_date(extract(month from CURRENT_DATE)|| '-'|| extract(year from CURRENT_DATE),'MM-YYYY') AS effective_from,
                 to_date('12-2999','MM-YYYY') AS effective_to,
                 'Y' AS active,
                 null as run_id,
                 sales_org.enterdatetime,  --- taking from SDL enterdatetime
                 current_timestamp() AS updt_dttm
-                FROM (SELECT sdl.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                      FROM sdl_mds_vn_customer_sales_organization sdl,
+                from (select sdl.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                      from sdl_mds_vn_customer_sales_organization sdl,
                            {{this}} itg
-                      WHERE sdl.lastchgdatetime != itg.lastchgdatetime
+                      where sdl.lastchgdatetime != itg.lastchgdatetime
                        AND   nvl(sdl.mti_code, sdl.mtd_code)=nvl(itg.mti_code, itg.mtd_code)
                       AND   itg.active = 'Y') sales_org
               where sales_org.rn = 1
@@ -132,10 +132,10 @@ union_3 as (
                 null as run_id,
                 sales_org.crtd_dttm,
                 current_timestamp() AS updt_dttm
-                FROM (SELECT sdl.*,itg.effective_from ,itg.crtd_dttm, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                      FROM sdl_mds_vn_customer_sales_organization sdl,
+                from (select sdl.*,itg.effective_from ,itg.crtd_dttm, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                      from sdl_mds_vn_customer_sales_organization sdl,
                            {{this}} itg
-                      WHERE sdl.lastchgdatetime = itg.lastchgdatetime
+                      where sdl.lastchgdatetime = itg.lastchgdatetime
                       AND   nvl(sdl.mti_code, sdl.mtd_code)=nvl(itg.mti_code, itg.mtd_code)
                       AND   itg.active = 'Y'
                       ) sales_org
@@ -178,10 +178,10 @@ select  --- case 3: PK present in ITG and active = 'N', record is not updated in
                 null as run_id,
                 sales_org.crtd_dttm,
                 sales_org.updt_dttm
-                FROM (SELECT itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                      FROM sdl_mds_vn_customer_sales_organization sdl,
+                from (select itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                      from sdl_mds_vn_customer_sales_organization sdl,
                            {{this}} itg
-                      WHERE sdl.lastchgdatetime = itg.lastchgdatetime
+                      where sdl.lastchgdatetime = itg.lastchgdatetime
                       AND   nvl(sdl.mti_code, sdl.mtd_code)=nvl(itg.mti_code, itg.mtd_code)
                       AND   itg.active = 'N') sales_org
                 where sales_org.rn = 1
@@ -217,15 +217,15 @@ select   --- case 4: PK not present in ITG, insert the whole new record in ITG f
                 sales_org.versionflag,
                 sales_org.versionname,
                 sales_org.versionnumber,
-                to_date(EXTRACT(month FROM CURRENT_DATE)|| '-' || EXTRACT(year FROM CURRENT_DATE),'MM-YYYY') AS effective_from,
+                to_date(extract(month from CURRENT_DATE)|| '-' || extract(year from CURRENT_DATE),'MM-YYYY') AS effective_from,
                 to_date('12-2999','MM-YYYY') AS effective_to,
                 'Y' AS active,
                 null as run_id,
                 sales_org.enterdatetime, -- taking from SDL enterdatetime
                 current_timestamp() AS updt_dttm
-                FROM (SELECT sdl.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                      FROM sdl_mds_vn_customer_sales_organization sdl where
-                      nvl(sdl.mti_code, sdl.mtd_code) NOT IN (SELECT nvl(mti_code, mtd_code) FROM {{this}})
+                from (select sdl.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                      from sdl_mds_vn_customer_sales_organization sdl where
+                      nvl(sdl.mti_code, sdl.mtd_code) NOT IN (select nvl(mti_code, mtd_code) from {{this}})
                       ) sales_org   
                 where sales_org.rn = 1    
 ),
@@ -264,41 +264,82 @@ select   --- case 4: PK not present in ITG, insert the whole new record in ITG f
                 sales_org.versionnumber,
                 sales_org.effective_from,
                 CASE WHEN sales_org.effective_to = to_date('2999-12-01','YYYY-MM-DD')
-                            THEN to_date(EXTRACT(month FROM CURRENT_DATE )|| '-'|| EXTRACT(year FROM CURRENT_DATE), 'MM-YYYY')
+                            THEN to_date(extract(month from CURRENT_DATE )|| '-'|| extract(year from CURRENT_DATE), 'MM-YYYY')
                     ELSE sales_org.effective_to
                 END AS effective_to,
                'N' AS active,
                 sales_org.run_id,
                 sales_org.crtd_dttm,
                 sales_org.updt_dttm
-                FROM (SELECT itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
-                              FROM sdl_mds_vn_customer_sales_organization sdl,
+                from (select itg.*, row_number() over (partition by nvl(sdl.mti_code, sdl.mtd_code) order by null) as rn
+                              from sdl_mds_vn_customer_sales_organization sdl,
                                    {{this}} itg
-                              WHERE sdl.lastchgdatetime != itg.lastchgdatetime
+                              where sdl.lastchgdatetime != itg.lastchgdatetime
                               AND datediff(month,itg.effective_from, sdl.lastchgdatetime) = 0
                               AND   nvl(sdl.mti_code, sdl.mtd_code)=nvl(itg.mti_code, itg.mtd_code)
                     ) sales_org
               --where sales_org.rn = 1  --remove this as it will not take every thing
-            UNION ALL
+            union all
             select * from union_1
-            UNION ALL
+            union all
             select * from union_2
-            UNION ALL
+            union all
             select * from union_3
-            UNION ALL
+            union all
             select * from union_4
-            UNION ALL
+            union all
             select * from union_5
                     
                     
         ),
-mtd_code as (SELECT mtd_code FROM wks),
-mti_code as (SELECT mti_code FROM wks)
-
-    SELECT *
-    FROM wks
-    UNION ALL
-    SELECT *          
-    FROM {{this}} sales_org
-    WHERE sales_org.mtd_code NOT IN (mtd_code)
+mtd_code as (select mtd_code from wks),
+mti_code as (select mti_code from wks),
+transformed as (
+    select *
+    from wks
+    union all
+    select *          
+    from {{this}} sales_org
+    where sales_org.mtd_code NOT IN (mtd_code)
     OR sales_org.mti_code NOT IN (mti_code)
+),
+final as (
+select
+address::varchar(1200) as address,
+code::varchar(500) as code,
+code_sr_pg::varchar(60) as code_sr_pg,
+code_ss::varchar(60) as code_ss,
+customer_name::varchar(600) as customer_name,
+district_name::varchar(200) as district_name,
+dksh_jnj::varchar(200) as dksh_jnj,
+id::number(18,0) as id,
+kam::varchar(200) as kam,
+mtd_code::number(31,0) as mtd_code,
+mti_code::number(31,0) as mti_code,
+name::varchar(500) as name,
+rom::varchar(60) as rom,
+sales_man::varchar(400) as sales_man,
+sales_supervisor::varchar(200) as sales_supervisor,
+status::varchar(60) as status,
+changetrackingmask::number(18,0) as changetrackingmask,
+enterdatetime::timestamp_ntz(9) as enterdatetime,
+enterusername::varchar(200) as enterusername,
+enterversionnumber::number(18,0) as enterversionnumber,
+lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+lastchgusername::varchar(200) as lastchgusername,
+lastchgversionnumber::number(18,0) as lastchgversionnumber,
+muid::varchar(36) as muid,
+validationstatus::varchar(500) as validationstatus,
+version_id::number(18,0) as version_id,
+versionflag::varchar(100) as versionflag,
+versionname::varchar(100) as versionname,
+versionnumber::number(18,0) as versionnumber,
+effective_from::date as effective_from,
+effective_to::date as effective_to,
+active::varchar(2) as active,
+run_id::number(14,0) as run_id,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
+)
+select * from final

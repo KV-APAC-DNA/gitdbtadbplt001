@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_customer_sales_organization
+    config:
+      alias: itg_vn_mt_customer_sales_organization
+      tags: [""]
+  

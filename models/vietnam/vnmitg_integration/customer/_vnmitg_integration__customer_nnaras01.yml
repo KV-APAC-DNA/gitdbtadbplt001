@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_dksh_cust_master
+    config:
+      alias: itg_vn_mt_dksh_cust_master
+      tags: [""]

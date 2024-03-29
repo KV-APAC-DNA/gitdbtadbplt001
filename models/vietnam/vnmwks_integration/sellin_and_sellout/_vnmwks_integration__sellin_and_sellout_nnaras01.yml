@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wks_mds_vn_allchannel_siso_target_sku
+    config:
+      alias: wks_mds_vn_allchannel_siso_target_sku
+      tags: [""]
+  - name: vnmwks_integration__wks_vn_si_st_so_details_forecast
+    config:
+      alias: wks_vn_si_st_so_details_forecast
+      tags: [""]
+  
