@@ -26,7 +26,7 @@ final as(
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Oct%' THEN '10'
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Nov%' THEN '11'
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Dec%' THEN '12'
-        END AS month,
+        END::varchar(20) AS month,
         thang::varchar(20) as thang,
         desc_a::varchar(20) as desc_a,
         idept::number(18,0) as idept,

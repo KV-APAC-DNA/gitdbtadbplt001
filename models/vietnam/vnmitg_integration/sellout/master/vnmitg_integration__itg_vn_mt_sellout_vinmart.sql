@@ -12,7 +12,7 @@ with source as(
 ),
 final as(
     select 
-        SUBSTRING(RIGHT (filename,11),4,4) AS year,
+        SUBSTRING(RIGHT (filename,11),4,4)::varchar(20) AS year,
         CASE
             WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Jan%' THEN '01'
             WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Feb%' THEN '02'
@@ -26,7 +26,7 @@ final as(
             WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Oct%' THEN '10'
             WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Nov%' THEN '11'
             WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Dec%' THEN '12'
-        END AS month,
+        END::varchar(20) AS month,
         store::varchar(20) as store,
         store_name::varchar(255) as store_name,
         mch5_mc::varchar(20) as mch5_mc,

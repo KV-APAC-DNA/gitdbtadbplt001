@@ -1,8 +1,8 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }} 
 ),
 source2 as(
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH_HISTORY
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh_history') }}
 ),
 itg_vn_mt_sellin_dksh as (
         SELECT dense_rank() OVER (

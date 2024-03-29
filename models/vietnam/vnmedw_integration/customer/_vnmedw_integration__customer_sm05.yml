@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_customer_dim
+    config: 
+      alias: itg_vn_dms_call_details
+      tags: ["vn_dms_datamart_load","transformation"]

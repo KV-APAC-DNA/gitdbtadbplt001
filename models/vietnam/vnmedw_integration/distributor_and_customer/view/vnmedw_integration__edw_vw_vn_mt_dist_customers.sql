@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_DKSH_CUST_MASTER
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_dksh_cust_master') }}
 ),
 transformed as(
     select 

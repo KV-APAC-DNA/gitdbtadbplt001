@@ -26,7 +26,7 @@ final as(
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Oct%' THEN '10'
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Nov%' THEN '11'
         WHEN SUBSTRING(RIGHT (filename,11),1,3) LIKE '%Dec%' THEN '12'
-        END AS month, 
+        END::varchar(20) AS month, 
         site_no::varchar(20) as site_no,
         site_name::varchar(255) as site_name,
         period::varchar(20) as period,

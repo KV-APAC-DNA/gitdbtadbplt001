@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_BILLING_FACT
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }} 
 ),
 transformed as(
     select 'VN' as cntry_key

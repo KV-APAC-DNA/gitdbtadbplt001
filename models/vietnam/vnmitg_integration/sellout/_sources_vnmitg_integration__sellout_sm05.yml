@@ -3,14 +3,22 @@ version: 2
 sources:
   - name: vnmsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: vnmsdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
       - name: sdl_vn_dms_d_sellout_sales_fact
-        tags: ["vn_dms_sellout"]
+        tags: ["vn_dms_sellout", "ingestion"]
+        tests:
+          - test_duplicate:
+                group_by_columns: ["dstrbtr_id","cntry_code","outlet_id","order_date","invoice_date","order_no","invoice_no","sales_route_id","sale_route_name","sales_group","salesrep_id","salesrep_name","material_code","uom","line_number","promotion_id"]
+                select_columns: ["dstrbtr_id","cntry_code","outlet_id","order_date","invoice_date","order_no","invoice_no","sales_route_id","sale_route_name","sales_group","salesrep_id","salesrep_name","material_code","uom","line_number","promotion_id"]
+                name: TRATBL_sdl_vn_dms_d_sellout_sales_fact__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
 
 
       - name: sdl_vn_mt_sellout_mega

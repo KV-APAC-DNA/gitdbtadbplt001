@@ -1,5 +1,5 @@
 with edw_vw_vn_mt_sellin_sellout_analysis as(
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_SELLIN_SELLOUT_ANALYSIS
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_sellin_sellout_analysis') }}
 ),
 transformed as(
 SELECT edw_vw_vn_mt_sellin_sellout_analysis.data_source
