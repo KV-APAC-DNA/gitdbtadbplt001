@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dms_sellthrgh_sales_fact
+        tests:
+            - test_null:
+                not_null_columns: ["status"]
+                select_columns: ["dstrbtr_id","mapped_spk","doc_number","product_code","status"]
+                name: TRATBL_sdl_vn_dms_sellthrgh_sales_fact__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+            - test_duplicate:
+                group_by_columns: ["dstrbtr_id","mapped_spk","doc_number","product_code","status"]
+                select_columns: ["dstrbtr_id","mapped_spk","doc_number","product_code","status"]
+                name: TRATBL_sdl_vn_dms_sellthrgh_sales_fact__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          
+      

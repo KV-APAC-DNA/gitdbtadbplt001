@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook="{{build_itg_vn_mt_customer_sales_organization()}}"
+    )
+}}
+
 WITH sdl_mds_vn_customer_sales_organization as (
     select * from DEV_DNA_LOAD.vnmsdl_raw.sdl_mds_vn_customer_sales_organization
 ),

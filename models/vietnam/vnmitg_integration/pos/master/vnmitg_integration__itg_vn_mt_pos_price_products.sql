@@ -1,3 +1,10 @@
+{{
+    config(
+        pre_hook="{{build_itg_vn_mt_pos_price_products()}}"
+    )
+}}
+
+
 with sdl_mds_vn_price_products as (
   select * from DEV_DNA_LOAD.vnmSDL_RAW.SDL_MDS_VN_PRICE_PRODUCTS
 ), 

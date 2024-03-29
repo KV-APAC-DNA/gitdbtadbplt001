@@ -9,4 +9,10 @@ models:
     config:
       alias: wks_vn_si_st_so_details_forecast
       tags: [""]
+  - name: vnmwks_integration__wks_vn_si_st_so_details
+    config:
+      alias: wks_vn_si_st_so_details
+      tags: [""]
+  
+   
   

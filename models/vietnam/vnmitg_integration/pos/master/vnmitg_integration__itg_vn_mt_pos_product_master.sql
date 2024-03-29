@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook="{{build_itg_vn_mt_pos_product_master()}}"
+    )
+}}
+
 with sdl_mds_vn_pos_products as (
     select * from DEV_DNA_LOAD.VNMSDL_RAW.SDL_MDS_VN_pos_PRODUCTS
 ),

@@ -1,3 +1,11 @@
+{{
+    config(
+        pre_hook="{{build_itg_vn_mt_dksh_product_master()}}"
+    )
+}}
+
+
+
 with sdl_mds_vn_distributor_products as (
     select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
 ),

@@ -1,3 +1,10 @@
+{{
+    config(
+        pre_hook="{{build_itg_vn_mt_pos_cust_master()}}"
+    )
+}}
+
+
 with sdl_mds_vn_distributor_customers as (
     select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_DISTRIBUTOR_CUSTOMERS
 ),
