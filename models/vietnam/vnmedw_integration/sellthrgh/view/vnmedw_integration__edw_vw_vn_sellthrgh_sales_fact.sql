@@ -9,7 +9,7 @@ itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1
 ),
 itg_vn_dms_product_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_PRODUCT_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 final as (
 SELECT distinct
