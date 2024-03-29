@@ -4,4 +4,4 @@ models:
   - name: vnmedw_integration__edw_vw_vn_mt_sellin_target
     config: 
       alias: edw_vw_vn_mt_sellin_target
-      tags: ["vn_oneview_datamart_refresh"]
+      tags: ["vn_mt_sellin_target"]
