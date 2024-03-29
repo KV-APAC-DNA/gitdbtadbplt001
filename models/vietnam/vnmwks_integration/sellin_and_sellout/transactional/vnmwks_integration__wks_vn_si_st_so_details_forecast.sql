@@ -1,23 +1,24 @@
 with itg_vn_dms_forecast as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_FORECAST
+select * from {{ ref('vnmitg_integration__itg_vn_dms_forecast') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_vn_si_st_so_details as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_VN_SI_ST_SO_DETAILS
+select * from {{ ref('vnmwks_integration__wks_vn_si_st_so_details') }}
 ),
 itg_vn_dms_history_saleout as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_HISTORY_SALEOUT
+select * from {{ ref('vnmitg_integration_itg_vn_dms_history_saleout') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
-select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk  from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM  
+select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk 
+ from {{ ref('vnmitg_integration_itg_vn_dms_history_saleout') }} 
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DISTRIBUTOR_SAP_SOLD_TO_MAPPING
+select * from {{ ref('vnmitg_integration_itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 transformed as (select timedim."year" as jj_year,
        timedim.qrtr as jj_qrtr,

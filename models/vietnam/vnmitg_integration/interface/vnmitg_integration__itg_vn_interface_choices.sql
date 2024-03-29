@@ -7,7 +7,7 @@
     )
 }}
 with sdl_vn_interface_choices as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_INTERFACE_CHOICES
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_interface_choices') }}
 ),
 final as (
 select

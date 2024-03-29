@@ -7,7 +7,7 @@
     )
 }}
 with wks_mds_vn_allchannel_siso_target_sku as (
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
+    select * from {{ ref('vnmwks_integration__wks_mds_vn_allchannel_siso_target_sku') }}
 
 ),
 final as (

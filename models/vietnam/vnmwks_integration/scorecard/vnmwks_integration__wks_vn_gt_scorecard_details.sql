@@ -1,29 +1,29 @@
 with itg_vn_dms_sales_stock_fact as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_SALES_STOCK_FACT
+select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_stock_fact') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
-select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk  from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM  
+select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk  from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}  
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_vn_dms_customer_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_CUSTOMER_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 itg_vn_dms_yearly_target as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_YEARLY_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_dms_yearly_target') }}
 ),
 wks_vn_si_st_so_details_forecast as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_VN_SI_ST_SO_DETAILS_FORECAST
+select * from {{ ref('vnmwks_integration__wks_vn_si_st_so_details_forecast') }}
 ),
 itg_vn_dms_sales_org_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_SALES_ORG_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_org_dim') }}
 ),
 edw_crncy_exch_rates as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 inv_dt as
 (

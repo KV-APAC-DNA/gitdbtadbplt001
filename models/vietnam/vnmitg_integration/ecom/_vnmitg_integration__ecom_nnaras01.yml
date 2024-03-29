@@ -4,4 +4,4 @@ models:
   - name: vnmitg_integration__itg_mds_vn_ecom_target
     config:
       alias: itg_mds_vn_ecom_target
-      tags: [""]
+      tags: ["vn_ecom_target","ingestion"]

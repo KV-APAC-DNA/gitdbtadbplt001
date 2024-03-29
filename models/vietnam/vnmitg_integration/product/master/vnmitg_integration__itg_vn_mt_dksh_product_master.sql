@@ -7,7 +7,7 @@
 
 
 with sdl_mds_vn_distributor_products as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_distributor_products') }}
 ),
  wks
 	AS

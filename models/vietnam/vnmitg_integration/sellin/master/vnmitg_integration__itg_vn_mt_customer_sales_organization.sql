@@ -5,7 +5,7 @@
 }}
 
 WITH sdl_mds_vn_customer_sales_organization as (
-    select * from DEV_DNA_LOAD.vnmsdl_raw.sdl_mds_vn_customer_sales_organization
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_customer_sales_organization') }}
 ),
 union_1 as (
     select --- case 1.a: PK present in ITG, record is updated, insert the old record from ITG keeping active as 'N'

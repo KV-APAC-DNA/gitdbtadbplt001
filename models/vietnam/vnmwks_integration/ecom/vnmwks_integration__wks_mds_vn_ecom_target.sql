@@ -1,6 +1,5 @@
 with sdl_mds_vn_ecom_target as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_ECOM_TARGET
-
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_ecom_target') }}
 ),
 final as (
 select

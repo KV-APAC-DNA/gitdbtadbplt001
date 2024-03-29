@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_vn_interface_notes
+        tags: ['vn_perfect_store','ingestion']
         tests:
           - test_null:
               not_null_columns: ["ise_id","slsper_id","cust_code","shop_code","ques_no","answer_seq","createddate"]
@@ -26,6 +27,7 @@ sources:
                 store_failures: true
                 schema: vnmwks_integration
       - name: sdl_vn_interface_choices
+        tags: ['VN_Perfect_Store','ingestion']
         tests:
           - test_null:
               not_null_columns: ["ise_id","ques_no","answer_seq"]

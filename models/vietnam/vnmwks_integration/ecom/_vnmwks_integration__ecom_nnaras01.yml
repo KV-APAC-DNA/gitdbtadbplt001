@@ -4,5 +4,5 @@ models:
   - name: vnmwks_integration__wks_mds_vn_ecom_target
     config:
       alias: wks_mds_vn_ecom_target
-      tags: [""]
+      tags: ['vn_ecom_target','ingestion']
   

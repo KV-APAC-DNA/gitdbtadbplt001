@@ -10,4 +10,5 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_vn_allchannel_siso_target_sku
+        tags: ['vn_dms_datamart_load','ingestion']
      

@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_dms_sellthrgh_sales_fact
+    config:
+      alias: itg_vn_dms_sellthrgh_sales_fact
+      tags: ["vn_dms_sellthrough","ingestion"]
+  

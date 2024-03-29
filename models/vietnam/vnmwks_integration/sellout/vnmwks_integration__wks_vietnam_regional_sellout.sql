@@ -1,47 +1,47 @@
 with wks_vietnam_regional_sellout_base as (
-select * from dev_dna_core.snaposewks_integration.wks_vietnam_regional_sellout_base
+select * from {{ ref('vnmwks_integration__wks_vietnam_regional_base') }}
 ),
 edw_vw_os_time_dim as (
-select * from dev_dna_core.apahil01_workspace.sgpedw_integration__edw_vw_os_time_dim
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_material_dim as (
-select * from dev_dna_core.snapaspedw_integration.edw_material_dim
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as (
-select * from dev_dna_core.snapaspedw_integration.edw_gch_producthierarchy
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_product_key_attributes as (
-select * from dev_dna_core.snapaspedw_integration.edw_product_key_attributes
+select * from {{ ref('vnmedw_integration__edw_product_key_attributes') }}
 ),
 edw_gch_customerhierarchy as (
-select * from dev_dna_core.snapaspedw_integration.edw_gch_customerhierarchy
+select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_customer_sales_dim as (
-select * from dev_dna_core.snapaspedw_integration.edw_customer_sales_dim
+select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as (
-select * from dev_dna_core.snapaspedw_integration.edw_customer_base_dim
+select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as (
-select * from dev_dna_core.snapaspedw_integration.edw_company_dim
+select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_dstrbtn_chnl as (
-select * from dev_dna_core.snapaspedw_integration.edw_dstrbtn_chnl
+select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_sales_org_dim as (
-select * from dev_dna_core.snapaspedw_integration.edw_sales_org_dim
+select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 edw_code_descriptions as (
-select * from dev_dna_core.snapaspedw_integration.edw_code_descriptions
+select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-select * from dev_dna_core.snapaspedw_integration.edw_subchnl_retail_env_mapping
+select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
 ),
 edw_code_descriptions_manual as (
-select * from dev_dna_core.snapaspedw_integration.edw_code_descriptions_manual
+select * from {{ ref('aspedw_integration__edw_code_descriptions_manual') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from dev_dna_core.snapaspedw_integration.vw_edw_reg_exch_rate
+select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 transformed as (
  select 

@@ -1,5 +1,5 @@
 with sdl_vn_dms_sellthrgh_sales_fact as (
-select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_VN_DMS_SELLTHRGH_SALES_FACT
+select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sellthrgh_sales_fact') }}
 ),
 wks_vn_dms_sellthrgh_sales_fact  as (select dstrbtr_id,dstrbtr_type,mapped_spk,doc_number,ref_number,receipt_date,order_type,vat_invoice_number,vat_invoice_note,vat_invoice_date,pon_number,line_ref,product_code,unit,quantity,price,amount,tax_amount,tax_id,tax_rate,"values",line_discount,doc_discount,status,run_id,curr_date as crtd_dttm
 

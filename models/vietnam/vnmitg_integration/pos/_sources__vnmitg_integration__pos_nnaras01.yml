@@ -10,6 +10,8 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_vn_pos_customers
+        tags: ['vn_mt_pos_master','ingestion']
       - name: sdl_mds_vn_price_products
+        tags: ['vn_mt_pos_price_product','ingestion']
       - name: sdl_mds_vn_pos_products
-      
+        tags: ['vn_mt_pos_master','ingestion']

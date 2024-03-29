@@ -1,5 +1,5 @@
 with sdl_mds_vn_allchannel_siso_target_sku as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_allchannel_siso_target_sku') }}
 
 ),
 final as (

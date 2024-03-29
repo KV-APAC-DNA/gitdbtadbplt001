@@ -10,4 +10,5 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_vn_distributor_products
+        tags: ['vn_mt_sellin_master','ingestion']
      

@@ -1,5 +1,5 @@
 with wks_vietnam_regional_sellout as (
-select * from dev_dna_core.snaposewks_integration.wks_vietnam_regional_sellout
+select * from {{ ref('vnmwks_integration__wks_vietnam_regional_sellout') }}
 ),
 transformed as (
 select *,

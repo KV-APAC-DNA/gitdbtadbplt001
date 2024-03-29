@@ -5,7 +5,7 @@
 }}
 
 with sdl_mds_vn_pos_products as (
-    select * from DEV_DNA_LOAD.VNMSDL_RAW.SDL_MDS_VN_pos_PRODUCTS
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_pos_products') }}
 ),
 wks as
 (select--- case 1.a: PK present in ITG, record is updated, insert the old record from ITG keeping active as 'N'

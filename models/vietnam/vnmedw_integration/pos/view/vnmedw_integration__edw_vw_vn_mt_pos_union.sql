@@ -1,38 +1,38 @@
 with itg_vn_mt_sellout_vinmart as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_VINMART
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_vinmart') }}
 ),
 itg_vn_mt_sellout_aeon as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_AEON
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_aeon') }}
 ),
 itg_vn_mt_pos_cust_master as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_POS_CUST_MASTER
+select * from {{ ref('vnmitg_integration__itg_vn_mt_pos_cust_master') }}
 ),
 itg_vn_mt_sellout_bhx as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_BHX
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_bhx') }}
 ),
 itg_vn_mt_sellout_mega as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_MEGA
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_mega') }}
 ),
 itg_vn_mt_sellout_coop as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_COOP
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_coop') }}
 ),
 itg_vn_mt_sellout_lotte as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_LOTTE
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_lotte') }}
 ),
 itg_vn_mt_sellout_guardian as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_GUARDIAN
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_guardian') }}
 ),
 itg_vn_mt_sellout_con_cung as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLOUT_CON_CUNG
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_con_cung') }}
 ),
 edw_vw_vn_mt_pos_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_products') }}
 ),
 edw_vw_vn_mt_dist_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 edw_vw_vn_mt_pos_price_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_PRICE_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_price_products') }}
 ),
 final as (
 select 

@@ -10,3 +10,4 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_vn_distributor_customers
+        tags: ['vn_mt_pos_master','ingestion']

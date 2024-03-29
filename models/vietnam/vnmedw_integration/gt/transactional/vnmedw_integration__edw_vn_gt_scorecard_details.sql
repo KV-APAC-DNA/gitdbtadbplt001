@@ -1,5 +1,5 @@
 with wks_vn_gt_scorecard_details as (
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_VN_GT_SCORECARD_DETAILS
+    select * from {{ ref('vnmwks_integration__wks_vn_gt_scorecard_details') }}
 ),
 final as (
     select 

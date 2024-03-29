@@ -1,20 +1,20 @@
 with edw_vw_vn_mt_pos_customers as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_CUSTOMERS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_customers') }}
 ),
 edw_vw_vn_mt_pos_union as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_UNION
+select * from select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_union') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_crncy_exch_rates as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 edw_vw_vn_mt_pos_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_products') }}
 ),
-EDW_VW_VN_MT_DIST_PRODUCTS as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+edw_vw_vn_mt_dist_products as (
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 final as (
 select 

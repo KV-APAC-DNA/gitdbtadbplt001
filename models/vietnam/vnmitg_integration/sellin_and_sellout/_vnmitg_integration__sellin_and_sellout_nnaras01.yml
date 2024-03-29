@@ -4,5 +4,5 @@ models:
   - name: vnmitg_integration__itg_mds_vn_allchannel_siso_target_sku
     config:
       alias: itg_mds_vn_allchannel_siso_target_sku
-      tags: [""]
+      tags: ["vn_target_by_sku","ingestion"]
   

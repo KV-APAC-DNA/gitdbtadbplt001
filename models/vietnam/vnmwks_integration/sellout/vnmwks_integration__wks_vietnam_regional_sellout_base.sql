@@ -1,38 +1,38 @@
 with edw_vw_vn_sellout_sales_fact as (
-select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_SELLOUT_SALES_FACT
+select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_sales_fact') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DISTRIBUTOR_SAP_SOLD_TO_MAPPING
+select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 itg_vn_dms_distributor_dim as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_dms_customer_dim as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_CUSTOMER_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_vn_dms_product_dim as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_PRODUCT_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 itg_vn_mt_sellin_dksh as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
 itg_vn_mt_sellin_dksh_history as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH_HISTORY
+select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh_history') }}
 ),
 itg_query_parameters as (
-select * from DEV_DNA_CORE.SGPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_vw_vn_mt_dist_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 edw_vw_vn_mt_dist_customers as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_CUSTOMERS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_customers') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 select

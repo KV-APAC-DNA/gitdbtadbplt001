@@ -3,17 +3,17 @@ version: 2
 models:
   - name: vnmitg_integration__itg_vn_interface_notes
     config:
-      alias: itg_vn_mt_dksh_cust_master
-      tags: [""]
+      alias: itg_vn_interface_notes
+      tags: ['vn_perfect_store','ingestion']
   - name: vnmitg_integration__itg_vn_interface_choices
     config:
-      alias: itg_vn_mt_dksh_cust_master
-      tags: [""]
-  - name: sdl_raw_vn_interface_notes
+      alias: itg_vn_interface_choices
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__sdl_raw_vn_interface_notes
     config:
       alias: sdl_raw_vn_interface_notes
-      tags: [""]
-  - name: sdl_raw_vn_interface_choices
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__sdl_raw_vn_interface_choices
     config:
       alias: sdl_raw_vn_interface_choices
-      tags: [""]
+      tags: ['vn_perfect_store','ingestion']

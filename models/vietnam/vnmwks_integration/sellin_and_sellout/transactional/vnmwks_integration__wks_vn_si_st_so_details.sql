@@ -28,40 +28,40 @@ itg_vn_dms_product_dim as (
 select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_PRODUCT_DIM
 ),
 itg_vn_dms_call_details as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_CALL_DETAILS
+select * from {{ ref('vnmitg_integration__itg_vn_dms_call_details') }}
 ),
 itg_vn_dms_sales_org_dim as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_SALES_ORG_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_org_dim') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DISTRIBUTOR_SAP_SOLD_TO_MAPPING
+select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 edw_vw_vn_sellout_sales_fact as (
-select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_SELLOUT_SALES_FACT
+select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_sales_fact') }}
 ),
 itg_vn_productivity_call_target as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_PRODUCTIVITY_CALL_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_productivity_call_target') }}
 ),
 itg_vn_visit_call_target as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_VISIT_CALL_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_visit_call_target') }}
 ),
 wrk_vn_mnth_week as (
-select * from DEV_DNA_CORE.vnmwks_integration.WRK_VN_MNTH_WEEK
+select * from {{ ref('vnmwks_integration__wrk_vn_mnth_week') }}
 ),
 itg_vn_dms_customer_dim as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_CUSTOMER_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 itg_vn_gt_topdoor_storetype_hierarchy as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_GT_TOPDOOR_STORETYPE_HIERARCHY
+select * from {{ ref('vnmitg_integration__itg_vn_gt_topdoor_storetype_hierarchy') }}
 ),
 itg_vn_gt_topdoor_targets as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_GT_TOPDOOR_TARGETS
+select * from {{ ref('vnmitg_integration__itg_vn_gt_topdoor_targets') }}
 ),
 itg_vn_dms_msl as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_MSL
+select * from {{ ref('vnmitg_integration__itg_vn_dms_msl') }}
 ),
 itg_mds_vn_gt_msl_shoptype_mapping as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_MDS_VN_GT_MSL_SHOPTYPE_MAPPING
+select * from {{ ref('vnmitg_integration__itg_mds_vn_gt_msl_shoptype_mapping') }}
 ),
  timedim as ((SELECT DISTINCT edw_vw_os_time_dim."year",
                     edw_vw_os_time_dim.qrtr,

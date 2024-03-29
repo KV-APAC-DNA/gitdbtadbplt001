@@ -7,7 +7,7 @@
     )
 }}
 with wks_mds_vn_ecom_target as (
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_mds_vn_ecom_target
+    select * from {{ ref('vnmwks_integration__wks_mds_vn_ecom_target') }}
 
 ),
 final as (

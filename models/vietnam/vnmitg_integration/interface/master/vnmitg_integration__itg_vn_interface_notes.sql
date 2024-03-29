@@ -7,7 +7,7 @@
     )
 }}
 with sdl_vn_interface_notes as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_VN_INTERFACE_notes
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_interface_notes') }}
 ),
 final as (
 select

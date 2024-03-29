@@ -4,15 +4,15 @@ models:
   - name: vnmwks_integration__wks_mds_vn_allchannel_siso_target_sku
     config:
       alias: wks_mds_vn_allchannel_siso_target_sku
-      tags: [""]
+      tags: ["vn_target_by_sku","transformation"]
   - name: vnmwks_integration__wks_vn_si_st_so_details_forecast
     config:
       alias: wks_vn_si_st_so_details_forecast
-      tags: [""]
+      tags: ["vn_dms_datamart_load","transformation"]
   - name: vnmwks_integration__wks_vn_si_st_so_details
     config:
       alias: wks_vn_si_st_so_details
-      tags: [""]
+      tags: ["vn_dms_datamart_load","transformation"]
   
    
   

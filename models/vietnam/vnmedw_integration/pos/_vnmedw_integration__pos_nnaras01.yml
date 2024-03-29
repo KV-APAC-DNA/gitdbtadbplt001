@@ -4,9 +4,9 @@ models:
   - name: vnmedw_integration__edw_vw_vn_mt_pos_offtake
     config:
       alias: edw_vw_vn_mt_pos_offtake
-      tags: [""]
+      tags: ["vn_mt_sellin_sellout_edw_load","transformation"]
 
   - name: vnmedw_integration__edw_vw_vn_mt_pos_union
     config:
       alias: edw_vw_vn_mt_pos_union
-      tags: [""]
+      tags: ["vn_mt_sellin_sellout_edw_load","transformation"]
