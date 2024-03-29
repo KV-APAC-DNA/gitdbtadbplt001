@@ -5,8 +5,8 @@
     )
 }}
 
-with wks_vn_dms_data_extract_summary as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }}  --DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_vn_dms_data_extract_summary
+with sdl_vn_dms_data_extract_summary as(
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_data_extract_summary') }} 
 ),
 sdl_vn_dms_call_details as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }} 
@@ -137,7 +137,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     --date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
@@ -196,7 +196,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -254,7 +254,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -312,7 +312,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -370,7 +370,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -428,7 +428,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -486,7 +486,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -544,7 +544,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -602,7 +602,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -660,7 +660,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -718,7 +718,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -776,7 +776,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -834,7 +834,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -892,7 +892,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -950,7 +950,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -1008,7 +1008,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
@@ -1066,7 +1066,7 @@ FROM (
       SUBSTRING(source_file_name, 1, REGEXP_INSTR(source_file_name, '.csv') - 1)
     ) AS source_file_name,
     record_count AS sourcefile_count
-  FROM wks_vn_dms_data_extract_summary
+  FROM sdl_vn_dms_data_extract_summary
   WHERE
     date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (

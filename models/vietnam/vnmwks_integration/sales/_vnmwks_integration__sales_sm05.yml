@@ -4,7 +4,7 @@ models:
   - name: vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact
     config: 
       alias: wks_itg_vn_dms_d_sellout_sales_fact
-      tags: ["vn_dms_sellout","transformation"]
+      tags: ["vn_dms_sellout","ingestion"]
 
   - name: vnmwks_integration__wrk_vn_mnth_week
     config: 

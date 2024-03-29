@@ -26,3 +26,6 @@ sources:
                 config:
                   store_failures: true
                   schema: vnmwks_integration
+
+      - name: sdl_vn_dms_data_extract_summary
+        tags: ["vn_dms_data_extract_summary","ingestion"]
