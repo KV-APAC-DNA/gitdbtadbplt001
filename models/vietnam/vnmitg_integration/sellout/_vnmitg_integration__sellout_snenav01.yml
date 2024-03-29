@@ -4,16 +4,16 @@ models:
   - name: vnmitg_integration__itg_vn_mt_sellout_aeon
     config:
       alias: itg_vn_mt_sellout_aeon
-      tags: ["vn_mt_pos_transaction"]
+      tags: ["vn_mt_pos_transaction","ingestion"]
   - name: vnmitg_integration__itg_vn_mt_sellout_bhx
     config:
       alias: itg_vn_mt_sellout_bhx
-      tags: ["vn_mt_pos_transaction"]
+      tags: ["vn_mt_pos_transaction","ingestion"]
   - name: vnmitg_integration__sdl_raw_vn_mt_sellout_aeon
     config:
       alias: sdl_raw_vn_mt_sellout_aeon
-      tags: ["vn_mt_pos_transaction"]
+      tags: ["vn_mt_pos_transaction","ingestion"]
   - name: vnmitg_integration__sdl_raw_vn_mt_sellout_bhx
     config:
       alias: sdl_raw_vn_mt_sellout_bhx
-      tags: ["vn_mt_pos_transaction"]
+      tags: ["vn_mt_pos_transaction","ingestion"]
