@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wrk_vn_sellthrough_by_wkmnth_for_target
+    config: 
+      alias: wrk_vn_sellthrough_by_wkmnth_for_target
+      tags: ["vn_dms_sellthrough_weekly_target","transformation"]
+  - name: vnmwks_integration__wrk_vn_sellthrough_target_p1
+    config: 
+      alias: wrk_vn_sellthrough_target_p1
+      tags: ["vn_dms_sellthrough_weekly_target","transformation"]
+  - name: vnmwks_integration__wrk_vn_sellthrough_target_p2
+    config: 
+      alias: wrk_vn_sellthrough_target_p2
+      tags: ["vn_dms_sellthrough_weekly_target","transformation"]

@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dms_kpi
+        tags: ["vn_dms_master","ingestion"]
+        tests:
+          - test_duplicate__ff:
+              group_by_columns: ["dstrbtr_id","cycle","kpi_type","saleman_code"]
+              name: TRATBL_sdl_vn_dms_kpi__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_null__ff:
+              not_null_columns: ["dstrbtr_id","cycle","kpi_type"]
+              name: TRATBL_sdl_vn_dms_kpi__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
