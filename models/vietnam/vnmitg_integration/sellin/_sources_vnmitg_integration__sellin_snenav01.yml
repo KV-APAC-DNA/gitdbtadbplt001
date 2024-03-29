@@ -11,3 +11,13 @@ sources:
     tables:
       - name: sdl_vn_mt_sellin_target
         tags: ["vn_mt_sellin_target","ingestion"]
+        
+  - name: vnmitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: vnmitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_vn_distributor_sap_sold_to_mapping
