@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dms_kpi_sellin_sellthrgh
+        tags: ["vn_dms_master","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["dstrbtr_id","dstrbtr_type","dstrbtr_name","cycle","ordertype"]
+              select_columns: ["dstrbtr_id","dstrbtr_type","dstrbtr_name","cycle","ordertype"]
+              name: TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["dstrbtr_id","dstrbtr_type","dstrbtr_name","cycle","ordertype"]
+              select_columns: ["dstrbtr_id","dstrbtr_type","dstrbtr_name","cycle","ordertype"]
+              name: TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
