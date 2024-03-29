@@ -1,31 +1,32 @@
 with edw_vw_os_time_dim as
-(select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM),
+(select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}),
 itg_vn_dms_kpi as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_KPI
+select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi') }}
 ),
 itg_vn_weekly_sellout_target as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_WEEKLY_SELLOUT_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_weekly_sellout_target') }}
 ),
 edw_vw_vn_sellthrgh_sales_fact as (
-select * from DEV_DNA_CORE.vnmedw_integration.EDW_VW_VN_SELLTHRGH_SALES_FACT
+select * from {{ ref('vnmedw_integration__edw_vw_vn_sellthrgh_sales_fact') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
-select *,Row_number() over (partition by dstrbtr_id order by crtd_dttm asc) as rnk  from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM  
+select *,Row_number() over (partition by dstrbtr_id order by crtd_dttm asc) as rnk 
+ from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim_rnk') }}
 ),
 itg_vn_dms_distributor_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM 
+select * from itg_vn_dms_distributor_dim_rnk
 ),
 itg_vn_weekly_sellthrough_target as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_WEEKLY_SELLTHROUGH_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_weekly_sellthrough_target') }}
 ),
 edw_vw_vn_billing_fact as (
-select * from DEV_DNA_CORE.vnmedw_integration.EDW_VW_VN_BILLING_FACT
+select * from {{ ref('vnmedw_integration__edw_vw_vn_billing_fact') }}
 ),
 itg_vn_weekly_sellin_target as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_WEEKLY_SELLIN_TARGET
+select * from {{ ref('vnmitg_integration__itg_vn_weekly_sellin_target') }}
 ),
 itg_vn_dms_product_dim as (
-select * from DEV_DNA_CORE.vnmitg_integration.ITG_VN_DMS_PRODUCT_DIM
+select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 itg_vn_dms_call_details as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_call_details') }}
