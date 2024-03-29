@@ -1,8 +1,9 @@
 with itg_vn_dms_sellthrgh_sales_fact as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_SELLTHRGH_SALES_FACT
+select * from {{ ref('vnmitg_integration__itg_vn_dms_sellthrgh_sales_fact') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
-select *,Row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk  from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM  
+select *,Row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk  
+from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}  
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1

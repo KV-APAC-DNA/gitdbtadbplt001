@@ -8,17 +8,17 @@ wks_vn_si_st_so_details as (
 select * from {{ ref('vnmwks_integration__wks_vn_si_st_so_details') }}
 ),
 itg_vn_dms_history_saleout as (
-select * from {{ ref('vnmitg_integration_itg_vn_dms_history_saleout') }}
+select * from {{ ref('vnmitg_integration__itg_vn_dms_history_saleout') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
 select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk 
- from {{ ref('vnmitg_integration_itg_vn_dms_history_saleout') }} 
+ from {{ ref('vnmitg_integration_itg__itg_vn_dms_distributor_dim') }} 
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from {{ ref('vnmitg_integration_itg_vn_distributor_sap_sold_to_mapping') }}
+select * from {{ source('vnmitg_integration', 'itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 transformed as (select timedim."year" as jj_year,
        timedim.qrtr as jj_qrtr,

@@ -1,17 +1,17 @@
 with edw_vw_vn_mt_pos_offtake as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_POS_OFFTAKE
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_offtake') }}
 ),
 edw_vw_vn_mt_sell_in_analysis as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_SELL_IN_ANALYSIS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_sell_in_analysis') }}
 ),
 itg_spiral_mti_offtake as (
-select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_SPIRAL_MTI_OFFTAKE
+select * from {{ ref('vnmitg_integration__itg_spiral_mti_offtake') }}
 ),
 edw_vw_vn_mt_dist_products as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 edw_calendar_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CALendAR_DIM
+select * from {{ ref('vnmedw_integration__edw_calendar_dim') }}
 ),
 union_3 as (select 'POS' as data_source,
     'Offtake' as data_type,

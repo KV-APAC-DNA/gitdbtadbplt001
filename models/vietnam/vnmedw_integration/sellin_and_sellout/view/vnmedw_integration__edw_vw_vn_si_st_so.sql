@@ -1,20 +1,20 @@
 with wks_vn_si_st_so_details_forecast as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_VN_SI_ST_SO_DETAILS_FOREcast
+select * from {{ ref('vnmwks_integration__wks_vn_si_st_so_details_forecast') }}
 ),
 edw_vw_vn_material_dim as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_MATERIAL_DIM
+select * from {{ ref('vnmedw_integration__edw_vw_vn_material_dim') }}
 ),
 edw_vw_vn_customer_dim as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_CUSTOMER_DIM
+select * from {{ ref('vnmedw_integration__edw_vw_vn_customer_dim') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_vn_dms_distributor_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM
+select * from {{ ref('vnmitg_interation__itg_vn_dms_distributor_dim') }}
 ),
 edw_crncy_exch_rates as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 final as (
 select *,
