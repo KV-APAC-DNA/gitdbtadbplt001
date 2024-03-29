@@ -1,5 +1,5 @@
 with wks_vietnam_regional_sellout_npd as (
-select * from dev_dna_core.snaposewks_integration.wks_vietnam_regional_sellout_npd
+select * from {{ ref('vnmwks_integration__wks_vietnam_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as (
 select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
