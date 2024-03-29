@@ -8,7 +8,7 @@ itg_vn_dms_kpi_sellin_sellthrgh as
 ),
 wrk_vn_mnth_week as 
 (
-    select * from {{ source('vnmwks_integration','wrk_vn_mnth_week') }}
+    select * from {{ ref('vnmwks_integration__wrk_vn_mnth_week') }}
 ),
 t2 as 
 (
