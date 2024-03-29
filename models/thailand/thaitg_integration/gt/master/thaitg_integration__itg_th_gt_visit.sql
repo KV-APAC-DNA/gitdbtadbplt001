@@ -8,7 +8,19 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw','sdl_th_gt_visit') }}
+    select *,
+    dense_rank() over( partition by
+        upper(trim(saleunit)), 
+        upper(trim(id_sale)), 
+        upper(trim(id_customer)), 
+        date_plan, 
+        coalesce(trim(time_plan), 'NA'), 
+        COALESCE(TRIM(time_visi), 'NA'), 
+        COALESCE(visit_end, '9999-12-31'), 
+        COALESCE(TRIM(visit_time), 'NA')
+        order by filename desc
+        ) as rnk
+    from {{ source('thasdl_raw','sdl_th_gt_visit') }}
 ),
 final as(
     select
@@ -22,7 +34,7 @@ final as(
         time_plan::varchar(50) as time_plan,
         date_visi::date as date_visi,
         time_visi::varchar(50) as time_visit_in,
-        object::varchar(100) as object,
+        left(object,100)::varchar(100) as object,
         visit_end::date as visit_end,
         visit_time::varchar(50) as time_visit_out,
         regioncode::varchar(50) as regioncode,
@@ -36,5 +48,6 @@ final as(
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
+    where rnk=1
 )
 select * from final

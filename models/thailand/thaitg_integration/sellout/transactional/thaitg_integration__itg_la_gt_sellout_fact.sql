@@ -7,7 +7,9 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }}
+    select *,
+    dense_rank() over(partition by distributorid,orderno,orderdate,arcode,linenumber order by filename desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }}
 ),
 final as
 (
@@ -59,5 +61,6 @@ final as
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
     from source
+    where rnk=1
 )
 select * from final
