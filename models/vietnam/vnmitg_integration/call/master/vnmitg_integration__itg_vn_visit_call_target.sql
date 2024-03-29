@@ -4,7 +4,7 @@ with edw_vw_os_time_dim as
 ),
 itg_vn_dms_kpi as
 (
-    select * from snaposeitg_integration.itg_vn_dms_kpi
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi') }}
 ),
 kpi as 
 (

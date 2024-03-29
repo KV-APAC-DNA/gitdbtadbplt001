@@ -1,6 +1,6 @@
 with itg_vn_dms_kpi_sellin_sellthrgh as
 (
-    select * from snaposeitg_integration.itg_vn_dms_kpi_sellin_sellthrgh
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi_sellin_sellthrgh') }}
 ),
 wrk_vn_mnth_week as
 (

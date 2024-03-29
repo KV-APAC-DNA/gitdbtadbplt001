@@ -4,11 +4,11 @@ with itg_vn_distributor_sap_sold_to_mapping as
 ),
 itg_vn_dms_distributor_dim as
 (
-    select * from snaposeitg_integration.itg_vn_dms_distributor_dim
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 edw_vw_vn_billing_fact as
 (
-    select * from snaposeedw_integration.edw_vw_vn_billing_fact
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_billing_fact') }}
 ),
 wrk_vn_mnth_week as
 (
