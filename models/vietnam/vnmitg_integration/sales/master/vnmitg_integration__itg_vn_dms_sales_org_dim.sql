@@ -1,0 +1,33 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=  ['dstrbtr_id','salesrep_id'],
+        pre_hook= "delete from {{this}} where (dstrbtr_id, salesrep_id) in ( select dstrbtr_id, salesrep_id from {{ source('vnmsdl_raw', 'sdl_vn_dms_sales_org_dim') }} )"
+    )
+}}
+
+with source as(
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sales_org_dim') }}
+),
+final as(
+    select
+        dstrbtr_id::varchar(30) as dstrbtr_id,
+        salesrep_id::varchar(30) as salesrep_id,
+        salesrep_name::varchar(100) as salesrep_name,
+        sup_code::varchar(50) as supervisor_code,
+        to_date(salesrep_crtdate,  'MM/DD/YYYY HH12:MI:SS AM') as salesrep_crtdate,
+        to_date(salesrep_dateoff,  'MM/DD/YYYY HH12:MI:SS AM') as salesrep_dateoff,
+        sup_name::varchar(100) as supervisor_name,
+        trim(sup_active, ',')::varchar(1) as sup_active,
+        to_date(sup_crtdate,  'MM/DD/YYYY HH12:MI:SS AM') as sup_crtdate,
+        to_date(sup_dateoff, 'MM/DD/YYYY HH12:MI:SS AM') as sup_dateoff,
+        asm_id::varchar(50) as asm_id,
+        asm_name::varchar(100) as asm_name,
+        trim(active, ',')::varchar(1) as active,
+        curr_date::timestamp_ntz(9) as crtd_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        run_id::number(14,0) as run_id
+    from source
+)
+select * from final

@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_sellin_coop
+    config: 
+      alias: itg_vn_mt_sellin_coop
+      tags: ["vn_mt_sellin_transaction","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_dms_yearly_target
+    config: 
+      alias: itg_vn_dms_yearly_target
+      tags: ["vn_dms_forecast","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_mt_sellin_dksh
+    config: 
+      alias: itg_vn_mt_sellin_dksh
+      tags: ["vn_mt_sellin_transaction","ingestion"]

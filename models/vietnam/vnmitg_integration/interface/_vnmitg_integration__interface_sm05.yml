@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_interface_branch
+    config: 
+      alias: itg_vn_interface_branch
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_interface_ise_header
+    config: 
+      alias: itg_vn_interface_ise_header
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__sdl_raw_vn_interface_branch
+    config: 
+      alias: sdl_raw_vn_interface_branch
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__sdl_raw_vn_interface_ise_header
+    config: 
+      alias: sdl_raw_vn_interface_ise_header
+      tags: ["vn_perfect_store","ingestion"]

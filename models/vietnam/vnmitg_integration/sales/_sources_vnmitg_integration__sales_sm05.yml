@@ -1,0 +1,71 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dms_sales_org_dim
+        tags: ["vn_dms_master","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["dstrbtr_id", "salesrep_id"]
+                select_columns: ["dstrbtr_id", "salesrep_id"]
+                name: TRATBL_sdl_vn_dms_sales_org_dim__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["dstrbtr_id", "salesrep_id"]
+                select_columns: ["dstrbtr_id", "salesrep_id"]
+                name: TRATBL_sdl_vn_dms_sales_org_dim__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_format:
+                where_clause: "to_date(salesrep_crtdate,  'MM/DD/YYYY HH12:MI:SS AM') > to_date(salesrep_dateoff,  'MM/DD/YYYY HH12:MI:SS AM') and to_date(salesrep_dateoff,  'MM/DD/YYYY HH12:MI:SS AM') <> '1900-01-01'"
+                failure_reason: "'salesrep_crtdate is greater than for salesrep_dateoff for salesman and distributor'"
+                select_columns: ["dstrbtr_id", "salesrep_id"]
+                name: TRATBL_sdl_vn_dms_sales_org_dim__test_format
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_format:
+                where_clause: "to_date(sup_crtdate,  'MM/DD/YYYY HH12:MI:SS AM') > to_date(sup_dateoff,  'MM/DD/YYYY HH12:MI:SS AM') and to_date(sup_dateoff,  'MM/DD/YYYY HH12:MI:SS AM') <> '1900-01-01'"
+                failure_reason: "'sup_crtdate is greater than for sup_dateoff for supervisor and salesman'"
+                select_columns: ["dstrbtr_id", "salesrep_id"]
+                name: TRATBL_sdl_vn_dms_sales_org_dim__test_format2
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_dms_sales_stock_fact
+        tags: ["vn_dms_sales_stock","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["dstrbtr_id", "material_code", "date", "bat_number", "expiry_date"]
+                select_columns: ["dstrbtr_id", "wh_code", "material_code", "date", "bat_number", "expiry_date"]
+                name: TRATBL_sdl_vn_dms_sales_stock_fact__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["dstrbtr_id", "wh_code", "material_code", "date", "bat_number", "expiry_date"]
+                select_columns: ["dstrbtr_id", "wh_code", "material_code", "date", "bat_number", "expiry_date"]
+                name: TRATBL_sdl_vn_dms_sales_stock_fact__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_dksh_daily_sales
+        tags: ["j_vt_dksh_inventory_etl_framework","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["file_name", "material", "group_ds", "category", "materialdescription"]
+                select_columns: ["file_name", "material", "group_ds", "category", "materialdescription"]
+                name: TRATBL_sdl_vn_dksh_daily_sales__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
