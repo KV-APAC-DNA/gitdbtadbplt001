@@ -1,8 +1,8 @@
 with wks_vietnam_lastnmonths as (
-    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_lastnmonths
+    select * from {{ ref('vnmwks_integration__wks_vietnam_lastnmonths') }}
 ),
 wks_vietnam_base as (
-    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base
+    select * from {{ ref('vnmwks_integration__wks_vietnam_base') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}

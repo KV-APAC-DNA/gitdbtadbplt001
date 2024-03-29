@@ -1,38 +1,38 @@
 with edw_vw_vn_sellout_sales_fact as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_SELLOUT_SALES_FACT
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_sales_fact') }}
 ),
 edw_vw_vn_customer_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_CUSTOMER_DIM
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_customer_dim') }}
 ),
 itg_mds_vn_gt_gts_ratio as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_GT_GTS_RATIO
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_gt_gts_ratio') }}
 ),
 itg_query_parameters as (
-    select * from DEV_DNA_CORE.SGPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from {{ source('sgpitg_integration','itg_query_parameters') }}
 ),
 itg_vn_mt_sellin_dksh as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
 sdl_mds_vn_distributor_products as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_MDS_VN_DISTRIBUTOR_PRODUCTS
+    select * from {{ source('vnmsdl_raw','sdl_mds_vn_distributor_products') }}
 ),
 wks_dksh_unmapped as (
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_DKSH_UNMAPPED
+    select * from {{ ref('vnmwks_integration__wks_dksh_unmapped') }}
 ),
 edw_list_price as (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_LIST_PRICE
+    select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 itg_parameter_reg_inventory as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PARAMETER_REG_INVENTORY
+    select * from {{ ref('vnmitg_integration__itg_parameter_reg_inventory') }}
 ),
 edw_gch_producthierarchy as (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_material_sales_dim as (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
-edw_material_dim AS (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+edw_material_dim as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 mat_prod as (
     SELECT 

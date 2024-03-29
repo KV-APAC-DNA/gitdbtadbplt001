@@ -1,8 +1,8 @@
-with EDW_VW_VN_SI_SO_INV_ANALYSIS as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_VN_SI_SO_INV_ANALYSIS
+with edw_vw_vn_si_so_inv_analysis as (
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_si_so_inv_analysis') }}
 ),
 edw_vw_vn_si_so_inv_analysis_dksh as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_vn_si_so_inv_analysis_dksh
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_si_so_inv_analysis_dksh') }}
 ),
 siso as (
     SELECT JJ_MNTH_ID AS MONTH,

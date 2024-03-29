@@ -1,14 +1,14 @@
 with wks_vietnam_siso_propagate_final as (
-    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_siso_propagate_final
+    select * from {{ ref('vnmwks_integration__wks_vietnam_siso_propagate_final') }}
 ),
 edw_material_dim as (
-    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-EDW_GCH_PRODUCTHIERARCHY as (
-    select * from dev_dna_core.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+edw_gch_producthierarchy as (
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_material_sales_dim as (
-    select * from dev_dna_core.ASPEDW_INTEGRATION.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 final as (
     SELECT month,

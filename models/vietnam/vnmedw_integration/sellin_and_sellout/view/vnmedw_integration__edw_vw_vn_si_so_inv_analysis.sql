@@ -2,28 +2,28 @@ with edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_vn_dms_d_sellout_sales_fact as (
-    select * from dev_dna_core.snaposeitg_integration.itg_vn_dms_d_sellout_sales_fact
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_d_sellout_sales_fact') }}
 ),
 itg_vn_dms_product_dim as (
-    select * from dev_dna_core.snaposeitg_integration.itg_vn_dms_product_dim
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 itg_vn_dms_distributor_dim as (
-    select * from dev_dna_core.snaposeitg_integration.itg_vn_dms_distributor_dim
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-    select * from dev_dna_core.snaposeitg_integration.itg_vn_distributor_sap_sold_to_mapping
+    select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 itg_mds_vn_gt_gts_ratio as (
-    select * from dev_dna_core.snaposeitg_integration.itg_mds_vn_gt_gts_ratio
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_gt_gts_ratio') }}
 ),
 edw_vw_vn_customer_dim as (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_vn_customer_dim
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_customer_dim') }}
 ),
 edw_vw_vn_sellout_inventory_fact as (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_vn_sellout_inventory_fact
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_inventory_fact') }}
 ),
 edw_vw_vn_billing_fact as (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_vn_billing_fact
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_billing_fact') }}
 ),
 cust_dim as (
     SELECT DISTINCT edw_vw_vn_customer_dim.sap_cust_id,

@@ -1,8 +1,8 @@
-with EDW_VW_OS_TIME_DIM as (
+with edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_vietnam_base_detail as (
-    select * from dev_dna_core.SNAPOSEWKS_INTEGRATION.wks_vietnam_base_detail
+    select * from {{ ref('vnmwks_integration__wks_vietnam_base_detail') }}
 ),
 filtered_wvbd as (
     SELECT sap_parent_customer_key,
