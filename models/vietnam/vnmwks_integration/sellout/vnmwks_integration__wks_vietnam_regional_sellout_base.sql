@@ -32,7 +32,7 @@ edw_vw_vn_mt_dist_customers as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_customers') }}
 ),
 itg_mds_ap_customer360_config as (
-select * {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 select
