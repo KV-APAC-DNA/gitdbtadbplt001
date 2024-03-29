@@ -4,4 +4,4 @@ models:
   - name: vnmitg_integration__itg_vn_gt_topdoor_targets
     config: 
       alias: itg_vn_gt_topdoor_targets
-      tags: ["j_ap_dna_etl_framework_vn_td_tgt"]
+      tags: ["j_ap_dna_etl_framework_vn_td_tgt","ingestion"]

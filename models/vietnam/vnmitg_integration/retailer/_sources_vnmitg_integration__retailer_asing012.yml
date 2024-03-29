@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_vn_gt_topdoor_target
-        tags: ["j_ap_dna_etl_framework_vn_td_tgt"]
+        tags: ["j_ap_dna_etl_framework_vn_td_tgt","ingestion"]
         tests:
           - test_duplicate__ff:
               group_by_columns: ["from_cycle","to_cycle","customer_code"]

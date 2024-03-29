@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_spiral_mti_offtake
-        tags: ["vn_mti_offtake"]
+        tags: ["vn_mti_offtake","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["customername","shopcode","supcode","year","month","barcode"]

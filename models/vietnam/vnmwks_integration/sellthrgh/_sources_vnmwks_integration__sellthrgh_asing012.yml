@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
       - name: wrk_vn_mnth_week
-        tags: ["vn_dms_sellthrough_weekly_target"]
+        tags: ["vn_dms_sellthrough_weekly_target","ingestion"]

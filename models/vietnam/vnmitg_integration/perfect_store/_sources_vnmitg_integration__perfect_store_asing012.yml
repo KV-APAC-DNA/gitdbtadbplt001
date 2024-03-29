@@ -10,8 +10,8 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_vn_ps_weights
-        tags: ["vn_mt_sellin_master"]
+        tags: ["vn_mt_sellin_master","ingestion"]
       - name: sdl_mds_vn_ps_store_tagging
-        tags: ["vn_mt_sellin_master"]
+        tags: ["vn_mt_sellin_master","ingestion"]
       - name: sdl_mds_vn_ps_targets
-        tags: ["vn_mt_sellin_master"]
+        tags: ["vn_mt_sellin_master","ingestion"]

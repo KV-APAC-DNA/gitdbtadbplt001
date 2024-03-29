@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_vn_dms_kpi
-        tags: ["vn_dms_master"]
+        tags: ["vn_dms_master","ingestion"]
         tests:
           - test_duplicate__ff:
               group_by_columns: ["dstrbtr_id","cycle","kpi_type","saleman_code"]

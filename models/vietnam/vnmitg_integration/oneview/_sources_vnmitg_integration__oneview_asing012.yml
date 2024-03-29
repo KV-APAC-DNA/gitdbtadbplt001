@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_vn_oneview_otc
-        tags: ["vn_one_view_otc"]
+        tags: ["vn_one_view_otc","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["order_no","billingdate"]

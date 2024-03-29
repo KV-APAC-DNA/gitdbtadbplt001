@@ -4,8 +4,8 @@ models:
   - name: vnmitg_integration__itg_vn_oneview_otc
     config: 
       alias: itg_vn_oneview_otc
-      tags: ["vn_one_view_otc"]
+      tags: ["vn_one_view_otc","ingestion"]
   - name: vnmitg_integration__sdl_raw_vn_oneview_otc
     config: 
       alias: sdl_raw_vn_oneview_otc
-      tags: ["vn_one_view_otc"]
+      tags: ["vn_one_view_otc","ingestion"]

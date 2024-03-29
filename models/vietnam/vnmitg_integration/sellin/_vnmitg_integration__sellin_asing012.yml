@@ -4,13 +4,13 @@ models:
   - name: vnmitg_integration__itg_vn_mt_sellin_dksh_fact
     config: 
       alias: itg_vn_mt_sellin_dksh_fact
-      tags: ["vn_mt_sellin_fact_load"]
+      tags: ["vn_mt_sellin_fact_load","transformation"]
   - name: vnmitg_integration__itg_vn_mt_sellin_dksh_history
     config: 
       alias: itg_vn_mt_sellin_dksh_history
-      tags: ["vn_mt_sellin_fact_load"]
+      tags: ["vn_mt_sellin_fact_load","transformation"]
   - name: vnmitg_integration__sdl_raw_vn_mt_sellin_dksh_history
     config: 
       alias: sdl_raw_vn_mt_sellin_dksh_history
-      tags: ["vn_mt_sellin_fact_load"]
+      tags: ["vn_mt_sellin_fact_load","transformation"]
     
