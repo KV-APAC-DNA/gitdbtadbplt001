@@ -1,14 +1,15 @@
 with itg_vn_mt_sellin_dksh_history as 
 (
-    select * from snaposeitg_integration.itg_vn_mt_sellin_dksh_history
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh_history') }}
 ),
 itg_vn_mt_sellin_dksh as 
 (
-    select * from snaposeitg_integration.itg_vn_mt_sellin_dksh
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
 dksh as
 (
-select supplier_code,
+select 
+    supplier_code,
     supplier_name,
     plant,
     productid,

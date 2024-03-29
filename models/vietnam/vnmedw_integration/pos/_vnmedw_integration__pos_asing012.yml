@@ -4,9 +4,9 @@ models:
   - name: vnmedw_integration__edw_vw_vn_mt_pos_price_products
     config: 
       alias: edw_vw_vn_mt_pos_price_products
-      tags: [""]
+      tags: ["vn_mt_sellin_sellout_edw_load"]
   - name: vnmedw_integration__edw_vw_vn_mt_pos_products
     config: 
       alias: edw_vw_vn_mt_pos_products
-      tags: [""]
+      tags: ["vn_mt_sellin_sellout_edw_load"]
   

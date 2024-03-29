@@ -1,6 +1,6 @@
 with itg_vn_mt_pos_product_master as
 (
-    select * from snaposeitg_integration.itg_vn_mt_pos_product_master
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_pos_product_master') }}
 ),
 final as 
 (

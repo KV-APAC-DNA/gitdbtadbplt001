@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['from_cycle','to_cycle','customer_code']
+        unique_key=  ['dstrbtr_id','cycle','kpi_type','saleman_code']
     )
 }}
 

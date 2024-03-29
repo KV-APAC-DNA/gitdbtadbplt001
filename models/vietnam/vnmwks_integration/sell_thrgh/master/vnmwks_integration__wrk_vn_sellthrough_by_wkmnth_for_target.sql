@@ -1,10 +1,10 @@
 with wrk_vn_mnth_week as 
 (
-    select * from snaposewks_integration.wrk_vn_mnth_week
+    select * from {{ source('vnmwks_integration','wrk_vn_mnth_week') }}
 ),
 edw_vw_vn_sellthrgh_sales_fact as
 (
-    select * from snaposeedw_integration.edw_vw_vn_sellthrgh_sales_fact
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_sellthrgh_sales_fact') }}
 ),
 itg_vn_dms_distributor_dim as
 (

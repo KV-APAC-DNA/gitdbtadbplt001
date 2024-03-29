@@ -1,6 +1,6 @@
 with itg_vn_mt_sellin_target as
 (
-    select * from {{ source('snaposeitg_integration', 'itg_vn_mt_sellin_target') }}
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_target') }}
 ),
 jnj as 
 (

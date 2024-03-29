@@ -1,18 +1,18 @@
 with itg_vn_distributor_sap_sold_to_mapping as
 (
-    select * from snaposeitg_integration.itg_vn_distributor_sap_sold_to_mapping
+    select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 itg_vn_dms_d_sellout_sales_fact as 
 (
-    select * from snaposeitg_integration.itg_vn_dms_d_sellout_sales_fact
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_d_sellout_sales_fact') }}
 ),
 itg_vn_dms_product_dim  as
 (
-    select * from snaposeitg_integration.itg_vn_dms_product_dim
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 itg_vn_dms_distributor_dim as
 (
-    select * from snaposeitg_integration.itg_vn_dms_distributor_dim
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 distributor as 
 (

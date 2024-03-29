@@ -1,62 +1,58 @@
 with
 edw_vn_dksh_stock as
 (
-    select * from vnmedw_integration.edw_vn_dksh_stock
+    select * from {{ ref('vnmedw_integration__edw_vn_dksh_stock') }}
 ),
 sdl_mds_vn_distributor_products as
 (
-    select * from dev_dna_load.vnmsdl_raw.sdl_mds_vn_distributor_products
+    select * from {{ source('vnmsdl_raw', 'sdl_mds_vn_distributor_products') }}
 ),
 wks_dksh_unmapped as
 (
-    select * from snaposewks_integration.wks_dksh_unmapped
+    select * from {{ ref('vnmwks_integration__wks_dksh_unmapped') }}
 ),
 edw_vw_os_time_dim as
 (
-select * from snaposeedw_integration.edw_vw_os_time_dim
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_vn_billing_fact as
 (
-    select * from vnmedw_integration.edw_vw_vn_billing_fact
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_billing_fact') }}
 ),
 edw_vn_dksh_stock as
 (
-    select * from vnmedw_integration.edw_vn_dksh_stock
-),
-sdl_mds_vn_distributor_products as
-(
-    select * from dev_dna_load.vnmsdl_raw.sdl_mds_vn_distributor_products
+    select * from {{ ref('vnmedw_integration__edw_vn_dksh_stock') }}
 ),
 edw_vw_vn_material_dim as
 (
-    select * from vnmedw_integration.edw_vw_vn_material_dim
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_material_dim') }}
 ),
 itg_query_parameters as
 (
-    select * from aspitg_integration.itg_query_parameters
+    select * from {{ source('aspitg_integration','itg_query_parameters') }}
 ),
 edw_list_price as
 (
-    select * from dev_dna_core.asing012_workspace.edw_list_price
+    select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 itg_vn_mt_sellin_dksh as 
 (
-    select * from vnmitg_integration.itg_vn_mt_sellin_dksh
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
 itg_parameter_reg_inventory as 
 (
-    select * from aspitg_integration.itg_parameter_reg_inventory
+    select * from {{ source('aspitg_integration','itg_parameter_reg_inventory') }}
 ),
-
 edw_vw_vn_customer_dim as 
 (
-    select * from vnmedw_integration.edw_vw_vn_customer_dim
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_customer_dim') }}
 ),
 derived_table1 as
 (
-SELECT a.inv_dt,
+select 
+    a.inv_dt,
     a.sap_sold_to_code,
-    VEOTD.year,
+    veotd."year",
     veotd.qrtr,
     veotd.mnth_id,
     veotd.mnth_no,
@@ -101,7 +97,7 @@ FROM (
         )
         LEFT JOIN (
             SELECT DISTINCT edw_vw_os_time_dim.cal_date,
-                EDW_VW_OS_TIME_DIM.year,
+                edw_vw_os_time_dim."year",
                 edw_vw_os_time_dim.qrtr,
                 edw_vw_os_time_dim.mnth_id,
                 edw_vw_os_time_dim.mnth_no
@@ -111,12 +107,12 @@ FROM (
 ),
 latest_inv as 
 (
-    SELECT DISTINCT DERIVED_TABLE1.year,
+    SELECT DISTINCT derived_table1."year",
         derived_table1.qrtr,
         derived_table1.mnth_id,
         derived_table1.mnth_no,
         "max"(derived_table1.inv_dt) OVER(
-            PARTITION BY DERIVED_TABLE1.year,
+            PARTITION BY derived_table1."year",
             derived_table1.mnth_id 
         ) AS dstrb_max_inv_date
     FROM  derived_table1
@@ -146,7 +142,7 @@ FROM wks_dksh_unmapped
 ),
 veotd as 
 (
-    SELECT DISTINCT EDW_VW_OS_TIME_DIM.year,
+    SELECT DISTINCT edw_vw_os_time_dim."year",
         edw_vw_os_time_dim.qrtr,
         edw_vw_os_time_dim.mnth_id,
         edw_vw_os_time_dim.mnth_no,
@@ -187,7 +183,7 @@ FROM (
         (
             (
                 SELECT 'VN_DKSH'::character varying AS channel,
-                    EVVSSF.year AS jj_year,
+                    evvssf.year AS jj_year,
                     (evvssf.qrtr)::character varying AS jj_qrtr,
                     (evvssf.mnth_id)::character varying AS jj_mnth_id,
                     evvssf.mnth_no AS jj_mnth_no,
@@ -222,7 +218,7 @@ FROM (
                                 a.transaction_date AS inv_dt,
                                 a.total AS end_stock_qty,
                                 a.values_lc AS end_stock_val,
-                                LATEST_INV.year,
+                                latest_inv."year",
                                 latest_inv.qrtr,
                                 latest_inv.mnth_no,
                                 latest_inv.mnth_id,
@@ -278,7 +274,7 @@ FROM (
                     )
                 UNION ALL
                 SELECT 'VN_DKSH'::character varying AS channel,
-                    VEOTD.year AS jj_year,
+                    veotd."year" AS jj_year,
                     (veotd.qrtr)::character varying AS jj_qrtr,
                     (veotd.mnth_id)::character varying AS jj_mnth_id,
                     veotd.mnth_no AS jj_mnth_no,
@@ -358,7 +354,7 @@ FROM (
             )
             UNION ALL
             SELECT 'VN_DKSH'::character varying AS channel,
-                VEOTD.year AS jj_year,
+                veotd."year" AS jj_year,
                 (veotd.qrtr)::character varying AS jj_qrtr,
                 (veotd.mnth_id)::character varying AS jj_mnth_id,
                 veotd.mnth_no AS jj_mnth_no,
@@ -385,7 +381,7 @@ FROM (
                 0 AS si_sls_qty,
                 0 AS si_gts_val
             FROM (
-                    SELECT DISTINCT EDW_VW_OS_TIME_DIM.year,
+                    SELECT DISTINCT edw_vw_os_time_dim."year",
                         edw_vw_os_time_dim.qrtr,
                         edw_vw_os_time_dim.mnth_id,
                         edw_vw_os_time_dim.mnth_no,

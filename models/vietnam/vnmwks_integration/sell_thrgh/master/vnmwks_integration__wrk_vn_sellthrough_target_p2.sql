@@ -4,11 +4,11 @@ with wrk_vn_sellthrough_by_wkmnth_for_target as
 ),
 itg_vn_dms_kpi_sellin_sellthrgh as
 (
-    select * from snaposeitg_integration.itg_vn_dms_kpi_sellin_sellthrgh
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi_sellin_sellthrgh') }}
 ),
 wrk_vn_mnth_week as 
 (
-    select * from snaposewks_integration.wrk_vn_mnth_week
+    select * from {{ source('vnmwks_integration','wrk_vn_mnth_week') }}
 ),
 t2 as 
 (

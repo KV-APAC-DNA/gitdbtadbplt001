@@ -2,7 +2,7 @@
 config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=["billingdate","order_no"],
+        unique_key=['billingdate','order_no'],
         pre_hook= "delete from {{this}} where  (billingdate,order_no) in (select distinct order_no,case when billingdate like '%-%' then to_char(to_date(billingdate,'dd-mm-yyyy'),'yyyymmdd') else billingdate end as billingdate from {{ source('vnmsdl_raw', 'sdl_vn_oneview_otc') }})"
 )
 }}
@@ -13,7 +13,7 @@ with sdl_vn_oneview_otc as
 ),
 edw_vw_vn_mt_dist_products as 
 (
-    select * from snaposeedw_integration.edw_vw_vn_mt_dist_products
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 final as 
 (

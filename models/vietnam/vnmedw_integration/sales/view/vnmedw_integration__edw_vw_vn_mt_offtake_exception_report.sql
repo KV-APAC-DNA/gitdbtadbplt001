@@ -1,6 +1,6 @@
 with edw_vw_vn_mt_pos_offtake as 
 (
-    select * from dev_dna_core.snaposeedw_integration.edw_vw_vn_mt_pos_offtake
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_offtake') }}
 ),
 final as 
 (

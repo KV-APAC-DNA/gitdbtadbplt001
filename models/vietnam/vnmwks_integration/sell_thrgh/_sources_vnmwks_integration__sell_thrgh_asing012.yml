@@ -1,13 +1,13 @@
 version: 2
 
 sources:
-  - name: snaposeitg_integration
+  - name: vnmwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snaposeitg_integration
+    schema: vnmwks_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: itg_vn_mt_dksh_product_master
-      - name: itg_vn_mt_sellin_target
+      - name: wrk_vn_mnth_week
+        tags: ["vn_dms_sellthrough_weekly_target"]
