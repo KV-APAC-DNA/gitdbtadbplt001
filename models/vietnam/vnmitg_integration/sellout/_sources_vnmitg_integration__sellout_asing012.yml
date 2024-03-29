@@ -18,7 +18,6 @@ sources:
               config:
                 store_failures: true
                 schema: vnmwks_integration
-
       - name: sdl_vn_mt_sellout_guardian
         tags: ["vn_mt_pos_transaction"]
         tests:
