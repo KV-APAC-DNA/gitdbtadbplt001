@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wks_vietnam_sellout_for_inv_analysis 
+    config:
+      alias: wks_vietnam_sellout_for_inv_analysis
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_base 
+    config:
+      alias: wks_vietnam_base
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_allmonths_base 
+    config:
+      alias: wks_vietnam_allmonths_base
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_lastnmonths 
+    config:
+      alias: wks_vietnam_lastnmonths
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_base_detail 
+    config:
+      alias: wks_vietnam_base_detail
+      tags: ["",""]
+  - name: vnmwks_integration__vietnam_propagate_to 
+    config:
+      alias: vietnam_propagate_to
+      tags: ["",""]
+  - name: vnmwks_integration__vietnam_propagate_from_to 
+    config:
+      alias: vietnam_propagate_from_to
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_siso_propagate_to_details 
+    config:
+      alias: wks_vietnam_siso_propagate_to_details
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_siso_propagate_to_existing_dtls 
+    config:
+      alias: wks_vietnam_siso_propagate_to_existing_dtls
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_siso_propagate_final 
+    config:
+      alias: wks_vietnam_siso_propagate_final
+      tags: ["",""]
+  - name: vnmwks_integration__vietnam_inventory_health_analysis_propagation_prestep 
+    config:
+      alias: vietnam_inventory_health_analysis_propagation_prestep
+      tags: ["",""]
+  - name: vnmwks_integration__vietnam_inventory_health_analysis_propagation 
+    config:
+      alias: vietnam_inventory_health_analysis_propagation
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_inventory_healthy_unhealthy_analysis 
+    config:
+      alias: wks_vietnam_inventory_healthy_unhealthy_analysis
+      tags: ["",""]
+  - name: vnmwks_integration__wks_vietnam_inventory_health_analysis_propagation_final 
+    config:
+      alias: wks_vietnam_inventory_health_analysis_propagation_final
+      tags: ["",""]

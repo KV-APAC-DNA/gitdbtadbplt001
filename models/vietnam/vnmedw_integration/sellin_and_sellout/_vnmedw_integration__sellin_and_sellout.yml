@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_si_so_inv_analysis
+    config:
+      alias: edw_vw_vn_si_so_inv_analysis
+      tags: ["",""]
