@@ -1,68 +1,68 @@
 with itg_vn_dms_product_dim as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_PRODUCT_DIM
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 edw_vw_vn_mt_dist_products as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_DIST_PRODUCTS
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 itg_mds_vn_allchannel_siso_target_sku as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_ALLCHANNEL_SISO_TARGET_SKU
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_allchannel_siso_target_sku') }}
 ),
 edw_material_dim as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_copa_trans_fact as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 itg_query_parameters as (
-    select * from DEV_DNA_CORE.SGPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
 ),
 edw_company_dim as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COMPANY_DIM
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 v_edw_customer_sales_dim as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.V_EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 edw_vw_vn_billing_fact as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_BILLING_FACT
+    select * from {{ ref('mysedw_integration__edw_vw_vn_billing_fact') }}
 ),
-edw_crncy_exch_rates as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+edw_crncy_exchange_rates as (
+    select * from {{ ref('aspedw_integration__edw_crncy_exchange_rates') }}
 ),
 edw_vn_si_st_so_details as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VN_SI_ST_SO_DETAILS
+    select * from {{ ref('aspedw_integration__edw_vn_si_st_so_details') }}
 ),
 itg_vn_dms_distributor_dim as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_dms_customer_dim as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_DMS_CUSTOMER_DIM
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 edw_vw_vn_mt_sell_in_analysis as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_SELL_IN_ANALYSIS
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_sell_in_analysis') }}
 ),
 itg_vn_mt_sellin_dksh as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
 itg_vn_mt_sellin_dksh_history as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH_HISTORY
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh_history') }}
 ),
 edw_vw_vn_mt_dist_customers as (
-    select * from DEV_DNA_CORE.VNMEDW_INTEGRATION.EDW_VW_VN_MT_DIST_CUSTOMERS
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_customers') }}
 ),
 itg_vn_mt_customer_sales_organization as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_CUSTOMER_SALES_ORGANIZATION
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_customer_sales_organization') }}
 ),
 itg_mds_vn_ecom_target as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_MDS_VN_ECOM_TARGET
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_ecom_target') }}
 ),
 itg_vn_oneview_otc as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_ONEVIEW_OTC
+    select * from {{ ref('vnmitg_integration__itg_vn_oneview_otc') }}
 ),
 
 prod_dim as 
@@ -1338,49 +1338,30 @@ cte14 as
 )
 
 
-select 'cte1' nm,* from cte1_filtered
+select * from cte1_filtered
 union all
-select 'cte2' nm,* from cte2_filtered
+select * from cte2_filtered
 union all
-select 'cte3' nm,* from cte3
+select * from cte3
 union all
-select 'cte4' nm,* from cte4
+select * from cte4
 union all
-select 'cte5' nm,* from cte5
+select * from cte5
 union all
-select 'cte6' nm,* from cte6
+select * from cte6
 union all
-select 'cte7' nm,* from cte7
+select * from cte7
 union all
-select 'cte8' nm,* from cte8
+select * from cte8
 union all
-select 'cte9' nm,* from cte9
+select * from cte9
 union all
-select 'cte10' nm,* from cte10
+select * from cte10
 union all
-select 'cte11' nm,* from cte11
+select * from cte11
 union all
-select 'cte12' nm,* from cte12
+select * from cte12
 union all
-select 'cte13' nm,* from cte13
+select * from cte13
 union all
-select 'cte14' nm,* from cte14
-
-
--- select 'cte6' nm,* from cte6
--- union all
--- select 'cte7' nm,* from cte7
--- union all
--- select 'cte8' nm,* from cte8
--- union all
--- select 'cte9' nm,* from cte9
--- union all
--- -- select * from cte10
--- -- union all
--- select 'cte11' nm,* from cte11
--- union all
--- select 'cte12' nm,* from cte12
--- -- union all
--- -- select * from cte13
--- union all
--- select 'cte14' nm,* from cte14
+select * from cte14

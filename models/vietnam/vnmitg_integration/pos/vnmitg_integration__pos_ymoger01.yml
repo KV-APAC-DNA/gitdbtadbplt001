@@ -4,4 +4,4 @@ models:
   - name: vnmitg_integration__itg_vn_mt_pos_union
     config:
       alias: itg_vn_mt_pos_union
-      tags: ["vn_mt_pos_fact_load",""]
+      tags: ["vn_mt_pos_fact_load","transformation"]

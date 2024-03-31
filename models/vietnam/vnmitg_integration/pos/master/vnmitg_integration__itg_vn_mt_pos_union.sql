@@ -1,52 +1,52 @@
 with itg_vn_mt_sellout_vinmart as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_vinmart
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_vinmart') }}
 ),
 itg_vn_mt_sellout_aeon as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_aeon
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_aeon') }}
 ),
 itg_vn_mt_pos_cust_master as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_pos_cust_master
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_pos_cust_master') }}
 ),
 itg_vn_mt_sellout_bhx as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_bhx
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_bhx') }}
 ),
 itg_vn_mt_sellout_mega as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_mega
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_mega') }}
 ),
 itg_vn_mt_sellout_coop as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_coop
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_coop') }}
 ),
 itg_vn_mt_sellout_lotte as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_lotte
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_lotte') }}
 ),
 itg_vn_mt_sellout_guardian as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_guardian
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_guardian') }}
 ),
 itg_vn_mt_sellout_con_cung as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_sellout_con_cung
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_con_cung') }}
 ),
 itg_vn_mt_pos_product_master as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_pos_product_master
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_pos_product_master') }}
 ),
 itg_vn_mt_dksh_product_master as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_dksh_product_master
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_dksh_product_master') }}
 ),
 itg_vn_mt_pos_price_products as (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.itg_vn_mt_pos_price_products
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_pos_price_products') }}
 ),
 
 final as
 (
-SELECT CAST(POS.YEAR AS INT) AS YEAR,
-       CAST(POS.MONTH AS INT) AS MONTH,
-       POS.ACCOUNT,
-       POS.Customer_cd,
-       POS.store_name,
-       POS.product_cd,
-       POS.barcode,
-       POS.quantity,
-       POS.amount,
-       convert_timezone('Asia/Singapore',current_timestamp) updt_dttm
+SELECT CAST(POS.YEAR AS INT)::NUMBER(18,0) AS YEAR,
+       CAST(POS.MONTH AS INT)::NUMBER(18,0) AS MONTH,
+       POS.ACCOUNT::VARCHAR(20) AS ACCOUNT,
+       POS.Customer_cd:: VARCHAR(200) AS Customer_cd,
+       POS.store_name:: VARCHAR(200) AS store_name,
+       POS.product_cd:: VARCHAR(200) AS product_cd,
+       POS.barcode::VARCHAR(20) AS barcode,
+       POS.quantity::NUMBER(18,0) AS quantity,
+       trunc(POS.amount,5)::NUMBER(20,5) as amount,
+       convert_timezone('Asia/Singapore',current_timestamp)::timestamp_ntz(9) updt_dttm
 FROM (SELECT DISTINCT 'Vinmart' AS account,
              YEAR,
              MONTH,
@@ -129,7 +129,7 @@ FROM (SELECT DISTINCT 'Vinmart' AS account,
              Coop.store_name,
              Coop.sku AS product_cd,
              Coop.barcode,
-             SUM(Coop.qty) OVER (PARTITION BY customer_cd,sku,store_name,CONCAT (YEAR,MONTH)) AS quantity,
+             trunc(SUM(Coop.qty) OVER (PARTITION BY customer_cd,sku,store_name,CONCAT (YEAR,MONTH))) AS quantity,
              SUM(Coop.sales_amount*0.88) OVER (PARTITION BY customer_cd,sku,store_name,CONCAT (YEAR,MONTH)) AS amount
       FROM (SELECT main.year,
                    main.month,
@@ -147,7 +147,7 @@ FROM (SELECT DISTINCT 'Vinmart' AS account,
                    main.sumofttbvnckhd,
                    main.store,
                    main.sales_amount,
-                   main.sales_amount / lp.list_price AS qty,
+                   (main.sales_amount / lp.list_price) AS qty,
                    'COOP' AS account,
                    main.store AS customer_cd,
                    main.store AS store_name,

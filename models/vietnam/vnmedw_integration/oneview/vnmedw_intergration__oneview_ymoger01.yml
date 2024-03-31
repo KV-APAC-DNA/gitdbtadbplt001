@@ -4,4 +4,4 @@ models:
   - name: vnmedw_integration__edw_vn_oneview_rpt
     config:
       alias: edw_vn_oneview_rpt
-      tags: ["vn_oneview_datamart_refresh",""]
+      tags: ["vn_oneview_datamart_refresh","transformation"]

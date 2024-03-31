@@ -8,7 +8,7 @@
 --Import CTE
 with source as 
 (
-    select *
+    select * 
     from {{ source('vnmsdl_raw', 'sdl_vn_interface_question') }}
 ),
 --Final CTE
