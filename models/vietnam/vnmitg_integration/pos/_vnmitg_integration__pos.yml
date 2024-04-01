@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_pos_cust_master
+    config:
+      alias: itg_vn_mt_pos_cust_master
+      tags: ["vn_mt_pos_master","ingestion"]
+  - name: vnmitg_integration__itg_vn_mt_pos_price_products
+    config:
+      alias: itg_vn_mt_pos_price_products
+      tags: ["vn_mt_pos_price_product","ingestion"]
+  - name: vnmitg_integration__itg_vn_mt_pos_product_master
+    config:
+      alias: itg_vn_mt_pos_product_master
+      tags: ["vn_mt_pos_master","ingestion"]
+  - name: vnmitg_integration__itg_vn_mt_pos_union
+    config:
+      alias: itg_vn_mt_pos_union
+      tags: ["vn_mt_pos_fact_load","transformation"]
+
+  

@@ -57,3 +57,8 @@ models:
     config:
       alias: wks_vietnam_inventory_health_analysis_propagation_final
       tags: ["",""]
+
+  - name: vnmwks_integration__wks_vn_dms_record_reconcile
+    config: 
+      alias: wks_vn_dms_record_reconcile
+      tags: ["vn_dms_data_extract_summary","ingestion"]

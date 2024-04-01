@@ -341,3 +341,4 @@ and vw.jj_mnth_id >= (select min(jj_mnth_id) from time_dim)
             product_group,
             group_jb 
         from final
+        where sub_channel not in ('TD001-DÆ°Æ¡ng Anh','TD002-Tiáº¿n ThÃ nh')

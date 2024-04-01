@@ -1335,9 +1335,60 @@ cte14 as
     on cast(timedim.mnth_id as numeric) = otc_tgt.cycle
     left join prod_dim prod
     on cast(otc_tgt.jnj_code as varchar) = prod.sap_code
-)
+),
 
-
+final as 
+(
+select 
+	data_type::varchar(15),
+	channel::varchar(20),
+	sub_channel::varchar(300),
+	jj_year::number(18,0),
+	jj_qrtr::varchar(14),
+	jj_mnth_id::varchar(23),
+	jj_mnth_no::number(18,0),
+	jj_mnth_wk_no::number(38,0),
+	jj_mnth_day::number(38,0),
+	mapped_spk::varchar(100),
+	dstrbtr_grp_cd::varchar(100),
+	dstrbtr_name::varchar(100),
+	sap_sold_to_code::varchar(50),
+	sap_matl_num::varchar(100),
+	sap_matl_name::varchar(100),
+	dstrbtr_matl_num::varchar(100),
+	dstrbtr_matl_name::varchar(500),
+	bar_code::varchar(40),
+	customer_code::varchar(100),
+	customer_name::varchar(500),
+	invoice_date::date,
+	salesman::varchar(50),
+	salesman_name::varchar(100),
+	si_gts_val::number(38,10),
+	si_gts_excl_dm_val::number(38,10),
+	si_nts_val::number(38,10),
+	si_mnth_tgt_by_sku::float,
+	so_net_trd_sls_loc::number(38,5),
+	so_net_trd_sls_usd::number(38,10),
+	so_mnth_tgt::number(38,10),
+	so_avg_wk_tgt::number(28,6),
+	so_mnth_tgt_by_sku::float,
+	zone_manager_id::varchar(100),
+	zone_manager_name::varchar(450),
+	"zone"::varchar(20) as zone,
+	province::varchar(1125),
+	region::varchar(1125),
+	shop_type::varchar(100),
+	mt_sub_channel::varchar(1125),
+	retail_environment::varchar(450),
+	group_account::varchar(1125),
+	account::varchar(1125),
+	franchise::varchar(30),
+	brand::varchar(83),
+	variant::varchar(100),
+	product_group::varchar(255),
+	group_jb::varchar(6)
+from 
+(
 select * from cte1_filtered
 union all
 select * from cte2_filtered
@@ -1365,3 +1416,6 @@ union all
 select * from cte13
 union all
 select * from cte14
+)
+
+select * from final

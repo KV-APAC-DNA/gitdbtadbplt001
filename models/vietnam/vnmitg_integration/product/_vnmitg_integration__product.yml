@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_mt_dksh_product_master
+    config:
+      alias: itg_vn_mt_dksh_product_master
+      tags: ['vn_mt_sellin_master','ingestion']
+  - name: vnmitg_integration__itg_vn_dms_product_dim
+    config: 
+      alias: itg_vn_dms_product_dim
+      tags: ["vn_dms_master","ingestion"]
+
+  - name: vnmitg_integration__sdl_raw_vn_dms_product_dim
+    config: 
+      alias: sdl_raw_vn_dms_product_dim
+      tags: ["vn_dms_master","ingestion"] 
+  - name: vnmitg_integration__itg_vn_product_mapping
+    config:
+      alias: itg_vn_product_mapping
+      tags: ["vn_perfect_store","ingestion"]

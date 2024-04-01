@@ -1,0 +1,87 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_vn_customer_sales_organization
+        tags: ['vn_mt_sellin_target','ingestion']
+      - name: sdl_mds_vn_distributor_products
+        tags: ['vn_mt_sellin_target','ingestion']
+      - name: sdl_vn_mt_sellin_dksh_history
+        tags: ["vn_mt_pos_transaction","ingestion"]
+      - name: sdl_vn_mt_sellin_coop
+        tags: ["vn_mt_sellin_transaction","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["sku", "store"]
+                select_columns: ["sku", "store"]
+                name: TRATBL_sdl_vn_mt_sellin_coop__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_lookup:
+                  select_columns: ["sku", "store"]
+                  lookup_table: "{{ ref('vnmitg_integration__itg_vn_mt_dksh_cust_master') }}"
+                  column: "coalesce(UPPER(store),'&')"
+                  lookup_column: "coalesce(UPPER(code),'#')"
+                  filter: "(store is not null or store!='') "
+                  name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+          - test_lookup:
+                  select_columns: ["sku", "store"]
+                  lookup_table: "{{ ref('vnmitg_integration__itg_vn_mt_dksh_product_master') }}"
+                  column: "coalesce(UPPER(sku),'&')"
+                  lookup_column: "coalesce(UPPER(code),'#')"
+                  filter: "(sku is not null or sku!='') "
+                  name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test2
+                  config:
+                    store_failures: true
+                    schema: thawks_integration
+           
+      - name: sdl_vn_mt_sellin_dksh
+        tags: ["vn_dms_forecast","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["productid", "custcode"]
+                select_columns: ["productid", "custcode"]
+                name: TRATBL_sdl_vn_mt_sellin_dksh__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_dms_yearly_target
+        tags: ["vn_dms_forecast","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["year", "kpi", "category"]
+                select_columns: ["year", "kpi", "category"]
+                name: TRATBL_sdl_vn_dms_yearly_target__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["kpi", "category"]
+                select_columns: ["year", "kpi", "category"]
+                name: TRATBL_sdl_vn_dms_yearly_target__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_mt_sellin_target
+        tags: ["vn_mt_sellin_target","ingestion"]        
+
+  - name: vnmitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: vnmitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_vn_distributor_sap_sold_to_mapping     

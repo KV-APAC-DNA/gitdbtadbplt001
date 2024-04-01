@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: vnmitg_integration__itg_vn_product_mapping
-    config:
-      alias: itg_vn_product_mapping
-      tags: ["vn_perfect_store","ingestion"]
