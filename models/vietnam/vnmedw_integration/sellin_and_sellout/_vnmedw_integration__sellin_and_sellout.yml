@@ -4,7 +4,7 @@ models:
   - name: vnmedw_integration__edw_vw_vn_si_so_inv_analysis
     config:
       alias: edw_vw_vn_si_so_inv_analysis
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmedw_integration__edw_vn_mt_sellin_sellout_analysis
     config:
       alias: edw_vn_mt_sellin_sellout_analysis

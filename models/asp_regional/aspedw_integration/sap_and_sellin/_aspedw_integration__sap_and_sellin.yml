@@ -179,4 +179,4 @@ models:
   - name: aspedw_integration__edw_crncy_exch_rates
     config:
       alias: edw_crncy_exch_rates
-      tags: ["",""]
+      tags: ["sap_ecc_master_etl_framework","transformation"]

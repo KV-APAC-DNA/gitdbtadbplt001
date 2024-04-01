@@ -4,59 +4,59 @@ models:
   - name: vnmwks_integration__wks_vietnam_sellout_for_inv_analysis 
     config:
       alias: wks_vietnam_sellout_for_inv_analysis
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_base 
     config:
       alias: wks_vietnam_base
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_allmonths_base 
     config:
       alias: wks_vietnam_allmonths_base
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_lastnmonths 
     config:
       alias: wks_vietnam_lastnmonths
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_base_detail 
     config:
       alias: wks_vietnam_base_detail
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__vietnam_propagate_to 
     config:
       alias: vietnam_propagate_to
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__vietnam_propagate_from_to 
     config:
       alias: vietnam_propagate_from_to
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_siso_propagate_to_details 
     config:
       alias: wks_vietnam_siso_propagate_to_details
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_siso_propagate_to_existing_dtls 
     config:
       alias: wks_vietnam_siso_propagate_to_existing_dtls
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_siso_propagate_final 
     config:
       alias: wks_vietnam_siso_propagate_final
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__vietnam_inventory_health_analysis_propagation_prestep 
     config:
       alias: vietnam_inventory_health_analysis_propagation_prestep
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__vietnam_inventory_health_analysis_propagation 
     config:
       alias: vietnam_inventory_health_analysis_propagation
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_inventory_healthy_unhealthy_analysis 
     config:
       alias: wks_vietnam_inventory_healthy_unhealthy_analysis
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
   - name: vnmwks_integration__wks_vietnam_inventory_health_analysis_propagation_final 
     config:
       alias: wks_vietnam_inventory_health_analysis_propagation_final
-      tags: ["",""]
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
 
   - name: vnmwks_integration__wks_vn_dms_record_reconcile
     config: 
