@@ -21,7 +21,6 @@ with transformed as (
         global_put_up_desc,
         sku_cd,
         sku_description,
-
         --greenlight_sku_flag,
         pka_product_key,
         pka_product_key_description,
@@ -131,7 +130,7 @@ with transformed as (
     select * from {{ source('pcfwks_integration', 'pacific_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ ref('thawks_integration__wks_thailand_inventory_health_analysis_propagation_final') }}
+    select * from {{ source('osewks_integration', 'wks_thailand_inventory_health_analysis_propagation_final') }}
 
     union all 
     select * from {{ source('osewks_integration', 'wks_vietnam_inventory_health_analysis_propagation_final') }}
@@ -196,9 +195,9 @@ final as(
         last_12months_so_qty::number(38,4) as last_12months_so_qty,
         last_3months_so_val::number(38,4) as last_3months_so_val,
         last_3months_so_val_usd::number(38,5) as last_3months_so_val_usd,
-        last_6months_so_val::number(38,4) as last_6months_so_val,
+        last_6months_so_val::number(38,4) as last_6months_so_val,--
         last_6months_so_val_usd::number(38,5) as last_6months_so_val_usd,
-        last_12months_so_val::number(38,4) as last_12months_so_val,
+        last_12months_so_val::number(38,4) as last_12months_so_val,--
         last_12months_so_val_usd::number(38,5) as last_12months_so_val_usd,
         propagate_flag::varchar(1) as propagate_flag,
         propagate_from::number(18,0) as propagate_from,
