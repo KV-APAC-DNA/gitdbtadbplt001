@@ -56,7 +56,7 @@ itg_vn_dms_distributor_dim as (
     select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-    select * from {{ soucre('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
+    select * from {{ source('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 cal AS (
     SELECT DISTINCT "year" as year,

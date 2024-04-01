@@ -11,12 +11,12 @@ SELECT edw_vw_vn_mt_sellin_sellout_analysis.data_source
 	,edw_vw_vn_mt_sellin_sellout_analysis.custcode
 	,edw_vw_vn_mt_sellin_sellout_analysis.name
 	,edw_vw_vn_mt_sellin_sellout_analysis.sub_channel
-	,edw_vw_vn_mt_sellin_sellout_analysis.region
+	,edw_vw_vn_mt_sellin_sellout_analysis."region"
 	,edw_vw_vn_mt_sellin_sellout_analysis.province
 	,edw_vw_vn_mt_sellin_sellout_analysis.kam
 	,edw_vw_vn_mt_sellin_sellout_analysis.retail_environment
 	,edw_vw_vn_mt_sellin_sellout_analysis.group_account
-	,edw_vw_vn_mt_sellin_sellout_analysis.account
+	,edw_vw_vn_mt_sellin_sellout_analysis."account"
 	,edw_vw_vn_mt_sellin_sellout_analysis.franchise
 	,edw_vw_vn_mt_sellin_sellout_analysis.category
 	,edw_vw_vn_mt_sellin_sellout_analysis.sub_category
@@ -42,7 +42,7 @@ WHERE (
 													(edw_vw_vn_mt_sellin_sellout_analysis.product_name IS NULL)
 													OR (edw_vw_vn_mt_sellin_sellout_analysis.sub_channel IS NULL)
 													)
-												OR (edw_vw_vn_mt_sellin_sellout_analysis.region IS NULL)
+												OR (edw_vw_vn_mt_sellin_sellout_analysis."region" IS NULL)
 												)
 											OR (edw_vw_vn_mt_sellin_sellout_analysis.province IS NULL)
 											)
@@ -52,7 +52,7 @@ WHERE (
 									)
 								OR (edw_vw_vn_mt_sellin_sellout_analysis.group_account IS NULL)
 								)
-							OR (edw_vw_vn_mt_sellin_sellout_analysis.account IS NULL)
+							OR (edw_vw_vn_mt_sellin_sellout_analysis."account" IS NULL)
 							)
 						OR (edw_vw_vn_mt_sellin_sellout_analysis.franchise IS NULL)
 						)

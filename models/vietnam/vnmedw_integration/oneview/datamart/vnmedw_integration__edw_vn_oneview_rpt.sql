@@ -7,7 +7,7 @@ edw_vw_os_time_dim as (
 ),
 itg_query_parameters as 
 (
-    select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 
 time_dim as 
