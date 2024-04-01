@@ -9,7 +9,9 @@
 
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
+    select *,
+    dense_rank() over(partition by UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) order by filename desc) as rnk
+    from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
 ),
 final as(
     select
@@ -56,5 +58,6 @@ final as(
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
+    where rnk=1
 )
 select * from final
