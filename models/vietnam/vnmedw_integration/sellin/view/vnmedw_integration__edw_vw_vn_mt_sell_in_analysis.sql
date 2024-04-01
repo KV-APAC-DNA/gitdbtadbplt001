@@ -34,7 +34,7 @@ final as (
    SELECT    'DKSH'    AS data_source,
              'SELL-IN' AS data_type,
              dksh.invoice_date,
-             timedim.year,
+             timedim."year",
              timedim.qrtr_no,
              (timedim.qrtr)::varchar      AS qrtr,
              (timedim.mnth_id)::varchar   AS mnth_id,
@@ -69,8 +69,8 @@ final as (
              (upper((cust.address)::text))::varchar    AS address,
              (upper(cust.sub_channel))::varchar        AS sub_channel,
              (upper(cust.group_account))::varchar      AS group_account,
-             (upper(cust.account))::varchar          AS "account",
-             (upper(cust.region))::varchar           AS "region",
+             (upper(cust."account"))::varchar          AS "account",
+             (upper(cust."region"))::varchar           AS "region",
              (upper(cust.province))::varchar           AS province,
              (upper(cust.retail_environment))::varchar AS retail_environment,
              dksh.zone as "zone",
@@ -132,7 +132,7 @@ final as (
    SELECT    'COOP'          AS data_source,
              'SELL-IN'       AS data_type,
              NULL AS invoice_date,
-             timedim.year,
+             timedim."year",
              timedim.qrtr_no,
              (timedim.qrtr)::varchar      AS qrtr,
              (timedim.mnth_id)::varchar   AS mnth_id,
@@ -173,12 +173,12 @@ final as (
                 ELSE upper(cust.group_account)
              END)::varchar AS group_account, 
              (
-             CASE WHEN ((upper(cust.account) = ('SAIGON COOP'::varchar)::text)
-                      OR ((upper(cust.account) IS NULL) AND ('SAIGON COOP' IS NULL))) 
+             CASE WHEN ((upper(cust."account") = ('SAIGON COOP'::varchar)::text)
+                      OR ((upper(cust."account") IS NULL) AND ('SAIGON COOP' IS NULL))) 
                     THEN ('COOP SM'::varchar)::text
-                ELSE upper(cust.account)
+                ELSE upper(cust."account")
              END)::varchar                                                          AS "account",
-             (upper(cust.region))::varchar                                        AS "region",
+             (upper(cust."region"))::varchar                                        AS "region",
              (upper(cust.province))::varchar                                        AS province,
              (upper(cust.retail_environment))::varchar                              AS retail_environment,
              NULL::varchar                                                          AS "zone",
@@ -195,7 +195,7 @@ final as (
    FROM   itg_vn_mt_sellin_coop coop
    JOIN
              (
-                             SELECT DISTINCT edw_vw_os_time_dim.year,
+                             SELECT DISTINCT edw_vw_os_time_dim."year",
                                              edw_vw_os_time_dim.qrtr_no,
                                              edw_vw_os_time_dim.qrtr,
                                              edw_vw_os_time_dim.mnth_id,
@@ -261,7 +261,7 @@ final as (
  SELECT    'Target' AS data_source,
            tgt.data_type,
            NULL AS invoice_date,
-           timedim.year,
+           timedim."year",
            timedim.qrtr_no,
            (timedim.qrtr)::varchar      AS qrtr,
            (timedim.mnth_id)::varchar   AS mnth_id,
@@ -296,8 +296,8 @@ final as (
            cust.address,
            (upper(cust.sub_channel))::varchar             AS sub_channel,
            (upper(cust.group_account))::varchar           AS group_account,
-           (upper(cust.account))::varchar               AS "account",
-           (upper(cust.region))::varchar                AS "region",
+           (upper(cust."account"))::varchar               AS "account",
+           (upper(cust."region"))::varchar                AS "region",
            (upper(cust.province))::varchar                AS province,
            (upper(cust.retail_environment))::varchar      AS retail_environment,
            NULL::varchar                                  AS "zone",
@@ -309,13 +309,13 @@ final as (
            ((NULL::numeric)::numeric(18,0))::numeric(20,3)          AS sales_amt_usd,
            ((NULL::numeric)::numeric(18,0))::numeric(10,3)          AS gts_amt_lcy,
            ((NULL::numeric)::numeric(18,0))::numeric(10,3)          AS gts_amt_usd,
-           (tgt.target)::numeric(20,10)                           AS target_lcy,
-           (tgt.target * exch_rate.ex_rt)::numeric(20,10)      AS target_usd
+           (tgt."target")::numeric(20,10)                           AS target_lcy,
+           (tgt."target" * exch_rate.ex_rt)::numeric(20,10)      AS target_usd
  FROM
         edw_vw_vn_mt_sellin_target tgt
  JOIN
            (
-                           SELECT DISTINCT edw_vw_os_time_dim.year,
+                           SELECT DISTINCT edw_vw_os_time_dim."year",
                                            edw_vw_os_time_dim.qrtr_no,
                                            edw_vw_os_time_dim.qrtr,
                                            edw_vw_os_time_dim.mnth_id,
@@ -325,7 +325,7 @@ final as (
                                            edw_vw_os_time_dim.mnth_long
                            FROM            edw_vw_os_time_dim
        ) timedim
- ON   (((tgt.sellin_cycle = timedim.mnth_no) AND  ((tgt.sellin_year)::text = ((timedim.year)::varchar)::text)))
+ ON   (((tgt.sellin_cycle = timedim.mnth_no) AND  ((tgt.sellin_year)::text = ((timedim."year")::varchar)::text)))
  LEFT JOIN edw_vw_vn_mt_dist_customers cust
  ON  (((tgt.cust_code)::text = (cust.code)::text))
  LEFT JOIN
@@ -372,7 +372,7 @@ UNION ALL
 SELECT    'JNJ'                                AS data_source,
           'SELL-IN'                            AS data_type,
           (bill_ft.bill_dt)::varchar AS invoice_date,
-          timedim.year,
+          timedim."year",
           timedim.qrtr_no,
           (timedim.qrtr)::varchar      AS qrtr,
           (timedim.mnth_id)::varchar   AS mnth_id,
@@ -438,8 +438,8 @@ SELECT    'JNJ'                                AS data_source,
           cust.address,
           (upper(cust.sub_channel))::varchar             AS sub_channel,
           (upper(cust.group_account))::varchar           AS group_account,
-          (upper(cust.account))::varchar               AS "account",
-          (upper(cust.region))::varchar                AS "region",
+          (upper(cust."account"))::varchar               AS "account",
+          (upper(cust."region"))::varchar                AS "region",
           (upper(cust.province))::varchar                AS province,
           (upper(cust.retail_environment))::varchar      AS retail_environment,
           NULL                                          AS "zone",

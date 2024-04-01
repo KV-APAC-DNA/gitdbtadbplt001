@@ -1,8 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['filename']
+        incremental_strategy= "append",
+        unique_key=  ['filename'],
+        pre_hook= "delete from {{this}} where (filename) in ( select filename from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellin_dksh_history') }})"
     )
 }}
 

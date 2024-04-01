@@ -7,7 +7,7 @@
                 {% else %}
                     {{schema}}.vnmitg_integration__itg_vn_mt_pos_cust_master
                 {% endif %}
-        vnmitg_integration.itg_vn_mt_pos_cust_master (
+            (
                 chain varchar(200),
                 changetrackingmask number(18,0),
                 code varchar(500),
@@ -43,7 +43,7 @@
                 active varchar(2),
                 run_id number(14,0),
                 crtd_dttm timestamp_ntz(9),
-                updt_dttm timestamp_ntz(9),
+                updt_dttm timestamp_ntz(9)
         );              
     {% endset %}
 

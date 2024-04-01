@@ -22,7 +22,7 @@ sources:
         tags: ["vn_mt_pos_transaction","ingestion"]
         tests:
           - test_null:
-              not_null_columns: ["sku","product_code"]
+              not_null_columns: ["sku","store_code"]
               name: TRATBL_sdl_vn_mt_sellout_guardian__null_test
               config:
                 store_failures: true

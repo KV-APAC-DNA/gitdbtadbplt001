@@ -183,7 +183,7 @@ FROM (
         (
             (
                 SELECT 'VN_DKSH'::character varying AS channel,
-                    evvssf.year AS jj_year,
+                    evvssf."year" AS jj_year,
                     (evvssf.qrtr)::character varying AS jj_qrtr,
                     (evvssf.mnth_id)::character varying AS jj_mnth_id,
                     evvssf.mnth_no AS jj_mnth_no,

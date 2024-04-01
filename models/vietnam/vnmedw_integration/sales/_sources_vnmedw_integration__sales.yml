@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: aspitg_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
     quoting:
       database: false
@@ -12,7 +12,7 @@ sources:
       - name: itg_parameter_reg_inventory
 
   - name: vnmwks_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: vnmwks_integration
     quoting:
       database: false

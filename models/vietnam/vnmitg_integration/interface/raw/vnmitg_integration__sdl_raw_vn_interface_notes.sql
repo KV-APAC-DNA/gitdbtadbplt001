@@ -6,7 +6,7 @@
         )
 }}
 
-with sdl_vn_interface_notes as (
+with source as (
     select * from {{ source('vnmsdl_raw', 'sdl_vn_interface_notes') }}
 ),
 final as (
@@ -21,7 +21,7 @@ answer_value::varchar(255) as answer_value,
 createddate::varchar(255) as createddate,
 filename::varchar(255) as filename,
 crt_dttm::timestamp_ntz(9) as crt_dttm
-from  sdl_vn_interface_notes
+from  source
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
