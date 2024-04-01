@@ -48,7 +48,7 @@ models:
   - name: vnmitg_integration__itg_vn_dms_d_sellout_sales_fact
     config: 
       alias: itg_vn_dms_d_sellout_sales_fact
-      tags: ["vn_dms_sellout","transformation"]
+      tags: ["vn_dms_sellout","ingestion"]
 
   - name: vnmitg_integration__itg_vn_weekly_sellout_target
     config: 

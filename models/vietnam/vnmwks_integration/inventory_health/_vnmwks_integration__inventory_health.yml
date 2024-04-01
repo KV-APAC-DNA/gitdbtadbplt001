@@ -61,4 +61,4 @@ models:
   - name: vnmwks_integration__wks_vn_dms_record_reconcile
     config: 
       alias: wks_vn_dms_record_reconcile
-      tags: ["vn_dms_data_extract_summary","ingestion"]
+      tags: ["vn_dms_data_extract_summary","transformation"]

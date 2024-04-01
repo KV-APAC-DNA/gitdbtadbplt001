@@ -39,3 +39,11 @@ models:
     config:
       alias: sdl_raw_vn_dms_msl
       tags: ["vn_dms_master","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_dms_sales_stock_fact
+    config:
+      alias: sdl_raw_vn_dms_sales_stock_fact
+      tags: ["vn_dms_sales_stock","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_dksh_daily_sales
+    config:
+      alias: sdl_raw_vn_dksh_daily_sales
+      tags: ["j_vt_dksh_inventory_etl_framework","ingestion"]
