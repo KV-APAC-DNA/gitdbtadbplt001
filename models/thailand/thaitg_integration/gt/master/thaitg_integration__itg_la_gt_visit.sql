@@ -6,7 +6,9 @@
     )
 }}
 with source as (
-    select * from {{ source('thasdl_raw', 'sdl_la_gt_visit') }}
+    select *,
+    dense_rank() over(partition by id_sale,id_customer,try_to_date(date_plan,'yyyymmdd'),try_to_date(date_visi,'yyyymmdd'),time_visi,try_to_date(visit_end,'yyyymmdd'),saleunit,time_plan order by filename desc) as rnk
+    from {{ source('thasdl_raw', 'sdl_la_gt_visit') }}
 ),
 final as (
     select
@@ -33,5 +35,6 @@ final as (
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    where rnk=1
 )
 select * from final

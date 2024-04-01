@@ -9,7 +9,9 @@
 
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
+    select *,
+    dense_rank() over(partition by UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) order by filename desc) as rnk
+    from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
 ),
 final as(
     select
@@ -36,16 +38,16 @@ final as(
         billprovince::varchar(30) as billprovince,
         billzipcode::varchar(50) as billzipcode,
         activestatus::number(18,0) as activestatus,
-        routestep1::varchar(10) as routestep1,
-        routestep2::varchar(10) as routestep2,
-        routestep3::varchar(10) as routestep3,
-        routestep4::varchar(10) as routestep4,
-        routestep5::varchar(10) as routestep5,
-        routestep6::varchar(10) as routestep6,
-        routestep7::varchar(10) as routestep7,
-        routestep8::varchar(10) as routestep8,
-        routestep9::varchar(10) as routestep9,
-        routestep10::varchar(10) as routestep10,
+        left(routestep1,10)::varchar(10) as routestep1,
+        left(routestep2,10)::varchar(10) as routestep2,
+        left(routestep3,10)::varchar(10) as routestep3,
+        left(routestep4,10)::varchar(10) as routestep4,
+        left(routestep5,10)::varchar(10) as routestep5,
+        left(routestep6,10)::varchar(10) as routestep6,
+        left(routestep7,10)::varchar(10) as routestep7,
+        left(routestep8,10)::varchar(10) as routestep8,
+        left(routestep9,10)::varchar(10) as routestep9,
+        left(routestep10,10)::varchar(10) as routestep10,
         store::varchar(200) as store,
         pricelevel::varchar(50) as pricelevel,
         salesareaname::varchar(150) as salesareaname,
@@ -56,5 +58,6 @@ final as(
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
+    where rnk=1
 )
 select * from final
