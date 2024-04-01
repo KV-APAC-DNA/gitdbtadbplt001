@@ -47,3 +47,11 @@ models:
     config:
       alias: sdl_raw_vn_dms_yearly_target
       tags: ["vn_mt_sellin_target","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_mt_sellin_dksh
+    config:
+      alias: sdl_raw_vn_mt_sellin_dksh
+      tags: ["vn_mt_sellin_transaction","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_mt_sellin_coop
+    config:
+      alias: sdl_raw_vn_mt_sellin_coop
+      tags: ["vn_mt_sellin_transaction","ingestion"]
