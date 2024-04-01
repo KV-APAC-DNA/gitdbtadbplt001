@@ -1,5 +1,5 @@
 with wks_vietnam_regional_sellout_base as (
-select * from {{ ref('vnmwks_integration__wks_vietnam_regional_base') }}
+select * from {{ ref('vnmwks_integration__wks_vietnam_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
@@ -11,7 +11,7 @@ edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_product_key_attributes as (
-select * from {{ ref('vnmedw_integration__edw_product_key_attributes') }}
+select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_gch_customerhierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
@@ -35,10 +35,10 @@ edw_code_descriptions as (
 select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
+select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_code_descriptions_manual as (
-select * from {{ ref('aspedw_integration__edw_code_descriptions_manual') }}
+select * from {{ source('aspedw_integration','edw_code_descriptions_manual') }}
 ),
 vw_edw_reg_exch_rate as (
 select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}

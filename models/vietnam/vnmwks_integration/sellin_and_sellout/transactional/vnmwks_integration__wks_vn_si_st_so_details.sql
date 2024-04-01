@@ -11,7 +11,7 @@ select * from {{ ref('vnmedw_integration__edw_vw_vn_sellthrgh_sales_fact') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
 select *,Row_number() over (partition by dstrbtr_id order by crtd_dttm asc) as rnk 
- from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim_rnk') }}
+ from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk
@@ -35,7 +35,7 @@ itg_vn_dms_sales_org_dim as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_org_dim') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
+select * from {{ source('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 edw_vw_vn_sellout_sales_fact as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_sales_fact') }}

@@ -1,6 +1,6 @@
 with itg_vn_distributor_sap_sold_to_mapping as
 (
-    select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
+    select * from {{ source('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 itg_vn_dms_d_sellout_sales_fact as 
 (

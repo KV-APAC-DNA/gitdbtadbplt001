@@ -12,7 +12,7 @@ select * from {{ ref('vnmitg_integration__itg_vn_dms_history_saleout') }}
 ),
 itg_vn_dms_distributor_dim_rnk as (
 select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as rnk 
- from {{ ref('vnmitg_integration_itg__itg_vn_dms_distributor_dim') }} 
+ from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }} 
 ),
 itg_vn_dms_distributor_dim as (
 select * from itg_vn_dms_distributor_dim_rnk where rnk=1

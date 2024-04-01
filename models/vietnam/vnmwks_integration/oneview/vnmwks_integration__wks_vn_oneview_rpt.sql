@@ -29,13 +29,13 @@ v_edw_customer_sales_dim as (
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 edw_vw_vn_billing_fact as (
-    select * from {{ ref('mysedw_integration__edw_vw_vn_billing_fact') }}
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_billing_fact') }}
 ),
 edw_crncy_exch_rates as (
     select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 edw_vn_si_st_so_details as (
-    select * from {{ ref('aspedw_integration__edw_vn_si_st_so_details') }}
+    select * from {{ ref('vnmedw_integration__edw_vn_si_st_so_details') }}
 ),
 itg_vn_dms_distributor_dim as (
     select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}

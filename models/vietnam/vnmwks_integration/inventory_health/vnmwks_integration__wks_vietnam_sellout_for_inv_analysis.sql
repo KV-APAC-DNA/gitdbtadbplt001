@@ -17,13 +17,13 @@ sdl_mds_vn_distributor_products as (
     select * from {{ source('vnmsdl_raw','sdl_mds_vn_distributor_products') }}
 ),
 wks_dksh_unmapped as (
-    select * from {{ ref('vnmwks_integration__wks_dksh_unmapped') }}
+    select * from {{ source('vnmwks_integration','wks_dksh_unmapped') }}
 ),
 edw_list_price as (
     select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 itg_parameter_reg_inventory as (
-    select * from {{ ref('vnmitg_integration__itg_parameter_reg_inventory') }}
+    select * from {{ source('aspitg_integration','itg_parameter_reg_inventory') }}
 ),
 edw_gch_producthierarchy as (
     select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}

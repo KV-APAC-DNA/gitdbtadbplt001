@@ -11,7 +11,7 @@ edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_vn_dms_distributor_dim as (
-select * from {{ ref('vnmitg_interation__itg_vn_dms_distributor_dim') }}
+select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 edw_crncy_exch_rates as (
 select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}

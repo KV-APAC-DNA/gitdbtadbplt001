@@ -11,7 +11,7 @@ edw_vw_vn_mt_dist_products as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_dist_products') }}
 ),
 edw_calendar_dim as (
-select * from {{ ref('vnmedw_integration__edw_calendar_dim') }}
+select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 union_3 as (select 'POS' as data_source,
     'Offtake' as data_type,
