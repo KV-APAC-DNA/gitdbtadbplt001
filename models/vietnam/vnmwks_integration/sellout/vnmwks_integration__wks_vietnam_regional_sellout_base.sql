@@ -2,7 +2,7 @@ with edw_vw_vn_sellout_sales_fact as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_sellout_sales_fact') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
+select * from {{ source('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 itg_vn_dms_distributor_dim as (
 select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}

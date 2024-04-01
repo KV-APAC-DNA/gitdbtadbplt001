@@ -2,7 +2,7 @@ with edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_vn_customer_dim as (
-    select * from {{ ref('thaedw_integration__edw_vw_vn_customer_dim') }}
+    select * from {{ ref('vnmedw_integration__edw_vw_vn_customer_dim') }}
 ),
 vw_edw_reg_exch_rate as (
     select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
@@ -38,7 +38,7 @@ edw_code_descriptions as (
     select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_copa_trans_fact as (
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
@@ -56,7 +56,7 @@ itg_vn_dms_distributor_dim as (
     select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
-    select * from {{ ref('vnmitg_integration__itg_vn_distributor_sap_sold_to_mapping') }}
+    select * from {{ soucre('vnmitg_integration','itg_vn_distributor_sap_sold_to_mapping') }}
 ),
 cal AS (
     SELECT DISTINCT "year" as year,

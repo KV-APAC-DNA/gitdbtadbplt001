@@ -19,9 +19,9 @@ final as(
         material_code::varchar(50) as material_code,
         bat_number::varchar(20) as bat_number,
         to_date(expiry_date, 'MM/DD/YYYY HH12:MI:SS AM') as expiry_date,
-        cast(quantity as int),
+        cast(quantity as int) as quantity,
         trim(uom)::varchar(2) as uom,
-        cast(amount as decimal(15, 4)),
+        cast(amount as decimal(15, 4)) as amount,
         curr_date::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         run_id::number(14,0) as run_id

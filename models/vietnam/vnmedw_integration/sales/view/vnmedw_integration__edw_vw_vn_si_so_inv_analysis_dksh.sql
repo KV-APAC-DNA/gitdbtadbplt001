@@ -9,7 +9,7 @@ sdl_mds_vn_distributor_products as
 ),
 wks_dksh_unmapped as
 (
-    select * from {{ ref('vnmwks_integration__wks_dksh_unmapped') }}
+    select * from {{ source('vnmwks_integration','wks_dksh_unmapped') }}
 ),
 edw_vw_os_time_dim as
 (

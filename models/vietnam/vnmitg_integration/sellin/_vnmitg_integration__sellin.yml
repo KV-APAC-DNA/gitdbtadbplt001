@@ -43,3 +43,7 @@ models:
     config:
       alias: sdl_raw_vn_mt_sellin_target
       tags: ["vn_mt_sellin_target","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_dms_yearly_target
+    config:
+      alias: sdl_raw_vn_dms_yearly_target
+      tags: ["vn_mt_sellin_target","ingestion"]

@@ -31,8 +31,8 @@ v_edw_customer_sales_dim as (
 edw_vw_vn_billing_fact as (
     select * from {{ ref('mysedw_integration__edw_vw_vn_billing_fact') }}
 ),
-edw_crncy_exchange_rates as (
-    select * from {{ ref('aspedw_integration__edw_crncy_exchange_rates') }}
+edw_crncy_exch_rates as (
+    select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 edw_vn_si_st_so_details as (
     select * from {{ ref('aspedw_integration__edw_vn_si_st_so_details') }}
@@ -1340,53 +1340,53 @@ cte14 as
 final as 
 (
 select 
-	data_type::varchar(15),
-	channel::varchar(20),
-	sub_channel::varchar(300),
-	jj_year::number(18,0),
-	jj_qrtr::varchar(14),
-	jj_mnth_id::varchar(23),
-	jj_mnth_no::number(18,0),
-	jj_mnth_wk_no::number(38,0),
-	jj_mnth_day::number(38,0),
-	mapped_spk::varchar(100),
-	dstrbtr_grp_cd::varchar(100),
-	dstrbtr_name::varchar(100),
-	sap_sold_to_code::varchar(50),
-	sap_matl_num::varchar(100),
-	sap_matl_name::varchar(100),
-	dstrbtr_matl_num::varchar(100),
-	dstrbtr_matl_name::varchar(500),
-	bar_code::varchar(40),
-	customer_code::varchar(100),
-	customer_name::varchar(500),
-	invoice_date::date,
-	salesman::varchar(50),
-	salesman_name::varchar(100),
-	si_gts_val::number(38,10),
-	si_gts_excl_dm_val::number(38,10),
-	si_nts_val::number(38,10),
-	si_mnth_tgt_by_sku::float,
-	so_net_trd_sls_loc::number(38,5),
-	so_net_trd_sls_usd::number(38,10),
-	so_mnth_tgt::number(38,10),
-	so_avg_wk_tgt::number(28,6),
-	so_mnth_tgt_by_sku::float,
-	zone_manager_id::varchar(100),
-	zone_manager_name::varchar(450),
+	data_type::varchar(15) as data_type,
+	channel::varchar(20) as channel,
+	sub_channel::varchar(300) as sub_channel,
+	jj_year::number(18,0) as jj_year,
+	jj_qrtr::varchar(14) as jj_qrtr,
+	jj_mnth_id::varchar(23) as jj_mnth_id,
+	jj_mnth_no::number(18,0) as jj_mnth_no,
+	jj_mnth_wk_no::number(38,0) as jj_mnth_wk_no,
+	jj_mnth_day::number(38,0) as jj_mnth_day,
+	mapped_spk::varchar(100) as mapped_spk,
+	dstrbtr_grp_cd::varchar(100) as dstrbtr_grp_cd,
+	dstrbtr_name::varchar(100) as dstrbtr_name,
+	sap_sold_to_code::varchar(50) as sap_sold_to_code,
+	sap_matl_num::varchar(100) as sap_matl_num,
+	sap_matl_name::varchar(100) as sap_matl_name,
+	dstrbtr_matl_num::varchar(100) as dstrbtr_matl_num,
+	dstrbtr_matl_name::varchar(500) as dstrbtr_matl_name,
+	bar_code::varchar(40) as bar_code,
+	customer_code::varchar(100) as customer_code,
+	customer_name::varchar(500) as customer_name,
+	invoice_date::date as invoice_date,
+	salesman::varchar(50) as salesman,
+	salesman_name::varchar(100) as salesman_name,
+	si_gts_val::number(38,10) as si_gts_val,
+	si_gts_excl_dm_val::number(38,10) as si_gts_excl_dm_val,
+	si_nts_val::number(38,10) as si_nts_val,
+	si_mnth_tgt_by_sku::float as si_mnth_tgt_by_sku,
+	so_net_trd_sls_loc::number(38,5) as so_net_trd_sls_loc,
+	so_net_trd_sls_usd::number(38,10) as so_net_trd_sls_usd,
+	so_mnth_tgt::number(38,10) as so_mnth_tgt,
+	so_avg_wk_tgt::number(28,6) as so_avg_wk_tgt,
+	so_mnth_tgt_by_sku::float as so_mnth_tgt_by_sku,
+	zone_manager_id::varchar(100) as zone_manager_id,
+	zone_manager_name::varchar(450) as zone_manager_name,
 	"zone"::varchar(20) as zone,
-	province::varchar(1125),
-	region::varchar(1125),
-	shop_type::varchar(100),
-	mt_sub_channel::varchar(1125),
-	retail_environment::varchar(450),
-	group_account::varchar(1125),
-	account::varchar(1125),
-	franchise::varchar(30),
-	brand::varchar(83),
-	variant::varchar(100),
-	product_group::varchar(255),
-	group_jb::varchar(6)
+	province::varchar(1125) as province,
+	region::varchar(1125) as region,
+	shop_type::varchar(100) as shop_type,
+	mt_sub_channel::varchar(1125) as mt_sub_channel,
+	retail_environment::varchar(450) as retail_environment,
+	group_account::varchar(1125) as group_account,
+	account::varchar(1125) as account,
+	franchise::varchar(30) as franchise,
+	brand::varchar(83) as brand,
+	variant::varchar(100) as variant,
+	product_group::varchar(255) as product_group,
+	group_jb::varchar(6) as group_jb
 from 
 (
 select * from cte1_filtered
@@ -1416,6 +1416,7 @@ union all
 select * from cte13
 union all
 select * from cte14
+)
 )
 
 select * from final
