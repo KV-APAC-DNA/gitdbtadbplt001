@@ -49,7 +49,7 @@ select
     doc_discount as numeric(15, 4)
   ) as doc_discount, 
   status, 
-  curr_date as crtd_dttm, 
+  current_timestamp() as crtd_dttm, 
   current_timestamp() as updt_dttm, 
   run_id 
 from 

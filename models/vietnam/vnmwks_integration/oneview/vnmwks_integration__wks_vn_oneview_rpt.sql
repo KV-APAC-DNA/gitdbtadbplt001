@@ -20,7 +20,7 @@ edw_copa_trans_fact as (
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 itg_query_parameters as (
-    select * from {{ source('sgpitg_integration', 'itg_query_parameters') }}
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_company_dim as (
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
@@ -826,7 +826,7 @@ cte8 as
        case when (mt.data_source = 'DKSH' ) or (mt.data_type = 'DKSH') then 'MTI' 
             when (mt.data_source = 'JNJ' ) or (mt.data_type = 'JNJ')then 'MTD'
             else 'Invalid' end as sub_channel,
-       mt.year as jj_year,
+       mt."year" as jj_year,
        substring(mt.qrtr,6,7) as jj_qrtr,
        mt.mnth_id as jj_mnth_id,
        mt.mnth_no as jj_mnth_no,
@@ -857,14 +857,14 @@ cte8 as
        null as so_mnth_tgt_by_sku,
        null as zone_manager_id,
        mt.kam as zone_manager_name,
-       mt.zone,
+       mt."zone",
        mt.province,
-       mt.region,
+       mt."region",
        null as shop_type,
        mt.sub_channel as mt_sub_channel,
        mt.retail_environment,
        mt.group_account,
-       mt.account,
+       mt."account",
        prod.franchise,
        prod.brand,
        prod.variant,
@@ -997,7 +997,7 @@ cte10 as
             cust.sub_channel as mt_sub_channel,
             cust.retail_environment,
             cust.group_account,
-            cust.account,
+            cust."account",
             gt_prod.franchise,
             gt_prod.brand,
             gt_prod.variant,

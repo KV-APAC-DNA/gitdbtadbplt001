@@ -139,8 +139,8 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    --date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    --to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -198,7 +198,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -256,7 +256,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -314,7 +314,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -372,7 +372,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -430,7 +430,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -488,7 +488,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -546,7 +546,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -604,7 +604,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -662,7 +662,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -720,7 +720,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -778,7 +778,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -836,7 +836,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -894,7 +894,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -952,7 +952,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -1010,7 +1010,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
@@ -1068,7 +1068,7 @@ FROM (
     record_count AS sourcefile_count
   FROM sdl_vn_dms_data_extract_summary
   WHERE
-    date_of_extraction::date = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,

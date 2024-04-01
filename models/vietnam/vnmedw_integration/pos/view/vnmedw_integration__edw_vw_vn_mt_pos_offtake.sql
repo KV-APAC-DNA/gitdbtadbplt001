@@ -2,7 +2,7 @@ with edw_vw_vn_mt_pos_customers as (
 select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_customers') }}
 ),
 edw_vw_vn_mt_pos_union as (
-select * from select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_union') }}
+select * from {{ ref('vnmedw_integration__edw_vw_vn_mt_pos_union') }}
 ),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
@@ -22,35 +22,35 @@ select
     (
       (
         upper(
-          (offtake.account):: text
+          (offtake."account"):: text
         ) <> ('COOP' :: character varying):: text
       ) 
       and (
         upper(
-          (offtake.account):: text
+          (offtake."account"):: text
         ) <> ('VINMART+' :: character varying):: text
       )
     ) 
     and (
       upper(
-        (offtake.account):: text
+        (offtake."account"):: text
       ) <> ('BHX' :: character varying):: text
     )
   ) then (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     )
   ):: character varying when (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     ) = ('COOP' :: character varying):: text
   ) then 'SAIGON COOP' :: character varying when (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     ) = ('VINMART+' :: character varying):: text
   ) then 'VINMART +' :: character varying when (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     ) = ('BHX' :: character varying):: text
   ) then 'BACH HOA XANH' :: character varying ELSE NULL :: character varying END as account, 
   offtake.jnj_year as "year", 
@@ -60,13 +60,13 @@ select
   offtake.store_code as customer_cd, 
   case when (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     ) <> ('CON CUNG' :: character varying):: text
   ) then offtake.pos_store_name ELSE offtake.store_name END as store_name, 
   offtake.product_cd, 
   case when (
     upper(
-      (offtake.account):: text
+      (offtake."account"):: text
     ) = ('GUARDIAN' :: character varying):: text
   ) then offtake.barcode ELSE offtake.pos_barcode END as barcode, 
   upper(offtake.product_name) as product_name, 
@@ -82,7 +82,7 @@ from
     select 
       pos.year, 
       pos.month, 
-      pos.account, 
+      pos."account", 
       pos.product_cd, 
       pos.customer_cd as trans_cust_cd, 
       pos.store_name, 
@@ -271,7 +271,7 @@ from
               and (
                 "replace"(
                   upper(
-                    (pos.account):: text
+                    (pos."account"):: text
                   ), 
                   ('+' :: character varying):: text, 
                   ('' :: character varying):: text
@@ -329,7 +329,7 @@ from
                 ('' :: character varying):: text
               ) = "replace"(
                 upper(
-                  (pos.account):: text
+                  (pos."account"):: text
                 ), 
                 ('+' :: character varying):: text, 
                 ('' :: character varying):: text
