@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: vnmsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: vnmsdl_raw
+    schema: snaposesdl_raw
     quoting:
       database: false
       schema: false
