@@ -5,3 +5,31 @@ models:
     config:
       alias: wks_th_gt_kpi_target_header
       tags: ["th_non_tesco","transformation"]
+  - name: thawks_integration__wks_th_gt_route_pre_load
+    config:
+      alias: wks_th_gt_route_pre_load
+      tags: ["th_gt_files","ingestion"]
+  - name: thawks_integration__wks_th_gt_route_detail_pre_load
+    config:
+      alias: wks_th_gt_route_detail_pre_load
+      tags: ["th_gt_files","ingestion"]
+  - name: thawks_integration__wks_la_gt_route_header_pre_load
+    config:
+      alias: wks_la_gt_route_header_pre_load
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thawks_integration__wks_la_gt_sales_order_fact_flag_incl
+    config:
+      alias: wks_la_gt_sales_order_fact_flag_incl
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thawks_integration__wks_cbd_gt_sales_report_fact_flag_incl
+    config:
+      alias: wks_cbd_gt_sales_report_fact_flag_incl
+      tags: ["cambodia_file_ingestion","ingestion"]
+  - name: thawks_integration__wks_la_gt_route_detail_pre_load
+    config:
+      alias: wks_la_gt_route_detail_pre_load
+      tags: ["laos_file_ingestion","ingestion"]
+  - name: thawks_integration__wks_th_gt_sales_order_flag_incl
+    config:
+      alias: wks_th_gt_sales_order_flag_incl
+      tags: ["th_gt_files","ingestion"]

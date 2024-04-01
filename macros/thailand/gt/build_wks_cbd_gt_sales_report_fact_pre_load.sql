@@ -88,17 +88,15 @@
         run_id,
         crt_dttm
         FROM
-        {% if target=='prod' %}
+        {% if target.name=='prod' %}
                     thaitg_integration.itg_cbd_gt_sales_report_fact
                 {% else %}
                     {{schema}}.thaitg_integration__itg_cbd_gt_sales_report_fact
                 {% endif %}
-        WHERE billing_date >= (SELECT MIN(billing_date) FROM dev_dna_load.snaposesdl_raw.sdl_cbd_gt_sales_report_fact
-                                                            --{{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
+        WHERE billing_date >= (SELECT MIN(billing_date) FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
         )
         AND   UPPER(bu) IN (SELECT DISTINCT UPPER(bu)
-                                FROM dev_dna_load.snaposesdl_raw.sdl_cbd_gt_sales_report_fact
-                                    --{{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
+                                FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
                                 );
     {% endset %}
 

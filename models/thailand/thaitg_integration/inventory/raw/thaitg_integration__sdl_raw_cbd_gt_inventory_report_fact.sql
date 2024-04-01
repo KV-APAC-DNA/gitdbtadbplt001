@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append"
+    )}}
+
 
 with sdl_cbd_gt_inventory_report_fact as (
     select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
@@ -21,5 +27,9 @@ SELECT
     crt_dttm
 FROM
    sdl_cbd_gt_inventory_report_fact
+     {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
+ {% endif %}
 )
 select * from final 

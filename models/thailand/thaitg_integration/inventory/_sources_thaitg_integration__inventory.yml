@@ -9,7 +9,6 @@ sources:
       schema: false
       identifier: false
     tables:
-  
     - name: sdl_mds_th_htc_inventory
       tags: ["th_non_tesco","ingestion"]
       tests:
@@ -20,7 +19,6 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
-
     - name: sdl_th_dms_inventory_fact
       tags: ["th_mbox_files","ingestion"]
       tests: 
@@ -50,3 +48,21 @@ sources:
               config:
                 store_failures: true
                 schema: thawks_integration
+    - name: sdl_cbd_gt_inventory_report_fact
+      tags: ["cambodia_file_ingestion"]
+      tests:
+                - test_null:
+                      not_null_columns: ["date","product_code","product_name","filename"]
+                      select_columns: ["date","product_code","product_name","filename"]
+                      name: TRATBL_sdl_cbd_gt_inventory_report_fact__null_test
+                      config:
+                        store_failures: true
+                        schema: thawks_integration
+                - test_duplicate:
+                    group_by_columns: ["date","product_code","product_name","filename"]
+                    select_columns: ["date","product_code","product_name","filename"]
+                    need_counts: "no"
+                    name: TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test
+                    config:
+                      store_failures: true
+                      schema: thawks_integration

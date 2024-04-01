@@ -12,8 +12,7 @@ with wks_th_gt_sales_order_pre_load as (
     select * from {{ source('thawks_integration', 'wks_th_gt_sales_order_pre_load') }}
 ),
 sdl_th_gt_sales_order as (
-    --select * from {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
-    select * from DEV_DNA_LOAD.snaposesdl_raw.sdl_th_gt_sales_order
+    select * from {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
 )
 
 SELECT 

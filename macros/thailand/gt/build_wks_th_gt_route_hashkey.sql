@@ -63,15 +63,14 @@
         run_id,
         crt_dttm
     FROM 
-    {% if target=='prod' %}
+    {% if target.name=='prod' %}
         thaitg_integration.itg_th_gt_route
     {% else %}
         {{schema}}.thaitg_integration__itg_th_gt_route
     {% endif %}
     
     WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                    FROM dev_dna_load.snaposesdl_raw.sdl_th_gt_route
-                                    --{{ source('thasdl_raw', 'sdl_th_gt_route') }}
+                                    FROM {{ source('thasdl_raw', 'sdl_th_gt_route') }}
                                     )
     AND   UPPER(flag) IN ('I','U'); 
     {% endset %}

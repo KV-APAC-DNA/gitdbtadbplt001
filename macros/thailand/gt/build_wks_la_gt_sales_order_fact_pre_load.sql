@@ -196,17 +196,15 @@
         run_id,
         crt_dttm
     FROM 
-    {% if target=='prod' %}
+    {% if target.name=='prod' %}
                     thaitg_integration.itg_la_gt_sales_order_fact
                 {% else %}
                     {{schema}}.thaitg_integration__itg_la_gt_sales_order_fact
                 {% endif %}
-    WHERE orderdate >= (SELECT MIN( to_date (orderdate , 'yyyy/mm/dd')) FROM dev_dna_load.snaposesdl_raw.sdl_la_gt_sales_order_fact
-                                                --{{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
+    WHERE orderdate >= (SELECT MIN( to_date (orderdate , 'yyyy/mm/dd')) FROM {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
     )
     AND   UPPER(saleunit) IN (SELECT DISTINCT UPPER(saleunit)
-                            FROM dev_dna_load.snaposesdl_raw.sdl_la_gt_sales_order_fact
-                            --{{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
+                            FROM {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
                             );
     {% endset %}
 

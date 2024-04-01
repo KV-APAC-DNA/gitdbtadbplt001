@@ -12,11 +12,10 @@ with wks_cbd_gt_sales_report_fact_pre_load as (
     select * from {{ source('thawks_integration', 'wks_cbd_gt_sales_report_fact_pre_load') }}
 ),
 sdl_cbd_gt_sales_report_fact as (
-    --select * from {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
     select *,
         MD5(coalesce(UPPER(product_code),'N/A') ||coalesce(to_date (billing_date , 'dd/mm/yyyy'),'9999-12-31')||coalesce(upper (batch_no),'N/A') ||coalesce(upper (customer_code),'N/A')
   ||coalesce(upper (sales_rep_no),'N/A') ||coalesce(order_no,'N/A')) AS hashkey 
-     from DEV_DNA_LOAD.snaposesdl_raw.sdl_cbd_gt_sales_report_fact
+     from {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
 )
 
 SELECT 

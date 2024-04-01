@@ -12,10 +12,9 @@ with wks_la_gt_sales_order_fact_pre_load as (
     select * from {{ source('thawks_integration', 'wks_la_gt_sales_order_fact_pre_load') }}
 ),
 sdl_la_gt_sales_order_fact as (
-    --select * from {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
     select *, MD5(coalesce(UPPER(saleunit),'N/A') ||coalesce(upper (orderid),'N/A') ||coalesce(to_date (orderdate , 'yyyy/mm/dd'),'9999-12-31')||coalesce(upper (productid),'N/A')
   ||coalesce(upper (customer_id),'N/A') ||coalesce(no,'N/A')) AS hashkey
-  from DEV_DNA_LOAD.snaposesdl_raw.sdl_la_gt_sales_order_fact
+  from {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
 )
 
 SELECT 

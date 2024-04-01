@@ -29,3 +29,7 @@ models:
     config: 
       alias: sdl_raw_la_gt_sellout_fact
       tags: ["laos_file_ingestion","ingestion"]
+  - name: thaitg_integration__itg_la_gt_sellout_fact
+    config: 
+      alias: itg_la_gt_sellout_fact
+      tags: ["laos_file_ingestion","ingestion"]
