@@ -1,0 +1,98 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_th_mym_product_master
+      tags: ["th_non_tesco","ingestion"]
+      
+    - name: sdl_mds_th_ref_distributor_item_unit
+      tags: ["th_non_tesco","ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["code"]
+              select_columns: ["code","name2"]
+              name: TRATBL_sdl_mds_th_ref_distributor_item_unit__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code","name2"]
+              name: TRATBL_sdl_mds_th_ref_distributor_item_unit__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
+    - name: sdl_mds_th_product_master
+      tags: ["th_non_tesco","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["code"]
+            select_columns: ["code", "name2","barcode"]
+            name: TRATBL_sdl_mds_th_product_master__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate:
+            group_by_columns: ["code"]
+            select_columns: ["code", "name2","barcode"]
+            filter: " upper(exceptionflag)='N'"
+            name: TRATBL_sdl_mds_th_product_master__duplicate_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+        - test_duplicate:
+            group_by_columns: ["code","barcode"]
+            select_columns: ["code", "name2","barcode"]
+            name: TRATBL_sdl_mds_th_product_master__duplicate_test2
+            config:
+              store_failures: true
+              schema: thawks_integration
+    - name: sdl_mds_th_distributor_msl
+      tags: ["th_non_tesco","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["barcode", "artypecode_code"]
+            select_columns: ["barcode", "artypecode_code", "productname"]
+            name: TRATBL_sdl_mds_th_distributor_msl__null_test
+            config:
+              store_failures: true
+              schema: thawks_integration
+
+    - name: sdl_mds_th_npi
+      tags: ["th_non_tesco","ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["code"]
+              select_columns: ["code","name"]
+              name: TRATBL_sdl_mds_th_npi__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code","name"]
+              name: TRATBL_sdl_mds_th_npi__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+    - name: sdl_mds_th_cbd_item_master
+      tags: ["th_non_tesco","ingestion"]
+    - name: sdl_mds_th_distributor_product_group
+      tags: ["th_non_tesco","ingestion"]
+      tests:
+      - test_null:
+          not_null_columns: ["sap_code"]
+          select_columns: ["sap_code","product_group_name"]
+          name: TRATBL_sdl_mds_th_distributor_product_group__null_test
+          config:
+            store_failures: true
+            schema: thawks_integration
+    

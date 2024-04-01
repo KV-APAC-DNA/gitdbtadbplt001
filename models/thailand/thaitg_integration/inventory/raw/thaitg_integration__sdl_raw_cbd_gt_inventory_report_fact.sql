@@ -1,0 +1,35 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="append"
+    )}}
+
+
+with sdl_cbd_gt_inventory_report_fact as (
+    select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
+
+),
+final as (
+SELECT
+    date,
+    clientcd_name,
+    product_code,
+    product_name,
+    baseUOM,
+    expired,
+    "1-90days",
+    "91-180days",
+    "181-365days",
+    ">365days",
+    total_qty,
+    filename,
+    run_id,
+    crt_dttm
+FROM
+   sdl_cbd_gt_inventory_report_fact
+     {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
+ {% endif %}
+)
+select * from final 

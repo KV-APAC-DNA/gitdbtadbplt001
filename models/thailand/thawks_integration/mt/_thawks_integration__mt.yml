@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: thawks_integration__wks_th_watsons_base_detail
+    config:
+      alias: wks_th_watsons_base_detail
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_watsons_propagate_from_to
+    config:
+      alias: wks_th_watsons_propagate_from_to
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_watsons_siso_propagate_to_details
+    config:
+      alias: wks_th_watsons_siso_propagate_to_details
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__th_wks_bigc
+    config:
+      alias: th_wks_bigc
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_makro
+    config:
+      alias: wks_th_makro
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_makro_temp
+    config:
+      alias: wks_th_makro_temp
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__th_watsons_propagate_to
+    config:
+      alias: th_watsons_propagate_to
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_watson_base
+    config:
+      alias: wks_th_watson_base
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_watsons_allmonths_base
+    config:
+      alias: wks_th_watsons_allmonths_base
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
+  - name: thawks_integration__wks_th_watsons_lastnmonths
+    config:
+      alias: wks_th_watsons_lastnmonths
+      tags: ["tesco_mt_7_11_and_tops","transformation"]
