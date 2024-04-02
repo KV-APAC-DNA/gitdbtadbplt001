@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook="{{build_itg_vn_mt_pos_cust_master()}}"
+        pre_hook="{{build_itg_vn_mt_dksh_cust_master()}}"
     )
 }}
 
@@ -57,7 +57,7 @@ wks
 				dksh.updt_dttm
 				FROM (SELECT itg.*, row_number() over (partition by sdl.code order by null) as rn
 							  FROM sdl_mds_vn_distributor_customers sdl,
-								   DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master itg
+								   {{this}} itg
 							  WHERE sdl.lastchgdatetime != itg.lastchgdatetime
 							  AND   sdl.code = itg.code) dksh
 			  where dksh.rn = 1
@@ -105,7 +105,7 @@ wks
 				current_timestamp() AS updt_dttm
 				FROM (SELECT sdl.*, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_customers sdl,
-						   DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master itg
+						   {{this}} itg
 					  WHERE sdl.lastchgdatetime != itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'Y') dksh
@@ -154,7 +154,7 @@ wks
 				current_timestamp() AS updt_dttm
 				FROM (SELECT sdl.*,itg.effective_from ,itg.crtd_dttm, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_customers sdl,
-						   DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master itg
+						   {{this}} itg
 					  WHERE sdl.lastchgdatetime = itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'Y'
@@ -204,7 +204,7 @@ wks
 				dksh.updt_dttm
 				FROM (SELECT itg.*, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_customers sdl,
-						   DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master itg
+						   {{this}} itg
 					  WHERE sdl.lastchgdatetime = itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'N') dksh
@@ -253,7 +253,7 @@ wks
 				current_timestamp() AS updt_dttm
 				FROM (SELECT sdl.*, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_customers sdl
-					  WHERE sdl.code NOT IN (SELECT code FROM DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master)) dksh	
+					  WHERE sdl.code NOT IN (SELECT code FROM {{this}})) dksh	
 				where dksh.rn = 1	  
 					
 					
@@ -266,7 +266,7 @@ transformed as (
 
 	SELECT *
 				
-	FROM DEV_DNA_CORE.nnaras01_workspace.vnmitg_integration__itg_vn_mt_dksh_cust_master dksh
+	FROM {{this}} dksh
 	WHERE dksh.code NOT IN (SELECT code FROM wks)
 ),
 final as (
