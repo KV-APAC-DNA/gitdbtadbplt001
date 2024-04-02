@@ -4,7 +4,7 @@ models:
   - name: vnmedw_integration__edw_vw_vn_sellout_sales_fact
     config: 
       alias: edw_vw_vn_sellout_sales_fact
-      tags: ["vn_dms_datamart_load","transformation"]
+      tags: ["vietnam_views","transformation"]
   - name: vnmedw_integration__edw_vw_vn_sellout_inventory_fact
     config: 
       alias: edw_vw_vn_sellout_inventory_fact
