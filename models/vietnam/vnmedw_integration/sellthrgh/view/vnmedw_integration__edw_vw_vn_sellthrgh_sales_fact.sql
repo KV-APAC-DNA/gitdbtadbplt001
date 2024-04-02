@@ -74,8 +74,7 @@ SELECT distinct
     ) THEN sellthrgh.amount ELSE (- sellthrgh.amount) END - (
       sellthrgh.line_discount + sellthrgh.doc_discount
     )
-  ) AS jj_net_trd_sls ,
-  sellthrgh.status as status
+  ) AS jj_net_trd_sls 
 FROM 
   itg_vn_dms_sellthrgh_sales_fact sellthrgh, 
   itg_vn_dms_distributor_dim dstrbtr, 
