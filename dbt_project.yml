@@ -268,3 +268,22 @@ models:
       thaedw_access:
         +materialized: view
         +schema: THAEDW_ACCESS
+    pacific:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      pcfedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: PCFEDW_INTEGRATION
+      pcfitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: PCFITG_INTEGRATION
+      pcfwks_integration:
+        +materialized: table
+        +schema: PCFWKS_INTEGRATION
+      pcfedw_access:
+        +materialized: view
+        +schema: PCFEDW_ACCESS
+      
