@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_perenso_work_item
+      tags: ["anz_perenso_call",""]
+    - name: sdl_perenso_diary_item_type
+      tags: ["anz_perenso_call",""]
+    - name: sdl_perenso_call_objectives
+      tags: ["anz_perenso_call",""]
+    - name: sdl_perenso_diary_item_time
+      tags: ["anz_perenso_call",""]
+    - name: sdl_perenso_todo_option
+      tags: ["anz_perenso_survey_ques",""]
+    - name: sdl_perenso_survey_result
+      tags: ["anz_perenso_survey_ques",""]
