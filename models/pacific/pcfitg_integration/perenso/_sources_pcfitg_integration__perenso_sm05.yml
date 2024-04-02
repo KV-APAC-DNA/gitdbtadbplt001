@@ -1,0 +1,136 @@
+version: 2
+
+sources:
+  - name: pcfedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_time_dim
+        tags: ["",""]
+
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_perenso_fsni_sales
+        tags: ["anz_perenso_foodstuff","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["retail_barcode","store_number","billing_date"]
+              select_columns: ["retail_barcode","store_number","billing_date"]
+              name: TRATBL_sdl_perenso_fsni_sales__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_fssi_sales
+        tags: ["anz_perenso_foodstuff","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["ean","ship_to_store"]
+              select_columns: ["ean","ship_to_store"]
+              name: TRATBL_sdl_perenso_fssi_sales__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_product_fields
+        tags: ["anz_perenso_product","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["field_type","field_key"]
+              select_columns: ["field_type","field_key"]
+              name: TRATBL_sdl_perenso_product_fields__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              group_by_columns: ["field_type","field_key"]
+              select_columns: ["field_type","field_key"]
+              name: TRATBL_sdl_perenso_product_fields__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_product_group
+        tags: ["anz_perenso_product","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["prod_grp_lev_key","prod_grp_key"]
+              select_columns: ["prod_grp_lev_key","prod_grp_key"]
+              name: TRATBL_sdl_perenso_product_group__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              group_by_columns: ["prod_grp_lev_key","prod_grp_key"]
+              select_columns: ["prod_grp_lev_key","prod_grp_key"]
+              name: TRATBL_sdl_perenso_product_group__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_product_group_lvl
+        tags: ["anz_perenso_product","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["field_key","prod_grp_lev_key"]
+              select_columns: ["field_key","prod_grp_lev_key"]
+              name: TRATBL_sdl_perenso_product_group_lvl__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              group_by_columns: ["field_key","prod_grp_lev_key"]
+              select_columns: ["field_key","prod_grp_lev_key"]
+              name: TRATBL_sdl_perenso_product_group_lvl__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_product
+        tags: ["anz_perenso_product","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["prod_key","prod_id"]
+              select_columns: ["prod_key","prod_id"]
+              name: TRATBL_sdl_perenso_product__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              group_by_columns: ["prod_key","prod_id"]
+              select_columns: ["prod_key","prod_id"]
+              name: TRATBL_sdl_perenso_product__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_product_group_reln
+        tags: ["anz_perenso_product","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["prod_grp_key","prod_key"]
+              select_columns: ["prod_grp_key","prod_key"]
+              name: TRATBL_sdl_perenso_product_group_reln__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              group_by_columns: ["prod_grp_key","prod_key"]
+              select_columns: ["prod_grp_key","prod_key"]
+              name: TRATBL_sdl_perenso_product_group_reln__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+      - name: sdl_perenso_prod_branch_identifier
+        tags: ["anz_perenso_product","ingestion"]
