@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_interface_answers
+    config: 
+      alias: itg_vn_interface_answers
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__itg_vn_interface_customer_visited
+    config: 
+      alias: itg_vn_interface_customer_visited
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_customer_visited
+    config: 
+      alias: sdl_raw_vn_interface_customer_visited
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_answers
+    config: 
+      alias: sdl_raw_vn_interface_answers
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__itg_vn_interface_notes
+    config:
+      alias: itg_vn_interface_notes
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__itg_vn_interface_choices
+    config:
+      alias: itg_vn_interface_choices
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__sdl_raw_vn_interface_notes
+    config:
+      alias: sdl_raw_vn_interface_notes
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__sdl_raw_vn_interface_choices
+    config:
+      alias: sdl_raw_vn_interface_choices
+      tags: ['vn_perfect_store','ingestion']
+  - name: vnmitg_integration__itg_vn_interface_branch
+    config: 
+      alias: itg_vn_interface_branch
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__itg_vn_interface_ise_header
+    config: 
+      alias: itg_vn_interface_ise_header
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__sdl_raw_vn_interface_branch
+    config: 
+      alias: sdl_raw_vn_interface_branch
+      tags: ["vn_perfect_store","ingestion"]
+
+  - name: vnmitg_integration__sdl_raw_vn_interface_ise_header
+    config: 
+      alias: sdl_raw_vn_interface_ise_header
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__itg_vn_interface_question
+    config:
+      alias: itg_vn_interface_question
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_question
+    config:
+      alias: sdl_raw_vn_interface_question
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__itg_vn_interface_cpg
+    config:
+      alias: itg_vn_interface_cpg
+      tags: ["vn_perfect_store","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_interface_cpg
+    config:
+      alias: sdl_raw_vn_interface_cpg
+      tags: ["vn_perfect_store","ingestion"]

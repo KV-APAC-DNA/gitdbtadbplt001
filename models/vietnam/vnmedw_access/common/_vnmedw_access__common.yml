@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: vnmedw_access__edw_vn_mt_offtake_exception_report
+    config: 
+        alias: edw_vn_mt_offtake_exception_report
+        tags: ["vn_mt_sellin_sellout_edw_load","transformation"]
+  - name: vnmedw_access__edw_vn_mt_sellin_exception
+    config: 
+        alias: edw_vn_mt_sellin_exception
+        tags: ["vn_mt_sellin_sellout_edw_load","transformation"]
+  - name: vnmedw_access__edw_vn_mt_sellin_sellout_analysis
+    config: 
+        alias: edw_vn_mt_sellin_sellout_analysis
+        tags: ["vn_mt_sellin_sellout_edw_load","transformation"]
+  - name: vnmedw_access__edw_vn_oneview_rpt
+    config: 
+        alias: edw_vn_oneview_rpt
+        tags: ["vn_oneview_datamart_refresh","transformation"]
+  - name: vnmedw_access__edw_vn_si_st_so_details
+    config:
+      alias: edw_vn_si_st_so_details
+      tags: ["vn_dms_datamart_load","transformation"]

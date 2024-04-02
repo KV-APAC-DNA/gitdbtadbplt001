@@ -1,0 +1,144 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_interface_notes
+        tags: ['vn_perfect_store','ingestion']
+        tests:
+          - test_null:
+              not_null_columns: ["ise_id","slsper_id","cust_code","shop_code","ques_no","answer_seq","createddate"]
+              select_columns: ["ise_id","slsper_id","cust_code","shop_code","ques_no","answer_seq","createddate"]
+              name: TRATBL_sdl_vn_interface_notes__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["ise_id","slsper_id","cust_code","shop_code","ques_no","answer_seq","createddate"]
+              select_columns: ["ise_id","slsper_id","cust_code","shop_code","ques_no","answer_seq","createddate"]
+              name: TRATBL_sdl_vn_interface_notes__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+      - name: sdl_vn_interface_choices
+        tags: ['VN_Perfect_Store','ingestion']
+        tests:
+          - test_null:
+              not_null_columns: ["ise_id","ques_no","answer_seq"]
+              select_columns: ["ise_id","ques_no","answer_seq"]
+              name: TRATBL_sdl_vn_interface_choices__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["ise_id","ques_no","answer_seq"]
+              select_columns: ["ise_id","ques_no","answer_seq"]
+              name: TRATBL_sdl_vn_interface_choices__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+      - name: sdl_vn_interface_answers
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["ise_id","slsper_id","cust_code","ques_no","shop_code","answer_seq","createddate"]
+              name: TRATBL_sdl_vn_interface_answers__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["ise_id","slsper_id","cust_code","ques_no","shop_code","answer_seq","createddate"]
+              name: TRATBL_sdl_vn_interface_answers__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+      - name: sdl_vn_interface_customer_visited
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["cust_code","slsper_id","branch_code","ise_id","visit_date"]
+              name: TRATBL_sdl_vn_interface_customer_visited__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["cust_code","slsper_id","branch_code","ise_id","visit_date"]
+              name: TRATBL_sdl_vn_interface_customer_visited__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+      - name: sdl_vn_interface_branch
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["branch_code", "parent_cust_code"]
+                select_columns: ["branch_code", "parent_cust_code","filename"]
+                name: TRATBL_sdl_vn_interface_branch__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["branch_code", "parent_cust_code"]
+                select_columns: ["branch_code", "parent_cust_code","filename"]
+                name: TRATBL_sdl_vn_interface_branch__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+      - name: sdl_vn_interface_ise_header
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null:
+                not_null_columns: ["ise_id", "ise_desc"]
+                select_columns: ["ise_id", "ise_desc","filename"]
+                name: TRATBL_sdl_vn_interface_ise_header__null_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration
+          - test_duplicate:
+                group_by_columns: ["ise_id", "ise_desc"]
+                select_columns: ["ise_id", "ise_desc","filename"]
+                name: TRATBL_sdl_vn_interface_ise_header__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration                        
+      - name: sdl_vn_interface_question
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["ise_id","ques_no"]
+              select_columns: ["ise_id","ques_no"]
+              name: TRATBL_sdl_vn_interface_question__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["ise_id","ques_no"]
+              select_columns: ["ise_id","ques_no"]
+              name: TRATBL_sdl_vn_interface_question__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+
+      - name: sdl_vn_interface_cpg
+        tags: ["vn_perfect_store","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["slsper_id","branch_code","visitdate"]
+              select_columns: ["slsper_id","branch_code","visitdate"]
+              name: TRATBL_sdl_vn_interface_cpg__null_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_duplicate:
+              group_by_columns: ["slsper_id","branch_code","visitdate"]
+              select_columns: ["slsper_id","branch_code","visitdate"]
+              name: TRATBL_sdl_vn_interface_cpg__duplicate_test
+              config:
+                store_failures: true
+                schema: vnmwks_integration

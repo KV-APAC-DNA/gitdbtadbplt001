@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vn_dksh_stock
+    config: 
+      alias: edw_vn_dksh_stock
+      tags: ["j_vt_dksh_inventory_etl_framework","transformation"]
