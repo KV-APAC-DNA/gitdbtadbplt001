@@ -3,19 +3,19 @@ version: 2
 models:
   - name: vnmwks_integration__wks_vietnam_regional_sellout
     config:
-      alias: wks_mds_vn_allchannel_siso_target_sku
+      alias: wks_vietnam_regional_sellout
       tags: ["customer_360_vn","transformation"]
   - name: vnmwks_integration__wks_vietnam_regional_sellout_base
     config:
-      alias: wks_vn_si_st_so_details_forecast
+      alias: wks_vietnam_regional_sellout_base
       tags: ["customer_360_vn","transformation"]
   - name: vnmwks_integration__wks_vietnam_regional_sellout_npd
     config:
-      alias: wks_vn_si_st_so_details_forecast
+      alias: wks_vietnam_regional_sellout_npd
       tags: ["customer_360_vn","transformation"]
   - name: vnwks_integration__wks_vietnam_regional_sellout_offtake_npd
     config:
-      alias: wks_vn_si_st_so_details_forecast
+      alias: wks_vietnam_regional_sellout_offtake_npd
       tags: ["customer_360_vn","transformation"]
   - name: vnmwks_integration__wks_vn_dms_d_sellout_sales_fact
     config: 
