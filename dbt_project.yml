@@ -163,6 +163,54 @@ models:
       mysedw_access:
         +materialized: view
         +schema: MYSEDW_ACCESS
+    vietnam:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      vnmitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: VNMITG_INTEGRATION
+      vnmedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: VNMEDW_INTEGRATION
+        customer:
+          +view:
+            materialized: view
+        distributor_and_customer:
+          +view:
+            materialized: view
+        material:
+          +view:
+            materialized: view
+        pos:
+          +view:
+            materialized: view
+        product:
+          +view:
+            materialized: view
+        sales:
+          +view:
+            materialized: view
+        sellin:
+          +view:
+            materialized: view
+        sellin_and_sellout:
+          +view:
+            materialized: view
+        sellout:
+          +view:
+            materialized: view
+        sellthrgh:
+          +view:
+            materialized: view
+      vnmwks_integration:
+        +materialized: table
+        +schema: VNMWKS_INTEGRATION
+      vnmedw_access:
+        +materialized: view
+        +schema: VNMEDW_ACCESS
     thailand:
       config:
         +enabled: true

@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: vnmsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: vnmsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_vn_dms_call_details
+        tags: ["vn_dms_call_details","ingestion"]
+        tests:
+          - test_duplicate:
+                group_by_columns: ["dstrbtr_id", "salesrep_id", "outlet_id", "visit_date", "checkin_time", "ordervisit"]
+                select_columns: ["dstrbtr_id", "salesrep_id", "outlet_id", "visit_date", "checkin_time", "ordervisit"]
+                name: TRATBL_sdl_vn_dms_call_details__duplicate_test
+                config:
+                  store_failures: true
+                  schema: vnmwks_integration

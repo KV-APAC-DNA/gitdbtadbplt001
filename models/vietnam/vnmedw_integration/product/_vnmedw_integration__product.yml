@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__edw_vw_vn_mt_dist_products
+    config: 
+      alias: edw_vw_vn_mt_dist_products
+      tags: ["vn_oneview_datamart_refresh","transformation"]

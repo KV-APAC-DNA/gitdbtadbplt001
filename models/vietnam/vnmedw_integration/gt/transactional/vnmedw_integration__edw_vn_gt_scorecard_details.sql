@@ -1,0 +1,45 @@
+with wks_vn_gt_scorecard_details as (
+    select * from {{ ref('vnmwks_integration__wks_vn_gt_scorecard_details') }}
+),
+final as (
+    select 
+    jj_year::number(18,0) as jj_year,
+    jj_qrtr::varchar(14) as jj_qrtr,
+    jj_mnth_id::varchar(23) as jj_mnth_id,
+    territory_dist::varchar(100) as territory_dist,
+    dist_type::varchar(256) as dist_type,
+    asm_id::varchar(200) as asm_id,
+    so_value::number(38,12) as so_value,
+    so_yearly_target::number(38,4) as so_yearly_target,
+    ub_brand_lvl_yearly_target::number(38,4) as ub_brand_lvl_yearly_target,
+    so_target::number(38,4) as so_target,
+    inv_value::number(38,4) as inv_value,
+    inv_value_prev::number(38,4) as inv_value_prev_day,
+    brand::varchar(100) as brand,
+    ub::number(38,0) as ub,
+    ub_yearly_target::number(38,4) as ub_yearly_target,
+    pc::number(38,0) as pc,
+    pc_yearly_target::number(38,4) as pc_yearly_target,
+    total_stores::number(38,0) as total_stores,
+    total_stores_yearly_target::number(38,4) as total_stores_yearly_target,
+    sr_active::number(38,0) as sr_active,
+    sr_active_yearly_target::number(38,4) as sr_active_yearly_target,
+    ss_active::number(38,0) as ss_active,
+    ss_active_yearly_target::number(38,4) as ss_active_yearly_target,
+    sr_inactive::number(38,0) as sr_inactive,
+    ss_inactive::number(38,0) as ss_inactive,
+    sr_resigned_yearly_target::number(35,0) as sr_resigned_yearly_target,
+    ub_coverage_percent_yearly_target::number(38,4) as ub_coverage_percent_yearly_target,
+    pc_sr_yearly_target::number(38,4) as pc_sr_yearly_target,
+    ub_sr_yearly_target::number(38,4) as ub_sr_yearly_target,
+    revenue_sr_m_yearly_target::number(38,4) as revenue_sr_m_yearly_target,
+    sr_attrition_percent_yearly_target::number(38,4) as sr_attrition_percent_yearly_target,
+    mnth_start_date::date as mnth_start_date,
+    mnth_end_date::date as mnth_end_date,
+    exchg_rate::number(14,10) as exchg_rate,
+    curr_mnth_indc::varchar(1) as curr_mnth_indc,
+    curr_year_indc::varchar(1) as curr_year_indc,
+    current_timestamp::timestamp_ntz(9) as crtd_dttm
+    from wks_vn_gt_scorecard_details 
+)
+select * from final

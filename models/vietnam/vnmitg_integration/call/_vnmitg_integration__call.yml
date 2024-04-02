@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_vn_visit_call_target
+    config:
+      alias: itg_vn_visit_call_target
+      tags: ["vn_visit_call_target","transformation"]
+  - name: vnmitg_integration__itg_vn_productivity_call_target
+    config:
+      alias: itg_vn_productivity_call_target
+      tags: ["vn_productivity_call_target","transformation"]
+    

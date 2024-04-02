@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmitg_integration__itg_mds_vn_gt_gts_ratio
+    config: 
+      alias: itg_mds_vn_gt_gts_ratio
+      tags: ["vn_mt_sellin_master","ingestion"]

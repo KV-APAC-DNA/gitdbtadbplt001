@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: vnmwks_integration__wks_vietnam_regional_sellout
+    config:
+      alias: wks_vietnam_regional_sellout
+      tags: ["customer_360_vn","transformation"]
+  - name: vnmwks_integration__wks_vietnam_regional_sellout_base
+    config:
+      alias: wks_vietnam_regional_sellout_base
+      tags: ["customer_360_vn","transformation"]
+  - name: vnmwks_integration__wks_vietnam_regional_sellout_npd
+    config:
+      alias: wks_vietnam_regional_sellout_npd
+      tags: ["customer_360_vn","transformation"]
+  - name: vnwks_integration__wks_vietnam_regional_sellout_offtake_npd
+    config:
+      alias: wks_vietnam_regional_sellout_offtake_npd
+      tags: ["customer_360_vn","transformation"]
+  - name: vnmwks_integration__wks_vn_dms_d_sellout_sales_fact
+    config: 
+      alias: wks_vn_dms_d_sellout_sales_fact
+      tags: ["vn_dms_sellout","ingestion"]
+
+  - name: vnmwks_integration__wrk_vn_sellout_by_wkmnth_for_target
+    config: 
+      alias: wrk_vn_sellout_by_wkmnth_for_target
+      tags: ["vn_dms_sellout_weekly_target","transformation"]
+
+  - name: vnmwks_integration__wrk_vn_target_p2
+    config: 
+      alias: wrk_vn_target_p2
+      tags: ["vn_dms_sellout_weekly_target","transformation"]
+
+  - name: vnmwks_integration__wrk_vn_target_p1
+    config: 
+      alias: wrk_vn_target_p1
+      tags: ["vn_dms_sellout_weekly_target","transformation"]  
