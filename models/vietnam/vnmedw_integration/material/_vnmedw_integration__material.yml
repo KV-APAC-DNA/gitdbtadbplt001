@@ -4,4 +4,4 @@ models:
   - name: vnmedw_integration__edw_vw_vn_material_dim
     config: 
       alias: edw_vw_vn_material_dim
-      tags: ["vn_dms_datamart_load","transformation"]
+      tags: ["vietnam_views","transformation"]
