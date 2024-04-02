@@ -30,7 +30,7 @@ final as (
             franchise_code,
             franchise_name,
             filename,
-            convert_timezone('Asia/Singapore',current_timestamp) AS crt_dttm
+            convert_timezone('Asia/Singapore',current_timestamp)::timestamp_ntz(9) AS crt_dttm
   from source
  {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
