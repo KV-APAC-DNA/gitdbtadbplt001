@@ -313,7 +313,7 @@ and vw.jj_mnth_id >= (select min(jj_mnth_id) from time_dim)
             bar_code,
             customer_code,
             customer_name,
-            invoice_date,
+            invoice_date::date as invoice_date,
             salesman,
             salesman_name,
             si_gts_val,
