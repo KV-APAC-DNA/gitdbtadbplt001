@@ -1,7 +1,13 @@
-{% macro build_wks_la_gt_route_detail_hashkey() %}
-    
+{% macro build_wks_la_gt_route_detail_hashkey(filename) %}
+    {% set tablename %}
+    {% if target.name=='prod' %}
+                    thawk_integration.wks_la_gt_route_detail_hashkey
+                {% else %}
+                    {{schema}}.thawks_integration__wks_la_gt_route_detail_hashkey
+                {% endif %}	
+    {% endset %}
     {% set query %}
-        CREATE TABLE if not exists thawks_integration.wks_la_gt_route_detail_hashkey (
+        CREATE TABLE if not exists {{tablename}} (
             	hashkey varchar(500),
                 route_id varchar(50),
                 customer_id varchar(50),
@@ -17,8 +23,8 @@
                 run_id varchar(14),
                 crt_dttm timestamp_ntz(9)
         );
-        TRUNCATE TABLE thawks_integration.wks_la_gt_route_detail_hashkey;
-        INSERT INTO thawks_integration.wks_la_gt_route_detail_hashkey
+        TRUNCATE TABLE {{tablename}};
+        INSERT INTO {{tablename}}
             (
             hashkey,
             route_id,
@@ -56,7 +62,7 @@ FROM
         {{schema}}.thaitg_integration__itg_la_gt_route_detail
     {% endif %}
 WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                FROM {{ source('thasdl_raw', 'sdl_la_gt_route_detail') }})
+                                FROM {{ source('thasdl_raw', 'sdl_la_gt_route_detail') }} where filename = '{{filename}}')
 AND   UPPER(flag) IN ('I','U');
 
                                 

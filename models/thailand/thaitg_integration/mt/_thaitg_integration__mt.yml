@@ -17,9 +17,9 @@ models:
     config:
       alias: itg_th_mt_bigc
       tags: ["tesco_mt_7_11_and_tops","transformation"]
-  - name: thaitg_integration__itg_th_makro_inv_so
+  - name: thaitg_integration__th_makro_inv_so
     config:
-      alias: itg_th_makro_inv_so
+      alias: th_makro_inv_so
       tags: ["tesco_mt_7_11_and_tops","transformation"]
 
   - name: thaitg_integration__sdl_raw_th_mt_price_data
