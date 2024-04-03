@@ -1,7 +1,13 @@
-{% macro build_wks_cbd_gt_sales_report_fact_pre_load() %}
-    
+{% macro build_wks_cbd_gt_sales_report_fact_pre_load(filename) %}
+    {% set tablename %}
+    {% if target.name=='prod' %}
+                    thawk_integration.wks_cbd_gt_sales_report_fact_pre_load
+                {% else %}
+                    {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_pre_load
+                {% endif %}	
+    {% endset %}
     {% set query %}
-    CREATE TABLE if not exists thawks_integration.wks_cbd_gt_sales_report_fact_pre_load		
+    CREATE TABLE if not exists {{tablename}}
     (
         hashkey varchar(500),
         bu varchar(50),
@@ -30,8 +36,8 @@
         run_id varchar(14),
         crt_dttm timestamp without time zone
     );
-    TRUNCATE TABLE thawks_integration.wks_cbd_gt_sales_report_fact_pre_load;
-    Insert into thawks_integration.wks_cbd_gt_sales_report_fact_pre_load
+    TRUNCATE TABLE {{tablename}};
+    Insert into {{tablename}}
         (
         hashkey ,
         bu,
@@ -93,10 +99,11 @@
                 {% else %}
                     {{schema}}.thaitg_integration__itg_cbd_gt_sales_report_fact
                 {% endif %}
-        WHERE billing_date >= (SELECT MIN(billing_date) FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
+        WHERE billing_date >= (SELECT MIN(billing_date) FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }} where filename = '{{filename}}'
         )
         AND   UPPER(bu) IN (SELECT DISTINCT UPPER(bu)
                                 FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
+                                where filename = '{{filename}}'
                                 );
     {% endset %}
 

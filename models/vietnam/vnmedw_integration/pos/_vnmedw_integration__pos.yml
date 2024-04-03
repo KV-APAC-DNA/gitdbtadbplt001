@@ -8,7 +8,7 @@ models:
   - name: vnmedw_integration__edw_vw_vn_mt_pos_products
     config: 
       alias: edw_vw_vn_mt_pos_products
-      tags: ["vn_mt_pos_master","transformation"]
+      tags: ["vn_mt_pos_master","ingestion"]
   - name: vnmedw_integration__edw_vw_vn_mt_pos_offtake
     config:
       alias: edw_vw_vn_mt_pos_offtake

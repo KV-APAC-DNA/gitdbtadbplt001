@@ -1,10 +1,10 @@
 with itg_th_gt_route_detail as 
 (
-    select * from {{ ref('thaitg_integration__itg_th_gt_route_detail') }}
+    select * from {{ source('thaitg_integration', 'itg_th_gt_route_detail') }}
 ),
 itg_th_gt_route as 
 (
-    select * from {{ ref('thaitg_integration__itg_th_gt_route') }}
+    select * from {{ source('thaitg_integration', 'itg_th_gt_route') }}
 ),
 final as 
 (

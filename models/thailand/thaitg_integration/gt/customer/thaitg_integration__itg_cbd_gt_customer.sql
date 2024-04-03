@@ -1,5 +1,5 @@
 with itg_cbd_gt_sales_report_fact as (
-    select * from {{ ref('thaitg_integration__itg_cbd_gt_sales_report_fact') }}
+    select * from {{ source('thaitg_integration', 'itg_cbd_gt_sales_report_fact') }}
 ),
 transformed as (
 select distinct 'CBD' AS dstrbtr_id,
