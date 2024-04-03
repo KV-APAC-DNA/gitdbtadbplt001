@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_metcash_grocery_date
+    config:
+      alias: wks_metcash_grocery_date
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+ 
