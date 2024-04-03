@@ -8,7 +8,7 @@ itg_mds_vn_gt_gts_ratio as (
     select * from {{ ref('vnmitg_integration__itg_mds_vn_gt_gts_ratio') }}
 ),
 itg_query_parameters as (
-    select * from {{ source('aspitg_integration','itg_query_parameters') }}
+    select * from {{ source('sgpitg_integration','itg_query_parameters') }}
 ),
 itg_vn_mt_sellin_dksh as (
     select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
