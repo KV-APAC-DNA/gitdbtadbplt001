@@ -3,7 +3,13 @@
     {{ log("Setting query to build wks_cbd_gt_sales_report_fact_flag_incl: "~ file) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_cbd_gt_sales_report_fact_flag_incl_query %}
-        create or replace wks_cbd_gt_sales_report_fact_flag_incl as (
+        create or replace table 
+        {% if target.name=='prod' %} 
+                thawk_integration.wks_cbd_gt_sales_report_fact_flag_incl
+            {% else %}
+                {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_flag_incl
+            {% endif %}	
+        as (
         with wks_cbd_gt_sales_report_fact_pre_load as (
             select * from 
             {% if target.name=='prod' %} 

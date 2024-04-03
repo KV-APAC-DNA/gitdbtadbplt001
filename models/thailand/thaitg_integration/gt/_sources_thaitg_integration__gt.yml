@@ -685,3 +685,19 @@ sources:
       - name: wks_la_gt_route_header_hashkey
       - name: wks_la_gt_route_detail_hashkey
       - name: wks_th_gt_kpi_target_header
+
+  - name: thaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_cbd_gt_sales_report_fact
+      - name: itg_la_gt_route_detail
+      - name: itg_la_gt_route_header
+      - name: itg_la_gt_sales_order_fact
+      - name: itg_th_gt_route
+      - name: itg_th_gt_route_detail
+      - name: itg_th_gt_sales_order

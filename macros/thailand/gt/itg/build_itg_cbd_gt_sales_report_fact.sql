@@ -3,27 +3,33 @@
     {{ log("Started building itg table for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     
-    {{ log("Setting query to delete records from itg table for file: "~ filename) }}
+    {{ log("Setting query to delete records from itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set delete_from_itg_query %}
     DELETE FROM  
-    {% if target.name=='prod' %}
+                {% if target.name=='prod' %}
                     thaitg_integration.itg_cbd_gt_sales_report_fact
                 {% else %}
                     {{schema}}.thaitg_integration__itg_cbd_gt_sales_report_fact
                 {% endif %}	
-    WHERE (UPPER(bu),billing_date) IN (SELECT DISTINCT UPPER(bu),billing_date FROM {{ ref('thawks_integration__wks_cbd_gt_sales_report_fact_flag_incl') }} );
+    WHERE (UPPER(bu),billing_date) IN (SELECT DISTINCT UPPER(bu),billing_date FROM 
+                {% if target.name=='prod' %}
+                    thawks_integration.wks_cbd_gt_sales_report_fact_flag_incl
+                {% else %}
+                    {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_flag_incl
+                {% endif %}	
+    );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Query set to delete records from itg table for file: "~ filename) }}
+    {{ log("Query set to delete records from itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Started running the query to delete records from itg table for file: "~ filename) }}
+    {{ log("Started running the query to delete records from itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(delete_from_itg_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Completed running the query to delete records from itg table for file: "~ filename) }}
+    {{ log("Completed running the query to delete records from itg table -> itg_cbd_gt_sales_report_fact  for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build itg table for file: "~ filename) }}
+    {{ log("Setting query to build itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_itg_model %}
     insert into  {% if target.name=='prod' %}
@@ -33,9 +39,9 @@
                 {% endif %}	
     with source as (
     select  * from {% if target.name=='prod' %}
-                    thawks_integration.wks_cbd_gt_sales_report_fact_pre_load
+                    thawks_integration.wks_cbd_gt_sales_report_fact_flag_incl
                 {% else %}
-                    {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_pre_load
+                    {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_flag_incl
                 {% endif %}	
     ),
     final as (
@@ -72,11 +78,11 @@
     select * from final;
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Query setting completed to build itg table for file: "~ filename) }}
+    {{ log("Query setting completed to build itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Started running query to build itg table for file: "~ filename) }}
+    {{ log("Started running query to build itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_itg_model) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Completed running query to build itg table for file: "~ filename) }}
+    {{ log("Completed running query to build itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
 {% endmacro %}

@@ -1,7 +1,13 @@
-{% macro build_wks_th_gt_sales_order_pre_load() %}
-    
+{% macro build_wks_th_gt_sales_order_pre_load(filename) %}
+    {% set tablename %}
+    {% if target.name=='prod' %}
+                    thawk_integration.wks_th_gt_sales_order_pre_load
+                {% else %}
+                    {{schema}}.thawks_integration__wks_th_gt_sales_order_pre_load
+                {% endif %}	
+    {% endset %}
     {% set query %}
-    CREATE TABLE if not exists thawks_integration.wks_th_gt_sales_order_pre_load		
+    CREATE TABLE if not exists {{tablename}}		
     (
         hashkey varchar(500),
         cntry_cd varchar(5),
@@ -68,9 +74,9 @@
         run_id varchar(50),
         crt_dttm timestamp without time zone  	
     );
-    TRUNCATE TABLE thawks_integration.wks_th_gt_sales_order_pre_load;
+    TRUNCATE TABLE {{tablename}};
     
-    INSERT INTO thawks_integration.wks_th_gt_sales_order_pre_load(
+    INSERT INTO {{tablename}}(
     hashkey,
     cntry_cd,
     crncy_cd,
@@ -208,10 +214,10 @@
         {% else %}
             {{schema}}.thaitg_integration__itg_th_gt_sales_order
         {% endif %}
-    WHERE orderdate >= (SELECT MIN(orderdate) FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
+    WHERE orderdate >= (SELECT MIN(orderdate) FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }} where filename = '{{filename}}'
     )
     AND   UPPER(saleunit) IN (SELECT DISTINCT UPPER(saleunit)
-                            FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }}
+                            FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }} where filename = '{{filename}}'
                             );
     {% endset %}
 
