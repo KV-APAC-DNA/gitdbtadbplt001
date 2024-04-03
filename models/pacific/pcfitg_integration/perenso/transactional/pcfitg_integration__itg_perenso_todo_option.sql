@@ -11,10 +11,10 @@ final as
 	dsp_order::number(14,0) as dsp_order,
 	active::varchar(5) as active,
 	run_id::number(14,0) as run_id,
-	cascade_next_todo_key::number(10,0) as cascade_next_todo_key,
-	cascadeon_answermode::number(10,0) as cascadeon_answermode,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
-	current_timestamp()::timestamp_ntz(9) as update_dt 
+	current_timestamp()::timestamp_ntz(9) as update_dt,
+    cascade_next_todo_key::number(10,0) as cascade_next_todo_key,
+	cascadeon_answermode::number(10,0) as cascadeon_answermode 
     from source
 )
 select * from final

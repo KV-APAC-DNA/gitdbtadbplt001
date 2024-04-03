@@ -21,3 +21,9 @@ sources:
       tags: ["anz_perenso_survey_ques",""]
     - name: sdl_perenso_survey_result
       tags: ["anz_perenso_survey_ques",""]
+    - name: sdl_perenso_over_and_above
+      tags: ["anz_perenso_over_and_above",""]
+    - name: sdl_perenso_prod_chk_distribution
+      tags: ["anz_perenso_over_and_above",""]
+    - name: sdl_perenso_over_and_above_state
+      tags: ["anz_perenso_over_and_above",""]

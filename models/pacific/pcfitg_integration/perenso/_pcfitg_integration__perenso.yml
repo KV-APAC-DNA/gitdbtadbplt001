@@ -17,3 +17,60 @@ models:
     config:
       alias: sdl_raw_perenso_diary_item_type
       tags: ["anz_perenso_call",""]
+  - name: pcfitg_integration__itg_perenso_diary_item_time
+    config:
+      alias: itg_perenso_diary_item_time
+      tags: ["anz_perenso_call",""]
+  - name: pcfitg_integration__sdl_raw_perenso_diary_item_time
+    config:
+      alias: sdl_raw_perenso_diary_item_time
+      tags: ["anz_perenso_call",""]
+  - name: pcfitg_integration__itg_perenso_call_objectives
+    config:
+      alias: itg_perenso_call_objectives
+      tags: ["anz_perenso_call",""]
+  - name: pcfitg_integration__sdl_raw_perenso_call_objectives
+    config:
+      alias: sdl_raw_perenso_call_objectives
+      tags: ["anz_perenso_call",""]
+  - name: pcfitg_integration__itg_perenso_todo_option
+    config:
+      alias: itg_perenso_todo_option
+      tags: ["anz_perenso_survey_ques",""]
+  - name: pcfitg_integration__sdl_raw_perenso_todo_option
+    config:
+      alias: sdl_raw_perenso_todo_option
+      tags: ["anz_perenso_survey_ques",""]
+  - name: pcfitg_integration__itg_perenso_survey_result
+    config:
+      alias: itg_perenso_survey_result
+      tags: ["anz_perenso_survey_ques",""]
+  - name: pcfitg_integration__sdl_raw_perenso_survey_result
+    config:
+      alias: sdl_raw_perenso_survey_result
+      tags: ["anz_perenso_survey_ques",""]
+  - name: pcfitg_integration__itg_perenso_prod_chk_distribution
+    config:
+      alias: itg_perenso_prod_chk_distribution
+      tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__sdl_raw_perenso_prod_chk_distribution
+    config:
+      alias: sdl_raw_perenso_prod_chk_distribution
+      tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__itg_perenso_Over_and_Above_state
+    config:
+      alias: itg_perenso_Over_and_Above_state
+      tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__itg_perenso_Over_and_Above
+    config:
+      alias: itg_perenso_Over_and_Above
+      tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__sdl_raw_perenso_Over_and_Above_state
+    config:
+      alias: sdl_raw_perenso_Over_and_Above_state
+      tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__sdl_raw_perenso_Over_and_Above
+    config:
+      alias: sdl_raw_perenso_Over_and_Above
+      tags: ["anz_perenso_over_and_above",""]
+
