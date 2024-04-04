@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "delete+insert",
+        unique_key=  ["branch_id","pro_id","ord_no","line_ref"]
+    )
+}}
+
 with source as 
 (
     select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_order_promotion') }}

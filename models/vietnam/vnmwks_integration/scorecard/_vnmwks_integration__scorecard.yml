@@ -4,5 +4,5 @@ models:
   - name: vnmwks_integration__wks_vn_gt_scorecard_details
     config:
       alias: wks_vn_gt_scorecard_details
-      tags: [""]
+      tags: ["vn_dms_datamart_load","transformation"]
   
