@@ -139,7 +139,9 @@ sources:
               config:
                 store_failures: true
                 schema: vnmwks_integration
-    
+    - name: sdl_perenso_users
+      tags: ["anz_perenso_head_office_req","ingestion"]
+  
     
 
 
