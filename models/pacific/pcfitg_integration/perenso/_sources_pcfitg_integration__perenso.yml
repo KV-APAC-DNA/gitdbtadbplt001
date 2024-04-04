@@ -145,3 +145,15 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+    - name: sdl_perenso_order_batch
+      tags: ["anz_perenso_order",""]
+    - name: sdl_perenso_order_detail
+      tags: ["anz_perenso_order",""]
+    - name: sdl_perenso_order_header
+      tags: ["anz_perenso_order",""]
+    - name: sdl_perenso_order_type
+      tags: ["anz_perenso_order",""]
+    - name: sdl_perenso_deal_discount
+      tags: ["anz_perenso_order",""]
+    - name: sdl_perenso_constants
+      tags: ["anz_perenso_order",""]

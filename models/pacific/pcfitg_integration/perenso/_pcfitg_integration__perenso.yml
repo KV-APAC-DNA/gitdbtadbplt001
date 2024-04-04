@@ -73,4 +73,53 @@ models:
     config:
       alias: sdl_raw_perenso_Over_and_Above
       tags: ["anz_perenso_over_and_above",""]
+  - name: pcfitg_integration__itg_perenso_order_batch
+    config:
+      alias: itg_perenso_order_batch
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_order_batch
+    config:
+      alias: sdl_raw_perenso_order_batch
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_order_detail
+    config:
+      alias: itg_perenso_order_detail
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_order_detail
+    config:
+      alias: sdl_raw_perenso_order_detail
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_order_header
+    config:
+      alias: itg_perenso_order_header
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_order_header
+    config:
+      alias: sdl_raw_perenso_order_header
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_order_type
+    config:
+      alias: itg_perenso_order_type
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_order_type
+    config:
+      alias: sdl_raw_perenso_order_type
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_deal_discount
+    config:
+      alias: itg_perenso_deal_discount
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_deal_discount
+    config:
+      alias: sdl_raw_perenso_deal_discount
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_constants
+    config:
+      alias: itg_perenso_constants
+      tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__sdl_raw_perenso_constants
+    config:
+      alias: sdl_raw_perenso_constants
+      tags: ["anz_perenso_order",""]
+
 
