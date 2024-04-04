@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_chw_ecomm_data
+    config: 
+      alias: itg_chw_ecomm_data
+      tags: ["anz_perenso_foodstuff","ingestion"]

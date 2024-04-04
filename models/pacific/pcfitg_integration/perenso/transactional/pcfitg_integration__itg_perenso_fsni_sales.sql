@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['dstrbtr_id', 'salesrep_id', 'outlet_id', 'visit_date', 'checkin_time', 'ordervisit'],
+        unique_key=  ['file_name'],
+        pre_hook= "delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }});"
     )
 }}
 
@@ -30,7 +31,7 @@ final as(
         sales_uom::varchar(10) as sales_uom,
         qty_in_base::number(18,0) as base_qty,
         base_uom::varchar(10) as base_uom,
-        'nzd'::varchar(3) as crncy,
+        'NZD'::varchar(3) as crncy,
         file_name::varchar(100) as file_name,
         current_timestamp()::timestamp_ntz(9) as crt_dt,
         current_timestamp()::timestamp_ntz(9) as updt_dt

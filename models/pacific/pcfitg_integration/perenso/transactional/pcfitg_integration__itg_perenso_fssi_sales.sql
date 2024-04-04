@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['dstrbtr_id', 'salesrep_id', 'outlet_id', 'visit_date', 'checkin_time', 'ordervisit'],
+        unique_key=  ['file_name'],
+        pre_hook= "delete from {{this}} where split_part(file_name, '.', 1) in (select split_part(file_name, '.', 1) from {{ source('pcfsdl_raw', 'sdl_perenso_fssi_sales') }});"
     )
 }}
 
