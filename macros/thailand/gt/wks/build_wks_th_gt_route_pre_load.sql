@@ -5,7 +5,7 @@
     {% set build_wks_th_gt_route_pre_load_query %}
     create or replace table 
         {% if target.name=='prod' %} 
-                thawk_integration.wks_th_gt_route_pre_load
+                thawks_integration.wks_th_gt_route_pre_load
             {% else %}
                 {{schema}}.thawks_integration__wks_th_gt_route_pre_load
             {% endif %}	
@@ -13,7 +13,7 @@
             with wks_th_gt_route_hashkey as (
                 select * from 
                 {% if target.name=='prod' %} 
-                thawk_integration.wks_th_gt_route_hashkey
+                thawks_integration.wks_th_gt_route_hashkey
                 {% else %}
                     {{schema}}.thawks_integration__wks_th_gt_route_hashkey
                 {% endif %}
