@@ -5,7 +5,7 @@
     {% set build_wks_th_gt_sales_order_flag_incl_query %}
     create or replace table 
         {% if target.name=='prod' %} 
-                thawk_integration.wks_th_gt_sales_order_flag_incl
+                thawks_integration.wks_th_gt_sales_order_flag_incl
             {% else %}
                 {{schema}}.thawks_integration__wks_th_gt_sales_order_flag_incl
             {% endif %}	
@@ -13,7 +13,7 @@
             with wks_th_gt_sales_order_pre_load as (
             select * from
                 {% if target.name=='prod' %} 
-                    thawk_integration.wks_th_gt_sales_order_pre_load
+                    thawks_integration.wks_th_gt_sales_order_pre_load
                 {% else %}
                     {{schema}}.thawks_integration__wks_th_gt_sales_order_pre_load
                 {% endif %}	

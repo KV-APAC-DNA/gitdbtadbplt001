@@ -5,14 +5,14 @@
     {% set build_wks_la_gt_route_header_pre_load_query %}
     create or replace table 
         {% if target.name=='prod' %} 
-                thawk_integration.wks_la_gt_route_header_pre_load
+                thawks_integration.wks_la_gt_route_header_pre_load
             {% else %}
                 {{schema}}.thawks_integration__wks_la_gt_route_header_pre_load
             {% endif %}	
         as (
                 with wks_la_gt_route_header_hashkey as (
             select * from {% if target.name=='prod' %} 
-                thawk_integration.wks_la_gt_route_header_hashkey
+                thawks_integration.wks_la_gt_route_header_hashkey
                 {% else %}
                 {{schema}}.thawks_integration__wks_la_gt_route_header_hashkey
                 {% endif %}	

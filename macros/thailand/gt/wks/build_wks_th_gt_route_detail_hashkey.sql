@@ -1,7 +1,7 @@
 {% macro build_wks_th_gt_route_detail_hashkey(filename) %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                    thawk_integration.wks_th_gt_route_detail_hashkey
+                    thawks_integration.wks_th_gt_route_detail_hashkey
                 {% else %}
                     {{schema}}.thawks_integration__wks_th_gt_route_detail_hashkey
                 {% endif %}	
