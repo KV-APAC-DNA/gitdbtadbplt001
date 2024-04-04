@@ -8,7 +8,7 @@
 with 
 sdl_th_sfmc_children_data as
 (
-    select * from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
 ),
 itg_mds_rg_sfmc_gender as 
 (
@@ -30,9 +30,10 @@ final as
     from sdl_th_sfmc_children_data isc
         left join itg_mds_rg_sfmc_gender gen on 
         upper(trim(gen.gender_raw::text)) = upper(trim(isc.child_gender::text))
+    where rnk=1
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-        where isc.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+        and isc.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
     {% endif %}
 )
 

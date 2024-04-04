@@ -7,7 +7,7 @@
 }}
 with source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master_additional') }}
 ),
 
 final as
@@ -21,9 +21,10 @@ final as
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
     from source
+    where rnk=1
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-        where source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+        and source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
     {% endif %}
 )
 
