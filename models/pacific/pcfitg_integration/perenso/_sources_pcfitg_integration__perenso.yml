@@ -147,13 +147,104 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_order_batch
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["ord_key","batch_key"]
+              not_null_columns: ["ord_key","batch_key"]
+              name: TRATBL_sdl_perenso_order_batch__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["ord_key","batch_key"]
+              group_by_columns: ["ord_key","batch_key"]
+              name: TRATBL_sdl_perenso_order_batch__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_perenso_order_detail
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["batch_key","order_key","line_key"]
+              not_null_columns: ["batch_key","order_key","line_key"]
+              name: TRATBL_sdl_perenso_order_detail__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["batch_key","order_key","line_key"]
+              group_by_columns: ["batch_key","order_key","line_key"]
+              name: TRATBL_sdl_perenso_order_detail__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_perenso_order_header
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["order_key","order_type_key"]
+              not_null_columns: ["order_key","order_type_key"]
+              name: TRATBL_sdl_perenso_order_header__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["order_key","order_type_key"]
+              group_by_columns: ["order_key","order_type_key"]
+              name: TRATBL_sdl_perenso_order_header__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_perenso_order_type
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["order_type_key"]
+              not_null_columns: ["order_type_key"]
+              name: TRATBL_sdl_perenso_order_type__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["order_type_key"]
+              group_by_columns: ["order_type_key"]
+              name: TRATBL_sdl_perenso_order_type__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_perenso_deal_discount
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["disc_key","deal_key"]
+              not_null_columns: ["disc_key","deal_key"]
+              name: TRATBL_sdl_perenso_deal_discount__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["disc_key","deal_key"]
+              group_by_columns: ["disc_key","deal_key"]
+              name: TRATBL_sdl_perenso_deal_discount__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+      
     - name: sdl_perenso_constants
       tags: ["anz_perenso_order",""]
+      tests:
+          - test_null:
+              select_columns: ["const_key"]
+              not_null_columns: ["const_key"]
+              name: TRATBL_sdl_perenso_constants__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_duplicate:
+              select_columns: ["const_key"]
+              group_by_columns: ["const_key"]
+              name: TRATBL_sdl_perenso_constants__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
