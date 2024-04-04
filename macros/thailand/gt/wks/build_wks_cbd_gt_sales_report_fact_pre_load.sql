@@ -1,7 +1,7 @@
 {% macro build_wks_cbd_gt_sales_report_fact_pre_load(filename) %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                    thawk_integration.wks_cbd_gt_sales_report_fact_pre_load
+                    thawks_integration.wks_cbd_gt_sales_report_fact_pre_load
                 {% else %}
                     {{schema}}.thawks_integration__wks_cbd_gt_sales_report_fact_pre_load
                 {% endif %}	
