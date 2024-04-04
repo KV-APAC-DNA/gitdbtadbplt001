@@ -76,7 +76,7 @@
     {% endif %}
     
     WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                    FROM {{ source('thasdl_raw', 'sdl_th_gt_route') }} where filename = '{{filename}}'
+                                    FROM {{ ref('thawks_integration__wks_th_gt_route') }} where filename = '{{filename}}'
                                     )
     AND   UPPER(flag) IN ('I','U'); 
     {% endset %}

@@ -1,6 +1,6 @@
 {% macro build_wks_th_gt_route_detail_pre_load(filename) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build wks_th_gt_route_detail_pre_load: "~ file) }}
+    {{ log("Setting query to build wks_th_gt_route_detail_pre_load: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_th_gt_route_detail_pre_load_query %}
         create or replace table 
@@ -19,7 +19,7 @@
                     {% endif %}	
                 ),
                 sdl_th_gt_route_detail as (
-                    select * from {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }} where filename= '{{filename}}'
+                    select * from {{ ref('thawks_integration__wks_th_gt_route_detail') }} where filename= '{{filename}}'
                 )
 
                 SELECT 
@@ -154,13 +154,13 @@
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Set the query to build wks_th_gt_route_detail_pre_load for file: "~ file) }}
+    {{ log("Set the query to build wks_th_gt_route_detail_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
-    {{ log("Started building model wks_th_gt_route_detail_pre_load for file: "~ file) }}
+    {{ log("Started building model wks_th_gt_route_detail_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_wks_th_gt_route_detail_pre_load_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Ended building model wks_th_gt_route_detail_pre_load for file: "~ file) }}
+    {{ log("Ended building model wks_th_gt_route_detail_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% endmacro %}

@@ -1,6 +1,6 @@
 {% macro build_wks_th_gt_route_pre_load(filename) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build build_wks_th_gt_route_pre_load: "~ file) }}
+    {{ log("Setting query to build build_wks_th_gt_route_pre_load: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_th_gt_route_pre_load_query %}
     create or replace table 
@@ -19,7 +19,7 @@
                 {% endif %}
             ),
             sdl_th_gt_route as (
-                select * from {{ source('thasdl_raw', 'sdl_th_gt_route') }} where filename= '{{filename}}'
+                select * from {{ ref('thawks_integration__wks_th_gt_route') }} where filename= '{{filename}}'
             )
             SELECT wks.cntry_cd,
                 wks.crncy_cd,
@@ -156,14 +156,14 @@
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Set the query to build build_wks_th_gt_route_pre_load for file: "~ file) }}
+    {{ log("Set the query to build build_wks_th_gt_route_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
-    {{ log("Started building model build_wks_th_gt_route_pre_load for file: "~ file) }}
+    {{ log("Started building model build_wks_th_gt_route_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_wks_th_gt_route_pre_load_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Ended building model build_wks_th_gt_route_pre_load for file: "~ file) }}
+    {{ log("Ended building model build_wks_th_gt_route_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
 {% endmacro %}

@@ -1,6 +1,6 @@
 {% macro build_wks_la_gt_route_header_pre_load(filename) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build build_wks_la_gt_route_header_pre_load: "~ file) }}
+    {{ log("Setting query to build build_wks_la_gt_route_header_pre_load: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_la_gt_route_header_pre_load_query %}
     create or replace table 
@@ -18,7 +18,7 @@
                 {% endif %}	
         ),
         sdl_la_gt_route_header as (
-            select * from {{ source('thasdl_raw', 'sdl_la_gt_route_header') }} where filename= '{{filename}}'
+            select * from {{ ref('thawks_integration__wks_la_gt_route_header') }} where filename= '{{filename}}'
         )
 
         SELECT wks.route_id,
@@ -134,14 +134,14 @@
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Set the query to build build_wks_la_gt_route_header_pre_load for file: "~ file) }}
+    {{ log("Set the query to build build_wks_la_gt_route_header_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
-    {{ log("Started building model build_wks_la_gt_route_header_pre_load for file: "~ file) }}
+    {{ log("Started building model build_wks_la_gt_route_header_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_wks_la_gt_route_header_pre_load_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Ended building model build_wks_la_gt_route_header_pre_load for file: "~ file) }}
+    {{ log("Ended building model build_wks_la_gt_route_header_pre_load for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
 {% endmacro %}

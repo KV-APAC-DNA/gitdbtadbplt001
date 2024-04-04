@@ -1,6 +1,6 @@
 {% macro build_wks_la_gt_sales_order_fact_flag_incl(filename) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build wks_la_gt_sales_order_fact_flag_incl: "~ file) }}
+    {{ log("Setting query to build wks_la_gt_sales_order_fact_flag_incl: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_la_gt_sales_order_fact_flag_incl_query %}
     create or replace table 
@@ -21,7 +21,7 @@
             sdl_la_gt_sales_order_fact as (
                 select *, MD5(coalesce(UPPER(saleunit),'N/A') ||coalesce(upper (orderid),'N/A') ||coalesce(to_date (orderdate , 'yyyy/mm/dd'),'9999-12-31')||coalesce(upper (productid),'N/A')
             ||coalesce(upper (customer_id),'N/A') ||coalesce(no,'N/A')) AS hashkey
-            from {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }} where filename= '{{filename}}'
+            from {{ ref('thawks_integration__wks_la_gt_sales_order_fact') }} where filename= '{{filename}}'
             )
             SELECT 
                 null as hashkey,
@@ -232,13 +232,13 @@
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Set the query to build wks_la_gt_sales_order_fact_flag_incl for file: "~ file) }}
+    {{ log("Set the query to build wks_la_gt_sales_order_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
-    {{ log("Started building model wks_la_gt_sales_order_fact_flag_incl for file: "~ file) }}
+    {{ log("Started building model wks_la_gt_sales_order_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_wks_la_gt_sales_order_fact_flag_incl_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Ended building model wks_la_gt_sales_order_fact_flag_incl for file: "~ file) }}
+    {{ log("Ended building model wks_la_gt_sales_order_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 {% endmacro %}
