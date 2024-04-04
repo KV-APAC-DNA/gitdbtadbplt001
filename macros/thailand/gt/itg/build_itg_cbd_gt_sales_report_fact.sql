@@ -85,4 +85,16 @@
     {% do run_query(build_itg_model) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Completed running query to build itg table -> itg_cbd_gt_sales_report_fact for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {{ log("Setting query to delete records from wks staging table -> wks_cbd_gt_sales_report_fact for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {% set delete_wks_staging_data_by_file_query %}
+    delete from {{ ref('thawks_integration__wks_cbd_gt_sales_report_fact') }} where filename= '{{filename}}';
+    {% endset %}
+    {{ log("Started running query to delete records from wks staging table -> wks_cbd_gt_sales_report_fact for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {% do run_query(delete_wks_staging_data_by_file_query) %}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {{ log("Completed running query to delete records from wks staging table -> wks_cbd_gt_sales_report_fact for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
 {% endmacro %}

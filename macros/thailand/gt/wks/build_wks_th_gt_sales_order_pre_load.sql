@@ -214,10 +214,10 @@
         {% else %}
             {{schema}}.thaitg_integration__itg_th_gt_sales_order
         {% endif %}
-    WHERE orderdate >= (SELECT MIN(orderdate) FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }} where filename = '{{filename}}'
+    WHERE orderdate >= (SELECT MIN(orderdate) FROM {{ ref('thawks_integration__wks_th_gt_sales_order') }} where filename = '{{filename}}'
     )
     AND   UPPER(saleunit) IN (SELECT DISTINCT UPPER(saleunit)
-                            FROM {{ source('thasdl_raw', 'sdl_th_gt_sales_order') }} where filename = '{{filename}}'
+                            FROM {{ ref('thawks_integration__wks_th_gt_sales_order') }} where filename = '{{filename}}'
                             );
     {% endset %}
 

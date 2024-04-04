@@ -1,6 +1,6 @@
 {% macro build_wks_cbd_gt_sales_report_fact_flag_incl(filename) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Setting query to build wks_cbd_gt_sales_report_fact_flag_incl: "~ file) }}
+    {{ log("Setting query to build wks_cbd_gt_sales_report_fact_flag_incl: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set build_wks_cbd_gt_sales_report_fact_flag_incl_query %}
         create or replace table 
@@ -22,7 +22,7 @@
             select *,
                 MD5(coalesce(UPPER(product_code),'N/A') ||coalesce(to_date (billing_date , 'dd/mm/yyyy'),'9999-12-31')||coalesce(upper (batch_no),'N/A') ||coalesce(upper (customer_code),'N/A')
         ||coalesce(upper (sales_rep_no),'N/A') ||coalesce(order_no,'N/A')) AS hashkey 
-            from {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }} where filename= '{{filename}}'
+            from {{ ref('thawks_integration__wks_cbd_gt_sales_report_fact') }} where filename= '{{filename}}'
         )
 
         SELECT 
@@ -123,14 +123,14 @@
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Set the query to build wks_cbd_gt_sales_report_fact_flag_incl for file: "~ file) }}
+    {{ log("Set the query to build wks_cbd_gt_sales_report_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
-    {{ log("Started building model wks_cbd_gt_sales_report_fact_flag_incl for file: "~ file) }}
+    {{ log("Started building model wks_cbd_gt_sales_report_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {% do run_query(build_wks_cbd_gt_sales_report_fact_flag_incl_query) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
-    {{ log("Ended building model wks_cbd_gt_sales_report_fact_flag_incl for file: "~ file) }}
+    {{ log("Ended building model wks_cbd_gt_sales_report_fact_flag_incl for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
 
 {% endmacro %}
