@@ -4,7 +4,7 @@ with wks_metcash_grocery_date as (
 sdl_metcash_ind_grocery as (
 select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_RAW_METCASH_IND_GROCERY where file_name like '%2024%'
  and  TRIM(SUPP_ID||SUPP_NAME||STATE||BANNER_ID||BANNER||CUSTOMER_ID||CUSTOMER) IS not NULL),
-final as (
+transformed as (
 --week 1 data mapping & conversion
 
 (select to_date(week_end_dt,'DD/MM/YYYY') week_end_dt,
@@ -250,6 +250,25 @@ from (select *
                gross_sales_wk5 as week_end_dt
 
         from wks_metcash_grocery_date) b on a.file_name = b.file_name)
+),
+final as (
+select
+week_end_dt::date as week_end_dt,
+supp_id::varchar(20) as supp_id,
+supp_name::varchar(50) as supp_name,
+state::varchar(50) as state,
+banner_id::varchar(10) as banner_id,
+banner::varchar(50) as banner,
+customer_id::varchar(20) as customer_id,
+customer::varchar(50) as customer,
+product_id::varchar(20) as product_id,
+product::varchar(50) as product,
+gross_sales::float as gross_sales,
+gross_cases::float as gross_cases,
+file_name::varchar(100) as file_name,
+run_id::varchar(50) as run_id,
+create_dt::timestamp_ntz(9) as create_dt
+from transformed
 )
 select * from final
 

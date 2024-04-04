@@ -6,8 +6,8 @@ final as (
 select 
         todo_key::number(10,0) as todo_key,
         todo_type::number(10,0) as todo_type,
-        todo_desc::varchar(256) as todo_desc,
-        work_item_key::number(14,0) as work_item_key,
+        todo_desc::varchar(255) as todo_desc,
+        work_item_key::number(10,0) as work_item_key,
         to_timestamp(start_date, 'DD/MM/YYYY')::timestamp_ntz(9) as start_date,
         to_timestamp(end_date, 'DD/MM/YYYY')::timestamp_ntz(9) as end_date,
         run_id::number(14,0) as run_id,
