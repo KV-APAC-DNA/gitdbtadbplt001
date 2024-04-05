@@ -249,7 +249,7 @@ from
                     edw_vw_vn_mt_dist_products
                 ) dst_prod ON (
                   (
-                    (prods.barcode):: text = (dst_prod.barcode):: text
+                    trim(prods.barcode):: text = trim(dst_prod.barcode):: text
                   )
                 )
               ) 
@@ -259,11 +259,11 @@ from
             (
               (
                 "replace"(
-                  (pos.product_cd):: text, 
+                  trim(pos.product_cd):: text, 
                   ('\'' :: character varying):: text, 
                   ('' :: character varying):: text
                 ) = "replace"(
-                  (pos_prod.customer_sku):: text, 
+                  trim(pos_prod.customer_sku):: text, 
                   ('\'' :: character varying):: text, 
                   ('' :: character varying):: text
                 )

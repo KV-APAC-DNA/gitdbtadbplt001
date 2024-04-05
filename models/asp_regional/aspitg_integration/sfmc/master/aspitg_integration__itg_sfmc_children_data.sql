@@ -1,8 +1,8 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['cntry_cd']
+        incremental_strategy="append",
+        pre_hook="delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }})"
     )
 }}
 with 
