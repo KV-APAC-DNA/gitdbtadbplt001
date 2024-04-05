@@ -8,7 +8,9 @@
 with 
 source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_711') }}
+    select *,
+    dense_rank() over (order by file_name desc) as rnk
+    from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_711') }}
 ),
 
 final as
@@ -30,6 +32,7 @@ final as
         yearmo::varchar(255) as yearmo,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
         from source
+        where rnk=1
 )
 
 select * from final

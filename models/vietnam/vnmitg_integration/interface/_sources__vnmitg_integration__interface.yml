@@ -27,7 +27,7 @@ sources:
                 store_failures: true
                 schema: vnmwks_integration
       - name: sdl_vn_interface_choices
-        tags: ['VN_Perfect_Store','ingestion']
+        tags: ['vn_perfect_store','ingestion']
         tests:
           - test_null:
               not_null_columns: ["ise_id","ques_no","answer_seq"]
