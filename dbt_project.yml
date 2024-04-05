@@ -176,35 +176,35 @@ models:
         +transient: false
         +schema: VNMEDW_INTEGRATION
         customer:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         distributor_and_customer:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         material:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         pos:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         product:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         sales:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         sellin:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         sellin_and_sellout:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         sellout:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
         sellthrgh:
-          +view:
-            materialized: view
+          view:
+            +materialized: view
       vnmwks_integration:
         +materialized: table
         +schema: VNMWKS_INTEGRATION
