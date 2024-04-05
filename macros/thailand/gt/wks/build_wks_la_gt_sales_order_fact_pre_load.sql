@@ -207,11 +207,11 @@
                 {% else %}
                     {{schema}}.thaitg_integration__itg_la_gt_sales_order_fact
                 {% endif %}
-    WHERE orderdate >= (SELECT MIN( to_date (orderdate , 'yyyy/mm/dd')) FROM {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
+    WHERE orderdate >= (SELECT MIN( to_date (orderdate , 'yyyy/mm/dd')) FROM {{ ref('thawks_integration__wks_la_gt_sales_order_fact') }}
     where filename='{{filename}}'
     )
     AND   UPPER(saleunit) IN (SELECT DISTINCT UPPER(saleunit)
-                            FROM {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }} where filename='{{filename}}'
+                            FROM {{ ref('thawks_integration__wks_la_gt_sales_order_fact') }} where filename='{{filename}}'
                             );
     {% endset %}
 

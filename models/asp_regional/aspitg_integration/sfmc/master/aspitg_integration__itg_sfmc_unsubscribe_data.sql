@@ -2,14 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=["event_date"],
         pre_hook= "delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH'"
     )
 }}
 with 
 source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_th_sfmc_unsubscribe_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_unsubscribe_data') }}
 ),
 final as
 (
@@ -31,6 +30,7 @@ final as
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    where rnk=1
 )
 
 
