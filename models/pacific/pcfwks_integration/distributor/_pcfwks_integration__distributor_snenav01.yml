@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_dstr_inv_chs
+    config: 
+      alias: wks_dstr_inv_chs
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_so_chs
+    config: 
+      alias: wks_dstr_so_chs
+      tags: ["",""]

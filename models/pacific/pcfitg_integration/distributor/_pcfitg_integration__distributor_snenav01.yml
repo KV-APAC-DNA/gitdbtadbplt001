@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__sdl_api_dstr_raw
+    config: 
+      alias: sdl_api_dstr_raw
+      tags: ["j_pa_pharma_inv_api","ingestion"]
+  - name: pcfitg_integration__sdl_symbion_dstr_raw
+    config: 
+      alias: sdl_symbion_dstr_raw
+      tags: ["j_pa_pharma_inv_symbion","ingestion"]

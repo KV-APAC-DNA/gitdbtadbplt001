@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: pcfsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: pcfsdl_raw
+    schema: snappcfsdl_raw
     quoting:
       database: false
       schema: false
@@ -163,3 +163,5 @@ sources:
                   store_failures: true
                   schema: pcfwks_integration
       - name: sdl_perenso_account_custom_list
+      - name: sdl_chs_dstr
+      - name: sdl_sigma_dstr
