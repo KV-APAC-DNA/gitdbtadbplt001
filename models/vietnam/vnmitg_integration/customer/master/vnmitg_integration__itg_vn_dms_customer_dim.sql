@@ -20,7 +20,7 @@ select
 	outlet_name::varchar(100) as outlet_name,
 	address_1::varchar(200) as address_1,
 	address_2::varchar(200) as address_2,
-	telephone::varchar(20) as telephone,
+	telephone::varchar(100) as telephone,
 	fax::varchar(20) as fax,
 	city::varchar(50) as city,
 	postcode::varchar(20) as postcode,
