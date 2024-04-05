@@ -80,8 +80,4 @@ models:
   - name: pcfitg_integration__itg_perenso_account_reln_id
     config: 
       alias: itg_perenso_account_reln_id
-<<<<<<< HEAD
       tags: ["anz_perenso_account","ingestion"]
-=======
-      tags: ["anz_perenso_account","ingestion"]
->>>>>>> 88bbac9361c3a735b4469b98a3f15784ffc90a11
