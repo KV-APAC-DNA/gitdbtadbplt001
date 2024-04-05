@@ -42,6 +42,7 @@ sources:
 
 
       - name: sdl_vn_mt_sellout_mega
+        tags: ["vn_mt_pos_transaction", "ingestion"]
         tests:
           - test_null:
                 not_null_columns: ["site_no", "art_no","period"]
@@ -59,6 +60,7 @@ sources:
                   schema: vnmwks_integration
 
       - name: sdl_vn_mt_sellout_coop
+        tags: ["vn_mt_pos_transaction", "ingestion"]
         tests:
           - test_null:
                 not_null_columns: ["sku", "store"]
@@ -75,6 +77,7 @@ sources:
                   store_failures: true
                   schema: vnmwks_integration
       - name: sdl_vn_mt_sellout_vinmart
+        tags: ["vn_mt_pos_transaction", "ingestion"]
         tests:
           - test_null:
                 not_null_columns: ["article", "store"]
@@ -91,6 +94,7 @@ sources:
                   store_failures: true
                   schema: vnmwks_integration
       - name: sdl_vn_dms_history_saleout
+        tags: ["vn_dms_history", "ingestion"]
         tests:
           - test_duplicate:
                 group_by_columns: ["user_id","rsm_name","group_jb","franchise","brand","variant","product_group","dmsproduct_group","product_code","productcodesap","dmsproductid","sku_name","tax","province","cycle"]

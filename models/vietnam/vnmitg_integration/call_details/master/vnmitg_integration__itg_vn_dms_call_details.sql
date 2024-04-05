@@ -27,5 +27,6 @@ final as(
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         run_id::number(14,0) as run_id
     from source
+    where rnk=1
 )
 select * from final
