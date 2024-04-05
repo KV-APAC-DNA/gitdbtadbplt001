@@ -14,7 +14,7 @@ final as(
     select
         dstrbtr_id::varchar(30) as dstrbtr_id,
         trim(cntry_code)::varchar(2) as cntry_code,
-        wh_code::varchar(10) as wh_code,
+        wh_code::varchar(20) as wh_code,
         to_date(date, 'MM/DD/YYYY HH12:MI:SS AM') as date,
         material_code::varchar(50) as material_code,
         bat_number::varchar(20) as bat_number,
