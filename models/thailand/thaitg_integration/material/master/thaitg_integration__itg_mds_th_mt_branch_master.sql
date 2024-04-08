@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="delete from {{this}} where LTRIM(branch_code,0) IN (SELECT LTRIM(branchcode,0) FROM  {{ source('thasdl_raw', 'sdl_mds_th_mt_branch_master') }})"
+        pre_hook="delete from {{this}} where coalesce(LTRIM(branch_code,0),'NA') IN (SELECT coalesce(LTRIM(branchcode,0),'NA') FROM  {{ source('thasdl_raw', 'sdl_mds_th_mt_branch_master') }})"
     )
 }}
 
