@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="delete from {{this}} where lTRIM(brnch_no,0) IN (SELECT lTRIM(branch_code,0) FROM {{ ref('thaitg_integration__itg_mds_th_mt_branch_master') }} );"
+        pre_hook="delete from {{this}} where coalesce(lTRIM(brnch_no,0),'NA') IN (SELECT coalesce(lTRIM(branch_code,0),'NA') FROM {{ ref('thaitg_integration__itg_mds_th_mt_branch_master') }} );"
     )
 }}
 
