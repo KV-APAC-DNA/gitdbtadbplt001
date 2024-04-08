@@ -1,15 +1,14 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['cntry_cd'],
-        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+        incremental_strategy="append",
+        pre_hook="delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }})"
     )
 }}
 with 
 source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }}
 ),
 
 final as
@@ -62,9 +61,10 @@ final as
         current_timestamp()::timestamp_ntz(9) as valid_from,
         '31-dec-9999'::timestamp_ntz(9) as valid_to
     from source
+    where rnk=1
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-        where source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+        and source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
     {% endif %}
 )
 
