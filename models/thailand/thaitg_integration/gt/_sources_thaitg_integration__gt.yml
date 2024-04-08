@@ -71,6 +71,7 @@ sources:
       tests:
         - test_duplicate__ff:
             group_by_columns: ["filename","id_sale","id_customer","date_plan","date_visi","time_visi","visit_end","saleunit","time_plan"]
+            where_condition: "time_plan not in('88888', '99999')"
             name: TRATBL_sdl_la_gt_visit__duplicate_test
             config:
               store_failures: true

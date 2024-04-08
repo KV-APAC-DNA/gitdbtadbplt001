@@ -1,4 +1,4 @@
-{% test test_duplicate__ff(model,failure_reason="Duplicate records present",group_by_columns=None,count_column=None)%}
+{% test test_duplicate__ff(model,failure_reason="Duplicate records present",group_by_columns=None,count_column=None,where_condition=None)%}
 
 {% if group_by_columns!=None %}
     {% set c_pk = "md5(concat(" + group_by_columns|join(",'_',") + "))" %} 
@@ -10,6 +10,9 @@
                     {%- endif -%}
                 {%- endfor %}
             from {{model}}
+            {% if where_condition!=None %}
+                where {{where_condition}}
+            {% endif %}
             group by 
             {% for item in group_by_columns -%}
                 {{item}}
