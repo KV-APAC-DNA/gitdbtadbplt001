@@ -2,8 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['distributor_id','store_id','sales_rep_id','barcode','survey_date'],
-        pre_hook= " delete from {{this}} where (upper(trim(distributor_id)),upper(trim(store_id)),upper(trim(sales_rep_id)),trim(barcode),survey_date) in (select distinct upper(trim(distributor_id)), upper(trim(store_id)), upper(trim(sales_rep_id)), trim(barcode), survey_date from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }})"
+        pre_hook= "delete from {{this}} where substring(filename,6,8)::integer <= (select distinct substring(filename,6,8)::integer from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}) and substring(filename,6,6) = (select distinct substring(filename,6,6) from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }} )"
     )
 }}
 
