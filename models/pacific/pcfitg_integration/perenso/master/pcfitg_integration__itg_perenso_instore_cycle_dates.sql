@@ -15,8 +15,8 @@ final as
 select 
     code::varchar(50) as time,
 	cycle_year::number(4,0) as cycle_year,
-	start_date, --need to work here
-	end_date, --need to work here
+	to_varchar(to_date(start_date::timestamp), 'dd/mm/yyyy') as start_date, --need to work here
+	to_varchar(to_date(end_date::timestamp), 'dd/mm/yyyy') as end_date, --need to work here
 	null::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as update_dt 
