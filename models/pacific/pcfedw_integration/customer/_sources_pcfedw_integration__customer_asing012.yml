@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_pacific_sapbw_plan_lkp
+      tags: ["anz_mds_sdl_to_edw_load",""]
+    - name: sdl_mds_pacific_sap_gl_ciw_mapping
+      tags: ["anz_mds_sdl_to_edw_load",""] 
+    - name: sdl_mds_pacific_px_gl_ciw_mapping     
+      tags: ["anz_mds_sdl_to_edw_load",""] 

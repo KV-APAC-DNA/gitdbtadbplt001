@@ -248,3 +248,5 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+    - name: sdl_mds_pacific_perenso_cycle_dates
+      tags: ["anz_mds_sdl_to_edw_load",""]

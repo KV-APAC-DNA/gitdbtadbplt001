@@ -121,5 +121,9 @@ models:
     config:
       alias: sdl_raw_perenso_constants
       tags: ["anz_perenso_order",""]
+  - name: pcfitg_integration__itg_perenso_instore_cycle_dates
+    config:
+      alias: itg_perenso_instore_cycle_dates
+      tags: ["anz_mds_sdl_to_edw_load",""]
 
 

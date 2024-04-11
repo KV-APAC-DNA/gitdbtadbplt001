@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_fin_accrual_adj_ref
+    config: 
+      alias: edw_fin_accrual_adj_ref
+      tags: ["anz_mds_sdl_to_edw_load",""]
+  
