@@ -13,7 +13,16 @@
                     {{schema}}.thaitg_integration__itg_la_gt_route_header
                 {% endif %}	
     WHERE (COALESCE(UPPER(TRIM(saleunit)),'N/A')) IN (
-        SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') FROM {{ source('thasdl_raw', 'sdl_la_gt_route_header') }} where filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
+        SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') 
+        from
+        {% if target.name=='prod' %}
+                    thawks_integration.wks_la_gt_route_header_pre_load
+                {% else %}
+                    {{schema}}.thawks_integration__wks_la_gt_route_header_pre_load
+                {% endif %} 
+        
+        
+        where filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
     {% endset %}
     { log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Query set to delete records from itg table for file: "~ filename) }}

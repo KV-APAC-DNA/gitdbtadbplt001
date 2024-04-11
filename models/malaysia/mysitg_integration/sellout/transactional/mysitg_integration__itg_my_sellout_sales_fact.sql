@@ -117,7 +117,7 @@ immd as (
         when status = 'DISCON'
         then 'C' || item_bar_cd
       end as flag,
-      row_number() over (partition by item_bar_cd order by flag asc) as row_count
+      row_number() over (partition by ltrim(item_bar_cd,'0') order by flag asc) as row_count
     from (
       select distinct
         item_bar_cd,
@@ -126,7 +126,7 @@ immd as (
       from (
         select
           item_bar_cd,
-          min(item_cd) over (partition by item_bar_cd, status) as item_cd, /* casting on item_cd */
+          min(item_cd) over (partition by ltrim(item_bar_cd,'0'), status) as item_cd, /* casting on item_cd */
           status
         from itg_my_material_dim
       )
