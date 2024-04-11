@@ -12,7 +12,10 @@ imier as (
   select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
 ),
 wks_my_sellout_sales_fact as(
-  select * from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
+  select *,
+    dense_rank() over(partition by dstrbtr_id,try_to_date(sls_ord_dt, 'DD/MM/YYYY') order by filename desc) as rnk 
+from {{ ref('myswks_integration__wks_my_sellout_sales_fact') }}
+qualify rnk=1
 ),
 itg_my_material_dim as (
     select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
