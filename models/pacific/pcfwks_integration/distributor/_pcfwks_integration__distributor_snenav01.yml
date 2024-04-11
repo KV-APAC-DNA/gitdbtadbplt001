@@ -1,11 +1,39 @@
 version: 2
 
 models:
+  - name: pcfwks_integration__wks_dstr_inv_api
+    config: 
+      alias: wks_dstr_inv_api
+      tags: ["",""]
   - name: pcfwks_integration__wks_dstr_inv_chs
     config: 
       alias: wks_dstr_inv_chs
       tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_inv_sigma
+    config: 
+      alias: wks_dstr_inv_sigma
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_inv_symbion
+    config: 
+      alias: wks_dstr_inv_symbion
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_metcash_inv
+    config: 
+      alias: wks_dstr_metcash_inv
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_so_api
+    config: 
+      alias: wks_dstr_so_api
+      tags: ["",""]
   - name: pcfwks_integration__wks_dstr_so_chs
     config: 
       alias: wks_dstr_so_chs
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_so_sigma
+    config: 
+      alias: wks_dstr_so_sigma
+      tags: ["",""]
+  - name: pcfwks_integration__wks_dstr_so_symbion
+    config: 
+      alias: wks_dstr_so_symbion
       tags: ["",""]

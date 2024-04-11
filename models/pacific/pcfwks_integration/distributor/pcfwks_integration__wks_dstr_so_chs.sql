@@ -1,6 +1,6 @@
 with wks_au_dstr_chs_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_chs_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_chs_header') }}
 ),
 sdl_chs_dstr as 
 (

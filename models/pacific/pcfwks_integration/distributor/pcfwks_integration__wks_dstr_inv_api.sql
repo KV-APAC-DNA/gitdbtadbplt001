@@ -1,6 +1,6 @@
-with wks_au_dstr_api_header as 
+with sdl_au_dstr_api_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_api_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_api_header') }}
 ),
 sdl_api_dstr as 
 (
@@ -31,7 +31,7 @@ a as
         (b.soh_qty * b.cost_price) AS inventory_amt,
         b.so_backorder_qty as back_order_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 final as

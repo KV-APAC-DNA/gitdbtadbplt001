@@ -1,6 +1,6 @@
-with wks_au_dstr_symbion_header as 
+with sdl_au_dstr_symbion_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_symbion_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_symbion_header') }}
 ),
 sdl_symbion_dstr as 
 (
@@ -29,7 +29,7 @@ combined as
         date_trunc('MONTH',to_date(right(a.mtd, 9), 'DD MON YY')) AS so_date,
         b.month_01 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -41,7 +41,7 @@ combined as
         to_date(a.month_01,'mon yy') as so_date,
         b.month_01 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -50,10 +50,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_02,'mon yy') as so_date,
         b.month_02 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -62,10 +62,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_03,'mon yy') as so_date,
         b.month_03 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -74,10 +74,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_04,'mon yy') as so_date,
         b.month_04 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -86,10 +86,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_05,'mon yy') as so_date,
         b.month_05 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -98,10 +98,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_06,'mon yy') as so_date,
         b.month_06 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -110,10 +110,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_07,'mon yy') as so_date,
         b.month_07 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -122,10 +122,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_08,'mon yy') as so_date,
         b.month_08 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -134,10 +134,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_09,'mon yy') as so_date,
         b.month_09 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -146,10 +146,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_10,'mon yy') as so_date,
         b.month_10 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -158,10 +158,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_11,'mon yy') as so_date,
         b.month_11 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -170,10 +170,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_12,'mon yy') as so_date,
         b.month_12 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
     union all
     select 
@@ -182,10 +182,10 @@ combined as
         b.symbion_product_desc,
         b.supplier_part_no,
         b.ean,
-        to_date(a.month_01,'mon yy') as so_date,
+        to_date(a.month_13,'mon yy') as so_date,
         b.month_13 AS sellout_qty,
         b.global_std_cost
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
 ),
 final as

@@ -9,3 +9,7 @@ models:
     config: 
       alias: sdl_symbion_dstr_raw
       tags: ["j_pa_pharma_inv_symbion","ingestion"]
+  - name: pcfitg_integration__sdl_ig_inventory_data_raw
+    config: 
+      alias: sdl_ig_inventory_data_raw
+      tags: ["j_pa_ig_inv_metcash","ingestion"]

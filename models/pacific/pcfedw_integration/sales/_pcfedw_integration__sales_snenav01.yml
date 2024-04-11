@@ -5,3 +5,7 @@ models:
     config: 
       alias: edw_pacific_field_sales
       tags: ["anz_perenso_field_sales","transformation"]
+  - name: pcfedw_integration__edw_pacific_field_sales_analysis
+    config: 
+      alias: edw_pacific_field_sales_analysis
+      tags: ["anz_perenso_field_sales","transformation"]

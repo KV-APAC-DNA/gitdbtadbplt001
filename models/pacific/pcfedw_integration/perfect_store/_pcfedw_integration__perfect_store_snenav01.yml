@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_pacific_perfect_store_targets
+    config: 
+      alias: edw_pacific_perfect_store_targets
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfedw_integration__edw_pacific_perfect_store_weights
+    config: 
+      alias: edw_pacific_perfect_store_weights
+      tags: ["j_ap_trax_etl_framework","transformation"]

@@ -1,6 +1,6 @@
-with wks_au_dstr_symbion_header as 
+with sdl_au_dstr_symbion_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_symbion_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_symbion_header') }}
 ),
 sdl_symbion_dstr as 
 (
@@ -31,7 +31,7 @@ a as
         b.soh_qty AS inventory_qty,
         b.soh_amt AS inventory_amt,
         b.back_order as back_order_qty
-    from wks_au_dstr_symbion_header a,
+    from sdl_au_dstr_symbion_header a,
         sdl_symbion_dstr b
 ),
 final as 

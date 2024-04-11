@@ -1,6 +1,6 @@
-with wks_au_dstr_sigma_header as 
+with sdl_au_dstr_sigma_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_sigma_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_sigma_header') }}
 ),
 sdl_sigma_dstr as 
 (
@@ -136,7 +136,7 @@ month_1 as
         ) as so_date,
         a.month_01 as so_qty
     from sdl_sigma_detail a,
-    wks_au_dstr_sigma_header b
+    sdl_au_dstr_sigma_header b
 ),
 month_2 as
 (
@@ -151,7 +151,7 @@ month_2 as
         ) as so_date,
         a.month_02 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_3 as
 (
@@ -166,7 +166,7 @@ month_3 as
         ) as so_date,
         a.month_03 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_4 as
 (
@@ -181,7 +181,7 @@ month_4 as
         ) as so_date,
         a.month_04 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_5 as
 (
@@ -196,7 +196,7 @@ month_5 as
         ) as so_date,
         a.month_05 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_6 as
 (
@@ -211,7 +211,7 @@ month_6 as
         ) as so_date,
         a.month_06 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_7 as
 (
@@ -226,7 +226,7 @@ month_7 as
         ) as so_date,
         a.month_07 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_8 as
 (
@@ -241,7 +241,7 @@ month_8 as
         ) as so_date,
         a.month_08 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_9 as
 (
@@ -256,7 +256,7 @@ month_9 as
         ) as so_date,
         a.month_09 as so_qty
     from sdl_sigma_detail a,
-    wks_au_dstr_sigma_header b
+    sdl_au_dstr_sigma_header b
 ),
 month_10 as
 (
@@ -271,7 +271,7 @@ month_10 as
         ) as so_date,
         a.month_10 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_11 as
 (
@@ -286,7 +286,7 @@ month_11 as
         ) as so_date,
         a.month_11 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_12 as
 (
@@ -301,7 +301,7 @@ month_12 as
         ) as so_date,
         a.month_12 as so_qty
     from sdl_sigma_detail a,
-    wks_au_dstr_sigma_header b
+    sdl_au_dstr_sigma_header b
 ),
 month_13 as
 (
@@ -316,7 +316,7 @@ month_13 as
         ) as so_date,
         a.month_13 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_14 as
 (
@@ -331,7 +331,7 @@ month_14 as
         ) as so_date,
         a.month_14 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_15 as
 (
@@ -346,7 +346,7 @@ month_15 as
         ) as so_date,
         a.month_15 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 month_16 as
 (
@@ -361,7 +361,7 @@ month_16 as
         ) as so_date,
         a.month_16 as so_qty
     from sdl_sigma_detail a,
-        wks_au_dstr_sigma_header b
+        sdl_au_dstr_sigma_header b
 ),
 combined as
 (

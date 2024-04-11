@@ -1,6 +1,6 @@
-with wks_au_dstr_chs_header as 
+with sdl_au_dstr_chs_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_chs_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_chs_header') }}
 ),
 sdl_chs_dstr as
 (
@@ -26,12 +26,12 @@ a as
         b.product_desc,
         b.supplier_product_code,
         b.primary_gtin,
-        ty_to_date(inv_dt, 'DD-MM-YYYY') AS inv_date,
+        try_to_date(inv_dt, 'DD-MM-YYYY') AS inv_date,
         b.soh_qty AS inventory_qty,
         b.soh_amt AS inventory_amt,
         b.back_order_qty as back_order_qty,
         b.last_cost
-    FROM wks_au_dstr_chs_header a,
+    FROM sdl_au_dstr_chs_header a,
         sdl_chs_dstr as b
 ),
 b as

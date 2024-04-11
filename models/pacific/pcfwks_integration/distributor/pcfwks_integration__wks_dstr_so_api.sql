@@ -1,6 +1,6 @@
-with wks_au_dstr_api_header as 
+with sdl_au_dstr_api_header as 
 (
-    select * from snappcfwks_integration.wks_au_dstr_api_header
+    select * from {{ source('pcfsdl_raw', 'sdl_au_dstr_api_header') }}
 ),
 sdl_api_dstr as 
 (
@@ -30,7 +30,7 @@ month_1 as
         TO_DATE(Trim(a.month_01), 'MON-YY') AS so_date,
         b.month_01 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_2 as
@@ -44,7 +44,7 @@ month_2 as
         TO_DATE(Trim(a.month_02), 'MON-YY') AS so_date,
         b.month_02 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_3 as
@@ -58,7 +58,7 @@ month_3 as
         TO_DATE(Trim(a.month_03), 'MON-YY') AS so_date,
         b.month_03 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_4 as
@@ -73,7 +73,7 @@ month_4 as
         TO_DATE(Trim(a.month_04), 'MON-YY') AS so_date,
         b.month_04 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_5 as
@@ -87,7 +87,7 @@ month_5 as
         TO_DATE(Trim(a.month_05), 'MON-YY') AS so_date,
         b.month_05 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_6 as
@@ -101,7 +101,7 @@ month_6 as
         TO_DATE(Trim(a.month_06), 'MON-YY') AS so_date,
         b.month_06 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_7 as
@@ -115,7 +115,7 @@ month_7 as
         TO_DATE(Trim(a.month_07), 'MON-YY') AS so_date,
         b.month_07 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_8 as
@@ -129,7 +129,7 @@ month_8 as
         TO_DATE(Trim(a.month_08), 'MON-YY') AS so_date,
         b.month_08 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_9 as
@@ -143,7 +143,7 @@ month_9 as
         TO_DATE(Trim(a.month_09), 'MON-YY') AS so_date,
         b.month_09 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_10 as
@@ -157,7 +157,7 @@ month_10 as
         TO_DATE(Trim(a.month_10), 'MON-YY') AS so_date,
         b.month_10 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_11 as
@@ -171,7 +171,7 @@ month_11 as
         TO_DATE(Trim(a.month_11), 'MON-YY') AS so_date,
         b.month_11 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_12 as
@@ -185,7 +185,7 @@ month_12 as
         TO_DATE(Trim(a.month_12), 'MON-YY') AS so_date,
         b.month_12 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 month_13 as
@@ -199,7 +199,7 @@ month_13 as
         TO_DATE(Trim(a.month_13), 'MON-YY') AS so_date,
         b.month_13 AS sellout_qty,
         b.cost_price
-    from wks_au_dstr_api_header a,
+    from sdl_au_dstr_api_header a,
         sdl_api_dstr b
 ),
 combined as

@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snappcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_trax_fct_psd_kpis
+      - name: sdl_trax_md_product
+      - name: sdl_trax_md_store
