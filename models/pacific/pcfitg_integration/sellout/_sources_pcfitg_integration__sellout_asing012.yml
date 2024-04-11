@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_pharm_sellout_weekly_raw
+      tags: ["J_Pac_Pharm_data_load",""]

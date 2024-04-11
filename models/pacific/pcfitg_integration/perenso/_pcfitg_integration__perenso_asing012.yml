@@ -125,6 +125,7 @@ models:
     config:
       alias: itg_perenso_instore_cycle_dates
       tags: ["anz_mds_sdl_to_edw_load",""]
+  
   - name: pcfitg_integration__itg_pacific_perenso_call_coverage_targets
     config:
       alias: itg_pacific_perenso_call_coverage_targets

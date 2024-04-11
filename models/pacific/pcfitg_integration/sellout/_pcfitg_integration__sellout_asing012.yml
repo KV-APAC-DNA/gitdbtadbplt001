@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_pharm_sellout_raw
+    config:
+      alias: itg_pharm_sellout_raw
+      tags: ["J_Pac_Pharm_data_load",""]

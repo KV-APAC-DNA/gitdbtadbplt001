@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_pharm_sellout_fact
+    config:
+      alias: edw_pharm_sellout_fact
+      tags: ["J_Pac_Pharm_data_load",""]
