@@ -42,7 +42,7 @@ where (
 final as
 (
     select * from jnj 
-    union all
+    union
     select * from dksh
 )
 
