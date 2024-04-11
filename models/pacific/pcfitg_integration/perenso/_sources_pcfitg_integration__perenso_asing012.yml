@@ -250,3 +250,7 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_perenso_cycle_dates
       tags: ["anz_mds_sdl_to_edw_load",""]
+    - name: sdl_pacific_perenso_call_coverage_targets
+      tags: ["anz_perenso_weekly_load",""]  
+    - name: sdl_over_and_above_points
+      tags: ["anz_perenso_weekly_load",""]    

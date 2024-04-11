@@ -125,5 +125,21 @@ models:
     config:
       alias: itg_perenso_instore_cycle_dates
       tags: ["anz_mds_sdl_to_edw_load",""]
+  - name: pcfitg_integration__itg_pacific_perenso_call_coverage_targets
+    config:
+      alias: itg_pacific_perenso_call_coverage_targets
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__sdl_raw_pacific_perenso_call_coverage_targets
+    config:
+      alias: sdl_raw_pacific_perenso_call_coverage_targets
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__itg_perenso_over_and_above_points
+    config:
+      alias: itg_perenso_over_and_above_points
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__sdl_raw_perenso_over_and_above_points
+    config:
+      alias: sdl_raw_perenso_over_and_above_points
+      tags: ["anz_perenso_weekly_load",""]
 
 
