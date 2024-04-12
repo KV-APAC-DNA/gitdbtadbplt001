@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_perenso_order_fact
+    config:
+      alias: edw_perenso_order_fact
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_call
+    config:
+      alias: edw_perenso_call
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_compliance
+    config:
+      alias: edw_perenso_compliance
+      tags: ["anz_perenso_fact_load", "transformation"]
+ 
+ 
+ 
