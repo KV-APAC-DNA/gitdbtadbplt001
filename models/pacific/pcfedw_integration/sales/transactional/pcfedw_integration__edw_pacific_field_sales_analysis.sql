@@ -131,7 +131,7 @@ final as
         etd.cal_mnth_nm,
         epfs.diary_item_type_desc,
         case
-            when upper(epfs.diary_item_category) = 'activity on account' then 'call'
+            when upper(epfs.diary_item_category) = 'activity on account' then 'CALL'
             else epfs.diary_item_category
         end diary_item_category,
         epfs.diary_start_date,
@@ -185,21 +185,21 @@ final as
         epad.acct_au_pharma_ssr_state,
         epad.acct_au_pharma_ssr_territory,
         case
-            when upper(epad.acct_ind_groc_state) != 'not assigned' then epad.acct_ind_groc_state
-            when upper(epad.acct_au_pharma_state) != 'not assigned' then epad.acct_au_pharma_state
-            when upper(epad.acct_nz_pharma_state) != 'not assigned' then epad.acct_nz_pharma_state
-            when upper(epad.acct_nz_groc_state) != 'not assigned' then epad.acct_nz_groc_state
-            when upper(epad.acct_ssr_team_leader) != 'not assigned' then epad.acct_ssr_team_leader
-            else 'not assigned'
+            when upper(epad.acct_ind_groc_state) != 'NOT ASSIGNED' then epad.acct_ind_groc_state
+            when upper(epad.acct_au_pharma_state) != 'NOT ASSIGNED' then epad.acct_au_pharma_state
+            when upper(epad.acct_nz_pharma_state) != 'NOT ASSIGNED' then epad.acct_nz_pharma_state
+            when upper(epad.acct_nz_groc_state) != 'NOT ASSIGNED' then epad.acct_nz_groc_state
+            when upper(epad.acct_ssr_team_leader) != 'NOT ASSIGNED' then epad.acct_ssr_team_leader
+            else 'NOT ASSIGNED'
         end acct_tsm,
         case
-            when upper(epad.acct_ind_groc_territory) != 'not assigned' then epad.acct_ind_groc_territory
-            when upper(epad.acct_au_pharma_territory) != 'not assigned' then epad.acct_au_pharma_territory
-            when upper(epad.acct_nz_pharma_territory) != 'not assigned' then epad.acct_nz_pharma_territory
-            when upper(epad.acct_nz_groc_territory) != 'not assigned' then epad.acct_nz_groc_territory
-            when upper(epad.acct_ssr_territory) != 'not assigned' then epad.acct_ssr_territory
-            when upper(epad.acct_au_pharma_ssr_territory) != 'not assigned' then epad.acct_au_pharma_ssr_territory
-            else 'not assigned'
+            when upper(epad.acct_ind_groc_territory) != 'NOT ASSIGNED' then epad.acct_ind_groc_territory
+            when upper(epad.acct_au_pharma_territory) != 'NOT ASSIGNED' then epad.acct_au_pharma_territory
+            when upper(epad.acct_nz_pharma_territory) != 'NOT ASSIGNED' then epad.acct_nz_pharma_territory
+            when upper(epad.acct_nz_groc_territory) != 'NOT ASSIGNED' then epad.acct_nz_groc_territory
+            when upper(epad.acct_ssr_territory) != 'NOT ASSIGNED' then epad.acct_ssr_territory
+            when upper(epad.acct_au_pharma_ssr_territory) != 'NOT ASSIGNED' then epad.acct_au_pharma_ssr_territory
+            else 'NOT ASSIGNED'
         end acct_terriroty,
         epad.acct_store_code as acct_store_code,
         epad.acct_fax_opt_out,
@@ -218,7 +218,7 @@ final as
         epfs.to_do_end_date,
         epfs.work_item_desc,
         case
-            when upper(epfs.work_item_type) = 'check the store' then 'walk the store'
+            when upper(epfs.work_item_type) = 'CHECK THE STORE' THEN 'WALK THE STORE'
             else epfs.work_item_type
         end work_item_type,
         epfs.work_item_start_date,
@@ -247,23 +247,23 @@ final as
         epfs.survey_target,
         survey_category,
         case
-            when upper(perenso_source) = 'call' then epad.weekly_targets
+            when upper(perenso_source) = 'CALL' then epad.weekly_targets
             else null
         end call_weekly_targets,
         case
-            when upper(perenso_source) = 'call' then epad.monthly_targets /(
+            when upper(perenso_source) = 'CALL' then epad.monthly_targets /(
                 max(jj_mnth_wk) over (partition by etd.jj_year, etd.jj_mnth_id)
             )
             else null
         end call_monthly_targets,
         case
-            when upper(perenso_source) = 'call' then epad.yearly_targets
+            when upper(perenso_source) = 'CALL' then epad.yearly_targets
             else null
         end call_yearly_targets,
         case
-            when upper(perenso_source) = 'call' then epad.call_per_week
+            when upper(perenso_source) = 'CALL' then epad.call_per_week
             else null
-        end calls_per_week,
+        end CALLs_per_week,
         call_description,
         assigned_user_key,
         assigned_user_name,

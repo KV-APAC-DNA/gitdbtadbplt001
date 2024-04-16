@@ -64,7 +64,7 @@ final as
         sales_week_3,
         sales_week_2,
         sales_week_1,
-        sales_this_week
+        sales_this_week,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
     from source
     {% if is_incremental() %}

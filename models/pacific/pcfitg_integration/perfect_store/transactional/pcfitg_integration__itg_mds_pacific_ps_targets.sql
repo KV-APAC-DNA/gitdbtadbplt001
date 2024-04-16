@@ -13,13 +13,13 @@ with source as
 final as
 (
     select 
-        name::varchar(100) as name,
+        name::varchar(100) as market,
         channel::varchar(100) as channel,
-        re_customer_flag::varchar(100) as re_customer_flag,
+        re_customer_flag::varchar(100) as retail_env,
         kpi::varchar(100) as kpi,
         attribute_1::varchar(100) as attribute_1,
         attribute_2::varchar(100) as attribute_2,
-        value::number(20,4) as value,
+        value::number(20,4) as target,
         current_timestamp::timestamp_ntz(9) as crtd_dttm,
         valid_from::timestamp_ntz(9) as valid_from,
         valid_to::timestamp_ntz(9) as valid_to

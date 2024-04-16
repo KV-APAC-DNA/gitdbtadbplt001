@@ -90,17 +90,18 @@ a as
 ),
 final as 
 (
-    select b.sap_prnt_cust_key as sap_parent_customer_key,
-        upper(b.sap_prnt_cust_desc) as sap_parent_customer_desc,
-        product_code as dstr_prod_cd,
-        product_desc as dstr_product_desc,
-        supplier_product_code as matl_num,
-        ean,
+    select 
+        b.sap_prnt_cust_key::varchar(12) as sap_parent_customer_key,
+        upper(b.sap_prnt_cust_desc)::varchar(75) as sap_parent_customer_desc,
+        product_code::varchar(50) as dstr_prod_cd,
+        product_desc::varchar(255) as dstr_product_desc,
+        supplier_product_code::varchar(50) as matl_num,
+        ean::varchar(50) as ean,
         try_to_date(inv_date, 'YYYYMMDD') as inv_date,
-        back_order_qty,
-        std_cost,
-        soh_qty as inventory_qty,
-        soh_amt as inventory_amt,
+        back_order_qty::number(10,4) as back_order_qty,
+        std_cost::number(10,4) as std_cost,
+        soh_qty::number(10,4) as inventory_qty,
+        soh_amt::number(10,4) as inventory_amt,
         current_timestamp::timestamp_ntz(9) as crtd_dttm
     from a
     left join 

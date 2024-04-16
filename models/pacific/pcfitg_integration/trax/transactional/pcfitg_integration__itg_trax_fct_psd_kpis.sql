@@ -1,8 +1,9 @@
 {{
-    config(
+    config
+    (
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['visit_date']
+        incremental_strategy="append",
+        pre_hook="delete from {{this}} where visit_date in (select distinct visit_date from {{ source('pcfsdl_raw', 'sdl_trax_fct_psd_kpis') }})"
     )
 }}
 with source as
@@ -68,5 +69,5 @@ final as
         current_timestamp::timestamp_ntz(9) as crt_dttm
     from source
 )
-select * from source
+select * from final
 

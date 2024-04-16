@@ -17,7 +17,7 @@ final as
         channel::varchar(100) as channel,
         retail_environment::varchar(100) as retail_env,
         kpi_name::varchar(100) as kpi,
-        weight::number(20,4) as weight,
+        value::number(20,4) as weight,
         current_timestamp::timestamp_ntz(9) as crtd_dttm
     from source    
 )

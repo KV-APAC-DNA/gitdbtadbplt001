@@ -21,9 +21,9 @@ wks_dstr_inv_symbion as
 (
     select * from {{ ref('pcfwks_integration__wks_dstr_inv_symbion') }}
 ),
-wks_dstr_inv_metcash as
+wks_dstr_metcash_inv as
 (
-    select * from {{ ref('pcfwks_integration__wks_dstr_inv_metcash') }}
+    select * from {{ ref('pcfwks_integration__wks_dstr_metcash_inv') }}
 ),
 api as
 (
@@ -34,7 +34,7 @@ api as
         dstr_product_desc,
         matl_num,
         ean,
-        cast(inv_date as Date),
+        cast(inv_date as Date) as inv_date,
         inventory_qty,
         inventory_amt,
         back_order_qty,
@@ -116,18 +116,18 @@ combined as
 ),
 metcash as
 (
-    Select 
+    select 
          md5
         (
             concat
             (
-                UPPER(sap_parent_customer_desc),
-                ltrim(dstr_prod_cd, '0'),
+                UPPER(sap_prnt_cust_desc),
+                ltrim(prod_cd, '0'),
                 inv_date
             )       
         ) as hash_key,
         sap_prnt_cust_key as sap_parent_customer_key,
-        SAP_PRNT_CUST_DESC as sap_parent_customer_desc,
+        sap_prnt_cust_desc as sap_parent_customer_desc,
         prod_cd as dstr_prod_cd,
         prod_desc as dstr_product_desc,
         null as matl_num,
@@ -142,6 +142,7 @@ metcash as
 final as
 (
     select 
+        hash_key,
         sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
         sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
         dstr_prod_cd::varchar(30) as dstr_prod_cd,
@@ -153,13 +154,13 @@ final as
         inventory_amt::number(16,4) as inventory_amt,
         back_order_qty::number(16,4) as back_order_qty,
         std_cost::number(10,4) as std_cost,
-        current_timestamp as crt_dttm
+        current_timestamp::timestamp_ntz(9) as crt_dttm
         from
         (
             select * from combined 
             union all
             select * from metcash
         )
-),
+)
 select * from final
 

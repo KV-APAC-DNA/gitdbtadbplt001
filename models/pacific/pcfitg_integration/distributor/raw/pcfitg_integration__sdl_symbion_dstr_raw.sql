@@ -49,9 +49,9 @@ final as
         month_13,
         current_timestamp::timestamp_ntz(9) as crtd_dttm
     from source
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    where source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
-    {% endif %}
+    -- {% if is_incremental() %}
+    -- -- this filter will only be applied on an incremental run
+    -- where source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
+    -- {% endif %}
 )
 select * from final

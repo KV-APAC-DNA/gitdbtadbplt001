@@ -37,13 +37,13 @@ a as
 final as 
 (
     select 
-        b.sap_prnt_cust_key as sap_parent_customer_key,
-        upper(a.dstr_nm) as sap_parent_customer_desc,
-        a.symbion_product_no as dstr_prod_cd,
-        a.symbion_product_desc as dstr_product_desc,
-        a.supplier_part_no as matl_num,
-        a.ean as ean,
-        a.inv_date,
+        b.sap_prnt_cust_key::varchar(12) as sap_parent_customer_key,
+        upper(a.dstr_nm)::varchar(7) as sap_parent_customer_desc,
+        a.symbion_product_no::varchar(255) as dstr_prod_cd,
+        a.symbion_product_desc::varchar(255) as dstr_product_desc,
+        a.supplier_part_no::varchar(255) as matl_num,
+        a.ean::varchar(255) as ean,
+        a.inv_date::date as inv_date,
         cast(a.inventory_qty as numeric(16, 4)) as inventory_qty,
         cast(a.inventory_amt as numeric(16, 4)) as inventory_amt,
         cast(a.back_order_qty as numeric(16, 4)) as back_order_qty,

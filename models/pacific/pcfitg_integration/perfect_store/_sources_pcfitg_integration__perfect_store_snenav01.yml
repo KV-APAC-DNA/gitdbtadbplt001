@@ -11,3 +11,4 @@ sources:
     tables:
       - name: sdl_mds_pacific_ps_targets
       - name: sdl_mds_pacific_ps_weights
+      - name: sdl_mds_pacific_ps_msl
