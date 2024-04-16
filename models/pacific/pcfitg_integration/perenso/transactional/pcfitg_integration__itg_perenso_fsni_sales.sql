@@ -22,7 +22,7 @@ final as(
         retail_barcode::varchar(30) as prod_ean,
         banner::varchar(50) as banner,
         store_number::varchar(20) as store_cd,
-        store_name::varchar(100),
+        store_name::varchar(100) as store_name,
         billing_document::varchar(30) as bill_doc,
         to_date(billing_date, 'DD.MM.YYYY') as bill_dt,
         to_date(pricing_date, 'DD.MM.YYYY') as pricing_dt,
