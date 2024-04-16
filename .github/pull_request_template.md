@@ -57,4 +57,8 @@ addressed, and remove any items that are not relevant to this PR.
 {%- if project.warehouse == 'redshift' %}
 - [ ] I have added sort and dist keys to models materialized as tables.
 - [ ] I have validated the SQL in any late-binding views.
+- [ ] I have done the structural validation
+- [ ] I have verified all date columns & date functions and output
+- [ ] I have checked the important dimension tables and their keys for extra spaces that must be trimmed
+- [ ] I have checked all the references and sources in each model
 {% endif %}
