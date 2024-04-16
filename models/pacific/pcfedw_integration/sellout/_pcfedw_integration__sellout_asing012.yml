@@ -5,3 +5,7 @@ models:
     config:
       alias: edw_pharm_sellout_fact
       tags: ["J_Pac_Pharm_data_load",""]
+  - name: pcfedw_integration__vw_pacific_sellout
+    config:
+      alias: vw_pacific_sellout
+      tags: ["",""]

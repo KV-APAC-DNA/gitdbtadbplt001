@@ -5,9 +5,9 @@ with source as
 final as
 (
 select 
-    display_type,
-    points,
-    run_id,
+    display_type::varchar(256) as oa_display_type,
+    points::number(10,3) as points,
+    run_id::number(14,0) as run_id,
     current_timestamp()::timestamp_ntz(9) as create_dt,
     current_timestamp()::timestamp_ntz(9) as update_dt
 from source

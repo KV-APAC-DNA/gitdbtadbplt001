@@ -5,4 +5,8 @@ models:
     config: 
       alias: edw_fin_accrual_adj_ref
       tags: ["anz_mds_sdl_to_edw_load",""]
+  - name: pcfedw_integration__vw_iri_scan_sales
+    config: 
+      alias: vw_iri_scan_sales
+      tags: ["",""]
   

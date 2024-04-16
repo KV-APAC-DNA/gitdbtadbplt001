@@ -11,4 +11,7 @@ sources:
     tables:
     - name: sdl_mds_pacific_ciw_adjustment
       tags: ["anz_mds_sdl_to_edw_load",""]
+    - name: sdl_mds_pacific_acct_nielsencode_mapping
+      tags: ["",""]
+
       

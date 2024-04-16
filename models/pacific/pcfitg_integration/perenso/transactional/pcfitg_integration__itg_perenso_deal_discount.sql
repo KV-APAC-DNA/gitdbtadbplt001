@@ -7,7 +7,7 @@ final as
     select 
     deal_key::number(10,0) as deal_key,
 	deal_desc::varchar(255) as deal_desc,
-	to_date(to_varchar(to_date(start_date,'dd/mm/yyyy'),'yyyy-mm-dd'),'yyyy-mm-dd') as star_date,
+	to_date(to_varchar(to_date(start_date,'dd/mm/yyyy'),'yyyy-mm-dd'),'yyyy-mm-dd') as start_date,
     to_date(to_varchar(to_date(end_date,'dd/mm/yyyy'),'yyyy-mm-dd'),'yyyy-mm-dd') as end_date,
 	short_desc::varchar(255) as short_desc,
 	disc_key::number(10,0) as disc_key,
