@@ -7,7 +7,7 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw','sdl_th_tesco_transdata') }}
+    select *, dense_rank() over(partition by to_date(ir_date), ltrim(warehouse,0), ltrim(supplier_id,0) order by file_name desc) as rnk from {{ source('thasdl_raw','sdl_th_tesco_transdata') }}
 ),
 final as 
 (
@@ -28,6 +28,7 @@ final as
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    where rnk=1
 )
 
 select * from final
