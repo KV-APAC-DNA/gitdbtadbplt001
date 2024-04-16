@@ -39,7 +39,7 @@ etd as (select jj_mnth_id,
         from edw_time_dim
 
         group by jj_mnth_id),
-final as 
+transformed as 
 (select ipoh.order_key,
 
        ipoh.order_type_key,
@@ -171,6 +171,48 @@ and   ipoh.acct_key = ipa.acct_key(+)
 
 and   (extract(year from delvry_dt)||lpad(extract(month from delvry_dt),2,0))::number = etd.jj_mnth_id(+)
 
+),
+final as (
+select
+order_key::number(10,0) as order_key,
+order_type_key::number(10,0) as order_type_key,
+order_type_desc::varchar(255) as order_type_desc,
+acct_key::number(10,0) as acct_key,
+order_date::date as order_date,
+order_header_status_key::number(10,0) as order_header_status_key,
+charge::varchar(256) as charge,
+confirmation::varchar(256) as confirmation,
+diary_item_key::number(10,0) as diary_item_key,
+work_item_key::number(10,0) as work_item_key,
+account_order_no::varchar(256) as account_order_no,
+delvry_instns::varchar(256) as delvry_instns,
+batch_key::number(10,0) as batch_key,
+line_key::number(10,0) as line_key,
+prod_key::number(10,0) as prod_key,
+unit_qty::number(10,0) as unit_qty,
+entered_qty::number(10,0) as entered_qty,
+entered_unit_key::number(10,0) as entered_unit_key,
+list_price::number(10,2) as list_price,
+nis::number(10,2) as nis,
+rrp::number(10,2) as rrp,
+credit_line_key::number(10,0) as credit_line_key,
+credited::varchar(256) as credited,
+disc_key::number(10,0) as disc_key,
+branch_key::number(10,0) as branch_key,
+dist_acct::varchar(100) as dist_acct,
+delvry_dt::date as delvry_dt,
+order_batch_status_key::number(10,0) as order_batch_status_key,
+suffix::varchar(10) as suffix,
+sent_dt::date as sent_dt,
+deal_key::number(10,0) as deal_key,
+deal_desc::varchar(255) as deal_desc,
+start_date::date as start_date,
+end_date::date as end_date,
+short_desc::varchar(255) as short_desc,
+discount_desc::varchar(255) as discount_desc,
+order_header_status::varchar(255) as order_header_status,
+order_batch_status::varchar(255) as order_batch_status,
+order_currency_cd::varchar(12) as order_currency_cd
+from transformed
 )
-
 select * from final

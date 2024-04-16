@@ -48,7 +48,7 @@ itg_perenso_constants as (
     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
 ),
 itg_perenso_instore_cycle_dates as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
 ),
 ipicd as (select  "TIME", 
 
@@ -68,9 +68,9 @@ ipicd as (select  "TIME",
 
 from itg_perenso_instore_cycle_dates ipicd),
 itg_perenso_over_and_above_points as (
-select * from 
+select * from DEV_DNA_CORE.ASING012_WORKSPACE.PCFITG_INTEGRATION__ITG_PERENSO_OVER_AND_ABOVE_POINTS
 ),
-final as (
+transformed as (
 select 'Over & Above' as perenso_source,
 
 		'Over & Above' as todo_type,		--IPC1.CONST_DESC AS TODO_TYPE,
@@ -183,11 +183,47 @@ and   ipdit.category = ipc3.const_key(+)
 
 and   ipwi.work_item_type = ipc4.const_key(+)
 
-and   trunc(ipdi.start_time) >= ipicd.start_date(+)
+and   ipdi.start_time::date >= ipicd.start_date(+)::date
 
-and   trunc(ipdi.start_time) <= ipicd.end_date(+)
+and   ipdi.start_time::date <= ipicd.end_date(+)::date
 
-and   upper(ipto.option_desc) = upper(ioaap.oa_display_type(+))
+and   upper(ipto.option_desc) = upper(ioaap.display_type(+))
+),
+final as (
+select 
+perenso_source::varchar(12) as perenso_source,
+todo_type::varchar(12) as todo_type,
+to_do_option_desc::varchar(256) as to_do_option_desc,
+store_chk_hdr_key::number(10,0) as store_chk_hdr_key,
+store_chk_date::timestamp_ntz(9) as store_chk_date,
+oa_acct_key::number(10,0) as oa_acct_key,
+prod_grp_key::number(10,0) as prod_grp_key,
+create_user_key::number(10,0) as create_user_key,
+over_and_above_key::number(10,0) as over_and_above_key,
+oa_start_date::timestamp_ntz(9) as oa_start_date,
+oa_end_date::timestamp_ntz(9) as oa_end_date,
+batch_count::number(10,0) as batch_count,
+todo_desc::varchar(255) as todo_desc,
+to_do_start_date::timestamp_ntz(9) as to_do_start_date,
+to_do_end_date::timestamp_ntz(9) as to_do_end_date,
+activated::varchar(10) as activated,
+over_and_above_notes::varchar(255) as over_and_above_notes,
+st_chk_acct_key::number(10,0) as st_chk_acct_key,
+diary_item_type_desc::varchar(255) as diary_item_type_desc,
+diary_item_category::varchar(255) as diary_item_category,
+diary_start_time::timestamp_ntz(9) as diary_start_time,
+diary_end_time::timestamp_ntz(9) as diary_end_time,
+diary_complete::varchar(5) as diary_complete,
+count_in_call_rate::varchar(5) as count_in_call_rate,
+work_item_desc::varchar(255) as work_item_desc,
+work_item_type::varchar(255) as work_item_type,
+work_item_start_date::timestamp_ntz(9) as work_item_start_date,
+work_item_end_date::timestamp_ntz(9) as work_item_end_date,
+cycle_start_date::date as cycle_start_date,
+cycle_end_date::date as cycle_end_date,
+cycle_number::varchar(20) as cycle_number,
+oa_points::number(10,3) as oa_points
+from transformed
 )
 select * from final
 

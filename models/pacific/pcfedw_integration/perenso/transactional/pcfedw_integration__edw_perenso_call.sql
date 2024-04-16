@@ -23,7 +23,7 @@ itg_perenso_constants as (
   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
 ),
 itg_perenso_instore_cycle_dates as (
-  select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+  select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
 ),
 ipicd as (select  "TIME", 
 
@@ -44,7 +44,7 @@ ipicd as (select  "TIME",
 from itg_perenso_instore_cycle_dates ipicd),
 
 
-final as (
+transformed as (
 select 'Call' as perenso_source,
 
        ipdit.diary_item_type_key,
@@ -98,6 +98,25 @@ and   trim(ipdit.category) = trim(ipc.const_key)
 and   ipdi.start_time::date >= ipicd.start_date(+)
 
 and   ipdi.start_time::date <= ipicd.end_date(+)
+),
+final as (
+    select
+perenso_source::varchar(4) as perenso_source,
+diary_item_type_key::number(14,0) as diary_item_type_key,
+diary_item_type_desc::varchar(255) as diary_item_type_desc,
+diary_item_key::number(10,0) as diary_item_key,
+diary_start_time::timestamp_ntz(9) as diary_start_time,
+diary_end_time::timestamp_ntz(9) as diary_end_time,
+acct_key::number(10,0) as acct_key,
+diary_complete::varchar(5) as diary_complete,
+diary_item_complete::number(18,0) as diary_item_complete,
+count_in_call_rate::varchar(5) as count_in_call_rate,
+diary_item_category::varchar(255) as diary_item_category,
+create_user_key::number(10,0) as create_user_key,
+cycle_start_date::date as cycle_start_date,
+cycle_end_date::date as cycle_end_date,
+cycle_number::varchar(20) as cycle_number
+from transformed
 )
 select * from final
 

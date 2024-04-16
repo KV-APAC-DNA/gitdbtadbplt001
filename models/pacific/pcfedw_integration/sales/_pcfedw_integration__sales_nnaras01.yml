@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_sls_evolution
+    config:
+      alias: edw_sls_evolution
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_sls_evolution_history
+    config:
+      alias: edw_sls_evolution_history
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_invoice_fact_snapshot
+    config:
+      alias: edw_invoice_fact_snapshot
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+ 
+ 
+ 

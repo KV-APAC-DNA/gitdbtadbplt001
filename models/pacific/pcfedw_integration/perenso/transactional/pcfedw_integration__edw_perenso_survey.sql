@@ -43,7 +43,7 @@ itg_perenso_constants as (
      select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
 ),
 itg_perenso_instore_cycle_dates as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+     select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
 ),
 edw_perenso_survey_target as (
      select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_SURVEY_TARGET
@@ -54,7 +54,7 @@ edw_perenso_account_dim as (
 itg_perenso_product_group as (
      select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT_GROUP
 ),
-final as (
+transformed as (
  select  act.*,
      target_type,
      target,
@@ -170,5 +170,40 @@ and   act.cycle_end_date = tgt.cycle_end_date(+)
 and   act.acct_key = tgt.acct_id(+)
 and   act.prod_grp_key = tgt.prod_grp_key(+)
 and   act.todo_desc = tgt.perenso_questions(+)
+),
+final as (
+select
+perenso_source::varchar(20) as perenso_source,
+todo_type::varchar(20) as todo_type,
+store_chk_hdr_key::number(10,0) as store_chk_hdr_key,
+store_chk_date::timestamp_ntz(9) as store_chk_date,
+line_key::number(10,0) as line_key,
+acct_key::number(10,0) as acct_key,
+prod_grp_key::number(10,0) as prod_grp_key,
+create_user_key::number(10,0) as create_user_key,
+todo_desc::varchar(255) as todo_desc,
+to_do_start_date::timestamp_ntz(9) as to_do_start_date,
+to_do_end_date::timestamp_ntz(9) as to_do_end_date,
+to_do_option_desc::varchar(256) as to_do_option_desc,
+survery_notes::varchar(100) as survery_notes,
+diary_item_type_desc::varchar(255) as diary_item_type_desc,
+diary_item_category::varchar(255) as diary_item_category,
+diary_start_time::timestamp_ntz(9) as diary_start_time,
+diary_end_time::timestamp_ntz(9) as diary_end_time,
+diary_complete::varchar(5) as diary_complete,
+count_in_call_rate::varchar(5) as count_in_call_rate,
+work_item_desc::varchar(255) as work_item_desc,
+work_item_type::varchar(255) as work_item_type,
+work_item_start_date::timestamp_ntz(9) as work_item_start_date,
+work_item_end_date::timestamp_ntz(9) as work_item_end_date,
+cycle_start_date::date as cycle_start_date,
+cycle_end_date::date as cycle_end_date,
+cycle_number::varchar(25) as cycle_number,
+parent_ques_desc::varchar(256) as parent_ques,
+ques_order::number(10,0) as ques_order,
+target_type::varchar(25) as target_type,
+target::number(10,0) as target,
+survey_category::varchar(100) as survey_category
+from transformed
 )
 select * from final

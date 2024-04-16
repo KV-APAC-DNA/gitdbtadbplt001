@@ -11,7 +11,7 @@ edw_perenso_prod_dim as (
 itg_material_uom as (
     select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MATERIAL_UOM
 ),    
-final as (
+transformed as (
 select sls.week_end_dt as cal_date,
 
        etd.jj_wk,
@@ -34,7 +34,7 @@ select sls.week_end_dt as cal_date,
 
        sls.customer,
 
-       ltrim(sls.product_id,0),
+       ltrim(sls.product_id,0) as product_id,
 
        sls.product,
 
@@ -99,6 +99,30 @@ from itg_metcash_ind_grocery sls,
 where sls.week_end_dt = etd.cal_date(+)::date
 
 and   ltrim(sls.product_id,0) = ltrim(muom.prod_metcash_code (+),0)
+),
+final as (
+select
+cal_date::timestamp_ntz(9) as cal_date,
+jj_wk::varchar(10) as jj_wk,
+week_num::varchar(10) as week_num,
+month_number::varchar(10) as month_number,
+supp_id::varchar(50) as supp_id,
+supp_name::varchar(256) as supp_name,
+state::varchar(256) as state,
+banner_id::varchar(50) as banner_id,
+banner::varchar(256) as banner,
+customer_id::varchar(50) as customer_id,
+customer::varchar(256) as customer,
+product_id::varchar(50) as product_id,
+product::varchar(256) as product,
+gross_sales::number(20,4) as gross_sales,
+gross_cases::number(20,4) as gross_cases,
+gross_units::number(20,4) as gross_units,
+unit::varchar(50) as unit,
+base_uom::varchar(50) as base_uom,
+from_uom::number(20,4) as from_uom,
+to_uom::number(20,4) as to_uom
+from transformed
 )
 select * from final
 

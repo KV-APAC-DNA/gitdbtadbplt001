@@ -43,7 +43,7 @@ itg_perenso_todo as (
 itg_perenso_constants as (
        select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
 ),
-final as (
+transformed as (
 select 'compliance' as perenso_source,
 
        'compliance' as todo_type,  --ipc1.const_desc as todo_type,
@@ -140,7 +140,35 @@ and   iphors.req_state = ipc2.const_key(+)
 
 and   ipdit.category = ipc3.const_key(+)
 
-and   ipwi.work_item_type = ipc4.const_key(+))
+and   ipwi.work_item_type = ipc4.const_key(+)),
+final as (
+select
+perenso_source::varchar(10) as perenso_source,
+todo_type::varchar(10) as todo_type,
+store_chk_hdr_key::number(10,0) as store_chk_hdr_key,
+store_chk_date::timestamp_ntz(9) as store_chk_date,
+acct_key::number(10,0) as acct_key,
+prod_grp_key::number(10,0) as prod_grp_key,
+create_user_key::number(10,0) as create_user_key,
+todo_desc::varchar(255) as todo_desc,
+to_do_start_date::timestamp_ntz(9) as to_do_start_date,
+to_do_end_date::timestamp_ntz(9) as to_do_end_date,
+fail_reason_desc::varchar(256) as fail_reason_desc,
+req_start_date::timestamp_ntz(9) as req_start_date,
+req_end_date::timestamp_ntz(9) as req_end_date,
+req_state::varchar(255) as req_state,
+diary_item_type_desc::varchar(255) as diary_item_type_desc,
+diary_item_category::varchar(255) as diary_item_category,
+diary_start_time::timestamp_ntz(9) as diary_start_time,
+diary_end_time::timestamp_ntz(9) as diary_end_time,
+diary_complete::varchar(5) as diary_complete,
+count_in_call_rate::varchar(5) as count_in_call_rate,
+work_item_desc::varchar(255) as work_item_desc,
+work_item_type::varchar(255) as work_item_type,
+work_item_start_date::timestamp_ntz(9) as work_item_start_date,
+work_item_end_date::timestamp_ntz(9) as work_item_end_date
+from transformed
+)
 
 select * from final
 
