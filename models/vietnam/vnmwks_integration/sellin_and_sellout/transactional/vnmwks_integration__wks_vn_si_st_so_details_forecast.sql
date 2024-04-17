@@ -15,7 +15,7 @@ select *,row_number() over (partition by dstrbtr_id order by crtd_dttm desc) as 
  from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }} 
 ),
 itg_vn_dms_distributor_dim as (
-select * from itg_vn_dms_distributor_dim_rnk where rnk=1
+select * from itg_vn_dms_distributor_dim_rnk
 ),
 itg_vn_distributor_sap_sold_to_mapping as (
 select * from {{ source('vnmitg_integration', 'itg_vn_distributor_sap_sold_to_mapping') }}
