@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_perenso_account_dim_snapshot
+    config: 
+      alias: edw_perenso_account_dim_snapshot
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_perenso_prod_dim
+    config: 
+      alias: edw_perenso_prod_dim
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]

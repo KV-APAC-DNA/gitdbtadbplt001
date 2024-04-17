@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_promax_analysis_snapshot
+    config: 
+      alias: edw_promax_analysis_snapshot
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]

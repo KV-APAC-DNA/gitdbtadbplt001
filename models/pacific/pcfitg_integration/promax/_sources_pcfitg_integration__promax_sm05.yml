@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snappcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_px_scan_data
+        tags: ["j_pa_grocery_inv_coles","ingestion"]
+
+      - name: sdl_px_uom
+        tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+
+      - name: sdl_px_term_plan
+        tags: ["j_pa_grocery_inv_woolworths","ingestion"]

@@ -12,9 +12,9 @@ with source as(
 ),
 final as(
     Select 
-        article_code as article_code,
-        sap_code as sap_code,
-        article_name as article_name,
+        article_code::varchar(100) as article_code,
+        sap_code::varchar(100) as sap_code,
+        article_name::varchar(200) as article_name,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source where not sap_code is null or sap_code<>''
 )

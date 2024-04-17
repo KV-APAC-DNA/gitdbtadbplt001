@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_dstr_coles_inv
+    config: 
+      alias: wks_dstr_coles_inv
+      tags: ["j_pa_grocery_inv_coles","ingestion"]
+
+  - name: pcfwks_integration__wks_dstr_coles_sap_mapping
+    config: 
+      alias: wks_dstr_coles_sap_mapping
+      tags: ["j_pa_grocery_inv_coles","ingestion"]
+
+  - name: pcfwks_integration__wks_dstr_woolworth_inv
+    config: 
+      alias: wks_dstr_woolworth_inv
+      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+
+  - name: pcfwks_integration__wks_dstr_woolworth_sap_mapping
+    config: 
+      alias: wks_dstr_woolworth_sap_mapping
+      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+
+  - name: pcfwks_integration__wks_woolworth_validation
+    config: 
+      alias: wks_woolworth_validation
+      tags: ["j_pa_grocery_inv_woolworths","ingestion"]

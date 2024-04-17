@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_px_scan_data
+    config: 
+      alias: itg_px_scan_data
+      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+

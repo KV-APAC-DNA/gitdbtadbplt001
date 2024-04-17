@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_invoice_analysis
+    config: 
+      alias: vw_invoice_analysis
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_sales_reporting_snapshot
+    config: 
+      alias: edw_sales_reporting_snapshot
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_invoice_analysis
+    config: 
+      alias: edw_invoice_analysis
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_demand_forecast_snapshot
+    config: 
+      alias: edw_demand_forecast_snapshot
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_apo_weekly_forecast_fact
+    config: 
+      alias: edw_apo_weekly_forecast_fact
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]

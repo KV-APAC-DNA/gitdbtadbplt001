@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_au_pharm_ecomm_fact
+    config: 
+      alias: edw_au_pharm_ecomm_fact
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+  - name: pcfedw_integration__edw_pharmacy_ecommerce_analysis
+    config: 
+      alias: edw_pharmacy_ecommerce_analysis
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]

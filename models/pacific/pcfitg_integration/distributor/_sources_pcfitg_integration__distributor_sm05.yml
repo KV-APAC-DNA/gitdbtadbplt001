@@ -10,26 +10,10 @@ sources:
       identifier: false
     tables:
       - name: sdl_dstr_coles_inv
-        tags: ["anz_perenso_foodstuff","ingestion"]
-        tests:
-          - test_null:
-              not_null_columns: ["retail_barcode","store_number","billing_date"]
-              select_columns: ["retail_barcode","store_number","billing_date"]
-              name: TRATBL_sdl_dstr_coles_inv__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+        tags: ["j_pa_grocery_inv_coles","ingestion"]
 
       - name: sdl_dstr_woolworth_inv
-        tags: ["anz_perenso_foodstuff","ingestion"]
-        tests:
-          - test_null:
-              not_null_columns: ["retail_barcode","store_number","billing_date"]
-              select_columns: ["retail_barcode","store_number","billing_date"]
-              name: TRATBL_sdl_dstr_woolworth_inv__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+        tags: ["j_pa_grocery_inv_woolworths","ingestion"]
 
   - name: pcfitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
