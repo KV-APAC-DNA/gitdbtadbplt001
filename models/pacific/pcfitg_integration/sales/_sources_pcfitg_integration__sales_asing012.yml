@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_iri_scan_sales
+      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+    - name: sdl_mds_pacific_cogs_master
+      tags: ["j_pacific_cogs_etl_framework",""]

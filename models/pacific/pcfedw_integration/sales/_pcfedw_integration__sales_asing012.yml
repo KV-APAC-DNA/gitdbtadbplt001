@@ -9,4 +9,13 @@ models:
     config: 
       alias: vw_iri_scan_sales
       tags: ["",""]
+  - name: pcfedw_integration__edw_vw_mds_cogs_rate_dim
+    config: 
+      alias: edw_vw_mds_cogs_rate_dim
+      tags: ["",""]
+
+  - name: pcfedw_integration__edw_iri_scan_sales_agg
+    config: 
+      alias: edw_iri_scan_sales_agg
+      tags: ["j_pac_iri_scan_sales_etl_framework",""]
   
