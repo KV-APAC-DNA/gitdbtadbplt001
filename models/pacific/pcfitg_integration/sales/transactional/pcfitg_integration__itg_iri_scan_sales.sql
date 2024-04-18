@@ -11,7 +11,7 @@ with source as
 (
     select *,
     dense_rank() over(partition by ac_nielsencode,iri_ean,wk_end_dt order by filename desc) as rnk
-     from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }}
+    from {{ source('pcfsdl_raw', 'sdl_iri_scan_sales') }}
 ),
 final as 
 (

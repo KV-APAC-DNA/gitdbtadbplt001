@@ -11,5 +11,35 @@ sources:
     tables:
     - name: sdl_iri_scan_sales
       tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tests:
+          - test_duplicate__ff:
+              group_by_columns: ["iri_market","wk_end_dt","iri_prod_desc","iri_ean","scan_sales","scan_units","ac_nielsencode","crtd_dttm","filename"]
+              name: TRATBL_sdl_iri_scan_sales__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_null__ff:
+              not_null_columns: ["ac_nielsencode","iri_ean","wk_end_dt"]
+              name: TRATBL_sdl_iri_scan_sales__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+          - test_lookup__ff:
+              failure_reason: "AC_NIELSENCODE IS NOT PRESNT IN LOOK UP TABLE"
+              column: "trim(upper(ac_nielsencode))"
+              lookup_table: "{{ ref('pcfitg_integration__itg_acct_nielsencode_mapping') }}"
+              lookup_column: "trim(upper(nvl(ac_nielsencode,'NA')))"
+              name: TRATBL_sdl_iri_scan_sales__lookup_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_mds_pacific_cogs_master
       tags: ["j_pacific_cogs_etl_framework",""]
+      tests:
+          - test_duplicate:
+              select_columns: ["sku","jj_year"]
+              group_by_columns: ["sku","jj_year"]
+              name: TRATBL_sdl_mds_pacific_cogs_master__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration

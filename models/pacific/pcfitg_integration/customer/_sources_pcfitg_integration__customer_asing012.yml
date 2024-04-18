@@ -11,3 +11,11 @@ sources:
     tables:
     - name: sdl_mds_pacific_cust_ciw_plan
       tags: ["anz_mds_sdl_to_edw_load",""]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_mds_pacific_cust_ciw_plan__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration

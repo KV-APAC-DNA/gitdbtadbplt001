@@ -8,7 +8,7 @@
 }}
 
 with source as (
-    select * from {{ source('pcfsdl_raw','sdl_pharm_sellout_weekly_raw') }}
+    select * from {{ ref('pcfitg_integration__sdl_pharm_sellout_weekly_raw') }}
 ),
 final as
 (
@@ -20,7 +20,7 @@ select
 	week_ending_date::varchar(8) as time_period,
 	units::number(18,0) as units,
 	amount::number(18,6) as src_amt_value,
-	amount::number(18,6) as amount, --check for this column as repeated above
+	amount::number(18,6) as amount,
 	derived_price::number(12,6) as derived_price,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm

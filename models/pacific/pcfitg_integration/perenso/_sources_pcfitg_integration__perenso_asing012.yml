@@ -250,6 +250,14 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_perenso_cycle_dates
       tags: ["anz_mds_sdl_to_edw_load",""]
+      tests:
+          - test_duplicate:
+              select_columns: ["code","cycle_year"]
+              group_by_columns: ["code","cycle_year"]
+              name: TRATBL_sdl_mds_pacific_perenso_cycle_dates__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_pacific_perenso_call_coverage_targets
       tags: ["anz_perenso_weekly_load",""]  
     - name: sdl_over_and_above_points
