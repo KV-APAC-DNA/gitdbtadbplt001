@@ -43,11 +43,26 @@ cte1 as(
 transformed as(
     SELECT
         '0000'::varchar(10) as cmp_id,
-        '00'::varchar(20) as channel_id,
+        '00'::varchar(20) as channel_id,,
         ac_attribute::varchar(50) as cust_id,
         sku_stockcode::varchar(15) as matl_id,
         gltt_longname::varchar(40) as gltt_longname,
-        timeperiod::number(18,0) as time_period,
+       -- timeperiod::number(18,0) as time_period,
+        case
+            when time_period='1' then TO_NUMERIC(year || '01')
+            when time_period='2' then TO_NUMERIC(year ||'02')
+            when time_period='3' then TO_NUMERIC(year ||'03')
+            when time_period='4' then TO_NUMERIC(year ||'04')
+            when time_period='5' then TO_NUMERIC(year ||'05')
+            when time_period='6' then TO_NUMERIC(year ||'06')
+            when time_period='7' then TO_NUMERIC(year ||'07')
+            when time_period='8' then TO_NUMERIC(year ||'08')
+            when time_period='9' then TO_NUMERIC(year ||'09')
+            when time_period='10' then TO_NUMERIC(year ||'10')
+            when time_period='11' then TO_NUMERIC(year ||'11')
+            when time_period='12' then TO_NUMERIC(year ||'12')
+        else time_period
+        end::number(18,0) as time_period,
         CASE timeperiod
             WHEN 1
             THEN asps_month1
@@ -115,5 +130,27 @@ FROM cte1, (
 ) AS m
 WHERE
   ac_attribute <> '  '
+),
+final as(
+    select 
+        cmp_id,
+        --channel_id,
+        case
+         when channel_id = '10' and cmp_id = '7470' then channel_id = '10 - au'
+         when channel_id = '11' and cmp_id = '7470' then channel_id = '11 - au'
+         when channel_id = '15' and cmp_id = '7470' then channel_id = '15 - au'
+         when channel_id = '19' and cmp_id = '7470' then channel_id = '19 - au'
+         when channel_id = '10' and cmp_id = '8361' then channel_id = '10 - nz'
+         when channel_id = '11' and cmp_id = '8361' then channel_id = '11 - nz'
+        else channel_id
+        end as channel_id
+        cust_id,
+        matl_id,
+        gltt_longname,
+        time_period,
+        px_term_proj_amt,
+        year,
+        gltt_rowid,
+    from transformed
 )
 select * from transformed

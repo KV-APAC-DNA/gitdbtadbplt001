@@ -9,7 +9,7 @@ transformed as(
         salesorg::varchar(4) as sales_org,
         mercia_reference::varchar(5) as channel,
         material::varchar(18) as material,
-        substring(fiscper, 1, 4) || substring(fiscper, 6, 7)::number(7,0) as period,
+        (substring(fiscper, 1, 4) || substring(fiscper, 6, 7))::number(7,0) as period,
         calweek::number(6,0) as week_no,
         to_char(cast(jnj_fiscal_week as timestampntz), 'YYYYMMDD')::varchar(16) as week_date,
         tot_forecast::number(17,3) as total_fcst,

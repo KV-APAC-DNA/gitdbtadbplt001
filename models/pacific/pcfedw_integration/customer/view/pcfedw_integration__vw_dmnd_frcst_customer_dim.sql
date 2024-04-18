@@ -1,8 +1,8 @@
 with edw_customer_base_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_customer_base_dim
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_base_dim
 ),
 edw_customer_sales_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
 ),
 dmnd_frcst_cust_attrb_lkp as(
     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.dmnd_frcst_cust_attrb_lkp

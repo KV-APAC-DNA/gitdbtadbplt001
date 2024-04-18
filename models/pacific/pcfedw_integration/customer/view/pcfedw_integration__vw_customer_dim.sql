@@ -2,10 +2,10 @@ with customer_control_tp_accrual_reversal_ac as(
     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.CUSTOMER_CONTROL_TP_ACCRUAL_REVERSAL_AC
 ),
 edw_customer_base_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_customer_base_dim
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_base_dim
 ),
 edw_customer_sales_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
 ),
 dly_sls_cust_attrb_lkp as(
     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP

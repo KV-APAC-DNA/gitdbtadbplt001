@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='append'
+    )
+}}
+
 with itg_perenso_account as(
      select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ACCOUNT
 ),
@@ -110,5 +117,9 @@ transformed as
         itg_perenso_account_type ipat
     where grp.acct_key = ipa.acct_key
     and   ipa.acct_type_key = ipat.acct_type_key
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    and '2024-03-20' > (select max(snapshot_dt)::date from {{ this }}) 
+    {% endif %}
 )
 select * from transformed

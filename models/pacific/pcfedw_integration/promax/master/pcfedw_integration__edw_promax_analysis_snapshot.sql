@@ -1,3 +1,13 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='append',
+        unique_key=['snapshot_date'],
+        pre_hook="delete from {{this}} where  snapshot_date::date <  SUBSTRING(add_months(current_timestamp(),cast((-1)*(select parameter_value from {{ source('pcfitg_integration', 'itg_query_parameters') }} where parameter_name='Pacific_Promax_master_snapshotdate_months')as integer)),1,19)::date"
+    )
+}}
+
+
 with itg_query_parameters as(
     select * from {{ source('pcfitg_integration', 'itg_query_parameters') }}
 ),

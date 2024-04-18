@@ -2,13 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['file_name'],
-        pre_hook= "delete from {{this}} where week_end_dt in ( select to_date(week_end, 'YYYY-MM-DD') from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }} );"
+        unique_key=  ['week_end_dt'],
+        pre_hook= "delete from {{this}} where week_end_dt in ( select TO_DATE(TO_CHAR(TO_DATE(week_end, 'MM/DD/YYYY'), 'YYYY-MM-DD'), 'YYYY-MM-DD') from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }} );"
     )
 }}
 
 with source as(
-    select * from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
 ),
 final as(
     select
@@ -23,7 +23,7 @@ final as(
         manufacturer::varchar(50) as manufacturer,
         mat_year::varchar(10) as mat_year,
         periodid::varchar(10) as time_period,
-        to_date(week_end, 'YYYY-MM-DD') as week_end_dt,
+        TO_DATE(TO_CHAR(TO_DATE(week_end, 'MM/DD/YYYY'), 'YYYY-MM-DD'), 'YYYY-MM-DD') as week_end_dt,
         cast(sales_online as decimal(10, 2)) as sales_value,
         cast(unit_online as decimal(10, 2)) as sales_qty,
         'AUD'::varchar(3) as crncy,
@@ -31,5 +31,6 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    where rnk=1
 )
 select * from final

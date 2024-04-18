@@ -1,5 +1,11 @@
+{{
+    config(
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+    )
+}}
+
 with edw_demand_forecast_snapshot as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_demand_forecast_snapshot
+    select * from {{ ref('pcfedw_integration__edw_demand_forecast_snapshot_temp') }}
 ),
 vw_dmnd_frcst_customer_dim as(
     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_dmnd_frcst_customer_dim
@@ -16,19 +22,19 @@ mstrcd as(
         parent_matl_desc
     from vw_apo_parent_child_dim
     where
-    cmp_id = 7470
+    to_char(cmp_id) = '7470'
     union all
     select distinct
-        master_code,
+        to_char(master_code),
         parent_matl_desc
     from vw_apo_parent_child_dim
     where
     not master_code in (
         select distinct
-        master_code
+        to_char(master_code)
         from vw_apo_parent_child_dim
         where
-        cmp_id = 7470
+        to_char(cmp_id) = '7470'
     )
 ),
 union1 as(
@@ -119,7 +125,7 @@ mstrcdd as(
         parent_matl_desc
         from vw_apo_parent_child_dim
         where
-        cmp_id = 7470
+        to_char(cmp_id) = '7470'
         union all
         select distinct
         master_code,
@@ -131,7 +137,7 @@ mstrcdd as(
         master_code
         from vw_apo_parent_child_dim
         where
-        cmp_id = 7470
+        to_char(cmp_id) = '7470'
     )
 ),
 union2 as(

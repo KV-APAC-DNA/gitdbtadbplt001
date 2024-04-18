@@ -1,32 +1,32 @@
 with edw_time_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_time_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_time_dim
 ),
 edw_pharm_sellout_fact as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_pharm_sellout_fact
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_pharm_sellout_fact
 ),
 edw_ps_msl_items as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_ps_msl_items
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_ps_msl_items
 ),
 vw_material_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.vw_material_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_material_dim
 ),
 edw_perenso_prod_probeid_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_perenso_prod_probeid_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_prod_probeid_dim
 ),
 edw_perenso_account_probeid_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_perenso_account_probeid_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_account_probeid_dim
 ),
 edw_perenso_prod_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_perenso_prod_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_prod_dim
 ),
 edw_perenso_account_dim as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_perenso_account_dim
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_account_dim
 ),
 edw_perenso_order_fact as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_perenso_order_fact
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_order_fact
 ),
 itg_perenso_distributor_detail as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DISTRIBUTOR_DETAILEDW_CUSTOMER_SALES_DIM
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_distributor_detail
 ),
 union1 as(
 SELECT 'IQVIA' AS pac_source_type
@@ -298,7 +298,7 @@ FROM (
 								,edw_perenso_order_fact.order_currency_cd
 							FROM edw_perenso_order_fact
 							WHERE ((edw_perenso_order_fact.order_type_desc)::TEXT = ('Turn-In Orders'::CHARACTER VARYING)::TEXT)
-							) epod LEFT JOIN .edw_time_dim etd ON (((epod.delvry_dt::date) = etd.cal_date::date))
+							) epod LEFT JOIN edw_time_dim etd ON (((epod.delvry_dt::date) = etd.cal_date::date))
 						) LEFT JOIN edw_perenso_account_dim epsd ON ((epod.acct_key = epsd.acct_id))
 					) LEFT JOIN edw_perenso_prod_dim eppd ON ((epod.prod_key = eppd.prod_key))
 				) LEFT JOIN vw_material_dim vmd ON ((ltrim((eppd.prod_id)::TEXT, ((0)::CHARACTER VARYING)::TEXT) = ltrim((vmd.matl_id)::TEXT, ((0)::CHARACTER VARYING)::TEXT)))

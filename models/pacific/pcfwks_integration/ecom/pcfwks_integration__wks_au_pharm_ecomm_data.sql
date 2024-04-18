@@ -1,8 +1,8 @@
 with itg_national_ecomm_data as (
-    select * from {{ ref('pcfitg_integration__itg_national_ecomm_data') }}
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_national_ecomm_data
 ),
 itg_chw_ecomm_data as (
-    select * from {{ ref('pcfitg_integration__itg_chw_ecomm_data') }}
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_chw_ecomm_data
 ),
 union1 as(
     select

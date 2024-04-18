@@ -124,7 +124,7 @@ final as(
     from source
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where source.create_dt > (select max(create_dt) from {{ this }}) 
+    where create_dt > (select max(create_dt) from {{ this }}) 
      {% endif %}
 )
 select * from final

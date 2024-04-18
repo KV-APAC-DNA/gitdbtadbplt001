@@ -1,12 +1,19 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='append'
+    )
+}}
+
 with vw_sales_reporting as(
     select * from dev_dna_core.snappcfedw_integration.vw_sales_reporting
 ),
 edw_time_dim as(
-    select * from {{ source('pcfedw_integration', 'edw_time_dim') }} 
+    select * from dev_dna_core.snappcfedw_integration.edw_time_dim
 ),
 transformed as (
     select 
-        current_date() as snap_shot_dt,
+        current_timestamp()::timestamp_ntz(9) as snap_shot_dt,
         snap_shot_mnth,
         snap_shot_year,
         pac_source_type,
@@ -206,9 +213,14 @@ transformed as (
     from edw_time_dim 
 
 )
-
-
 where snap_shot_dt::date = cal_date::date
 and jj_year in (snap_shot_year, snap_shot_prior_year)
+
+{% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    and snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
+{% endif %}
+
 )
 select * from transformed
+

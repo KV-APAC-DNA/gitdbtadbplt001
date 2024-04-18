@@ -110,9 +110,9 @@ final as(
     from (
         select * from union1
         union
-        select * from union1
+        select * from union2
         union
-        select * from union1
+        select * from union3
     )
 )
 select * from final
