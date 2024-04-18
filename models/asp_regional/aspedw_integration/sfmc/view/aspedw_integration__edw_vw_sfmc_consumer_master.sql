@@ -198,7 +198,7 @@ smoker as (
                     null::varchar as oral_problem_eng,
                     itg_sfmc_consumer_master_additional.subscriber_key as subscriber_key1
                 from itg_sfmc_consumer_master_additional
-                where (trim(itg_sfmc_consumer_master_additional.attribute_name)::text = ('Smoker'::varchar)::text)
+                where (upper(trim(itg_sfmc_consumer_master_additional.attribute_name))::text = upper(('Smoker'::varchar))::text)
             ) b 
             on ((trim(a.subscriber_key)::text = trim(b.subscriber_key1)::text))
         )
@@ -332,7 +332,7 @@ expectant_mother as (
                     itg_sfmc_consumer_master_additional.subscriber_key as subscriber_key1
                 from itg_sfmc_consumer_master_additional
                 where (
-                        trim(itg_sfmc_consumer_master_additional.attribute_name)::text = ('Expectant_Mother'::varchar)::text
+                        upper(trim(itg_sfmc_consumer_master_additional.attribute_name))::text = upper(('Expectant_Mother'::varchar))::text
                     )
             ) b on (
                 (
@@ -475,9 +475,9 @@ category_they_are_using as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Category_they_are_using'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Category_they_are_using'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text
@@ -627,9 +627,9 @@ skin_condition as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Skin_Condition'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Skin_Condition'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text
@@ -779,9 +779,9 @@ skin_problem as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Skin_Problem'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Skin_Problem'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text
@@ -927,9 +927,9 @@ use_mouthwash as (
                     itg_sfmc_consumer_master_additional.subscriber_key AS subscriber_key1
                 from itg_sfmc_consumer_master_additional
                 where (
-                        trim(
+                        upper(trim(
                             itg_sfmc_consumer_master_additional.attribute_name
-                        )::text = ('Use_Mouthwash'::varchar)::text
+                        ))::text = upper(('Use_Mouthwash'::varchar))::text
                     )
             ) b on (
                 (
@@ -1071,9 +1071,9 @@ mouthwash_time as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Mouthwash_time'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Mouthwash_time'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text
@@ -1223,9 +1223,9 @@ why_not_use_mouthwash as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Why_not_use_Mouthwash'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Why_not_use_Mouthwash'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text
@@ -1375,9 +1375,9 @@ oral_problem as (
                         (
                             (
                                 (
-                                    trim(cm.attribute_name)::text = ('Oral_Problem'::varchar)::text
+                                    upper(trim(cm.attribute_name))::text = upper(('Oral_Problem'::varchar))::text
                                 )
-                                and (trim(cm.attribute_name)::text = trim(dim.subject)::text)
+                                and (upper(trim(cm.attribute_name))::text = upper(trim(dim.subject))::text)
                             )
                             and (
                                 trim(cm.attribute_value)::text = trim(dim.original_value)::text

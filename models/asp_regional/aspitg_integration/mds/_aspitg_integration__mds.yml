@@ -16,7 +16,7 @@ models:
   - name: aspitg_integration__itg_mds_log
     config:
       alias: itg_mds_log
-      tags: ["daily","rg_mds_dna","travel_retail_mds"]
+      tags: ["daily","rg_mds_to_dna","ingestion"]
   - name: aspitg_integration__itg_mds_ap_dso
     config:
       alias: itg_mds_ap_dso

@@ -99,10 +99,10 @@
                 {% else %}
                     {{schema}}.thaitg_integration__itg_cbd_gt_sales_report_fact
                 {% endif %}
-        WHERE billing_date >= (SELECT MIN(billing_date) FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }} where filename = '{{filename}}'
+        WHERE billing_date >= (SELECT MIN(billing_date) FROM {{ ref('thawks_integration__wks_cbd_gt_sales_report_fact') }} where filename = '{{filename}}'
         )
         AND   UPPER(bu) IN (SELECT DISTINCT UPPER(bu)
-                                FROM {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
+                                FROM {{ ref('thawks_integration__wks_cbd_gt_sales_report_fact') }}
                                 where filename = '{{filename}}'
                                 );
     {% endset %}

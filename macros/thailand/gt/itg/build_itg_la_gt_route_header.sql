@@ -13,7 +13,16 @@
                     {{schema}}.thaitg_integration__itg_la_gt_route_header
                 {% endif %}	
     WHERE (COALESCE(UPPER(TRIM(saleunit)),'N/A')) IN (
-        SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') FROM {{ source('thasdl_raw', 'sdl_la_gt_route_header') }} where filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
+        SELECT DISTINCT COALESCE(UPPER(TRIM(saleunit)),'N/A') 
+        from
+        {% if target.name=='prod' %}
+                    thawks_integration.wks_la_gt_route_header_pre_load
+                {% else %}
+                    {{schema}}.thawks_integration__wks_la_gt_route_header_pre_load
+                {% endif %} 
+        
+        
+        where filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
     {% endset %}
     { log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Query set to delete records from itg table for file: "~ filename) }}
@@ -70,5 +79,17 @@
     {% do run_query(build_itg_model) %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Completed running query to build itg table -> itg_la_gt_route_header for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {{ log("Setting query to delete records from wks staging table -> wks_la_gt_route_header for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {% set delete_wks_staging_data_by_file_query %}
+    delete from {{ ref('thawks_integration__wks_la_gt_route_header') }} where filename= '{{filename}}';
+    {% endset %}
+    {{ log("Started running query to delete records from wks staging table -> wks_la_gt_route_header for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {% do run_query(delete_wks_staging_data_by_file_query) %}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
+    {{ log("Completed running query to delete records from wks staging table -> wks_la_gt_route_header for file: "~ filename) }}
+    {{ log("-----------------------------------------------------------------------------------------------") }}
 {% endmacro %}
 m

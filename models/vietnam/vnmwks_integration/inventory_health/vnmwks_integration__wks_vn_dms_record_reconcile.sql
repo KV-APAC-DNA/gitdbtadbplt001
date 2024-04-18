@@ -39,10 +39,10 @@ itg_vn_dms_forecast as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_forecast') }}
 ),
 sdl_vn_dms_h_sellout_sales_fact as (
-       select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_d_sellout_sales_fact') }} 
+       select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_h_sellout_sales_fact') }} 
 ),
 itg_vn_dms_h_sellout_sales_fact as (
-       select * from {{ ref('vnmitg_integration__itg_vn_dms_d_sellout_sales_fact') }}
+       select * from {{ ref('vnmitg_integration__itg_vn_dms_h_sellout_sales_fact') }}
 ),
 sdl_vn_dms_history_saleout as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }} 

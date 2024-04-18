@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sales_stock_fact') }}
+    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_h_sellout_sales_fact') }}
 ),
 final as(
     select * from source

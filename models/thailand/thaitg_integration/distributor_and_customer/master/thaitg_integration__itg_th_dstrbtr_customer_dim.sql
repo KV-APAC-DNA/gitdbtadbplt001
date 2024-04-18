@@ -1,8 +1,11 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['dstrbtr_id','ar_cd']
+        incremental_strategy= "append",
+        pre_hook=[
+            "delete from {{this}} where (UPPER(TRIM(DSTRBTR_ID)),UPPER(TRIM(AR_CD))) IN (SELECT UPPER(TRIM(DISTRIBUTORID)), UPPER(TRIM(ARCODE)) FROM {{ ref('thaitg_integration__itg_th_dms_customer_dim') }});",
+            "delete from {{this}} where (UPPER(TRIM(DSTRBTR_ID)),UPPER(TRIM(AR_CD))) IN (SELECT UPPER(TRIM(DISTRIBUTORID)), UPPER(TRIM(ARCODE)) FROM {{ ref('thaitg_integration__itg_th_dms_chana_customer_dim') }});"
+        ]
     )
 }}
 
@@ -95,8 +98,8 @@ select
 trans_cust as 
 (
 select 
-  upper(trim(cust.distributorid)) as dstrbtr_id, 
-  upper(trim(cust.arcode)) as ar_cd, 
+  trim(cust.distributorid) as dstrbtr_id, 
+  trim(cust.arcode) as ar_cd, 
   trim(cust.old_cust_id) as old_cust_id, 
   trim(cust.arname) as ar_nm, 
   trim(cust.araddress) as ar_adres, 
@@ -273,8 +276,8 @@ cust_2 as
 trans_cust_2 as 
 (
 select 
-  upper(trim(cust_2.distributorid)) as dstrbtr_id, 
-  upper(trim(cust_2.arcode)) as ar_cd, 
+  trim(cust_2.distributorid) as dstrbtr_id, 
+  trim(cust_2.arcode) as ar_cd, 
   trim(cust_2.arcode) as old_cust_id, 
   trim(cust_2.arname) as ar_nm, 
   trim(cust_2.araddress) as ar_adres, 
