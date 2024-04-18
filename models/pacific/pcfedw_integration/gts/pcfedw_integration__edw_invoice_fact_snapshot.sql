@@ -1,20 +1,13 @@
-
-
-
-
-----------------------------------------------------------------------------------
--- CREATE WORK TABLE USING EDW AS SOURCE AND SELECTING ONLY REQUIRED MONTHS - CURRENCT & PREVIOUS
-with edw_time_dim  as (
-       select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+with edw_time_dim as (
+select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
 ),
 edw_invoice_fact as (
-       select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_INVOICE_FACT
+select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_INVOICE_FACT
 ),
 dly_sls_cust_attrb_lkp as (
-       select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
+select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
 ),
-wks_invoice_fact_snapshot as
-(
+wks_invoice_fact_snapshot as (
 select snapshot_date,
 
        jj_mnth_id,
@@ -33,11 +26,11 @@ select snapshot_date,
 
 from {{this}} eifs,
 
-     (select cast(to_char(add_months (to_date(t1.jj_mnth_id,'YYYYMM'),- 1),'YYYYMM') as integer) as jj_period
+     (select cast(to_char(add_months (to_date(t1.jj_mnth_id::varchar,'YYYYMM'),- 1),'YYYYMM') As integer) as jj_period
 
       from edw_time_dim t1
 
-      where trunc(t1.cal_date) = trunc(convert_timezone('aedt',sysdate))
+      where t1.cal_date::date = convert_timezone('Australia/Sydney',current_timestamp())::date
 
       union
 
@@ -45,11 +38,13 @@ from {{this}} eifs,
 
       from edw_time_dim t1
 
-      where trunc(t1.cal_date) = trunc(convert_timezone('aedt',sysdate))) etd
+      where t1.cal_date::date = convert_timezone('Australia/Sydney',current_timestamp())::date) etd
 
-where eifs.jj_mnth_id = etd.jj_period
-)
-transformed as (
+where eifs.jj_mnth_id = etd.jj_period ),
+
+
+final_1 as (
+
 select snapshot_date,
 
        jj_mnth_id,
@@ -67,13 +62,12 @@ select snapshot_date,
        gros_trd_sls
 
 from wks_invoice_fact_snapshot
+),
 
 
+final_2 as (
 
--- INSERT CURRENCT DAY SNAPSHOT DATA INTO EDW INVOICE FACT TABLE
-
-union all
-select trunc(convert_timezone ('aedt',sysdate)) as snapshot_date,
+select convert_timezone ('Australia/Sydney',current_timestamp())::date as snapshot_date,
 
        etd.jj_mnth_id,
 
@@ -153,10 +147,25 @@ from (select eif.co_cd,
 
       from edw_time_dim t1
 
-      where trunc(t1.cal_date) = trunc(convert_timezone ('aedt',sysdate))) etd
+      where t1.cal_date::date = convert_timezone ('Australia/Sydney',current_timestamp())::date) etd
 
 where etd.jj_mnth_id = orders.fisc_yr_src
+),
+transformed as (
+select * from final_1
+union all
+select * from final_2
+),
+final as (
+select
+snapshot_date::date as snapshot_date,
+jj_mnth_id::number(18,0) as jj_mnth_id,
+co_cd::varchar(4) as co_cd,
+cust_num::varchar(10) as cust_num,
+matl_num::varchar(40) as matl_num,
+sls_doc::varchar(50) as sls_doc,
+curr_key::varchar(10) as curr_key,
+gros_trd_sls::number(38,7) as gros_trd_sls,
+from transformed
 )
 select * from final
-
-
