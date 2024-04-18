@@ -11,8 +11,10 @@ with sdl_mds_vn_distributor_products as (
 ),
  wks
 	AS
-		(
-			select --- case 1.a: PK present in ITG, record is updated, insert the old record from ITG keeping active as 'N'
+		( 
+                    --- case 1.a: PK present in ITG, record is updated, insert the old record from ITG keeping active as 'N'
+
+			select 
 				dksh.id,
 				dksh.muid,
 				dksh.versionname,
@@ -50,7 +52,7 @@ with sdl_mds_vn_distributor_products as (
 				FROM (SELECT itg.*, row_number() over (partition by sdl.code order by null) as rn
 							  FROM sdl_mds_vn_distributor_products sdl,
 								   {{this}} itg
-							  WHERE sdl.lastchgdatetime != itg.lastchgdatetime
+							  WHERE sdl.lastchgdatetime::timestamp_ntz(9) != itg.lastchgdatetime
 							  AND   sdl.code = itg.code) dksh
 			  where dksh.rn = 1
 			UNION ALL
@@ -89,7 +91,7 @@ with sdl_mds_vn_distributor_products as (
 				FROM (SELECT sdl.*, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_products sdl,
 						   {{this}} itg
-					  WHERE sdl.lastchgdatetime != itg.lastchgdatetime
+					  WHERE sdl.lastchgdatetime::timestamp_ntz(9) != itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'Y') dksh
 			  where dksh.rn = 1
@@ -129,7 +131,7 @@ with sdl_mds_vn_distributor_products as (
 				FROM (SELECT sdl.*,itg.effective_from ,itg.crtd_dttm, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_products sdl,
 						   {{this}} itg
-					  WHERE sdl.lastchgdatetime = itg.lastchgdatetime
+					  WHERE sdl.lastchgdatetime::timestamp_ntz(9) = itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'Y'
 					  ) dksh
@@ -170,7 +172,7 @@ with sdl_mds_vn_distributor_products as (
 				FROM (SELECT itg.*, row_number() over (partition by sdl.code order by null) as rn
 					  FROM sdl_mds_vn_distributor_products sdl,
 						   {{this}} itg
-					  WHERE sdl.lastchgdatetime = itg.lastchgdatetime
+					  WHERE sdl.lastchgdatetime::timestamp_ntz(9) = itg.lastchgdatetime
 					  AND   sdl.code = itg.code
 					  AND	itg.active = 'N') dksh
 				where dksh.rn = 1

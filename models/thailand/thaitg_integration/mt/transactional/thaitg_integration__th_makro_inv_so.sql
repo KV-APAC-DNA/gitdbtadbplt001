@@ -65,7 +65,7 @@ left join (
   where
     sap_cntry_cd = 'TH'
 ) AS cust_dim
-  ON cust_dim.sap_cust_id = '116819'
+  ON trim(cust_dim.sap_cust_id) = '116819'
 left join (
   select distinct
     code as matl_num,
@@ -86,7 +86,7 @@ left join (
   where
     rnk = 1
 ) as th_prod_dim
-  on th_prod_dim.barcd = makro.barcode
+  on trim(th_prod_dim.barcd) = trim(makro.barcode)
 left join (
   select
     *
@@ -106,7 +106,7 @@ left join (
   where
     rn = 1
 ) as os_matl_dim
-  on os_matl_dim.material = th_prod_dim.matl_num
+  on trim(os_matl_dim.material) = trim(th_prod_dim.matl_num)
 ),
 
 final as (

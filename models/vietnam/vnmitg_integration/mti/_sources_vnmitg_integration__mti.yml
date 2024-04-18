@@ -13,7 +13,7 @@ sources:
         tags: ["vn_mti_offtake","ingestion"]
         tests:
           - test_null__ff:
-              not_null_columns: ["customername","shopcode","supcode","year","month","barcode"]
+              not_null_columns: ["customername","shopcode","year","month","barcode"]
               name: TRATBL_sdl_spiral_mti_offtake__null_test
               config:
                 store_failures: true

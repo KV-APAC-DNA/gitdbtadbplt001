@@ -14,7 +14,8 @@ select
     product_cd AS "product_cd",
     store_name AS "store_name",
     product_name AS "product_name",
-    account AS "account"
+    account AS "account",
+    sub_category AS "sub_category"
 from source
 )
 
