@@ -19,7 +19,7 @@
         {% endfor %}
         from {{model}}
         where 
-            not ({{column}}) in (
+            ({{column}}) not in (
                 select distinct
                     {{lookup_column}}
                 from  {{lookup_table}}

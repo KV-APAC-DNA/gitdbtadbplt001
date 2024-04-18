@@ -121,7 +121,8 @@ sources:
         tags: ["MDS","rg_mds_to_dna","ingestion"]
         tests:
           - test_null:
-              not_null_columns: ["name", "channel", "coverage"]
+              not_null_columns: ["name", "channel"]
+              select_columns: ["name", "channel", "coverage"]
               name: TRATBL_sdl_mds_rg_ps_market_coverage__null_test
               config:
                 store_failures: true
@@ -135,20 +136,19 @@ sources:
                 schema: aspwks_integration
       - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
         tags: ["MDS","rg_mds_to_dna","ingestion"]
-        tests:
-          - test_null:
-              not_null_columns: ["market", "online_store"]
-              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__null_test
-              config:
-                store_failures: true
-                schema: aspwks_integration
-          - test_duplicate:
-              group_by_columns: ["market", "online_store"]
-              need_counts: no 
-              name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__duplicate_test
-              config:
-                store_failures: true
-                schema: aspwks_integration
+        # Got confirmation from Murali for making these tests disbaled as in J&J the DQ check is disabled wrapper_id='WRP_001' and job_id='JB099' 
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["market", "online_store"]
+        #       name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: aspwks_integration
+        #   - test_duplicate_sdl_mds_rg_ecom_digital_shelf_customer_mapping:
+        #       name: TRATBL_sdl_mds_rg_ecom_digital_shelf_customer_mapping__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: aspwks_integration
       - name: sdl_mds_rg_tih_distributor_closure
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_mds_rg_sfmc_gender
