@@ -136,7 +136,7 @@ sources:
                 schema: aspwks_integration
       - name: sdl_mds_rg_ecom_digital_shelf_customer_mapping
         tags: ["MDS","rg_mds_to_dna","ingestion"]
-        # Need to get confirmation from Murali for making these tests disbaled as in J&J the DQ check is disabled wrapper_id='WRP_001' and job_id='JB099' 
+        # Got confirmation from Murali for making these tests disbaled as in J&J the DQ check is disabled wrapper_id='WRP_001' and job_id='JB099' 
         # tests:
         #   - test_null:
         #       not_null_columns: ["market", "online_store"]
