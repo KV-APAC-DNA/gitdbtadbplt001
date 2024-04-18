@@ -43,3 +43,127 @@ models:
     config:
       alias: edw_reg_inventory_health_analysis_propagation
       tags: ["regional_inventory_health_analysis","transformation"]
+  - name: aspedw_access__edw_customer_base_dim
+    config: 
+      alias: v_edw_customer_base_dim
+      tags: ["sap_ecc_master_etl_framework","transformation"]  
+  - name: aspedw_access__edw_delivery_fact
+    config: 
+      alias: v_edw_delivery_fact
+      tags: ["rg_s3_to_dna_delivery","transformation"] 
+  - name: aspedw_access__edw_dstrbtn_chnl
+    config: 
+      alias: v_edw_dstrbtn_chnl
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_ecc_marm
+    config: 
+      alias: v_edw_ecc_marm
+      tags: ["sap_ecc_master_etl_framework","transformation"] 
+  - name: aspedw_access__edw_ecc_standard_cost
+    config: 
+      alias: v_edw_ecc_standard_cost
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_gch_customerhierarchy
+    config: 
+      alias: v_edw_gch_customerhierarchy
+      tags: ["Global_Commercial_Hierarchy_Wrapper","transformation"]
+  - name: aspedw_access__edw_gch_geographyhierarchy
+    config: 
+      alias: v_edw_gch_geographyhierarchy
+      tags: ["Global_Commercial_Hierarchy_Wrapper","transformation"]
+  - name: aspedw_access__edw_gch_producthierarchy
+    config: 
+      alias: v_edw_gch_producthierarchy
+      tags: ["Global_Commercial_Hierarchy_Wrapper","transformation"]
+  - name: aspedw_access__edw_list_price
+    config: 
+      alias: v_edw_list_price
+      tags: ["rg_s3_to_dna_list_price","transformation"] 
+  - name: aspedw_access__edw_material_dim
+    config: 
+      alias: v_edw_material_dim
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_material_plant_dim
+    config: 
+      alias: v_edw_material_plant_dim
+      tags: ["sap_bw_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_profit_center_dim
+    config: 
+      alias: v_edw_profit_center_dim  
+      tags: ["sap_ecc_master_etl_framework","transformation"]					
+  - name: aspedw_access__edw_sales_order_fact
+    config: 
+      alias: v_edw_sales_order_fact  
+      tags: ["sales_rg_sap_to_dna_s3_framework","transformation"]
+  - name: aspedw_access__edw_sales_org_dim
+    config: 
+      alias: v_edw_sales_org_dim
+      tags: ["sap_ecc_master_etl_framework","transformation"]				
+  - name: aspedw_access__edw_sap_bw_dna_material_bomlist
+    config: 
+      alias: v_edw_sap_bw_dna_material_bomlist  
+      tags: ["sap_bw_master_etl_framework","transformation"]  
+  - name: aspedw_access__edw_material_sales_dim
+    config: 
+      alias: v_edw_material_sales_dim
+      tags: ["sap_bw_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_material_typ
+    config: 
+      alias: v_edw_material_typ
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_material_uom
+    config: 
+      alias: v_edw_material_uom
+      tags: ["rg_s3_to_dna_material_uom","transformation"] 
+  - name: aspedw_access__edw_plant_dim
+    config: 
+      alias: v_edw_plant_dim
+      tags: ["sap_bw_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_prod_hier
+    config: 
+      alias: v_edw_prod_hier
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_account_ciw_dim
+    config: 
+      alias: v_edw_account_ciw_dim  
+      tags: ["J_RG_Account_attr_CIW_Dim","transformation"]
+  - name: aspedw_access__edw_account_dim
+    config: 
+      alias: v_edw_account_dim  
+      tags: ["sap_bw_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_billing_fact
+    config: 
+      alias: v_edw_billing_fact  
+      tags: ["rg_s3_to_dna_billing","transformation"]
+  - name: aspedw_access__edw_calendar_dim
+    config: 
+      alias: v_edw_calendar_dim  
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_code_descriptions
+    config: 
+      alias: v_edw_code_descriptions  
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_copa_plan_fact
+    config: 
+      alias: v_edw_copa_plan_fact  
+      tags: ["j_sap_bw_trxn_copa17_wrapper","transformation"]
+  - name: aspedw_access__edw_copa_trans_fact
+    config: 
+      alias: v_edw_copa_trans_fact  
+      tags: ["j_sap_bw_txn_copa10_wrapper","transformation"]
+  - name: aspedw_access__edw_crncy_exch
+    config: 
+      alias: v_edw_crncy_exch  
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_crncy_exch_rates
+    config: 
+      alias: v_edw_crncy_exch_rates  
+      tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_access__edw_inventory_fact
+    config: 
+      alias: v_edw_inventory_fact  
+      tags: ["j_sap_bw_trxn_inventory_wrapper","transformation"]
+  - name: aspedw_access__edw_invoice_fact
+    config: 
+      alias: v_edw_invoice_fact  
+      tags: ["J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
