@@ -12,8 +12,8 @@ with source as (
 ),
 final as (
 select 
-    trim(jj_year)::varchar(10),
-    trim(sku)::varchar(100),
+    trim(jj_year)::varchar(10) as jj_year,
+    trim(sku)::varchar(100) as sku,
     'SGD'::varchar(5) as crncy,
     au_cogs_per_unit::number(31,2) as au_cogs_per_unit,
     nz_cogs_per_unit::number(31,2) as nz_cogs_per_unit,
