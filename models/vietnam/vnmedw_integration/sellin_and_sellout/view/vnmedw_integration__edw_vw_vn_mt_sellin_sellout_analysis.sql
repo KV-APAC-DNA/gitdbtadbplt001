@@ -62,7 +62,7 @@ union_3 as (select 'POS' as data_source,
     pos.supname as sales_supervisor,
     null::varchar as kam,
     ((pos.quantity)::numeric(18, 0))::numeric(38, 4) as sales_qty,
-    ((pos.amount)::numeric(18, 0))::numeric(38, 9) as sales_amt_lcy,
+    (trunc(pos.amount)::numeric(18, 0))::numeric(38, 9) as sales_amt_lcy,
     (pos.amountusd)::numeric(38, 14) as sales_amt_usd,
     ((null::numeric)::numeric(18, 0))::numeric(28, 10) as target_lcy,
     ((null::numeric)::numeric(18, 0))::numeric(28, 10) as target_usd

@@ -1,8 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['customername','shopcode','supcode','year','month','barcode']
+        incremental_strategy= "append",
+        pre_hook="delete from {{this}} where ((CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode) IN (select CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode
+                                       from {{ source('vnmsdl_raw','sdl_spiral_mti_offtake') }} ))"
     )
 }}
 
