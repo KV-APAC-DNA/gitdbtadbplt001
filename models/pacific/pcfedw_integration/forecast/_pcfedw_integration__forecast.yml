@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_intgeration__vw_demand_forecast_analysis
+    config:
+      alias: vw_demand_forecast_analysis
+      tags: ["",""]
