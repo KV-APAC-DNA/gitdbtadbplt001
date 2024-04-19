@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_apo_parent_child_dim
+    config: 
+      alias: vw_apo_parent_child_dim
+      tags: ["","transformation"]

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_px_apn
+    config: 
+      alias: itg_px_apn
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+  - name: pcfitg_integration__itg_px_forecast
+    config: 
+      alias: itg_px_forecast
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+  - name: pcfitg_integration__itg_px_master
+    config: 
+      alias: itg_px_master
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

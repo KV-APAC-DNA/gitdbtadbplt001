@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_dstr_inv_api
+    config: 
+      alias: wks_dstr_inv_api
+      tags: ["j_pa_pharma_inv_api","transformation"]
+  - name: pcfwks_integration__wks_dstr_inv_chs
+    config: 
+      alias: wks_dstr_inv_chs
+      tags: ["j_pa_pharma_inv_chs","transformation"]
+  - name: pcfwks_integration__wks_dstr_inv_sigma
+    config: 
+      alias: wks_dstr_inv_sigma
+      tags: ["j_pa_pharma_inv_sigma","transformation"]
+  - name: pcfwks_integration__wks_dstr_inv_symbion
+    config: 
+      alias: wks_dstr_inv_symbion
+      tags: ["j_pa_pharma_inv_symbion","transformation"]
+  - name: pcfwks_integration__wks_dstr_metcash_inv
+    config: 
+      alias: wks_dstr_metcash_inv
+      tags: ["j_pa_ig_inv_metcash","transformation"]
+  - name: pcfwks_integration__wks_dstr_so_api
+    config: 
+      alias: wks_dstr_so_api
+      tags: ["j_pa_pharma_inv_api","transformation"]
+  - name: pcfwks_integration__wks_dstr_so_chs
+    config: 
+      alias: wks_dstr_so_chs
+      tags: ["j_pa_pharma_inv_chs","transformation"]
+  - name: pcfwks_integration__wks_dstr_so_sigma
+    config: 
+      alias: wks_dstr_so_sigma
+      tags: ["j_pa_pharma_inv_sigma","transformation"]
+  - name: pcfwks_integration__wks_dstr_so_symbion
+    config: 
+      alias: wks_dstr_so_symbion
+      tags: ["j_pa_pharma_inv_symbion","transformation"]

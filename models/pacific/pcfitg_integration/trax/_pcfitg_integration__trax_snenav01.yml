@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_trax_fct_psd_kpis
+    config: 
+      alias: itg_trax_fct_psd_kpis
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfitg_integration__itg_trax_md_product
+    config: 
+      alias: itg_trax_md_product
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfitg_integration__itg_trax_md_store
+    config: 
+      alias: itg_trax_md_store
+      tags: ["j_ap_trax_etl_framework","transformation"]

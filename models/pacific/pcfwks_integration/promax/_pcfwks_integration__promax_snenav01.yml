@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_promax_ciw_snapshot
+    config: 
+      alias: wks_promax_ciw_snapshot
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfwks_integration__wks_promax_ciw_snapshot_current
+    config: 
+      alias: wks_promax_ciw_snapshot_current
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]

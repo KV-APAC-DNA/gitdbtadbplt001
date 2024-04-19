@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_pacific_field_sales
+    config: 
+      alias: edw_pacific_field_sales
+      tags: ["anz_perenso_field_sales","transformation"]
+  - name: pcfedw_integration__edw_pacific_field_sales_analysis
+    config: 
+      alias: edw_pacific_field_sales_analysis
+      tags: ["anz_perenso_field_sales","transformation"]
+  - name: pcfedw_integration__vw_iri_scan_sales_analysis
+    config: 
+      alias: vw_iri_scan_sales_analysis
+      tags: ["","transformation"]
