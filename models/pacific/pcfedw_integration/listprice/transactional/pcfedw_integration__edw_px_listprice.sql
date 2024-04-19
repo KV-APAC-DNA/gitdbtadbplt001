@@ -6,8 +6,8 @@ transformed as
 (
     select *, 
         case 
-            when lp_stopdate is null then current_date+1800 
-            else lp_stopdate::date  
+            when lp_stopdate is null then dateadd('days', 1800, current_timestamp()) 
+            else lp_stopdate 
         end as new_lp_stopdate
     from source
 

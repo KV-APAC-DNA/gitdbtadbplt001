@@ -18,7 +18,6 @@ edw_promax_ciw_snapshot as
 final as
 (
     select ------- dna data 
-        distinct
         eps.snapshot_date::timestamp_ntz(9) as snapshot_date,
         eps.snapshot_month::varchar(10) as snapshot_month,
         eps.snapshot_year::number(18,0) as snapshot_year,
@@ -38,7 +37,7 @@ final as
         ltrim(vmd.matl_id, 0::varchar(40)) as matl_id,
         vmd.matl_desc::varchar(100) as matl_desc,
         ltrim(vapcd.parent_id, 0::varchar(18)) as parent_matl_id,
-        vapcd.parent_matl_desc::varchar(100) as parent_matl_desc,
+        mstrcd.parent_matl_desc::varchar(100) as parent_matl_desc,
         vmd.fran_desc::varchar(100) as fran_desc,
         vmd.grp_fran_desc::varchar(100) as grp_fran_desc,
         vmd.matl_type_desc::varchar(40) as matl_type_desc,
