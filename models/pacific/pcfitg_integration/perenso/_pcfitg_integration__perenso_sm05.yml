@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_perenso_fsni_sales
+    config: 
+      alias: itg_perenso_fsni_sales
+      tags: ["anz_perenso_foodstuff","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_fssi_sales
+    config: 
+      alias: itg_perenso_fssi_sales
+      tags: ["anz_perenso_foodstuff","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_prod_branch_identifier
+    config: 
+      alias: itg_perenso_prod_branch_identifier
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_product
+    config: 
+      alias: itg_perenso_product
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_product_fields
+    config: 
+      alias: itg_perenso_product_fields
+      tags: ["anz_perenso_product","ingestion"]
+
+
+  - name: pcfitg_integration__itg_perenso_product_group
+    config: 
+      alias: itg_perenso_product_group
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_product_group_lvl
+    config: 
+      alias: itg_perenso_product_group_lvl
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_product_group_reln
+    config: 
+      alias: itg_perenso_product_group_reln
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_product_reln_id
+    config: 
+      alias: itg_perenso_product_reln_id
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_fsni_sales
+    config: 
+      alias: sdl_raw_perenso_fsni_sales
+      tags: ["anz_perenso_foodstuff","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_fssi_sales
+    config: 
+      alias: sdl_raw_perenso_fssi_sales
+      tags: ["anz_perenso_foodstuff","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_prod_branch_identifier
+    config: 
+      alias: sdl_raw_perenso_prod_branch_identifier
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_product
+    config: 
+      alias: sdl_raw_perenso_product
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_product_fields
+    config: 
+      alias: sdl_raw_perenso_product_fields
+      tags: ["anz_perenso_product","ingestion"]
+
+
+  - name: pcfitg_integration__sdl_raw_perenso_product_group
+    config: 
+      alias: sdl_raw_perenso_product_group
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_product_group_lvl
+    config: 
+      alias: sdl_raw_perenso_product_group_lvl
+      tags: ["anz_perenso_product","ingestion"]
+
+  - name: pcfitg_integration__sdl_raw_perenso_product_group_reln
+    config: 
+      alias: sdl_raw_perenso_product_group_reln
+      tags: ["anz_perenso_product","ingestion"]
+
+
+  - name: pcfitg_integration__sdl_raw_perenso_product_reln_id
+    config: 
+      alias: sdl_raw_perenso_product_reln_id
+      tags: ["anz_perenso_product","ingestion"]

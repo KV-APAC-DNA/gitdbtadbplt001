@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_customer_grocery_inventory
+    config: 
+      alias: itg_customer_grocery_inventory
+      tags: ["j_pa_grocery_inv_woolworths", "j_pa_grocery_inv_coles","ingestion"]
+
