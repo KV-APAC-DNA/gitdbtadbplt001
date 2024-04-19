@@ -21,4 +21,6 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+    - name: sdl_mds_pacific_prod_mapping_cwh
+      tags: ["",""]
       

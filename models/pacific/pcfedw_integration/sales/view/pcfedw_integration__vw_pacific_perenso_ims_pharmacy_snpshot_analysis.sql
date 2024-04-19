@@ -1,27 +1,27 @@
 with
 edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
-),--used as source
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
+),
 vw_jjbr_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_jjbr_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_bwar_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_bwar_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 edw_perenso_order_fact as
 (
-    select * from snappcfedw_integration.edw_perenso_order_fact
+    select * from {{ ref('pcfedw_integration__edw_perenso_order_fact') }}
 ),
 edw_perenso_prod_dim as
 (
-    select * from snappcfedw_integration.edw_perenso_prod_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 edw_perenso_account_dim_snapshot as
 (
-    select * from snappcfedw_integration.edw_perenso_account_dim_snapshot
+    select * from {{ ref('pcfedw_integration__edw_perenso_account_dim_snapshot') }}
 ),
 final as
 ( 

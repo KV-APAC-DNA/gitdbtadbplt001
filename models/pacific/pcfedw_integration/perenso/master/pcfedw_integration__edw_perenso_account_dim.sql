@@ -2,18 +2,18 @@ with
 itg_perenso_acct_mapping as
 (
     select * from {{ source('pcfitg_integration', 'itg_perenso_acct_mapping') }}
-), --one time load
+),
 wks_perenso_acct_intermideate as
 (
-    select * from snappcfwks_integration.wks_perenso_acct_intermideate
+    select * from {{ ref('pcfwks_integration__wks_perenso_acct_intermideate') }}
 ),
 itg_perenso_account  as
 (
-    select * from snappcfitg_integration.itg_perenso_account
+    select * from {{ ref('pcfitg_integration__itg_perenso_account') }}
 ),
 itg_perenso_account_type as
 (
-    select * from snappcfitg_integration.itg_perenso_account_type
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_type') }}
 ),
 grp as
 (SELECT 

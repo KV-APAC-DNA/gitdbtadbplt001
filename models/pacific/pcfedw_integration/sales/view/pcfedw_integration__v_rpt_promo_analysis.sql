@@ -1,51 +1,51 @@
 with 
 vw_jjbr_curr_exch_dim as 
 (
-    select * from snappcfedw_integration.vw_jjbr_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 edw_time_dim as 
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 itg_px_master as 
 (
-    select * from snappcfitg_integration.itg_px_master
+    select * from {{ ref('pcfitg_integration__itg_px_master') }}
 ),
 edw_vw_terms_master as 
 (
-    select * from snappcfedw_integration.edw_vw_terms_master
+    select * from {{ ref('pcfedw_integration__edw_vw_terms_master') }}
 ),
 vw_customer_dim as 
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 vw_material_dim as 
 (
-    select * from snappcfedw_integration.vw_material_dim
+    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 itg_px_weekly_sell as 
 (
-    select * from snappcfitg_integration.itg_px_weekly_sell
+    select * from {{ ref('pcfitg_integration__itg_px_weekly_sell') }}
 ),
 edw_px_listprice as 
 (
-    select * from snappcfedw_integration.edw_px_listprice
+    select * from {{ ref('pcfedw_integration__edw_px_listprice') }}
 ),
 dly_sls_cust_attrb_lkp as 
 (
-    select * from snappcfedw_integration.dly_sls_cust_attrb_lkp
+    select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
 vw_sap_std_cost as 
 (
-    select * from snappcfedw_integration.vw_sap_std_cost
+    select * from {{ ref('pcfedw_integration__vw_sap_std_cost') }}
 ),
 edw_vw_mds_cogs_rate_dim as 
 (
-    select * from snappcfedw_integration.edw_vw_mds_cogs_rate_dim
+    select * from {{ ref('pcfedw_integration__edw_vw_mds_cogs_rate_dim') }}
 ),
 itg_query_parameters as 
 (
-    select * from snappcfitg_integration.itg_query_parameters
+    select * from {{ source('pcfitg_integration', 'itg_query_parameters') }}
 ),
 final as
 (
