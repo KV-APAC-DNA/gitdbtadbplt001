@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: pcfedw_access__edw_demand_forecast_snapshot
+    config:
+      alias: edw_demand_forecast_snapshot
+      tags: ["",""]
+  - name: pcfedw_access__edw_gts_visibility
+    config:
+      alias: edw_gts_visibility
+      tags: ["",""]
+  - name: pcfedw_access__edw_invoice_analysis
+    config:
+      alias: edw_invoice_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pacific_field_sales_analysis
+    config:
+      alias: edw_pacific_field_sales_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pacific_metcash_dstrbtn_analysis
+    config:
+      alias: edw_pacific_metcash_dstrbtn_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pacific_perenso_ims_analysis
+    config:
+      alias: edw_pacific_perenso_ims_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+    config:
+      alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pacific_pharmacy_dstrbtn_analysis
+    config:
+      alias: edw_pacific_pharmacy_dstrbtn_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_pharmacy_ecommerce_analysis
+    config:
+      alias: edw_pharmacy_ecommerce_analysis
+      tags: ["",""]
+  - name: pcfedw_access__edw_promax_analysis_snapshot
+    config:
+      alias: edw_promax_analysis_snapshot
+      tags: ["",""]
+  - name: pcfedw_access__edw_promax_ciw_snapshot
+    config:
+      alias: edw_promax_ciw_snapshot
+      tags: ["",""]
+  - name: pcfedw_access__edw_sales_reporting
+    config:
+      alias: edw_sales_reporting
+      tags: ["",""]
+  - name: pcfedw_access__edw_sales_reporting_snapshot
+    config:
+      alias: edw_sales_reporting_snapshot
+      tags: ["",""]
+  - name: pcfedw_access__edw_sls_evolution
+    config:
+      alias: edw_sls_evolution
+      tags: ["",""]
+  - name: pcfedw_access__v_rpt_promo_analysis
+    config:
+      alias: v_rpt_promo_analysis
+      tags: ["",""]
+  - name: pcfedw_access__vw_competitive_banner_group
+    config:
+      alias: vw_competitive_banner_group
+      tags: ["",""]
+  - name: pcfedw_access__vw_demand_forecast_analysis
+    config:
+      alias: vw_demand_forecast_analysis
+      tags: ["",""]
+  - name: pcfedw_access__vw_iri_scan_sales_analysis
+    config:
+      alias: vw_iri_scan_sales_analysis
+      tags: ["",""]
+  - name: pcfedw_access__vw_px_master_analysis
+    config:
+      alias: vw_px_master_analysis
+      tags: ["",""]
