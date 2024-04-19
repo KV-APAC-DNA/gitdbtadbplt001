@@ -1,14 +1,14 @@
 with vw_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_curr_exch_dim') }}
 ),
 edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_jjbr_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_jjbr_curr_exch_dim    
+    select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}   
 ),
 final as
 (

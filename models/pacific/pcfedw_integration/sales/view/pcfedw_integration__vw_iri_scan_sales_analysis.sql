@@ -1,6 +1,6 @@
 with edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_material_dim as
 (
@@ -8,31 +8,31 @@ edw_material_dim as
 ),
 vw_iri_scan_sales as
 (
-    select * from snappcfedw_integration.vw_iri_scan_sales
+    select * from {{ ref('pcfedw_integration__vw_iri_scan_sales') }}
 ),
 vw_customer_dim as
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 vw_sapbw_ciw_fact as
 (
-    select * from snappcfedw_integration.vw_sapbw_ciw_fact
+    select * from {{ ref('pcfedw_integration__vw_sapbw_ciw_fact') }}
 ),
 vw_apo_parent_child_dim as
 (
-    select * from snappcfedw_integration.vw_apo_parent_child_dim
+    select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 edw_product_key_attributes as
 (
-    select * from snapaspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_gch_producthierarchy as
 (
-    select * from aspedw_integration.edw_gch_producthierarchy
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 rg_edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 sales as
 (

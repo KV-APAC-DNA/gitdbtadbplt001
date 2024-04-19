@@ -2,7 +2,21 @@
     config(
         materialized= "incremental",
         incremental_strategy= "delete+insert",
-        unique_key=["hash_key"]
+        pre_hook = "delete from {{this}} where (upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),so_date) in 
+            (
+                select upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),so_date
+                from
+                ( 
+                    select * from {{ ref('pcfwks_integration__wks_dstr_so_api') }}
+                    union all
+                    select * from {{ ref('pcfwks_integration__wks_dstr_so_chs') }}
+                    union all
+                    select * from {{ ref('pcfwks_integration__wks_dstr_so_sigma') }}
+                    union all
+                    select * from {{ ref('pcfwks_integration__wks_dstr_so_symbion') }}
+                )
+            )
+        "
     )
 }}
 with wks_dstr_so_api as
@@ -90,17 +104,6 @@ transformed as
 final as
 (
     select
-        md5
-        (
-            concat
-            (
-                upper(sap_parent_customer_desc),
-                ltrim(dstr_prod_cd, '0'),
-                coalesce(ltrim(matl_num, '0'), 'NA'),
-                coalesce(ltrim(ean, '0'), 'NA'),
-                so_date
-            )
-        ) as hash_key,
         sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
         sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
         dstr_prod_cd::varchar(30) as dstr_prod_cd,

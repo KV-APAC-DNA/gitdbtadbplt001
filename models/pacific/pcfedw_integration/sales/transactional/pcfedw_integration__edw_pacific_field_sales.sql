@@ -1,30 +1,30 @@
 with edw_perenso_call as
 (
-    select * from snappcfedw_integration.edw_perenso_call
+    select * from {{ ref('pcfedw_integration__edw_perenso_call') }}
 ),
 edw_perenso_compliance as
 (
-    select * from snappcfedw_integration.edw_perenso_compliance
+    select * from {{ ref('pcfedw_integration__edw_perenso_compliance') }}
 ),
 edw_perenso_over_and_above as
 (
-    select * from snappcfedw_integration.edw_perenso_over_and_above
+    select * from {{ ref('pcfedw_integration__edw_perenso_over_and_above') }}
 ),
 edw_perenso_survey as
 (
-    select * from snappcfedw_integration.edw_perenso_survey
+    select * from {{ ref('pcfedw_integration__edw_perenso_survey') }}
 ),
 itg_perenso_call_objectives as
 (
-    select * from snappcfitg_integration.itg_perenso_call_objectives
+    select * from {{ ref('pcfitg_integration__itg_perenso_call_objectives') }}
 ),
 itg_perenso_users as
 (
-    select * from snappcfitg_integration.itg_perenso_users
+    select * from {{ ref('pcfitg_integration__itg_perenso_users') }}
 ),
 itg_perenso_diary_item_time as
 (
-    select * from snappcfitg_integration.itg_perenso_diary_item_time
+    select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_time') }}
 ),
 itg_perenso_diary_item as
 (
@@ -32,7 +32,7 @@ itg_perenso_diary_item as
 ),
 itg_perenso_diary_item_type as
 (
-    select * from snappcfitg_integration.itg_perenso_diary_item_type
+    select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
 union_1 as
 (

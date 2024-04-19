@@ -1,15 +1,15 @@
 
 with vw_customer_dim as
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 vw_material_dim as
 (
-    select * from snappcfedw_integration.vw_material_dim
+    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 vw_apo_parent_child_dim as
 (
-    select * from snappcfedw_integration.vw_apo_parent_child_dim
+    select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 edw_promax_ciw_snapshot as
 (

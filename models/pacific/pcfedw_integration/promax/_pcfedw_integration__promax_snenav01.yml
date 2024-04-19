@@ -45,3 +45,7 @@ models:
     config: 
       alias: px_combined_ciw_fact
       tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfedw_integration__edw_px_master_fact
+    config: 
+      alias: edw_px_master_fact
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

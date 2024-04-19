@@ -1,14 +1,14 @@
 with edw_material_sales_dim as
 (
-    select * from aspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 dly_sls_cust_attrb_lkp as
 (
-    select * from snappcfedw_integration.dly_sls_cust_attrb_lkp
+    select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
 final as
 (

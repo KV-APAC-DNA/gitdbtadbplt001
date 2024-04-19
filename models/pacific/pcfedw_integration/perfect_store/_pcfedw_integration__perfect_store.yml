@@ -13,3 +13,7 @@ models:
     config: 
       alias: edw_ps_msl_items
       tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfedw_integration__edw_vw_perfect_store_trax_fact
+    config: 
+      alias: edw_vw_perfect_store_trax_fact
+      tags: ["","transformation"]

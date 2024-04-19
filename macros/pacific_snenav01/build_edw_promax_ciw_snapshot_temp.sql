@@ -52,7 +52,7 @@
                 {% else %}
                     {{schema}}.pcfedw_integration__edw_promax_ciw_snapshot
                 {% endif %};
-        delete from {{this}} where to_date(snapshot_date) < (current_date -102)                              
+        delete from {{this}} where to_date(snapshot_date) < (current_date -100)                              
     {% endset %}
 
     {% do run_query(query) %}
