@@ -59,7 +59,7 @@ union1 as (
         current_timestamp() as updt_dttm
     from source, imier
     where imier.cust_id(+)=source.dstrbtr_id
-        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
+        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 6),'-', '')
 )
 
 select * from union1
