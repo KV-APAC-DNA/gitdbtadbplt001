@@ -9,3 +9,7 @@ models:
     config: 
       alias: edw_pacific_perfect_store_weights
       tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfedw_integration__edw_ps_msl_items
+    config: 
+      alias: edw_ps_msl_items
+      tags: ["j_ap_trax_etl_framework","transformation"]

@@ -45,8 +45,8 @@ etdc as
         case
             when (
                 (row_number () over ( partition by etd.cal_year order by to_date(etd.cal_date)))%7::bigint) = 0 
-                then (row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7
-                else (row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7 + 1
+                then floor((row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7)
+                else floor((row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7 + 1)
         end as cal_wk
     from edw_time_dim etd
 ),
@@ -67,9 +67,10 @@ etdcm as (
             select etd.cal_year,
                 etd.cal_mnth_id,
                 case
-                    when ((row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))%7::bigint) = 0 
-                    then (row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7
-                    else (row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7 + 1
+                    when (
+                        (row_number () over ( partition by etd.cal_year order by to_date(etd.cal_date)))%7::bigint) = 0 
+                        then floor((row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7)
+                        else floor((row_number () over (partition by etd.cal_year order by to_date(etd.cal_date)))/7 + 1)
                 end as cal_wk
             from edw_time_dim etd
         ) etdc
@@ -107,7 +108,7 @@ epad as
     where upper(epad.acct_type_desc) = upper(ippcct.account_type_description(+))
         and upper(epad.acct_grade) = upper(ippcct.account_grade(+))
 ) ,
-final as
+transformed as
 (
     select 
         epfs.perenso_source,
@@ -131,7 +132,7 @@ final as
         etd.cal_mnth_nm,
         epfs.diary_item_type_desc,
         case
-            when upper(epfs.diary_item_category) = 'activity on account' then 'CALL'
+            when upper(epfs.diary_item_category) = 'ACTIVITY ON ACCOUNT' then 'Call'
             else epfs.diary_item_category
         end diary_item_category,
         epfs.diary_start_date,
@@ -218,7 +219,7 @@ final as
         epfs.to_do_end_date,
         epfs.work_item_desc,
         case
-            when upper(epfs.work_item_type) = 'CHECK THE STORE' THEN 'WALK THE STORE'
+            when upper(epfs.work_item_type) = 'CHECK THE STORE' THEN 'Walk The Store'
             else epfs.work_item_type
         end work_item_type,
         epfs.work_item_start_date,
@@ -253,7 +254,7 @@ final as
         case
             when upper(perenso_source) = 'CALL' then epad.monthly_targets /(
                 max(jj_mnth_wk) over (partition by etd.jj_year, etd.jj_mnth_id)
-            )
+            )::double precision
             else null
         end call_monthly_targets,
         case
@@ -284,7 +285,140 @@ final as
         and epfs.acct_key = epad.acct_id(+)
         and epfs.create_user_key = ipu.user_key(+)
         and epfs.prod_grp_key = ippg.prod_grp_key(+)
+),
+final as
+(
+    select 
+        perenso_source::varchar(20) as perenso_source,
+        time_id::number(18,0) as time_id,
+        jj_year::number(18,0) as jj_year,
+        jj_qrtr::number(18,0) as jj_qrtr,
+        jj_mnth::number(18,0) as jj_mnth,
+        jj_wk::number(18,0) as jj_wk,
+        jj_mnth_wk::number(38,0) as jj_mnth_wk,
+        jj_mnth_id::number(18,0) as jj_mnth_id,
+        jj_mnth_tot::number(18,0) as jj_mnth_tot,
+        jj_mnth_day::number(18,0) as jj_mnth_day,
+        jj_mnth_shrt::varchar(3) as jj_mnth_shrt,
+        jj_mnth_long::varchar(10) as jj_mnth_long,
+        cal_year::number(18,0) as cal_year,
+        cal_qrtr::number(18,0) as cal_qrtr,
+        cal_mnth::number(18,0) as cal_mnth,
+        cal_wk::number(38,0) as cal_wk,
+        cal_mnth_wk::number(38,0) as cal_mnth_wk,
+        cal_mnth_id::number(18,0) as cal_mnth_id,
+        cal_mnth_nm::varchar(10) as cal_mnth_nm,
+        diary_item_type_desc::varchar(255) as diary_item_type_desc,
+        diary_item_category::varchar(255) as diary_item_category,
+        diary_start_date::date as diary_start_date,
+        diary_start_time::varchar(18) as diary_start_time,
+        diary_end_date::date as diary_end_date,
+        diary_end_time::varchar(18) as diary_end_time,
+        diary_complete::varchar(5) as diary_complete,
+        count_in_call_rate::varchar(5) as count_in_call_rate,
+        todo_type::varchar(20) as todo_type,
+        to_do_option_desc::varchar(256) as to_do_option_desc,
+        acct_key::number(10,0) as acct_key,
+        acct_display_name::varchar(256) as acct_display_name,
+        acct_type_desc::varchar(50) as acct_type_desc,
+        acct_street_1::varchar(256) as acct_street_1,
+        acct_street_2::varchar(256) as acct_street_2,
+        acct_street_3::varchar(256) as acct_street_3,
+        acct_suburb::varchar(25) as acct_suburb,
+        acct_postcode::varchar(25) as acct_postcode,
+        acct_phone_number::varchar(50) as acct_phone_number,
+        acct_fax_number::varchar(50) as acct_fax_number,
+        acct_email::varchar(256) as acct_email,
+        acct_country::varchar(256) as acct_country,
+        acct_region::varchar(256) as acct_region,
+        acct_state::varchar(256) as acct_state,
+        acct_banner_country::varchar(256) as acct_banner_country,
+        acct_banner_division::varchar(256) as acct_banner_division,
+        acct_banner_type::varchar(256) as acct_banner_type,
+        acct_banner::varchar(256) as acct_banner,
+        acct_type::varchar(256) as acct_type,
+        acct_sub_type::varchar(256) as acct_sub_type,
+        acct_grade::varchar(256) as acct_grade,
+        acct_nz_pharma_country::varchar(256) as acct_nz_pharma_country,
+        acct_nz_pharma_state::varchar(256) as acct_nz_pharma_state,
+        acct_nz_pharma_territory::varchar(256) as acct_nz_pharma_territory,
+        acct_nz_groc_country::varchar(256) as acct_nz_groc_country,
+        acct_nz_groc_state::varchar(256) as acct_nz_groc_state,
+        acct_nz_groc_territory::varchar(256) as acct_nz_groc_territory,
+        acct_ssr_country::varchar(256) as acct_ssr_country,
+        acct_ssr_state::varchar(256) as acct_ssr_state,
+        acct_ssr_team_leader::varchar(256) as acct_ssr_team_leader,
+        acct_ssr_territory::varchar(256) as acct_ssr_territory,
+        acct_ssr_sub_territory::varchar(256) as acct_ssr_sub_territory,
+        acct_ind_groc_country::varchar(256) as acct_ind_groc_country,
+        acct_ind_groc_state::varchar(256) as acct_ind_groc_state,
+        acct_ind_groc_territory::varchar(256) as acct_ind_groc_territory,
+        acct_ind_groc_sub_territory::varchar(256) as acct_ind_groc_sub_territory,
+        acct_au_pharma_country::varchar(256) as acct_au_pharma_country,
+        acct_au_pharma_state::varchar(256) as acct_au_pharma_state,
+        acct_au_pharma_territory::varchar(256) as acct_au_pharma_territory,
+        acct_au_pharma_ssr_country::varchar(256) as acct_au_pharma_ssr_country,
+        acct_au_pharma_ssr_state::varchar(256) as acct_au_pharma_ssr_state,
+        acct_au_pharma_ssr_territory::varchar(256) as acct_au_pharma_ssr_territory,
+        acct_tsm::varchar(256) as acct_tsm,
+        acct_terriroty::varchar(256) as acct_terriroty,
+        acct_store_code::varchar(256) as acct_store_code,
+        acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
+        acct_email_opt_out::varchar(256) as acct_email_opt_out,
+        acct_contact_method::varchar(256) as acct_contact_method,
+        ssr_grade::varchar(256) as ssr_grade,
+        create_user_key::number(10,0) as create_user_key,
+        create_user_name::varchar(100) as create_user_name,
+        create_user_desc::varchar(100) as create_user_desc,
+        create_user_email_address::varchar(100) as create_user_email_address,
+        store_chk_date::timestamp_ntz(9) as store_chk_date,
+        prod_grp_key::number(18,0) as prod_grp_key,
+        prod_grp_desc::varchar(100) as prod_grp_desc,
+        todo_desc::varchar(256) as todo_desc,
+        to_do_start_date::timestamp_ntz(9) as to_do_start_date,
+        to_do_end_date::timestamp_ntz(9) as to_do_end_date,
+        work_item_desc::varchar(255) as work_item_desc,
+        work_item_type::varchar(255) as work_item_type,
+        work_item_start_date::timestamp_ntz(9) as work_item_start_date,
+        work_item_end_date::timestamp_ntz(9) as work_item_end_date,
+        survery_notes::varchar(100) as survery_notes,
+        fail_reason_desc::varchar(256) as fail_reason_desc,
+        req_start_date::timestamp_ntz(9) as req_start_date,
+        req_end_date::timestamp_ntz(9) as req_end_date,
+        oa_acct_key::number(18,0) as oa_acct_key,
+        oa_start_date::timestamp_ntz(9) as oa_start_date,
+        oa_end_date::timestamp_ntz(9) as oa_end_date,
+        oa_points::number(21,3) as oa_points,
+        batch_count::number(18,0) as batch_count,
+        activated::varchar(10) as activated,
+        over_and_above_notes::varchar(255) as over_and_above_notes,
+        load_date::date as load_date,
+        question_response::varchar(256) as question_response,
+        dash_start_time::date as dash_start_time,
+        dash_end_time::date as dash_end_time,
+        cycle_start_date::date as cycle_start_date,
+        cycle_end_date::date as cycle_end_date,
+        cycle_number::varchar(25) as cycle_number,
+        parent_question::varchar(256) as parent_question,
+        question_order::number(18,0) as question_order,
+        survey_target_type::varchar(25) as survey_target_type,
+        survey_target::number(18,0) as survey_target,
+        survey_category::varchar(100) as survey_category,
+        call_weekly_targets::number(10,0) as call_weekly_targets,
+        call_monthly_targets::number(30,20) as call_monthly_targets,
+        call_yearly_targets::number(10,0) as call_yearly_targets,
+        calls_per_week::number(10,5) as calls_per_week,
+        call_description::varchar(255) as call_description,
+        assigned_user_key::varchar(50) as assigned_user_key,
+        assigned_user_name::varchar(100) as assigned_user_name,
+        due_dt::date as due_dt,
+        completed_dt::date as completed_dt,
+        status::varchar(50) as status,
+        diary_session_start_time::timestamp_ntz(9) as diary_session_start_time,
+        diary_session_end_time::timestamp_ntz(9) as diary_session_end_time,
+        duration::varchar(50) as duration,
+        latitude::varchar(50) as latitude,
+        longitude::varchar(50) as longitude
+    from transformed
 )
-select count(*),'model' from final
-union all
-select count(*),'snap' from snappcfedw_integration.edw_pacific_field_sales_analysis
+select * from final

@@ -11,13 +11,13 @@ projprd as
   select 
   left(replace(add_months(to_date(t1.jj_mnth_id||'01','yyyymmdd'),-1),'-',''),6) as prev_jj_period
   from edw_time_dim t1
-  where to_date(cal_date) = to_date('2024-04-10T06:37:11.684000-07:00')+1
+  where to_date(cal_date) = current_date+1
 ),
 transformed as
 (
   select 
-    substring('2024-04-10T06:37:11.684000-07:00', 1, 19) as snapshot_date,
-    month(current_timestamp) as snapshot_month,
+    substring('2024-04-17 13:12:40.000', 1, 19) as snapshot_date,
+    upper(monthname(current_timestamp)) as snapshot_month,
     year(current_timestamp) as snapshot_year,
     jj_period,
     jj_wk,
@@ -110,14 +110,14 @@ transformed as
     (
       select jj_year
       from edw_time_dim
-      where to_date(cal_date) = to_date('2024-04-10T06:37:11.684000-07:00')
+      where to_date(cal_date) = to_date(current_date)
     )
-    and pac_subsource_type in 
+    and trim(pac_subsource_type) in 
     (
-      'PX_FORECAST',
-      'PX_MASTER',
-      'PX_TERMS',
-      'SAPBW_ACTUAL'
+        'PX_FORECAST',
+        'PX_MASTER',
+        'PX_TERMS',
+        'SAPBW_ACTUAL'
     )
     and cust_no is not null
     group by 

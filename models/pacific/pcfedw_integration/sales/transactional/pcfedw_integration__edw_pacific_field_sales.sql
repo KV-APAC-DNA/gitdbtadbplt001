@@ -511,8 +511,6 @@ final as
         longitude::varchar(50) as longitude
     from combined
 )
-select count(*),'model' from final
-union all
-select count(*),'snap' from snappcfedw_integration.edw_pacific_field_sales
+select * from final
 
 

@@ -51,7 +51,7 @@ final as(
      from source
  {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where source.snapshot_date::date > (select max(snapshot_date)::date from {{ this }}) 
+    where source.snapshot_date > (select max(snapshot_date) from {{ this }}) 
  {% endif %}
 )
 select * from final

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_mds_perfect_store_msl
+    config: 
+      alias: wks_mds_perfect_store_msl
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfwks_integration__wks_pacific_perfect_store_targets
+    config: 
+      alias: wks_pacific_perfect_store_targets
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfwks_integration__wks_pacific_perfect_store_weights
+    config: 
+      alias: wks_pacific_perfect_store_weights
+      tags: ["j_ap_trax_etl_framework","transformation"]

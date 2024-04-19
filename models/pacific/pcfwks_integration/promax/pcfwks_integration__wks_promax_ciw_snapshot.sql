@@ -17,7 +17,8 @@ edw_promax_ciw_snapshot as
 ),
 final as
 (
-    select ------- dna data
+    select ------- dna data 
+        distinct
         eps.snapshot_date::timestamp_ntz(9) as snapshot_date,
         eps.snapshot_month::varchar(10) as snapshot_month,
         eps.snapshot_year::number(18,0) as snapshot_year,
@@ -37,7 +38,7 @@ final as
         ltrim(vmd.matl_id, 0::varchar(40)) as matl_id,
         vmd.matl_desc::varchar(100) as matl_desc,
         ltrim(vapcd.parent_id, 0::varchar(18)) as parent_matl_id,
-        mstrcd.parent_matl_desc::varchar(100) as parent_matl_desc,
+        vapcd.parent_matl_desc::varchar(100) as parent_matl_desc,
         vmd.fran_desc::varchar(100) as fran_desc,
         vmd.grp_fran_desc::varchar(100) as grp_fran_desc,
         vmd.matl_type_desc::varchar(40) as matl_type_desc,
@@ -76,18 +77,18 @@ final as
                 )
         ) mstrcd
     where to_date(eps.snapshot_date) > '2017-05-21'
-        and ltrim(eps.cust_no) = (ltrim(vcd.cust_no(+), '0'))
-        and ltrim(eps.matl_id) = (ltrim(vmd.matl_id(+), '0'))
+        and trim(eps.cust_no) = (ltrim(vcd.cust_no(+), '0'))
+        and trim(eps.matl_id) = (ltrim(vmd.matl_id(+), '0'))
         and (
             decode(
-                eps.cmp_desc,
+                trim(eps.cmp_desc),
                 'Australia',
                 '7470',
                 'New Zealand',
                 '8361'
-            ) = (vapcd.cmp_id(+))
-            and ltrim(eps.matl_id) = (ltrim(vapcd.matl_id(+), '0'))
+            ) = trim(vapcd.cmp_id(+))
+            and trim(eps.matl_id) = (ltrim(vapcd.matl_id(+), '0'))
         )
-        and ltrim(vapcd.master_code) = ltrim(mstrcd.master_code(+))
+        and trim(vapcd.master_code) = trim(mstrcd.master_code(+))
 )
 select * from final
