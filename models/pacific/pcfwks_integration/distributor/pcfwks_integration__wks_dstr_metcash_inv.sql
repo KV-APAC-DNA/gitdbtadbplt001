@@ -4,15 +4,15 @@ with sdl_ig_inventory_data as
 ),
 edw_customer_sales_dim as
 (
-     select * from snapaspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as
 (
-     select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_code_descriptions as
 (
-     select * from snapaspedw_integration.edw_code_descriptions
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 itg_parameter_reg_inventory as
 (

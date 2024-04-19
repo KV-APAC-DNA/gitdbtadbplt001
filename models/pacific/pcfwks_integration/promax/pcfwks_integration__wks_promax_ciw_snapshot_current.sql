@@ -1,10 +1,10 @@
 with edw_time_dim as
 (
-  select * from snappcfedw_integration.edw_time_dim
+  select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_sales_reporting as
 (
-  select * from snappcfedw_integration.vw_sales_reporting
+  select * from {{ ref('pcfedw_integration__vw_sales_reporting') }}
 ),
 projprd as
 (
@@ -16,7 +16,7 @@ projprd as
 transformed as
 (
   select 
-    substring('2024-04-17 13:12:40.000', 1, 19) as snapshot_date,
+    substring(current_timestamp(), 1, 19) as snapshot_date,
     upper(monthname(current_timestamp)) as snapshot_month,
     year(current_timestamp) as snapshot_year,
     jj_period,

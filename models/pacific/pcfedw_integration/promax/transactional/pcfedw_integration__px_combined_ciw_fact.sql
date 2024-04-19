@@ -4,43 +4,43 @@ with edw_px_master_fact as
 ),
 edw_px_gl_trans_lkp as
 (
-    select * from snappcfedw_integration.edw_px_gl_trans_lkp
+    select * from {{ ref('pcfedw_integration__edw_px_gl_trans_lkp') }}
 ),
 vw_customer_dim as
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_px_forecast_fact as
 (
-    select * from snappcfedw_integration.edw_px_forecast_fact
+    select * from {{ ref('pcfedw_integration__edw_px_forecast_fact') }}
 ),
 edw_px_listprice as
 (
-    select * from snappcfedw_integration.edw_px_listprice
+    select * from {{ ref('pcfedw_integration__edw_px_listprice') }}
 ),
 dly_sls_cust_attrb_lkp as
 (
-    select * from snappcfedw_integration.dly_sls_cust_attrb_lkp
+    select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
 vw_jjbr_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_jjbr_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_sap_std_cost as
 (
-    select * from snappcfedw_integration.vw_sap_std_cost
+    select * from {{ ref('pcfedw_integration__vw_sap_std_cost') }}
 ),
 edw_px_term_plan_ext as
 (
-    select * from snappcfedw_integration.edw_px_term_plan_ext
+    select * from {{ ref('pcfedw_integration__edw_px_term_plan_ext') }}
 ),
 edw_account_dim as
 (
-    select * from snapaspedw_integration.edw_account_dim
+    select * from {{ ref('aspedw_integration__edw_account_dim') }}
 ),
 union_1 as
 (  

@@ -1,6 +1,6 @@
 with edw_crncy_exch as
 (
-    select * from snapaspedw_integration.edw_crncy_exch
+    select * from {{ ref('aspedw_integration__edw_crncy_exch') }}
 ),
 final as
 (

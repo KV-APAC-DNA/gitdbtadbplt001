@@ -2,7 +2,22 @@
     config(
         materialized= "incremental",
         incremental_strategy= "delete+insert",
-        unique_key=["hash_key"]
+        pre_hook = ["delete from {{this}}
+                    where (upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),inv_date) in (
+                            select upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),inv_date
+                            from
+                            ( 
+                                select * from {{ ref('pcfwks_integration__wks_dstr_inv_api') }}
+                                union all
+                                select * from {{ ref('pcfwks_integration__wks_dstr_inv_chs') }}
+                                union all
+                                select * from {{ ref('pcfwks_integration__wks_dstr_inv_sigma') }}
+                                union all
+                                select * from {{ ref('pcfwks_integration__wks_dstr_inv_symbion') }}
+                            )
+                        )",
+                        "delete from {{this}} where (upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),inv_date) in (select UPPER(SAP_PRNT_CUST_DESC),ltrim(prod_cd, '0'),inv_date from {{ ref('pcfwks_integration__wks_dstr_metcash_inv') }})"
+]
     )
 }}
 with wks_dstr_inv_api as
@@ -91,20 +106,6 @@ symbion as
 ),
 combined as
 (
-    select 
-        md5
-        (
-            concat
-            (
-                UPPER(sap_parent_customer_desc),
-                ltrim(dstr_prod_cd, '0'),
-                coalesce(ltrim(matl_num, '0'), 'NA'),
-                coalesce(ltrim(ean, '0'), 'NA'),
-                inv_date
-            )       
-        ) as hash_key,*
-    from
-    (
         select * from api
         union all
         select * from chs
@@ -112,20 +113,10 @@ combined as
         select * from sigma
         union all
         select * from symbion
-    )
 ),
 metcash as
 (
-    select 
-         md5
-        (
-            concat
-            (
-                UPPER(sap_prnt_cust_desc),
-                ltrim(prod_cd, '0'),
-                inv_date
-            )       
-        ) as hash_key,
+    select
         sap_prnt_cust_key as sap_parent_customer_key,
         sap_prnt_cust_desc as sap_parent_customer_desc,
         prod_cd as dstr_prod_cd,
@@ -142,7 +133,6 @@ metcash as
 final as
 (
     select 
-        hash_key,
         sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
         sap_parent_customer_desc::varchar(50) as sap_parent_customer_desc,
         dstr_prod_cd::varchar(30) as dstr_prod_cd,

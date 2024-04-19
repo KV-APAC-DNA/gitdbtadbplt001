@@ -15,7 +15,7 @@ final as
     select * from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where ('2024-04-17')::date > (select max(snapshot_date)::date from {{ this }}) 
+    where (snapshot_date)::date > (select max(snapshot_date)::date from {{ this }}) 
     {% endif %}
 
 )

@@ -1,26 +1,26 @@
 with edw_pacific_field_sales as
 (
-    select * from snappcfedw_integration.edw_pacific_field_sales
+    select * from {{ ref('pcfedw_integration__edw_pacific_field_sales') }}
 ),
 edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_perenso_account_dim as
 (
-    select * from snappcfedw_integration.edw_perenso_account_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 itg_perenso_product_group as
 (
-    select * from snappcfitg_integration.itg_perenso_product_group
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_group') }}
 ),
 itg_perenso_users as
 (
-    select * from snappcfitg_integration.itg_perenso_users
+    select * from {{ ref('pcfitg_integration__itg_perenso_users') }}
 ),
 itg_pacific_perenso_call_coverage_targets as
 (
-    select * from snappcfitg_integration.itg_pacific_perenso_call_coverage_targets
+    select * from {{ ref('pcfitg_integration__itg_pacific_perenso_call_coverage_targets') }}
 ),
 etdw as 
 (

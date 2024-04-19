@@ -8,15 +8,15 @@ sdl_symbion_dstr as
 ),
 edw_customer_sales_dim as
 (
-     select * from snapaspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as
 (
-     select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_code_descriptions as
 (
-     select * from snapaspedw_integration.edw_code_descriptions
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 combined as
 (
