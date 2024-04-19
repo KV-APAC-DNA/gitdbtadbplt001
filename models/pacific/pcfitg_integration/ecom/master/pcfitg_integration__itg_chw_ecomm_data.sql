@@ -8,7 +8,7 @@
 }}
 
 with source as(
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
+    select * from {{ source('pcfsdl_raw', 'sdl_chw_ecomm_data') }}
 ),
 final as(
     select
@@ -31,6 +31,5 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
-    where rnk=1
 )
 select * from final

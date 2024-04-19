@@ -4,9 +4,19 @@ models:
   - name: pcfedw_integration__edw_perenso_account_dim_snapshot
     config: 
       alias: edw_perenso_account_dim_snapshot
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
 
   - name: pcfedw_integration__edw_perenso_prod_dim
     config: 
       alias: edw_perenso_prod_dim
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfedw_integration__edw_perenso_account_metcash_dim
+    config: 
+      alias: edw_perenso_account_metcash_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfedw_integration__edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+    config: 
+      alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]

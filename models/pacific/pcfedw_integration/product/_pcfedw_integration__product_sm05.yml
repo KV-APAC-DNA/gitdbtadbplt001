@@ -4,4 +4,4 @@ models:
   - name: pcfedw_integration__vw_competitive_banner_group
     config: 
       alias: vw_competitive_banner_group
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+      tags: ["j_pacific_cbg_data_ingestion","transformation"]

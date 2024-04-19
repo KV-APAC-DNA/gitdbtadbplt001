@@ -1,5 +1,8 @@
 with edw_px_term_plan as(
-    select * from {{ ref('pcfedw_integration__edw_px_term_plan') }}
+    select * from DEV_DNA_CORE.sm05_workspace.pcfedw_integration__edw_px_term_plan
+),
+vw_customer_dim as(
+    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_customer_dim
 ),
 cte1 as(
     SELECT
@@ -10,7 +13,7 @@ cte1 as(
         edw_px_term_plan.sku_attribute,
         edw_px_term_plan.sku_longname,
         edw_px_term_plan.gltt_longname,
-        edw_px_term_plan.bd_shortname,
+        edw_px_term_plan.bd_shortname as year,
         edw_px_term_plan.bd_longname,
         edw_px_term_plan.asps_type,
         SUM(edw_px_term_plan.asps_month1) AS asps_month1,
@@ -43,25 +46,25 @@ cte1 as(
 transformed as(
     SELECT
         '0000'::varchar(10) as cmp_id,
-        '00'::varchar(20) as channel_id,,
+        '00'::varchar(20) as channel_id,
         ac_attribute::varchar(50) as cust_id,
         sku_stockcode::varchar(15) as matl_id,
         gltt_longname::varchar(40) as gltt_longname,
        -- timeperiod::number(18,0) as time_period,
         case
-            when time_period='1' then TO_NUMERIC(year || '01')
-            when time_period='2' then TO_NUMERIC(year ||'02')
-            when time_period='3' then TO_NUMERIC(year ||'03')
-            when time_period='4' then TO_NUMERIC(year ||'04')
-            when time_period='5' then TO_NUMERIC(year ||'05')
-            when time_period='6' then TO_NUMERIC(year ||'06')
-            when time_period='7' then TO_NUMERIC(year ||'07')
-            when time_period='8' then TO_NUMERIC(year ||'08')
-            when time_period='9' then TO_NUMERIC(year ||'09')
-            when time_period='10' then TO_NUMERIC(year ||'10')
-            when time_period='11' then TO_NUMERIC(year ||'11')
-            when time_period='12' then TO_NUMERIC(year ||'12')
-        else time_period
+            when timeperiod='1' then TO_NUMERIC(year || '01')
+            when timeperiod='2' then TO_NUMERIC(year ||'02')
+            when timeperiod='3' then TO_NUMERIC(year ||'03')
+            when timeperiod='4' then TO_NUMERIC(year ||'04')
+            when timeperiod='5' then TO_NUMERIC(year ||'05')
+            when timeperiod='6' then TO_NUMERIC(year ||'06')
+            when timeperiod='7' then TO_NUMERIC(year ||'07')
+            when timeperiod='8' then TO_NUMERIC(year ||'08')
+            when timeperiod='9' then TO_NUMERIC(year ||'09')
+            when timeperiod='10' then TO_NUMERIC(year ||'10')
+            when timeperiod='11' then TO_NUMERIC(year ||'11')
+            when timeperiod='12' then TO_NUMERIC(year ||'12')
+        else timeperiod
         end::number(18,0) as time_period,
         CASE timeperiod
             WHEN 1
@@ -89,7 +92,7 @@ transformed as(
             WHEN 12
             THEN asps_month12
         END::float AS px_term_proj_amt,
-        bd_shortname::varchar(4) as year,
+        year::varchar(4) as year,
         gltt_rowid::number(18,0) as gltt_rowid
 FROM cte1, (
   SELECT
@@ -131,19 +134,10 @@ FROM cte1, (
 WHERE
   ac_attribute <> '  '
 ),
-final as(
+transformedd as(
     select 
-        cmp_id,
-        --channel_id,
-        case
-         when channel_id = '10' and cmp_id = '7470' then channel_id = '10 - au'
-         when channel_id = '11' and cmp_id = '7470' then channel_id = '11 - au'
-         when channel_id = '15' and cmp_id = '7470' then channel_id = '15 - au'
-         when channel_id = '19' and cmp_id = '7470' then channel_id = '19 - au'
-         when channel_id = '10' and cmp_id = '8361' then channel_id = '10 - nz'
-         when channel_id = '11' and cmp_id = '8361' then channel_id = '11 - nz'
-        else channel_id
-        end as channel_id
+        vcd.cmp_id,
+        vcd.channel_cd as channel_id,
         cust_id,
         matl_id,
         gltt_longname,
@@ -152,5 +146,28 @@ final as(
         year,
         gltt_rowid,
     from transformed
+    left join  vw_customer_dim vcd  
+    on  transformed.cust_id=substring(cust_no,5,6)
+),
+final as(
+       select 
+        cmp_id,
+        case
+            when channel_id = '10' and cmp_id = '7470' then try_cast('10 - AU' as varchar)
+            when channel_id = '11' and cmp_id = '7470' then try_cast('11 - AU' as varchar)
+            when channel_id = '15' and cmp_id = '7470' then try_cast('15 - AU' as varchar)
+            when channel_id = '19' and cmp_id = '7470' then try_cast('19 - AU' as varchar)
+            when channel_id = '10' and cmp_id = '8361' then try_cast('10 - NZ' as varchar)
+            when channel_id = '11' and cmp_id = '8361' then try_cast('11 - NZ' as varchar)
+        else channel_id
+        end as channel_id,
+        cust_id,
+        matl_id,
+        gltt_longname,
+        time_period,
+        px_term_proj_amt,
+        year,
+        gltt_rowid,
+    from transformedd
 )
-select * from transformed
+select * from final

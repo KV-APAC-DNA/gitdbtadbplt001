@@ -4,4 +4,24 @@ models:
   - name: pcfedw_integration__edw_promax_analysis_snapshot
     config: 
       alias: edw_promax_analysis_snapshot
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+      tags: ["j_pacific_promax_master_snapshot_etl_framework","transformation"]
+
+  - name: pcfedw_integration__edw_px_scan_data_fact
+    config: 
+      alias: edw_px_scan_data_fact
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_term_plan
+    config: 
+      alias: edw_px_term_plan
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_term_plan_ext
+    config: 
+      alias: edw_px_term_plan_ext
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_uom
+    config: 
+      alias: edw_px_uom
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

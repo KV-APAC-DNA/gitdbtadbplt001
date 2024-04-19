@@ -10,10 +10,10 @@ sources:
       identifier: false
     tables:
       - name: sdl_px_scan_data
-        tags: ["j_pa_grocery_inv_coles","ingestion"]
+        tags: ["j_pac_promax_ciw_wrapper","ingestion"]
 
       - name: sdl_px_uom
-        tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+        tags: ["j_pac_promax_ciw_wrapper","ingestion"]
 
       - name: sdl_px_term_plan
-        tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+        tags: ["j_pac_promax_ciw_wrapper","ingestion"]

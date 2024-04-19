@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__v_rpt_pacific_perfect_store
+    config: 
+      alias: v_rpt_pacific_perfect_store
+      tags: ["","transformation"]
+
+  - name: pcfedw_integration__vw_sapbw_futures_fact
+    config: 
+      alias: vw_sapbw_futures_fact
+      tags: ["","transformation"]
+
+ 

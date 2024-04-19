@@ -4,5 +4,14 @@ models:
   - name: pcfitg_integration__itg_px_scan_data
     config: 
       alias: itg_px_scan_data
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pac_promax_ciw_wrapper","ingestion"]
 
+  - name: pcfitg_integration__itg_px_term_plan
+    config: 
+      alias: itg_px_term_plan
+      tags: ["j_pac_promax_ciw_wrapper","ingestion"]
+
+  - name: pcfitg_integration__itg_px_uom
+    config: 
+      alias: itg_px_uom
+      tags: ["j_pac_promax_ciw_wrapper","ingestion"]
