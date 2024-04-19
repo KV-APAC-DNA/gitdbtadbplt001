@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook="{{build_pcfedw_integration__edw_invoice_fact_snapshot()}}"
+    )
+}}
+
 with edw_time_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
 ),
