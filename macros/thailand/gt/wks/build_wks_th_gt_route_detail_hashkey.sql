@@ -1,7 +1,13 @@
-{% macro build_wks_th_gt_route_detail_hashkey() %}
-    
+{% macro build_wks_th_gt_route_detail_hashkey(filename) %}
+    {% set tablename %}
+    {% if target.name=='prod' %}
+                    thawks_integration.wks_th_gt_route_detail_hashkey
+                {% else %}
+                    {{schema}}.thawks_integration__wks_th_gt_route_detail_hashkey
+                {% endif %}	
+    {% endset %}
     {% set query %}
-    CREATE TABLE if not exists  thawks_integration.wks_th_gt_route_detail_hashkey	(
+    CREATE TABLE if not exists  {{tablename}}	(
         hashkey varchar(500),
         cntry_cd varchar(5),
         crncy_cd varchar(5),
@@ -19,8 +25,8 @@
         run_id varchar(50),
         crt_dttm timestamp without time zone
     );
-    TRUNCATE TABLE thawks_integration.wks_th_gt_route_detail_hashkey;
-    INSERT INTO thawks_integration.wks_th_gt_route_detail_hashkey
+    TRUNCATE TABLE {{tablename}};
+    INSERT INTO {{tablename}}
     (
     hashkey,
     cntry_cd,
@@ -58,15 +64,15 @@
        run_id,
        crt_dttm
 FROM
-{% if target.name=='prod' %}
-        thaitg_integration.itg_th_gt_route_detail
-    {% else %}
-        {{schema}}.thaitg_integration__itg_th_gt_route_detail
-    {% endif %}
-WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
-                                FROM {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }}
-                                )
-AND   UPPER(flag) IN ('I','U');
+    {% if target.name=='prod' %}
+            thaitg_integration.itg_th_gt_route_detail
+        {% else %}
+            {{schema}}.thaitg_integration__itg_th_gt_route_detail
+        {% endif %}
+    WHERE UPPER(TRIM(saleunit)) IN (SELECT DISTINCT UPPER(TRIM(saleunit))
+                                    FROM {{ ref('thawks_integration__wks_th_gt_route_detail') }} where filename = '{{filename}}'
+                                    )
+    AND   UPPER(flag) IN ('I','U');
     {% endset %}
     {% do run_query(query) %}
 {% endmacro %}

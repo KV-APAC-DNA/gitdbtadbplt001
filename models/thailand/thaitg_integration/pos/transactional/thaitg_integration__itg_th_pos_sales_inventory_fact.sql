@@ -33,7 +33,7 @@ itg_th_mt_bigc as
 ),
 th_makro_inv_so as
 (
-   select * from {{ ref('thaitg_integration__itg_th_makro_inv_so') }}
+   select * from {{ ref('thaitg_integration__th_makro_inv_so') }}
 ),
 product_master as 
 (

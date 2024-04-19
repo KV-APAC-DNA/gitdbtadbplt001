@@ -1,10 +1,11 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['brnch_no']
+        incremental_strategy= "append",
+        pre_hook="delete from {{this}} where coalesce(lTRIM(brnch_no,0),'NA') IN (SELECT coalesce(lTRIM(branch_code,0),'NA') FROM {{ ref('thaitg_integration__itg_mds_th_mt_branch_master') }} );"
     )
 }}
+
 
 with itg_mds_th_mt_branch_master as(
     select * from {{ ref('thaitg_integration__itg_mds_th_mt_branch_master') }}
@@ -15,7 +16,7 @@ itg_th_tims_region as (
 transformed as(
     select
         b.account::varchar(20) as cust_cd,
-        LTRIM(b.branch_code, 0)::varchar(50) as brnch_no,
+        TRIM(b.branch_code)::varchar(50) as brnch_no,
         trim(b.branch_name)::varchar(200) as branch_nm,
         trim(b.branch_type)::varchar(200) as brnch_typ,
         trim(b.allstoretype_name)::varchar(200) as all_str_typ,

@@ -38,10 +38,10 @@ wks as
        pos.crtd_dttm,
        pos.updt_dttm
 from (select itg.*,
-             row_number() over (partition by sdl.customer_sku,sdl.customer order by sdl.lastchgdatetime) as rn
+             row_number() over (partition by sdl.customer_sku,sdl.customer order by sdl.lastchgdatetime::timestamp_ntz(9)) as rn
       from sdl_mds_vn_pos_products sdl,
            {{this}} itg
-      where sdl.lastchgdatetime != itg.lastchgdatetime
+      where sdl.lastchgdatetime::timestamp_ntz(9) != itg.lastchgdatetime
       and   sdl.customer_sku = itg.customer_sku
 	  and   SDL.customer = itg.customer) pos
 where pos.rn = 1
@@ -74,10 +74,10 @@ select--- case 1.b: PK is present in ITG, record is updated, insert new record f
        --- taking from SDL enterdatetime
        current_timestamp() as updt_dttm
 from (select sdl.*,
-             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime) as rn
+             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime::timestamp_ntz(9)) as rn
       from sdl_mds_vn_pos_products sdl,
            {{this}} itg
-      where sdl.lastchgdatetime != itg.lastchgdatetime
+      where sdl.lastchgdatetime::timestamp_ntz(9) != itg.lastchgdatetime
       and   sdl.customer_sku = itg.customer_sku
 	  and   sdl.customer = itg.customer
       and   itg.active = 'Y') pos
@@ -112,10 +112,10 @@ select--- case 2: PK present in ITG and active = 'Y', record is not updated in S
 from (select sdl.*,
              itg.effective_from,
              itg.crtd_dttm,
-             row_number() over (partition by sdl.customer_sku,sdl.customer order by sdl.lastchgdatetime) as rn
+             row_number() over (partition by sdl.customer_sku,sdl.customer order by sdl.lastchgdatetime::timestamp_ntz(9)) as rn
       from sdl_mds_vn_pos_products sdl,
            {{this}} itg
-      where sdl.lastchgdatetime = itg.lastchgdatetime
+      where sdl.lastchgdatetime::timestamp_ntz(9) = itg.lastchgdatetime
       and   sdl.customer_sku = itg.customer_sku
 	  and sdl.customer = itg.customer
       and   itg.active = 'Y') pos
@@ -148,10 +148,10 @@ select--- case 3: PK present in ITG and active = 'N', record is not updated in S
        pos.crtd_dttm,
        pos.updt_dttm
 from (select itg.*,
-             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime) as rn
+             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime::timestamp_ntz(9)) as rn
       from sdl_mds_vn_pos_products sdl,
            {{this}} itg
-      where sdl.lastchgdatetime = itg.lastchgdatetime
+      where sdl.lastchgdatetime::timestamp_ntz(9) = itg.lastchgdatetime
       and   sdl.customer_sku = itg.customer_sku
 	  and   sdl.customer = itg.customer
       and   itg.active = 'N') pos
@@ -185,7 +185,7 @@ select--- case 4: PK not present in ITG, insert the whole new record in ITG from
        -- taking from SDL enterdatetime
        current_timestamp() as updt_dttm
 from (select sdl.*,
-             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime) as rn
+             row_number() over (partition by sdl.customer_sku, sdl.customer order by sdl.lastchgdatetime::timestamp_ntz(9)) as rn
       from sdl_mds_vn_pos_products sdl
       where (sdl.customer_sku,sdl.customer) NOT IN (select customer_sku, customer from {{this}})) pos
 where pos.rn = 1) ,
@@ -194,7 +194,7 @@ select * from wks
 union all
 select *
 from {{this}} dksh
-where (dksh.customer_sku, dksh.customer) NOT IN (select customer_sku,customer from wks)
+where (coalesce(dksh.customer_sku,'0'), coalesce(dksh.customer,'NA')) NOT IN (select coalesce(customer_sku,'0'),coalesce(customer,'NA') from wks)
 ),
 final as (
 select 

@@ -96,3 +96,11 @@ models:
     config:
       alias: sdl_raw_vn_mt_sellout_bhx
       tags: ["vn_mt_pos_transaction","ingestion"]
+  - name: vnmitg_integration__sdl_raw_vn_dms_h_sellout_sales_fact
+    config:
+      alias: sdl_raw_vn_dms_h_sellout_sales_fact
+      tags: ["vn_dms_sellout","ingestion"]
+  - name: vnmitg_integration__itg_vn_dms_h_sellout_sales_fact
+    config:
+      alias: itg_vn_dms_h_sellout_sales_fact
+      tags: ["vn_dms_sellout","ingestion"]

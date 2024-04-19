@@ -1,13 +1,16 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['transaction_date']
+        incremental_strategy= "append",
+        pre_hook="delete from {{this}} where transaction_date is not null and transaction_date in (select transaction_date from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }});"
     )
 }}
 
 with sdl_th_mt_bigc as (
-select * from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }}
+select 
+    *,
+    dense_rank() over(partition by transaction_date order by file_name desc) as rnk
+    from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }}
 ),
 final as (
     select
@@ -47,9 +50,6 @@ final as (
         file_name::varchar(200) as file_name,
         crt_dttm::timestamp_ntz(9) as crt_dttm
     from sdl_th_mt_bigc
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-        where sdl_th_mt_bigc.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
+    where rnk=1
 )
 select * from final

@@ -8,7 +8,9 @@
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }}
+    select *,
+        dense_rank() over(partition by dstrbtr_id, salesrep_id, outlet_id, to_date(visit_date, 'MM/DD/YYYY HH12:MI:SS AM'), to_timestamp(checkin_time , 'MM/DD/YYYY HH12:MI:SS AM'), ordervisit order by source_file_name desc) as rnk
+    from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }}
 ),
 final as(
     select
@@ -25,5 +27,6 @@ final as(
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         run_id::number(14,0) as run_id
     from source
+    where rnk=1
 )
 select * from final

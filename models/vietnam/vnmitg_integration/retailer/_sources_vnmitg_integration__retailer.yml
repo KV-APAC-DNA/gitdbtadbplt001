@@ -27,9 +27,16 @@ sources:
                 store_failures: true
                 schema: vnmwks_integration
           - test_format:
-              where_clause: "not regexp_like (trim(from_cycle),'[1-2][0-9][0-9][0-9][0-1][0-9][0-3][0-9]')"
+              where_clause: "not regexp_like (trim(from_cycle),'[1-2][0-9][0-9][0-9][0-1][0-9]')"
               failure_reason: "''"
-              name: TRATBL_sdl_vn_gt_topdoor_target__format_test
+              name: TRATBL_sdl_vn_gt_topdoor_target__format_test_from_cycle
+              config:
+                store_failures: true
+                schema: vnmwks_integration
+          - test_format:
+              where_clause: "not regexp_like (trim(to_cycle),'[1-2][0-9][0-9][0-9][0-1][0-9]')"
+              failure_reason: "''"
+              name: TRATBL_sdl_vn_gt_topdoor_target__format_test_to_cycle
               config:
                 store_failures: true
                 schema: vnmwks_integration

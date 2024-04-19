@@ -32,8 +32,8 @@ select
     cast (sum(sellth.jj_net_trd_sls) as numeric(21, 8)) amount
 from  sellth,
     wrk_vn_mnth_week w
-where sellth.bill_date between cast(w.frst_day as date)
-    and cast(w.lst_day as date)
+where sellth.bill_date between to_date(w.frst_day,'YYYYMMDD')
+     and to_date(w.lst_day,'YYYYMMDD')
     and dstrbtr_id != 'TTHNoi' 
 group by dstrbtr_id,
     mapped_spk,

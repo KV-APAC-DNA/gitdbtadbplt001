@@ -16,6 +16,6 @@ select
     '0'::varchar(1) as run_id,
     current_timestamp()::timestamp_ntz(9) as crtd_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    otc::varchar(100) as otc,
+    otc::varchar(200) as otc,
 from sdl_mds_vn_allchannel_siso_target_sku )
 select * from final
