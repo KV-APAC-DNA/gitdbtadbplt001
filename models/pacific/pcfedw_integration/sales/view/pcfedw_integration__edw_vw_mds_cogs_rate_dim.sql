@@ -1,11 +1,11 @@
 with 
 itg_mds_cogs_master_dim as 
 (
-    select * from snappcfitg_integration.itg_mds_cogs_master_dim
+    select * from {{ ref('pcfitg_integration__itg_mds_cogs_master_dim') }}
 ),
 edw_time_dim as 
 (
-    select * from snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_crncy_exch as 
 (

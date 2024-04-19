@@ -1,7 +1,7 @@
 with
 itg_iri_scan_sales as
 (
-    select * from snappcfitg_integration.itg_iri_scan_sales
+    select * from {{ ref('pcfitg_integration__itg_iri_scan_sales') }}
 ),
 sdl_mds_pacific_acct_nielsencode_mapping as
 (
@@ -9,7 +9,7 @@ sdl_mds_pacific_acct_nielsencode_mapping as
 ),
 vw_customer_dim as
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 final as
 (

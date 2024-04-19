@@ -12,11 +12,11 @@ edw_code_descriptions as
 ),
 vw_iri_scan_sales_analysis as
 (
-    select * from snappcfedw_integration.vw_iri_scan_sales_analysis
+    select * from {{ ref('pcfedw_integration__vw_iri_scan_sales_analysis') }}
 ),
 itg_mds_pacific_prod_mapping_cwh as
 (
-    select * from snappcfitg_integration.itg_mds_pacific_prod_mapping_cwh
+    select * from {{ ref('pcfitg_integration__itg_mds_pacific_prod_mapping_cwh') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -32,15 +32,15 @@ itg_parameter_reg_inventory as
 ), 
 edw_metcash_ind_grocery_fact as
 (
-    select * from snappcfedw_integration.edw_metcash_ind_grocery_fact
+    select * from {{ ref('pcfedw_integration__edw_metcash_ind_grocery_fact') }}
 ),
 edw_perenso_prod_dim as
 (
-    select * from snappcfedw_integration.edw_perenso_prod_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 itg_customer_sellout as
 (
-    select * from snappcfitg_integration.itg_customer_sellout
+    select * from {{ ref('pcfitg_integration__itg_customer_sellout') }}
 ),
 final as
 (

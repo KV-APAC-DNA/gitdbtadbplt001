@@ -1,11 +1,11 @@
 with
 edw_time_dim as
 (
-    select * from snappcfedw_integration.edw_time_dim
-),--used a ssource
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
+),
 vw_iri_scan_sales_analysis as
 (
-    select * from snappcfedw_integration.vw_iri_scan_sales_analysis
+    select * from {{ ref('pcfedw_integration__vw_iri_scan_sales_analysis') }}
 ),
 iri as
 (

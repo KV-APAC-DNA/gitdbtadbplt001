@@ -1,12 +1,12 @@
 with
 vw_curr_exch_dim as
 (
-    select * from snappcfedw_integration.vw_curr_exch_dim
+    select * from {{ ref('pcfedw_integration__vw_curr_exch_dim') }}
 ),
 edw_time_dim as
 (
-    select * from pcfedw_integration.edw_time_dim
-), --to be used as source
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
+),
 c as
 (
 SELECT "max"(vw_curr_exch_dim.exch_rate) AS exch_rate
