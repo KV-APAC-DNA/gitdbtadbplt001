@@ -276,6 +276,30 @@ models:
         +materialized: table
         +transient: false
         +schema: PCFEDW_INTEGRATION
+        currency_exchange:
+          view:
+            +materialized: view
+        common:
+          view:
+            +materialized: view
+        customer:
+          view:
+            +materialized: view
+        forecast:
+          view:
+            +materialized: view
+        material:
+          view:
+            +materialized: view
+        product:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        sellout:
+          view:
+            +materialized: view
       pcfitg_integration:
         +materialized: table
         +transient: false
@@ -286,4 +310,3 @@ models:
       pcfedw_access:
         +materialized: view
         +schema: PCFEDW_ACCESS
-      

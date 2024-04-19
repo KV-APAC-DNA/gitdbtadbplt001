@@ -1,0 +1,46 @@
+with source as (
+    select * from {{ ref ('pcfedw_integration__edw_promax_ciw_snapshot') }}
+),
+final as (
+    select  
+        snapshot_date as "snapshot_date",
+        snapshot_month as "snapshot_month",
+        snapshot_year as "snapshot_year",
+        jj_period as "jj_period",
+        jj_wk as "jj_wk",
+        jj_mnth as "jj_mnth",
+        jj_mnth_shrt as "jj_mnth_shrt",
+        jj_mnth_long as "jj_mnth_long",
+        jj_qrtr as "jj_qrtr",
+        jj_year as "jj_year",
+        cust_no as "cust_no",
+        cmp_desc as "cmp_desc",
+        channel_desc as "channel_desc",
+        cust_nm as "cust_nm",
+        sales_office_desc as "sales_office_desc",
+        sales_grp_desc as "sales_grp_desc",
+        matl_id as "matl_id",
+        matl_desc as "matl_desc",
+        parent_matl_id as "parent_matl_id",
+        parent_matl_desc as "parent_matl_desc",
+        fran_desc as "fran_desc",
+        grp_fran_desc as "grp_fran_desc",
+        matl_type_desc as "matl_type_desc",
+        prod_fran_desc as "prod_fran_desc",
+        prod_mjr_desc as "prod_mjr_desc",
+        prod_mnr_desc as "prod_mnr_desc",
+        base_curr_cd as "base_curr_cd",
+        to_ccy as "to_ccy",
+        px_qty as "px_qty",
+        px_gts as "px_gts",
+        px_eff_val as "px_eff_val",
+        px_jgf_si_val as "px_jgf_si_val",
+        px_pmt_terms_val as "px_pmt_terms_val",
+        px_datains_val as "px_datains_val",
+        px_exp_adj_val as "px_exp_adj_val",
+        px_jgf_sd_val as "px_jgf_sd_val",
+        px_ciw_tot as "px_ciw_tot",
+        px_nts as "px_nts"
+    from source
+)
+select * from final

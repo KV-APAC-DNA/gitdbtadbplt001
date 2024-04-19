@@ -1,0 +1,48 @@
+with source as (
+    select * from {{ ref ('pcfedw_integration__edw_sls_evolution') }}
+),
+final as (
+	select 
+        country as "country",
+        snapshot_date as "snapshot_date",
+        cust_no as "cust_no",
+        matl_id as "matl_id",
+        grp_fran_desc as "grp_fran_desc",
+        prod_fran_desc as "prod_fran_desc",
+        prod_mjr_desc as "prod_mjr_desc",
+        prod_mnr_desc as "prod_mnr_desc",
+        matl_desc as "matl_desc",
+        brnd_desc as "brnd_desc",
+        gcph_franchise as "gcph_franchise",
+        gcph_brand as "gcph_brand",
+        gcph_subbrand as "gcph_subbrand",
+        gcph_variant as "gcph_variant",
+        gcph_needstate as "gcph_needstate",
+        gcph_category as "gcph_category",
+        gcph_subcategory as "gcph_subcategory",
+        gcph_segment as "gcph_segment",
+        gcph_subsegment as "gcph_subsegment",
+        master_code as "master_code",
+        channel_desc as "channel_desc",
+        sales_office_desc as "sales_office_desc",
+        cust_nm as "cust_nm",
+        sales_grp_desc as "sales_grp_desc",
+        key_measure as "key_measure",
+        ciw_ctgry as "ciw_ctgry",
+        ciw_accnt_grp as "ciw_accnt_grp",
+        sap_accnt as "sap_accnt",
+        local_curr_cd as "local_curr_cd",
+        curr_jj_period as "curr_jj_period",
+        prev_jj_period as "prev_jj_period",
+        jj_mnth as "jj_mnth",
+        jj_mnth_shrt as "jj_mnth_shrt",
+        jj_year as "jj_year",
+        jj_period as "jj_period",
+        jj_qrtr as "jj_qrtr",
+        to_ccy as "to_ccy",
+        exch_rate as "exch_rate",
+        gts as "gts",
+        futr_gts as "futr_gts"
+    from source
+)
+select * from final
