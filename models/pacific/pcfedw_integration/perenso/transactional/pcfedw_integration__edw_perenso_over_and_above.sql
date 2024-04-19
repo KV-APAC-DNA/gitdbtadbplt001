@@ -21,16 +21,16 @@
 -- ADD COLUMN OA_POINTS NUMERIC(10,3);
 
 with itg_perenso_over_and_above_state as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
+    select * from {{ ref('pcfitg_integration__itg_perenso_over_and_above_state') }}
 ),
 itg_perenso_over_and_above as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
+    select * from {{ ref('pcfitg_integration__itg_perenso_over_and_above') }}
 ),
 itg_perenso_store_chk_hdr as (
     select * from {{ ref('pcfitg_integration__itg_perenso_store_chk_hdr') }}
 ),
 itg_perenso_diary_item as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
+    select * from {{ ref('pcfitg_integration__itg_perenso_diary_item') }}
 ),
 itg_perenso_diary_item_type as (
 select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
@@ -42,7 +42,7 @@ itg_perenso_todo_option as (
     select * from {{ ref('pcfitg_integration__itg_perenso_todo_option') }}
 ),
 itg_perenso_todo as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_TODO
+    select * from {{ ref('pcfitg_integration__itg_perenso_todo') }}
 ),
 itg_perenso_constants as (
     select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}

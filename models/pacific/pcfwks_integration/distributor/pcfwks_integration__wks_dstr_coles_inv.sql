@@ -2,16 +2,18 @@ with sdl_dstr_coles_inv as (
     select * from {{ source('pcfsdl_raw', 'sdl_dstr_coles_inv') }}
 ),
 edw_customer_sales_dim as (
-    select * from dev_dna_core.snapaspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-edw_customer_base_dim as (
-    select * from dev_dna_core.snapaspedw_integration.edw_customer_base_dim
+edw_customer_base_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-edw_code_descriptions as (
-    select * from dev_dna_core.snapaspedw_integration.edw_code_descriptions
+edw_code_descriptions as
+(
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 itg_parameter_reg_inventory as (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_PARAMETER_REG_INVENTORY
+    select * from {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
 ), 
 inv as(
 	SELECT

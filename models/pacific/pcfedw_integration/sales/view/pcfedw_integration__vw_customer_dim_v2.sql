@@ -1,5 +1,5 @@
 with customer_control_tp_accrual_reversal_ac as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.CUSTOMER_CONTROL_TP_ACCRUAL_REVERSAL_AC
+select * from {{ source('pcfedw_integration', 'customer_control_tp_accrual_reversal_ac') }}
 ),
 edw_customer_base_dim as (
 select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}

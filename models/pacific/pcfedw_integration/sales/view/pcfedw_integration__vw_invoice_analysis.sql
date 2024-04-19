@@ -1,23 +1,23 @@
 with vw_bwar_curr_exch_dim as(
-	select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_bwar_curr_exch_dim
+	select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 vw_jjbr_curr_exch_dim as(
-	select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_jjbr_curr_exch_dim
+	select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 edw_invoice_fact as(
-	select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_invoice_fact
+	select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 vw_customer_dim as(
-	select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_customer_dim
+	select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_customer_base_dim as(
-	select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_customer_base_dim
+	select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_time_dim as(
 	select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_material_dim as(
-	select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_material_dim
+	select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 currex as(
 		SELECT vw_jjbr_curr_exch_dim.rate_type

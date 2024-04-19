@@ -33,16 +33,16 @@ vw_customer_dim_adj as (
 select * from {{ ref('pcfedw_integration__vw_customer_dim_adj') }}
 ),
 edw_material_divest as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIVEST
+select * from {{ source('pcfedw_integration', 'edw_material_divest') }}
 ),
 edw_bme_transfers as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_BME_TRANSFERS
+select * from {{ source('pcfedw_integration', 'edw_bme_transfers') }}
 ),
 vw_sapbw_futures_fact as (
 select * from {{ ref('pcfedw_integration__vw_sapbw_futures_fact') }}
 ),
 edw_vogue_data_ref as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_VOGUE_DATA_REF
+select * from {{ source('pcfedw_integration', 'edw_vogue_data_ref') }}
 ),
 vw_fin_accrual_adj as (
 select * from {{ ref('pcfedw_integration__vw_fin_accrual_adj') }}

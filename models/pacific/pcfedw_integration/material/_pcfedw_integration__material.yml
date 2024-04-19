@@ -4,12 +4,12 @@ models:
   - name: pcfedw_integration__vw_material_dim
     config: 
       alias: vw_material_dim
-      tags: ["pacific_views","ingestion"]
+      tags: ["pacific_view","transformation"]
   - name: pcfedw_integration__vw_apo_parent_child_dim
     config: 
       alias: vw_apo_parent_child_dim
-      tags: ["","transformation"]
+      tags: ["pacific_view","transformation"]
   - name: pcfedw_integration__edw_material_dim
     config: 
       alias: edw_material_dim
-      tags: ["sap_ecc_master_etl_framework","ingestion"]
+      tags: ["sap_ecc_master_etl_framework","transformation"]

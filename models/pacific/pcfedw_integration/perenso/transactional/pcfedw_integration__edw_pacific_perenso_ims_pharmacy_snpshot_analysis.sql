@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_PACIFIC_PERENSO_IMS_PHARMACY_SNPSHOT_ANALYSIS
+    select * from {{ ref('pcfedw_integration__vw_pacific_perenso_ims_pharmacy_snpshot_analysis') }}
 ),
 final as(
     select 

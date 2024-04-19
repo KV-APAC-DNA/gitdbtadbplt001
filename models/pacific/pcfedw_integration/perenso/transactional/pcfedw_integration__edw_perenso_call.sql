@@ -17,7 +17,7 @@ with itg_perenso_diary_item_type as (
   select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
 itg_perenso_diary_item as (
-  select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
+  select * from {{ ref('pcfitg_integration__itg_perenso_diary_item') }}
 ),
 itg_perenso_constants as (
   select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}

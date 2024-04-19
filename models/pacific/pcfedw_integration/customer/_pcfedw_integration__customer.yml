@@ -4,27 +4,27 @@ models:
   - name: pcfedw_integration__edw_sapbw_plan_lkp
     config: 
       alias: edw_sapbw_plan_lkp
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
   - name: pcfedw_integration__edw_ciw_accnt_lkp
     config: 
       alias: edw_ciw_accnt_lkp
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
   - name: pcfedw_integration__edw_px_gl_trans_lkp
     config: 
       alias: edw_px_gl_trans_lkp
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
   - name: pcfedw_integration__vw_sap_std_cost
     config:
       alias: vw_sap_std_cost
-      tags: ["", "transformation"]
+      tags: ["pacific_view", "transformation"]
   - name: pcfedw_integration__vw_sapbw_ciw_fact
     config:
       alias: vw_sapbw_ciw_fact
-      tags: ["", "transformation"]
+      tags: ["pacific_view", "transformation"]
   - name: pcfedw_integration__vw_customer_dim
     config: 
       alias: vw_customer_dim
-      tags: ["","transformation"]
+      tags: ["pacific_view","transformation"]
 
   - name: pcfedw_integration__vw_dmnd_frcst_customer_dim
     config: 

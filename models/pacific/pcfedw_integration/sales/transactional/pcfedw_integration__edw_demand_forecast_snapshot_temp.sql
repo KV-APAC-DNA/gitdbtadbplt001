@@ -11,7 +11,7 @@ with edw_time_dim as(
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_demand_forecast_analysis as(
-    select * from {{ ref('pcfedw_intgeration__vw_demand_forecast_analysis') }}
+    select * from {{ ref('pcfedw_integration__vw_demand_forecast_analysis') }}
 ),
 vdfa as (
     select

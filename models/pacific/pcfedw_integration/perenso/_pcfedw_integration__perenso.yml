@@ -4,7 +4,7 @@ models:
   - name: pcfedw_integration__edw_perenso_account_dim
     config: 
       alias: edw_perenso_account_dim
-      tags: ["anz_perenso_dimension_load",""]
+      tags: ["anz_perenso_dimension_load","transformation"]
   - name: pcfedw_integration__edw_perenso_order_fact
     config:
       alias: edw_perenso_order_fact

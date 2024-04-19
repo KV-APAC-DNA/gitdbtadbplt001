@@ -4,7 +4,7 @@ with edw_time_dim as
 ),
 edw_material_dim as
 (
-    select * from snappcfedw_integration.edw_material_dim
+    select * from {{ ref('pcfedw_integration__edw_material_dim') }}
 ),
 vw_iri_scan_sales as
 (

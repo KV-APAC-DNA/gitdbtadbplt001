@@ -8,7 +8,7 @@
 }}
 with source as
 (
-    select * from snappcfwks_integration.wks_promax_ciw_snapshot_current
+    select * from {{ ref('pcfwks_integration__wks_promax_ciw_snapshot_current') }} 
 ),
 final as
 (

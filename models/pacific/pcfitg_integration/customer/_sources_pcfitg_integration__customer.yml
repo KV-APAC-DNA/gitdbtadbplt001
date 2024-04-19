@@ -50,3 +50,41 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+
+  - name: pcfedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: customer_control_tp_accrual_reversal_ac
+      tags: ["",""]
+
+    - name: dmnd_frcst_cust_attrb_lkp
+      tags: ["",""]
+
+    - name: edw_ciw_accnt_map
+      tags: ["",""]
+
+    - name: edw_bme_transfers
+      tags: ["",""]
+    - name: edw_material_divest
+      tags: ["",""]
+
+    - name: edw_vogue_data_ref
+      tags: ["",""]
+
+    - name: edw_perenso_account_hist_dim
+      tags: ["",""]
+
+  - name: pcfitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_ims_field_order_history

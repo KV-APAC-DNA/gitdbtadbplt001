@@ -1,14 +1,14 @@
 with edw_fin_accrual_adj_ref as
 (
-    select * from snappcfedw_integration.edw_fin_accrual_adj_ref
+    select * from {{ ref('pcfedw_integration__edw_fin_accrual_adj_ref') }}
 ),
 edw_ciw_accnt_lkp as
 (
-    select * from snappcfedw_integration.edw_ciw_accnt_lkp
+    select * from {{ ref('pcfedw_integration__edw_ciw_accnt_lkp') }}
 ),
 edw_account_dim as
 (
-    select * from snapaspedw_integration.edw_account_dim
+    select * from {{ ref('aspedw_integration__edw_account_dim') }}
 ),
 final as
 (

@@ -28,7 +28,7 @@ itg_perenso_diary_item_time as
 ),
 itg_perenso_diary_item as
 (
-    select * from snappcfitg_integration.itg_perenso_diary_item
+    select * from {{ ref('pcfitg_integration__itg_perenso_diary_item') }}
 ),
 itg_perenso_diary_item_type as
 (

@@ -1,5 +1,5 @@
 with itg_weekly_forecast as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_WEEKLY_FORECAST
+    select * from {{ ref('pcfitg_integration__itg_weekly_forecast') }}
 ),
 edw_time_dim as(
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}

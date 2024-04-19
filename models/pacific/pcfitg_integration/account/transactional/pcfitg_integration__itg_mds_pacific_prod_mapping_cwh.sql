@@ -14,10 +14,10 @@ with source as
 ),
 final as 
 (
-select distinct
-    code::varchar(500) as cwh_prodid,
-    jnj_sap_code::number(28,0) as matl_num,
-    description::varchar(200) as matl_desc
-from source
+    select distinct
+        code::varchar(500) as cwh_prodid,
+        jnj_sap_code::number(28,0) as matl_num,
+        description::varchar(200) as matl_desc
+    from source
 )
 select * from final

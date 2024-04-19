@@ -1,32 +1,32 @@
 with edw_time_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_pharm_sellout_fact as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_pharm_sellout_fact
+    select * from {{ ref('pcfedw_integration__edw_pharm_sellout_fact') }}
 ),
 edw_ps_msl_items as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_ps_msl_items
+    select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
 ),
 vw_material_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_material_dim
+    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 edw_perenso_prod_probeid_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_prod_probeid_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_probeid_dim') }}
 ),
 edw_perenso_account_probeid_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_account_probeid_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_account_probeid_dim') }}
 ),
 edw_perenso_prod_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_prod_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 edw_perenso_account_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_account_dim
+    select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 edw_perenso_order_fact as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_order_fact
+    select * from {{ ref('pcfedw_integration__edw_perenso_order_fact') }}
 ),
 itg_perenso_distributor_detail as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_distributor_detail
+    select * from {{ ref('pcfitg_integration__itg_perenso_distributor_detail') }}
 ),
 union1 as(
 SELECT 'IQVIA' AS pac_source_type

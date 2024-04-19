@@ -4,11 +4,11 @@ models:
   - name: pcfedw_integration__edw_pharm_sellout_fact
     config:
       alias: edw_pharm_sellout_fact
-      tags: ["j_pac_pharm_data_load",""]
+      tags: ["j_pac_pharm_data_load","transformation"]
   - name: pcfedw_integration__vw_pacific_sellout
     config:
       alias: vw_pacific_sellout
-      tags: ["j_ap_china_reg_data_refresh",""]
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
   - name: pcfedw_integration__edw_pharm_sellout_analysis
     config:
       alias: edw_pharm_sellout_analysis
@@ -16,5 +16,5 @@ models:
   - name: pcfedw_integration__vw_pharm_sellout_analysis
     config: 
       alias: vw_pharm_sellout_analysis
-      tags: ["","transformation"]
+      tags: ["pacific_pharmacy_weekly_data","transformation"]
 

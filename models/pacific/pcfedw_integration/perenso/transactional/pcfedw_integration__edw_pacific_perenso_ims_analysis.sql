@@ -23,7 +23,7 @@ edw_perenso_account_dim as (
 select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 itg_perenso_diary_item as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
+select * from {{ ref('pcfitg_integration__itg_perenso_diary_item') }}
 ),
 itg_perenso_users as (
 select * from {{ ref('pcfitg_integration__itg_perenso_users') }}
@@ -53,7 +53,7 @@ edw_perenso_prod_probeid_dim as (
 select * from {{ ref('pcfedw_integration__edw_perenso_prod_probeid_dim') }}
 ),
 itg_ims_field_order_history as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_IMS_FIELD_ORDER_HISTORY
+select * from {{ source('pcfitg_integration', 'itg_ims_field_order_history') }}
 ),
 edw_metcash_ind_grocery_fact as (
 select * from {{ ref('pcfedw_integration__edw_metcash_ind_grocery_fact') }}
@@ -68,7 +68,7 @@ itg_perenso_fsni_sales as (
 select * from {{ ref('pcfitg_integration__itg_perenso_fsni_sales') }}
 ),
 edw_perenso_account_hist_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_HIST_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_account_hist_dim') }}
 ),
 itg_perenso_prod_chk_distribution as (
 select * from {{ ref('pcfitg_integration__itg_perenso_prod_chk_distribution') }}

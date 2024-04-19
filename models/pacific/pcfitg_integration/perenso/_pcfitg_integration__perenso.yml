@@ -57,21 +57,21 @@ models:
     config:
       alias: sdl_raw_perenso_prod_chk_distribution
       tags: ["anz_perenso_over_and_above",""]
-  - name: pcfitg_integration__itg_perenso_Over_and_Above_state
+  - name: pcfitg_integration__itg_perenso_over_and_above_state
     config:
-      alias: itg_perenso_Over_and_Above_state
+      alias: itg_perenso_over_and_above_state
       tags: ["anz_perenso_over_and_above",""]
-  - name: pcfitg_integration__itg_perenso_Over_and_Above
+  - name: pcfitg_integration__itg_perenso_over_and_above
     config:
-      alias: itg_perenso_Over_and_Above
+      alias: itg_perenso_over_and_above
       tags: ["anz_perenso_over_and_above",""]
-  - name: pcfitg_integration__sdl_raw_perenso_Over_and_Above_state
+  - name: pcfitg_integration__sdl_raw_perenso_over_and_above_state
     config:
-      alias: sdl_raw_perenso_Over_and_Above_state
+      alias: sdl_raw_perenso_over_and_above_state
       tags: ["anz_perenso_over_and_above",""]
-  - name: pcfitg_integration__sdl_raw_perenso_Over_and_Above
+  - name: pcfitg_integration__sdl_raw_perenso_over_and_above
     config:
-      alias: sdl_raw_perenso_Over_and_Above
+      alias: sdl_raw_perenso_over_and_above
       tags: ["anz_perenso_over_and_above",""]
   - name: pcfitg_integration__itg_perenso_order_batch
     config:
@@ -315,5 +315,23 @@ models:
     config: 
       alias: itg_perenso_account_reln_id
       tags: ["anz_perenso_account","ingestion"]
+
+  - name: pcfitg_integration__itg_perenso_todo
+    config:
+      alias: itg_perenso_todo
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_head_office_req_state
+    config:
+      alias: itg_perenso_head_office_req_state
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_head_office_req_check
+    config:
+      alias: itg_perenso_head_office_req_check
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_store_chk_hdr
+    config:
+      alias: itg_perenso_store_chk_hdr
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  
 
 
