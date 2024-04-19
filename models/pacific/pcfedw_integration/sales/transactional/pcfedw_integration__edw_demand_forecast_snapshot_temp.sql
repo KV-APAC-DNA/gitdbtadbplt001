@@ -8,10 +8,10 @@
 
 
 with edw_time_dim as(
-    select * from dev_dna_core.snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_demand_forecast_analysis as(
-    select * from dev_dna_core.snappcfedw_integration.vw_demand_forecast_analysis
+    select * from {{ ref('pcfedw_intgeration__vw_demand_forecast_analysis') }}
 ),
 vdfa as (
     select

@@ -1,14 +1,14 @@
 with customer_control_tp_accrual_reversal_ac as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.CUSTOMER_CONTROL_TP_ACCRUAL_REVERSAL_AC
+    select * from {{ source('pcfedw_integration', 'customer_control_tp_accrual_reversal_ac') }}
 ),
 edw_customer_base_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_customer_sales_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 dly_sls_cust_attrb_lkp as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
+    select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
 customer as(
 	SELECT DISTINCT cust.cust_num AS cust_no

@@ -8,13 +8,13 @@ with edw_demand_forecast_snapshot as(
     select * from {{ ref('pcfedw_integration__edw_demand_forecast_snapshot_temp') }}
 ),
 vw_dmnd_frcst_customer_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_dmnd_frcst_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_dmnd_frcst_customer_dim') }}
 ),
 vw_material_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_material_dim
+    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 vw_apo_parent_child_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_apo_parent_child_dim
+    select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 mstrcd as(
     select distinct

@@ -1,11 +1,11 @@
 with edw_time_dim as(
-    select *  from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+    select *  from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_invoice_fact as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_invoice_fact
+    select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ), 
 dly_sls_cust_attrb_lkp as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.dly_sls_cust_attrb_lkp
+    select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ), 
 eif as(
 SELECT a.act_delv_dt

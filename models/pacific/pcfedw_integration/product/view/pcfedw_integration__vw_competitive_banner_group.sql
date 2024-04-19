@@ -1,8 +1,8 @@
 with itg_competitive_banner_group as(
-    select * from dev_dna_core.snappcfitg_integration.itg_competitive_banner_group
+    select * from {{ ref('pcfitg_integration__itg_competitive_banner_group') }}
 ),
 edw_time_dim as(
-    select * from dev_dna_core.snappcfedw_integration.edw_time_dim
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 transformed as(
 select coalesce(itg_cbg.market, '#'::character varying) as market

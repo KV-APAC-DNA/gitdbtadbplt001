@@ -3,12 +3,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['transaction_date'],
-        pre_hook= "delete from {{this}} where transaction_date >= (select min(time_period) from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_COMPETITIVE_BANNER_GROUP);"
+        pre_hook= "delete from {{this}} where transaction_date >= (select min(time_period) from {{ source('pcfsdl_raw', 'sdl_competitive_banner_group') }});"
     )
 }}
 
 with source as(
-    select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_COMPETITIVE_BANNER_GROUP
+    select * from {{ source('pcfsdl_raw', 'sdl_competitive_banner_group') }} 
 ),
 final as(
     select 

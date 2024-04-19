@@ -5,46 +5,46 @@
 }}
 
 with edw_perenso_account_dim_snapshot as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM_SNAPSHOT
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim_snapshot') }}
 ),
-EDW_PERENSO_ACCOUNT_DIM as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM
+edw_perenso_account_dim as(
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 edw_ps_msl_items as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PS_MSL_ITEMS
+select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
 ),
 edw_pacific_pharmacy_dstrbtn_analysis as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PACIFIC_PHARMACY_DSTRBTN_ANALYSIS
+select * from {{ ref('pcfedw_integration__edw_pacific_pharmacy_dstrbtn_analysis') }}
 ),
 edw_pacific_perfect_store_weights as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PACIFIC_PERFECT_STORE_WEIGHTS
+select * from {{ ref('pcfedw_integration__edw_pacific_perfect_store_weights') }}
 ),
 edw_vw_perfect_store_trax_products as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_VW_PERFECT_STORE_TRAX_PRODUCTS
+select * from {{ ref('pcfedw_integration__edw_vw_perfect_store_trax_products') }}
 ),
 edw_pacific_perfect_store_targets as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PACIFIC_PERFECT_STORE_TARGETS
+select * from {{ ref('pcfedw_integration__edw_pacific_perfect_store_targets') }}
 ),
 edw_product_key_attributes as(
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_KEY_ATTRIBUTES
+select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
 ),
 edw_pacific_metcash_dstrbtn_analysis as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PACIFIC_METCASH_DSTRBTN_ANALYSIS
+select * from {{ ref('pcfedw_integration__edw_pacific_metcash_dstrbtn_analysis') }}
 ),
-EDW_VW_IRI_PS_BASE_DATA as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_VW_IRI_PS_BASE_DATA
+edw_vw_iri_ps_base_data as(
+select * from {{ ref('pcfedw_integration__edw_vw_iri_ps_base_data') }}
 ),
-EDW_IRI_SCAN_SALES_AGG as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_IRI_SCAN_SALES_AGG
+edw_iri_scan_sales_agg as(
+select * from {{ ref('pcfedw_integration__edw_iri_scan_sales_agg') }}
 ),
 itg_trax_md_store as(
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_trax_md_store
+select * from {{ ref('pcfitg_integration__itg_trax_md_store') }}
 ),
 edw_pacific_perenso_ims_analysis as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_pacific_perenso_ims_analysis
+select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
 ),
-EDW_VW_PERFECT_STORE_TRAX_FACT as(
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_VW_PERFECT_STORE_TRAX_FACT
+edw_vw_perfect_store_trax_fact as(
+select * from {{ ref('pcfedw_integration__edw_vw_perfect_store_trax_fact') }}
 ),
 msl AS (
 			SELECT ean

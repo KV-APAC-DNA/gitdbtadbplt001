@@ -1,8 +1,8 @@
 with edw_px_term_plan as(
-    select * from DEV_DNA_CORE.sm05_workspace.pcfedw_integration__edw_px_term_plan
+    select * from {{ ref('pcfedw_integration__edw_px_term_plan') }}
 ),
 vw_customer_dim as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.vw_customer_dim
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 cte1 as(
     SELECT

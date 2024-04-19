@@ -1,11 +1,11 @@
 with vw_bwar_curr_exch_dim as(
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_BWAR_CURR_EXCH_DIM
+    select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 edw_perenso_prod_probeid_dim as (
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_PROBEID_DIM
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_probeid_dim') }}
 ),
 edw_gch_producthierarchy as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_au_pharm_ecomm_fact as (
     select * from {{ ref('pcfedw_integration__edw_au_pharm_ecomm_fact') }}

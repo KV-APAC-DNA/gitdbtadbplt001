@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: pcfitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_perenso_prod_mapping
+      tags: ["",""]

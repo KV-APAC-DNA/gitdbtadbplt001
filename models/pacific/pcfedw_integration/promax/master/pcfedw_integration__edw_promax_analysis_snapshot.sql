@@ -12,22 +12,22 @@ with itg_query_parameters as(
     select * from {{ source('pcfitg_integration', 'itg_query_parameters') }}
 ),
 px_combined_ciw_fact as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.PX_COMBINED_CIW_FACT
+    select * from {{ ref('pcfedw_integration__px_combined_ciw_fact') }}
 ),
 edw_px_gl_trans_lkp as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PX_GL_TRANS_LKP
+    select * from {{ ref('pcfedw_integration__edw_px_gl_trans_lkp') }}
 ),
 vw_customer_dim as(
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+    select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 vw_material_dim as(
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_MATERIAL_DIM
+    select * from {{ ref('pcfedw_integration__vw_material_dim') }}
 ),
 edw_time_dim as(
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_px_master_fact as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PX_MASTER_FACT
+    select * from {{ ref('pcfedw_integration__edw_px_master_fact') }}
 ),
 cte1 as(
 SELECT
@@ -181,62 +181,62 @@ SELECT
 ),
 transformed as(
 SELECT
-  CONVERT_TIMEZONE('AEDT', CURRENT_TIMESTAMP()) AS SNAPSHOT_DATE,
+  convert_timezone('Australia/Sydney', current_timestamp()) AS SNAPSHOT_DATE,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'MON') AS SNAPSHOT_MONTH,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'yyyy') AS SNAPSHOT_YEAR,
-  ac_code,
-  ac_longname,
-  activity_longname,
-  channel_desc,
-  closed_switch,
-  confirmed_switch,
-  country,
-  curr_cd,
-  cust_no,
-  cust_del_flag,
-  cust_nm,
-  fran_desc,
-  gltt_rowid,
-  grp_fran_desc,
-  jj_mnth_day,
-  jj_mnth_shrt,
-  jj_mnth_long,
-  jj_mnth,
-  jj_mnth_id,
-  jj_qrtr,
-  jj_wk,
-  jj_year,
-  local_ccy,
-  matl_desc,
-  matl_id,
-  mega_brnd_desc,
-  prod_fran_desc,
-  prod_mjr_desc,
-  prod_mnr_desc,
-  promax_bucket,
-  p_buystartdatedef,
-  p_buystopdatedef,
-  p_deleted,
-  promotionforecastweek,
-  p_promonumber,
-  promotionrowid,
-  p_startdate,
-  p_stopdate,
-  sales_grp_desc,
-  sales_office_desc,
-  sap_accnt_nm,
-  sap_account,
-  transaction_longname,
-  updt_dt,
-  buyperiod_length,
-  case_deal,
-  case_quantity,
-  committed_spend,
-  aud_rate,
-  open_total,
-  paid_total,
-  planspend_total,
-  promo_length
+  ac_code::varchar(50) as ac_code,
+  ac_longname::varchar(40) as ac_longname,
+  activity_longname::varchar(40) as activity_longname,
+  channel_desc::varchar(20) as channel_desc,
+  closed_switch::varchar(6) as closed_switch,
+  confirmed_switch::varchar(11) as confirmed_switch,
+  country::varchar(20) as country,
+  curr_cd::varchar(256) as curr_cd,
+  cust_no::varchar(10) as cust_no,
+  cust_del_flag::varchar(256) as cust_del_flag,
+  cust_nm::varchar(256) as cust_nm,
+  fran_desc::varchar(100) as fran_desc,
+  gltt_rowid::number(18,0) as gltt_rowid,
+  grp_fran_desc::varchar(100) as grp_fran_desc,
+  jj_mnth_day::number(18,0) as jj_mnth_day,
+  jj_mnth_shrt::varchar(3) as jj_mnth_shrt,
+  jj_mnth_long::varchar(10) as jj_mnth_long,
+  jj_mnth::number(18,0) as jj_mnth,
+  jj_mnth_id::number(18,0) as jj_mnth_id,
+  jj_qrtr::number(18,0) as jj_qrtr,
+  jj_wk::number(18,0) as jj_wk,
+  jj_year::number(18,0) as jj_year,
+  local_ccy::varchar(10) as local_ccy,
+  matl_desc::varchar(100) as matl_desc,
+  matl_id::varchar(40) as matl_id,
+  mega_brnd_desc::varchar(100) as mega_brnd_desc,
+  prod_fran_desc::varchar(100) as prod_fran_desc,
+  prod_mjr_desc::varchar(100) as prod_mjr_desc,
+  prod_mnr_desc::varchar(100) as prod_mnr_desc,
+  promax_bucket::varchar(40) as promax_bucket,
+  p_buystartdatedef::timestamp_ntz(9) as p_buystartdatedef,
+  p_buystopdatedef::timestamp_ntz(9) as p_buystopdatedef,
+  p_deleted::varchar(3) as p_deleted,
+  promotionforecastweek::timestamp_ntz(9) as promotionforecastweek,
+  p_promonumber::varchar(10) as p_promonumber,
+  promotionrowid::number(18,0) as promotionrowid,
+  p_startdate::timestamp_ntz(9) as p_startdate,
+  p_stopdate::timestamp_ntz(9) as p_stopdate,
+  sales_grp_desc::varchar(30) as sales_grp_desc,
+  sales_office_desc::varchar(30) as sales_office_desc,
+  sap_accnt_nm::varchar(100) as sap_accnt_nm,
+  sap_account::varchar(40) as sap_account,
+  transaction_longname::varchar(40) as transaction_longname,
+  updt_dt::timestamp_ntz(9) as updt_dt,
+  buyperiod_length::number(38,0) as buyperiod_length,
+  case_deal::float as case_deal,
+  case_quantity::number(18,0) as case_quantity,
+  committed_spend::float as committed_spend,
+  aud_rate::float as aud_rate,
+  open_total::float as open_total,
+  paid_total::float as paid_total,
+  planspend_total::float as planspend_total,
+  promo_length::number(38,0) as promo_length
 FROM cte1
 where (jj_mnth_id)> cast((SUBSTRING(add_months(current_timestamp()::timestamp_ntz(9),cast((-1)*(select parameter_value from itg_query_parameters where parameter_name='Pacific_Promax_master_snapshot_data_past_months')as integer)),1,4))
 
