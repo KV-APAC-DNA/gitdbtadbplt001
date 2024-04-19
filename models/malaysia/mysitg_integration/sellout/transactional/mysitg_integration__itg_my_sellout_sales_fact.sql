@@ -59,7 +59,7 @@ union1 as (
         current_timestamp() as updt_dttm
     from source, imier
     where imier.cust_id(+)=source.dstrbtr_id
-        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 6),'-', '')
+        and imier.yearmo(+)=replace(substring(try_to_date(sls_ord_dt,'dd.mm.yyyy'), 0, 7),'-', '')
 )
 
 select * from union1
@@ -100,7 +100,7 @@ union2 as (
     from wks_my_sellout_sales_fact as t1, imier as t2
     where
     t2.cust_id(+) = t1.dstrbtr_id
-    and t2.yearmo(+) = substring(replace(try_to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 7)
+    and t2.yearmo(+) = substring(replace(try_to_date(sls_ord_dt, 'DD/MM/YYYY'), '-', ''), 0, 6)
 ),
 immd as (
   select
