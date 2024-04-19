@@ -4,5 +4,5 @@ models:
   - name: pcfedw_integration__vw_jjbr_curr_exch_dim
     config: 
       alias: vw_jjbr_curr_exch_dim
-      tags: ["",""]
+      tags: ["anz_perenso_field_order_analysis",""]
   

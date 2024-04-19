@@ -4,8 +4,8 @@ models:
   - name: pcfedw_integration__edw_pharm_sellout_fact
     config:
       alias: edw_pharm_sellout_fact
-      tags: ["J_Pac_Pharm_data_load",""]
+      tags: ["j_pac_pharm_data_load",""]
   - name: pcfedw_integration__vw_pacific_sellout
     config:
       alias: vw_pacific_sellout
-      tags: ["",""]
+      tags: ["j_ap_china_reg_data_refresh",""]

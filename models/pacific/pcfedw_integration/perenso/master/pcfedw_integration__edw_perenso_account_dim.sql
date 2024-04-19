@@ -1,7 +1,7 @@
 with
 itg_perenso_acct_mapping as
 (
-    select * from snappcfitg_integration.itg_perenso_acct_mapping
+    select * from {{ source('pcfitg_integration', 'itg_perenso_acct_mapping') }}
 ), --one time load
 wks_perenso_acct_intermideate as
 (

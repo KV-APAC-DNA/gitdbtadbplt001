@@ -13,7 +13,7 @@ sources:
       tags: ["anz_mds_sdl_to_edw_load",""]
       tests:
           - test_duplicate:
-              select_columns: ["sls_org" , "cmp_id", "sls_grp_cd"]
+              select_columns: ["sls_org", "cmp_id", "market", "sls_grp"]
               group_by_columns: ["sls_org", "cmp_id", "market", "sls_grp"]
               name: TRATBL_sdl_mds_pacific_cust_attrb__duplicate_test
               config:
