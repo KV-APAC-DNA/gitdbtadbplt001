@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_pacific_metcash_dstrbtn_analysis
+    config:
+      alias: edw_pacific_metcash_dstrbtn_analysis
+      tags: ["anz_perenso_distribution", "transformation"]
+ 

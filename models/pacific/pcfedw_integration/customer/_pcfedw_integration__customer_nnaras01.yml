@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_sap_std_cost
+    config:
+      alias: vw_sap_std_cost
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__vw_sapbw_ciw_fact
+    config:
+      alias: vw_sapbw_ciw_fact
+      tags: ["", "transformation"]
+ 

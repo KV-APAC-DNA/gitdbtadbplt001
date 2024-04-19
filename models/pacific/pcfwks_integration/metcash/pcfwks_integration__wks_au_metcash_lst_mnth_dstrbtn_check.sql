@@ -7,28 +7,30 @@ wks_au_metcash_prod_acct_date_comb as (
 wks_au_metcash_dstrbtn_date_range as (
     select * from {{ ref('pcfwks_integration__wks_au_metcash_dstrbtn_date_range') }}
 ),
-subquery_1 as (SELECT a.delvry_dt,
-       a.acct_key,
-       a.prod_key,
-       COUNT(DISTINCT CASE WHEN c1.unit_qty <> 0 THEN c1.delvry_dt END) AS prod_lst_mnth_qty,
-       COUNT(DISTINCT CASE WHEN c2.unit_qty <> 0 THEN c2.delvry_dt END) AS acct_lst_mnth_qty
-FROM wks_au_metcash_prod_acct_date_comb a
-JOIN wks_au_metcash_dstrbtn_date_range b ON a.delvry_dt = b.delvry_dt
-LEFT JOIN wks_au_metcash_monthly c1 ON c1.prod_key = a.prod_key
-                                      AND c1.delvry_dt > b.lst_mnth_delvry_dt
-                                      AND c1.delvry_dt <= b.delvry_dt
-LEFT JOIN wks_au_metcash_monthly c2 ON c2.acct_key = a.acct_key
-                                      AND c2.delvry_dt > b.lst_mnth_delvry_dt
-                                      AND c2.delvry_dt <= b.delvry_dt
-GROUP BY a.delvry_dt, a.acct_key, a.prod_key
-),
 wks_au_metcash_lst_mnth_dstrbtn_check as (
 select delvry_dt,
        acct_key,
        prod_key,
        prod_lst_mnth_qty,
        acct_lst_mnth_qty
-from subquery_1
+from (select a.delvry_dt,
+             a.acct_key,
+             a.prod_key,
+             (select count(c.unit_qty)
+              from wks_au_metcash_monthly c
+              where c.delvry_dt > b.lst_mnth_delvry_dt
+              and   c.delvry_dt <= b.delvry_dt
+              and   c.prod_key = a.prod_key
+              and   c.unit_qty <> 0) as prod_lst_mnth_qty,
+             (select count(c.unit_qty)
+              from wks_au_metcash_monthly c
+              where c.delvry_dt > b.lst_mnth_delvry_dt
+              and   c.delvry_dt <= b.delvry_dt
+              and   c.acct_key = a.acct_key
+              and   c.unit_qty <> 0) as acct_lst_mnth_qty
+      from wks_au_metcash_prod_acct_date_comb a,
+           wks_au_metcash_dstrbtn_date_range b
+      where a.delvry_dt = b.delvry_dt)
 where delvry_dt >(select distinct dateadd(month,-24,wapm.delvry_dt)
                   from wks_au_metcash_monthly wapm,
                        (select max(delvry_dt) delvry_dt

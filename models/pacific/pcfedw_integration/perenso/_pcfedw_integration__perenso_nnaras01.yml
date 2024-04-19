@@ -13,6 +13,41 @@ models:
     config:
       alias: edw_perenso_compliance
       tags: ["anz_perenso_fact_load", "transformation"]
- 
+  - name: pcfedw_integration__edw_perenso_over_and_above
+    config:
+      alias: edw_perenso_over_and_above
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_survey
+    config:
+      alias: edw_perenso_survey
+      tags: ["anz_perenso_fact_load", "transformation"]
+
+  - name: pcfedw_integration__edw_perenso_survey_target
+    config:
+      alias: edw_perenso_survey_target
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_metcash_ind_grocery_fact
+    config:
+      alias: edw_metcash_ind_grocery_fact
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_pacific_perenso_ims_analysis
+    config:
+      alias: edw_pacific_perenso_ims_analysis
+      tags: ["anz_perenso_fact_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_account_probeid_dim
+    config:
+      alias: edw_perenso_account_probeid_dim
+      tags: ["anz_perenso_dimension_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_prod_probeid_dim
+    config:
+      alias: edw_perenso_prod_probeid_dim
+      tags: ["anz_perenso_dimension_load", "transformation"]
+  
+  
+  
+  
+  
+  
+  
  
  

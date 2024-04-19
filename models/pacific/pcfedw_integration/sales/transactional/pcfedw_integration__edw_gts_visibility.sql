@@ -1,3 +1,9 @@
+{{
+    config(
+        pre_hook="{{build_pcfedw_integration__edw_gts_visibility()}}"
+    )
+}}
+
 
 with 
 edw_invoice_fact_snapshot as (
@@ -5,6 +11,12 @@ select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_INVOICE_FACT_SNAPSHOT
 ),
 edw_billing_fact as (
 select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_BILLING_FACT
+),
+EDW_BILLING_FACT_SNAPSHOT as (
+select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_BILLING_FACT_SNAPSHOT
+),
+EDW_SAPBW_PLAN_LKP as (
+select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SAPBW_PLAN_LKP
 ),
 edw_time_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
@@ -217,7 +229,7 @@ from edw_invoice_fact_snapshot eifs
 
              from vw_apo_parent_child_dim
 
-             where cmp_id = 7470
+             where trim(cmp_id)::varchar = '7470'
 
              union all
 
@@ -231,7 +243,7 @@ from edw_invoice_fact_snapshot eifs
 
                                         from vw_apo_parent_child_dim
 
-                                        where cmp_id = 7470))) mstrcd on vapcd.master_code = mstrcd.master_code)
+                                        where trim(cmp_id)::varchar = '7470'))) mstrcd on vapcd.master_code = mstrcd.master_code)
 
          on eifs.co_cd = vapcd.cmp_id
 
@@ -262,7 +274,7 @@ from edw_invoice_fact_snapshot eifs
              where ltrim(materialnumber,0) <> ''
 
              and   "region" = 'APAC') egph on ltrim (eifs.matl_num,0) = ltrim (egph.materialnumber,0)
-),
+) ,
 non_open_orders as (select convert_timezone ('Australia/Sydney',doc_crt_dt)::date as snapshot_date,
 
        dct.jj_mnth_id as snapshot_date_jnj_month,
@@ -361,7 +373,274 @@ where  dct.cal_date=orders.doc_crt_dt
 
 and rdt.cal_date=orders.rqst_delv_dt
 
-),
+) ,
+
+final_non_open_orders as (
+
+SELECT 'Non Open Orders' as subsource_type,        
+
+        CASE
+
+         WHEN EIFS.CO_CD = '7470' THEN 'Australia'
+
+         WHEN EIFS.CO_CD = '8361' THEN 'New Zealand'
+
+         ELSE NULL
+
+       END AS COUNTRY,
+
+       EIFS.SNAPSHOT_DATE,
+
+       EIFS.SNAPSHOT_DATE_JNJ_MONTH,
+
+       EIFS.JJ_MNTH_ID,
+
+       ETD.JJ_MNTH,
+
+       ETD.JJ_MNTH_SHRT AS JJ_MNTH_NM,
+
+       ETD.JJ_YEAR,
+
+       ETD.JJ_QRTR,
+
+       LTRIM(EIFS.CUST_NUM) AS CUST_NUM,
+
+       LTRIM(EIFS.MATL_NUM) AS MATL_NUM,
+
+       EIFS.SLS_DOC,
+
+       EIFS.RQST_DELV_DT,
+
+       EIFS.RQST_DELV_DT_JNJ_MONTH,
+
+       EBF.BILL_NUM,
+
+       EBF.BILL_DT,
+
+       EBF.BILL_DT_YYYY_MM,
+
+       EBF.CREATED_ON,
+
+       EMD.GRP_FRAN_DESC,
+
+       EMD.PROD_FRAN_DESC,
+
+       EMD.PROD_MJR_DESC,
+
+       EMD.PROD_MNR_DESC,
+
+       EMD.MATL_DESC,
+
+       EMD.BRND_DESC,
+
+       EGPH.GCPH_FRANCHISE,
+
+       EGPH.GCPH_BRAND,
+
+       EGPH.GCPH_SUBBRAND,
+
+       EGPH.GCPH_VARIANT,
+
+       EGPH.GCPH_NEEDSTATE,
+
+       EGPH.GCPH_CATEGORY,
+
+       EGPH.GCPH_SUBCATEGORY,
+
+       EGPH.GCPH_SEGMENT,
+
+       EGPH.GCPH_SUBSEGMENT,
+
+       MSTRCD.MASTER_CODE,
+
+       VCD.CHANNEL_DESC,
+
+       VCD.SALES_OFFICE_DESC,
+
+       VCD.CUST_NM,
+
+       VCD.SALES_GRP_DESC,
+
+       EIFS.CURR_KEY AS LOCAL_CCY,
+
+       CURRENCY.TO_CCY AS TO_CCY,
+
+       CURRENCY.EXCH_RATE AS EXCH_RATE,
+
+       (EIFS.GROS_TRD_SLS*CURRENCY.EXCH_RATE) AS OPEN_ORDERS_VAL,
+
+       (EBF.SUBTOTAL_1*CURRENCY.EXCH_RATE) AS GTS_LANDING_VAL
+
+FROM NON_open_orders EIFS
+
+  LEFT JOIN (SELECT DOC_NUM,
+
+                    SOLD_TO,
+
+                    MATERIAL,
+
+                    BILL_NUM,
+
+                    BILL_DT,
+
+                    BDT.JJ_MNTH_ID BILL_DT_YYYY_MM,
+
+                    CREATED_ON,
+
+                    SUM(SUBTOTAL_1) AS SUBTOTAL_1
+
+             FROM EDW_BILLING_FACT_SNAPSHOT EDW_BILLING_FACT JOIN (SELECT DISTINCT CAL_DATE,JJ_MNTH_ID FROM EDW_TIME_DIM T1) BDT ON BDT.CAL_DATE=EDW_BILLING_FACT.BILL_DT
+
+             WHERE BILL_TYPE not in (select parameter_value from itg_query_parameters where country_code='ANZ' and parameter_name='Billing_Exclusion' and parameter_type='bill_type')
+
+             AND (BILL_NUM IS NOT NULL AND BILL_DT IS NOT NULL)
+
+             GROUP BY DOC_NUM,
+
+                      SOLD_TO,
+
+                      MATERIAL,
+
+                      BILL_NUM,
+
+                      BILL_DT,
+
+                      BDT.JJ_MNTH_ID,
+
+                      CREATED_ON
+
+             HAVING COALESCE(SUM(SUBTOTAL_1),0)<>0) EBF
+
+         ON LTRIM (EIFS.SLS_DOC,'0') = LTRIM (EBF.DOC_NUM,'0')
+
+        AND LTRIM (EIFS.CUST_NUM,'0') = LTRIM (EBF.SOLD_TO,'0')
+
+        AND LTRIM (EIFS.MATL_NUM,'0') = LTRIM (EBF.MATERIAL,'0')
+
+  JOIN (SELECT DISTINCT JJ_MNTH,
+
+               JJ_MNTH_SHRT,
+
+               JJ_QRTR,
+
+               JJ_YEAR,
+
+               JJ_MNTH_ID
+
+        FROM EDW_TIME_DIM) ETD ON EIFS.JJ_MNTH_ID = ETD.JJ_MNTH_ID
+
+  INNER JOIN      (SELECT CAST(TO_CHAR(ADD_MONTHS (TO_DATE(T1.JJ_MNTH_ID::varchar,'YYYYMM'),- 1),'YYYYMM') AS INTEGER) AS JJ_PERIOD
+
+                    FROM EDW_TIME_DIM T1
+
+                    WHERE to_date(T1.CAL_DATE) = to_date(CONVERT_TIMEZONE('Australia/Sydney',current_timestamp()))
+
+                    UNION
+
+                    SELECT T1.JJ_MNTH_ID AS JJ_PERIOD
+
+                    FROM EDW_TIME_DIM T1
+
+                    WHERE to_date(T1.CAL_DATE) = to_date(CONVERT_TIMEZONE('Australia/Sydney',current_timestamp()))) ETD1 ON ETD1.JJ_PERIOD :: varchar(10)=EBF.BILL_DT_YYYY_MM
+
+  JOIN (SELECT RATE_TYPE,
+
+               FROM_CCY,
+
+               TO_CCY,
+
+               JJ_MNTH_ID,
+
+               EXCH_RATE
+
+        FROM VW_JJBR_CURR_EXCH_DIM
+
+        WHERE EXCH_RATE = 1
+
+        AND   FROM_CCY = 'AUD'
+
+        UNION ALL
+
+        SELECT RATE_TYPE,
+
+               FROM_CCY,
+
+               TO_CCY,
+
+               JJ_MNTH_ID,
+
+               EXCH_RATE
+
+        FROM VW_BWAR_CURR_EXCH_DIM) CURRENCY
+
+    ON EIFS.CURR_KEY = CURRENCY.FROM_CCY
+
+   AND ETD.JJ_MNTH_ID = CURRENCY.JJ_MNTH_ID
+
+  LEFT JOIN VW_CUSTOMER_DIM VCD ON LTRIM (EIFS.CUST_NUM,'0') = LTRIM (VCD.CUST_NO,'0')
+
+  LEFT JOIN EDW_MATERIAL_DIM EMD ON LTRIM (EIFS.MATL_NUM,'0') = LTRIM (EMD.MATL_ID,'0')
+
+  LEFT JOIN (VW_APO_PARENT_CHILD_DIM VAPCD
+
+  LEFT JOIN (SELECT DISTINCT MASTER_CODE,
+
+                    PARENT_MATL_DESC
+
+             FROM VW_APO_PARENT_CHILD_DIM
+
+             WHERE trim(CMP_ID)::varchar = '7470'
+
+             UNION ALL
+
+             SELECT DISTINCT MASTER_CODE,
+
+                    PARENT_MATL_DESC
+
+             FROM VW_APO_PARENT_CHILD_DIM
+
+             WHERE NOT (MASTER_CODE IN (SELECT DISTINCT MASTER_CODE
+
+                                        FROM VW_APO_PARENT_CHILD_DIM
+
+                                        WHERE trim(CMP_ID)::varchar = '7470'))) MSTRCD ON VAPCD.MASTER_CODE = MSTRCD.MASTER_CODE)
+
+         ON EIFS.CO_CD = VAPCD.CMP_ID
+
+        AND EIFS.MATL_NUM = VAPCD.MATL_ID
+
+  LEFT JOIN (SELECT MATERIALNUMBER,
+
+                    GCPH_FRANCHISE,
+
+                    GCPH_BRAND,
+
+                    GCPH_SUBBRAND,
+
+                    GCPH_VARIANT,
+
+                    GCPH_NEEDSTATE,
+
+                    GCPH_CATEGORY,
+
+                    GCPH_SUBCATEGORY,
+
+                    GCPH_SEGMENT,
+
+                    GCPH_SUBSEGMENT
+
+             FROM EDW_GCH_PRODUCTHIERARCHY
+
+             WHERE LTRIM(MATERIALNUMBER,0) <> ''
+
+             AND   "region" = 'APAC') EGPH ON LTRIM (EIFS.MATL_NUM,0) = LTRIM (EGPH.MATERIALNUMBER,0)
+
+  JOIN EDW_SAPBW_PLAN_LKP ESPL ON ESPL.SLS_GRP_CD = VCD.SALES_GRP_CD
+
+  WHERE  (BILL_NUM IS NOT NULL AND BILL_DT IS NOT NULL)
+
+)
+,
 open_orders as (
 select
 'open orders' as subsource_type,
@@ -453,13 +732,13 @@ select
   from WKS_GTS_VISIBILITY
 ),
 transformed as (
-select * from non_open_orders
+select * from final_non_open_orders
 union all
 select * from open_orders
-),
+) ,
 final as (
 select
-subsource_type varchar(15) as subsource_type,
+subsource_type::varchar(15) as subsource_type,
 country::varchar(11) as country,
 snapshot_date::date as snapshot_date,
 snapshot_date_jnj_month::number(18,0) as snapshot_date_jnj_month,

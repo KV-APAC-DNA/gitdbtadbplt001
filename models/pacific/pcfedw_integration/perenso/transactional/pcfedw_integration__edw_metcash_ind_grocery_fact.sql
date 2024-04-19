@@ -9,7 +9,7 @@ edw_perenso_prod_dim as (
     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM
 ),
 itg_material_uom as (
-    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MATERIAL_UOM
+    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MATERIAL_UOM
 ),    
 transformed as (
 select sls.week_end_dt as cal_date,

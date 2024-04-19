@@ -187,7 +187,7 @@ and   ipdi.start_time::date >= ipicd.start_date(+)::date
 
 and   ipdi.start_time::date <= ipicd.end_date(+)::date
 
-and   upper(ipto.option_desc) = upper(ioaap.display_type(+))
+and   upper(ipto.option_desc) = upper(ioaap.OA_display_type(+))
 ),
 final as (
 select 

@@ -1,13 +1,13 @@
 with itg_survey_targets as (
-    select * from 
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_SURVEY_TARGETS
 ),
 itg_survey_product_grp_to_category_map as (
-    select * from 
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_survey_product_grp_to_category_map
 ),
 itg_survey_type_to_question_map as (
-       select * from 
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_survey_type_to_question_map
 ),    
-final as (
+transformed as (
 (select ist.year,
 
        ist.cycle_start_date,
@@ -77,6 +77,21 @@ where ist.category is null
 and   upper(ist.account_type_description) = upper(istm.account_type_description)
 
 and   upper(ist.target_type) = upper(istm.target_type))
+),
+final as (
+select
+    year::varchar(256) as year,
+    cycle_start_date::varchar(256) as cycle_start_date,
+    cycle_end_date::varchar(256) as cycle_end_date,
+    account_type_description::varchar(256) as account_type_description,
+    target_type::varchar(256) as target_type,
+    category::varchar(256) as category,
+    territory_region::varchar(256) as territory_region,
+    territory::varchar(256) as territory,
+    question_product_group::varchar(256) as question_product_group,
+    perenso_questions::varchar(256) as perenso_questions,
+    target::number(20,0) as target
+from transformed
 )
 select * from final
 
