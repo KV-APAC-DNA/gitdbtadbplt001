@@ -4,4 +4,4 @@ models:
   - name: pcfedw_intgeration__vw_demand_forecast_analysis
     config:
       alias: vw_demand_forecast_analysis
-      tags: ["",""]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw",""]
