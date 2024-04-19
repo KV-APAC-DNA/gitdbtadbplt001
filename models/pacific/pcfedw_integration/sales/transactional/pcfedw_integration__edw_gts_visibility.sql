@@ -5,7 +5,7 @@
 }}
 
 
-with 
+with
 edw_invoice_fact_snapshot as (
 select * from {{ ref('pcfedw_integration__edw_invoice_fact_snapshot') }}
 ),
@@ -31,7 +31,7 @@ vw_customer_dim as (
 select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('pcfedw_integration__edw_material_dim') }}
 ),
 vw_apo_parent_child_dim as (
 select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
@@ -377,7 +377,7 @@ and rdt.cal_date=orders.rqst_delv_dt
 
 final_non_open_orders as (
 
-SELECT 'Non Open Orders' as subsource_type,        
+SELECT 'Non Open Orders' as subsource_type,
 
         CASE
 

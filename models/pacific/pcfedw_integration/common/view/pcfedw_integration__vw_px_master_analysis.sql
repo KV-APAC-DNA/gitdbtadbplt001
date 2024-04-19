@@ -8,7 +8,7 @@ edw_px_gl_trans_lkp as
 ),
 edw_px_master_fact as
 (
-    select * from snappcfedw_integration.edw_px_master_fact
+    select * from {{ ref('pcfedw_integration__edw_px_master_fact') }}
 ),
 vw_customer_dim as
 (
@@ -23,7 +23,7 @@ edw_time_dim as
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 final as
-(    
+(
     SELECT etd.cal_date,
         etd.time_id,
         etd.jj_wk,
@@ -148,23 +148,23 @@ final as
         epgm.promax_measure,
         epgm.promax_bucket,
         epmf.promotionrowid
-    FROM 
+    FROM
         (
-            SELECT 
+            SELECT
                 DISTINCT px_combined_ciw_fact.sap_accnt,
                 px_combined_ciw_fact.sap_accnt_nm
             FROM px_combined_ciw_fact
         ) cpf,
         edw_px_gl_trans_lkp epgm,
         edw_px_master_fact epmf
-        LEFT JOIN vw_customer_dim vcd 
+        LEFT JOIN vw_customer_dim vcd
         ON (epmf.cust_id)::text = ltrim((vcd.cust_no)::text,('0'::character varying)::text)
-        LEFT JOIN vw_material_dim vmd 
+        LEFT JOIN vw_material_dim vmd
         ON (epmf.matl_id)::text = ltrim((vmd.matl_id)::text,('0'::character varying)::text)
-        LEFT JOIN edw_time_dim etd 
+        LEFT JOIN edw_time_dim etd
         ON to_date(epmf.promotionforecastweek) = to_date(etd.cal_date)
     WHERE
-        (epmf.gltt_rowid = epgm.row_id) 
+        (epmf.gltt_rowid = epgm.row_id)
         AND ((epgm.sap_account)::text = (cpf.sap_accnt)::text)
 )
 select * from final

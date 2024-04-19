@@ -1,6 +1,6 @@
-with edw_px_master_fact as 
+with edw_px_master_fact as
 (
-    select * from snappcfedw_integration.edw_px_master_fact
+    select * from {{ ref('pcfedw_integration__edw_px_master_fact') }}
 ),
 edw_px_gl_trans_lkp as
 (
@@ -43,8 +43,8 @@ edw_account_dim as
     select * from {{ ref('aspedw_integration__edw_account_dim') }}
 ),
 union_1 as
-(  
-    select 
+(
+    select
         pac_source_type,
         pac_subsource_type,
         cmp_id,
@@ -144,7 +144,7 @@ union_1 as
             sum(tot_paid) tot_paid,
             sum(committed_spend) committed_spend,
             tp_category
-        FROM 
+        FROM
         (
             SELECT 'PROMAX' as PAC_SOURCE_TYPE,
                 'PX_MASTER' as pac_subsource_type,
@@ -249,7 +249,7 @@ union_2 as
         0 as tot_paid,
         0 as committed_spend,
         null as tp_category
-    from 
+    from
         (
             select pac_source_type,
                 pac_subsource_type,
@@ -288,7 +288,7 @@ union_2 as
                         (epf.est_estimate * epl.lp_price)::double precision as px_gts,
                         0 as px_rtrns,
                         epf.est_estimate * epl.lp_price as px_gp
-                    from 
+                    from
                     (
                         select a.ac_code,
                             a.ac_attribute,
@@ -309,28 +309,28 @@ union_2 as
                         where a.ac_attribute = ltrim(b.cust_no (+), '0')
                             and to_date(a.est_date) = to_date(c.cal_date)
                     ) epf,
-                        -- edw_time_dim etd,	
+                        -- edw_time_dim etd,
                     (
-                        /* old code 
-                            
+                        /* old code
+
                             select distinct lp.sku_stockcode,
-                            
+
                             lkp.cmp_id,
-                            
+
                             lp.lp_price
-                            
+
                             from edw_px_listprice lp,
-                            
+
                             (select distinct cmp_id,
-                            
+
                             sls_org
-                            
+
                             from dly_sls_cust_attrb_lkp) lkp
-                            
+
                             where lp.sales_org = lkp.sls_org
-                            
+
                             and   to_date(lp.lp_startdate) <= to_date(sysdate)
-                            
+
                             and   (to_date(lp.lp_stopdate) > to_date(sysdate) or to_date(lp.lp_stopdate) is  null) */
                         select distinct eff_jj_month,
                             sku_stockcode,
@@ -372,7 +372,7 @@ union_2 as
                     ) epl,
                     vw_jjbr_curr_exch_dim curr
                     where --to_date(epf.est_date) = to_date(etd.cal_date)
-                    --and   
+                    --and
                     epf.sku_stockcode = epl.sku_stockcode (+)
                     and epf.jj_mnth_id = epl.eff_jj_month (+) ---join condition added
                     and epf.week_no = epl.week_no (+)
@@ -421,7 +421,7 @@ union_2 as
 ),
 union_3 as
 (
-    select 
+    select
         a.pac_source_type,
         a.pac_subsource_type,
         a.cmp_id,
@@ -456,7 +456,7 @@ union_3 as
         0 as tot_paid,
         c.px_base_measure as committed_spend,
         c.tp_category
-    from 
+    from
         (
             select pac_source_type,
                 pac_subsource_type,
@@ -476,7 +476,7 @@ union_3 as
                 0 as px_gts,
                 0 as px_rtrns,
                 0 as px_gp
-            from 
+            from
                 (
                     SELECT 'PROMAX' as PAC_SOURCE_TYPE,
                         'PX_TERMS' as pac_subsource_type,
@@ -496,7 +496,7 @@ union_3 as
                         0 as px_gts,
                         0 as px_rtrns,
                         0 as px_gp
-                    from 
+                    from
                         (
                             select a.ac_code,
                                 a.ac_attribute,
@@ -516,33 +516,33 @@ union_3 as
                             where a.ac_attribute = ltrim(b.cust_no (+), '0')
                                 and to_date(a.est_date) = to_date(c.cal_date)
                         ) epf,
-                        --edw_time_dim etd,	
+                        --edw_time_dim etd,
                         (
                             /*select distinct lp.sku_stockcode,
-                             
+
                              lkp.cmp_id,
-                             
+
                              lp.lp_price
-                             
+
                              from edw_px_listprice lp,
-                             
+
                              (select distinct cmp_id,
-                             
+
                              sls_org
-                             
+
                              from dly_sls_cust_attrb_lkp) lkp
-                             
+
                              where lp.sales_org = lkp.sls_org
-                             
+
                              and   to_date(lp.lp_startdate) <= to_date(sysdate)
-                             
+
                              and   (to_date(lp.lp_stopdate) > to_date(sysdate) or to_date(lp.lp_stopdate) is  null)*/
                             -- old code
                             select distinct eff_jj_month,
                                 sku_stockcode,
                                 cmp_id,
                                 lp_price
-                            from 
+                            from
                                 (
                                     select distinct time.cal_date as eff_date,
                                         time.jj_mnth_id as eff_jj_month,
@@ -571,7 +571,7 @@ union_3 as
                         ) epl,
                         vw_jjbr_curr_exch_dim curr
                     where --to_date(epf.est_date) = to_date(etd.cal_date)
-                        --and   
+                        --and
                         epf.sku_stockcode = epl.sku_stockcode (+)
                         and epf.cmp_id = epl.cmp_id (+)
                         and epf.jj_mnth_id = epl.eff_jj_month (+) --newly included
@@ -656,7 +656,7 @@ union_3 as
                     end
                 ) as PX_CIW_TOT,
                 PGTM.tp_category
-            FROM 
+            FROM
                 (
                     SELECT CMP_ID,
                         CUST_ID,
@@ -757,7 +757,7 @@ final as
         tot_planspend::float as tot_planspend,
         tot_paid::float as tot_paid,
         committed_spend::float as committed_spend,
-        tp_category::varchar(20) as tp_category  
+        tp_category::varchar(20) as tp_category
     from
     (
         select * from union_1

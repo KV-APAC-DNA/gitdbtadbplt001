@@ -1,6 +1,5 @@
 with sdl_perenso_account_fields as (
     select * from {{ source('pcfsdl_raw', 'sdl_perenso_account_fields') }}
-    -- select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.sdl_perenso_account_fields
 ),
 final as (
 select

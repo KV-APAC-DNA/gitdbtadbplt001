@@ -1,6 +1,5 @@
 with sdl_perenso_account_group as (
-    -- select * from {{ source('pcfsdl_raw', 'sdl_perenso_account_group') }}
-    select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_PERENSO_ACCOUNT_GROUP
+    select * from {{ source('pcfsdl_raw', 'sdl_perenso_account_group') }}
 ),
 final as (
 select
