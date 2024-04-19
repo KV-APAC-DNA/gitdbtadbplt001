@@ -1,3 +1,4 @@
+
 with wks_au_pharm_monthly as (
     select * from {{ ref('pcfwks_integration__wks_au_pharm_monthly') }}
 ),
