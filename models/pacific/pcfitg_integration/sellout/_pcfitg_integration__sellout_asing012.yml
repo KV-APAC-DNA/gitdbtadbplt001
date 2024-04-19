@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_pharm_sellout_raw
+    config:
+      alias: itg_pharm_sellout_raw
+      tags: ["J_Pac_Pharm_data_load",""]
+  - name: pcfitg_integration__sdl_pharm_sellout_weekly_raw
+    config:
+      alias: sdl_pharm_sellout_weekly_raw
+      tags: ["J_Pac_Pharm_data_load",""]
+  - name: pcfitg_integration__itg_mds_pacific_terms_master
+    config:
+      alias: itg_mds_pacific_terms_master
+      tags: ["j_pac_roi_etl_framework",""]

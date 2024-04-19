@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_pacific_ciw_adjustment
+      tags: ["anz_mds_sdl_to_edw_load",""]
+    - name: sdl_mds_pacific_acct_nielsencode_mapping
+      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+
+  - name: pcfitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: pcfitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_perenso_acct_mapping
+
+
+      

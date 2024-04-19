@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_sapbw_plan_lkp
+    config: 
+      alias: edw_sapbw_plan_lkp
+      tags: ["anz_mds_sdl_to_edw_load",""]
+  - name: pcfedw_integration__edw_ciw_accnt_lkp
+    config: 
+      alias: edw_ciw_accnt_lkp
+      tags: ["anz_mds_sdl_to_edw_load",""]
+  - name: pcfedw_integration__edw_px_gl_trans_lkp
+    config: 
+      alias: edw_px_gl_trans_lkp
+      tags: ["anz_mds_sdl_to_edw_load",""]
+
+  

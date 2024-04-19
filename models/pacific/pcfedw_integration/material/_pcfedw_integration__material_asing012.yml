@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_material_dim
+    config: 
+      alias: vw_material_dim
+      tags: ["J_Pac_Sap_Bw_Weekly_Forecast_File_Edw",""]
+  

@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_perenso_account_dim
+    config: 
+      alias: edw_perenso_account_dim
+      tags: ["anz_perenso_dimension_load",""]
+  
