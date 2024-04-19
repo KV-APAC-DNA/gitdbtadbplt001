@@ -5,14 +5,12 @@
     )
 }}
 
-
-
 with
 edw_time_dim as (
-      select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+      select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_sales_reporting as (
-      select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SALES_REPORTING
+      select * from {{ ref('pcfedw_integration__edw_sales_reporting') }}
 ),
 etd as (
  (select cast(to_char(add_months (to_date(t1.jj_mnth_id::varchar,'YYYYMM'),- 1),'YYYYMM') as integer) as prev_jj_period,

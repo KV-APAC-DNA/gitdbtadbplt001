@@ -1,8 +1,8 @@
 with itg_mds_pacific_terms_master as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_MDS_PACIFIC_TERMS_MASTER
+select * from {{ ref('pcfitg_integration__itg_mds_pacific_terms_master') }}
 ),
 vw_customer_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 final as (
 SELECT 

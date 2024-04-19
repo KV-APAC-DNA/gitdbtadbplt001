@@ -14,16 +14,16 @@
 
 -- ADD COLUMN CYCLE_NUMBER VARCHAR(20);
 with itg_perenso_diary_item_type as (
-  select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
+  select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
 itg_perenso_diary_item as (
   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
 ),
 itg_perenso_constants as (
-  select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
+  select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}
 ),
 itg_perenso_instore_cycle_dates as (
-  select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+  select  * from {{ ref('pcfitg_integration__itg_perenso_instore_cycle_dates') }}
 ),
 ipicd as (select  "TIME", 
 

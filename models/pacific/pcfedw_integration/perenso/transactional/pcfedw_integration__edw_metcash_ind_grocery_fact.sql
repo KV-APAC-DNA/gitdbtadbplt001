@@ -1,15 +1,15 @@
 
 with itg_metcash_ind_grocery as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_METCASH_IND_GROCERY
+    select * from {{ ref('pcfitg_integration__itg_metcash_ind_grocery') }}
 ),
 edw_time_dim as (
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+    select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_perenso_prod_dim as (
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM
+    select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 itg_material_uom as (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MATERIAL_UOM
+    select * from {{ ref('aspitg_integration__itg_material_uom') }}
 ),    
 transformed as (
 select sls.week_end_dt as cal_date,

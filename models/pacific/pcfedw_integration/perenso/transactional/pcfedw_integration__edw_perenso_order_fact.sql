@@ -1,26 +1,23 @@
 with itg_perenso_order_header as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ORDER_HEADER
+     select * from {{ ref('pcfitg_integration__itg_perenso_order_header') }}
 ),
 itg_perenso_order_type as (
-   select * from  DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ORDER_TYPE
+   select * from  {{ ref('pcfitg_integration__itg_perenso_order_type') }}
  ),
 itg_perenso_order_detail as (
-   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ORDER_DETAIL
+   select * from {{ ref('pcfitg_integration__itg_perenso_order_detail') }}
 ),
 itg_perenso_order_batch as (
-   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ORDER_BATCH
+   select * from {{ ref('pcfitg_integration__itg_perenso_order_batch') }}
 ),
 itg_perenso_deal_discount as (
-   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DEAL_DISCOUNT
+   select * from {{ ref('pcfitg_integration__itg_perenso_deal_discount') }}
 ),
 itg_perenso_constants as (
-   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
+   select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}
 ),
-itg_perenso_constants as (
-   select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
-), 
 itg_perenso_account as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ACCOUNT
+select * from {{ ref('pcfitg_integration__itg_perenso_account') }}
 ),
 edw_time_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM

@@ -1,20 +1,20 @@
 with edw_pacific_perenso_ims_analysis as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PACIFIC_PERENSO_IMS_ANALYSIS 
+select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
 ),
 edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM--matching
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
-EDW_PERENSO_PROD_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM--2119
+edw_perenso_prod_dim as (
+select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
-EDW_PERENSO_ACCOUNT_METCASH_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_METCASH_DIM--3359
+edw_perenso_account_metcash_dim as (
+select * from {{ ref('pcfedw_integration__edw_perenso_account_metcash_dim') }}
 ),
-EDW_PERENSO_ACCOUNT_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM--14622
+edw_perenso_account_dim as (
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 edw_ps_msl_items as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PS_MSL_ITEMS
+select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
 ),
 wks_au_metcash_monthly as (
     select * from {{ ref('pcfwks_integration__wks_au_metcash_monthly') }}

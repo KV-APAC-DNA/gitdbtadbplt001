@@ -1,9 +1,10 @@
 with vw_customer_dim_v2 as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM_V2
+select * from {{ ref('pcfedw_integration__vw_customer_dim_v2') }}
 ),
 vw_customer_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
+
 final as (
 SELECT 
   derived_table1.cust_no, 

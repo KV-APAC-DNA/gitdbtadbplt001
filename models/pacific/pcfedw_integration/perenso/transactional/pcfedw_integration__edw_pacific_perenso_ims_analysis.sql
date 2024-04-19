@@ -1,80 +1,80 @@
 with edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_sapbw_ciw_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_SAPBW_CIW_FACT
+select * from {{ ref('pcfedw_integration__vw_sapbw_ciw_fact') }}
 ),
 vw_customer_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from  DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_material_dim
 ),
 vw_apo_parent_child_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_APO_PARENT_CHILD_DIM
+select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 edw_perenso_prod_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 edw_perenso_order_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ORDER_FACT
+select * from {{ ref('pcfedw_integration__edw_perenso_order_fact') }}
 ),
 edw_perenso_account_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 itg_perenso_diary_item as (
 select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
 ),
 itg_perenso_users as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_USERS
+select * from {{ ref('pcfitg_integration__itg_perenso_users') }}
 ),
 itg_perenso_distributor_detail as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DISTRIBUTOR_DETAIL
+select * from {{ ref('pcfitg_integration__itg_perenso_distributor_detail') }}
 ),
 itg_perenso_prod_branch_identifier as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PROD_BRANCH_IDENTIFIER
+select * from {{ ref('pcfitg_integration__itg_perenso_prod_branch_identifier') }}
 ),
 edw_ps_msl_items as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PS_MSL_ITEMS
+select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
 ),
 vw_jjbr_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_JJBR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_bwar_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_BWAR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 edw_pharm_sellout_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PHARM_SELLOUT_FACT
+select * from {{ ref('pcfedw_integration__edw_pharm_sellout_fact') }}
 ),
 edw_perenso_account_probeid_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_PROBEID_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_account_probeid_dim') }}
 ),
 edw_perenso_prod_probeid_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_PROBEID_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_prod_probeid_dim') }}
 ),
 itg_ims_field_order_history as (
 select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_IMS_FIELD_ORDER_HISTORY
 ),
 edw_metcash_ind_grocery_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_METCASH_IND_GROCERY_FACT
+select * from {{ ref('pcfedw_integration__edw_metcash_ind_grocery_fact') }}
 ),
 edw_perenso_account_metcash_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_METCASH_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_account_metcash_dim') }}
 ),
 itg_perenso_fssi_sales as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_FSSI_SALES
+select * from {{ ref('pcfitg_integration__itg_perenso_fssi_sales') }}
 ),
 itg_perenso_fsni_sales as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_FSNI_SALES
+select * from {{ ref('pcfitg_integration__itg_perenso_fsni_sales') }}
 ),
 edw_perenso_account_hist_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_HIST_DIM
 ),
 itg_perenso_prod_chk_distribution as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PROD_CHK_DISTRIBUTION
+select * from {{ ref('pcfitg_integration__itg_perenso_prod_chk_distribution') }}
 ),
 edw_perenso_account_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 ETD AS
 (SELECT ETD.*,

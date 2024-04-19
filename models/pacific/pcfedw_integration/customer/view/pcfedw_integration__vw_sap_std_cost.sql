@@ -1,8 +1,8 @@
 with vw_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_curr_exch_dim') }}
 ),
 edw_ecc_standard_cost as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_ECC_STANDARD_COST
+select * from {{ ref('aspedw_integration__edw_ecc_standard_cost') }}
 ),
 final as (
 SELECT 

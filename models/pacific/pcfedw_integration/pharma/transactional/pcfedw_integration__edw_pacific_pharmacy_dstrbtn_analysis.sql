@@ -5,21 +5,20 @@
 
 with 
 edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 wks_au_pharma_dstrbtn_summary as (
 select * from {{ ref('pcfwks_integration__wks_au_pharma_dstrbtn_summary') }}
 ),
-EDW_PERENSO_PROD_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM--2119
+edw_perenso_prod_dim as (
+select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
-EDW_PERENSO_ACCOUNT_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM--14622
+edw_perenso_account_dim as (
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 edw_ps_msl_items as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PS_MSL_ITEMS
+select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
 ),
-
 transformed as (
 select wapds.delvry_dt,
        etd.time_id,

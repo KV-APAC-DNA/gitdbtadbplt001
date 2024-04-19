@@ -1,12 +1,12 @@
 with
 edw_perenso_account_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.edw_perenso_account_dim
+select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 itg_perenso_account_reln_id as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_account_reln_id 
+select * from {{ ref('pcfitg_integration__itg_perenso_account_reln_id') }}
 ),
 itg_perenso_account_fields as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_account_fields
+select * from {{ ref('pcfitg_integration__itg_perenso_account_fields') }}
 ),
 transformed as (
 select edw.acct_id,

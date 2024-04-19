@@ -1,5 +1,5 @@
 with edw_billing_fact as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_BILLING_FACT
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_billing_fact_snapshot as 
  (

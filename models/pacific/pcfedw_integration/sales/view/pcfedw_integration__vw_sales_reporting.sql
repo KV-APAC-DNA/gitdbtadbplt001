@@ -1,36 +1,36 @@
 with 
 edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_sapbw_plan_lkp as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SAPBW_PLAN_LKP
+select * from {{ ref('pcfedw_integration__edw_sapbw_plan_lkp') }}
 ),
 vw_jjbr_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_JJBR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_bwar_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_BWAR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 vw_sapbw_ciw_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_SAPBW_CIW_FACT
+select * from {{ ref('pcfedw_integration__vw_sapbw_ciw_fact') }}
 ),
 vw_customer_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_material_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIM
 ),
 vw_apo_parent_child_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_APO_PARENT_CHILD_DIM
+select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 edw_sapbw_plan_lkp as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SAPBW_PLAN_LKP
+select * from {{ ref('pcfedw_integration__edw_sapbw_plan_lkp') }}
 ),
 px_combined_ciw_fact as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.PX_COMBINED_CIW_FACT
+select * from {{ ref('pcfedw_integration__px_combined_ciw_fact') }}
 ),
-VW_CUSTOMER_DIM_ADJ as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM_ADJ
+vw_customer_dim_adj as (
+select * from {{ ref('pcfedw_integration__vw_customer_dim_adj') }}
 ),
 edw_material_divest as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIVEST
@@ -38,17 +38,17 @@ select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIVEST
 edw_bme_transfers as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_BME_TRANSFERS
 ),
-VW_SAPBW_FUTURES_FACT as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_SAPBW_FUTURES_FACT
+vw_sapbw_futures_fact as (
+select * from {{ ref('pcfedw_integration__vw_sapbw_futures_fact') }}
 ),
-EDW_VOGUE_DATA_REF as (
+edw_vogue_data_ref as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_VOGUE_DATA_REF
 ),
-VW_FIN_ACCRUAL_ADJ as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_FIN_ACCRUAL_ADJ
+vw_fin_accrual_adj as (
+select * from {{ ref('pcfedw_integration__vw_fin_accrual_adj') }}
 ),
-EDW_VW_MDS_COGS_RATE_DIM as (
-select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.EDW_VW_MDS_COGS_RATE_DIM
+edw_vw_mds_cogs_rate_dim as (
+select * from {{ ref('pcfedw_integration__edw_vw_mds_cogs_rate_dim') }}
 ),
 final as (
 SELECT 

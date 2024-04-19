@@ -8,10 +8,10 @@
 
 with
 edw_time_dim as (
-      select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+      select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_sales_reporting as (
-      select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SALES_REPORTING
+      select * from {{ ref('pcfedw_integration__edw_sales_reporting') }}
 ),
 union_1 as (
     select 'ANZ' as identifier,

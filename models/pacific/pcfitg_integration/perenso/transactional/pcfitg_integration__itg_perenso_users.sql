@@ -1,8 +1,7 @@
---- select * from {{ source('pcfsdl_raw', 'sdl_perenso_users') }}
 
 
 with sdl_perenso_users as (
-    select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_PERENSO_USERS
+    select * from {{ source('pcfsdl_raw', 'sdl_perenso_users') }}
 ),
 
 final as (

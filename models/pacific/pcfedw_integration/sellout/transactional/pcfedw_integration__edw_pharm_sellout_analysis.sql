@@ -1,5 +1,5 @@
 with vw_pharm_sellout_analysis as (
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PHARM_SELLOUT_ANALYSIS
+    select * from {{ ref('pcfedw_integration__vw_pharm_sellout_analysis') }}
 
 ),
 final as (

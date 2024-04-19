@@ -1,11 +1,11 @@
 with itg_survey_targets as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_SURVEY_TARGETS
+    select * from {{ ref('pcfitg_integration__itg_survey_targets') }}
 ),
 itg_survey_product_grp_to_category_map as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_survey_product_grp_to_category_map
+    select * from {{ ref('pcfitg_integration__itg_survey_product_grp_to_category_map') }}
 ),
 itg_survey_type_to_question_map as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_survey_type_to_question_map
+    select * from {{ ref('pcfitg_integration__itg_survey_type_to_question_map') }}
 ),    
 transformed as (
 (select ist.year,
