@@ -6,3 +6,7 @@ models:
       alias: itg_customer_grocery_inventory
       tags: ["j_pa_grocery_inv_woolworths", "j_pa_grocery_inv_coles","ingestion"]
 
+  - name: pcfitg_integration__itg_customer_inventory
+    config: 
+      alias: itg_customer_inventory
+      tags: ["","transformation"]

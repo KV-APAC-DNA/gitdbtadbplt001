@@ -5,3 +5,7 @@ models:
     config:
       alias: vw_demand_forecast_analysis
       tags: ["j_pac_sap_bw_weekly_forecast_file_edw",""]
+  - name: pcfedw_integration__edw_px_forecast_fact
+    config: 
+      alias: edw_px_forecast_fact
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

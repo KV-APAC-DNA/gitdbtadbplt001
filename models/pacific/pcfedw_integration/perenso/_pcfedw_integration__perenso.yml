@@ -1,6 +1,10 @@
 version: 2
 
 models:
+  - name: pcfedw_integration__edw_perenso_account_dim
+    config: 
+      alias: edw_perenso_account_dim
+      tags: ["anz_perenso_dimension_load",""]
   - name: pcfedw_integration__edw_perenso_order_fact
     config:
       alias: edw_perenso_order_fact
@@ -42,12 +46,23 @@ models:
     config:
       alias: edw_perenso_prod_probeid_dim
       tags: ["anz_perenso_dimension_load", "transformation"]
+  - name: pcfedw_integration__edw_perenso_account_dim_snapshot
+    config: 
+      alias: edw_perenso_account_dim_snapshot
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
+
+  - name: pcfedw_integration__edw_perenso_prod_dim
+    config: 
+      alias: edw_perenso_prod_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfedw_integration__edw_perenso_account_metcash_dim
+    config: 
+      alias: edw_perenso_account_metcash_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfedw_integration__edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+    config: 
+      alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
   
-  
-  
-  
-  
-  
-  
- 
- 

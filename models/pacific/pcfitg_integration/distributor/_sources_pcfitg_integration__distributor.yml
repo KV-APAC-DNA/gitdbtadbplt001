@@ -14,6 +14,13 @@ sources:
 
       - name: sdl_dstr_woolworth_inv
         tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      - name: sdl_api_dstr
+      - name: sdl_symbion_dstr
+      - name: sdl_ig_inventory_data
+      - name : sdl_au_dstr_api_header
+      - name : sdl_au_dstr_chs_header
+      - name : sdl_au_dstr_symbion_header
+      - name : sdl_au_dstr_sigma_header
 
   - name: pcfitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

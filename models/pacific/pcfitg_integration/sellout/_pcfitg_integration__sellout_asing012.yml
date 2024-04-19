@@ -13,3 +13,7 @@ models:
     config:
       alias: itg_mds_pacific_terms_master
       tags: ["j_pac_roi_etl_framework",""]
+  - name: pcfitg_integration__itg_customer_sellout
+    config: 
+      alias: itg_customer_sellout
+      tags: ["","transformation"]

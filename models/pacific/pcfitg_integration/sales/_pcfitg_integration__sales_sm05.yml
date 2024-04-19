@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: pcfitg_integration__itg_weekly_forecast
-    config: 
-      alias: itg_weekly_forecast
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
-

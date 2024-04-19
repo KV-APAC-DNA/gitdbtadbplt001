@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: pcfedw_integration__vw_pharm_sellout_analysis
-    config: 
-      alias: vw_pharm_sellout_analysis
-      tags: ["","transformation"]

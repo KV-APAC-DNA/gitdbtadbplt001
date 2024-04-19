@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: pcfitg_integration__itg_customer_sellout
-    config: 
-      alias: itg_customer_sellout
-      tags: ["","transformation"]

@@ -43,3 +43,4 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
+    - name: sdl_px_weekly_sell

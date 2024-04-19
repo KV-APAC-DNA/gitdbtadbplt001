@@ -13,3 +13,11 @@ models:
     config:
       alias: itg_mds_cogs_master_dim
       tags: ["j_pacific_cogs_etl_framework",""]
+  - name: pcfitg_integration__itg_weekly_forecast
+    config: 
+      alias: itg_weekly_forecast
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+  - name: pcfitg_integration__itg_px_weekly_sell
+    config: 
+      alias: itg_px_weekly_sell
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

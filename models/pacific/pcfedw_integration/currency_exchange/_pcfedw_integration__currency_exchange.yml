@@ -1,6 +1,10 @@
 version: 2
 
 models:
+  - name: pcfedw_integration__vw_jjbr_curr_exch_dim
+    config: 
+      alias: vw_jjbr_curr_exch_dim
+      tags: ["anz_perenso_field_order_analysis","transformation"]
   - name: pcfedw_integration__vw_bwar_curr_exch_dim
     config: 
       alias: vw_bwar_curr_exch_dim
@@ -9,3 +13,4 @@ models:
     config: 
       alias: vw_curr_exch_dim
       tags: ["","transformation"]
+  

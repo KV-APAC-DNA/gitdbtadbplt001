@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: pcfitg_integration__itg_px_weekly_sell
-    config: 
-      alias: itg_px_weekly_sell
-      tags: ["j_pac_promax_ciw_wrapper","transformation"]

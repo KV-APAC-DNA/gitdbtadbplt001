@@ -9,4 +9,13 @@ models:
     config:
       alias: wks_itg_metcash_ind_grocery
       tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfwks_integration__wks_perenso_prod_intermideate
+    config: 
+      alias: wks_perenso_prod_intermideate
+      tags: ["anz_perenso_dimension_load","ingestion"]
+
+  - name: pcfwks_integration__wks_perenso_acct_intermideate
+    config: 
+      alias: wks_perenso_acct_intermideate
+      tags: ["anz_perenso_dimension_load","ingestion"]
  
