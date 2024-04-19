@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_sls_evolution
+    config:
+      alias: edw_sls_evolution
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_sls_evolution_history
+    config:
+      alias: edw_sls_evolution_history
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_invoice_fact_snapshot
+    config:
+      alias: edw_invoice_fact_snapshot
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_gts_visibility
+    config:
+      alias: edw_gts_visibility
+      tags: ["j_pac_sls_evol_refresh_gts_visibility", "transformation"]
+  - name: pcfedw_integration__edw_billing_fact_snapshot
+    config:
+      alias: edw_billing_fact_snapshot
+      tags: ["j_pac_sls_evol_refresh_gts_visibility", "transformation"]
+  - name: pcfedw_integration__edw_vw_perfect_store_trax_products
+    config:
+      alias: edw_vw_perfect_store_trax_products
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__edw_vw_terms_master
+    config:
+      alias: edw_vw_terms_master
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__vw_customer_dim_adj
+    config:
+      alias: vw_customer_dim_adj
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__vw_sales_reporting
+    config:
+      alias: vw_sales_reporting
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__vw_sapbw_fact
+    config:
+      alias: vw_sapbw_fact
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__vw_customer_dim_v2
+    config:
+      alias: vw_customer_dim_v2
+      tags: ["", "transformation"]
+  - name: pcfedw_integration__edw_invoice_fact_snapshot
+    config:
+      alias: edw_invoice_fact_snapshot
+      tags: ["", "transformation"]
+  
+  
+ 
+ 
+ 
