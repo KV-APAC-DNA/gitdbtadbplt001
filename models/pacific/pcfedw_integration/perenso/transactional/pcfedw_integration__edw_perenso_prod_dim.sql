@@ -1,11 +1,11 @@
-with WKS_PERENSO_PROD_INTERMIDEATE as(
-    select * from DEV_DNA_CORE.SNAPPCFWKS_INTEGRATION.WKS_PERENSO_PROD_INTERMIDEATE
+with wks_perenso_prod_intermideate as(
+    select * from {{ ref('pcfwks_integration__wks_perenso_prod_intermideate') }}
 ),
-ITG_PERENSO_PROD_MAPPING as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PROD_MAPPING
+itg_perenso_prod_mapping as(
+    select * from {{ source('pcfitg_integration', 'itg_perenso_prod_mapping') }}
 ),
-ITG_PERENSO_PRODUCT as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT
+itg_perenso_product as(
+    select * from {{ ref('pcfitg_integration__itg_perenso_product') }}
 ),
 transformed as(
     select

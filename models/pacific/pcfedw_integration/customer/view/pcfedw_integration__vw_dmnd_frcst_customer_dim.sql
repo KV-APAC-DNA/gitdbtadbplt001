@@ -1,11 +1,11 @@
 with edw_customer_base_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_customer_sales_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 dmnd_frcst_cust_attrb_lkp as(
-    select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.dmnd_frcst_cust_attrb_lkp
+    select * from {{ source('pcfedw_integration', 'dmnd_frcst_cust_attrb_lkp') }}
 ),
 customer as(
 SELECT DISTINCT cust.cust_num AS cust_no

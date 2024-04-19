@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from DEV_DNA_LOAD.SNAPPCFSDL_RAW.SDL_WEEKLY_FORECAST
+    select * from {{ source('pcfsdl_raw', 'sdl_weekly_forecast') }}
 ),
 final as(
     select 

@@ -6,16 +6,16 @@
 }}
 
 with itg_perenso_account as(
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_ACCOUNT
+     select * from {{ ref('pcfitg_integration__itg_perenso_account') }}
 ),
 itg_perenso_account_type as(
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_account_type
+     select * from {{ ref('pcfitg_integration__itg_perenso_account_type') }}
 ),
 wks_perenso_acct_intermideate as(
-     select * from DEV_DNA_CORE.SNAPPCFWKS_INTEGRATION.WKS_PERENSO_ACCT_INTERMIDEATE
+     select * from {{ ref('pcfwks_integration__wks_perenso_acct_intermideate') }}
 ),
 itg_perenso_acct_mapping as(
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_acct_mapping
+     select * from {{ source('pcfitg_integration', 'itg_perenso_acct_mapping') }}
 ),
 grp as(
         select 
@@ -110,7 +110,7 @@ transformed as
 	   coalesce(grp.acct_fax_opt_out,'Not Assigned')::varchar(256) as acct_fax_opt_out,
 	   coalesce(grp.acct_email_opt_out,'Not Assigned')::varchar(256) as acct_email_opt_out,
 	   coalesce(grp.acct_contact_method,'Not Assigned')::varchar(256) as acct_contact_method,
-	   extract(year from current_timestamp())||lpad(extract(month from current_timestamp()),2,0)::varchar(30) as snapshot_mnth,
+	   (extract(year from current_timestamp())||lpad(extract(month from current_timestamp()),2,0))::varchar(30) as snapshot_mnth,
        current_timestamp()::timestamp_ntz(9) as snapshot_dt
     from grp,
         itg_perenso_account ipa,
@@ -119,7 +119,7 @@ transformed as
     and   ipa.acct_type_key = ipat.acct_type_key
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    and '2024-03-20' > (select max(snapshot_dt)::date from {{ this }}) 
+    and snapshot_dt::date > (select max(snapshot_dt)::date from {{ this }}) 
     {% endif %}
 )
 select * from transformed

@@ -1,26 +1,26 @@
 with itg_perenso_account_group_reln as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_group_reln
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_group_reln') }}
 ),
 itg_perenso_account as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account
+    select * from {{ ref('pcfitg_integration__itg_perenso_account') }}
 ), 
 itg_perenso_account_fields as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_fields
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_fields') }}
 ), 
 itg_perenso_account_type as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_type
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_type') }}
 ), 
 itg_perenso_account_group_lvl as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_group_lvl
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_group_lvl') }}
 ), 
 itg_perenso_account_group as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_group
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_group') }}
 ), 
 itg_perenso_account_reln_id as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_reln_id
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_reln_id') }}
 ), 
 itg_perenso_account_custom_list as(
-    select * from dev_dna_core.snappcfitg_integration.itg_perenso_account_custom_list
+    select * from {{ ref('pcfitg_integration__itg_perenso_account_custom_list') }}
 ), 
 union1 as(
     select

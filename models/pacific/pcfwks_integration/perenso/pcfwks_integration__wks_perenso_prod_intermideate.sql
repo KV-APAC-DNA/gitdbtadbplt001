@@ -1,20 +1,20 @@
 with itg_perenso_product_group_reln as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT_GROUP_RELN
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_group_reln') }}
 ),
 itg_perenso_product as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_product
+    select * from {{ ref('pcfitg_integration__itg_perenso_product') }}
 ), 
 itg_perenso_product_fields as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_product_fields
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_fields') }}
 ), 
 itg_perenso_product_reln_id as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_product_reln_id
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_reln_id') }}
 ), 
 itg_perenso_product_group_lvl as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_product_group_lvl
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_group_lvl') }}
 ), 
 itg_perenso_product_group as(
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.itg_perenso_product_group
+    select * from {{ ref('pcfitg_integration__itg_perenso_product_group') }}
 ), 
 union1 as(
       select

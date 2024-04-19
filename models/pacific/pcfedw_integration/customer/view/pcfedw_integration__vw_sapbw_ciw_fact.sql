@@ -1,29 +1,29 @@
 with vw_jjbr_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_JJBR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_bwar_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_BWAR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
-VW_CURR_EXCH_DIM as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CURR_EXCH_DIM
+vw_curr_exch_dim as (
+select * from {{ ref('pcfedw_integration__vw_curr_exch_dim') }}
 ),
 edw_copa_trans_fact as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
-EDW_CIW_ACCNT_LKP as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_CIW_ACCNT_LKP
+edw_ciw_accnt_lkp as (
+select * from {{ ref('pcfedw_integration__edw_ciw_accnt_lkp') }}
 ),
-DLY_SLS_CUST_ATTRB_LKP as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
+dly_sls_cust_attrb_lkp as (
+select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
-VW_SAP_STD_COST as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_SAP_STD_COST
+vw_sap_std_cost as (
+select * from {{ ref('pcfedw_integration__vw_sap_std_cost') }}
 ),
 vw_actual_cogs_rate_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_ACTUAL_COGS_RATE_DIM
+select * from {{ ref('pcfedw_integration__vw_actual_cogs_rate_dim') }}
 ),
 edw_account_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_ACCOUNT_DIM
+select * from {{ ref('aspedw_integration__edw_account_dim') }}
 ),
 max_query as (
                             SELECT 
