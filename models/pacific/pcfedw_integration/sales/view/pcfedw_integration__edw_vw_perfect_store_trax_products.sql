@@ -1,6 +1,6 @@
 with
 itg_trax_md_product as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_TRAX_MD_PRODUCT
+select * from {{ ref('pcfitg_integration__itg_trax_md_product') }}
 ),
 final as (
 SELECT 

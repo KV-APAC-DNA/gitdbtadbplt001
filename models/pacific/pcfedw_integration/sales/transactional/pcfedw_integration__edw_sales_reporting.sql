@@ -1,5 +1,5 @@
 with source as(
-    select * from dev_dna_core.snappcfedw_integration.vw_sales_reporting
+    select * from {{ ref('pcfedw_integration__vw_sales_reporting') }}
 ),
 final as(
     select 

@@ -19,40 +19,40 @@
 
 
 with itg_perenso_survey_result as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_SURVEY_RESULT
+     select * from {{ ref('pcfitg_integration__itg_perenso_survey_result') }}
 ),
 itg_perenso_store_chk_hdr as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_STORE_CHK_HDR
+     select * from {{ ref('pcfitg_integration__itg_perenso_store_chk_hdr') }}
 ),
 itg_perenso_todo_option as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_TODO_OPTION
+     select * from {{ ref('pcfitg_integration__itg_perenso_todo_option') }}
 ),
 itg_perenso_todo as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_TODO
+     select * from {{ ref('pcfitg_integration__itg_perenso_todo') }}
 ),
 itg_perenso_diary_item as (
      select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
 ),
 itg_perenso_diary_item_type as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
+     select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
 itg_perenso_work_item as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_WORK_ITEM
+     select * from {{ ref('pcfitg_integration__itg_perenso_work_item') }}
 ),
 itg_perenso_constants as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
+     select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}
 ),
 itg_perenso_instore_cycle_dates as (
-     select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+     select  * from {{ ref('pcfitg_integration__itg_perenso_instore_cycle_dates') }}
 ),
 edw_perenso_survey_target as (
-     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_SURVEY_TARGET
+     select * from {{ ref('pcfedw_integration__edw_perenso_survey_target') }}
 ),
 edw_perenso_account_dim as (
-     select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_ACCOUNT_DIM
+     select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
 itg_perenso_product_group as (
-     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT_GROUP
+     select * from {{ ref('pcfitg_integration__itg_perenso_product_group') }}
 ),
 transformed as (
  select  act.*,

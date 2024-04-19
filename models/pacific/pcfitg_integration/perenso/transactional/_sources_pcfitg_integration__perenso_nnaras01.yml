@@ -141,6 +141,10 @@ sources:
                 schema: vnmwks_integration
     - name: sdl_perenso_users
       tags: ["anz_perenso_head_office_req","ingestion"]
+    - name: sdl_perenso_diary_item
+      tags: ["anz_perenso_sales_rep","ingestion"]
+
+
   
     
 

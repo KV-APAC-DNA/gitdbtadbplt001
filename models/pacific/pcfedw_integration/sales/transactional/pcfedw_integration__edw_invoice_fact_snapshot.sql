@@ -5,13 +5,13 @@
 }}
 
 with edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_invoice_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_INVOICE_FACT
+select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 dly_sls_cust_attrb_lkp as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
+select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
 wks_invoice_fact_snapshot as (
 select snapshot_date,

@@ -7,48 +7,48 @@
 
 with 
 edw_invoice_fact_snapshot as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_INVOICE_FACT_SNAPSHOT
+select * from {{ ref('pcfedw_integration__edw_invoice_fact_snapshot') }}
 ),
 edw_billing_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_BILLING_FACT
+select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
-EDW_BILLING_FACT_SNAPSHOT as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_BILLING_FACT_SNAPSHOT
+edw_billing_fact_snapshot as (
+select * from {{ ref('pcfedw_integration__edw_billing_fact_snapshot') }}
 ),
-EDW_SAPBW_PLAN_LKP as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_SAPBW_PLAN_LKP
+edw_sapbw_plan_lkp as (
+select * from {{ ref('pcfedw_integration__edw_sapbw_plan_lkp') }}
 ),
 edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 vw_jjbr_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_JJBR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_jjbr_curr_exch_dim') }}
 ),
 vw_bwar_curr_exch_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_BWAR_CURR_EXCH_DIM
+select * from {{ ref('pcfedw_integration__vw_bwar_curr_exch_dim') }}
 ),
 vw_customer_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_CUSTOMER_DIM
+select * from {{ ref('pcfedw_integration__vw_customer_dim') }}
 ),
 edw_material_dim as (
 select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_MATERIAL_DIM
 ),
 vw_apo_parent_child_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.VW_APO_PARENT_CHILD_DIM
+select * from {{ ref('pcfedw_integration__vw_apo_parent_child_dim') }}
 ),
 edw_gch_producthierarchy as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 itg_query_parameters as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_QUERY_PARAMETERS
+select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_invoice_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_INVOICE_FACT
+select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 dly_sls_cust_attrb_lkp as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.DLY_SLS_CUST_ATTRB_LKP
+select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
 ),
-WKS_GTS_VISIBILITY as (
+wks_gts_visibility as (
 select case
 
          when EIFS.CO_CD = '7470' then 'Australia'

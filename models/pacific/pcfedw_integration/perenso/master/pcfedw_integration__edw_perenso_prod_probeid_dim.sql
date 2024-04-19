@@ -1,12 +1,12 @@
 with
 edw_perenso_prod_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PERENSO_PROD_DIM
+select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 itg_perenso_product_reln_id as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT_RELN_ID 
+select * from {{ ref('pcfitg_integration__itg_perenso_product_reln_id') }}
 ),
 itg_perenso_product_fields as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_PRODUCT_FIELDS
+select * from {{ ref('pcfitg_integration__itg_perenso_product_fields') }}
 ),
 transformed as (
 select edw.prod_key,

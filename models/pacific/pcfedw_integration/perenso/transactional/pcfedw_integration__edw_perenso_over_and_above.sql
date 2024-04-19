@@ -21,34 +21,34 @@
 -- ADD COLUMN OA_POINTS NUMERIC(10,3);
 
 with itg_perenso_over_and_above_state as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_OVER_AND_ABOVE_STATE
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
 ),
 itg_perenso_over_and_above as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_OVER_AND_ABOVE
+    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
 ),
 itg_perenso_store_chk_hdr as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_STORE_CHK_HDR
+    select * from {{ ref('pcfitg_integration__itg_perenso_store_chk_hdr') }}
 ),
 itg_perenso_diary_item as (
     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM
 ),
 itg_perenso_diary_item_type as (
-select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_DIARY_ITEM_TYPE
+select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
 itg_perenso_work_item as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_WORK_ITEM
+    select * from {{ ref('pcfitg_integration__itg_perenso_work_item') }}
 ),
 itg_perenso_todo_option as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_TODO_OPTION
+    select * from {{ ref('pcfitg_integration__itg_perenso_todo_option') }}
 ),
 itg_perenso_todo as (
     select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_TODO
 ),
 itg_perenso_constants as (
-    select * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_CONSTANTS
+    select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}
 ),
 itg_perenso_instore_cycle_dates as (
-select distinct * from DEV_DNA_CORE.SNAPPCFITG_INTEGRATION.ITG_PERENSO_INSTORE_CYCLE_DATES
+select * from {{ ref('pcfitg_integration__itg_perenso_instore_cycle_dates') }}
 ),
 ipicd as (select  "TIME", 
 
