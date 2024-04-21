@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_iri_scan_sales
-      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
       tests:
           - test_duplicate__ff:
               group_by_columns: ["iri_market","wk_end_dt","iri_prod_desc","iri_ean","scan_sales","scan_units","ac_nielsencode","crtd_dttm","filename"]
@@ -34,7 +34,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_cogs_master
-      tags: ["j_pacific_cogs_etl_framework",""]
+      tags: ["j_pacific_cogs_etl_framework","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["sku","jj_year"]

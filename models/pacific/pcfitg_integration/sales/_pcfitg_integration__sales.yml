@@ -4,15 +4,15 @@ models:
   - name: pcfitg_integration__itg_iri_scan_sales
     config:
       alias: itg_iri_scan_sales
-      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
   - name: pcfitg_integration__sdl_raw_iri_scan_sales
     config:
       alias: sdl_raw_iri_scan_sales
-      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
   - name: pcfitg_integration__itg_mds_cogs_master_dim
     config:
       alias: itg_mds_cogs_master_dim
-      tags: ["j_pacific_cogs_etl_framework",""]
+      tags: ["j_pacific_cogs_etl_framework","ingestion"]
   - name: pcfitg_integration__itg_weekly_forecast
     config: 
       alias: itg_weekly_forecast
