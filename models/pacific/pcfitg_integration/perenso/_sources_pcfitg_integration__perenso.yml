@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_perenso_work_item
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
       tests:
           - test_null__ff:
               not_null_columns: ["work_item_key","work_item_type"]
@@ -26,7 +26,7 @@ sources:
                 schema: pcfwks_integration
         
     - name: sdl_perenso_diary_item_type
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
       tests:
           - test_null__ff:
               not_null_columns: ["diary_item_type_key"]
@@ -41,7 +41,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_call_objectives
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
       tests:
           - test_null__ff:
               not_null_columns: ["assigned_user_key","created_user_key","objective_key","acct_key"]
@@ -51,7 +51,7 @@ sources:
                 schema: pcfwks_integration
           
     - name: sdl_perenso_diary_item_time
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
       tests:
           - test_null:
               select_columns: ["diary_item_key"]
@@ -61,7 +61,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_todo_option
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
       tests:
           - test_null:
               select_columns: ["todo_key","option_key"]
@@ -78,7 +78,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_survey_result
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
       tests:
           - test_null:
               select_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
@@ -96,7 +96,7 @@ sources:
                 schema: pcfwks_integration
       
     - name: sdl_perenso_over_and_above
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
       tests:
           - test_null:
               select_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
@@ -113,7 +113,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_prod_chk_distribution
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
       tests:
           - test_null__ff:
               not_null_columns: ["acct_key","prod_key"]
@@ -129,7 +129,7 @@ sources:
                 schema: pcfwks_integration
 
     - name: sdl_perenso_over_and_above_state
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
       tests:
           - test_null:
               select_columns: ["over_and_above_key","store_chk_hdr_key"]
@@ -146,7 +146,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_order_batch
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["ord_key","batch_key"]
@@ -163,7 +163,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_order_detail
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["batch_key","order_key","line_key"]
@@ -180,7 +180,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_order_header
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["order_key","order_type_key"]
@@ -197,7 +197,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_order_type
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["order_type_key"]
@@ -214,7 +214,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_perenso_deal_discount
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["disc_key","deal_key"]
@@ -232,7 +232,7 @@ sources:
                 schema: pcfwks_integration
       
     - name: sdl_perenso_constants
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
       tests:
           - test_null:
               select_columns: ["const_key"]
@@ -249,7 +249,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_perenso_cycle_dates
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["code","cycle_year"]

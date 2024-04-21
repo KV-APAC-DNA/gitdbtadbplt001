@@ -10,9 +10,9 @@ sources:
       identifier: false
     tables:
     - name: sdl_acct_nielsencode_mapping
-      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tags: ["j_pac_iri_scan_sales_etl_framework","transformation"]
     - name: sdl_mds_pacific_cust_attrb
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["sls_org", "cmp_id", "market", "sls_grp"]
@@ -22,5 +22,5 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_prod_mapping_cwh
-      tags: ["",""]
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
       

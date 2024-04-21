@@ -4,4 +4,4 @@ models:
   - name: pcfitg_integration__itg_cust_ciw_plan_fact
     config: 
       alias: itg_cust_ciw_plan_fact
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]

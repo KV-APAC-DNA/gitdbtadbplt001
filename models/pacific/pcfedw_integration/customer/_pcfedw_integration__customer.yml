@@ -30,5 +30,9 @@ models:
     config: 
       alias: vw_dmnd_frcst_customer_dim
       tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
+  - name: pcfedw_integration__edw_cust_ciw_plan_fact
+    config: 
+      alias: edw_cust_ciw_plan_fact
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
 
   

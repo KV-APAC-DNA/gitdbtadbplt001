@@ -4,144 +4,144 @@ models:
   - name: pcfitg_integration__sdl_raw_perenso_work_item
     config: 
       alias: sdl_raw_perenso_work_item
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_work_item
     config: 
       alias: itg_perenso_work_item
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_diary_item_type
     config:
       alias: itg_perenso_diary_item_type
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_diary_item_type
     config:
       alias: sdl_raw_perenso_diary_item_type
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_diary_item_time
     config:
       alias: itg_perenso_diary_item_time
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_diary_item_time
     config:
       alias: sdl_raw_perenso_diary_item_time
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_call_objectives
     config:
       alias: itg_perenso_call_objectives
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_call_objectives
     config:
       alias: sdl_raw_perenso_call_objectives
-      tags: ["anz_perenso_call",""]
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_todo_option
     config:
       alias: itg_perenso_todo_option
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_todo_option
     config:
       alias: sdl_raw_perenso_todo_option
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
   - name: pcfitg_integration__itg_perenso_survey_result
     config:
       alias: itg_perenso_survey_result
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_survey_result
     config:
       alias: sdl_raw_perenso_survey_result
-      tags: ["anz_perenso_survey_ques",""]
+      tags: ["anz_perenso_survey_ques","ingestion"]
   - name: pcfitg_integration__itg_perenso_prod_chk_distribution
     config:
       alias: itg_perenso_prod_chk_distribution
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_prod_chk_distribution
     config:
       alias: sdl_raw_perenso_prod_chk_distribution
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__itg_perenso_over_and_above_state
     config:
       alias: itg_perenso_over_and_above_state
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__itg_perenso_over_and_above
     config:
       alias: itg_perenso_over_and_above
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_over_and_above_state
     config:
       alias: sdl_raw_perenso_over_and_above_state
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_over_and_above
     config:
       alias: sdl_raw_perenso_over_and_above
-      tags: ["anz_perenso_over_and_above",""]
+      tags: ["anz_perenso_over_and_above","ingestion"]
   - name: pcfitg_integration__itg_perenso_order_batch
     config:
       alias: itg_perenso_order_batch
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_batch
     config:
       alias: sdl_raw_perenso_order_batch
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_order_detail
     config:
       alias: itg_perenso_order_detail
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_detail
     config:
       alias: sdl_raw_perenso_order_detail
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_order_header
     config:
       alias: itg_perenso_order_header
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_header
     config:
       alias: sdl_raw_perenso_order_header
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_order_type
     config:
       alias: itg_perenso_order_type
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_type
     config:
       alias: sdl_raw_perenso_order_type
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_deal_discount
     config:
       alias: itg_perenso_deal_discount
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_deal_discount
     config:
       alias: sdl_raw_perenso_deal_discount
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_constants
     config:
       alias: itg_perenso_constants
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_constants
     config:
       alias: sdl_raw_perenso_constants
-      tags: ["anz_perenso_order",""]
+      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__itg_perenso_instore_cycle_dates
     config:
       alias: itg_perenso_instore_cycle_dates
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
   
   - name: pcfitg_integration__itg_pacific_perenso_call_coverage_targets
     config:
       alias: itg_pacific_perenso_call_coverage_targets
-      tags: ["anz_perenso_weekly_load",""]
+      tags: ["anz_perenso_weekly_load","transformation"]
   - name: pcfitg_integration__sdl_raw_pacific_perenso_call_coverage_targets
     config:
       alias: sdl_raw_pacific_perenso_call_coverage_targets
-      tags: ["anz_perenso_weekly_load",""]
+      tags: ["anz_perenso_weekly_load","transformation"]
   - name: pcfitg_integration__itg_perenso_over_and_above_points
     config:
       alias: itg_perenso_over_and_above_points
-      tags: ["anz_perenso_weekly_load",""]
+      tags: ["anz_perenso_weekly_load","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_over_and_above_points
     config:
       alias: sdl_raw_perenso_over_and_above_points
-      tags: ["anz_perenso_weekly_load",""]
+      tags: ["anz_perenso_weekly_load","ingestion"]
   - name: pcfitg_integration__itg_perenso_fsni_sales
     config: 
       alias: itg_perenso_fsni_sales

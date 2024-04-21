@@ -9,4 +9,4 @@ models:
   - name: pcfitg_integration__itg_customer_inventory
     config: 
       alias: itg_customer_inventory
-      tags: ["","transformation"]
+      tags: ["j_pa_pharma_inv_chs","transformation"]

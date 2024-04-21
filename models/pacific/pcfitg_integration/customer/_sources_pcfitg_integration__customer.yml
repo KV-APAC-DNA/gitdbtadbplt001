@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_pacific_cust_ciw_plan
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["muid", "prod_mjr_cd"]
@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_sapbw_plan_lkp
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["sls_org" , "cmp_id", "sls_grp_cd"]
@@ -30,7 +30,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_mds_pacific_sap_gl_ciw_mapping
-      tags: ["anz_mds_sdl_to_edw_load",""]
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["code"]
@@ -41,7 +41,7 @@ sources:
                 schema: pcfwks_integration 
 
     - name: sdl_mds_pacific_px_gl_ciw_mapping     
-      tags: ["anz_mds_sdl_to_edw_load",""] 
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"] 
       tests:
           - test_duplicate:
               select_columns: ["code","sap_account"]
