@@ -53,6 +53,9 @@ select * from {{ ref('pcfedw_integration__edw_vw_mds_cogs_rate_dim') }}
 edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
+edw_copa_plan_fact as (
+select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
+),
 final as (
 SELECT
   vsf.pac_source_type,
