@@ -4,9 +4,9 @@ models:
   - name: pcfitg_integration__itg_customer_grocery_inventory
     config: 
       alias: itg_customer_grocery_inventory
-      tags: ["j_pa_grocery_inv_woolworths", "j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","transformation"]
 
   - name: pcfitg_integration__itg_customer_inventory
     config: 
       alias: itg_customer_inventory
-      tags: ["j_pa_pharma_inv_chs","transformation"]
+      tags: ["j_pa_pharma_inv","transformation"]

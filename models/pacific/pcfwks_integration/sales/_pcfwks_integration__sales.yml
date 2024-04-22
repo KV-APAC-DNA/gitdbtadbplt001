@@ -4,7 +4,7 @@ models:
   - name: pcfwks_integration__wks_coles_validation
     config: 
       alias: wks_coles_validation
-      tags: ["j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfwks_integration__wks_demand_forecast_snapshot
     config: 

@@ -4,60 +4,60 @@ models:
   - name: pcfwks_integration__wks_dstr_coles_inv
     config: 
       alias: wks_dstr_coles_inv
-      tags: ["j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfwks_integration__wks_dstr_coles_sap_mapping
     config: 
       alias: wks_dstr_coles_sap_mapping
-      tags: ["j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfwks_integration__wks_dstr_woolworth_inv
     config: 
       alias: wks_dstr_woolworth_inv
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfwks_integration__wks_dstr_woolworth_sap_mapping
     config: 
       alias: wks_dstr_woolworth_sap_mapping
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfwks_integration__wks_woolworth_validation
     config: 
       alias: wks_woolworth_validation
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_inv_api
     config: 
       alias: wks_dstr_inv_api
-      tags: ["j_pa_pharma_inv_api","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_inv_chs
     config: 
       alias: wks_dstr_inv_chs
-      tags: ["j_pa_pharma_inv_chs","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_inv_sigma
     config: 
       alias: wks_dstr_inv_sigma
-      tags: ["j_pa_pharma_inv_sigma","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_inv_symbion
     config: 
       alias: wks_dstr_inv_symbion
-      tags: ["j_pa_pharma_inv_symbion","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_metcash_inv
     config: 
       alias: wks_dstr_metcash_inv
-      tags: ["j_pa_ig_inv_metcash","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_so_api
     config: 
       alias: wks_dstr_so_api
-      tags: ["j_pa_pharma_inv_api","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_so_chs
     config: 
       alias: wks_dstr_so_chs
-      tags: ["j_pa_pharma_inv_chs","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_so_sigma
     config: 
       alias: wks_dstr_so_sigma
-      tags: ["j_pa_pharma_inv_sigma","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfwks_integration__wks_dstr_so_symbion
     config: 
       alias: wks_dstr_so_symbion
-      tags: ["j_pa_pharma_inv_symbion","transformation"]
+      tags: ["j_pa_pharma_inv","ingestion"]

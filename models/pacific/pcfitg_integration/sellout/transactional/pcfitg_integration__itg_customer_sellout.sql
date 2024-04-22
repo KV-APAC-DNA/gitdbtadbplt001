@@ -1,7 +1,7 @@
 {{
     config(
         materialized= "incremental",
-        incremental_strategy= "delete+insert",
+        incremental_strategy= "append",
         pre_hook = "delete from {{this}} where (upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),so_date) in 
             (
                 select upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),coalesce(ltrim(matl_num, '0'), 'NA'),coalesce(ltrim(ean, '0'), 'NA'),so_date
@@ -15,7 +15,7 @@
                     union all
                     select * from {{ ref('pcfwks_integration__wks_dstr_so_symbion') }}
                 )
-            )
+            );
         "
     )
 }}
