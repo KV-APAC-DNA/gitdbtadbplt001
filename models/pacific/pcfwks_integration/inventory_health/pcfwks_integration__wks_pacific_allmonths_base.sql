@@ -9,16 +9,16 @@ edw_vw_os_time_dim as
 final as
 (
     select
-        all_months.sap_parent_customer_key,
-        all_months.sap_parent_customer_desc,
-        all_months.matl_num,
-        all_months.mnth_id as month,
-        sum(b.so_qty) as so_qty,
-        sum(b.so_value) as so_value,
-        sum(b.inv_qty) as inv_qty,
-        sum(b.inv_value) as inv_value,
-        sum(b.sell_in_qty) as sell_in_qty,
-        sum(b.sell_in_value) as sell_in_value
+        all_months.sap_parent_customer_key::varchar(20) as sap_parent_customer_key,
+        all_months.sap_parent_customer_desc::varchar(75) as sap_parent_customer_desc,
+        all_months.matl_num::varchar(100) as matl_num,
+        all_months.mnth_id::varchar(23) as month,
+        sum(b.so_qty)::number(38,4) as so_qty,
+        sum(b.so_value)::number(38,4) as so_value,
+        sum(b.inv_qty)::number(38,5) as inv_qty,
+        sum(b.inv_value)::number(38,4) as inv_value,
+        sum(b.sell_in_qty)::number(38,5) as sell_in_qty,
+        sum(b.sell_in_value)::number(38,5) as sell_in_value
     from
         (
             select distinct sap_parent_customer_key,
