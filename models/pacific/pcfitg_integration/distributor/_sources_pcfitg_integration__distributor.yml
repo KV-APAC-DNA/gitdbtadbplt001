@@ -15,21 +15,21 @@ sources:
       - name: sdl_dstr_woolworth_inv
         tags: ["j_pa_grocery_inv_woolworths","ingestion"]
       - name: sdl_api_dstr
-      tests:
-          - test_null:
-              not_null_columns: ["inv_dt"]
-              name: TRATBL_sdl_api_dstr__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+        tests:
+            - test_null:
+                not_null_columns: ["inv_dt"]
+                name: TRATBL_sdl_api_dstr__null_test
+                config:
+                  store_failures: true
+                  schema: pcfwks_integration
       - name: sdl_symbion_dstr
-      tests:
-          - test_null:
-              not_null_columns: ["inv_dt"]
-              name: TRATBL_sdl_symbion_dstr__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+        tests:
+            - test_null:
+                not_null_columns: ["inv_dt"]
+                name: TRATBL_sdl_symbion_dstr__null_test
+                config:
+                  store_failures: true
+                  schema: pcfwks_integration
       - name: sdl_ig_inventory_data
       - name : sdl_au_dstr_api_header
       - name : sdl_au_dstr_chs_header
