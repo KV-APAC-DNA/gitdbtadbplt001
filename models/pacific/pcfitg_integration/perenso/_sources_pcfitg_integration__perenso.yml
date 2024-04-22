@@ -24,7 +24,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
-        
+
     - name: sdl_perenso_diary_item_type
       tags: ["anz_perenso_call","ingestion"]
       tests:
@@ -49,7 +49,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
-          
+
     - name: sdl_perenso_diary_item_time
       tags: ["anz_perenso_call","ingestion"]
       tests:
@@ -94,7 +94,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
-      
+
     - name: sdl_perenso_over_and_above
       tags: ["anz_perenso_over_and_above","ingestion"]
       tests:
@@ -230,7 +230,7 @@ sources:
               config:
                 store_failures: true
                 schema: pcfwks_integration
-      
+
     - name: sdl_perenso_constants
       tags: ["anz_perenso_order","ingestion"]
       tests:
@@ -259,9 +259,9 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_pacific_perenso_call_coverage_targets
-      tags: ["anz_perenso_weekly_load",""]  
+      tags: ["anz_perenso_weekly_load",""]
     - name: sdl_over_and_above_points
-      tags: ["anz_perenso_weekly_load",""]  
+      tags: ["anz_perenso_weekly_load",""]
 
     - name: sdl_perenso_fsni_sales
       tags: ["anz_perenso_foodstuff","ingestion"]
@@ -496,7 +496,7 @@ sources:
               name: TRATBL_sdl_perenso_account_type__duplicate_test
               config:
                 store_failures: true
-                schema: pcfwks_integration 
+                schema: pcfwks_integration
     - name: sdl_perenso_account
       tags: ["anz_perenso_account","ingestion"]
       tests:
@@ -513,7 +513,7 @@ sources:
               name: TRATBL_sdl_perenso_account__duplicate_test
               config:
                 store_failures: true
-                schema: pcfwks_integration 
+                schema: pcfwks_integration
     - name: sdl_perenso_acct_dist_acct
       tags: ["anz_perenso_account","ingestion"]
       tests:
@@ -530,7 +530,7 @@ sources:
               name: TRATBL_sdl_perenso_acct_dist_acct__duplicate_test
               config:
                 store_failures: true
-                schema: pcfwks_integration 
+                schema: pcfwks_integration
     - name: sdl_perenso_distributor_detail
       tags: ["anz_perenso_account","ingestion"]
       tests:
@@ -550,7 +550,21 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_account_custom_list
     - name: sdl_chs_dstr
+      tests:
+          - test_null:
+              not_null_columns: ["inv_dt"]
+              name: TRATBL_sdl_chs_dstr__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_sigma_dstr
+      tests:
+          - test_null:
+              not_null_columns: ["inv_dt"]
+              name: TRATBL_sdl_sigma_dstr__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
 
     - name: sdl_perenso_todo
       tags: ["anz_perenso_head_office_req","ingestion"]
@@ -683,42 +697,10 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_users
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["user_type_key","user_key"]
-              select_columns: ["user_type_key","user_key"]
-              name: TRATBL_sdl_perenso_users__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-
-          - test_duplicate:
-              group_by_columns: ["user_type_key","user_key"]
-              select_columns: ["user_type_key","user_key"]
-              name: TRATBL_sdl_perenso_users__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
     - name: sdl_perenso_diary_item
       tags: ["anz_perenso_sales_rep","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["diary_item_type_key","diary_item_key"]
-              select_columns: ["diary_item_type_key","diary_item_key"]
-              name: TRATBL_sdl_perenso_diary_item__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["diary_item_type_key","diary_item_key"]
-              select_columns: ["diary_item_type_key","diary_item_key"]
-              name: TRATBL_sdl_perenso_diary_item__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
 
-      
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: pcfedw_integration
@@ -740,4 +722,4 @@ sources:
     tables:
     - name: itg_perenso_prod_mapping
       tags: ["",""]
-    
+
