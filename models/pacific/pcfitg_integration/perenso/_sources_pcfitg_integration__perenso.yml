@@ -550,6 +550,7 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_account_custom_list
     - name: sdl_chs_dstr
+      tags: ["j_pa_pharma_inv","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["inv_dt"]
@@ -558,9 +559,10 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_sigma_dstr
+      tags: ["j_pa_pharma_inv","ingestion"]    
       tests:
           - test_null:
-              not_null_columns: ["inv_dt"]
+              not_null_columns: ["inv_date"]
               name: TRATBL_sdl_sigma_dstr__null_test
               config:
                 store_failures: true

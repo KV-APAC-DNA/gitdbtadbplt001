@@ -17,7 +17,7 @@
                             )
                         )",
                         "delete from {{this}} where (upper(sap_parent_customer_desc),ltrim(dstr_prod_cd, '0'),inv_date) in (select UPPER(SAP_PRNT_CUST_DESC),ltrim(prod_cd, '0'),inv_date from {{ ref('pcfwks_integration__wks_dstr_metcash_inv') }})"
-]
+                    ]
     )
 }}
 with wks_dstr_inv_api as
