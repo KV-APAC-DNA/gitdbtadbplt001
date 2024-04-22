@@ -17,7 +17,7 @@ itg_parameter_reg_inventory as (
 ), 
 inv as(
 	SELECT
-		TO_DATE(TRIM(inv.inv_date), 'YYYY-MM-DD') AS inv_date,
+		TO_DATE(TRIM(inv.inv_date),'DD-MM-YYYY') AS inv_date,
 		inv.order_item AS article_code,
 		inv.order_item_desc AS article_desc,
 		CAST(inv.closing_soh_qty_unit AS DECIMAL(16, 4)) AS soh_qty,
