@@ -4,6 +4,8 @@ with wks_metcash_grocery_date as (
 ),
 sdl_metcash_ind_grocery as (
     select * from {{ source('pcfsdl_raw', 'sdl_metcash_ind_grocery') }}
+    where trim(supp_id||supp_name||state||banner_id||banner||customer_id||customer) is null
+
 ),
 transformed as (
     --week 1 data mapping & conversion
