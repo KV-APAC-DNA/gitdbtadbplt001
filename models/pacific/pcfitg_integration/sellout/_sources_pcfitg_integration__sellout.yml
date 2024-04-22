@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_pharm_sellout_probe
-      tags: ["J_Pac_Pharm_data_load",""]
+      tags: ["j_pac_pharm_data_load",""]
       tests:
           - test_duplicate:
               select_columns: ["weekendingdate", "outletnumber", "pfc"]
@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_pharm_sellout_outlet
-      tags: ["J_Pac_Pharm_data_load","ingestion"]
+      tags: ["j_pac_pharm_data_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["weekendingdate", "outletnumber", "actualoutlet"]
@@ -30,7 +30,7 @@ sources:
                 store_failures: true
                 schema: pcfwks_integration
     - name: sdl_pharm_sellout_product
-      tags: ["J_Pac_Pharm_data_load","ingestion"]
+      tags: ["j_pac_pharm_data_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["weekendingdate", "pfc"]

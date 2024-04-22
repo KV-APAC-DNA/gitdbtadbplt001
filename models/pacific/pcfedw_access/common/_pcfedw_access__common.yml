@@ -4,76 +4,76 @@ models:
   - name: pcfedw_access__edw_demand_forecast_snapshot
     config:
       alias: edw_demand_forecast_snapshot
-      tags: ["",""]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
   - name: pcfedw_access__edw_gts_visibility
     config:
       alias: edw_gts_visibility
-      tags: ["",""]
+      tags: ["j_pac_sls_evol_refresh_gts_visibility", "transformation"]
   - name: pcfedw_access__edw_invoice_analysis
     config:
       alias: edw_invoice_analysis
-      tags: ["",""]
+      tags: ["j_pac_order_analysis_table_ref","transformation"]
   - name: pcfedw_access__edw_pacific_field_sales_analysis
     config:
       alias: edw_pacific_field_sales_analysis
-      tags: ["",""]
+      tags: ["anz_perenso_field_sales","transformation"]
   - name: pcfedw_access__edw_pacific_metcash_dstrbtn_analysis
     config:
       alias: edw_pacific_metcash_dstrbtn_analysis
-      tags: ["",""]
+      tags: ["anz_perenso_distribution", "transformation"]
   - name: pcfedw_access__edw_pacific_perenso_ims_analysis
     config:
       alias: edw_pacific_perenso_ims_analysis
-      tags: ["",""]
+      tags: ["anz_perenso_fact_load", "transformation"]
   - name: pcfedw_access__edw_pacific_perenso_ims_pharmacy_snpshot_analysis
     config:
       alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
-      tags: ["",""]
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
   - name: pcfedw_access__edw_pacific_pharmacy_dstrbtn_analysis
     config:
       alias: edw_pacific_pharmacy_dstrbtn_analysis
-      tags: ["",""]
+      tags: ["anz_perenso_distribution", "transformation"]
   - name: pcfedw_access__edw_pharmacy_ecommerce_analysis
     config:
       alias: edw_pharmacy_ecommerce_analysis
-      tags: ["",""]
+      tags: ["anz_pharm_ecomm_load","transformation"]
   - name: pcfedw_access__edw_promax_analysis_snapshot
     config:
       alias: edw_promax_analysis_snapshot
-      tags: ["",""]
+      tags: ["j_pacific_promax_master_snapshot_etl_framework","transformation"]
   - name: pcfedw_access__edw_promax_ciw_snapshot
     config:
       alias: edw_promax_ciw_snapshot
-      tags: ["",""]
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
   - name: pcfedw_access__edw_sales_reporting
     config:
       alias: edw_sales_reporting
-      tags: ["",""]
+      tags: ["j_pacific_dna_etl_framework_edw_sales_reporting","transformation"]
   - name: pcfedw_access__edw_sales_reporting_snapshot
     config:
       alias: edw_sales_reporting_snapshot
-      tags: ["",""]
+      tags: ["j_pac_ds_ciw_tableau_incr_ref","transformation"]
   - name: pcfedw_access__edw_sls_evolution
     config:
       alias: edw_sls_evolution
-      tags: ["",""]
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
   - name: pcfedw_access__v_rpt_promo_analysis
     config:
       alias: v_rpt_promo_analysis
-      tags: ["",""]
+      tags: ["pacific_view","transformation"]
   - name: pcfedw_access__vw_competitive_banner_group
     config:
       alias: vw_competitive_banner_group
-      tags: ["",""]
+      tags: ["j_pacific_cbg_data_ingestion","transformation"]
   - name: pcfedw_access__vw_demand_forecast_analysis
     config:
       alias: vw_demand_forecast_analysis
-      tags: ["",""]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
   - name: pcfedw_access__vw_iri_scan_sales_analysis
     config:
       alias: vw_iri_scan_sales_analysis
-      tags: ["",""]
+      tags: ["pacific_view","transformation"]
   - name: pcfedw_access__vw_px_master_analysis
     config:
       alias: vw_px_master_analysis
-      tags: ["",""]
+      tags: ["pacific_view","transformation"]
