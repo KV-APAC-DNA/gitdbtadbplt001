@@ -20,7 +20,7 @@ itg_parameter_reg_inventory as (
 ), 
 inv as(
 	select
-    TO_DATE(inv.inv_date, 'YYYY-MM-DD') AS inv_date,
+    to_date(inv.inv_date,'DD-MM-YYYY') AS inv_date,
     inv.article_code,
     inv.articledesc as article_desc,
     cast(inv.soh_oms as decimal(10, 4)) * cast(inv.om as decimal(10, 4)) as soh_qty,
