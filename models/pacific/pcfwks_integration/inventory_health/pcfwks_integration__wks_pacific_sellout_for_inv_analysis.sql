@@ -1,77 +1,100 @@
-with edw_material_dim as(
-select * from aspedw_integration.edw_material_dim
+with edw_material_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-edw_gch_producthierarchy as(
-select * from aspedw_integration.edw_gch_producthierarchy
+edw_gch_producthierarchy as
+(
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-edw_material_sales_dim as(
-select * from aspedw_integration.edw_material_sales_dim
+edw_material_sales_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
-edw_gch_customerhierarchy as(
-select * from aspedw_integration.edw_gch_customerhierarchy
+edw_gch_customerhierarchy as
+(
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
-edw_customer_sales_dim as(
-select * from aspedw_integration.edw_customer_sales_dim
+edw_customer_sales_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-edw_customer_base_dim as(
-select * from aspedw_integration.edw_customer_base_dim
+edw_customer_base_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-edw_company_dim as(
-select * from aspedw_integration.edw_company_dim
+edw_company_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
-edw_dstrbtn_chnl as(
-select * from aspedw_integration.edw_dstrbtn_chnl
+edw_dstrbtn_chnl as
+(
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_sales_org_dim as(
-select * from aspedw_integration.edw_sales_org_dim
+select * from {{ref('aspedw_integration__edw_sales_org_dim')}}
 ),
-edw_code_descriptions as(
-select * from aspedw_integration.edw_code_descriptions
+edw_code_descriptions as
+(
+select * from {{ref('aspedw_integration__edw_code_descriptions')}}
 ),
-edw_subchnl_retail_env_mapping as(
-select * from aspedw_integration.edw_subchnl_retail_env_mapping
+edw_subchnl_retail_env_mapping as
+(
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
-edw_list_price as(
-select * from aspedw_integration.edw_list_price
+edw_list_price as
+(
+    select * from {{ref('aspedw_integration__edw_list_price')}}
 ),
-itg_parameter_reg_inventory as(
-select * from aspitg_integration.itg_parameter_reg_inventory
+itg_parameter_reg_inventory as
+(
+    select * from {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
 ),
-edw_customer_dim as(
-select * from snapindedw_integration.edw_customer_dim
+edw_customer_dim as
+(
+    select * from snapindedw_integration.edw_customer_dim
 ),
 vw_customer_dim as
 (
-    select * from snappcfedw_integration.vw_customer_dim
+    select * from {{ref('pcfedw_integration__vw_customer_dim')}}
 ),
-vw_iri_scan_sales as(
-select * from snappcfedw_integration.vw_iri_scan_sales
+vw_iri_scan_sales as
+(
+    select * from {{ref('pcfedw_integration__vw_iri_scan_sales')}}
 ),
-vw_iri_scan_sales_analysis as(
-select * from snappcfedw_integration.vw_iri_scan_sales_analysis
+vw_iri_scan_sales_analysis as
+(
+    select * from {{ref('pcfedw_integration__vw_iri_scan_sales_analysis')}}
 ),
-edw_material_dim_pcf as(
-select * from snappcfedw_integration.edw_material_dim
+edw_material_dim_pcf as
+(
+    select * from {{ref('pcfedw_integration__edw_material_dim')}}
 ),
-vw_sapbw_ciw_fact as(
-select * from snappcfedw_integration.vw_sapbw_ciw_fact
+vw_sapbw_ciw_fact as
+(
+    select * from {{ref('pcfedw_integration__vw_sapbw_ciw_fact')}}
 ),
-vw_apo_parent_child_dim as(
-select * from snappcfedw_integration.vw_apo_parent_child_dim
+vw_apo_parent_child_dim as
+(
+    select * from {{ref('pcfedw_integration__vw_apo_parent_child_dim')}}
 ),
-edw_metcash_ind_grocery_fact as(
-select * from snappcfedw_integration.edw_metcash_ind_grocery_fact
+edw_metcash_ind_grocery_fact as
+(
+    select * from {{ref('pcfedw_integration__edw_metcash_ind_grocery_fact')}}
 ),
-edw_perenso_prod_dim as(
-select * from snappcfedw_integration.edw_perenso_prod_dim
+edw_perenso_prod_dim as
+(
+    select * from {{ref('pcfedw_integration__edw_perenso_prod_dim')}}
 ),
-itg_customer_sellout as(
-select * from snappcfitg_integration.itg_customer_sellout
+itg_customer_sellout as
+(
+    select * from {{ref('pcfitg_integration__itg_customer_sellout')}}
 ),
-itg_mds_pacific_prod_mapping_cwh as(
-select * from snappcfitg_integration.itg_mds_pacific_prod_mapping_cwh
+itg_mds_pacific_prod_mapping_cwh as
+(
+    select * from {{ref('pcfitg_integration__itg_mds_pacific_prod_mapping_cwh')}}
 ),
-product AS (
+product AS 
+(
     Select *
     from (
             SELECT DISTINCT EMD.matl_num AS SAP_MATL_NUM,
