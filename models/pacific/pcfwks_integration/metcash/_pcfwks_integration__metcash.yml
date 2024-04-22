@@ -37,7 +37,7 @@ models:
     config:
       alias: wks_au_metcash_lst3_mnth_dstrbtn_check
       tags: ["anz_perenso_distribution", "transformation"]
-  - name: pcfwks_integration__pcfwks_integration__wks_au_metcash_lst6_mnth
+  - name: pcfwks_integration__wks_au_metcash_lst6_mnth
     config:
       alias: wks_au_metcash_lst6_mnth
       tags: ["anz_perenso_distribution", "transformation"]
