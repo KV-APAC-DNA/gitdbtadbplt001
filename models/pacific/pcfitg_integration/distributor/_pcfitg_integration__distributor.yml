@@ -4,31 +4,31 @@ models:
   - name: pcfitg_integration__itg_dstr_woolworth_sap_mapping
     config: 
       alias: itg_dstr_woolworth_sap_mapping
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pa_grocery_inv","transformation"]
 
   - name: pcfitg_integration__itg_dstr_coles_sap_mapping
     config: 
       alias: itg_dstr_coles_sap_mapping
-      tags: ["j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","transformation"]
 
   - name: pcfitg_integration__sdl_dstr_coles_inv_raw
     config: 
       alias: sdl_dstr_coles_inv_raw
-      tags: ["j_pa_grocery_inv_coles","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
 
   - name: pcfitg_integration__sdl_dstr_woolworth_inv_raw
     config: 
       alias: sdl_dstr_woolworth_inv_raw
-      tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+      tags: ["j_pa_grocery_inv","ingestion"]
   - name: pcfitg_integration__sdl_api_dstr_raw
     config: 
       alias: sdl_api_dstr_raw
-      tags: ["j_pa_pharma_inv_api","ingestion"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfitg_integration__sdl_symbion_dstr_raw
     config: 
       alias: sdl_symbion_dstr_raw
-      tags: ["j_pa_pharma_inv_symbion","ingestion"]
+      tags: ["j_pa_pharma_inv","ingestion"]
   - name: pcfitg_integration__sdl_ig_inventory_data_raw
     config: 
       alias: sdl_ig_inventory_data_raw
-      tags: ["j_pa_ig_inv_metcash","ingestion"]
+      tags: ["j_pa_pharma_inv","ingestion"]
