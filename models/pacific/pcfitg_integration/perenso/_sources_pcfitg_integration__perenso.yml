@@ -683,8 +683,40 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_users
       tags: ["anz_perenso_head_office_req","ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["user_type_key","user_key"]
+              select_columns: ["user_type_key","user_key"]
+              name: TRATBL_sdl_perenso_users__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+          - test_duplicate:
+              group_by_columns: ["user_type_key","user_key"]
+              select_columns: ["user_type_key","user_key"]
+              name: TRATBL_sdl_perenso_users__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
     - name: sdl_perenso_diary_item
       tags: ["anz_perenso_sales_rep","ingestion"]
+      tests:
+          - test_null:
+              not_null_columns: ["diary_item_type_key","diary_item_key"]
+              select_columns: ["diary_item_type_key","diary_item_key"]
+              name: TRATBL_sdl_perenso_diary_item__null_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+          - test_duplicate:
+              group_by_columns: ["diary_item_type_key","diary_item_key"]
+              select_columns: ["diary_item_type_key","diary_item_key"]
+              name: TRATBL_sdl_perenso_diary_item__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
 
       
   - name: pcfedw_integration
