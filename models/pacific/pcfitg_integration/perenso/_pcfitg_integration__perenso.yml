@@ -138,9 +138,9 @@ models:
     config:
       alias: itg_perenso_over_and_above_points
       tags: ["anz_perenso_weekly_load","ingestion"]
-  - name: pcfitg_integration__sdl_raw_perenso_over_and_above_points
+  - name: pcfitg_integration__sdl_raw_over_and_above_points
     config:
-      alias: sdl_raw_perenso_over_and_above_points
+      alias: sdl_raw_over_and_above_points
       tags: ["anz_perenso_weekly_load","ingestion"]
   - name: pcfitg_integration__itg_perenso_fsni_sales
     config: 

@@ -2,16 +2,16 @@ with wks_au_pharma_curnt_mnth as (
     select * from {{ ref('pcfwks_integration__wks_au_pharma_curnt_mnth') }}
 ),
 wks_au_pharma_lst_mnth as (
-    select * from {{ ref('pcfwks_integration__wks_au_pharma_last_mnth') }}
+    select * from {{ ref('pcfwks_integration__wks_au_pharma_lst_mnth') }}
 ),
 wks_au_pharma_lst3_mnth as (
-    select * from {{ ref('pcfwks_integration__wks_au_pharma_last3_mnth') }}
+    select * from {{ ref('pcfwks_integration__wks_au_pharma_lst3_mnth') }}
 ),
 wks_au_pharma_lst6_mnth as (
-    select * from {{ ref('pcfwks_integration__wks_au_pharma_last6_mnth') }}
+    select * from {{ ref('pcfwks_integration__wks_au_pharma_lst6_mnth') }}
 ),
 wks_au_pharma_lst12_mnth as (
-    select * from {{ ref('pcfwks_integration__wks_au_pharma_last12_mnth') }}
+    select * from {{ ref('pcfwks_integration__wks_au_pharma_lst12_mnth') }}
 ),
 wks_au_pharma_curnt_mnth_dstrbtn_check as (
     select * from {{ ref('pcfwks_integration__wks_au_pharma_curnt_mnth_dstrbtn_check') }}
