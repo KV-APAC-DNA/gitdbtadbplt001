@@ -50,6 +50,9 @@ select * from {{ ref('pcfedw_integration__vw_fin_accrual_adj') }}
 edw_vw_mds_cogs_rate_dim as (
 select * from {{ ref('pcfedw_integration__edw_vw_mds_cogs_rate_dim') }}
 ),
+edw_gch_producthierarchy as (
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+),
 final as (
 SELECT
   vsf.pac_source_type,
