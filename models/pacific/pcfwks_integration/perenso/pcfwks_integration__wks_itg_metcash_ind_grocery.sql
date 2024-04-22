@@ -1,6 +1,6 @@
 with wks_metcash_grocery_date as (
     select *
-    from { { ref('pcfwks_integration__wks_metcash_grocery_date') } }
+    from {{ ref('pcfwks_integration__wks_metcash_grocery_date') }}
 ),
 sdl_metcash_ind_grocery as (
     select * from {{ source('pcfsdl_raw', 'sdl_metcash_ind_grocery') }}

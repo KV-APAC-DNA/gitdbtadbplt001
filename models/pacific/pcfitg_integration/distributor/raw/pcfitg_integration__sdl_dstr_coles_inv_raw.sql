@@ -29,9 +29,5 @@ final as(
         dc_days_on_hand,
         current_timestamp()::timestamp_ntz(9) as crtd_dt
     from source
-     {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    where source.crtd_dt > (select max(crtd_dt) from {{ this }}) 
-    {% endif %}
 )
 select * from final

@@ -53,9 +53,9 @@ models:
     config:
       alias: wks_au_pharma_lst_mnth_dstrbtn_check
       tags: ["anz_perenso_distribution", "transformation"]
-  - name: pcfwks_integration__wks_au_pharma_monthly
+  - name: pcfwks_integration__wks_au_pharm_monthly
     config:
-      alias: wks_au_pharma_lst_mnth_dstrbtn_check
+      alias: wks_au_pharm_monthly
       tags: ["anz_perenso_distribution", "transformation"]
   - name: pcfwks_integration__wks_au_pharm_prod_acct_comb
     config:

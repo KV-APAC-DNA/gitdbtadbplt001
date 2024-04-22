@@ -693,9 +693,9 @@ FROM
                         edw_time_dim.jj_mnth_id,
                         edw_time_dim.jj_mnth_tot
                       FROM
-                        snappcfedw_integration.edw_time_dim
+                        edw_time_dim
                     ) etd,
-                    snappcfedw_integration.edw_sapbw_plan_lkp spl,
+                    edw_sapbw_plan_lkp spl,
                     (
                       SELECT
                         vw_jjbr_curr_exch_dim.rate_type,
@@ -704,7 +704,7 @@ FROM
                         vw_jjbr_curr_exch_dim.jj_mnth_id,
                         vw_jjbr_curr_exch_dim.exch_rate
                       FROM
-                        snappcfedw_integration.vw_jjbr_curr_exch_dim
+                        vw_jjbr_curr_exch_dim
                       WHERE
                         (
                           (
@@ -726,7 +726,7 @@ FROM
                         vw_bwar_curr_exch_dim.jj_mnth_id,
                         vw_bwar_curr_exch_dim.exch_rate
                       FROM
-                        snappcfedw_integration.vw_bwar_curr_exch_dim
+                        vw_bwar_curr_exch_dim
                     ) currex,
                     (
                       SELECT
@@ -737,7 +737,7 @@ FROM
                           ):: numeric(18, 0)
                         ) AS prcnt_elpsd
                       FROM
-                        snappcfedw_integration.edw_time_dim t1
+                        edw_time_dim t1
                       WHERE
                         (
                           t1.cal_date::date = dateadd(day,1,CURRENT_TIMESTAMP)::date
@@ -765,7 +765,7 @@ FROM
                         ):: integer AS prev_jj_period,
                         t1.jj_mnth_id AS curr_jj_period
                       FROM
-                        snappcfedw_integration.edw_time_dim t1
+                        edw_time_dim t1
                       WHERE
                         (
                           t1.cal_date::date = dateadd(day,1,CURRENT_TIMESTAMP)::date
@@ -791,7 +791,7 @@ FROM
                                 DISTINCT edw_time_dim.jj_mnth_id,
                                 edw_time_dim.jj_wk
                               FROM
-                                snappcfedw_integration.edw_time_dim
+                                edw_time_dim
                             ) derived_table1
                         ) derived_table2
                       GROUP BY
@@ -802,7 +802,7 @@ FROM
                         (
                           (
                             (
-                              snappcfedw_integration.vw_sapbw_ciw_fact vsf
+                              vw_sapbw_ciw_fact vsf
                               LEFT JOIN (
                                 (
                                   (
@@ -828,7 +828,7 @@ FROM
                                           (vw_customer_dim.mercia_ref):: character varying AS mercia_ref,
                                           (vw_customer_dim.curr_cd):: character varying AS curr_cd
                                         FROM
-                                          snappcfedw_integration.vw_customer_dim
+                                          vw_customer_dim
                                         UNION
                                         SELECT
                                           vw_customer_dim_adj.cust_no,
@@ -877,7 +877,7 @@ FROM
                                         (vw_customer_dim.mercia_ref):: character varying AS mercia_ref,
                                         (vw_customer_dim.curr_cd):: character varying AS curr_cd
                                       FROM
-                                        snappcfedw_integration.vw_customer_dim
+                                        vw_customer_dim
                                       WHERE
                                         (
                                           (
@@ -914,7 +914,7 @@ FROM
                                       (vw_customer_dim.mercia_ref):: character varying AS mercia_ref,
                                       (vw_customer_dim.curr_cd):: character varying AS curr_cd
                                     FROM
-                                      snappcfedw_integration.vw_customer_dim
+                                      vw_customer_dim
                                     WHERE
                                       (
                                         (
@@ -946,7 +946,7 @@ FROM
                                     (vw_customer_dim.mercia_ref):: character varying AS mercia_ref,
                                     (vw_customer_dim.curr_cd):: character varying AS curr_cd
                                   FROM
-                                    snappcfedw_integration.vw_customer_dim
+                                    vw_customer_dim
                                   WHERE
                                     (
                                       (
@@ -978,7 +978,7 @@ FROM
                                   (vw_customer_dim.mercia_ref):: character varying AS mercia_ref,
                                   (vw_customer_dim.curr_cd):: character varying AS curr_cd
                                 FROM
-                                  snappcfedw_integration.vw_customer_dim
+                                  vw_customer_dim
                                 WHERE
                                   (
                                     (
@@ -1011,20 +1011,20 @@ FROM
                                 )
                               )
                             )
-                            LEFT JOIN snappcfedw_integration.edw_material_dim vmd ON (
+                            LEFT JOIN edw_material_dim vmd ON (
                               (
                                 (vsf.matl_id):: text = (vmd.matl_id):: text
                               )
                             )
                           )
                           LEFT JOIN (
-                            snappcfedw_integration.vw_apo_parent_child_dim vapcd
+                            vw_apo_parent_child_dim vapcd
                             LEFT JOIN (
                               SELECT
                                 DISTINCT vw_apo_parent_child_dim.master_code,
                                 vw_apo_parent_child_dim.parent_matl_desc
                               FROM
-                                snappcfedw_integration.vw_apo_parent_child_dim
+                                vw_apo_parent_child_dim
                               WHERE
                                 (
                                   (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -1036,7 +1036,7 @@ FROM
                                 DISTINCT vw_apo_parent_child_dim.master_code,
                                 vw_apo_parent_child_dim.parent_matl_desc
                               FROM
-                                snappcfedw_integration.vw_apo_parent_child_dim
+                                vw_apo_parent_child_dim
                               WHERE
                                 (
                                   NOT (
@@ -1044,7 +1044,7 @@ FROM
                                       SELECT
                                         DISTINCT vw_apo_parent_child_dim.master_code
                                       FROM
-                                        snappcfedw_integration.vw_apo_parent_child_dim
+                                        vw_apo_parent_child_dim
                                       WHERE
                                         (
                                           (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -1101,7 +1101,7 @@ FROM
                           edw_gch_producthierarchy.gcph_segment,
                           edw_gch_producthierarchy.gcph_subsegment
                         FROM
-                          snapaspedw_integration.edw_gch_producthierarchy
+                          edw_gch_producthierarchy
                         WHERE
                           (
                             (
@@ -1586,9 +1586,9 @@ FROM
                         edw_time_dim.jj_mnth_id,
                         edw_time_dim.jj_mnth_tot
                       FROM
-                        snappcfedw_integration.edw_time_dim
+                        edw_time_dim
                     ) etd,
-                    snappcfedw_integration.edw_sapbw_plan_lkp spl,
+                    edw_sapbw_plan_lkp spl,
                     (
                       SELECT
                         vw_jjbr_curr_exch_dim.rate_type,
@@ -1597,7 +1597,7 @@ FROM
                         vw_jjbr_curr_exch_dim.jj_mnth_id,
                         vw_jjbr_curr_exch_dim.exch_rate
                       FROM
-                        snappcfedw_integration.vw_jjbr_curr_exch_dim
+                        vw_jjbr_curr_exch_dim
                       WHERE
                         (
                           (
@@ -1619,7 +1619,7 @@ FROM
                         vw_bwar_curr_exch_dim.jj_mnth_id,
                         vw_bwar_curr_exch_dim.exch_rate
                       FROM
-                        snappcfedw_integration.vw_bwar_curr_exch_dim
+                        vw_bwar_curr_exch_dim
                     ) currex,
                     (
                       SELECT
@@ -1630,7 +1630,7 @@ FROM
                           ):: numeric(18, 0)
                         ) AS prcnt_elpsd
                       FROM
-                        snappcfedw_integration.edw_time_dim t1
+                        edw_time_dim t1
                       WHERE
                         (
                           t1.cal_date::date =
@@ -1661,7 +1661,7 @@ FROM
                         ):: integer AS prev_jj_period,
                         t1.jj_mnth_id AS curr_jj_period
                       FROM
-                        snappcfedw_integration.edw_time_dim t1
+                        edw_time_dim t1
                       WHERE
                         (
                           t1.cal_date::date =
@@ -1691,7 +1691,7 @@ FROM
                                 DISTINCT edw_time_dim.jj_mnth_id,
                                 edw_time_dim.jj_wk
                               FROM
-                                snappcfedw_integration.edw_time_dim
+                                edw_time_dim
                             ) derived_table3
                         ) derived_table4
                       GROUP BY
@@ -1702,8 +1702,8 @@ FROM
                         (
                           (
                             (
-                              snappcfedw_integration.px_combined_ciw_fact pcf
-                              LEFT JOIN snappcfedw_integration.vw_customer_dim vcd ON (
+                              px_combined_ciw_fact pcf
+                              LEFT JOIN vw_customer_dim vcd ON (
                                 (
                                   (pcf.cust_no):: text = ltrim(
                                     (vcd.cust_no):: text,
@@ -1712,7 +1712,7 @@ FROM
                                 )
                               )
                             )
-                            LEFT JOIN snappcfedw_integration.edw_material_dim vmd ON (
+                            LEFT JOIN edw_material_dim vmd ON (
                               (
                                 (pcf.matl_id):: text = ltrim(
                                   (vmd.matl_id):: text,
@@ -1722,13 +1722,13 @@ FROM
                             )
                           )
                           LEFT JOIN (
-                            snappcfedw_integration.vw_apo_parent_child_dim vapcd
+                            vw_apo_parent_child_dim vapcd
                             LEFT JOIN (
                               SELECT
                                 DISTINCT vw_apo_parent_child_dim.master_code,
                                 vw_apo_parent_child_dim.parent_matl_desc
                               FROM
-                                snappcfedw_integration.vw_apo_parent_child_dim
+                                vw_apo_parent_child_dim
                               WHERE
                                 (
                                   (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -1740,7 +1740,7 @@ FROM
                                 DISTINCT vw_apo_parent_child_dim.master_code,
                                 vw_apo_parent_child_dim.parent_matl_desc
                               FROM
-                                snappcfedw_integration.vw_apo_parent_child_dim
+                                vw_apo_parent_child_dim
                               WHERE
                                 (
                                   NOT (
@@ -1748,7 +1748,7 @@ FROM
                                       SELECT
                                         DISTINCT vw_apo_parent_child_dim.master_code
                                       FROM
-                                        snappcfedw_integration.vw_apo_parent_child_dim
+                                        vw_apo_parent_child_dim
                                       WHERE
                                         (
                                           (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -1805,7 +1805,7 @@ FROM
                           edw_gch_producthierarchy.gcph_segment,
                           edw_gch_producthierarchy.gcph_subsegment
                         FROM
-                          snapaspedw_integration.edw_gch_producthierarchy
+                          edw_gch_producthierarchy
                         WHERE
                           (
                             (
@@ -2077,7 +2077,7 @@ FROM
                   NULL :: character varying AS gcph_segment,
                   NULL :: character varying AS gcph_subsegment
                 FROM
-                  snappcfedw_integration.edw_sapbw_plan_lkp spl,
+                  edw_sapbw_plan_lkp spl,
                   (
                     SELECT
                       vw_jjbr_curr_exch_dim.rate_type,
@@ -2086,7 +2086,7 @@ FROM
                       vw_jjbr_curr_exch_dim.jj_mnth_id,
                       vw_jjbr_curr_exch_dim.exch_rate
                     FROM
-                      snappcfedw_integration.vw_jjbr_curr_exch_dim
+                      vw_jjbr_curr_exch_dim
                     WHERE
                       (
                         (
@@ -2108,7 +2108,7 @@ FROM
                       vw_bwar_curr_exch_dim.jj_mnth_id,
                       vw_bwar_curr_exch_dim.exch_rate
                     FROM
-                      snappcfedw_integration.vw_bwar_curr_exch_dim
+                      vw_bwar_curr_exch_dim
                   ) currex,
                   (
                     SELECT
@@ -2119,7 +2119,7 @@ FROM
                         ):: numeric(18, 0)
                       ) AS prcnt_elpsd
                     FROM
-                      snappcfedw_integration.edw_time_dim t1
+                      edw_time_dim t1
                     WHERE
                       (
                         t1.cal_date::date =
@@ -2151,7 +2151,7 @@ FROM
                       ):: integer AS prev_jj_period,
                       t1.jj_mnth_id AS curr_jj_period
                     FROM
-                      snappcfedw_integration.edw_time_dim t1
+                      edw_time_dim t1
                     WHERE
                       (
                         t1.cal_date::date =
@@ -2181,7 +2181,7 @@ FROM
                               DISTINCT edw_time_dim.jj_mnth_id,
                               edw_time_dim.jj_wk
                             FROM
-                              snappcfedw_integration.edw_time_dim
+                              edw_time_dim
                           ) derived_table5
                       ) derived_table6
                     GROUP BY
@@ -2190,7 +2190,7 @@ FROM
                   (
                     (
                       (
-                        snappcfedw_integration.edw_cust_ciw_plan_fact ecpf
+                        edw_cust_ciw_plan_fact ecpf
                         LEFT JOIN (
                           SELECT
                             DISTINCT edw_time_dim.jj_mnth,
@@ -2201,7 +2201,7 @@ FROM
                             edw_time_dim.jj_mnth_id,
                             edw_time_dim.jj_mnth_tot
                           FROM
-                            snappcfedw_integration.edw_time_dim
+                            edw_time_dim
                         ) etd ON (
                           (
                             (ecpf.time_period):: numeric(18, 0) = etd.jj_mnth_id
@@ -2219,7 +2219,7 @@ FROM
                           vw_customer_dim.sales_grp_desc,
                           vw_customer_dim.country
                         FROM
-                          snappcfedw_integration.vw_customer_dim
+                          vw_customer_dim
                       ) vcd ON (
                         (
                           (ecpf.sales_grp_cd):: text = (vcd.sales_grp_cd):: text
@@ -2237,7 +2237,7 @@ FROM
                         edw_material_dim.prod_mjr_cd,
                         edw_material_dim.prod_mjr_desc
                       FROM
-                        snappcfedw_integration.edw_material_dim
+                        edw_material_dim
                     ) vmd ON (
                       (
                         (ecpf.prod_mjr_cd):: text = (vmd.prod_mjr_cd):: text
@@ -2464,7 +2464,7 @@ FROM
                 NULL :: character varying AS gcph_segment,
                 NULL :: character varying AS gcph_subsegment
               FROM
-                snappcfedw_integration.edw_sapbw_plan_lkp spl,
+                edw_sapbw_plan_lkp spl,
                 (
                   SELECT
                     vw_jjbr_curr_exch_dim.rate_type,
@@ -2473,7 +2473,7 @@ FROM
                     vw_jjbr_curr_exch_dim.jj_mnth_id,
                     vw_jjbr_curr_exch_dim.exch_rate
                   FROM
-                    snappcfedw_integration.vw_jjbr_curr_exch_dim
+                    vw_jjbr_curr_exch_dim
                   WHERE
                     (
                       (
@@ -2495,7 +2495,7 @@ FROM
                     vw_bwar_curr_exch_dim.jj_mnth_id,
                     vw_bwar_curr_exch_dim.exch_rate
                   FROM
-                    snappcfedw_integration.vw_bwar_curr_exch_dim
+                    vw_bwar_curr_exch_dim
                 ) currex,
                 (
                   SELECT
@@ -2506,7 +2506,7 @@ FROM
                       ):: numeric(18, 0)
                     ) AS prcnt_elpsd
                   FROM
-                    snappcfedw_integration.edw_time_dim t1
+                    edw_time_dim t1
                   WHERE
                     (
                       t1.cal_date::date =
@@ -2538,7 +2538,7 @@ FROM
                     ):: integer AS prev_jj_period,
                     t1.jj_mnth_id AS curr_jj_period
                   FROM
-                    snappcfedw_integration.edw_time_dim t1
+                    edw_time_dim t1
                   WHERE
                     (
                       t1.cal_date::date =
@@ -2568,7 +2568,7 @@ FROM
                             DISTINCT edw_time_dim.jj_mnth_id,
                             edw_time_dim.jj_wk
                           FROM
-                            snappcfedw_integration.edw_time_dim
+                            edw_time_dim
                         ) derived_table7
                     ) derived_table8
                   GROUP BY
@@ -2588,7 +2588,7 @@ FROM
                           edw_time_dim.jj_mnth_id,
                           edw_time_dim.jj_mnth_tot
                         FROM
-                          snappcfedw_integration.edw_time_dim
+                          edw_time_dim
                       ) etd ON (
                         (ebt.year = etd.jj_mnth_id)
                       )
@@ -2604,7 +2604,7 @@ FROM
                         vw_customer_dim.sales_grp_desc,
                         vw_customer_dim.country
                       FROM
-                        snappcfedw_integration.vw_customer_dim
+                        vw_customer_dim
                     ) vcd ON (
                       (
                         (ebt.sales_group_cd):: text = (vcd.sales_grp_cd):: text
@@ -2622,7 +2622,7 @@ FROM
                       edw_material_dim.prod_mjr_cd,
                       edw_material_dim.prod_mjr_desc
                     FROM
-                      snappcfedw_integration.edw_material_dim
+                      edw_material_dim
                   ) vmd ON (
                     (
                       (ebt.prod_mjr_cd):: text = (vmd.prod_mjr_cd):: text
@@ -2889,7 +2889,7 @@ FROM
                   edw_time_dim.jj_mnth_id,
                   edw_time_dim.jj_mnth_tot
                 FROM
-                  snappcfedw_integration.edw_time_dim
+                  edw_time_dim
               ) etd,
               (
                 SELECT
@@ -2899,7 +2899,7 @@ FROM
                   vw_jjbr_curr_exch_dim.jj_mnth_id,
                   vw_jjbr_curr_exch_dim.exch_rate
                 FROM
-                  snappcfedw_integration.vw_jjbr_curr_exch_dim
+                  vw_jjbr_curr_exch_dim
                 WHERE
                   (
                     (
@@ -2921,7 +2921,7 @@ FROM
                   vw_bwar_curr_exch_dim.jj_mnth_id,
                   vw_bwar_curr_exch_dim.exch_rate
                 FROM
-                  snappcfedw_integration.vw_bwar_curr_exch_dim
+                  vw_bwar_curr_exch_dim
               ) currex,
               (
                 SELECT
@@ -2932,7 +2932,7 @@ FROM
                     ):: numeric(18, 0)
                   ) AS prcnt_elpsd
                 FROM
-                  snappcfedw_integration.edw_time_dim t1
+                  edw_time_dim t1
                 WHERE
                   (
                     t1.cal_date::date =
@@ -2964,7 +2964,7 @@ FROM
                   ):: integer AS prev_jj_period,
                   t1.jj_mnth_id AS curr_jj_period
                 FROM
-                  snappcfedw_integration.edw_time_dim t1
+                  edw_time_dim t1
                 WHERE
                   (
                     t1.cal_date::date =
@@ -2994,7 +2994,7 @@ FROM
                           DISTINCT edw_time_dim.jj_mnth_id,
                           edw_time_dim.jj_wk
                         FROM
-                          snappcfedw_integration.edw_time_dim
+                          edw_time_dim
                       ) derived_table9
                   ) derived_table10
                 GROUP BY
@@ -3006,26 +3006,26 @@ FROM
                     (
                       (
                         VW_SAPBW_FUTURES_FACT vsff
-                        LEFT JOIN snappcfedw_integration.vw_customer_dim vcd ON (
+                        LEFT JOIN vw_customer_dim vcd ON (
                           (
                             (vsff.cust_no):: text = (vcd.cust_no):: text
                           )
                         )
                       )
-                      LEFT JOIN snappcfedw_integration.edw_material_dim vmd ON (
+                      LEFT JOIN edw_material_dim vmd ON (
                         (
                           (vsff.matl_id):: text = (vmd.matl_id):: text
                         )
                       )
                     )
                     LEFT JOIN (
-                      snappcfedw_integration.vw_apo_parent_child_dim vapcd
+                      vw_apo_parent_child_dim vapcd
                       LEFT JOIN (
                         SELECT
                           DISTINCT vw_apo_parent_child_dim.master_code,
                           vw_apo_parent_child_dim.parent_matl_desc
                         FROM
-                          snappcfedw_integration.vw_apo_parent_child_dim
+                          vw_apo_parent_child_dim
                         WHERE
                           (
                             (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -3037,7 +3037,7 @@ FROM
                           DISTINCT vw_apo_parent_child_dim.master_code,
                           vw_apo_parent_child_dim.parent_matl_desc
                         FROM
-                          snappcfedw_integration.vw_apo_parent_child_dim
+                          vw_apo_parent_child_dim
                         WHERE
                           (
                             NOT (
@@ -3045,7 +3045,7 @@ FROM
                                 SELECT
                                   DISTINCT vw_apo_parent_child_dim.master_code
                                 FROM
-                                  snappcfedw_integration.vw_apo_parent_child_dim
+                                  vw_apo_parent_child_dim
                                 WHERE
                                   (
                                     (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -3102,7 +3102,7 @@ FROM
                     edw_gch_producthierarchy.gcph_segment,
                     edw_gch_producthierarchy.gcph_subsegment
                   FROM
-                    snapaspedw_integration.edw_gch_producthierarchy
+                    edw_gch_producthierarchy
                   WHERE
                     (
                       (
@@ -3507,7 +3507,7 @@ FROM
             NULL :: character varying AS gcph_segment,
             NULL :: character varying AS gcph_subsegment
           FROM
-            snappcfedw_integration.edw_sapbw_plan_lkp spl,
+            edw_sapbw_plan_lkp spl,
             (
               SELECT
                 vw_jjbr_curr_exch_dim.rate_type,
@@ -3516,7 +3516,7 @@ FROM
                 vw_jjbr_curr_exch_dim.jj_mnth_id,
                 vw_jjbr_curr_exch_dim.exch_rate
               FROM
-                snappcfedw_integration.vw_jjbr_curr_exch_dim
+                vw_jjbr_curr_exch_dim
               WHERE
                 (
                   (
@@ -3538,7 +3538,7 @@ FROM
                 vw_bwar_curr_exch_dim.jj_mnth_id,
                 vw_bwar_curr_exch_dim.exch_rate
               FROM
-                snappcfedw_integration.vw_bwar_curr_exch_dim
+                vw_bwar_curr_exch_dim
             ) currex,
             (
               SELECT
@@ -3549,7 +3549,7 @@ FROM
                   ):: numeric(18, 0)
                 ) AS prcnt_elpsd
               FROM
-                snappcfedw_integration.edw_time_dim t1
+                edw_time_dim t1
               WHERE
                 (
                   t1.cal_date::date =
@@ -3581,7 +3581,7 @@ FROM
                 ):: integer AS prev_jj_period,
                 t1.jj_mnth_id AS curr_jj_period
               FROM
-                snappcfedw_integration.edw_time_dim t1
+                edw_time_dim t1
               WHERE
                 (
                   t1.cal_date::date =
@@ -3610,7 +3610,7 @@ FROM
                         DISTINCT edw_time_dim.jj_mnth_id,
                         edw_time_dim.jj_wk
                       FROM
-                        snappcfedw_integration.edw_time_dim
+                        edw_time_dim
                     ) derived_table11
                 ) derived_table12
               GROUP BY
@@ -3630,7 +3630,7 @@ FROM
                       edw_time_dim.jj_mnth_id,
                       edw_time_dim.jj_mnth_tot
                     FROM
-                      snappcfedw_integration.edw_time_dim
+                      edw_time_dim
                   ) etd ON (
                     (
                       (evdr.time_period):: numeric(18, 0) = etd.jj_mnth_id
@@ -3648,7 +3648,7 @@ FROM
                     vw_customer_dim.sales_grp_desc,
                     vw_customer_dim.country
                   FROM
-                    snappcfedw_integration.vw_customer_dim
+                    vw_customer_dim
                 ) vcd ON (
                   (
                     (evdr.sls_grp_cd):: text = (vcd.sales_grp_cd):: text
@@ -3666,7 +3666,7 @@ FROM
                   edw_material_dim.prod_mjr_cd,
                   edw_material_dim.prod_mjr_desc
                 FROM
-                  snappcfedw_integration.edw_material_dim
+                  edw_material_dim
               ) vmd ON (
                 (
                   (evdr.prod_mjr_cd):: text = (vmd.prod_mjr_cd):: text
@@ -3890,7 +3890,7 @@ FROM
           NULL :: character varying AS gcph_segment,
           NULL :: character varying AS gcph_subsegment
         FROM
-          snappcfedw_integration.edw_sapbw_plan_lkp spl,
+          edw_sapbw_plan_lkp spl,
           (
             SELECT
               vw_jjbr_curr_exch_dim.rate_type,
@@ -3899,7 +3899,7 @@ FROM
               vw_jjbr_curr_exch_dim.jj_mnth_id,
               vw_jjbr_curr_exch_dim.exch_rate
             FROM
-              snappcfedw_integration.vw_jjbr_curr_exch_dim
+              vw_jjbr_curr_exch_dim
             WHERE
               (
                 (
@@ -3921,7 +3921,7 @@ FROM
               vw_bwar_curr_exch_dim.jj_mnth_id,
               vw_bwar_curr_exch_dim.exch_rate
             FROM
-              snappcfedw_integration.vw_bwar_curr_exch_dim
+              vw_bwar_curr_exch_dim
           ) currex,
           (
             SELECT
@@ -3932,7 +3932,7 @@ FROM
                 ):: numeric(18, 0)
               ) AS prcnt_elpsd
             FROM
-              snappcfedw_integration.edw_time_dim t1
+              edw_time_dim t1
             WHERE
               (
                 t1.cal_date::date =
@@ -3964,7 +3964,7 @@ FROM
               ):: integer AS prev_jj_period,
               t1.jj_mnth_id AS curr_jj_period
             FROM
-              snappcfedw_integration.edw_time_dim t1
+              edw_time_dim t1
             WHERE
               (
                 t1.cal_date::date =
@@ -3994,7 +3994,7 @@ FROM
                       DISTINCT edw_time_dim.jj_mnth_id,
                       edw_time_dim.jj_wk
                     FROM
-                      snappcfedw_integration.edw_time_dim
+                      edw_time_dim
                   ) derived_table13
               ) derived_table14
             GROUP BY
@@ -4014,7 +4014,7 @@ FROM
                     edw_time_dim.jj_mnth_id,
                     edw_time_dim.jj_mnth_tot
                   FROM
-                    snappcfedw_integration.edw_time_dim
+                    edw_time_dim
                 ) etd ON (
                   (
                     (faar.time_period):: numeric(18, 0) = etd.jj_mnth_id
@@ -4038,7 +4038,7 @@ FROM
                   vw_customer_dim.sales_grp_desc,
                   vw_customer_dim.country
                 FROM
-                  snappcfedw_integration.vw_customer_dim
+                  vw_customer_dim
               ) vcd ON (
                 (
                   (faar.cust_id):: text = vcd.cust_no
@@ -4056,7 +4056,7 @@ FROM
                 edw_material_dim.prod_mjr_cd,
                 edw_material_dim.prod_mjr_desc
               FROM
-                snappcfedw_integration.edw_material_dim
+                edw_material_dim
             ) vmd ON (
               (
                 (faar.prod_mjr_cd):: text = (vmd.prod_mjr_cd):: text
@@ -4503,7 +4503,7 @@ FROM
             edw_time_dim.jj_mnth_id,
             edw_time_dim.jj_mnth_tot
           FROM
-            snappcfedw_integration.edw_time_dim
+            edw_time_dim
         ) etd,
         (
           SELECT
@@ -4513,7 +4513,7 @@ FROM
             vw_jjbr_curr_exch_dim.jj_mnth_id,
             vw_jjbr_curr_exch_dim.exch_rate
           FROM
-            snappcfedw_integration.vw_jjbr_curr_exch_dim
+            vw_jjbr_curr_exch_dim
           WHERE
             (
               (
@@ -4535,7 +4535,7 @@ FROM
             vw_bwar_curr_exch_dim.jj_mnth_id,
             vw_bwar_curr_exch_dim.exch_rate
           FROM
-            snappcfedw_integration.vw_bwar_curr_exch_dim
+            vw_bwar_curr_exch_dim
         ) currex,
         (
           SELECT
@@ -4546,7 +4546,7 @@ FROM
               ):: numeric(18, 0)
             ) AS prcnt_elpsd
           FROM
-            snappcfedw_integration.edw_time_dim t1
+            edw_time_dim t1
           WHERE
             (
               t1.cal_date::date =
@@ -4578,7 +4578,7 @@ FROM
             ):: integer AS prev_jj_period,
             t1.jj_mnth_id AS curr_jj_period
           FROM
-            snappcfedw_integration.edw_time_dim t1
+            edw_time_dim t1
           WHERE
             (
               t1.cal_date::date = dateadd(day,1,CURRENT_TIMESTAMP)::date
@@ -4604,7 +4604,7 @@ FROM
                     DISTINCT edw_time_dim.jj_mnth_id,
                     edw_time_dim.jj_wk
                   FROM
-                    snappcfedw_integration.edw_time_dim
+                    edw_time_dim
                 ) derived_table15
             ) derived_table16
           GROUP BY
@@ -4682,7 +4682,7 @@ FROM
                     edw_copa_plan_fact.crt_dttm,
                     edw_copa_plan_fact.updt_dttm
                   FROM
-                    snapaspedw_integration.edw_copa_plan_fact
+                    edw_copa_plan_fact
                   WHERE
                     (
                       (
@@ -4722,7 +4722,7 @@ FROM
                       )
                     )
                 ) ecpf
-                LEFT JOIN snappcfedw_integration.edw_material_dim vmd ON (
+                LEFT JOIN edw_material_dim vmd ON (
                   (
                     CASE WHEN (
                       (
@@ -4759,13 +4759,13 @@ FROM
                 )
               )
               LEFT JOIN (
-                snappcfedw_integration.vw_apo_parent_child_dim vapcd
+                vw_apo_parent_child_dim vapcd
                 LEFT JOIN (
                   SELECT
                     DISTINCT vw_apo_parent_child_dim.master_code,
                     vw_apo_parent_child_dim.parent_matl_desc
                   FROM
-                    snappcfedw_integration.vw_apo_parent_child_dim
+                    vw_apo_parent_child_dim
                   WHERE
                     (
                       (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -4777,7 +4777,7 @@ FROM
                     DISTINCT vw_apo_parent_child_dim.master_code,
                     vw_apo_parent_child_dim.parent_matl_desc
                   FROM
-                    snappcfedw_integration.vw_apo_parent_child_dim
+                    vw_apo_parent_child_dim
                   WHERE
                     (
                       NOT (
@@ -4785,7 +4785,7 @@ FROM
                           SELECT
                             DISTINCT vw_apo_parent_child_dim.master_code
                           FROM
-                            snappcfedw_integration.vw_apo_parent_child_dim
+                            vw_apo_parent_child_dim
                           WHERE
                             (
                               (vw_apo_parent_child_dim.cmp_id):: text = (
@@ -4850,7 +4850,7 @@ FROM
                 edw_sapbw_plan_lkp.pln_chnl_cd,
                 edw_sapbw_plan_lkp.pln_chnl_desc
               FROM
-                snappcfedw_integration.edw_sapbw_plan_lkp
+                edw_sapbw_plan_lkp
             ) spl ON (
               (
                 (
@@ -4885,7 +4885,7 @@ FROM
               edw_gch_producthierarchy.gcph_segment,
               edw_gch_producthierarchy.gcph_subsegment
             FROM
-              snapaspedw_integration.edw_gch_producthierarchy
+              edw_gch_producthierarchy
             WHERE
               (
                 (
