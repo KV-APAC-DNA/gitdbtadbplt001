@@ -65,4 +65,14 @@ models:
     config: 
       alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
       tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
+
+  - name: pcfedw_integration__edw_perenso_account_hist_dim
+    config: 
+      alias: edw_perenso_account_hist_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfedw_integration__edw_perenso_account_hist_dim_temp
+    config: 
+      alias: edw_perenso_account_hist_dim_temp
+      tags: ["anz_perenso_dimension_load","transformation"]
   

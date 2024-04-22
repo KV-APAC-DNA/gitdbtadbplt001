@@ -12,10 +12,14 @@ models:
   - name: pcfwks_integration__wks_perenso_prod_intermideate
     config: 
       alias: wks_perenso_prod_intermideate
-      tags: ["anz_perenso_dimension_load","ingestion"]
+      tags: ["anz_perenso_dimension_load","transformation"]
 
   - name: pcfwks_integration__wks_perenso_acct_intermideate
     config: 
       alias: wks_perenso_acct_intermideate
-      tags: ["anz_perenso_dimension_load","ingestion"]
- 
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfwks_integration__wks_perenso_acct_hist_dim
+    config: 
+      alias: wks_perenso_acct_hist_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
