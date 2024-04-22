@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_fin_accrual_adj_ref
+    config:
+      alias: edw_fin_accrual_adj_ref
+      tags: ["anz_mds_sdl_to_edw_load","transformation"]
+  - name: pcfedw_integration__vw_iri_scan_sales
+    config:
+      alias: vw_iri_scan_sales
+      tags: ["j_pac_iri_scan_sales_etl_framework","transformation"]
+  - name: pcfedw_integration__edw_vw_mds_cogs_rate_dim
+    config:
+      alias: edw_vw_mds_cogs_rate_dim
+      tags: ["pacific_view","transformation"]
+
+  - name: pcfedw_integration__edw_iri_scan_sales_agg
+    config:
+      alias: edw_iri_scan_sales_agg
+      tags: ["j_pac_iri_scan_sales_etl_framework","transformation"]
+  - name: pcfedw_integration__v_rpt_promo_analysis
+    config:
+      alias: v_rpt_promo_analysis
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_pacific_perenso_ims_pharmacy_snpshot_analysis
+    config:
+      alias: vw_pacific_perenso_ims_pharmacy_snpshot_analysis
+      tags: ["anz_perenso_pharmacy_snapshot_refresh","transformation"]
+  - name: pcfedw_integration__edw_sls_evolution
+    config:
+      alias: edw_sls_evolution
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_sls_evolution_history
+    config:
+      alias: edw_sls_evolution_history
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_invoice_fact_snapshot
+    config:
+      alias: edw_invoice_fact_snapshot
+      tags: ["j_pac_sls_evol_refresh", "transformation"]
+  - name: pcfedw_integration__edw_gts_visibility
+    config:
+      alias: edw_gts_visibility
+      tags: ["j_pac_sls_evol_refresh_gts_visibility", "transformation"]
+  - name: pcfedw_integration__edw_billing_fact_snapshot
+    config:
+      alias: edw_billing_fact_snapshot
+      tags: ["j_pac_sls_evol_refresh_gts_visibility", "transformation"]
+  - name: pcfedw_integration__edw_vw_perfect_store_trax_products
+    config:
+      alias: edw_vw_perfect_store_trax_products
+      tags: ["j_ap_trax_etl_framework", "transformation"]
+  - name: pcfedw_integration__edw_vw_terms_master
+    config:
+      alias: edw_vw_terms_master
+      tags: ["pacific_view", "transformation"]
+  - name: pcfedw_integration__vw_customer_dim_adj
+    config:
+      alias: vw_customer_dim_adj
+      tags: ["pacific_view", "transformation"]
+  - name: pcfedw_integration__vw_sales_reporting
+    config:
+      alias: vw_sales_reporting
+      tags: ["pacific_view", "transformation"]
+  - name: pcfedw_integration__vw_sapbw_fact
+    config:
+      alias: vw_sapbw_fact
+      tags: ["pacific_view", "transformation"]
+  - name: pcfedw_integration__vw_customer_dim_v2
+    config:
+      alias: vw_customer_dim_v2
+      tags: ["pacific_view", "transformation"]
+  - name: pcfedw_integration__vw_invoice_analysis
+    config:
+      alias: vw_invoice_analysis
+      tags: ["j_pac_order_analysis_table_ref","transformation"]
+
+  - name: pcfedw_integration__edw_sales_reporting_snapshot
+    config:
+      alias: edw_sales_reporting_snapshot
+      tags: ["j_pac_ds_ciw_tableau_incr_ref","transformation"]
+
+  - name: pcfedw_integration__edw_invoice_analysis
+    config:
+      alias: edw_invoice_analysis
+      tags: ["j_pac_order_analysis_table_ref","transformation"]
+
+  - name: pcfedw_integration__edw_demand_forecast_snapshot
+    config:
+      alias: edw_demand_forecast_snapshot
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
+
+  - name: pcfedw_integration__edw_demand_forecast_snapshot_temp
+    config:
+      alias: edw_demand_forecast_snapshot_temp
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
+
+  - name: pcfedw_integration__edw_apo_weekly_forecast_fact
+    config:
+      alias: edw_apo_weekly_forecast_fact
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
+
+  - name: pcfedw_integration__edw_sales_reporting
+    config:
+      alias: edw_sales_reporting
+      tags: ["j_pacific_dna_etl_framework_edw_sales_reporting","transformation"]
+  - name: pcfedw_integration__edw_pacific_field_sales
+    config:
+      alias: edw_pacific_field_sales
+      tags: ["anz_perenso_field_sales","transformation"]
+  - name: pcfedw_integration__edw_pacific_field_sales_analysis
+    config:
+      alias: edw_pacific_field_sales_analysis
+      tags: ["anz_perenso_field_sales","transformation"]
+  - name: pcfedw_integration__vw_iri_scan_sales_analysis
+    config:
+      alias: vw_iri_scan_sales_analysis
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__edw_vw_iri_ps_base_data
+    config:
+      alias: edw_vw_iri_ps_base_data
+      tags: ["pacific_view","transformation"]

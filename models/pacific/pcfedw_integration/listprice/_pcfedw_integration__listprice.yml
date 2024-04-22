@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_px_listprice
+    config: 
+      alias: edw_px_listprice
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

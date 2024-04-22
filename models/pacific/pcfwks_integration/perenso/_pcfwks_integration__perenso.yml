@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_metcash_grocery_date
+    config:
+      alias: wks_metcash_grocery_date
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfwks_integration__wks_itg_metcash_ind_grocery
+    config:
+      alias: wks_itg_metcash_ind_grocery
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfwks_integration__wks_perenso_prod_intermideate
+    config: 
+      alias: wks_perenso_prod_intermideate
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfwks_integration__wks_perenso_acct_intermideate
+    config: 
+      alias: wks_perenso_acct_intermideate
+      tags: ["anz_perenso_dimension_load","transformation"]
+
+  - name: pcfwks_integration__wks_perenso_acct_hist_dim
+    config: 
+      alias: wks_perenso_acct_hist_dim
+      tags: ["anz_perenso_dimension_load","transformation"]

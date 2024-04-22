@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: pcfsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: pcfsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_pacific_product_mapping_coles
+        tags: ["j_pa_grocery_inv_coles","ingestion"]
+        tests:
+          - test_duplicate:
+                group_by_columns: ["jnj_sap_code"]
+                select_columns: ["jnj_sap_code", "code"]
+                name: TRATBL_sdl_mds_pacific_product_mapping_coles__duplicate_test
+                config:
+                  store_failures: true
+                  schema: pcfwks_integration
+
+      - name: sdl_mds_pacific_product_mapping_ww
+        tags: ["j_pa_grocery_inv_woolworths","ingestion"]
+        tests:
+          - test_duplicate:
+                group_by_columns: ["code"]
+                select_columns: ["jnj_sap_code", "code"]
+                name: TRATBL_sdl_mds_pacific_product_mapping_ww__duplicate_test
+                config:
+                  store_failures: true
+                  schema: pcfwks_integration
+
+      - name: sdl_competitive_banner_group
+        tags: ["j_pacific_cbg_data_ingestion","ingestion"]
+
+      - name: sdl_weekly_forecast
+        tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+
+
+
+
+

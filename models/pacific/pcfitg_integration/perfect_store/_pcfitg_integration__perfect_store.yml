@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_mds_pacific_ps_targets
+    config: 
+      alias: itg_mds_pacific_ps_targets
+      tags: ["j_ap_trax_etl_framework","transformation"]
+  - name: pcfitg_integration__itg_mds_pacific_ps_weights
+    config: 
+      alias: itg_mds_pacific_ps_weights
+      tags: ["j_ap_trax_etl_framework","transformation"]

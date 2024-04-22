@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_px_listprice
+    config: 
+      alias: itg_px_listprice
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
