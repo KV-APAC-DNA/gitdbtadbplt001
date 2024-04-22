@@ -17,7 +17,7 @@ edw_promax_ciw_snapshot as
 ),
 final as
 (
-    select ------- dna data 
+    select ------- dna data
         eps.snapshot_date::timestamp_ntz(9) as snapshot_date,
         eps.snapshot_month::varchar(10) as snapshot_month,
         eps.snapshot_year::number(18,0) as snapshot_year,
