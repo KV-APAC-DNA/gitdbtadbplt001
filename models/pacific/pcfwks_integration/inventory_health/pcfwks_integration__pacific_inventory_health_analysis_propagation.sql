@@ -157,9 +157,7 @@ CUSTOMER AS (
         ECSD.BNR_FRMT_KEY AS SAP_BNR_FRMT_KEY,
         CDDES_BNRFMT.CODE_DESC AS SAP_BNR_FRMT_DESC,
         SUBCHNL_RETAIL_ENV.RETAIL_ENV,
-        -- REGZONE.REGION_NAME AS REGION,
         null as region,
-        -- REGZONE.ZONE_NAME AS ZONE_OR_AREA,
         null as zone_or_area,
         EGCH.GCGH_REGION AS GCH_REGION,
         EGCH.GCGH_CLUSTER AS GCH_CLUSTER,
@@ -191,13 +189,7 @@ CUSTOMER AS (
             FROM EDW_CUSTOMER_SALES_DIM
             WHERE SLS_ORG IN ('3300', '330B', '330H')
             GROUP BY CUST_NUM
-        ) A,
-        -- (
-        --     SELECT DISTINCT CUSTOMER_CODE,
-        --         REGION_NAME,
-        --         ZONE_NAME
-        --     FROM IN_EDW.EDW_CUSTOMER_DIM
-        -- ) REGZONE
+        ) A
     WHERE EGCH.CUSTOMER (+) = ECBD.CUST_NUM
         AND ECSD.CUST_NUM = ECBD.CUST_NUM
         AND DECODE(
@@ -226,7 +218,6 @@ CUSTOMER AS (
         AND cddes_subchnl.code_type(+) = 'Sub Channel Key'
         AND CDDES_SUBCHNL.CODE(+) = ECSD.SUB_CHNL_KEY
         AND UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL(+)) = UPPER(CDDES_SUBCHNL.CODE_DESC)
-        -- AND LTRIM(ECSD.CUST_NUM, '0') = REGZONE.CUSTOMER_CODE(+)
 ),
 INV_SO_SI AS (
     Select * from wks_pacific_siso_propagate_final
