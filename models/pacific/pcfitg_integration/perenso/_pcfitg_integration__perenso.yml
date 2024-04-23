@@ -332,6 +332,14 @@ models:
     config:
       alias: itg_perenso_store_chk_hdr
       tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_account_fields
+    config:
+      alias: itg_perenso_account_fields
+      tags: ["anz_perenso_account", "ingestion"] 
+  - name: pcfitg_integration__sdl_raw_perenso_account_fields
+    config:
+      alias: sdl_raw_perenso_account_fields
+      tags: ["anz_perenso_account", "ingestion"]
   
 
 
