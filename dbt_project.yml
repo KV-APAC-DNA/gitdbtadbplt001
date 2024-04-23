@@ -310,3 +310,18 @@ models:
       pcfedw_access:
         +materialized: view
         +schema: PCFEDW_ACCESS
+    philippines:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      phledw_integration:
+        +materialized: table
+        +transient: false
+        +schema: PHLEDW_INTEGRATION
+      phlitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: PHLITG_INTEGRATION
+      phlwks_integration:
+        +materialized: table
+        +schema: PHLWKS_INTEGRATION
