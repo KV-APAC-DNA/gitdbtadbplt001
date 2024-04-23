@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: pcfitg_integration__itg_survey_product_grp_to_category_map
+    config:
+      alias: itg_survey_product_grp_to_category_map
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__sdl_raw_survey_product_grp_to_category_map
+    config:
+      alias: sdl_raw_survey_product_grp_to_category_map
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__itg_survey_type_to_question_map
+    config:
+      alias: itg_survey_type_to_question_map
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__sdl_raw_survey_type_to_question_map
+    config:
+      alias: sdl_raw_survey_type_to_question_map
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__itg_survey_targets
+    config:
+      alias: itg_survey_targets
+      tags: ["anz_perenso_weekly_load",""]
+  - name: pcfitg_integration__sdl_raw_survey_targets
+    config:
+      alias: sdl_raw_survey_targets
+      tags: ["anz_perenso_weekly_load",""]
+
+

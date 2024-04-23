@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__v_rpt_pacific_perfect_store
+    config: 
+      alias: v_rpt_pacific_perfect_store
+      tags: ["pacific_view","transformation"]
+
+  - name: pcfedw_integration__vw_sapbw_futures_fact
+    config: 
+      alias: vw_sapbw_futures_fact
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_actual_cogs_rate_dim
+    config: 
+      alias: vw_actual_cogs_rate_dim
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_fin_accrual_adj
+    config: 
+      alias: vw_fin_accrual_adj
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_px_master_analysis
+    config: 
+      alias: vw_px_master_analysis
+      tags: ["pacific_view","transformation"]
+
+ 

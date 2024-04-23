@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__edw_promax_analysis_snapshot
+    config: 
+      alias: edw_promax_analysis_snapshot
+      tags: ["j_pacific_promax_master_snapshot_etl_framework","transformation"]
+
+  - name: pcfedw_integration__edw_px_scan_data_fact
+    config: 
+      alias: edw_px_scan_data_fact
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_term_plan
+    config: 
+      alias: edw_px_term_plan
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_term_plan_ext
+    config: 
+      alias: edw_px_term_plan_ext
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+
+  - name: pcfedw_integration__edw_px_uom
+    config: 
+      alias: edw_px_uom
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+  - name: pcfedw_integration__edw_px_apn
+    config: 
+      alias: edw_px_apn
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]
+  - name: pcfedw_integration__edw_promax_ciw_snapshot
+    config: 
+      alias: edw_promax_ciw_snapshot
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfedw_integration__edw_promax_ciw_snapshot_history
+    config: 
+      alias: edw_promax_ciw_snapshot_history
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfedw_integration__edw_promax_ciw_snapshot_temp
+    config: 
+      alias: edw_promax_ciw_snapshot_temp
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfedw_integration__px_combined_ciw_fact
+    config: 
+      alias: px_combined_ciw_fact
+      tags: ["j_pacific_dna_etl_framework_tab_promax_ciw_snapshot","transformation"]
+  - name: pcfedw_integration__edw_px_master_fact
+    config: 
+      alias: edw_px_master_fact
+      tags: ["j_pac_promax_ciw_wrapper","transformation"]

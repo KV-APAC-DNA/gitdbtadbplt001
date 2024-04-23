@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_jjbr_curr_exch_dim
+    config: 
+      alias: vw_jjbr_curr_exch_dim
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_bwar_curr_exch_dim
+    config: 
+      alias: vw_bwar_curr_exch_dim
+      tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__vw_curr_exch_dim
+    config: 
+      alias: vw_curr_exch_dim
+      tags: ["pacific_view","transformation"]
+  

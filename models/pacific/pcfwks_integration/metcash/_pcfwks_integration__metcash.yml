@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_au_metcash_curnt_mnth
+    config:
+      alias: wks_au_metcash_curnt_mnth
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_curnt_mnth_dstrbtn_check
+    config:
+      alias: wks_au_metcash_curnt_mnth_dstrbtn_check
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_dstrbtn_date_range
+    config:
+      alias: wks_au_metcash_dstrbtn_date_range
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_dstrbtn_set
+    config:
+      alias: wks_au_metcash_dstrbtn_set
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_dstrbtn_summary
+    config:
+      alias: wks_au_metcash_dstrbtn_summary
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst12_mnth
+    config:
+      alias: wks_au_metcash_lst12_mnth
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst12_mnth_dstrbtn_check
+    config:
+      alias: wks_au_metcash_lst12_mnth_dstrbtn_check
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst3_mnth
+    config:
+      alias: wks_au_metcash_lst3_mnth
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst3_mnth_dstrbtn_check
+    config:
+      alias: wks_au_metcash_lst3_mnth_dstrbtn_check
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst6_mnth
+    config:
+      alias: wks_au_metcash_lst6_mnth
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst6_mnth_dstrbtn_check
+    config:
+      alias: wks_au_metcash_lst6_mnth_dstrbtn_check
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst_mnth
+    config:
+      alias: wks_au_metcash_lst_mnth
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_lst_mnth_dstrbtn_check
+    config:
+      alias: wks_au_metcash_lst_mnth_dstrbtn_check
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_monthly
+    config:
+      alias: wks_au_metcash_monthly
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_prod_acct_comb
+    config:
+      alias: wks_au_metcash_prod_acct_comb
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_metcash_prod_acct_date_comb
+    config:
+      alias: wks_au_metcash_prod_acct_date_comb
+      tags: ["anz_perenso_distribution", "transformation"]
+
+
+
+
+
+
+
+
+  

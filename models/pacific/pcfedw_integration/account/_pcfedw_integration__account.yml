@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__dly_sls_cust_attrb_lkp
+    config: 
+      alias: dly_sls_cust_attrb_lkp
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+  
