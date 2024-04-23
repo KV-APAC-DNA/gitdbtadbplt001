@@ -7,7 +7,7 @@ final as
     select
         acct_key::number(10,0) as acct_key,
         branch_key::number(10,0) as branch_key,
-        id::varchar(10) as id,
+        id::varchar(50) as id,
         system_primary::varchar(10) as system_primary,
         active::varchar(10) as active,
         run_id::number(14,0) as run_id,
