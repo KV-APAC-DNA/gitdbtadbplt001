@@ -516,6 +516,7 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_acct_dist_acct
       tags: ["anz_perenso_account","ingestion"]
+      # Validation Flag is N in J&J
       # tests:
       #   - test_null:
       #         not_null_columns: ["acct_key","branch_key"]
@@ -743,7 +744,6 @@ sources:
       identifier: false
     tables:
       - name: edw_time_dim
-        tags: ["",""]
 
   - name: pcfitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -754,5 +754,3 @@ sources:
       identifier: false
     tables:
     - name: itg_perenso_prod_mapping
-      tags: ["",""]
-
