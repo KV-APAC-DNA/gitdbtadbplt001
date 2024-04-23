@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_pacific_base_detail
+    config: 
+      alias: wks_pacific_base_detail
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_propagate_to
+    config: 
+      alias: pacific_propagate_to
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_propagate_from_to
+    config: 
+      alias: pacific_propagate_from_to
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_siso_propagate_to_details
+    config: 
+      alias: wks_pacific_siso_propagate_to_details
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_siso_propagate_to_existing_dtls
+    config: 
+      alias: wks_pacific_siso_propagate_to_existing_dtls
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_siso_propagate_final
+    config: 
+      alias: wks_pacific_siso_propagate_final
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation
+    config:
+      alias: pacific_inventory_health_analysis_propagation
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_pacific_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation_final
+    config:
+      alias: pacific_inventory_health_analysis_propagation_final
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation_prestep
+    config:
+      alias: pacific_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_allmonths_base
+    config: 
+      alias: wks_pacific_allmonths_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_base
+    config: 
+      alias: wks_pacific_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_lastnmonths
+    config: 
+      alias: wks_pacific_lastnmonths
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_sellout_for_inv_analysis
+    config: 
+      alias: wks_pacific_sellout_for_inv_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
