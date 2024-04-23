@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_tbl_surveyisehdr
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+    - name: sdl_ph_tbl_surveyisequestion
+      tags: ["ph_perfectstore_survey_master","ingestion"] 
+    - name: sdl_ph_tbl_surveychoices
+      tags: ["ph_perfectstore_survey_master","ingestion"] 
+    - name: sdl_ph_tbl_acctexec
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+    - name: sdl_ph_tbl_surveycpg
+      tags: ["ph_perfectstore_survey_master","ingestion"]

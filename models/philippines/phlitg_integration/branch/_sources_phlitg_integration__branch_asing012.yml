@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_tbl_isebranchmaster
+      tags: ["ph_perfectstore_branchmaster","ingestion"]

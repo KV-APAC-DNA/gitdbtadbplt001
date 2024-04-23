@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_tbl_surveyisehdr
+    config:
+      alias: itg_ph_tbl_surveyisehdr
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveyisequestion
+    config:
+      alias: itg_ph_tbl_surveyisequestion
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveychoices
+    config:
+      alias: itg_ph_tbl_surveychoices
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_acctexec
+    config:
+      alias: itg_ph_tbl_acctexec
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveycpg
+    config:
+      alias: itg_ph_tbl_surveycpg
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+      
+  
