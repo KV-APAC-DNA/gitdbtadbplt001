@@ -376,6 +376,3 @@ models:
     config:
       alias: sdl_raw_perenso_account_group_lvl
       tags: ["anz_perenso_account", "ingestion"]  
-
-
->>>>>>> e41b43ad04c0a1743a036261a9ca6376ec8447fe
