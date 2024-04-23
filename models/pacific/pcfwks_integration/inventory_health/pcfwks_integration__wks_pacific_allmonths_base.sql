@@ -1,6 +1,6 @@
 with wks_pacific_base as
 (
-    select * from snappcfwks_integration.wks_pacific_base
+    select * from {{ ref('pcfwks_integration__wks_pacific_base') }}
 ),
 edw_vw_os_time_dim as
 (

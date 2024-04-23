@@ -1,30 +1,30 @@
 with vw_pacific_inventory as
 (
-    select * from snappcfedw_integration.vw_pacific_inventory
+    select * from {{ ref('pcfedw_integration__vw_pacific_inventory') }}
 ),
 vw_pacific_sellout as
 (
-    select * from snappcfedw_integration.vw_pacific_sellout
+    select * from {{ ref('pcfedw_integration__vw_pacific_sellout') }}
 ),
 itg_mds_pacific_prod_mapping_cwh as
 (
-    select * from snappcfitg_integration.itg_mds_pacific_prod_mapping_cwh
+    select * from {{ ref('pcfitg_integration__itg_mds_pacific_prod_mapping_cwh') }}
 ),
 edw_copa_trans_fact as
 (
-    select * from aspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_customer_sales_dim as
 (
-    select * from aspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as
 (
-    select * from aspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_code_descriptions as
 (
-    select * from aspedw_integration.edw_code_descriptions
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 inv_so as
 (
