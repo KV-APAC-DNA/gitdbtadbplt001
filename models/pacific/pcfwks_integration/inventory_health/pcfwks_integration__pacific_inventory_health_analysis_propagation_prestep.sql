@@ -1,5 +1,5 @@
 with wks_pacific_siso_propagate_final as (
-    select * from {{ ref('pcfwks_integration.wks_pacific_siso_propagate_final') }}
+    select * from {{ ref('pcfwks_integration__wks_pacific_siso_propagate_final') }}
 ),
 vw_edw_reg_exch_rate as (
     select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
@@ -35,7 +35,7 @@ edw_code_descriptions as (
     select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}

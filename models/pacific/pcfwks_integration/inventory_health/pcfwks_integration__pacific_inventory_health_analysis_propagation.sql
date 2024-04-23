@@ -1,5 +1,5 @@
 with wks_pacific_siso_propagate_final as (
-    select * from {{ ref('pcfwks_integration.wks_pacific_siso_propagate_final') }}
+    select * from {{ ref('pcfwks_integration__wks_pacific_siso_propagate_final') }}
 ),
 pacific_inventory_health_analysis_propagation_prestep as (
     select * from {{ ref ('pcfwks_integration__pacific_inventory_health_analysis_propagation_prestep') }}
@@ -44,7 +44,7 @@ edw_code_descriptions as (
     select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
