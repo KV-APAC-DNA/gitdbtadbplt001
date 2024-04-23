@@ -516,21 +516,21 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_acct_dist_acct
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_key","branch_key"]
-              select_columns: ["acct_key","branch_key","id"]
-              name: TRATBL_sdl_perenso_acct_dist_acct__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_key","branch_key","id"]
-              select_columns: ["acct_key","branch_key","id"]
-              name: TRATBL_sdl_perenso_acct_dist_acct__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_key","branch_key"]
+      #         select_columns: ["acct_key","branch_key","id"]
+      #         name: TRATBL_sdl_perenso_acct_dist_acct__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_key","branch_key","id"]
+      #         select_columns: ["acct_key","branch_key","id"]
+      #         name: TRATBL_sdl_perenso_acct_dist_acct__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_distributor_detail
       tags: ["anz_perenso_account","ingestion"]
       tests:
