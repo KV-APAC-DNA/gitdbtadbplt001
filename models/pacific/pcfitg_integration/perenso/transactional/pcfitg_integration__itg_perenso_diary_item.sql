@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         unique_key=  ['store_chk_hdr_key','over_and_above_key'],
         pre_hook= "DELETE FROM {{this}} WHERE start_time IN (SELECT DISTINCT TO_DATE(SUBSTRING(start_time,0,23),'DD/MM/YYYY HH12:MI:SS AM')
-                    FROM {{'pcfsdl_raw','sdl_perenso_diary_item'}});"
+                    FROM {{ source('pcfsdl_raw','sdl_perenso_diary_item') }});"
     )
 }}
 
