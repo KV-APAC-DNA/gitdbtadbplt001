@@ -20,7 +20,7 @@ itg_perenso_account as (
 select * from {{ ref('pcfitg_integration__itg_perenso_account') }}
 ),
 edw_time_dim as (
-select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 ipa as  (select distinct acct_key,
 
