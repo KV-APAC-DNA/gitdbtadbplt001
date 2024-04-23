@@ -287,6 +287,10 @@ models:
     config: 
       alias: itg_perenso_account_group_reln
       tags: ["anz_perenso_account","ingestion"]
+  - name: pcfitg_integration__itg_perenso_account_group
+    config: 
+      alias: itg_perenso_account_group
+      tags: ["anz_perenso_account","ingestion"]
   - name: pcfitg_integration__itg_perenso_account_type
     config: 
       alias: itg_perenso_account_type
@@ -340,6 +344,13 @@ models:
     config:
       alias: sdl_raw_perenso_account_fields
       tags: ["anz_perenso_account", "ingestion"]
-  
+  - name: pcfitg_integration__itg_perenso_account_group_lvl
+    config:
+      alias: itg_perenso_account_group_lvl
+      tags: ["anz_perenso_account", "ingestion"] 
+  - name: pcfitg_integration__sdl_raw_perenso_account_group_lvl
+    config:
+      alias: sdl_raw_perenso_account_group_lvl
+      tags: ["anz_perenso_account", "ingestion"]  
 
 
