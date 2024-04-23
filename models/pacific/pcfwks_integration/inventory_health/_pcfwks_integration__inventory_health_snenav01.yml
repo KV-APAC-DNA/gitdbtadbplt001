@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_pacific_allmonths_base
+    config: 
+      alias: wks_pacific_allmonths_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_base
+    config: 
+      alias: wks_pacific_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_lastnmonths
+    config: 
+      alias: wks_pacific_lastnmonths
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_sellout_for_inv_analysis
+    config: 
+      alias: wks_pacific_sellout_for_inv_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
