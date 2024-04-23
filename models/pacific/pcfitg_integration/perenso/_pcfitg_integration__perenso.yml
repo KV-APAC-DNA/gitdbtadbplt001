@@ -28,7 +28,7 @@ models:
   - name: pcfitg_integration__sdl_raw_perenso_diary_item
     config:
       alias: sdl_raw_perenso_diary_item
-      tags: ["anz_perenso_call","ingestion"]
+      tags: ["anz_perenso_sales_rep","ingestion"]
   - name: pcfitg_integration__itg_perenso_call_objectives
     config:
       alias: itg_perenso_call_objectives
@@ -367,7 +367,7 @@ models:
   - name: pcfitg_integration__itg_perenso_diary_item
     config: 
       alias: itg_perenso_diary_item
-      tags: ["anz_perenso_call","ingestion"]
+      tags: ["anz_perenso_sales_rep","ingestion"]
   - name: pcfitg_integration__itg_perenso_account_group_lvl
     config:
       alias: itg_perenso_account_group_lvl

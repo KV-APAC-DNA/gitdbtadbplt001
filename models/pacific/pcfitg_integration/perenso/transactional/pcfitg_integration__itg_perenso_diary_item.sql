@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "DELETE FROM {{this}} WHERE start_time IN (SELECT DISTINCT TO_DATE(SUBSTRING(start_time,0,23),'DD/MM/YYYY HH12:MI:SS AM')
+        pre_hook= "DELETE FROM {{this}} WHERE to_date(start_time) IN (SELECT DISTINCT TO_DATE(SUBSTRING(start_time,0,23),'DD/MM/YYYY HH12:MI:SS AM')
                     FROM {{ source('pcfsdl_raw','sdl_perenso_diary_item') }});"
     )
 }}

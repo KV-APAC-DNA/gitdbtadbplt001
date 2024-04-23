@@ -516,6 +516,7 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_acct_dist_acct
       tags: ["anz_perenso_account","ingestion"]
+      # Validation Flag is N in J&J
       # tests:
       #   - test_null:
       #         not_null_columns: ["acct_key","branch_key"]
@@ -716,21 +717,22 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_diary_item
       tags: ["anz_perenso_sales_rep","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["diary_item_key","diary_item_type_key"]
-              select_columns: ["diary_item_key","diary_item_type_key"]
-              name: TRATBL_sdl_perenso_diary_item__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["diary_item_key","diary_item_type_key"]
-              select_columns: ["diary_item_key","diary_item_type_key"]
-              name: TRATBL_sdl_perenso_diary_item__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # Validation Flag is N in J&J: WRP_005, ANZ, JB021, SJB005
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["diary_item_key","diary_item_type_key"]
+      #         select_columns: ["diary_item_key","diary_item_type_key"]
+      #         name: TRATBL_sdl_perenso_diary_item__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["diary_item_key","diary_item_type_key"]
+      #         select_columns: ["diary_item_key","diary_item_type_key"]
+      #         name: TRATBL_sdl_perenso_diary_item__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
 
   - name: pcfedw_integration
@@ -742,7 +744,6 @@ sources:
       identifier: false
     tables:
       - name: edw_time_dim
-        tags: ["",""]
 
   - name: pcfitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -753,5 +754,3 @@ sources:
       identifier: false
     tables:
     - name: itg_perenso_prod_mapping
-      tags: ["",""]
-
