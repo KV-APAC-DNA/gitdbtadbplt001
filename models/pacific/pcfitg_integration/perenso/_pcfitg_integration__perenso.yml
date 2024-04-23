@@ -97,10 +97,6 @@ models:
     config:
       alias: sdl_raw_perenso_order_detail
       tags: ["anz_perenso_order","ingestion"]
-  - name: pcfitg_integration__itg_perenso_order_header
-    config:
-      alias: itg_perenso_order_header
-      tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_header
     config:
       alias: sdl_raw_perenso_order_header
