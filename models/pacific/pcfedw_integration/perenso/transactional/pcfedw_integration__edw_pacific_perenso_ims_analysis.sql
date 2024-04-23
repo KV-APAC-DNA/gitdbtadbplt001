@@ -1167,7 +1167,7 @@ LEFT JOIN (SELECT *
             WHERE TO_CCY = 'USD') BWAR
 ON ETD.JJ_MNTH_ID = BWAR.JJ_MNTH_ID AND BASE.CRNCY = BWAR.FROM_CCY
 WHERE DATEDIFF(MONTH,BASE.CAL_DATE,CURRENT_DATE) <= 25) ,
-union__1 as (
+subq_1 as (
 SELECT CAL_DT AS CAL_DATE,
              'FSSI' ACCT_BANNER,
              'FOODSTUFF-STH ISLAND' AS SALES_OFFICE,
@@ -1180,7 +1180,7 @@ SELECT CAL_DT AS CAL_DATE,
              CRNCY
        FROM ITG_PERENSO_FSSI_SALES
 ) ,
-union__2 as ( SELECT BILL_DT AS CAL_DATE,
+subq_2 as ( SELECT BILL_DT AS CAL_DATE,
               'FSNI' ACCT_BANNER,
               'FOODSTUFF-NTH ISLAND' AS SALES_OFFICE,
               PROD_EAN,
@@ -1192,9 +1192,9 @@ union__2 as ( SELECT BILL_DT AS CAL_DATE,
               CRNCY
         FROM ITG_PERENSO_FSNI_SALES) ,
 base as (SELECT ETD.JJ_MNTH_ID,A.* FROM (
-       select * from union__1
+       select * from subq_1
        UNION ALL
-      select * from union__2) A
+      select * from subq_2) A
         LEFT JOIN ETD ON A.CAL_DATE = ETD.CAL_DATE
         WHERE PROD_EAN IN (SELECT LTRIM(PROD_EAN,0) FROM EDW_PERENSO_PROD_DIM WHERE TRIM(PROD_EAN)<>'' GROUP BY 1 HAVING COUNT(*) > 1)) ,
 union_6 as (--For Multiple PROD EANs

@@ -93,7 +93,11 @@ select edw.acct_id,
 
        edw.acct_au_pharma_ssr_territory,
 
-       reln.id as account_probe_id
+       reln.id as account_probe_id,
+       edw.acct_store_code,
+       edw.acct_fax_opt_out,
+       edw.acct_email_opt_out,
+       edw.acct_contact_method
 
 from edw_perenso_account_dim edw,
 
@@ -152,10 +156,10 @@ acct_au_pharma_ssr_country::varchar(256) as acct_au_pharma_ssr_country,
 acct_au_pharma_ssr_state::varchar(256) as acct_au_pharma_ssr_state,
 acct_au_pharma_ssr_territory::varchar(256) as acct_au_pharma_ssr_territory,
 account_probe_id::varchar(100) as account_probe_id
--- acct_store_code::varchar(256) as acct_store_code,
--- acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
--- acct_email_opt_out::varchar(256) as acct_email_opt_out,
--- acct_contact_method::varchar(256) as acct_contact_method
+acct_store_code::varchar(256) as acct_store_code,
+acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
+acct_email_opt_out::varchar(256) as acct_email_opt_out,
+acct_contact_method::varchar(256) as acct_contact_method
 from transformed
 )
 select * from final
