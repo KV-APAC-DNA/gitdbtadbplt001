@@ -364,6 +364,10 @@ models:
     config:
       alias: sdl_raw_perenso_account_fields
       tags: ["anz_perenso_account", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_diary_item
+    config: 
+      alias: itg_perenso_diary_item
+      tags: ["anz_perenso_call","ingestion"]
   - name: pcfitg_integration__itg_perenso_account_group_lvl
     config:
       alias: itg_perenso_account_group_lvl
@@ -372,5 +376,3 @@ models:
     config:
       alias: sdl_raw_perenso_account_group_lvl
       tags: ["anz_perenso_account", "ingestion"]  
-
-
