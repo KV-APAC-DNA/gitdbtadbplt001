@@ -61,7 +61,7 @@ models:
   - name: pcfedw_integration__vw_sales_reporting
     config:
       alias: vw_sales_reporting
-      tags: ["pacific_view", "transformation"]
+      tags: ["j_pacific_dna_etl_framework_edw_sales_reporting", "transformation"]
   - name: pcfedw_integration__vw_sapbw_fact
     config:
       alias: vw_sapbw_fact
