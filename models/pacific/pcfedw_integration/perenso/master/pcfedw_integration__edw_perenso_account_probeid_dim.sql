@@ -155,7 +155,7 @@ acct_au_pharma_territory::varchar(256) as acct_au_pharma_territory,
 acct_au_pharma_ssr_country::varchar(256) as acct_au_pharma_ssr_country,
 acct_au_pharma_ssr_state::varchar(256) as acct_au_pharma_ssr_state,
 acct_au_pharma_ssr_territory::varchar(256) as acct_au_pharma_ssr_territory,
-account_probe_id::varchar(100) as account_probe_id
+account_probe_id::varchar(100) as account_probe_id,
 acct_store_code::varchar(256) as acct_store_code,
 acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
 acct_email_opt_out::varchar(256) as acct_email_opt_out,
