@@ -68,7 +68,7 @@ ipicd as (select  "TIME",
 
 from itg_perenso_instore_cycle_dates ipicd),
 itg_perenso_over_and_above_points as (
-select * from DEV_DNA_CORE.ASING012_WORKSPACE.PCFITG_INTEGRATION__ITG_PERENSO_OVER_AND_ABOVE_POINTS
+select * from {{ ref('pcfitg_integration__itg_perenso_over_and_above_points') }}
 ),
 transformed as (
 select 'Over & Above' as perenso_source,
@@ -226,9 +226,3 @@ oa_points::number(10,3) as oa_points
 from transformed
 )
 select * from final
-
-
-
-
-
---COMMIT;
