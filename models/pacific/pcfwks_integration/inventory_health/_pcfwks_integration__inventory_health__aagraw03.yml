@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: pcfwks_integration__wks_pacific_siso_propagate_final
+    config: 
+      alias: wks_pacific_siso_propagate_final
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation
+    config:
+      alias: pacific_inventory_health_analysis_propagation
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__wks_pacific_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_pacific_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation_final
+    config:
+      alias: pacific_inventory_health_analysis_propagation_final
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: pcfwks_integration__pacific_inventory_health_analysis_propagation_prestep
+    config:
+      alias: pacific_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
