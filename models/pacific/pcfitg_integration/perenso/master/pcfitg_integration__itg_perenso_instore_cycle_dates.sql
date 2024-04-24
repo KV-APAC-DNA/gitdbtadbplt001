@@ -2,7 +2,6 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['time','cycle_year'],
         pre_hook= "delete from {{this}} where (substring(time, 0, 8), cycle_year) in (select substring(code, 0, 8) as cycle,cycle_year from {{ source('pcfsdl_raw', 'sdl_mds_pacific_perenso_cycle_dates') }});"
     )
 }}

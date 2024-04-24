@@ -1,25 +1,3 @@
--- ALTER TABLE AU_EDW.EDW_PERENSO_OVER_AND_ABOVE
-
--- ADD COLUMN CYCLE_START_DATE DATE;
-
--- 
-
--- ALTER TABLE AU_EDW.EDW_PERENSO_OVER_AND_ABOVE
-
--- ADD COLUMN CYCLE_END_DATE DATE;
-
-
-
--- ALTER TABLE AU_EDW.EDW_PERENSO_OVER_AND_ABOVE
-
--- ADD COLUMN CYCLE_NUMBER VARCHAR(20);
-
-
-
--- ALTER TABLE AU_EDW.EDW_PERENSO_OVER_AND_ABOVE
-
--- ADD COLUMN OA_POINTS NUMERIC(10,3);
-
 with itg_perenso_over_and_above_state as (
     select * from {{ ref('pcfitg_integration__itg_perenso_over_and_above_state') }}
 ),

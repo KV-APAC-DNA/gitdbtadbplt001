@@ -1,18 +1,3 @@
--- ALTER TABLE AU_EDW.EDW_PERENSO_CALL
-
--- ADD COLUMN CYCLE_START_DATE DATE;
-
--- 
-
--- ALTER TABLE AU_EDW.EDW_PERENSO_CALL
-
--- ADD COLUMN CYCLE_END_DATE DATE;
-
-
-
--- ALTER TABLE AU_EDW.EDW_PERENSO_CALL
-
--- ADD COLUMN CYCLE_NUMBER VARCHAR(20);
 with itg_perenso_diary_item_type as (
   select * from {{ ref('pcfitg_integration__itg_perenso_diary_item_type') }}
 ),
@@ -25,10 +10,9 @@ itg_perenso_constants as (
 itg_perenso_instore_cycle_dates as (
   select  * from {{ ref('pcfitg_integration__itg_perenso_instore_cycle_dates') }}
 ),
-ipicd as (select  "TIME", 
-
+ipicd as (
+    select  TIME, 
         cycle_year,
-
         to_date((substring(ipicd.start_date,7,4) || '-' ||
 
                  substring(ipicd.start_date,4,2) || '-' ||
@@ -40,7 +24,6 @@ ipicd as (select  "TIME",
                  substring(ipicd.end_date,4,2) || '-' ||
 
                  substring(ipicd.end_date,1,2)),'YYYY-MM-DD') as end_date
-
 from itg_perenso_instore_cycle_dates ipicd),
 
 
@@ -101,25 +84,21 @@ and   ipdi.start_time::date <= ipicd.end_date(+)
 ),
 final as (
     select
-perenso_source::varchar(4) as perenso_source,
-diary_item_type_key::number(14,0) as diary_item_type_key,
-diary_item_type_desc::varchar(255) as diary_item_type_desc,
-diary_item_key::number(10,0) as diary_item_key,
-diary_start_time::timestamp_ntz(9) as diary_start_time,
-diary_end_time::timestamp_ntz(9) as diary_end_time,
-acct_key::number(10,0) as acct_key,
-diary_complete::varchar(5) as diary_complete,
-diary_item_complete::number(18,0) as diary_item_complete,
-count_in_call_rate::varchar(5) as count_in_call_rate,
-diary_item_category::varchar(255) as diary_item_category,
-create_user_key::number(10,0) as create_user_key,
-cycle_start_date::date as cycle_start_date,
-cycle_end_date::date as cycle_end_date,
-cycle_number::varchar(20) as cycle_number
-from transformed
+        perenso_source::varchar(4) as perenso_source,
+        diary_item_type_key::number(14,0) as diary_item_type_key,
+        diary_item_type_desc::varchar(255) as diary_item_type_desc,
+        diary_item_key::number(10,0) as diary_item_key,
+        diary_start_time::timestamp_ntz(9) as diary_start_time,
+        diary_end_time::timestamp_ntz(9) as diary_end_time,
+        acct_key::number(10,0) as acct_key,
+        diary_complete::varchar(5) as diary_complete,
+        diary_item_complete::number(18,0) as diary_item_complete,
+        count_in_call_rate::varchar(5) as count_in_call_rate,
+        diary_item_category::varchar(255) as diary_item_category,
+        create_user_key::number(10,0) as create_user_key,
+        cycle_start_date::date as cycle_start_date,
+        cycle_end_date::date as cycle_end_date,
+        cycle_number::varchar(20) as cycle_number
+    from transformed
 )
 select * from final
-
-
-
-
