@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_clobotics_task_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+    - name: sdl_ph_clobotics_store_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+    - name: sdl_ph_clobotics_survey_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+
+
+  - name: phlitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: phlitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_ph_clobotics_store_mapping
+      tags: ["",""]
