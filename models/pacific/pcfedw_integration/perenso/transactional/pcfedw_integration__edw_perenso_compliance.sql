@@ -1,24 +1,3 @@
--- alter table au_edw.edw_perenso_compliance
-
--- add column compliance_target varchar(2);
-
-
-
--- alter table au_edw.edw_perenso_compliance
-
--- add column compliance_promo_group varchar(100);
-
-
-
--- alter table au_edw.edw_perenso_compliance
-
--- drop column compliance_target;
-
-
-
--- alter table au_edw.edw_perenso_compliance
-
--- drop column compliance_promo_group;
 with itg_perenso_head_office_req_check as (
     select * from {{ ref('pcfitg_integration__itg_perenso_head_office_req_check') }}
 ),
