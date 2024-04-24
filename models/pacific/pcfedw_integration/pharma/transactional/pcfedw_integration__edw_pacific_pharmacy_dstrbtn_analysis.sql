@@ -289,8 +289,9 @@ final as (
     lst6_mnth_dstrbtn_trgt::number(18,0) as lst6_mnth_dstrbtn_trgt,
     lst12_mnth_dstrbtn_trgt::number(18,0) as lst12_mnth_dstrbtn_trgt,
     pharmacy_msl_rank::varchar(5) as pharmacy_msl_rank,
-    pharmacy_msl_flag::varchar(5)pharmacy_msl_flag,
+    pharmacy_msl_flag::varchar(5) as pharmacy_msl_flag,
     load_date::timestamp_ntz(9) as load_date
     from transformed
-),
+)
+
 select * from final
