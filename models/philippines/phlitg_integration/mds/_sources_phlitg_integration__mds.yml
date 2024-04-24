@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_ph_npi_peg_item
+    - name: sdl_mds_ph_npi_sales_groupings
+    - name: sdl_mds_ph_targets_by_account_and_skus
+    - name: sdl_mds_ph_distributor_product
+    - name: sdl_mds_ph_ref_repfranchise
+    - name: sdl_mds_ph_lav_customer
