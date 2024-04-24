@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: phlsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: phlsdl_raw
     quoting:
       database: false
       schema: false
@@ -27,7 +27,7 @@ sources:
                   schema: phlwks_integration
             - test_lookup__ff:
                 failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
-                column: "upper(coalesce(subscriber_key, ''))" 
+                column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
                 name: TRATBL_sdl_ph_sfmc_click_data__lookup_test
@@ -52,7 +52,7 @@ sources:
                   schema: phlwks_integration
             - test_lookup__ff:
                 failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
-                column: "upper(coalesce(subscriber_key, ''))" 
+                column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
                 name: TRATBL_sdl_ph_sfmc_complaint_data__lookup_test
@@ -84,7 +84,7 @@ sources:
                   schema: phlwks_integration
             - test_lookup__ff:
                 failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
-                column: "upper(coalesce(subscriber_key, ''))" 
+                column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
                 name: TRATBL_sdl_ph_sfmc_sent_data__lookup_test
