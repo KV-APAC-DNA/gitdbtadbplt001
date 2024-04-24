@@ -2,8 +2,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key=  ['time_period']
+        incremental_strategy= "append",
+        prehook="delete from {{this}} where time_period 
+        in (select distinct week_ending_date from {{ ref('pcfitg_integration__sdl_pharm_sellout_weekly_raw') }})"
     )
 }}
 

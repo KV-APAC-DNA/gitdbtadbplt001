@@ -181,7 +181,7 @@ SELECT
 ),
 transformed as(
 SELECT
-  convert_timezone('Australia/Sydney', current_timestamp()) AS SNAPSHOT_DATE,
+  convert_timezone('Australia/Sydney', current_timestamp())::timestamp_ntz(9) AS SNAPSHOT_DATE,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'MON') AS SNAPSHOT_MONTH,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'yyyy') AS SNAPSHOT_YEAR,
   ac_code::varchar(50) as ac_code,

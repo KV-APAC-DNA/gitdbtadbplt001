@@ -340,7 +340,7 @@ final as(
     select * from union2
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where snapshot_date > (select max(snapshot_date) from {{ this }}) 
+    where snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
     {% endif %}
 )
 select * from final
