@@ -40,7 +40,7 @@ edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 itg_query_parameters as (
-select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+select * from {{ source('pcfitg_integration', 'itg_query_parameters') }}
 ),
 edw_invoice_fact as (
 select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
