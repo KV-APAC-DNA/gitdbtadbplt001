@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_mds_ph_lav_product
+    config:
+      alias: itg_mds_ph_lav_product
+      tags: ["ph_mds_itg_refresh","ingestion"]
