@@ -73,6 +73,7 @@ final as(
         px_tot_frcst::number(18,0) as px_tot_frcst,                 
         px_base_frcst::number(18,0) as px_base_frcst,                
         px_promo_frcst::number(18,0) as px_promo_frcst,
+        null::number(18,0) as count
     from source
 )
 select * from final

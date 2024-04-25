@@ -47,7 +47,7 @@ sources:
     - name: sdl_mds_pacific_ciw_adjustment
       tags: ["anz_mds_sdl_to_edw_load",""]
     - name: sdl_mds_pacific_acct_nielsencode_mapping
-      tags: ["j_pac_iri_scan_sales_etl_framework",""]
+      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
 
   - name: pcfitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
