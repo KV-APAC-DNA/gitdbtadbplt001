@@ -867,7 +867,7 @@ FROM
                   (0):: numeric
                 ):: numeric(18, 0) END AS pmt_terms_val, 
                 CASE WHEN (
-                  (accnt.key_measure):: text = (
+                  trim(accnt.key_measure):: text = (
                     'Data and Insights' :: character varying
                   ):: text
                 ) THEN copa.amt_obj_crncy ELSE (
