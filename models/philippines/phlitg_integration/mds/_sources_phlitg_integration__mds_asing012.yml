@@ -11,3 +11,11 @@ sources:
     tables:
     - name: sdl_mds_ph_targets_by_national_and_skus
       tags: ["ph_mds_itg_refresh","ingestion"]
+    - name: sdl_mds_ph_gt_customer
+      tags: ["ph_mds_itg_refresh","ingestion"]
+    - name: sdl_mds_ph_ref_pos_primary_sold_to
+      tags: ["ph_mds_itg_refresh","ingestion"]
+    - name: sdl_mds_ph_pos_product
+      tags: ["ph_mds_itg_refresh","ingestion"]
+    - name: sdl_mds_ph_ref_parent_customer
+      tags: ["ph_mds_itg_refresh","ingestion"]

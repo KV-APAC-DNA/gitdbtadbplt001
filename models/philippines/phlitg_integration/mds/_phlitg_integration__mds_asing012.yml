@@ -5,3 +5,19 @@ models:
     config:
       alias: itg_mds_ph_targets_by_national_and_skus
       tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_gt_customer
+    config:
+      alias: itg_mds_ph_gt_customer
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to
+    config:
+      alias: itg_mds_ph_ref_pos_primary_sold_to
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_pos_product
+    config:
+      alias: itg_mds_ph_pos_product
+      tags: ["ph_mds_itg_refresh","ingestion"]    
+  - name: phlitg_integration__itg_mds_ph_ref_parent_customer
+    config:
+      alias: itg_mds_ph_ref_parent_customer
+      tags: ["ph_mds_itg_refresh","ingestion"]

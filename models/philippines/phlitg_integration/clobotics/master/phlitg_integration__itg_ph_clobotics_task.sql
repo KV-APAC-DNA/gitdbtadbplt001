@@ -14,7 +14,7 @@ with sdl_ph_clobotics_task_raw_data as
 ),
 itg_ph_clobotics_store_mapping as 
 (
-    select * from {{ source('phlitg_integration', 'itg_ph_clobotics_store_mapping') }} ----to be confirmed
+    select * from {{ source('phlitg_integration', 'itg_ph_clobotics_store_mapping') }} 
 ),
 trans as
 (
