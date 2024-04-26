@@ -381,7 +381,7 @@ final as
         work_item_type::varchar(255) as work_item_type,
         work_item_start_date::timestamp_ntz(9) as work_item_start_date,
         work_item_end_date::timestamp_ntz(9) as work_item_end_date,
-        survery_notes::varchar(100) as survery_notes,
+        survery_notes::varchar(16777216) as survery_notes,
         fail_reason_desc::varchar(256) as fail_reason_desc,
         req_start_date::timestamp_ntz(9) as req_start_date,
         req_end_date::timestamp_ntz(9) as req_end_date,
