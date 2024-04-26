@@ -53,11 +53,11 @@ select wapds.delvry_dt,
        eppd.prod_grocery_category,
        eppd.prod_grocery_brand,
        case 
-             when (eppd.prod_active_nz_pharma != 'not assigned' 
-                  or eppd.prod_active_au_grocery != 'not assigned' 
-                  or eppd.prod_active_metcash != 'not assigned' 
-                  or eppd.prod_active_nz_grocery != 'not assigned' 
-                  or eppd.prod_active_au_pharma != 'not assigned')
+             when (eppd.prod_active_nz_pharma != 'NOT ASSIGNED' 
+                  or eppd.prod_active_au_grocery != 'NOT ASSIGNED' 
+                  or eppd.prod_active_metcash != 'NOT ASSIGNED' 
+                  or eppd.prod_active_nz_grocery != 'NOT ASSIGNED' 
+                  or eppd.prod_active_au_pharma != 'NOT ASSIGNED')
              then 1
              else 0
        end prod_active_status,
