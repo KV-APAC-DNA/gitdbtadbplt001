@@ -79,21 +79,22 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_survey_result
       tags: ["anz_perenso_survey_ques","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
-              not_null_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_survey_result__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
-              group_by_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_survey_result__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # Validation Flag is 'N' in JnJ - WRP_008, JB031, ANZ
+      # tests:
+      #     - test_null:
+      #         select_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
+      #         not_null_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_survey_result__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
+      #         group_by_columns: ["store_chk_hdr_key","line_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_survey_result__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
     - name: sdl_perenso_over_and_above
       tags: ["anz_perenso_over_and_above","ingestion"]
