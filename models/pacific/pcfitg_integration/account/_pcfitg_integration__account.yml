@@ -4,7 +4,7 @@ models:
   - name: pcfitg_integration__itg_acct_nielsencode_mapping
     config:
       alias: itg_acct_nielsencode_mapping
-      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
+      tags: ["j_pac_iri_scan_sales_etl_framework","inactive"]
       
   - name: pcfitg_integration__itg_mds_pacific_prod_mapping_cwh
     config:

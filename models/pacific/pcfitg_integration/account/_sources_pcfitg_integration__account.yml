@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_acct_nielsencode_mapping
-      tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
+      tags: ["j_pac_iri_scan_sales_etl_framework","inactive"]
     - name: sdl_mds_pacific_cust_attrb
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
