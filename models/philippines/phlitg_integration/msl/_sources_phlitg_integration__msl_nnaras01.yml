@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_non_ise_robinsons_ds
+    - name: sdl_ph_non_ise_waltermart
+    - name: sdl_ph_non_ise_svi_smc
+    - name: sdl_ph_non_ise_shm
+    - name: sdl_ph_non_ise_robinsons_sm
+    - name: sdl_ph_non_ise_landmark_sm
+    - name: sdl_ph_non_ise_super_8
+    - name: sdl_ph_non_ise_puregold
+    - name: sdl_ph_non_ise_landmark_ds
+    - name: sdl_ph_non_ise_rustans
