@@ -8,7 +8,7 @@ with source as(
     select * from {{ source('phlsdl_raw', 'sdl_mds_ph_ref_distributors') }}
 ),
 wks as (
-    select  dstrbtr_grp_cd,
+    select  dstrbtr_grp_cd, 
             dstrbtr_grp_nm,
             primary_sold_to,
             primary_sold_to_nm,
