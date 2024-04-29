@@ -393,7 +393,7 @@ final as
         activated::varchar(10) as activated,
         over_and_above_notes::varchar(255) as over_and_above_notes,
         load_date::date as load_date,
-        question_response::varchar(256) as question_response,
+        question_response::varchar(16777216) as question_response,
         dash_start_time::date as dash_start_time,
         dash_end_time::date as dash_end_time,
         cycle_start_date::date as cycle_start_date,
