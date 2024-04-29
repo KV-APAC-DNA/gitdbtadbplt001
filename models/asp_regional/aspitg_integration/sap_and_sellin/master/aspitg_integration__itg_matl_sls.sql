@@ -50,7 +50,7 @@ final as (
         zdel_unit as delv_unit,
         zschme :: varchar(3) as delv_uom,
         zvrkme :: varchar(3) as sls_unit,
-        zlaunchd as launch_dt,
+        try_to_date(zlaunchd,'YYYYMMDD') as launch_dt,
         znpi_ind :: varchar(1) as npi_in,
         zlmat_gr1 :: varchar(10) as lcl_mat_grp_1,
         zlmat_gr2 :: varchar(10) as lcl_mat_grp_2,
