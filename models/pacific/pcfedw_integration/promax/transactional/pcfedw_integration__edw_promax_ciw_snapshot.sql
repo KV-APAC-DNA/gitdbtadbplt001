@@ -5,7 +5,7 @@
                                         {% if target.name=='prod' %}
                                             pcfedw_integration.edw_promax_ciw_snapshot_temp
                                         {% else %}
-                                            {{schema}}.pcfedw_integration__edw_promax_ciw_snapshot
+                                            {{schema}}.pcfedw_integration__edw_promax_ciw_snapshot_temp
                                         {% endif %}
                 clone {{this}};"
     )
