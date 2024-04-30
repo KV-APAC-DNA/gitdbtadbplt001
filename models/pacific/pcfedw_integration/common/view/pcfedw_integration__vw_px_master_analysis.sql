@@ -89,7 +89,7 @@ final as
         vmd.updt_dt,
         epmf.ac_code,
         epmf.ac_longname,
-        epmf.p_promonumber,
+        coalesce(epmf.p_promonumber,'') as p_promonumber,
         epmf.p_startdate,
         epmf.p_stopdate,
         epmf.promo_length,
