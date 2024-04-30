@@ -118,7 +118,7 @@ FROM (
         ) mat ON (
             (
                 (
-                    ((inv.year)::text + (inv.mnth_no)::text) = (mat.mnth_id)::text
+                    ((inv.year)::text || (inv.mnth_no)::text) = (mat.mnth_id)::text
                 )
                 AND ((inv.item_cd)::text = (mat.item_cd)::text)
             )
