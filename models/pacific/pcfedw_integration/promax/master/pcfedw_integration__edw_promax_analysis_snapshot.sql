@@ -246,5 +246,9 @@ and
 (jj_mnth_id)< cast((SUBSTRING(add_months(current_timestamp()::timestamp_ntz(9),cast((select parameter_value from itg_query_parameters where parameter_name='Pacific_Promax_master_snapshot_data_forecast_months')as integer)),1,4))
 
 ||(SUBSTRING(add_months(current_timestamp()::timestamp_ntz(9),cast((select parameter_value from itg_query_parameters where parameter_name='Pacific_Promax_master_snapshot_data_forecast_months')as integer)),6,2)) as numeric)
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+    and convert_timezone('Australia/Sydney', current_timestamp())::date > (select max(snapshot_date)::date from {{ this }})
+    {% endif %}
 )
 select * from transformed

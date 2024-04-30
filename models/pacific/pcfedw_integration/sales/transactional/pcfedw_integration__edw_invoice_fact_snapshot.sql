@@ -124,8 +124,14 @@ from (select eif.co_cd,
             from edw_invoice_fact a
 
             where a.nts_bill <> 0
-
-            and   a.fut_sls_qty <> 0) eif,
+                
+            and   a.fut_sls_qty <> 0
+            
+            {% if is_incremental() %}
+                -- this filter will only be applied on an incremental run
+                and convert_timezone ('Australia/Sydney',current_timestamp())::date > (select max(snapshot_date)::date from {{ this }}) 
+            {% endif %}
+            ) eif,
 
            (select distinct dly_sls_cust_attrb_lkp.cmp_id
 
