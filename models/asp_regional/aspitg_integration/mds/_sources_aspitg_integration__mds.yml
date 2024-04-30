@@ -36,7 +36,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate__ff:
-              group_by_columns: ["country_code",'"dcl code"','"sales channel_name"']
+              group_by_columns: ["country_code",'"dcl code"','"sales channel_name"','"sap code"']
               name: TRATBL_sdl_mds_apac_dcl_products__duplicate_test
               config:
                 store_failures: true
