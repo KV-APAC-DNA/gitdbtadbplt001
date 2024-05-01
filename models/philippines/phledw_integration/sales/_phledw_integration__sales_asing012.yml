@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_pos_inventory
+    config:
+      alias: edw_vw_ph_pos_inventory
+      tags: ["","transformation"]
+  - name: phledw_integration__edw_vw_ph_pos_sales_fact
+    config:
+      alias: edw_vw_ph_pos_sales_fact
+      tags: ["","transformation"]
+  - name: phledw_integration__edw_vw_ph_pos_sellout_sales_fact
+    config:
+      alias: edw_vw_ph_pos_sellout_sales_fact
+      tags: ["","transformation"]

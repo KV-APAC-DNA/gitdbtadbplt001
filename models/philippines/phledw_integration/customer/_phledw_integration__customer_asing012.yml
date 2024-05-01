@@ -1,0 +1,9 @@
+models:
+  - name: phledw_integration__edw_vw_ph_dstrbtr_customer_dim
+    config:
+      alias: edw_vw_ph_dstrbtr_customer_dim
+      tags: ["","transformation"]
+  - name: phledw_integration__edw_vw_ph_pos_wm_competitor_analysis
+    config:
+      alias: edw_vw_ph_pos_wm_competitor_analysis
+      tags: ["","transformation"]
