@@ -11,11 +11,86 @@ sources:
     tables:
     - name: sdl_ph_tbl_surveyisehdr
       tags: ["ph_perfectstore_survey_master","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["iseid"]
+              not_null_columns: ["iseid"]
+              name: TRATBL_sdl_ph_tbl_surveyisehdr__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid"]
+              group_by_columns: ["iseid"]
+              name: TRATBL_sdl_ph_tbl_surveyisehdr__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_ph_tbl_surveyisequestion
       tags: ["ph_perfectstore_survey_master","ingestion"] 
+      tests:
+          - test_null:
+              select_columns: ["iseid","quesno"]
+              not_null_columns: ["iseid","quesno"]
+              name: TRATBL_sdl_ph_tbl_surveyisequestion__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid","quesno"]
+              group_by_columns: ["iseid","quesno"]
+              name: TRATBL_sdl_ph_tbl_surveyisequestion__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_ph_tbl_surveychoices
       tags: ["ph_perfectstore_survey_master","ingestion"] 
+      tests:
+          - test_null:
+              select_columns: ["iseid","quesno","answerseq"]
+              not_null_columns: ["iseid","quesno","answerseq"]
+              name: TRATBL_sdl_ph_tbl_surveychoices__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid","quesno","answerseq"]
+              group_by_columns: ["iseid","quesno","answerseq"]
+              name: TRATBL_sdl_ph_tbl_surveychoices__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_ph_tbl_acctexec
       tags: ["ph_perfectstore_survey_master","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["slsperid"]
+              not_null_columns: ["slsperid"]
+              name: TRATBL_sdl_ph_tbl_acctexec__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["slsperid"]
+              group_by_columns: ["slsperid"]
+              name: TRATBL_sdl_ph_tbl_acctexec__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_ph_tbl_surveycpg
       tags: ["ph_perfectstore_survey_master","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["slsperid","custcode","branchcode","visitdate"]
+              not_null_columns: ["slsperid","custcode","branchcode","visitdate"]
+              name: TRATBL_sdl_ph_tbl_surveycpg__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["slsperid","custcode","branchcode","visitdate"]
+              group_by_columns: ["slsperid","custcode","branchcode","visitdate"]
+              name: TRATBL_sdl_ph_tbl_surveycpg__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
