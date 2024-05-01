@@ -2,9 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook = "delete from {{this}} where file_nm in (select distinct file_name from (select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_sm_goods') }}
-        union all 
-        select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }}) );"
+        pre_hook = "delete from {{this}} where file_nm in (select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_sm_goods') }}
+        union 
+        select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }} );"
     )
 }}
 with itg_mds_ph_pos_pricelist as (

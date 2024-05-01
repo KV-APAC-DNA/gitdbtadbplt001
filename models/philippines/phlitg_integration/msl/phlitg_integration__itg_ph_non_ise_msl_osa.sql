@@ -2,26 +2,26 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where ( sku_code,osa_check_date,UPPER(branch_code) ,UPPER(retailer_name) ) in (
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }} WHERE encoded_report = '1'
+        pre_hook= "delete from {{this}} where ( coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) ) in (
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }} WHERE encoded_report = '1'
           union 
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }} WHERE encoded_report = '1'
-          union all
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }} WHERE encoded_report = '1'
-          union all
-          select distinct sku_code,osa_check_date,UPPER(branch_code) as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }} WHERE encoded_report = '1'
+          union 
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }} WHERE encoded_report = '1'
+          union 
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }} WHERE encoded_report = '1'
          );"
     )
 }}

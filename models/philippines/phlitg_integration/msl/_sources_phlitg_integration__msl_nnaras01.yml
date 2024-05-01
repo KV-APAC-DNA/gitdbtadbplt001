@@ -10,6 +10,42 @@ sources:
       identifier: false
     tables:
     - name: sdl_ph_non_ise_robinsons_ds
+      tests:
+        - test_null_nnaras01:
+                select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
+                not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
+                name: TRATBL_sdl_ph_non_ise_robinsons_ds__null_test
+                filter: " ENCODED_REPORT = '1'"
+                config:
+                  store_failures: true
+                  schema: phl_integration
+        - test_duplicate:
+            select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
+            group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
+            filter: " ENCODED_REPORT = '1'"
+            name: TRATBL_sdl_ph_non_ise_robinsons_ds__duplicate_test
+            config:
+              store_failures: true
+              schema: phl_integration
+        - test_date_format_odd_eve_leap_nnaras01:
+            model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+            date_column: "osa_check_date"
+            filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
+            select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
+            name: TRATBL_sdl_ph_non_ise_shm__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: phl_integration
+        - test_lookup:
+              select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
+              column: "UPPER(TRIM(RETAILER_NAME))"
+              lookup_column: "UPPER(TRIM(RETAILER_NAME))"
+              lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+              name: TRATBL_sdl_ph_non_ise_shm__lookup_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_ph_non_ise_waltermart
     - name: sdl_ph_non_ise_svi_smc
     - name: sdl_ph_non_ise_shm

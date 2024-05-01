@@ -10,9 +10,122 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_ph_npi_peg_item
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["peg_itemcode_code","peg_itemcode_name","code","salescycle"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_npi_peg_item__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["peg_itemcode_code","peg_itemcode_name","code","salescycle"]
+              group_by_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_npi_peg_item__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_npi_sales_groupings
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["code","name"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_npi_sales_groupings__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["code","name"]
+              group_by_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_npi_sales_groupings__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_targets_by_account_and_skus
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["account_code","sku_code","year","activity","area"]
+              not_null_columns: ["account_code","sku_code","year"]
+              name: TRATBL_sdl_mds_ph_targets_by_account_and_skus__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["account_code","sku_code","year","activity","area"]
+              group_by_columns: ["account_code","sku_code","year"]
+              name: TRATBL_sdl_mds_ph_targets_by_account_and_skus__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_distributor_product
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["itemcode","distcode_code","name"]
+              not_null_columns: ["itemcode","distcode_code"]
+              name: TRATBL_sdl_mds_ph_distributor_product__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["itemcode","distcode_code","name"]
+              group_by_columns: ["itemcode","distcode_code"]
+              name: TRATBL_sdl_mds_ph_distributor_product__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
     - name: sdl_mds_ph_ref_repfranchise
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["code","name"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_ref_repfranchise__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["code","name"]
+              group_by_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_ref_repfranchise__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_lav_customer 
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["code","name"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_lav_customer__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["code","name"]
+              group_by_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_lav_customer__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_pos_pricelist
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["product_code_code","yearmo","code","name"]
+              not_null_columns: ["product_code_code","yearmo"]
+              name: TRATBL_sdl_mds_ph_pos_pricelist__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["product_code_code","yearmo","code","name"]
+              group_by_columns: ["product_code_code","yearmo"]
+              name: TRATBL_sdl_mds_ph_pos_pricelist__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
