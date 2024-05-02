@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_sellout_analysis
+    config:
+      alias: edw_mv_ph_customer_dim
+      tags: ["ph_analysis","transformation"]

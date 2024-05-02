@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_siso_analysis
+    config:
+      alias: edw_vw_ph_siso_analysis
+      tags: ["ph_siso_analysis","transformation"]

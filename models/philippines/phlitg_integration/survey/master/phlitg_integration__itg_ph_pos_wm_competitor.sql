@@ -29,7 +29,6 @@ final as (
         current_timestamp::timestamp_ntz(9) as crtd_dttm,
         current_timestamp::timestamp_ntz(9) as updt_dttm
     from source
-    where rnk = 1
 )
 select * from final
 
