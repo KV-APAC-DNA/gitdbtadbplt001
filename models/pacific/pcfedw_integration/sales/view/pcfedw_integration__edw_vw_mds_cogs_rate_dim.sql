@@ -177,7 +177,7 @@ FROM (
 final as
 (
     select * from temp_a
-    union all
+    union
     select * from temp_b
 )
 select * from final
