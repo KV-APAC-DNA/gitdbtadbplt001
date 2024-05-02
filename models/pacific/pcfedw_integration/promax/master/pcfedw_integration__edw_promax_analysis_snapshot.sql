@@ -174,7 +174,7 @@ SELECT
   LEFT JOIN vw_material_dim AS vmd
     ON CAST(epmf.matl_id AS TEXT) = LTRIM(CAST(vmd.matl_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
   LEFT JOIN edw_time_dim AS etd
-    ON ltrim(epmf.promotionforecastweek)::date = ltrim(etd.cal_date)::date
+    ON (epmf.promotionforecastweek)::date = (etd.cal_date)::date
   WHERE
     epmf.gltt_rowid = epgm.row_id
     AND CAST(epgm.sap_account AS TEXT) = CAST(cpf.sap_accnt AS TEXT)
