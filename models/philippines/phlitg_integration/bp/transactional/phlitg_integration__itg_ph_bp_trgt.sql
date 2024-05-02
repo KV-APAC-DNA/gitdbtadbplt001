@@ -20,7 +20,7 @@ final as
     brnd_cd::varchar(100) as brnd_cd,
     tp_trgt_amt::number(15,4) as tp_trgt_amt,
     concat(left(filename, 10), '.xlsx')::varchar(100) as filename,
-    run_id::varchar(100) as run_id,
+    run_id::varchar(50) as run_id,
     current_timestamp()::timestamp_ntz(9) as crtd_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source

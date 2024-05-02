@@ -5,7 +5,7 @@
         unique_key=  ['jj_mnth_id','filename'],
         pre_hook= "delete from {{this}} using (
         select jj_mnth_id,filename from {{ source('phlsdl_raw', 'sdl_ph_le_trgt') }}
-        ) sdl where substring(sdl.filename, 7, 4) = substring(itg_ph_le_trgt.jj_mnth_id, 1, 4) and substring(sdl.jj_mnth_id, 5, 2) = substring(itg_ph_le_trgt.jj_mnth_id, 5, 2);"
+        ) sdl where substring(sdl.filename, 7, 4) = substring({{this}}.jj_mnth_id, 1, 4) and substring(sdl.jj_mnth_id, 5, 2) = substring({{this}}.jj_mnth_id, 5, 2);"
     )
 }}
 with source as
