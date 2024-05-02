@@ -122,6 +122,10 @@ final as(
         case when substr(totnoafc,-1) = '-' then substr(totnoafc, 1, length(totnoafc)-1)::number(17,3) * -1
         else totnoafc::number(17,3) end as totnoafc
     from source
+     {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.create_dt > (select max(create_dt) from {{ this }}) 
+    {% endif %}
 
 )
 select * from final
