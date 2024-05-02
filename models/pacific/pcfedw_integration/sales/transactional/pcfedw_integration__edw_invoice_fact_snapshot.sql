@@ -158,10 +158,7 @@ from (select eif.co_cd,
       where t1.cal_date::date = convert_timezone ('Australia/Sydney',current_timestamp())::date) etd
 
     where etd.jj_mnth_id = orders.fisc_yr_src
-    {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        and convert_timezone ('Asia/Singapore',current_timestamp())::date > (select max(snapshot_date)::date from {{ this }}) 
-    {% endif %}
+    and convert_timezone ('Asia/Singapore',current_timestamp())::date > (select max(snapshot_date)::date from {{ this }}) 
 ),
 transformed as (
 select * from final_1
