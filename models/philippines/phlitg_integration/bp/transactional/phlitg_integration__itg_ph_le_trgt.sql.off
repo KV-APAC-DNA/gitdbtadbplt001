@@ -1,0 +1,29 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        unique_key=  ['jj_mnth_id','filename'],
+        pre_hook= "delete from {{this}} using (
+        select jj_mnth_id,filename from {{ source('phlsdl_raw', 'sdl_ph_le_trgt') }}
+        ) sdl where substring(sdl.filename, 7, 4) = substring(itg_ph_le_trgt.jj_mnth_id, 1, 4) and substring(sdl.jj_mnth_id, 5, 2) = substring(itg_ph_le_trgt.jj_mnth_id, 5, 2);"
+    )
+}}
+with source as
+(
+    select * from {{ source('phlsdl_raw', 'sdl_ph_le_trgt') }}
+),
+final as
+( 
+    select
+    jj_mnth_id::number(18,0) as jj_mnth_id,
+	cust_id::number(18,0) as cust_id,
+	trgt_type::varchar(10) as trgt_type,
+	brnd_cd::varchar(100) as brnd_cd,
+	tp_trgt_amt::number(15,4) as tp_trgt_amt,
+	filename::varchar(20) as filename,
+	cdl_dttm::varchar(50) as cdl_dttm,
+    current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+    current_timestamp()::timestamp_ntz(9) as updt_dttm
+    from source
+)
+select * from final

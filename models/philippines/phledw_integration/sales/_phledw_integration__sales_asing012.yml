@@ -4,12 +4,12 @@ models:
   - name: phledw_integration__edw_vw_ph_pos_inventory
     config:
       alias: edw_vw_ph_pos_inventory
-      tags: ["","transformation"]
+      tags: ["philippines_views","transformation"]
   - name: phledw_integration__edw_vw_ph_pos_sales_fact
     config:
       alias: edw_vw_ph_pos_sales_fact
-      tags: ["","transformation"]
+      tags: ["philippines_views","transformation"]
   - name: phledw_integration__edw_vw_ph_pos_sellout_sales_fact
     config:
       alias: edw_vw_ph_pos_sellout_sales_fact
-      tags: ["","transformation"]
+      tags: ["philippines_views","transformation"]

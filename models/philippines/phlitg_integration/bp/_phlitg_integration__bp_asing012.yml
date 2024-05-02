@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_bp_trgt
+    config:
+      alias: itg_ph_bp_trgt
+      tags: ["ph_bp_target","ingestion"]
+  - name: phlitg_integration__sdl_raw_ph_bp_trgt
+    config:
+      alias: sdl_raw_ph_bp_trgt
+      tags: ["ph_bp_target","ingestion"]
+  - name: phlitg_integration__itg_ph_le_trgt
+    config:
+      alias: itg_ph_le_trgt
+      tags: ["","transformation"]
