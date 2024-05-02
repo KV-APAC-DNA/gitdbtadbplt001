@@ -23,9 +23,9 @@ itg_perenso_constants as (
        select * from {{ ref('pcfitg_integration__itg_perenso_constants') }}
 ),
 transformed as (
-select 'compliance' as perenso_source,
+select 'Compliance' as perenso_source,
 
-       'compliance' as todo_type,  --ipc1.const_desc as todo_type,
+       'Compliance' as todo_type,  --ipc1.const_desc as todo_type,
 
        iphorc.store_chk_hdr_key,
 
