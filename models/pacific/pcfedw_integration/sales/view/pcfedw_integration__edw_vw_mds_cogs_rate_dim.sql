@@ -72,7 +72,7 @@ FROM (
                             )
                     ) exch
                     JOIN (
-                        SELECT edw_time_dim.jj_mnth_id,
+                        SELECT DISTINCT edw_time_dim.jj_mnth_id,
                             (edw_time_dim.jj_year)::character varying AS jj_year,
                             edw_time_dim.time_id
                         FROM edw_time_dim
@@ -153,7 +153,7 @@ FROM (
                                         )
                                 ) exch
                                 JOIN (
-                                    SELECT edw_time_dim.jj_mnth_id,
+                                    SELECT DISTINCT edw_time_dim.jj_mnth_id,
                                         (edw_time_dim.jj_year)::character varying AS jj_year,
                                         edw_time_dim.time_id
                                     FROM edw_time_dim
