@@ -2,45 +2,45 @@ with edw_ph_sellout_analysis as (
     select * from snaposeedw_integration.edw_ph_sellout_analysis
 ),
 edw_product_key_attributes as (
-    select * from snapaspedw_integration.edw_product_key_attributes
+    select * from aspedw_integration.edw_product_key_attributes
 ),
 itg_query_parameters as (
-    select * from phlitg_integration.itg_query_parameters
+    select * from snaposeitg_integration.itg_query_parameters
 ),
 edw_vw_ph_sellout_inventory_fact as (
-    select * from snaposeedw_integration.edw_vw_os_sellout_inventory_fact
+    select * from phledw_integration.edw_vw_os_sellout_inventory_fact
     where cntry_cd = 'PH'
 ),
 edw_vw_os_time_dim as (
     select * from snenav01_workspace.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
 ),
 edw_vw_ph_dstrbtr_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
+    select * from phledw_integration.edw_vw_os_dstrbtr_customer_dim
     where cntry_cd = 'PH'
 ),
 edw_vw_ph_dstrbtr_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_dstrbtr_material_dim
+    select * from phledw_integration.edw_vw_os_dstrbtr_material_dim
     where cntry_cd = 'PH'
 ),
 edw_vw_ph_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_material_dim
+    select * from phledw_integration.edw_vw_os_material_dim
     where cntry_key = 'PH'
 ),
 itg_mds_ph_lav_product as (
-    select * from phlitg_integration.itg_mds_ph_lav_product
+    select * from snaposeitg_integration.itg_mds_ph_lav_product
 ),
 itg_mds_ph_pos_pricelist as (
-    select * from phlitg_integration.itg_mds_ph_pos_pricelist
+    select * from snaposeitg_integration.itg_mds_ph_pos_pricelist
 ),
 edw_mv_ph_customer_dim as (
-    select * from phledw_integration.edw_mv_ph_customer_dim
+    select * from snaposeedw_integration.edw_mv_ph_customer_dim
 ),
 edw_vw_ph_sellin_sales_fact as (
-    select * from snaposeedw_integration.edw_vw_os_sellin_sales_fact
+    select * from phledw_integration.edw_vw_os_sellin_sales_fact
     where cntry_nm = 'PH'
 ),
 edw_vw_ph_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
+    select * from phledw_integration.edw_vw_os_customer_dim
     where sap_cntry_cd = 'PH'
 ),
 dstrbtr_matl as
@@ -174,8 +174,8 @@ dstrbtr_matl as
                     from edw_vw_ph_dstrbtr_material_dim
                     where cntry_cd = 'PH'
                 ) VEODMD
-            where veodcd.dstrbtr_grp_cd(+) = a.dstrbtr_grp_cd
-                and veodmd.dstrbtr_grp_cd(+) = a.dstrbtr_grp_cd
+            where trim(veodcd.dstrbtr_grp_cd(+)) = trim(a.dstrbtr_grp_cd)
+                and trim(veodmd.dstrbtr_grp_cd(+)) = trim(a.dstrbtr_grp_cd)
                 and upper(trim(veodmd.dstrbtr_matl_num(+))) = upper(trim(a.dstrbtr_matl_num))
         ) vosinv1,
         (
@@ -186,9 +186,9 @@ dstrbtr_matl as
             where cntry_key = 'PH'
                 AND UPPER(prod.ctry_nm) = 'PHILIPPINES'
         ) VEOMD
-    WHERE LTRIM(VEOMD.SAP_MATL_NUM(+), '0') = LTRIM(VOSINV1.SAP_MATL_NUM, '0')
-        AND LTRIM(NVL(VOSINV1.DSTRBTR_MATL_NUM,'NA'), '0') NOT IN (
-            SELECT DISTINCT LTRIM(NVL(ITEM_CD, 'NA'), '0')
+    WHERE trim(LTRIM(VEOMD.SAP_MATL_NUM(+), '0')) = trim(LTRIM(VOSINV1.SAP_MATL_NUM, '0'))
+        AND LTRIM(NVL(trim(VOSINV1.DSTRBTR_MATL_NUM),'NA'), '0') NOT IN (
+            SELECT DISTINCT LTRIM(NVL(trim(ITEM_CD), 'NA'), '0')
             FROM ITG_MDS_PH_LAV_PRODUCT
             WHERE ACTIVE = 'Y'
         )
@@ -318,7 +318,7 @@ set_1 as
         0 AS END_STOCK_VAL,
         prod.pka_productkey
     FROM EDW_PH_SELLOUT_ANALYSIS SELL
-    LEFT JOIN EDW_PRODUCT_KEY_ATTRIBUTES PROD ON SELL.SKU = ltrim(prod.matl_num, '0')
+    LEFT JOIN EDW_PRODUCT_KEY_ATTRIBUTES PROD ON trim(SELL.SKU) = trim(ltrim(prod.matl_num, '0'))
     AND upper(prod.ctry_nm) = 'PHILIPPINES'
     WHERE SELL.rka_cd IS NULL
     OR (
@@ -326,8 +326,7 @@ set_1 as
         AND (
             SELL.rka_cd = ' '
             OR SELL.rka_cd NOT IN (
-                SELECT DISTINCT parameter_value
-                FROM itg_query_parameters
+                SELECT DISTINCT parameter_value FROM itg_query_parameters
                 WHERE country_code = 'PH'
                     AND parameter_name = 'rka_cd'
             )
@@ -619,8 +618,8 @@ set_2 as
                             ) EPP
                         WHERE LTRIM(EPP.ITEM_CD(+), '0') = LTRIM(IMPLP.ITEM_CD, '0')
                     ) VEODMD
-                WHERE VEODCD.DSTRBTR_GRP_CD(+) = A.DSTRBTR_GRP_CD --AND   VEODMD.DSTRBTR_GRP_CD(+) = A.DSTRBTR_GRP_CD
-                    AND LTRIM(VEODMD.ITEM_CD(+)) = LTRIM(A.DSTRBTR_MATL_NUM, '0')
+                WHERE trim(VEODCD.DSTRBTR_GRP_CD(+)) = trim(A.DSTRBTR_GRP_CD) --AND   VEODMD.DSTRBTR_GRP_CD(+) = A.DSTRBTR_GRP_CD
+                    AND trim(LTRIM(VEODMD.ITEM_CD(+))) = trim(LTRIM(A.DSTRBTR_MATL_NUM, '0'))
             ) VOSINV1,
             (
                 SELECT MAT.*,
@@ -630,10 +629,10 @@ set_2 as
                 WHERE MAT.CNTRY_KEY = 'PH'
                     AND UPPER(prod.ctry_nm) = 'PHILIPPINES'
             ) VEOMD
-        WHERE LTRIM(VEOMD.SAP_MATL_NUM(+), '0') = LTRIM(VOSINV1.DSTRBTR_MATL_NUM, '0')
-            AND LTRIM(VOSINV1.DSTRBTR_MATL_NUM, '0') NOT IN
+        WHERE trim(LTRIM(VEOMD.SAP_MATL_NUM(+), '0')) = trim(LTRIM(VOSINV1.DSTRBTR_MATL_NUM, '0'))
+            AND LTRIM(nvl(trim(VOSINV1.DSTRBTR_MATL_NUM),'NA'), '0') NOT IN
             (
-                SELECT DISTINCT LTRIM(NVL(DSTRBTR_MATL_NUM, 'NA'), '0')
+                SELECT DISTINCT LTRIM(NVL(trim(DSTRBTR_MATL_NUM), 'NA'), '0')
                 FROM DSTRBTR_MATL
             )
     ) AS VOSINV,
@@ -644,7 +643,7 @@ set_2 as
         WHERE SAP_CNTRY_CD = 'PH'
     ) VEOCD
     WHERE TRIM(EOCD.CUST_ID(+)) = TRIM(VOSINV.SAP_SOLDTO_CODE)
-    AND LTRIM(VEOCD.SAP_CUST_ID(+), '0') = LTRIM(VOSINV.SAP_SOLDTO_CODE, '0')
+    AND trim(LTRIM(VEOCD.SAP_CUST_ID(+), '0')) = trim(LTRIM(VOSINV.SAP_SOLDTO_CODE, '0'))
 ),
 
 set_3 as
@@ -856,9 +855,9 @@ set_3 as
                     OR TP_VAL <> 0
                 )
                 AND VEOSSF1.CNTRY_NM = 'PH'
-                AND TRIM(VEOSSF1.JJ_MNTH_ID) = CAST(to_date(VEOTD.MNTH_ID) AS VARCHAR)
+                AND TRIM(VEOSSF1.JJ_MNTH_ID) = CAST((VEOTD.MNTH_ID) AS VARCHAR)
                 AND VEOSSF1.PSTNG_DT BETWEEN VEOTD.FIRST_DAY AND VEOTD.LAST_DAY
-                AND UPPER(TRIM(EOCD1.CUST_ID(+))) = UPPER(LTRIM(VEOSSF1.CUST_ID, '0'))
+                AND UPPER(TRIM(EOCD1.CUST_ID(+))) = trim(UPPER(LTRIM(VEOSSF1.CUST_ID, '0')))
             GROUP BY VEOTD.MNTH_ID,
                 VEOTD.MNTH_NO,
                 VEOTD.YEAR,
@@ -881,7 +880,7 @@ set_3 as
             SELECT MAT.*,
                 PROD.PKA_PRODUCTKEY
             FROM EDW_vw_ph_MATERIAL_DIM MAT
-                LEFT JOIN EDW_PRODUCT_KEY_ATTRIBUTES PROD ON LTRIM(MAT.sap_matl_num, '0') = ltrim(prod.matl_num, '0')
+                LEFT JOIN EDW_PRODUCT_KEY_ATTRIBUTES PROD ON  trim(LTRIM(MAT.sap_matl_num, '0')) = trim(ltrim(prod.matl_num, '0'))
             WHERE CNTRY_KEY = 'PH'
                 AND upper(prod.ctry_nm) = 'PHILIPPINES'
         ) VEOMD,
@@ -890,10 +889,10 @@ set_3 as
             FROM EDW_vw_ph_CUSTOMER_DIM
             WHERE SAP_CNTRY_CD = 'PH'
         ) VEOCD
-    WHERE UPPER(TRIM(EOCD.CUST_ID(+))) = UPPER(LTRIM(VEOSSF.CUST_ID, '0'))
-        AND UPPER(LTRIM(VEOMD.SAP_MATL_NUM(+), '0')) = UPPER(LTRIM(VEOSSF.ITEM_CD, '0'))
-        AND UPPER(LTRIM(VEOCD.SAP_CUST_ID(+), '0')) = UPPER(LTRIM(VEOSSF.CUST_ID, '0'))
-        AND UPPER(TRIM(EPP.ITEM_CD(+))) = UPPER(TRIM(VEOSSF.ITEM_CD))
+    WHERE UPPER(TRIM(EOCD.CUST_ID(+))) = trim(UPPER(LTRIM(VEOSSF.CUST_ID, '0')))
+        AND trim(UPPER(LTRIM(VEOMD.SAP_MATL_NUM(+), '0'))) = trim(UPPER(LTRIM(VEOSSF.ITEM_CD, '0')))
+        AND trim(UPPER(LTRIM(VEOCD.SAP_CUST_ID(+), '0'))) = trim(UPPER(LTRIM(VEOSSF.CUST_ID, '0')))
+        AND trim(UPPER(TRIM(EPP.ITEM_CD(+)))) = UPPER(TRIM(VEOSSF.ITEM_CD))
         AND TRIM(EPP.JJ_MNTH_ID(+)) = TRIM(VEOSSF.JJ_MNTH_ID)
         AND TRIM(UPPER(EOCD.RPT_GRP_1_DESC)) = 'GENERAL TRADE'
     GROUP BY
@@ -995,6 +994,7 @@ final as
         jj_qrtr,
         jj_mnth_id,
         jj_mnth_no,
+        jj_mnth_wk_no,
         warehse_cd,
         cntry_nm,
         dstrbtr_grp_cd,
@@ -1102,6 +1102,7 @@ final as
         si_sls_less_rtn_qty,
         si_gts_val,
         si_ret_val,
+        si_gts_less_rtn_val,
         si_nts_qty,
         si_nts_val,
         si_tp_val,

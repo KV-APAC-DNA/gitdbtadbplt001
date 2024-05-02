@@ -1,5 +1,5 @@
 with edw_vw_ph_sellout_sales_fact as (
-    select * from snaposeedw_integration.edw_vw_os_sellout_sales_fact
+    select * from phledw_integration.edw_vw_os_sellout_sales_fact
     where cntry_cd = 'PH'
 ),
 edw_vw_os_time_dim as (
@@ -9,37 +9,37 @@ edw_calendar_dim as (
     select * from aspedw_integration.edw_calendar_dim
 ),
 edw_vw_ph_dstrbtr_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
+    select * from phledw_integration.edw_vw_os_dstrbtr_customer_dim
     where cntry_cd = 'PH'
 ),
 edw_vw_ph_dstrbtr_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_dstrbtr_material_dim
+    select * from phledw_integration.edw_vw_os_dstrbtr_material_dim
     where cntry_cd = 'PH'
 ),
 itg_mds_ph_distributor_supervisors as (
-    select * from phlitg_integration.itg_mds_ph_distributor_supervisors
+    select * from snaposeitg_integration.itg_mds_ph_distributor_supervisors
 ),
 itg_mds_ph_gt_customer as (
-    select * from phlitg_integration.itg_mds_ph_gt_customer
+    select * from snaposeitg_integration.itg_mds_ph_gt_customer
 ),
 edw_vw_ph_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_material_dim
+    select * from phledw_integration.edw_vw_os_material_dim
     where cntry_key = 'PH'
 ),
 itg_mds_ph_lav_product as (
-    select * from phlitg_integration.itg_mds_ph_lav_product
+    select * from snaposeitg_integration.itg_mds_ph_lav_product
 ),
 itg_mds_ph_pos_pricelist as (
-    select * from phlitg_integration.itg_mds_ph_pos_pricelist
+    select * from snaposeitg_integration.itg_mds_ph_pos_pricelist
 ),
 itg_mds_ph_ref_rka_master as (
-    select * from phlitg_integration.itg_mds_ph_ref_rka_master
+    select * from snaposeitg_integration.itg_mds_ph_ref_rka_master
 ),
 edw_mv_ph_customer_dim as (
-    select * from phledw_integration.edw_mv_ph_customer_dim
+    select * from snaposeedw_integration.edw_mv_ph_customer_dim
 ),
 edw_vw_ph_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
+    select * from phledw_integration.edw_vw_os_customer_dim
     where sap_cntry_cd = 'PH'
 ),
 veosf as
@@ -692,26 +692,16 @@ veosf as
                     )
                 )
             WHERE (
-                    NOT (
-                        ltrim(
-                            veosf1.dstrbtr_matl_num,
-                            ('0'::character varying)::text
-                        ) IN (
-                            SELECT DISTINCT ltrim(
-                                    (
-                                        COALESCE(
-                                            itg_mds_ph_lav_product.item_cd,
-                                            'NA'::character varying
-                                        )
-                                    )::text,
-                                    ('0'::character varying)::text
-                                ) AS ltrim
-                            FROM itg_mds_ph_lav_product
-                            WHERE (
-                                    (itg_mds_ph_lav_product.active)::text = ('Y'::character varying)::text
-                                )
+                ltrim(COALESCE(veosf1.dstrbtr_matl_num,'NA'),('0'::character varying)::text) NOT IN 
+                (
+                    SELECT DISTINCT ltrim((COALESCE(itg_mds_ph_lav_product.item_cd,'NA'::character varying))::text,('0'::character varying)::text) AS ltrim
+                    FROM itg_mds_ph_lav_product
+                    WHERE 
+                        (
+                            (itg_mds_ph_lav_product.active)::text = ('Y'::character varying)::text
                         )
-                    )
+                )
+                    
                 )
         ) dstrbtr_matl
     UNION ALL
@@ -989,8 +979,8 @@ veosf as
                                                 SELECT edw_vw_os_time_dim.mnth_id
                                                 FROM edw_vw_os_time_dim
                                                 WHERE (
-                                                        edw_vw_os_time_dim.cal_date = to_date(
-                                                            ('now'::character varying)::timestamp without time zone
+                                                        edw_vw_os_time_dim.cal_date::date = to_date(
+                                                            current_timestamp::timestamp without time zone
                                                         )
                                                     )
                                             ) veotd,
@@ -1041,22 +1031,7 @@ veosf as
                                                     SELECT itg_mds_ph_pos_pricelist.status,
                                                         itg_mds_ph_pos_pricelist.item_cd,
                                                         min((itg_mds_ph_pos_pricelist.jj_mnth_id)::text) AS launch_period,
-                                                        min(
-                                                            to_char(
-                                                                add_months(
-                                                                    (
-                                                                        (
-                                                                            concat(
-                                                                                (itg_mds_ph_pos_pricelist.jj_mnth_id)::text,
-                                                                                ('01'::character varying)::text
-                                                                            )
-                                                                        )::date
-                                                                    )::timestamp without time zone,
-                                                                    (11)::bigint
-                                                                ),
-                                                                ('YYYYMM'::character varying)::text
-                                                            )
-                                                        ) AS end_period
+                                                        MIN(left(replace(add_months(to_date(JJ_MNTH_ID||'01','yyyymmdd'),11),'-',''),6)) AS END_PERIOD
                                                     FROM itg_mds_ph_pos_pricelist
                                                     WHERE (
                                                             (
@@ -1377,441 +1352,433 @@ veosf as
         )
     WHERE
         (
-            NOT (
-                ltrim(
-                    veosf1.dstrbtr_matl_num,
-                    ('0'::character varying)::text
-                ) IN (
-                    SELECT DISTINCT ltrim(
-                            COALESCE(
-                                dstrbtr_matl.dstrbtr_matl_num,
-                                ('NA'::character varying)::text
-                            ),
-                            ('0'::character varying)::text
-                        ) AS ltrim
-                    FROM (
-                            SELECT veosf1.dstrbtr_grp_cd,
-                                veosf1.cust_cd,
-                                veosf1.sup_id,
-                                veosf1.sup_nm,
-                                veosf1.sls_rep_id,
-                                veosf1.sls_rep_nm,
-                                veosf1.sales_team,
-                                veosf1.cust_nm,
-                                veosf1.sap_soldto_code,
-                                veosf1.sap_matl_num,
-                                veosf1.dstrbtr_matl_num,
-                                veosf1.chnl_cd,
-                                veosf1.chnl_desc,
-                                veosf1.sub_chnl_cd,
-                                veosf1.sub_chnl_desc,
-                                veosf1.region_cd,
-                                veosf1.region_nm,
-                                veosf1.province_cd,
-                                veosf1.province_nm,
-                                veosf1.town_cd,
-                                veosf1.town_nm,
-                                veosf1.str_prioritization,
-                                veosf1.rka_cd,
-                                veosf1.rka_nm,
-                                veosf1.is_npi,
-                                veosf1.npi_str_period,
-                                veosf1.npi_end_period,
-                                veosf1.is_reg,
-                                veosf1.is_promo,
-                                veosf1.promo_strt_period,
-                                veosf1.promo_end_period,
-                                veosf1.is_mcl,
-                                veosf1.is_hero,
-                                veosf1.bill_date,
-                                veosf1.bill_doc,
-                                veosf1.slsmn_cd,
-                                veosf1.sls_qty,
-                                veosf1.ret_qty,
-                                veosf1.uom,
-                                veosf1.sls_qty_pc,
-                                veosf1.ret_qty_pc,
-                                veosf1.grs_trd_sls,
-                                veosf1.ret_val,
-                                veosf1.trd_discnt,
-                                veosf1.trd_sls,
-                                veosf1.net_trd_sls,
-                                veosf1.jj_grs_trd_sls,
-                                veosf1.jj_ret_val,
-                                veosf1.jj_trd_sls,
-                                veosf1.jj_net_trd_sls,
-                                veomd.sap_mat_desc AS sku_desc,
-                                veomd.sap_mat_type_cd,
-                                veomd.sap_mat_type_desc,
-                                veomd.sap_base_uom_cd,
-                                veomd.sap_prchse_uom_cd,
-                                veomd.sap_prod_sgmt_cd,
-                                veomd.sap_prod_sgmt_desc,
-                                veomd.sap_base_prod_cd,
-                                veomd.sap_base_prod_desc,
-                                veomd.sap_mega_brnd_cd,
-                                veomd.sap_mega_brnd_desc,
-                                veomd.sap_brnd_cd,
-                                veomd.sap_brnd_desc,
-                                veomd.sap_vrnt_cd,
-                                veomd.sap_vrnt_desc,
-                                veomd.sap_put_up_cd,
-                                veomd.sap_put_up_desc,
-                                veomd.sap_grp_frnchse_cd,
-                                veomd.sap_grp_frnchse_desc,
-                                veomd.sap_frnchse_cd,
-                                veomd.sap_frnchse_desc,
-                                veomd.sap_prod_frnchse_cd,
-                                veomd.sap_prod_frnchse_desc,
-                                veomd.sap_prod_mjr_cd,
-                                veomd.sap_prod_mjr_desc,
-                                veomd.sap_prod_mnr_cd,
-                                veomd.sap_prod_mnr_desc,
-                                veomd.sap_prod_hier_cd,
-                                veomd.sap_prod_hier_desc,
-                                veomd.gph_region AS global_mat_region,
-                                veomd.gph_prod_frnchse AS global_prod_franchise,
-                                veomd.gph_prod_brnd AS global_prod_brand,
-                                veomd.gph_prod_vrnt AS global_prod_variant,
-                                veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
-                                veomd.gph_prod_put_up_desc AS global_put_up_desc,
-                                veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
-                                veomd.gph_prod_needstate AS global_prod_need_state,
-                                veomd.gph_prod_ctgry AS global_prod_category,
-                                veomd.gph_prod_subctgry AS global_prod_subcategory,
-                                veomd.gph_prod_sgmnt AS global_prod_segment,
-                                veomd.gph_prod_subsgmnt AS global_prod_subsegment,
-                                veomd.gph_prod_size AS global_prod_size,
-                                veomd.gph_prod_size_uom AS global_prod_size_uom
-                            FROM (
-                                    (
-                                        SELECT a.dstrbtr_grp_cd,
-                                            a.cust_cd,
-                                            esp.sup_id,
-                                            esp.sup_nm,
-                                            a.slsmn_cd AS sls_rep_id,
-                                            a.slsmn_nm AS sls_rep_nm,
-                                            esp.slsgrpnm AS sales_team,
-                                            veodcd2.cust_nm,
-                                            veodcd.sap_soldto_code,
-                                            veodmd.sap_matl_num,
-                                            upper(trim((a.dstrbtr_matl_num)::text)) AS dstrbtr_matl_num,
-                                            veodcd2.chnl_cd,
-                                            veodcd2.chnl_desc,
-                                            veodcd2.sub_chnl_cd,
-                                            veodcd2.sub_chnl_desc,
-                                            impgc.rep_grp2 AS region_cd,
-                                            impgc.rep_grp2_desc AS region_nm,
-                                            impgc.rep_grp3 AS province_cd,
-                                            impgc.rep_grp3_desc AS province_nm,
-                                            impgc.rep_grp5 AS town_cd,
-                                            impgc.rep_grp5_desc AS town_nm,
-                                            impgc.store_prioritization AS str_prioritization,
-                                            impgc.sls_dist AS rka_cd,
-                                            rka.rka_nm,
-                                            veodmd.is_npi,
-                                            veodmd.npi_str_period,
-                                            veodmd.npi_end_period,
-                                            veodmd.is_reg,
-                                            veodmd.is_promo,
-                                            veodmd.promo_strt_period,
-                                            veodmd.promo_end_period,
-                                            veodmd.is_mcl,
-                                            veodmd.is_hero,
-                                            a.bill_date,
-                                            a.bill_doc,
-                                            a.slsmn_cd,
-                                            a.sls_qty,
-                                            a.ret_qty,
-                                            a.uom,
-                                            a.sls_qty_pc,
-                                            a.ret_qty_pc,
-                                            a.grs_trd_sls,
-                                            a.ret_val,
-                                            a.trd_discnt,
-                                            a.trd_sls,
-                                            a.net_trd_sls,
-                                            a.jj_grs_trd_sls,
-                                            a.jj_ret_val,
-                                            a.jj_trd_sls,
-                                            a.jj_net_trd_sls
-                                        FROM (
+            ltrim(COALESCE(veosf1.dstrbtr_matl_num,'NA'),('0'::character varying)::text) NOT IN 
+            (
+                SELECT DISTINCT ltrim(COALESCE(   dstrbtr_matl.dstrbtr_matl_num,    ('NA'::character varying)::text),('0'::character varying)::text) AS ltrim
+                FROM (
+                        SELECT veosf1.dstrbtr_grp_cd,
+                            veosf1.cust_cd,
+                            veosf1.sup_id,
+                            veosf1.sup_nm,
+                            veosf1.sls_rep_id,
+                            veosf1.sls_rep_nm,
+                            veosf1.sales_team,
+                            veosf1.cust_nm,
+                            veosf1.sap_soldto_code,
+                            veosf1.sap_matl_num,
+                            veosf1.dstrbtr_matl_num,
+                            veosf1.chnl_cd,
+                            veosf1.chnl_desc,
+                            veosf1.sub_chnl_cd,
+                            veosf1.sub_chnl_desc,
+                            veosf1.region_cd,
+                            veosf1.region_nm,
+                            veosf1.province_cd,
+                            veosf1.province_nm,
+                            veosf1.town_cd,
+                            veosf1.town_nm,
+                            veosf1.str_prioritization,
+                            veosf1.rka_cd,
+                            veosf1.rka_nm,
+                            veosf1.is_npi,
+                            veosf1.npi_str_period,
+                            veosf1.npi_end_period,
+                            veosf1.is_reg,
+                            veosf1.is_promo,
+                            veosf1.promo_strt_period,
+                            veosf1.promo_end_period,
+                            veosf1.is_mcl,
+                            veosf1.is_hero,
+                            veosf1.bill_date,
+                            veosf1.bill_doc,
+                            veosf1.slsmn_cd,
+                            veosf1.sls_qty,
+                            veosf1.ret_qty,
+                            veosf1.uom,
+                            veosf1.sls_qty_pc,
+                            veosf1.ret_qty_pc,
+                            veosf1.grs_trd_sls,
+                            veosf1.ret_val,
+                            veosf1.trd_discnt,
+                            veosf1.trd_sls,
+                            veosf1.net_trd_sls,
+                            veosf1.jj_grs_trd_sls,
+                            veosf1.jj_ret_val,
+                            veosf1.jj_trd_sls,
+                            veosf1.jj_net_trd_sls,
+                            veomd.sap_mat_desc AS sku_desc,
+                            veomd.sap_mat_type_cd,
+                            veomd.sap_mat_type_desc,
+                            veomd.sap_base_uom_cd,
+                            veomd.sap_prchse_uom_cd,
+                            veomd.sap_prod_sgmt_cd,
+                            veomd.sap_prod_sgmt_desc,
+                            veomd.sap_base_prod_cd,
+                            veomd.sap_base_prod_desc,
+                            veomd.sap_mega_brnd_cd,
+                            veomd.sap_mega_brnd_desc,
+                            veomd.sap_brnd_cd,
+                            veomd.sap_brnd_desc,
+                            veomd.sap_vrnt_cd,
+                            veomd.sap_vrnt_desc,
+                            veomd.sap_put_up_cd,
+                            veomd.sap_put_up_desc,
+                            veomd.sap_grp_frnchse_cd,
+                            veomd.sap_grp_frnchse_desc,
+                            veomd.sap_frnchse_cd,
+                            veomd.sap_frnchse_desc,
+                            veomd.sap_prod_frnchse_cd,
+                            veomd.sap_prod_frnchse_desc,
+                            veomd.sap_prod_mjr_cd,
+                            veomd.sap_prod_mjr_desc,
+                            veomd.sap_prod_mnr_cd,
+                            veomd.sap_prod_mnr_desc,
+                            veomd.sap_prod_hier_cd,
+                            veomd.sap_prod_hier_desc,
+                            veomd.gph_region AS global_mat_region,
+                            veomd.gph_prod_frnchse AS global_prod_franchise,
+                            veomd.gph_prod_brnd AS global_prod_brand,
+                            veomd.gph_prod_vrnt AS global_prod_variant,
+                            veomd.gph_prod_put_up_cd AS global_prod_put_up_cd,
+                            veomd.gph_prod_put_up_desc AS global_put_up_desc,
+                            veomd.gph_prod_sub_brnd AS global_prod_sub_brand,
+                            veomd.gph_prod_needstate AS global_prod_need_state,
+                            veomd.gph_prod_ctgry AS global_prod_category,
+                            veomd.gph_prod_subctgry AS global_prod_subcategory,
+                            veomd.gph_prod_sgmnt AS global_prod_segment,
+                            veomd.gph_prod_subsgmnt AS global_prod_subsegment,
+                            veomd.gph_prod_size AS global_prod_size,
+                            veomd.gph_prod_size_uom AS global_prod_size_uom
+                        FROM (
+                                (
+                                    SELECT a.dstrbtr_grp_cd,
+                                        a.cust_cd,
+                                        esp.sup_id,
+                                        esp.sup_nm,
+                                        a.slsmn_cd AS sls_rep_id,
+                                        a.slsmn_nm AS sls_rep_nm,
+                                        esp.slsgrpnm AS sales_team,
+                                        veodcd2.cust_nm,
+                                        veodcd.sap_soldto_code,
+                                        veodmd.sap_matl_num,
+                                        upper(trim((a.dstrbtr_matl_num)::text)) AS dstrbtr_matl_num,
+                                        veodcd2.chnl_cd,
+                                        veodcd2.chnl_desc,
+                                        veodcd2.sub_chnl_cd,
+                                        veodcd2.sub_chnl_desc,
+                                        impgc.rep_grp2 AS region_cd,
+                                        impgc.rep_grp2_desc AS region_nm,
+                                        impgc.rep_grp3 AS province_cd,
+                                        impgc.rep_grp3_desc AS province_nm,
+                                        impgc.rep_grp5 AS town_cd,
+                                        impgc.rep_grp5_desc AS town_nm,
+                                        impgc.store_prioritization AS str_prioritization,
+                                        impgc.sls_dist AS rka_cd,
+                                        rka.rka_nm,
+                                        veodmd.is_npi,
+                                        veodmd.npi_str_period,
+                                        veodmd.npi_end_period,
+                                        veodmd.is_reg,
+                                        veodmd.is_promo,
+                                        veodmd.promo_strt_period,
+                                        veodmd.promo_end_period,
+                                        veodmd.is_mcl,
+                                        veodmd.is_hero,
+                                        a.bill_date,
+                                        a.bill_doc,
+                                        a.slsmn_cd,
+                                        a.sls_qty,
+                                        a.ret_qty,
+                                        a.uom,
+                                        a.sls_qty_pc,
+                                        a.ret_qty_pc,
+                                        a.grs_trd_sls,
+                                        a.ret_val,
+                                        a.trd_discnt,
+                                        a.trd_sls,
+                                        a.net_trd_sls,
+                                        a.jj_grs_trd_sls,
+                                        a.jj_ret_val,
+                                        a.jj_trd_sls,
+                                        a.jj_net_trd_sls
+                                    FROM (
+                                            (
                                                 (
                                                     (
                                                         (
                                                             (
-                                                                (
-                                                                    SELECT fact.cntry_cd,
-                                                                        fact.cntry_nm,
-                                                                        fact.dstrbtr_grp_cd,
-                                                                        fact.dstrbtr_soldto_code,
-                                                                        fact.cust_cd,
-                                                                        fact.dstrbtr_matl_num,
-                                                                        fact.sap_matl_num,
-                                                                        fact.bar_cd,
-                                                                        fact.bill_date,
-                                                                        fact.bill_doc,
-                                                                        fact.slsmn_cd,
-                                                                        fact.slsmn_nm,
-                                                                        fact.wh_id,
-                                                                        fact.doc_type,
-                                                                        fact.doc_type_desc,
-                                                                        fact.base_sls,
-                                                                        fact.sls_qty,
-                                                                        fact.ret_qty,
-                                                                        fact.uom,
-                                                                        fact.sls_qty_pc,
-                                                                        fact.ret_qty_pc,
-                                                                        fact.grs_trd_sls,
-                                                                        fact.ret_val,
-                                                                        fact.trd_discnt,
-                                                                        fact.trd_discnt_item_lvl,
-                                                                        fact.trd_discnt_bill_lvl,
-                                                                        fact.trd_sls,
-                                                                        fact.net_trd_sls,
-                                                                        fact.cn_reason_cd,
-                                                                        fact.cn_reason_desc,
-                                                                        fact.jj_grs_trd_sls,
-                                                                        fact.jj_ret_val,
-                                                                        fact.jj_trd_sls,
-                                                                        fact.jj_net_trd_sls,
-                                                                        cal.sales_cycle
-                                                                    FROM (
-                                                                            edw_vw_ph_sellout_sales_fact fact
-                                                                            LEFT JOIN (
-                                                                                SELECT edw_calendar_dim.cal_day,
-                                                                                    edw_calendar_dim.fisc_yr_vrnt,
-                                                                                    edw_calendar_dim.wkday,
-                                                                                    edw_calendar_dim.cal_wk,
-                                                                                    edw_calendar_dim.cal_mo_1,
-                                                                                    edw_calendar_dim.cal_mo_2,
-                                                                                    edw_calendar_dim.cal_qtr_1,
-                                                                                    edw_calendar_dim.cal_qtr_2,
-                                                                                    edw_calendar_dim.half_yr,
-                                                                                    edw_calendar_dim.cal_yr,
-                                                                                    edw_calendar_dim.fisc_per,
-                                                                                    edw_calendar_dim.pstng_per,
-                                                                                    edw_calendar_dim.fisc_yr,
-                                                                                    edw_calendar_dim.rec_mode,
-                                                                                    edw_calendar_dim.crt_dttm,
-                                                                                    edw_calendar_dim.updt_dttm,
-                                                                                    (
-                                                                                        "left"(
-                                                                                            ((edw_calendar_dim.fisc_per)::character varying)::text,
-                                                                                            4
-                                                                                        ) + "right"(
-                                                                                            ((edw_calendar_dim.fisc_per)::character varying)::text,
-                                                                                            2
-                                                                                        )
-                                                                                    ) AS sales_cycle
-                                                                                FROM edw_calendar_dim
-                                                                            ) cal ON ((to_date(fact.bill_date) = cal.cal_day))
-                                                                        )
-                                                                ) a
-                                                                LEFT JOIN (
-                                                                    SELECT DISTINCT edw_vw_ph_dstrbtr_customer_dim.dstrbtr_grp_cd,
-                                                                        edw_vw_ph_dstrbtr_customer_dim.sap_soldto_code
-                                                                    FROM edw_vw_ph_dstrbtr_customer_dim
-                                                                    WHERE (
-                                                                            (edw_vw_ph_dstrbtr_customer_dim.cntry_cd)::text = ('PH'::character varying)::text
-                                                                        )
-                                                                ) veodcd ON (
-                                                                    (
-                                                                        (veodcd.dstrbtr_grp_cd)::text = (a.dstrbtr_grp_cd)::text
+                                                                SELECT fact.cntry_cd,
+                                                                    fact.cntry_nm,
+                                                                    fact.dstrbtr_grp_cd,
+                                                                    fact.dstrbtr_soldto_code,
+                                                                    fact.cust_cd,
+                                                                    fact.dstrbtr_matl_num,
+                                                                    fact.sap_matl_num,
+                                                                    fact.bar_cd,
+                                                                    fact.bill_date,
+                                                                    fact.bill_doc,
+                                                                    fact.slsmn_cd,
+                                                                    fact.slsmn_nm,
+                                                                    fact.wh_id,
+                                                                    fact.doc_type,
+                                                                    fact.doc_type_desc,
+                                                                    fact.base_sls,
+                                                                    fact.sls_qty,
+                                                                    fact.ret_qty,
+                                                                    fact.uom,
+                                                                    fact.sls_qty_pc,
+                                                                    fact.ret_qty_pc,
+                                                                    fact.grs_trd_sls,
+                                                                    fact.ret_val,
+                                                                    fact.trd_discnt,
+                                                                    fact.trd_discnt_item_lvl,
+                                                                    fact.trd_discnt_bill_lvl,
+                                                                    fact.trd_sls,
+                                                                    fact.net_trd_sls,
+                                                                    fact.cn_reason_cd,
+                                                                    fact.cn_reason_desc,
+                                                                    fact.jj_grs_trd_sls,
+                                                                    fact.jj_ret_val,
+                                                                    fact.jj_trd_sls,
+                                                                    fact.jj_net_trd_sls,
+                                                                    cal.sales_cycle
+                                                                FROM (
+                                                                        edw_vw_ph_sellout_sales_fact fact
+                                                                        LEFT JOIN (
+                                                                            SELECT edw_calendar_dim.cal_day,
+                                                                                edw_calendar_dim.fisc_yr_vrnt,
+                                                                                edw_calendar_dim.wkday,
+                                                                                edw_calendar_dim.cal_wk,
+                                                                                edw_calendar_dim.cal_mo_1,
+                                                                                edw_calendar_dim.cal_mo_2,
+                                                                                edw_calendar_dim.cal_qtr_1,
+                                                                                edw_calendar_dim.cal_qtr_2,
+                                                                                edw_calendar_dim.half_yr,
+                                                                                edw_calendar_dim.cal_yr,
+                                                                                edw_calendar_dim.fisc_per,
+                                                                                edw_calendar_dim.pstng_per,
+                                                                                edw_calendar_dim.fisc_yr,
+                                                                                edw_calendar_dim.rec_mode,
+                                                                                edw_calendar_dim.crt_dttm,
+                                                                                edw_calendar_dim.updt_dttm,
+                                                                                (
+                                                                                    "left"(
+                                                                                        ((edw_calendar_dim.fisc_per)::character varying)::text,
+                                                                                        4
+                                                                                    ) + "right"(
+                                                                                        ((edw_calendar_dim.fisc_per)::character varying)::text,
+                                                                                        2
+                                                                                    )
+                                                                                ) AS sales_cycle
+                                                                            FROM edw_calendar_dim
+                                                                        ) cal ON ((to_date(fact.bill_date) = cal.cal_day))
                                                                     )
-                                                                )
-                                                            )
+                                                            ) a
                                                             LEFT JOIN (
-                                                                SELECT edw_vw_ph_dstrbtr_material_dim.dstrbtr_matl_num,
-                                                                    edw_vw_ph_dstrbtr_material_dim.dstrbtr_grp_cd,
-                                                                    edw_vw_ph_dstrbtr_material_dim.sap_soldto_code,
-                                                                    edw_vw_ph_dstrbtr_material_dim.sap_matl_num,
-                                                                    edw_vw_ph_dstrbtr_material_dim.is_npi,
-                                                                    edw_vw_ph_dstrbtr_material_dim.npi_str_period,
-                                                                    edw_vw_ph_dstrbtr_material_dim.npi_end_period,
-                                                                    edw_vw_ph_dstrbtr_material_dim.is_reg,
-                                                                    edw_vw_ph_dstrbtr_material_dim.is_promo,
-                                                                    edw_vw_ph_dstrbtr_material_dim.promo_strt_period,
-                                                                    edw_vw_ph_dstrbtr_material_dim.promo_end_period,
-                                                                    edw_vw_ph_dstrbtr_material_dim.is_mcl,
-                                                                    edw_vw_ph_dstrbtr_material_dim.is_hero
-                                                                FROM edw_vw_ph_dstrbtr_material_dim
+                                                                SELECT DISTINCT edw_vw_ph_dstrbtr_customer_dim.dstrbtr_grp_cd,
+                                                                    edw_vw_ph_dstrbtr_customer_dim.sap_soldto_code
+                                                                FROM edw_vw_ph_dstrbtr_customer_dim
                                                                 WHERE (
-                                                                        (edw_vw_ph_dstrbtr_material_dim.cntry_cd)::text = ('PH'::character varying)::text
+                                                                        (edw_vw_ph_dstrbtr_customer_dim.cntry_cd)::text = ('PH'::character varying)::text
                                                                     )
-                                                            ) veodmd ON (
+                                                            ) veodcd ON (
                                                                 (
-                                                                    (
-                                                                        (veodmd.dstrbtr_grp_cd)::text = (a.dstrbtr_grp_cd)::text
-                                                                    )
-                                                                    AND (
-                                                                        upper(trim((veodmd.dstrbtr_matl_num)::text)) = (a.dstrbtr_matl_num)::text
-                                                                    )
+                                                                    (veodcd.dstrbtr_grp_cd)::text = (a.dstrbtr_grp_cd)::text
                                                                 )
                                                             )
                                                         )
                                                         LEFT JOIN (
-                                                            SELECT itg_mds_ph_distributor_supervisors.distcode,
-                                                                itg_mds_ph_distributor_supervisors.slsspid AS sup_id,
-                                                                itg_mds_ph_distributor_supervisors.slsspnm AS sup_nm,
-                                                                itg_mds_ph_distributor_supervisors.salescycle,
-                                                                itg_mds_ph_distributor_supervisors.slsid,
-                                                                itg_mds_ph_distributor_supervisors.slsgrpnm
-                                                            FROM itg_mds_ph_distributor_supervisors
-                                                            GROUP BY itg_mds_ph_distributor_supervisors.distcode,
-                                                                itg_mds_ph_distributor_supervisors.slsspid,
-                                                                itg_mds_ph_distributor_supervisors.slsspnm,
-                                                                itg_mds_ph_distributor_supervisors.salescycle,
-                                                                itg_mds_ph_distributor_supervisors.slsid,
-                                                                itg_mds_ph_distributor_supervisors.slsgrpnm
-                                                        ) esp ON (
+                                                            SELECT edw_vw_ph_dstrbtr_material_dim.dstrbtr_matl_num,
+                                                                edw_vw_ph_dstrbtr_material_dim.dstrbtr_grp_cd,
+                                                                edw_vw_ph_dstrbtr_material_dim.sap_soldto_code,
+                                                                edw_vw_ph_dstrbtr_material_dim.sap_matl_num,
+                                                                edw_vw_ph_dstrbtr_material_dim.is_npi,
+                                                                edw_vw_ph_dstrbtr_material_dim.npi_str_period,
+                                                                edw_vw_ph_dstrbtr_material_dim.npi_end_period,
+                                                                edw_vw_ph_dstrbtr_material_dim.is_reg,
+                                                                edw_vw_ph_dstrbtr_material_dim.is_promo,
+                                                                edw_vw_ph_dstrbtr_material_dim.promo_strt_period,
+                                                                edw_vw_ph_dstrbtr_material_dim.promo_end_period,
+                                                                edw_vw_ph_dstrbtr_material_dim.is_mcl,
+                                                                edw_vw_ph_dstrbtr_material_dim.is_hero
+                                                            FROM edw_vw_ph_dstrbtr_material_dim
+                                                            WHERE (
+                                                                    (edw_vw_ph_dstrbtr_material_dim.cntry_cd)::text = ('PH'::character varying)::text
+                                                                )
+                                                        ) veodmd ON (
                                                             (
                                                                 (
-                                                                    ((a.dstrbtr_grp_cd)::text = (esp.distcode)::text)
-                                                                    AND (a.sales_cycle = (esp.salescycle)::text)
+                                                                    (veodmd.dstrbtr_grp_cd)::text = (a.dstrbtr_grp_cd)::text
                                                                 )
-                                                                AND ((a.slsmn_cd)::text = (esp.slsid)::text)
+                                                                AND (
+                                                                    upper(trim((veodmd.dstrbtr_matl_num)::text)) = (a.dstrbtr_matl_num)::text
+                                                                )
                                                             )
                                                         )
                                                     )
-                                                    LEFT JOIN
-                                                    (
-                                                        SELECT edw_vw_ph_dstrbtr_customer_dim.cntry_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cntry_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.dstrbtr_grp_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.dstrbtr_soldto_code,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sap_soldto_code,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.alt_cust_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.alt_cust_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.addr,
-                                                            edw_vw_ph_dstrbtr_customer_dim.area_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.area_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.state_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.state_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.region_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.region_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.prov_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.prov_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.town_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.town_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.city_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.city_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.post_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.post_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.slsmn_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.slsmn_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sub_chnl_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sub_chnl_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_attr1_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_attr1_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_attr2_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.chnl_attr2_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.outlet_type_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.outlet_type_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr1_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr1_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr2_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr2_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_dstrct_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_dstrct_nm,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_office_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_office_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_grp_cd,
-                                                            edw_vw_ph_dstrbtr_customer_dim.sls_grp_desc,
-                                                            edw_vw_ph_dstrbtr_customer_dim.status
-                                                        FROM edw_vw_ph_dstrbtr_customer_dim
-                                                        WHERE (
-                                                                (edw_vw_ph_dstrbtr_customer_dim.cntry_cd)::text = ('PH'::character varying)::text
+                                                    LEFT JOIN (
+                                                        SELECT itg_mds_ph_distributor_supervisors.distcode,
+                                                            itg_mds_ph_distributor_supervisors.slsspid AS sup_id,
+                                                            itg_mds_ph_distributor_supervisors.slsspnm AS sup_nm,
+                                                            itg_mds_ph_distributor_supervisors.salescycle,
+                                                            itg_mds_ph_distributor_supervisors.slsid,
+                                                            itg_mds_ph_distributor_supervisors.slsgrpnm
+                                                        FROM itg_mds_ph_distributor_supervisors
+                                                        GROUP BY itg_mds_ph_distributor_supervisors.distcode,
+                                                            itg_mds_ph_distributor_supervisors.slsspid,
+                                                            itg_mds_ph_distributor_supervisors.slsspnm,
+                                                            itg_mds_ph_distributor_supervisors.salescycle,
+                                                            itg_mds_ph_distributor_supervisors.slsid,
+                                                            itg_mds_ph_distributor_supervisors.slsgrpnm
+                                                    ) esp ON (
+                                                        (
+                                                            (
+                                                                ((a.dstrbtr_grp_cd)::text = (esp.distcode)::text)
+                                                                AND (a.sales_cycle = (esp.salescycle)::text)
                                                             )
-                                                    ) veodcd2 ON (((veodcd2.cust_cd)::text = (a.cust_cd)::text))
+                                                            AND ((a.slsmn_cd)::text = (esp.slsid)::text)
+                                                        )
+                                                    )
                                                 )
                                                 LEFT JOIN
                                                 (
-                                                    (
-                                                        SELECT itg_mds_ph_gt_customer.dstrbtr_cust_id,
-                                                            itg_mds_ph_gt_customer.dstrbtr_cust_nm,
-                                                            itg_mds_ph_gt_customer.slsmn,
-                                                            itg_mds_ph_gt_customer.slsmn_desc,
-                                                            itg_mds_ph_gt_customer.rep_grp2,
-                                                            itg_mds_ph_gt_customer.rep_grp2_desc,
-                                                            itg_mds_ph_gt_customer.rep_grp3,
-                                                            itg_mds_ph_gt_customer.rep_grp3_desc,
-                                                            itg_mds_ph_gt_customer.rep_grp4,
-                                                            itg_mds_ph_gt_customer.rep_grp4_desc,
-                                                            itg_mds_ph_gt_customer.rep_grp5,
-                                                            itg_mds_ph_gt_customer.rep_grp5_desc,
-                                                            itg_mds_ph_gt_customer.rep_grp6,
-                                                            itg_mds_ph_gt_customer.rep_grp6_desc,
-                                                            itg_mds_ph_gt_customer.status,
-                                                            itg_mds_ph_gt_customer.address,
-                                                            itg_mds_ph_gt_customer.zip,
-                                                            itg_mds_ph_gt_customer.slm_grp_cd,
-                                                            itg_mds_ph_gt_customer.frequency_visit,
-                                                            itg_mds_ph_gt_customer.store_prioritization,
-                                                            itg_mds_ph_gt_customer.latitude,
-                                                            itg_mds_ph_gt_customer.longitude,
-                                                            itg_mds_ph_gt_customer.rpt_grp9,
-                                                            itg_mds_ph_gt_customer.rpt_grp9_desc,
-                                                            itg_mds_ph_gt_customer.rpt_grp11,
-                                                            itg_mds_ph_gt_customer.rpt_grp11_desc,
-                                                            itg_mds_ph_gt_customer.sls_dist,
-                                                            itg_mds_ph_gt_customer.sls_dist_desc,
-                                                            itg_mds_ph_gt_customer.dstrbtr_grp_cd,
-                                                            itg_mds_ph_gt_customer.dstrbtr_grp_nm,
-                                                            itg_mds_ph_gt_customer.rpt_grp_15_desc,
-                                                            itg_mds_ph_gt_customer.last_chg_datetime,
-                                                            itg_mds_ph_gt_customer.effective_from,
-                                                            itg_mds_ph_gt_customer.effective_to,
-                                                            itg_mds_ph_gt_customer.active,
-                                                            itg_mds_ph_gt_customer.crtd_dttm,
-                                                            itg_mds_ph_gt_customer.updt_dttm,
-                                                            itg_mds_ph_gt_customer.zip_code,
-                                                            itg_mds_ph_gt_customer.zip_cd_name,
-                                                            itg_mds_ph_gt_customer.barangay_code,
-                                                            itg_mds_ph_gt_customer.barangay_cd_name,
-                                                            itg_mds_ph_gt_customer.long_lat_source
-                                                        FROM itg_mds_ph_gt_customer
-                                                        WHERE (
-                                                                (itg_mds_ph_gt_customer.active)::text = ('Y'::character varying)::text
-                                                            )
-                                                    ) impgc
-                                                    LEFT JOIN (
-                                                        SELECT itg_mds_ph_ref_rka_master.rka_cd,
-                                                            itg_mds_ph_ref_rka_master.rka_nm,
-                                                            itg_mds_ph_ref_rka_master.last_chg_datetime,
-                                                            itg_mds_ph_ref_rka_master.effective_from,
-                                                            itg_mds_ph_ref_rka_master.effective_to,
-                                                            itg_mds_ph_ref_rka_master.active,
-                                                            itg_mds_ph_ref_rka_master.crtd_dttm,
-                                                            itg_mds_ph_ref_rka_master.updt_dttm
-                                                        FROM itg_mds_ph_ref_rka_master
-                                                        WHERE (
-                                                                (itg_mds_ph_ref_rka_master.active)::text = ('Y'::character varying)::text
-                                                            )
-                                                    ) rka ON (
-                                                        (
-                                                            ltrim((impgc.sls_dist)::text) = ltrim((rka.rka_cd)::text)
+                                                    SELECT edw_vw_ph_dstrbtr_customer_dim.cntry_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cntry_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.dstrbtr_grp_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.dstrbtr_soldto_code,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sap_soldto_code,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.alt_cust_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.alt_cust_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.addr,
+                                                        edw_vw_ph_dstrbtr_customer_dim.area_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.area_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.state_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.state_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.region_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.region_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.prov_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.prov_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.town_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.town_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.city_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.city_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.post_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.post_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.slsmn_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.slsmn_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sub_chnl_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sub_chnl_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_attr1_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_attr1_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_attr2_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.chnl_attr2_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.outlet_type_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.outlet_type_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr1_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr1_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr2_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.cust_grp_attr2_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_dstrct_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_dstrct_nm,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_office_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_office_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_grp_cd,
+                                                        edw_vw_ph_dstrbtr_customer_dim.sls_grp_desc,
+                                                        edw_vw_ph_dstrbtr_customer_dim.status
+                                                    FROM edw_vw_ph_dstrbtr_customer_dim
+                                                    WHERE (
+                                                            (edw_vw_ph_dstrbtr_customer_dim.cntry_cd)::text = ('PH'::character varying)::text
                                                         )
+                                                ) veodcd2 ON (((veodcd2.cust_cd)::text = (a.cust_cd)::text))
+                                            )
+                                            LEFT JOIN
+                                            (
+                                                (
+                                                    SELECT itg_mds_ph_gt_customer.dstrbtr_cust_id,
+                                                        itg_mds_ph_gt_customer.dstrbtr_cust_nm,
+                                                        itg_mds_ph_gt_customer.slsmn,
+                                                        itg_mds_ph_gt_customer.slsmn_desc,
+                                                        itg_mds_ph_gt_customer.rep_grp2,
+                                                        itg_mds_ph_gt_customer.rep_grp2_desc,
+                                                        itg_mds_ph_gt_customer.rep_grp3,
+                                                        itg_mds_ph_gt_customer.rep_grp3_desc,
+                                                        itg_mds_ph_gt_customer.rep_grp4,
+                                                        itg_mds_ph_gt_customer.rep_grp4_desc,
+                                                        itg_mds_ph_gt_customer.rep_grp5,
+                                                        itg_mds_ph_gt_customer.rep_grp5_desc,
+                                                        itg_mds_ph_gt_customer.rep_grp6,
+                                                        itg_mds_ph_gt_customer.rep_grp6_desc,
+                                                        itg_mds_ph_gt_customer.status,
+                                                        itg_mds_ph_gt_customer.address,
+                                                        itg_mds_ph_gt_customer.zip,
+                                                        itg_mds_ph_gt_customer.slm_grp_cd,
+                                                        itg_mds_ph_gt_customer.frequency_visit,
+                                                        itg_mds_ph_gt_customer.store_prioritization,
+                                                        itg_mds_ph_gt_customer.latitude,
+                                                        itg_mds_ph_gt_customer.longitude,
+                                                        itg_mds_ph_gt_customer.rpt_grp9,
+                                                        itg_mds_ph_gt_customer.rpt_grp9_desc,
+                                                        itg_mds_ph_gt_customer.rpt_grp11,
+                                                        itg_mds_ph_gt_customer.rpt_grp11_desc,
+                                                        itg_mds_ph_gt_customer.sls_dist,
+                                                        itg_mds_ph_gt_customer.sls_dist_desc,
+                                                        itg_mds_ph_gt_customer.dstrbtr_grp_cd,
+                                                        itg_mds_ph_gt_customer.dstrbtr_grp_nm,
+                                                        itg_mds_ph_gt_customer.rpt_grp_15_desc,
+                                                        itg_mds_ph_gt_customer.last_chg_datetime,
+                                                        itg_mds_ph_gt_customer.effective_from,
+                                                        itg_mds_ph_gt_customer.effective_to,
+                                                        itg_mds_ph_gt_customer.active,
+                                                        itg_mds_ph_gt_customer.crtd_dttm,
+                                                        itg_mds_ph_gt_customer.updt_dttm,
+                                                        itg_mds_ph_gt_customer.zip_code,
+                                                        itg_mds_ph_gt_customer.zip_cd_name,
+                                                        itg_mds_ph_gt_customer.barangay_code,
+                                                        itg_mds_ph_gt_customer.barangay_cd_name,
+                                                        itg_mds_ph_gt_customer.long_lat_source
+                                                    FROM itg_mds_ph_gt_customer
+                                                    WHERE (
+                                                            (itg_mds_ph_gt_customer.active)::text = ('Y'::character varying)::text
+                                                        )
+                                                ) impgc
+                                                LEFT JOIN (
+                                                    SELECT itg_mds_ph_ref_rka_master.rka_cd,
+                                                        itg_mds_ph_ref_rka_master.rka_nm,
+                                                        itg_mds_ph_ref_rka_master.last_chg_datetime,
+                                                        itg_mds_ph_ref_rka_master.effective_from,
+                                                        itg_mds_ph_ref_rka_master.effective_to,
+                                                        itg_mds_ph_ref_rka_master.active,
+                                                        itg_mds_ph_ref_rka_master.crtd_dttm,
+                                                        itg_mds_ph_ref_rka_master.updt_dttm
+                                                    FROM itg_mds_ph_ref_rka_master
+                                                    WHERE (
+                                                            (itg_mds_ph_ref_rka_master.active)::text = ('Y'::character varying)::text
+                                                        )
+                                                ) rka ON (
+                                                    (
+                                                        ltrim((impgc.sls_dist)::text) = ltrim((rka.rka_cd)::text)
                                                     )
-                                                ) ON (
-                                                    (
-                                                        ltrim(
-                                                            (impgc.dstrbtr_cust_id)::text,
-                                                            ('0'::character varying)::text
-                                                        ) = ltrim(
-                                                            (a.cust_cd)::text,
-                                                            ('0'::character varying)::text
-                                                        )
+                                                )
+                                            ) ON (
+                                                (
+                                                    ltrim(
+                                                        (impgc.dstrbtr_cust_id)::text,
+                                                        ('0'::character varying)::text
+                                                    ) = ltrim(
+                                                        (a.cust_cd)::text,
+                                                        ('0'::character varying)::text
                                                     )
                                                 )
                                             )
-                                        WHERE (
+                                        )
+                                    WHERE (
+                                            (
                                                 (
                                                     (
                                                         (
@@ -1820,140 +1787,129 @@ veosf as
                                                                     (
                                                                         (
                                                                             (
-                                                                                (
-                                                                                    a.sls_qty <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
-                                                                                )
-                                                                                OR (
-                                                                                    a.ret_qty <> (((0)::numeric)::numeric(18, 0))::numeric(24, 6)
-                                                                                )
+                                                                                a.sls_qty <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
                                                                             )
                                                                             OR (
-                                                                                a.sls_qty_pc <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
+                                                                                a.ret_qty <> (((0)::numeric)::numeric(18, 0))::numeric(24, 6)
                                                                             )
                                                                         )
                                                                         OR (
-                                                                            a.ret_qty_pc <> (((0)::numeric)::numeric(18, 0))::numeric(24, 6)
+                                                                            a.sls_qty_pc <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
                                                                         )
                                                                     )
                                                                     OR (
-                                                                        a.grs_trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(38, 12)
+                                                                        a.ret_qty_pc <> (((0)::numeric)::numeric(18, 0))::numeric(24, 6)
                                                                     )
                                                                 )
                                                                 OR (
-                                                                    a.ret_val <> (((0)::numeric)::numeric(18, 0))::numeric(38, 12)
+                                                                    a.grs_trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(38, 12)
                                                                 )
                                                             )
                                                             OR (
-                                                                a.trd_discnt <> (((0)::numeric)::numeric(18, 0))::numeric(23, 6)
+                                                                a.ret_val <> (((0)::numeric)::numeric(18, 0))::numeric(38, 12)
                                                             )
                                                         )
                                                         OR (
-                                                            a.trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(20, 4)
+                                                            a.trd_discnt <> (((0)::numeric)::numeric(18, 0))::numeric(23, 6)
                                                         )
                                                     )
                                                     OR (
-                                                        a.net_trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
+                                                        a.trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(20, 4)
                                                     )
                                                 )
-                                                AND (
-                                                    (a.cntry_cd)::text = ('PH'::character varying)::text
+                                                OR (
+                                                    a.net_trd_sls <> (((0)::numeric)::numeric(18, 0))::numeric(22, 6)
                                                 )
                                             )
-                                    ) veosf1
-                                    LEFT JOIN (
-                                        SELECT edw_vw_ph_material_dim.cntry_key,
-                                            edw_vw_ph_material_dim.sap_matl_num,
-                                            edw_vw_ph_material_dim.sap_mat_desc,
-                                            edw_vw_ph_material_dim.ean_num,
-                                            edw_vw_ph_material_dim.sap_mat_type_cd,
-                                            edw_vw_ph_material_dim.sap_mat_type_desc,
-                                            edw_vw_ph_material_dim.sap_base_uom_cd,
-                                            edw_vw_ph_material_dim.sap_prchse_uom_cd,
-                                            edw_vw_ph_material_dim.sap_prod_sgmt_cd,
-                                            edw_vw_ph_material_dim.sap_prod_sgmt_desc,
-                                            edw_vw_ph_material_dim.sap_base_prod_cd,
-                                            edw_vw_ph_material_dim.sap_base_prod_desc,
-                                            edw_vw_ph_material_dim.sap_mega_brnd_cd,
-                                            edw_vw_ph_material_dim.sap_mega_brnd_desc,
-                                            edw_vw_ph_material_dim.sap_brnd_cd,
-                                            edw_vw_ph_material_dim.sap_brnd_desc,
-                                            edw_vw_ph_material_dim.sap_vrnt_cd,
-                                            edw_vw_ph_material_dim.sap_vrnt_desc,
-                                            edw_vw_ph_material_dim.sap_put_up_cd,
-                                            edw_vw_ph_material_dim.sap_put_up_desc,
-                                            edw_vw_ph_material_dim.sap_grp_frnchse_cd,
-                                            edw_vw_ph_material_dim.sap_grp_frnchse_desc,
-                                            edw_vw_ph_material_dim.sap_frnchse_cd,
-                                            edw_vw_ph_material_dim.sap_frnchse_desc,
-                                            edw_vw_ph_material_dim.sap_prod_frnchse_cd,
-                                            edw_vw_ph_material_dim.sap_prod_frnchse_desc,
-                                            edw_vw_ph_material_dim.sap_prod_mjr_cd,
-                                            edw_vw_ph_material_dim.sap_prod_mjr_desc,
-                                            edw_vw_ph_material_dim.sap_prod_mnr_cd,
-                                            edw_vw_ph_material_dim.sap_prod_mnr_desc,
-                                            edw_vw_ph_material_dim.sap_prod_hier_cd,
-                                            edw_vw_ph_material_dim.sap_prod_hier_desc,
-                                            edw_vw_ph_material_dim.gph_region,
-                                            edw_vw_ph_material_dim.gph_reg_frnchse,
-                                            edw_vw_ph_material_dim.gph_reg_frnchse_grp,
-                                            edw_vw_ph_material_dim.gph_prod_frnchse,
-                                            edw_vw_ph_material_dim.gph_prod_brnd,
-                                            edw_vw_ph_material_dim.gph_prod_sub_brnd,
-                                            edw_vw_ph_material_dim.gph_prod_vrnt,
-                                            edw_vw_ph_material_dim.gph_prod_needstate,
-                                            edw_vw_ph_material_dim.gph_prod_ctgry,
-                                            edw_vw_ph_material_dim.gph_prod_subctgry,
-                                            edw_vw_ph_material_dim.gph_prod_sgmnt,
-                                            edw_vw_ph_material_dim.gph_prod_subsgmnt,
-                                            edw_vw_ph_material_dim.gph_prod_put_up_cd,
-                                            edw_vw_ph_material_dim.gph_prod_put_up_desc,
-                                            edw_vw_ph_material_dim.gph_prod_size,
-                                            edw_vw_ph_material_dim.gph_prod_size_uom,
-                                            edw_vw_ph_material_dim.launch_dt,
-                                            edw_vw_ph_material_dim.qty_shipper_pc,
-                                            edw_vw_ph_material_dim.prft_ctr,
-                                            edw_vw_ph_material_dim.shlf_life
-                                        FROM edw_vw_ph_material_dim
-                                        WHERE (
-                                                (edw_vw_ph_material_dim.cntry_key)::text = ('PH'::character varying)::text
-                                            )
-                                    ) veomd ON (
-                                        (
-                                            ltrim(
-                                                (veomd.sap_matl_num)::text,
-                                                ('0'::character varying)::text
-                                            ) = ltrim(
-                                                (veosf1.sap_matl_num)::text,
-                                                ('0'::character varying)::text
+                                            AND (
+                                                (a.cntry_cd)::text = ('PH'::character varying)::text
                                             )
                                         )
-                                    )
-                                )
-                            WHERE (
-                                    NOT (
+                                ) veosf1
+                                LEFT JOIN (
+                                    SELECT edw_vw_ph_material_dim.cntry_key,
+                                        edw_vw_ph_material_dim.sap_matl_num,
+                                        edw_vw_ph_material_dim.sap_mat_desc,
+                                        edw_vw_ph_material_dim.ean_num,
+                                        edw_vw_ph_material_dim.sap_mat_type_cd,
+                                        edw_vw_ph_material_dim.sap_mat_type_desc,
+                                        edw_vw_ph_material_dim.sap_base_uom_cd,
+                                        edw_vw_ph_material_dim.sap_prchse_uom_cd,
+                                        edw_vw_ph_material_dim.sap_prod_sgmt_cd,
+                                        edw_vw_ph_material_dim.sap_prod_sgmt_desc,
+                                        edw_vw_ph_material_dim.sap_base_prod_cd,
+                                        edw_vw_ph_material_dim.sap_base_prod_desc,
+                                        edw_vw_ph_material_dim.sap_mega_brnd_cd,
+                                        edw_vw_ph_material_dim.sap_mega_brnd_desc,
+                                        edw_vw_ph_material_dim.sap_brnd_cd,
+                                        edw_vw_ph_material_dim.sap_brnd_desc,
+                                        edw_vw_ph_material_dim.sap_vrnt_cd,
+                                        edw_vw_ph_material_dim.sap_vrnt_desc,
+                                        edw_vw_ph_material_dim.sap_put_up_cd,
+                                        edw_vw_ph_material_dim.sap_put_up_desc,
+                                        edw_vw_ph_material_dim.sap_grp_frnchse_cd,
+                                        edw_vw_ph_material_dim.sap_grp_frnchse_desc,
+                                        edw_vw_ph_material_dim.sap_frnchse_cd,
+                                        edw_vw_ph_material_dim.sap_frnchse_desc,
+                                        edw_vw_ph_material_dim.sap_prod_frnchse_cd,
+                                        edw_vw_ph_material_dim.sap_prod_frnchse_desc,
+                                        edw_vw_ph_material_dim.sap_prod_mjr_cd,
+                                        edw_vw_ph_material_dim.sap_prod_mjr_desc,
+                                        edw_vw_ph_material_dim.sap_prod_mnr_cd,
+                                        edw_vw_ph_material_dim.sap_prod_mnr_desc,
+                                        edw_vw_ph_material_dim.sap_prod_hier_cd,
+                                        edw_vw_ph_material_dim.sap_prod_hier_desc,
+                                        edw_vw_ph_material_dim.gph_region,
+                                        edw_vw_ph_material_dim.gph_reg_frnchse,
+                                        edw_vw_ph_material_dim.gph_reg_frnchse_grp,
+                                        edw_vw_ph_material_dim.gph_prod_frnchse,
+                                        edw_vw_ph_material_dim.gph_prod_brnd,
+                                        edw_vw_ph_material_dim.gph_prod_sub_brnd,
+                                        edw_vw_ph_material_dim.gph_prod_vrnt,
+                                        edw_vw_ph_material_dim.gph_prod_needstate,
+                                        edw_vw_ph_material_dim.gph_prod_ctgry,
+                                        edw_vw_ph_material_dim.gph_prod_subctgry,
+                                        edw_vw_ph_material_dim.gph_prod_sgmnt,
+                                        edw_vw_ph_material_dim.gph_prod_subsgmnt,
+                                        edw_vw_ph_material_dim.gph_prod_put_up_cd,
+                                        edw_vw_ph_material_dim.gph_prod_put_up_desc,
+                                        edw_vw_ph_material_dim.gph_prod_size,
+                                        edw_vw_ph_material_dim.gph_prod_size_uom,
+                                        edw_vw_ph_material_dim.launch_dt,
+                                        edw_vw_ph_material_dim.qty_shipper_pc,
+                                        edw_vw_ph_material_dim.prft_ctr,
+                                        edw_vw_ph_material_dim.shlf_life
+                                    FROM edw_vw_ph_material_dim
+                                    WHERE (
+                                            (edw_vw_ph_material_dim.cntry_key)::text = ('PH'::character varying)::text
+                                        )
+                                ) veomd ON (
+                                    (
                                         ltrim(
-                                            veosf1.dstrbtr_matl_num,
+                                            (veomd.sap_matl_num)::text,
                                             ('0'::character varying)::text
-                                        ) IN (
-                                            SELECT DISTINCT ltrim(
-                                                    (
-                                                        COALESCE(
-                                                            itg_mds_ph_lav_product.item_cd,
-                                                            'NA'::character varying
-                                                        )
-                                                    )::text,
-                                                    ('0'::character varying)::text
-                                                ) AS ltrim
-                                            FROM itg_mds_ph_lav_product
-                                            WHERE (
-                                                    (itg_mds_ph_lav_product.active)::text = ('Y'::character varying)::text
-                                                )
+                                        ) = ltrim(
+                                            (veosf1.sap_matl_num)::text,
+                                            ('0'::character varying)::text
                                         )
                                     )
                                 )
-                        ) dstrbtr_matl
-                )
+                            )
+                        WHERE (
+                                    
+                                    ltrim(veosf1.dstrbtr_matl_num,('0'::character varying)::text) NOT IN 
+                                    (
+                                        SELECT DISTINCT ltrim((COALESCE(itg_mds_ph_lav_product.item_cd,'NA'::character varying))::text,('0'::character varying)::text) AS ltrim
+                                        FROM itg_mds_ph_lav_product
+                                        WHERE (
+                                                (itg_mds_ph_lav_product.active)::text = ('Y'::character varying)::text
+                                            )
+                                    )
+                                
+                            )
+                    ) dstrbtr_matl
             )
+            
         )
 ),
 final as
@@ -2180,4 +2136,4 @@ final as
             to_date((veotd.cal_date)::timestamp without time zone) = to_date(veosf.bill_date)
         )
 )
-select count(*) from final
+select * from final
