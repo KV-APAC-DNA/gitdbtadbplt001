@@ -16,7 +16,7 @@ models:
   - name: pcfitg_integration__itg_weekly_forecast
     config: 
       alias: itg_weekly_forecast
-      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
   - name: pcfitg_integration__itg_px_weekly_sell
     config: 
       alias: itg_px_weekly_sell
