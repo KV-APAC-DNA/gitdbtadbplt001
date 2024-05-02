@@ -33,6 +33,3 @@ sources:
 
       - name: sdl_competitive_banner_group
         tags: ["j_pacific_cbg_data_ingestion","transformation"]
-
-      - name: sdl_weekly_forecast
-        tags: ["j_pac_sap_bw_weekly_forecast_file_edw","ingestion"]
