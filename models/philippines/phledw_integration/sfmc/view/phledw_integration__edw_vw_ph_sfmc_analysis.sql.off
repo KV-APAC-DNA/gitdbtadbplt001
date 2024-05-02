@@ -1,7 +1,7 @@
 with
 edw_vw_ph_sfmc_consumer_master as
 (
-    select * from snapaspedw_integration.edw_vw_ph_sfmc_consumer_master
+    select * from {{ ref('phledw_integration__edw_vw_ph_sfmc_consumer_master') }}
 ),
 itg_mds_rg_sfmc_gender as
 (
@@ -17,7 +17,7 @@ edw_vw_sfmc_email_activity_fact as
 ),
 edw_vw_ph_sfmc_subscriber_status_history as
 (
-    select * from snapaspedw_integration.edw_vw_ph_sfmc_subscriber_status_history
+    select * from select * from {{ ref('phledw_integration__edw_vw_ph_sfmc_subscriber_status_history') }}
 ),
 temp_a as
 (

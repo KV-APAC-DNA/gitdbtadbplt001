@@ -1,7 +1,7 @@
 with 
 itg_ph_pos_wm_competitor as
 (
-    select * from snaposeitg_integration.itg_ph_pos_wm_competitor
+    select * from {{ ref('phlitg_integration__itg_ph_pos_wm_competitor') }}
 ),
 final as
 (

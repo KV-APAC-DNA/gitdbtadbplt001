@@ -1,15 +1,15 @@
 with
 itg_mds_ph_ref_pos_primary_sold_to as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_ref_pos_primary_sold_to
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to') }}
 ),
 itg_ph_as_watsons_inventory as 
 (
-    select * from snaposeitg_integration.itg_ph_as_watsons_inventory
+    select * from {{ ref('phlitg_integration__itg_ph_as_watsons_inventory') }}
 ),
 itg_mds_ph_pos_product as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_pos_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}
 ),
 final as
 (

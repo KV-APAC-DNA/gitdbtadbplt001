@@ -5,45 +5,42 @@ edw_vw_os_time_dim as
 ),
 itg_ph_pos_pg_sm_sales_fact as 
 (
-    select * from snaposeitg_integration.itg_ph_pos_pg_sm_sales_fact
+    select * from {{ ref('phlitg_integration__itg_ph_pos_pg_sm_sales_fact') }}
 ),
 edw_vw_ph_pos_customer_dim as 
 (
-    select * from snaposeedw_integration.edw_vw_os_pos_customer_dim
-    where cntry_cd='PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_customer_dim') }}
 ),
 itg_mds_ph_ref_pos_primary_sold_to as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_ref_pos_primary_sold_to
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to') }}
 ),
 edw_vw_ph_pos_material_dim as 
 (
-    select * from snaposeedw_integration.edw_vw_os_pos_material_dim
-    where cntry_cd='PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_material_dim') }}
 ),
 itg_mds_ph_pos_customers as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_pos_customers
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers') }}
 ),
 edw_vw_ph_material_dim as 
 (
     select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}),
 edw_mv_ph_customer_dim as 
 (
-    select * from snaposeedw_integration.edw_mv_ph_customer_dim
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
 edw_vw_ph_customer_dim as 
 (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd='PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 itg_mds_ph_lav_product as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_lav_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
 itg_mds_ph_pos_pricelist as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_pos_pricelist
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 final as
 (

@@ -1,7 +1,7 @@
 with
 itg_ph_pos_sales_fact as
 (
-    select * from snaposeitg_integration.itg_ph_pos_sales_fact
+    select * from {{ ref('phlitg_integration__itg_ph_pos_sales_fact') }}
 ),
 final as
 (

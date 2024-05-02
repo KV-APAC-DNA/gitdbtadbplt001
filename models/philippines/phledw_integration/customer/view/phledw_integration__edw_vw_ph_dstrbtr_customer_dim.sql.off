@@ -1,15 +1,15 @@
 with
 itg_mds_ph_gt_customer as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_gt_customer
+    select * from {{ ref('phlitg_integration__itg_mds_ph_gt_customer') }}
 ),
 itg_mds_ph_ref_distributors as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_ref_distributors
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_distributors') }}
 ),
 itg_mds_ph_ref_rka_master as 
 (
-    select * from snaposeitg_integration.itg_mds_ph_ref_rka_master
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_rka_master') }}
 ),
 
 final as
