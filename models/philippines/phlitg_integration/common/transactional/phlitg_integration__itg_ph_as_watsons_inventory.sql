@@ -3,14 +3,14 @@
     (
         materialized="incremental",
         incremental_strategy="append",
-        unique_key=["vendor_cd","jj_mnth_id","brnch_cd","item_cd"],
+        unique_key=["year","mnth_no","inv_week","item_cd"],
         pre_hook="delete from {{this}} where nvl(year, 'NA') || nvl(mnth_no, 'NA') || nvl(inv_week, 'NA') || nvl(item_cd, '#') in ( select distinct nvl(substring(filename, 17, 4), 'NA') || substring(filename, 21, 2) || nvl(substring(filename, 23, 2), 'NA') || nvl(item_cd, '#') from {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }});"
 
 
     )
 }}
 with source as (
-    select *, dense_rank() over(partition by null order by file_nm desc) as rnk from  {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
+    select *, dense_rank() over(partition by null order by filename desc) as rnk from  {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
 ),
 final as
 (

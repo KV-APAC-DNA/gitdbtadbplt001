@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_mv_ph_customer_dim
+    config:
+      alias: edw_mv_ph_customer_dim
+      tags: ["philippines_views","transformation"]

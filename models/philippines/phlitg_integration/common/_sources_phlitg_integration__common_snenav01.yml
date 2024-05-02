@@ -18,12 +18,12 @@ sources:
                 config:
                   store_failures: true
                   schema: phlwks_integration
-            # - test_duplicate__ff:
-            #     group_by_columns: [1]
-            #     name: TRATBL_sdl_ph_as_watsons_inventory__duplicate_test
-            #     config:
-            #       store_failures: true
-            #       schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["sku","description","total_units","total_cost","avg_sales_cost","wks_sup","remarks","br_ol_pl_ex","group_name","dept_name","class_name","sub_class_name","br_ol_pl_ex_subclass","subclass","catman","item_status","item_class","hold_reason_code","site_code","site_name","gwp","ret_non_ret","good_bad_13_wks","filename"]
+                name: TRATBL_sdl_ph_as_watsons_inventory__duplicate_test
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
             - test_lookup__ff:
                 failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
                 column: "nvl(item_cd, '#')"
@@ -33,3 +33,4 @@ sources:
                 config:
                   store_failures: true
                   schema: phlwks_integration
+      - name: sdl_ph_sfmc_consumer_master
