@@ -4,19 +4,19 @@
         incremental_strategy= "append",
         pre_hook= "delete from {{this}} where ( coalesce(sku_code, 'NA'), coalesce(upper(month), 'NA'), coalesce(upper(week), 'NA'), coalesce(upper(encoded_report), 'NA'), coalesce(upper(branch_code), 'NA'), upper(retailer_name) ) in (
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }} WHERE encoded_report <> '1'
-          union 
+          union all 
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }} WHERE encoded_report <> '1'
           union all
           select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }} WHERE encoded_report <> '1'

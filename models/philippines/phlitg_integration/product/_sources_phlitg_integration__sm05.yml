@@ -9,6 +9,31 @@ sources:
       schema: false
       identifier: false
     tables:
+    - name: sdl_ph_sfmc_bounce_data
+      tags: ["ph_sfmc_files","ingestion"]
+      tests:
+        - test_duplicate:
+            group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+            name: TRATBL_sdl_ph_sfmc_bounce_data__duplicate_test
+            config:
+              store_failures: true
+              schema: phlwks_integration
+        - test_null:
+            not_null_columns: ["subscriber_key","event_date","email_name","job_id","batch_id"]
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+            name: TRATBL_sdl_ph_sfmc_bounce_data__null_test
+            config:
+              store_failures: true
+              schema: phlwks_integration
+        - test_format:
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+            where_clause: " not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+            failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD ...for SUBSCRIBER_KEY & actual event_date'"
+            name: TRATBL_sdl_ph_sfmc_bounce_data__format_test
+            config:
+              store_failures: true
+              schema: phlwks_integration
     - name: sdl_ph_non_ise_landmark_sm
     - name: sdl_ph_non_ise_landmark_ds
     - name: sdl_ph_non_ise_puregold

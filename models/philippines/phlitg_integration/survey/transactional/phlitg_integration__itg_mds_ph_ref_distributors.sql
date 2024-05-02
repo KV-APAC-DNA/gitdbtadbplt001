@@ -142,5 +142,29 @@ transformed as(
     dstrbtr_grp_cd not in (
             select trim(dstrbtr_grp_cd) from wks
         )
+),
+final as(
+    select 
+        dstrbtr_grp_cd::varchar(20) as dstrbtr_grp_cd,
+        dstrbtr_grp_nm::varchar(255) as dstrbtr_grp_nm,
+        primary_sold_to::varchar(50) as primary_sold_to,
+        primary_sold_to_nm::varchar(255) as primary_sold_to_nm,
+        rpt_grp_10::varchar(50) as rpt_grp_10,
+        rpt_grp_10_desc::varchar(255) as rpt_grp_10_desc,
+        rpt_grp_12::varchar(50) as rpt_grp_12,
+        rpt_grp_12_desc::varchar(255) as rpt_grp_12_desc,
+        rpt_grp_13::varchar(50) as rpt_grp_13,
+        rpt_grp_13_desc::varchar(255) as rpt_grp_13_desc,
+        rpt_grp_14::varchar(50) as rpt_grp_14,
+        rpt_grp_14_desc::varchar(255) as rpt_grp_14_desc,
+        rpt_grp_8::varchar(50) as rpt_grp_8,
+        rpt_grp_8_desc::varchar(255) as rpt_grp_8_desc,
+        last_chg_datetime::timestamp_ntz(9) as last_chg_datetime,
+        effective_from::timestamp_ntz(9) as effective_from,
+        effective_to::timestamp_ntz(9) as effective_to,
+        active::varchar(10) as active,
+        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm
+    from transformed
 )
-select * from transformed
+select * from final

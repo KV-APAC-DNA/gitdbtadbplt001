@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_ph_ps_weights
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
           - test_null:
               select_columns: ["re_id", "kpi", "channel"]
@@ -27,7 +27,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_mds_ph_msl_hdr
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
           - test_null:
               select_columns: ["code", "to_salescycle", "fr_salescycle"]
@@ -60,7 +60,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_mds_ph_msl_dtls
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
           - test_null:
               select_columns: ["msl_hdr_code_code", "sku_code"]
@@ -77,7 +77,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_mds_ph_ps_targets
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
           - test_null:
               select_columns: ["kpi", "channel", "RE", "attribute_1", "attribute_2", "value"]
@@ -94,6 +94,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_mds_ph_distributor_supervisors
+      tags: ["ph_mds_itg_refresh", "ingestion"]
       tests:
           - test_null:
               select_columns: ["code"]
@@ -111,7 +112,7 @@ sources:
                 schema: phlwks_integration
 
     - name: sdl_mds_ph_ref_repbrand
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
           - test_null:
               select_columns: ["code"]
@@ -127,3 +128,4 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+

@@ -20,7 +20,7 @@ final as(
         cast(qty as numeric(15, 4)) as qty,
         uom::varchar(20) as uom,
         cast(amt as numeric(15, 4)) as amt,
-        cdl_dttm as cdl_dttm,
+        cdl_dttm::varchar(50) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         null::timestamp_ntz(9)  as updt_dttm
     from source
