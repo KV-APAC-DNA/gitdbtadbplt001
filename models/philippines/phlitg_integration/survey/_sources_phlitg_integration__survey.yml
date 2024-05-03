@@ -165,5 +165,3 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
-    - name: sdl_ph_pos_waltermart
-      tags: ["j_os_dna_sdl_to_edw_wm_sales","ingestion"]
