@@ -29,7 +29,7 @@ edw_vw_ph_material_dim as(
     select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
 ),
 edw_vw_ph_customer_dim as(
-    select * from select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 edw_product_key_attributes as(
     select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
