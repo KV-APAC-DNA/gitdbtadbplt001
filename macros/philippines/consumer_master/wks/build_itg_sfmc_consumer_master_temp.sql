@@ -69,7 +69,7 @@
             {{schema}}.aspitg_integration__itg_sfmc_consumer_master
         {% endif %};
         delete from {{tablename}}
-        where cntry_cd = 'PH' and file_name = '{{filename}}';
+        where file_name = '{{filename}}';
     {% endset %}
 
     {% do run_query(query) %}

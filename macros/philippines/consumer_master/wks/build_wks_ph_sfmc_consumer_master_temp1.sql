@@ -19,6 +19,7 @@
             {% else %}
                 {{schema}}.phlitg_integration__itg_sfmc_consumer_master_temp
             {% endif %}
+            where cntry_cd = 'PH'
         ),
         sdl_ph_sfmc_consumer_master as (
             select * from {{ ref('phlwks_integration__wks_ph_sfmc_consumer_master') }}
@@ -46,7 +47,7 @@
                             where file_name = '{{filename}}'
                         ) as sdl
                     where sdl.subscriber_key = itg.subscriber_key
-                        and itg.valid_to = '31-DEC-9999'
+                        and itg.valid_to = '31-DEC-9999'::timestamp_ntz
                         and ITG.cntry_cd = 'PH'
                 ) temp
         )
