@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_clobotics_task
+    config:
+      alias: itg_ph_clobotics_task
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+  - name: phlitg_integration__itg_ph_clobotics_survey
+    config:
+      alias: itg_ph_clobotics_survey
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+  - name: phlitg_integration__itg_ph_clobotics_store
+    config:
+      alias: itg_ph_clobotics_store
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+
+  - name: phlitg_integration__sdl_raw_ph_clobotics_store_raw_data
+    config:
+      alias: sdl_raw_ph_clobotics_store_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+  - name: phlitg_integration__sdl_raw_ph_clobotics_survey_data
+    config:
+      alias: sdl_raw_ph_clobotics_survey_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+  - name: phlitg_integration__sdl_raw_ph_clobotics_task_raw_data
+    config:
+      alias: sdl_raw_ph_clobotics_task_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]

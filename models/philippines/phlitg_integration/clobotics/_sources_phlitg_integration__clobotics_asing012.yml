@@ -1,0 +1,126 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_clobotics_task_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
+              not_null_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
+              name: TRATBL_sdl_ph_clobotics_task_raw_data__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
+              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for create_time'"
+              name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test1
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
+              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for task_action_time'"
+              name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test2
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for plan_finish_time'"
+              name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test3
+              config:
+                store_failures: true
+                schema: phlwks_integration
+    - name: sdl_ph_clobotics_store_raw_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
+              not_null_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
+              name: TRATBL_sdl_ph_clobotics_store_raw_data__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for plan_finish_time'"
+              name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test1
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
+              where_clause: "not regexp_like (trim(plan_start_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for plan_start_time'"
+              name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test2
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
+              where_clause: "not regexp_like (trim(plan_upload_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for plan_upload_time'"
+              name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test3
+              config:
+                store_failures: true
+                schema: phlwks_integration
+    - name: sdl_ph_clobotics_survey_data
+      tags: ["ph_perfectstore_clobotics","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
+              not_null_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
+              name: TRATBL_sdl_ph_clobotics_survey_data__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
+              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for create_time'"
+              name: TRATBL_sdl_ph_clobotics_survey_data__format_test1
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
+              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for task_action_time'"
+              name: TRATBL_sdl_ph_clobotics_survey_data__format_test2
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              failure_reason: "'Date time not correct for plan_finish_time'"
+              name: TRATBL_sdl_ph_clobotics_survey_data__format_test3
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
+
+  - name: phlitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: phlitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_ph_clobotics_store_mapping
+      tags: ["ph_perfectstore_clobotics",""]
+    - name: itg_ph_le_trgt
