@@ -95,7 +95,7 @@
         itg_active_records as
         (
             select * from itg_temp
-            where (
+            where not (
                 subscriber_key in
                 (
                     select subscriber_key from wks_ph_sfmc_consumer_master_temp1
@@ -274,7 +274,7 @@
             opt_in_for_jnj_communication,
             opt_in_for_campaign
         from
-        itg_temp itg left join
+        itg_union itg left join
         (SELECT subscriber_key FROM sdl_PH_sfmc_consumer_master) sdl
         on itg.subscriber_key = sdl.subscriber_key
         );
