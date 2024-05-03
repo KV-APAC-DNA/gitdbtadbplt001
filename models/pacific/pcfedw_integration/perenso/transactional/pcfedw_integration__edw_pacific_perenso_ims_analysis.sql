@@ -1574,7 +1574,7 @@ final as (
     cal_mnth_nm::varchar(10) as cal_mnth_nm,
     prod_key::number(10,0) as prod_key,
     prod_probe_id::number(18,0) as prod_probe_id,
-    prod_desc::varchar(256) as prod_desc,
+    prod_desc::varchar(1000) as prod_desc,
     prod_sapbw_code::varchar(50) as prod_sapbw_code,
     prod_ean::varchar(50) as prod_ean,
     prod_jj_franchise::varchar(100) as prod_jj_franchise,
