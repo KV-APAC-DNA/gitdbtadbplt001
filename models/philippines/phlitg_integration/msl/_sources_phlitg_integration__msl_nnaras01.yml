@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_ph_non_ise_robinsons_ds
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
         - test_null:
                 select_columns: ["retailer_name","sku_code","osa_check_date","branch_code","ret_nm_prefix"]
@@ -48,7 +48,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_ph_non_ise_waltermart
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                   select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -86,7 +86,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_svi_smc
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                   select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -124,7 +124,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_shm
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                   select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -162,7 +162,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_robinsons_sm
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -200,7 +200,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_landmark_sm
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -238,7 +238,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_super_8
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -276,7 +276,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_puregold
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -314,7 +314,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_landmark_ds
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -352,7 +352,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
     - name: sdl_ph_non_ise_rustans
-      tags: ["","ingestion"]
+      tags: ["ph_non_pos","ingestion"]
       tests:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
