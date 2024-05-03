@@ -5,3 +5,7 @@ models:
     config:
       alias: itg_ph_iop_target
       tags: ["ph_iop_target","ingestion"]
+  - name: phlitg_integration__sdl_raw_ph_iop_trgt
+    config:
+      alias: sdl_raw_ph_iop_trgt
+      tags: ["ph_iop_target","ingestion"]
