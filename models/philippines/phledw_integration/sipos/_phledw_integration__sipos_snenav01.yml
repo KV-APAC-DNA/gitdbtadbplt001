@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_si_pos_inv_analysis
+    config:
+      alias: edw_vw_ph_si_pos_inv_analysis
+      tags: ["philippines_views","transformation"]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_pos_wm_competitor
+    config:
+      alias: itg_ph_pos_wm_competitor
+      tags: ["j_os_dna_sdl_to_edw_wm_sales","ingestion"]

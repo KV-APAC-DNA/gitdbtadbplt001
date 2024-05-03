@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: phaitg_integration__sdl_raw_ph_sfmc_children_data
+    config:
+      alias: sdl_raw_ph_sfmc_children_data
+      tags: ["ph_crm_files","ingestion"]
+  - name: phaitg_integration__sdl_raw_ph_sfmc_consumer_master
+    config:
+      alias: sdl_raw_ph_sfmc_consumer_master
+      tags: ["ph_crm_files","ingestion"]
+  - name: phaitg_integration__sdl_raw_ph_sfmc_unsubscribe_data
+    config:
+      alias: sdl_raw_ph_sfmc_unsubscribe_data
+      tags: ["ph_sfmc_files","ingestion"]
+  - name: phaitg_integration__sdl_raw_ph_sfmc_complaint_data
+    config:
+      alias: sdl_raw_ph_sfmc_complaint_data
+      tags: ["ph_sfmc_files","ingestion"]
+  - name: phaitg_integration__sdl_raw_ph_sfmc_click_data
+    config:
+      alias: sdl_raw_ph_sfmc_click_data
+      tags: ["ph_sfmc_files","ingestion"]
+  - name: phaitg_integration__sdl_raw_ph_sfmc_sent_data
+    config:
+      alias: sdl_raw_ph_sfmc_sent_data
+      tags: ["ph_sfmc_files","ingestion"]

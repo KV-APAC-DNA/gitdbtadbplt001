@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_mds_ph_ise_parent
+    config:
+      alias: itg_mds_ph_ise_parent
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_ise_sos_targets
+    config:
+      alias: itg_mds_ph_ise_sos_targets
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_ise_weights
+    config:
+      alias: itg_mds_ph_ise_weights
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_lav_product
+    config:
+      alias: itg_mds_ph_lav_product
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_pos_customers
+    config:
+      alias: itg_mds_ph_pos_customers
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_product_hierarchy
+    config:
+      alias: itg_mds_ph_product_hierarchy
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_ref_rka_master
+    config:
+      alias: itg_mds_ph_ref_rka_master
+      tags: ["ph_mds_itg_refresh","ingestion"]

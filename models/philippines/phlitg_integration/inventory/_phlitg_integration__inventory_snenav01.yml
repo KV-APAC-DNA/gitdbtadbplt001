@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: phlitg_integration__sdl_ph_raw_as_watsons_inventory
+    config:
+      alias: sdl_ph_raw_as_watsons_inventory
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]
+  - name: phlitg_integration__itg_ph_as_watsons_inventory
+    config:
+      alias: itg_ph_as_watsons_inventory
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]
