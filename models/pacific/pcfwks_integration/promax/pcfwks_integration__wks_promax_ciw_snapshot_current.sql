@@ -16,7 +16,7 @@ projprd as
 transformed as
 (
   select 
-    substring(current_timestamp(), 1, 19) as snapshot_date,
+    substring(convert_timezone('UTC', current_timestamp()), 1, 19) as snapshot_date,
     upper(monthname(current_timestamp)) as snapshot_month,
     year(current_timestamp) as snapshot_year,
     jj_period,
