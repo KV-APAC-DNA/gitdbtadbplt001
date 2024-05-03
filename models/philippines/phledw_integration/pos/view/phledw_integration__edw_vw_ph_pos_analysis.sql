@@ -1,41 +1,38 @@
 with itg_mds_ph_pos_pricelist as(
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.ITG_MDS_PH_POS_PRICELIST
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }} 
 ),
 itg_mds_ph_lav_product as (
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.itg_mds_ph_lav_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
-edw_vw_os_pos_sales_fact as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_pos_sales_fact
+edw_vw_ph_pos_sales_fact as (
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_sales_fact') }}
 ),
 edw_vw_os_time_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_mds_ph_ref_pos_primary_sold_to as (
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.itg_mds_ph_ref_pos_primary_sold_to
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to') }}
 ),
-edw_vw_os_pos_customer_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_pos_customer_dim
+edw_vw_ph_pos_customer_dim as (
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_customer_dim') }}
 ),
-edw_vw_os_pos_material_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_POS_MATERIAL_DIM
+edw_vw_ph_pos_material_dim as (
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_material_dim') }}
 ),
 itg_mds_ph_pos_customers as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.itg_mds_ph_pos_customers
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers') }}
 ),
 edw_mv_ph_customer_dim as (
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_mv_ph_customer_dim
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
-edw_vw_os_material_dim as(
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.edw_vw_os_material_dim
-
+edw_vw_ph_material_dim as(
+    select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
 ),
-EDW_VW_OS_CUSTOMER_DIM as(
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_OS_CUSTOMER_DIM
-
+edw_vw_ph_customer_dim as(
+    select * from select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 edw_product_key_attributes as(
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_product_key_attributes
-
+    select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
 ),
 epp2 as(
     	select status,
@@ -102,7 +99,7 @@ veposf as(
 			jj_nts
 		from (
 			select *
-			from edw_vw_os_pos_sales_fact
+			from edw_vw_ph_pos_sales_fact
 			where cntry_cd = 'PH'
 			) a,
 			(
@@ -121,12 +118,12 @@ veposf as(
 				) e,
 			(
 				select *
-				from edw_vw_os_pos_customer_dim
+				from edw_vw_ph_pos_customer_dim
 				where cntry_cd = 'PH'
 				) c,
 			(
 				select *
-				from edw_vw_os_pos_material_dim
+				from edw_vw_ph_pos_material_dim
 				where cntry_cd = 'PH'
 				) d,
 			(
@@ -153,14 +150,14 @@ veposf as(
 veomd as (
     select mat.*,
 			prod.pka_productkey
-		from edw_vw_os_material_dim mat
+		from edw_vw_ph_material_dim mat
 		left join edw_product_key_attributes prod on ltrim(mat.sap_matl_num, '0') = ltrim(prod.matl_num, '0')
 		where cntry_key = 'PH'
 			AND upper(prod.ctry_nm) = 'PHILIPPINES'
 ),
 veocd as(
     select *
-		from edw_vw_os_customer_dim
+		from edw_vw_ph_customer_dim
 		where sap_cntry_cd = 'PH'
 ),
 veotd2 as(

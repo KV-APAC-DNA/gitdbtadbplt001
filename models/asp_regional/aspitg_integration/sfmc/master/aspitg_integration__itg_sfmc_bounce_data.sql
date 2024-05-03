@@ -2,9 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook="{% if var('ph_job_to_execute') == 'th_sfmc_files' %}
+        pre_hook="{% if var('job_to_execute') == 'th_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_bounce_data') }}) and cntry_cd = 'TH';
-                    {% elif var('ph_job_to_execute') == 'ph_sfmc_files' %}
+                    {% elif var('job_to_execute') == 'ph_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_bounce_data') }}) and cntry_cd = 'PH';
                     {% endif %}"
     )
@@ -15,7 +15,7 @@ with source as(
 source2 as(
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_bounce_data') }}
 ),
-{% if var("ph_job_to_execute") == 'th_sfmc_files' %}
+{% if var("job_to_execute") == 'th_sfmc_files' %}
 
 final as
 (
@@ -54,7 +54,7 @@ final as
 )
 select * from final
 
-{% elif var("ph_job_to_execute") == 'ph_sfmc_files' %}
+{% elif var("job_to_execute") == 'ph_sfmc_files' %}
 
 final as
 (

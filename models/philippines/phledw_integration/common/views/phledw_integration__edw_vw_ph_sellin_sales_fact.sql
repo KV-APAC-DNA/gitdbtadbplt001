@@ -1,5 +1,5 @@
 with edw_copa_trans_fact as (
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_copa_trans_fact
+	select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 t2 as (
 	select t1.co_cd,

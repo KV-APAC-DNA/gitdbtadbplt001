@@ -1,5 +1,5 @@
 with itg_mds_ph_pos_product as(
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.itg_mds_ph_pos_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }} 
 ),
 transformed as(
     SELECT 'PH' AS cntry_cd

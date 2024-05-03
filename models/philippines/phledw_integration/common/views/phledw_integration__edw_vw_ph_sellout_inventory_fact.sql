@@ -1,5 +1,5 @@
 with itg_ph_dms_sellout_stock_fact as(
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.itg_ph_dms_sellout_stock_fact
+    select * from {{ ref('phlitg_integration__itg_ph_dms_sellout_stock_fact') }} 
 ),
 transformed as(
     SELECT 'PH' AS cntry_cd

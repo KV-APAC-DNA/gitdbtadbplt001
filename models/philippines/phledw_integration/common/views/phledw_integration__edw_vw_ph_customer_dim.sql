@@ -1,26 +1,26 @@
 with edw_customer_sales_dim as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_sales_dim
+	select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }} 
 ),
 edw_customer_base_dim as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_customer_base_dim
+	select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_gch_customerhierarchy as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_gch_customerhierarchy
+	select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_code_descriptions as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_code_descriptions
+	select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_sales_org_dim as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_sales_org_dim
+	select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 edw_dstrbtn_chnl as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_dstrbtn_chnl
+	select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_company_dim as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_company_dim
+	select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_subchnl_retail_env_mapping as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_subchnl_retail_env_mapping
+	select * from {{ ref('aspedw_access__edw_subchnl_retail_env_mapping') }}
 ),
 a as(
 	

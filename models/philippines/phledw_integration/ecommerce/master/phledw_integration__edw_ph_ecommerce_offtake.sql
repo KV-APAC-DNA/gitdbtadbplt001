@@ -1,17 +1,17 @@
 with itg_ph_ecommerce_offtake_acommerce as(
-    select * from DEV_DNA_CORE.PHLITG_INTEGRATION.itg_ph_ecommerce_offtake_acommerce
+    select * from {{ ref('phlitg_integration__itg_ph_ecommerce_offtake_acommerce') }}
 ),
 sdl_mds_ph_ecom_product as(
-    select * from DEV_DNA_LOAD.snaposesdl_raw.sdl_mds_ph_ecom_product
+    select * from {{ source('phlsdl_raw', 'sdl_mds_ph_ecom_product') }}
 ),
 edw_product_key_attributes as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_crncy_exch_rates as(
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_CRNCY_EXCH_RATES
+    select * from {{ ref('aspedw_integration__edw_crncy_exch_rates') }}
 ),
 edw_calendar_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 trans as(
 SELECT trans.*,
