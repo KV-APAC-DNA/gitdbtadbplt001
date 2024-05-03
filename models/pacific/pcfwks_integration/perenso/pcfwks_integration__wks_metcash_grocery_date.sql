@@ -18,11 +18,11 @@ final as (
             supp_id || supp_name || state || banner_id || banner || customer_id || customer
         ) is null
         and (
-            gross_sales_wk1 like '%/%'
-            or gross_sales_wk2 like '%/%'
-            or gross_sales_wk3 like '%/%'
-            or gross_sales_wk4 like '%/%'
-            or gross_sales_wk5 like '%/%'
+            gross_sales_wk1 like '%-%'
+            or gross_sales_wk2 like '%-%'
+            or gross_sales_wk3 like '%-%'
+            or gross_sales_wk4 like '%-%'
+            or gross_sales_wk5 like '%-%'
         )
 )
 select * from final
