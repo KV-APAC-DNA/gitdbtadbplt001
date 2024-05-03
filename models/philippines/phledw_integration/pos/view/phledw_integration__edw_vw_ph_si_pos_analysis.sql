@@ -1,23 +1,33 @@
-with edw_vw_os_pos_sales_fact as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_pos_sales_fact ),
-edw_vw_os_time_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_time_dim) ,
-itg_mds_ph_ref_pos_primary_sold_to as 
-(select * from dev_dna_core.snaposeitg_integration.itg_mds_ph_ref_pos_primary_sold_to) ,
-edw_vw_os_pos_customer_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_pos_customer_dim) ,
-edw_vw_os_pos_material_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_pos_material_dim ) ,
-edw_vw_os_material_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_material_dim), 
-edw_vw_os_customer_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_customer_dim), 
-edw_mv_ph_customer_dim as 
-(select * from dev_dna_core.snaposeedw_integration.edw_mv_ph_customer_dim) ,
-edw_vw_os_sellin_sales_fact as
-(select * from dev_dna_core.snaposeedw_integration.edw_vw_os_sellin_sales_fact) ,
-itg_mds_ph_pos_pricelist as 
-(select * from dev_dna_core.snaposeitg_integration.itg_mds_ph_pos_pricelist) ,
+with edw_vw_ph_pos_sales_fact as (
+select * from {{ ref('phledw_integration__edw_vw_ph_pos_sales_fact') }}
+),
+edw_vw_os_time_dim as (
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+),
+itg_mds_ph_ref_pos_primary_sold_to as (
+select * from {{ ref('phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to') }}
+) ,
+edw_vw_ph_pos_customer_dim as (
+select * from {{ ref('phledw_integration__edw_vw_ph_pos_customer_dim') }}
+),
+edw_vw_ph_pos_material_dim as (
+select * from {{ ref('phledw_integration__edw_vw_ph_pos_material_dim') }}
+) ,
+edw_vw_ph_material_dim as (
+select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
+), 
+edw_vw_ph_customer_dim as (
+select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+), 
+edw_mv_ph_customer_dim as (
+select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
+),
+edw_vw_ph_sellin_sales_fact as (
+select * from {{ ref('phledw_integration__edw_vw_ph_sellin_sales_fact') }}
+) ,
+itg_mds_ph_pos_pricelist as (
+select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
+) ,
 final as (
 select veposf.year as jj_year,
        veposf.qrtr as jj_qtr,

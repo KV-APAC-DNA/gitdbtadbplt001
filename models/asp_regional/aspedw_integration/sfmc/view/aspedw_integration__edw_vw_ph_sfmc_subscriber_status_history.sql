@@ -1,6 +1,6 @@
 with 
 itg_sfmc_consumer_master as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_SFMC_CONSUMER_MASTER
+select * from {{ ref('aspitg_integration__itg_sfmc_consumer_master') }}
 ),
 final as (
 SELECT 

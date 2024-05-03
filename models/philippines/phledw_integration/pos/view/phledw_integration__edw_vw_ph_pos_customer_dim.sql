@@ -1,5 +1,5 @@
 with itg_mds_ph_pos_customers as (
-select * from DEV_DNA_CORE.PHLITG_INTEGRATION.ITG_MDS_PH_POS_CUSTOMERS
+select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers') }}
 ),
 final as (
     SELECT 

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__sdl_raw_ph_non_ise_shm
+    config:
+      alias: sdl_raw_ph_non_ise_shm
+      tags: ["ph_non_pos_shm","ingestion"]

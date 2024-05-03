@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_ph_gt_scorecard
+    config:
+      alias: edw_ph_gt_scorecard
+      tags: ["ph_gt_scorecard_datamart_refresh","transformation"]
+  
+  

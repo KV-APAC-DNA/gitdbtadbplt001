@@ -277,9 +277,31 @@ where upper(trim(ipp2.item_cd (+))) = upper(ippd.sap_item_cd)
 
 and   trim(ipp2.jj_mnth_id (+)) = trim(ippd.pl_jj_mnth_id)
 ),
-final as (
+transformed as (
     select * from puregold
     union ALL
     select * from goods
+),
+final as (
+select
+cust_cd::varchar(10) as cust_cd,
+jj_mnth_id::varchar(10) as jj_mnth_id,
+item_cd::varchar(30) as item_cd,
+brnch_cd::varchar(20) as brnch_cd,
+pos_qty::number(20,4) as pos_qty,
+pos_gts::number(20,4) as pos_gts,
+pos_item_prc::number(20,4) as pos_item_prc,
+pos_tax::number(20,4) as pos_tax,
+pos_nts::number(20,4) as pos_nts,
+conv_factor::number(20,4) as conv_factor,
+jj_qty_pc::number(20,4) as jj_qty_pc,
+jj_item_prc_per_pc::number(20,4) as jj_item_prc_per_pc,
+jj_gts::number(20,4) as jj_gts,
+jj_vat_amt::number(20,4) as jj_vat_amt,
+jj_nts::number(20,4) as jj_nts,
+file_nm::varchar(100) as file_nm,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
 )
 select * from final

@@ -603,7 +603,7 @@ FROM sdl_ph_non_ise_waltermart
 
 WHERE encoded_report = '1'
 ),
-final as (
+transformed as (
 select * from landmark_ds
 union all
 select * from landmark_sm
@@ -623,5 +623,34 @@ union all
 select * from svi_smc
 union all
 select * from super_8
+),
+final as (
+select
+    ret_nm_prefix::varchar(50) as ret_nm_prefix,
+    sku_code::varchar(50) as sku_code,
+    brand::varchar(500) as brand,
+    barcode::varchar(100) as barcode,
+    item_description::varchar(500) as item_description,
+    msl_large::varchar(10) as msl_large,
+    msl_small::varchar(10) as msl_small,
+    msl_premium::varchar(10) as msl_premium,
+    msl_dept::varchar(10) as msl_dept,
+    month::varchar(10) as month,
+    week::varchar(10) as week,
+    reason::varchar(500) as reason,
+    acct_deliv_date::varchar(100) as acct_deliv_date,
+    osa_check_date::date as osa_check_date,
+    encoded_report::varchar(500) as encoded_report,
+    team_leader::varchar(100) as team_leader,
+    branch_code::varchar(50) as branch_code,
+    branch_code_original::varchar(50) as branch_code_original,
+    branch_classification::varchar(100) as branch_classification,
+    branch_name::varchar(100) as branch_name,
+    osa_flag::varchar(10) as osa_flag,
+    retailer_name::varchar(50) as retailer_name,
+    filename::varchar(100) as filename,
+    run_id::number(14,0) as run_id,
+    crtd_dttm::timestamp_ntz(9) as crtd_dttm
+from transformed
 )
 select * from final

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_pos_customer_dim
+    config:
+      alias: 
+      tags: ["","transformation"]
+  - name: phledw_integration__edw_vw_ph_si_pos_analysis
+    config:
+      alias: edw_vw_ph_si_pos_analysis
+      tags: ["","transformation"]
+
+  
+      
+  

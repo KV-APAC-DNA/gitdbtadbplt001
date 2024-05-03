@@ -2,9 +2,7 @@ with sdl_mds_ph_targets_by_account_and_skus as (
     select * from {{ source('phlsdl_raw', 'sdl_mds_ph_targets_by_account_and_skus') }}
 ),
 edw_vw_os_time_dim as (
-    -- select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
-    select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
-
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 transformed as (
 SELECT year,

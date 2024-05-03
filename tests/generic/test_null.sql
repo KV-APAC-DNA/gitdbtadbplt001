@@ -1,4 +1,4 @@
-{% test test_null(model,not_null_columns=None,select_columns=None)%}
+{% test test_null(model,not_null_columns=None,select_columns=None,filter=none)%}
 {% if not_null_columns!=None %}
     select
         'KEY COLUMN IS NULL/BLANK' AS failure_reason,
@@ -23,4 +23,7 @@
             {%- endif -%}
         {% endfor %}
 {%- endif -%}
+{%- if filter !=None %}
+                and {{filter}} 
+            {% endif %}
 {% endtest %}

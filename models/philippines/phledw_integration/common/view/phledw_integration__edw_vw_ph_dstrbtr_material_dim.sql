@@ -1,14 +1,14 @@
 with edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_mds_ph_distributor_product as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_DISTRIBUTOR_PRODUCT
+select * from {{ ref('phlitg_integration__itg_mds_ph_distributor_product') }}
 ),
 itg_mds_ph_lav_product as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_LAV_PRODUCT
+select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
 itg_mds_ph_pos_pricelist as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_PRICELIST
+select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 final as (
   SELECT 

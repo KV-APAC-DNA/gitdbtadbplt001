@@ -1,5 +1,5 @@
 with edw_delivery_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_DELIVERY_FACT
+select * from {{ ref('aspedw_integration__edw_delivery_fact') }}
 ),
 final as (
 SELECT 
