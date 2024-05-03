@@ -45,7 +45,7 @@ itg_ph_bp_trgt as
 ),
 itg_ph_le_trgt as
 (
-    select * from {{ ref('phlitg_integration__itg_ph_le_trgt') }}
+    select * from phlitg_integration.itg_ph_le_trgt
 ),
 final as
 (

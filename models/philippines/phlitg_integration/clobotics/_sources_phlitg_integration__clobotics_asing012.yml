@@ -123,3 +123,4 @@ sources:
     tables:
     - name: itg_ph_clobotics_store_mapping
       tags: ["ph_perfectstore_clobotics",""]
+    - name: itg_ph_le_trgt
