@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__sdl_raw_ph_non_ise_super_8
+    config:
+      alias: sdl_raw_ph_non_ise_super_8
+      tags: ["ph_non_pos_super_8","ingestion"]

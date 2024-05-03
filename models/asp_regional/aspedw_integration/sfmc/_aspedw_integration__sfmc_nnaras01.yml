@@ -1,0 +1,9 @@
+models:
+  - name: aspedw_integration__edw_vw_ph_sfmc_consumer_master
+    config: 
+      alias: edw_vw_ph_sfmc_consumer_master
+      tags: ["","transformation"]
+  - name: aspedw_integration__edw_vw_ph_sfmc_subscriber_status_history
+    config:
+      alias: edw_vw_ph_sfmc_subscriber_status_history
+      tags: ["","transformation"]
