@@ -1,47 +1,41 @@
 with edw_ph_sellout_analysis as (
-    select * from snaposeedw_integration.edw_ph_sellout_analysis
+    select * from {{ ref('phledw_integration__edw_ph_sellout_analysis') }}
 ),
 edw_product_key_attributes as (
-    select * from aspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_query_parameters as (
-    select * from snaposeitg_integration.itg_query_parameters
+    select * from {{ source('phlitg_integration', 'itg_query_parameters') }}
 ),
 edw_vw_ph_sellout_inventory_fact as (
-    select * from phledw_integration.edw_vw_os_sellout_inventory_fact
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_sellout_inventory_fact') }}
 ),
 edw_vw_os_time_dim as (
-    select * from snenav01_workspace.SGPEDW_INTEGRATION__EDW_VW_OS_TIME_DIM
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_ph_dstrbtr_customer_dim as (
-    select * from phledw_integration.edw_vw_os_dstrbtr_customer_dim
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_customer_dim') }}
 ),
 edw_vw_ph_dstrbtr_material_dim as (
-    select * from phledw_integration.edw_vw_os_dstrbtr_material_dim
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_material_dim') }}
 ),
 edw_vw_ph_material_dim as (
-    select * from phledw_integration.edw_vw_os_material_dim
-    where cntry_key = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
 ),
 itg_mds_ph_lav_product as (
-    select * from snaposeitg_integration.itg_mds_ph_lav_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
 itg_mds_ph_pos_pricelist as (
-    select * from snaposeitg_integration.itg_mds_ph_pos_pricelist
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 edw_mv_ph_customer_dim as (
-    select * from snaposeedw_integration.edw_mv_ph_customer_dim
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
 edw_vw_ph_sellin_sales_fact as (
-    select * from phledw_integration.edw_vw_os_sellin_sales_fact
-    where cntry_nm = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_sellin_sales_fact') }}
 ),
 edw_vw_ph_customer_dim as (
-    select * from phledw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 dstrbtr_matl as
 (

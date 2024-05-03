@@ -1,20 +1,20 @@
 with itg_mds_ph_lav_customer as (
-    select * from phlitg_integration.itg_mds_ph_lav_customer
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_customer') }}
 ),
 itg_mds_ph_ref_parent_customer as (
-    select * from phlitg_integration.itg_mds_ph_ref_parent_customer
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_parent_customer') }}
 ),
 edw_customer_base_dim as(
-    select * from aspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_customer_sales_dim as(
-    select * from aspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_company_dim as (
-    select * from aspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_sales_org_dim as(
-    select * from aspedw_integration.edw_sales_org_dim
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 final as
 (

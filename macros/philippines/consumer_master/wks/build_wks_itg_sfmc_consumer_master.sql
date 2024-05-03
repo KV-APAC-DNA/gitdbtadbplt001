@@ -91,8 +91,24 @@
             left join wks_ph_sfmc_consumer_master_temp1 temp
             on itg.subscriber_key = temp.subscriber_key
             and temp.compare = 'UPDATED'
+        ),
+        itg_active_records as
+        (
+            select * from itg_temp
+            where (
+                subscriber_key in 
+                (
+                    select subscriber_key from wks_ph_sfmc_consumer_master_temp1
+                    where compare = 'NO_CHANGE'
+                )
+                and valid_to = '31-DEC-9999'::timestamp_ntz
+            )
+        ),
+        itg_union as
+        (
+            select * from itg_active_records
 
-            union all
+            union all 
             --insert existing updated records
             select
                 'PH' as cntry_cd,
@@ -203,80 +219,64 @@
                     or temp.compare = 'NO_CHANGE'
                 )
             and file_name = '{{filename}}'
-        ),
-        soft_delete as
-        (
-            select
-                cntry_cd,
-                first_name,
-                last_name,
-                mobile_num,
-                mobile_cntry_cd,
-                birthday_mnth,
-                birthday_year,
-                address_1,
-                address_2,
-                address_city,
-                address_zipcode,
-                itg.subscriber_key,
-                website_unique_id,
-                source,
-                medium,
-                brand,
-                address_cntry,
-                campaign_id,
-                created_date,
-                updated_date,
-                unsubscribe_date,
-                email,
-                full_name,
-                last_logon_time,
-                remaining_points,
-                redeemed_points,
-                total_points,
-                gender,
-                line_id,
-                line_name,
-                line_email,
-                line_channel_id,
-                address_region,
-                tier,
-                opt_in_for_communication,
-                have_kid,
-                age,
-                file_name,
-                crtd_dttm,
-                current_timestamp as updt_dttm,
-                valid_from,
-                case
-                    when sdl.subscriber_key is null and valid_to = '31-DEC-9999'::timestamp_ntz then current_timestamp
-                    else valid_to
-                end as valid_to,
-                case
-                    when sdl.subscriber_key is null then 'Y'
-                    else itg.delete_flag
-                end as delete_flag,
-                subscriber_status,
-                opt_in_for_jnj_communication,
-                opt_in_for_campaign
-            from
-            itg_temp itg left join
-            (SELECT subscriber_key FROM sdl_PH_sfmc_consumer_master) sdl
-            on itg.subscriber_key = sdl.subscriber_key
-        ),
-        final as
-        (
-            select * from soft_delete
-            where not (
-                subscriber_key in 
-                (
-                    select subscriber_key from wks_ph_sfmc_consumer_master_temp1
-                    where compare = 'NO_CHANGE'
-                )
-                and valid_to = '31-DEC-9999'::timestamp_ntz
-            )
         )
-        select * from final
+        select
+            cntry_cd,
+            first_name,
+            last_name,
+            mobile_num,
+            mobile_cntry_cd,
+            birthday_mnth,
+            birthday_year,
+            address_1,
+            address_2,
+            address_city,
+            address_zipcode,
+            itg.subscriber_key,
+            website_unique_id,
+            source,
+            medium,
+            brand,
+            address_cntry,
+            campaign_id,
+            created_date,
+            updated_date,
+            unsubscribe_date,
+            email,
+            full_name,
+            last_logon_time,
+            remaining_points,
+            redeemed_points,
+            total_points,
+            gender,
+            line_id,
+            line_name,
+            line_email,
+            line_channel_id,
+            address_region,
+            tier,
+            opt_in_for_communication,
+            have_kid,
+            age,
+            file_name,
+            crtd_dttm,
+            current_timestamp as updt_dttm,
+            valid_from,
+            case
+                when sdl.subscriber_key is null and valid_to = '31-DEC-9999'::timestamp_ntz then current_timestamp
+                else valid_to
+            end as valid_to,
+            case
+                when sdl.subscriber_key is null then 'Y'
+                else itg.delete_flag
+            end as delete_flag,
+            subscriber_status,
+            opt_in_for_jnj_communication,
+            opt_in_for_campaign
+        from
+        itg_temp itg left join
+        (SELECT subscriber_key FROM sdl_PH_sfmc_consumer_master) sdl
+        on itg.subscriber_key = sdl.subscriber_key
         );
     {% endset %}
     {{ log("-----------------------------------------------------------------------------------------------") }}
