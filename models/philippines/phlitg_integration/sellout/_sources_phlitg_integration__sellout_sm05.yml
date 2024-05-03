@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_dms_sellout_sales_fact
+      tags: ["ph_dms","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["dstrbtr_prod_id"]
+              not_null_columns: ["dstrbtr_prod_id"]
+              name: TRATBL_sdl_ph_dms_sellout_sales_fact__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_lookup:
+              select_columns: ["dstrbtr_prod_id"]
+              column: "nvl((dstrbtr_prod_id), '#')"
+              lookup_column: "nvl((item_cd), '#')"
+              lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_lav_product') }} "
+              lookup_filter: "ACTIVE='Y' UNION ALL SELECT DISTINCT nvl(dstrbtr_item_cd,'#') as item_cd FROM {{ ref('phlitg_integration__itg_mds_ph_distributor_product') }} where ACTIVE='Y'"
+              name: TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
+    - name: sdl_ph_dms_sellout_stock_fact
+      tags: ["ph_dms","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["dstrbtr_prod_id"]
+              not_null_columns: ["dstrbtr_prod_id"]
+              name: TRATBL_sdl_ph_dms_sellout_stock_fact__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_lookup:
+              select_columns: ["dstrbtr_prod_id"]
+              column: "nvl((dstrbtr_prod_id), '#')"
+              lookup_column: "nvl((item_cd), '#')"
+              lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_lav_product') }} "
+              lookup_filter: "ACTIVE='Y' UNION ALL SELECT DISTINCT nvl(dstrbtr_item_cd,'#') as item_cd FROM {{ ref('phlitg_integration__itg_mds_ph_distributor_product') }} where ACTIVE='Y'"
+              name: TRATBL_sdl_ph_dms_sellout_stock_fact__lookup_test
+              config:
+                store_failures: true
+                schema: phlwks_integration

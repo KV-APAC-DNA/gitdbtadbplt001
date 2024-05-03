@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_ph_ecommerce_offtake
+    config: 
+      alias: edw_ph_ecommerce_offtake
+      tags: ["ph_acommerce_data_ingestion","transformation"]
+

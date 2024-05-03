@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_ecommerce_offtake_acommerce
+    config: 
+      alias: itg_ph_ecommerce_offtake_acommerce
+      tags: ["ph_acommerce_data_ingestion","ingestion"]
