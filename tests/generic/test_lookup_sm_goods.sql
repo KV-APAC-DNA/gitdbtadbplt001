@@ -1,4 +1,4 @@
-{% test test_lookup_sm(model,model_nm,model_nm_2,select_columns=None,filter=None)%}
+{% test test_lookup_sm_goods(model,model_nm,model_nm_2,select_columns=None,filter=None)%}
 
 SELECT 'Product mapping CHECK' AS "error value",
 

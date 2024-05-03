@@ -42,7 +42,7 @@ sources:
               select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
               column: "UPPER(TRIM(RETAILER_NAME))"
               lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-              lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+              lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
               name: TRATBL_sdl_ph_non_ise_robinsons__lookup_test
               config:
                 store_failures: true
@@ -80,7 +80,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_waltermart__lookup_test
             config:
               store_failures: true
@@ -118,7 +118,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_svi_smc__lookup_test
             config:
               store_failures: true
@@ -156,7 +156,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_shm__lookup_test
             config:
               store_failures: true
@@ -194,7 +194,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_robinsons_sm__lookup_test
             config:
               store_failures: true
@@ -232,7 +232,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_landmark_sm__lookup_test
             config:
               store_failures: true
@@ -270,7 +270,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_super_8__lookup_test
             config:
               store_failures: true
@@ -308,7 +308,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_puregold__lookup_test
             config:
               store_failures: true
@@ -346,7 +346,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_landmark_ds_lookup_test
             config:
               store_failures: true
@@ -384,7 +384,7 @@ sources:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
-            lookup_table: "dev_dna_core.snaposeitg_integration.ITG_PH_PS_RETAILER_SOLDTO_MAP "
+            lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
             name: TRATBL_sdl_ph_non_ise_rustans_lookup_test
             config:
               store_failures: true
