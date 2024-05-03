@@ -20,7 +20,7 @@ edw_company_dim as(
 	select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_subchnl_retail_env_mapping as(
-	select * from {{ ref('aspedw_access__edw_subchnl_retail_env_mapping') }}
+	select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 a as(
 	

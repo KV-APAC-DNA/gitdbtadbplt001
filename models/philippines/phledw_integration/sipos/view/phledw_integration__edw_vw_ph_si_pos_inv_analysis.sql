@@ -1,47 +1,41 @@
 with edw_vw_os_time_dim as (
-    select * from snenav01_workspace.SGPEDW_INTEGRATION__edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_vw_ph_pos_sales_fact as (
-    select * from snaposeedw_integration.edw_vw_os_pos_sales_fact
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_sales_fact') }}
 ),
 edw_vw_ph_pos_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_pos_customer_dim
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_customer_dim') }}
 ),
 itg_mds_ph_ref_pos_primary_sold_to as (
-    select * from phlitg_integration.itg_mds_ph_ref_pos_primary_sold_to
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_pos_primary_sold_to') }}
 ),
 edw_vw_ph_pos_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_pos_material_dim
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_material_dim') }}
 ),
 edw_vw_ph_material_dim as (
-    select * from snaposeedw_integration.edw_vw_os_material_dim
-    where cntry_key = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
 ),
 edw_vw_ph_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 edw_mv_ph_customer_dim as (
-    select * from phledw_integration.edw_mv_ph_customer_dim
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
 edw_vw_ph_sellin_sales_fact as (
-    select * from snaposeedw_integration.edw_vw_os_sellin_sales_fact
-    where cntry_nm = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_sellin_sales_fact') }}
 ),
 itg_ph_as_watsons_inventory as (
-    select * from phlitg_integration.itg_ph_as_watsons_inventory
+    select * from {{ ref('phlitg_integration__itg_ph_as_watsons_inventory') }}
 ),
 itg_mds_ph_pos_pricelist as (
-    select * from phlitg_integration.itg_mds_ph_pos_pricelist
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 itg_mds_ph_pos_product as (
-    select * from phlitg_integration.itg_mds_ph_pos_product
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}
 ),
 edw_vw_ph_pos_inventory as (
-    select * from snaposeedw_integration.edw_vw_ph_pos_inventory
+    select * from {{ ref('phledw_integration__edw_vw_ph_pos_inventory') }}
 ),
 veposf as
 (
