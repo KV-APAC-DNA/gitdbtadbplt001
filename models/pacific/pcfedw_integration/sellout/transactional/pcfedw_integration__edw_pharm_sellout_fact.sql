@@ -8,7 +8,7 @@ select
     store_probe_id::varchar(10) as store_probe_id,
 	store_name::varchar(30) as store_name,
 	product_probe_id::varchar(10) as product_probe_id,
-	product_description::varchar(60) as product_description,
+	product_description::varchar(1000) as product_description,
 	time_period::varchar(8) as time_period,
 	units::number(18,0) as units,
 	src_amt_value::number(18,6) as src_amt_value,
