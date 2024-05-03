@@ -17,7 +17,7 @@ source as
 ),
 wks_itg_sfmc_consumer_master as
 (
-    select * from phlwks_integration__wks_itg_sfmc_consumer_master
+    select * from {{ source('phlwks_integration', 'wks_itg_sfmc_consumer_master') }}
 )
 {% if var("job_to_execute") == 'th_crm_files' %}
 ,

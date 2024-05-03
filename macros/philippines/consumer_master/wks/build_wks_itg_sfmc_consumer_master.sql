@@ -22,7 +22,7 @@
             where cntry_cd = 'PH'
         ),
         sdl_ph_sfmc_consumer_master as (
-            select * from {{ ref('phlwks_integration__wks_ph_sfmc_consumer_master') }}
+            select * from {{ ref('phlwks_integration__wks_sdl_ph_sfmc_consumer_master') }}
         ),
         wks_ph_sfmc_consumer_master_temp1 as
         (
@@ -96,7 +96,7 @@
         (
             select * from itg_temp
             where (
-                subscriber_key in 
+                subscriber_key in
                 (
                     select subscriber_key from wks_ph_sfmc_consumer_master_temp1
                     where compare = 'NO_CHANGE'
@@ -108,7 +108,7 @@
         (
             select * from itg_active_records
 
-            union all 
+            union all
             --insert existing updated records
             select
                 'PH' as cntry_cd,
@@ -288,9 +288,9 @@
     {{ log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Completed running query to build wks_itg table -> wks_itg_sfmc_consumer_master for file: "~ filename) }}
     {{ log("Setting query to delete records from wks staging table -> wks_ph_sfmc_consumer_master for file: "~ filename) }}
-    {{ log("-----------------------------------------------------------------------------------------------") }}    
+    {{ log("-----------------------------------------------------------------------------------------------") }}
     {% set delete_wks_staging_data_by_file_query %}
-    delete from {{ ref('phlwks_integration__wks_ph_sfmc_consumer_master') }} where file_name= '{{filename}}';
+    delete from {{ ref('phlwks_integration__wks_sdl_ph_sfmc_consumer_master') }} where file_name= '{{filename}}';
     {% endset %}
     {{ log("Started running query to delete records from wks staging table -> wks_ph_sfmc_consumer_master for file: "~ filename) }}
     {{ log("-----------------------------------------------------------------------------------------------") }}
