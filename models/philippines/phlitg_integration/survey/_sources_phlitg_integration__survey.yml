@@ -94,3 +94,76 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+    - name: sdl_ph_tbl_surveyanswers
+      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["iseid","slsperid","custcode","createddate","answerseq","quesno","branchcode"]
+              not_null_columns: ["iseid","slsperid","custcode","createddate","answerseq","quesno","branchcode"]
+              name: TRATBL_sdl_ph_tbl_surveyanswers__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid","slsperid","custcode","createddate","answerseq","quesno","branchcode"]
+              group_by_columns: ["iseid","slsperid","custcode","createddate","answerseq","quesno","branchcode"]
+              name: TRATBL_sdl_ph_tbl_surveyanswers__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
+    - name: sdl_ph_tbl_surveycustomers
+      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["iseid","slsperid","custcode","visitdate","branchcode"]
+              not_null_columns: ["iseid","slsperid","custcode","visitdate","branchcode"]
+              name: TRATBL_sdl_ph_tbl_surveycustomers__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid","slsperid","custcode","visitdate","branchcode"]
+              group_by_columns: ["iseid","slsperid","custcode","visitdate","branchcode"]
+              name: TRATBL_sdl_ph_tbl_surveycustomers__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+    
+    - name: sdl_ph_tbl_surveynotes
+      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["iseid","slsperid","custcode","branchcode","questionno","answerseq","createddate"]
+              not_null_columns: ["iseid","slsperid","custcode","branchcode","questionno","answerseq","createddate"]
+              name: TRATBL_sdl_ph_tbl_surveynotes__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["iseid","slsperid","custcode","branchcode","questionno","answerseq","createddate"]
+              group_by_columns: ["iseid","slsperid","custcode","branchcode","questionno","answerseq","createddate"]
+              name: TRATBL_sdl_ph_tbl_surveynotes__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
+    - name: sdl_mds_ph_ref_distributors
+      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["code"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_ref_distributors__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["code"]
+              group_by_columns: ["code"]
+              name: TRATBL_sdl_mds_ph_ref_distributors__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+    - name: sdl_ph_pos_waltermart
+      tags: ["j_os_dna_sdl_to_edw_wm_sales","ingestion"]

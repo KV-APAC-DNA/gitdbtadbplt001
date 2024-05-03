@@ -7,3 +7,7 @@ models:
     config:
       alias: edw_vw_ph_pos_wm_competitor_analysis
       tags: ["philippines_views","transformation"]
+  - name: phledw_integration__edw_mv_ph_customer_dim
+    config:
+      alias: edw_mv_ph_customer_dim
+      tags: ["philippines_views","transformation"]

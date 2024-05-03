@@ -13,7 +13,15 @@ models:
     config:
       alias: edw_ph_si_pos_analysis
       tags: ["ph_analysis","transformation"]
+  - name: phledw_integration__edw_ph_pos_analysis
+    config: 
+      alias: edw_ph_pos_analysis
+      tags: ["ph_analysis","transformation"]
 
+  - name: phledw_integration__edw_vw_ph_pos_analysis
+    config: 
+      alias: edw_vw_ph_pos_analysis
+      tags: ["ph_analysis","transformation"]
   
       
   

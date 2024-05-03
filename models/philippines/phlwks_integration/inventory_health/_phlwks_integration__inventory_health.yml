@@ -21,4 +21,8 @@ models:
     config:
       alias: wks_ph_siso_propagate_to_details
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_base
+    config:
+      alias: wks_ph_base
+      tags: ["j_os_dna_sdl_to_edw_wm_sales","transformation"]
   
