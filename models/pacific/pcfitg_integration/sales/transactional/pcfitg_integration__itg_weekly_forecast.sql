@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy= 'append'
+        incremental_strategy= 'append',
+        post_hook="{{sap_transaction_processed_files('BWA_WEEKLY_FORECAST','vw_stg_sdl_weekly_forecast','itg_weekly_forecast')}}"
     )
 }}
 
