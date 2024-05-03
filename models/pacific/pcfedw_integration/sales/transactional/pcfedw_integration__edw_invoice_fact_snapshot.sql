@@ -1,6 +1,7 @@
 {{
     config(
-        pre_hook="{{build_pcfedw_integration__edw_invoice_fact_snapshot()}}"
+        pre_hook="{{build_pcfedw_integration__edw_invoice_fact_snapshot()}}
+        delete from {{this}} where snapshot_date=convert_timezone ('Australia/Sydney',current_timestamp())::date;"
     )
 }}
 
@@ -158,7 +159,6 @@ from (select eif.co_cd,
       where t1.cal_date::date = convert_timezone ('Australia/Sydney',current_timestamp())::date) etd
 
     where etd.jj_mnth_id = orders.fisc_yr_src
-    and convert_timezone ('Asia/Singapore',current_timestamp())::date > (select max(snapshot_date)::date from {{ this }}) 
 ),
 transformed as (
 select * from final_1
