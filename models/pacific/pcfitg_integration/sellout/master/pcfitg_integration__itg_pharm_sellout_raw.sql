@@ -17,7 +17,7 @@ select
     outlet_number::varchar(10) as store_probe_id,
 	name::varchar(30) as store_name,
 	pfc::varchar(10) as product_probe_id,
-	pack_long_desc::varchar(60) as product_description,
+	pack_long_desc::varchar(1000) as product_description,
 	week_ending_date::varchar(8) as time_period,
 	units::number(18,0) as units,
 	amount::number(18,6) as src_amt_value,
