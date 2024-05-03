@@ -48,7 +48,16 @@ sources:
       tags: ["anz_mds_sdl_to_edw_load",""]
     - name: sdl_mds_pacific_acct_nielsencode_mapping
       tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
-    - name: sdl_weekly_forecast
+  
+  - name: bwa_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: bwa_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: bwa_weekly_forecast
       tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
 
   - name: pcfitg_integration
