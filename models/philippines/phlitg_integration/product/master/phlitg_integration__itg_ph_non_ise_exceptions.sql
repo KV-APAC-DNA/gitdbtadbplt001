@@ -3,58 +3,58 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "delete from {{this}} where ( coalesce(sku_code, 'NA'), coalesce(upper(month), 'NA'), coalesce(upper(week), 'NA'), coalesce(upper(encoded_report), 'NA'), coalesce(upper(branch_code), 'NA'), upper(retailer_name) ) in (
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }} WHERE encoded_report <> '1'
           union all 
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }} WHERE encoded_report <> '1'
           union all
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }} WHERE encoded_report <> '1'
           union all
-          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }} WHERE encoded_report <> '1'
+          select distinct coalesce(sku_code, 'NA') as sku_code, coalesce(upper(month), 'NA') as month, coalesce(upper(week), 'NA') as week, coalesce(upper(encoded_report), 'NA') as encoded_report, coalesce(upper(branch_code), 'NA') as branch_code, upper(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }} WHERE encoded_report <> '1'
          );"
     )
 }}
 
-with sdl_ph_non_ise_landmark_sm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }}
+with wks_ph_non_ise_landmark_sm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }}
 ),
-sdl_ph_non_ise_landmark_ds as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }}
+wks_ph_non_ise_landmark_ds as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }}
 ),
-sdl_ph_non_ise_puregold as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}
+wks_ph_non_ise_puregold as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }}
 ),
-sdl_ph_non_ise_robinsons_ds as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }}
+wks_ph_non_ise_robinsons_ds as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }}
 ),
-sdl_ph_non_ise_robinsons_sm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}
+wks_ph_non_ise_robinsons_sm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }}
 ),
-sdl_ph_non_ise_rustans as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }}
+wks_ph_non_ise_rustans as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }}
 ),
-sdl_ph_non_ise_shm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}
+wks_ph_non_ise_shm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }}
 ),
-sdl_ph_non_ise_super_8 as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }}
+wks_ph_non_ise_super_8 as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }}
 ),
-sdl_ph_non_ise_svi_smc as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }}
+wks_ph_non_ise_svi_smc as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }}
 ),
-sdl_ph_non_ise_waltermart as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }}
+wks_ph_non_ise_waltermart as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }}
 ), 
 landmark_ds as(
     select distinct 
@@ -81,7 +81,7 @@ landmark_ds as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_landmark_ds
+    from wks_ph_non_ise_landmark_ds
     where encoded_report <> '1'
 ),
 landmark_sm as(
@@ -109,7 +109,7 @@ landmark_sm as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_landmark_sm
+    from wks_ph_non_ise_landmark_sm
     WHERE encoded_report <> '1'       
 ),
 puregold as(
@@ -137,7 +137,7 @@ puregold as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_puregold
+    from wks_ph_non_ise_puregold
     where encoded_report <> '1'
 ),
 ROBINSONS_DS as(
@@ -165,7 +165,7 @@ ROBINSONS_DS as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_robinsons_ds
+    from wks_ph_non_ise_robinsons_ds
     where encoded_report <> '1'
 ),
 ROBINSONS_SM as(
@@ -193,7 +193,7 @@ ROBINSONS_SM as(
     	filename::varchar(100) as filename,
     	run_id::number(14,0) as run_id,
     	crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_robinsons_sm
+    from wks_ph_non_ise_robinsons_sm
     where encoded_report <> '1'
 
 ),
@@ -222,7 +222,7 @@ rustans as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_rustans
+    from wks_ph_non_ise_rustans
     where encoded_report <> '1'
 ),
 shm as(
@@ -250,7 +250,7 @@ shm as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    from sdl_ph_non_ise_shm
+    from wks_ph_non_ise_shm
     where encoded_report <> '1'
 
 ),
@@ -279,7 +279,7 @@ super_8 as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    FROM sdl_ph_non_ise_super_8
+    FROM wks_ph_non_ise_super_8
     WHERE encoded_report <> '1' 
 ),
 svi_smc as(
@@ -307,7 +307,7 @@ svi_smc as(
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    FROM sdl_ph_non_ise_svi_smc
+    FROM wks_ph_non_ise_svi_smc
     WHERE encoded_report <> '1'
 ),
 waltermart as (
@@ -335,7 +335,7 @@ waltermart as (
         filename::varchar(100) as filename,
         run_id::number(14,0) as run_id,
         crtd_dttm::timestamp_ntz(9) as crtd_dttm
-    FROM sdl_ph_non_ise_waltermart
+    FROM wks_ph_non_ise_waltermart
     WHERE encoded_report <> '1'
 
 ),
