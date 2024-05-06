@@ -13,7 +13,7 @@ edw_time_dim as(
 ),
 transformed as (
     select 
-        current_timestamp()::timestamp_ntz(9) as snap_shot_dt,
+        dateadd(day,1,convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)) as snap_shot_dt,
         snap_shot_mnth::number(18,0) as snap_shot_mnth,
         snap_shot_year::number(18,0) as snap_shot_year,
         pac_source_type::varchar(6) as pac_source_type,
@@ -209,16 +209,18 @@ transformed as (
         cal_date as cal_date,
         jj_mnth_id as snap_shot_mnth,
         jj_year as snap_shot_year,
-        jj_year - 1 as snap_shot_prior_year
+        jj_year - 1 as snap_shot_prior_year,
+        jj_mnth_day
     from edw_time_dim 
 
 )
 where snap_shot_dt::date = cal_date::date
 and jj_year in (snap_shot_year, snap_shot_prior_year)
+and jj_mnth_day = '1'
 
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    and snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
+    and snap_shot_dt::date > (select max(snap_shot_dt)::date from {{ this }}) 
 {% endif %}
 
 )
