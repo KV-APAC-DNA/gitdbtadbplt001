@@ -1,8 +1,35 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        pre_hook= "delete from {{this}} where UPPER(CUST_CD) ||JJ_MNTH_ID||LTRIM(BRNCH_CD,'0') ||LTRIM(ITEM_CD,'0')  in (
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_robinsons') }} 
+          union 
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||nvl(ltrim(pos_prod_cd,'0'),'') from {{ source('phlsdl_raw', 'sdl_ph_pos_mercury') }} 
+          union 
+          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_rustans') }} 
+          union 
+          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_south_star') }} 
+          union 
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_watsons') }} 
+          union 
+          select distinct 'DYNA'||mnth_id||customer_id||matl_num from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }} 
+          union 
+          select distinct  'PSC' ||MNTH_ID||STORE_CD||ITEM_CD  from {{ source('phlsdl_raw', 'sdl_ph_pos_711') }} 
+          union 
+          select distinct UPPER(SUBSTRING(FILE_NM,1,2)) ||JJ_MNTH_ID||LTRIM(STORE_CD,'0') ||LTRIM(POS_PROD_CD,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_waltermart') }} WHERE VENDOR_CD = '6539'
+          
+         );"
+    )
+}}
+
+
+
 with itg_mds_ph_pos_pricelist as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_PRICELIST
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 itg_mds_ph_pos_product as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_PRODUCT
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}
 ),
 sdl_ph_pos_robinsons as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_robinsons') }}
@@ -22,14 +49,32 @@ sdl_ph_pos_waltermart as (
 sdl_ph_pos_watsons as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_watsons') }}
 ),
-sdl_ph_pos_dyna as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna') }}
+sdl_ph_pos_dyna_sales as (
+    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }}
 ),
 sdl_ph_pos_711 as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_711') }}
 ),
 sdl_ph_pos_puregold as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }}
+),
+itg_mds_ph_pos_pricelist as (
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
+),
+itg_ph_pricelist as (
+select * from {{ ref('phlitg_integration__itg_ph_pricelist') }}
+),
+itg_ph_pos_product_dim as (
+select * from {{ref('phlitg_integration__itg_ph_pos_product_dim')}}
+),
+itg_ph_711_product_dim as (
+select * from {{ref('phlitg_integration__itg_ph_711_product_dim')}}
+),
+itg_ph_dyna_product_dim as (
+select * from {{ref('phlitg_integration__itg_ph_dyna_product_dim')}}
+),
+sdl_ph_pos_dyna_sales as (
+select * from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }}
 ),
 robinsons as (
 select upper(substring(ippd.file_nm,1,3)) as cust_cd,
@@ -58,9 +103,9 @@ select upper(substring(ippd.file_nm,1,3)) as cust_cd,
 
        (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit as jj_gts,
 
-       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*float8(12.0 / 112.0) as jj_vat_amt,
+       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*(12.0 / 112.0) as jj_vat_amt,
 
-       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*float8(100.0 / 112.0) as jj_nts,
+       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -179,9 +224,9 @@ mercury as (
 
        (cast(ippd.qty as numeric(20,4))*cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)) as jj_gts,
 
-       ((cast(ippd.qty as numeric(20,4))*cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(12.0 / 112.0) as jj_vat_amt,
+       ((cast(ippd.qty as numeric(20,4))*cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt,
 
-       ((cast(ippd.qty as numeric(20,4))*cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(100.0 / 112.0) as jj_nts,
+       ((cast(ippd.qty as numeric(20,4))*cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -286,9 +331,9 @@ rustans as (
 
        end as pos_item_prc,
 
-       cast(ippd.amt as numeric(15,4))*float8(12.0 / 112.0) as pos_tax,
+       cast(ippd.amt as numeric(15,4))*(12.0 / 112.0) as pos_tax,
 
-       cast(ippd.amt as numeric(15,4))*float8(100.0 / 112.0) as pos_nts,
+       cast(ippd.amt as numeric(15,4))*(100.0 / 112.0) as pos_nts,
 
        cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)) as conv_factor,
 
@@ -298,9 +343,9 @@ rustans as (
 
        (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit as jj_gts,
 
-       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*float8(12.0 / 112.0) as jj_vat_amt,
+       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*(12.0 / 112.0) as jj_vat_amt,
 
-       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*float8(100.0 / 112.0) as jj_nts,
+       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -413,9 +458,9 @@ southstar as (
 
        end as pos_item_prc,
 
-       cast(ippd.amt as numeric(15,4))*float8(12.0 / 112.0) as pos_tax,
+       cast(ippd.amt as numeric(15,4))*(12.0 / 112.0) as pos_tax,
 
-       cast(ippd.amt as numeric(15,4))*float8(100.0 / 112.0) as pos_nts,
+       cast(ippd.amt as numeric(15,4))*(100.0 / 112.0) as pos_nts,
 
        cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)) as conv_factor,
 
@@ -425,9 +470,9 @@ southstar as (
 
        (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit as jj_gts,
 
-       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*float8(12.0 / 112.0) as jj_vat_amt,
+       ((cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4)))*ipp2.lst_price_unit)*(12.0 / 112.0) as jj_vat_amt,
 
-       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*float8(100.0 / 112.0) as jj_nts,
+       (cast(ippd.qty as numeric(15,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(15,4))*ipp2.lst_price_unit)*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -515,7 +560,7 @@ from (select * from itg_mds_ph_pos_pricelist where active='Y') as ipp2,
 
 where upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
 
-and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id);
+and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
 ),
 waltermart as (
     select upper(substring(ippd.file_nm,1,2)) as cust_cd,
@@ -532,9 +577,9 @@ waltermart as (
 
        cast(ippd.amt as numeric(20,4)) / nullif(cast(ippd.qty as numeric(20,4)),0) as pos_item_prc,
 
-       cast(ippd.amt as numeric(20,4))*float8(12.0 / 112.0) as pos_tax,
+       cast(ippd.amt as numeric(20,4))*(12.0 / 112.0) as pos_tax,
 
-       cast(ippd.amt as numeric(20,4))*float8(100.0 / 112.0) as pos_nts,
+       cast(ippd.amt as numeric(20,4))*(100.0 / 112.0) as pos_nts,
 
        cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)) as conv_factor,
 
@@ -544,9 +589,9 @@ waltermart as (
 
        (cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)) as jj_gts,
 
-       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(12.0 / 112.0) as jj_vat_amt,
+       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt,
 
-       (cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4))*float8(100.0 / 112.0) as jj_nts,
+       (cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4))*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -655,9 +700,9 @@ watsons as (
 
        cast(ippd.amt as numeric(20,4)) / nullif(cast(ippd.qty as numeric(20,4)),0) as pos_item_prc,
 
-       cast(ippd.amt as numeric(20,4))*float8(12.0 / 112.0) as pos_tax,
+       cast(ippd.amt as numeric(20,4))*(12.0 / 112.0) as pos_tax,
 
-       cast(ippd.amt as numeric(20,4))*float8(100.0 / 112.0) as pos_nts,
+       cast(ippd.amt as numeric(20,4))*(100.0 / 112.0) as pos_nts,
 
        cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)) as conv_factor,
 
@@ -667,9 +712,9 @@ watsons as (
 
        (cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)) as jj_gts,
 
-       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(12.0 / 112.0) as jj_vat_amt,
+       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt,
 
-       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(100.0 / 112.0) as jj_nts,
+       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts,
 
        ippd.file_nm,
 
@@ -755,125 +800,6 @@ where upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
 
 and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
 ),
-dyna as (
-    select upper(substring(file_nm,1,4)) as cust_cd,
-
-       ippd.jj_mnth_id as jj_mnth_id,
-
-       ippd.pos_prod_cd as item_cd,
-
-       ippd.store_cd as brnch_cd,
-
-       cast(ippd.qty as numeric(15,4)) as pos_qty,
-
-       cast(ippd.qty as numeric(15,4))*cast(ippd.cust_item_prc as numeric(15,4)) as pos_gts,
-
-       cast(ippd.cust_item_prc as numeric(15,4)) as pos_item_prc,
-
-       cast(ippd.qty as numeric(15,4))*cast(ippd.cust_item_prc as numeric(15,4))*float8(12.0 / 112.0) as pos_tax,
-
-       cast(ippd.qty as numeric(15,4))*cast(ippd.cust_item_prc as numeric(15,4))*float8(100.0 / 112.0) as pos_nts,
-
-       cast(ippd.cust_conv_factor as numeric(15,4)) as conv_factor,
-
-       cast(ippd.qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4)) as jj_qty_pc,
-
-       ipp2.lst_price_unit as jj_item_prc_per_pc,
-
-       cast(ippd.qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit as jj_gts,
-
-       (cast(ippd.qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*float8(12.0 / 112.0) as jj_vat_amt,
-
-       (cast(ippd.qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*float8(100.0 / 112.0) as jj_nts,
-
-       ippd.file_nm,
-
-       ippd.cdl_dttm,
-
-       current_timestamp() as crtd_dttm,
-
-       null as updt_dttm
-
-from itg_ph_pricelist ipp2,
-
-     (select ipppd.item_cd,
-
-             cust_cd,
-
-             sap_item_cd,
-
-             cust_conv_factor,
-
-             jnj_pc_per_cust_unit,
-
-             cust_item_prc,
-
-             spm.jj_mnth_id,
-
-             case
-
-               when spm.jj_mnth_id < ipp.min_period and ipppd.early_bk_period is not null then ipppd.early_bk_period
-
-               when spm.jj_mnth_id < ipp.min_period and ipppd.early_bk_period is null then ipp.min_period
-
-               when spm.jj_mnth_id > ipp.max_period and ipppd.lst_period is not null then ipppd.lst_period
-
-               when spm.jj_mnth_id > ipp.max_period and ipppd.lst_period is null then ipp.max_period
-
-               else spm.jj_mnth_id
-
-             end as pl_jj_mnth_id,
-
-             spm.pos_prod_cd,
-
-             spm.store_cd,
-
-             spm.qty,
-
-             spm.file_nm,
-
-             spm.cdl_dttm
-
-      from (select distinct item_cd,
-
-                   cust_cd,
-
-                   sap_item_cd,
-
-                   cust_conv_factor,
-
-                   jnj_pc_per_cust_unit,
-
-                   cust_item_prc,
-
-                   lst_period,
-
-                   early_bk_period
-
-            from itg_ph_pos_product_dim
-
-            where cust_cd = 'DYNA') ipppd,
-
-           (select max(jj_mnth_id) as max_period,
-
-                   min(jj_mnth_id) as min_period,
-
-                   item_cd
-
-            from itg_ph_pricelist
-
-            group by item_cd) ipp,
-
-           sdl_ph_pos_dyna spm
-
-      where upper(trim(ipppd.item_cd(+))) = upper(trim(spm.pos_prod_cd))
-
-      and   upper(trim(ipp.item_cd(+))) = upper(ipppd.sap_item_cd)) ippd
-
-where upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
-
-and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
-),
 seveneleven as (
     select cust_cd,
 
@@ -889,9 +815,9 @@ seveneleven as (
 
        null as pos_item_prc,
 
-       cast(ippd.tot_amt as numeric(15,4))*float8(12.0 / 112.0) as pos_tax,
+       cast(ippd.tot_amt as numeric(15,4))*(12.0 / 112.0) as pos_tax,
 
-       cast(ippd.tot_amt as numeric(15,4))*float8(100.0 / 112.0) as pos_nts,
+       cast(ippd.tot_amt as numeric(15,4))*(100.0 / 112.0) as pos_nts,
 
        cast(ippd.cust_conv_factor as numeric(15,4)) as conv_factor,
 
@@ -901,9 +827,9 @@ seveneleven as (
 
        cast(ippd.tot_qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit as jj_gts,
 
-       (cast(ippd.tot_qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*float8(12.0 / 112.0) as jj_vat_amt,
+       (cast(ippd.tot_qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*(12.0 / 112.0) as jj_vat_amt,
 
-       (cast(ippd.tot_qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*float8(100.0 / 112.0) as jj_nts,
+       (cast(ippd.tot_qty as numeric(15,4)) / cast(ippd.cust_conv_factor as numeric(15,4))*ipp2.lst_price_unit)*(100.0 / 112.0) as jj_nts,
 
        null as file_nm,
 
@@ -977,124 +903,151 @@ where upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
 
 and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
 ),
-puregold as (
-    select upper(substring(ippd.file_nm,1,2)) as cust_cd,
+dyna as (
+SELECT CUST_CD,
 
-       ippd.jj_mnth_id as jj_mnth_id,
+       IPPD.JJ_MNTH_ID AS JJ_MNTH_ID,
 
-       ippd.pos_prod_cd as item_cd,
+       IPPD.POS_PROD_CD AS ITEM_CD,
 
-       ippd.store_cd as brnch_cd,
+       IPPD.CUSTOMER_ID AS BRNCH_CD,
 
-       cast(ippd.qty as numeric(20,4)) as pos_qty,
+       CAST(IPPD.QTY AS NUMERIC(15,4)) AS POS_QTY,
 
-       null as pos_gts,
+       CAST(IPPD.SLS_AMT AS NUMERIC(15,4)) AS POS_GTS,
 
-       null as pos_item_prc,
+       CAST(IPPD.CUST_ITEM_PRC AS NUMERIC(15,4)) AS POS_ITEM_PRC,
 
-       null as pos_tax,
+       CAST(IPPD.SLS_AMT AS NUMERIC(15,4))*(12.0 / 112.0) AS POS_TAX,
 
-       null as pos_nts,
+       CAST(IPPD.SLS_AMT AS NUMERIC(15,4))*(100.0 / 112.0) AS POS_NTS,
 
-       cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)) as conv_factor,
+       CAST(IPPD.CUST_CONV_FACTOR AS NUMERIC(15,4)) AS CONV_FACTOR,
 
-       cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)) as jj_qty_pc,
+       CAST(IPPD.QTY AS NUMERIC(15,4)) / CAST(IPPD.CUST_CONV_FACTOR AS NUMERIC(15,4)) AS JJ_QTY_PC,
 
-       cast(ipp2.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc,
+       IPP2.LST_PRICE_UNIT AS JJ_ITEM_PRC_PER_PC,
 
-       (cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)) as jj_gts,
+       CAST(IPPD.QTY AS NUMERIC(15,4)) / CAST(IPPD.CUST_CONV_FACTOR AS NUMERIC(15,4))*IPP2.LST_PRICE_UNIT AS JJ_GTS,
 
-       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(12.0 / 112.0) as jj_vat_amt,
+       (CAST(IPPD.QTY AS NUMERIC(15,4)) / CAST(IPPD.CUST_CONV_FACTOR AS NUMERIC(15,4))*IPP2.LST_PRICE_UNIT)*(12.0 / 112.0) AS JJ_VAT_AMT,
 
-       ((cast(ippd.qty as numeric(20,4)) / cast(ippd.jnj_pc_per_cust_unit as numeric(20,4)))*cast(ipp2.lst_price_unit as numeric(20,4)))*float8(100.0 / 112.0) as jj_nts,
+       (CAST(IPPD.QTY AS NUMERIC(15,4)) / CAST(IPPD.CUST_CONV_FACTOR AS NUMERIC(15,4))*IPP2.LST_PRICE_UNIT)*(100.0 / 112.0) AS JJ_NTS,
 
-       ippd.file_nm,
+       NULL AS FILE_NM,
 
-       ippd.cdl_dttm,
+       NULL AS CDL_DTTM,
 
-       current_timestamp() as crtd_dttm,
+       current_timestamp() AS CRTD_DTTM,
 
-       null as updt_dttm
+       NULL AS UPDT_DTTM
 
-from itg_ph_pricelist ipp2,
+FROM ITG_PH_PRICELIST IPP2,
 
-     (select ipppd.item_cd,
+     (SELECT SALES.ITEM_CD,
 
-             cust_cd,
+             'DYNA' as CUST_CD,
 
-             sap_item_cd,
+             SAP_ITEM_CD,
 
-             cust_conv_factor,
+             CUST_CONV_FACTOR,
 
-             case
+             CUST_ITEM_PRC,
 
-               when (jnj_pc_per_cust_unit != 0 or jnj_pc_per_cust_unit != null) then jnj_pc_per_cust_unit
+             SALES.MNTH_ID AS JJ_MNTH_ID,
 
-               else 1
+             CASE
 
-             end as jnj_pc_per_cust_unit,
+               when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
 
-             spm.jj_mnth_id,
+               when sales.mnth_id != nvl(ipp.jj_mnth_id,'0')  and sales.early_bk_period is not null then sales.early_bk_period
 
-             case
+               when sales.mnth_id != nvl(ipp.jj_mnth_id,'0') and sales.early_bk_period is null then sales.lst_period
 
-               when spm.jj_mnth_id < ipp.min_period and ipppd.early_bk_period is not null then ipppd.early_bk_period
+             END AS PL_JJ_MNTH_ID,
 
-               when spm.jj_mnth_id < ipp.min_period and ipppd.early_bk_period is null then ipp.min_period
+             SALES.MATL_NUM AS POS_PROD_CD,
 
-               when spm.jj_mnth_id > ipp.max_period and ipppd.lst_period is not null then ipppd.lst_period
+             SALES.CUSTOMER_ID,
 
-               when spm.jj_mnth_id > ipp.max_period and ipppd.lst_period is null then ipp.max_period
+             SALES.QTY,
 
-               else spm.jj_mnth_id
+             SALES.SLS_AMT
 
-             end as pl_jj_mnth_id,
+      FROM (SELECT *
 
-             spm.pos_prod_cd,
+            FROM (SELECT DISTINCT YEARMONTH,
 
-             spm.store_cd,
+                         ITEM_CD,
 
-             spm.qty,
+                         CUST_CD,
 
-             spm.file_nm,
+                         SAP_ITEM_CD,
 
-             spm.cdl_dttm
+                         CUST_CONV_FACTOR,
 
-      from (select distinct item_cd,
+                         CUST_ITEM_PRC,
 
-                   cust_cd,
+                         LST_PERIOD,
 
-                   sap_item_cd,
+                         EARLY_BK_PERIOD
 
-                   cust_conv_factor,
+                  FROM ITG_PH_DYNA_PRODUCT_DIM) IPPPD,
 
-                   jnj_pc_per_cust_unit,
+                 SDL_PH_POS_DYNA_SALES SPM
 
-                   lst_period,
+            WHERE UPPER(TRIM(IPPPD.ITEM_CD(+))) = UPPER(TRIM(SPM.MATL_NUM))
 
-                   early_bk_period
+            AND   IPPPD.YEARMONTH(+) = SPM.MNTH_ID) AS SALES,
 
-            from itg_ph_pos_product_dim
+           ITG_PH_PRICELIST IPP
 
-            where cust_cd = 'PG') ipppd,
+      WHERE IPP.JJ_MNTH_ID(+) = SALES.MNTH_ID
 
-           (select max(jj_mnth_id) as max_period,
+      AND   IPP.ITEM_CD(+) = SALES.SAP_ITEM_CD) AS IPPD
 
-                   min(jj_mnth_id) as min_period,
+WHERE UPPER(TRIM(IPP2.ITEM_CD(+))) = UPPER(IPPD.SAP_ITEM_CD)
 
-                   item_cd
-
-            from itg_ph_pricelist
-
-            group by item_cd) ipp,
-
-           (select * from sdl_ph_pos_puregold where qty <> 0) spm
-
-      where upper(trim(ipppd.item_cd(+))) = upper(trim(spm.pos_prod_cd))
-
-      and   upper(trim(ipp.item_cd(+))) = upper(ipppd.sap_item_cd)) ippd
-
-where upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
-
-and   trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
+AND   TRIM(IPP2.JJ_MNTH_ID(+)) = TRIM(IPPD.PL_JJ_MNTH_ID)
+),
+transformed as (
+select * from robinsons
+union all
+select * from mercury
+union all
+select * from seveneleven
+union all
+select * from watsons
+union all
+select * from waltermart
+union all
+select * from rustans
+union all
+select * from southstar
+union all
+select * from dyna
+),
+final as (
+select 
+cust_cd::varchar(30) as cust_cd,
+jj_mnth_id::varchar(30) as jj_mnth_id,
+item_cd::varchar(30) as item_cd,
+brnch_cd::varchar(50) as brnch_cd,
+pos_qty::number(20,4) as pos_qty,
+pos_gts::number(20,4) as pos_gts,
+pos_item_prc::number(20,4) as pos_item_prc,
+pos_tax::number(20,4) as pos_tax,
+pos_nts::number(20,4) as pos_nts,
+conv_factor::number(20,4) as conv_factor,
+jj_qty_pc::number(20,4) as jj_qty_pc,
+jj_item_prc_per_pc::number(20,4) as jj_item_prc_per_pc,
+jj_gts::number(20,4) as jj_gts,
+jj_vat_amt::number(20,4) as jj_vat_amt,
+jj_nts::number(20,4) as jj_nts,
+file_nm::varchar(150) as file_nm,
+cdl_dttm::varchar(50) as cdl_dttm,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
 )
+select * from final

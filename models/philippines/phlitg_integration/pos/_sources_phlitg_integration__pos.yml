@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: phlsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: phlsdl_raw
+    schema: snaposesdl_raw
     quoting:
       database: false
       schema: false
@@ -19,6 +19,26 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_robinsons')}}) AND UPPER(CUST_CD)='ROB'"
+            name: TRATBL_sdl_ph_pos_robinsons__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration 
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) = 'ROB'"
+            name: TRATBL_sdl_ph_pos_robinsons__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration   
     - name: sdl_ph_pos_mercury
       tags: ["ph_pos","ingestion"]
       tests:
@@ -29,6 +49,26 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_robinsons')}}) AND UPPER(CUST_CD)='MDC'"
+            name: TRATBL_sdl_ph_pos_mercury__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) = 'MDC'"
+            name: TRATBL_sdl_ph_pos_mercury__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration   
     - name: sdl_ph_pos_watsons
       tags: ["ph_pos","ingestion"]
       tests:
@@ -39,16 +79,56 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_watsons')}}) AND UPPER(CUST_CD) = 'WAT'"
+            name: TRATBL_sdl_ph_pos_watsons__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) = 'WAT'"
+            name: TRATBL_sdl_ph_pos_watsons__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration  
     - name: sdl_ph_pos_rustans
       tags: ["ph_pos","ingestion"]
       tests:
       - test_null:
               select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
               not_null_columns: ["pos_prod_cd","store_cd"]
-              name: tratbl_sdl_ph_pos_mercury__null_test
+              name: tratbl_sdl_ph_pos_rustans__null_test
               config:
                 store_failures: true
                 schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_rustans')}}) AND UPPER(CUST_CD) in ('RS','SW','WC')"
+            name: TRATBL_sdl_ph_pos_rustans__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) IN ('RS','SW','WC')"
+            name: TRATBL_sdl_ph_pos_rustans__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration  
     - name: sdl_ph_pos_south_star
       tags: ["ph_pos","ingestion"]
       tests:
@@ -59,6 +139,26 @@ sources:
                 config:
                   store_failures: true
                   schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_south_star')}}) AND UPPER(CUST_CD) = 'SS'"
+            name: TRATBL_sdl_ph_pos_south_star__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) = 'SS'"
+            name: TRATBL_sdl_ph_pos_south_star__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration  
     - name: sdl_ph_pos_waltermart
       tags: ["ph_pos","ingestion"]
       tests:
@@ -69,7 +169,46 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
-    - name: sdl_ph_pos_dyna
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "jj_mnth_id,pos_prod_cd"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_waltermart')}}) AND UPPER(CUST_CD) = 'WM'"
+            name: TRATBL_sdl_ph_pos_waltermart__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+      - test_lookup:
+            select_columns: ["jj_mnth_id","pos_prod_cd","store_cd"]
+            column: "store_cd"
+            lookup_column: "BRNCH_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_customers')}} "
+            lookup_filter: "ACTIVE='Y' AND UPPER(CUST_CD) = 'WM'"
+            name: TRATBL_sdl_ph_pos_waltermart__lookup_test_store_code
+            config:
+              store_failures: true
+              schema: phlwks_integration  
+    - name: sdl_ph_pos_dyna_sales
+      tags: ["ph_pos_711","ingestion"]
+      tests:
+      - test_null:
+              select_columns: ["customer_id","MATL_NUM","SLS_AREA"]
+              not_null_columns: ["customer_id","MATL_NUM"]
+              name: TRATBL_sdl_ph_pos_dyna_sales__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["mnth_id","MATL_NUM","SLS_AREA"]
+            column: "mnth_id,MATL_NUM"
+            lookup_column: "mnth_id,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+            lookup_filter: "MNTH_ID IN (SELECT DISTINCT MNTH_ID FROM {{source('phlsdl_raw','sdl_ph_pos_dyna_sales')}}) and upper(cust_cd)='DYNA' and active='Y'"
+            name: TRATBL_sdl_ph_pos_dyna_sales__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
     - name: sdl_ph_pos_711
       tags: ["ph_pos_711","ingestion"]
       tests:
@@ -80,6 +219,16 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+      - test_lookup:
+            select_columns: ["mnth_id","ITEM_CD","STORE_NM"]
+            column: "mnth_id,ITEM_CD"
+            lookup_column: "YEARMONTH,ITEM_CD"
+            lookup_table: "{{ ref('phlitg_integration__itg_ph_711_product_dim ')}}"
+            lookup_filter: "YEARMONTH IN (SELECT DISTINCT MNTH_ID FROM {{source('phlsdl_raw','sdl_ph_pos_711')}})"
+            name: TRATBL_sdl_ph_pos_711__lookup_test
+            config:
+              store_failures: true
+              schema: phlwks_integration  
     - name: sdl_ph_pos_puregold
       tags: ["ph_pos_puregold","ingestion"]
     - name: sdl_ph_pos_sm_goods

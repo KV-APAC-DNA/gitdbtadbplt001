@@ -216,58 +216,58 @@ sources:
                 schema: phlwks_integration
     - name: sdl_ph_iop_trgt
       tags: ["ph_iop_target","ingestion"]
-    #   tests:
-    #       - test_null:
-    #           select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #           not_null_columns: ["year","brand","customer_code"]
-    #           name: TRATBL_sdl_ph_iop_trgt__null_test
-    #           config:
-    #             store_failures: true
-    #             schema: phlwks_integration
-    #       - test_duplicate:
-    #           select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #           group_by_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #           name: TRATBL_sdl_ph_iop_trgt__duplicate_test
-    #           config:
-    #             store_failures: true
-    #             schema: phlwks_integration
-    #       - test_format:
-    #           select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #           where_clause: "not regexp_like (trim(year),'[0-2][0-9][0-9][0-9][0-1][0-9]') and (trim(year) != '' and trim(year) is not null)"
-    #           failure_reason: "'Invalid Format for From_salescycle :Expect format is YYYYMM'"
-    #           name: TRATBL_sdl_ph_iop_trgt__format_test
-    #           config:
-    #             store_failures: true
-    #             schema: phlwks_integration
-    #       - test_lookup:
-    #         select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #         column: "upper(trim(brand))"
-    #         lookup_column: "upper(trim(brand))"
-    #         lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
-    #         lookup_filter: "upper(brand) in (SELECT upper(gph_prod_brnd) FROM {{ref{'phledw_integration__edw_vw_ph_material_dim'}}})"
-    #         name: TRATBL_sdl_ph_iop_trgt_lookup_test_brand
-    #         config:
-    #           store_failures: true
-    #           schema: phlwks_integration
-    #       - test_lookup:
-    #         select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #         column: "upper(trim(segment))"
-    #         lookup_column: "upper(trim(segment))"
-    #         lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
-    #         lookup_filter: "upper(segment) in (SELECT upper(gph_prod_sgmnt) FROM {{ref{'phledw_integration__edw_vw_ph_material_dim'}}})"
-    #         name: TRATBL_sdl_ph_iop_trgt_lookup_test_segment
-    #         config:
-    #           store_failures: true
-    #           schema: phlwks_integration
-    #       - test_lookup:
-    #         select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
-    #         column: "upper(trim(customer_code))"
-    #         lookup_column: "upper(cust_id))"
-    #         lookup_table: "{{ref{'phledw_integration__edw_vw_ph_material_dim'}}}"
-    #         name: TRATBL_sdl_ph_iop_trgt_lookup_test_customer_code
-    #         config:
-    #           store_failures: true
-    #           schema: phlwks_integration
+      tests:
+          - test_null:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              not_null_columns: ["year","brand","customer_code"]
+              name: TRATBL_sdl_ph_iop_trgt__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              group_by_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              name: TRATBL_sdl_ph_iop_trgt__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              where_clause: "not regexp_like (trim(year),'[0-2][0-9][0-9][0-9][0-1][0-9]') and (trim(year) != '' and trim(year) is not null)"
+              failure_reason: "'Invalid Format for From_salescycle :Expect format is YYYYMM'"
+              name: TRATBL_sdl_ph_iop_trgt__format_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_lookup:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              column: "upper(trim(brand))"
+              lookup_column: "upper(trim(brand))"
+              lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
+              lookup_filter: "upper(brand) in (SELECT upper(gph_prod_brnd) FROM DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_MATERIAL_DIM)"
+              name: TRATBL_sdl_ph_iop_trgt__lookup_test_brand
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_lookup:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              column: "upper(trim(segment))"
+              lookup_column: "upper(trim(segment))"
+              lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
+              lookup_filter: "upper(segment) in (SELECT upper(gph_prod_sgmnt) FROM DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_MATERIAL_DIM)"
+              name: TRATBL_sdl_ph_iop_trgt__lookup_test_segment
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_lookup:
+              select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
+              column: "upper(trim(customer_code))"
+              lookup_column: "upper(cust_id)"
+              lookup_table: "DEV_DNA_CORE.PHLEDW_INTEGRATION.EDW_MV_PH_CUSTOMER_DIM"
+              name: TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code
+              config:
+                store_failures: true
+                schema: phlwks_integration
     - name: sdl_mds_ph_ps_weights
       tags: ["ph_mds_itg_refresh","ingestion"]
       tests:
