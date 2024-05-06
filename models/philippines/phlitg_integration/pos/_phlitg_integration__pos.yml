@@ -39,3 +39,4 @@ models:
       alias: itg_ph_pos_sales_fact
       tags: ["ph_pos","ingestion"]
     
+    
