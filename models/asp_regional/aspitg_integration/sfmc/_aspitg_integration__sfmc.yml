@@ -19,7 +19,7 @@ models:
   - name: aspitg_integration__itg_sfmc_open_data
     config:
       alias: itg_sfmc_open_data
-      tags: ["th_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
   
   - name: aspitg_integration__itg_sfmc_unsubscribe_data
     config:

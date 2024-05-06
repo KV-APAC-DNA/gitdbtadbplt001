@@ -4,11 +4,8 @@ models:
   - name: phledw_integration__edw_vw_ph_npi
     config:
       alias: edw_vw_ph_npi
-      tags: ["ph_npi_table_refresh","transformation"]
+      tags: ["ph_npi_refresh","transformation"]
   - name: phledw_integration__edw_ph_npi
     config:
       alias: edw_ph_npi
-      tags: ["ph_npi_table_refresh","transformation"]
-  
-      
-  
+      tags: ["ph_npi_refresh","transformation"]
