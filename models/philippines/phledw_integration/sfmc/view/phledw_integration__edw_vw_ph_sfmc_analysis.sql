@@ -17,7 +17,7 @@ edw_vw_sfmc_email_activity_fact as
 ),
 edw_vw_ph_sfmc_subscriber_status_history as
 (
-    select * from select * from {{ ref('aspedw_integration__edw_vw_ph_sfmc_subscriber_status_history') }}
+    select * from  {{ ref('aspedw_integration__edw_vw_ph_sfmc_subscriber_status_history') }}
 ),
 temp_a as
 (

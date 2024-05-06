@@ -14,6 +14,6 @@ select *
 from sdl_ph_pos_sm_goods
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where curr_date > (select max(curr_date) from {{ this }}) 
+    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
  {% endif %})
 select * from final

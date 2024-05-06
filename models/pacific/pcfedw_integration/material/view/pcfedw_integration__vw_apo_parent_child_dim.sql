@@ -130,7 +130,7 @@ final as
                         row_number() OVER(
                             PARTITION BY derived_table1.sales_org,
                             derived_table1.master_code
-                            ORDER BY derived_table1.launch_date DESC,derived_table1.matl_id desc
+                            ORDER BY derived_table1.launch_date DESC, derived_table1.matl_id DESC
                         ) AS rowno
                     FROM (
                             SELECT DISTINCT a.sls_org AS sales_org,

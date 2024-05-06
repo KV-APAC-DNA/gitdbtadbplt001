@@ -3,7 +3,7 @@
         materialized='incremental',
         incremental_strategy='append',
         unique_key=['snapshot_date'],
-        pre_hook="delete from {{this}} where  snapshot_date::date <  SUBSTRING(add_months(current_timestamp(),cast((-1)*(select parameter_value from {{ source('pcfitg_integration', 'itg_query_parameters') }} where parameter_name='Pacific_Promax_master_snapshotdate_months')as integer)),1,19)::date"
+        pre_hook="delete from {{this}} where  snapshot_date::date <  SUBSTRING(add_months(convert_timezone('UTC', current_timestamp()),cast((-1)*(select parameter_value from {{ source('pcfitg_integration', 'itg_query_parameters') }} where parameter_name='Pacific_Promax_master_snapshotdate_months')as integer)),1,19)::date"
     )
 }}
 
@@ -174,14 +174,14 @@ SELECT
   LEFT JOIN vw_material_dim AS vmd
     ON CAST(epmf.matl_id AS TEXT) = LTRIM(CAST(vmd.matl_id AS TEXT), CAST(CAST('0' AS VARCHAR) AS TEXT))
   LEFT JOIN edw_time_dim AS etd
-    ON ltrim(epmf.promotionforecastweek)::date = ltrim(etd.cal_date)::date
+    ON (epmf.promotionforecastweek)::date = (etd.cal_date)::date
   WHERE
     epmf.gltt_rowid = epgm.row_id
     AND CAST(epgm.sap_account AS TEXT) = CAST(cpf.sap_accnt AS TEXT)
 ),
 transformed as(
 SELECT
-  convert_timezone('Australia/Sydney', current_timestamp()) AS SNAPSHOT_DATE,
+  convert_timezone('Australia/Sydney', current_timestamp())::timestamp_ntz(9) AS SNAPSHOT_DATE,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'MON') AS SNAPSHOT_MONTH,
   TO_CHAR(CAST(CURRENT_TIMESTAMP() AS TIMESTAMPNTZ), 'yyyy') AS SNAPSHOT_YEAR,
   ac_code::varchar(50) as ac_code,
@@ -246,5 +246,9 @@ and
 (jj_mnth_id)< cast((SUBSTRING(add_months(current_timestamp()::timestamp_ntz(9),cast((select parameter_value from itg_query_parameters where parameter_name='Pacific_Promax_master_snapshot_data_forecast_months')as integer)),1,4))
 
 ||(SUBSTRING(add_months(current_timestamp()::timestamp_ntz(9),cast((select parameter_value from itg_query_parameters where parameter_name='Pacific_Promax_master_snapshot_data_forecast_months')as integer)),6,2)) as numeric)
+    {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+    and convert_timezone('Australia/Sydney', current_timestamp())::date > (select max(snapshot_date)::date from {{ this }})
+    {% endif %}
 )
 select * from transformed

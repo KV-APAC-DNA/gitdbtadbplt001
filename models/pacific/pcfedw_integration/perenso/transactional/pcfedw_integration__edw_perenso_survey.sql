@@ -1,23 +1,3 @@
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN CYCLE_START_DATE DATE;
--- 
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN CYCLE_END_DATE DATE;
-
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN CYCLE_NUMBER VARCHAR(25);
--- 
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN TARGET_TYPE VARCHAR(25);
-
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN TARGET NUMERIC(10);
--- 
-
--- ALTER TABLE EDW_PERENSO_SURVEY
--- ADD COLUMN SURVEY_CATEGORY VARCHAR(100);
-
-
 with itg_perenso_survey_result as (
      select * from {{ ref('pcfitg_integration__itg_perenso_survey_result') }}
 ),
@@ -185,7 +165,7 @@ todo_desc::varchar(255) as todo_desc,
 to_do_start_date::timestamp_ntz(9) as to_do_start_date,
 to_do_end_date::timestamp_ntz(9) as to_do_end_date,
 to_do_option_desc::varchar(256) as to_do_option_desc,
-survery_notes::varchar(100) as survery_notes,
+survery_notes::varchar(16777216) as survery_notes,
 diary_item_type_desc::varchar(255) as diary_item_type_desc,
 diary_item_category::varchar(255) as diary_item_category,
 diary_start_time::timestamp_ntz(9) as diary_start_time,

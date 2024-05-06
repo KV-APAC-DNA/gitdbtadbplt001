@@ -34,11 +34,11 @@ select
     probe.pfc,
     product.pack_long_desc,
     (
-        substring(probe.weekendingdate, 7, 2) + substring (probe.weekendingdate, 5, 2) + substring (probe.weekendingdate, 1, 4)
+        substring(probe.weekendingdate, 7, 2) || substring (probe.weekendingdate, 5, 2) || substring (probe.weekendingdate, 1, 4)
     ) as week_ending_date,
     probe.units,
     case
-        when probe.units != 0 then probe.value / probe.units
+        when probe.units != 0 then trunc(probe.value / probe.units)
         else 0
     end derived_price,
     probe.units * derived_price as amount,

@@ -29,7 +29,7 @@ itg_mds_ph_pos_pricelist as (
 select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ) ,
 final as (
-select veposf.year as jj_year,
+select veposf."year" as jj_year,
        veposf.qrtr as jj_qtr,
        veposf.jj_mnth_id,
        veposf.mnth_no as jj_mnth_no,
@@ -137,7 +137,7 @@ select veposf.year as jj_year,
        0 as si_nts_qty,
        0 as si_nts_val,
        0 as si_tp_val
-from (select b.year,
+from (select b."year",
              b.qrtr,
              b.qrtr_no,
              b.mnth_no,
@@ -165,7 +165,7 @@ from (select b.year,
     from (select *
             from edw_vw_os_pos_sales_fact
             where cntry_cd = 'PH') as a,
-           (select distinct year,
+           (select distinct "year",
                    qrtr_no,
                    qrtr,
                    mnth_id,
@@ -176,10 +176,10 @@ from (select b.year,
             from itg_mds_ph_ref_pos_primary_sold_to
             where active = 'Y') e,
            (select *
-            from edw_vw_os_pos_customer_dim
+            from EDW_VW_ph_POS_CUSTOMER_DIM
             where cntry_cd = 'PH') c,
            (select *
-            from edw_vw_os_pos_material_dim
+            from EDW_VW_ph_POS_material_DIM
             where cntry_cd = 'PH') d
       where b.mnth_id = a.jj_mnth_id
       and   c.brnch_cd(+) = a.cust_brnch_cd
@@ -309,7 +309,7 @@ select veossf.jj_year as jj_year,
        veossf.tp_val as si_tp_val
 from (select veotd.mnth_id as jj_mnth_id,
              veotd.mnth_no as jj_mnth_no,
-             veotd.year as jj_year,
+             veotd."year" as jj_year,
              veotd.qrtr as jj_qtr,
              -- veotd.mnth_wk_no as jj_mnth_wk_no,
              eocd1.dstrbtr_grp_cd,
@@ -334,7 +334,7 @@ from (select veotd.mnth_id as jj_mnth_id,
                                                        from edw_mv_ph_customer_dim
                                                        where cust_id in (select primary_soldto from itg_mds_ph_ref_pos_primary_sold_to
                                                                           where active='Y')))) eocd1,
-           (select year,
+           (select "year",
                    qrtr_no,
                    qrtr,
                    mnth_id,
@@ -351,7 +351,7 @@ from (select veotd.mnth_id as jj_mnth_id,
                      when mnth_wk_no = lst_wk then '20991231'
                      else lst_day
                    end as last_day*/
-            from (select distinct year,
+            from (select distinct "year",
                          qrtr_no,
                          qrtr,
                          mnth_id,
@@ -364,7 +364,7 @@ from (select veotd.mnth_id as jj_mnth_id,
                    max(cal_date_id) as lst_day,
                    max(mnth_wk_no) over (partition by mnth_id) as lst_wk*/
                   from edw_vw_os_time_dim t /* group by
-                    year,
+                    "year",
                    qrtr_no,
                    qrtr,
                    mnth_id,
@@ -381,7 +381,7 @@ from (select veotd.mnth_id as jj_mnth_id,
       and   upper(trim(eocd1.cust_id(+))) = upper(ltrim(veossf1.cust_id,'0'))
       group by veotd.mnth_id,
                veotd.mnth_no,
-               veotd.year,
+               veotd."year",
                veotd.qrtr,
                -- veotd.mnth_wk_no,
                eocd1.dstrbtr_grp_cd,

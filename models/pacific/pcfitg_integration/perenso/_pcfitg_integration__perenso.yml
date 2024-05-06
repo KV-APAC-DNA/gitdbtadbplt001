@@ -25,6 +25,10 @@ models:
     config:
       alias: sdl_raw_perenso_diary_item_time
       tags: ["anz_perenso_call","ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_diary_item
+    config:
+      alias: sdl_raw_perenso_diary_item
+      tags: ["anz_perenso_sales_rep","ingestion"]
   - name: pcfitg_integration__itg_perenso_call_objectives
     config:
       alias: itg_perenso_call_objectives
@@ -40,6 +44,10 @@ models:
   - name: pcfitg_integration__sdl_raw_perenso_todo_option
     config:
       alias: sdl_raw_perenso_todo_option
+      tags: ["anz_perenso_survey_ques","ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_todo
+    config:
+      alias: sdl_raw_perenso_todo
       tags: ["anz_perenso_survey_ques","ingestion"]
   - name: pcfitg_integration__itg_perenso_survey_result
     config:
@@ -88,10 +96,6 @@ models:
   - name: pcfitg_integration__sdl_raw_perenso_order_detail
     config:
       alias: sdl_raw_perenso_order_detail
-      tags: ["anz_perenso_order","ingestion"]
-  - name: pcfitg_integration__itg_perenso_order_header
-    config:
-      alias: itg_perenso_order_header
       tags: ["anz_perenso_order","ingestion"]
   - name: pcfitg_integration__sdl_raw_perenso_order_header
     config:
@@ -287,6 +291,14 @@ models:
     config: 
       alias: itg_perenso_account_group_reln
       tags: ["anz_perenso_account","ingestion"]
+  - name: pcfitg_integration__itg_perenso_account_group
+    config: 
+      alias: itg_perenso_account_group
+      tags: ["anz_perenso_account","ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_account_group
+    config: 
+      alias: sdl_raw_perenso_account_group
+      tags: ["anz_perenso_account","ingestion"]
   - name: pcfitg_integration__itg_perenso_account_type
     config: 
       alias: itg_perenso_account_type
@@ -324,14 +336,60 @@ models:
     config:
       alias: itg_perenso_head_office_req_state
       tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_head_office_req_state
+    config:
+      alias: sdl_raw_perenso_head_office_req_state
+      tags: ["anz_perenso_head_office_req", "ingestion"]
   - name: pcfitg_integration__itg_perenso_head_office_req_check
     config:
       alias: itg_perenso_head_office_req_check
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_head_office_req_check
+    config:
+      alias: sdl_raw_perenso_head_office_req_check
       tags: ["anz_perenso_head_office_req", "ingestion"]
   - name: pcfitg_integration__itg_perenso_store_chk_hdr
     config:
       alias: itg_perenso_store_chk_hdr
       tags: ["anz_perenso_head_office_req", "ingestion"]
-  
+  - name: pcfitg_integration__sdl_raw_perenso_store_chk_hdr
+    config:
+      alias: sdl_raw_perenso_store_chk_hdr
+      tags: ["anz_perenso_head_office_req", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_account_fields
+    config:
+      alias: itg_perenso_account_fields
+      tags: ["anz_perenso_account", "ingestion"] 
+  - name: pcfitg_integration__sdl_raw_perenso_account_fields
+    config:
+      alias: sdl_raw_perenso_account_fields
+      tags: ["anz_perenso_account", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_diary_item
+    config: 
+      alias: itg_perenso_diary_item
+      tags: ["anz_perenso_sales_rep","ingestion"]
+  - name: pcfitg_integration__itg_perenso_account_group_lvl
+    config:
+      alias: itg_perenso_account_group_lvl
+      tags: ["anz_perenso_account", "ingestion"] 
+  - name: pcfitg_integration__sdl_raw_perenso_account_group_lvl
+    config:
+      alias: sdl_raw_perenso_account_group_lvl
+      tags: ["anz_perenso_account", "ingestion"]  
+  - name: pcfitg_integration__itg_metcash_ind_grocery
+    config:
+      alias: itg_metcash_ind_grocery
+      tags: ["anz_perenso_head_office_req", "ingestion"]
 
-
+  - name: pcfitg_integration__itg_perenso_order_header
+    config:
+      alias: itg_perenso_order_header
+      tags: ["anz_perenso_order", "ingestion"]
+  - name: pcfitg_integration__itg_perenso_users
+    config:
+      alias: itg_perenso_users
+      tags: ["anz_perenso_sales_rep", "ingestion"]
+  - name: pcfitg_integration__sdl_raw_perenso_users
+    config:
+      alias: sdl_raw_perenso_users
+      tags: ["anz_perenso_sales_rep", "ingestion"]

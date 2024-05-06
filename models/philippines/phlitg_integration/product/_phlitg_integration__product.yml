@@ -4,7 +4,7 @@ models:
   - name: phlitg_integration__itg_ph_non_ise_exceptions
     config: 
       alias: itg_ph_non_ise_exceptions
-      tags: ["ph_non_pos","ingestion"]
+      tags: ["ph_non_pos","transformation"]
 
   - name: phlitg_integration__sdl_raw_ph_non_ise_landmark_sm
     config:

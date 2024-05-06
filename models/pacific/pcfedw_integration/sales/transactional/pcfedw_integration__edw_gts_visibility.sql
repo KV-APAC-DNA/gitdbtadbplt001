@@ -40,7 +40,7 @@ edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 itg_query_parameters as (
-select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+select * from {{ source('pcfitg_integration', 'itg_query_parameters') }}
 ),
 edw_invoice_fact as (
 select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
@@ -274,6 +274,7 @@ from edw_invoice_fact_snapshot eifs
              where ltrim(materialnumber,0) <> ''
 
              and   "region" = 'APAC') egph on ltrim (eifs.matl_num,0) = ltrim (egph.materialnumber,0)
+             join edw_sapbw_plan_lkp espl on espl.sls_grp_cd = vcd.sales_grp_cd
 ) ,
 non_open_orders as (select convert_timezone ('Australia/Sydney',doc_crt_dt)::date as snapshot_date,
 

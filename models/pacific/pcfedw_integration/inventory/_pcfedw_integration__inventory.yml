@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: pcfedw_integration__vw_pacific_inventory
+    config: 
+      alias: vw_pacific_inventory
+      tags: ["j_ap_china_reg_data_refresh","transformation"]

@@ -19,7 +19,7 @@ final as
 	todo_key::number(10,0) as todo_key,
 	prod_grp_key::number(10,0) as prod_grp_key,
 	optionans::number(10,0) as optionans,
-	notesans::varchar(100) as notesans,
+	notesans::varchar(16777216) as notesans,
 	run_id::number(14,0) as run_id,
 	current_timestamp()::timestamp_ntz(9) as create_dt,
 	current_timestamp()::timestamp_ntz(9) as update_dt 

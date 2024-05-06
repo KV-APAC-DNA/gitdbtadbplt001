@@ -1,6 +1,6 @@
 {% macro build_sfmc_consumer_master() %}
     {{ log("===============================================================================================") }}
-    {{ log("Step1: Trying to fetch the filenames from SDL table: phlsdl_raw.sdl_cbd_gt_sales_report_fact ") }}
+    {{ log("Step1: Trying to fetch the filenames from SDL table: phlsdl_raw.sdl_ph_sfmc_consumer_master ") }}
     {{ log("===============================================================================================") }}
     {{ log("Trying to set the query to fetch the file names ") }}
     {{ log("===============================================================================================") }}
@@ -22,7 +22,7 @@
             {% endif %}
 
         {{ log("===============================================================================================") }}
-        {{ log("Fetched the filenames from SDL table: phlsdl_raw.sdl_cbd_gt_sales_report_fact "~ filenames) }}
+        {{ log("Fetched the filenames from SDL table: phlsdl_raw.sdl_ph_sfmc_consumer_master "~ filenames) }}
         {{ log("===============================================================================================") }}
 
     {{ log("Started building itg_temp table for file: "~ file) }}

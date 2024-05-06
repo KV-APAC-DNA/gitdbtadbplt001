@@ -11,7 +11,7 @@
                 {{schema}}.phlwks_integration__wks_ph_sfmc_consumer_master_temp1
             {% endif %}
         as (
-        with itg_sfmc_consumer_master_temp as 
+        with itg_sfmc_consumer_master_temp as
         (
             select * from
             {% if target.name=='prod' %}
@@ -22,7 +22,7 @@
             where cntry_cd = 'PH'
         ),
         sdl_ph_sfmc_consumer_master as (
-            select * from {{ ref('phlwks_integration__wks_ph_sfmc_consumer_master') }}
+            select * from {{ ref('phlwks_integration__wks_sdl_ph_sfmc_consumer_master') }}
         ),
         final as
         (

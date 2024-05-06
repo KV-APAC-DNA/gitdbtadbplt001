@@ -1,22 +1,4 @@
-with edw_pacific_perenso_ims_analysis as (
-select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
-),
-edw_time_dim as (
-select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
-),
-edw_perenso_prod_dim as (
-select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
-),
-edw_perenso_account_metcash_dim as (
-select * from {{ ref('pcfedw_integration__edw_perenso_account_metcash_dim') }}
-),
-edw_perenso_account_dim as (
-select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
-),
-edw_ps_msl_items as (
-select * from {{ ref('pcfedw_integration__edw_ps_msl_items') }}
-),
-wks_au_metcash_monthly as (
+with wks_au_metcash_monthly as (
     select * from {{ ref('pcfwks_integration__wks_au_metcash_monthly') }}
 ),
 wks_au_metcash_prod_acct_comb as (

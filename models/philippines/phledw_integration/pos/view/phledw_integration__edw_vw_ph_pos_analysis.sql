@@ -1,5 +1,5 @@
 with itg_mds_ph_pos_pricelist as(
-    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }} 
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 itg_mds_ph_lav_product as (
     select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
@@ -32,7 +32,7 @@ edw_vw_ph_customer_dim as(
     select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 edw_product_key_attributes as(
-    select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 epp2 as(
     	select status,
@@ -60,7 +60,7 @@ epmad as(
 		where active = 'Y'
 ),
 veposf as(
-    select b.year,
+    select b."year",
 			b.qrtr,
 			b.qrtr_no,
 			b.mnth_no,
@@ -103,7 +103,7 @@ veposf as(
 			where cntry_cd = 'PH'
 			) a,
 			(
-				select distinct year,
+				select distinct "year",
 					qrtr_no,
 					qrtr,
 					mnth_id,
@@ -168,7 +168,7 @@ veotd2 as(
 transformed as(
 
 
-select veposf.year as jj_year,
+select veposf."year" as jj_year,
 	veposf.qrtr as jj_qtr,
 	veposf.jj_mnth_id,
 	veposf.mnth_no as jj_mnth_no,
@@ -267,18 +267,18 @@ select veposf.year as jj_year,
 	veomd.gph_prod_subsgmnt as global_prod_subsegment,
 	veomd.gph_prod_size as global_prod_size,
 	veomd.gph_prod_size_uom as global_prod_size_uom,
-	case 
+	case
 		WHEN UPPER(EPMAD.PROMO_REG_IND) = 'REG'
 			THEN 'Y'
 		ELSE 'N'
 		END AS IS_REG,
-	CASE 
+	CASE
 		WHEN UPPER(EPMAD.PROMO_REG_IND) = 'PROMO'
 			THEN 'Y'
 		ELSE 'N'
 		END AS IS_PROMO,
 	EPMAD.PROMO_STRT_PERIOD AS LOCAL_MAT_PROMO_STRT_PERIOD,
-	CASE 
+	CASE
 		WHEN EPP2.STATUS = '**'
 			AND (
 				VEOTD2.MNTH_ID BETWEEN EPP2.LAUNCH_PERIOD
@@ -287,7 +287,7 @@ select veposf.year as jj_year,
 			THEN 'Y'
 		ELSE 'N'
 		END AS IS_NPI,
-	CASE 
+	CASE
 		WHEN UPPER(EPMAD.HERO_SKU_IND) = 'Y'
 			THEN 'HERO'
 		ELSE 'NA'

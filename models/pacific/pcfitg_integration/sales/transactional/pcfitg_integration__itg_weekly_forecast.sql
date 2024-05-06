@@ -1,16 +1,19 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy= 'append'
+        incremental_strategy= 'append',
+        post_hook="{{sap_transaction_processed_files('BWA_WEEKLY_FORECAST','vw_stg_sdl_weekly_forecast','itg_weekly_forecast')}}"
     )
 }}
 
 with source as(
-    select * from {{ source('pcfsdl_raw', 'sdl_weekly_forecast') }}
+    select * from {{ ref('pcfitg_integration__vw_stg_sdl_weekly_forecast') }}
+),
+sap_transactional_processed_files as (
+    select * from {{ source('aspwks_integration', 'sap_transactional_processed_files') }}
 ),
 final as(
-    select 
-        to_timestamp(create_dt, 'YYYYMMDD HH24:MI:SS') as create_dt,
+    select
         calmonth::number(6,0) as calmonth,
         calquart1::number(1,0) as calquart1,
         calweek::number(6,0) as calweek,
@@ -47,84 +50,52 @@ final as(
         mat_sales::varchar(18) as mat_sales,
         snap_per::number(7,0) as snap_per,
         fiscyear::number(4,0) as fiscyear,
-       	case when substr(ablcma,-1) = '-' then substr(ablcma, 1, length(ablcma)-1)::number(17,3) * -1
-        else ablcma::number(17,3) end as ablcma,
-        case when substr(base_fc,-1) = '-' then substr(base_fc, 1, length(base_fc)-1)::number(17,3) * -1
-        else base_fc::number(17,3) end as base_fc,
-        case when substr(cnblefct,-1) = '-' then substr(cnblefct, 1, length(cnblefct)-1)::number(17,3) * -1
-        else cnblefct::number(17,3) end as cnblefct,
-        case when substr(tot_for_val,-1) = '-' then substr(tot_for_val, 1, length(tot_for_val)-1)::number(17,3) * -1
-        else tot_for_val::number(17,3) end as tot_for_val,
-        case when substr(cor_dmd_hist,-1) = '-' then substr(cor_dmd_hist, 1, length(cor_dmd_hist)-1)::number(17,3) * -1
-        else cor_dmd_hist::number(17,3) end as cor_dmd_hist,
-        case when substr(cpfr_fcst,-1) = '-' then substr(cpfr_fcst, 1, length(cpfr_fcst)-1)::number(17,3) * -1
-        else cpfr_fcst::number(17,3) end as cpfr_fcst,
-        case when substr(dpndnt_his,-1) = '-' then substr(dpndnt_his, 1, length(dpndnt_his)-1)::number(17,3) * -1
-        else dpndnt_his::number(17,3) end as dpndnt_his,
-        case when substr(dmd_his,-1) = '-' then substr(dmd_his, 1, length(dmd_his)-1)::number(17,3) * -1
-        else dmd_his::number(17,3) end as dmd_his,
-        case when substr(his_ship,-1) = '-' then substr(his_ship, 1, length(his_ship)-1)::number(17,3) * -1
-        else his_ship::number(17,3) end as his_ship,
-        case when substr(mape001,-1) = '-' then substr(mape001, 1, length(mape001)-1)::number(17,3) * -1
-        else mape001::number(17,3) end as mape001,
-        case when substr(mape002,-1) = '-' then substr(mape002, 1, length(mape002)-1)::number(17,3) * -1
-        else mape002::number(17,3) end as mape002,
-        case when substr(mape003,-1) = '-' then substr(mape003, 1, length(mape003)-1)::number(17,3) * -1
-        else mape003::number(17,3) end as mape003,
-        case when substr(mape004,-1) = '-' then substr(mape004, 1, length(mape004)-1)::number(17,3) * -1
-        else mape004::number(17,3) end as mape004,
-        case when substr(mape005,-1) = '-' then substr(mape005, 1, length(mape005)-1)::number(17,3) * -1
-        else mape005::number(17,3) end as mape005,
-        case when substr(non_af_fcst,-1) = '-' then substr(non_af_fcst, 1, length(non_af_fcst)-1)::number(17,3) * -1
-        else non_af_fcst::number(17,3) end as non_af_fcst,
-        case when substr(othmisi,-1) = '-' then substr(othmisi, 1, length(othmisi)-1)::number(17,3) * -1
-        else othmisi::number(17,3) end as othmisi,
-        case when substr(price_chng,-1) = '-' then substr(price_chng, 1, length(price_chng)-1)::number(17,3) * -1
-        else price_chng::number(17,3) end as price_chng,
-        case when substr(promo,-1) = '-' then substr(promo, 1, length(promo)-1)::number(17,3) * -1
-        else promo::number(17,3) end as promo,
-        case when substr(fin_prop_fct,-1) = '-' then substr(fin_prop_fct, 1, length(fin_prop_fct)-1)::number(17,3) * -1
-        else fin_prop_fct::number(17,3) end as fin_prop_fct,
-        case when substr(fin_prop_fac_tbd,-1) = '-' then substr(fin_prop_fac_tbd, 1, length(fin_prop_fac_tbd)-1)::number(17,3) * -1
-        else fin_prop_fac_tbd::number(17,3) end as fin_prop_fac_tbd,
-        case when substr(prop_fact_tbd,-1) = '-' then substr(prop_fact_tbd, 1, length(prop_fact_tbd)-1)::number(17,3) * -1
-        else prop_fact_tbd::number(17,3) end as prop_fact_tbd,
-        case when substr(sam_free_fct,-1) = '-' then substr(sam_free_fct, 1, length(sam_free_fct)-1)::number(17,3) * -1
-        else sam_free_fct::number(17,3) end as sam_free_fct,
-        case when substr(tot_mk_sls_events,-1) = '-' then substr(tot_mk_sls_events, 1, length(tot_mk_sls_events)-1)::number(17,3) * -1
-        else tot_mk_sls_events::number(17,3) end as tot_mk_sls_events,
-        case when substr(tot_forecast,-1) = '-' then substr(tot_forecast, 1, length(tot_forecast)-1)::number(17,3) * -1
-        else tot_forecast::number(17,3) end as tot_forecast,
-        case when substr(tot_bas_fct,-1) = '-' then substr(tot_bas_fct, 1, length(tot_bas_fct)-1)::number(17,3) * -1
-        else tot_bas_fct::number(17,3) end as tot_bas_fct,
-        case when substr(net_fct,-1) = '-' then substr(net_fct, 1, length(net_fct)-1)::number(17,3) * -1
-        else net_fct::number(17,3) end as net_fct,
-        case when substr(trd_invc,-1) = '-' then substr(trd_invc, 1, length(trd_invc)-1)::number(17,3) * -1
-        else trd_invc::number(17,3) end as trd_invc,
-        case when substr(unit_prc_sku,-1) = '-' then substr(unit_prc_sku, 1, length(unit_prc_sku)-1)::number(17,3) * -1
-        else unit_prc_sku::number(17,3) end as unit_prc_sku,
-        case when substr(aux02,-1) = '-' then substr(aux02, 1, length(aux02)-1)::number(17,3) * -1
-        else aux02::number(17,3) end as aux02,
-        case when substr(prop_fact,-1) = '-' then substr(prop_fact, 1, length(prop_fact)-1)::number(17,3) * -1
-        else prop_fact::number(17,3) end as prop_fact,
-        case when substr(fix_prop_fact,-1) = '-' then substr(fix_prop_fact, 1, length(fix_prop_fact)-1)::number(17,3) * -1
-        else fix_prop_fact::number(17,3) end as fix_prop_fact,
-        case when substr(his_sal_ord,-1) = '-' then substr(his_sal_ord, 1, length(his_sal_ord)-1)::number(17,3) * -1
-        else his_sal_ord::number(17,3) end as his_sal_ord,
-        case when substr(apo_cor_hist,-1) = '-' then substr(apo_cor_hist, 1, length(apo_cor_hist)-1)::number(17,3) * -1
-        else apo_cor_hist::number(17,3) end as apo_cor_hist,
-        case when substr(prd_disc,-1) = '-' then substr(prd_disc, 1, length(prd_disc)-1)::number(17,3) * -1
-        else prd_disc::number(17,3) end as prd_disc,
-        case when substr(final_stat_fc,-1) = '-' then substr(final_stat_fc, 1, length(final_stat_fc)-1)::number(17,3) * -1
-        else final_stat_fc::number(17,3) end as final_stat_fc,
-        case when substr(sncfcst,-1) = '-' then substr(sncfcst, 1, length(sncfcst)-1)::number(17,3) * -1
-        else sncfcst::number(17,3) end as sncfcst,
-        case when substr(totnoafc,-1) = '-' then substr(totnoafc, 1, length(totnoafc)-1)::number(17,3) * -1
-        else totnoafc::number(17,3) end as totnoafc
+       	ablcma::number(17,3) as ablcma,
+        base_fc::number(17,3) as base_fc,
+        cnblefct::number(17,3) as cnblefct,
+        tot_for_val::number(17,3) as tot_for_val,
+        cor_dmd_hist::number(17,3) as cor_dmd_hist,
+        cpfr_fcst::number(17,3) as cpfr_fcst,
+        dpndnt_his::number(17,3) as dpndnt_his,
+        dmd_his::number(17,3) as dmd_his,
+        his_ship::number(17,3) as his_ship,
+        mape001::number(17,3) as mape001,
+        mape002::number(17,3) as mape002,
+        mape003::number(17,3) as mape003,
+        mape004::number(17,3) as mape004,
+        mape005::number(17,3) as mape005,
+        non_af_fcst::number(17,3) as non_af_fcst,
+        othmisi::number(17,3) as othmisi,
+        price_chng::number(17,3) as price_chng,
+        promo::number(17,3) as promo,
+        fin_prop_fct::number(17,3) as fin_prop_fct,
+        fin_prop_fac_tbd::number(17,3) as fin_prop_fac_tbd,
+        prop_fact_tbd::number(17,3) as prop_fact_tbd,
+        sam_free_fct::number(17,3) as sam_free_fct,
+        tot_mk_sls_events::number(17,3) as tot_mk_sls_events,
+        tot_forecast::number(17,3) as tot_forecast,
+        tot_bas_fct::number(17,3) as tot_bas_fct,
+        net_fct::number(17,3) as net_fct,
+        trd_invc::number(17,3) as trd_invc,
+        unit_prc_sku::number(17,3) as unit_prc_sku,
+        aux02::number(17,3) as aux02,
+        prop_fact::number(17,3) as prop_fact,
+        fix_prop_fact::number(17,3) as fix_prop_fact,
+        his_sal_ord::number(17,3) as his_sal_ord,
+        apo_cor_hist::number(17,3) as apo_cor_hist,
+        prd_disc::number(17,3) as prd_disc,
+        final_stat_fc::number(17,3) as final_stat_fc,
+        sncfcst::number(17,3) as sncfcst,
+        totnoafc::number(17,3) as totnoafc,
+        file_name::varchar(255) as file_name,
+        create_dt::timestamp_ntz(9) as create_dt
     from source
-     {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    where create_dt > (select max(create_dt) from {{ this }}) 
-     {% endif %}
+    where not exists (
+    select 
+        act_file_name 
+    from sap_transactional_processed_files 
+    where target_table_name='itg_weekly_forecast' and sap_transactional_processed_files.act_file_name=source.file_name
+  )
+
 )
 select * from final
