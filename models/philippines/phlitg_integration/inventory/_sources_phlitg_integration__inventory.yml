@@ -19,7 +19,7 @@ sources:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
-                group_by_columns: ["sku","description","total_units","total_cost","avg_sales_cost","wks_sup","remarks","br_ol_pl_ex","group_name","dept_name","class_name","sub_class_name","br_ol_pl_ex_subclass","subclass","catman","item_status","item_class","hold_reason_code","site_code","site_name","gwp","ret_non_ret","good_bad_13_wks","filename"]
+                group_by_columns: ["item_cd","item_desc","total_units","total_cost","avg_sales_cost","wks_sup","remarks","br_ol_pl_ex","group_name","dept_name","class_name","sub_class_name","br_ol_pl_ex_subclass","subclass","catman","item_status","item_class","hold_reason_code","site_code","site_name","gwp","ret_non_ret","good_bad_13_wks","filename"]
                 name: TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff
                 config:
                   store_failures: true
