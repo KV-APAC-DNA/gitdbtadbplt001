@@ -19,7 +19,7 @@ source_ph as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_complaint_data') }}
 )
-{% if var("job_to_execute") == 'th_sfmc_files' %}
+{% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
 ,
 final as(
     select
@@ -44,7 +44,7 @@ final as(
 )
 select * from final
 
-{% elif var("job_to_execute") == 'ph_sfmc_files' %}
+{% elif var("sfmc_job_to_execute") == 'ph_sfmc_files' %}
 ,
 final as(
     select
