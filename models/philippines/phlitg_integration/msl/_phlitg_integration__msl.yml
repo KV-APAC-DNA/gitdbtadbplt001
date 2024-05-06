@@ -4,4 +4,4 @@ models:
   - name: phlitg_integration__itg_ph_non_ise_msl_osa
     config:
       alias: itg_ph_non_ise_msl_osa
-      tags: ["ph_non_pos","ingestion"]
+      tags: ["ph_non_pos","transformation"]
