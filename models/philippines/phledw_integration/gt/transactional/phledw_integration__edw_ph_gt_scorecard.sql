@@ -20,7 +20,7 @@ edw_ph_siso_analysis as (
 select * from {{ ref('phledw_integration__edw_ph_siso_analysis') }}
 ),
 itg_query_parameters as (
-select * from DEV_DNA_CORE.phlitg_INTEGRATION.ITG_QUERY_PARAMETERS
+select * from {{ source('phlitg_integration', 'itg_query_parameters') }}
 ),
 edw_vw_ph_dstrbtr_customer_dim as (
 select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_customer_dim') }}
@@ -407,7 +407,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                   AND   order_qty IS NOT NULL
                   AND   TO_CHAR(invoice_dt,'yyyy') >= (SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) sellout
-              LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+              LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                      ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                     AND sellout.trnsfrm_cust_id = customer.cust_cd
                     AND UPPER (customer.cntry_cd) = 'PH'
@@ -506,7 +506,7 @@ FROM (SELECT 'Sellout' AS Identifier,
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) sellout
                      ON dist.dstrbtr_grp_cd = sellout.dstrbtr_grp_cd
                     AND dist.dstrbtr_item_cd = sellout.dstrbtr_prod_id
-              LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+              LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                      ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                     AND sellout.trnsfrm_cust_id = customer.cust_cd
                     AND UPPER (customer.cntry_cd) = 'PH') a
@@ -598,7 +598,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                   AND   planned_visit IS NOT NULL
                   AND   year(planned_visit) >= (SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) visit
-              LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+              LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                      ON visit.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                     AND visit.trnsfrm_cust_id = customer.cust_cd
                     AND UPPER (customer.cntry_cd) = 'PH') a
@@ -707,7 +707,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                         AND   TO_CHAR(invoice_dt,'yyyy') >= (SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) sellout
                     LEFT JOIN edw_vw_os_time_dim TIME ON sellout.invoice_dt = time.cal_date
-                    LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+                    LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                            ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                           AND sellout.trnsfrm_cust_id = customer.cust_cd
                           AND UPPER (customer.cntry_cd) = 'PH'
@@ -821,7 +821,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                         AND   TO_CHAR(invoice_dt,'yyyy') >= (SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) sellout
                     LEFT JOIN edw_vw_os_time_dim TIME ON sellout.invoice_dt = time.cal_date
-                    LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+                    LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                            ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                           AND sellout.trnsfrm_cust_id = customer.cust_cd
                           AND UPPER (customer.cntry_cd) = 'PH'
@@ -937,7 +937,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                                  LEFT JOIN time_dim b ON a.l3m = b.mnth_id) TIME
                            ON sellout.invoice_dt BETWEEN time.start_date
                           AND time.end_date
-                    LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+                    LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                            ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                           AND sellout.trnsfrm_cust_id = customer.cust_cd
                           AND UPPER (customer.cntry_cd) = 'PH'
@@ -1017,7 +1017,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                   WHERE actual_visit IS NOT NULL
                   AND   TO_CHAR(actual_visit,'yyyy') >= (SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) covered
-              LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+              LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                      ON covered.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                     AND covered.trnsfrm_cust_id = customer.cust_cd
                     AND UPPER (customer.cntry_cd) = 'PH'
@@ -1112,7 +1112,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                   AND   order_qty > 0
                   AND   TO_CHAR(invoice_dt,'yyyy') >=(SELECT year(dateadd(day,-(SELECT CAST(parameter_value*365 AS INTEGER) FROM itg_query_parameters 
 			WHERE parameter_name = 'PH_GT_SCORECARD_DATA_RETENTION_YEARS' AND country_code = 'PH'),current_timestamp())))) sellout
-              LEFT JOIN edw_vw_os_dstrbtr_customer_dim customer
+              LEFT JOIN EDW_VW_PH_DSTRBTR_CUSTOMER_DIM customer
                      ON sellout.dstrbtr_grp_cd = customer.dstrbtr_grp_cd
                     AND sellout.trnsfrm_cust_id = customer.cust_cd
                     AND UPPER (customer.cntry_cd) = 'PH'
