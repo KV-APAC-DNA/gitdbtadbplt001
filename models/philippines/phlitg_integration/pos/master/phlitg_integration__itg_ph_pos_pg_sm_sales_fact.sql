@@ -8,10 +8,10 @@
     )
 }}
 with itg_mds_ph_pos_pricelist as (
-        select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_PRICELIST
+        select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 itg_mds_ph_pos_product as (
-    select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_PRODUCT
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}
 ),
 sdl_ph_pos_puregold as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }}
