@@ -6,6 +6,7 @@
 
 with edw_demand_forecast_snapshot as(
     select * from {{ ref('pcfedw_integration__edw_demand_forecast_snapshot_temp') }}
+    where jj_period >= replace(left(dateadd(month, -6, current_timestamp),7),'-','') 
 ),
 vw_dmnd_frcst_customer_dim as(
     select * from {{ ref('pcfedw_integration__vw_dmnd_frcst_customer_dim') }}
