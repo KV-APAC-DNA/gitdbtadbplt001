@@ -2,8 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key=  ['objective_key'],
-        pre_hook= "delete from {{this}} where (diary_session_start_time) in (select distinct to_date(try_to_timestamp_ntz(start_time,'dd/mm/yyyy hh12:mi:ss am')) from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }});"
+        pre_hook= "delete from {{this}} where to_date(diary_session_start_time) in (select distinct to_date(try_to_timestamp_ntz(start_time,'dd/mm/yyyy hh12:mi:ss am')) from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }});"
     )
 }}
 with source as 

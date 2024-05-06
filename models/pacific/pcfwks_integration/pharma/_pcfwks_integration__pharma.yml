@@ -65,6 +65,22 @@ models:
     config:
       alias: wks_au_pharm_prod_acct_date_comb
       tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_pharma_dstrbtn_set_subtable1
+    config:
+      alias: wks_au_pharma_dstrbtn_set_subtable1
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_pharma_dstrbtn_set_subtable2
+    config:
+      alias: wks_au_pharma_dstrbtn_set_subtable2
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_pharma_dstrbtn_set_subtable3
+    config:
+      alias: wks_au_pharma_dstrbtn_set_subtable3
+      tags: ["anz_perenso_distribution", "transformation"]
+  - name: pcfwks_integration__wks_au_pharma_dstrbtn_set_subtable4
+    config:
+      alias: wks_au_pharma_dstrbtn_set_subtable4
+      tags: ["anz_perenso_distribution", "transformation"]
 
 
 

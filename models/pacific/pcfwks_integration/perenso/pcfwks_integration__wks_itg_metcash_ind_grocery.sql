@@ -4,13 +4,13 @@ with wks_metcash_grocery_date as (
 ),
 sdl_metcash_ind_grocery as (
     select * from {{ source('pcfsdl_raw', 'sdl_metcash_ind_grocery') }}
-    where trim(supp_id||supp_name||state||banner_id||banner||customer_id||customer) is null
+    where trim(supp_id||supp_name||state||banner_id||banner||customer_id||customer) is not null
 
 ),
 transformed as (
     --week 1 data mapping & conversion
     (
-        select to_date(week_end_dt, 'DD/MM/YYYY') week_end_dt,
+        select to_date(week_end_dt) week_end_dt,
             supp_id,
             supp_name,
             state,
@@ -37,7 +37,7 @@ transformed as (
                 from wks_metcash_grocery_date
             ) b on a.file_name = b.file_name --week 2 data mapping & conversion
         union all
-        select to_date(week_end_dt, 'DD/MM/YYYY') week_end_dt,
+        select to_date(week_end_dt) week_end_dt,
             supp_id,
             supp_name,
             state,
@@ -64,7 +64,7 @@ transformed as (
                 from wks_metcash_grocery_date
             ) b on a.file_name = b.file_name --week 3 data mapping & conversion
         union all
-        select to_date(week_end_dt, 'DD/MM/YYYY') week_end_dt,
+        select to_date(week_end_dt) week_end_dt,
             supp_id,
             supp_name,
             state,
@@ -91,7 +91,7 @@ transformed as (
                 from wks_metcash_grocery_date
             ) b on a.file_name = b.file_name --week 4 data mapping & conversion
         union all
-        select to_date(week_end_dt, 'DD/MM/YYYY') week_end_dt,
+        select to_date(week_end_dt) week_end_dt,
             supp_id,
             supp_name,
             state,
@@ -118,7 +118,7 @@ transformed as (
                 from wks_metcash_grocery_date
             ) b on a.file_name = b.file_name --week 5 data mapping & conversion
         union all
-        select to_date(week_end_dt, 'DD/MM/YYYY') week_end_dt,
+        select to_date(week_end_dt) week_end_dt,
             supp_id,
             supp_name,
             state,
@@ -136,13 +136,13 @@ transformed as (
         from (
                 select *
                 from sdl_metcash_ind_grocery
-                where gross_sales_wk5 <> 0
+                where gross_sales_wk5 <> 0 
                     and trim(gross_sales_wk5) is not null
             ) a
             join (
                 select file_name,
                     gross_sales_wk5 as week_end_dt
-                from wks_metcash_grocery_date
+                from wks_metcash_grocery_date where gross_sales_wk5 <> gross_sales_wk1
             ) b on a.file_name = b.file_name
     )
 ),

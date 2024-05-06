@@ -1167,7 +1167,7 @@ LEFT JOIN (SELECT *
             WHERE TO_CCY = 'USD') BWAR
 ON ETD.JJ_MNTH_ID = BWAR.JJ_MNTH_ID AND BASE.CRNCY = BWAR.FROM_CCY
 WHERE DATEDIFF(MONTH,BASE.CAL_DATE,CURRENT_DATE) <= 25) ,
-union__1 as (
+subq_1 as (
 SELECT CAL_DT AS CAL_DATE,
              'FSSI' ACCT_BANNER,
              'FOODSTUFF-STH ISLAND' AS SALES_OFFICE,
@@ -1180,7 +1180,7 @@ SELECT CAL_DT AS CAL_DATE,
              CRNCY
        FROM ITG_PERENSO_FSSI_SALES
 ) ,
-union__2 as ( SELECT BILL_DT AS CAL_DATE,
+subq_2 as ( SELECT BILL_DT AS CAL_DATE,
               'FSNI' ACCT_BANNER,
               'FOODSTUFF-NTH ISLAND' AS SALES_OFFICE,
               PROD_EAN,
@@ -1192,9 +1192,9 @@ union__2 as ( SELECT BILL_DT AS CAL_DATE,
               CRNCY
         FROM ITG_PERENSO_FSNI_SALES) ,
 base as (SELECT ETD.JJ_MNTH_ID,A.* FROM (
-       select * from union__1
+       select * from subq_1
        UNION ALL
-      select * from union__2) A
+      select * from subq_2) A
         LEFT JOIN ETD ON A.CAL_DATE = ETD.CAL_DATE
         WHERE PROD_EAN IN (SELECT LTRIM(PROD_EAN,0) FROM EDW_PERENSO_PROD_DIM WHERE TRIM(PROD_EAN)<>'' GROUP BY 1 HAVING COUNT(*) > 1)) ,
 union_6 as (--For Multiple PROD EANs
@@ -1574,7 +1574,7 @@ final as (
     cal_mnth_nm::varchar(10) as cal_mnth_nm,
     prod_key::number(10,0) as prod_key,
     prod_probe_id::number(18,0) as prod_probe_id,
-    prod_desc::varchar(256) as prod_desc,
+    prod_desc::varchar(1000) as prod_desc,
     prod_sapbw_code::varchar(50) as prod_sapbw_code,
     prod_ean::varchar(50) as prod_ean,
     prod_jj_franchise::varchar(100) as prod_jj_franchise,
@@ -1605,9 +1605,9 @@ final as (
     acct_street_1::varchar(256) as acct_street_1,
     acct_street_2::varchar(256) as acct_street_2,
     acct_street_3::varchar(256) as acct_street_3,
-    acct_suburb::varchar(25) as acct_suburb,
-    acct_postcode::varchar(25) as acct_postcode,
-    acct_phone_number::varchar(50) as acct_phone_number,
+    acct_suburb::varchar(255) as acct_suburb,
+    acct_postcode::varchar(255) as acct_postcode,
+    acct_phone_number::varchar(255) as acct_phone_number,
     acct_fax_number::varchar(50) as acct_fax_number,
     acct_email::varchar(256) as acct_email,
     acct_country::varchar(256) as acct_country,

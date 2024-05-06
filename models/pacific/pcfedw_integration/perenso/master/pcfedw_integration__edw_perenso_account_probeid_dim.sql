@@ -93,7 +93,11 @@ select edw.acct_id,
 
        edw.acct_au_pharma_ssr_territory,
 
-       reln.id as account_probe_id
+       reln.id as account_probe_id,
+       edw.acct_store_code,
+       edw.acct_fax_opt_out,
+       edw.acct_email_opt_out,
+       edw.acct_contact_method
 
 from edw_perenso_account_dim edw,
 
@@ -115,9 +119,9 @@ acct_type_desc::varchar(50) as acct_type_desc,
 acct_street_1::varchar(256) as acct_street_1,
 acct_street_2::varchar(256) as acct_street_2,
 acct_street_3::varchar(256) as acct_street_3,
-acct_suburb::varchar(25) as acct_suburb,
-acct_postcode::varchar(25) as acct_postcode,
-acct_phone_number::varchar(50) as acct_phone_number,
+acct_suburb::varchar(255) as acct_suburb,
+acct_postcode::varchar(255) as acct_postcode,
+acct_phone_number::varchar(255) as acct_phone_number,
 acct_fax_number::varchar(50) as acct_fax_number,
 acct_email::varchar(256) as acct_email,
 acct_country::varchar(256) as acct_country,
@@ -151,11 +155,11 @@ acct_au_pharma_territory::varchar(256) as acct_au_pharma_territory,
 acct_au_pharma_ssr_country::varchar(256) as acct_au_pharma_ssr_country,
 acct_au_pharma_ssr_state::varchar(256) as acct_au_pharma_ssr_state,
 acct_au_pharma_ssr_territory::varchar(256) as acct_au_pharma_ssr_territory,
-account_probe_id::varchar(100) as account_probe_id
--- acct_store_code::varchar(256) as acct_store_code,
--- acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
--- acct_email_opt_out::varchar(256) as acct_email_opt_out,
--- acct_contact_method::varchar(256) as acct_contact_method
+account_probe_id::varchar(100) as account_probe_id,
+acct_store_code::varchar(256) as acct_store_code,
+acct_fax_opt_out::varchar(256) as acct_fax_opt_out,
+acct_email_opt_out::varchar(256) as acct_email_opt_out,
+acct_contact_method::varchar(256) as acct_contact_method
 from transformed
 )
 select * from final

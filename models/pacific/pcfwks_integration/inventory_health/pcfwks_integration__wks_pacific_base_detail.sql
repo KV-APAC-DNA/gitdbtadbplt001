@@ -5,11 +5,11 @@ edw_vw_os_time_dim as
 ),
 wks_pacific_lastnmonths as
 (
-    select * from snappcfwks_integration.wks_pacific_lastnmonths
+    select * from {{ ref('pcfwks_integration__wks_pacific_lastnmonths') }}
 ),
 wks_pacific_base as
 (
-    select * from snappcfwks_integration.wks_pacific_base
+    select * from {{ ref('pcfwks_integration__wks_pacific_base') }}
 ),
 temp as 
 (

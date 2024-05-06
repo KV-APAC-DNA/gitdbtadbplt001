@@ -4,5 +4,4 @@ models:
   - name: pcfitg_integration__itg_competitive_banner_group
     config: 
       alias: itg_competitive_banner_group
-      tags: ["j_pacific_cbg_data_ingestion","ingestion"]
-
+      tags: ["j_pacific_cbg_data_ingestion","transformation"]

@@ -5,7 +5,7 @@ edw_time_dim as (
 select * from {{ source('pcfedw_integration', 'edw_time_dim') }}
 ),
 edw_perenso_prod_dim as (
-select * from {{ ref('pcfedw_integration__dly_sls_cust_attrb_lkp') }}
+select * from {{ ref('pcfedw_integration__edw_perenso_prod_dim') }}
 ),
 edw_perenso_account_metcash_dim as (
 select * from {{ ref('pcfedw_integration__edw_perenso_account_metcash_dim') }}

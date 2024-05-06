@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+
     )
 }}
 
@@ -339,7 +340,7 @@ final as(
     select * from union2
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where snapshot_date > (select max(snapshot_date) from {{ this }}) 
+    where snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
     {% endif %}
 )
 select * from final

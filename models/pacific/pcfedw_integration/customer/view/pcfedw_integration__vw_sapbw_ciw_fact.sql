@@ -767,7 +767,7 @@ FROM
             derived_table1.cal_month_id, 
             derived_table1.jj_month_id, 
             derived_table1.cust_no, 
-            derived_table1.matl_id, 
+            coalesce(derived_table1.matl_id,'') as matl_id, 
             derived_table1.key_measure, 
             derived_table1.ciw_category, 
             derived_table1.ciw_account_group, 
@@ -867,7 +867,7 @@ FROM
                   (0):: numeric
                 ):: numeric(18, 0) END AS pmt_terms_val, 
                 CASE WHEN (
-                  (accnt.key_measure):: text = (
+                  trim(accnt.key_measure):: text = (
                     'Data and Insights' :: character varying
                   ):: text
                 ) THEN copa.amt_obj_crncy ELSE (
@@ -979,7 +979,7 @@ FROM
             derived_table1.cal_month_id, 
             derived_table1.jj_month_id, 
             derived_table1.cust_no, 
-            derived_table1.matl_id, 
+            coalesce(derived_table1.matl_id,''), 
             derived_table1.key_measure, 
             derived_table1.ciw_category, 
             derived_table1.ciw_account_group, 

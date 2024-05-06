@@ -53,11 +53,11 @@ select wapds.delvry_dt,
        eppd.prod_grocery_category,
        eppd.prod_grocery_brand,
        case 
-             when (eppd.prod_active_nz_pharma != 'not assigned' 
-                  or eppd.prod_active_au_grocery != 'not assigned' 
-                  or eppd.prod_active_metcash != 'not assigned' 
-                  or eppd.prod_active_nz_grocery != 'not assigned' 
-                  or eppd.prod_active_au_pharma != 'not assigned')
+             when (eppd.prod_active_nz_pharma != 'NOT ASSIGNED' 
+                  or eppd.prod_active_au_grocery != 'NOT ASSIGNED' 
+                  or eppd.prod_active_metcash != 'NOT ASSIGNED' 
+                  or eppd.prod_active_nz_grocery != 'NOT ASSIGNED' 
+                  or eppd.prod_active_au_pharma != 'NOT ASSIGNED')
              then 1
              else 0
        end prod_active_status,
@@ -221,9 +221,9 @@ final as (
     acct_street_1::varchar(256) as acct_street_1,
     acct_street_2::varchar(256) as acct_street_2,
     acct_street_3::varchar(256) as acct_street_3,
-    acct_suburb::varchar(25) as acct_suburb,
-    acct_postcode::varchar(25) as acct_postcode,
-    acct_phone_number::varchar(50) as acct_phone_number,
+    acct_suburb::varchar(255) as acct_suburb,
+    acct_postcode::varchar(255) as acct_postcode,
+    acct_phone_number::varchar(255) as acct_phone_number,
     acct_fax_number::varchar(50) as acct_fax_number,
     acct_email::varchar(256) as acct_email,
     acct_country::varchar(256) as acct_country,
@@ -289,8 +289,9 @@ final as (
     lst6_mnth_dstrbtn_trgt::number(18,0) as lst6_mnth_dstrbtn_trgt,
     lst12_mnth_dstrbtn_trgt::number(18,0) as lst12_mnth_dstrbtn_trgt,
     pharmacy_msl_rank::varchar(5) as pharmacy_msl_rank,
-    pharmacy_msl_flag::varchar(5)pharmacy_msl_flag,
+    pharmacy_msl_flag::varchar(5) as pharmacy_msl_flag,
     load_date::timestamp_ntz(9) as load_date
     from transformed
-),
+)
+
 select * from final

@@ -90,7 +90,7 @@ final as(
         then iff(right(net_value,1)='-',concat('-',replace(net_value,'-','')),net_value) 
         else iff(right(net_value,1)='-',concat('-',replace(net_value,'-','')),net_value) * pow(10,(2-currdec)) 
         end as net_value,
-        iff(right(bic_zblqtycse,1)='-',concat('-',replace(bic_zblqtycse,'-','')),bic_zblqtycse) as zorqtycse,
+        iff(right(bic_zorqtycse,1)='-',concat('-',replace(bic_zorqtycse,'-','')),bic_zorqtycse) as zorqtycse,
         iff(right(bic_zordqtybu,1)='-',concat('-',replace(bic_zordqtybu,'-','')),bic_zordqtybu) as zordqtybu,
         iff(right(bic_zordqty,1)='-',concat('-',replace(bic_zordqty,'-','')),bic_zordqty) as zordqty,
         iff(right(cml_or_qty,1)='-',concat('-',replace(cml_or_qty,'-','')),cml_or_qty) as cml_or_qty,

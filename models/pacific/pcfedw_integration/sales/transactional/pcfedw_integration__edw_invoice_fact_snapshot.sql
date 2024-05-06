@@ -1,6 +1,7 @@
 {{
     config(
-        pre_hook="{{build_pcfedw_integration__edw_invoice_fact_snapshot()}}"
+        pre_hook="{{build_pcfedw_integration__edw_invoice_fact_snapshot()}}
+        delete from {{this}} where snapshot_date=convert_timezone ('Australia/Sydney',current_timestamp())::date;"
     )
 }}
 
@@ -124,8 +125,10 @@ from (select eif.co_cd,
             from edw_invoice_fact a
 
             where a.nts_bill <> 0
-
-            and   a.fut_sls_qty <> 0) eif,
+                
+            and   a.fut_sls_qty <> 0
+            
+            ) eif,
 
            (select distinct dly_sls_cust_attrb_lkp.cmp_id
 
@@ -155,7 +158,7 @@ from (select eif.co_cd,
 
       where t1.cal_date::date = convert_timezone ('Australia/Sydney',current_timestamp())::date) etd
 
-where etd.jj_mnth_id = orders.fisc_yr_src
+    where etd.jj_mnth_id = orders.fisc_yr_src
 ),
 transformed as (
 select * from final_1

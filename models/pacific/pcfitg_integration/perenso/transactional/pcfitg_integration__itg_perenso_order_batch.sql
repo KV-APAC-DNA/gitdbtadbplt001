@@ -17,7 +17,7 @@ final as
 	batch_key::number(10,0) as batch_key,
 	branch_key::number(10,0) as branch_key,
 	dist_acct::varchar(100) as dist_acct,
-	to_date(try_to_timestamp_ntz(delvry_dt,'dd/mm/yyyy hh12:mi:ss am')) as delvry_dt,
+	to_date(try_to_timestamp_ntz(delvry_dt,'dd/mm/yyyy')) as delvry_dt,
 	status::number(10,0) as status,
 	suffix::varchar(10) as suffix,
 	to_date(try_to_timestamp_ntz(sent_dt,'dd/mm/yyyy hh12:mi:ss am')) as sent_dt,
