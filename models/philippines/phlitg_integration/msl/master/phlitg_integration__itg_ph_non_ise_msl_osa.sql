@@ -3,63 +3,60 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "delete from {{this}} where ( coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) ) in (
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }} WHERE encoded_report = '1'
           union 
-          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }} WHERE encoded_report = '1'
+          select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }} WHERE encoded_report = '1'
          );"
     )
 }}
 
 
-
-
-
-with sdl_ph_non_ise_landmark_sm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }}
+with wks_ph_non_ise_landmark_sm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }}
 ),
-sdl_ph_non_ise_landmark_ds as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }}
+wks_ph_non_ise_landmark_ds as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }}
 ),
-sdl_ph_non_ise_puregold as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}
+wks_ph_non_ise_puregold as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }}
 ),
-sdl_ph_non_ise_robinsons_ds as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }}
+wks_ph_non_ise_robinsons_ds as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }}
 ),
-sdl_ph_non_ise_robinsons_sm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}
+wks_ph_non_ise_robinsons_sm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }}
 ),
-sdl_ph_non_ise_rustans as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }}
+wks_ph_non_ise_rustans as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }}
 ),
-sdl_ph_non_ise_shm as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}
+wks_ph_non_ise_shm as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }}
 ),
-sdl_ph_non_ise_super_8 as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }}
+wks_ph_non_ise_super_8 as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }}
 ),
-sdl_ph_non_ise_svi_smc as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }}
+wks_ph_non_ise_svi_smc as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }}
 ),
-sdl_ph_non_ise_waltermart as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }}
-),
+wks_ph_non_ise_waltermart as (
+    select * from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }}
+), 
 landmark_ds as (
     SELECT ret_nm_prefix,
 
@@ -111,7 +108,7 @@ landmark_ds as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_landmark_ds
+FROM wks_ph_non_ise_landmark_ds
 
 WHERE encoded_report = '1'
 ),
@@ -167,7 +164,7 @@ SELECT ret_nm_prefix,
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_landmark_sm
+FROM wks_ph_non_ise_landmark_sm
 
 WHERE encoded_report = '1'
 ),
@@ -222,7 +219,7 @@ puregold as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_puregold
+FROM wks_ph_non_ise_puregold
 
 WHERE encoded_report = '1'
 ),
@@ -274,7 +271,7 @@ robinsons_ds as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_robinsons_ds
+FROM wks_ph_non_ise_robinsons_ds
 
 WHERE encoded_report = '1'
 ),
@@ -328,7 +325,7 @@ SELECT ret_nm_prefix,
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_robinsons_sm
+FROM wks_ph_non_ise_robinsons_sm
 
 WHERE encoded_report = '1'
 ),
@@ -383,7 +380,7 @@ rustans as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_rustans
+FROM wks_ph_non_ise_rustans
 
 WHERE encoded_report = '1'
 ),
@@ -438,7 +435,7 @@ shm as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_shm
+FROM wks_ph_non_ise_shm
 
 WHERE encoded_report = '1'
 ),
@@ -491,7 +488,7 @@ super_8 as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_super_8
+FROM wks_ph_non_ise_super_8
 
 WHERE encoded_report = '1'
 ),
@@ -545,7 +542,7 @@ SELECT ret_nm_prefix,
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_svi_smc
+FROM wks_ph_non_ise_svi_smc
 
 WHERE encoded_report = '1'
 ),
@@ -599,7 +596,7 @@ waltermart as (
 
        crtd_dttm
 
-FROM sdl_ph_non_ise_waltermart
+FROM wks_ph_non_ise_waltermart
 
 WHERE encoded_report = '1'
 ),

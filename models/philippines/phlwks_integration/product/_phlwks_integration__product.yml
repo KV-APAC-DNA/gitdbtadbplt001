@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: phlwks_integration__wks_ph_non_ise_robinsons_ds
+    config:
+      alias: wks_ph_non_ise_robinsons_ds
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_waltermart
+    config:
+      alias: wks_ph_non_ise_waltermart
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_svi_smc
+    config:
+      alias: wks_ph_non_ise_svi_smc
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_shm
+    config:
+      alias: wks_ph_non_ise_shm
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_robinsons_sm
+    config:
+      alias: wks_ph_non_ise_robinsons_sm
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_landmark_sm
+    config:
+      alias: wks_ph_non_ise_landmark_sm
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_super_8
+    config:
+      alias: wks_ph_non_ise_super_8
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_puregold
+    config:
+      alias: wks_ph_non_ise_puregold
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_landmark_ds
+    config:
+      alias: wks_ph_non_ise_landmark_ds
+      tags: ["ph_non_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_non_ise_rustans
+    config:
+      alias: wks_ph_non_ise_rustans
+      tags: ["ph_non_pos", "ingestion"]
