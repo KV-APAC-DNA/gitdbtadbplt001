@@ -15,13 +15,13 @@ sources:
             - test_null__ff:
                 failure_reason: "Nulls present in is_unique or subscriber_key or event_date or email_name or job_id or batch_id or url"
                 not_null_columns: ['is_unique','batch_id','job_id','email_name','event_date','subscriber_key','url']
-                name: TRATBL_sdl_ph_sfmc_click_data__null_test
+                name: TRATBL_sdl_ph_sfmc_click_data__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
-                name: TRATBL_sdl_ph_sfmc_click_data__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_click_data__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -30,7 +30,7 @@ sources:
                 column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
-                name: TRATBL_sdl_ph_sfmc_click_data__lookup_test
+                name: TRATBL_sdl_ph_sfmc_click_data__test_lookup__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -40,13 +40,13 @@ sources:
             - test_null__ff:
                 not_null_columns: ['job_id','batch_id','subscriber_key','event_date','email_name']
                 failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
-                name: TRATBL_sdl_ph_sfmc_complaint_data__null_test
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
-                name: TRATBL_sdl_ph_sfmc_complaint_data__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -55,7 +55,7 @@ sources:
                 column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
-                name: TRATBL_sdl_ph_sfmc_complaint_data__lookup_test
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_lookup__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -72,13 +72,13 @@ sources:
             - test_null__ff:
                 not_null_columns: ['job_id','batch_id','event_date','subscriber_key','email_name']
                 failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
-                name: TRATBL_sdl_ph_sfmc_sent_data__null_test
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
-                name: TRATBL_sdl_ph_sfmc_sent_data__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -87,7 +87,7 @@ sources:
                 column: "upper(coalesce(subscriber_key, ''))"
                 lookup_column: "upper(coalesce(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
-                name: TRATBL_sdl_ph_sfmc_sent_data__lookup_test
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_lookup__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -104,13 +104,13 @@ sources:
             - test_null__ff:
                 not_null_columns: ["job_id","batch_id","subscriber_key","email_name","event_date"]
                 failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
-                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__null_test
+                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date","file_name"]
-                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -119,7 +119,7 @@ sources:
                   column: "upper(nvl(subscriber_key, ''))"
                   lookup_column: "upper(nvl(subscriber_key, ''))"
                   lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
-                  name: TRATBL_sdl_ph_sfmc_unsubscribe_data__lookup_test
+                  name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_lookup__ff
                   config:
                     store_failures: true
                     schema: phlwks_integration
@@ -135,13 +135,13 @@ sources:
         tests:
             - test_null__ff:
                 not_null_columns: ["parent_key","child_number"]
-                name: TRATBL_sdl_ph_sfmc_children_data__null_test
+                name: TRATBL_sdl_ph_sfmc_children_data__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ["parent_key","child_number","file_name"]
-                name: TRATBL_sdl_ph_sfmc_children_data__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_children_data__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -150,7 +150,7 @@ sources:
                 column: "upper(nvl(parent_key, ''))"
                 lookup_column: "upper(nvl(subscriber_key, ''))"
                 lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
-                name: TRATBL_sdl_ph_sfmc_children_data__lookup_test
+                name: TRATBL_sdl_ph_sfmc_children_data__test_lookup__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
@@ -159,13 +159,13 @@ sources:
         tests:
             - test_null__ff:
                 not_null_columns: ["subscriber_key","brand"]
-                name: TRATBL_sdl_ph_sfmc_consumer_master__null_test
+                name: TRATBL_sdl_ph_sfmc_consumer_master__test_null__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
             - test_duplicate__ff:
                 group_by_columns: ["subscriber_key","file_name"]
-                name: TRATBL_sdl_ph_sfmc_consumer_master__duplicate_test
+                name: TRATBL_sdl_ph_sfmc_consumer_master__test_duplicate__ff
                 config:
                   store_failures: true
                   schema: phlwks_integration
