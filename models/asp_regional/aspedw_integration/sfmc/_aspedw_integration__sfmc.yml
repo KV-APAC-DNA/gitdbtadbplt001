@@ -17,3 +17,11 @@ models:
     config:
       alias: edw_vw_th_sfmc_analysis
       tags: ["th_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_ph_sfmc_consumer_master
+    config:
+      alias: edw_vw_ph_sfmc_consumer_master
+      tags: ["ph_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_ph_sfmc_subscriber_status_history
+    config:
+      alias: edw_vw_ph_sfmc_subscriber_status_history
+      tags: ["ph_sfmc_analysis_refresh","transformation"]
