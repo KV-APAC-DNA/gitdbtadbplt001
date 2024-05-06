@@ -60,7 +60,7 @@ epmad as(
 		where active = 'Y'
 ),
 veposf as(
-    select b.year,
+    select b."year",
 			b.qrtr,
 			b.qrtr_no,
 			b.mnth_no,
@@ -103,7 +103,7 @@ veposf as(
 			where cntry_cd = 'PH'
 			) a,
 			(
-				select distinct year,
+				select distinct "year",
 					qrtr_no,
 					qrtr,
 					mnth_id,
@@ -168,7 +168,7 @@ veotd2 as(
 transformed as(
 
 
-select veposf.year as jj_year,
+select veposf."year" as jj_year,
 	veposf.qrtr as jj_qtr,
 	veposf.jj_mnth_id,
 	veposf.mnth_no as jj_mnth_no,

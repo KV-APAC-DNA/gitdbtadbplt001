@@ -961,7 +961,7 @@ set_2 as
     FROM
         (
             (
-                SELECT vppi."year" as year,
+                SELECT vppi.year as year,
                     vppi.mnth_no,
                     vppi.inv_week,
                     vppi.inv_date,
@@ -994,7 +994,7 @@ set_2 as
                             ) = ((td.wk)::CHARACTER VARYING)::TEXT
                         )
                         AND (
-                            (vppi."year")::TEXT = ((td.jj_year)::CHARACTER VARYING)::TEXT
+                            (vppi.year)::TEXT = ((td.jj_year)::CHARACTER VARYING)::TEXT
                         )
                 )
             ) inv
