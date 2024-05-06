@@ -21,3 +21,7 @@ models:
     config: 
       alias: itg_px_weekly_sell
       tags: ["j_pac_promax_ciw_wrapper","transformation"]
+  - name: pcfitg_integration__vw_stg_sdl_weekly_forecast
+    config: 
+      alias: vw_stg_sdl_weekly_forecast
+      tags: ["pacific_view","transformation"]

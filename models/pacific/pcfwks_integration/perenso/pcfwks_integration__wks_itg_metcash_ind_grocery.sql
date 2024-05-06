@@ -136,13 +136,13 @@ transformed as (
         from (
                 select *
                 from sdl_metcash_ind_grocery
-                where gross_sales_wk5 <> 0
+                where gross_sales_wk5 <> 0 
                     and trim(gross_sales_wk5) is not null
             ) a
             join (
                 select file_name,
                     gross_sales_wk5 as week_end_dt
-                from wks_metcash_grocery_date
+                from wks_metcash_grocery_date where gross_sales_wk5 <> gross_sales_wk1
             ) b on a.file_name = b.file_name
     )
 ),
