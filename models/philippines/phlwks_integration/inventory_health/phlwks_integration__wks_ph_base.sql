@@ -313,4 +313,6 @@ final as
         select * from set_2
     )
 )
-select * from final
+select count(*),'dbt' from final
+union all
+select count(*),'snap' from phlwks_integration.wks_ph_base

@@ -155,7 +155,7 @@ sources:
                   store_failures: true
                   schema: phlwks_integration
       - name: sdl_ph_sfmc_consumer_master
-        tags: ["th_crm_files","ingestion"]
+        tags: ["ph_crm_files","ingestion"]
         tests:
             - test_null__ff:
                 not_null_columns: ["subscriber_key","brand"]
@@ -169,6 +169,37 @@ sources:
                 config:
                   store_failures: true
                   schema: phlwks_integration
+      - name: sdl_ph_sfmc_open_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["job_id","batch_id","subscriber_key","event_date","email_name","is_unique"]
+                name: TRATBL_sdl_ph_sfmc_open_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique","file_name"]
+                name: TRATBL_sdl_ph_sfmc_open_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+                column: "upper(nvl(subscriber_key, ''))"
+                lookup_column: "upper(nvl(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+                name: TRATBL_sdl_ph_sfmc_open_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_format:
+                where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+                failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
+                name: TRATBL_sdl_ph_sfmc_open_data_format_test
+                config:
+                  store_failures: true
+                schema: phlwks_integration
 
   - name: phlwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
