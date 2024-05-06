@@ -78,7 +78,7 @@ models:
   - name: pcfedw_integration__edw_sales_reporting_snapshot
     config:
       alias: edw_sales_reporting_snapshot
-      tags: ["j_pac_ds_ciw_tableau_incr_ref__inactive","transformation"]
+      tags: ["j_pac_ds_ciw_tableau_incr_ref","transformation"]
 
   - name: pcfedw_integration__edw_invoice_analysis
     config:
