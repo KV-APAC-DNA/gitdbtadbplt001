@@ -157,6 +157,10 @@ sources:
               config:
                 store_failures: true
                 schema: phlwks_integration
+    - name: sdl_ph_711_product_dim
+      tags: ["ph_pos","ingestion"]
+    - name: sdl_ph_pricelist
+      tags: ["ph_pos","ingestion"]
 
                   
 
