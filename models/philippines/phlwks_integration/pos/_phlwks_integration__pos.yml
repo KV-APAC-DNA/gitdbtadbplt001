@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: phlwks_integration__wks_ph_pos_711
+    config: 
+      alias: wks_ph_pos_711
+      tags: ["ph_pos","transformation"]
+
+  - name: phlwks_integration__wks_ph_pos_dyna_sales
+    config:
+      alias: wks_ph_pos_dyna_sales
+      tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_mercury
+    config:
+      alias: wks_ph_pos_mercury
+      tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_rustans
+    config:
+      alias: wks_ph_pos_rustans
+      tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_south_star
+    config:
+      alias: wks_ph_pos_south_star
+      tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_waltermart
+    config:
+      alias: wks_ph_pos_waltermart
+      tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_watsons
+    config:
+      alias: wks_ph_pos_watsons
+      tags: ["ph_pos", "ingestion"]
+  
