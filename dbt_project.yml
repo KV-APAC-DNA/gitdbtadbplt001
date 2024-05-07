@@ -320,6 +320,39 @@ models:
         +materialized: table
         +transient: false
         +schema: PHLEDW_INTEGRATION
+        common:
+          view:
+            +materialized: view
+        customer:
+          view:
+            +materialized: view
+        material:
+          view:
+            +materialized: view
+        npi:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        sellin:
+          view:
+            +materialized: view
+        sellout:
+          view:
+            +materialized: view
+        sfmc:
+          view:
+            +materialized: view
+        sipos:
+          view:
+            +materialized: view
+        siso:
+          view:
+            +materialized: view
       phlitg_integration:
         +materialized: table
         +transient: false
