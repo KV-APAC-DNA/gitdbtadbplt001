@@ -42,7 +42,7 @@ models:
     config:
       alias: itg_ph_pos_sales_fact
       tags: ["ph_pos","ingestion"]
-   - name: phlitg_integration__itg_ph_pricelist
+  - name: phlitg_integration__itg_ph_pricelist
     config:
       alias: itg_ph_pricelist
       tags: ["ph_pos","ingestion"]
