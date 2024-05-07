@@ -335,8 +335,8 @@ SELECT 'NT'::CHARACTER VARYING AS subsource_type,
        f.target_value AS nts_val
 FROM itg_mds_ph_targets_by_national_and_skus f
   LEFT JOIN (SELECT *                                   
-             FROM edw_vw_os_material_dim
-             WHERE edw_vw_os_material_dim.cntry_key::TEXT = 'PH'::CHARACTER VARYING::TEXT) m ON 
+             FROM edw_vw_ph_material_dim
+             WHERE edw_vw_ph_material_dim.cntry_key::TEXT = 'PH'::CHARACTER VARYING::TEXT) m ON 
              UPPER (LTRIM (m.sap_matl_num::TEXT,0::CHARACTER VARYING::TEXT)) = UPPER (LTRIM (f.item_cd::TEXT,0::CHARACTER VARYING::TEXT))
   JOIN (SELECT itg_mds_ph_npi_peg_item.npi_item_cd,
                itg_mds_ph_npi_peg_item.peg_item_cd,
@@ -376,8 +376,8 @@ FROM (SELECT a.item_cd,
         LEFT JOIN (select distinct account_name,sls_grping,trade_type from itg_mds_ph_npi_sales_groupings) b 
         ON a.account_nm::TEXT = b.account_name::TEXT) a
   LEFT JOIN (SELECT *
-             FROM edw_vw_os_material_dim
-             WHERE edw_vw_os_material_dim.cntry_key::TEXT = 'PH'::CHARACTER VARYING::TEXT) m ON UPPER (LTRIM (m.sap_matl_num ::TEXT,0::CHARACTER VARYING::TEXT)) = UPPER (LTRIM (a.item_cd::TEXT,0::CHARACTER VARYING::TEXT))
+             FROM edw_vw_ph_material_dim
+             WHERE edw_vw_ph_material_dim.cntry_key::TEXT = 'PH'::CHARACTER VARYING::TEXT) m ON UPPER (LTRIM (m.sap_matl_num ::TEXT,0::CHARACTER VARYING::TEXT)) = UPPER (LTRIM (a.item_cd::TEXT,0::CHARACTER VARYING::TEXT))
   JOIN (SELECT itg_mds_ph_npi_peg_item.npi_item_cd,
                itg_mds_ph_npi_peg_item.peg_item_cd,
                itg_mds_ph_npi_peg_item.peg_item_desc,
