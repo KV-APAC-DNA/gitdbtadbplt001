@@ -1,19 +1,10 @@
 {% macro update_edw_sales_reporting() %}
     
     {% set query %}
-        DELETE FROM 
-                {% if target.name=='prod' %}
-                    pcfedw_integration.edw_sales_reporting
-                {% else %}
-                    {{schema}}.pcfedw_integration__edw_sales_reporting
-                {% endif %}
+        DELETE FROM {{ ref('pcfedw_integration__edw_sales_reporting') }}
         WHERE pac_subsource_type='SAPBW_FUTURES';
-        INSERT INTO 
-        {% if target.name=='prod' %}
-                    pcfedw_integration.edw_sales_reporting
-                {% else %}
-                    {{schema}}.pcfedw_integration__edw_sales_reporting
-                {% endif %}
+        
+        INSERT INTO  {{ ref('pcfedw_integration__edw_sales_reporting') }}
         select
             current_timestamp() as snap_shot_dt,
             pac_source_type as pac_source_type,
