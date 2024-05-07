@@ -32,31 +32,28 @@ itg_mds_ph_pos_product as (
     select * from {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}
 ),
 sdl_ph_pos_robinsons as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_robinsons') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_robinsons') }}
 ),
 sdl_ph_pos_mercury as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_mercury') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_mercury') }}
 ),
 sdl_ph_pos_rustans as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_rustans') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_rustans') }}
 ),
 sdl_ph_pos_south_star as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_south_star') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_south_star') }}
 ),
 sdl_ph_pos_waltermart as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_waltermart') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_waltermart') }}
 ),
 sdl_ph_pos_watsons as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_watsons') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_watsons') }}
 ),
 sdl_ph_pos_dyna_sales as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_dyna_sales') }}
 ),
 sdl_ph_pos_711 as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_711') }}
-),
-sdl_ph_pos_puregold as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }}
+    select * from {{ ref('phlwks_integration__wks_ph_pos_711') }}
 ),
 itg_mds_ph_pos_pricelist as (
     select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
@@ -69,9 +66,6 @@ select * from {{ref('phlitg_integration__itg_ph_711_product_dim')}}
 ),
 itg_ph_dyna_product_dim as (
 select * from {{ref('phlitg_integration__itg_ph_dyna_product_dim')}}
-),
-sdl_ph_pos_dyna_sales as (
-select * from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }}
 ),
 robinsons as (
 select upper(substring(ippd.file_nm,1,3)) as cust_cd,
