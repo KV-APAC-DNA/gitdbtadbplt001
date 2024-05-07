@@ -9,7 +9,7 @@ wks_ph_lastnmonths as
 ),
 wks_ph_base as 
 (
-    select * from from {{ ref('phlwks_integration__wks_ph_base') }}
+    select * from  {{ ref('phlwks_integration__wks_ph_base') }}
 ),
 edw_vw_os_time_dim as
 (
