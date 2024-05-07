@@ -163,7 +163,7 @@ from (select b."year",
              jj_vat_amt,
              jj_nts
     from (select *
-            from edw_vw_os_pos_sales_fact
+            from edw_vw_ph_pos_sales_fact
             where cntry_cd = 'PH') as a,
            (select distinct "year",
                    qrtr_no,

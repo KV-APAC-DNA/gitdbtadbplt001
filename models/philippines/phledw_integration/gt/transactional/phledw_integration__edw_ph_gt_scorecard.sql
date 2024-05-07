@@ -425,7 +425,7 @@ FROM (SELECT 'Sellout' AS Identifier,
         LEFT JOIN listprice g
                ON g.item_cd = a.finsku
               AND e.mnth_id = g.mnth_id
-        LEFT JOIN edw_vw_os_material_dim h
+        LEFT JOIN edw_vw_ph_material_dim h
                ON LTRIM (a.sap_item_cd,0) = LTRIM (h.sap_matl_num,0)
               AND UPPER (h.cntry_key) = 'PH'
       GROUP BY Identifier,
@@ -517,7 +517,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                    WHERE UPPER(active) = 'Y') b ON a.dstrbtr_grp_cd = b.dstrbtr_grp_cd
         LEFT JOIN edw_mv_ph_customer_dim d ON b.sap_soldto_code = d.cust_id
         LEFT JOIN edw_vw_os_time_dim e ON a.invoice_dt = e.cal_date
-        LEFT JOIN edw_vw_os_material_dim h
+        LEFT JOIN edw_vw_ph_material_dim h
                ON LTRIM (a.sap_item_cd,0) = LTRIM (h.sap_matl_num,0)
               AND UPPER (h.cntry_key) = 'PH'
       GROUP BY Identifier,
@@ -721,7 +721,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                            ON sellout.dstrbtr_grp_cd = dist.dstrbtr_grp_cd
                           AND sellout.dstrbtr_prod_id = dist.dstrbtr_item_cd
                           AND UPPER (dist.active) = 'Y'
-                    LEFT JOIN edw_vw_os_material_dim mat
+                    LEFT JOIN edw_vw_ph_material_dim mat
                            ON LTRIM (dist.sap_item_cd,0) = LTRIM (mat.sap_matl_num,0)
                           AND UPPER (mat.cntry_key) = 'PH')
             GROUP BY "year",
@@ -835,7 +835,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                            ON sellout.dstrbtr_grp_cd = dist.dstrbtr_grp_cd
                           AND sellout.dstrbtr_prod_id = dist.dstrbtr_item_cd
                           AND UPPER (dist.active) = 'Y'
-                    LEFT JOIN edw_vw_os_material_dim mat
+                    LEFT JOIN edw_vw_ph_material_dim mat
                            ON LTRIM (dist.sap_item_cd,0) = LTRIM (mat.sap_matl_num,0)
                           AND UPPER (mat.cntry_key) = 'PH')
             GROUP BY "year",
@@ -1127,7 +1127,7 @@ FROM (SELECT 'Sellout' AS Identifier,
                    WHERE UPPER(active) = 'Y') b ON a.dstrbtr_grp_cd = b.dstrbtr_grp_cd
         LEFT JOIN edw_mv_ph_customer_dim d ON b.sap_soldto_code = d.cust_id
         LEFT JOIN edw_vw_os_time_dim e ON a.invoice_dt = e.cal_date
-        LEFT JOIN edw_vw_os_material_dim f
+        LEFT JOIN edw_vw_ph_material_dim f
                ON LTRIM (a.sap_item_cd,0) = LTRIM (f.sap_matl_num,0)
               AND UPPER (f.cntry_key) = 'PH'
       GROUP BY Identifier,
