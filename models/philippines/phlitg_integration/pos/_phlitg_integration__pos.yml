@@ -34,8 +34,15 @@ models:
     config:
       alias: itg_ph_pos_pg_sm_sales_fact
       tags: ["ph_pos","ingestion"]
+  - name: phlitg_integration__itg_ph_711_product_dim
+    config:
+      alias: itg_ph_711_product_dim
+      tags: ["ph_pos","ingestion"]
   - name: phlitg_integration__itg_ph_pos_sales_fact
     config:
       alias: itg_ph_pos_sales_fact
       tags: ["ph_pos","ingestion"]
-
+  - name: phlitg_integration__itg_ph_pricelist
+    config:
+      alias: itg_ph_pricelist
+      tags: ["ph_pos","ingestion"]

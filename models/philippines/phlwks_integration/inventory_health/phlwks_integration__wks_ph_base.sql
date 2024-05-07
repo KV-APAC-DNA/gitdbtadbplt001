@@ -1,25 +1,23 @@
 with edw_ph_siso_analysis as (
-    select * from phledw_integration.edw_ph_siso_analysis
+    select * from {{ ref('phledw_integration__edw_ph_siso_analysis') }}
 ),
 itg_mds_ph_ref_distributors as (
-    select * from phlitg_integration.itg_mds_ph_ref_distributors
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_distributors') }}
 ),
 edw_vw_ph_dstrbtr_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_dstrbtr_customer_dim
-    where cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_customer_dim') }}
 ),
 edw_vw_ph_customer_dim as (
-    select * from snaposeedw_integration.edw_vw_os_customer_dim
-    where sap_cntry_cd = 'PH'
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 itg_mds_ph_pos_pricelist as (
-    select * from phlitg_integration.itg_mds_ph_pos_pricelist
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
 edw_vw_ph_si_pos_inv_analysis as (
-    select * from snaposeedw_integration.edw_vw_ph_si_pos_inv_analysis
+    select * from {{ ref('phledw_integration__edw_vw_ph_si_pos_inv_analysis') }}
 ),
 edw_mv_ph_customer_dim as (
-    select * from phledw_integration.edw_mv_ph_customer_dim
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
 ph_lst_list_price as
 (
@@ -169,7 +167,8 @@ set_1 as
             ) LP ON CAST(LP.JJ_MNTH_ID AS INT) = CAST(A.JJ_MNTH_ID AS INT)
             AND LTRIM(LP.ITEM_CD, '0') = LTRIM(A.SKU, '0')
         )
-    group by A.JJ_YEAR,
+    group by 
+        A.JJ_YEAR,
         A.JJ_MNTH_ID,
         NVL(CUST_HIER.SAP_PRNT_CUST_KEY, A.PARENT_CUSTOMER_CD),
         a.sls_grp_desc,
@@ -313,6 +312,4 @@ final as
         select * from set_2
     )
 )
-select count(*),'dbt' from final
-union all
-select count(*),'snap' from phlwks_integration.wks_ph_base
+select * from final
