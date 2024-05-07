@@ -29,7 +29,7 @@ final as
         branch_classification as branch_classification,
         branch_name as branch_name,
         osa_flag as osa_flag,
-        retailer_name asretailer_name,
+        retailer_name as retailer_name,
         filename as filename,
         run_id as run_id,
         crtd_dttm as crtd_dttm
