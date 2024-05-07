@@ -19,7 +19,7 @@ sources:
                 filter: " ENCODED_REPORT = '1'"
                 config:
                   store_failures: true
-                  schema: phl_integration
+                  schema: phlwks_integration
         - test_duplicate:
             select_columns: ["retailer_name","sku_code","osa_check_date","branch_code","ret_nm_prefix"]
             group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -27,7 +27,7 @@ sources:
             name: TRATBL_sdl_ph_non_ise_robinsons_ds__duplicate_test
             config:
               store_failures: true
-              schema: phl_integration
+              schema: phlwks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
             date_column: "osa_check_date"
@@ -37,7 +37,7 @@ sources:
             name: TRATBL_sdl_ph_non_ise_robinsons_ds__test_date_format_odd_eve_leap
             config:
               store_failures: true
-              schema: phl_integration
+              schema: phlwks_integration
         - test_lookup:
               select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
               column: "UPPER(TRIM(RETAILER_NAME))"
@@ -57,7 +57,7 @@ sources:
                   filter: " ENCODED_REPORT = '1'"
                   config:
                     store_failures: true
-                    schema: phl_integration
+                    schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -65,7 +65,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_waltermart__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -75,7 +75,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_waltermart__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -95,7 +95,7 @@ sources:
                   filter: " ENCODED_REPORT = '1'"
                   config:
                     store_failures: true
-                    schema: phl_integration
+                    schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -103,7 +103,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_svi_smc__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -113,7 +113,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_svi_smc__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -133,7 +133,7 @@ sources:
                   filter: " ENCODED_REPORT = '1'"
                   config:
                     store_failures: true
-                    schema: phl_integration
+                    schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -141,7 +141,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_shm__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -151,7 +151,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_shm__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -171,7 +171,7 @@ sources:
                     filter: " ENCODED_REPORT = '1'"
                     config:
                       store_failures: true
-                      schema: phl_integration
+                      schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -179,7 +179,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_robinsons_sm__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -189,7 +189,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_robinsons_sm__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -205,11 +205,11 @@ sources:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
                     not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
-                    name: TRATBL_sdl_ph_non_ise_landmark_sm_null_test
+                    name: TRATBL_sdl_ph_non_ise_landmark_sm__null_test
                     filter: " ENCODED_REPORT = '1'"
                     config:
                       store_failures: true
-                      schema: phl_integration
+                      schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -217,7 +217,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_landmark_sm__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -227,7 +227,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_landmark_sm__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -247,7 +247,7 @@ sources:
                     filter: " ENCODED_REPORT = '1'"
                     config:
                       store_failures: true
-                      schema: phl_integration
+                      schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -255,7 +255,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_super_8__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -265,7 +265,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_super_8__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -281,11 +281,11 @@ sources:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
                     not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
-                    name: TRATBL_sdl_ph_non_ise_puregold_null_test
+                    name: TRATBL_sdl_ph_non_ise_puregold__null_test
                     filter: " ENCODED_REPORT = '1'"
                     config:
                       store_failures: true
-                      schema: phl_integration
+                      schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -293,7 +293,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_puregold__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -303,7 +303,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_puregold__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
@@ -319,11 +319,11 @@ sources:
       - test_null:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
-          name: TRATBL_sdl_ph_non_ise_landmark_ds_null_test
+          name: TRATBL_sdl_ph_non_ise_landmark_ds__null_test
           filter: " ENCODED_REPORT = '1'"
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -331,7 +331,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_landmark_ds__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -341,13 +341,13 @@ sources:
           name: TRATBL_sdl_ph_non_ise_landmark_ds__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
-            name: TRATBL_sdl_ph_non_ise_landmark_ds_lookup_test
+            name: TRATBL_sdl_ph_non_ise_landmark_ds__lookup_test
             config:
               store_failures: true
               schema: phlwks_integration
@@ -357,11 +357,11 @@ sources:
       - test_null:
                     select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
                     not_null_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
-                    name: TRATBL_sdl_ph_non_ise_rustans_ds_null_test
+                    name: TRATBL_sdl_ph_non_ise_rustans__null_test
                     filter: " ENCODED_REPORT = '1'"
                     config:
                       store_failures: true
-                      schema: phl_integration
+                      schema: phlwks_integration
       - test_duplicate:
           select_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
           group_by_columns: ["retailer_name","sku_code","osa_check_date","branch_code"]
@@ -369,7 +369,7 @@ sources:
           name: TRATBL_sdl_ph_non_ise_rustans__duplicate_test
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_date_format_odd_eve_leap:
           model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
@@ -379,13 +379,13 @@ sources:
           name: TRATBL_sdl_ph_non_ise_rustans__test_date_format_odd_eve_leap
           config:
             store_failures: true
-            schema: phl_integration
+            schema: phlwks_integration
       - test_lookup:
             select_columns: ["filename", "retailer_name", "sku_code", "osa_check_date", "branch_code", "ret_nm_prefix"]
             column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_column: "UPPER(TRIM(RETAILER_NAME))"
             lookup_table: "{{ref('phlitg_integration__itg_ph_ps_retailer_soldto_map')}} "
-            name: TRATBL_sdl_ph_non_ise_rustans_lookup_test
+            name: TRATBL_sdl_ph_non_ise_rustans__lookup_test
             config:
               store_failures: true
               schema: phlwks_integration
