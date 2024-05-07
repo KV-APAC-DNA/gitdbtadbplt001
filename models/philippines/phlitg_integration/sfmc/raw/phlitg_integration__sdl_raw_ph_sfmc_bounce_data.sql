@@ -38,6 +38,7 @@ final as
         email_name,
         email_id,
         email_address,
+        file_name,
         crt_dttm
     from source
     {% if is_incremental() %}
