@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: phlwks_integration__wks_ph_sfmc_consumer_master
+  - name: phlwks_integration__wks_sdl_ph_sfmc_consumer_master
     config:
-      alias: wks_ph_sfmc_consumer_master
+      alias: wks_sdl_ph_sfmc_consumer_master
       tags: ["ph_crm_files","ingestion"]
