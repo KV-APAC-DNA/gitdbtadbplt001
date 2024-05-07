@@ -10,7 +10,7 @@ with source as(
 ),
 final as
 (
-    select *
+    select *, null as filename
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

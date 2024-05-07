@@ -30,4 +30,8 @@ models:
     config:
       alias: wks_ph_pos_watsons
       tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_ph_pos_robinsons
+    config:
+      alias: wks_ph_pos_robinsons
+      tags: ["ph_pos", "ingestion"]
   

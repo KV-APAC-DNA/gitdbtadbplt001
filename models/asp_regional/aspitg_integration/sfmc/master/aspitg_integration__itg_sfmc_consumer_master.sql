@@ -2,12 +2,12 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
+        pre_hook=[build_sfmc_consumer_master(),"{% if var('crm_job_to_execute') == 'th_crm_files' %}
                     delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }});
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd='PH';
                     {% endif %}
-                "
+                "]
     )
 }}
 with
