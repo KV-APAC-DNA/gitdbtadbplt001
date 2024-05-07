@@ -29,7 +29,7 @@ transformed as(
 					sap_cust_chnl_key,
 					sap_cust_sub_chnl_key
 				) as rn
-		from edw_vw_os_customer_dim t1,
+		from edw_vw_ph_customer_dim t1,
 			edw_mv_ph_customer_dim t2
 		where t1.sap_cntry_cd = 'PH'
 			and ltrim(t1.sap_cust_id, '0') = ltrim(t2.cust_id(+), '0')
