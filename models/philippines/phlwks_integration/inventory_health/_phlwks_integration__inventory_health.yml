@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: phlwks_integration__wks_ph_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_ph_siso_propagate_to_existing_dtls
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_base_detail
+    config:
+      alias: wks_ph_base_detail
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__ph_propagate_to
+    config:
+      alias: ph_propagate_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__ph_propagate_from_to
+    config:
+      alias: ph_propagate_from_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_siso_propagate_to_details
+    config:
+      alias: wks_ph_siso_propagate_to_details
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_inventory_health_analysis_propagation_prestep
+    config:
+      alias: wks_ph_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_base
+    config:
+      alias: wks_ph_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_allmonths_base
+    config:
+      alias: wks_ph_allmonths_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_ph_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_lastnmonths
+    config:
+      alias: wks_ph_lastnmonths
+      tags: ["j_ap_ph_reg_data_refresh","transformation"] 
+
+  - name: phlwks_integration__wks_ph_inventory_health_analysis_propagation
+    config:
+      alias: wks_ph_inventory_health_analysis_propagation
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_inventory_health_analysis_propagation_final
+    config:
+      alias: wks_ph_inventory_health_analysis_propagation_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_regional
+    config:
+      alias: wks_ph_regional
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_inv_cust_hier
+    config:
+      alias: wks_ph_inv_cust_hier
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_inv_prod_hier
+    config:
+      alias: wks_ph_inv_prod_hier
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_sellout_for_inv_analysis
+    config:
+      alias: wks_ph_sellout_for_inv_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_siso_propagate_final
+    config:
+      alias: wks_ph_siso_propagate_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+

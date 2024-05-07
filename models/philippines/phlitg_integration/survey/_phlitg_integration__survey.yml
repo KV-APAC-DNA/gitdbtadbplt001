@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_tbl_surveyisehdr
+    config:
+      alias: itg_ph_tbl_surveyisehdr
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveyisequestion
+    config:
+      alias: itg_ph_tbl_surveyisequestion
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveychoices
+    config:
+      alias: itg_ph_tbl_surveychoices
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_acctexec
+    config:
+      alias: itg_ph_tbl_acctexec
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveycpg
+    config:
+      alias: itg_ph_tbl_surveycpg
+      tags: ["ph_perfectstore_survey_master","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveyanswers
+    config: 
+      alias: itg_ph_tbl_surveyanswers
+      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+  - name: phlitg_integration__itg_ph_pos_wm_competitor
+    config:
+      alias: itg_ph_pos_wm_competitor
+      tags: ["j_os_dna_sdl_to_edw_wm_sales","ingestion"]
+  - name: phlitg_integration__itg_mds_ph_ref_distributors
+    config:
+      alias: itg_ph_pos_wm_competitor
+      tags: ["ph_mds_itg_refresh","ingestion"]
+      
+  

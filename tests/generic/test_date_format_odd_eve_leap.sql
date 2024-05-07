@@ -9,7 +9,7 @@
       {{failure_reason}} AS Reason
 {% endif %}
 {% if date_column!=None %}
-FROM {{model_nm}} AS A
+FROM {{model}} AS A
 WHERE
   {{date_column}} IN (
     SELECT DISTINCT

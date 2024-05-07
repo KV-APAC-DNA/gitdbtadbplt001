@@ -1,0 +1,212 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_ph_sfmc_click_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                failure_reason: "Nulls present in is_unique or subscriber_key or event_date or email_name or job_id or batch_id or url"
+                not_null_columns: ['is_unique','batch_id','job_id','email_name','event_date','subscriber_key','url']
+                name: TRATBL_sdl_ph_sfmc_click_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','url','link_name','is_unique','file_name']
+                name: TRATBL_sdl_ph_sfmc_click_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                column: "upper(coalesce(subscriber_key, ''))"
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_ph_sfmc_click_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+      - name: sdl_ph_sfmc_complaint_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ['job_id','batch_id','subscriber_key','event_date','email_name']
+                failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','email_id','file_name']
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                column: "upper(coalesce(subscriber_key, ''))"
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_ph_sfmc_complaint_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_format:
+                where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+                failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
+                name: TRATBL_sdl_ph_sfmc_complaint_data_format_test
+                config:
+                  store_failures: true
+                schema: phlwks_integration
+      - name: sdl_ph_sfmc_sent_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ['job_id','batch_id','event_date','subscriber_key','email_name']
+                failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ['job_id','batch_id','subscriber_id','subscriber_key','event_date','email_id','file_name']
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                column: "upper(coalesce(subscriber_key, ''))"
+                lookup_column: "upper(coalesce(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_ph_sfmc_sent_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_format:
+                where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+                failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
+                name: TRATBL_sdl_ph_sfmc_sent_data_format_test
+                config:
+                  store_failures: true
+                schema: phlwks_integration
+      - name: sdl_ph_sfmc_unsubscribe_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["job_id","batch_id","subscriber_key","email_name","event_date"]
+                failure_reason: "Nulls present in subscriber_key or event_date or email_name or job_id or batch_id"
+                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date","file_name"]
+                name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                  failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                  column: "upper(nvl(subscriber_key, ''))"
+                  lookup_column: "upper(nvl(subscriber_key, ''))"
+                  lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+                  name: TRATBL_sdl_ph_sfmc_unsubscribe_data__test_lookup__ff
+                  config:
+                    store_failures: true
+                    schema: phlwks_integration
+            - test_format:
+                where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+                failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
+                name: TRATBL_sdl_ph_sfmc_unsubscribe_data_format_test
+                config:
+                  store_failures: true
+                schema: phlwks_integration
+      - name: sdl_ph_sfmc_children_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["parent_key","child_number"]
+                name: TRATBL_sdl_ph_sfmc_children_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["parent_key","child_number","file_name"]
+                name: TRATBL_sdl_ph_sfmc_children_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+                column: "upper(nvl(parent_key, ''))"
+                lookup_column: "upper(nvl(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+                name: TRATBL_sdl_ph_sfmc_children_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+      - name: sdl_ph_sfmc_consumer_master
+        tags: ["ph_crm_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["subscriber_key","brand"]
+                name: TRATBL_sdl_ph_sfmc_consumer_master__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["subscriber_key","file_name"]
+                name: TRATBL_sdl_ph_sfmc_consumer_master__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+      - name: sdl_ph_sfmc_open_data
+        tags: ["ph_sfmc_files","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["job_id","batch_id","subscriber_key","event_date","email_name","is_unique"]
+                name: TRATBL_sdl_ph_sfmc_open_data__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique","file_name"]
+                name: TRATBL_sdl_ph_sfmc_open_data__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+                column: "upper(nvl(subscriber_key, ''))"
+                lookup_column: "upper(nvl(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }} "
+                name: TRATBL_sdl_ph_sfmc_open_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_format:
+                where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
+                failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
+                name: TRATBL_sdl_ph_sfmc_open_data_format_test
+                config:
+                  store_failures: true
+                schema: phlwks_integration
+
+  - name: phlwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: phlwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_itg_sfmc_consumer_master

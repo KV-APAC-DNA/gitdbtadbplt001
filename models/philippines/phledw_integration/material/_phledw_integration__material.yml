@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_material_dim
+    config:
+      alias: edw_vw_ph_material_dim
+      tags: ["philippines_views","transformation"]

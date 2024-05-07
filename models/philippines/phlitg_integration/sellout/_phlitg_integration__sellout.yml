@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_dms_sellout_sales_fact
+    config: 
+      alias: itg_ph_dms_sellout_sales_fact
+      tags: ["ph_dms","ingestion"]
+
+  - name: phlitg_integration__itg_ph_dms_sellout_stock_fact
+    config: 
+      alias: itg_ph_dms_sellout_stock_fact
+      tags: ["ph_dms","ingestion"]
+
+  - name: phlitg_integration__sdl_raw_ph_dms_sellout_sales_fact_ph
+    config: 
+      alias: sdl_raw_ph_dms_sellout_sales_fact_ph
+      tags: ["ph_dms","ingestion"]
+      
+  - name: phlitg_integration__sdl_raw_ph_dms_sellout_stock_fact_ph
+    config: 
+      alias: sdl_raw_ph_dms_sellout_stock_fact_ph
+      tags: ["ph_dms","ingestion"]

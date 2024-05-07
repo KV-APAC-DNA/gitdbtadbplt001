@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_ph_ecom_product
+      tags: ["ph_acommerce_data_ingestion","ingestion"]
+    - name: sdl_ph_ecommerce_offtake_acommerce
+      tags: ["ph_acommerce_data_ingestion","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["order_id","acommerce_item_sku"]
+              not_null_columns: ["order_id","acommerce_item_sku"]
+              name: TRATBL_sdl_ph_ecommerce_offtake_acommerce__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+
+

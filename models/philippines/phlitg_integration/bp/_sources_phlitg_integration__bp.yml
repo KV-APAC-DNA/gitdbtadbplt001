@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ph_bp_trgt
+      tags: ["ph_bp_target","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["jj_mnth_id","trgt_type","brnd_cd","cust_id"]
+              not_null_columns: ["jj_mnth_id","trgt_type","brnd_cd","cust_id"]
+              name: TRATBL_sdl_ph_bp_trgt__null_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_duplicate:
+              select_columns: ["jj_mnth_id","trgt_type","brnd_cd","cust_id"]
+              group_by_columns: ["jj_mnth_id","trgt_type","brnd_cd","cust_id","filename"]
+              name: TRATBL_sdl_ph_bp_trgt__duplicate_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+          - test_format:
+              select_columns: ["jj_mnth_id","trgt_type","brnd_cd","cust_id"]
+              where_clause: "not regexp_like (trim(jj_mnth_id),'(20)[0-9][0-9][0-9][0-9]')"
+              failure_reason: "'Invalid year format in column year, expected format is YYYY'"
+              name: TRATBL_sdl_ph_bp_trgt__format_test
+              config:
+                store_failures: true
+                schema: phlwks_integration
+

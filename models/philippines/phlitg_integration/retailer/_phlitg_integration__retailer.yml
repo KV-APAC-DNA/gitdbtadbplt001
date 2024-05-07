@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_ps_retailer_soldto_map
+    config:
+      alias: itg_ph_ps_retailer_soldto_map
+      tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_ph_non_ise_weights
+    config:
+      alias: itg_ph_non_ise_weights
+      tags: ["ph_mds_itg_refresh","ingestion"]
+
+  

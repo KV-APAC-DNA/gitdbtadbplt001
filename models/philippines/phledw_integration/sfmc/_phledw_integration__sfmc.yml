@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_sfmc_analysis
+    config:
+      alias: edw_vw_ph_sfmc_analysis
+      tags: ["ph_sfmc_analysis_refresh","transformation"]
+  - name: phledw_integration__edw_ph_sfmc_analysis
+    config:
+      alias: edw_ph_sfmc_analysis
+      tags: ["ph_sfmc_analysis_refresh","transformation"]

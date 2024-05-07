@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: phlsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_ph_as_watsons_inventory
+        tags: ["j_rg_watsons_inv_ingestion","ingestion"]
+        tests:
+            - test_null__ff:
+                not_null_columns: ["item_cd"]
+                name: TRATBL_sdl_ph_as_watsons_inventory__test_null__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_duplicate__ff:
+                group_by_columns: ["item_cd","item_desc","total_units","total_cost","avg_sales_cost","wks_sup","remarks","br_ol_pl_ex","group_name","dept_name","class_name","sub_class_name","br_ol_pl_ex_subclass","subclass","catman","item_status","item_class","hold_reason_code","site_code","site_name","gwp","ret_non_ret","good_bad_13_wks","filename"]
+                name: TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration
+            - test_lookup__ff:
+                failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
+                column: "nvl(item_cd, '#')"
+                lookup_column: "nvl(item_cd, '#')"
+                lookup_table: " phlitg_integration.itg_mds_ph_pos_product"
+                name: TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: phlwks_integration

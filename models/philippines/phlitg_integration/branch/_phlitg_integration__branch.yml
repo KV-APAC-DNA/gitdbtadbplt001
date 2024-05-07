@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phlitg_integration__itg_ph_tbl_isebranchmaster
+    config:
+      alias: itg_ph_tbl_isebranchmaster
+      tags: ["ph_perfectstore_branchmaster","ingestion"]
