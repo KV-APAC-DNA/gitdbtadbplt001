@@ -9,7 +9,7 @@ models:
     config:
       alias: edw_vw_ph_pos_sales_fact
       tags: ["philippines_views","transformation"]
-  - name: phledw_integration__edw_vw_ph_pos_sellout_sales_fact
+  - name: phledw_integration__edw_vw_ph_sellout_sales_fact
     config:
-      alias: edw_vw_ph_pos_sellout_sales_fact
+      alias: edw_vw_ph_sellout_sales_fact
       tags: ["philippines_views","transformation"]
