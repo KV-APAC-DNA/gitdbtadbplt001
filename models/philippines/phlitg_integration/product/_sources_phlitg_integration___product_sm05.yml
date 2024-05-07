@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: phlwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_ph_price
+      tags: ["j_ap_ph_reg_data_refresh","ingestion"]
+
+    - name: wks_ph_cur
+      tags: ["j_ap_ph_reg_data_refresh","ingestion"]

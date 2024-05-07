@@ -1,22 +1,21 @@
 with wks_ph_price as(
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_PH_PRICE
+    select * from {{ ref('phlwks_integration__wks_ph_price') }}
 ),
 wks_ph_inv_cust_hier as(
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_ph_inv_cust_hier
+    select * from {{ ref('phlwks_integration__wks_ph_inv_cust_hier') }}
 ),
 wks_ph_inv_prod_hier as(
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_ph_inv_prod_hier
+    select * from {{ ref('phlwks_integration__wks_ph_inv_prod_hier') }}
 ),
 wks_ph_cur as(
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_ph_cur
+    select * from {{ ref('phlwks_integration__wks_ph_cur') }}
 ),
 edw_vw_os_time_dim as(
-    select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_PH_siso_propagate_final as(
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.wks_PH_siso_propagate_final
+    select * from {{ ref('phlwks_integration__wks_ph_regional') }}
 ),
-
 a as(
    SELECT 'PH' AS country_key,
 		f.*

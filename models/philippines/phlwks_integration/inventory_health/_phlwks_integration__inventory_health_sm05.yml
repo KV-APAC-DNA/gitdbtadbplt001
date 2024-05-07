@@ -11,11 +11,6 @@ models:
       alias: wks_ph_inventory_health_analysis_propagation_final
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
 
-  - name: phlwks_integration__wks_ph_price
-    config:
-      alias: wks_ph_price
-      tags: ["j_ap_ph_reg_data_refresh","transformation"]
-
   - name: phlwks_integration__wks_ph_regional
     config:
       alias: wks_ph_regional
@@ -25,3 +20,4 @@ models:
     config:
       alias: wks_ph_inv_cust_hier
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
+

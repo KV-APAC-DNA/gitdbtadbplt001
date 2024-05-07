@@ -1,11 +1,11 @@
 with wks_ph_inventory_healthy_unhealthy_analysis as(
-	SELECT * FROM DEV_DNA_CORE.PHLWKS_INTEGRATION.WKS_PH_INVENTORY_HEALTHY_UNHEALTHY_ANALYSIS
+	SELECT * FROM {{ ref('phlwks_integration__wks_ph_inventory_healthy_unhealthy_analysis') }}
 ),
 wks_ph_sellout_for_inv_analysis as(
-	SELECT * FROM DEV_DNA_CORE.PHLWKS_INTEGRATION.wks_ph_sellout_for_inv_analysis
+	SELECT * FROM {{ ref('phlwks_integration__wks_ph_sellout_for_inv_analysis') }}
 ),
 wks_ph_inventory_health_analysis_propagation as(
-	SELECT * FROM DEV_DNA_CORE.PHLWKS_INTEGRATION.wks_ph_inventory_health_analysis_propagation
+	SELECT * FROM {{ ref('phlwks_integration__wks_ph_inventory_health_analysis_propagation') }}
 ),
 transformed as(
 SELECT inv.*,

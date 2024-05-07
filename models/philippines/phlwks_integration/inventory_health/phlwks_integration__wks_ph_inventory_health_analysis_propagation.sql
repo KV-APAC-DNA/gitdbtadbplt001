@@ -2,19 +2,19 @@ with wks_ph_regional as(
     select * from {{ ref('phlwks_integration__wks_ph_regional') }}
 ),
 vw_edw_reg_exch_rate as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.VW_EDW_REG_EXCH_RATE
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_copa_trans_fact as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_company_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 v_edw_customer_sales_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.V_EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 wks_ph_inventory_health_analysis_propagation_prestep as(
-    select * from DEV_DNA_CORE.sm05_workspace.wks_ph_inventory_health_analysis_propagation_prestep
+    select * from {{ ref('phlwks_integration__wks_ph_inventory_health_analysis_propagation_prestep') }}
 ),
 Regional AS (
 			SELECT *,
