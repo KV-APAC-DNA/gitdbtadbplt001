@@ -3,7 +3,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_id', 'salesrep_id', 'outlet_id', 'visit_date', 'checkin_time', 'ordervisit'],
-        pre_hook= "delete from {{this}} where (dstrbtr_id, salesrep_id, outlet_id, visit_date, checkin_time, ordervisit) in ( select dstrbtr_id, salesrep_id, outlet_id, to_date(visit_date, 'MM/DD/YYYY HH12:MI:SS AM') as visit_date, to_timestamp(checkin_time , 'MM/DD/YYYY HH12:MI:SS AM') as checkin_time, ordervisit from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }} );"
+        pre_hook= "delete from {{this}} where (dstrbtr_id, salesrep_id, outlet_id, visit_date, checkin_time, coalesce(ordervisit,'')) in ( select dstrbtr_id, salesrep_id, outlet_id, to_date(visit_date, 'MM/DD/YYYY HH12:MI:SS AM') as visit_date, to_timestamp(checkin_time , 'MM/DD/YYYY HH12:MI:SS AM') as checkin_time, coalesce(ordervisit,'') from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }} );"
     )
 }}
 
