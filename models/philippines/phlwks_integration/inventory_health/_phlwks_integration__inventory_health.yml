@@ -61,4 +61,16 @@ models:
     config:
       alias: wks_ph_inv_cust_hier
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_inv_prod_hier
+    config:
+      alias: wks_ph_inv_prod_hier
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_sellout_for_inv_analysis
+    config:
+      alias: wks_ph_sellout_for_inv_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: phlwks_integration__wks_ph_siso_propagate_final
+    config:
+      alias: wks_ph_siso_propagate_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
 

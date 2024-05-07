@@ -64,9 +64,6 @@ itg_mds_ph_pos_pricelist as (
 itg_ph_pricelist as (
 select * from {{ ref('phlitg_integration__itg_ph_pricelist') }}
 ),
-itg_ph_pos_product_dim as (
-select * from {{ref('phlitg_integration__itg_ph_pos_product_dim')}}
-),
 itg_ph_711_product_dim as (
 select * from {{ref('phlitg_integration__itg_ph_711_product_dim')}}
 ),
