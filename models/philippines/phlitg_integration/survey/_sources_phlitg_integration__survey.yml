@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_ph_tbl_surveyisehdr
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
       tests:
           - test_null:
               select_columns: ["iseid"]
@@ -27,7 +27,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_ph_tbl_surveyisequestion
-      tags: ["ph_perfectstore_survey_master","ingestion"] 
+      tags: ["ph_perfectstore","ingestion"] 
       tests:
           - test_null:
               select_columns: ["iseid","quesno"]
@@ -44,7 +44,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_ph_tbl_surveychoices
-      tags: ["ph_perfectstore_survey_master","ingestion"] 
+      tags: ["ph_perfectstore","ingestion"] 
       tests:
           - test_null:
               select_columns: ["iseid","quesno","answerseq"]
@@ -61,7 +61,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_ph_tbl_acctexec
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
       tests:
           - test_null:
               select_columns: ["slsperid"]
@@ -78,7 +78,7 @@ sources:
                 store_failures: true
                 schema: phlwks_integration
     - name: sdl_ph_tbl_surveycpg
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
       tests:
           - test_null:
               select_columns: ["slsperid","custcode","branchcode","visitdate"]

@@ -4,27 +4,27 @@ models:
   - name: phlitg_integration__itg_ph_tbl_surveyisehdr
     config:
       alias: itg_ph_tbl_surveyisehdr
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_tbl_surveyisequestion
     config:
       alias: itg_ph_tbl_surveyisequestion
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_tbl_surveychoices
     config:
       alias: itg_ph_tbl_surveychoices
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_tbl_acctexec
     config:
       alias: itg_ph_tbl_acctexec
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_tbl_surveycpg
     config:
       alias: itg_ph_tbl_surveycpg
-      tags: ["ph_perfectstore_survey_master","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_tbl_surveyanswers
     config: 
       alias: itg_ph_tbl_surveyanswers
-      tags: ["ph_perfectstore_survey_transaction","ingestion"]
+      tags: ["ph_perfectstore","ingestion"]
   - name: phlitg_integration__itg_ph_pos_wm_competitor
     config:
       alias: itg_ph_pos_wm_competitor
@@ -33,5 +33,15 @@ models:
     config:
       alias: itg_mds_ph_ref_distributors
       tags: ["ph_mds_itg_refresh","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveynotes
+    config:
+      alias: itg_ph_tbl_surveynotes
+      tags: ["ph_perfectstore","ingestion"]
+  - name: phlitg_integration__itg_ph_tbl_surveycustomers
+    config:
+      alias: itg_ph_tbl_surveycustomers
+      tags: ["ph_perfectstore","ingestion"]
+    
+
       
   
