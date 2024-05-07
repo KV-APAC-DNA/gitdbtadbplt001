@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: phlwks_integration__wks_ph_inventory_health_analysis_propagation
+    config:
+      alias: wks_ph_inventory_health_analysis_propagation
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_inventory_health_analysis_propagation_final
+    config:
+      alias: wks_ph_inventory_health_analysis_propagation_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_regional
+    config:
+      alias: wks_ph_regional
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
+  - name: phlwks_integration__wks_ph_inv_cust_hier
+    config:
+      alias: wks_ph_inv_cust_hier
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+
