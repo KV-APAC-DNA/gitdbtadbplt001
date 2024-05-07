@@ -223,7 +223,7 @@ sources:
             select_columns: ["mnth_id","ITEM_CD","STORE_NM"]
             column: "mnth_id,ITEM_CD"
             lookup_column: "YEARMONTH,ITEM_CD"
-            lookup_table: "{{ ref('phlitg_integration__itg_ph_711_product_dim ')}}"
+            lookup_table: "{{ ref('phlitg_integration__itg_ph_711_product_dim')}}"
             lookup_filter: "YEARMONTH IN (SELECT DISTINCT MNTH_ID FROM {{source('phlsdl_raw','sdl_ph_pos_711')}})"
             name: TRATBL_sdl_ph_pos_711__lookup_test
             config:
