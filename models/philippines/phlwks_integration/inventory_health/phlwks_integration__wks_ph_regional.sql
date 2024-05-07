@@ -1,5 +1,5 @@
 with wks_ph_price as(
-    select * from {{ ref('phlwks_integration__wks_ph_price') }}
+    select * from {{ source('phlwks_integration', 'wks_ph_price') }}
 ),
 wks_ph_inv_cust_hier as(
     select * from {{ ref('phlwks_integration__wks_ph_inv_cust_hier') }}
@@ -8,7 +8,7 @@ wks_ph_inv_prod_hier as(
     select * from {{ ref('phlwks_integration__wks_ph_inv_prod_hier') }}
 ),
 wks_ph_cur as(
-    select * from {{ ref('phlwks_integration__wks_ph_cur') }}
+    select * from {{ source('phlwks_integration', 'wks_ph_cur') }}
 ),
 edw_vw_os_time_dim as(
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
