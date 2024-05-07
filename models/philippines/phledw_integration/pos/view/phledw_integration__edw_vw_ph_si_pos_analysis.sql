@@ -189,10 +189,10 @@ from (select b."year",
       and   d.jj_mnth_id(+) = a.jj_mnth_id
       and   d.cust_cd(+) = a.cust_cd) veposf,
      (select *
-      from edw_vw_os_material_dim
+      from edw_vw_ph_material_dim
       where cntry_key = 'PH') veomd,
      (select *
-      from edw_vw_os_customer_dim
+      from edw_vw_ph_customer_dim
       where sap_cntry_cd = 'PH') veocd,
      edw_mv_ph_customer_dim eocd
 where upper(ltrim(veomd.sap_matl_num(+),0)) = trim(veposf.sap_item_cd)
@@ -324,7 +324,7 @@ from (select veotd.mnth_id as jj_mnth_id,
              sum(nts_qty) as nts_qty,
              sum(nts_val) as nts_val,
              sum(tp_val) as tp_val
-      from edw_vw_os_sellin_sales_fact  veossf1,
+      from edw_vw_ph_sellin_sales_fact  veossf1,
            (select distinct cust_id,
                    dstrbtr_grp_cd
             from edw_mv_ph_customer_dim
@@ -400,10 +400,10 @@ from (select veotd.mnth_id as jj_mnth_id,
       from itg_mds_ph_pos_pricelist
       where active = 'Y') epp,
      (select *
-      from edw_vw_os_material_dim
+      from edw_vw_ph_material_dim
       where cntry_key = 'PH') veomd,
      (select *
-      from edw_vw_os_customer_dim
+      from edw_vw_ph_customer_dim
       where sap_cntry_cd = 'PH') veocd
 where upper(trim(eocd.cust_id)) = upper(ltrim(veossf.cust_id,'0'))
 and   upper(ltrim(veomd.sap_matl_num(+),'0')) = upper(ltrim(veossf.item_cd,'0'))
