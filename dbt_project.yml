@@ -327,3 +327,6 @@ models:
       phlwks_integration:
         +materialized: table
         +schema: PHLWKS_INTEGRATION
+      phledw_access:
+        +materialized: view
+        +schema: PHLEDW_ACCESS

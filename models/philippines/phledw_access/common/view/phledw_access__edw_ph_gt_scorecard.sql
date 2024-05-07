@@ -1,0 +1,48 @@
+with source as (
+    select * from {{ ref('phledw_integration__edw_ph_gt_scorecard') }}
+),
+final as
+(
+    SELECT jj_qrtr AS "jj_qrtr",
+        sku_cnt AS "sku_cnt",
+        census AS "census",
+        unserved AS "unserved",
+        brand AS "brand",
+        dstrbtr_grp_nm AS "dstrbtr_grp_nm",
+        tdp AS "tdp",
+        trnsfrm_cust_id AS "trnsfrm_cust_id",
+        otif AS "otif",
+        jj_year AS "jj_year",
+        sls_grp_desc AS "sls_grp_desc",
+        msl_tdp AS "msl_tdp",
+        identifier AS "identifier",
+        rka_nm AS "rka_nm",
+        segment AS "segment",
+        planned_visit AS "planned_visit",
+        order_lines AS "order_lines",
+        franchise AS "franchise",
+        cntry_nm AS "cntry_nm",
+        visited AS "visited",
+        dstrbtr_grp_cd AS "dstrbtr_grp_cd",
+        jj_mnth_no AS "jj_mnth_no",
+        inventory AS "inventory",
+        average_sales AS "average_sales",
+        sub_chnl_cd AS "sub_chnl_cd",
+        npi_tdp AS "npi_tdp",
+        npi AS "npi",
+        invoice_dt AS "invoice_dt",
+        cnt_msl AS "cnt_msl",
+        jj_mnth_id AS "jj_mnth_id",
+        account_grp AS "account_grp",
+        promo_local AS "promo_local",
+        chnl_desc AS "chnl_desc",
+        so_gts_val AS "so_gts_val",
+        ret_val AS "ret_val",
+        infull AS "infull",
+        si_gts_val AS "si_gts_val",
+        ontime AS "ontime",
+        rka_cd AS "rka_cd",
+        promo_national AS "promo_national"
+    from source
+)
+select * from final
