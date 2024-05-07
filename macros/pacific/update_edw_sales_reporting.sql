@@ -1,4 +1,4 @@
-{% macro build_edw_sales_reporting() %}
+{% macro update_edw_sales_reporting() %}
     
     {% set query %}
         DELETE FROM 
