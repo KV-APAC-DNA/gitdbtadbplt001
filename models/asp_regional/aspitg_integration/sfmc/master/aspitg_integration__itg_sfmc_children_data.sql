@@ -18,7 +18,7 @@ with sdl_th_sfmc_children_data as
 ),
 itg_mds_rg_sfmc_gender as
 (
-    select * from snapaspitg_integration.itg_mds_rg_sfmc_gender
+    select * from {{ ref('aspitg_integration__itg_mds_rg_sfmc_gender') }}
 ),
 sdl_ph_sfmc_children_data as
 (
