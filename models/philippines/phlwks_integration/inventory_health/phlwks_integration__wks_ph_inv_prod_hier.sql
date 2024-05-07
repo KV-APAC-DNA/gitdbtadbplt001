@@ -4,6 +4,9 @@ select * from {{ ref('phledw_integration__edw_ph_siso_analysis') }}
 edw_vw_greenlight_skus as (
 select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
+edw_material_dim as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
 final as (
 SELECT *
 FROM (
