@@ -120,7 +120,8 @@ transformed as
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     and snapshot_dt::date > (select max(snapshot_dt)::date from {{ this }}) 
-    and convert_timezone('UTC',current_date) = dateadd(day,20,to_date(to_char(convert_timezone('UTC',current_date),'yyyymm'),'yyyymm'))
     {% endif %}
+    and convert_timezone('UTC',current_date) = dateadd(day,20,to_date(to_char(convert_timezone('UTC',current_date),'yyyymm'),'yyyymm'))
+
 )
 select * from transformed
