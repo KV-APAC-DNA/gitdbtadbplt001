@@ -379,7 +379,7 @@ models:
   - name: pcfitg_integration__itg_metcash_ind_grocery
     config:
       alias: itg_metcash_ind_grocery
-      tags: ["anz_perenso_head_office_req", "ingestion"]
+      tags: ["anz_perenso_metcash_load", "ingestion"]
 
   - name: pcfitg_integration__itg_perenso_order_header
     config:
