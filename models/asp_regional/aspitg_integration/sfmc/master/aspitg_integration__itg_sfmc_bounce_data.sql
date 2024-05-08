@@ -5,7 +5,7 @@
         pre_hook="{% if var('sfmc_job_to_execute') == 'th_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_bounce_data') }}) and cntry_cd = 'TH';
                     {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
-                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_bounce_data') }}) and cntry_cd = 'PH';
+                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_bounce_data') }}) and cntry_cd = 'PH';
                     {% endif %}"
     )
 }}
