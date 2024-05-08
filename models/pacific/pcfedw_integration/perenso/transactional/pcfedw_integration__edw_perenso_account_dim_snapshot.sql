@@ -111,7 +111,7 @@ transformed as
 	   coalesce(grp.acct_email_opt_out,'Not Assigned')::varchar(256) as acct_email_opt_out,
 	   coalesce(grp.acct_contact_method,'Not Assigned')::varchar(256) as acct_contact_method,
 	   (extract(year from current_timestamp())||lpad(extract(month from current_timestamp()),2,0))::varchar(30) as snapshot_mnth,
-       current_timestamp()::timestamp_ntz(9) as snapshot_dt
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as snapshot_dt
     from grp,
         itg_perenso_account ipa,
         itg_perenso_account_type ipat
@@ -120,6 +120,7 @@ transformed as
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     and snapshot_dt::date > (select max(snapshot_dt)::date from {{ this }}) 
+    and convert_timezone('UTC',current_date) = dateadd(day,20,to_date(to_char(convert_timezone('UTC',current_date),'yyyymm'),'yyyymm'))
     {% endif %}
 )
 select * from transformed
