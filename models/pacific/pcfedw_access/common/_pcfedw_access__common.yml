@@ -24,7 +24,7 @@ models:
   - name: pcfedw_access__edw_pacific_perenso_ims_analysis
     config:
       alias: edw_pacific_perenso_ims_analysis
-      tags: ["anz_perenso_fact_load", "transformation"]
+      tags: ["anz_perenso_field_order_analysis", "transformation"]
   - name: pcfedw_access__edw_pacific_perenso_ims_pharmacy_snpshot_analysis
     config:
       alias: edw_pacific_perenso_ims_pharmacy_snpshot_analysis
