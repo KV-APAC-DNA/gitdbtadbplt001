@@ -1,0 +1,121 @@
+
+-- with
+-- itg_tw_pos_watson_store as
+-- (
+--     select * from {{ ref('ntaitg_integration__itg_tw_pos_watson_store') }}
+-- ),
+-- itg_query_parameters as
+-- (
+--     select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
+-- ),
+-- trans as
+-- (
+--     SELECT 
+--        start_date AS pos_dt,
+--        NULL AS vend_cd,
+--        NULL AS vend_nm,
+--        NULL AS prod_nm,
+--        product_code AS vend_prod_cd,
+--        product_description AS vend_prod_nm,
+--        NULL AS brnd_nm,
+--        NULL AS ean_num,
+--        store_no AS str_cd,
+--        store_name AS str_nm,
+--        selling_qty AS sls_qty,
+--        selling_amt AS sls_amt,
+--        NULL AS unit_prc_amt,
+--        NULL AS sls_excl_vat_amt,
+--        NULL AS stk_rtrn_amt,
+--        NULL AS stk_recv_amt,
+--        NULL AS avg_sell_qty,
+--        NULL AS cum_ship_qty,
+--        NULL AS cum_rtrn_qty,
+--        NULL AS web_ordr_takn_qty,
+--        NULL AS web_ordr_acpt_qty,
+--        NULL AS dc_invnt_qty,
+--        NULL AS invnt_qty,
+--        NULL AS invnt_amt,
+--        NULL AS invnt_dt,
+--        NULL AS serial_num,
+--        NULL AS prod_delv_type,
+--        NULL AS prod_type,
+--        department AS dept_cd,
+--        NULL AS dept_nm,
+--        NULL AS spec_1_desc,
+--        NULL AS spec_2_desc,
+--        NULL AS cat_big,
+--        NULL AS cat_mid,
+--        NULL AS cat_small,
+--        NULL AS dc_prod_cd,
+--        NULL AS cust_dtls,
+--        NULL AS dist_cd,
+--        'TWD' AS crncy_cd,
+--        NULL AS src_txn_sts,
+--        NULL AS src_seq_num,
+--        para.parameter_value AS src_sys_cd,
+--        para.country_code AS ctry_cd,
+--        TGT.CRT_DTTM AS TGT_CRT_DTTM,
+--        NULL AS UPD_DTTM,
+--        CASE
+--          WHEN TGT.CRT_DTTM IS NULL THEN 'I'
+--          ELSE 'U'
+--        END AS CHNG_FLG
+-- FROM itg_tw_pos_watson_store SRC
+--   LEFT OUTER JOIN (select * from itg_query_parameters
+-- 						where country_code = 'TW'
+-- 						and parameter_type = 'cust_nm') para
+--          ON SPLIT_PART(SRC.filename,'_',3) = para.parameter_name
+--         AND SPLIT_PART(SRC.filename,'_',1) = para.country_code
+-- ),
+-- final as 
+-- (
+--     select 
+--     pos_dt::date as pos_dt,
+-- 	vend_cd::varchar(1) as vend_cd,
+-- 	vend_nm::varchar(1) as vend_nm,
+-- 	prod_nm::varchar(1) as prod_nm,
+-- 	vend_prod_cd::varchar(40) as vend_prod_cd,
+-- 	vend_prod_nm::varchar(500) as vend_prod_nm,
+-- 	brnd_nm::varchar(1) as brnd_nm,
+-- 	ean_num::varchar(1) as ean_num,
+-- 	str_cd::varchar(40) as str_cd,
+-- 	str_nm::varchar(40) as str_nm,
+-- 	sls_qty::number(18,0) as sls_qty,
+-- 	sls_amt::number(16,5) as sls_amt,
+-- 	unit_prc_amt::varchar(1) as unit_prc_amt,
+-- 	sls_excl_vat_amt::varchar(1) as sls_excl_vat_amt,
+-- 	stk_rtrn_amt::varchar(1) as stk_rtrn_amt,
+-- 	stk_recv_amt::varchar(1) as stk_recv_amt,
+-- 	avg_sell_qty::varchar(1) as avg_sell_qty,
+-- 	cum_ship_qty::varchar(1) as cum_ship_qty,
+-- 	cum_rtrn_qty::varchar(1) as cum_rtrn_qty,
+-- 	web_ordr_takn_qty::varchar(1) as web_ordr_takn_qty,
+-- 	web_ordr_acpt_qty::varchar(1) as web_ordr_acpt_qty,
+-- 	dc_invnt_qty::varchar(1) as dc_invnt_qty,
+-- 	invnt_qty::varchar(1) as invnt_qty,
+-- 	invnt_amt::varchar(1) as invnt_amt,
+-- 	invnt_dt::varchar(1) as invnt_dt,
+-- 	serial_num::varchar(1) as serial_num,
+-- 	prod_delv_type::varchar(1) as prod_delv_type,
+-- 	prod_type::varchar(1) as prod_type,
+-- 	dept_cd::varchar(40) as dept_cd,
+-- 	dept_nm::varchar(1) as dept_nm,
+-- 	spec_1_desc::varchar(1) as spec_1_desc,
+-- 	spec_2_desc::varchar(1) as spec_2_desc,
+-- 	cat_big::varchar(1) as cat_big,
+-- 	cat_mid::varchar(1) as cat_mid,
+-- 	cat_small::varchar(1) as cat_small,
+-- 	dc_prod_cd::varchar(1) as dc_prod_cd,
+-- 	cust_dtls::varchar(1) as cust_dtls,
+-- 	dist_cd::varchar(1) as dist_cd,
+-- 	crncy_cd::varchar(3) as crncy_cd,
+-- 	src_txn_sts::varchar(1) as src_txn_sts,
+-- 	src_seq_num::varchar(1) as src_seq_num,
+-- 	src_sys_cd::varchar(300) as src_sys_cd,
+-- 	ctry_cd::varchar(10) as ctry_cd,
+-- 	current_timestamp()::timestamp_ntz(9) as tgt_crt_dttm ,
+-- 	current_timestamp()::varchar(1) as upd_dttm,
+-- 	chng_flg::varchar(1) as chng_flg,
+--     from trans
+-- )
+-- select * from final 
