@@ -17,7 +17,7 @@
           union 
           select distinct  'PSC' ||MNTH_ID||STORE_CD||ITEM_CD  from {{ source('phlsdl_raw', 'sdl_ph_pos_711') }} 
           union 
-          select distinct UPPER(SUBSTRING(FILE_NM,1,2)) ||JJ_MNTH_ID||LTRIM(STORE_CD,'0') ||LTRIM(POS_PROD_CD,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_waltermart') }} WHERE VENDOR_CD = '6539'
+          select distinct UPPER(SUBSTRING(FILE_NM,1,2)) ||JJ_MNTH_ID||LTRIM(STORE_CD,'0') ||LTRIM(POS_PROD_CD,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_waltermart') }} WHERE VENDOR_CD = '6256'
           
          );"
     )
