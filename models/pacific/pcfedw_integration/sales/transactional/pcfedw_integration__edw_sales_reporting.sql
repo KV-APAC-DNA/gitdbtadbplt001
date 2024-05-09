@@ -190,7 +190,6 @@ final as(
         gcph_subcategory::varchar(100) as gcph_subcategory,
         gcph_segment ::varchar(100) as gcph_segment ,
         gcph_subsegment::varchar(100) as gcph_subsegment    
-    from source 
-    where pac_subsource_type not in ('SAPBW_FUTURES')
+    from source
 )
 select * from final
