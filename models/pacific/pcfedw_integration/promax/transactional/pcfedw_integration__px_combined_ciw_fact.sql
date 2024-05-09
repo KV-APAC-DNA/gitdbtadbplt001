@@ -351,7 +351,7 @@ union_2 as
                                             time.jj_mnth_id,
                                             time.jj_wk
                                             order by time.cal_date desc,
-                                            order by lp.lp_price desc
+                                            lp.lp_price desc
                                         )
                                     ) as rank
                                 from edw_px_listprice lp,
@@ -551,7 +551,7 @@ union_3 as
                                         lkp.cmp_id,
                                         lp.lp_price,
                                         (
-                                            row_number() over (partition by lkp.cmp_id,lp.sku_stockcode,time.jj_mnth_id order by time.cal_date desc,order by lp.lp_price desc
+                                            row_number() over (partition by lkp.cmp_id,lp.sku_stockcode,time.jj_mnth_id order by time.cal_date desc,lp.lp_price desc
                                             )
                                         ) as rank
                                     from edw_px_listprice lp,
