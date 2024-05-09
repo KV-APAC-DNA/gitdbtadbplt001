@@ -1,0 +1,130 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_tw_incentive_schemes
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              not_null_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              name: TRATBL_sdl_mds_tw_incentive_schemes__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              group_by_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              name: TRATBL_sdl_mds_tw_incentive_schemes__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_gender
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["gender_standard_name","gender_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_gender__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["gender_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_gender__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_member_tier
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["tier_standard_name","tier_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_member_tier__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["tier_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_member_tier__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_channel
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["channel_standard_name","channel_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_channel__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["channel_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_channel__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_kr_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_hk_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_ps_targets
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+      - name: sdl_mds_kr_ps_targets
+        tags: ["na_mds_sdl_itg_load","ingestion"]       
+      - name: sdl_mds_hk_ps_targets 
+        tags: ["na_mds_sdl_itg_load","ingestion"]
