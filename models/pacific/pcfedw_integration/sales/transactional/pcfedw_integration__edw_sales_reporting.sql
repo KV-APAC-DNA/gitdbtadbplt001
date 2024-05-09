@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append",
+        pre_hook= "delete from {{this}} where pac_subsource_type <> 'SAPBW_FUTURES';"
+    )
+}}
 with source as(
     select * from {{ ref('pcfedw_integration__vw_sales_reporting') }}
 ),
@@ -191,5 +198,6 @@ final as(
         gcph_segment ::varchar(100) as gcph_segment ,
         gcph_subsegment::varchar(100) as gcph_subsegment    
     from source
+    where pac_subsource_type <> 'SAPBW_FUTURES'
 )
 select * from final
