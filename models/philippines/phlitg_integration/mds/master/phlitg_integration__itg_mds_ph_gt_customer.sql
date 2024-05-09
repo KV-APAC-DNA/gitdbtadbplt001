@@ -260,5 +260,6 @@ final as
     barangay_cd_name::varchar(255) as barangay_cd_name,
     long_lat_source::number(20,10) as long_lat_source
 from trans
+where len(address)<=255
 )
 select * from final
