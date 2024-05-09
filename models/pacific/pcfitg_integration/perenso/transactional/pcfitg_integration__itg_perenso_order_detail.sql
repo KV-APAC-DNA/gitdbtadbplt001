@@ -8,7 +8,8 @@
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_order_detail') }}
+    select *, dense_rank() over(partition by order_key,batch_key,line_key order by run_id desc) as rn from {{ source('pcfsdl_raw', 'sdl_perenso_order_detail') }}
+    qualify rn=1
 ),
 final as 
 (

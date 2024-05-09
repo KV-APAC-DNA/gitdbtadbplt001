@@ -37,7 +37,7 @@ models:
   - name: pcfedw_integration__edw_pacific_perenso_ims_analysis
     config:
       alias: edw_pacific_perenso_ims_analysis
-      tags: ["anz_perenso_fact_load", "transformation"]
+      tags: ["anz_perenso_field_order_analysis", "transformation"]
   - name: pcfedw_integration__edw_perenso_account_probeid_dim
     config:
       alias: edw_perenso_account_probeid_dim
