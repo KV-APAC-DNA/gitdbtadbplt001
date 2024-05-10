@@ -20,8 +20,8 @@ select
     to_date(wk_end_dt, 'dd/mm/yy') as wk_end_dt,
     iri_prod_desc::varchar(255) as iri_prod_desc,
     iri_ean::varchar(100) as iri_ean,
-    (scan_sales * 1000)::number(20,4) as scan_sales,
-    (scan_units * 1000)::number(20,4) as scan_units,
+    (concat(split_part(scan_sales,'.',1),'.',left(split_part(scan_sales,'.',2),4))*1000)::number(20,4) as scan_sales,
+    (concat(split_part(scan_units,'.',1),'.',left(split_part(scan_units,'.',2),4))*1000)::number(20,4) as scan_units,
     ac_nielsencode::varchar(100) as ac_nielsencode,
     current_timestamp()::timestamp_ntz(9) as crtd_dttm,
     filename::varchar(255) as filename
