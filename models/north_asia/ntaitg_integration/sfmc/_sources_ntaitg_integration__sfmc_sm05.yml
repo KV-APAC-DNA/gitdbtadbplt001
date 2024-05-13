@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_tw_sfmc_invoice_data
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_tw_sfmc_invoice_data__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+    - name: sdl_tw_sfmc_bounce_data
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_tw_sfmc_bounce_data__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration                
+
+

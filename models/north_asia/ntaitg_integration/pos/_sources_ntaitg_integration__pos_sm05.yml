@@ -1,0 +1,45 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_kr_pos_store_code_sold_to_map
+    - name: sdl_mds_tw_pos_promotional_price_ean_map
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_mds_tw_pos_promotional_price_ean_map__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+    - name: sdl_mds_hk_pos_product_mapping
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_mds_hk_pos_product_mapping__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+
+    - name: sdl_mds_hk_pos_promo_calendar
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate:
+              select_columns: ["muid", "prod_mjr_cd"]
+              group_by_columns: ["muid", "prod_mjr_cd"]
+              name: TRATBL_sdl_mds_hk_pos_promo_calendar__duplicate_test
+              config:
+                store_failures: true
+                schema: pcfwks_integration
+    - name: sdl_mds_hk_ref_pos_accounts
