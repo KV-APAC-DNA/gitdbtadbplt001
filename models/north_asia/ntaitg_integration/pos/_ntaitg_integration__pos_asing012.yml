@@ -9,3 +9,7 @@ models:
     config:
         alias: sdl_raw_tw_pos_watson_store
         tags: ["tw_pos_watson","ingestion"]
+  - name: ntaitg_integration__itg_tw_strategic_cust_hier
+    config:
+        alias: itg_tw_strategic_cust_hier
+        tags: ["tw_strategic_customer_hierarchy","ingestion"]

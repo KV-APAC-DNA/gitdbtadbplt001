@@ -9,3 +9,7 @@ models:
     config:
       alias: sdl_raw_ph_sfmc_sent_data
       tags: ["nta_sfmc_files","ingestion"]
+  - name: ntaitg_integration__sdl_raw_ph_sfmc_click_data
+    config:
+      alias: sdl_raw_ph_sfmc_sent_data
+      tags: ["nta_sfmc_files","ingestion"]

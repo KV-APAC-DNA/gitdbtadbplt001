@@ -5,9 +5,9 @@ with source as
 final as 
 (   
     select 
-    incentive_type::varchar(100) as incentive_type,
-	"begin"::number(28,4) as begin,
-	"end"::number(28,4) as end,
+    type_code::varchar(100) as incentive_type,
+	begin::number(28,4) as begin,
+	end::number(28,4) as end,
 	nts_si::number(28,4) as nts_si,
 	offtake_si::number(28,4) as offtake_si,
 	tp_si::number(28,4) as tp_si,

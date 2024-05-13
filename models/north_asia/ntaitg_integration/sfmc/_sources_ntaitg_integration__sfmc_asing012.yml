@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: ntasdl_raw
+    schema: snapntasdl_raw
     quoting:
       database: false
       schema: false
@@ -13,5 +13,9 @@ sources:
           tags: ["nta_sfmc_files","ingestion"]
         - name: sdl_tw_sfmc_sent_data
           tags: ["nta_sfmc_files","ingestion"]
+        - name: sdl_tw_sfmc_click_data
+          tags: ["nta_sfmc_files","ingestion"]
+        - name: sdl_tw_sfmc_consumer_master
+          tags: ["nta_crm_files","ingestion"]
           
 

@@ -13,15 +13,15 @@ sources:
         tags: ["na_mds_sdl_itg_load","ingestion"]
         tests:
           - test_null:
-              select_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
-              not_null_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              select_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              not_null_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
               name: TRATBL_sdl_mds_tw_incentive_schemes__null_test
               config:
                 store_failures: true
                 schema: ntawks_integration
           - test_duplicate:
-              select_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
-              group_by_columns: ['"begin"','"end"','nts_si','offtake_si','tp_si','ciw_si']
+              select_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              group_by_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
               name: TRATBL_sdl_mds_tw_incentive_schemes__duplicate_test
               config:
                 store_failures: true
@@ -124,7 +124,52 @@ sources:
                 schema: ntawks_integration
       - name: sdl_mds_tw_ps_targets
         tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_tw_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
       - name: sdl_mds_kr_ps_targets
-        tags: ["na_mds_sdl_itg_load","ingestion"]       
+        tags: ["na_mds_sdl_itg_load","ingestion"]    
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_kr_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration   
       - name: sdl_mds_hk_ps_targets 
         tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_hk_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
