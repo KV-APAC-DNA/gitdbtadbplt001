@@ -368,6 +368,7 @@ union_2 as
                                     ) as time
                                 where lp.sales_org = lkp.sls_org
                                     and to_date(time.cal_date) between to_date(lp.lp_startdate) and to_date(lp.lp_stopdate)
+                                    and lp.lp_price<>0
                             )
                         where rank = 1
                     ) epl,
@@ -567,6 +568,7 @@ union_3 as
                                         ) as time
                                     where lp.sales_org = lkp.sls_org
                                         and to_date(time.cal_date) between to_date(lp.lp_startdate) and to_date(lp.lp_stopdate)
+                                        and lp.lp_price<>0
                                 )
                             where rank = 1
                         ) epl,
