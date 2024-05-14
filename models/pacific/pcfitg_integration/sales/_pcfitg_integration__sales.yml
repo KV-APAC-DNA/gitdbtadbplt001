@@ -24,4 +24,4 @@ models:
   - name: pcfitg_integration__vw_stg_sdl_weekly_forecast
     config: 
       alias: vw_stg_sdl_weekly_forecast
-      tags: ["pacific_view","transformation"]
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
