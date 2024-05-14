@@ -1,10 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where pac_subsource_type <> 'SAPBW_FUTURES';"
-    )
-}}
 with source as(
     select * from {{ ref('pcfedw_integration__vw_sales_reporting') }}
 ),
