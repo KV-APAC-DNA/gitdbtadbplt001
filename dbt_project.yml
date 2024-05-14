@@ -306,6 +306,9 @@ models:
         +materialized: table
         +transient: false
         +schema: PCFITG_INTEGRATION
+        sales:
+          staging:
+            +materialized: view
       pcfwks_integration:
         +materialized: table
         +schema: PCFWKS_INTEGRATION
