@@ -7,7 +7,6 @@
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_complaint_data') }}) and cntry_cd = 'TH';
                     {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_complaint_data') }}) and cntry_cd = 'PH';
-                    {% endif %}
                     {% elif var('sfmc_job_to_execute') == 'tw_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('ntasdl_raw','sdl_tw_sfmc_complaint_data') }}) and cntry_cd = 'TW';
                     {% endif %}
@@ -94,7 +93,7 @@ final as(
         file_name::varchar(255) as file_name,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source_ph
+    from source_tw
     where rnk=1
 )
 {% endif %}

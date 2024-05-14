@@ -34,4 +34,8 @@ sources:
                 name: TRATBL_sdl_tw_as_watsons_inventory__lookup_test
                 config:
                   store_failures: true
-                  schema: phlwks_integration 
+                  schema: ntawks_integration 
+      - name: sdl_tw_sfmc_complaint_data
+        tags: [""]
+      - name: sdl_ph_sfmc_unsubscribe_data
+        tags: [""]

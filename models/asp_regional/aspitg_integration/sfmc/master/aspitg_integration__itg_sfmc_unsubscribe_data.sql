@@ -20,6 +20,9 @@ with source as(
 source_ph as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_unsubscribe_data') }}
+),
+source_tw as (
+    select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_ph_sfmc_unsubscribe_data') }}
 )
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
 ,
@@ -95,8 +98,9 @@ final as
         file_name::varchar(255) as file_name,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source_ph
+    from source_tw
     where rnk=1
 )
 select * from final
+
 {% endif %}
