@@ -4,7 +4,8 @@
         incremental_strategy= "append",
         unique_key=  ['store_chk_hdr_key','line_key','todo_key','prod_grp_key'],
         pre_hook= "delete from {{this}} where (nvl(store_chk_hdr_key,'999999'),nvl(line_key,'999999'),nvl(todo_key,'999999'),nvl(prod_grp_key,'999999')) in (select distinct nvl(store_chk_hdr_key,'999999'),
-       nvl(line_key,'999999'),nvl(todo_key,'999999'),nvl(prod_grp_key,'999999') from {{ source('pcfsdl_raw', 'sdl_perenso_survey_result') }});"
+       nvl(line_key,'999999'),nvl(todo_key,'999999'),nvl(prod_grp_key,'999999') from {{ source('pcfsdl_raw', 'sdl_perenso_survey_result') }});
+       delete from {{this}} where store_chk_hdr_key in (select distinct store_chk_hdr_key from pcfedw_integration.edw_perenso_survey where store_chk_date>=dateadd(day,-91,convert_timezone('UTC',current_timestamp)::date));"
     )
 }}
 with source as 
