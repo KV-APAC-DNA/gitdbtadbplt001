@@ -52,7 +52,7 @@ final as
 SELECT a.cmp_id,
     a.country,
     a.cust_no,
-    a.promo_number,
+    nvl(a.promo_number,'') as promo_number,
     a.px_jj_year,
     a.px_jj_mnth,
     a.matl_id,
