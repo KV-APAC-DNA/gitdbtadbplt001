@@ -1,3 +1,14 @@
+{{
+    config(
+        post_hook = "create or replace table 
+                    {% if target.name=='prod' %}
+                        pcfedw_integration.edw_demand_forecast_snapshot_temp
+                    {% else %}
+                        {{schema}}.pcfedw_integration__edw_demand_forecast_snapshot_temp
+                    {% endif %}
+                clone {{this}};"
+    )
+}}
 with source as(
     select * from {{ ref('pcfwks_integration__wks_demand_forecast_snapshot') }}
 ),
