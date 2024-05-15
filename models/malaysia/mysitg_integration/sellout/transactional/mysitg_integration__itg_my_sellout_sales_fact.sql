@@ -180,8 +180,8 @@ final as (
     union2.crtd_dttm::timestamp_ntz(9) as crtd_dttm,
     union2.updt_dttm::timestamp_ntz(9) as updt_dttm
     from union2,immd,a 
-    where ltrim(immd.item_bar_cd(+),'0') = ltrim(ean_num,'0')
-    and ltrim(a.ext_item_cd(+),'0') = ltrim(dstrbtr_prod_cd,'0') 
+    where ltrim(immd.item_bar_cd(+),'0') = ltrim(trim(ean_num),'0')
+    and ltrim(a.ext_item_cd(+),'0') = ltrim(trim(dstrbtr_prod_cd),'0') 
 )
 select * from final
 {% endif %}
