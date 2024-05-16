@@ -58,7 +58,7 @@ select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
 ),
 edw_cust_ciw_plan_fact as (
 select * from {{ ref('pcfedw_integration__edw_cust_ciw_plan_fact') }}
-)
+),
 final as (
 SELECT
   vsf.pac_source_type,
