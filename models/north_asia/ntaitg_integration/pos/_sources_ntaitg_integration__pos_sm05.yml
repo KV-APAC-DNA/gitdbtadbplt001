@@ -1,6 +1,15 @@
 version: 2
 
 sources:
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: sm05_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: ntaitg_integration__itg_pos_prom_prc_map_temp  
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: snapntasdl_raw

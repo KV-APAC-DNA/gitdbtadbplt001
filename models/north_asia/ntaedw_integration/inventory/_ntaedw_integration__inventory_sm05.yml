@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_pos_inventory_fact
+    config: 
+      alias: edw_pos_inventory_fact
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaedw_integration__edw_ims_inventory_fact
+    config: 
+      alias: edw_ims_inventory_fact
+      tags: ["j_pa_grocery_inv","transformation"]

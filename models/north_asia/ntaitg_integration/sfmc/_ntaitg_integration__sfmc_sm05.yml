@@ -10,3 +10,8 @@ models:
     config: 
       alias: sdl_raw_tw_sfmc_invoice_data
       tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_consumer_master
+    config: 
+      alias: sdl_raw_tw_sfmc_consumer_master
+      tags: ["j_pa_grocery_inv","transformation"]

@@ -1,9 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy = "merge",
+        incremental_strategy = "append",
         unique_key=["cust_prod_cd","barcd", "cust"],
-        merge_exclude_columns = ["crt_dttm"]
+        pre_hook = ["delete from {{this}} itg_pos_prom_prc_map using DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_itg_pos_promotional_price_map wks_itg_pos_promotional_price_map where wks_itg_pos_promotional_price_map.barcode = itg_pos_prom_prc_map.barcd and  wks_itg_pos_promotional_price_map.customer=itg_pos_prom_prc_map.cust and  wks_itg_pos_promotional_price_map.cust_prod_cd=itg_pos_prom_prc_map.cust_prod_cd and   wks_itg_pos_promotional_price_map.chng_flg = 'U';"]
     )
 }}
 
