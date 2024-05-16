@@ -12,23 +12,67 @@ sources:
     - name: sdl_tw_sfmc_invoice_data
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
-          - test_duplicate:
-              select_columns: ["muid", "prod_mjr_cd"]
-              group_by_columns: ["muid", "prod_mjr_cd"]
-              name: TRATBL_sdl_tw_sfmc_invoice_data__duplicate_test
+          - test_duplicate__ff:
+              group_by_columns: ["website_unique_id", "file_name"]
+              name: TRATBL_sdl_tw_sfmc_invoice_data__duplicate_test__ff
               config:
                 store_failures: true
-                schema: pcfwks_integration
+                schema: ntawks_integration
+          - test_null__ff:
+              not_null_columns: ["subscriber_key","website_unique_id"]
+              name: TRATBL_sdl_tw_sfmc_invoice_data__null_test__ff
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup__ff:
+                failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                column: "upper(nvl(subscriber_key, ''))"
+                lookup_column: "upper(nvl(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_tw_sfmc_invoice_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
 
     - name: sdl_tw_sfmc_bounce_data
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
-          - test_duplicate:
-              select_columns: ["muid", "prod_mjr_cd"]
-              group_by_columns: ["muid", "prod_mjr_cd"]
-              name: TRATBL_sdl_tw_sfmc_bounce_data__duplicate_test
+          - test_duplicate__ff:
+              group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
+              name: TRATBL_sdl_tw_sfmc_bounce_data__duplicate_test__ff
               config:
                 store_failures: true
-                schema: pcfwks_integration                
+                schema: ntawks_integration
+          - test_null__ff:
+              not_null_columns: ["job_id","batch_id","subscriber_key","event_date","email_id"]
+              name: TRATBL_sdl_tw_sfmc_bounce_data__null_test__ff
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup__ff:
+                failure_reason: "Subscriber_Key not present in Consumer Master Lookup Table"
+                column: "upper(nvl(subscriber_key, ''))"
+                lookup_column: "upper(nvl(subscriber_key, ''))"
+                lookup_table: "{{ ref('aspitg_integration__itg_sfmc_consumer_master') }}"
+                name: TRATBL_sdl_tw_sfmc_bounce_data__test_lookup__ff
+                config:
+                  store_failures: true
+                  schema: ntawks_integration           
 
 
+    - name: sdl_tw_sfmc_consumer_master
+      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tests:
+          - test_duplicate__ff:
+              group_by_columns: ["subscriber_key","file_name"]
+              name: TRATBL_sdl_tw_sfmc_consumer_master__duplicate_test__ff
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_null__ff:
+              not_null_columns: ["subscriber_key","brand"]
+              name: TRATBL_sdl_tw_sfmc_consumer_master__null_test__ff
+              config:
+                store_failures: true
+                schema: ntawks_integration
+ 

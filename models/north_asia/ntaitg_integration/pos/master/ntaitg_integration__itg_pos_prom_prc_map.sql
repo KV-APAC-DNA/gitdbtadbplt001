@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy = "merge",
-        unique_key=["cust_prod_cd","barcd", "cust","prom_prc"],
+        unique_key=["cust_prod_cd","barcd", "cust"],
         merge_exclude_columns = ["crt_dttm"]
     )
 }}

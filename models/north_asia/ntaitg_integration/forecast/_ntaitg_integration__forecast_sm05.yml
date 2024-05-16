@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_tw_bp_target
+    config: 
+      alias: itg_tw_bp_target
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_tw_bu_forecast_sku
+    config: 
+      alias: itg_tw_bu_forecast_sku
+      tags: ["j_pa_grocery_inv","transformation"]

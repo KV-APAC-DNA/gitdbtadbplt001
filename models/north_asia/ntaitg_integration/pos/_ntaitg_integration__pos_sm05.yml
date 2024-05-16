@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_mds_hk_pos_product_mapping
+    config: 
+      alias: itg_mds_hk_pos_product_mapping
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_mds_hk_pos_promo_calendar
+    config: 
+      alias: itg_mds_hk_pos_promo_calendar
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_mds_hk_ref_pos_accounts
+    config: 
+      alias: itg_mds_hk_ref_pos_accounts
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_cust_prod_cd_ean_map
+    config: 
+      alias: itg_pos_cust_prod_cd_ean_map
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_prom_prc_map
+    config: 
+      alias: itg_pos_prom_prc_map
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_str_cd_sold_to_map
+    config: 
+      alias: itg_pos_str_cd_sold_to_map
+      tags: ["j_pa_grocery_inv","transformation"]

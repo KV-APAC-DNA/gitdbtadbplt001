@@ -6,3 +6,12 @@ models:
       alias: itg_ims_invnt
       tags: ["j_pa_grocery_inv","transformation"]
 
+  - name: ntaitg_integration__sdl_tw_ims_dstr_std_stock
+    config: 
+      alias: sdl_tw_ims_dstr_std_stock
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__sdl_raw_tw_ims_dstr_std_stock
+    config: 
+      alias: sdl_raw_tw_ims_dstr_std_stock
+      tags: ["j_pa_grocery_inv","transformation"]

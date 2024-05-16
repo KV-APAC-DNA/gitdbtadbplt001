@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107479_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107479_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107482_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107482_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107483_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107483_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107485_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107485_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107501_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107501_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107507_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107507_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_107510_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_107510_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_116047_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_116047_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_120812_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_120812_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_122296_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_122296_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_123291_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_123291_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_131953_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_131953_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_132222_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_132222_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_132349_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_132349_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_132508_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_132508_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxstock
+    config:
+      alias: s_tw_ims_dstr_std_stock_134478_pxstock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxStore
+    config:
+      alias: s_tw_ims_dstr_std_stock_134478_pxStore
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_134478_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_135307_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_135307_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_135561_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_135561_stock
+      tags: ["","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_136454_stock
+    config:
+      alias: wks_tw_ims_dstr_std_stock_136454_stock
+      tags: ["","transformation"]

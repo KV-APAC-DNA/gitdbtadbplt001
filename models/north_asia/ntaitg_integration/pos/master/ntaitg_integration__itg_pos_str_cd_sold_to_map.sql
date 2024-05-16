@@ -21,7 +21,7 @@ final as(
         cust_str_cd::varchar(50) as cust_str_cd,
         sold_to_cd::varchar(50) as sold_to_cd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm 
+        current_timestamp()::timestamp_ntz(9) as upd_dttm 
     from source
 )
 select * from final

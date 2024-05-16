@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_v_rpt_tw_sales_incentive
+    config: 
+      alias: edw_v_rpt_tw_sales_incentive
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaedw_integration__edw_rpt_tw_sales_incentive
+    config: 
+      alias: edw_rpt_tw_sales_incentive
+      tags: ["j_pa_grocery_inv","transformation"]

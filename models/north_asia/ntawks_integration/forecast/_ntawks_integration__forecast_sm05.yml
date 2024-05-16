@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_tw_bu_forecast_sku
+    config: 
+      alias: wks_itg_tw_bu_forecast_sku
+      tags: ["j_pa_grocery_inv","transformation"]
+

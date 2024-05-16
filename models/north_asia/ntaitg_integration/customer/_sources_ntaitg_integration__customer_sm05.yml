@@ -21,4 +21,4 @@ sources:
                 schema: pcfwks_integration
              
 
-
+    - name: sdl_tw_ims_dstr_prod_map
