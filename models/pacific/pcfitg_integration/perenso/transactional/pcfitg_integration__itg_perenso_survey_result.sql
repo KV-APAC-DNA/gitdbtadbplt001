@@ -12,7 +12,9 @@
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_survey_result') }}
+    select *, dense_rank() over (partition by nvl(store_chk_hdr_key,'999999'),nvl(line_key,'999999'),nvl(todo_key,'999999'),nvl(prod_grp_key,'999999') order by run_id desc) as rnk 
+    from {{ source('pcfsdl_raw', 'sdl_perenso_survey_result') }}
+    qualify rnk=1
 ),
 final as 
 (
