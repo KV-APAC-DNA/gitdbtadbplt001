@@ -2,12 +2,11 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook=[build_sfmc_consumer_master(),"{% if var('crm_job_to_execute') == 'th_crm_files' %}
+        pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
                     delete from {{this}} where cntry_cd='TH' and crtd_dttm < (select min(crtd_dttm) from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }});
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd='PH';
-                    {% endif %}
-                "]
+                    {% endif %}"
     )
 }}
 with
@@ -29,9 +28,9 @@ final as
         first_name::varchar(200) as first_name,
         last_name::varchar(200) as last_name,
         mobile_num::varchar(30) as mobile_num,
-        mobile_cntry_cd ::varchar(10) as mobile_cntry_cd,
-        birthday_mnth::varchar(10) as birthday_mnth,
-        birthday_year::varchar(10) as birthday_year,
+        mobile_cntry_cd ::varchar(30) as mobile_cntry_cd,
+        birthday_mnth::varchar(100) as birthday_mnth,
+        birthday_year::varchar(100) as birthday_year,
         address_1::varchar(255) as address_1,
         address_2::varchar(255) as address_2,
         address_city::varchar(100) as address_city,
@@ -42,7 +41,7 @@ final as
         medium::varchar(100) as medium,
         brand::varchar(200) as brand,
         address_cntry::varchar(100) as address_cntry,
-        campaign_id::varchar(100) as campaign_id,
+        campaign_id::varchar(1000) as campaign_id,
         created_date::timestamp_ntz(9) as created_date,
         updated_date::timestamp_ntz(9) as updated_date,
         unsubscribe_date::timestamp_ntz(9) as unsubscribe_date,
@@ -90,9 +89,9 @@ final as
         first_name::varchar(200) as first_name,
         last_name::varchar(200) as last_name,
         mobile_num::varchar(30) as mobile_num,
-        mobile_cntry_cd::varchar(10) as mobile_cntry_cd,
-        birthday_mnth::varchar(10) as birthday_mnth,
-        birthday_year::varchar(10) as birthday_year,
+        mobile_cntry_cd::varchar(30) as mobile_cntry_cd,
+        birthday_mnth::varchar(100) as birthday_mnth,
+        birthday_year::varchar(100) as birthday_year,
         address_1::varchar(255) as address_1,
         address_2::varchar(255) as address_2,
         address_city::varchar(100) as address_city,
@@ -103,7 +102,7 @@ final as
         medium::varchar(100) as medium,
         brand::varchar(200) as brand,
         address_cntry::varchar(100) as address_cntry,
-        campaign_id::varchar(100) as campaign_id,
+        campaign_id::varchar(1000) as campaign_id,
         created_date::timestamp_ntz(9) as created_date,
         updated_date::timestamp_ntz(9) as updated_date,
         unsubscribe_date::timestamp_ntz(9) as unsubscribe_date,

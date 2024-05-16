@@ -64,7 +64,7 @@ gt_sellout as (
                         (''::character varying)::text
                     ),
                     0,
-                    5
+                    6
                 )
             )::character varying AS max_yearmo,
             'Malaysia' AS cntry_nm,
