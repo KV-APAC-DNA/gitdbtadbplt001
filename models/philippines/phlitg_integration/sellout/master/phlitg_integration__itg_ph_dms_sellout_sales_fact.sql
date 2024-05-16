@@ -8,7 +8,8 @@
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }}
+    select *, dense_rank() over (partition by dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM'),'YYYYMMDD'), '') || to_char(to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM'),'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id order by cdl_dttm desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }}
+    qualify rnk=1
 ),
 final as(
     select 
