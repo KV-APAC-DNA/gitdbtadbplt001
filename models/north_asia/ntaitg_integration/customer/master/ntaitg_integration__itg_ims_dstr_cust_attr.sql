@@ -4,11 +4,11 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_key=["dstr_cd","dstr_cust_cd","ctry_cd"],
-        pre_hook="delete from {{this}} USING {{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_customer') }} t2 WHERE itg_ims_dstr_cust_attr.dstr_cd = t2.distributor_code AND itg_ims_dstr_cust_attr.dstr_cust_cd = t2.distributor_cusotmer_code AND itg_ims_dstr_cust_attr.ctry_cd = 'TW';"
+        pre_hook="delete from {{this}} USING {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }} t2 WHERE itg_ims_dstr_cust_attr.dstr_cd = t2.distributor_code AND itg_ims_dstr_cust_attr.dstr_cust_cd = t2.distributor_cusotmer_code AND itg_ims_dstr_cust_attr.ctry_cd = 'TW';"
     )
 }}
 with source as (
-    select * from  {{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_customer') }}
+    select * from  {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }}
 ),
 tw_ims_distributor_ingestion_metadata as
 (

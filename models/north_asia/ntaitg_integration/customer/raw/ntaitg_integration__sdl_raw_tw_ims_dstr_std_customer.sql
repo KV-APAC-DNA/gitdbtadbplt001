@@ -7,7 +7,7 @@
 with 
 source as
 (
-    select * from {{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_customer') }}
+    select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }} 
 ),
 
 final as
