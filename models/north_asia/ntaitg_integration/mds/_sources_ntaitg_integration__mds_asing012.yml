@@ -173,3 +173,5 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+      - name: sdl_tw_sales_target
+        tags: ['j_tw_sales_target_wrapper',"transformation"]

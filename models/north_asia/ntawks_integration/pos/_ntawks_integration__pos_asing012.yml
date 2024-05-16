@@ -6,3 +6,11 @@ models:
     config:
       alias: wks_itg_pos_watson_store
       tags: ["tw_pos_watson","transformation"]
+  - name: ntawks_integration__wks_itg_tw_sales_target
+    config:
+      alias: wks_itg_tw_sales_target
+      tags: ["j_tw_sales_target_wrapper","transformation"]
+  - name: ntawks_integration__wks_tw_sales_incentive_tp_ciw
+    config:
+      alias: wks_tw_sales_incentive_tp_ciw
+      tags: ["twsi_datamart_load","transformation"]
