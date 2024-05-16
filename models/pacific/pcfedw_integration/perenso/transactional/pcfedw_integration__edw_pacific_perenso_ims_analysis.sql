@@ -1527,7 +1527,7 @@ LEFT JOIN  ETD
 ON DSTR.START_DATE = ETD.CAL_DATE::date
 LEFT JOIN EDW_PERENSO_PROD_DIM EPPD ON DSTR.PROD_KEY = EPPD.PROD_KEY
 LEFT JOIN EDW_PERENSO_ACCOUNT_DIM EPAD ON DSTR.ACCT_KEY = EPAD.ACCT_ID
-WHERE DELVRY_DT > add_months(current_timestamp(),-24)::date
+WHERE DELVRY_DT > add_months(convert_timezone('UTC',current_timestamp())::date,-24)
 ),
 transformed as (
 select * from union_1
