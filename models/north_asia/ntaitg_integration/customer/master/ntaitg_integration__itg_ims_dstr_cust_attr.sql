@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_key=["dstr_cd","dstr_cust_cd","ctry_cd"],
-        pre_hook="delete from {{this}} USING {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }} t2 WHERE itg_ims_dstr_cust_attr.dstr_cd = t2.distributor_code AND itg_ims_dstr_cust_attr.dstr_cust_cd = t2.distributor_cusotmer_code AND itg_ims_dstr_cust_attr.ctry_cd = 'TW';"
+        pre_hook="delete from {{this}} as itg_ims_dstr_cust_attr USING {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }} t2 WHERE itg_ims_dstr_cust_attr.dstr_cd = t2.distributor_code AND itg_ims_dstr_cust_attr.dstr_cust_cd = t2.distributor_cusotmer_code AND itg_ims_dstr_cust_attr.ctry_cd = 'TW';"
     )
 }}
 with source as (
@@ -69,13 +69,18 @@ final AS
 	t1.distributor_address::varchar(255) as distributor_address,
 	t1.distributor_telephone::varchar(255) as distributor_telephone,
 	t1.distributor_contact::varchar(255) as distributor_contact,
-	t2.store_type::varchar(255) as store_type,
-    t2.hq::varchar(255) as hq
+    case when t1.store_type='TW'
+    THEN t2.store_type 
+    else t1.store_type
+    end::varchar(255) as store_type,
+    case when t1.ctry_cd='TW'
+    THEN t2.hq 
+    else t1.hq
+    end::varchar(255) as hq
     from trans t1
         left join itg_tw_ims_dstr_customer_mapping t2 
         ON LTRIM (t1.dstr_cust_cd, '0') = LTRIM (t2.distributors_customer_code, '0')
         AND t1.dstr_cd = t2.distributor_code
-        AND t1.ctry_cd = 'TW'
 )
 select * from final
 
