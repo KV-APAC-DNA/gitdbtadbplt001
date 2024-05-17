@@ -1,5 +1,5 @@
 with itg_sfmc_consumer_master as (
-    select * from snapntaitg_integration.itg_sfmc_consumer_master
+    select * from {{ ref('aspitg_integration__itg_sfmc_consumer_master') }}
 ),
 
 logon_month as 

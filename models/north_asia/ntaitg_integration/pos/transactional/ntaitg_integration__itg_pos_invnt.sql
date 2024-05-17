@@ -7,7 +7,7 @@
                     (
                         select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd from
                         (
-                            select * from snapntawks_integration.wks_itg_pos_poya_invnt
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_poya_invnt') }}
                         )
                         where chng_flg = 'U'
                     );",
@@ -15,9 +15,9 @@
                     (
                         select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from
                         (
-                            select * from snapntawks_integration.wks_itg_pos_pxcivilia_invnt
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_pxcivilia_invnt') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_rtmart_invnt
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_rtmart_invnt') }}
                         )
                         where chng_flg = 'U'
                     );"
@@ -26,13 +26,13 @@
 }}
 
 with wks_itg_pos_poya_invnt as (
-    select * from snapntawks_integration.wks_itg_pos_poya_invnt
+    select * from {{ ref('ntawks_integration__wks_itg_pos_poya_invnt') }}
 ),
 wks_itg_pos_pxcivilia_invnt as (
-    select * from snapntawks_integration.wks_itg_pos_pxcivilia_invnt
+    select * from {{ ref('ntawks_integration__wks_itg_pos_pxcivilia_invnt') }}
 ),
 wks_itg_pos_rtmart_invnt as (
-    select * from snapntawks_integration.wks_itg_pos_rtmart_invnt
+    select * from {{ ref('ntawks_integration__wks_itg_pos_rtmart_invnt') }}
 ),
 final as 
 (    

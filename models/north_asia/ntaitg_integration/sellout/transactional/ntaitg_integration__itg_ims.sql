@@ -17,7 +17,7 @@ with sdl_tw_ims_dstr_std_sel_out as
     select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
 ),
 itg_ims_dstr_cust_attr as (
-    select * from snapntaitg_integration.itg_ims_dstr_cust_attr
+    select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 tw_ims_distributor_ingestion_metadata as (
     select * from snapntawks_integration.tw_ims_distributor_ingestion_metadata
