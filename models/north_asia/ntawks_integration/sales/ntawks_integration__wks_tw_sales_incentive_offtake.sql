@@ -208,7 +208,7 @@ monthly_offtake as
                                                     customer_name
                                                 from itg_tsi_target_data
                                             )
-                                    ) target ON a.dstr_cd = target.dist_code
+                                    ) target ON trim(a.dstr_cd) = trim(target.dist_code)
                                 WHERE ctry_cd = 'TW'
                                     AND to_crncy = 'TWD'
                                 GROUP BY a.ctry_cd,
