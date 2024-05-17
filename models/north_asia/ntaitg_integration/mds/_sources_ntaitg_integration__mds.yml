@@ -9,335 +9,212 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_kr_ecommerce_offtake_product_master
-        columns:
-          - name: load_date
-            data_type: timestamp_ntz
-          - name: source_file_name
-            data_type: varchar
-          - name: retailer_sku_code
-            data_type: varchar
-          - name: jnj_sku_code
-            data_type: varchar
-          - name: retailer_type
-            data_type: varchar
-          - name: ean
-            data_type: varchar
-          - name: retailer_barcode
-            data_type: varchar
-          - name: brand
-            data_type: varchar
-          - name: retailer_sku_name
-            data_type: varchar
-
-      - name: sdl_mds_hk_ecom_product
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: dataset
-            data_type: varchar
-          - name: cust_attr_1
-            data_type: varchar
-          - name: cust_attr_2
-            data_type: varchar
-          - name: upc
-            data_type: varchar
-          - name: sku_name
-            data_type: varchar
-          - name: prod_attr_1
-            data_type: varchar
-          - name: prod_attr_2
-            data_type: varchar
-          - name: prod_attr_3
-            data_type: varchar
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
-
-      - name: sdl_mds_hk_sku_benchmarks
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: jj_upc
-            data_type: varchar
-          - name: jj_sku_description
-            data_type: varchar
-          - name: jj_packsize
-            data_type: number
-          - name: jj_target
-            data_type: number
-          - name: variance
-            data_type: number
-          - name: comp_upc
-            data_type: varchar
-          - name: comp_sku_description
-            data_type: varchar
-          - name: comp_packsize
-            data_type: number
-          - name: valid_from
-            data_type: timestamp_ntz
-          - name: valid_to
-            data_type: timestamp_ntz
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
-
+      - name: sdl_mds_tw_ecom_product   
+      - name: sdl_mds_hk_ecom_product  
       - name: sdl_mds_kr_ecom_offtake_product_mapping
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: retailer_sku_code
-            data_type: varchar
-          - name: jnj_sku_code
-            data_type: varchar
-          - name: ean
-            data_type: varchar
-          - name: brand
-            data_type: varchar
-          - name: retailer_sku_name
-            data_type: varchar
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
-
-      - name: sdl_mds_kr_sku_benchmarks
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: jj_upc
-            data_type: varchar
-          - name: jj_sku_description
-            data_type: varchar
-          - name: jj_packsize
-            data_type: number
-          - name: jj_target
-            data_type: number
-          - name: variance
-            data_type: number
-          - name: comp_upc
-            data_type: varchar
-          - name: comp_sku_description
-            data_type: varchar
-          - name: comp_packsize
-            data_type: number
-          - name: valid_from
-            data_type: timestamp_ntz
-          - name: valid_to
-            data_type: timestamp_ntz
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
-
-      - name: sdl_mds_tw_ecom_product
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: dataset
-            data_type: varchar
-          - name: cust_attr_1
-            data_type: varchar
-          - name: cust_attr_2
-            data_type: varchar
-          - name: upc
-            data_type: varchar
-          - name: sku_name
-            data_type: varchar
-          - name: prod_attr_1
-            data_type: varchar
-          - name: prod_attr_2
-            data_type: varchar
-          - name: prod_attr_3
-            data_type: varchar
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
-
+      - name: sdl_kr_ecommerce_offtake_product_master
       - name: sdl_mds_tw_sku_benchmarks
-        columns:
-          - name: id
-            data_type: number
-          - name: muid
-            data_type: varchar
-          - name: versionname
-            data_type: varchar
-          - name: versionnumber
-            data_type: number
-          - name: version_id
-            data_type: number
-          - name: versionflag
-            data_type: varchar
-          - name: name
-            data_type: varchar
-          - name: code
-            data_type: varchar
-          - name: changetrackingmask
-            data_type: number
-          - name: jj_upc
-            data_type: varchar
-          - name: jj_sku_description
-            data_type: varchar
-          - name: jj_packsize
-            data_type: number
-          - name: jj_target
-            data_type: number
-          - name: variance
-            data_type: number
-          - name: comp_upc
-            data_type: varchar
-          - name: comp_sku_description
-            data_type: varchar
-          - name: comp_packsize
-            data_type: number
-          - name: valid_from
-            data_type: timestamp_ntz
-          - name: valid_to
-            data_type: timestamp_ntz
-          - name: enterdatetime
-            data_type: timestamp_ntz
-          - name: enterusername
-            data_type: varchar
-          - name: enterversionnumber
-            data_type: number
-          - name: lastchgdatetime
-            data_type: timestamp_ntz
-          - name: lastchgusername
-            data_type: varchar
-          - name: lastchgversionnumber
-            data_type: number
-          - name: validationstatus
-            data_type: varchar
+      - name: sdl_mds_kr_sku_benchmarks
+      - name: sdl_mds_hk_sku_benchmarks
+      - name: sdl_mds_tw_incentive_schemes
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              not_null_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              name: TRATBL_sdl_mds_tw_incentive_schemes__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              group_by_columns: ["begin","end","nts_si","offtake_si","tp_si","ciw_si"]
+              name: TRATBL_sdl_mds_tw_incentive_schemes__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_gender
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["gender_standard_name","gender_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_gender__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["gender_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_gender__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_member_tier
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["tier_standard_name","tier_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_member_tier__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["tier_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_member_tier__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_sfmc_channel
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["channel_standard_name","channel_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_channel__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["channel_raw"]
+              name: TRATBL_sdl_mds_tw_sfmc_channel__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_kr_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_hk_ps_weights
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["re","kpi","channel"]
+              not_null_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["re","kpi","channel"]
+              group_by_columns: ["re","kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_tw_ps_targets
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_tw_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_tw_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_mds_kr_ps_targets
+        tags: ["na_mds_sdl_itg_load","ingestion"]    
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_kr_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_kr_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration   
+      - name: sdl_mds_hk_ps_targets 
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              not_null_columns: ["kpi","channel"]
+              name: TRATBL_sdl_mds_hk_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              select_columns: ["kpi","channel","re","attribute_1","attribute_2","value"]
+              group_by_columns: ["channel","re","attribute_1","attribute_2","value"]
+              name: TRATBL_sdl_mds_hk_ps_targets__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_tw_sales_target
+        tags: ['j_tw_sales_target_wrapper',"transformation"]
+
+      - name: sdl_mds_tw_sales_representative
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                group_by_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                name: TRATBL_sdl_mds_tw_sales_representative__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                not_null_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                select_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                name: TRATBL_sdl_mds_tw_sales_representative__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_mds_tw_customer_sales_rep_mapping
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                group_by_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                name: TRATBL_sdl_mds_tw_customer_sales_rep_mapping__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                not_null_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code"]
+                select_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                name: TRATBL_sdl_mds_tw_customer_sales_rep_mapping__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+     

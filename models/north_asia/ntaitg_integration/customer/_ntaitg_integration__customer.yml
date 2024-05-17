@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_ims_dstr_cust_attr
+    config:
+      alias: itg_ims_dstr_cust_attr
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_ims_dstr_std_customer
+    config:
+      alias: sdl_raw_tw_ims_dstr_std_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntaitg_integration__sdl_tw_ims_dstr_std_customer
+    config:
+      alias: sdl_tw_ims_dstr_std_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_rt_mart
+    config:
+      alias: sdl_raw_tw_pos_rt_mart
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__itg_tw_sales_target
+    config:
+      alias: itg_tw_sales_target
+      tags: ["j_tw_sales_target_wrapper","transformation"]
+

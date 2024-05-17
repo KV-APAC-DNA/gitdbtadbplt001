@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__vw_tw_forecast
-    config: 
-        alias: vw_tw_forecast
-        tags: ["twsi_datamart_load","transformation"]
