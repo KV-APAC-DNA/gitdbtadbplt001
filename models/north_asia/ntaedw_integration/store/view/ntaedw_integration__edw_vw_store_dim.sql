@@ -1,11 +1,11 @@
 with itg_ims_dstr_cust_attr as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_IMS_DSTR_CUST_ATTR
+select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 edw_sales_rep_route_plan as (
 select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_SALES_REP_ROUTE_PLAN
 ),
 edw_ims_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 final as (
 SELECT 

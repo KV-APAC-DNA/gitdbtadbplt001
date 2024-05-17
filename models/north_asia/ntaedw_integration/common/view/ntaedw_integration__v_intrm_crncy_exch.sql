@@ -1,5 +1,5 @@
 with edw_crncy_exch as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CRNCY_EXCH
+select * from {{ ref('aspedw_integration__edw_crncy_exch') }}
 ),
 final as (
 SELECT drvd_crncy.ex_rt_typ,

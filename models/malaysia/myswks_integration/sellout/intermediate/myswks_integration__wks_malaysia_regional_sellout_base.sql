@@ -1,39 +1,39 @@
 with
 itg_my_sellout_sales_fact as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_SELLOUT_SALES_FACT
+select * from {{ ref('mysitg_integration__itg_my_sellout_sales_fact') }}
 ),
 itg_my_customer_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_CUSTOMER_DIM
+select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
 itg_my_dstrbtrr_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_DSTRBTRR_DIM
+select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
 ),
-ITG_MY_DSTRBTR_CUST_DIM as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_DSTRBTR_CUST_DIM
+itg_my_dstrbtr_cust_dim as (
+select * from {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }}
 ),
-ITG_MY_OUTLET_ATTR as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_OUTLET_ATTR
+itg_my_outlet_attr as (
+select * from {{ ref('mysitg_integration__itg_my_outlet_attr') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_my_gt_outlet_exclusion as (
 select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_GT_OUTLET_EXCLUSION
 ),
 itg_my_pos_sales_fact as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_POS_SALES_FACT
+select * from {{ ref('mysitg_integration__itg_my_pos_sales_fact') }}
 ),
 itg_my_customer_dim as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_CUSTOMER_DIM
+select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
 itg_my_pos_cust_mstr as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_POS_CUST_MSTR
+select * from {{ ref('mysitg_integration__itg_my_pos_cust_mstr') }}
 ),
 itg_mds_my_customer_hierarchy as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_MY_CUSTOMER_HIERARCHY
+select * from {{ ref('mysitg_integration__itg_mds_my_customer_hierarchy') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 sellout as (
 SELECT 'SELL-OUT' AS DATA_SRC,

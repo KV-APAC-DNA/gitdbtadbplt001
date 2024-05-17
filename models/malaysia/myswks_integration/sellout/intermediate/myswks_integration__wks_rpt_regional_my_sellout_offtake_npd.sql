@@ -1,8 +1,8 @@
 with wks_malaysia_regional_sellout_npd as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_MALAYSIA_REGIONAL_SELLOUT_NPD
+select * from {{ ref('myswks_integration__wks_malaysia_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 SELECT *,

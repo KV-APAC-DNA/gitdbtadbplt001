@@ -1,5 +1,5 @@
 with wks_malaysia_regional_sellout as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_MALAYSIA_REGIONAL_SELLOUT
+select * from {{ ref('myswks_integration__wks_malaysia_regional_sellout') }}
 ),
 transformed as (	
 select *,
