@@ -1,8 +1,8 @@
 with itg_tw_strategic_cust_hier as(
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_STRATEGIC_CUST_HIER
+    select * from {{ ref('ntaitg_integration__itg_tw_strategic_cust_hier') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 transformed as(
     select 
