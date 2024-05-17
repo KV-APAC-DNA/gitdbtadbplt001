@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_ims_fact
+    config: 
+        alias: vw_tw_forecast
+        tags: ["tw_ims_distributor_standard_sell_out","transformation"]

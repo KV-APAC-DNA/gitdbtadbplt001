@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_children_data
+    config: 
+      alias: sdl_raw_tw_sfmc_children_data
+      tags: ["nta_crm_files","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_redemption_data
+    config: 
+      alias: sdl_raw_tw_sfmc_redemption_data
+      tags: ["nta_sfmc_files","ingestion"]
