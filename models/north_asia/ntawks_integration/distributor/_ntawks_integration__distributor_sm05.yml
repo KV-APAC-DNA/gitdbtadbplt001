@@ -4,5 +4,5 @@ models:
   - name: ntawks_integration__wks_itg_tw_ims_dstr_prod_map
     config: 
       alias: wks_itg_tw_ims_dstr_prod_map
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["tw_ims_distributor_prod_map","ingestion"]
 

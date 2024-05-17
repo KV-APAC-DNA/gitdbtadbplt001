@@ -4,9 +4,9 @@ models:
   - name: ntaedw_integration__edw_pos_inventory_fact
     config: 
       alias: edw_pos_inventory_fact
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["tw_pos","transformation"]
 
   - name: ntaedw_integration__edw_ims_inventory_fact
     config: 
       alias: edw_ims_inventory_fact
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["tw_ims_distributor_standard_stock","transformation"]

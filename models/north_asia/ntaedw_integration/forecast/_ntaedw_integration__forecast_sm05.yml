@@ -4,9 +4,9 @@ models:
   - name: ntaedw_integration__edw_tw_bu_forecast_sku
     config: 
       alias: edw_tw_bu_forecast_sku
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]
 
   - name: ntaedw_integration__edw_tw_bp_target
     config: 
       alias: edw_tw_bp_target
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]

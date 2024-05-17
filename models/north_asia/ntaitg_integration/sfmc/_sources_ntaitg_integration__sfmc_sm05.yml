@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_tw_sfmc_invoice_data
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["nta_sfmc_files","ingestion"]
       tests:
           - test_duplicate__ff:
               group_by_columns: ["website_unique_id", "file_name"]
@@ -35,7 +35,7 @@ sources:
                   schema: ntawks_integration
 
     - name: sdl_tw_sfmc_bounce_data
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["nta_sfmc_files","ingestion"]
       tests:
           - test_duplicate__ff:
               group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","file_name"]
@@ -61,7 +61,7 @@ sources:
 
 
     - name: sdl_tw_sfmc_consumer_master
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["nta_crm_files","ingestion"]
       tests:
           - test_duplicate__ff:
               group_by_columns: ["subscriber_key","file_name"]
@@ -76,3 +76,12 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
  
+  - name: ntawks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_tw_itg_sfmc_consumer_master  

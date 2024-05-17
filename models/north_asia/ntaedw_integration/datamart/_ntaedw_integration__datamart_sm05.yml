@@ -4,14 +4,14 @@ models:
   - name: ntaedw_integration__v_interm_cust_hier_dim
     config: 
       alias: v_interm_cust_hier_dim
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["taiwan_views","transformation"]
 
   - name: ntaedw_integration__v_calendar_dtls
     config: 
       alias: v_calendar_dtls
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["taiwan_views","transformation"]
 
   - name: ntaedw_integration__edw_vw_gt_msl_items
     config: 
       alias: edw_vw_gt_msl_items
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["taiwan_views","transformation"]

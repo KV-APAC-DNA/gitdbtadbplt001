@@ -6,9 +6,9 @@
     {% set build_wks_itg_model %}
         create or replace table
         {% if target.name=='prod' %}
-                        ntawks_integration.wks_itg_sfmc_consumer_master
+                        ntawks_integration.wks_tw_itg_sfmc_consumer_master
                     {% else %}
-                        {{schema}}.ntawks_integration__wks_itg_sfmc_consumer_master
+                        {{schema}}.ntawks_integration__wks_tw_itg_sfmc_consumer_master
                     {% endif %}
         as(
         with itg_sfmc_consumer_master_temp as

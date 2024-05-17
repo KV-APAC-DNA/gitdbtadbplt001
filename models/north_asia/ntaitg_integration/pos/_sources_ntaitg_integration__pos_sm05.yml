@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
     - name: ntaitg_integration__itg_pos_prom_prc_map_temp  
+      tags: ["na_mds_sdl_itg_load","ingestion"]
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: snapntasdl_raw
@@ -19,7 +20,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_kr_pos_store_code_sold_to_map
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["na_mds_sdl_itg_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
@@ -36,7 +37,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_tw_pos_px_civila
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["tw_pos","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["pos_date", "ean_code", "civilian_product_code"]
@@ -46,7 +47,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_mds_tw_pos_promotional_price_ean_map
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["na_mds_sdl_itg_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
@@ -64,15 +65,15 @@ sources:
                 schema: ntawks_integration
 
     - name: sdl_mds_hk_pos_product_mapping
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["na_mds_sdl_itg_load","transformation"]
 
     - name: sdl_mds_hk_pos_promo_calendar
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["na_mds_sdl_itg_load","transformation"]
 
     - name: sdl_mds_hk_ref_pos_accounts
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["na_mds_sdl_itg_load","transformation"]
     - name: sdl_tw_pos_cosmed
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["tw_pos","ingestion"]
       tests:
           - test_null:
               not_null_columns: ["product_code"]
@@ -81,3 +82,6 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+
+    - name: sdl_tw_ims_dstr_prod_map
+      tags: ["tw_ims_distributor_prod_map","transformation"]

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_tw_bp_forecast
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["lph_level_6","representative_cust_no","forecast_for_year","forecast_for_mnth"]
@@ -20,7 +20,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_tw_bu_forecast_sku
-      tags: ["anz_mds_sdl_to_edw_load","ingestion"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","ingestion"]
       tests:
         - test_lookup:
             select_columns: ["sap_code","representative_cust_no","forecast_for_year","forecast_for_mnth"]

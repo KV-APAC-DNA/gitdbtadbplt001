@@ -4,9 +4,9 @@ models:
   - name: ntaitg_integration__itg_tw_bp_target
     config: 
       alias: itg_tw_bp_target
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","ingestion"]
 
   - name: ntaitg_integration__itg_tw_bu_forecast_sku
     config: 
       alias: itg_tw_bu_forecast_sku
-      tags: ["j_pa_grocery_inv","transformation"]
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]

@@ -20,6 +20,11 @@ wks_itg_sfmc_consumer_master as
 (
     select * from {{ source('phlwks_integration', 'wks_itg_sfmc_consumer_master') }}
     --
+),
+wks_tw_itg_sfmc_consumer_master as
+(
+    select * from {{ source('ntawks_integration', 'wks_tw_itg_sfmc_consumer_master') }}
+    --
 )
 {% if var("crm_job_to_execute") == 'th_crm_files' %}
 ,
@@ -137,7 +142,7 @@ final as
 )
 select * from final
 
-{% elif var("crm_job_to_execute") == 'tw_crm_files' %}
+{% elif var("crm_job_to_execute") == 'nta_crm_files' %}
 ,
 
 final as
