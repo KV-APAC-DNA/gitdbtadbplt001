@@ -12,11 +12,11 @@ with source as (
 ),
 tw_ims_distributor_ingestion_metadata as
 (
-    select * from snapntawks_integration.tw_ims_distributor_ingestion_metadata
+    select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
 ), --static
 itg_tw_ims_dstr_customer_mapping as
 (
-    select * from snapntaitg_integration.itg_tw_ims_dstr_customer_mapping
+    select * from {{ source('ntaitg_integration', 'itg_tw_ims_dstr_customer_mapping') }}
 ), --take as a source
 trans as
 (

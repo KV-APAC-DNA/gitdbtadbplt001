@@ -2,7 +2,7 @@ with itg_ims_dstr_cust_attr as (
 select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 edw_sales_rep_route_plan as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_SALES_REP_ROUTE_PLAN
+select * from {{ source('ntaedw_integration', 'edw_sales_rep_route_plan') }}
 ),
 edw_ims_fact as (
 select * from {{ ref('ntaedw_integration__edw_ims_fact') }}

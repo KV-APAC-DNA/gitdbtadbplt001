@@ -37,7 +37,7 @@ edw_code_descriptions as (
 select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_SUBCHNL_RETAIL_ENV_MAPPING
+select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_code_descriptions_manual as (
 select * from {{ ref('aspedw_integration__edw_code_descriptions') }}

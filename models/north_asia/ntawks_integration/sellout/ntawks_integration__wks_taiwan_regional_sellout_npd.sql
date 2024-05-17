@@ -1,5 +1,5 @@
 with wks_taiwan_regional_sellout as (
-select * from dev_dna_core.snapntawks_integration.wks_taiwan_regional_sellout
+select * from {{ ref('ntawks_integration__wks_taiwan_regional_sellout') }}
 ),
 transformed as 
 (

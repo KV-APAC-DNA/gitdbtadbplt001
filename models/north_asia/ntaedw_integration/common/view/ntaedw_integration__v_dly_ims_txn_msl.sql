@@ -11,7 +11,7 @@ edw_vw_gt_msl_items as (
 select * from {{ ref('ntaedw_integration__edw_vw_gt_msl_items') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 EDW_STORE_DIM as (
 select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_STORE_DIM

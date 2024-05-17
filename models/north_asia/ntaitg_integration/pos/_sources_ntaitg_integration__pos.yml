@@ -167,18 +167,13 @@ sources:
       - name: itg_mds_tw_customer_sales_rep_mapping
       - name: itg_pos_temp
       - name: itg_pos_invnt_temp
-  
-  - name: aspedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name:  edw_customer_attr_flat_dim       
-      - name: edw_product_attr_dim 
+      - name: itg_sales_rep_so_target_fact
+      - name: itg_tw_ims_dstr_customer_mapping
+      - name: itg_tw_ims_dstr_prod_price_map
+      - name: itg_sls_grp_to_customer_mapping
+      - name: itg_pos_cust_prod_to_sap_prod_map
 
+  
 
   - name: ntaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -189,4 +184,7 @@ sources:
       identifier: false
     tables:
       - name:  edw_intrm_calendar 
+      - name: edw_sales_rep_route_plan
+      - name: edw_sls_rep_dim
+      - name: edw_vw_pop6_store
 

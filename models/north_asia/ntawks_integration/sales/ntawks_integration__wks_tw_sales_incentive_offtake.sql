@@ -2,14 +2,13 @@ with v_rpt_pos_offtake_wkly_nonkorea as (
     select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_wkly_nonkorea') }}
 ),
 itg_sls_grp_to_customer_mapping as (
-    select * from snapntaitg_integration.itg_sls_grp_to_customer_mapping
+    select * from {{ source('ntaitg_integration', 'itg_sls_grp_to_customer_mapping') }}
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
     select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
 ),
 v_rpt_dly_plan_ims_enrich as(
-    select * from v_rpt_dly_plan_ims_enrich
-
+    select * from {{ ref('ntaedw_integration__v_rpt_dly_plan_ims_enrich') }}
 ),
 edw_vw_promo_calendar as (
     select * from {{ ref('ntaedw_integration__edw_vw_promo_calendar') }}

@@ -18,7 +18,7 @@ edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_my_gt_outlet_exclusion as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_GT_OUTLET_EXCLUSION
+select * from {{ source('mysitg_integration', 'itg_my_gt_outlet_exclusion') }}
 ),
 itg_my_pos_sales_fact as (
 select * from {{ ref('mysitg_integration__itg_my_pos_sales_fact') }}

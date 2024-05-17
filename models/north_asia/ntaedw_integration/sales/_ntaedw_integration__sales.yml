@@ -10,3 +10,8 @@ models:
     config: 
       alias: edw_rpt_tw_sales_incentive
       tags: ["twsi_datamart_load","transformation"]
+
+  - name: ntaedw_integration__v_rpt_dly_plan_ims_enrich
+    config: 
+      alias: v_rpt_dly_plan_ims_enrich
+      tags: ["taiwan_views","transformation"]

@@ -1,24 +1,24 @@
 with 
 edw_pos_fact as (
-select * from dev_dna_core.snapntaedw_integration.edw_pos_fact
+select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_vw_os_time_dim as (
 select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_ims_fact as (
-select * from dev_dna_core.snapntaedw_integration.edw_ims_fact
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_ims_dstr_cust_attr as (
-select * from dev_dna_core.snapntaitg_integration.itg_ims_dstr_cust_attr
+select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from dev_dna_core.snapaspitg_integration.itg_mds_ap_customer360_config
+select * from {{ source('aspitg_integration', 'itg_mds_ap_customer360_config') }}
 ),
 edw_vw_pop6_store as (
-select * from dev_dna_core.snapntaedw_integration.edw_vw_pop6_store
+select * from {{ source('ntaedw_integration', 'edw_vw_pop6_store') }}
 ),
 itg_query_parameters as (
-select * from dev_dna_core.snapntaitg_integration.itg_query_parameters
+select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 pos as (
 SELECT 'POS' AS DATA_SRC,

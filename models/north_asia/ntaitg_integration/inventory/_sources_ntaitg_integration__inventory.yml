@@ -480,6 +480,7 @@ sources:
     tables:
     - name: tw_ims_distributor_ingestion_metadata
       tags: ["","ingestion"]
+    - name: wks_edw_customer_attr_flat_dim
 
 
   - name: ntaedw_integration

@@ -2,7 +2,7 @@ with edw_vw_sales_rep_so_target_fact as (
 select * from {{ ref('ntaedw_integration__edw_vw_sales_rep_so_target_fact') }}
 ),
 edw_sales_rep_route_plan as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_SALES_REP_ROUTE_PLAN
+select * from {{ source('ntaedw_integration', 'edw_sales_rep_route_plan') }}
 ),
 v_intrm_calendar_ims as (
 select * from {{ ref('ntaedw_integration__v_intrm_calendar_ims') }}
