@@ -30,7 +30,7 @@ sources:
                 select_columns: ["item_cd","item_desc"]
                 column: " nvl(trim(item_cd),'#')"
                 lookup_column: "cust_prod_cd"
-                lookup_table: "DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_CUST_PROD_CD_EAN_MAP"
+                lookup_table: "{{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}"
                 name: TRATBL_sdl_tw_as_watsons_inventory__lookup_test
                 config:
                   store_failures: true
@@ -482,14 +482,3 @@ sources:
       tags: ["","ingestion"]
     - name: wks_edw_customer_attr_flat_dim
 
-
-  - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-    - name: v_calendar_promo_univ_fisc
-      tags: ["","ingestion"]

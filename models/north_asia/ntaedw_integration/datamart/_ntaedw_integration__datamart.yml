@@ -15,3 +15,8 @@ models:
     config: 
       alias: edw_vw_gt_msl_items
       tags: ["taiwan_views","transformation"]
+
+  - name: ntaedw_integration__v_calendar_promo_univ_fisc
+    config: 
+      alias: v_calendar_promo_univ_fisc
+      tags: ["taiwan_views","transformation"]

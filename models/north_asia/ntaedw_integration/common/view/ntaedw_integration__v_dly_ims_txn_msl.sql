@@ -13,8 +13,8 @@ select * from {{ ref('ntaedw_integration__edw_vw_gt_msl_items') }}
 edw_product_attr_dim as (
 select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
-EDW_STORE_DIM as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_STORE_DIM
+edw_store_dim as (
+select * from {{ ref('ntaedw_integration__edw_store_dim') }}
 ),
 final as (
 SELECT a.ims_txn_dt,

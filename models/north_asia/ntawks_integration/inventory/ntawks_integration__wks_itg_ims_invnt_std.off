@@ -2,7 +2,7 @@ with sdl_tw_ims_dstr_std_stock as(
     select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_stock') }}
 ),
 tw_ims_distributor_ingestion_metadata as(
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.TW_IMS_DISTRIBUTOR_INGESTION_METADATA
+    select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
 ),
 union1 as(
     SELECT SRC.invnt_dt,
