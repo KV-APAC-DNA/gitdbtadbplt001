@@ -2,10 +2,10 @@ with sdl_tw_bu_forecast_prod_hier as (
 select * from {{ source('ntasdl_raw', 'sdl_tw_bu_forecast_prod_hier') }}
 ),
 edw_customer_attr_hier_dim as (
-select * from DEV_DNA_CORE.SM05_WORKSPACE.ASPEDW_INTEGRATION__EDW_CUSTOMER_ATTR_HIER_DIM
+select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 transformed as (
 select

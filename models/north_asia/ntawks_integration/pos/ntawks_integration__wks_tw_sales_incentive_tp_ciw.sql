@@ -29,7 +29,7 @@ v_rpt_copa_ciw as
 ), 
 edw_customer_attr_hier_dim as 
 (
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_hier_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ), 
 trans as
 (

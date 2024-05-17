@@ -176,7 +176,8 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name:  edw_customer_attr_hier_dim        
+      - name:  edw_customer_attr_flat_dim       
+      - name: edw_product_attr_dim 
 
 
   - name: ntaedw_integration

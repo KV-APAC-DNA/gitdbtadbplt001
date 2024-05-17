@@ -8,7 +8,7 @@
 }}
 
 with source as(
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_itg_tw_ims_dstr_prod_map
+    select * from {{ ref('ntawks_integration__wks_itg_tw_ims_dstr_prod_map') }}
 ),
 final as(
     select

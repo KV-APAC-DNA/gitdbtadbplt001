@@ -3,12 +3,12 @@
         materialized="incremental",
         incremental_strategy = "append",
         unique_key=["cust_prod_cd","barcd", "cust"],
-        pre_hook = ["delete from {{this}} itg_pos_prom_prc_map using DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_itg_pos_promotional_price_map wks_itg_pos_promotional_price_map where wks_itg_pos_promotional_price_map.barcode = itg_pos_prom_prc_map.barcd and  wks_itg_pos_promotional_price_map.customer=itg_pos_prom_prc_map.cust and  wks_itg_pos_promotional_price_map.cust_prod_cd=itg_pos_prom_prc_map.cust_prod_cd and   wks_itg_pos_promotional_price_map.chng_flg = 'U';"]
+        pre_hook = ["delete from {{this}} itg_pos_prom_prc_map using {{ ref('ntawks_integration__wks_itg_pos_promotional_price_map') }} wks_itg_pos_promotional_price_map where wks_itg_pos_promotional_price_map.barcode = itg_pos_prom_prc_map.barcd and  wks_itg_pos_promotional_price_map.customer=itg_pos_prom_prc_map.cust and  wks_itg_pos_promotional_price_map.cust_prod_cd=itg_pos_prom_prc_map.cust_prod_cd and   wks_itg_pos_promotional_price_map.chng_flg = 'U';"]
     )
 }}
 
 with source as(
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_itg_pos_promotional_price_map
+    select * from {{ ref('ntawks_integration__wks_itg_pos_promotional_price_map') }} 
 ),
 final as(
     select 
