@@ -3,7 +3,7 @@ itg_sales_rep_so_target_fact as (
 select * from dev_dna_core.snapntaitg_integration.itg_sales_rep_so_target_fact
 ),
 v_intrm_calendar_ims as (
-select * from dev_dna_core.snapntaedw_integration.v_intrm_calendar_ims
+select * from {{ ref('ntaedw_integration__v_intrm_calendar_ims') }}
 ),
 final as (
 select 
