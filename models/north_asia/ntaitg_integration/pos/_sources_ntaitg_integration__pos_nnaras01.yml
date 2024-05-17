@@ -1,0 +1,95 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_tw_pos_poya
+        tags: ["TW_POS_Poya","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["ean_code","customer_product_code"]
+                not_null_columns: ["ean_code","customer_product_code"]
+                name: TRATBL_sdl_tw_pos_poya__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            
+      - name: sdl_tw_pos_ec
+        tags: [""]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["product_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_ec__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_carrefour
+        tags: [""]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["product_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_carrefour__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_date_format_odd_eve_leap:
+                model_nm: "{{ source('ntasdl_raw', 'sdl_tw_pos_carrefour') }}"
+                date_column: "pos_date::date"
+                filter: "(odd_mon.pos_date) = (even_mon.pos_date) and (even_mon.pos_date) = (feb.pos_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                failure_reason: "'Pos-date having incorrect date-format. Expected: yyyyMMdd'"
+                select_columns: ["pos_date","product_code"]
+                name: TRATBL_sdl_tw_pos_carrefour__test_date_format_odd_eve_leap
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+
+      - name: sdl_tw_pos_7eleven
+        tags: [""]
+        tests:
+            - test_duplicate:
+                select_columns: ["pos_date","product_code"]
+                group_by_columns: ["pos_date","product_code","product_description","sales_qty","vendor_code","vendor_description"]
+                name: TRATBL_sdl_tw_pos_7eleven__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_cosmed
+        tags: [""]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["pos_date"]
+                name: TRATBL_sdl_tw_pos_cosmed__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_px_civila
+        tags: [""]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["civilian_product_code","ean_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_px_civila__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_rt_mart
+        tags: [""]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["ean_code","pos_date","product_code"]
+                name: TRATBL_sdl_tw_pos_rt_mart__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        
+      

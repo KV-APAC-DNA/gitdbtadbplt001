@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_tw_bu_forecast_prod_hier
+    config:
+      alias: wks_itg_tw_bu_forecast_prod_hier
+      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]
+  
+ 
+  
