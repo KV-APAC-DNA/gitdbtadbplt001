@@ -63,45 +63,45 @@ wks_tw_ims_dstr_std_stock_136454_stock as (
 ),
 transformed as(
     select * from wks_tw_ims_dstr_std_stock_107479_stock
-    union
+    union all
     select * from wks_tw_ims_dstr_std_stock_107482_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_107483_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_107485_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_107501_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_107507_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_107510_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_116047_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_120812_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_122296_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_123291_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_131953_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_132222_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_132349_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_132508_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_134478_pxstock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_134478_pxStore
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_134478_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_135307_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_135561_stock
-    union 
+    union all 
     select * from wks_tw_ims_dstr_std_stock_136454_stock
 )
 select * from transformed

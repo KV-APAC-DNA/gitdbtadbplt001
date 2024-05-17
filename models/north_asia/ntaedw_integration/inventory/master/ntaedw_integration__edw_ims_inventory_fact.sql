@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_edw_ims_invnt_std
+    select * from {{ ref('ntawks_integration__wks_edw_ims_invnt_std') }}
 ),
 final as(
     select 

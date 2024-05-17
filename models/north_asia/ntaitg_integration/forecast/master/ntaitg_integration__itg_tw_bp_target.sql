@@ -11,10 +11,10 @@ with source as(
     select * from {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }}
 ),
 edw_customer_attr_hier_dim as (
-    select * from DEV_DNA_CORE.SM05_WORKSPACE.ASPEDW_INTEGRATION__EDW_CUSTOMER_ATTR_HIER_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 
 bp_frcst_prod_hier as(

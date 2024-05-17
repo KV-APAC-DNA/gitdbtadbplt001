@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_BP_TARGET
+    select * from {{ ref('ntaitg_integration__itg_tw_bp_target') }} 
 ),
 final as(
     select

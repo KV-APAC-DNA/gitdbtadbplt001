@@ -1,11 +1,11 @@
 with v_intrm_calendar_ims as(
-	select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_INTRM_CALENDAR_IMS 
+	select * from {{ ref('ntaedw_integration__v_intrm_calendar_ims') }}
 ),
 edw_ims_fact as(
-	select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.edw_ims_fact
+	select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_gt_msl_items as(
-	select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_gt_msl_items 
+	select * from {{ source('ntaitg_integration', 'itg_gt_msl_items') }}
 ),
 t2 as(
 	SELECT v_intrm_calendar_ims.cal_day

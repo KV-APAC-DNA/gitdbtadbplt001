@@ -1,11 +1,11 @@
 with wks_tw_sales_incentive_offtake as(
-	select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_TW_SALES_INCENTIVE_OFFTAKE
+	select * from {{ ref('ntawks_integration__wks_tw_sales_incentive_offtake') }}
 ),
 wks_tw_sales_incentive_nts as(
-	select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_tw_sales_incentive_nts
+	select * from {{ ref('ntawks_integration__wks_tw_sales_incentive_nts') }}
 ),
 wks_tw_sales_incentive_tp_ciw as(
-	select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.wks_tw_sales_incentive_tp_ciw
+	select * from {{ ref('ntawks_integration__wks_tw_sales_incentive_tp_ciw') }}
 ),
 union1 as(
 		SELECT wks_tw_sales_incentive_offtake.source_type

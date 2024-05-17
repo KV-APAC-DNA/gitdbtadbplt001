@@ -1,5 +1,5 @@
 with edw_customer_attr_hier_dim as(
-	select * from DEV_DNA_CORE.SM05_WORKSPACE.ASPEDW_INTEGRATION__EDW_CUSTOMER_ATTR_HIER_DIM
+	select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 union1 as(
 	SELECT DISTINCT edw_customer_attr_hier_dim.cntry

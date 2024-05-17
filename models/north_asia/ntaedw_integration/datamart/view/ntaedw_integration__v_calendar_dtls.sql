@@ -1,5 +1,5 @@
 with v_calendar_promo_univ_fisc as(
-    select * from  DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_CALENDAR_PROMO_UNIV_FISC
+    select * from  {{ source('ntaedw_integration', 'v_calendar_promo_univ_fisc') }}
 ),
 transformed as(
 

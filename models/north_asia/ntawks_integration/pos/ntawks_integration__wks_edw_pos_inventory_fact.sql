@@ -1,23 +1,23 @@
 with itg_pos_cust_prod_cd_ean_map as(
-  select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_CUST_PROD_CD_EAN_MAP
+  select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 ),
 itg_pos_invnt as(
-  select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_pos_invnt
+  select * from {{ ref('ntaitg_integration__itg_pos_invnt') }}
 ),
 edw_customer_attr_flat_dim as(
-  select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_CUSTOMER_ATTR_FLAT_DIM
+  select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 itg_query_parameters as(
-  select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_query_parameters
+  select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_material_dim as(
-  select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_material_dim
+  select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 itg_pos_prom_prc_map as(
-  select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_pos_prom_prc_map
+  select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
 edw_product_attr_dim as(
-  select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+  select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 
 x as(

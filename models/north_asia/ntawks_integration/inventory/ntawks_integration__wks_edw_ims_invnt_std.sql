@@ -2,13 +2,13 @@ with itg_ims_invnt as(
     select * from {{ source('ntaitg_integration', 'itg_ims_invnt') }}
 ),
 itg_tw_ims_dstr_prod_map as(
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_tw_ims_dstr_prod_map
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}
 ),
 itg_query_parameters as(
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_material_sales_dim as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 transformed as(
     SELECT x.invnt_dt,

@@ -467,6 +467,9 @@ sources:
     - name: itg_ims_invnt
       tags: ["","ingestion"]
 
+    - name: itg_gt_msl_items
+      tags: ["","ingestion"]
+
   - name: ntawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: ntawks_integration
@@ -476,4 +479,16 @@ sources:
       identifier: false
     tables:
     - name: tw_ims_distributor_ingestion_metadata
+      tags: ["","ingestion"]
+
+
+  - name: ntaedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: v_calendar_promo_univ_fisc
       tags: ["","ingestion"]

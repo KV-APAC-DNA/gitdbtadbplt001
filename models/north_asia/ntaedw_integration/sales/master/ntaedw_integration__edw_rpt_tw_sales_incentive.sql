@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.SNAPNTAedw_INTEGRATION.edw_v_rpt_tw_sales_incentive
+    select * from {{ ref('ntaedw_integration__edw_v_rpt_tw_sales_incentive') }}
 ),
 final as(
     select 
