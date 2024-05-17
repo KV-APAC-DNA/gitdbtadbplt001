@@ -1,15 +1,15 @@
 with 
 vw_tw_forecast as
 (
-    select * from snapntaedw_integration.vw_tw_forecast
+    select * from {{ ref('ntaedw_integration__vw_tw_forecast') }}
 ),
 edw_vw_promo_calendar as
 (
-    select * from snapntaedw_integration.edw_vw_promo_calendar
+    select * from {{ ref('ntaedw_integration__edw_vw_promo_calendar') }}
 ),
 itg_tsi_target_data as
 (
-    select * from snapntaitg_integration.itg_tsi_target_data
+    select * from {{ ref('ntaitg_integration__itg_tsi_target_data') }}
 ),
 itg_mds_tw_incentive_schemes as
 (
@@ -17,20 +17,20 @@ itg_mds_tw_incentive_schemes as
 ),
 itg_mds_tw_sales_representative as
 (
-    select * from snapntaitg_integration.itg_mds_tw_sales_representative
+    select * from {{ source('ntaitg_integration', 'itg_mds_tw_sales_representative') }}
 ), --as a source
 itg_mds_tw_customer_sales_rep_mapping as 
 (
-    select * from snapntaitg_integration.itg_mds_tw_customer_sales_rep_mapping
+    select * from {{ source('ntaitg_integration', 'itg_mds_tw_customer_sales_rep_mapping') }}
 ), --as a source
 v_rpt_copa_ciw as
 (
-    select * from snapntaedw_integration.v_rpt_copa_ciw
-), --use as ref
+    select * from {{ ref('aspedw_integration__v_rpt_copa_ciw') }}
+), 
 edw_customer_attr_hier_dim as 
 (
-    select * from sm05_workspace.edw_customer_attr_hier_dim
-), --as a source from aspedw
+    select * from {{ source('aspedw_integration', 'edw_customer_attr_hier_dim') }}
+), 
 trans as
 (
     select *

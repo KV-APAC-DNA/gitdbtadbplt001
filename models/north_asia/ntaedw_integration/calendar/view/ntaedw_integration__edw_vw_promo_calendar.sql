@@ -1,11 +1,11 @@
 with 
 edw_intrm_calendar as 
 (
-    select * from snapntaedw_integration.edw_intrm_calendar
+    select * from {{ source('ntaedw_integration', 'edw_intrm_calendar') }}
 ),
 itg_mds_hk_pos_promo_calendar as 
 (
-    select * from snapntaitg_integration.itg_mds_hk_pos_promo_calendar
+    select * from {{ ref('ntaitg_integration__itg_mds_hk_pos_promo_calendar') }}
 ),
 final as 
 (

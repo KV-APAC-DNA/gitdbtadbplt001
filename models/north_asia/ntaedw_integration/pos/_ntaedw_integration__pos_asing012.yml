@@ -5,10 +5,6 @@ models:
   config:
     alias: v_rpt_pos_offtake_wkly_nonkorea
     tags: ["taiwan_views","transformation"]
-- name: ntaedw_integration__v_rpt_dly_plan_ims_enrich
-  config:
-    alias: v_rpt_dly_plan_ims_enrich
-    tags: ["taiwan_views","transformation"]
 - name: ntaedw_integration__edw_internal_target_fact
   config:
     alias: edw_internal_target_fact

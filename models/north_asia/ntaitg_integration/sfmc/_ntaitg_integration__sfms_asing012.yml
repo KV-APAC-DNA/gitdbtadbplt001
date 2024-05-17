@@ -1,15 +1,15 @@
 version: 2
 
 models:
-  - name: ntaitg_integration__sdl_raw_ph_sfmc_open_data
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_open_data
     config:
-      alias: sdl_raw_ph_sfmc_open_data
+      alias: sdl_raw_tw_sfmc_open_data
       tags: ["nta_sfmc_files","ingestion"]
-  - name: ntaitg_integration__sdl_raw_ph_sfmc_sent_data
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_sent_data
     config:
-      alias: sdl_raw_ph_sfmc_sent_data
+      alias: sdl_raw_tw_sfmc_sent_data
       tags: ["nta_sfmc_files","ingestion"]
-  - name: ntaitg_integration__sdl_raw_ph_sfmc_click_data
+  - name: ntaitg_integration__sdl_raw_tw_sfmc_click_data
     config:
-      alias: sdl_raw_ph_sfmc_sent_data
+      alias: sdl_raw_tw_sfmc_sent_data
       tags: ["nta_sfmc_files","ingestion"]

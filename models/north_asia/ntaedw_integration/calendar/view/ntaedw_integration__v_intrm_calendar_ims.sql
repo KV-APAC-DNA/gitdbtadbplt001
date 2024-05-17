@@ -1,7 +1,7 @@
 with 
 v_intrm_calendar as
 (
-    select * from snapntaedw_integration.v_intrm_calendar
+    select * from {{ ref('ntaedw_integration__v_intrm_calendar') }}
 ),
 
 final as
