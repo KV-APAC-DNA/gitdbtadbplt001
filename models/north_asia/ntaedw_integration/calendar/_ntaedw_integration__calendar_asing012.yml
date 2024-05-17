@@ -1,0 +1,15 @@
+version: 2
+
+models:
+- name: ntaedw_integration__v_intrm_calendar_ims
+  config:
+    alias: v_intrm_calendar_ims
+    tags: ["taiwan_views","transformation"]
+- name: ntaedw_integration__v_intrm_calendar
+  config:
+    alias: v_intrm_calendar
+    tags: ["taiwan_views","transformation"]
+- name: ntaedw_integration__edw_vw_promo_calendar
+  config:
+    alias: edw_vw_promo_calendar
+    tags: ["taiwan_views","transformation"]

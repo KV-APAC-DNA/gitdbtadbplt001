@@ -1,0 +1,43 @@
+version: 2
+
+models:
+- name: ntaitg_integration__itg_mds_tw_incentive_schemes
+  config:
+    alias: itg_mds_tw_incentive_schemes
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_tw_sfmc_gender
+  config:
+    alias: itg_mds_tw_sfmc_gender
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_tw_sfmc_member_tier
+  config:
+    alias: itg_mds_tw_sfmc_member_tier
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_tw_sfmc_channel
+  config:
+    alias: itg_mds_tw_sfmc_channel
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_tw_ps_weights
+  config:
+    alias: itg_mds_tw_ps_weights
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_kr_ps_weights
+  config:
+    alias: itg_mds_kr_ps_weights
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_hk_ps_weights
+  config:
+    alias: itg_mds_hk_ps_weights
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_tw_ps_targets
+  config:
+    alias: itg_mds_tw_ps_targets
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_kr_ps_targets
+  config: 
+    alias: itg_mds_kr_ps_targets
+    tags: ["na_mds_sdl_itg_load","ingestion"]
+- name: ntaitg_integration__itg_mds_hk_ps_targets
+  config:
+    alias: itg_mds_hk_ps_targets
+    tags: ["na_mds_sdl_itg_load","ingestion"]

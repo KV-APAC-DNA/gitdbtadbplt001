@@ -19,7 +19,7 @@ models:
   - name: aspitg_integration__itg_sfmc_open_data
     config:
       alias: itg_sfmc_open_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","nta_sfmc_files","ingestion"]
   
   - name: aspitg_integration__itg_sfmc_unsubscribe_data
     config:
@@ -39,9 +39,9 @@ models:
   - name: aspitg_integration__itg_sfmc_click_data
     config: 
       alias: itg_sfmc_click_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","nta_sfmc_files",ingestion"]
 
   - name: aspitg_integration__itg_sfmc_sent_data
     config: 
       alias: itg_sfmc_sent_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","nta_sfmc_files","ingestion"]
