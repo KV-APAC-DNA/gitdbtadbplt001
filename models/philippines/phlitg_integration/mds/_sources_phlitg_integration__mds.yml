@@ -244,7 +244,7 @@ sources:
               column: "upper(trim(brand))"
               lookup_column: "upper(trim(brand))"
               lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
-              lookup_filter: "upper(brand) in (SELECT upper(gph_prod_brnd) FROM DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_MATERIAL_DIM)"
+              lookup_filter: "upper(brand) in (SELECT upper(gph_prod_brnd) FROM {{ ref('phledw_integration__edw_vw_ph_material_dim') }})"
               name: TRATBL_sdl_ph_iop_trgt__lookup_test_brand
               config:
                 store_failures: true
@@ -254,7 +254,7 @@ sources:
               column: "upper(trim(segment))"
               lookup_column: "upper(trim(segment))"
               lookup_table: "{{source('phlsdl_raw','sdl_ph_iop_trgt')}} "
-              lookup_filter: "upper(segment) in (SELECT upper(gph_prod_sgmnt) FROM DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_MATERIAL_DIM)"
+              lookup_filter: "upper(segment) in (SELECT upper(gph_prod_sgmnt) FROM {{ ref('phledw_integration__edw_vw_ph_material_dim') }})"
               name: TRATBL_sdl_ph_iop_trgt__lookup_test_segment
               config:
                 store_failures: true
@@ -263,7 +263,7 @@ sources:
               select_columns: ["measure","target_type","year","brand","segment","customer_code","account","filename"]
               column: "upper(trim(customer_code))"
               lookup_column: "upper(cust_id)"
-              lookup_table: "DEV_DNA_CORE.PHLEDW_INTEGRATION.EDW_MV_PH_CUSTOMER_DIM"
+              lookup_table: "{{ ref('phledw_integration__edw_mv_ph_customer_dim') }}"
               name: TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code
               config:
                 store_failures: true
