@@ -1,38 +1,38 @@
 with edw_vw_sfmc_invoice_data as (
-    select * from snapntaedw_integration.edw_vw_sfmc_invoice_data
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_invoice_data') }}
 ),
 edw_vw_sfmc_consumer_master as (
-    select * from snapaspedw_integration.edw_vw_sfmc_consumer_master
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_consumer_master') }}
 ),
 itg_mds_tw_sfmc_member_tier as (
-    select * from snapntaitg_integration.itg_mds_tw_sfmc_member_tier
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_sfmc_member_tier') }}
 ),
 edw_vw_sfmc_children_data as (
-    select * from snapaspedw_integration.edw_vw_sfmc_children_data
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_children_data') }}
 ),
 itg_mds_tw_sfmc_gender as (
-    select * from snapntaitg_integration.itg_mds_tw_sfmc_gender
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_sfmc_gender') }}
 ),
 itg_mds_tw_sfmc_channel as (
-    select * from snapntaitg_integration.itg_mds_tw_sfmc_channel
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_sfmc_channel') }}
 ),
 edw_vw_sfmc_redemption_data as (
-    select * from snapntaedw_integration.edw_vw_sfmc_redemption_data
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_redemption_data') }}
 ),
 edw_vw_sfmc_email_activity_fact as (
-    select * from snapaspedw_integration.edw_vw_sfmc_email_activity_fact
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_email_activity_fact') }}
 ),
 itg_sfmc_consumer_master as (
-    select * from snapntaitg_integration.itg_sfmc_consumer_master
+    select * from {{ ref('aspitg_integration__itg_sfmc_consumer_master') }}
 ),
 edw_calendar_dim as (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_vw_sfmc_active_history as (
-    select * from snapntaedw_integration.edw_vw_sfmc_active_history
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_active_history') }}
 ),
 edw_vw_sfmc_tier_history as (
-    select * from snapntaedw_integration.edw_vw_sfmc_tier_history
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_tier_history') }}
 ),
 --INVOICE
 invoice as

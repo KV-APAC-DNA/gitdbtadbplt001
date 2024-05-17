@@ -1,29 +1,30 @@
 with v_rpt_pos_offtake_wkly_nonkorea as (
-    select * from snapntaedw_integration.v_rpt_pos_offtake_wkly_nonkorea
+    select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_wkly_nonkorea') }}
 ),
 itg_sls_grp_to_customer_mapping as (
     select * from snapntaitg_integration.itg_sls_grp_to_customer_mapping
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
-    select * from snapntaitg_integration.itg_mds_tw_customer_sales_rep_mapping
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
 ),
 v_rpt_dly_plan_ims_enrich as(
-    select * from snapntaedw_integration.v_rpt_dly_plan_ims_enrich
+    select * from v_rpt_dly_plan_ims_enrich
+
 ),
 edw_vw_promo_calendar as (
-    select * from snapntaedw_integration.edw_vw_promo_calendar
+    select * from {{ ref('ntaedw_integration__edw_vw_promo_calendar') }}
 ),
 itg_tsi_target_data as (
-    select * from snapntaitg_integration.itg_tsi_target_data
+    select * from {{ ref('ntaitg_integration__itg_tsi_target_data') }}
 ),
 vw_tw_forecast as (
-    select * from snapntaedw_integration.vw_tw_forecast
+    select * from {{ ref('ntaedw_integration__vw_tw_forecast') }}
 ),
 itg_mds_tw_incentive_schemes as (
-    select * from snapntaitg_integration.itg_mds_tw_incentive_schemes
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_incentive_schemes') }}
 ),
 itg_mds_tw_sales_representative as (
-    select * from snapntaitg_integration.itg_mds_tw_sales_representative
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_sales_representative') }}
 ),
 monthly_offtake as 
 (

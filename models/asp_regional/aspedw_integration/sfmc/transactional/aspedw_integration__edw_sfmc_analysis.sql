@@ -1,11 +1,11 @@
 with edw_vw_sfmc_analysis as (
-    select * from snapntaedw_integration.edw_vw_sfmc_analysis
+    select * from {{ ref('aspedw_integration__edw_vw_sfmc_analysis') }}
 ),
 edw_calendar_dim as (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_query_parameters as (
-    select * from snapaspitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 union_1 as 
 (   

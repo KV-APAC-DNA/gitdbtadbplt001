@@ -7,13 +7,13 @@
                     (
                         select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from
                         (
-                            select * from snapntawks_integration.wks_itg_pos_poya
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_7eleven
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_ec
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_cosmed
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }}
                         )
                         where chng_flg = 'U'
                     );",
@@ -21,11 +21,11 @@
                     (
                         select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from
                         (
-                            select * from snapntawks_integration.wks_itg_pos_carrefour
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_carrefour') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_rt_mart
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_rt_mart') }}
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_px_civila
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }}
                         )
                         where chng_flg = 'U'
                     );",
@@ -33,7 +33,7 @@
                     (
                         select distinct pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd from
                         (
-                            select * from snapntawks_integration.wks_itg_pos_watson_store
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_watson_store') }}
                         )
                         where chng_flg = 'U'
                     )"
@@ -42,28 +42,28 @@
 }}
 
 with wks_itg_pos_7eleven as (
-    select * from snapntawks_integration.wks_itg_pos_7eleven
+    select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }}
 ),
 wks_itg_pos_poya as (
-    select * from snapntawks_integration.wks_itg_pos_poya
+    select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }}
 ),
 wks_itg_pos_ec as (
-    select * from snapntawks_integration.wks_itg_pos_ec
+    select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }}
 ),
 wks_itg_pos_watson_store as (
-    select * from snapntawks_integration.wks_itg_pos_watson_store
+    select * from {{ ref('ntawks_integration__wks_itg_pos_watson_store') }}
 ),
 wks_itg_pos_carrefour as (
-    select * from snapntawks_integration.wks_itg_pos_carrefour
+    select * from {{ ref('ntawks_integration__wks_itg_pos_carrefour') }}
 ),
 wks_itg_pos_cosmed as (
-    select * from snapntawks_integration.wks_itg_pos_cosmed
+    select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }}
 ),
 wks_itg_pos_rt_mart as (
-    select * from snapntawks_integration.wks_itg_pos_rt_mart
+    select * from {{ ref('ntawks_integration__wks_itg_pos_rt_mart') }}
 ),
 wks_itg_pos_px_civila as (
-    select * from snapntawks_integration.wks_itg_pos_px_civila
+    select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }}
 ),
 final as 
 (    

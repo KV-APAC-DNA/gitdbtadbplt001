@@ -1,5 +1,5 @@
 with source as (
-    select * from snapntaitg_integration.itg_sfmc_redemption_data
+    select * from {{ ref('aspitg_integration__itg_sfmc_redemption_data') }}
 ),
 final as
 (    
