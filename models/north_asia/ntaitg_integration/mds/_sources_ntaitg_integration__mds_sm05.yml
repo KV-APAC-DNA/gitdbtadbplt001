@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_tw_sales_representative
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                group_by_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                name: TRATBL_sdl_mds_tw_sales_representative__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                not_null_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                select_columns: ["code","name","reportto_code","reportto_name","reverse_code"]
+                name: TRATBL_sdl_mds_tw_sales_representative__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_mds_tw_customer_sales_rep_mapping
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                group_by_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                name: TRATBL_sdl_mds_tw_customer_sales_rep_mapping__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                not_null_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code"]
+                select_columns: ["year_code","month_code","month_name","ec_code","ec_name","offtake_inc_code","offtake_inc_name","customer_code","customer_name_code","customer_name_local","s_name","psr_code_01_code","psr_code_01_name","psr_code_02_code","psr_code_02_name","psr_code_03_code","psr_code_03_name","psr_code_04_code","psr_code_04_name","psr_code_05_code","psr_code_05_name"]
+                name: TRATBL_sdl_mds_tw_customer_sales_rep_mapping__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+     

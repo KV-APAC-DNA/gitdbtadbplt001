@@ -1,0 +1,23 @@
+version: 2
+
+models:
+
+  - name: ntawks_integration__wks_itg_pos_cust_prod_cd_ean_map
+    config: 
+      alias: wks_itg_pos_cust_prod_cd_ean_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_itg_pos_promotional_price_map
+    config: 
+      alias: wks_itg_pos_promotional_price_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_itg_pos_str_cd_sold_to_map
+    config: 
+      alias: wks_itg_pos_str_cd_sold_to_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_edw_pos_inventory_fact
+    config: 
+      alias: wks_edw_pos_inventory_fact
+      tags: ["tw_pos","transformation"]

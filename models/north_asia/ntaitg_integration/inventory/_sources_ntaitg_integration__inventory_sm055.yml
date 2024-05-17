@@ -1,0 +1,442 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_tw_ims_dstr_std_stock_107479_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107479_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107479_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107479_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration    
+    - name: sdl_tw_ims_dstr_std_stock_107482_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107482_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107482_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107482_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_107483_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107483_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107483_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107483_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_107485_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107485_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107485_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107485_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_107501_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107501_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107501_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107501_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_107507_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107507_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107507_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107507_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_107510_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_107510_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_107510_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_107510_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_116047_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_116047_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_116047_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_116047_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_120812_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_120812_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_120812_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_120812_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_122296_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_122296_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_122296_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_122296_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_123291_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_123291_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_123291_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_123291_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_131953_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_131953_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_131953_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_131953_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_132222_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_132222_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_132222_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_132222_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_132349_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_132349_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_132349_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_132349_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_132508_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_132508_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_132508_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_132508_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_134478_pxstock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_pxstock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_134478_pxstock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_pxstock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_134478_pxStore
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_pxStore__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_134478_pxStore') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_pxStore__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_134478_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_134478_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_134478_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_135307_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_135307_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_135307_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_135307_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_135561_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_135561_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_135561_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_135561_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_stock_136454_stock
+      tags: ["tw_ims_distributor_standard_stock","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+                not_null_columns: ["inventory_date"]
+                name: TRATBL_sdl_tw_ims_dstr_std_stock_136454_stock__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_stock_136454_stock') }}"
+            date_column: "inventory_date"
+            filter: "(odd_mon.inventory_date) = (even_mon.inventory_date) and (even_mon.inventory_date) = (feb.inventory_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Inventory-date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["distributor_code","ean","distributor_product_code","inventory_date"]
+            name: TRATBL_sdl_tw_ims_dstr_std_stock_136454_stock__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+
+  - name: ntawks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapntawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: tw_ims_distributor_ingestion_metadata
+      tags: ["","ingestion"]
