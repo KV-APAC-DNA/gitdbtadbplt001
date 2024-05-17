@@ -1,27 +1,27 @@
 with
 edw_customer_attr_flat_dim as
 (
-    select * from snapntaedw_integration.edw_customer_attr_flat_dim
-), --rg_schema
+    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+), 
 v_interm_cust_hier_dim as
 (
-    select * from snapntaedw_integration.v_interm_cust_hier_dim
+    select * from {{ ref('ntaedw_integration__v_interm_cust_hier_dim') }}
 ),
 edw_product_attr_dim as
 (
-    select * from snapaspedw_integration.edw_product_attr_dim
-), --rg_schema
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+), 
 v_calendar_dtls as
 (
-    select * from snapntaedw_integration.v_calendar_dtls
-), --rg_schema
+    select * from {{ ref('ntaedw_integration__v_calendar_dtls') }}
+), 
 v_intrm_crncy_exch as
 (
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_pos_fact as
 (
-    select * from snapntaedw_integration.edw_pos_fact
+    select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 final as
 (
