@@ -1,4 +1,3 @@
-
 with source as(
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_redemption_data') }}
 ),

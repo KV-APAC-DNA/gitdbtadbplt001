@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__sdl_raw_tw_pos_carrefour
+    config: 
+      alias: sdl_raw_tw_pos_carrefour
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_ec
+    config: 
+      alias: sdl_raw_tw_pos_ec
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__itg_pos
+    config: 
+      alias: itg_pos
+      tags: ["tw_pos","transformation"]
+  - name: ntaitg_integration__itg_pos_invnt
+    config: 
+      alias: tg_pos_invnt
+      tags: ["tw_pos","transformation"]

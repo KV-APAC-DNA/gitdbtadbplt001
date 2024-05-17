@@ -1,9 +1,12 @@
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_pos_ec') }}
 ),
+itg_pos as (
+    select * from {{ source('ntaitg_integration', 'itg_pos_temp') }}
+),
 final as
 (
-    select
+    SELECT 
         src.pos_date AS pos_dt,
         src.customer_ec_platfom AS vend_cd,
         NULL AS vend_nm,
@@ -51,19 +54,36 @@ final as
         NULL AS src_seq_num,
         'EC' AS src_sys_cd,
         'TW' AS ctry_cd,
+        TGT.CRT_DTTM AS TGT_CRT_DTTM,
         current_timestamp as UPD_DTTM,
-    FROM
-    (
-            SELECT
-                max(customer_ec_platfom) as customer_ec_platfom,
+        CASE
+            WHEN TGT.CRT_DTTM IS NULL THEN 'I'
+            ELSE 'U'
+        END AS CHNG_FLG
+    FROM 
+        (
+            SELECT MAX(customer_ec_platfom) AS customer_ec_platfom,
                 pos_date,
                 product_code,
-                max(product_name) as product_name,
-                coalesce(sum(qty), 0) as qty,
-                coalesce(sum(selling_amt_before_tax), 0) as selling_amt_before_tax,
-                max(brand) as brand
-            from source
+                MAX(product_name) AS product_name,
+                COALESCE(SUM(qty), 0) AS qty,
+                COALESCE(SUM(selling_amt_before_tax), 0) AS selling_amt_before_tax,
+                MAX(brand) AS brand
+            FROM source
             GROUP BY pos_date,
                 product_code
         ) SRC
+        LEFT OUTER JOIN 
+        (
+            SELECT pos_dt,
+                vend_prod_cd,
+                CRT_DTTM,
+                COALESCE(sls_excl_vat_amt, 0) AS sls_excl_vat_amt,
+                COALESCE(sls_qty, 0) AS sls_qty
+            FROM ITG_POS
+            WHERE src_sys_cd = 'EC'
+                AND ctry_cd = 'TW'
+        ) TGT ON SRC.pos_date = TGT.pos_dt
+        AND SRC.product_code = TGT.vend_prod_cd
 )
+select * from final

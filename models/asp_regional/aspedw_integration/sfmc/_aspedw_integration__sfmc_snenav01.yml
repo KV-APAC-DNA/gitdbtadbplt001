@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_sfmc_analysis
+    config: 
+        alias: edw_sfmc_analysis
+        tags: ["tw_sfmc_analysis_refresh","transformation"]

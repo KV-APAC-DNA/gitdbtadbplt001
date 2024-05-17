@@ -1,4 +1,8 @@
-with logon_month as 
+with itg_sfmc_consumer_master as (
+    select * from snapntaitg_integration.itg_sfmc_consumer_master
+),
+
+logon_month as 
 (
     SELECT 
         itg_sfmc_consumer_master.subscriber_key,
@@ -18,7 +22,7 @@ with logon_month as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text
@@ -49,7 +53,7 @@ month_1 as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text
@@ -80,7 +84,7 @@ month_2 as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text
@@ -111,7 +115,7 @@ month_3 as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text
@@ -142,7 +146,7 @@ month_4 as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text
@@ -173,7 +177,7 @@ month_5 as
             )
         )::character varying AS active_month,
         to_date(itg_sfmc_consumer_master.crtd_dttm) AS file_dt
-    FROM snapntaitg_integration.itg_sfmc_consumer_master
+    FROM itg_sfmc_consumer_master
     WHERE (
             (
                 (itg_sfmc_consumer_master.cntry_cd)::text = 'TW'::text

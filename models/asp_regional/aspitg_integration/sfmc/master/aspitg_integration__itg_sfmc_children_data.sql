@@ -7,7 +7,8 @@
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH';
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd = 'PH'
-                    {% elif var('crm_job_to_execute') == 'tw_crm_files' %};
+                    {% elif var('crm_job_to_execute') == 'tw_crm_files' %}
+                    delete from {{this}} where cntry_cd = 'TW';
                     {% endif %}
                 "
     )
@@ -19,7 +20,8 @@ with sdl_th_sfmc_children_data as
 ),
 itg_mds_rg_sfmc_gender as
 (
-    select * from {{ ref('aspitg_integration__itg_mds_rg_sfmc_gender') }}
+    select * from SNAPASPITG_INTEGRATION.ITG_MDS_RG_SFMC_GENDER
+    --{{ ref('aspitg_integration__itg_mds_rg_sfmc_gender') }}
 ),
 sdl_ph_sfmc_children_data as
 (
@@ -100,10 +102,6 @@ final as
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from sdl_tw_sfmc_children_data
     where rnk=1
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-        and crtd_dttm > (select max(crtd_dttm) from {{ this }})
-    {% endif %}
 )
 
 select * from final
