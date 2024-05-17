@@ -189,14 +189,14 @@ from (select mnth_id
                    mnth_wk_no,
                    case
                      when mnth_wk_no = 1 then '19000101'
-                     else (min(cal_date_id)::date)
+                     else (min(cal_date_id))
                    end as first_day,
                    case
                      when mnth_wk_no = (select max(mnth_wk_no)
                                         from edw_vw_os_time_dim b
                                         where b.mnth_id = mnth_id
                                         ) then '20991231'
-                     else (max(cal_date_id)::date)
+                     else (max(cal_date_id))
                    end as last_day
             from edw_vw_os_time_dim a
             group by "year",
