@@ -8,7 +8,7 @@
                     {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_unsubscribe_data') }}) and cntry_cd = 'PH';
                     {% elif var('sfmc_job_to_execute') == 'tw_sfmc_files' %}
-                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('ntasdl_raw','sdl_ph_sfmc_unsubscribe_data') }}) and cntry_cd = 'TW';
+                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('ntasdl_raw','sdl_tw_sfmc_unsubscribe_data') }}) and cntry_cd = 'TW';
                     {% endif %}
                 "
     )
@@ -22,7 +22,7 @@ source_ph as
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_unsubscribe_data') }}
 ),
 source_tw as (
-    select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_ph_sfmc_unsubscribe_data') }}
+    select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_unsubscribe_data') }}
 )
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
 ,

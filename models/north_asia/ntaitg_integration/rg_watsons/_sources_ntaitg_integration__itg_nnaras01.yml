@@ -37,5 +37,5 @@ sources:
                   schema: ntawks_integration 
       - name: sdl_tw_sfmc_complaint_data
         tags: [""]
-      - name: sdl_ph_sfmc_unsubscribe_data
+      - name: sdl_tw_sfmc_unsubscribe_data
         tags: [""]

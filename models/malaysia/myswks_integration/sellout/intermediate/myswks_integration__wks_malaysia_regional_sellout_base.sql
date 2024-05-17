@@ -1,4 +1,3 @@
-
 with
 itg_my_sellout_sales_fact as (
 select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_SELLOUT_SALES_FACT
@@ -8,6 +7,12 @@ select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_CUSTOMER_DIM
 ),
 itg_my_dstrbtrr_dim as (
 select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_DSTRBTRR_DIM
+),
+ITG_MY_DSTRBTR_CUST_DIM as (
+select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_DSTRBTR_CUST_DIM
+),
+ITG_MY_OUTLET_ATTR as (
+select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MY_OUTLET_ATTR
 ),
 edw_vw_os_time_dim as (
 select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
@@ -30,41 +35,7 @@ select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_MY_CUSTOMER_HIERARCHY
 itg_mds_ap_customer360_config as (
 select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
 ),
-final as (
-SELECT
-BASE.data_src,
-BASE.cntry_cd,
-BASE.cntry_nm,
-BASE.year,
-BASE.mnth_id,
-BASE.week_id,
-BASE.day,
-BASE.univ_year,
-BASE.univ_month,
-BASE.soldto_code,
-BASE.distributor_code,
-BASE.distributor_name,
-BASE.store_cd,
-BASE.store_name,
-BASE.store_type,
-BASE.dstrbtr_lvl1,
-BASE.dstrbtr_lvl2 ,
-BASE.dstrbtr_lvl3,
-BASE.ean,
-BASE.matl_num,
-BASE.Customer_Product_Desc,
-BASE.region,
-BASE.zone_or_area,
-BASE.so_sls_qty,
-BASE.so_sls_value,
-BASE.msl_product_code,
-BASE.msl_product_desc,
-BASE.store_grade,
-UPPER(BASE.retail_env) as retail_env,
-current_timestamp() AS crtd_dttm,
-current_timestamp() AS updt_dttm
-FROM
-(
+sellout as (
 SELECT 'SELL-OUT' AS DATA_SRC,
        'MY' AS 	CNTRY_CD,
        'Malaysia' AS CNTRY_NM,
@@ -110,17 +81,21 @@ left join --itg_my_outlet_attr attr
 where NOT (COALESCE(ltrim(imcd.dstrbtr_grp_cd, '0'), '0') || COALESCE(trim(sls.cust_cd), '0') 
   IN (SELECT DISTINCT COALESCE(dstrbtr_cd, '0')|| COALESCE(outlet_cd, '0')
                FROM itg_my_gt_outlet_exclusion))
-
-UNION ALL
-
+),
+pos as (
 SELECT 'POS' AS DATA_SRC,
        'MY' AS 	CNTRY_CD,
        'Malaysia' AS CNTRY_NM,
        LEFT(JJ_MNTH_ID,4)::INT AS YEAR,
        JJ_MNTH_ID AS MNTH_ID,
 	   JJ_YR_WEEK_NO AS WEEK_ID,
-	   --CASE WHEN NVL(JJ_YR_WEEK_NO,'NA')<>'NA' THEN trunc(to_date(RIGHT(JJ_YR_WEEK_NO,2)::INTEGER||' '||LEFT(JJ_YR_WEEK_NO,4)::INTEGER,'WW YYYY'))-(date_part(dow,trunc(to_date(RIGHT(JJ_YR_WEEK_NO,2)::INTEGER||' '||LEFT(JJ_YR_WEEK_NO,4)::INTEGER,'WW YYYY'))))::integer+1 else TO_DATE(JJ_MNTH_ID|| '01','YYYYMMDD') end AS DAY,
-	   CASE WHEN NVL(JJ_YR_WEEK_NO,'NA')<>'NA' THEN TO_DATE(JJ_YR_WEEK_NO, 'IYYYIW') else TO_DATE(JJ_MNTH_ID|| '01','YYYYMMDD') end AS DAY,
+	   --CASE WHEN NVL(JJ_YR_WEEK_NO,'NA')<>'NA' THEN trunc(to_date(RIGHT(JJ_YR_WEEK_NO,2)::INTEGER||' '||LEFT(JJ_YR_WEEK_NO,4)::INTEGER,'WW YYYY'))-(date_part(dow,trunc(to_date(RIGHT(JJ_YR_WEEK_NO,2)::INTEGER||' '||LEFT(JJ_YR_WEEK_NO,4)::INTEGER,'WW YYYY'))))::integer+1 else TO_DATE(JJ_MNTH_ID|| '01','YYYYMMDD') end AS DAY, 
+   CASE 
+        WHEN NVL(JJ_YR_WEEK_NO, 'NA') <> 'NA' THEN 
+            TO_DATE(SUBSTRING(JJ_YR_WEEK_NO, 1, 4) || '-01-01', 'YYYY-MM-DD') + 
+            (CAST(SUBSTRING(JJ_YR_WEEK_NO, 5, 2) AS INTEGER) - 1) * 7  
+        ELSE TO_DATE(JJ_MNTH_ID || '01', 'YYYYMMDD') 
+    END AS DAY,
 	   LEFT(JJ_MNTH_ID,4)::INT  as univ_year,
 	   Right(JJ_MNTH_ID,2)::INT as univ_month,
 	   imcd.dstrbtr_grp_cd as SOLDTO_CODE,
@@ -151,10 +126,89 @@ SELECT 'POS' AS DATA_SRC,
 on ltrim(imcd.cust_id, '0') = ltrim(POS.cust_id, '0')
 left join itg_my_dstrbtrr_dim dist on ltrim(imcd.dstrbtr_grp_cd, '0') = ltrim(dist.cust_id, '0')
 left join itg_mds_my_customer_hierarchy cust_hier
-  ON ltrim(imcd.dstrbtr_grp_cd, '0') = ltrim(cust_hier.sold_to, '0')) BASE
+  ON ltrim(imcd.dstrbtr_grp_cd, '0') = ltrim(cust_hier.sold_to, '0')
+),
+transformed as (
+SELECT
+BASE.data_src,
+BASE.cntry_cd,
+BASE.cntry_nm,
+BASE.year,
+BASE.mnth_id,
+BASE.week_id,
+BASE.day,
+BASE.univ_year,
+BASE.univ_month,
+BASE.soldto_code,
+BASE.distributor_code,
+BASE.distributor_name,
+BASE.store_cd,
+BASE.store_name,
+BASE.store_type,
+BASE.dstrbtr_lvl1,
+BASE.dstrbtr_lvl2 ,
+BASE.dstrbtr_lvl3,
+BASE.ean,
+BASE.matl_num,
+BASE.Customer_Product_Desc,
+BASE.region,
+BASE.zone_or_area,
+BASE.so_sls_qty,
+BASE.so_sls_value,
+BASE.msl_product_code,
+BASE.msl_product_desc,
+BASE.store_grade,
+UPPER(BASE.retail_env) as retail_env,
+current_timestamp() AS crtd_dttm,
+current_timestamp() AS updt_dttm
+FROM
+(
+select * from sellout
+
+UNION ALL
+
+select * from pos
+  ) BASE
 WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
 AND base.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_my')='ALL' then '190001' else to_char(add_months(to_date(current_date::varchar, 'YYYY-MM-DD'), -((select param_value from itg_mds_ap_customer360_config where code='base_load_my')::integer)), 'YYYYMM')
 end)
+),
+final as (
+select
+data_src::varchar(8) as data_src,
+cntry_cd::varchar(2) as cntry_cd,
+cntry_nm::varchar(8) as cntry_nm,
+year::number(18,0) as year,
+mnth_id::varchar(23) as mnth_id,
+week_id::varchar(10) as week_id,
+day::date as day,
+univ_year::number(18,0) as univ_year,
+univ_month::number(18,0) as univ_month,
+soldto_code::varchar(50) as soldto_code,
+distributor_code::varchar(50) as distributor_code,
+distributor_name::varchar(255) as distributor_name,
+store_cd::varchar(50) as store_cd,
+store_name::varchar(255) as store_name,
+store_type::varchar(255) as store_type,
+dstrbtr_lvl1::varchar(40) as dstrbtr_lvl1,
+dstrbtr_lvl2::varchar(40) as dstrbtr_lvl2,
+dstrbtr_lvl3::varchar(40) as dstrbtr_lvl3,
+ean::varchar(50) as ean,
+matl_num::varchar(255) as matl_num,
+customer_product_desc::varchar(255) as customer_product_desc,
+region::varchar(2) as region,
+zone_or_area::varchar(2) as zone_or_area,
+so_sls_qty::number(22,6) as so_sls_qty,
+so_sls_value::number(22,6) as so_sls_value,
+msl_product_code::varchar(50) as msl_product_code,
+msl_product_desc::varchar(255) as msl_product_desc,
+store_grade::varchar(256) as store_grade,
+retail_env::varchar(3) as retail_env,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm
+from transformed
 )
 select * from final
+
+
 

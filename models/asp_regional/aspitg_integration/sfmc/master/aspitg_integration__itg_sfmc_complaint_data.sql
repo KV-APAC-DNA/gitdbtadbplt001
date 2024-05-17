@@ -96,4 +96,5 @@ final as(
     from source_tw
     where rnk=1
 )
+select * from final
 {% endif %}
