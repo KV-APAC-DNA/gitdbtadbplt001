@@ -3,7 +3,7 @@ edw_pos_fact as (
 select * from dev_dna_core.snapntaedw_integration.edw_pos_fact
 ),
 edw_vw_os_time_dim as (
-select * from dev_dna_core.snenav01_workspace.edw_vw_os_time_dim
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_ims_fact as (
 select * from dev_dna_core.snapntaedw_integration.edw_ims_fact

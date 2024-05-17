@@ -1,5 +1,5 @@
 with sdl_tw_bu_forecast_prod_hier as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_TW_BU_FORECAST_PROD_HIER
+select * from {{ source('ntasdl_raw', 'sdl_tw_bu_forecast_prod_hier') }}
 ),
 edw_customer_attr_hier_dim as (
 select * from DEV_DNA_CORE.SM05_WORKSPACE.ASPEDW_INTEGRATION__EDW_CUSTOMER_ATTR_HIER_DIM

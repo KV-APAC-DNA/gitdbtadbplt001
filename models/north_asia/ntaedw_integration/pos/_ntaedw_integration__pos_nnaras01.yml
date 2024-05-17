@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_vw_sales_rep_so_target_fact
+    config:
+      alias: edw_vw_sales_rep_so_target_fact
+      tags: ["","transformation"]
+  - name: ntaedw_integration__edw_pos_fact
+    config:
+      alias: edw_pos_fact
+      tags: ["","transformation"]
+ 
+  

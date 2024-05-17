@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_dly_ims_txn_msl
+    config:
+      alias: v_dly_ims_txn_msl
+      tags: ["taiwan_views","transformation"]
+ 
+  - name: ntaedw_integration__v_intrm_crncy_exch
+    config:
+      alias: v_intrm_crncy_exch
+      tags: ["taiwan_views","transformation"]

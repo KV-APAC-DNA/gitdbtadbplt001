@@ -41,6 +41,16 @@ sources:
                   store_failures: true
                   schema: ntawks_integration
             - test_date_format_odd_eve_leap:
+                model_nm: "{{ source('ntasdl_raw', 'sdl_tw_pos_carrefour') }}"
+                date_column: "pos_date::date"
+                filter: "(odd_mon.pos_date) = (even_mon.pos_date) and (even_mon.pos_date) = (feb.pos_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                failure_reason: "'Pos-date having incorrect date-format. Expected: yyyyMMdd'"
+                select_columns: ["pos_date","product_code"]
+                name: TRATBL_sdl_tw_pos_carrefour__test_date_format_odd_eve_leap
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+
       - name: sdl_tw_pos_7eleven
         tags: [""]
         tests:
@@ -82,5 +92,4 @@ sources:
                   store_failures: true
                   schema: ntawks_integration
         
-      - name: sdl_tw_sfmc_unsubscribe_data
-        tags: [""]
+      
