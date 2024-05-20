@@ -1870,7 +1870,8 @@ FROM
                       AND (
                         (spl.sls_grp_cd):: text = (vcd.sales_grp_cd):: text
                       )
-                      and pcf.px_jj_mnth>='202201' --adding additional filter for Promax data to have data >= 2022
+                      --and pcf.px_jj_mnth>='202201' --adding additional filter for Promax data to have data >= 2022
+                      --Removing the above added filter for Promax data
                     )
                 )
                 UNION ALL
