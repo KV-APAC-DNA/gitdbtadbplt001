@@ -1,9 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy = "merge",
-        unique_key=["c_pk"],
-        merge_exclude_columns = ["crt_dttm"]
+        incremental_strategy = "append",
+        unique_key=["invnt_dt", "prod_cd", "ean_num", "ctry_cd", "chng_flg", "dstr_cd"],
+        pre_hook="delete from {{this}} itg_ims_invnt using {{ ref('ntawks_integration__wks_itg_ims_invnt_std') }} wks_itg_ims_invnt_std where coalesce(itg_ims_invnt.invnt_dt,'1/1/1900') = coalesce(wks_itg_ims_invnt_std.invnt_dt,'1/1/1900') and   coalesce(itg_ims_invnt.prod_cd,'#') = coalesce(wks_itg_ims_invnt_std.prod_cd,'#') and   coalesce(itg_ims_invnt.ean_num,'#') = coalesce(wks_itg_ims_invnt_std.ean_num,'#') and   coalesce(itg_ims_invnt.ctry_cd,'#') = coalesce(wks_itg_ims_invnt_std.ctry_cd,'#') and   wks_itg_ims_invnt_std.chng_flg = 'U' and   itg_ims_invnt.dstr_cd in (select distinct distributor_code from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }} where subject_area = 'Stock-Data' and   ctry_cd = 'TW');"
     )
 }}
 
@@ -12,16 +12,6 @@ with source as(
 ),
 final as(
     select 
-       MD5(
-            CONCAT
-                    (
-                        COALESCE(invnt_dt,'1/1/1900'),
-                        COALESCE(prod_cd,'#'),
-                        COALESCE(ean_num,'#'),
-                        COALESCE(ctry_cd,'#'),
-                        COALESCE(dstr_nm,'#')
-                    )       
-                ) as c_pk,
        to_date(invnt_dt) as invnt_dt,
        dstr_cd::varchar(30) as dstr_cd,
        dstr_nm::varchar(100) as dstr_nm,
@@ -44,7 +34,10 @@ final as(
        sls_rep_nm::varchar(50) as sls_rep_nm,
        ctry_cd::varchar(2) as ctry_cd,
        crncy_cd::varchar(3) as crncy_cd,
-       current_timestamp()::timestamp_ntz(9) as crt_dttm,
+       case
+         when chng_flg = 'I' then current_timestamp()::timestamp_ntz(9)
+         else tgt_crt_dttm
+       end as crt_dttm,
        current_timestamp()::timestamp_ntz(9) as updt_dttm,
        chn_uom::varchar(100) as chn_uom,
        storage_name::varchar(200) as storage_name

@@ -1,5 +1,5 @@
 with itg_ims_invnt as(
-    select * from {{ source('ntaitg_integration', 'itg_ims_invnt') }}
+    select * from {{ ref('ntaitg_integration__itg_ims_invnt') }}
 ),
 itg_tw_ims_dstr_prod_map as(
     select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}

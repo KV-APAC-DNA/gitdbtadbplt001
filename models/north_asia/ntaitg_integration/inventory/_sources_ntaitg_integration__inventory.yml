@@ -464,9 +464,7 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: itg_ims_invnt
-      tags: ["","ingestion"]
-
+    - name: itg_ims_invnt_temp
     - name: itg_gt_msl_items
       tags: ["","ingestion"]
 
