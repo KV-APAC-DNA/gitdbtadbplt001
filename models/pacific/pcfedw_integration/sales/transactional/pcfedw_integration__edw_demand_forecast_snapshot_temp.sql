@@ -170,7 +170,8 @@ union1 as(
         vdfa.apo_promo_frcst,
         vdfa.px_tot_frcst,
         vdfa.px_base_frcst,
-        vdfa.px_promo_frcst
+        vdfa.px_promo_frcst,
+        null as count
     from vdfa, etd
     where vdfa.snap_shot_dt::date=etd.snapshot_date::date
 ),
@@ -330,7 +331,8 @@ union2 as(
         vdfaa.APO_PROMO_FRCST,
         vdfaa.PX_TOT_FRCST,
         vdfaa.PX_BASE_FRCST,
-        vdfaa.PX_PROMO_FRCST
+        vdfaa.PX_PROMO_FRCST,
+        null as count
     FROM VDFAA, ETDD
     WHERE (VDFAA.SNAP_SHOT_DT)::date=(ETDD.SNAPSHOT_DATE)::date
 ),
