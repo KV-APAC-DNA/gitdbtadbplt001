@@ -18,7 +18,7 @@ vdfa as (
     select
         pac_source_type,
         pac_subsource_type,
-        convert_timezone('UTC', current_date)::date as snap_shot_dt,
+        convert_timezone('UTC', current_timestamp)::date as snap_shot_dt,
         jj_period,
         jj_week_no,
         jj_wk,
@@ -85,7 +85,7 @@ vdfa as (
 ),
 etd as(
     select
-        convert_timezone('UTC', current_date)::date as snapshot_date,
+        convert_timezone('UTC', current_timestamp)::date as snapshot_date,
         etd.jj_wk as snapshot_week_no,
         etdw.row_number as snapshot_mnth_week_no,
         etd.jj_mnth_shrt as snapshot_mnth_shrt,
@@ -179,7 +179,7 @@ vdfaa as (
      SELECT
         PAC_SOURCE_TYPE,
         PAC_SUBSOURCE_TYPE,
-        convert_timezone('UTC', current_date)::date as SNAP_SHOT_DT,
+        convert_timezone('UTC', current_timestamp)::date as SNAP_SHOT_DT,
         JJ_PERIOD,
         JJ_WEEK_NO,
         JJ_WK,
@@ -244,12 +244,12 @@ vdfaa as (
         PX_PROMO_FRCST
     FROM VW_DEMAND_FORECAST_ANALYSIS, 
     (SELECT TO_NUMBER(TO_CHAR(DATEADD('month', -1, TO_DATE('202312'::STRING, 'YYYYMM')), 'YYYYMM')) 
-    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = left(convert_timezone('UTC', current_date+1),10)::date) PROJPRD
+    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = left((convert_timezone('UTC', current_timestamp)::date+1),10)::date) PROJPRD
     WHERE PAC_SUBSOURCE_TYPE='SAPBW_ACTUAL'
 ),
 etdd as(
     SELECT
-        convert_timezone('UTC', current_date)::date as SNAPSHOT_DATE,
+        convert_timezone('UTC', current_timestamp)::date as SNAPSHOT_DATE,
         ETD.JJ_WK AS SNAPSHOT_WEEK_NO,
         ETDW.ROW_NUMBER AS SNAPSHOT_MNTH_WEEK_NO,
         ETD.JJ_MNTH_SHRT AS SNAPSHOT_MNTH_SHRT,
