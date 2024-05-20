@@ -36,7 +36,7 @@ sources:
             - test_format:
                 where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
                 failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
-                name: TRATBL_sdl_tw_sfmc_open_data_format_test
+                name: TRATBL_sdl_tw_sfmc_open_data__format_test
                 config:
                   store_failures: true
                 schema: ntawks_integration
@@ -68,7 +68,7 @@ sources:
             - test_format:
                 where_clause: "not regexp_like (substring(event_date,1,10),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]')"
                 failure_reason: "'event_date format is not expected, expected format is YYYY-MM-DD'"
-                name: TRATBL_sdl_tw_sfmc_sent_data_format_test
+                name: TRATBL_sdl_tw_sfmc_sent_data__format_test
                 config:
                   store_failures: true
                 schema: ntawks_integration
@@ -212,15 +212,13 @@ sources:
         - name: sdl_tw_sfmc_unsubscribe_data
           tags: ["nta_sfmc_files","ingestion"]
           tests:
-          - test_null:
-              select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","file_name"]
+          - test_null__ff:
               not_null_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","file_name"]
               name: TRATBL_sdl_tw_sfmc_unsubscribe_data__null_test
               config:
                 store_failures: true
                 schema: ntawks_integration
-          - test_duplicate:
-                  select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date","file_name"]
+          - test_duplicate__ff:
                   group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","email_id","event_date","file_name"]
                   name: TRATBL_sdl_tw_sfmc_unsubscribe_data__duplicate_test
                   config:
