@@ -20,7 +20,7 @@ itg_ims_dstr_cust_attr as (
     select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 tw_ims_distributor_ingestion_metadata as (
-    select * from snapntawks_integration.tw_ims_distributor_ingestion_metadata
+    select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
     --source
 ),
 
