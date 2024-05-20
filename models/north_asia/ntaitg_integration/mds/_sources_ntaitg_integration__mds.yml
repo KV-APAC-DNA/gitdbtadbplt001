@@ -42,7 +42,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-          - test_duplicate:
+          - test_duplicate__ff:
               group_by_columns: ["gender_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_gender__duplicate_test
               config:
@@ -57,7 +57,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-          - test_duplicate:
+          - test_duplicate__ff:
               group_by_columns: ["tier_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_member_tier__duplicate_test
               config:
@@ -72,7 +72,7 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-          - test_duplicate:
+          - test_duplicate__ff:
               group_by_columns: ["channel_raw"]
               name: TRATBL_sdl_mds_tw_sfmc_channel__duplicate_test
               config:
