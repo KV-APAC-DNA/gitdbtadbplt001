@@ -1,0 +1,3 @@
+INSERT INTO na_sdl.sdl_raw_kr_coupang_product_ranking_monthly
+SELECT *
+FROM na_sdl.sdl_kr_coupang_product_ranking_monthly;

@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_kr_coupang_product_ranking_weekly
+        tags: ["",""]
+      - name: sdl_kr_coupang_product_ranking_monthly
+        tags: ["",""]
+      - name: sdl_kr_coupang_product_master
+        tags: ["",""]
+      - name: sdl_kr_coupang_product_summary_weekly
+        tags: ["",""]
+      - name: sdl_kr_coupang_product_summary_monthly
+        tags: ["",""]
+      - name: sdl_kr_coupang_product_ranking_daily
+        tags: ["",""]
