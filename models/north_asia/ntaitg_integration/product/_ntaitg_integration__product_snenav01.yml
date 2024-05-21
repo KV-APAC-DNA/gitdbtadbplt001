@@ -3,37 +3,25 @@ version: 2
 models:
   - name: ntaitg_integration__itg_mds_hk_product_hierarchy
     config:
-        alias: itg_tw_pos_watson_store
-        tags: ["tw_pos_watson","ingestion"]
-  - name: ntaitg_integration__sdl_raw_tw_pos_watson_store
+        alias: itg_mds_hk_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_keyword_classifications
     config:
-        alias: sdl_raw_tw_pos_watson_store
-        tags: ["tw_pos_watson","ingestion"]
-  - name: ntaitg_integration__itg_tw_strategic_cust_hier
+        alias: itg_mds_kr_keyword_classifications
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_naver_product_master
     config:
-        alias: itg_tw_strategic_cust_hier
-        tags: ["tw_strategic_customer_hierarchy","ingestion"]
-
-  - name: ntaitg_integration__sdl_raw_tw_pos_7eleven
+        alias: itg_mds_kr_naver_product_master
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_kr_gt_dpt_daiso
     config:
-      alias: sdl_raw_tw_pos_7eleven
-      tags: ["tw_sfmc","transformation"]
-  - name: ntaitg_integration__sdl_raw_tw_pos_poya
+        alias: itg_kr_gt_dpt_daiso
+        tags: ["gt_sellout_dept_daiso_cust_dim","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_brand_campaign_promotion
     config:
-      alias: sdl_raw_tw_pos_poya
-      tags: ["tw_sfmc","transformation"]
-
-  - name: ntaitg_integration__itg_mds_hk_pos_product_mapping
+        alias: itg_mds_kr_brand_campaign_promotion
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_product_hierarchy
     config:
-      alias: itg_mds_hk_pos_product_mapping
-      tags: ["j_pa_grocery_inv","transformation"]
-
-  - name: ntaitg_integration__itg_mds_hk_pos_promo_calendar
-    config:
-      alias: itg_mds_hk_pos_promo_calendar
-      tags: ["j_pa_grocery_inv","transformation"]
-
-  - name: ntaitg_integration__itg_mds_hk_ref_pos_accounts
-    config:
-      alias: itg_mds_hk_ref_pos_accounts
-      tags: ["j_pa_grocery_inv","transformation"]
+        alias: itg_mds_kr_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]

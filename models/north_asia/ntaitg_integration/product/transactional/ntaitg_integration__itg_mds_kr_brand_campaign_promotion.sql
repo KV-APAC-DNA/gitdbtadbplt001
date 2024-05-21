@@ -1,13 +1,22 @@
-DELETE
-FROM NA_ITG.ITG_MDS_KR_Brand_Campaign_Promotion
-WHERE (TRIM(code)) IN (SELECT TRIM(code) AS code FROM na_sdl.SDL_MDS_KR_Brand_Campaign_Promotion);
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "delete+insert",
+        unique_key= ["code"]
+    )
+}}
 
-
-INSERT INTO NA_ITG.ITG_MDS_KR_Brand_Campaign_Promotion
-SELECT
-       TRIM(code),
-       TRIM(brand_code) AS brand_code,
-       TRIM(brand_name) AS brand_name,
-       TRIM(brand_id) AS brand_id,
-	   lastchgdatetime as lastchgdatetime
-FROM na_sdl.SDL_MDS_KR_Brand_Campaign_Promotion;
+with source as (
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_brand_campaign_promotion') }}
+),
+final as
+(
+    select
+        trim(code)::varchar(500) as code,
+        trim(brand_code)::varchar(500) AS brand_code,
+        trim(brand_name)::varchar(500) AS brand_name,
+        trim(brand_id)::varchar(500) AS brand_id,
+        lastchgdatetime::timestamp_ntz(9) as lastchgdatetime
+    from source
+)
+select * from final

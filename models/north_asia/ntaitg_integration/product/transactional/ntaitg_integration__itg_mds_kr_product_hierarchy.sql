@@ -1,9 +1,20 @@
-DELETE FROM NA_ITG.ITG_MDS_KR_PRODUCT_HIERARCHY
-WHERE PRFT_CTR IN (SELECT DISTINCT CODE FROM NA_SDL.SDL_MDS_KR_PRODUCT_HIERARCHY);
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "delete+insert",
+        unique_key= ["prft_ctr"]
+    )
+}}
 
-INSERT INTO NA_ITG.ITG_MDS_KR_PRODUCT_HIERARCHY
- (SELECT CODE AS PRFT_CTR,
-		 LOCAL_BRAND_CLASSIFICATION_CODE,
-		 SYSDATE as CRTD_DTTM
-  FROM  NA_SDL.SDL_MDS_KR_PRODUCT_HIERARCHY );
-
+with source as (
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_product_hierarchy') }}
+),
+final as
+(
+    select 
+        code::varchar(500) as prft_ctr,
+        local_brand_classification_code::varchar(200) as local_brand_classification_code,
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm
+    from source
+)
+select * from source

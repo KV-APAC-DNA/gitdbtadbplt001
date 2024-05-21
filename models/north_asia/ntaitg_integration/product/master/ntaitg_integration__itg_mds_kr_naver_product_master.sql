@@ -1,16 +1,25 @@
-DELETE
-FROM na_itg.ITG_MDS_KR_Naver_Product_Master
-WHERE (TRIM(code)) IN (SELECT TRIM(code) AS code FROM na_sdl.SDL_MDS_KR_Naver_Product_Master);
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "delete+insert",
+        unique_key= ["code"]
+    )
+}}
 
-
-INSERT INTO na_itg.ITG_MDS_KR_Naver_Product_Master
-SELECT
-       TRIM(code),
-       TRIM(category_l_code) AS Category_L_Code,
-       TRIM(category_m_code) AS Category_M_Code,
-       TRIM(category_s_code) AS Category_S_Code,
-	   TRIM(brands_name) AS brand_name,
-	   TRIM(product_name) as product_name,
-	   lastchgdatetime as lastchgdatetime,
-	   sysdate as refresh_date
-FROM na_sdl.SDL_MDS_KR_Naver_Product_Master;
+with source as (
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_naver_product_master') }}
+),
+final as 
+(
+    select
+        trim(code)::varchar(100) as code,
+        trim(category_l_code)::varchar(100) AS Category_L_Code,
+        trim(category_m_code)::varchar(100) AS Category_M_Code,
+        trim(category_s_code)::varchar(100) AS Category_S_Code,
+        trim(brands_name)::varchar(100) AS brand_name,
+        trim(product_name)::varchar(1000) as product_name,
+        lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+        current_timestamp()::timestamp_ntz(9) as refresh_date
+    from source
+)
+select * from final

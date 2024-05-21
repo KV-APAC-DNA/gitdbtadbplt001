@@ -3,12 +3,27 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: ntasdl_raw
+    schema: snapntasdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: sdl_tw_pos_watson_store
+      - name: sdl_mds_kr_sub_customer_master
+        tags: ["gt_sellout_dept_daiso_cust_dim","ingestion"]
+      - name: sdl_mds_kr_brand_campaign_promotion
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      - name: sdl_mds_kr_naver_product_master
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      - name: sdl_mds_kr_keyword_classifications
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      - name: sdl_mds_kr_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+      - name: sdl_mds_hk_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+      - name: sdl_kr_gt_daiso_price
+        tags: ["",""]
+      - name: sdl_mds_kr_retailer_price_master
+        tags: ["",""]   
 
 
