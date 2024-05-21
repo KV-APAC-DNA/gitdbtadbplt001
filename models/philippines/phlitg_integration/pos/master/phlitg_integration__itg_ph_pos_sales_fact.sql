@@ -3,21 +3,21 @@
     incremental_strategy = "append", 
     pre_hook = 
 		"delete from {{this}} where UPPER(CUST_CD) ||JJ_MNTH_ID||LTRIM(BRNCH_CD,'0') ||LTRIM(ITEM_CD,'0')  in (
-          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_robinsons') }} 
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ ref('phlwks_integration__wks_ph_pos_robinsons') }} 
           union 
-          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||nvl(ltrim(pos_prod_cd,'0'),'') from {{ source('phlsdl_raw', 'sdl_ph_pos_mercury') }} 
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||nvl(ltrim(pos_prod_cd,'0'),'') from {{ ref('phlwks_integration__wks_ph_pos_mercury') }} 
           union 
-          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_rustans') }} 
+          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ ref('phlwks_integration__wks_ph_pos_rustans') }} 
           union 
-          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_south_star') }} 
+          select distinct upper(substring(file_nm,1,2)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ ref('phlwks_integration__wks_ph_pos_south_star') }} 
           union 
-          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_watsons') }} 
+          select distinct upper(substring(file_nm,1,3)) ||jj_mnth_id||ltrim(store_cd,'0') ||ltrim(pos_prod_cd,'0') from {{ ref('phlwks_integration__wks_ph_pos_watsons') }} 
           union 
-          select distinct 'DYNA'||mnth_id||customer_id||matl_num from {{ source('phlsdl_raw', 'sdl_ph_pos_dyna_sales') }} 
+          select distinct 'DYNA'||mnth_id||customer_id||matl_num from {{ ref('phlwks_integration__wks_ph_pos_dyna_sales') }} 
           union 
-          select distinct  'PSC' ||MNTH_ID||STORE_CD||ITEM_CD  from {{ source('phlsdl_raw', 'sdl_ph_pos_711') }} 
+          select distinct  'PSC' ||MNTH_ID||STORE_CD||ITEM_CD  from {{ ref('phlwks_integration__wks_ph_pos_711') }}
           union 
-          select distinct UPPER(SUBSTRING(FILE_NM,1,2)) ||JJ_MNTH_ID||LTRIM(STORE_CD,'0') ||LTRIM(POS_PROD_CD,'0') from {{ source('phlsdl_raw', 'sdl_ph_pos_waltermart') }} WHERE VENDOR_CD = '6256'
+          select distinct UPPER(SUBSTRING(FILE_NM,1,2)) ||JJ_MNTH_ID||LTRIM(STORE_CD,'0') ||LTRIM(POS_PROD_CD,'0') from {{ ref('phlwks_integration__wks_ph_pos_waltermart') }} WHERE VENDOR_CD = '6256'
          );"
 	) }}
 WITH itg_mds_ph_pos_pricelist AS (
