@@ -8,7 +8,7 @@
                     {% else %}
                         {{schema}}.pcfedw_integration__edw_demand_forecast_snapshot
                     {% endif %}
-                    where jj_period < replace(left(dateadd(month, -6, current_timestamp),7),'-','');
+                    where replace(left(snap_shot_dt,7),'-','') < replace(left(dateadd(month, -6, current_timestamp),7),'-','');
                     create or replace table 
                     {% if target.name=='prod' %}
                         pcfedw_integration.edw_demand_forecast_snapshot_temp
