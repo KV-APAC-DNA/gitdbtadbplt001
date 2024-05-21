@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_id_pos_daily_idm_sellout
+      tags: ["id_pos_daily_idm_sellout","ingestion"]
+      

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_distributor_salesman_dim
+    config:
+      alias: edw_distributor_salesman_dim
+      tags: ["id_ivy_salesman_master_update","transformation"]

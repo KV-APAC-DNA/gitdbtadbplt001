@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_id_pos_daily_idm_sellout
+    config:
+      alias: itg_id_pos_daily_idm_sellout
+      tags: ["id_pos_daily_idm_sellout","ingestion"]

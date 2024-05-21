@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_distributor_ivy_merchandising
+    config:
+      alias: itg_distributor_ivy_merchandising
+      tags: ["id_ivy_merchandising","ingestion"]
