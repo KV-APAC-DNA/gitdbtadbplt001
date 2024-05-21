@@ -3,7 +3,7 @@ version: 2
 models:
   - name: phlitg_integration__sdl_raw_ph_pos_mercury_ph
     config:
-      alias: sdl_raw_mds_ph_distributor_product
+      alias: sdl_raw_ph_pos_mercury_ph
       tags: ["ph_pos","ingestion"]
 
   - name: phlitg_integration__sdl_raw_ph_pos_robinsons_ph

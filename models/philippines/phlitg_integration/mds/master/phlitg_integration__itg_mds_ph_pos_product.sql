@@ -53,13 +53,13 @@ trans as
                 from {{this}} itg,
                     sdl_mds_ph_pos_product sdl
                 where sdl.lastchgdatetime != itg.last_chg_datetime
-                    and trunc(sdl.effective_sales_cycle) = itg.mnth_id
+                    and trim(replace(sdl.effective_sales_cycle,char(13),'')) = itg.mnth_id
                     and trim(sdl.item_cd) = itg.item_cd
                     and trim(sdl.prefix) = itg.cust_cd
             )
         union all
         select trim(code) as code,
-            trunc(effective_sales_cycle) as mnth_id,
+            trim(replace(effective_sales_cycle,char(13),'')) as mnth_id,
             trim(item_cd) as item_cd,
             trim(barcode) as bar_cd,
             trim(item_nm) as item_nm,
@@ -143,14 +143,14 @@ trans as
                 from {{this}} itg,
                     sdl_mds_ph_pos_product sdl
                 where sdl.lastchgdatetime != itg.last_chg_datetime
-                    and trunc(sdl.effective_sales_cycle) = itg.mnth_id
+                    and trim(replace(sdl.effective_sales_cycle,char(13),'')) = itg.mnth_id
                     and trim(sdl.item_cd) = itg.item_cd
                     and trim(sdl.prefix) = itg.cust_cd
                     and itg.active = 'Y'
             )
         union all
         select trim(code) as code,
-            trunc(effective_sales_cycle) as mnth_id,
+            trim(replace(effective_sales_cycle,char(13),'')) as mnth_id,
             trim(item_cd) as item_cd,
             trim(barcode) as bar_cd,
             trim(item_nm) as item_nm,
@@ -235,13 +235,13 @@ trans as
                 from {{this}} itg,
                     sdl_mds_ph_pos_product sdl
                 where sdl.lastchgdatetime = itg.last_chg_datetime
-                    and trunc(sdl.effective_sales_cycle) = itg.mnth_id
+                    and trim(replace(sdl.effective_sales_cycle,char(13),'')) = itg.mnth_id
                     and trim(sdl.item_cd) = itg.item_cd
                     and trim(sdl.prefix) = itg.cust_cd
             )
         union all
         select trim(code) as code,
-            trunc(effective_sales_cycle) as mnth_id,
+            trim(replace(effective_sales_cycle,char(13),'')) as mnth_id,
             trim(item_cd) as item_cd,
             trim(barcode) as bar_cd,
             trim(item_nm) as item_nm,
@@ -323,7 +323,7 @@ trans as
         from (
                 select *
                 from sdl_mds_ph_pos_product sdl
-                where trunc(effective_sales_cycle) || trim(item_cd) || trim(prefix) not in (
+                where trim(replace(effective_sales_cycle,char(13),'')) || trim(item_cd) || trim(prefix) not in (
                         select distinct mnth_id || item_cd || cust_cd
                         from {{this}}
                     )
