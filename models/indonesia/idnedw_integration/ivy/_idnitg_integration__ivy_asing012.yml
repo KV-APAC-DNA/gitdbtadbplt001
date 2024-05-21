@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnedw_integration__edw_distributor_ivy_merchandising
-    config:
-      alias: edw_distributor_ivy_merchandising
-      tags: ["id_ivy_merchandising","transformation"]

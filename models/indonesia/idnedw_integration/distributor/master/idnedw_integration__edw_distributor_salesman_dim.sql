@@ -7,7 +7,7 @@
 }}
 with source as 
 (
-    select * from snapidnedw_integration.edw_distributor_ivy_user_master
+    select * from {{ ref('idnedw_integration__edw_distributor_ivy_user_master') }}
 ),
 final as
 (

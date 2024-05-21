@@ -5,3 +5,15 @@ models:
     config:
       alias: itg_distributor_ivy_merchandising
       tags: ["id_ivy_merchandising","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_merchandising
+    config:
+      alias: sdl_raw_distributor_ivy_merchandising
+      tags: ["id_ivy_merchandising","ingestion"]
+  - name : idnitg_integration__itg_distributor_ivy_user_master
+    config:
+      alias: itg_distributor_ivy_user_master
+      tags: ["id_ivy_usermaster","ingestion"]
+  - name : idnitg_integration__sdl_raw_distributor_ivy_user_master
+    config:
+      alias: sdl_raw_distributor_ivy_user_master
+      tags: ["id_ivy_usermaster","ingestion"]

@@ -11,7 +11,7 @@
         upper(retailer_code),
         surveydate,
         upper(aq_name),
-        coalesce(link, 'na')
+        coalesce(link, 'NA')
         ) in (
         select distinct distributor_code,
             upper(sales_repcode),
@@ -47,11 +47,11 @@ final as
         trim(split_part(surveydate, ',', 3)) || ' ' || trim (split_part(surveydate, ',', 2)),
         'yyyy month dd'
     ) as surveydate,
-    aq_name::varchar(500) as aq_name
-	srd_answer::varchar(100) as srd_answer
-	link::varchar(500) as link
-	cdl_dttm::varchar(50) as cdl_dttm
-	run_id::number(14,0) as run_id
+    aq_name::varchar(500) as aq_name,
+	srd_answer::varchar(100) as srd_answer,
+	link::varchar(500) as link,
+	cdl_dttm::varchar(50) as cdl_dttm,
+	run_id::number(14,0) as run_id,
 	source_file_name::varchar(256) as source_file_name
     from source
 )

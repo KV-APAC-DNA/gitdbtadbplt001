@@ -9,9 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_distributor_ivy_merchandising
-      tags: ["id_ivy_merchandising","ingestion"]
-    - name: sdl_distributor_ivy_user_master
-      tags: ["id_ivy_usermaster","ingestion"]
+    - name: sdl_mds_id_ref_mapping_channel
+      tags: ["id_mds_itg_load","ingestion"]
+
 
       
