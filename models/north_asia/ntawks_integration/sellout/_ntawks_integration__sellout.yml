@@ -3,7 +3,7 @@ version: 2
 models:
   - name: ntawks_integration__wks_taiwan_regional_sellout
     config:
-      alias: wks_itg_tw_bu_forecast_prod_hier
+      alias: wks_taiwan_regional_sellout
       tags: ["Customer_360_TW","transformation"]
   - name: ntawks_integration__wks_taiwan_regional_sellout_base
     config:
@@ -19,7 +19,7 @@ models:
       tags: ["Customer_360_TW","transformation"]
   - name: ntawks_integration__wks_edw_pos_fact
     config:
-      alias: wks_itg_tw_bu_forecast_prod_hier
+      alias: wks_edw_pos_fact
       tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]
    
  
