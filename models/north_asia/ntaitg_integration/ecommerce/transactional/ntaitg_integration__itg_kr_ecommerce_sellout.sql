@@ -62,7 +62,7 @@ sdl_kr_pos_emart_ssg_mod as (
 ),
 emart as (
     select 
-        'EMART' as customer_name,
+        'Emart' as customer_name,
         master.sold_to as customer_code,
         'SSG.COM' as sub_customer_name,
         nvl(ean, offline_ean) as ean_number,
@@ -70,7 +70,7 @@ emart as (
         product_type as sku_type,
         null as brand_categories,
         cast(prod_nm as varchar(100)) as product_name,
-        substring(pos_dt, 0, 5) as year,
+        substring(pos_dt, 0, 4) as year,
         substring(pos_dt, 5, 2) as month,
         null as week,
         to_date(pos_dt, 'YYYYMMDD') as transaction_date,
