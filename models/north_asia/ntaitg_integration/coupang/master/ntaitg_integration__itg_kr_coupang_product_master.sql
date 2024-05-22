@@ -9,7 +9,7 @@
 }}
 with source as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_master') }}
-)
+),
 final as
 (
 	select
@@ -24,7 +24,7 @@ final as
 		run_id::number(14,0) as run_id,
 		file_name::varchar(255) as file_name,
 		yearmo::varchar(255) as yearmo,
-		current_timestamp()::timestamp_ntz(9) as crtd_dttm
-	from na_sdl.sdl_kr_coupang_product_master
+		current_timestamp()::timestamp_ntz(9) as updt_dttm
+	from source
 )
 select * from final

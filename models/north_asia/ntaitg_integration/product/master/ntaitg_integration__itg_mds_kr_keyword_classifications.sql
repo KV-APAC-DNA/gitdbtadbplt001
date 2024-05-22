@@ -1,13 +1,13 @@
 {{
     config(
         materialized= "incremental",
-        incremental_strategy= "delete+insert",
+        incremental_strategy= "append",
         pre_hook = "delete from {{this}} where (upper(trim(keyword))) in (select upper(trim(keyword)) as keyword from {{ source('ntasdl_raw', 'sdl_mds_kr_keyword_classifications') }});"
     )
 }}
 
 with source as (
-    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_keyword_classifications') }}
+    select count(*) from {{ source('ntasdl_raw', 'sdl_mds_kr_keyword_classifications') }}
 ),
 final as (
     select 

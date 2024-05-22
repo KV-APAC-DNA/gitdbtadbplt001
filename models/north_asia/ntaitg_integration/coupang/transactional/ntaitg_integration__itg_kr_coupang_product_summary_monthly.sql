@@ -26,7 +26,7 @@ final as
 		run_id::number(14,0) as run_id,
 		file_name::varchar(255) as file_name,
 		yearmo::varchar(255) as yearmo,
-		updt_dttm::timestamp_ntz(9) as updt_dttm
+		current_timestamp()::timestamp_ntz(9) as updt_dttm
 	from source
 )
 select * from final

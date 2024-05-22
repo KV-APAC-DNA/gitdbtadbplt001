@@ -17,4 +17,4 @@ final as
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
     from source
 )
-select * from source
+select * from final
