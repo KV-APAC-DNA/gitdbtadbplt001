@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: ntawks_integration__wks_itg_pos
+    config:
+      alias: wks_itg_pos
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_emart
+    config:
+      alias: wks_itg_pos_emart
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_emart_ecvan_ssg
+    config:
+      alias: wks_itg_pos_emart_ecvan_ssg
+      tags: ["kr_pos","ingestion"]
   - name: ntawks_integration__wks_itg_pos_rank
     config:
       alias: wks_itg_pos_rank

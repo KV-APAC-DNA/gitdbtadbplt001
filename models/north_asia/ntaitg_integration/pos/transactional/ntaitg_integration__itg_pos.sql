@@ -62,13 +62,13 @@
                         where chng_flg = 'U'
                     )
                     {% elif var('pos_job_to_execute') == 'kr_pos' %}
-                    delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd) in
+                    delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd) in
                     (
-                        select distinct pos_dt,ean_num,src_sys_cd,ctry_cd from
+                        select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from
                         (
                             select * from ntawks_integration.wks_itg_pos_costco
                             union all
-                            select * from snapntawks_integration.wks_itg_pos_emart
+                            select * from ntawks_integration.wks_itg_pos_emart
                         )
                         where chng_flg = 'U'
                     );
@@ -108,7 +108,7 @@ wks_itg_pos as (
     select * from ntawks_integration.wks_itg_pos
 ),
 wks_itg_pos_emart as (
-    select * from snapntawks_integration.wks_itg_pos_emart
+    select * from ntawks_integration.wks_itg_pos_emart
 ),
 wks_itg_pos_emart_ecvan_ssg as (
       select * from snapntawks_integration.wks_itg_pos_emart_ecvan_ssg  
@@ -506,7 +506,7 @@ emart as
         END AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     FROM wks_itg_pos_emart
-)
+),
 emart_ecvan_ssg as 
 (
     select 
@@ -606,7 +606,7 @@ emart_combined as
     (
         select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from emart_ecvan_ssg
     )
-)
+),
 final as 
 (
     select

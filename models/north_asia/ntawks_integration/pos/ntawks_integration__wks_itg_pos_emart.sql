@@ -114,5 +114,3 @@ final as
         AND 'KR' = TGT.ctry_cd
 )
 select count(*) from final
-union all
-select count(*) from snapntawks_integration.wks_itg_pos_emart

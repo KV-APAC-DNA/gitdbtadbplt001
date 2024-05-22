@@ -10,14 +10,14 @@ sources:
       identifier: false
     tables:
       - name: sdl_kr_coupang_product_ranking_weekly
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]
       - name: sdl_kr_coupang_product_ranking_monthly
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]
       - name: sdl_kr_coupang_product_master
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]
       - name: sdl_kr_coupang_product_summary_weekly
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]
       - name: sdl_kr_coupang_product_summary_monthly
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]
       - name: sdl_kr_coupang_product_ranking_daily
-        tags: ["",""]
+        tags: ["kr_coupang_premium_productranking","ingestion"]

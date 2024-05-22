@@ -32,4 +32,6 @@ sources:
       - name: sdl_kr_pos_emart_ssg
         tags: ["kr_pos","ingestion"]
       - name: sdl_kr_pos_emart
-        tags: ["kr_pos","ingestion"]     
+        tags: ["kr_pos","ingestion"] 
+      - name: sdl_pos_prc_condition_map
+        tags: ["","ingestion"]     
