@@ -11,4 +11,19 @@ sources:
     tables:
     - name: sdl_id_pos_daily_idm_sellout
       tags: ["id_pos_daily_idm_sellout","ingestion"]
-      
+    - name: sdl_mds_id_lav_hero_list
+      tags: ["id_mds_itg_load","ingestion"]
+    - name: sdl_mds_id_lav_mcs_list
+      tags: ["id_mds_itg_load","ingestion"]
+    - name: sdl_mds_id_lav_npi_sku_list
+      tags: ["id_mds_itg_load","ingestion"]
+
+  - name: snapidnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapidnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : edw_time_dim

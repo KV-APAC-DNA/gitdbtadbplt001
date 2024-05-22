@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_product_dim
+    config:
+      alias: itg_product_dim
+      tags: ["id_mds_itg_load","ingestion"]

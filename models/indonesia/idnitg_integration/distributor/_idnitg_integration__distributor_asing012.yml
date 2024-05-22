@@ -5,3 +5,19 @@ models:
     config:
       alias: itg_distributor_channel_dim
       tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_dim
+    config:
+      alias: itg_distributor_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_group_dim
+    config:
+      alias: itg_distributor_group_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_product_dim
+    config:
+      alias: itg_distributor_product_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_province_dim
+    config:
+      alias: itg_distributor_province_dim
+      tags: ["id_mds_itg_load","ingestion"]

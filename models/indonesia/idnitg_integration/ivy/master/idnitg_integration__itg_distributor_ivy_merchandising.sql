@@ -23,7 +23,7 @@
                 )
             ) as surveydate,
             upper(aq_name),
-            coalesce(link, 'na')
+            coalesce(link, 'NA')
         from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }});"
     )
 }}
