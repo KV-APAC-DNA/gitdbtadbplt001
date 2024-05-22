@@ -1,8 +1,10 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy="delete+insert",
-        unique_key=["file_name"]
+        incremental_strategy="append",
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where file_name in (select distinct file_name from {{ source('ntasdl_raw','sdl_kr_dads_naver_search_channel') }});
+        {% endif %}"
 )}}
 
 with source as (
