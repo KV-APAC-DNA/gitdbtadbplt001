@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_pos_rank
+    config:
+      alias: wks_itg_pos_rank
+      tags: ["kr_pos","ingestion"]

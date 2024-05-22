@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_kr_pos_eland
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_lotte_mart
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_homeplus_online
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_lohbs
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_homeplus
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_gs_super
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_lotte_super
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_olive_young
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_lalavla
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_costco_invrpt
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_emart_ssg
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_emart
+        tags: ["kr_pos","ingestion"]     
