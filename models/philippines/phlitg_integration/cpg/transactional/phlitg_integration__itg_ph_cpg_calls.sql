@@ -8,7 +8,8 @@
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_cpg_calls') }}
+    select *, dense_rank() over (partition by nvl(dstrbtr_grp_cd,'#') || nvl(cust_id,'#') || nvl(to_date(planned_visit,'YYYYMMDD'),'9999-12-31') || nvl(to_date(actual_visit,'YYYYMMDD'),'9999-12-31') || nvl(order_no,'#') order by filename desc) rn from {{ source('phlsdl_raw', 'sdl_ph_cpg_calls') }}
+    qualify rn=1
 ),
 final as(
     select 

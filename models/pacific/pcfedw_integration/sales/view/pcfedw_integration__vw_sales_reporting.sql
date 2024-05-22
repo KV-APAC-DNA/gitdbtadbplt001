@@ -56,6 +56,9 @@ select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 edw_copa_plan_fact as (
 select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
 ),
+edw_cust_ciw_plan_fact as (
+select * from {{ ref('pcfedw_integration__edw_cust_ciw_plan_fact') }}
+),
 final as (
 SELECT
   vsf.pac_source_type,
@@ -1867,6 +1870,8 @@ FROM
                       AND (
                         (spl.sls_grp_cd):: text = (vcd.sales_grp_cd):: text
                       )
+                      --and pcf.px_jj_mnth>='202201' --adding additional filter for Promax data to have data >= 2022
+                      --Removing the above added filter for Promax data
                     )
                 )
                 UNION ALL

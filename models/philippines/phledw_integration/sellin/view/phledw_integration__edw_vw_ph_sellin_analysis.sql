@@ -45,7 +45,7 @@ itg_ph_bp_trgt as
 ),
 itg_ph_le_trgt as
 (
-    select * from phlitg_integration.itg_ph_le_trgt
+    select * from {{ source('phlitg_integration','itg_ph_le_trgt') }}
 ),
 final as
 (
@@ -189,14 +189,14 @@ from (select mnth_id
                    mnth_wk_no,
                    case
                      when mnth_wk_no = 1 then '19000101'
-                     else (min(cal_date_id)::date)
+                     else (min(cal_date_id))
                    end as first_day,
                    case
                      when mnth_wk_no = (select max(mnth_wk_no)
                                         from edw_vw_os_time_dim b
                                         where b.mnth_id = mnth_id
                                         ) then '20991231'
-                     else (max(cal_date_id)::date)
+                     else (max(cal_date_id))
                    end as last_day
             from edw_vw_os_time_dim a
             group by "year",
@@ -210,7 +210,7 @@ from (select mnth_id
                      mnth_wk_no) veotd
       where (sls_qty <> 0 or ret_qty <> 0 or gts_val <> 0 or ret_val <> 0 or nts_val <> 0 or tp_val <> 0)
       and   cntry_nm = 'PH'
-      and   trim(veossf1.jj_mnth_id) = cast((veotd.mnth_id::date) as varchar)
+      and   trim(veossf1.jj_mnth_id) = trim(cast((veotd.mnth_id) as varchar))
       and   veossf1.pstng_dt between veotd.first_day and veotd.last_day
       group by bill_typ,
                veotd.mnth_id,

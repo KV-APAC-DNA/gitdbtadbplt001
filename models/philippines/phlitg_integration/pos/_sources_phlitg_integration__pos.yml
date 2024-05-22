@@ -190,7 +190,7 @@ sources:
               store_failures: true
               schema: phlwks_integration  
     - name: sdl_ph_pos_dyna_sales
-      tags: ["ph_pos_711","ingestion"]
+      tags: ["ph_pos","ingestion"]
       tests:
       - test_null:
               select_columns: ["customer_id","MATL_NUM","SLS_AREA"]
@@ -210,7 +210,7 @@ sources:
               store_failures: true
               schema: phlwks_integration  
     - name: sdl_ph_pos_711
-      tags: ["ph_pos_711","ingestion"]
+      tags: ["ph_pos","ingestion"]
       tests:
       - test_null:
               select_columns: ["mnth_id","store_nm","item_nm"]
@@ -230,9 +230,9 @@ sources:
               store_failures: true
               schema: phlwks_integration  
     - name: sdl_ph_pos_puregold
-      tags: ["ph_pos_puregold","ingestion"]
+      tags: ["ph_pos","ingestion"]
     - name: sdl_ph_pos_sm_goods
-      tags: ["ph_pos_sm_gr","ingestion"]
+      tags: ["ph_pos","ingestion"]
       tests:
       - test_null:
               select_columns: ["article_number","site_code","received_qty"]

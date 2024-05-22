@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_pharm_sellout_probe
-      tags: ["j_pac_pharm_data_load",""]
+      tags: ["j_pac_pharm_data_load","ingestion"]
       tests:
           - test_duplicate:
               select_columns: ["weekendingdate", "outletnumber", "pfc"]

@@ -3,12 +3,32 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_grp_cd', 'dstrbtr_cust_id', 'order_dt', 'invoice_dt', 'order_no', 'dstrbtr_prod_id', 'invoice_no'],
-        pre_hook= ["delete from {{this}} where dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(order_dt, 'YYYYMMDD'), '') || to_char(invoice_dt, 'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id in ( select distinct dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM'),'YYYYMMDD'), '') || to_char(to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM'),'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }} );"]
+        pre_hook= ["delete from {{this}} where dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(order_dt, 'YYYYMMDD'), '') || to_char(invoice_dt, 'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id in 
+        ( select distinct dstrbtr_grp_cd || dstrbtr_cust_id || 
+        nvl(to_char(case when try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') else to_date(order_dt,'MM/DD/YYYY HH24:MI')    end,'YYYYMMDD'), '') || 
+        to_char(case when try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') else to_date(invoice_dt,'MM/DD/YYYY HH24:MI') end,'YYYYMMDD') || 
+        nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id 
+        from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }} );"]
     )
 }}
 
-with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }}
+with sdl_ph_dms_sellout_sales_fact as(
+    select *, 
+        case 
+            when try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM')
+            else  to_date(order_dt,'MM/DD/YYYY HH24:MI') 
+        end as order_dt_mod,
+        case 
+            when try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM')
+            else  to_date(invoice_dt,'MM/DD/YYYY HH24:MI') 
+        end as invoice_dt_mod
+    from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }}
+
+),
+source as (
+    select *, dense_rank() over (partition by dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(order_dt_mod,'YYYYMMDD'), '') || to_char(invoice_dt_mod,'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id order by cdl_dttm desc) as rnk 
+    from sdl_ph_dms_sellout_sales_fact
+    qualify rnk=1
 ),
 final as(
     select 
@@ -33,8 +53,14 @@ final as(
                         else dstrbtr_grp_cd || dstrbtr_cust_id
                         end
                 end::varchar(30) as trnsfrm_cust_id,
-        to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') as order_dt,
-        to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') as invoice_dt,
+        case 
+            when try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM')
+            else  to_date(order_dt,'MM/DD/YYYY HH24:MI') 
+        end as order_dt,
+        case 
+            when try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM')
+            else  to_date(invoice_dt,'MM/DD/YYYY HH24:MI') 
+        end as invoice_dt,
         order_no::varchar(20) as order_no,
         invoice_no::varchar(20) as invoice_no,
         sls_route_id::varchar(20) as sls_route_id,
@@ -57,7 +83,10 @@ final as(
         wh_id::varchar(50) as wh_id,
         sls_rep_type::varchar(50) as sls_rep_type,
         cast(order_qty as numeric(15, 4)) as order_qty,
-        to_date(order_delivery_dt,'MM/DD/YYYY HH12:MI:SS AM') as order_delivery_dt,
+        case 
+            when try_to_date(order_delivery_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_delivery_dt,'MM/DD/YYYY HH12:MI:SS AM')
+            else  to_date(order_delivery_dt,'MM/DD/YYYY HH24:MI') 
+        end as order_delivery_dt,
         order_status::varchar(50) as order_status
     from source
 )

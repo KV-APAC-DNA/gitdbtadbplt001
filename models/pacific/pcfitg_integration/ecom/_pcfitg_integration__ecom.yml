@@ -4,9 +4,9 @@ models:
   - name: pcfitg_integration__itg_chw_ecomm_data
     config: 
       alias: itg_chw_ecomm_data
-      tags: ["anz_perenso_foodstuff","ingestion"]
+      tags: ["anz_pharm_ecomm_load","ingestion"]
 
   - name: pcfitg_integration__itg_national_ecomm_data
     config: 
       alias: itg_national_ecomm_data
-      tags: ["anz_perenso_foodstuff","ingestion"]
+      tags: ["anz_pharm_ecomm_load","ingestion"]

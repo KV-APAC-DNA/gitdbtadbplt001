@@ -47,6 +47,7 @@ final as (
         gcph_subsegment as "gcph_subsegment",
         cust_group as "cust_group",
         ecomm_cust as "ecomm_cust",
+        owner as "owner",
         manufacturer as "manufacturer",
         unit_online as "unit_online",
         aud_sales_online as "aud_sales_online",

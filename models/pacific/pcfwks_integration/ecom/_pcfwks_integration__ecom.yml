@@ -4,4 +4,4 @@ models:
   - name: pcfwks_integration__wks_au_pharm_ecomm_data
     config: 
       alias: wks_au_pharm_ecomm_data
-      tags: ["anz_pharm_ecomm_load","ingestion"]
+      tags: ["anz_pharm_ecomm_load","transformation"]

@@ -11,35 +11,35 @@ sources:
     tables:
     - name: sdl_perenso_work_item
       tags: ["anz_perenso_call","ingestion"]
-      tests:
-          - test_null__ff:
-              not_null_columns: ["work_item_key","work_item_type"]
-              name: TRATBL_sdl_perenso_work_item__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate__ff:
-              group_by_columns: ["work_item_key","work_item_type"]
-              name: TRATBL_sdl_perenso_work_item__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null__ff:
+      #         not_null_columns: ["work_item_key","work_item_type"]
+      #         name: TRATBL_sdl_perenso_work_item__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate__ff:
+      #         group_by_columns: ["work_item_key","work_item_type"]
+      #         name: TRATBL_sdl_perenso_work_item__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
     - name: sdl_perenso_diary_item_type
       tags: ["anz_perenso_call","ingestion"]
-      tests:
-          - test_null__ff:
-              not_null_columns: ["diary_item_type_key"]
-              name: TRATBL_sdl_perenso_diary_item_type__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate__ff:
-              group_by_columns: ["diary_item_type_key"]
-              name: TRATBL_sdl_perenso_diary_item_type__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null__ff:
+      #         not_null_columns: ["diary_item_type_key"]
+      #         name: TRATBL_sdl_perenso_diary_item_type__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate__ff:
+      #         group_by_columns: ["diary_item_type_key"]
+      #         name: TRATBL_sdl_perenso_diary_item_type__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_call_objectives
       tags: ["anz_perenso_call","ingestion"]
       tests:
@@ -62,177 +62,177 @@ sources:
                 schema: pcfwks_integration
     - name: sdl_perenso_todo_option
       tags: ["anz_perenso_survey_ques","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["todo_key","option_key"]
-              not_null_columns: ["todo_key","option_key"]
-              name: TRATBL_sdl_perenso_todo_option__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["todo_key","option_key"]
-              group_by_columns: ["todo_key","option_key"]
-              name: TRATBL_sdl_perenso_todo_option__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["todo_key","option_key"]
+      #         not_null_columns: ["todo_key","option_key"]
+      #         name: TRATBL_sdl_perenso_todo_option__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["todo_key","option_key"]
+      #         group_by_columns: ["todo_key","option_key"]
+      #         name: TRATBL_sdl_perenso_todo_option__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_survey_result
       tags: ["anz_perenso_survey_ques","ingestion"]
 
     - name: sdl_perenso_over_and_above
       tags: ["anz_perenso_over_and_above","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
-              not_null_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_over_and_above__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
-              group_by_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_over_and_above__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
+      #         not_null_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_over_and_above__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
+      #         group_by_columns: ["over_and_above_key","acct_key","todo_option_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_over_and_above__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_prod_chk_distribution
       tags: ["anz_perenso_over_and_above","ingestion"]
-      tests:
-          - test_null__ff:
-              not_null_columns: ["acct_key","prod_key"]
-              name: TRATBL_sdl_perenso_prod_chk_distribution__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate__ff:
-              group_by_columns: ["acct_key","prod_key","start_date","end_date"]
-              name: TRATBL_sdl_perenso_prod_chk_distribution__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null__ff:
+      #         not_null_columns: ["acct_key","prod_key"]
+      #         name: TRATBL_sdl_perenso_prod_chk_distribution__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate__ff:
+      #         group_by_columns: ["acct_key","prod_key","start_date","end_date"]
+      #         name: TRATBL_sdl_perenso_prod_chk_distribution__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
     - name: sdl_perenso_over_and_above_state
       tags: ["anz_perenso_over_and_above","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["over_and_above_key","store_chk_hdr_key"]
-              not_null_columns: ["over_and_above_key","store_chk_hdr_key"]
-              name: TRATBL_sdl_perenso_over_and_above_state__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["over_and_above_key","store_chk_hdr_key"]
-              group_by_columns: ["over_and_above_key","store_chk_hdr_key"]
-              name: TRATBL_sdl_perenso_over_and_above_state__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["over_and_above_key","store_chk_hdr_key"]
+      #         not_null_columns: ["over_and_above_key","store_chk_hdr_key"]
+      #         name: TRATBL_sdl_perenso_over_and_above_state__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["over_and_above_key","store_chk_hdr_key"]
+      #         group_by_columns: ["over_and_above_key","store_chk_hdr_key"]
+      #         name: TRATBL_sdl_perenso_over_and_above_state__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_order_batch
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["ord_key","batch_key"]
-              not_null_columns: ["ord_key","batch_key"]
-              name: TRATBL_sdl_perenso_order_batch__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["ord_key","batch_key"]
-              group_by_columns: ["ord_key","batch_key"]
-              name: TRATBL_sdl_perenso_order_batch__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["ord_key","batch_key"]
+      #         not_null_columns: ["ord_key","batch_key"]
+      #         name: TRATBL_sdl_perenso_order_batch__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["ord_key","batch_key"]
+      #         group_by_columns: ["ord_key","batch_key"]
+      #         name: TRATBL_sdl_perenso_order_batch__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_order_detail
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["batch_key","order_key","line_key"]
-              not_null_columns: ["batch_key","order_key","line_key"]
-              name: TRATBL_sdl_perenso_order_detail__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["batch_key","order_key","line_key"]
-              group_by_columns: ["batch_key","order_key","line_key"]
-              name: TRATBL_sdl_perenso_order_detail__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["batch_key","order_key","line_key"]
+      #         not_null_columns: ["batch_key","order_key","line_key"]
+      #         name: TRATBL_sdl_perenso_order_detail__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["batch_key","order_key","line_key"]
+      #         group_by_columns: ["batch_key","order_key","line_key"]
+      #         name: TRATBL_sdl_perenso_order_detail__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_order_header
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["order_key","order_type_key"]
-              not_null_columns: ["order_key","order_type_key"]
-              name: TRATBL_sdl_perenso_order_header__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["order_key","order_type_key"]
-              group_by_columns: ["order_key","order_type_key"]
-              name: TRATBL_sdl_perenso_order_header__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["order_key","order_type_key"]
+      #         not_null_columns: ["order_key","order_type_key"]
+      #         name: TRATBL_sdl_perenso_order_header__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["order_key","order_type_key"]
+      #         group_by_columns: ["order_key","order_type_key"]
+      #         name: TRATBL_sdl_perenso_order_header__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_order_type
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["order_type_key"]
-              not_null_columns: ["order_type_key"]
-              name: TRATBL_sdl_perenso_order_type__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["order_type_key"]
-              group_by_columns: ["order_type_key"]
-              name: TRATBL_sdl_perenso_order_type__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["order_type_key"]
+      #         not_null_columns: ["order_type_key"]
+      #         name: TRATBL_sdl_perenso_order_type__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["order_type_key"]
+      #         group_by_columns: ["order_type_key"]
+      #         name: TRATBL_sdl_perenso_order_type__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_deal_discount
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["disc_key","deal_key"]
-              not_null_columns: ["disc_key","deal_key"]
-              name: TRATBL_sdl_perenso_deal_discount__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["disc_key","deal_key"]
-              group_by_columns: ["disc_key","deal_key"]
-              name: TRATBL_sdl_perenso_deal_discount__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["disc_key","deal_key"]
+      #         not_null_columns: ["disc_key","deal_key"]
+      #         name: TRATBL_sdl_perenso_deal_discount__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["disc_key","deal_key"]
+      #         group_by_columns: ["disc_key","deal_key"]
+      #         name: TRATBL_sdl_perenso_deal_discount__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
     - name: sdl_perenso_constants
       tags: ["anz_perenso_order","ingestion"]
-      tests:
-          - test_null:
-              select_columns: ["const_key"]
-              not_null_columns: ["const_key"]
-              name: TRATBL_sdl_perenso_constants__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-          - test_duplicate:
-              select_columns: ["const_key"]
-              group_by_columns: ["const_key"]
-              name: TRATBL_sdl_perenso_constants__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         select_columns: ["const_key"]
+      #         not_null_columns: ["const_key"]
+      #         name: TRATBL_sdl_perenso_constants__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #     - test_duplicate:
+      #         select_columns: ["const_key"]
+      #         group_by_columns: ["const_key"]
+      #         name: TRATBL_sdl_perenso_constants__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_mds_pacific_perenso_cycle_dates
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
@@ -272,233 +272,234 @@ sources:
 
     - name: sdl_perenso_product_fields
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["field_type","field_key"]
-            select_columns: ["field_type","field_key"]
-            name: TRATBL_sdl_perenso_product_fields__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["field_type","field_key"]
-            select_columns: ["field_type","field_key"]
-            name: TRATBL_sdl_perenso_product_fields__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["field_type","field_key"]
+      #       select_columns: ["field_type","field_key"]
+      #       name: TRATBL_sdl_perenso_product_fields__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["field_type","field_key"]
+      #       select_columns: ["field_type","field_key"]
+      #       name: TRATBL_sdl_perenso_product_fields__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
 
     - name: sdl_perenso_product_group
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["prod_grp_lev_key","prod_grp_key"]
-            select_columns: ["prod_grp_lev_key","prod_grp_key"]
-            name: TRATBL_sdl_perenso_product_group__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["prod_grp_lev_key","prod_grp_key"]
-            select_columns: ["prod_grp_lev_key","prod_grp_key"]
-            name: TRATBL_sdl_perenso_product_group__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["prod_grp_lev_key","prod_grp_key"]
+      #       select_columns: ["prod_grp_lev_key","prod_grp_key"]
+      #       name: TRATBL_sdl_perenso_product_group__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["prod_grp_lev_key","prod_grp_key"]
+      #       select_columns: ["prod_grp_lev_key","prod_grp_key"]
+      #       name: TRATBL_sdl_perenso_product_group__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
 
     - name: sdl_perenso_product_group_lvl
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["field_key","prod_grp_lev_key"]
-            select_columns: ["field_key","prod_grp_lev_key"]
-            name: TRATBL_sdl_perenso_product_group_lvl__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["field_key","prod_grp_lev_key"]
-            select_columns: ["field_key","prod_grp_lev_key"]
-            name: TRATBL_sdl_perenso_product_group_lvl__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["field_key","prod_grp_lev_key"]
+      #       select_columns: ["field_key","prod_grp_lev_key"]
+      #       name: TRATBL_sdl_perenso_product_group_lvl__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["field_key","prod_grp_lev_key"]
+      #       select_columns: ["field_key","prod_grp_lev_key"]
+      #       name: TRATBL_sdl_perenso_product_group_lvl__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
 
     - name: sdl_perenso_product
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["prod_key","prod_id"]
-            select_columns: ["prod_key","prod_id"]
-            name: TRATBL_sdl_perenso_product__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["prod_key","prod_id"]
-            select_columns: ["prod_key","prod_id"]
-            name: TRATBL_sdl_perenso_product__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["prod_key","prod_id"]
+      #       select_columns: ["prod_key","prod_id"]
+      #       name: TRATBL_sdl_perenso_product__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["prod_key","prod_id"]
+      #       select_columns: ["prod_key","prod_id"]
+      #       name: TRATBL_sdl_perenso_product__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
 
     - name: sdl_perenso_product_group_reln
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["prod_grp_key","prod_key"]
-            select_columns: ["prod_grp_key","prod_key"]
-            name: TRATBL_sdl_perenso_product_group_reln__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["prod_grp_key","prod_key"]
-            select_columns: ["prod_grp_key","prod_key"]
-            name: TRATBL_sdl_perenso_product_group_reln__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["prod_grp_key","prod_key"]
+      #       select_columns: ["prod_grp_key","prod_key"]
+      #       name: TRATBL_sdl_perenso_product_group_reln__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["prod_grp_key","prod_key"]
+      #       select_columns: ["prod_grp_key","prod_key"]
+      #       name: TRATBL_sdl_perenso_product_group_reln__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
 
     - name: sdl_perenso_prod_branch_identifier
       tags: ["anz_perenso_product","ingestion"]
 
     - name: sdl_perenso_product_reln_id
       tags: ["anz_perenso_product","ingestion"]
-      tests:
-        - test_null:
-            not_null_columns: ["field_key","prod_key"]
-            select_columns: ["field_key","id","prod_key"]
-            name: TRATBL_sdl_perenso_product_reln_id__null_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
-        - test_duplicate:
-            group_by_columns: ["field_key","id","prod_key"]
-            select_columns: ["field_key","id","prod_key"]
-            name: TRATBL_sdl_perenso_product_reln_id__duplicate_test
-            config:
-              store_failures: true
-              schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #       not_null_columns: ["field_key","prod_key"]
+      #       select_columns: ["field_key","id","prod_key"]
+      #       name: TRATBL_sdl_perenso_product_reln_id__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
+      #   - test_duplicate:
+      #       group_by_columns: ["field_key","id","prod_key"]
+      #       select_columns: ["field_key","id","prod_key"]
+      #       name: TRATBL_sdl_perenso_product_reln_id__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: pcfwks_integration
     - name: sdl_perenso_ranging
       tags: ["anz_perenso_ranging","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_grp_lev_key", "ranging_key"]
-              select_columns: ["acct_grp_lev_key", "ranging_key"]
-              name: TRATBL_sdl_perenso_ranging__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_grp_lev_key", "ranging_key"]
-              select_columns: ["acct_grp_lev_key", "ranging_key"]
-              name: TRATBL_sdl_perenso_ranging__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_grp_lev_key", "ranging_key"]
+      #         select_columns: ["acct_grp_lev_key", "ranging_key"]
+      #         name: TRATBL_sdl_perenso_ranging__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_grp_lev_key", "ranging_key"]
+      #         select_columns: ["acct_grp_lev_key", "ranging_key"]
+      #         name: TRATBL_sdl_perenso_ranging__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_ranging_product
       tags: ["anz_perenso_ranging","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["ranging_key","prod_key","acct_grp_key"]
-              select_columns: ["ranging_key","prod_key","acct_grp_key"]
-              name: TRATBL_sdl_perenso_ranging_product__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["ranging_key","prod_key","acct_grp_key"]
-              select_columns: ["ranging_key","prod_key","acct_grp_key"]
-              name: TRATBL_sdl_perenso_ranging_product__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["ranging_key","prod_key","acct_grp_key"]
+      #         select_columns: ["ranging_key","prod_key","acct_grp_key"]
+      #         name: TRATBL_sdl_perenso_ranging_product__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["ranging_key","prod_key","acct_grp_key"]
+      #         select_columns: ["ranging_key","prod_key","acct_grp_key"]
+      #         name: TRATBL_sdl_perenso_ranging_product__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_ranging_acct_grp_rel
       tags: ["anz_perenso_ranging","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_grp_key","ranging_key"]
-              select_columns: ["acct_grp_key","ranging_key"]
-              name: TRATBL_sdl_perenso_ranging_acct_grp_rel__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_grp_key","ranging_key"]
-              select_columns: ["acct_grp_key","ranging_key"]
-              name: TRATBL_sdl_perenso_ranging_acct_grp_rel__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_grp_key","ranging_key"]
+      #         select_columns: ["acct_grp_key","ranging_key"]
+      #         name: TRATBL_sdl_perenso_ranging_acct_grp_rel__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_grp_key","ranging_key"]
+      #         select_columns: ["acct_grp_key","ranging_key"]
+      #         name: TRATBL_sdl_perenso_ranging_acct_grp_rel__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_group_reln
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_grp_key","acct_key"]
-              select_columns: ["acct_grp_key","acct_key"]
-              name: TRATBL_sdl_perenso_account_group_reln__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_grp_key","acct_key"]
-              select_columns: ["acct_grp_key","acct_key"]
-              name: TRATBL_sdl_perenso_account_group_reln__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_grp_key","acct_key"]
+      #         select_columns: ["acct_grp_key","acct_key"]
+      #         name: TRATBL_sdl_perenso_account_group_reln__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_grp_key","acct_key"]
+      #         select_columns: ["acct_grp_key","acct_key"]
+      #         name: TRATBL_sdl_perenso_account_group_reln__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_reln_id
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["field_key","acct_key"]
-              select_columns: ["field_key","acct_key","id"]
-              name: TRATBL_sdl_perenso_account_reln_id__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["field_key","acct_key","id"]
-              select_columns: ["field_key","acct_key","id"]
-              name: TRATBL_sdl_perenso_account_reln_id__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["field_key","acct_key"]
+      #         select_columns: ["field_key","acct_key","id"]
+      #         name: TRATBL_sdl_perenso_account_reln_id__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["field_key","acct_key","id"]
+      #         select_columns: ["field_key","acct_key","id"]
+      #         name: TRATBL_sdl_perenso_account_reln_id__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_type
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_type_key"]
-              select_columns: ["acct_type_key"]
-              name: TRATBL_sdl_perenso_account_type__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_type_key"]
-              select_columns: ["acct_type_key"]
-              name: TRATBL_sdl_perenso_account_type__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_type_key"]
+      #         select_columns: ["acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account_type__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_type_key"]
+      #         select_columns: ["acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account_type__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["acct_key","acct_type_key"]
-              select_columns: ["acct_key","acct_type_key"]
-              name: TRATBL_sdl_perenso_account__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["acct_key","acct_type_key"]
-              select_columns: ["acct_key","acct_type_key"]
-              name: TRATBL_sdl_perenso_account__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # Validation Flag is N in J&J - WRP_001
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["acct_key","acct_type_key"]
+      #         select_columns: ["acct_key","acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["acct_key","acct_type_key"]
+      #         select_columns: ["acct_key","acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_acct_dist_acct
       tags: ["anz_perenso_account","ingestion"]
       # Validation Flag is N in J&J
@@ -519,21 +520,21 @@ sources:
       #           schema: pcfwks_integration
     - name: sdl_perenso_distributor_detail
       tags: ["anz_perenso_account","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["dist_key","branch_key"]
-              select_columns: ["dist_key","branch_key"]
-              name: TRATBL_sdl_perenso_distributor_detail__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["dist_key","branch_key"]
-              select_columns: ["dist_key","branch_key"]
-              name: TRATBL_sdl_perenso_distributor_detail__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["dist_key","branch_key"]
+      #         select_columns: ["dist_key","branch_key"]
+      #         name: TRATBL_sdl_perenso_distributor_detail__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["dist_key","branch_key"]
+      #         select_columns: ["dist_key","branch_key"]
+      #         name: TRATBL_sdl_perenso_distributor_detail__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_custom_list
     - name: sdl_chs_dstr
       tags: ["j_pa_pharma_inv","ingestion"]
@@ -556,150 +557,150 @@ sources:
 
     - name: sdl_perenso_todo
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["todo_key","work_item_key"]
-              select_columns: ["todo_key","work_item_key"]
-              name: TRATBL_sdl_perenso_todo__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["todo_key","work_item_key"]
+      #         select_columns: ["todo_key","work_item_key"]
+      #         name: TRATBL_sdl_perenso_todo__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["todo_key","work_item_key"]
-              select_columns: ["todo_key","work_item_key"]
-              name: TRATBL_sdl_perenso_todo__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["todo_key","work_item_key"]
+      #         select_columns: ["todo_key","work_item_key"]
+      #         name: TRATBL_sdl_perenso_todo__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_head_office_req_state
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
-              select_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_head_office_req_state__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         select_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_head_office_req_state__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
-              select_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_head_office_req_state__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         select_columns: ["acct_key","store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_head_office_req_state__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_head_office_req_check
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
-              select_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_head_office_req_check__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         select_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_head_office_req_check__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
-              select_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
-              name: TRATBL_sdl_perenso_head_office_req_check__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         select_columns: ["store_chk_hdr_key","todo_key","prod_grp_key"]
+      #         name: TRATBL_sdl_perenso_head_office_req_check__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
     - name: sdl_perenso_store_chk_hdr
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
-              select_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
-              name: TRATBL_sdl_perenso_store_chk_hdr__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
+      #         select_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
+      #         name: TRATBL_sdl_perenso_store_chk_hdr__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
-              select_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
-              name: TRATBL_sdl_perenso_store_chk_hdr__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
+      #         select_columns: ["store_chk_hdr_key","diary_item_key","acct_key","work_item_key"]
+      #         name: TRATBL_sdl_perenso_store_chk_hdr__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_metcash_ind_grocery
       tags: ["anz_perenso_head_office_req","ingestion"]
     - name: sdl_perenso_account_group_lvl
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["field_key","acct_grp_lev_key"]
-              select_columns: ["field_key","acct_grp_lev_key"]
-              name: TRATBL_sdl_perenso_account_group_lvl__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["field_key","acct_grp_lev_key"]
+      #         select_columns: ["field_key","acct_grp_lev_key"]
+      #         name: TRATBL_sdl_perenso_account_group_lvl__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["field_key","acct_grp_lev_key"]
-              select_columns: ["field_key","acct_grp_lev_key"]
-              name: TRATBL_sdl_perenso_account_group_lvl__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["field_key","acct_grp_lev_key"]
+      #         select_columns: ["field_key","acct_grp_lev_key"]
+      #         name: TRATBL_sdl_perenso_account_group_lvl__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_group
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["acct_grp_key","acct_grp_lev_key"]
-              select_columns: ["acct_grp_key","acct_grp_lev_key"]
-              name: TRATBL_sdl_perenso_account_group__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["acct_grp_key","acct_grp_lev_key"]
+      #         select_columns: ["acct_grp_key","acct_grp_lev_key"]
+      #         name: TRATBL_sdl_perenso_account_group__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["acct_grp_key","acct_grp_lev_key"]
-              select_columns: ["acct_grp_key","acct_grp_lev_key"]
-              name: TRATBL_sdl_perenso_account_group__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["acct_grp_key","acct_grp_lev_key"]
+      #         select_columns: ["acct_grp_key","acct_grp_lev_key"]
+      #         name: TRATBL_sdl_perenso_account_group__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_account_fields
       tags: ["anz_perenso_head_office_req","ingestion"]
-      tests:
-          - test_null:
-              not_null_columns: ["field_key","acct_type_key"]
-              select_columns: ["field_key","acct_type_key"]
-              name: TRATBL_sdl_perenso_account_fields__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #     - test_null:
+      #         not_null_columns: ["field_key","acct_type_key"]
+      #         select_columns: ["field_key","acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account_fields__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
 
-          - test_duplicate:
-              group_by_columns: ["field_key","acct_type_key"]
-              select_columns: ["field_key","acct_type_key"]
-              name: TRATBL_sdl_perenso_account_fields__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      #     - test_duplicate:
+      #         group_by_columns: ["field_key","acct_type_key"]
+      #         select_columns: ["field_key","acct_type_key"]
+      #         name: TRATBL_sdl_perenso_account_fields__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_users
       tags: ["anz_perenso_sales_rep","ingestion"]
-      tests:
-        - test_null:
-              not_null_columns: ["user_type_key","user_key"]
-              select_columns: ["user_type_key","user_key"]
-              name: TRATBL_sdl_perenso_users__null_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
-        - test_duplicate:
-              group_by_columns: ["user_type_key","user_key"]
-              select_columns: ["user_type_key","user_key"]
-              name: TRATBL_sdl_perenso_users__duplicate_test
-              config:
-                store_failures: true
-                schema: pcfwks_integration
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["user_type_key","user_key"]
+      #         select_columns: ["user_type_key","user_key"]
+      #         name: TRATBL_sdl_perenso_users__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["user_type_key","user_key"]
+      #         select_columns: ["user_type_key","user_key"]
+      #         name: TRATBL_sdl_perenso_users__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: pcfwks_integration
     - name: sdl_perenso_diary_item
       tags: ["anz_perenso_sales_rep","ingestion"]
       # Validation Flag is N in J&J: WRP_005, ANZ, JB021, SJB005

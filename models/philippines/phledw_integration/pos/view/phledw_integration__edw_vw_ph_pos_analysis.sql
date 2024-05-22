@@ -1,3 +1,12 @@
+-- get mnth_id for cartetian join
+{%- call statement('get_mnth_id', fetch_result=True) -%}
+        select mnth_id
+	    from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+	    where cal_date::date = date(current_timestamp())
+{%- endcall -%}
+
+{%- set mnth_id = load_result('get_mnth_id')['data'][0][0] %}
+
 with itg_mds_ph_pos_pricelist as(
     select * from {{ ref('phlitg_integration__itg_mds_ph_pos_pricelist') }}
 ),
@@ -34,16 +43,17 @@ edw_vw_ph_customer_dim as(
 edw_product_key_attributes as(
     select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
+
 epp2 as(
     	select status,
 			item_cd,
 			min(jj_mnth_id) as launch_period,
-			min(to_char(add_months(cast((
-								concat (
+			min(to_char(add_months(to_date(
+								concat(
 									jj_mnth_id,
 									'01'
-									)
-								) AS DATE), 11), 'YYYYMM')) as end_period
+									),'yyyymmdd'
+								), 11), 'YYYYMM')) as end_period
 		from itg_mds_ph_pos_pricelist
 		where status = '**'
 			and active = 'Y'
@@ -160,14 +170,9 @@ veocd as(
 		from edw_vw_ph_customer_dim
 		where sap_cntry_cd = 'PH'
 ),
-veotd2 as(
-    select mnth_id
-	from edw_vw_os_time_dim
-	where cal_date::date = date(current_timestamp())
-),
+
+
 transformed as(
-
-
 select veposf."year" as jj_year,
 	veposf.qrtr as jj_qtr,
 	veposf.jj_mnth_id,
@@ -281,7 +286,7 @@ select veposf."year" as jj_year,
 	CASE
 		WHEN EPP2.STATUS = '**'
 			AND (
-				VEOTD2.MNTH_ID BETWEEN EPP2.LAUNCH_PERIOD
+				{{mnth_id}} BETWEEN EPP2.LAUNCH_PERIOD
 					AND EPP2.END_PERIOD
 				)
 			THEN 'Y'
@@ -306,7 +311,13 @@ select veposf."year" as jj_year,
 	jj_vat_amt,
 	jj_nts,
 	veomd.pka_productkey
-from veotd2, epp2,epmad,veposf,veomd, veocd, edw_mv_ph_customer_dim eocd
+from 
+    epp2,
+    epmad,
+    veposf,
+    veomd, 
+    veocd, 
+    edw_mv_ph_customer_dim eocd
 where upper(ltrim(veomd.sap_matl_num(+), 0)) = ltrim(veposf.sap_item_cd, '0')
 	and upper(trim(eocd.cust_id(+))) = upper(trim(veposf.sold_to))
 	and upper(ltrim(veocd.sap_cust_id(+), '0')) = upper(trim(veposf.sold_to))

@@ -350,7 +350,8 @@ union_2 as
                                             lp.sku_stockcode,
                                             time.jj_mnth_id,
                                             time.jj_wk
-                                            order by time.cal_date desc
+                                            order by time.cal_date desc,
+                                            lp.lp_price desc
                                         )
                                     ) as rank
                                 from edw_px_listprice lp,
@@ -367,6 +368,7 @@ union_2 as
                                     ) as time
                                 where lp.sales_org = lkp.sls_org
                                     and to_date(time.cal_date) between to_date(lp.lp_startdate) and to_date(lp.lp_stopdate)
+                                    and lp.lp_price<>0
                             )
                         where rank = 1
                     ) epl,
@@ -550,7 +552,7 @@ union_3 as
                                         lkp.cmp_id,
                                         lp.lp_price,
                                         (
-                                            row_number() over (partition by lkp.cmp_id,lp.sku_stockcode,time.jj_mnth_id order by time.cal_date desc
+                                            row_number() over (partition by lkp.cmp_id,lp.sku_stockcode,time.jj_mnth_id order by time.cal_date desc,lp.lp_price desc
                                             )
                                         ) as rank
                                     from edw_px_listprice lp,
@@ -566,6 +568,7 @@ union_3 as
                                         ) as time
                                     where lp.sales_org = lkp.sls_org
                                         and to_date(time.cal_date) between to_date(lp.lp_startdate) and to_date(lp.lp_stopdate)
+                                        and lp.lp_price<>0
                                 )
                             where rank = 1
                         ) epl,

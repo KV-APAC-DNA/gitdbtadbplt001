@@ -120,3 +120,7 @@ models:
     config:
       alias: edw_vw_iri_ps_base_data
       tags: ["pacific_view","transformation"]
+  - name: pcfedw_integration__edw_demand_forecast_snapshot_history
+    config:
+      alias: edw_demand_forecast_snapshot_history
+      tags: ["j_pac_sap_bw_weekly_forecast_file_edw","transformation"]
