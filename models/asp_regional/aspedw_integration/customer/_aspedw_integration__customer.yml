@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_customer_attr_hier_dim
+    config: 
+      alias: edw_customer_attr_hier_dim
+      tags: ["","transformation"]

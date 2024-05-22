@@ -1,0 +1,523 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:    
+    - name: sdl_tw_ims_dstr_std_sel_out_107479_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["transaction_date"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107479_sellout__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107479_sellout__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_date_format_odd_eve_leap:
+      #       model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107479_sellout') }}"
+      #       date_column: "transaction_date"
+      #       filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+      #       failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+      #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107479_sellout__test_date_format_odd_eve_leap
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_107482_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107482_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107482_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107482_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107482_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_107483_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107483_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107483_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107483_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107483_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_107485_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107485_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107485_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107485_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107485_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_107501_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107501_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107501_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107501_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107501_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration    
+    - name: sdl_tw_ims_dstr_std_sel_out_107507_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["transaction_date"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107507_sellout__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107507_sellout__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_date_format_odd_eve_leap:
+      #       model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107507_sellout') }}"
+      #       date_column: "transaction_date"
+      #       filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+      #       failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+      #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107507_sellout__test_date_format_odd_eve_leap
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration    
+    - name: sdl_tw_ims_dstr_std_sel_out_107510_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107510_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107510_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107510_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_116047_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_116047_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_116047_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_116047_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_116047_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_120812_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      # tests:
+      #   - test_null:
+      #         not_null_columns: ["transaction_date"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_120812_sellout__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_duplicate:
+      #         group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #         name: TRATBL_sdl_tw_ims_dstr_std_sel_out_120812_sellout__duplicate_test
+      #         config:
+      #           store_failures: true
+      #           schema: ntawks_integration
+      #   - test_date_format_odd_eve_leap:
+      #       model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_120812_sellout') }}"
+      #       date_column: "transaction_date"
+      #       filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+      #       failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+      #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+      #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_120812_sellout__test_date_format_odd_eve_leap
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_122296_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_122296_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_122296_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_122296_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_122296_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_123291_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_123291_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_123291_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_123291_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_123291_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_131953_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_131953_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_131953_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_131953_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_131953_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_132222_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132222_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132222_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132222_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132222_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_132349_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132349_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132349_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132349_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132349_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_132508_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132508_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132508_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132508_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132508_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_134478_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_134478_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_134478_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_134478_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_134478_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_135307_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135307_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135307_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_135307_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135307_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_135561_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135561_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135561_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_135561_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135561_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_tw_ims_dstr_std_sel_out_136454_sellout
+      tags: ["tw_ims_distributor_standard_sell_out", "ingestion"]
+      tests:
+        - test_null:
+              not_null_columns: ["transaction_date"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_136454_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_duplicate:
+              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_136454_sellout__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_136454_sellout') }}"
+            date_column: "transaction_date"
+            filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+            failure_reason: "'Transaction_date having incorrect date-format. Expected: yyyyMMdd'"
+            select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+            name: TRATBL_sdl_tw_ims_dstr_std_sel_out_136454_sellout__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration

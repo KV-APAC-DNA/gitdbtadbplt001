@@ -1,0 +1,147 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_tw_sales_target
+    config:
+      alias: wks_itg_tw_sales_target
+      tags: ["j_tw_sales_target_wrapper","transformation"]
+  - name: ntawks_integration__wks_tw_sales_incentive_tp_ciw
+    config:
+      alias: wks_tw_sales_incentive_tp_ciw
+      tags: ["twsi_datamart_load","transformation"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107479_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107479_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107485_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107485_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107501_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107501_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107507_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107507_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107510_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107510_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_116047_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_116047_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_120812_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_120812_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_122296_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_122296_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_123291_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_123291_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_131953_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_131953_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_132349_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_132349_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_132508_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_132508_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_135307_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_135307_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_135561_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_135561_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107482_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107482_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_107483_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_107483_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_132222_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_132222_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_tw_ims_dstr_std_customer_136454_customer
+    config:
+      alias: wks_tw_ims_dstr_std_customer_136454_customer
+      tags: ["tw_ims_distributor_standard_customer","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_cust_prod_cd_ean_map
+    config: 
+      alias: wks_itg_pos_cust_prod_cd_ean_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_itg_pos_promotional_price_map
+    config: 
+      alias: wks_itg_pos_promotional_price_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_itg_pos_str_cd_sold_to_map
+    config: 
+      alias: wks_itg_pos_str_cd_sold_to_map
+      tags: ["na_mds_sdl_itg_load","ingestion"]
+
+  - name: ntawks_integration__wks_edw_pos_inventory_fact
+    config: 
+      alias: wks_edw_pos_inventory_fact
+      tags: ["tw_pos","transformation"]
+
+  - name: ntawks_integration__wks_itg_pos_7eleven
+    config:
+      alias: wks_itg_pos_7eleven
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_carrefour
+    config:
+      alias: wks_itg_pos_carrefour
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_cosmed
+    config:
+      alias: wks_itg_pos_cosmed
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_ec
+    config:
+      alias: wks_itg_pos_ec
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_poya
+    config:
+      alias: wks_itg_pos_poya
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_poya_invnt
+    config:
+      alias: wks_itg_pos_poya_invnt
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_px_civila
+    config:
+      alias: wks_itg_pos_px_civila
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_pxcivilia_invnt
+    config:
+      alias: wks_itg_pos_pxcivilia_invnt
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_rt_mart
+    config:
+      alias: wks_itg_pos_rt_mart
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_rtmart_invnt
+    config:
+      alias: wks_itg_pos_rtmart_invnt
+      tags: ["tw_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_watson_store
+    config:
+      alias: wks_itg_pos_watson_store
+      tags: ["tw_pos","ingestion"]
