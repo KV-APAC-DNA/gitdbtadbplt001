@@ -44,7 +44,7 @@ models:
       tags: ["tw_sfmc_files","ingestion"]
   - name: ntaitg_integration__sdl_raw_tw_sfmc_click_data
     config:
-      alias: sdl_raw_tw_sfmc_sent_data
+      alias: sdl_raw_tw_sfmc_click_data
       tags: ["tw_sfmc_files","ingestion"]
   
  
