@@ -21,3 +21,7 @@ models:
     config:
       alias: itg_npi_sku_list
       tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_mds_id_lav_inventory_intransit_history
+    config:
+      alias: itg_mds_id_lav_inventory_intransit_history
+      tags: ["id_mds_itg_load","ingestion"]

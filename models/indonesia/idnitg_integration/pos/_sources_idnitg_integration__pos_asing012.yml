@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: idnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: idnsdl_raw
+    schema: snapidnsdl_raw
     quoting:
       database: false
       schema: false
@@ -18,6 +18,8 @@ sources:
     - name: sdl_mds_id_lav_npi_sku_list
       tags: ["id_mds_itg_load","ingestion"]
     - name : sdl_mds_id_pos_cust_prod_mapping
+      tags: ["id_mds_itg_load","ingestion"] 
+    - name: sdl_mds_id_lav_inventory_intransit
       tags: ["id_mds_itg_load","ingestion"] 
 
   - name: snapidnedw_integration

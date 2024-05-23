@@ -5,9 +5,9 @@ with source as
 final as 
 (
     select 
-    jjid::varchar(200) as jjid,
-	store_name::varchar(500) as store_name,
-	crt_dttm::timestamp_ntz(9) as crt_dttm
+    trim(jjid)::varchar(200) as jjid,
+	trim(name)::varchar(500) as store_name,
+	current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
 )
 select * from final
