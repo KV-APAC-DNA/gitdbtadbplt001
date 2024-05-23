@@ -4,12 +4,12 @@ models:
   - name: aspitg_integration__itg_sfmc_children_data
     config: 
       alias: itg_sfmc_children_data
-      tags: ["th_crm_files","ph_crm_files","ingestion"]
+      tags: ["th_crm_files","ph_crm_files","tw_crm_files","ingestion"]
   
   - name: aspitg_integration__itg_sfmc_consumer_master
     config:
       alias: itg_sfmc_consumer_master
-      tags: ["th_crm_files","ph_crm_files","transformation"]
+      tags: ["th_crm_files","ph_crm_files","tw_crm_files_consumer_master","transformation"]
   
   - name: aspitg_integration__itg_sfmc_consumer_master_additional
     config:
@@ -19,29 +19,39 @@ models:
   - name: aspitg_integration__itg_sfmc_open_data
     config:
       alias: itg_sfmc_open_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
   
   - name: aspitg_integration__itg_sfmc_unsubscribe_data
     config:
       alias: itg_sfmc_unsubscribe_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
   
   - name: aspitg_integration__itg_sfmc_bounce_data
     config:
       alias: itg_sfmc_bounce_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
 
   - name: aspitg_integration__itg_sfmc_complaint_data
     config: 
       alias: itg_sfmc_complaint_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
 
   - name: aspitg_integration__itg_sfmc_click_data
     config: 
       alias: itg_sfmc_click_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
 
   - name: aspitg_integration__itg_sfmc_sent_data
     config: 
       alias: itg_sfmc_sent_data
-      tags: ["th_sfmc_files","ph_sfmc_files","ingestion"]
+      tags: ["th_sfmc_files","ph_sfmc_files","tw_sfmc_files","ingestion"]
+
+  - name: aspitg_integration__itg_sfmc_redemption_data
+    config: 
+      alias: itg_sfmc_redemption_data
+      tags: ["tw_crm_files","ingestion"]
+
+  - name: aspitg_integration__itg_sfmc_invoice_data
+    config: 
+      alias: itg_sfmc_invoice_data
+      tags: ["tw_crm_files","ingestion"]

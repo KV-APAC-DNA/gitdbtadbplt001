@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_interm_cust_hier_dim
+    config: 
+      alias: v_interm_cust_hier_dim
+      tags: ["taiwan_views","transformation"]
+
+  - name: ntaedw_integration__v_calendar_dtls
+    config: 
+      alias: v_calendar_dtls
+      tags: ["taiwan_views","transformation"]
+
+  - name: ntaedw_integration__edw_vw_gt_msl_items
+    config: 
+      alias: edw_vw_gt_msl_items
+      tags: ["taiwan_views","transformation"]
+
+  - name: ntaedw_integration__v_calendar_promo_univ_fisc
+    config: 
+      alias: v_calendar_promo_univ_fisc
+      tags: ["taiwan_views","transformation"]
