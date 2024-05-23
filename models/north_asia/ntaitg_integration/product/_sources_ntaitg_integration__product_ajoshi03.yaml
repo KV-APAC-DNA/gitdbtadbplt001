@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_kr_product_ean_mapping
+      tags: ["kr_mds_refresh","ingestion"]
+
+    - name: sdl_kr_jnj_price_guide
+      tags: ["j_kr_price_master_data_ingestion","ingestion"]      
+      
