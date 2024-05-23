@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_distributor_ivy_inventory
+      tags: ["id_ivy_inventory","ingestion"]
+
+    - name: sdl_mds_id_dms_dist_margin_control
+      tags: ["id_mds_itg_load","ingestion"]
