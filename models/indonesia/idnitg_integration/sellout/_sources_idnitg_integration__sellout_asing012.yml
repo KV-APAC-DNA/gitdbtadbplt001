@@ -9,10 +9,5 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_mds_id_lav_product_hierarchy
+    - name:  sdl_mds_id_dist_reporting_control
       tags: ["id_mds_itg_load","ingestion"]
-    - name: sdl_mds_id_lav_bp_sop_target
-      tags: ["id_mds_itg_load","ingestion"]
-    - name: sdl_mds_id_lav_sales_target
-      tags: ["id_mds_itg_load","ingestion"]
-

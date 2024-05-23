@@ -17,6 +17,8 @@ sources:
       tags: ["id_mds_itg_load","ingestion"]
     - name: sdl_mds_id_lav_npi_sku_list
       tags: ["id_mds_itg_load","ingestion"]
+    - name : sdl_mds_id_pos_cust_prod_mapping
+      tags: ["id_mds_itg_load","ingestion"] 
 
   - name: snapidnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

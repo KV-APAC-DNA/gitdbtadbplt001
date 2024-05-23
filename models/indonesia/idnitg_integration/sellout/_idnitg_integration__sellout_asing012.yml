@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales
+    config:
+      alias: itg_mds_id_dist_reporting_control_sellout_sales
+      tags: ["id_mds_itg_load","ingestion"]

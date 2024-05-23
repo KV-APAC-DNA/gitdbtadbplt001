@@ -1,10 +1,4 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy= "append",
-    )
-}}
+
 with source as 
 (
     select * from {{ ref('idnedw_integration__edw_distributor_ivy_user_master') }}
