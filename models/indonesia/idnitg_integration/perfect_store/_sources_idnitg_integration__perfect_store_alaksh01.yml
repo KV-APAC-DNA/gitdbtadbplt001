@@ -48,7 +48,7 @@ sources:
       tests:
         - test_null:
             select_columns: ["outlet_id","merchandiser_id","input_date","franchise"]
-            not_null_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
+            not_null_columns: ["outlet_id","merchandiser_id","input_date","franchise"]
             name: TRATBL_sdl_id_ps_promotion_competitor__null_test
             config:
               store_failures: true
