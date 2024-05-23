@@ -1,94 +1,95 @@
 version: 2
 
 sources:
-  - name: NTAEDW_INTEGRATION
+  - name: ntaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: NTAEDW_INTEGRATION
+    schema: ntaedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_KR_RPT_RETAIL_EXCELLENCE
-  - name: IDNEDW_INTEGRATION
+      - name: v_edw_kr_rpt_retail_excellence
+  - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: IDNEDW_INTEGRATION
+    schema: idnedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_ID_RE
-  - name: PCFEDW_INTEGRATION
+      - name: v_edw_rpt_id_re
+  - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: PCFEDW_INTEGRATION
+    schema: pcfedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_ANZ_RE
-  - name: INDEDW_INTEGRATION
+      - name: v_edw_rpt_anz_re
+  - name: indedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: INDEDW_INTEGRATION
+    schema: indedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_RETAIL_EXCELLENCE
-  - name: MYSEDW_INTEGRATION
+      - name: v_edw_rpt_retail_excellence
+  - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: MYSEDW_INTEGRATION
+    schema: mysedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_MY_RE
-  - name: PHLEDW_INTEGRATION
+      - name: v_edw_rpt_my_re
+  - name: phledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: PHLEDW_INTEGRATION
+    schema: phledw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_PH_RPT_RETAIL_EXCELLENCE
-  - name: SGPEDW_INTEGRATION
+      - name: v_edw_ph_rpt_retail_excellence
+  - name: sgpedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: SGPEDW_INTEGRATION
+    schema: sgpedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_SG_RPT_RETAIL_EXCELLENCE
-  - name: THAEDW_INTEGRATION
+      - name: v_edw_sg_rpt_retail_excellence
+
+  - name: thaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: THAEDW_INTEGRATION
+    schema: thaedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_RETAIL_EXCELLENCE_TH
-  - name: CHNEDW_INTEGRATION
+      - name: v_edw_rpt_retail_excellence_th
+  - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: CHNEDW_INTEGRATION
+    schema: chnedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_RETAIL_EXCELLENCE_CNPC
-      - name: V_EDW_RPT_RETAIL_EXCELLENCE_CNSC
-  - name: JPNEDW_INTEGRATION
+      - name: v_edw_rpt_retail_excellence_cnpc
+      - name: v_edw_rpt_retail_excellence_cnsc
+  - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: JPNEDW_INTEGRATION
+    schema: jpnedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: V_EDW_RPT_RETAIL_EXCELLENCE
+      - name: v_edw_rpt_retail_excellence
