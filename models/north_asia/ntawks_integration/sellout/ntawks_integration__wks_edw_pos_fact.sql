@@ -1,23 +1,23 @@
 with itg_pos as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS
+select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 itg_pos_cust_prod_cd_ean_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_CUST_PROD_CD_EAN_MAP
+select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 itg_pos_prom_prc_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_PROM_PRC_MAP
+select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-ITG_POS_CUST_PROD_TO_SAP_PROD_MAP as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_CUST_PROD_TO_SAP_PROD_MAP
+itg_pos_cust_prod_to_sap_prod_map as (
+select * from {{ source('ntaitg_integration', 'itg_pos_cust_prod_to_sap_prod_map') }}
 ),
 nonqp as (
 SELECT src.pos_dt,

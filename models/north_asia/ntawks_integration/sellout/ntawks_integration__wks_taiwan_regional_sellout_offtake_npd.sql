@@ -1,9 +1,9 @@
 with 
 WKS_TAIWAN_REGIONAL_SELLOUT_NPD as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_TAIWAN_REGIONAL_SELLOUT_NPD
+select * from {{ ref('ntawks_integration__wks_taiwan_regional_sellout_npd') }}
 ),
 ITG_MDS_AP_CUSTOMER360_CONFIG as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ source('aspitg_integration', 'itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 SELECT *,

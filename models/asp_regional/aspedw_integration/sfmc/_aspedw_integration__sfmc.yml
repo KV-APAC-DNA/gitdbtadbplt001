@@ -25,3 +25,8 @@ models:
     config:
       alias: edw_vw_ph_sfmc_subscriber_status_history
       tags: ["ph_sfmc_analysis_refresh","transformation"]
+
+  - name: aspedw_integration__edw_sfmc_analysis
+    config: 
+        alias: edw_sfmc_analysis
+        tags: ["tw_sfmc_analysis_refresh","transformation"]

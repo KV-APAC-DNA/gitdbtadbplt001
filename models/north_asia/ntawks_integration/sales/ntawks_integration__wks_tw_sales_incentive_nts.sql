@@ -1,23 +1,23 @@
 with vw_tw_forecast as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.VW_TW_FORECAST
+select * from {{ ref('ntaedw_integration__vw_tw_forecast') }}
 ),
 edw_vw_promo_calendar as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_PROMO_CALENDAR
+select * from {{ ref('ntaedw_integration__edw_vw_promo_calendar') }}
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_MDS_TW_CUSTOMER_SALES_REP_MAPPING
+select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
 ),
 itg_tsi_target_data as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TSI_TARGET_DATA
+select * from {{ ref('ntaitg_integration__itg_tsi_target_data') }}
 ),
 itg_mds_tw_incentive_schemes as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_MDS_TW_INCENTIVE_SCHEMES
+select * from {{ ref('ntaitg_integration__itg_mds_tw_incentive_schemes') }}
 ),
 itg_mds_tw_sales_representative as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_MDS_TW_SALES_REPRESENTATIVE
+select * from {{ ref('ntaitg_integration__itg_mds_tw_sales_representative') }}
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_MDS_TW_CUSTOMER_SALES_REP_MAPPING
+select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
 ),
 final as (
 SELECT *

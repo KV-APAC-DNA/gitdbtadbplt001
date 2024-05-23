@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__sdl_raw_tsi_target_data
+    config:
+      alias: sdl_raw_tsi_target_data
+      tags: ["twsi_target_ingestion","ingestion"]
+  - name: ntaitg_integration__itg_tsi_target_data
+    config:
+      alias: itg_tsi_target_data
+      tags: ["twsi_target_ingestion","ingestion"]

@@ -1,20 +1,20 @@
 with edw_ims_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_tw_ims_dstr_prod_price_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_IMS_DSTR_PROD_PRICE_MAP
+select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}
 ),
 edw_vw_store_dim as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_STORE_DIM
+select * from {{ ref('ntaedw_integration__edw_vw_store_dim') }}
 ),
-EDW_VW_GT_MSL_ITEMS as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_GT_MSL_ITEMS
+edw_vw_gt_msl_items as (
+select * from {{ ref('ntaedw_integration__edw_vw_gt_msl_items') }}
 ),
-EDW_PRODUCT_ATTR_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+edw_product_attr_dim as (
+select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
-EDW_STORE_DIM as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_STORE_DIM
+edw_store_dim as (
+select * from {{ ref('ntaedw_integration__edw_store_dim') }}
 ),
 final as (
 SELECT a.ims_txn_dt,

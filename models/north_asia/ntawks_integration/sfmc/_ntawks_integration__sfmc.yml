@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_sdl_tw_sfmc_consumer_master
+    config:
+      alias: wks_sdl_tw_sfmc_consumer_master
+      tags: ["nta_crm_files","ingestion"]

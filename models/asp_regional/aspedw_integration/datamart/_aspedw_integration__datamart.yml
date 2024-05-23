@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_vw_sfmc_active_history
+    config: 
+        alias: edw_vw_sfmc_active_history
+        tags: ["tw_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_analysis
+    config: 
+        alias: edw_vw_sfmc_analysis
+        tags: ["tw_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_invoice_data
+    config: 
+        alias: edw_vw_sfmc_invoice_data
+        tags: ["tw_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_redemption_data
+    config: 
+        alias: edw_vw_sfmc_redemption_data
+        tags: ["tw_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_sfmc_tier_history
+    config: 
+        alias: edw_vw_sfmc_tier_history
+        tags: ["tw_sfmc_analysis_refresh","transformation"]
