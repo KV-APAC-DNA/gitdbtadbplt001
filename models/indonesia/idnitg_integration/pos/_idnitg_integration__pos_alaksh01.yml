@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: idnitg_integration__sdl_raw_id_pos_superindo_sellout
+    config: 
+      alias: sdl_raw_id_pos_superindo_sellout
+      tags: ["id_pos_superindo","ingestion"]
+  - name: idnitg_integration__itg_id_pos_superindo_sellout
+    config: 
+      alias: itg_id_pos_superindo_sellout
+      tags: ["id_pos_superindo","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_superindo_stock
+    config: 
+      alias: sdl_raw_id_pos_superindo_stock
+      tags: ["id_pos_superindo","ingestion"]
+  - name: idnitg_integration__itg_id_pos_superindo_stock
+    config: 
+      alias: itg_id_pos_superindo_stock
+      tags: ["id_pos_superindo","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_carrefour_sellout
+    config: 
+      alias: sdl_raw_id_pos_carrefour_sellout
+      tags: ["id_pos_carrefour","ingestion"]
+  - name: idnitg_integration__itg_id_pos_carrefour_sellout
+    config: 
+      alias: itg_id_pos_carrefour_sellout
+      tags: ["id_pos_carrefour","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_carrefour_stock
+    config: 
+      alias: sdl_raw_id_pos_carrefour_stock
+      tags: ["id_pos_carrefour","ingestion"]
+  - name: idnitg_integration__itg_id_pos_carrefour_stock
+    config: 
+      alias: itg_id_pos_carrefour_stock
+      tags: ["id_pos_carrefour","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_watson_sellout
+    config: 
+      alias: sdl_raw_id_pos_watson_sellout
+      tags: ["id_pos_watson","ingestion"]
+  - name: idnitg_integration__itg_id_pos_watson_sellout
+    config: 
+      alias: itg_id_pos_watson_sellout
+      tags: ["id_pos_watson","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_watson_stock
+    config: 
+      alias: sdl_raw_id_pos_watson_stock
+      tags: ["id_pos_watson","ingestion"]
+  - name: idnitg_integration__itg_id_pos_watson_stock
+    config: 
+      alias: itg_id_pos_watson_stock
+      tags: ["id_pos_watson","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_sat_sellout
+    config: 
+      alias: sdl_raw_id_pos_sat_sellout
+      tags: ["id_pos_alfamart","ingestion"]
+  - name: idnitg_integration__itg_id_pos_sat_sellout
+    config: 
+      alias: itg_id_pos_sat_sellout
+      tags: ["id_pos_alfamart","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_sat_stock
+    config: 
+      alias: sdl_raw_id_pos_sat_stock
+      tags: ["id_pos_alfamart","ingestion"]
+  - name: idnitg_integration__itg_id_pos_sat_stock
+    config: 
+      alias: itg_id_pos_sat_stock
+      tags: ["id_pos_alfamart","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_midi_sellout
+    config: 
+      alias: sdl_raw_id_pos_midi_sellout
+      tags: ["id_pos_alfamidi","ingestion"]
+  - name: idnitg_integration__itg_id_pos_midi_sellout
+    config: 
+      alias: itg_id_pos_midi_sellout
+      tags: ["id_pos_alfamidi","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_midi_stock
+    config: 
+      alias: sdl_raw_id_pos_midi_stock
+      tags: ["id_pos_alfamidi","ingestion"]
+  - name: idnitg_integration__itg_id_pos_midi_stock
+    config: 
+      alias: itg_id_pos_midi_stock
+      tags: ["id_pos_alfamidi","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_diamond_sellout
+    config: 
+      alias: sdl_raw_id_pos_diamond_sellout
+      tags: ["id_pos_diamond","ingestion"]
+  - name: idnitg_integration__itg_id_pos_diamond_sellout
+    config: 
+      alias: itg_id_pos_diamond_sellout
+      tags: ["id_pos_diamond","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_pos_guardian_stock
+    config: 
+      alias: sdl_raw_id_pos_guardian_stock
+      tags: ["id_pos_guardian","ingestion"]

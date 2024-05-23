@@ -1,0 +1,311 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_id_pos_superindo_sellout
+      tags: ["id_pos_superindo","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"]
+            not_null_columns: ["company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply"]
+            name: TRATBL_sdl_id_pos_superindo_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"]
+                group_by_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"] 
+                name: TRATBL_sdl_id_pos_superindo_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_superindo_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_superindo_stock
+      tags: ["id_pos_superindo","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth"]
+            not_null_columns: ["code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi"]
+            name: TRATBL_sdl_id_pos_superindo_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth"]
+                group_by_columns: ["code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_superindo_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_superindo_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_carrefour_sellout
+      tags: ["id_pos_carrefour","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","fdesc","scc","scc_name","sales_qty","net_sales","share","yearmonth"]
+            not_null_columns: ["fdesc","scc","scc_name","sales_qty","net_sales"]
+            name: TRATBL_sdl_id_pos_carrefour_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","fdesc","scc","scc_name","sales_qty","net_sales","share","yearmonth"]
+                group_by_columns: ["fdesc","scc","scc_name","sales_qty","net_sales","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_carrefour_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_carrefour_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_carrefour_stock
+      tags: ["id_pos_carrefour","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","dep_desc","stock_qty","stock_amt","stock_days","yearmonth"]
+            not_null_columns: ["dep_desc","stock_qty","stock_amt"]
+            name: TRATBL_sdl_id_pos_carrefour_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","dep_desc","stock_qty","stock_amt","stock_days","yearmonth"]
+                group_by_columns: ["dep_desc","stock_qty","stock_amt","stock_days","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_carrefour_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_carrefour_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_watson_sellout
+      tags: ["id_pos_watson","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth"]
+            not_null_columns: ["str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale"]
+            name: TRATBL_sdl_id_pos_watson_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth"]
+                group_by_columns: ["sale_date","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_watson_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_watson_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_watson_stock
+      tags: ["id_pos_watson","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","yearmonth"]
+            not_null_columns: ["store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\""]
+            name: TRATBL_sdl_id_pos_watson_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+              select_columns: ["filename","pos_cust","store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","yearmonth"]
+              group_by_columns: ["store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+              name: TRATBL_sdl_id_pos_watson_stock__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_watson_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_sat_sellout
+      tags: ["id_pos_alfamart","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","type","\"values\""]
+            name: TRATBL_sdl_id_pos_sat_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_sat_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_sat_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_sat_stock
+      tags: ["id_pos_alfamart","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","store_dc","type","\"values\""]
+            name: TRATBL_sdl_id_pos_sat_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","store_dc","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_sat_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_sat_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_midi_sellout
+      tags: ["id_pos_alfamidi","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","type","\"values\""]
+            name: TRATBL_sdl_id_pos_midi_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_midi_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_midi_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_midi_stock
+      tags: ["id_pos_alfamidi","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","store_dc","type","\"values\""]
+            name: TRATBL_sdl_id_pos_midi_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","store_dc","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_midi_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_midi_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_diamond_sellout
+      tags: ["id_pos_diamond","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","branch","nama_barang","qty","sales","yearmonth"]
+            not_null_columns: ["nama_barang","qty","sales"]
+            name: TRATBL_sdl_id_pos_diamond_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","branch","nama_barang","qty","sales","yearmonth"]
+                group_by_columns: ["branch","nama_barang","qty","sales","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_diamond_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_diamond_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_guardian_stock
+      tags: ["id_pos_guardian","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","article","article_desc","category","soh_stores","soh_dc","yearmonth"]
+            not_null_columns: ["article","article_desc","category"]
+            name: TRATBL_sdl_id_pos_guardian_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","article","article_desc","category","soh_stores","soh_dc","yearmonth"]
+                group_by_columns: ["article","article_desc","category","soh_stores","soh_dc","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_guardian_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_guardian_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration

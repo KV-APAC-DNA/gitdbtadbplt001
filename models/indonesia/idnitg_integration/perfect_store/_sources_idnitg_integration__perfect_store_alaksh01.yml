@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_id_ps_pricing
+      tags: ["id_ps_pricing","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["outlet_id","merchandiser_id","input_date","put_up","competitor","price_type"]
+            not_null_columns: ["outlet_id","merchandiser_id","input_date","put_up","competitor","price_type"]
+            name: TRATBL_sdl_id_ps_pricing__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["outlet_id","merchandiser_id","input_date","put_up","competitor","price_type"]
+                group_by_columns: ["outlet_id","merchandiser_id","input_date","put_up","competitor","price_type"] 
+                name: TRATBL_sdl_id_ps_pricing__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_ps_promotion
+      tags: ["id_ps_promo","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
+            not_null_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
+            name: TRATBL_sdl_id_ps_promotion__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
+                group_by_columns: ["outlet_id","merchandiser_id","input_date","promo_desc","photo_link"] 
+                name: TRATBL_sdl_id_ps_promotion__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_ps_promotion_competitor
+      tags: ["id_ps_promo_competitor","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["outlet_id","merchandiser_id","input_date","franchise"]
+            not_null_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
+            name: TRATBL_sdl_id_ps_promotion_competitor__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["outlet_id","merchandiser_id","input_date","franchise"]
+                group_by_columns: ["outlet_id","merchandiser_id","input_date","franchise","photo_link"] 
+                name: TRATBL_sdl_id_ps_promotion_competitor__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration

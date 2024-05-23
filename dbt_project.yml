@@ -366,3 +366,21 @@ models:
       phledw_access:
         +materialized: view
         +schema: PHLEDW_ACCESS
+    indonesia:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      idnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNEDW_INTEGRATION
+      idnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNITG_INTEGRATION
+      idnwks_integration:
+        +materialized: table
+        +schema: IDNWKS_INTEGRATION
+      idnedw_access:
+        +materialized: view
+        +schema: IDNEDW_ACCESS
