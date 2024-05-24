@@ -168,7 +168,7 @@ final as (
             CAST ( try_to_number(pka_package_desc_v1) * try_to_decimal(pka_size_desc_v1,38,2) AS VARCHAR(30)) AS TS
             -- End Add new column total_size = size*package AEBU-10288
         FROM EDW_MATERIAL_DIM
-        WHERE pka_package_desc is not null and MATL_NUM IN (SELECT DISTINCT MATL_NUM
+        WHERE MATL_NUM IN (SELECT DISTINCT MATL_NUM
                         FROM (SELECT MATL_NUM,
                                         FISC_YR_PER,
                                         SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
