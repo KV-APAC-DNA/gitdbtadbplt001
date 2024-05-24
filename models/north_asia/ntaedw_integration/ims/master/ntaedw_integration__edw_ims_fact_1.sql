@@ -2,13 +2,24 @@
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="delete from {{this}} where dstr_cd in ( select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }};"
+        pre_hook="{% if var('job_to_execute') == 'tw_ims_distributor_standard_sell_out' %}
+            delete from {{this}} where dstr_cd in ( select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }};
+            {% elif var('job_to_execute') == 'kr_edw_ims_fact' %}
+            delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
+            {% endif %}
+            "
     )
 }}
 with wks_edw_ims_sls_std as (
     select * from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }}
 ),
-union_1_taiwan as
+itg_kr_gt_sellout as (
+    select * from dev_dna_core.snapntaitg_integration.itg_kr_gt_sellout
+
+)
+{% if var('job_to_execute') == 'tw_ims_distributor_standard_sell_out' %}
+,
+taiwan as
 (
     SELECT 
         ims_txn_dt::date as ims_txn_dt,
@@ -64,68 +75,32 @@ union_1_taiwan as
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
     FROM wks_edw_ims_sls_std
-),
-daiso as (
-select ims_txn_dt,
-       dstr_cd,
-       dstr_nm,
-       cust_cd,
-       cust_nm,
-       prod_cd,
-       prod_nm,
-       ean_num,
-       unit_prc,
-       sls_amt,
-       sls_qty,
-       ctry_cd,
-       crncy_cd,
-       crt_dttm,
-       updt_dttm,
-       sub_customer_code,
-       sub_customer_name
-from na_itg.itg_kr_gt_sellout
-where upper(dstr_nm) = 'DAISO'
-),
-hyundai as (
-select ims_txn_dt,
-       dstr_cd,
-       dstr_nm,
-       cust_cd,
-       cust_nm,
-       prod_cd,
-       prod_nm,
-       ean_num,
-       unit_prc,
-       sls_amt,
-       sls_qty,
-       ctry_cd,
-       crncy_cd,
-       crt_dttm,
-       updt_dttm,
-       sub_customer_code,
-       sub_customer_name
-from na_itg.itg_kr_gt_sellout
-where upper(dstr_nm) = 'HYUNDAI'
-),
-lotte_ak as (
-SELECT IMS_TXN_DT,
-       DSTR_CD,
-       DSTR_NM,
-       CUST_CD,
-       CUST_NM,
-       PROD_CD,
-       PROD_NM,
-       EAN_NUM,
-       UNIT_PRC,
-       SLS_AMT,
-       SLS_QTY,
-       CTRY_CD,
-       CRNCY_CD,
-       CRT_DTTM,
-       UPDT_DTTM,
-       SUB_CUSTOMER_CODE,
-       SUB_CUSTOMER_NAME
-FROM NA_ITG.ITG_KR_GT_SELLOUT
-WHERE UPPER(DSTR_NM) IN ('LOTTE','AK');
 )
-select * from final
+select * from taiwan
+{% elif var('job_to_execute') == 'kr_edw_ims_fact' %}
+,
+Korea as (
+select ims_txn_dt,
+       dstr_cd,
+       dstr_nm,
+       cust_cd,
+       cust_nm,
+       prod_cd,
+       prod_nm,
+       ean_num,
+       unit_prc,
+       sls_amt,
+       sls_qty,
+       ctry_cd,
+       crncy_cd,
+       crt_dttm,
+       updt_dttm,
+       sub_customer_code,
+       sub_customer_name
+from itg_kr_gt_sellout
+where upper(dstr_nm) in 
+('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
+)
+select * from korea
+
+{% endif %}
