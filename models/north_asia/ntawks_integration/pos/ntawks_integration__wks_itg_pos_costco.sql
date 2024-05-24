@@ -1,5 +1,5 @@
 with sdl_kr_pos_costco_invrpt as(
-    select *, dense_rank() over(partition by null order by filename desc) as rnk from {{ source('ntasdl_raw', 'sdl_kr_pos_costco_invrpt') }}
+    select *, dense_rank() over(partition by null order by filename desc) as rnk from {{ ref('ntawks_integration__wks_kr_pos_costco_invrpt') }}
 ),
 itg_pos_temp as 
 (
@@ -99,7 +99,7 @@ final as
         END AS CHNG_FLG
     FROM --SDL_KR_POS_COSTCO_INVRPT SRC
     (
-        select * from SDL_KR_POS_COSTCO_INVRPT where rnk = 1
+        select * from sdl_kr_pos_costco_invrpt where rnk = 1
     ) SRC
     LEFT OUTER JOIN 
     (

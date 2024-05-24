@@ -27,11 +27,27 @@ sources:
         tags: ["kr_pos","ingestion"]
       - name: sdl_kr_pos_lalavla
         tags: ["kr_pos","ingestion"]
-      - name: sdl_kr_pos_costco_invrpt
-        tags: ["kr_pos","ingestion"]
       - name: sdl_kr_pos_emart_ssg
         tags: ["kr_pos","ingestion"]
       - name: sdl_kr_pos_emart
         tags: ["kr_pos","ingestion"] 
       - name: sdl_pos_prc_condition_map
-        tags: ["","ingestion"]     
+        tags: ["kr_pos","ingestion"]  
+      - name: sdl_kr_pos_costco_invrpt_header
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_costco_invrpt_line
+        tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_sales_target_am_brand
+        tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+      - name: sdl_kr_fert_material_fact
+        tags: ["j_kr_fert_material_wrapper","transformation"]
+
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_kr_sales_target_am_brand_temp

@@ -18,16 +18,6 @@
                         )
                         where chng_flg = 'U'
                     );
-                    {% elif var('pos_job_to_execute') == 'kr_pos' %}
-                    delete from {{this}} itg_pos where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) in 
-                    (
-                        select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from snapntawks_integration.wks_itg_pos_emart_ecvan_ssg
-                    )
-                    and upper(itg_pos.src_sys_cd) = 'EMART'
-                    and upper(itg_pos.ctry_cd) = 'KR'
-                    {% endif %}"
-                    ,
-                    "{% if var('pos_job_to_execute') == 'tw_pos' %}
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd) in
                     (
                         select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from
@@ -40,19 +30,6 @@
                         )
                         where chng_flg = 'U'
                     );
-                    {% elif var('pos_job_to_execute') == 'kr_pos' %}
-                    delete from {{this}} itg_pos using ntawks_integration.wks_itg_pos
-                    where wks_itg_pos.pos_dt = itg_pos.pos_dt
-                        and wks_itg_pos.ean_num = itg_pos.ean_num
-                        and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd
-                        and wks_itg_pos.ctry_cd = itg_pos.ctry_cd
-                        and wks_itg_pos.chng_flg = 'U'
-                        and itg_pos.src_sys_cd not in ('Emart', 'Costco')
-                        and wks_itg_pos.str_cd = itg_pos.str_cd
-                    {% endif %}
-                    "
-                    ,
-                    "{% if var('pos_job_to_execute') == 'tw_pos' %}
                     delete from {{this}} where (pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd) in
                     (
                         select distinct pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd from
@@ -60,8 +37,22 @@
                             select * from {{ ref('ntawks_integration__wks_itg_pos_watson_store') }}
                         )
                         where chng_flg = 'U'
-                    )
+                    );
                     {% elif var('pos_job_to_execute') == 'kr_pos' %}
+                    delete from {{this}} itg_pos where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) in 
+                    (
+                        select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from snapntawks_integration.wks_itg_pos_emart_ecvan_ssg
+                    )
+                    and upper(itg_pos.src_sys_cd) = 'EMART'
+                    and upper(itg_pos.ctry_cd) = 'KR';
+                    delete from {{this}} itg_pos using ntawks_integration.wks_itg_pos
+                    where wks_itg_pos.pos_dt = itg_pos.pos_dt
+                        and wks_itg_pos.ean_num = itg_pos.ean_num
+                        and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd
+                        and wks_itg_pos.ctry_cd = itg_pos.ctry_cd
+                        and wks_itg_pos.chng_flg = 'U'
+                        and itg_pos.src_sys_cd not in ('Emart', 'Costco')
+                        and wks_itg_pos.str_cd = itg_pos.str_cd;
                     delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd) in
                     (
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from

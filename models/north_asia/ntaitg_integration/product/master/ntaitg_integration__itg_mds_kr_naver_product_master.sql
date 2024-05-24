@@ -13,10 +13,10 @@ final as
 (
     select
         trim(code)::varchar(100) as code,
-        trim(category_l_code)::varchar(100) AS Category_L_Code,
-        trim(category_m_code)::varchar(100) AS Category_M_Code,
-        trim(category_s_code)::varchar(100) AS Category_S_Code,
-        trim(brands_name)::varchar(100) AS brand_name,
+        trim(category_l_code)::varchar(100) as category_l_name,
+        trim(category_m_code)::varchar(100) as category_m_name,
+        trim(category_s_code)::varchar(100) as category_s_name,
+        trim(brands_name)::varchar(100) as brands_name,
         trim(product_name)::varchar(1000) as product_name,
         lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
         current_timestamp()::timestamp_ntz(9) as refresh_date

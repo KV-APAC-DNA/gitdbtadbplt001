@@ -108,11 +108,14 @@ final as
             ctry_cd,
             crt_dttm
         from itg_pos_temp
-    ) tgt on src.pos_date = tgt.pos_dt
-    and src.barcode = tgt.ean_num
-    and src.store_code = tgt.str_cd
-    and src.src_sys_cd = tgt.src_sys_cd
-    AND 'KR' = tgt.ctry_cd
-    where src.rnk = 1
+    ) TGT ON SRC.pos_date = TGT.pos_dt
+        AND SRC.barcode = TGT.ean_num
+        AND SRC.store_code = TGT.str_cd
+        AND SRC.src_sys_cd = TGT.src_sys_cd
+        AND 'KR' = TGT.ctry_cd
+    where SRC.rnk = 1
 )
-select * from final
+select count(*)
+-- ,count(distinct pos_dt,ean_num,str_cd,src_sys_cd) 
+from final
+where src_sys_cd = 'Homeplus'

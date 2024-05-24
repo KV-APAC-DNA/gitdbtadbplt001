@@ -2,11 +2,14 @@
     config(
         materialized= "incremental",
         incremental_strategy= "append",
-        pre_hook = "delete from {{this}}
+        pre_hook = "{% if is_incremental() %}
+                    delete from {{this}}
 					where trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
 					in
 					(select distinct trim(product_ranking_date)||trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(coupang_sku_id)||trim(coupang_sku_name)||trim(ranking)||trim(data_granularity)
-					from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }});"
+					from {{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }});
+                    {% endif %}
+                    "
     )
 }}
 with source as (

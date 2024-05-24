@@ -17,3 +17,11 @@ models:
     config:
       alias: wks_itg_pos_rank
       tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_kr_sales_target_am_brand
+    config:
+      alias: wks_itg_kr_sales_target_am_brand
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+  - name: ntawks_integration__wks_edw_brand_sls_target
+    config:
+      alias: wks_edw_brand_sls_target
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]

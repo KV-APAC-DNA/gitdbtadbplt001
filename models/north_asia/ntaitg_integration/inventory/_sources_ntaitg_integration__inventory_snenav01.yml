@@ -9,7 +9,5 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_kr_sales_target_am_cust_link
-
-    - name: sdl_kr_sales_target_am_sls_grp
-    - name: sdl_mds_kr_sales_store_map
+      - name: sdl_kr_otc_inventory
+        tags: ["j_kr_otc_inv_etl_framework ","ingestion"]

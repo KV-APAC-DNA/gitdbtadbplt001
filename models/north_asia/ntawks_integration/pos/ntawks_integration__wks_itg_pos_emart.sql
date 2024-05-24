@@ -113,4 +113,4 @@ final as
         AND 'Emart' = TGT.src_sys_cd
         AND 'KR' = TGT.ctry_cd
 )
-select count(*) from final
+select * from final

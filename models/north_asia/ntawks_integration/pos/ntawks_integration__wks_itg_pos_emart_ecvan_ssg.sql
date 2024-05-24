@@ -1,6 +1,7 @@
 with sdl_kr_pos_emart_ssg as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_emart_ssg') }}
+    --need to add it as source
 ),
 wks_sdl_kr_pos_ecvan_ssg as 
 (
@@ -20,12 +21,12 @@ wks_sdl_kr_pos_ecvan_ssg as
 final as 
 (    
     SELECT 
-        cast(SRC.pos_dt as date) AS pos_dt,
+        to_date(SRC.pos_dt,'yyyymmdd') AS pos_dt,
         NULL AS vend_cd,
         vend_nm AS vend_nm,
         NULL AS prod_nm,
         NULL AS vend_prod_cd,
-        cast(src.prod_nm as varchar(100)) AS vend_prod_nm,
+        src.prod_nm::varchar(100) AS vend_prod_nm,
         NULL AS brnd_nm,
         src.ean AS ean_num,
         src.str_cd AS str_cd,

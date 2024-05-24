@@ -9,3 +9,7 @@ models:
     config:
       alias: itg_kr_sales_target_am_sls_grp
       tags: ["j_kr_sales_target_am_sales_group_wrapper",""]
+  - name: ntaitg_integration__itg_kr_sales_store_map
+    config:
+      alias: itg_kr_sales_store_map
+      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
