@@ -194,7 +194,7 @@ from (select mnth_id
                    case
                      when mnth_wk_no = (select max(mnth_wk_no)
                                         from edw_vw_os_time_dim b
-                                        where b.mnth_id = mnth_id
+                                        where b.mnth_id = a.mnth_id
                                         ) then '20991231'
                      else (max(cal_date_id))
                    end as last_day
