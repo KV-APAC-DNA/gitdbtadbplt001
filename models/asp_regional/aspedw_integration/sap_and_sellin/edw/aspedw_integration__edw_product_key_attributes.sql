@@ -143,6 +143,7 @@ final as (
         FROM (SELECT *
         -- Start Add new column total_size = size*package AEBU-10288
                 ,CASE
+                WHEN UPPER(pka_package_desc) = 'PREMIX' THEN '1'
                 WHEN SUBSTRING(pka_package_desc,1,1) = 'x' THEN SUBSTRING(pka_package_desc,2,LENGTH(pka_package_desc))
                 WHEN UPPER(pka_package_desc) = 'ASSORTED PACK' THEN '1' --'PACK'
                 WHEN UPPER(pka_package_desc) = 'MIX PACK' THEN '1'
