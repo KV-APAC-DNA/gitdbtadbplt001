@@ -143,6 +143,7 @@ final as (
         FROM (SELECT *
         -- Start Add new column total_size = size*package AEBU-10288
                 ,CASE
+                WHEN UPPER(pka_package_desc) = 'PREMIX' THEN '1'
                 WHEN SUBSTRING(pka_package_desc,1,1) = 'x' THEN SUBSTRING(pka_package_desc,2,LENGTH(pka_package_desc))
                 WHEN UPPER(pka_package_desc) = 'ASSORTED PACK' THEN '1' --'PACK'
                 WHEN UPPER(pka_package_desc) = 'MIX PACK' THEN '1'
@@ -167,7 +168,7 @@ final as (
             CAST ( try_to_number(pka_package_desc_v1) * try_to_decimal(pka_size_desc_v1,38,2) AS VARCHAR(30)) AS TS
             -- End Add new column total_size = size*package AEBU-10288
         FROM EDW_MATERIAL_DIM
-        WHERE MATL_NUM IN (SELECT DISTINCT MATL_NUM
+        WHERE pka_package_desc is not null and MATL_NUM IN (SELECT DISTINCT MATL_NUM
                         FROM (SELECT MATL_NUM,
                                         FISC_YR_PER,
                                         SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
