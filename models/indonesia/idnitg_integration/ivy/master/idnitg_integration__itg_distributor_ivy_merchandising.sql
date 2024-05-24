@@ -19,7 +19,7 @@
             (
                 to_date(
                     trim(split_part(surveydate, ',', 3)) || ' ' || trim (split_part(surveydate, ',', 2)),
-                    'yyyy month dd'
+                    'YYYY MON DD'
                 )
             ) as surveydate,
             upper(aq_name),
@@ -45,7 +45,7 @@ final as
 	month::varchar(30) as month,
     to_date(
         trim(split_part(surveydate, ',', 3)) || ' ' || trim (split_part(surveydate, ',', 2)),
-        'yyyy month dd'
+        'yyyy mon dd'
     ) as surveydate,
     aq_name::varchar(500) as aq_name,
 	srd_answer::varchar(100) as srd_answer,
