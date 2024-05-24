@@ -192,13 +192,13 @@ from (select mnth_id
                      else (min(a.cal_date_id))
                    end as first_day,
                    case
-                     when a.mnth_wk_no = (select max(mnth_wk_no)
-                                        from edw_vw_os_time_dim
-                                        where mnth_id = a.mnth_id
-                                        ) then '20991231'
+                     when a.mnth_wk_no = b.mnth_wk_no then '20991231'
                      else (max(a.cal_date_id))
                    end as last_day
             from edw_vw_os_time_dim a
+            join
+             (select mnth_id,max(mnth_wk_no) as mnth_wk_no from edw_vw_os_time_dim group by mnth_id) b
+             on a.mnth_id = b.mnth_id
             group by a."year",
                      a.qrtr_no,
                      a.qrtr,
@@ -207,7 +207,8 @@ from (select mnth_id
                      a.mnth_no,
                      a.mnth_shrt,
                      a.mnth_long,
-                     a.mnth_wk_no) veotd
+                     a.mnth_wk_no,
+                     b.mnth_wk_no) veotd
       where (sls_qty <> 0 or ret_qty <> 0 or gts_val <> 0 or ret_val <> 0 or nts_val <> 0 or tp_val <> 0)
       and   cntry_nm = 'PH'
       and   trim(veossf1.jj_mnth_id) = trim(cast((veotd.mnth_id) as varchar))
