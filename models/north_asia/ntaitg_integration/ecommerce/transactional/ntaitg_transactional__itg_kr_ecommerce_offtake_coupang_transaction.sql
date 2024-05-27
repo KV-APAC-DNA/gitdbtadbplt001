@@ -60,7 +60,7 @@ trans as
         ) as active_customers, 
         0 as new_customers, 
         'KRW' as transaction_currency, 
-        'KOREA' as country 
+        'Korea' as country 
     from source
 
 ),
