@@ -1,3 +1,14 @@
+{{
+    config
+    (
+        materialized="incremental",
+        incremental_strategy= "append",     
+        pre_hook = "DELETE
+        FROM {{this}} 
+        WHERE 0 != (SELECT COUNT(*) FROM {{source('idnsdl_raw','sdl_mds_id_dms_dist_margin_control')}});"
+    )
+}}
+
 with source as
 (
     select * from {{source('idnsdl_raw','sdl_mds_id_dms_dist_margin_control') }}
@@ -5,14 +16,17 @@ with source as
 final as
 (
     select
-    distributorcode::varchar(10) as distributorcode,
-	franchise::varchar(50) as franchise,
-	brand::varchar(50) as brand,
-	type::varchar(10) as type,
-	margin:: varchar(50) as margin,
-	effective_from::varchar(6) as effective_from,
-	effective_to::varchar(6) as effective_to,
+    upper(trim(distributorcode))::varchar(10) as distributorcode,
+	upper(trim(franchise))::varchar(50) as franchise,
+	upper(trim(brand))::varchar(50) as brand,
+	upper(trim(type))::varchar(10) as type,
+	trim(margin):: varchar(50) as margin,
+    TRIM(effective_from)::varchar(6) as effective_from,
+    nvl(effective_to,'999912')::varchar(6) as effective_to,
+	--effective_from::varchar(6) as effective_from,
+	--effective_to::varchar(6) as effective_to,
 	current_timestamp()::timestamp_ntz as crtd_dttm
     from source
 )
+
 select * from final
