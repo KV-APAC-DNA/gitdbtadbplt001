@@ -5,7 +5,7 @@ edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_query_parameters as (
-    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 union_1 as 
 (   
