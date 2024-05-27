@@ -25,7 +25,7 @@ source_nta as
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_open_data') }}
 )
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
-,
+
 final as
 (
     select
@@ -52,7 +52,7 @@ final as
 select * from final
 
 {% elif var("sfmc_job_to_execute") == 'ph_sfmc_files' %}
-,
+
 final as
 (
     select
@@ -79,7 +79,7 @@ final as
 select * from final
 
 {% elif var("sfmc_job_to_execute") == 'nta_sfmc_files' %}
-,
+
 final as
 (
     select
