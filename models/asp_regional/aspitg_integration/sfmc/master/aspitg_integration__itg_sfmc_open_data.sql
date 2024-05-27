@@ -13,7 +13,7 @@
     )
 }}
 
-with source as(
+with source as (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw','sdl_th_sfmc_open_data') }}
 ),
 source_ph as
@@ -23,7 +23,7 @@ source_ph as
 source_nta as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_open_data') }}
-)
+),
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
 
 final as
