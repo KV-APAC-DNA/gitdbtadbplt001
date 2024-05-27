@@ -80,7 +80,7 @@ final as
 )
 select * from final
 
-{% elif var("sfmc_job_to_execute") == 'nta_sfmc_files' %}
+{% elif var("sfmc_job_to_execute") == 'tw_sfmc_files' %}
 
 final as
 (
