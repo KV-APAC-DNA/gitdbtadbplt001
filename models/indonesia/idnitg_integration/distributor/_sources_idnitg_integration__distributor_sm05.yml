@@ -9,7 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: sdl_id_ps_planogram
+    - name: sdl_csa_raw_sellout_sales_fact
       tags: ["","ingestion"]
       # tests:
       #   - test_null:
@@ -26,5 +26,8 @@ sources:
       #       config:
       #         store_failures: true
       #         schema: idnwks_integration
-
-    - name: sdl_id_ps_secondary_display
+    - name: sdl_dnr_raw_sellout_sales_fact
+    - name: sdl_dnr_customer_dim
+    - name: sdl_sdn_raw_sellout_sales_fact
+    - name: sdl_spr_raw_sellout_sales_fact
+    - name: sdl_pp_raw_sellout_sales_fact

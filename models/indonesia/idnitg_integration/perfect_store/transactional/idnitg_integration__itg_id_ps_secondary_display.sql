@@ -3,14 +3,15 @@
     (
         materialized="incremental",
         incremental_strategy="append",
+        unique_key=["outlet_id","merchandiser_id","input_date","franchise","photo_link"],
         pre_hook="delete from {{this}} itg
         where (itg.outlet_id, itg.merchandiser_id, itg.input_date, upper(itg.franchise), coalesce(itg.photo_link, 'NA')) 
-        in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_ID_PS_PLANOGRAM sdl);"
+        in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') from DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_id_ps_secondary_display sdl);"
     )
 }}
 
 with source as (
-    select * from  DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_ID_PS_PLANOGRAM
+    select * from  DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_id_ps_secondary_display
 ),
 final as
 (
@@ -30,8 +31,9 @@ final as
         trim(sdl.jnj_week)::varchar(5) as jnj_week,
         trim(sdl.day_name)::varchar(20) as day_name,
         to_date(trim(sdl.input_date)) as input_date,
-        trim(sdl.franchise)::varchar(50) franchise,
-        trim(sdl.photo_link)::varchar(100) photo_link,
+        trim(sdl.franchise)::varchar(50) as  franchise,
+        trim(sdl.photo_link)::varchar(100) as  photo_link,
+        trim(sdl.rent)::varchar(2) as  rent,
         sdl.file_name::varchar(100) as file_name,
         convert_timezone('UTC', current_timestamp()) as crt_dttm
     from source sdl
