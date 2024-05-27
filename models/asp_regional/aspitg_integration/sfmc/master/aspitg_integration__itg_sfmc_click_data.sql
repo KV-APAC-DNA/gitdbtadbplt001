@@ -24,7 +24,7 @@ source_ph as
 source_nta as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_click_data') }}
-)
+),
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
 
 final as(
