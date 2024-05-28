@@ -23,5 +23,6 @@ sources:
     - name: sdl_mds_id_distributor_group_ingest_include
       tags: ["id_mds_itg_load","ingestion"]
 
-
+    - name: sdl_mds_id_ref_salesman
+      tags: ["id_mds_itg_load","ingestion"]
       
