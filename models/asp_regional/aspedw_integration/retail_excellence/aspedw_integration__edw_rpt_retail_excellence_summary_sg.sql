@@ -1,14 +1,16 @@
+--Overwriding default SQL header as we dont want to change timezone to Singapore
 {{
     config(
-        materialized="incremental",
-        incremental_strategy= "append",
-        pre_hook="DELETE FROM {{ this }} WHERE market='Singapore'"
+        sql_header= ""
     )
 }}
 
 --Import CTE
 with edw_sg_rpt_retail_excellence_summary_base as (
     select * from {{ ref('aspedw_integration__edw_sg_rpt_retail_excellence_summary_base') }}
+),
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 --Logical CTE
 
@@ -86,16 +88,15 @@ SELECT FISC_YR,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp ,
-SYSDATE()		--// SYSDATE
- FROM edw_sg_rpt_retail_excellence_summary_base		--//  FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
-WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(fisc_per),'YYYYMM')
-                                    FROM edw_sg_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
---AND   FISC_PER <= (SELECT MAX(fisc_per)
---                   FROM edw_sg_rpt_retail_excellence_summary_base)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE)
---AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
---                                 FROM RG_ITG.ITG_QUERY_PARAMETERS		--//                                  FROM rg_itg.itg_query_parameters
---                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
---                                 AND   country_code = 'SG')
+SYSDATE() AS CRT_DTTM			--// SYSDATE
+ FROM edw_sg_rpt_retail_excellence_summary_base	
+ WHERE FISC_PER > to_char((to_date(add_months(TO_DATE(TO_VARCHAR(select MAX(fisc_per) from edw_sg_rpt_retail_excellence_summary_base), 'YYYYMM'),-15)))::timestamp without time zone,'YYYYMM'::text)::NUMERIC(18,0)
+AND   FISC_PER <= (SELECT MAX(fisc_per)
+                   FROM edw_sg_rpt_retail_excellence_summary_base)
+AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
+                                 FROM itg_query_parameters
+                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
+                                 AND   country_code = 'SG')
 GROUP BY FISC_YR,
        FISC_PER,
        CLUSTER,
@@ -132,7 +133,6 @@ GROUP BY FISC_YR,
       MDP_FLAG,
 	  TARGET_COMPLAINCE
 )
-
 
 --Final select
 select * from final 
