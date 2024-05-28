@@ -11,7 +11,7 @@ sdl_mds_id_lav_inventory_intransit as
 ),
 itg_mds_id_lav_inventory_intransit as
 (
-    select * from snapidnitg_integration.itg_mds_id_lav_inventory_intransit
+    select * from idnitg_integration.itg_mds_id_lav_inventory_intransit
 ),
 final as 
 (

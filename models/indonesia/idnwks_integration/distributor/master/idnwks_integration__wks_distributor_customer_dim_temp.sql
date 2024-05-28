@@ -15,9 +15,9 @@ edw_distributor_dim as
 (
     select * from idnedw_integration.edw_distributor_dim
 ),
-wks_sdn_customer as 
+sdl_pp_raw_sellout_sales_fact as 
 (
-    select * from idnwks_integration.wks_sdn_customer
+    select * from dev_dna_load.idnsdl_raw.sdl_pp_raw_sellout_sales_fact
 ),
 itg_distributor_customer_dim as 
 (

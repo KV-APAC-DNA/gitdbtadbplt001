@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from idnwks_integration.wks_mds_id_lav_inventory_intransit
+    select * from {{ ref('idnwks_integration__wks_mds_id_lav_inventory_intransit') }}
 ),
 final as 
 (
@@ -46,5 +46,6 @@ final as
 	created_on1::date as created_on1,
 	hashkey::varchar(255) as hashkey,
 	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm
+    from source
 )
 select * from final

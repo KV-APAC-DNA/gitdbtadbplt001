@@ -1,7 +1,9 @@
-with itg_mds_id_lav_inventory_intransit as
-(
-    select * from idnitg_integration.itg_mds_id_lav_inventory_intransit
-),
+{{
+    config(
+        pre_hook="{{build_itg_mds_id_lav_inventory_intransit()}}"
+    )
+}}
+with
 sdl_mds_id_lav_inventory_intransit as
 (
     select * from {{ source('idnsdl_raw', 'sdl_mds_id_lav_inventory_intransit') }}
@@ -9,7 +11,7 @@ sdl_mds_id_lav_inventory_intransit as
 temp_a as 
 (
     SELECT *
-FROM itg_mds_id_lav_inventory_intransit
+FROM {{this}}
 WHERE NVL(
         LEFT (TO_CHAR(CREATED_ON1, 'YYYYMMDD'), 6),
         '99991231'
