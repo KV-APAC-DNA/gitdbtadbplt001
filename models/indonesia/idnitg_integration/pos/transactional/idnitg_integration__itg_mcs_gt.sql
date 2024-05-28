@@ -4,8 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["year"],
-        pre_hook = "delete from {{this}} where cast(year as integer) in (
-        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list') }});"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where cast(year as integer) in (
+        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_mcs_list') }});
+        {% endif %}"
     )
 }}
 with source as 
@@ -59,12 +61,12 @@ trans as
 final as
 (
     select
-    tiering::VARCHAR(255) as tiering,
-    sku::VARCHAR(2000) AS sku_name,
-    YEAR::VARCHAR(20) as YEAR,
-    jj_mnth_long::VARCHAR(20) as jj_mnth_long,
-    val::VARCHAR(255) AS sku_code,
-    current_timestamp()::timestamp_ntz(9) AS crt_dttm
+    tiering::varchar(255) as tiering,
+    sku::varchar(2000) as sku_name,
+    year::varchar(20) as year,
+    jj_mnth_long::varchar(20) as month,
+    val::varchar(255) as sku_code,
+    convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crt_dttm
     from trans
 )
 select * from final

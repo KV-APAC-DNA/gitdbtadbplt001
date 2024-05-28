@@ -4,8 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["jj_sap_prod_id"],
-        pre_hook = "delete from {{this}} where TRIM(jj_sap_prod_id) in (
-        select DISTINCT TRIM(sap_code) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_product_hierarchy') }});"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where TRIM(jj_sap_prod_id) in (
+        select DISTINCT TRIM(sap_code) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_product_hierarchy') }});
+        {% endif %}"
     )
 }}
 with source as 
@@ -43,8 +45,8 @@ final as
        null::varchar(60) as pft_cs,
        current_timestamp()::timestamp_ntz(9) AS crtd_dttm,
        current_timestamp()::timestamp_ntz(9) AS uptd_dttm,
-	   nvl(effective_from,'200001') as effective_from,
-       nvl(effective_to,'999912') as effective_to 
+	   nvl(effective_from,'200001')::varchar(10) as effective_from,
+       nvl(effective_to,'999912')::varchar(10) as effective_to 
     from source
 )
 select * from final

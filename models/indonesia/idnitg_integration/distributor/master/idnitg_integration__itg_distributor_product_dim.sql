@@ -4,7 +4,9 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["prod_key"],
-        pre_hook = "delete from {{this}} where (trim(prod_key)) in (select distinct trim(product_key) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_product') }});"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where (trim(prod_key)) in (select distinct trim(product_key) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_mapping_product') }});
+        {% endif %}"
     )
 }}
 with source as 
@@ -30,8 +32,8 @@ final as
          when denominator = 0 then 1
          else cast(denominator as numeric)
        end::number(20,0) as denominator,
-	   nvl(effective_from,'200001') as effective_from,
-       nvl(effective_to,'999912') as effective_to
+	   nvl(effective_from,'200001')::varchar(10) as effective_from,
+       nvl(effective_to,'999912')::varchar(10) as effective_to
     from source
 )
 select * from final
