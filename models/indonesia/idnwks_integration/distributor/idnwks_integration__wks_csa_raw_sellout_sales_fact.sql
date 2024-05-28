@@ -1,6 +1,6 @@
 with source as(
     select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_csa_raw_sellout_sales_fact
-),
+), 
 transformed as(
     select 
         'CSA' as dstrbtr_grp_nm,

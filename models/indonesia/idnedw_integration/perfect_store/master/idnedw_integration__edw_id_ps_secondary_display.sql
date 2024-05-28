@@ -17,7 +17,7 @@ final as
         franchise::varchar(50) as franchise,
         photo_link::varchar(100) as photo_link,
         rent::varchar(2) as rent,
-        convert_timezone('UTC', current_timestamp()) as crt_dttm
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm
     from source
 )
 select * from final

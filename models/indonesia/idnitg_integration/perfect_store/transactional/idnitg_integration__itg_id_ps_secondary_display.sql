@@ -35,7 +35,7 @@ final as
         trim(sdl.photo_link)::varchar(100) as  photo_link,
         trim(sdl.rent)::varchar(2) as  rent,
         sdl.file_name::varchar(100) as file_name,
-        convert_timezone('UTC', current_timestamp()) as crt_dttm
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm
     from source sdl
 )
 select * from final

@@ -16,7 +16,7 @@ final as
         day_name::varchar(20) as day_name,
         franchise::varchar(50) as franchise,
         photo_link::varchar(100) as photo_link,
-        convert_timezone('UTC', current_timestamp()) as crt_dttm
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm
     from source
 )
 select * from final
