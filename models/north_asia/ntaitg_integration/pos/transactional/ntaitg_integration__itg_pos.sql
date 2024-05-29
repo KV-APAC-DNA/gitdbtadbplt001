@@ -57,8 +57,7 @@
                     (
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from
                         (
-                            select * from ntawks_integration.wks_itg_pos_costco
-                            union all
+                            
                             select * from ntawks_integration.wks_itg_pos_emart
                         )
                         where chng_flg = 'U'
@@ -92,9 +91,9 @@ wks_itg_pos_rt_mart as (
 wks_itg_pos_px_civila as (
     select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }}
 ),
-wks_itg_pos_costco as (
-    select * from ntawks_integration.wks_itg_pos_costco
-),
+-- wks_itg_pos_costco as (
+--     select * from ntawks_integration.wks_itg_pos_costco
+-- ),
 wks_itg_pos as (
     select * from ntawks_integration.wks_itg_pos
 ),
@@ -219,99 +218,99 @@ final as
 select * from final
 {% elif var("pos_job_to_execute") == 'kr_pos' %}
 ,
-costco as
-(
-    select 
-        pos_dt,
-        vend_cd,
-        vend_nm,
-        prod_nm,
-        vend_prod_cd,
-        vend_prod_nm,
-        brnd_nm,
-        ean_num,
-        str_cd,
-        str_nm,
-        sls_qty,
-        sls_amt,
-        unit_prc_amt,
-        sls_excl_vat_amt,
-        stk_rtrn_amt,
-        stk_recv_amt,
-        avg_sell_qty,
-        CAST(cum_ship_qty AS INTEGER) AS cum_ship_qty,
-        CAST(cum_rtrn_qty AS INTEGER) AS cum_rtrn_qty,
-        CAST(web_ordr_takn_qty AS INTEGER) AS web_ordr_takn_qty,
-        CAST(web_ordr_acpt_qty AS INTEGER) AS web_ordr_acpt_qty,
-        CAST(dc_invnt_qty AS INTEGER) AS dc_invnt_qty,
-        invnt_qty,
-        invnt_amt,
-        invnt_dt,
-        serial_num,
-        prod_delv_type,
-        prod_type,
-        dept_cd,
-        dept_nm,
-        spec_1_desc,
-        spec_2_desc,
-        cat_big,
-        cat_mid,
-        cat_small,
-        dc_prod_cd,
-        cust_dtls,
-        dist_cd,
-        crncy_cd,
-        src_txn_sts,
-        CAST(src_seq_num AS INTEGER) AS src_seq_num,
-        src_sys_cd,
-        ctry_cd,
-        src_mesg_no,
-        src_mesg_code,
-        src_mesg_func_code,
-        CAST(src_mesg_date as date) as src_mesg_date,
-        src_sale_date_form,
-        src_send_code,
-        src_send_ean_code,
-        src_send_name,
-        src_recv_qual,
-        src_recv_ean_code,
-        src_recv_name,
-        src_part_qual,
-        src_part_ean_code,
-        src_part_id,
-        src_part_name,
-        src_sender_id,
-        src_recv_date,
-        src_recv_time,
-        src_file_size,
-        src_file_path,
-        src_lega_tran,
-        src_regi_date,
-        src_line_no,
-        src_instore_code,
-        src_mnth_sale_amnt,
-        src_qty_unit,
-        src_mnth_sale_qty,
-        SRC_unit_of_pkg_sales as unit_of_pkg_sales,
-        SRC_doc_send_date as doc_send_date,
-        SRC_unit_of_pkg_invt as unit_of_pkg_invt,
-        SRC_doc_fun as doc_fun,
-        SRC_doc_no as doc_no,
-        SRC_doc_fun_cd as doc_fun_cd,
-        SRC_buye_loc_cd as buye_loc_cd,
-        SRC_vend_loc_cd as vend_loc_cd,
-        SRC_provider_loc_cd as provider_loc_cd,
-        SRC_comp_qty as comp_qty,
-        SRC_unit_of_pkg_comp as unit_of_pkg_comp,
-        SRC_order_qty as order_qty,
-        SRC_unit_of_pkg_order as unit_of_pkg_order,
-        CASE
-            WHEN CHNG_FLG = 'I' THEN current_timestamp()
-            ELSE TGT_CRT_DTTM
-        END AS CRT_DTTM,
-        current_timestamp() AS UPD_DTTM
-    from wks_itg_pos_costco
-),
+-- costco as
+-- (
+--     select 
+--         pos_dt,
+--         vend_cd,
+--         vend_nm,
+--         prod_nm,
+--         vend_prod_cd,
+--         vend_prod_nm,
+--         brnd_nm,
+--         ean_num,
+--         str_cd,
+--         str_nm,
+--         sls_qty,
+--         sls_amt,
+--         unit_prc_amt,
+--         sls_excl_vat_amt,
+--         stk_rtrn_amt,
+--         stk_recv_amt,
+--         avg_sell_qty,
+--         CAST(cum_ship_qty AS INTEGER) AS cum_ship_qty,
+--         CAST(cum_rtrn_qty AS INTEGER) AS cum_rtrn_qty,
+--         CAST(web_ordr_takn_qty AS INTEGER) AS web_ordr_takn_qty,
+--         CAST(web_ordr_acpt_qty AS INTEGER) AS web_ordr_acpt_qty,
+--         CAST(dc_invnt_qty AS INTEGER) AS dc_invnt_qty,
+--         invnt_qty,
+--         invnt_amt,
+--         invnt_dt,
+--         serial_num,
+--         prod_delv_type,
+--         prod_type,
+--         dept_cd,
+--         dept_nm,
+--         spec_1_desc,
+--         spec_2_desc,
+--         cat_big,
+--         cat_mid,
+--         cat_small,
+--         dc_prod_cd,
+--         cust_dtls,
+--         dist_cd,
+--         crncy_cd,
+--         src_txn_sts,
+--         CAST(src_seq_num AS INTEGER) AS src_seq_num,
+--         src_sys_cd,
+--         ctry_cd,
+--         src_mesg_no,
+--         src_mesg_code,
+--         src_mesg_func_code,
+--         CAST(src_mesg_date as date) as src_mesg_date,
+--         src_sale_date_form,
+--         src_send_code,
+--         src_send_ean_code,
+--         src_send_name,
+--         src_recv_qual,
+--         src_recv_ean_code,
+--         src_recv_name,
+--         src_part_qual,
+--         src_part_ean_code,
+--         src_part_id,
+--         src_part_name,
+--         src_sender_id,
+--         src_recv_date,
+--         src_recv_time,
+--         src_file_size,
+--         src_file_path,
+--         src_lega_tran,
+--         src_regi_date,
+--         src_line_no,
+--         src_instore_code,
+--         src_mnth_sale_amnt,
+--         src_qty_unit,
+--         src_mnth_sale_qty,
+--         SRC_unit_of_pkg_sales as unit_of_pkg_sales,
+--         SRC_doc_send_date as doc_send_date,
+--         SRC_unit_of_pkg_invt as unit_of_pkg_invt,
+--         SRC_doc_fun as doc_fun,
+--         SRC_doc_no as doc_no,
+--         SRC_doc_fun_cd as doc_fun_cd,
+--         SRC_buye_loc_cd as buye_loc_cd,
+--         SRC_vend_loc_cd as vend_loc_cd,
+--         SRC_provider_loc_cd as provider_loc_cd,
+--         SRC_comp_qty as comp_qty,
+--         SRC_unit_of_pkg_comp as unit_of_pkg_comp,
+--         SRC_order_qty as order_qty,
+--         SRC_unit_of_pkg_order as unit_of_pkg_order,
+--         CASE
+--             WHEN CHNG_FLG = 'I' THEN current_timestamp()
+--             ELSE TGT_CRT_DTTM
+--         END AS CRT_DTTM,
+--         current_timestamp() AS UPD_DTTM
+--     from wks_itg_pos_costco
+-- ),
 allretailers as 
 (
     select 
@@ -688,8 +687,6 @@ final as
         upd_dttm::timestamp_ntz(9) as upd_dttm
     from
     (
-        select * from costco
-        union all
         select * from allretailers
         union all
         select * from emart_combined

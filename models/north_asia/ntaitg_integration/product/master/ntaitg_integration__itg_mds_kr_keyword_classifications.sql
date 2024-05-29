@@ -10,7 +10,7 @@
 }}
 
 with source as (
-    select count(*) from {{ source('ntasdl_raw', 'sdl_mds_kr_keyword_classifications') }}
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_keyword_classifications') }}
 ),
 final as (
     select 

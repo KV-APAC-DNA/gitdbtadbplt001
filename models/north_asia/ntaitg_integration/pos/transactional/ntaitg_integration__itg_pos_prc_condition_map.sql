@@ -8,7 +8,8 @@
 }}
 with sdl_pos_prc_condition_map as 
 (
-    select * from {{ source('ntasdl_raw','sdl_pos_prc_condition_map') }}
+    select * from {{ ref('ntaitg_integration__vw_stg_sdl_pos_prc_condition_map') }}
+
 ),
 final as
 (
