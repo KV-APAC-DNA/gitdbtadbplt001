@@ -1,0 +1,64 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_kr_cost_of_goods
+      tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
+      tests:
+        - test_duplicate:
+            select_columns: ["sap_code", "valid_from", "valid_to"]
+            group_by_columns: ["sap_code", "valid_from", "valid_to"]
+            name: TRATBL_sdl_mds_kr_cost_of_goods__duplicate_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_mds_kr_tp_target
+      tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            not_null_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            name: TRATBL_sdl_mds_kr_tp_target__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_duplicate:
+            select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            group_by_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            name: TRATBL_sdl_mds_kr_tp_target__duplicate_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_format:
+            select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            where_clause: "not regexp_like (trim(year_code),'(20)[0-9]{2}')"
+            failure_reason: "'Year Having Incorrect Format -- Expected: YYYY'"
+            name: TRATBL_sdl_mds_kr_tp_target__format_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_lookup:
+            select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
+            column: "upper(trim(sales_group_code))"
+            lookup_column: "upper(trim(sls_grp_cd))"
+            lookup_table: "aspedw_integration.edw_customer_attr_flat_dim"                                 #update the reference
+            lookup_filter: "upper(county) = 'KR' and trim(sls_grp_cd) is not null and trim(sls_grp_cd) <> ''"
+            filter: "trim(sales_group_code) is not null and trim(sales_group_code) <> ''"
+            failure_reason: "'MISSING SLS_GRP_CD COMPARED TO MASTER TABLE FOR : SALES_GROUP_CD'"
+            name: TRATBL_sdl_mds_kr_tp_target__lookup_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_na_trade_promotion_plan
+      tags: [""]
+    - name: sdl_na_trade_promotion_actual
+      tags: [""]
+    - name: sdl_kr_trade_promotion
+      tags: [""]

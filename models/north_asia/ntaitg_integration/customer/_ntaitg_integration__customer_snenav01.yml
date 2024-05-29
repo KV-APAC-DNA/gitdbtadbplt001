@@ -9,5 +9,3 @@ models:
     config:
       alias: itg_mds_tw_customer_hierarchy
       tags: ["kr_master_mds_sdl_itg_load","transformation"]
-
-

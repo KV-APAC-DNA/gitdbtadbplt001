@@ -33,3 +33,15 @@ models:
     config:
         alias: sdl_raw_kr_ecom_dstr_sellout_stock
         tags: ["",""]
+  - name: ntaitg_integration__itg_kr_ecommerce_offtake_product_master
+    config: 
+      alias: itg_kr_ecommerce_offtake_product_master
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_transactional__itg_kr_ecommerce_offtake_coupang_transaction
+    config: 
+      alias: itg_kr_ecommerce_offtake_coupang_transaction
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+  - name: ntaitg_integration__itg_kr_ecommerce_offtake_sales_ebay
+    config: 
+      alias: itg_kr_ecommerce_offtake_sales_ebay
+      tags: ["j_kr_generic_query_execution", "ingestion"]

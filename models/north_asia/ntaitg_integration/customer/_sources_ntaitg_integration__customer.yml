@@ -9,6 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_mds_hk_customer_hierarchy
+      - name: sdl_mds_tw_customer_hierarchy
       - name: sdl_tw_ims_dstr_std_customer_107479_customer
         tags: ["tw_ims_distributor_standard_customer","ingestion"]
         tests:

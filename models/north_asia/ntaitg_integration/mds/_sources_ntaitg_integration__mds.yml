@@ -11,7 +11,23 @@ sources:
     tables:
       - name: sdl_mds_tw_ecom_product   
       - name: sdl_mds_hk_ecom_product  
-      # - name: sdl_mds_kr_ecom_offtake_product_mapping
+      - name: sdl_mds_kr_ecom_offtake_product_mapping
+        tags: ["j_kr_ecomm_offtake_product_master_load", "ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["retailer_sku_code", "name", "ean"]
+                group_by_columns: ["retailer_sku_code", "name", "ean"]
+                name: TRATBL_sdl_mds_kr_ecom_offtake_product_mapping__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                select_columns: ["retailer_sku_code", "name", "ean"]
+                not_null_columns: ["retailer_sku_code", "name", "ean"]
+                name: TRATBL_sdl_mds_kr_ecom_offtake_product_mapping__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration     
       - name: sdl_kr_ecommerce_offtake_product_master
       - name: sdl_mds_tw_sku_benchmarks
       - name: sdl_mds_kr_sku_benchmarks
