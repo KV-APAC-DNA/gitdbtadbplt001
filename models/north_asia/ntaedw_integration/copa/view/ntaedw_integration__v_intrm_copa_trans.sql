@@ -223,7 +223,7 @@ final as
         a.uom,
         a.sls_vol,
         a.un_sls_vol,
-        ('now'::character varying)::timestamp without time zone AS vld_from,
+        current_timestamp()::timestamp without time zone AS vld_from,
         b.sls_grp AS cust_sls_grp,
         (h.sls_grp)::character varying(40) AS sls_grp_desc,
         b.sls_ofc AS cust_sls_ofc,

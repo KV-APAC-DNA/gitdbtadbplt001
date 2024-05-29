@@ -283,6 +283,4 @@ GROUP BY
   a.ex_rt, 
   a.edw_cust_nm
 )
-select count(*) from final
-union all
-select count(*) from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_RPT_INVC_TO_NTS
+select * from final

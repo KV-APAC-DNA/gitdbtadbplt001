@@ -611,6 +611,4 @@ GROUP BY
   TRANS.application_code, 
   TRANS.remark 
 )
-select count(*) from final
-union all
-select count(*) from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_RPT_KR_TRADE_PROMOTION;
+select * from final

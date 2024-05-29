@@ -505,4 +505,4 @@ GROUP BY
   a.store_type, 
   a.sls_grp_cd
 )
-select count(*) from final
+select * from final

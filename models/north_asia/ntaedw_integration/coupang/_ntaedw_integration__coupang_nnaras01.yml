@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__vw_edw_coupang_brand_and_product_ranking
+    config: 
+        alias: vw_edw_coupang_brand_and_product_ranking
+        tags: []
+  - name: ntaedw_integration__vw_edw_coupang_brand_trend
+    config: 
+        alias: vw_edw_coupang_brand_trend
+        tags: []
+  - name: ntaedw_integration__vw_edw_coupang_premium_intrm
+    config: 
+        alias: vw_edw_coupang_premium_intrm
+        tags: []
+  - name: ntaedw_integration__vw_edw_coupang_search_keyword
+    config: 
+        alias: vw_edw_coupang_search_keyword
+        tags: []
+  - name: ntaedw_integration__vw_edw_coupang_user_review
+    config: 
+        alias: vw_edw_coupang_user_review
+        tags: []
+  
+  

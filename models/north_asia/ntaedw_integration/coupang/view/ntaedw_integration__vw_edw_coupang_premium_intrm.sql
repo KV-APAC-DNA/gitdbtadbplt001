@@ -1,14 +1,14 @@
 with vw_edw_coupang_brand_and_product_ranking as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.VW_EDW_COUPANG_BRAND_AND_PRODUCT_RANKING
+select * from dev_dna_core.ntaedw_integration.vw_edw_coupang_brand_and_product_ranking
 ),
-VW_EDW_COUPANG_USER_REVIEW as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.VW_EDW_COUPANG_USER_REVIEW
+vw_edw_coupang_user_review as (
+select * from {{ ref('ntaedw_integration__vw_edw_coupang_user_review') }}
 ),
-VW_EDW_COUPANG_BRAND_TREND as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.VW_EDW_COUPANG_BRAND_TREND
+vw_edw_coupang_brand_trend as (
+select * from {{ ref('ntaedw_integration__vw_edw_coupang_brand_trend') }}
 ),
-VW_EDW_COUPANG_SEARCH_KEYWORD as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.VW_EDW_COUPANG_SEARCH_KEYWORD
+vw_edw_coupang_search_keyword as (
+select * from {{ ref('ntaedw_integration__vw_edw_coupang_search_keyword') }}
 ),
 final as (
 SELECT 

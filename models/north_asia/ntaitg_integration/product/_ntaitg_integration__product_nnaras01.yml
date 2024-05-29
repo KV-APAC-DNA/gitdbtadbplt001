@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_kr_coupang_daily_brand_reviews
+    config: 
+      alias: itg_kr_coupang_daily_brand_reviews
+      tags: []
+
+  
