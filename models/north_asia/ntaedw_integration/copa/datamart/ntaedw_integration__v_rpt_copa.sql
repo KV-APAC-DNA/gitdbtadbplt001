@@ -14,85 +14,31 @@ final as
             (matl_num)::text,
             ((0)::character varying)::text
         ) AS matl,
-        COALESCE(
-            matl_desc,
-            'Not Available'::character varying
-        ) AS matl_desc,
+        COALESCE(matl_desc,'Not Available'::character varying) AS matl_desc,
         ean_num,
-        COALESCE(
-            prod_hier_lvl1,
-            'Not Available'::character varying
-        ) AS prod_hier_lvl1,
-        COALESCE(
-            prod_hier_lvl2,
-            'Not Available'::character varying
-        ) AS prod_hier_lvl2,
-        COALESCE(
-            prod_hier_lvl3,
-            'Not Available'::character varying
-        ) AS prod_hier_lvl3,
-        COALESCE(
-            prod_hier_lvl4,
-            'Not Available'::character varying
-        ) AS mega_brnd_desc,
-        COALESCE(
-            prod_hier_lvl4,
-            'Not Available'::character varying
-        ) AS brnd_desc,
-        COALESCE(
-            prod_minor,
-            'Not Available'::character varying
-        ) AS prod_minor,
-        COALESCE(
-            sls_grp,
-            'Not Available'::character varying
-        ) AS sls_grp,
-        COALESCE(
-            sls_grp_desc,
-            'Not Available'::character varying
-        ) AS sls_grp_desc,
-        COALESCE(
-            sls_ofc,
-            'Not Available'::character varying
-        ) AS sls_ofc,
-        COALESCE(
-            sls_ofc_desc,
-            'Not Available'::character varying
-        ) AS sls_ofc_desc,
-        COALESCE(
-            prod_hier_lvl5,
-            'Not Available'::character varying
-        ) AS category_1,
-        COALESCE(
-            prod_hier_lvl6,
-            'Not Available'::character varying
-        ) AS categroy_2,
-        COALESCE(
-            prod_hier_lvl7,
-            'Not Available'::character varying
-        ) AS platform_ca,
-        COALESCE(
-            prod_hier_lvl8,
-            'Not Available'::character varying
-        ) AS prod_hier_lvl8,
-        COALESCE(
-            prod_hier_lvl9,
-            'Not Available'::character varying
-        ) AS prod_hier_lvl9,
+        COALESCE(prod_hier_lvl1,'Not Available'::character varying) AS prod_hier_lvl1,
+        COALESCE(prod_hier_lvl2,'Not Available'::character varying) AS prod_hier_lvl2,
+        COALESCE(prod_hier_lvl3,'Not Available'::character varying) AS prod_hier_lvl3,
+        COALESCE(prod_hier_lvl4,'Not Available'::character varying) AS mega_brnd_desc,
+        COALESCE(prod_hier_lvl4,'Not Available'::character varying) AS brnd_desc,
+        COALESCE(prod_minor,'Not Available'::character varying) AS prod_minor,
+        COALESCE(sls_grp,'Not Available'::character varying) AS sls_grp,
+        COALESCE(sls_grp_desc,'Not Available'::character varying) AS sls_grp_desc,
+        COALESCE(sls_ofc,'Not Available'::character varying) AS sls_ofc,
+        COALESCE(sls_ofc_desc,'Not Available'::character varying) AS sls_ofc_desc,
+        COALESCE(prod_hier_lvl5,'Not Available'::character varying) AS category_1,
+        COALESCE(prod_hier_lvl6,'Not Available'::character varying) AS categroy_2,
+        COALESCE(prod_hier_lvl7,'Not Available'::character varying) AS platform_ca,
+        COALESCE(prod_hier_lvl8,'Not Available'::character varying) AS prod_hier_lvl8,
+        COALESCE(prod_hier_lvl9,'Not Available'::character varying) AS prod_hier_lvl9,
         sum(amt_obj_crncy) AS amt_obj_crncy,
         obj_crncy_co_obj,
-        COALESCE(
-            edw_cust_nm,
-            'Not Available'::character varying
-        ) AS edw_cust_nm,
+        COALESCE(edw_cust_nm,'Not Available'::character varying) AS edw_cust_nm,
         from_crncy,
         to_crncy,
         ex_rt_typ,
         ex_rt,
-        COALESCE(
-            prod_hier_lvl3,
-            'Others'::character varying
-        ) AS brand_group,
+        COALESCE(prod_hier_lvl3,'Others'::character varying) AS brand_group,
         try_to_date(
             (
                 (
