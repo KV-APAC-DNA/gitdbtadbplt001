@@ -2,11 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="DELETE FROM {{this}} WHERE 0 != (
-        SELECT COUNT(*)
-        FROM {{ source('idnsdl_raw', 'sdl_mds_id_dist_reporting_control') }}
-        WHERE UPPER(TRIM(sourcetype)) = 'SALES'
-    );"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where 0 != (
+        select count(*)
+        from {{ source('idnsdl_raw', 'sdl_mds_id_dist_reporting_control') }}
+        where upper(trim(sourcetype)) = 'SALES'
+    );
+    {% endif %}"
     )
 }}
 with source as 
@@ -42,7 +44,7 @@ trans as
                     cast(trim(effectiveto) as numeric) as effective_to,
                     cast(trim(refreshfrom) as numeric) as refresh_from,
                     upper(trim(sourcetype)) as source_type,
-                    current_timestamp()::timestamp_ntz(9) as crtd_dttm
+                    convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm
                 from source
                 where upper(trim(sourcetype)) = 'SALES'
                 order by upper(trim(distributorcode)),

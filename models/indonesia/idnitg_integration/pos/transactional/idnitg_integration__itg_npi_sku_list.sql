@@ -4,8 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["year"],
-        pre_hook = "delete from {{this}} where cast(year as integer) in (
-        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_npi_sku_list') }});"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where cast(year as integer) in (
+        select cast(year as integer) from {{ source('idnsdl_raw', 'sdl_mds_id_lav_npi_sku_list') }});
+        {% endif %}"
     )
 }}
 with source as 

@@ -21,8 +21,8 @@ final as
 	trim(type_dist)::varchar(75) as dstrbtr_chnl_type_nm,
 	trim(type_jnj)::varchar(75) as jnj_chnl_type_id,
 	trim(type_jnj_id)::varchar(50) as jnj_chnl_type_nm,
-	current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as updt_dttm,
 	nvl(effective_from,'200001')::varchar(10) as effective_from,
     nvl(effective_to,'999912')::varchar(10) as effective_to 
     from source

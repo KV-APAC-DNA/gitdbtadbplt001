@@ -9,7 +9,7 @@ final as
 	trim(code)::varchar(30) as adhoc_months,
 	upper(trim(enable_adhoc_load))::varchar(30) as enable_adhoc_load,
 	upper(trim(source))::varchar(30) as source,
-	current_timestamp()::timestamp_ntz(9) as crtd_dttm
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm
     from source
 )
 select * from final

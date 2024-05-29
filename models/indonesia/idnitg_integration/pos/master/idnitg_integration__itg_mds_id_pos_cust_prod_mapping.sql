@@ -2,8 +2,10 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="DELETE FROM {{this}} WHERE 0 != (SELECT COUNT(*)
-        FROM {{ source('idnsdl_raw', 'sdl_mds_id_pos_cust_prod_mapping') }});"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where 0 != (select count(*)
+        FROM {{ source('idnsdl_raw', 'sdl_mds_id_pos_cust_prod_mapping') }});
+        {% endif %}"
     )
 }}
 with source as 
@@ -20,7 +22,7 @@ final as
 	trim(brand_2)::varchar(50) as brand2,
 	trim(sku_sales_cube)::varchar(200) as sku_sales_cube,
 	trim(sku_sap_codename)::varchar(200) as sku_sap_codename,
-	current_timestamp()::timestamp_ntz(9) as crtd_dttm
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm
     from source
 )
 select * from final

@@ -28,8 +28,8 @@ final as
        trim(status)::varchar(50) as status,
        trim(lead_time)::number(18,0) as lead_tm,
        trim(prov_id)::varchar(50) as prvnce_id,
-       current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-       current_timestamp()::timestamp_ntz(9) as uptd_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as uptd_dttm,
 	   nvl(effective_from,'200001')::varchar(10) as effective_from,
        nvl(effective_to,'999912')::varchar(10) as effective_to 
     from source

@@ -2,11 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="DELETE FROM {{this}} WHERE 0 != (
-        SELECT COUNT(*)
-        FROM {{ source('idnsdl_raw', 'sdl_mds_id_dist_reporting_control') }}
-        WHERE UPPER(TRIM(sourcetype)) = 'STOCK'
-    );"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where 0 != (
+        select count(*)
+        from {{ source('idnsdl_raw', 'sdl_mds_id_dist_reporting_control') }}
+        where upper(trim(sourcetype)) = 'STOCK'
+    );
+    {% endif %}"
     )
 }}
 with source as 
@@ -42,7 +44,7 @@ trans as
                     CAST(TRIM(effectiveto) AS NUMERIC) AS effective_to,
                     CAST(TRIM(refreshfrom) AS NUMERIC) AS refresh_from,
                     UPPER(TRIM(sourcetype)) AS source_type,
-                    current_timestamp()::timestamp_ntz(9) AS crtd_dttm
+                    convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) AS crtd_dttm
                 FROM source
                 WHERE UPPER(TRIM(sourcetype)) = 'STOCK'
                 ORDER BY UPPER(TRIM(distributorcode)),

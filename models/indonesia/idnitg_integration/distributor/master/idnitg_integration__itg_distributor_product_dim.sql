@@ -25,8 +25,8 @@ final as
        trim(brand)::varchar(25) as brand,
        cast(uom as numeric) as cse,
        trim(product_key)::varchar(100) as prod_key,
-       current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-       current_timestamp()::timestamp_ntz(9) as updt_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as updt_dttm,
        case
          when denominator is null then 1
          when denominator = 0 then 1

@@ -4,7 +4,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["distributor_code","sales_repcode","retailer_code","surveydate","aq_name","link"],
-        pre_hook = "delete from {{this}}
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}}
         where (
         distributor_code,
         upper(sales_repcode),
@@ -24,7 +25,8 @@
             ) as surveydate,
             upper(aq_name),
             coalesce(link, 'NA')
-        from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }});"
+        from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }});
+        {% endif %}"
     )
 }}
 with source as

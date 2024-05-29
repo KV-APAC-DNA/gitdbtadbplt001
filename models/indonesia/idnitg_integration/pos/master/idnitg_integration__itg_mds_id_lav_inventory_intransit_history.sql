@@ -56,7 +56,7 @@ final as
 	name1::varchar(255) as name1,
 	created_on1::date as created_on1,
 	hashkey::varchar(255) as hashkey,
-	current_timestamp()::timestamp_ntz(9) as crtd_dttm
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm
     from itg_mds_id_lav_inventory_intransit
     where nvl(
         left (to_char(created_on1, 'yyyymmdd'), 6),

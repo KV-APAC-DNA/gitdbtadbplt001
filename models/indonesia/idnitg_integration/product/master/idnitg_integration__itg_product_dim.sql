@@ -43,8 +43,8 @@ final as
        null::varchar(60) as pft_apt,
        null::varchar(60) as pft_bs,
        null::varchar(60) as pft_cs,
-       current_timestamp()::timestamp_ntz(9) AS crtd_dttm,
-       current_timestamp()::timestamp_ntz(9) AS uptd_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) AS crtd_dttm,
+       convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) AS uptd_dttm,
 	   nvl(effective_from,'200001')::varchar(10) as effective_from,
        nvl(effective_to,'999912')::varchar(10) as effective_to 
     from source
