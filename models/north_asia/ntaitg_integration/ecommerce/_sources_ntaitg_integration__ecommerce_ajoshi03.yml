@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+    - name: sdl_kr_ecommerce_offtake_coupang_transaction
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+
+    - name: sdl_kr_ecommerce_offtake_sales_ebay
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+
+      
+
+    # - name: sdl_mds_kr_ecom_offtake_product_mapping
+    #   tags: ["j_kr_ecomm_offtake_product_master_load", "ingestion"]
+    #   tests:
+    #       - test_duplicate:
+    #           select_columns: ["retailer_sku_code", "retailer_type", "ean"]
+    #           group_by_columns: ["retailer_sku_code", "retailer_type", "ean"]
+    #           name: TRATBL_sdl_mds_kr_ecom_offtake_product_mapping__duplicate_test
+    #           config:
+    #             store_failures: true
+    #             schema: ntawks_integration
+    #       - test_null:
+    #           select_columns: ["retailer_sku_code", "retailer_type", "ean"]
+    #           not_null_columns: ["retailer_sku_code", "retailer_type", "ean"]
+    #           name: TRATBL_sdl_mds_kr_ecom_offtake_product_mapping__null_test
+    #           config:
+    #             store_failures: true
+    #             schema: ntawks_integration     

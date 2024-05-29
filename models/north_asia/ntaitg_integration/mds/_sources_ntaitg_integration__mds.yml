@@ -11,7 +11,7 @@ sources:
     tables:
       - name: sdl_mds_tw_ecom_product   
       - name: sdl_mds_hk_ecom_product  
-      - name: sdl_mds_kr_ecom_offtake_product_mapping
+      # - name: sdl_mds_kr_ecom_offtake_product_mapping
       - name: sdl_kr_ecommerce_offtake_product_master
       - name: sdl_mds_tw_sku_benchmarks
       - name: sdl_mds_kr_sku_benchmarks
