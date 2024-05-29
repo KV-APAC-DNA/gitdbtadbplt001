@@ -27,6 +27,28 @@ sources:
 
     - name: sdl_mds_id_lav_bp_sop_target
       tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_format:
+              select_columns: ["year","franchise","brand_code","variant"]
+              where_clause: "brand_code IN ( SELECT DISTINCT brand_code as Brand FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} x MINUS SELECT DISTINCT b.Brand FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.brand_code = b.brand )"
+              name: TRATBL_sdl_mds_id_lav_bp_sop_target__lookup_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","franchise","brand_code","variant"]
+              where_clause: "Franchise IN ( SELECT DISTINCT Franchise FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} x MINUS SELECT DISTINCT b.Franchise FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.Franchise = b.Franchise )"
+              name: TRATBL_sdl_mds_id_lav_bp_sop_target__lookup_test2
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","franchise","brand_code","variant"]
+              where_clause: "Variant IN ( SELECT DISTINCT Variant FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} x MINUS SELECT DISTINCT b.Variant3 FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_bp_sop_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.Variant = b.Variant3 )"
+              name: TRATBL_sdl_mds_id_lav_bp_sop_target__lookup_test3
+              config:
+                store_failures: true
+                schema: idnwks_integration
     - name: sdl_mds_id_lav_sales_target
       tags: ["id_mds_itg_load","ingestion"]
       tests:

@@ -35,6 +35,20 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration 
+          - test_format:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              where_clause: "region in ( SELECT DISTINCT region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE a.region = b.region)"
+              name: TRATBL_sdl_mds_id_lav_hero_list__lookup_test2
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              where_clause: "SAP_Code IN ( SELECT DISTINCT SAP_Code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.jj_sap_prod_id FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.SAP_Code = b.jj_sap_prod_id )"
+              name: TRATBL_sdl_mds_id_lav_hero_list__lookup_test3
+              config:
+                store_failures: true
+                schema: idnwks_integration
     - name: sdl_mds_id_lav_mcs_list
       tags: ["id_mds_itg_load","ingestion"]
     - name: sdl_mds_id_lav_npi_sku_list
