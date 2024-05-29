@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: idnwks_integration__wks_indonesia_base
+    config:
+      alias: wks_indonesia_base
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_allmonths_base
+    config:
+      alias: wks_indonesia_allmonths_base
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_lastnmonths
+    config:
+      alias: wks_indonesia_lastnmonths
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_base_detail
+    config:
+      alias: wks_indonesia_base_detail
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+
