@@ -10,9 +10,9 @@ with source as
 (
     select * from {{ source('ntasdl_raw', 'sdl_kr_sales_target_am_sls_grp') }}
 ),
-final as 
+final as
 (
-    select 
+    select
         sales_group::varchar(30) as sls_grp,
         brnd::varchar(30) as brnd,
         acct_mgr::varchar(2000) as acct_mgr,
@@ -30,8 +30,8 @@ final as
         nov_trgt_amt::number(16,5) as nov_trgt_amt,
         dec_trgt_amt::number(16,5) as dec_trgt_amt,
         country_code::varchar(10) as ctry_cd,
-        current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm
     from source
 )
 select * from final
