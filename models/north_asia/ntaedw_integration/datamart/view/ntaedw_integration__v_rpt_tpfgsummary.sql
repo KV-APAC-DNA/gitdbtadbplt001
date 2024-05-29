@@ -399,7 +399,7 @@ a as
                 ) >= (
                     date_part(
                         year,
-                        current_timestamp::timestamp without time zone
+                        convert_timezone('UTC', current_timestamp())::timestamp without time zone
                     ) - (2)::double precision
                 )
             )
@@ -780,7 +780,7 @@ sales_south_korea as
                             ) >= (
                                 date_part(
                                     year,
-                                    current_timestamp::timestamp without time zone
+                                    convert_timezone('UTC', current_timestamp())::timestamp without time zone
                                 ) - (2)::double precision
                             )
                         )
@@ -985,7 +985,7 @@ fg_target as
                 (tgt.year)::double precision >= (
                     date_part(
                         year,
-                        current_timestamp::timestamp without time zone
+                        convert_timezone('UTC', current_timestamp())::timestamp without time zone
                     ) - (2)::double precision
                 )
             )
@@ -1075,7 +1075,7 @@ fg_nts_target as
                             (itg_kr_tp_tracker_target.year)::double precision >= (
                                 date_part(
                                     year,
-                                    current_timestamp::timestamp without time zone
+                                    convert_timezone('UTC', current_timestamp())::timestamp without time zone
                                 ) - (2)::double precision
                             )
                         )
@@ -1205,7 +1205,7 @@ nts_target as
                         (itg_kr_sales_tgt.fisc_yr)::double precision >= (
                             date_part(
                                 year,
-                                current_timestamp::timestamp without time zone
+                                convert_timezone('UTC', current_timestamp())::timestamp without time zone
                             ) - (2)::double precision
                         )
                     )

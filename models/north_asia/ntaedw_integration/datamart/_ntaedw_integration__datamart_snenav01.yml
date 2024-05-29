@@ -9,27 +9,7 @@ models:
     config: 
       alias: edw_vw_sfmc_naver_dm
       tags: ["kr_sfmc_analysis_refresh","transformation"]
-  - name: ntaedw_integration__edw_vw_kr_tp_tracker
-    config: 
-      alias: edw_vw_kr_tp_tracker
-      tags: ["korea_views","transformation"]
-  - name: ntaedw_integration__v_rpt_copa
-    config: 
-      alias: v_rpt_copa
-      tags: ["korea_views","transformation"]
-  - name: ntaedw_integration__v_rpt_kr_coupang_ppm
-    config: 
-      alias: v_rpt_kr_coupang_ppm
-      tags: ["korea_views","transformation"]
   - name: ntaedw_integration__v_rpt_tpfgsummary
     config: 
       alias: v_rpt_tpfgsummary
-      tags: ["korea_views","transformation"]
-  - name: ntaedw_integration__vw_edw_coupang_premium
-    config: 
-      alias: vw_edw_coupang_premium
-      tags: ["korea_views","transformation"]
-  - name: ntaedw_integration__vw_edw_coupang_product_ranking_daily
-    config: 
-      alias: vw_edw_coupang_product_ranking_daily
       tags: ["korea_views","transformation"]
