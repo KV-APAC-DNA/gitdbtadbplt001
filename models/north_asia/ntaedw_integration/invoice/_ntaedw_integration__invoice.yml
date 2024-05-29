@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_intrm_invc_trans
+    config: 
+        alias: v_intrm_invc_trans
+        tags: []
+  - name: ntaedw_integration__v_rpt_invc_to_nts
+    config: 
+        alias: v_rpt_invc_to_nts
+        tags: []
+  
