@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_mds_hk_customer_hierarchy
+    config:
+      alias: itg_mds_k_customer_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
+  - name: ntaitg_integration__itg_mds_tw_customer_hierarchy
+    config:
+      alias: itg_mds_tw_customer_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
+
+

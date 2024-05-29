@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_catg_sls_target
+    config: 
+      alias: edw_catg_sls_target
+      tags: ["j_kr_sales_target_am_sales_group_wrapper","transformation"]
+  - name: ntaedw_integration__edw_brand_sls_target
+    config: 
+      alias: edw_brand_sls_target
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]

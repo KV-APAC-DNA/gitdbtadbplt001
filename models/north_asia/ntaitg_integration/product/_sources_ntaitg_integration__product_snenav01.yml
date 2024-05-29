@@ -1,0 +1,89 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_kr_sub_customer_master
+      tags: ["gt_sellout_dept_daiso_cust_dim","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["name","code","sap_customer_code"]
+          not_null_columns: ["code","sap_customer_code"]
+          name: TRATBL_sdl_mds_kr_sub_customer_master__null_test
+          filter: " upper(trim(retailer_code))='DEPT & DAISO' "
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["name","code","sap_customer_code"]
+          group_by_columns: ["name","code","sap_customer_code"]
+          filter: " upper(trim(retailer_code))='DEPT & DAISO'"
+          name: TRATBL_sdl_mds_kr_sub_customer_master__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_brand_campaign_promotion
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["code","brand_code"]
+          not_null_columns: ["code","brand_code"]
+          name: TRATBL_sdl_mds_kr_brand_campaign_promotion__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["code","brand_code"]
+          group_by_columns: ["code","brand_code"]
+          name: TRATBL_sdl_mds_kr_brand_campaign_promotion__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_naver_product_master
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          not_null_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          name: TRATBL_sdl_mds_kr_naver_product_master__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          group_by_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          name: TRATBL_sdl_mds_kr_naver_product_master__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_keyword_classifications
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["keyword","keyword_group"]
+          not_null_columns: ["keyword","keyword_group"]
+          name: TRATBL_sdl_mds_kr_keyword_classifications__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["keyword","keyword_group"]
+          group_by_columns: ["keyword","keyword_group"]
+          name: TRATBL_sdl_mds_kr_keyword_classifications__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_product_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+    - name: sdl_mds_hk_product_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+    - name: sdl_kr_gt_daiso_price
+      tags: ["gt_sellout_daiso","ingestion"]
+    - name: sdl_mds_kr_retailer_price_master
+      tags: ["gt_sellout_daiso_price_master","ingestion"]

@@ -1,0 +1,142 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_pos_eland
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["store_code","barcode"]
+          not_null_columns: ["store_code","barcode"]
+          name: TRATBL_sdl_kr_pos_eland__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_lotte_mart
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["store_name"]
+          not_null_columns: ["store_name"]
+          name: TRATBL_sdl_kr_pos_lotte_mart__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_homeplus_online
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["store_code","bar_code","number_of_sales","sales_revenue"]
+          not_null_columns: ["pos_date",store_code]
+          name: TRATBL_sdl_kr_pos_homeplus_online__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_format:
+          select_columns: ["store_code","bar_code","number_of_sales","sales_revenue"]
+          where_clause: "not regexp_like (trim(pos_date),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]')"
+          failure_reason: "'is an invalid period for store_code,bar_code,number_of_sales,sales_revenue'"
+          name: TRATBL_sdl_kr_pos_homeplus_online__format_test
+          config:
+            store_failures: true
+          schema: ntawks_integration
+    - name: sdl_kr_pos_lohbs
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["store_code","store_name"]
+          not_null_columns: ["store_code","store_name"]
+          name: TRATBL_sdl_kr_pos_lohbs__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_homeplus
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["pos_date","store_code"]
+          not_null_columns: ["pos_date","store_code"]
+          name: TRATBL_sdl_kr_pos_homeplus__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_gs_super
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["pos_date","store_code"]
+          not_null_columns: ["pos_date","store_code"]
+          name: TRATBL_sdl_kr_pos_gs_super__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_lotte_super
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["store_name"]
+          not_null_columns: ["store_name"]
+          name: TRATBL_sdl_kr_pos_lotte_super__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_olive_young
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["barcode","store_code"]
+          not_null_columns: ["barcode","store_code"]
+          name: TRATBL_sdl_kr_pos_olive_young__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_lalavla
+      tags: ["kr_pos","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["pos_date"]
+          not_null_columns: ["pos_date"]
+          name: TRATBL_sdl_kr_pos_lalavla__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_pos_emart_ssg
+      tags: ["kr_pos","ingestion"]
+    - name: sdl_kr_pos_emart
+      tags: ["kr_pos","ingestion"] 
+    - name: sdl_pos_prc_condition_map
+      tags: ["kr_pos","ingestion"]  
+    # - name: sdl_kr_pos_costco_invrpt_header
+    #   tags: ["kr_pos","ingestion"]
+    # - name: sdl_kr_pos_costco_invrpt_line
+    #   tags: ["kr_pos","ingestion"]
+    - name: sdl_kr_sales_target_am_brand
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+    - name: sdl_kr_fert_material_fact
+      tags: ["j_kr_fert_material_wrapper","transformation"]
+
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_kr_sales_target_am_brand_temp
+  - name: bwa_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: bwa_access
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: bwa_kr_list_price

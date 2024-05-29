@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_sales_target_am_cust_link
+
+    - name: sdl_kr_sales_target_am_sls_grp
+    - name: sdl_mds_kr_sales_store_map

@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_coupang_product_ranking_weekly
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          not_null_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_weekly__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_date_format_odd_eve_leap:
+          model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }} "
+          date_column: "product_ranking_date"
+          filter: "(odd_mon.product_ranking_date) = (even_mon.product_ranking_date) and (even_mon.product_ranking_date) = (feb.product_ranking_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+          failure_reason: "'product_ranking_date HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_weekly__test_date_format_odd_eve_leap
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_coupang_product_ranking_monthly
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          not_null_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_monthly__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_date_format_odd_eve_leap:
+          model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }} "
+          date_column: "product_ranking_date"
+          filter: "(odd_mon.product_ranking_date) = (even_mon.product_ranking_date) and (even_mon.product_ranking_date) = (feb.product_ranking_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+          failure_reason: "'product_ranking_date HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_monthly__test_date_format_odd_eve_leap
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_coupang_product_master
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          not_null_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          name: TRATBL_sdl_kr_coupang_product_master__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_coupang_product_summary_weekly
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          not_null_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          name: TRATBL_sdl_kr_coupang_product_summary_weekly__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_coupang_product_summary_monthly
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          not_null_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
+          name: TRATBL_sdl_kr_coupang_product_summary_monthly__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_kr_coupang_product_ranking_daily
+      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          not_null_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_daily__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_date_format_odd_eve_leap:
+          model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_daily') }} "
+          date_column: "product_ranking_date"
+          filter: "(odd_mon.product_ranking_date) = (even_mon.product_ranking_date) and (even_mon.product_ranking_date) = (feb.product_ranking_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+          failure_reason: "'product_ranking_date HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
+          select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
+          name: TRATBL_sdl_kr_coupang_product_ranking_daily__test_date_format_odd_eve_leap
+          config:
+            store_failures: true
+            schema: ntawks_integration

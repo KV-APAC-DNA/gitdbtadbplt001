@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntawks_integration__notify_mising_cust_prod_cd
+    config:
+      alias: notify_mising_cust_prod_cd
+      tags: ["kr_pos_edw_load","kr_master_mds_sdl_itg_load","transformation"]
