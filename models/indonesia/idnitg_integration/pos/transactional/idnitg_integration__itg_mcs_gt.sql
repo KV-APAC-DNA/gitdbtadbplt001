@@ -16,7 +16,7 @@ with source as
 ),
 edw_time_dim as 
 (
-    select * from {{ source('snapidnedw_integration', 'edw_time_dim') }}
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ) , ---change schema
 trans as 
 (

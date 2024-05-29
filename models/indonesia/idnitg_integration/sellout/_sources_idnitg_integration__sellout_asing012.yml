@@ -11,3 +11,18 @@ sources:
     tables:
     - name:  sdl_mds_id_dist_reporting_control
       tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype","year_month"]
+              not_null_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto"]
+              name: TRATBL_sdl_mds_id_dist_reporting_control__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate:
+              select_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype","year_month"]
+              group_by_columns: ["distributorcode","sourcesystem","effectivefrom","effectiveto","refreshfrom","sourcetype"]
+              name: TRATBL_sdl_mds_id_dist_reporting_control__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration

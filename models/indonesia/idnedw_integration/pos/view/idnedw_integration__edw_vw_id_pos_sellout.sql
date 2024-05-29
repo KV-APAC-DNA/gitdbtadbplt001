@@ -1,4 +1,3 @@
-
 with 
 itg_id_pos_carrefour_sellout as 
 (
@@ -43,6 +42,38 @@ itg_id_pos_superindo_sellout as
 itg_id_pos_watson_sellout as 
 (
   select * from idnitg_integration.itg_id_pos_watson_sellout
+),
+itg_id_pos_idm_sellout_qty as 
+(
+    select * from  idnitg_integration.itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('QTY'::character varying)::text
+),
+itg_id_pos_idm_sellout_idr as 
+(
+    select * from  idnitg_integration.itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('IDR'::character varying)::text
+),
+itg_id_pos_igr_sellout_qty as 
+(
+    select * from idnitg_integration.itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('QTY'::character varying)::text
+),
+itg_id_pos_igr_sellout_idr as 
+(
+    select * from idnitg_integration.itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('IDR'::character varying)::text
+),
+itg_id_pos_midi_sellout_qty as 
+(
+    select * from idnitg_integration.itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('QTY'::character varying)::text
+),
+itg_id_pos_midi_sellout_idr as 
+(
+    select * from idnitg_integration.itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('VALUE'::character varying)::text
+),
+itg_id_pos_sat_sellout_qty as 
+(
+    select * from idnitg_integration.itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('QTY'::character varying)::text
+),
+itg_id_pos_sat_sellout_idr as 
+(
+    select * from idnitg_integration.itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('VALUE'::character varying)::text
 ),
 final as 
 (
@@ -89,10 +120,7 @@ final as
                             NULL AS branch_stock_value,
                             NULL AS stock_uom,
                             NULL AS stock_days,
-                            convert_timezone(
-                                ('SGT'::character varying)::text,
-                                ('now'::character varying)::timestamp without time zone
-                            ) AS crtd_dttm
+                            current_timestamp()::timestamp_ntz(9) AS crtd_dttm
                         FROM (
                                 itg_id_pos_carrefour_sellout c4
                                 LEFT JOIN edw_distributor_group_dim dist ON (
@@ -148,10 +176,7 @@ final as
                             NULL AS branch_stock_value,
                             NULL AS stock_uom,
                             NULL AS stock_days,
-                            convert_timezone(
-                                ('SGT'::character varying)::text,
-                                ('now'::character varying)::timestamp without time zone
-                            ) AS crtd_dttm
+                            current_timestamp()::timestamp_ntz(9) AS crtd_dttm
                         FROM (
                                 (
                                     itg_id_pos_diamond_sellout dmd
@@ -208,60 +233,8 @@ final as
                         NULL AS customer_product_group,
                         NULL AS customer_store_class,
                         NULL AS customer_store_channel,
-                        (
-                            SELECT itg_id_pos_idm_sellout."values"
-                            FROM itg_id_pos_idm_sellout
-                            WHERE (
-                                    (
-                                        (
-                                            (
-                                                (
-                                                    trim((itg_id_pos_idm_sellout.type)::text) = ('QTY'::character varying)::text
-                                                )
-                                                AND (
-                                                    (itg_id_pos_idm_sellout.type)::text = (idm.type)::text
-                                                )
-                                            )
-                                            AND (
-                                                (itg_id_pos_idm_sellout.plu)::text = (idm.plu)::text
-                                            )
-                                        )
-                                        AND (
-                                            (itg_id_pos_idm_sellout.branch)::text = (idm.branch)::text
-                                        )
-                                    )
-                                    AND (
-                                        (itg_id_pos_idm_sellout.yearmonth)::text = (idm.yearmonth)::text
-                                    )
-                                )
-                        ) AS sales_qty,
-                        (
-                            SELECT itg_id_pos_idm_sellout."values"
-                            FROM itg_id_pos_idm_sellout
-                            WHERE (
-                                    (
-                                        (
-                                            (
-                                                (
-                                                    trim((itg_id_pos_idm_sellout.type)::text) = ('IDR'::character varying)::text
-                                                )
-                                                AND (
-                                                    (itg_id_pos_idm_sellout.type)::text = (idm.type)::text
-                                                )
-                                            )
-                                            AND (
-                                                (itg_id_pos_idm_sellout.plu)::text = (idm.plu)::text
-                                            )
-                                        )
-                                        AND (
-                                            (itg_id_pos_idm_sellout.branch)::text = (idm.branch)::text
-                                        )
-                                    )
-                                    AND (
-                                        (itg_id_pos_idm_sellout.yearmonth)::text = (idm.yearmonth)::text
-                                    )
-                                )
-                        ) AS sales_value,
+                        qty."values" as sales_qty,
+                        idr."values" as sales_value,
                         NULL AS service_level,
                         NULL AS sales_order,
                         NULL AS "share",
@@ -271,10 +244,7 @@ final as
                         NULL AS branch_stock_value,
                         NULL AS stock_uom,
                         NULL AS stock_days,
-                        convert_timezone(
-                            ('SGT'::character varying)::text,
-                            ('now'::character varying)::timestamp without time zone
-                        ) AS crtd_dttm
+                        current_timestamp()::timestamp_ntz(9) AS crtd_dttm
                     FROM (
                             (
                                 itg_id_pos_idm_sellout idm
@@ -292,7 +262,49 @@ final as
                                     )
                                 )
                             )
-                        )
+                            left join itg_id_pos_idm_sellout_qty as qty
+                            on (
+                                    (
+                                        (
+                                            (
+                                                (
+                                                    (qty.type)::text = (idm.type)::text
+                                                )
+                                            )
+                                            AND (
+                                                (qty.plu)::text = (idm.plu)::text
+                                            )
+                                        )
+                                        AND (
+                                            (qty.branch)::text = (idm.branch)::text
+                                        )
+                                    )
+                                    AND (
+                                        (qty.yearmonth)::text = (idm.yearmonth)::text
+                                    )
+                                )
+                            left join itg_id_pos_idm_sellout_idr as idr
+                            on (
+                                    (
+                                        (
+                                            (
+                                                (
+                                                    (idr.type)::text = (idm.type)::text
+                                                )
+                                            )
+                                            AND (
+                                                (idr.plu)::text = (idm.plu)::text
+                                            )
+                                        )
+                                        AND (
+                                            (idr.branch)::text = (idm.branch)::text
+                                        )
+                                    )
+                                    AND (
+                                        (idr.yearmonth)::text = (idm.yearmonth)::text
+                                    )
+                                )
+                        ) 
                     WHERE (
                             (idm.pos_cust)::text = ('INDOMARET'::character varying)::text
                         )
@@ -323,60 +335,8 @@ final as
                     NULL AS customer_product_group,
                     NULL AS customer_store_class,
                     NULL AS customer_store_channel,
-                    (
-                        SELECT itg_id_pos_igr_sellout."values"
-                        FROM itg_id_pos_igr_sellout
-                        WHERE (
-                                (
-                                    (
-                                        (
-                                            (
-                                                trim((itg_id_pos_igr_sellout.type)::text) = ('QTY'::character varying)::text
-                                            )
-                                            AND (
-                                                (itg_id_pos_igr_sellout.type)::text = (igr.type)::text
-                                            )
-                                        )
-                                        AND (
-                                            (itg_id_pos_igr_sellout.description)::text = (igr.description)::text
-                                        )
-                                    )
-                                    AND (
-                                        (itg_id_pos_igr_sellout.branch)::text = (igr.branch)::text
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_igr_sellout.yearmonth)::text = (igr.yearmonth)::text
-                                )
-                            )
-                    ) AS sales_qty,
-                    (
-                        SELECT itg_id_pos_igr_sellout."values"
-                        FROM itg_id_pos_igr_sellout
-                        WHERE (
-                                (
-                                    (
-                                        (
-                                            (
-                                                trim((itg_id_pos_igr_sellout.type)::text) = ('IDR'::character varying)::text
-                                            )
-                                            AND (
-                                                (itg_id_pos_igr_sellout.type)::text = (igr.type)::text
-                                            )
-                                        )
-                                        AND (
-                                            (itg_id_pos_igr_sellout.description)::text = (igr.description)::text
-                                        )
-                                    )
-                                    AND (
-                                        (itg_id_pos_igr_sellout.branch)::text = (igr.branch)::text
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_igr_sellout.yearmonth)::text = (igr.yearmonth)::text
-                                )
-                            )
-                    ) AS sales_value,
+                    qty."values" AS sales_qty,
+                    idr."values" AS sales_value,
                     NULL AS service_level,
                     NULL AS sales_order,
                     NULL AS "share",
@@ -386,10 +346,7 @@ final as
                     NULL AS branch_stock_value,
                     NULL AS stock_uom,
                     NULL AS stock_days,
-                    convert_timezone(
-                        ('SGT'::character varying)::text,
-                        ('now'::character varying)::timestamp without time zone
-                    ) AS crtd_dttm
+                    current_timestamp()::timestamp_ntz(9) AS crtd_dttm
                 FROM (
                         (
                             itg_id_pos_igr_sellout igr
@@ -409,6 +366,50 @@ final as
                                 )
                             )
                         )
+                        left join itg_id_pos_igr_sellout_qty  as qty on 
+                            (
+                                (
+                                    (
+                                        (
+                                            
+                                            (
+                                                (qty.type)::text = (igr.type)::text
+                                            )
+                                        )
+                                        AND (
+                                            (qty.description)::text = (igr.description)::text
+                                        )
+                                    )
+                                    AND (
+                                        (qty.branch)::text = (igr.branch)::text
+                                    )
+                                )
+                                AND (
+                                    (qty.yearmonth)::text = (igr.yearmonth)::text
+                                )
+                            )
+                            left join itg_id_pos_igr_sellout_idr as idr on 
+                            (
+                                (
+                                    (
+                                        (
+                                            
+                                            (
+                                                (idr.type)::text = (igr.type)::text
+                                            )
+                                        )
+                                        AND (
+                                            (idr.description)::text = (igr.description)::text
+                                        )
+                                    )
+                                    AND (
+                                        (idr.branch)::text = (igr.branch)::text
+                                    )
+                                )
+                                AND (
+                                    (idr.yearmonth)::text = (igr.yearmonth)::text
+                                )
+                            )
                     )
                 WHERE (
                         (igr.pos_cust)::text = ('INDOGROSIR'::character varying)::text
@@ -440,60 +441,8 @@ final as
                 NULL AS customer_product_group,
                 NULL AS customer_store_class,
                 NULL AS customer_store_channel,
-                (
-                    SELECT itg_id_pos_midi_sellout."values"
-                    FROM itg_id_pos_midi_sellout
-                    WHERE (
-                            (
-                                (
-                                    (
-                                        (
-                                            trim((itg_id_pos_midi_sellout.type)::text) = ('QTY'::character varying)::text
-                                        )
-                                        AND (
-                                            (itg_id_pos_midi_sellout.plu)::text = (midi.plu)::text
-                                        )
-                                    )
-                                    AND (
-                                        trim((itg_id_pos_midi_sellout.type)::text) = trim((midi.type)::text)
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_midi_sellout.branch)::text = (midi.branch)::text
-                                )
-                            )
-                            AND (
-                                (itg_id_pos_midi_sellout.yearmonth)::text = (midi.yearmonth)::text
-                            )
-                        )
-                ) AS sales_qty,
-                (
-                    SELECT itg_id_pos_midi_sellout."values"
-                    FROM itg_id_pos_midi_sellout
-                    WHERE (
-                            (
-                                (
-                                    (
-                                        (
-                                            trim((itg_id_pos_midi_sellout.type)::text) = ('VALUE'::character varying)::text
-                                        )
-                                        AND (
-                                            (itg_id_pos_midi_sellout.plu)::text = (midi.plu)::text
-                                        )
-                                    )
-                                    AND (
-                                        trim((itg_id_pos_midi_sellout.type)::text) = trim((midi.type)::text)
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_midi_sellout.branch)::text = (midi.branch)::text
-                                )
-                            )
-                            AND (
-                                (itg_id_pos_midi_sellout.yearmonth)::text = (midi.yearmonth)::text
-                            )
-                        )
-                ) AS sales_value,
+                qty."values" as sales_qty,
+                idr."values" as sales_value,
                 NULL AS service_level,
                 NULL AS sales_order,
                 NULL AS "share",
@@ -503,10 +452,7 @@ final as
                 NULL AS branch_stock_value,
                 NULL AS stock_uom,
                 NULL AS stock_days,
-                convert_timezone(
-                    ('SGT'::character varying)::text,
-                    ('now'::character varying)::timestamp without time zone
-                ) AS crtd_dttm
+                current_timestamp()::timestamp_ntz(9) AS crtd_dttm
             FROM (
                     (
                         itg_id_pos_midi_sellout midi
@@ -524,6 +470,48 @@ final as
                             )
                         )
                     )
+                    left join itg_id_pos_midi_sellout_qty as qty on  (
+                            (
+                                (
+                                    (
+                                        
+                                         (
+                                            (qty.plu)::text = (midi.plu)::text
+                                        )
+                                    )
+                                    AND (
+                                        trim((qty.type)::text) = trim((midi.type)::text)
+                                    )
+                                )
+                                AND (
+                                    (qty.branch)::text = (midi.branch)::text
+                                )
+                            )
+                            AND (
+                                (qty.yearmonth)::text = (midi.yearmonth)::text
+                            )
+                        )
+
+                        left join itg_id_pos_midi_sellout_idr as idr on (
+                            (
+                                (
+                                    (
+                                        (
+                                            (idr.plu)::text = (midi.plu)::text
+                                        )
+                                    )
+                                    AND (
+                                        trim((idr.type)::text) = trim((midi.type)::text)
+                                    )
+                                )
+                                AND (
+                                    (idr.branch)::text = (midi.branch)::text
+                                )
+                            )
+                            AND (
+                                (idr.yearmonth)::text = (midi.yearmonth)::text
+                            )
+                        )
                 )
             WHERE (
                     (midi.pos_cust)::text = ('ALFAMIDI'::character varying)::text
@@ -552,61 +540,8 @@ final as
             NULL AS customer_product_group,
             NULL AS customer_store_class,
             NULL AS customer_store_channel,
-            (
-                SELECT itg_id_pos_sat_sellout."values"
-                FROM itg_id_pos_sat_sellout
-                WHERE (
-                        (
-                            (
-                                (
-                                    (
-                                        trim((itg_id_pos_sat_sellout.type)::text) = ('QTY'::character varying)::text
-                                    )
-                                   
-                                   AND (
-                                        (itg_id_pos_sat_sellout.type)::text = (sat.type)::text
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_sat_sellout.plu)::text = (sat.plu)::text
-                                )
-                            )
-                            AND (
-                                (itg_id_pos_sat_sellout.branch)::text = (sat.branch)::text
-                            )
-                        )
-                        AND (
-                            (itg_id_pos_sat_sellout.yearmonth)::text = (sat.yearmonth)::text
-                        )
-                    )
-            ) AS sales_qty,
-            (
-                SELECT itg_id_pos_sat_sellout."values"
-                FROM itg_id_pos_sat_sellout
-                WHERE (
-                        (
-                            (
-                                (
-                                    (
-                                        trim((itg_id_pos_sat_sellout.type)::text) = ('VALUE'::character varying)::text
-                                    )
-                                    AND (
-                                        (itg_id_pos_sat_sellout.plu)::text = (sat.plu)::text
-                                    )
-                                )
-                                AND (
-                                    (itg_id_pos_sat_sellout.type)::text = (sat.type)::text
-                                )
-                            )
-                            AND (
-                                (itg_id_pos_sat_sellout.branch)::text = (sat.branch)::text
-                            )
-                        )
-                        AND (
-                            (itg_id_pos_sat_sellout.yearmonth)::text = (sat.yearmonth)::text
-                        )
-                    )
-            ) AS sales_value,
+            qty."values" AS sales_qty,
+            idr."values" AS sales_value,
             NULL AS service_level,
             NULL AS sales_order,
             NULL AS "share",
@@ -616,19 +551,14 @@ final as
             NULL AS branch_stock_value,
             NULL AS stock_uom,
             NULL AS stock_days,
-            convert_timezone(
-                ('SGT'::character varying)::text,
-                ('now'::character varying)::timestamp without time zone
-            ) AS crtd_dttm
-        FROM (
-                (
-                    itg_id_pos_sat_sellout sat
+            current_timestamp()::timestamp_ntz(9) AS crtd_dttm
+        FROM  itg_id_pos_sat_sellout sat
                     LEFT JOIN edw_distributor_group_dim dist ON (
                         (
                             (sat.pos_cust)::text = (dist.dstrbtr_grp_cd)::text
                         )
                     )
-                )
+                
                 LEFT JOIN itg_mds_id_pos_cust_prod_mapping mds ON (
                     (
                         ((sat.plu)::text = (mds.plu_sku_desc)::text)
@@ -637,7 +567,48 @@ final as
                         )
                     )
                 )
-            )
+                left join itg_id_pos_sat_sellout_qty as qty on (
+                        (
+                            (
+                                (
+                                    (
+                                        (qty.type)::text = (sat.type)::text
+                                    )
+                                )
+                                AND (
+                                    (qty.plu)::text = (sat.plu)::text
+                                )
+                            )
+                            AND (
+                                (qty.branch)::text = (sat.branch)::text
+                            )
+                        )
+                        AND (
+                            (qty.yearmonth)::text = (sat.yearmonth)::text
+                        )
+                    )
+
+                    left join itg_id_pos_sat_sellout as idr on (
+                        (
+                            (
+                                (
+                                     (
+                                        (idr.plu)::text = (sat.plu)::text
+                                    )
+                                )
+                                AND (
+                                    (idr.type)::text = (sat.type)::text
+                                )
+                            )
+                            AND (
+                                (idr.branch)::text = (sat.branch)::text
+                            )
+                        )
+                        AND (
+                            (idr.yearmonth)::text = (sat.yearmonth)::text
+                        )
+                    )
+            
         WHERE (
                 (sat.pos_cust)::text = ('ALFA'::character varying)::text
             )
@@ -669,13 +640,7 @@ final as
         NULL AS customer_store_class,
         NULL AS customer_store_channel,
         indo.mon_supply AS sales_qty,
-        (
-            SELECT (indo.mon_supply * edw_product_dim.price)
-            FROM edw_product_dim
-            WHERE (
-                    (edw_product_dim.jj_sap_prod_id)::text = (mds.jj_sap_prod_id)::text
-                )
-        ) AS sales_value,
+        indo.mon_supply * edw_product_dim.price AS sales_value,
         indo.mon_sales_percent AS service_level,
         indo.mon_order AS sales_order,
         NULL AS "share",
@@ -685,10 +650,7 @@ final as
         NULL AS branch_stock_value,
         NULL AS stock_uom,
         NULL AS stock_days,
-        convert_timezone(
-            ('SGT'::character varying)::text,
-            ('now'::character varying)::timestamp without time zone
-        ) AS crtd_dttm
+        current_timestamp()::timestamp_ntz(9) AS crtd_dttm
     FROM (
             (
                 itg_id_pos_superindo_sellout indo
@@ -708,6 +670,9 @@ final as
                     )
                 )
             )
+            left join  edw_product_dim on (
+                    (edw_product_dim.jj_sap_prod_id)::text = (mds.jj_sap_prod_id)::text
+                )
         )
     WHERE (
             (indo.pos_cust)::text = ('SUPER INDO'::character varying)::text
@@ -747,10 +712,7 @@ SELECT 'ID' AS sap_cntry_cd,
     NULL AS branch_stock_value,
     NULL AS stock_uom,
     NULL AS stock_days,
-    convert_timezone(
-        ('SGT'::character varying)::text,
-        ('now'::character varying)::timestamp without time zone
-    ) AS crtd_dttm
+    current_timestamp()::timestamp_ntz(9) AS crtd_dttm
 FROM (
         (
             itg_id_pos_watson_sellout wat
