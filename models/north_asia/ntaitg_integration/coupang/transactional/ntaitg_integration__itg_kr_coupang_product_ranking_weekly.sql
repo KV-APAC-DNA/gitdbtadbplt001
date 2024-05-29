@@ -28,7 +28,7 @@ final as
 		file_name::varchar(255) as file_name,
 		yearmo::varchar(255) as yearmo,
 		data_granularity::varchar(255) as data_granularity,
-		current_timestamp()::timestamp_ntz(9) as updt_dttm
+		convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm
 	from source
 )
 select * from final
