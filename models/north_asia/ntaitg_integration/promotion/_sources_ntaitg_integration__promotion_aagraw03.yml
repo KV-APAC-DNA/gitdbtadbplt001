@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: ntasdl_raw
+    schema: snapntasdl_raw
     quoting:
       database: false
       schema: false
@@ -12,4 +12,10 @@ sources:
     - name: sdl_mds_kr_cost_of_goods
       tags: [""]
     - name: sdl_mds_kr_tp_target
+      tags: [""]
+    - name: sdl_na_trade_promotion_plan
+      tags: [""]
+    - name: sdl_na_trade_promotion_actual
+      tags: [""]
+    - name: sdl_kr_trade_promotion
       tags: [""]

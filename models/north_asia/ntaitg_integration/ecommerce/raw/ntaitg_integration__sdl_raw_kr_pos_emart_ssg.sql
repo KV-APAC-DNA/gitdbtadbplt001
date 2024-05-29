@@ -10,6 +10,7 @@ with source as (
 final as (
     select
         str_nm,
+        str_cd,
         team_nm,
         lrg_classification_nm,
         mid_classification_nm,

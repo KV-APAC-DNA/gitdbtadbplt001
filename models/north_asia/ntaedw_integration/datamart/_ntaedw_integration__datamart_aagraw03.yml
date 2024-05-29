@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__vw_edw_coupang_product_ranking
+    config: 
+      alias: vw_edw_coupang_product_ranking
+      tags: [""]

@@ -9,3 +9,15 @@ models:
     config:
         alias: itg_kr_tp_tracker_target
         tags: ["",""]
+  - name: ntaitg_integration__itg_trd_promo_actl
+    config:
+        alias: itg_trd_promo_actl
+        tags: ["",""]
+  - name: ntaitg_integration__itg_trd_promo_pln
+    config:
+        alias: itg_trd_promo_pln
+        tags: ["",""]
+  - name: ntaitg_integration__itg_kr_trade_promotion
+    config:
+        alias: itg_kr_trade_promotion
+        tags: ["",""]

@@ -21,3 +21,15 @@ models:
     config:
         alias: sdl_raw_kr_pos_emart_ssg
         tags: ["",""]
+  - name: ntaitg_integration__itg_kr_ecom_dstr_sellout
+    config:
+        alias: itg_kr_ecom_dstr_sellout
+        tags: ["",""]
+  - name: ntaitg_integration__itg_kr_ecom_dstr_inventory
+    config:
+        alias: itg_kr_ecom_dstr_inventory
+        tags: ["",""]
+  - name: ntaitg_integration__sdl_raw_kr_ecom_dstr_sellout_stock
+    config:
+        alias: sdl_raw_kr_ecom_dstr_sellout_stock
+        tags: ["",""]

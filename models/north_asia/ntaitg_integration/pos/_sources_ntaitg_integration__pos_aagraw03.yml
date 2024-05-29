@@ -9,5 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_mds_kr_sub_customer_master
-        tags: [""]
+        - name: sdl_kr_pos_costco_vmimst_line
+          tags: [""]
+        - name: sdl_kr_pos_costco_vmimst_header
+          tags: [""]

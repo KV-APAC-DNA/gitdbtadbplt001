@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_kr_pos_emart_ssg
+    config:
+      alias: wks_kr_pos_emart_ssg
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_naver_sellout
+    config:
+      alias: wks_kr_ecommerce_naver_sellout
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecom_coupang
+    config:
+      alias: wks_kr_ecom_coupang
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_ebay_sellout
+    config:
+      alias: wks_kr_ecommerce_ebay_sellout
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_trexi_sellout
+    config:
+      alias: wks_kr_ecommerce_trexi_sellout
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_unitoa_sellout
+    config:
+      alias: wks_kr_ecommerce_unitoa_sellout
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_tca_sellout
+    config:
+      alias: wks_kr_ecommerce_tca_sellout
+      tags: [""]

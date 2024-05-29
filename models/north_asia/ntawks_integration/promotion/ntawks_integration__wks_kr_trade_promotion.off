@@ -1,0 +1,114 @@
+{{
+    config(
+        pre_hook="create itg if not exists"
+    )
+}}
+with source as (
+    select * from {{ source('ntasdl_raw', 'sdl_kr_trade_promotion') }}
+),
+itg_kr_trade_promotion as (
+    select * from {{ ref('ntaitg_integration__itg_kr_trade_promotion') }}
+),
+cte1 as (
+    select 
+        a.ctry_cd,
+        a.crncy_cd,
+        a.customer_code,
+        a.activity_name,
+        a.product_code,
+        a.line_begin_date,
+        a.line_end_date,
+        a.or_tp_qty,
+        a.or_tp_rebate_a,
+        a.ttl_cost,
+        a.remark,
+        a.sap_sgrp,
+        a.or_tp_rebate,
+        a.application_code,
+        a.crt_dttm
+    from itg_kr_trade_promotion a
+    where (
+            coalesce(customer_code, 'N/A'),
+            product_code,
+            line_begin_date,
+            line_end_date,
+            sap_sgrp,
+            application_code
+        ) not in (
+            select coalesce(cus_code, 'N/A'),
+                pr_code,
+                to_date(line_begin_date, 'YYYY-MM-DD'),
+                to_date(line_end_date, 'YYYY-MM-DD'),
+                sap_sgrp,
+                application_code
+            from source b
+        )
+),
+cte2 as (
+    select 
+        'KR' as ctry_cd,
+        'KRW' as crncy_cd,
+        b.cus_code,
+        b.act_name,
+        b.pr_code,
+        to_date(b.line_begin_date, 'YYYY-MM-DD'),
+        to_date(b.line_end_date, 'YYYY-MM-DD'),
+        b.or_tp_qty,
+        b.or_tp_rebate_a,
+        b.ttl_cost,
+        b.remark,
+        b.sap_sgrp,
+        b.or_tp_rebate,
+        b.application_code,
+        sysdate as crt_dttm
+    from source b
+    where (
+            coalesce(cus_code, 'N/A'),
+            pr_code,
+            to_date(line_begin_date, 'YYYY-MM-DD'),
+            to_date(line_end_date, 'YYYY-MM-DD'),
+            sap_sgrp,
+            application_code
+        ) not in (
+            select coalesce(customer_code, 'N/A'),
+                product_code,
+                line_begin_date,
+                line_end_date,
+                sap_sgrp,
+                application_code
+            from itg_kr_trade_promotion a
+        )
+),
+cte3 as (
+    select distinct 
+        a.ctry_cd,
+        a.crncy_cd,
+        a.customer_code,
+        b.act_name as activity_name,
+        a.product_code,
+        a.line_begin_date,
+        a.line_end_date,
+        b.or_tp_qty,
+        b.or_tp_rebate_a,
+        b.ttl_cost,
+        b.remark,
+        a.sap_sgrp,
+        b.or_tp_rebate,
+        a.application_code,
+        sysdate as crt_dttm
+    from itg_kr_trade_promotion a
+        join source b on coalesce(a.customer_code, 'N/A') = coalesce(b.cus_code, 'N/A')
+        and a.product_code = b.pr_code
+        and a.line_begin_date = to_date(b.line_begin_date, 'YYYY-MM-DD')
+        and a.line_end_date = to_date(b.line_end_date, 'YYYY-MM-DD')
+        and a.sap_sgrp = b.sap_sgrp
+        and a.application_code = b.application_code
+),
+final as (
+    select * from cte1
+    union all
+    select * from cte2
+    union all
+    select * from cte3
+)
+select * from final

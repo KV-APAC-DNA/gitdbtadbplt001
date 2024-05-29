@@ -3,13 +3,13 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_naver_sellout') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ source('ntasdl_raw', 'sdl_kr_ecom_coupang') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_ebay_sellout') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_trexi_sellout') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_unitoa_sellout') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_tca_sellout') }});
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date || upper(sub_customer_name) in (select distinct 'EMART' || nvl(ean, offline_ean) || to_date(pos_dt, 'YYYYMMDD') || 'SSG.COM' from {{ source('ntasdl_raw', 'sdl_kr_pos_emart_ssg') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_naver_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecom_coupang') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_ebay_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_trexi_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ ref('ntawks_integration__wks_kr_ecommerce_unitoa_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ ref('ntawks_integration__wks_kr_ecommerce_tca_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date || upper(sub_customer_name) in (select distinct 'EMART' || nvl(ean, offline_ean) || to_date(pos_dt, 'YYYYMMDD') || 'SSG.COM' from {{ ref('ntawks_integration__wks_kr_pos_emart_ssg') }});
         {% endif %}"
     )
 }}
@@ -18,47 +18,25 @@ with itg_sales_store_master as (
     select * from snapntaitg_integration.itg_sales_store_master
 ),
 sdl_kr_pos_emart_ssg as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_pos_emart_ssg') }}
+    select * from {{ ref('ntawks_integration__wks_kr_pos_emart_ssg') }}
 ),
 sdl_kr_ecommerce_naver_sellout as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_naver_sellout') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_naver_sellout') }}
 ),
 sdl_kr_ecom_coupang as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecom_coupang') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecom_coupang') }}
 ),
 sdl_kr_ecommerce_ebay_sellout as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_ebay_sellout') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_ebay_sellout') }}
 ),
 sdl_kr_ecommerce_trexi_sellout as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_trexi_sellout') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_trexi_sellout') }}
 ),
 sdl_kr_ecommerce_unitoa_sellout as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_unitoa_sellout') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_unitoa_sellout') }}
 ),
 sdl_kr_ecommerce_tca_sellout as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_tca_sellout') }}
-),
-sdl_kr_pos_emart_ssg_mod as (
-    select 
-        str_nm,
-        master.cust_store_cd as str_cd,
-        team_nm,
-        lrg_classification_nm,
-        mid_classification_nm,
-        sub_classified_nm,
-        offline_ean,
-        ean,
-        prod_nm,
-        pos_dt,
-        sellout_qty,
-        sellout_amt,
-        suppliers,
-        product_type,
-        crtd_dttm,
-        filename
-    from sdl_kr_pos_emart_ssg sales, itg_sales_store_master master
-    where master.ctry_cd='KR'
-    and trim(sales.str_nm)=trim(master.store_nm(+))
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_tca_sellout') }}
 ),
 emart as (
     select 
@@ -81,7 +59,7 @@ emart as (
         'KRW' as crncy_cd,
         crtd_dttm as crt_dttm,
         filename as source_file_name
-    from sdl_kr_pos_emart_ssg_mod as sales,
+    from sdl_kr_pos_emart_ssg as sales,
         itg_sales_store_master as master
     where master.cust_store_cd(+) = sales.str_cd
 ),

@@ -3,11 +3,13 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapntasdl_raw
+    schema: ntasdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: sdl_mds_kr_sub_customer_master
-        tags: [""]
+    - name: sdl_na_onpack_target
+      tags: [""]
+    - name: sdl_mds_kr_target
+      tags: [""]

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_trd_promo_actl
+    config: 
+      alias: edw_trd_promo_actl
+      tags: [""]
+  - name: ntaedw_integration__edw_trd_promo_pln
+    config: 
+      alias: edw_trd_promo_pln
+      tags: [""]
+  - name: ntaedw_integration__edw_kr_trade_promotion
+    config:
+        alias: edw_kr_trade_promotion
+        tags: ["",""]

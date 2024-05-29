@@ -3,11 +3,11 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where trunc(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
-        delete from {{this}} where trunc(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
-        delete from {{this}} where trunc(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
-        delete from {{this}} where trunc(transaction_date) || ean in (select distinct transaction_date || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
-        delete from {{this}} where (trunc(transaction_date) || ean) in (select distinct (transaction_date || ean_number) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
+        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
+        delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
+        delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || ean_number) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction') }});
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay') }});
         {% endif %}"
@@ -36,25 +36,25 @@ edw_retailer_mapping as (
 ),
 emart as (
     SELECT 
-        CRT_DTTM,
+        CRT_DTTM AS LOAD_DATE,
         SOURCE_FILE_NAME,
         '#N/A' AS RETAILER_SKU_CODE,
-        NULL,
+        NULL AS NO_OF_UNITS_SOLD,
         CASE
             WHEN EAN_NUMBER IS NULL THEN '#N/A'
             ELSE EAN_NUMBER
         END AS EAN,
-        NULL,
-        SELLOUT_AMOUNT,
-        SELLOUT_QTY,
+        NULL AS ORDER_DATE,
+        SELLOUT_AMOUNT AS SALES_VALUE,
+        SELLOUT_QTY AS QUANTITY,
         'SSG.COM' AS RETAILER_CODE,
         'SSG.COM' AS RETAILER_NAME,
         nvl(TRANSACTION_DATE, '9999-12-31') as TRANSACTION_DATE,
         '#N/A' AS ORDER_NUMBER,
-        NULL,
-        PRODUCT_NAME,
-        CRNCY_CD,
-        'KOREA',
+        NULL as PRODUCT_CODE,
+        PRODUCT_NAME as PRODUCT_TITLE,
+        CRNCY_CD as TRANSACTION_CURRENCY,
+        'KOREA' as COUNTRY,
         SUB_CUSTOMER_NAME
     FROM ITG_KR_ECOMMERCE_SELLOUT
     WHERE UPPER(CUSTOMER_NAME) = 'EMART'
@@ -63,75 +63,78 @@ emart as (
 ),
 naver as (
     SELECT 
-        CRT_DTTM,
+        CRT_DTTM AS LOAD_DATE,
         SOURCE_FILE_NAME,
         '#N/A' AS RETAILER_SKU_CODE,
-        NULL,
+        NULL AS NO_OF_UNITS_SOLD,
         CASE
             WHEN EAN_NUMBER IS NULL THEN '#N/A'
             ELSE EAN_NUMBER
         END AS EAN,
-        NULL,
-        SELLOUT_AMOUNT,
-        SELLOUT_QTY,
+        NULL AS ORDER_DATE,
+        SELLOUT_AMOUNT AS SALES_VALUE,
+        SELLOUT_QTY AS QUANTITY,
         '136250' AS RETAILER_CODE,
         'NAVER' AS RETAILER_NAME,
         TRANSACTION_DATE,
         '#N/A' AS ORDER_NUMBER,
-        NULL,
-        PRODUCT_NAME,
-        CRNCY_CD,
-        'KOREA'
+        NULL AS PRODUCT_CODE,
+        PRODUCT_NAME AS PRODUCT_TITLE,
+        CRNCY_CD AS TRANSACTION_CURRENCY,
+        'KOREA' AS COUNTRY,
+        null as SUB_CUSTOMER_NAME
     FROM ITG_KR_ECOMMERCE_SELLOUT
     WHERE UPPER(CUSTOMER_NAME) = 'NAVER'
         AND UPPER(CTRY_CD) = 'KR'
 ),
 unitoa_coupang as (
     SELECT 
-        CRT_DTTM,
+        CRT_DTTM AS LOAD_DATE,
         SOURCE_FILE_NAME,
         '#N/A' AS RETAILER_SKU_CODE,
-        NULL,
+        NULL AS NO_OF_UNITS_SOLD,
         CASE
             WHEN EAN_NUMBER IS NULL THEN '#N/A'
             ELSE EAN_NUMBER
         END AS EAN,
-        NULL,
-        SELLOUT_AMOUNT,
-        SELLOUT_QTY,
+        NULL AS ORDER_DATE,
+        SELLOUT_AMOUNT AS SALES_VALUE,
+        SELLOUT_QTY AS QUANTITY,
         '140555' AS RETAILER_CODE,
         '(JU) UNITOA_COUPANG' AS RETAILER_NAME,
         TRANSACTION_DATE,
         '#N/A' AS ORDER_NUMBER,
-        NULL,
-        PRODUCT_NAME,
-        CRNCY_CD,
-        'KOREA'
+        NULL AS PRODUCT_CODE,
+        PRODUCT_NAME AS PRODUCT_TITLE,
+        CRNCY_CD AS TRANSACTION_CURRENCY,
+        'KOREA' AS COUNTRY,
+        null as SUB_CUSTOMER_NAME
     FROM ITG_KR_ECOMMERCE_SELLOUT
     WHERE UPPER(CUSTOMER_NAME) = '(JU) UNITOA_COUPANG'
         AND UPPER(CTRY_CD) = 'KR'
 ),
 ebay as (
     SELECT 
-        CRT_DTTM,
+        CRT_DTTM AS LOAD_DATE,
         SOURCE_FILE_NAME,
         '#N/A' AS RETAILER_SKU_CODE,
-        NULL,
+        NULL AS NO_OF_UNITS_SOLD,
         CASE
             WHEN EAN_NUMBER IS NULL THEN '#N/A'
             ELSE EAN_NUMBER
         END AS EAN,
-        NULL,
-        SELLOUT_AMOUNT,
-        SELLOUT_QTY,
+        NULL AS ORDER_DATE,
+        SELLOUT_AMOUNT AS SALES_VALUE,
+        SELLOUT_QTY AS QUANTITY,
         'eBay' AS RETAILER_CODE,
         'eBay' AS RETAILER_NAME,
         TRANSACTION_DATE,
         '#N/A' AS ORDER_NUMBER,
-        NULL,
-        PRODUCT_NAME,
-        CRNCY_CD,
-        'KOREA'
+        NULL AS PRODUCT_CODE,
+        PRODUCT_NAME AS PRODUCT_TITLE,
+        CRNCY_CD AS TRANSACTION_CURRENCY,
+        'KOREA' AS COUNTRY,
+        null as SUB_CUSTOMER_NAME
     FROM ITG_KR_ECOMMERCE_SELLOUT
     WHERE UPPER(CUSTOMER_NAME) = 'EBAY'
         AND UPPER(CTRY_CD) = 'KR'
@@ -166,43 +169,45 @@ sales_ebay as (
     select
         itg_sales.load_date,
         itg_sales.source_file_name,
-        itg_sales.sku_code,
+        itg_sales.sku_code as retailer_sku_code,
         itg_sales.no_of_units_sold,
         case when prod_dim.ean is null then '#N/A' else prod_dim.ean end as ean,
         itg_sales.order_date,
         itg_sales.sales_value,
         itg_sales.quantity,
-        itg_sales.retailer_cod,
-        case when mapping.retailer_cd = itg_sales.retailer_cod then mapping.retailer_nm else itg_sales.retailer_name end as retailer_name,
+        itg_sales.retailer_code,
+        case when mapping.retailer_cd = itg_sales.retailer_code then mapping.retailer_nm else itg_sales.retailer_name end as retailer_name,
         itg_sales.transaction_date,
         itg_sales.order_number,
         itg_sales.product_code,
         itg_sales.product_title,
         itg_sales.transaction_currency,
-        itg_sales.country
+        itg_sales.country,
+        null as sub_customer_name
     from itg_kr_ecommerce_offtake_sales_ebay itg_sales
     left join itg_kr_ecommerce_offtake_product_master prod_dim on itg_sales.sku_code = prod_dim.retailer_sku_code
-    left join edw_retailer_mapping mapping on mapping.retailer_cd = itg_sales.retailer_cod
+    left join edw_retailer_mapping mapping on mapping.retailer_cd = itg_sales.retailer_code
     where itg_sales.load_date = (select max(load_date) from sdl_kr_ecommerce_offtake_sales_ebay)
 ),
 sales_copang as (
     select
         itg_sales_copang.load_date,
         itg_sales_copang.source_file_name,
-        COALESCE(itg_sales_copang.sku_code,'#N/A'),
+        COALESCE(itg_sales_copang.sku_code,'#N/A') as retailer_sku_code,
         NULL AS no_of_units_sold,
         case when prod_dim.ean is null then '#N/A' else prod_dim.ean end as ean,
         NULL AS order_date,
         itg_sales_copang.sales_value,
         itg_sales_copang.quantity,
-        'Coupang' AS retailer_cod,
+        'Coupang' AS retailer_code,
         'Coupang' AS retailer_name,
         itg_sales_copang.transaction_date,
         '#N/A' AS order_number,
-        itg_sales_copang.product_id,
-        itg_sales_copang.sku_name,
+        itg_sales_copang.product_id as product_code,
+        itg_sales_copang.sku_name as product_title,
         itg_sales_copang.transaction_currency,
-        itg_sales_copang.country
+        itg_sales_copang.country,
+        null as sub_customer_name
     from itg_kr_ecommerce_offtake_coupang_transaction itg_sales_copang
     left join itg_kr_ecommerce_offtake_product_master prod_dim on itg_sales_copang.sku_code = prod_dim.retailer_sku_code
     where itg_sales_copang.load_date = (select max(load_date) from sdl_kr_ecommerce_offtake_coupang_transaction)

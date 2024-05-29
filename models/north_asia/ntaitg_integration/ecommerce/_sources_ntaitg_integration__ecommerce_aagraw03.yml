@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: ntasdl_raw
+    schema: snapntasdl_raw
     quoting:
       database: false
       schema: false
@@ -13,7 +13,7 @@ sources:
       tags: [""]
     - name: sdl_kr_pos_emart_ssg
       tags: [""]
-    - name: sdl_kr_ecommerce_naver_sellout
+    - name: sdl_kr_ecom_naver_sellout_temp
       tags: [""]
     - name: sdl_kr_ecom_coupang
       tags: [""]
@@ -27,9 +27,11 @@ sources:
       tags: [""]
     - name: sdl_kr_ecommerce_offtake_coupang_transaction
       tags: [""]
+    - name: sdl_kr_ecom_dstr_sellout_stock
+      tags: [""]
 
   - name: aspedw_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
     quoting:
       database: false
