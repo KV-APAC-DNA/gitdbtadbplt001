@@ -11,7 +11,7 @@ final as(
         dstrbtr_grp_cd::varchar(100) as distributor_id,
         dstrbtr_grp_name::varchar(250) as distributor_id_name,
         franchise::varchar(50) as franchise,
-        brand::varchar(50) as brand,
+        brand::varchar(50) as brand, 
         prod_sub_brand::varchar(100) as prod_sub_brand,
         variant::varchar(100) as variant,
         segment::varchar(50) as segment,

@@ -1,5 +1,5 @@
 with WKS_INDONESIA_REGIONAL_SELLOUT_NPD as(
-    select * from DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_INDONESIA_REGIONAL_SELLOUT_NPD
+    select * from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_INDONESIA_REGIONAL_SELLOUT_NPD
 ),
 itg_mds_ap_customer360_config as(
 select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
@@ -61,8 +61,8 @@ offtake as(
         from_currency,
         to_currency,
         exchange_rate,
-        nvl(sellout_sales_quantity,0) as sellout_sales_quantity,
-        nvl(sellout_sales_value,0) as sellout_sales_value,
+        coalesce(sellout_sales_quantity,0) as sellout_sales_quantity,
+        coalesce(sellout_sales_value,0) as sellout_sales_value,
         sellout_sales_value_usd,
         0 as sellout_value_list_price,
         0 as sellout_value_list_price_usd,

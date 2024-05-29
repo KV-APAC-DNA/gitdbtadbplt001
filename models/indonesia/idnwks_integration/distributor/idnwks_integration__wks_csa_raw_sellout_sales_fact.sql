@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_csa_raw_sellout_sales_fact
+    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_CSA_RAW_SELLOUT_SALES_FACT
 ), 
 transformed as(
     select 
@@ -59,4 +59,4 @@ transformed as(
         NULL::timestamp_ntz(9) as UPDT_DTTM,
     from source
 )
-select * from transformed
+select count(*) from transformed

@@ -5,12 +5,12 @@
         incremental_strategy="append",
         pre_hook="delete from {{this}} itg
         where (itg.outlet_id, itg.merchandiser_id, itg.input_date, upper(itg.franchise), coalesce(itg.photo_link, 'NA')) 
-        in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_ID_PS_PLANOGRAM sdl);"
+        in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') from {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }} sdl);"
     )
 }}
 
 with source as (
-    select * from  DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_ID_PS_PLANOGRAM
+    select * from {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }}
 ),
 final as
 (

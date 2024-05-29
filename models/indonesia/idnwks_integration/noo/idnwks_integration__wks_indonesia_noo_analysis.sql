@@ -1,20 +1,30 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='append',
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;',
+        pre_hook="delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');"
+        
+    )
+}}
+
 with EDW_TIME_DIM as(
-select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_TIME_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM
 ),
 WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT as(
-select * from DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT
+select * from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT
 ),
 EDW_DISTRIBUTOR_DIM as(
-select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
 ),
 EDW_PRODUCT_DIM as(
-select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_PRODUCT_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM
 ),
 EDW_DISTRIBUTOR_CUSTOMER_DIM as(
-select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM
 ),
 EDW_DISTRIBUTOR_SALESMAN_DIM as(
-select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_SALESMAN_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_SALESMAN_DIM
 ),
 
 union1 as (
@@ -63,8 +73,6 @@ union1 as (
             EPD.STATUS AS PROD_STATUS,
             NVL(TRIM(UPPER(EDSD.SLSMN_ID)),'Noname') AS SLSMN_ID,
             NVL(EDSD.SLSMN_NM,'Noname') AS SLSMN_NM,
-            EDSD.REC_KEY AS SALESMAN_KEY,
-            EDSD.SFA_ID AS SFA_ID,
             EADSSF.SLS_QTY,
             EADSSF.GRS_VAL AS HNA,
             EADSSF.JJ_NET_VAL AS NIV,
@@ -82,26 +90,32 @@ union1 as (
             NULL AS SKU_BENCHMARK,
             NULL AS HERO_SKU_FLAG,
             NULL AS TRGT_DIST_BRND_CHNL_FLAG,
-            EDCD.cust_grp2 AS Tiering,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL
+            EDCD.cust_grp2 AS Tiering,     
+            NULL as COUNT_SKU_CODE,
+            NULL as MCS_STATUS,
+            NULL as LOCAL_VARIANT,
+            NULL as COUNT_LOCAL_VARIANT,
+            EDSD.REC_KEY AS SALESMAN_KEY,
+            EDSD.SFA_ID AS SFA_ID,
+            NULL as LATEST_CHNL,
+            NULL as LATEST_OUTLET_TYPE,
+            NULL as LATEST_CHNL_GRP,
+            NULL as LATEST_CUST_GRP2,
+            NULL as LATEST_CUST_GRP,
+            NULL as LATEST_CUST_NM_MAP,
+            NULL as LATEST_REGION,
+            NULL as LATEST_AREA,
+            NULL as LATEST_RBM,
+            NULL as LATEST_AREA_PIC,
+            NULL as LATEST_JJID,
+            NULL as LATEST_PUT_UP,
+            NULL as LATEST_FRANCHISE,
+            NULL as LATEST_BRAND,
+            NULL as LATEST_MSL,
+            NULL as LATEST_COUNT_LOCAL_VARIANT,
+            NULL as LATEST_CHNL_GRP2,
+            NULL as Latest_Distributor_Group,
+            NULL as Latest_Dstrbtr_grp_cd
 	
       FROM (SELECT TRANS_KEY,
                   BILL_DOC,
@@ -243,8 +257,6 @@ union2 as(
             EPD.STATUS AS PROD_STATUS,
             'Noname' AS SLSMN_ID,
             'Noname' AS SLSMN_NM,
-            NULL AS SALESMAN_KEY,
-            NULL AS SFA_ID,
             BILLING.SLS_QTY,
             BILLING.GRS_VAL AS HNA,
             BILLING.JJ_NET_VAL AS NIV,
@@ -263,25 +275,31 @@ union2 as(
             NULL AS HERO_SKU_FLAG,
             NULL AS TRGT_DIST_BRND_CHNL_FLAG,
             EDCD.cust_grp2 AS Tiering,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL
+            NULL as COUNT_SKU_CODE,
+            NULL as MCS_STATUS,
+            NULL as LOCAL_VARIANT,
+            NULL as COUNT_LOCAL_VARIANT,
+            NULL AS SALESMAN_KEY,
+            NULL AS SFA_ID,
+            NULL as LATEST_CHNL,
+            NULL as LATEST_OUTLET_TYPE,
+            NULL as LATEST_CHNL_GRP,
+            NULL as LATEST_CUST_GRP2,
+            NULL as LATEST_CUST_GRP,
+            NULL as LATEST_CUST_NM_MAP,
+            NULL as LATEST_REGION,
+            NULL as LATEST_AREA,
+            NULL as LATEST_RBM,
+            NULL as LATEST_AREA_PIC,
+            NULL as LATEST_JJID,
+            NULL as LATEST_PUT_UP,
+            NULL as LATEST_FRANCHISE,
+            NULL as LATEST_BRAND,
+            NULL as LATEST_MSL,
+            NULL as LATEST_COUNT_LOCAL_VARIANT,
+            NULL as LATEST_CHNL_GRP2,
+            NULL as Latest_Distributor_Group,
+            NULL as Latest_Dstrbtr_grp_cd
       FROM (SELECT T1.TRANS_KEY,
                         T1.BILL_DOC,
                         T1.BILL_DT,

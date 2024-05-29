@@ -4,7 +4,9 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_key=["bill_dt","bill_doc","initemv_week","jj_sap_dstrbtr_id","jj_sap_prod_id"],
-        pre_hook="delete from {{this}} where (bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id)) in  (select distinct bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id) from DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_ALL_DISTRIBUTOR_SELLIN_SALES_FACT);"
+        pre_hook="{% if is_incremental() %}
+                  delete from {{this}} where (bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id)) in  (select distinct bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id) from DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_ALL_DISTRIBUTOR_SELLIN_SALES_FACT);
+                  {% endif %}"
     )
 }}
 with source as (
@@ -30,8 +32,8 @@ final as
         uom::varchar(10) as uom,
         net_val::number(18,4) as net_val,
         curr::varchar(10) as curr,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         filename::varchar(255) as filename
     from source
 )
