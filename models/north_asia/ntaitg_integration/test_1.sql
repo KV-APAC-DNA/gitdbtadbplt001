@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_lotte_ak_gt_sellout') }}
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_target') }}
 ),
 final as
 (
