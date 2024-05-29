@@ -1,32 +1,32 @@
-with source as
+with source as 
 (
-    select * from {{ ref('idnwks_integration__wks_distributor_customer_dim_temp') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_distributor_customer_update') }}
 ),
 final as 
 (
     select 
-    key_outlet::varchar(100) as key_outlet,
-	jj_sap_dstrbtr_id::varchar(50) as jj_sap_dstrbtr_id,
-	jj_sap_dstrbtr_nm::varchar(100) as jj_sap_dstrbtr_nm,
-	cust_id::varchar(100) as cust_id,
-	cust_nm::varchar(100) as cust_nm,
-	address::varchar(500) as address,
-	city::varchar(100) as city,
-	cust_grp::varchar(100) as cust_grp,
-	chnl::varchar(100) as chnl,
-	outlet_type::varchar(100) as outlet_type,
-	chnl_grp::varchar(100) as chnl_grp,
-	jjid::varchar(100) as jjid,
-	pst_cd::varchar(100) as pst_cd,
-	cust_id_map::varchar(100) as cust_id_map,
-	cust_nm_map::varchar(100) as cust_nm_map,
-	chnl_grp2::varchar(100) as chnl_grp2,
-	cust_crtd_dt::timestamp_ntz(9) as cust_crtd_dt,
-	cust_grp2::varchar(100) as cust_grp2,
-	convert_timezone('utc', current_timestamp())::timestamp_ntz(9) as crtd_dttm,
-	convert_timezone('utc', current_timestamp())::timestamp_ntz(9) as updt_dttm,
-	effective_from::varchar(10) as effective_from,
-	effective_to::varchar(10) as effective_to,
+    trim(key_outlet)::varchar(100) as key_outlet,
+	trim(sales_office_id_jnj)::varchar(50) as jj_sap_dstrbtr_id,
+	trim(sales_office)::varchar(100) as jj_sap_dstrbtr_nm,
+	trim(cust_id)::varchar(100) as cust_id,
+	trim(cust_name)::varchar(100) as cust_nm,
+	trim(address)::varchar(500) as address,
+	trim(city)::varchar(100) as city,
+	trim(cust_group1)::varchar(100) as cust_grp,
+	trim(channel)::varchar(100) as chnl,
+	trim(outlet_type)::varchar(100) as outlet_type,
+	trim(channel_group1)::varchar(100) as chnl_grp,
+	trim(jjid)::varchar(100) as jjid,
+	trim(postal_code)::varchar(100) as pst_cd,
+	trim(cust_id_map)::varchar(100) as cust_id_map,
+	trim(cust_name_map)::varchar(100) as cust_nm_map,
+	trim(channel_group2)::varchar(100) as chnl_grp2,
+	create_date::timestamp_ntz(9) as cust_crtd_dt,
+	trim(cust_group2)::varchar(100) as cust_grp2,
+	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+	convert_timezone('UTC',current_timestamp())::TIMESTAMP_NTZ(9) as UPDT_DTTM,
+	nvl(effective_from,'200001')::varchar(10) as effective_from,
+    nvl(effective_to,'999912')::varchar(10) as effective_to 
     from source
 )
 select * from final

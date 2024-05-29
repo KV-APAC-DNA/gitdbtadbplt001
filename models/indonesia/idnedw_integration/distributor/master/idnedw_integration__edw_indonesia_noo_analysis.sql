@@ -1,23 +1,23 @@
 with 
 wks_indonesia_noo_analysis as
 (
-    select * from snapidnwks_integration.wks_indonesia_noo_analysis
+    select * from idnwks_integration.wks_indonesia_noo_analysis
 ),
 edw_product_dim as 
 (
-    select * from {{ ref('idnedw_integration__edw_product_dim') }}
+    select * from idnedw_integration.edw_product_dim
 ),
 edw_distributor_dim as 
 (
-    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
+    select * from idnedw_integration.edw_distributor_dim
 ),
 edw_time_dim as 
 (
-    select * from snapidnedw_integration.edw_time_dim
+    select * from idnedw_integration.edw_time_dim
 ),
 itg_target_dist_brand_channel as 
 (
-    select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
+    select * from idnitg_integration.itg_target_dist_brand_channel
 ),
 
 trans as 
@@ -282,6 +282,12 @@ final as
 	hero_sku_flag::varchar(1) as hero_sku_flag,
 	trgt_dist_brnd_chnl_flag::varchar(1) as trgt_dist_brnd_chnl_flag,
 	tiering::varchar(100) as tiering,
+    null::number(18,0) as count_sku_code,
+    null::varchar(20) as mcs_status,
+    null::varchar(2000) as local_variant,
+    null::number(18,0) as count_local_variant,
+    null::varchar(70) as salesman_key,
+    null::varchar(255) as sfa_id,
 	latest_chnl::varchar(100) as latest_chnl,
 	latest_outlet_type::varchar(100) as latest_outlet_type,
 	latest_chnl_grp::varchar(100) as latest_chnl_grp,
