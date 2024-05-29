@@ -1,7 +1,7 @@
 with sdl_kr_pos_emart_ssg as 
 (
     select * from {{ source('ntasdl_raw','sdl_kr_pos_emart_ssg') }}
-    --need to add it as source
+    --need to add it as source ntawks_integration__wks_kr_pos_emart_ssg
 ),
 wks_sdl_kr_pos_ecvan_ssg as 
 (

@@ -3,7 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                    delete from {{this}} itg  using snapntawks_integration.wks_itg_kr_sales_target_am_brand wks
+                    delete from {{this}} itg  using {{ ref('ntawks_integration__wks_itg_kr_sales_target_am_brand') }} wks
                     where wks.year = itg.yr and wks.country_code = itg.ctry_cd and wks.chng_flg = 'U';
                     {% endif %}
                     "
@@ -11,7 +11,7 @@
 }}
 
 with source as (
-    select * from snapntawks_integration.wks_itg_kr_sales_target_am_brand
+    select * from {{ ref('ntawks_integration__wks_itg_kr_sales_target_am_brand') }}
 ),
 transformed as 
 (

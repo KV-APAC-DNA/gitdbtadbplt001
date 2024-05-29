@@ -7,7 +7,7 @@ edw_intrm_calendar as
 ),
 edw_product_attr_dim as 
 (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 final as 
 (   

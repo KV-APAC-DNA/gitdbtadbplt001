@@ -1,11 +1,11 @@
 with edw_calendar_dim as (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_kr_sales_target_am_sls_grp as (
-    select * from snapntaitg_integration.itg_kr_sales_target_am_sls_grp
+    select * from {{ ref('ntaitg_integration__itg_kr_sales_target_am_sls_grp') }} 
 ),
 itg_kr_sales_target_am_cust_link as (
-    select * from snapntaitg_integration.itg_kr_sales_target_am_cust_link
+    select * from {{ ref('ntaitg_integration__itg_kr_sales_target_am_cust_link') }} 
 ),
 final as
 (

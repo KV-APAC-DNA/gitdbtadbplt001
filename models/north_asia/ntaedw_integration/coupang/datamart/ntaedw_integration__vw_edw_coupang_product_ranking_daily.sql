@@ -1,10 +1,10 @@
 with itg_kr_coupang_product_ranking_daily as 
 (
-    select * from ntaitg_integration.itg_kr_coupang_product_ranking_daily
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_product_ranking_daily') }} 
 ),
 itg_kr_coupang_product_master as 
 (
-   select * from ntaitg_integration.itg_kr_coupang_product_master 
+   select * from {{ ref('ntaitg_integration__itg_kr_coupang_product_master') }} 
 ),
 final as
 (   

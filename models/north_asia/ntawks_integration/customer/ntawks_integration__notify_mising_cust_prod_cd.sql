@@ -1,6 +1,6 @@
 with itg_pos as 
 (
-    select * from snapntaitg_integration.itg_pos
+    select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 itg_pos_store_product as 
 (
@@ -8,7 +8,7 @@ itg_pos_store_product as
 ),
 edw_product_attr_dim as 
 (
-    select * from snaposeedw_integration.edw_product_attr_dim
+    select * from{{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 itg_sales_cust_prod_master as 
 (

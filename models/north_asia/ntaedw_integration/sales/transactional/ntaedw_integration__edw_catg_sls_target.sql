@@ -1,5 +1,5 @@
 with source as (
-    select * from snapntawks_integration.wks_edw_catg_sls_target
+    select * from {{ ref('ntawks_integration__wks_edw_catg_sls_target') }}
 ),
 final as 
 (

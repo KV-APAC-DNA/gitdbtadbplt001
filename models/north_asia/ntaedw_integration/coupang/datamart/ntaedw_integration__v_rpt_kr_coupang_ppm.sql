@@ -8,7 +8,7 @@ edw_intrm_calendar as (
     select * from ntaedw_integration.edw_intrm_calendar
 ),
 edw_product_attr_dim as (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 kr_coupang_ppm as 
 (

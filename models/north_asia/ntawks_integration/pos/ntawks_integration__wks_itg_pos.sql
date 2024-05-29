@@ -1,5 +1,5 @@
 with wks_itg_pos_rank as (
-    select * from snapntawks_integration.wks_itg_pos_rank
+    select * from {{ ref('ntawks_integration__wks_itg_pos_rank') }}
 ),
 itg_pos_temp as 
 (

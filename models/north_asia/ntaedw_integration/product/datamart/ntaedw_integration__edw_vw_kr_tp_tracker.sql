@@ -1,26 +1,26 @@
 with itg_query_parameters_rg as(
-    select * from aspitg_integration.itg_query_parameters
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_acct_ciw_hier as(
-    select * from aspedw_integration.edw_acct_ciw_hier
+    select * from {{ ref('aspedw_integration__edw_acct_ciw_hier') }} 
 ),
 v_intrm_reg_crncy_exch_fiscper as(
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from  {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from aspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 edw_intrm_calendar as(
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from ntaedw_integration__edw_intrm_calendar
 ),
 v_intrm_copa_trans as(
-    select * from ntaedw_integration.v_intrm_copa_trans
+    select * from ntaedw_integration__v_intrm_copa_trans
 ),
 itg_kr_tp_tracker_target as(
-    select * from ntaitg_integration.itg_kr_tp_tracker_target
+    select * from ntaitg_integration__itg_kr_tp_tracker_target
 ),
 itg_query_parameters_na as(
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 nts_actuals as 
 (

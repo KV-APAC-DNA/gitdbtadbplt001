@@ -1,54 +1,54 @@
 with v_rpt_copa as
 (
-    select * from ntaedw_integration.v_rpt_copa
+    select * from {{ ref('ntaedw_integration__v_rpt_copa') }}
 ),
 edw_fert_material_fact as
 (
-    select * from ntaedw_integration.edw_fert_material_fact
+    select * from {{ ref('ntaedw_integration__edw_fert_material_fact') }}
 ),
 itg_mds_kr_cost_of_goods as
 (
-    select * from ntaitg_integration.itg_mds_kr_cost_of_goods
+    select * from ntaitg_integration__itg_mds_kr_cost_of_goods
 ),
 itg_kr_sales_store_map as
 (
-    select * from aspitg_integration.itg_kr_sales_store_map
+    select * from {{ ref('ntaitg_integration__itg_kr_sales_store_map') }} 
 ),
 edw_gch_producthierarchy as
 (
-    select * from aspedw_integration.edw_gch_producthierarchy
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }} 
 ),
 edw_product_attr_dim as
 (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
 edw_product_key_attributes as
 (
-    select * from aspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }} 
 ),
 edw_billing_fact as
 (
-    select * from aspedw_integration.edw_billing_fact
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_intrm_calendar as
 (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from ntaedw_integration__edw_intrm_calendar
 ),
 edw_material_sales_dim as
 (
-    select * from aspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 itg_kr_sales_tgt as
 (
-    select * from ntaitg_integration.itg_kr_sales_tgt
+    select * from ntaitg_integration__itg_kr_sales_tgt
 ),
 v_intrm_reg_crncy_exch_fiscper as
 (
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 itg_kr_tp_tracker_target as
 (
-    select * from ntaitg_integration.itg_kr_tp_tracker_target
+    select * from ntaitg_integration__itg_kr_tp_tracker_target
 ),
 prod_hier as 
 (

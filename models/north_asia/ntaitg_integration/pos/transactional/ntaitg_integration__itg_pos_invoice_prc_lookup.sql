@@ -2,10 +2,6 @@ with wks_edw_pos_fact_korea as
 (
     select * from dev_dna_core.snapntawks_integration.wks_edw_pos_fact_korea
 ),
-itg_pos_invoice_prc_lookup as 
-(
-    select * from dev_dna_core.snapntaitg_integration.itg_pos_invoice_prc_lookup
-),
 wks_pos_prc_condition_map as (
     select * from snapntawks_integration.wks_pos_prc_condition_map
 ),

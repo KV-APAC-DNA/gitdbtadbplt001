@@ -3,7 +3,8 @@
     (
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook= ["{% if var('pos_job_to_execute') == 'tw_pos' %}
+        pre_hook= [" {% if is_incremental() %}
+                    {% if var('pos_job_to_execute') == 'tw_pos' %}
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd) in
                     (
                         select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from
@@ -41,11 +42,11 @@
                     {% elif var('pos_job_to_execute') == 'kr_pos' %}
                     delete from {{this}} itg_pos where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) in 
                     (
-                        select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from snapntawks_integration.wks_itg_pos_emart_ecvan_ssg
+                        select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
                     )
                     and upper(itg_pos.src_sys_cd) = 'EMART'
                     and upper(itg_pos.ctry_cd) = 'KR';
-                    delete from {{this}} itg_pos using ntawks_integration.wks_itg_pos
+                    delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }}
                     where wks_itg_pos.pos_dt = itg_pos.pos_dt
                         and wks_itg_pos.ean_num = itg_pos.ean_num
                         and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd
@@ -58,10 +59,11 @@
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from
                         (
                             
-                            select * from ntawks_integration.wks_itg_pos_emart
+                            select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }}
                         )
                         where chng_flg = 'U'
                     );
+                    {% endif %}
                     {% endif %}   
                     "
                 ]
@@ -92,16 +94,16 @@ wks_itg_pos_px_civila as (
     select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }}
 ),
 -- wks_itg_pos_costco as (
---     select * from ntawks_integration.wks_itg_pos_costco
+--     select * from ntawks_integration__wks_itg_pos_costco
 -- ),
 wks_itg_pos as (
-    select * from ntawks_integration.wks_itg_pos
+    select * from {{ ref('ntawks_integration__wks_itg_pos') }}
 ),
 wks_itg_pos_emart as (
-    select * from ntawks_integration.wks_itg_pos_emart
+    select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }}
 ),
 wks_itg_pos_emart_ecvan_ssg as (
-      select * from snapntawks_integration.wks_itg_pos_emart_ecvan_ssg  
+      select * from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
 )
 {% if var('pos_job_to_execute') == 'tw_pos' %}
 ,
