@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_dads_linkprice
+      tags: [""]
+    - name: sdl_kr_dads_naver_gmv
+      tags: [""]
+    - name: sdl_kr_dads_naver_keyword_search_volume
+      tags: [""]
+    - name: sdl_kr_dads_naver_search_channel
+      tags: [""]

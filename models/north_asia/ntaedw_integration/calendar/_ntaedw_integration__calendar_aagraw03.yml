@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_intrm_calendar
+    config:
+      alias: edw_intrm_calendar
+      tags: [""]

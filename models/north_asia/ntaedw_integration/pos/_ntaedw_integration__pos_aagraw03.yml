@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_rpt_pos_offtake_daily_korea
+    config:
+      alias: v_rpt_pos_offtake_daily_korea
+      tags: [""]

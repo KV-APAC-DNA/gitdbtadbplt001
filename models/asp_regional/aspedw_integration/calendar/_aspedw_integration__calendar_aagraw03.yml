@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__v_calendar_promo_univ_dtls
+    config: 
+      alias: v_calendar_promo_univ_dtls
+      tags: [""]

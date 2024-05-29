@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_kr_sales_tgt
+    config: 
+      alias: edw_kr_sales_tgt
+      tags: [""]
+  - name: ntaedw_integration__edw_onpck_trgt
+    config: 
+      alias: edw_onpck_trgt
+      tags: [""]
+  - name: ntaedw_integration__v_rpt_onpack
+    config: 
+      alias: v_rpt_onpack
+      tags: [""]
