@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapidnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_distributor_ivy_order
+        tags: ["id_ivy_order","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["distributor_code","order_id","product_code","order_date"]
+              failure_reason: "Null records for: distributor_code (OR) order_id (OR) product_code (OR) order_date"
+              name: TRATBL_sdl_distributor_ivy_order__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_lookup__ff:
+              failure_reason: "missing outlet compared with outlet master AND distributor_code"
+              column: "TRIM(distributor_code)"
+              lookup_column: "TRIM(jj_sap_dstrbtr_id)"
+              lookup_table: " snapidnedw_integration.edw_distributor_ivy_outlet_master" #Change to Refernce of EDW table later
+              name: TRATBL_sdl_distributor_ivy_order__test_lookup__ff
+              config:
+                store_failures: true
+                schema: idnwks_integration
+      - name: sdl_distributor_ivy_invoice
+        tags: ["id_ivy_invoice","ingestion"]
+        tests:
+        - test_null__ff:
+              not_null_columns: ["distributor_code","invoice_no","product_code","invoice_date"]
+              failure_reason: "Null records for: distributor_code (OR) invoice_no (OR) product_code (OR) invoice_date"
+              name: TRATBL_sdl_distributor_ivy_invoice__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+        - test_lookup__ff:
+              failure_reason: "missing outlet compared with outlet master AND distributor_code"
+              column: "TRIM(distributor_code)"
+              lookup_column: "TRIM(jj_sap_dstrbtr_id)"
+              lookup_table: " snapidnedw_integration.edw_distributor_ivy_outlet_master"  #Change to Refernce of EDW table later
+              name: TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff
+              config:
+                store_failures: true
+                schema: idnwks_integration

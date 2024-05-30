@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_distributor_ivy_order
+    config:
+      alias: edw_distributor_ivy_order
+      tags: ["id_ivy_order","transformation"]
+  - name: idnedw_integration__edw_ivy_indonesia_noo_analysis
+    config:
+      alias: edw_ivy_indonesia_noo_analysis
+      tags: ["id_ivy_datamart_load","transformation"]
+  - name: idnedw_integration__vw_all_distributor_sellout_sales_fact
+    config:
+      alias: vw_all_distributor_sellout_sales_fact
+      tags: ["id_sellout_sales","transformation"]
