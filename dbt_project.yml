@@ -366,21 +366,3 @@ models:
       phledw_access:
         +materialized: view
         +schema: PHLEDW_ACCESS
-    north_asia:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      ntaitg_integration:
-        +materialized: table
-        +transient: false
-        +schema: NTAITG_INTEGRATION
-      ntaedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: NTAEDW_INTEGRATION
-      ntawks_integration:
-        +materialized: table
-        +schema: NTAWKS_INTEGRATION
-      ntaedw_access:
-        +materialized: view
-        +schema: NTAEDW_ACCESS

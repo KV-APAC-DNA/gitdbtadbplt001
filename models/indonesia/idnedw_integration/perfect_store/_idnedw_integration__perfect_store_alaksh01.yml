@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_id_ps_pricing
+    config:
+      alias: edw_id_ps_pricing
+      tags: ["id_ps_pricing","transformation"]
+  - name: idnedw_integration__edw_id_ps_promotion
+    config:
+      alias: edw_id_ps_promotion
+      tags: ["id_ps_promo","transformation"]
+  - name: idnedw_integration__edw_id_ps_promotion_competitor
+    config:
+      alias: edw_id_ps_promotion_competitor
+      tags: ["id_ps_promo_competitor","transformation"]

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: idnitg_integration__sdl_raw_id_ps_pricing
+    config: 
+      alias: sdl_raw_id_ps_pricing
+      tags: ["id_ps_pricing","ingestion"]
+  - name: idnitg_integration__itg_id_ps_pricing
+    config: 
+      alias: itg_id_ps_pricing
+      tags: ["id_ps_pricing","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_ps_promotion
+    config: 
+      alias: sdl_raw_id_ps_promotion
+      tags: ["id_ps_promo","ingestion"]
+  - name: idnitg_integration__itg_id_ps_promotion
+    config: 
+      alias: itg_id_ps_promotion
+      tags: ["id_ps_promo","ingestion"]
+  - name: idnitg_integration__sdl_raw_id_ps_promotion_competitor
+    config: 
+      alias: sdl_raw_id_ps_promotion_competitor
+      tags: ["id_ps_promo_competitor","ingestion"]
+  - name: idnitg_integration__itg_id_ps_promotion_competitor
+    config: 
+      alias: itg_id_ps_promotion_competitor
+      tags: ["id_ps_promo_competitor","ingestion"]
