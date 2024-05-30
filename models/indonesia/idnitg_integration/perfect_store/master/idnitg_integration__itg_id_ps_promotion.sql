@@ -3,10 +3,12 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["outlet_id","merchandiser_id","input_date","promo_desc","competitor","price_type"],
-        prehook= "delete from {{this}}
-        where (outlet_id,merchandiser_id,input_date,upper(promo_desc),coalesce(photo_link,'na')) 
-        in (select distinct trim(outlet_id),trim(merchandiser_id),cast(trim(input_date) as date),
-        upper(trim(promo_desc)),coalesce(trim(photo_link),'na') from {{ source('idnsdl_raw', 'sdl_id_ps_promotion') }})"
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where (outlet_id,merchandiser_id,input_date,
+        upper(promo_desc),coalesce(photo_link,'na')) in (select distinct trim(outlet_id),
+        trim(merchandiser_id),cast(trim(input_date) as date),upper(trim(promo_desc)),
+        coalesce(trim(photo_link),'na') from {{ source('idnsdl_raw', 'sdl_id_ps_promotion') }});
+        {% endif %}"
     )
 }}
 

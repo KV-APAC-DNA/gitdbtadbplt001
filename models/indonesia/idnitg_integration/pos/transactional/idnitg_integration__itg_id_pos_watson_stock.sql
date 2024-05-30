@@ -33,10 +33,10 @@ final as
 	STORE,		
 	"values",
     pos_cust,
-    run_id,
-    filename,
     yearmonth,
-    current_timestamp()::timestamp_ntz AS crtd_dttm
+    run_id,
+    current_timestamp()::timestamp_ntz AS crtd_dttm,
+    filename
     from source
 )
 select * from final
