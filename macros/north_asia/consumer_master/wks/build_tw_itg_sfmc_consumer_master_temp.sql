@@ -31,7 +31,7 @@
                             medium varchar(100),
                             brand varchar(200),
                             address_cntry varchar(100),
-                            campaign_id varchar(100),
+                            campaign_id varchar(500),
                             created_date timestamp_ntz(9),
                             updated_date timestamp_ntz(9),
                             unsubscribe_date timestamp_ntz(9),

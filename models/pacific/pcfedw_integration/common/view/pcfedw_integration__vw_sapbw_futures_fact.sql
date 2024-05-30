@@ -133,7 +133,7 @@ FROM  a
 	,(
 		SELECT DISTINCT edw_time_dim.jj_mnth_id
 		FROM edw_time_dim
-		WHERE (edw_time_dim.cal_date::TIMESTAMP = DATE_TRUNC('day', current_timestamp::TIMESTAMP))
+		WHERE (edw_time_dim.cal_date::TIMESTAMP = DATE_TRUNC('day', convert_timezone('UTC', current_timestamp())::TIMESTAMP))
 		) b
 WHERE (
 		(
