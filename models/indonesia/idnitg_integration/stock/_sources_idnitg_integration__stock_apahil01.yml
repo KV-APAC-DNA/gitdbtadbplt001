@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapidnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_stock_dist_map
+        tests:
+        - test_lookup__ff:
+              failure_reason: "Lookup failed for distributor_id. distributor_id is not present in SAPBW"
+              column: "coalesce(UPPER(dstrbtr_id),'&')"
+              lookup_column: "coalesce(upper(dstrbtr_id),'#')"
+              lookup_table: "{{ ref('idnitg_integration__itg_stock_dist_map')}}" 
+              filters: "dstrbtr_id!='ALL'"
+              name: TRATBL_sdl_stock_dist_map__test_lookup__ff
+              config:
+                store_failures: true
+                schema: idnwks_integration 

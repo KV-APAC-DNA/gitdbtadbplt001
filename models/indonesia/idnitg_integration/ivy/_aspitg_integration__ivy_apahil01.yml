@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: idnitg_integration__sdl_raw_distributor_ivy_order
+    config:
+      alias: sdl_raw_distributor_ivy_order
+      tags: ["id_ivy_order","ingestion"]
+  - name: idnitg_integration__itg_distributor_ivy_order
+    config:
+      alias: itg_distributor_ivy_order
+      tags: ["id_ivy_order","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_invoice
+    config:
+      alias: sdl_raw_distributor_ivy_invoice
+      tags: ["id_ivy_invoice","ingestion"]
+  - name: idnitg_integration__itg_all_ivy_distributor_sellout_sales_fact
+    config:
+      alias: itg_all_ivy_distributor_sellout_sales_fact
+      tags: ["id_ivy_invoice","ingestion"]
