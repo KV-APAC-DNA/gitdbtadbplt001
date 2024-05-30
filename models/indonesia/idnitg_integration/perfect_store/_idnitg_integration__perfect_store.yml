@@ -25,3 +25,8 @@ models:
     config: 
       alias: itg_id_ps_promotion_competitor
       tags: ["id_ps_promo_competitor","ingestion"]
+
+  - name: idnitg_integration__itg_mds_id_5ps_store_mapping
+    config:
+      alias: itg_mds_id_5ps_store_mapping
+      tags: ["id_mds_itg_load","ingestion"] 

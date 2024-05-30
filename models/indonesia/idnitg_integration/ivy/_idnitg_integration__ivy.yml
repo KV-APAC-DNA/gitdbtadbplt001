@@ -1,6 +1,16 @@
 version: 2
 
 models:
+  - name: idnitg_integration__itg_distributor_ivy_inventory
+    config:
+      alias: itg_distributor_ivy_inventory
+      tags: ["id_ivy_inventory","ingestion"] 
+
+  - name: idnitg_integration__itg_mds_id_dms_dist_margin_control
+    config:
+      alias: itg_mds_id_dms_dist_margin_control
+      tags: ["id_mds_itg_load","ingestion"]
+
   - name: idnitg_integration__sdl_raw_distributor_ivy_order
     config:
       alias: sdl_raw_distributor_ivy_order
@@ -17,3 +27,4 @@ models:
     config:
       alias: itg_all_ivy_distributor_sellout_sales_fact
       tags: ["id_ivy_invoice","ingestion"]
+    
