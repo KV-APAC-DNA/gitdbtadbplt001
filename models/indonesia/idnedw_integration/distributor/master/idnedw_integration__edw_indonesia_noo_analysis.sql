@@ -19,7 +19,10 @@ itg_target_dist_brand_channel as
 (
     select * from idnitg_integration.itg_target_dist_brand_channel
 ),
-
+itg_mcs_gt as 
+(
+    select * from idnitg_integration.itg_mcs_gt
+),
 trans as 
 (
 SELECT T1.JJ_YEAR,
@@ -216,6 +219,695 @@ FROM itg_target_dist_brand_channel h
 		and concat(h.year,decode(upper(trim(h.jj_mnth_long)),'JANUARY','01','FEBRUARY','02','MARCH','03','APRIL','04','MAY','05','JUNE','06','JULY','07','AUGUST','08',
 'SEPTEMBER','09','OCTOBER','10','NOVEMBER','11','DECEMBER','12','00')) between EPD.effective_from and EPD.effective_to THEN 1 END = 1
 ),
+transformed as 
+(
+    select 
+    jj_year,
+jj_qrtr,
+jj_mnth,
+jj_wk,
+jj_mnth_wk_no,
+jj_mnth_no,
+bill_doc,
+bill_dt,
+dstrbtr_grp_cd,
+dstrbtr_grp_nm,
+jj_sap_dstrbtr_id,
+jj_sap_dstrbtr_nm,
+dstrbtr_cd_nm,
+area,
+region,
+bdm_nm,
+rbm_nm,
+dstrbtr_status,
+cust_id_map,
+cust_nm_map,
+dstrbtr_cust_cd_nm,
+cust_grp,
+chnl,
+outlet_type,
+chnl_grp,
+jjid,
+chnl_grp2,
+city,
+cust_status,
+jj_sap_prod_id,
+jj_sap_prod_desc,
+jj_sap_upgrd_prod_id,
+jj_sap_upgrd_prod_desc,
+jj_sap_cd_mp_prod_id,
+jj_sap_cd_mp_prod_desc,
+sap_prod_code_name,
+franchise,
+brand,
+variant1,
+variant2,
+variant,
+put_up,
+prod_status,
+slsmn_id,
+slsmn_nm,
+sls_qty,
+hna,
+niv,
+trd_dscnt,
+dstrbtr_niv,
+rtrn_qty,
+rtrn_val,
+hsku_target_growth,
+hsku_target_coverage,
+jj_mnth_long,
+trgt_hna,
+trgt_niv,
+npi_flag,
+benchmark_sku_code,
+sku_benchmark,
+hero_sku_flag,
+trgt_dist_brnd_chnl_flag,
+tiering,
+null as count_sku_code,
+null as mcs_status,
+null as local_variant,
+null as count_local_variant,
+null as salesman_key,
+null as sfa_id,
+latest_chnl,
+latest_outlet_type,
+latest_chnl_grp,
+latest_cust_grp2,
+latest_cust_grp,
+latest_cust_nm_map,
+latest_region,
+latest_area,
+latest_rbm,
+latest_area_pic,
+latest_jjid,
+latest_put_up,
+latest_franchise,
+latest_brand,
+latest_msl,
+latest_count_local_variant,
+latest_chnl_grp2,
+latest_distributor_group,
+latest_dstrbtr_grp_cd,
+    from trans
+),
+
+temp_a as 
+
+(
+    SELECT tiering,
+             COUNT(DISTINCT sku_code) AS distinct_sku_count
+      FROM  itg_mcs_gt 
+      GROUP BY tiering
+)
+
+,updt1 as 
+(
+    select 
+transformed.jj_year as jj_year,
+transformed.jj_qrtr as jj_qrtr,
+transformed.jj_mnth as jj_mnth,
+transformed.jj_wk as jj_wk,
+transformed.jj_mnth_wk_no as jj_mnth_wk_no,
+transformed.jj_mnth_no as jj_mnth_no,
+transformed.bill_doc as bill_doc,
+transformed.bill_dt as bill_dt,
+transformed.dstrbtr_grp_cd as dstrbtr_grp_cd,
+transformed.dstrbtr_grp_nm as dstrbtr_grp_nm,
+transformed.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+transformed.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+transformed.dstrbtr_cd_nm as dstrbtr_cd_nm,
+transformed.area as area,
+transformed.region as region,
+transformed.bdm_nm as bdm_nm,
+transformed.rbm_nm as rbm_nm,
+transformed.dstrbtr_status as dstrbtr_status,
+transformed.cust_id_map as cust_id_map,
+transformed.cust_nm_map as cust_nm_map,
+transformed.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+transformed.cust_grp as cust_grp,
+transformed.chnl as chnl,
+transformed.outlet_type as outlet_type,
+transformed.chnl_grp as chnl_grp,
+transformed.jjid as jjid,
+transformed.chnl_grp2 as chnl_grp2,
+transformed.city as city,
+transformed.cust_status as cust_status,
+transformed.jj_sap_prod_id as jj_sap_prod_id,
+transformed.jj_sap_prod_desc as jj_sap_prod_desc,
+transformed.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+transformed.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+transformed.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+transformed.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+transformed.sap_prod_code_name as sap_prod_code_name,
+transformed.franchise as franchise,
+transformed.brand as brand,
+transformed.variant1 as variant1,
+transformed.variant2 as variant2,
+transformed.variant as variant,
+transformed.put_up as put_up,
+transformed.prod_status as prod_status,
+transformed.slsmn_id as slsmn_id,
+transformed.slsmn_nm as slsmn_nm,
+transformed.sls_qty as sls_qty,
+transformed.hna as hna,
+transformed.niv as niv,
+transformed.trd_dscnt as trd_dscnt,
+transformed.dstrbtr_niv as dstrbtr_niv,
+transformed.rtrn_qty as rtrn_qty,
+transformed.rtrn_val as rtrn_val,
+transformed.hsku_target_growth as hsku_target_growth,
+transformed.hsku_target_coverage as hsku_target_coverage,
+transformed.jj_mnth_long as jj_mnth_long,
+transformed.trgt_hna as trgt_hna,
+transformed.trgt_niv as trgt_niv,
+transformed.npi_flag as npi_flag,
+transformed.benchmark_sku_code as benchmark_sku_code,
+transformed.sku_benchmark as sku_benchmark,
+transformed.hero_sku_flag as hero_sku_flag,
+transformed.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+transformed.tiering as tiering, 
+nvl(temp_a.distinct_sku_count,transformed.count_sku_code) as count_sku_code,
+transformed.mcs_status as mcs_status,
+transformed.local_variant as local_variant,
+transformed.count_local_variant as count_local_variant,
+transformed.salesman_key as salesman_key,
+transformed.sfa_id as sfa_id,
+transformed.latest_chnl as latest_chnl,
+transformed.latest_outlet_type as latest_outlet_type,
+transformed.latest_chnl_grp as latest_chnl_grp,
+transformed.latest_cust_grp2 as latest_cust_grp2,
+transformed.latest_cust_grp as latest_cust_grp,
+transformed.latest_cust_nm_map as latest_cust_nm_map,
+transformed.latest_region as latest_region,
+transformed.latest_area as latest_area,
+transformed.latest_rbm as latest_rbm,
+transformed.latest_area_pic as latest_area_pic,
+transformed.latest_jjid as latest_jjid,
+transformed.latest_put_up as latest_put_up,
+transformed.latest_franchise as latest_franchise,
+transformed.latest_brand as latest_brand,
+transformed.latest_msl as latest_msl,
+transformed.latest_count_local_variant as latest_count_local_variant,
+transformed.latest_chnl_grp2 as latest_chnl_grp2,
+transformed.latest_distributor_group as latest_distributor_group,
+transformed.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+from transformed  
+left join temp_a
+on temp_a.tiering = transformed.tiering
+
+)
+,
+
+t6 as 
+(select distinct mcs_status,month,year,sku_code,tiering from 
+    (SELECT  t4.*,
+             CASE
+               WHEN t4.tiering IS NOT NULL THEN 'Y'
+               ELSE 'N'
+             END AS mcs_status
+      FROM (SELECT t1.jj_year,
+                   t1.jj_mnth,
+                   t1.jj_sap_cd_mp_prod_id,
+                   t1.tiering AS noo_tiering,
+                   t2.*
+            FROM updt1 t1
+              LEFT OUTER JOIN (SELECT tiering,
+                                      sku_name,
+                                      YEAR,
+                                      CASE
+                                        WHEN MONTH = 'January' THEN '01'
+                                        WHEN MONTH = 'February' THEN '02'
+                                        WHEN MONTH = 'March' THEN '03'
+                                        WHEN MONTH = 'April' THEN '04'
+                                        WHEN MONTH = 'May' THEN '05'
+                                        WHEN MONTH = 'June' THEN '06'
+                                        WHEN MONTH = 'July' THEN '07'
+                                        WHEN MONTH = 'August' THEN '08'
+                                        WHEN MONTH = 'September' THEN '09'
+                                        WHEN MONTH = 'October' THEN '10'
+                                        WHEN MONTH = 'November' THEN '11'
+                                        WHEN MONTH = 'December' THEN '12'
+                                        ELSE NULL
+                                      END AS MONTH,
+                                      sku_code
+                               FROM itg_mcs_gt) t2
+                           ON t1.tiering = t2.tiering
+                          AND t1.jj_mnth = t2.year || '.' || t2.month
+                          AND t1.jj_sap_cd_mp_prod_id = t2.sku_code
+            WHERE t1.chnl IN ('GT','MEDICAL','LKA')
+            AND   t1.jj_mnth IS NOT NULL
+            AND   t1.jj_mnth <> '') t4)
+),
+t as (
+select distinct sku_code,month,year,tiering,sku_name 
+from itg_mcs_gt where sku_code is not null
+qualify row_number() over (partition by sku_code,month,year,tiering  order by null) = 1
+),
+
+updt2 as 
+(
+    select 
+    t5.jj_year as jj_year,
+t5.jj_qrtr as jj_qrtr,
+t5.jj_mnth as jj_mnth,
+t5.jj_wk as jj_wk,
+t5.jj_mnth_wk_no as jj_mnth_wk_no,
+t5.jj_mnth_no as jj_mnth_no,
+t5.bill_doc as bill_doc,
+t5.bill_dt as bill_dt,
+t5.dstrbtr_grp_cd as dstrbtr_grp_cd,
+t5.dstrbtr_grp_nm as dstrbtr_grp_nm,
+t5.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+t5.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+t5.dstrbtr_cd_nm as dstrbtr_cd_nm,
+t5.area as area,
+t5.region as region,
+t5.bdm_nm as bdm_nm,
+t5.rbm_nm as rbm_nm,
+t5.dstrbtr_status as dstrbtr_status,
+t5.cust_id_map as cust_id_map,
+t5.cust_nm_map as cust_nm_map,
+t5.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+t5.cust_grp as cust_grp,
+t5.chnl as chnl,
+t5.outlet_type as outlet_type,
+t5.chnl_grp as chnl_grp,
+t5.jjid as jjid,
+t5.chnl_grp2 as chnl_grp2,
+t5.city as city,
+t5.cust_status as cust_status,
+t5.jj_sap_prod_id as jj_sap_prod_id,
+t5.jj_sap_prod_desc as jj_sap_prod_desc,
+t5.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+t5.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+t5.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+t5.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+t5.sap_prod_code_name as sap_prod_code_name,
+t5.franchise as franchise,
+t5.brand as brand,
+t5.variant1 as variant1,
+t5.variant2 as variant2,
+t5.variant as variant,
+t5.put_up as put_up,
+t5.prod_status as prod_status,
+t5.slsmn_id as slsmn_id,
+t5.slsmn_nm as slsmn_nm,
+t5.sls_qty as sls_qty,
+t5.hna as hna,
+t5.niv as niv,
+t5.trd_dscnt as trd_dscnt,
+t5.dstrbtr_niv as dstrbtr_niv,
+t5.rtrn_qty as rtrn_qty,
+t5.rtrn_val as rtrn_val,
+t5.hsku_target_growth as hsku_target_growth,
+t5.hsku_target_coverage as hsku_target_coverage,
+t5.jj_mnth_long as jj_mnth_long,
+t5.trgt_hna as trgt_hna,
+t5.trgt_niv as trgt_niv,
+t5.npi_flag as npi_flag,
+t5.benchmark_sku_code as benchmark_sku_code,
+t5.sku_benchmark as sku_benchmark,
+t5.hero_sku_flag as hero_sku_flag,
+t5.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+t5.tiering as tiering,
+t5.count_sku_code as count_sku_code,
+nvl(t6.mcs_status,t5.mcs_status) as mcs_status,
+nvl(itg.sku_name,t5.local_variant) as local_variant,
+t5.count_local_variant as count_local_variant,
+t5.salesman_key as salesman_key,
+t5.sfa_id as sfa_id,
+t5.latest_chnl as latest_chnl,
+t5.latest_outlet_type as latest_outlet_type,
+t5.latest_chnl_grp as latest_chnl_grp,
+t5.latest_cust_grp2 as latest_cust_grp2,
+t5.latest_cust_grp as latest_cust_grp,
+t5.latest_cust_nm_map as latest_cust_nm_map,
+t5.latest_region as latest_region,
+t5.latest_area as latest_area,
+t5.latest_rbm as latest_rbm,
+t5.latest_area_pic as latest_area_pic,
+t5.latest_jjid as latest_jjid,
+t5.latest_put_up as latest_put_up,
+t5.latest_franchise as latest_franchise,
+t5.latest_brand as latest_brand,
+t5.latest_msl as latest_msl,
+t5.latest_count_local_variant as latest_count_local_variant,
+t5.latest_chnl_grp2 as latest_chnl_grp2,
+t5.latest_distributor_group as latest_distributor_group,
+t5.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd,
+from updt1 as t5
+left join t6
+    ON t5.tiering = t6.tiering
+   AND t5.jj_sap_cd_mp_prod_id = t6.sku_code
+   AND t5.jj_mnth = t6.year || '.' || t6.month
+left join t as itg
+ON t5.tiering = itg.tiering
+   AND t5.jj_year = itg.year
+   AND t5.jj_mnth_long = itg.month
+   AND (t5.jj_sap_cd_mp_prod_id) = (itg.sku_code)
+
+)
+,
+temp_b as 
+(
+    (SELECT t3.jj_year,
+             t3.jj_mnth_no,
+             t3.tiering,
+             COUNT(DISTINCT t4.sku_name) AS distinct_variant_count
+      FROM updt2 t3
+        LEFT OUTER JOIN (SELECT tiering,
+                                sku_name,
+                                YEAR,
+                                CASE
+                                  WHEN MONTH = 'January' THEN 1
+                                  WHEN MONTH = 'February' THEN 2
+                                  WHEN MONTH = 'March' THEN 3
+                                  WHEN MONTH = 'April' THEN 4
+                                  WHEN MONTH = 'May' THEN 5
+                                  WHEN MONTH = 'June' THEN 6
+                                  WHEN MONTH = 'July' THEN 7
+                                  WHEN MONTH = 'August' THEN 8
+                                  WHEN MONTH = 'September' THEN 9
+                                  WHEN MONTH = 'October' THEN 10
+                                  WHEN MONTH = 'November' THEN 11
+                                  WHEN MONTH = 'December' THEN 12
+                                  ELSE NULL
+                                END AS MONTH
+                         FROM itg_mcs_gt) t4
+                     ON t3.jj_year = t4.year
+                    AND t3.jj_mnth_no = t4.month
+                    AND t3.tiering = t4.tiering
+      GROUP BY t3.jj_year,
+               t3.jj_mnth_no,
+               t3.tiering)
+),
+updt3 as 
+(
+    select 
+    b.jj_year as jj_year,
+b.jj_qrtr as jj_qrtr,
+b.jj_mnth as jj_mnth,
+b.jj_wk as jj_wk,
+b.jj_mnth_wk_no as jj_mnth_wk_no,
+b.jj_mnth_no as jj_mnth_no,
+b.bill_doc as bill_doc,
+b.bill_dt as bill_dt,
+b.dstrbtr_grp_cd as dstrbtr_grp_cd,
+b.dstrbtr_grp_nm as dstrbtr_grp_nm,
+b.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+b.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+b.dstrbtr_cd_nm as dstrbtr_cd_nm,
+b.area as area,
+b.region as region,
+b.bdm_nm as bdm_nm,
+b.rbm_nm as rbm_nm,
+b.dstrbtr_status as dstrbtr_status,
+b.cust_id_map as cust_id_map,
+b.cust_nm_map as cust_nm_map,
+b.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+b.cust_grp as cust_grp,
+b.chnl as chnl,
+b.outlet_type as outlet_type,
+b.chnl_grp as chnl_grp,
+b.jjid as jjid,
+b.chnl_grp2 as chnl_grp2,
+b.city as city,
+b.cust_status as cust_status,
+b.jj_sap_prod_id as jj_sap_prod_id,
+b.jj_sap_prod_desc as jj_sap_prod_desc,
+b.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+b.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+b.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+b.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+b.sap_prod_code_name as sap_prod_code_name,
+b.franchise as franchise,
+b.brand as brand,
+b.variant1 as variant1,
+b.variant2 as variant2,
+b.variant as variant,
+b.put_up as put_up,
+b.prod_status as prod_status,
+b.slsmn_id as slsmn_id,
+b.slsmn_nm as slsmn_nm,
+b.sls_qty as sls_qty,
+b.hna as hna,
+b.niv as niv,
+b.trd_dscnt as trd_dscnt,
+b.dstrbtr_niv as dstrbtr_niv,
+b.rtrn_qty as rtrn_qty,
+b.rtrn_val as rtrn_val,
+b.hsku_target_growth as hsku_target_growth,
+b.hsku_target_coverage as hsku_target_coverage,
+b.jj_mnth_long as jj_mnth_long,
+b.trgt_hna as trgt_hna,
+b.trgt_niv as trgt_niv,
+b.npi_flag as npi_flag,
+b.benchmark_sku_code as benchmark_sku_code,
+b.sku_benchmark as sku_benchmark,
+b.hero_sku_flag as hero_sku_flag,
+b.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+b.tiering as tiering,
+b.count_sku_code as count_sku_code,
+b.mcs_status as mcs_status,
+b.local_variant as local_variant,
+nvl(temp_b.distinct_variant_count,b.count_local_variant) as count_local_variant,
+b.salesman_key as salesman_key,
+b.sfa_id as sfa_id,
+b.latest_chnl as latest_chnl,
+b.latest_outlet_type as latest_outlet_type,
+b.latest_chnl_grp as latest_chnl_grp,
+b.latest_cust_grp2 as latest_cust_grp2,
+b.latest_cust_grp as latest_cust_grp,
+b.latest_cust_nm_map as latest_cust_nm_map,
+b.latest_region as latest_region,
+b.latest_area as latest_area,
+b.latest_rbm as latest_rbm,
+b.latest_area_pic as latest_area_pic,
+b.latest_jjid as latest_jjid,
+b.latest_put_up as latest_put_up,
+b.latest_franchise as latest_franchise,
+b.latest_brand as latest_brand,
+b.latest_msl as latest_msl,
+b.latest_count_local_variant as latest_count_local_variant,
+b.latest_chnl_grp2 as latest_chnl_grp2,
+b.latest_distributor_group as latest_distributor_group,
+b.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+from updt2 as b 
+left join temp_b 
+    ON b.tiering = temp_b.tiering
+   AND b.jj_year = temp_b.jj_year
+   AND b.jj_mnth_no = temp_b.jj_mnth_no
+   )
+,
+temp_d as 
+(
+    (SELECT distinct tiering,
+        sku_code
+ FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt) and month = 'December' )
+),
+updt4 as 
+(
+    select 
+c.jj_year as jj_year,
+c.jj_qrtr as jj_qrtr,
+c.jj_mnth as jj_mnth,
+c.jj_wk as jj_wk,
+c.jj_mnth_wk_no as jj_mnth_wk_no,
+c.jj_mnth_no as jj_mnth_no,
+c.bill_doc as bill_doc,
+c.bill_dt as bill_dt,
+c.dstrbtr_grp_cd as dstrbtr_grp_cd,
+c.dstrbtr_grp_nm as dstrbtr_grp_nm,
+c.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+c.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+c.dstrbtr_cd_nm as dstrbtr_cd_nm,
+c.area as area,
+c.region as region,
+c.bdm_nm as bdm_nm,
+c.rbm_nm as rbm_nm,
+c.dstrbtr_status as dstrbtr_status,
+c.cust_id_map as cust_id_map,
+c.cust_nm_map as cust_nm_map,
+c.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+c.cust_grp as cust_grp,
+c.chnl as chnl,
+c.outlet_type as outlet_type,
+c.chnl_grp as chnl_grp,
+c.jjid as jjid,
+c.chnl_grp2 as chnl_grp2,
+c.city as city,
+c.cust_status as cust_status,
+c.jj_sap_prod_id as jj_sap_prod_id,
+c.jj_sap_prod_desc as jj_sap_prod_desc,
+c.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+c.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+c.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+c.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+c.sap_prod_code_name as sap_prod_code_name,
+c.franchise as franchise,
+c.brand as brand,
+c.variant1 as variant1,
+c.variant2 as variant2,
+c.variant as variant,
+c.put_up as put_up,
+c.prod_status as prod_status,
+c.slsmn_id as slsmn_id,
+c.slsmn_nm as slsmn_nm,
+c.sls_qty as sls_qty,
+c.hna as hna,
+c.niv as niv,
+c.trd_dscnt as trd_dscnt,
+c.dstrbtr_niv as dstrbtr_niv,
+c.rtrn_qty as rtrn_qty,
+c.rtrn_val as rtrn_val,
+c.hsku_target_growth as hsku_target_growth,
+c.hsku_target_coverage as hsku_target_coverage,
+c.jj_mnth_long as jj_mnth_long,
+c.trgt_hna as trgt_hna,
+c.trgt_niv as trgt_niv,
+c.npi_flag as npi_flag,
+c.benchmark_sku_code as benchmark_sku_code,
+c.sku_benchmark as sku_benchmark,
+c.hero_sku_flag as hero_sku_flag,
+c.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+c.tiering as tiering,
+c.count_sku_code as count_sku_code,
+c.mcs_status as mcs_status,
+c.local_variant as local_variant,
+c.count_local_variant as count_local_variant,
+c.salesman_key as salesman_key,
+c.sfa_id as sfa_id,
+c.latest_chnl as latest_chnl,
+c.latest_outlet_type as latest_outlet_type,
+c.latest_chnl_grp as latest_chnl_grp,
+c.latest_cust_grp2 as latest_cust_grp2,
+c.latest_cust_grp as latest_cust_grp,
+c.latest_cust_nm_map as latest_cust_nm_map,
+c.latest_region as latest_region,
+c.latest_area as latest_area,
+c.latest_rbm as latest_rbm,
+c.latest_area_pic as latest_area_pic,
+c.latest_jjid as latest_jjid,
+c.latest_put_up as latest_put_up,
+c.latest_franchise as latest_franchise,
+c.latest_brand as latest_brand,
+case when temp_d.tiering  is not null then 'Y' 
+else c.latest_msl end as latest_msl,
+c.latest_count_local_variant as latest_count_local_variant,
+c.latest_chnl_grp2 as latest_chnl_grp2,
+c.latest_distributor_group as latest_distributor_group,
+c.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+    from updt3 as c
+    left join temp_d
+    on c.latest_cust_grp2 = temp_d.tiering 
+    and c.jj_sap_cd_mp_prod_id = temp_d.sku_code 
+)
+,
+
+temp_e as 
+(
+    (SELECT  tiering,
+        count(DISTINCT sku_name) as distinct_variant_count
+ FROM itg_mcs_gt where year = (select max(year) from itg_mcs_gt) and month = 'December'  group by tiering )
+),
+updt5 as 
+(
+    select 
+n1.jj_year as jj_year,
+n1.jj_qrtr as jj_qrtr,
+n1.jj_mnth as jj_mnth,
+n1.jj_wk as jj_wk,
+n1.jj_mnth_wk_no as jj_mnth_wk_no,
+n1.jj_mnth_no as jj_mnth_no,
+n1.bill_doc as bill_doc,
+n1.bill_dt as bill_dt,
+n1.dstrbtr_grp_cd as dstrbtr_grp_cd,
+n1.dstrbtr_grp_nm as dstrbtr_grp_nm,
+n1.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+n1.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+n1.dstrbtr_cd_nm as dstrbtr_cd_nm,
+n1.area as area,
+n1.region as region,
+n1.bdm_nm as bdm_nm,
+n1.rbm_nm as rbm_nm,
+n1.dstrbtr_status as dstrbtr_status,
+n1.cust_id_map as cust_id_map,
+n1.cust_nm_map as cust_nm_map,
+n1.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+n1.cust_grp as cust_grp,
+n1.chnl as chnl,
+n1.outlet_type as outlet_type,
+n1.chnl_grp as chnl_grp,
+n1.jjid as jjid,
+n1.chnl_grp2 as chnl_grp2,
+n1.city as city,
+n1.cust_status as cust_status,
+n1.jj_sap_prod_id as jj_sap_prod_id,
+n1.jj_sap_prod_desc as jj_sap_prod_desc,
+n1.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+n1.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+n1.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+n1.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+n1.sap_prod_code_name as sap_prod_code_name,
+n1.franchise as franchise,
+n1.brand as brand,
+n1.variant1 as variant1,
+n1.variant2 as variant2,
+n1.variant as variant,
+n1.put_up as put_up,
+n1.prod_status as prod_status,
+n1.slsmn_id as slsmn_id,
+n1.slsmn_nm as slsmn_nm,
+n1.sls_qty as sls_qty,
+n1.hna as hna,
+n1.niv as niv,
+n1.trd_dscnt as trd_dscnt,
+n1.dstrbtr_niv as dstrbtr_niv,
+n1.rtrn_qty as rtrn_qty,
+n1.rtrn_val as rtrn_val,
+n1.hsku_target_growth as hsku_target_growth,
+n1.hsku_target_coverage as hsku_target_coverage,
+n1.jj_mnth_long as jj_mnth_long,
+n1.trgt_hna as trgt_hna,
+n1.trgt_niv as trgt_niv,
+n1.npi_flag as npi_flag,
+n1.benchmark_sku_code as benchmark_sku_code,
+n1.sku_benchmark as sku_benchmark,
+n1.hero_sku_flag as hero_sku_flag,
+n1.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+n1.tiering as tiering,
+n1.count_sku_code as count_sku_code,
+n1.mcs_status as mcs_status,
+n1.local_variant as local_variant,
+n1.count_local_variant as count_local_variant,
+n1.salesman_key as salesman_key,
+n1.sfa_id as sfa_id,
+n1.latest_chnl as latest_chnl,
+n1.latest_outlet_type as latest_outlet_type,
+n1.latest_chnl_grp as latest_chnl_grp,
+n1.latest_cust_grp2 as latest_cust_grp2,
+n1.latest_cust_grp as latest_cust_grp,
+n1.latest_cust_nm_map as latest_cust_nm_map,
+n1.latest_region as latest_region,
+n1.latest_area as latest_area,
+n1.latest_rbm as latest_rbm,
+n1.latest_area_pic as latest_area_pic,
+n1.latest_jjid as latest_jjid,
+n1.latest_put_up as latest_put_up,
+n1.latest_franchise as latest_franchise,
+n1.latest_brand as latest_brand,
+n1.latest_msl as latest_msl,
+nvl(temp_e.distinct_variant_count,n1.latest_count_local_variant) as latest_count_local_variant,
+n1.latest_chnl_grp2 as latest_chnl_grp2,
+n1.latest_distributor_group as latest_distributor_group,
+n1.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+    from updt4 as n1
+    left join temp_e
+    ON n1.latest_cust_grp2 = temp_e.tiering
+)
+,
 final as 
 (
     select 
@@ -282,12 +974,12 @@ final as
 	hero_sku_flag::varchar(1) as hero_sku_flag,
 	trgt_dist_brnd_chnl_flag::varchar(1) as trgt_dist_brnd_chnl_flag,
 	tiering::varchar(100) as tiering,
-    null::number(18,0) as count_sku_code,
-    null::varchar(20) as mcs_status,
-    null::varchar(2000) as local_variant,
-    null::number(18,0) as count_local_variant,
-    null::varchar(70) as salesman_key,
-    null::varchar(255) as sfa_id,
+    count_sku_code::number(18,0) as count_sku_code,
+    mcs_status::varchar(20) as mcs_status,
+    local_variant::varchar(2000) as local_variant,
+    count_local_variant::number(18,0) as count_local_variant,
+    salesman_key::varchar(70) as salesman_key,
+    sfa_id::varchar(255) as sfa_id,
 	latest_chnl::varchar(100) as latest_chnl,
 	latest_outlet_type::varchar(100) as latest_outlet_type,
 	latest_chnl_grp::varchar(100) as latest_chnl_grp,
@@ -307,7 +999,6 @@ final as
 	latest_chnl_grp2::varchar(200) as latest_chnl_grp2,
 	latest_distributor_group::varchar(200) as latest_distributor_group,
 	latest_dstrbtr_grp_cd::varchar(200) as latest_dstrbtr_grp_cd
-    from trans
+    from updt5
 )
-
 select * from final

@@ -101,6 +101,16 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+          - test_lookup:
+              select_columns: ["document","material","description",'"ship-to"',"name1"]
+              failure_reason: "'MATERIAL CODE VALIDITY CHECK FAILED'"
+              column: "ltrim(nvl(material, '#'), '0')"
+              lookup_column: "ltrim(nvl (jj_sap_prod_id, '#'), '0')"
+              lookup_table: "{{ ref('idnedw_integration__edw_product_dim') }}"
+              name: TRATBL_sdl_mds_id_lav_inventory_intransit__test_lookup2
+              config:
+                store_failures: true
+                schema: idnwks_integration
 
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

@@ -59,4 +59,34 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
+              where_clause: "UPPER(REPLACE(Customer_Code, '.0', '')) IN ( SELECT DISTINCT UPPER(REPLACE(Customer_Code, '.0', '')) AS customer_code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.jj_sap_dstrbtr_id) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE TRIM(UPPER(a.Customer_Code)) = TRIM(UPPER(b.jj_sap_dstrbtr_id)) )"
+              name: TRATBL_sdl_mds_id_lav_sales_target__lookup_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
+              where_clause: "UPPER(channel) IN ( SELECT DISTINCT UPPER(channel) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.chnl) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_distributor_customer_dim') }} b WHERE TRIM(UPPER(a.channel)) = TRIM(UPPER(b.chnl)) )"
+              name: TRATBL_sdl_mds_id_lav_sales_target__lookup_test2
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
+              where_clause: "UPPER(brand) IN ( SELECT DISTINCT UPPER(brand) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.brand) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE TRIM(UPPER(a.brand)) = TRIM(UPPER(b.brand)) )"
+              name: TRATBL_sdl_mds_id_lav_sales_target__lookup_test3
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","sales_type","customer_code","customer","channel","brand","franchise"]
+              where_clause: "UPPER(franchise) IN ( SELECT DISTINCT UPPER(franchise) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} x MINUS SELECT DISTINCT UPPER(b.franchise) FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_sales_target') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE TRIM(UPPER(a.franchise)) = TRIM(UPPER(b.franchise)) )"
+              name: TRATBL_sdl_mds_id_lav_sales_target__lookup_test4
+              config:
+                store_failures: true
+                schema: idnwks_integration
+      
+          
 

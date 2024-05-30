@@ -1,15 +1,12 @@
 with edw_distributor_ivy_user_master as 
 (
-    select * from {{ ref('idnedw_integration__edw_distributor_ivy_user_master') }}
+    select * from idnedw_integration.edw_distributor_ivy_user_master
 ),
 itg_distributor_salesman_dim as 
 (
-    select * from {{ ref('idnitg_integration__itg_distributor_salesman_dim') }}
+    select * from idnitg_integration.itg_distributor_salesman_dim
 ),
-
-{% if var("job_to_execute") == 'id_ivy_salesman_master_update' %}
-
-final as
+final3 as
 (
     select 
     distinct 
@@ -23,11 +20,14 @@ final as
        sr_code::varchar(255) as sfa_id,
 	   '200001'::varchar(10) as effective_from,
 	   '999912'::varchar(10) as effective_to 
-    from edw_distributor_ivy_user_master
-)
-select * from final
+    from edw_distributor_ivy_user_master um
+    WHERE NOT EXISTS (SELECT 1
+                  FROM {{this}} sd
+                  WHERE (UPPER(TRIM(um.dis_code)) ||UPPER(TRIM(um.sr_code))) = UPPER(TRIM(rec_key)))
+AND   (UPPER(TRIM(um.dis_code)) <> '' AND UPPER(TRIM(um.sr_code)) <> '')
+AND   (UPPER(TRIM(um.dis_code)) IS NOT NULL AND UPPER(TRIM(um.sr_code)) IS NOT NULL)
+),
 
-{% elif var("job_to_execute") == 'id_mds_itg_load' %}
 
 final as 
 (
@@ -44,5 +44,11 @@ final as
         effective_to::varchar(10) as effective_to
     from itg_distributor_salesman_dim
 )
-select * from final
-{% endif %}
+
+,final2 as 
+(
+    select * from final 
+    union all
+    select * from final3
+)
+select * from final2
