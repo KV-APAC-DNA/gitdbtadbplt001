@@ -6,20 +6,17 @@
 }}
 
 --Import CTE
-with v_edw_sg_rpt_retail_excellence as (
-    select * from {{ source('sgpedw_integration', 'v_edw_sg_rpt_retail_excellence') }}
-),
-itg_query_parameters as (
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+with v_edw_rpt_retail_excellence_th as (
+    select * from {{ source('thaedw_integration', 'v_edw_rpt_retail_excellence_th') }}
 ),
 --Logical CTE
 
 --Final CTE
 final as (
 SELECT FISC_YR,
-       CAST(FISC_PER AS numeric(18,0)) AS FISC_PER,		--// INTEGER
+       CAST(FISC_PER AS numeric(18,0) )AS FISC_PER,		--// INTEGER
        CLUSTER,
-       MARKET,
+	   MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
        DISTRIBUTOR_NAME,
@@ -33,7 +30,7 @@ SELECT FISC_YR,
        STORE_SIZE,
        REGION,
        ZONE_NAME,
-       CITY,
+       Null as CITY,
        RTRLATITUDE,
        RTRLONGITUDE,
        CUSTOMER_SEGMENT_KEY,
@@ -62,7 +59,7 @@ SELECT FISC_YR,
        PROD_HIER_L7,
        PROD_HIER_L8,
        PROD_HIER_L9,
-       MAPPED_SKU_CD,
+	   MAPPED_SKU_CD,
        SAP_PROD_SGMT_CD,
        SAP_PROD_SGMT_DESC,
        SAP_BASE_PROD_DESC,
@@ -70,23 +67,23 @@ SELECT FISC_YR,
        SAP_BRND_DESC,
        SAP_VRNT_DESC,
        SAP_PUT_UP_DESC,
-       SAP_GRP_FRNCHSE_CD,
-       SAP_GRP_FRNCHSE_DESC,
-       SAP_FRNCHSE_CD,
-       SAP_FRNCHSE_DESC,
-       SAP_PROD_FRNCHSE_CD,
-       SAP_PROD_FRNCHSE_DESC,
-       SAP_PROD_MJR_CD,
-       SAP_PROD_MJR_DESC,
-       SAP_PROD_MNR_CD,
-       SAP_PROD_MNR_DESC,
-       SAP_PROD_HIER_CD,
-       SAP_PROD_HIER_DESC,
-       PKA_FRANCHISE_DESC,
-       PKA_BRAND_DESC,
-       PKA_SUB_BRAND_DESC,
-       PKA_VARIANT_DESC,
-       PKA_SUB_VARIANT_DESC,
+	   SAP_GRP_FRNCHSE_CD,
+	   SAP_GRP_FRNCHSE_DESC,
+	   SAP_FRNCHSE_CD,
+	   SAP_FRNCHSE_DESC,
+	   SAP_PROD_FRNCHSE_CD,
+	   SAP_PROD_FRNCHSE_DESC,
+	   SAP_PROD_MJR_CD,
+	   SAP_PROD_MJR_DESC,
+	   SAP_PROD_MNR_CD,
+	   SAP_PROD_MNR_DESC,
+	   SAP_PROD_HIER_CD,
+	   SAP_PROD_HIER_DESC,
+	   PKA_FRANCHISE_DESC,
+	   PKA_BRAND_DESC,
+	   PKA_SUB_BRAND_DESC,
+	   PKA_VARIANT_DESC,
+	   PKA_SUB_VARIANT_DESC,
        GLOBAL_PRODUCT_FRANCHISE,
        GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
@@ -97,8 +94,8 @@ SELECT FISC_YR,
        GLOBAL_PRODUCT_SUBCATEGORY,
        GLOBAL_PUT_UP_DESCRIPTION,
        EAN,
-       SKU_CODE,
-       SKU_DESCRIPTION,
+       --SKU_CODE,
+       --SKU_DESCRIPTION,
        PKA_PRODUCT_KEY,
        PKA_PRODUCT_KEY_DESCRIPTION,
        SALES_VALUE,
@@ -124,37 +121,37 @@ SELECT FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       TARGET_COMPLAINCE,
-       LIST_PRICE,
-       SIZE_OF_PRICE_LM,
-       SIZE_OF_PRICE_P3M,
-       SIZE_OF_PRICE_P6M,
-       SIZE_OF_PRICE_P12M,
+	   TARGET_COMPLAINCE,
+	   LIST_PRICE,
+	   SIZE_OF_PRICE_LM,
+	   SIZE_OF_PRICE_P3M,
+	   SIZE_OF_PRICE_P6M,
+	   SIZE_OF_PRICE_P12M,
        LM_SALES_FLAG_COUNT,
-       P3M_SALES_FLAG_COUNT,
-       P6M_SALES_FLAG_COUNT,
-       P12M_SALES_FLAG_COUNT,
+	   P3M_SALES_FLAG_COUNT,
+	   P6M_SALES_FLAG_COUNT,
+	   P12M_SALES_FLAG_COUNT,
        MDP_FLAG_COUNT,
-       DATA_SRC,
-       SALES_VALUE_LIST_PRICE,
-       LM_SALES_LP,
-       P3M_SALES_LP,
-       P6M_SALES_LP,
-       P12M_SALES_LP,
-       SIZE_OF_PRICE_LM_LP,
-       SIZE_OF_PRICE_P3M_LP,
-       SIZE_OF_PRICE_P6M_LP,
-       SIZE_OF_PRICE_P12M_LP,
-       SOLDTO_CODE,
+		DATA_SRC,
+SALES_VALUE_LIST_PRICE,
+		 LM_SALES_LP,
+		 P3M_SALES_LP,
+		 P6M_SALES_LP,
+		 P12M_SALES_LP,
+		SIZE_OF_PRICE_LM_LP,
+	   SIZE_OF_PRICE_P3M_LP,
+	   SIZE_OF_PRICE_P6M_LP,
+	   SIZE_OF_PRICE_P12M_LP,
+	   SOLDTO_CODE,
 current_timestamp()::date  as crt_dttm
-FROM v_edw_sg_rpt_retail_excellence		--// FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE
-WHERE FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(FISC_PER)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
-                   FROM v_edw_sg_rpt_retail_excellence)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM v_edw_sg_rpt_retail_excellence)		--// AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
-                                 FROM itg_query_parameters		--//                                  FROM rg_itg.itg_query_parameters
-                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG')
+      	      FROM v_edw_rpt_retail_excellence_th
+			  WHERE
+			  market = 'Thailand'
+
+AND   FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(fisc_per)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
+                   FROM v_edw_rpt_retail_excellence_th)	
+AND   FISC_PER <= (SELECT MAX(fisc_per) FROM v_edw_rpt_retail_excellence_th) and DATA_SRC is not null
+
 )
 
 

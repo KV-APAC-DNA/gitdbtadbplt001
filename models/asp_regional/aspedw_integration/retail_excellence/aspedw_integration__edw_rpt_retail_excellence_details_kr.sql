@@ -6,18 +6,15 @@
 }}
 
 --Import CTE
-with v_edw_sg_rpt_retail_excellence as (
-    select * from {{ source('sgpedw_integration', 'v_edw_sg_rpt_retail_excellence') }}
-),
-itg_query_parameters as (
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+with v_edw_kr_rpt_retail_excellence as (
+    select * from {{ source('ntaedw_integration', 'v_edw_kr_rpt_retail_excellence') }}
 ),
 --Logical CTE
 
 --Final CTE
 final as (
 SELECT FISC_YR,
-       CAST(FISC_PER AS numeric(18,0)) AS FISC_PER,		--// INTEGER
+       FISC_PER :: numeric(18,0),		--// INTEGER
        CLUSTER,
        MARKET,
        CHANNEL_NAME,
@@ -25,17 +22,17 @@ SELECT FISC_YR,
        DISTRIBUTOR_NAME,
        SELL_OUT_CHANNEL,
        STORE_TYPE,
-       PRIORITIZATION_SEGMENTATION,
-       STORE_CATEGORY,
+       'Not Available' AS PRIORITIZATION_SEGMENTATION,
+       'Not Available' AS STORE_CATEGORY,
        STORE_CODE,
        STORE_NAME,
        STORE_GRADE,
-       STORE_SIZE,
+       'Not Available' AS STORE_SIZE,
        REGION,
        ZONE_NAME,
        CITY,
-       RTRLATITUDE,
-       RTRLONGITUDE,
+       'Not Available' AS RTRLATITUDE,
+       'Not Available' AS RTRLONGITUDE,
        CUSTOMER_SEGMENT_KEY,
        CUSTOMER_SEGMENT_DESCRIPTION,
        RETAIL_ENVIRONMENT,
@@ -136,25 +133,22 @@ SELECT FISC_YR,
        P12M_SALES_FLAG_COUNT,
        MDP_FLAG_COUNT,
        DATA_SRC,
-       SALES_VALUE_LIST_PRICE,
-       LM_SALES_LP,
-       P3M_SALES_LP,
-       P6M_SALES_LP,
-       P12M_SALES_LP,
-       SIZE_OF_PRICE_LM_LP,
-       SIZE_OF_PRICE_P3M_LP,
-       SIZE_OF_PRICE_P6M_LP,
-       SIZE_OF_PRICE_P12M_LP,
-       SOLDTO_CODE,
+	   SALES_VALUE_LIST_PRICE,
+	   LM_SALES_LP,
+	   P3M_SALES_LP,
+	   P6M_SALES_LP,
+	   P12M_SALES_LP,
+	   SIZE_OF_PRICE_LM_LP,
+	   SIZE_OF_PRICE_P3M_LP,
+	   SIZE_OF_PRICE_P6M_LP,
+	   SIZE_OF_PRICE_P12M_LP,
+	   SOLD_TO_CODE,
 current_timestamp()::date  as crt_dttm
-FROM v_edw_sg_rpt_retail_excellence		--// FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE
+FROM v_edw_kr_rpt_retail_excellence
 WHERE FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(FISC_PER)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
-                   FROM v_edw_sg_rpt_retail_excellence)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM v_edw_sg_rpt_retail_excellence)		--// AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
-                                 FROM itg_query_parameters		--//                                  FROM rg_itg.itg_query_parameters
-                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG')
+                   FROM v_edw_kr_rpt_retail_excellence)
+AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM v_edw_kr_rpt_retail_excellence)
+
 )
 
 

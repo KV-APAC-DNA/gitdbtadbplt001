@@ -6,18 +6,15 @@
 }}
 
 --Import CTE
-with v_edw_sg_rpt_retail_excellence as (
-    select * from {{ source('sgpedw_integration', 'v_edw_sg_rpt_retail_excellence') }}
-),
-itg_query_parameters as (
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+with v_edw_rpt_anz_re as (
+    select * from {{ source('pcfedw_integration', 'v_edw_rpt_anz_re') }}
 ),
 --Logical CTE
 
 --Final CTE
 final as (
 SELECT FISC_YR,
-       CAST(FISC_PER AS numeric(18,0)) AS FISC_PER,		--// INTEGER
+       CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,		--// INTEGER
        CLUSTER,
        MARKET,
        CHANNEL_NAME,
@@ -145,16 +142,14 @@ SELECT FISC_YR,
        SIZE_OF_PRICE_P3M_LP,
        SIZE_OF_PRICE_P6M_LP,
        SIZE_OF_PRICE_P12M_LP,
-       SOLDTO_CODE,
-current_timestamp()::date  as crt_dttm
-FROM v_edw_sg_rpt_retail_excellence		--// FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE
-WHERE FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(FISC_PER)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
-                   FROM v_edw_sg_rpt_retail_excellence)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM v_edw_sg_rpt_retail_excellence)		--// AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
-                                 FROM itg_query_parameters		--//                                  FROM rg_itg.itg_query_parameters
-                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG')
+       --SOLDTO_CODE,
+SYSDATE()		--// SYSDATE
+FROM v_edw_rpt_anz_re
+WHERE market in ('Australia','New Zealand') 
+AND   FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(fisc_per)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
+                   FROM v_edw_rpt_anz_re)
+AND   FISC_PER <= (SELECT MAX(fisc_per) FROM v_edw_rpt_anz_re)
+
 )
 
 

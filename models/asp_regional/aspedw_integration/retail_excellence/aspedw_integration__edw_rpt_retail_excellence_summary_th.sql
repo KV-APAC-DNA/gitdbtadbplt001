@@ -6,11 +6,8 @@
 }}
 
 --Import CTE
-with edw_sg_rpt_retail_excellence_summary_base as (
-    select * from {{ ref('aspedw_integration__edw_sg_rpt_retail_excellence_summary_base') }}
-),
-itg_query_parameters as (
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+with th_edw_rpt_retail_excellence_summary_base as (
+    select * from {{ ref('aspedw_integration__th_edw_rpt_retail_excellence_summary_base') }}
 ),
 --Logical CTE
 
@@ -27,7 +24,7 @@ SELECT FISC_YR,
        SELL_OUT_CHANNEL,
        REGION,
        ZONE_NAME,
-       CITY,
+       null as CITY,
        RETAIL_ENVIRONMENT,
        PROD_HIER_L1,
        PROD_HIER_L2,
@@ -87,17 +84,13 @@ SELECT FISC_YR,
          SUM(size_of_price_lm_lp)  AS size_of_price_lm_lp,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
-        SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp ,
-current_timestamp()::date  as crt_dttm
- FROM edw_sg_rpt_retail_excellence_summary_base	
- WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(fisc_per)::varchar,'YYYYMM')
-                                    FROM edw_sg_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
-AND   FISC_PER <= (SELECT MAX(fisc_per)
-                   FROM edw_sg_rpt_retail_excellence_summary_base)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
-                                 FROM itg_query_parameters
-                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG')
+        SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
+        current_timestamp()::date  as crt_dttm
+ FROM th_edw_rpt_retail_excellence_summary_base
+ WHERE
+
+FISC_PER > TO_CHAR(ADD_MONTHS((SELECT to_date(MAX(fisc_per)::varchar,'YYYYMM') FROM th_edw_rpt_retail_excellence_summary_base),-15),'YYYYMM')	
+  AND FISC_PER <= (select max(fisc_per) FROM th_edw_rpt_retail_excellence_summary_base)	
 GROUP BY FISC_YR,
        FISC_PER,
        CLUSTER,
@@ -133,6 +126,7 @@ GROUP BY FISC_YR,
       P12M_SALES_FLAG,
       MDP_FLAG,
 	  TARGET_COMPLAINCE
+
 )
 
 --Final select

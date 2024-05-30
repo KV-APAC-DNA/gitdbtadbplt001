@@ -6,11 +6,8 @@
 }}
 
 --Import CTE
-with edw_sg_rpt_retail_excellence_summary_base as (
-    select * from {{ ref('aspedw_integration__edw_sg_rpt_retail_excellence_summary_base') }}
-),
-itg_query_parameters as (
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+with edw_kr_rpt_retail_excellence_summary_base as (
+    select * from {{ ref('aspedw_integration__edw_kr_rpt_retail_excellence_summary_base') }}
 ),
 --Logical CTE
 
@@ -20,7 +17,7 @@ SELECT FISC_YR,
        FISC_PER,
        CLUSTER,
        MARKET,
-       data_src,
+       DATA_SRC,
        FLAG_AGG_DIM_KEY,
        DISTRIBUTOR_CODE,
        DISTRIBUTOR_NAME,
@@ -87,23 +84,19 @@ SELECT FISC_YR,
          SUM(size_of_price_lm_lp)  AS size_of_price_lm_lp,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
-        SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp ,
+        SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
 current_timestamp()::date  as crt_dttm
- FROM edw_sg_rpt_retail_excellence_summary_base	
- WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(fisc_per)::varchar,'YYYYMM')
-                                    FROM edw_sg_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
-AND   FISC_PER <= (SELECT MAX(fisc_per)
-                   FROM edw_sg_rpt_retail_excellence_summary_base)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
-                                 FROM itg_query_parameters
-                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG')
+FROM edw_kr_rpt_retail_excellence_summary_base
+WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(FISC_PER)::varchar,'YYYYMM')
+                                     FROM edw_kr_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                      FROM NA_EDW.EDW_KR_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
+AND   FISC_PER <= (SELECT MAX(FISC_PER)
+                   FROM edw_kr_rpt_retail_excellence_summary_base)		--//                    FROM NA_EDW.EDW_KR_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE)
 GROUP BY FISC_YR,
        FISC_PER,
        CLUSTER,
        MARKET,
        FLAG_AGG_DIM_KEY,
-       data_src,
+       DATA_SRC,
        DISTRIBUTOR_CODE,
        DISTRIBUTOR_NAME,
        SELL_OUT_CHANNEL,
@@ -128,11 +121,12 @@ GROUP BY FISC_YR,
        GLOBAL_PRODUCT_CATEGORY,
        GLOBAL_PRODUCT_SUBCATEGORY,
        LM_SALES_FLAG,
-      P3M_SALES_FLAG,
-      P6M_SALES_FLAG,
-      P12M_SALES_FLAG,
-      MDP_FLAG,
-	  TARGET_COMPLAINCE
+       P3M_SALES_FLAG,
+       P6M_SALES_FLAG,
+       P12M_SALES_FLAG,
+       MDP_FLAG,
+	   TARGET_COMPLAINCE
+
 )
 
 --Final select
