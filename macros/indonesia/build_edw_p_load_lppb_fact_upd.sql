@@ -5,7 +5,7 @@
     {{ log("Trying to set the query to fetch the distributor group & month ") }}
     {{ log("===============================================================================================") }}
     {% set get_rows_query %}
-        select distinct dstrbtr_grp_cd,jj_mnth_id from alaksh01_workspace.idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact
+        select distinct dstrbtr_grp_cd,jj_mnth_id from snapidnwks_integration.wks_itg_all_distributor_sellin_sellout_fact
         order by dstrbtr_grp_cd,jj_mnth_id;
     {% endset %}
     {{ log("Try to execute the query to fetch the distributor group & month ") }}
@@ -22,7 +22,7 @@
             {% set delete_from_edw_query %}
             create or replace temporary table wks_lppb_fact_dist_grp_sellin_sellout as
             
-                select distinct dstrbtr_grp_cd,jj_mnth_id from alaksh01_workspace.idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact
+                select distinct dstrbtr_grp_cd,jj_mnth_id from snapidnwks_integration.wks_itg_all_distributor_sellin_sellout_fact
                 where upper(trim(dstrbtr_grp_cd))=upper(trim('{{ i[0] }}'))
                 and jj_mnth_id='{{ i[1] }}'
             ;
@@ -33,7 +33,7 @@
             						 SLS.JJ_MNTH_ID
             					FROM snapidnedw_integration.EDW_ALL_DISTRIBUTOR_LPPB_FACT SLS,
             					   wks_lppb_fact_dist_grp_sellin_sellout SLS1,
-            					   alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
+            					   snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
             					WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
             					AND UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(SLS1.DSTRBTR_GRP_CD))
             					AND SLS.JJ_MNTH_ID=SLS1.JJ_MNTH_ID
@@ -45,7 +45,7 @@
             							   SLS.JJ_MNTH_ID
             						FROM snapidnedw_integration.EDW_ALL_DISTRIBUTOR_LPPB_FACT SLS,
             							 wks_lppb_fact_dist_grp_sellin_sellout SLS1,
-            							 alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
+            							 snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
             						WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
             						 AND UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(SLS1.DSTRBTR_GRP_CD))
             						 AND SLS.JJ_MNTH_ID=SLS1.JJ_MNTH_ID
@@ -57,7 +57,7 @@
             							SLS.JJ_MNTH_ID
             					 FROM snapidnedw_integration.EDW_ALL_DISTRIBUTOR_LPPB_FACT SLS,
             						  wks_lppb_fact_dist_grp_sellin_sellout SLS1,
-            						  alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
+            						  snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
             					 WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
             					  AND UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(SLS1.DSTRBTR_GRP_CD))
             					  AND SLS.JJ_MNTH_ID=SLS1.JJ_MNTH_ID
@@ -70,7 +70,7 @@
                     {{schema}}.idnedw_integration__edw_all_distributor_lppb_fact
                 {% endif %}	
             WHERE (UPPER(TRIM(JJ_SAP_DSTRBTR_ID)),JJ_MNTH_ID) IN (SELECT DISTINCT UPPER(TRIM(DIM.JJ_SAP_DSTRBTR_ID)),SLS.JJ_MNTH_ID
-            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS,alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
+            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS,snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM
             WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD)) AND SLS.JJ_MNTH_ID=DIM.JJ_MNTH_ID
             UNION ALL
             SELECT DISTINCT UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)),SLS.JJ_MNTH_ID FROM wks_lppb_fact_dist_grp_dist_id_delete SLS WHERE UPPER(TRIM(IDENTIFIER))='SISO_SI') AND   UPPER(TRIM(IDENTIFIER))='SISO_SI';
@@ -81,7 +81,7 @@
                     {{schema}}.idnedw_integration__edw_all_distributor_lppb_fact
                 {% endif %}
             WHERE (UPPER(TRIM(JJ_SAP_DSTRBTR_ID)),JJ_MNTH_ID) IN (SELECT DISTINCT UPPER(TRIM(DIM.JJ_SAP_DSTRBTR_ID)),SLS.JJ_MNTH_ID 
-            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS, alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM  
+            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS, snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM  
             WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD)) AND SLS.JJ_MNTH_ID=DIM.JJ_MNTH_ID 
             UNION ALL 
             SELECT DISTINCT UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)),SLS.JJ_MNTH_ID FROM wks_lppb_fact_dist_grp_dist_id_delete SLS WHERE UPPER(TRIM(IDENTIFIER))='SISO_SO') AND  UPPER(TRIM(IDENTIFIER))='SISO_SO';
@@ -92,7 +92,7 @@
                     {{schema}}.idnedw_integration__edw_all_distributor_lppb_fact
                 {% endif %}
             WHERE (UPPER(TRIM(JJ_SAP_DSTRBTR_ID)),UPPER(TRIM(DSTRBTR_GRP_CD)),JJ_MNTH_ID) IN (SELECT DISTINCT UPPER(TRIM(EDD.AREA)),UPPER(TRIM(SLS.DSTRBTR_GRP_CD)),SLS.JJ_MNTH_ID 
-            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS, alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM EDD 
+            FROM wks_lppb_fact_dist_grp_sellin_sellout SLS, snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM EDD 
             WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD)) AND UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(DIM.JJ_SAP_DSTRBTR_ID))  AND  SLS.JJ_MNTH_ID = DIM.JJ_MNTH_ID 
             UNION ALL
             SELECT DISTINCT UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)),UPPER(TRIM(SLS.DSTRBTR_GRP_CD)),SLS.JJ_MNTH_ID FROM wks_lppb_fact_dist_grp_dist_id_delete SLS WHERE UPPER(TRIM(IDENTIFIER))='SISO_NKA_ECOM' ) AND   UPPER(TRIM(IDENTIFIER)) = 'SISO_NKA_ECOM';
@@ -182,8 +182,8 @@
             SUM(0) AS SALEABLE_STOCK_VALUE,
             SUM(0) AS NON_SALEABLE_STOCK_QTY,
             SUM(0) AS NON_SALEABLE_STOCK_VALUE
-            FROM alaksh01_workspace.idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact T1,
-                alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
+            FROM snapidnwks_integration.wks_itg_all_distributor_sellin_sellout_fact T1,
+                snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
                 WKS_LPPB_FACT_DIST_GRP_SELLIN_SELLOUT M
             WHERE T1.JJ_MNTH_ID = M.JJ_MNTH_ID
             AND   M.JJ_MNTH_ID = DIM.JJ_MNTH_ID
@@ -221,8 +221,8 @@
                 SUM(0) AS SALEABLE_STOCK_VALUE,
                 SUM(0) AS NON_SALEABLE_STOCK_QTY,
                 SUM(0) AS NON_SALEABLE_STOCK_VALUE
-            FROM alaksh01_workspace.idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact T1,
-                alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
+            FROM snapidnwks_integration.wks_itg_all_distributor_sellin_sellout_fact T1,
+                snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
                 snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
                 WKS_LPPB_FACT_DIST_GRP_SELLIN_SELLOUT M
             WHERE T1.JJ_MNTH_ID = M.JJ_MNTH_ID
@@ -265,8 +265,8 @@
                 SUM(0) AS SALEABLE_STOCK_VALUE,
                 SUM(0) AS NON_SALEABLE_STOCK_QTY,
                 SUM(0) AS NON_SALEABLE_STOCK_VALUE
-            FROM ALAKSH01_WORKSPACE.IDNEDW_INTEGRATION__EDW_ALL_DISTRIBUTOR_LPPB_FACT T1,
-                (SELECT DISTINCT DSTRBTR_GRP_CD,JJ_MNTH_ID FROM alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER) DIM,
+            FROM SNAPIDNEDW_INTEGRATION.EDW_ALL_DISTRIBUTOR_LPPB_FACT T1,
+                (SELECT DISTINCT DSTRBTR_GRP_CD,JJ_MNTH_ID FROM snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER) DIM,
                 WKS_LPPB_FACT_DIST_GRP_SELLIN_SELLOUT M
             WHERE T1.JJ_MNTH_ID = TO_CHAR(ADD_MONTHS(TO_DATE(M.JJ_MNTH_ID,'YYYYMM'),-1),'YYYYMM')
             AND   M.JJ_MNTH_ID = DIM.JJ_MNTH_ID
@@ -407,8 +407,8 @@
                 SUM(0) AS SALEABLE_STOCK_VALUE,
                 SUM(0) AS NON_SALEABLE_STOCK_QTY,
                 SUM(0) AS NON_SALEABLE_STOCK_VALUE
-                FROM alaksh01_workspace.idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact T1,
-                    alaksh01_workspace.idnwks_integration__WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
+                FROM snapidnwks_integration.wks_itg_all_distributor_sellin_sellout_fact T1,
+                    snapidnwks_integration.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_MASTER DIM,
                     snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
                     WKS_LPPB_FACT_DIST_GRP_SELLIN_SELLOUT M
                 WHERE T1.JJ_MNTH_ID = M.JJ_MNTH_ID

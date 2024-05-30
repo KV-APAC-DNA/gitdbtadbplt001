@@ -13,17 +13,17 @@ with source as
 final as
 (
     select
-    fdesc,
-    scc,
-    scc_name,
-    sales_qty,
-    net_sales,
-    Share,
-    pos_cust,
-    yearmonth,
-    run_id,
-    current_timestamp()::timestamp_ntz AS crtd_dttm,
-    filename
+    fdesc::varchar(100) as fdesc,
+    scc::varchar(50) as scc,
+    scc_name::varchar(200) as scc_name,
+    sales_qty::number(18,2) as sales_qty,
+    net_sales::number(18,2) as net_sales,
+    share::number(10,2) as share,
+    pos_cust::varchar(50) as pos_cust,
+    yearmonth::varchar(10) as yearmonth,
+    run_id::number(14,0) as run_id,
+    current_timestamp()::timestamp_ntz as crtd_dttm,
+    filename::varchar(100) as filename
     from source
 )
 select * from final

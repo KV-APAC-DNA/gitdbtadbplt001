@@ -19,26 +19,26 @@ with source as
 final as
 (
     select
-    trim(outlet_id) as outlet_id,
-	trim(outlet_custom_code) as outlet_custom_code,
-	trim(outlet_name) as outlet_name,
-	trim(province) as province,
-	trim(city) as city,
-	trim(channel) as channel,
-	trim(merchandiser_id) as merchandiser_id,
-	trim(merchandiser_name) as merchandiser_name,
-	trim(cust_group) as cust_group,
-	trim(address) as address,
-	trim(jnj_year) as jnj_year,
-	trim(jnj_month) as jnj_month,
-	trim(jnj_week) as jnj_week,
-	trim(day_name) as day_name,
-	cast(trim(input_date) as date) as input_date,
-	trim(franchise) as franchise,
-	trim(photo_link) as photo_link,
-    null as description,
-	file_name,
-    current_timestamp()::timestamp_ntz AS crt_dttm
+    trim(outlet_id)::varchar(10) as outlet_id,
+    trim(outlet_custom_code)::varchar(10) as outlet_custom_code,
+    trim(outlet_name)::varchar(100) as outlet_name,
+    trim(province)::varchar(50) as province,
+    trim(city)::varchar(50) as city,
+    trim(channel)::varchar(50) as channel,
+    trim(merchandiser_id)::varchar(20) as merchandiser_id,
+    trim(merchandiser_name)::varchar(50) as merchandiser_name,
+    trim(cust_group)::varchar(50) as cust_group,
+    trim(address)::varchar(255) as address,
+    trim(jnj_year)::varchar(4) as jnj_year,
+    trim(jnj_month)::varchar(2) as jnj_month,
+    trim(jnj_week)::varchar(5) as jnj_week,
+    trim(day_name)::varchar(20) as day_name,
+    cast(trim(input_date) as date) as input_date,
+    trim(franchise)::varchar(50) as franchise,
+    trim(photo_link)::varchar(100) as photo_link,
+    trim(description)::varchar(1000) as description,
+    trim(file_name)::varchar(100) as file_name,
+    sysdate() as crt_dttm
     from source
 )
 select * from final
