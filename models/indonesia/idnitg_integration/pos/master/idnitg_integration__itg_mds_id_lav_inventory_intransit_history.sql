@@ -11,7 +11,7 @@ sdl_mds_id_lav_inventory_intransit as
 ),
 itg_mds_id_lav_inventory_intransit as
 (
-    select * from idnitg_integration.itg_mds_id_lav_inventory_intransit
+    select * from {{ ref('idnitg_integration__itg_mds_id_lav_inventory_intransit') }}
 ),
 final as 
 (

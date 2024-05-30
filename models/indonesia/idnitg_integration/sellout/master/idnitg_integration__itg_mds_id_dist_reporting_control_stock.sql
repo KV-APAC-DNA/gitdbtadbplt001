@@ -61,7 +61,7 @@ final as
 	effective_from::number(31,0) as effective_from,
 	effective_to::number(31,0) as effective_to,
 	source_type::varchar(30) as source_type,
-	crtd_dttm::timestamp_ntz(9) as crtd_dttm
+	crtd_dttm as crtd_dttm
     from trans
     order by distributor_cd,
     effective_from

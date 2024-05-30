@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: idnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapidnsdl_raw
+    schema: idnsdl_raw
     quoting:
       database: false
       schema: false
@@ -120,3 +120,16 @@ sources:
 
     - name: sdl_mds_id_distributor_customer_update
       tags: ["id_mds_sdl_itg_load_dist_cust_dim","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["cust_id","sales_office_id_jnj"]
+              name: TRATBL_sdl_mds_id_distributor_customer_update__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["effective_to","cust_id","sales_office_id_jnj"]
+              name: TRATBL_sdl_mds_id_distributor_customer_update__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration

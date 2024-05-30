@@ -1,7 +1,7 @@
 with
 wks_indonesia_lastnmonths as 
 (
-    select * from idnwks_integration.wks_indonesia_lastnmonths
+    select * from {{ ref('idnwks_integration__wks_indonesia_lastnmonths') }}
 ),
 wks_indonesia_base as 
 (

@@ -16,7 +16,7 @@ models:
   - name: idnitg_integration__itg_mcs_gt
     config:
       alias: itg_mcs_gt
-      tags: ["id_mds_itg_load","ingestion"]
+      tags: ["id_mds_itg_load","transformation"]
   - name: idnitg_integration__itg_npi_sku_list
     config:
       alias: itg_npi_sku_list

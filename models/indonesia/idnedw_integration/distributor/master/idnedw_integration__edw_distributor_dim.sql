@@ -4,11 +4,11 @@ with source as
 ),
 itg_distributor_province_dim as 
 (
-    select * from snapidnitg_integration.itg_distributor_province_dim
+    select * from {{ ref('idnitg_integration__itg_distributor_province_dim') }}
 ),
 itg_distributor_group_dim as 
 (
-    select * from snapidnitg_integration.itg_distributor_group_dim
+    select * from {{ ref('idnitg_integration__itg_distributor_group_dim') }}
 ),
 final as 
 (

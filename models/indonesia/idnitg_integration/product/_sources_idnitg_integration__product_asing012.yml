@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: idnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapidnsdl_raw
+    schema: idnsdl_raw
     quoting:
       database: false
       schema: false

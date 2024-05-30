@@ -1,23 +1,23 @@
 with 
 itg_all_distributor_sellout_sales_fact as 
 (
-    select * from idnitg_integration.itg_all_distributor_sellout_sales_fact
+    select * from {{ ref('idnitg_integration__itg_all_distributor_sellout_sales_fact') }}
 ),
 itg_all_non_ivy_distributor_sellout_sales_fact as 
 (
-    select * from idnitg_integration.itg_all_non_ivy_distributor_sellout_sales_fact
+    select * from {{ ref('idnitg_integration__itg_all_non_ivy_distributor_sellout_sales_fact') }}
 ),
 itg_all_ivy_distributor_sellout_sales_fact as 
 (
-    select * from idnitg_integration.itg_all_ivy_distributor_sellout_sales_fact
+    select * from {{ ref('idnitg_integration__itg_all_ivy_distributor_sellout_sales_fact') }}
 ),
 edw_distributor_dim as 
 (
-    select * from idnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 itg_all_distributor_sellin_sales_fact as 
 (
-    select * from idnitg_integration.itg_all_distributor_sellin_sales_fact
+    select * from {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }}
 ),
 edw_time_dim as 
 (
@@ -37,7 +37,7 @@ edw_product_dim as
 ),
 edw_vw_os_material_dim as 
 (
-    select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
+    select * from {{ ref('idnedw_integration__edw_vw_id_material_dim') }}
 ),
 edw_vw_greenlight_skus as 
 (
@@ -45,7 +45,7 @@ edw_vw_greenlight_skus as
 ),
 edw_vw_os_customer_dim
 as (
-    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+    select * from {{ ref('idnedw_integration__edw_vw_id_customer_dim') }}
 ),
 trans as 
 (

@@ -1,10 +1,10 @@
 with edw_distributor_ivy_user_master as 
 (
-    select * from idnedw_integration.edw_distributor_ivy_user_master
+    select * from {{ ref('idnedw_integration__edw_distributor_ivy_user_master') }}
 ),
 itg_distributor_salesman_dim as 
 (
-    select * from idnitg_integration.itg_distributor_salesman_dim
+    select * from {{ ref('idnitg_integration__itg_distributor_salesman_dim') }}
 ),
 final3 as
 (

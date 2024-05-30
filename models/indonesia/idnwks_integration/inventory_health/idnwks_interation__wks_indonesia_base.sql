@@ -1,7 +1,7 @@
 with 
 edw_indonesia_lppb_analysis as 
 (   
-    select * from idnedw_integration.edw_indonesia_lppb_analysis
+    select * from {{ ref('idnedw_integration__edw_indonesia_lppb_analysis') }}
 ),
 edw_vw_os_time_dim as 
 (

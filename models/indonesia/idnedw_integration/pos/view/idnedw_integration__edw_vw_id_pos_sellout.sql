@@ -1,79 +1,79 @@
 with 
 itg_id_pos_carrefour_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_carrefour_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_carrefour_sellout') }}
 ),
 itg_id_pos_diamond_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_diamond_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_diamond_sellout') }}
 ),
 edw_distributor_group_dim as 
 (
-  select * from idnedw_integration__edw_distributor_group_dim
+  select * from {{ ref('idnedw_integration__edw_distributor_group_dim') }}
 ),
 itg_mds_id_pos_cust_prod_mapping as 
 (
-  select * from idnitg_integration.itg_mds_id_pos_cust_prod_mapping
+  select * from {{ ref('idnitg_integration__itg_mds_id_pos_cust_prod_mapping') }}
 ),
 itg_id_pos_idm_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_idm_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_idm_sellout') }}
 ),
 itg_id_pos_igr_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_igr_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_igr_sellout') }}
 ),
 itg_id_pos_midi_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_midi_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_midi_sellout') }}
 ),
 itg_id_pos_sat_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_sat_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_sat_sellout') }}
 ),
 edw_product_dim as 
 (
-  select * from idnedw_integration.edw_product_dim
+  select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 itg_id_pos_superindo_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_superindo_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_superindo_sellout') }}
 ),
 itg_id_pos_watson_sellout as 
 (
-  select * from idnitg_integration.itg_id_pos_watson_sellout
+  select * from {{ ref('idnitg_integration__itg_id_pos_watson_sellout') }}
 ),
 itg_id_pos_idm_sellout_qty as 
 (
-    select * from  idnitg_integration.itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('QTY'::character varying)::text
+    select * from  itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('QTY'::character varying)::text
 ),
 itg_id_pos_idm_sellout_idr as 
 (
-    select * from  idnitg_integration.itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('IDR'::character varying)::text
+    select * from  itg_id_pos_idm_sellout where trim((itg_id_pos_idm_sellout.type)::text) = ('IDR'::character varying)::text
 ),
 itg_id_pos_igr_sellout_qty as 
 (
-    select * from idnitg_integration.itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('QTY'::character varying)::text
+    select * from itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('QTY'::character varying)::text
 ),
 itg_id_pos_igr_sellout_idr as 
 (
-    select * from idnitg_integration.itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('IDR'::character varying)::text
+    select * from itg_id_pos_igr_sellout where trim((itg_id_pos_igr_sellout.type)::text) = ('IDR'::character varying)::text
 ),
 itg_id_pos_midi_sellout_qty as 
 (
-    select * from idnitg_integration.itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('QTY'::character varying)::text
+    select * from itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('QTY'::character varying)::text
 ),
 itg_id_pos_midi_sellout_idr as 
 (
-    select * from idnitg_integration.itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('VALUE'::character varying)::text
+    select * from itg_id_pos_midi_sellout where trim((itg_id_pos_midi_sellout.type)::text) = ('VALUE'::character varying)::text
 ),
 itg_id_pos_sat_sellout_qty as 
 (
-    select * from idnitg_integration.itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('QTY'::character varying)::text
+    select * from itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('QTY'::character varying)::text
 ),
 itg_id_pos_sat_sellout_idr as 
 (
-    select * from idnitg_integration.itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('VALUE'::character varying)::text
+    select * from itg_id_pos_sat_sellout where trim((itg_id_pos_sat_sellout.type)::text) = ('VALUE'::character varying)::text
 ),
 final as 
 (

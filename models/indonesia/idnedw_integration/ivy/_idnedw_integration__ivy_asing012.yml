@@ -9,7 +9,3 @@ models:
     config:
       alias: edw_distributor_ivy_user_master
       tags: ["id_ivy_usermaster","transformation"]
-  - name: idnedw_integration__edw_distributor_channel_dim
-    config:
-      alias: edw_distributor_channel_dim
-      tags: ["id_mds_itg_load","transformation"]

@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: idnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapidnsdl_raw
+    schema: idnsdl_raw
     quoting:
       database: false
       schema: false
@@ -50,7 +50,7 @@ sources:
                 store_failures: true
                 schema: idnwks_integration
     - name: sdl_mds_id_lav_mcs_list
-      tags: ["id_mds_itg_load","ingestion"]
+      tags: ["id_mds_itg_load","transformation"]
     - name: sdl_mds_id_lav_npi_sku_list
       tags: ["id_mds_itg_load","ingestion"]
       tests:

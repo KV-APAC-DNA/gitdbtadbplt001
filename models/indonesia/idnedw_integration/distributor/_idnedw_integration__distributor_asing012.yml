@@ -21,3 +21,7 @@ models:
     config:
       alias: edw_indonesia_noo_analysis
       tags: ["id_noo_analysis","transformation"]
+  - name: idnedw_integration__edw_distributor_channel_dim
+    config:
+      alias: edw_distributor_channel_dim
+      tags: ["id_mds_itg_load","transformation"]

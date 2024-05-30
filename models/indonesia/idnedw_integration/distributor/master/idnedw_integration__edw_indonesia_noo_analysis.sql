@@ -1,27 +1,27 @@
 with 
 wks_indonesia_noo_analysis as
 (
-    select * from idnwks_integration.wks_indonesia_noo_analysis
+    select * from {{ ref('idnwks_integration__wks_indonesia_noo_analysis') }}
 ),
 edw_product_dim as 
 (
-    select * from idnedw_integration.edw_product_dim
+    select * from  select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_distributor_dim as 
 (
-    select * from idnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_time_dim as 
 (
-    select * from idnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 itg_target_dist_brand_channel as 
 (
-    select * from idnitg_integration.itg_target_dist_brand_channel
+    select * from select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
 ),
 itg_mcs_gt as 
 (
-    select * from idnitg_integration.itg_mcs_gt
+    select * from {{ ref('idnitg_integration__itg_mcs_gt') }}
 ),
 trans as 
 (

@@ -1,11 +1,11 @@
 with 
 wks_indonesia_siso_propagate_final as 
 (
-    select * from idnwks_integration.wks_indonesia_siso_propagate_final
+    select * from {{ ref('idnwks_integration__wks_indonesia_siso_propagate_final') }}
 ),
 edw_indonesia_lppb_analysis as 
 (
-    select * from idnedw_integration.edw_indonesia_lppb_analysis
+    select * from {{ ref('idnedw_integration__edw_indonesia_lppb_analysis') }}
 ),
 edw_vw_os_time_dim as 
 (
@@ -17,14 +17,14 @@ edw_product_dim as
 ),
 edw_vw_os_material_dim as 
 (
-    select * from {{ ref('phledw_integration__edw_vw_ph_material_dim') }}
+    select * from {{ ref('idnedw_integration__edw_vw_id_material_dim') }}
 ),
 edw_vw_greenlight_skus as 
 (
     select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
 edw_vw_os_customer_dim as (
-    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+    select * from {{ ref('idnedw_integration__edw_vw_id_customer_dim') }}
 ),
 edw_material_dim as 
 (
@@ -40,7 +40,7 @@ edw_distributor_dim as
 ),
 wks_indonesia_inventory_health_analysis_propagation_prestep as 
 (
-    select * from idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_prestep
+    select * from {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_prestep') }}
 ),
 v_edw_customer_sales_dim as 
 (
