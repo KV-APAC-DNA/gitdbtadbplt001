@@ -183,7 +183,7 @@ inv as (
 final as (
     SELECT y.yr AS fisc_yr,
         y.mo AS fisc_mo,
-        x.ctry_cd,
+        y.ctry_cd,
         CASE
             WHEN (x.ctry_nm IS NOT NULL) THEN x.ctry_nm
             WHEN (
