@@ -17,4 +17,16 @@ models:
     config:
       alias: wks_indonesia_base_detail
       tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_prestep
+    config:
+      alias: wks_indonesia_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_inventory_health_analysis_propagation
+    config:
+      alias: wks_indonesia_inventory_health_analysis_propagation
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_sellout_for_inv_analysis
+    config:
+      alias: wks_indonesia_sellout_for_inv_analysis
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
 
