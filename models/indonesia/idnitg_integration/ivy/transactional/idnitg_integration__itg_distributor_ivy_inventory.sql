@@ -4,8 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["create_dt"],
-        pre_hook = "delete from {{this}} where CREATE_DT IN (SELECT DISTINCT(trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD')))))
- from {{ source('idnsdl_raw', 'sdl_distributor_ivy_inventory') }});"
+        pre_hook = " {% if is_incremental() %}
+        delete from {{this}} where CREATE_DT IN (SELECT DISTINCT(trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD')))))
+ from {{ source('idnsdl_raw', 'sdl_distributor_ivy_inventory') }});
+        {% endif %}"
     )
 }}
 with source as

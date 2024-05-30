@@ -3,9 +3,11 @@
     (
         materialized="incremental",
         incremental_strategy= "append",     
-        pre_hook = "DELETE
+        pre_hook = " {% if is_incremental() %}
+        DELETE
         FROM {{this}} 
-        WHERE 0 != (SELECT COUNT(*) FROM {{source('idnsdl_raw','sdl_mds_id_lav_sellin_target')}});"
+        WHERE 0 != (SELECT COUNT(*) FROM {{source('idnsdl_raw','sdl_mds_id_lav_sellin_target')}});
+        {% endif %}"
     )
 }}
 with source as
@@ -33,8 +35,6 @@ final as
 		jj_year_month::varchar(30) as jj_year_month,
         replace(TRIM(niv),',','.')::number(25,7) as niv,
         replace(TRIM(hna),',','.')::number(25,7) as hna,
-		--niv:: number(25,7) as niv,
-		--hna:: number(25,7) as hna,
 		enterdatetime::timestamp_ntz(9) as enterdatetime,
 		lastchgdatetime::timestamp_ntz(9) as lastchgdatetime
     from source

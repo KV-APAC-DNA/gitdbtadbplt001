@@ -3,9 +3,11 @@
     (
         materialized="incremental",
         incremental_strategy= "append",     
-        pre_hook = "DELETE
+        pre_hook = "{% if is_incremental() %}
+        DELETE
         FROM {{this}} 
-        WHERE 0 != (SELECT COUNT(*) FROM {{source('idnsdl_raw','sdl_mds_id_dms_dist_margin_control')}});"
+        WHERE 0 != (SELECT COUNT(*) FROM {{source('idnsdl_raw','sdl_mds_id_dms_dist_margin_control')}});
+        {% endif %}"
     )
 }}
 
@@ -23,8 +25,6 @@ final as
 	trim(margin):: varchar(50) as margin,
     TRIM(effective_from)::varchar(6) as effective_from,
     nvl(effective_to,'999912')::varchar(6) as effective_to,
-	--effective_from::varchar(6) as effective_from,
-	--effective_to::varchar(6) as effective_to,
 	current_timestamp()::timestamp_ntz as crtd_dttm
     from source
 )
