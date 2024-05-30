@@ -1,5 +1,5 @@
 with source as (
-    select * from  DEV_DNA_CORE.SNAPIDNITG_INTEGRATION.ITG_ID_PS_SECONDARY_DISPLAY
+    select * from {{ ref('idnitg_integration__itg_id_ps_secondary_display') }} 
 ),
 final as
 (

@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM_TEMP
+    select * from {{ source('idnsdl_raw', 'sdl_distributor_customer_dim') }} 
 ),
 final as(
     select 

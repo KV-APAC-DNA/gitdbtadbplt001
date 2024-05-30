@@ -1,5 +1,5 @@
 with wks_indonesia_regional_sellout as (
-    select * from dev_dna_core.idnwks_integration.wks_indonesia_regional_sellout
+    select * from {{ ref('idnwks_integration__wks_indonesia_regional_sellout') }}
 ),
 
 transformed as (

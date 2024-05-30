@@ -59,4 +59,4 @@ transformed as(
         NULL::timestamp_ntz(9) as UPDT_DTTM,
     from source
 )
-select count(*) from transformed
+select *from transformed

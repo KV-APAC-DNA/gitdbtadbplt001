@@ -1,17 +1,17 @@
 with edw_indonesia_noo_analysis as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_INDONESIA_NOO_ANALYSIS
+select * from {{ ref('idnedw_integration__edw_indonesia_noo_analysis') }}
 ),
 edw_vw_os_time_dim as(
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_id_pos_sellout as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_ID_POS_SELLOUT
+select * from {{ ref('idnedw_integration__edw_id_pos_sellout') }}
 ),
 itg_query_parameters as(
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_QUERY_PARAMETERS
+select * from {{ source('phlitg_integration', 'itg_query_parameters') }}
 ),
 itg_mds_ap_customer360_config as(
-select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 union1 as(
 	SELECT 'SELL-OUT' AS DATA_SRC,

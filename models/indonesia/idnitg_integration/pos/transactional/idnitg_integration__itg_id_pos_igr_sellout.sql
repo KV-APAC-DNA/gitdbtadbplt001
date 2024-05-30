@@ -4,7 +4,9 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["filename"],
-        pre_hook="delete from {{this}} where filename  in (select distinct filename from {{ source('idnsdl_raw', 'sdl_id_pos_igr_sellout') }});"
+        pre_hook="{% if is_incremental() %}
+                delete from {{this}} where filename  in (select distinct filename from {{ source('idnsdl_raw', 'sdl_id_pos_igr_sellout') }});
+                {% endif %}"
     )
 }}
 

@@ -1,14 +1,14 @@
 with source as (
-    select * from  DEV_DNA_CORE.SNAPIDNITG_INTEGRATION.ITG_DISTRIBUTOR_IVY_OUTLET_MASTER
+    select * from {{ ref('idnitg_integration__itg_distributor_ivy_outlet_master') }} 
 ),
 EDW_DISTRIBUTOR_DIM as (
-    select * from  DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
+    select * from  {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 EDW_DISTRIBUTOR_CUSTOMER_DIM as (
-    select * from  DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM
+    select * from  {{ ref('idnedw_integration__edw_distributor_customer_dim') }}
 ),
 edw_channelgroup_metadata as (
-    select * from  DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.edw_channelgroup_metadata
+    select * from  {{ source('idnedw_integration', 'edw_channelgroup_metadata') }}
 ),
 transformed as
 (

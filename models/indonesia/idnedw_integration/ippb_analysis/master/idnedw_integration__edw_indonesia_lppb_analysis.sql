@@ -1,20 +1,20 @@
-with EDW_ALL_DISTRIBUTOR_LPPB_FACT as(
-	select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_ALL_DISTRIBUTOR_LPPB_FACT--13264369
+with edw_all_distributor_lppb_fact as(
+	select * from {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }}
 ),
 EDW_TIME_DIM as(
-	select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM--5838
+	select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 itg_target_dist_brand_channel as(
-	select * from DEV_DNA_CORE.IDNITG_INTEGRATION.ITG_TARGET_DIST_BRAND_CHANNEL--68196
+	select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
 ),
 edw_distributor_dim as(
-	select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.edw_distributor_dim--1187
+	select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as(
-	select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM --1674
+	select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 itg_target_bp_s_op as(
-	select * from DEV_DNA_CORE.IDNITG_INTEGRATION.itg_target_bp_s_op --2076
+	select * from {{ ref('idnitg_integration__itg_target_bp_s_op') }}
 ),
 
 union1 as(
@@ -932,5 +932,78 @@ GROUP BY JJ_YEAR,
          JJ_MNTH_LONG,
          TRGT_BP_S_OP_FLAG,
          TRGT_DIST_BRND_CHNL_FLAG
+),
+final as(
+    select 
+    	jj_year::number(18,0) as jj_year,
+        jj_qrtr::varchar(24) as jj_qrtr,
+        jj_mnth_id::number(18,0) as jj_mnth_id,
+        jj_mnth::varchar(25) as jj_mnth,
+        jj_mnth_desc::varchar(20) as jj_mnth_desc,
+        jj_mnth_no::number(18,0) as jj_mnth_no,
+        dstrbtr_grp_cd::varchar(25) as dstrbtr_grp_cd,
+        dstrbtr_grp_nm::varchar(155) as dstrbtr_grp_nm,
+        jj_sap_dstrbtr_id::varchar(75) as jj_sap_dstrbtr_id,
+        jj_sap_dstrbtr_nm::varchar(75) as jj_sap_dstrbtr_nm,
+        dstrbtr_cd_nm::varchar(72) as dstrbtr_cd_nm,
+        area::varchar(50) as area,
+        region::varchar(50) as region,
+        bdm_nm::varchar(50) as bdm_nm,
+        rbm_nm::varchar(50) as rbm_nm,
+        dstrbtr_status::varchar(50) as dstrbtr_status,
+        jj_sap_prod_id::varchar(50) as jj_sap_prod_id,
+        jj_sap_prod_desc::varchar(100) as jj_sap_prod_desc,
+        jj_sap_upgrd_prod_id::varchar(50) as jj_sap_upgrd_prod_id,
+        jj_sap_upgrd_prod_desc::varchar(100) as jj_sap_upgrd_prod_desc,
+        jj_sap_cd_mp_prod_id::varchar(50) as jj_sap_cd_mp_prod_id,
+        jj_sap_cd_mp_prod_desc::varchar(100) as jj_sap_cd_mp_prod_desc,
+        sap_prod_code_name::varchar(152) as sap_prod_code_name,
+        franchise::varchar(75) as franchise,
+        brand::varchar(75) as brand,
+        sku_grp_or_variant::varchar(50) as sku_grp_or_variant,
+        sku_grp1_or_variant1::varchar(50) as sku_grp1_or_variant1,
+        sku_grp2_or_variant2::varchar(50) as sku_grp2_or_variant2,
+        sku_grp3_or_variant3::varchar(62) as sku_grp3_or_variant3,
+        prod_status::varchar(50) as prod_status,
+        strt_inv_qty::number(18,4) as strt_inv_qty,
+        sellin_qty::number(18,4) as sellin_qty,
+        sellout_qty::number(18,4) as sellout_qty,
+        end_inv_qty::number(18,4) as end_inv_qty,
+        strt_inv_val::number(18,4) as strt_inv_val,
+        gross_strt_inv_val::number(18,4) as gross_strt_inv_val,
+        sellin_val::number(18,4) as sellin_val,
+        gross_sellin_val::number(18,4) as gross_sellin_val,
+        sellout_val::number(18,4) as sellout_val,
+        gross_sellout_val::number(18,4) as gross_sellout_val,
+        end_inv_val::number(18,4) as end_inv_val,
+        gross_end_inv_val::number(18,4) as gross_end_inv_val,
+        sellout_last_two_mnths_qty::number(18,4) as sellout_last_two_mnths_qty,
+        sellout_last_two_mnths_val::number(18,4) as sellout_last_two_mnths_val,
+        gross_sellout_last_two_mnths_val::number(18,4) as gross_sellout_last_two_mnths_val,
+        stock_on_hand_qty::number(18,4) as stock_on_hand_qty,
+        stock_on_hand_val::number(18,4) as stock_on_hand_val,
+        variant::varchar(75) as variant,
+        jj_mnth_long::varchar(75) as jj_mnth_long,
+        bp_qtn::number(18,4) as bp_qtn,
+        bp_val::number(18,4) as bp_val,
+        s_op_qtn::number(18,4) as s_op_qtn,
+        s_op_val::number(18,4) as s_op_val,
+        trgt_hna::number(38,4) as trgt_hna,
+        trgt_niv::number(38,4) as trgt_niv,
+        trgt_bp_s_op_flag::varchar(1) as trgt_bp_s_op_flag,
+        trgt_dist_brnd_chnl_flag::varchar(1) as trgt_dist_brnd_chnl_flag,
+        saleable_stock_qty::number(18,4) as saleable_stock_qty,
+        saleable_stock_value::number(18,4) as saleable_stock_value,
+        non_saleable_stock_qty::number(18,4) as non_saleable_stock_qty,
+        non_saleable_stock_value::number(18,4) as non_saleable_stock_value,
+        intransit_qty::number(18,4) as intransit_qty,
+        intransit_hna::number(18,4) as intransit_hna,
+        intransit_niv::number(18,4) as intransit_niv,
+        stock_on_hand_niv::number(18,4) as stock_on_hand_niv,
+        p3m_sellout_val::number(18,4) as p3m_sellout_val,
+        p3m_gross_sellout_val::number(18,4) as p3m_gross_sellout_val,
+        p6m_sellout_val::number(18,4) as p6m_sellout_val,
+        p6m_gross_sellout_val::number(18,4) as p6m_gross_sellout_val
+    from transformed
 )
-select * from transformed
+select * from final

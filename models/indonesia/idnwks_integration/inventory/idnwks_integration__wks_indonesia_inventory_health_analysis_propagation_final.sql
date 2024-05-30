@@ -1,14 +1,13 @@
 with wks_indonesia_inventory_health_analysis_propagation as(
-SELECT *
-	FROM DEV_DNA_CORE.ASPWKS_INTEGRATION.WKS_INDONESIA_INVENTORY_HEALTH_ANALYSIS_PROPAGATION_FINAL
+    SELECT * FROM {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation') }}
 ), 
 wkly_avg as(
 	SELECT *
-	FROM DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_INDONESIA_SELLOUT_FOR_INV_ANALYSIS
+	FROM {{ ref('idnwks_integration__wks_indonesia_sellout_for_inv_analysis') }}
 ), 
 healthy_inv as(
 	SELECT *
-	FROM DEV_DNA_CORE.IDNWKS_INTEGRATION.wks_indonesia_inventory_healthy_unhealthy_analysis
+	FROM {{ ref('idnwks_integration__wks_indonesia_inventory_healthy_unhealthy_analysis') }}
 ),
 
 transformed as(

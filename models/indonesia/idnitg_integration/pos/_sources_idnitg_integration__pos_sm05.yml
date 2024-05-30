@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_id_pos_guardian_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_guardian","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"] 
@@ -34,7 +34,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_idm_sellout
-      tags: ["","ingestion"]
+      tags: ["id_pos_idm","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "\"values\"", "yearmonth"] 
@@ -59,7 +59,7 @@ sources:
         #       schema: idnwks_integration
 
     - name: sdl_id_pos_idm_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_idm","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"] 
@@ -83,7 +83,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_igr_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_idm","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"] 
@@ -107,7 +107,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_igr_sellout
-      tags: ["","ingestion"]
+      tags: ["id_pos_idm","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
@@ -131,7 +131,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_otc_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_matahari","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"] 
@@ -155,7 +155,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_jb_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_matahari","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"] 
@@ -179,7 +179,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_beauty_stock
-      tags: ["","ingestion"]
+      tags: ["id_pos_matahari","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"] 
@@ -203,9 +203,9 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_daily_sat_sellout
-      tags: ["","ingestion"]
+      tags: ["id_pos_daily_sat_sellout","transformation"]
     - name: sdl_id_pos_daily_basedline_sellout
-      tags: ["","ingestion"]
+      tags: ["id_pos_daily_basedline_sellout","ingestion"]
       tests:
         - test_null:
             select_columns: ["key_account", "plu", "month", "year", "roi_month"] 

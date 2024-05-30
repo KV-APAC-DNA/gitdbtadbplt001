@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_VW_ID_POS_SELLOUT 
+    select * from {{ ref('idnedw_integration__edw_vw_id_pos_sellout') }} 
 ),
 final as(
     select 

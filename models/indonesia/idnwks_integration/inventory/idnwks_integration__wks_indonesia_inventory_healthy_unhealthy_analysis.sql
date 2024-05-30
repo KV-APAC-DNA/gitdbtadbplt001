@@ -1,20 +1,20 @@
 with wks_Indonesia_siso_propagate_final as(
-select * from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_INDONESIA_SISO_PROPAGATE_FINAL
+select * from {{ ref('idnwks_integration__wks_indonesia_siso_propagate_final') }}
 ),
-EDW_VW_OS_MATERIAL_DIM as(
-select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_VW_OS_MATERIAL_DIM
+edw_vw_id_material_dim as(
+select * from {{ ref('idnedw_integration__edw_vw_id_material_dim') }}
 ),
 edw_product_dim as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM
+select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_material_dim as(
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-EDW_VW_OS_CUSTOMER_DIM as(
-select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_VW_OS_CUSTOMER_DIM
+edw_vw_id_customer_dim as(
+select * from {{ ref('idnedw_integration__edw_vw_id_customer_dim') }}
 ),
 EDW_DISTRIBUTOR_DIM as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
+select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 siso as(
 	SELECT *
@@ -54,7 +54,7 @@ egph as(
 				GPH_PROD_SUBCTGRY,
 				--GPH_PROD_PUT_UP_DESC,
 				'999912' AS effective_to
-			FROM EDW_VW_OS_MATERIAL_DIM
+			FROM edw_vw_id_material_dim
 			WHERE CNTRY_KEY = 'ID'
 			
 			UNION ALL
@@ -73,7 +73,7 @@ egph as(
 			FROM edw_product_dim
 			WHERE LTRIM(jj_sap_prod_id, 0) NOT IN (
 					SELECT LTRIM(sap_matl_num, 0)
-					FROM EDW_VW_OS_MATERIAL_DIM
+					FROM edw_vw_id_material_dim
 					WHERE CNTRY_KEY = 'ID'
 					)
 			) product
@@ -120,7 +120,7 @@ cust_hier as(
 				RETAIL_ENV
 			FROM (
 				SELECT *
-				FROM EDW_VW_OS_CUSTOMER_DIM
+				FROM edw_vw_id_customer_dim
 				WHERE SAP_CNTRY_CD = 'ID'
 				) AS T1,
 				EDW_DISTRIBUTOR_DIM AS T2

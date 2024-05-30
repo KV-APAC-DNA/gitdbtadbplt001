@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_ID_PS_PLANOGRAM
+    select * from  {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }}
 ),
 final as(
     select 

@@ -1,11 +1,11 @@
 with itg_all_distributor_sellin_sales_fact as(
-select * from DEV_DNA_CORE.IDNITG_INTEGRATION.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT
+select * from {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }}
 ),
 edw_time_dim as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM
+select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_billing_fact as(
-select * from DEV_DNA_CORE.ASPEDW_Integration.EDW_BILLING_FACT
+select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 union1 as(
       SELECT to_date(t1.bill_dt) AS bill_dt

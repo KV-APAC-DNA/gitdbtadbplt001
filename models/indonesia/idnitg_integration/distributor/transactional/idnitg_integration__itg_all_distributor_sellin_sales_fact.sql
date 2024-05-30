@@ -5,12 +5,12 @@
         incremental_strategy="append",
         unique_key=["bill_dt","bill_doc","initemv_week","jj_sap_dstrbtr_id","jj_sap_prod_id"],
         pre_hook="{% if is_incremental() %}
-                  delete from {{this}} where (bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id)) in  (select distinct bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id) from DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_ALL_DISTRIBUTOR_SELLIN_SALES_FACT);
+                  delete from {{this}} where (bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id)) in  (select distinct bill_dt , bill_doc , item , jj_sap_dstrbtr_id ,upper(jj_sap_prod_id) from {{ source('idnsdl_raw', 'sdl_all_distributor_sellin_sales_fact') }});
                   {% endif %}"
     )
 }}
 with source as (
-    select * from  DEV_DNA_CORE.SNAPIDNWKS_INTEGRATION.WKS_ALL_DISTRIBUTOR_SELLIN_SALES_FACT
+    select * from {{ source('idnsdl_raw', 'sdl_all_distributor_sellin_sales_fact') }}
 ),
 final as
 (

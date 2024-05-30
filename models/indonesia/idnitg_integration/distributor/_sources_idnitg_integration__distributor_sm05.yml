@@ -3,14 +3,14 @@ version: 2
 sources:
   - name: idnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapidnsdl_raw
+    schema: idnsdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-    - name: sdl_csa_raw_sellout_sales_fact
-      tags: ["","ingestion"]
+    - name: sdl_distributor_customer_dim
+      tags: ["id_cd_server_data","transformation"]
       # tests:
       #   - test_null:
       #       select_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
@@ -26,8 +26,19 @@ sources:
       #       config:
       #         store_failures: true
       #         schema: idnwks_integration
-    - name: sdl_dnr_raw_sellout_sales_fact
-    - name: sdl_dnr_customer_dim
-    - name: sdl_sdn_raw_sellout_sales_fact
-    - name: sdl_spr_raw_sellout_sales_fact
-    - name: sdl_pp_raw_sellout_sales_fact
+    - name: sdl_all_distributor_sellin_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+    - name: sdl_all_distributor_sellout_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+
+  - name: idnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_time_dim
+      tags: ["","ingestion"]
+    - name: edw_channelgroup_metadata

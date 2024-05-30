@@ -1,5 +1,5 @@
 with source as(
-    select * from dev_dna_core.aspwks_integration.wks_indonesia_inventory_health_analysis_propagation_final 
+    select * from {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_final') }} 
 ),
 final as(
     select 

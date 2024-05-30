@@ -1,8 +1,8 @@
 with WKS_INDONESIA_REGIONAL_SELLOUT_NPD as(
-    select * from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_INDONESIA_REGIONAL_SELLOUT_NPD
+    select * from {{ ref('idnwks_integration__wks_indonesia_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as(
-select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 offtake as(
     select year ::integer as year,

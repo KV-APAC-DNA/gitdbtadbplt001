@@ -4,7 +4,9 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key= ["yearmonth"],
-        pre_hook="delete from {{this}} where yearmonth  in (select distinct yearmonth from {{ source('idnsdl_raw', 'sdl_id_pos_daily_sat_sellout') }});"
+        pre_hook="{% if is_incremental() %}
+                delete from {{this}} where yearmonth  in (select distinct yearmonth from {{ source('idnsdl_raw', 'sdl_id_pos_daily_sat_sellout') }});
+                {% endif %}"
     )
 }}
 
