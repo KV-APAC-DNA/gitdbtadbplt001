@@ -25,7 +25,7 @@ sources:
             name: TRATBL_sdl_id_ps_planogram__duplicate_test
             config:
               store_failures: true
-              schema: idnwks_integration
+              schema: idnwks_integration 
 
     - name: sdl_id_ps_secondary_display
       tags: ["","ingestion"]

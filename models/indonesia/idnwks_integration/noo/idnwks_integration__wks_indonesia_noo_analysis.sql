@@ -3,11 +3,10 @@
         materialized='incremental',
         incremental_strategy='append',
         sql_header='use warehouse DEV_DNA_CORE_app2_wh;',
-        pre_hook="delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');"
-        
+        pre_hook="delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SELLOUT_FACT where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');",
+        post_hook="{{ wks_indonesia_noo_analysis_update() }}"        
     )
 }}
-
 with EDW_TIME_DIM as(
 select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM
 ),
@@ -17,11 +16,17 @@ select * from DEV_DNA_CORE.IDNWKS_INTEGRATION.WKS_ITG_ALL_DISTRIBUTOR_SELLIN_SEL
 EDW_DISTRIBUTOR_DIM as(
 select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
 ),
+EDW_PRODUCT_DIM_rnk as(
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM qualify row_number() over (partition by JJ_SAP_PROD_ID order by null) = 1
+),
+EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk as(
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM qualify row_number() over (partition by JJ_SAP_DSTRBTR_ID order by null) = 1
+),
 EDW_PRODUCT_DIM as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_PRODUCT_DIM 
 ),
 EDW_DISTRIBUTOR_CUSTOMER_DIM as(
-select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM
+select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CUSTOMER_DIM 
 ),
 EDW_DISTRIBUTOR_SALESMAN_DIM as(
 select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_SALESMAN_DIM
