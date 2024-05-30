@@ -22,4 +22,4 @@ final as
         website_unique_id
     from source
 )
-select * from source
+select * from final

@@ -7,7 +7,7 @@
         delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_click_data') }}) and cntry_cd = 'TH';
         {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
         delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_click_data') }}) and cntry_cd = 'PH';
-        {% elif var('sfmc_job_to_execute') == 'nta_sfmc_files' %}
+        {% elif var('sfmc_job_to_execute') == 'tw_sfmc_files' %}
         delete from {{this}} where event_date >= (select min(event_date) from {{ source('ntasdl_raw','sdl_tw_sfmc_click_data') }}) and cntry_cd = 'TW';
         {% endif %}
         "
@@ -19,14 +19,14 @@ with source as(
 ),
 source_ph as
 (
-    select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_click_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_sfmc_click_data') }}
 ),
 source_nta as
 (
-    select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_click_data') }}
-)
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_click_data') }}
+),
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
-,
+
 final as(
     select
         'TH'::varchar(10) AS cntry_cd,
@@ -53,7 +53,7 @@ final as(
 select * from final
 
 {% elif var("sfmc_job_to_execute") == 'ph_sfmc_files' %}
-,
+
 final as
 (
     SELECT
@@ -80,8 +80,8 @@ final as
 )
 select * from final
 
-{% elif var("sfmc_job_to_execute") == 'nta_sfmc_files' %}
-,
+{% elif var("sfmc_job_to_execute") == 'tw_sfmc_files' %}
+
 final as
 (
     SELECT
