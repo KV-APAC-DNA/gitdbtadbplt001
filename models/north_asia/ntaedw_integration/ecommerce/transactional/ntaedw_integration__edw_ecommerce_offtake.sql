@@ -3,11 +3,11 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
-        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
-        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
-        delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
-        delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || ean_number) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
+        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || nvl(ean_number,'#N/A') from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
+        delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || nvl(ean_number,'#N/A') from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
+        delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || nvl(ean_number,'#N/A')) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }});
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }});
         {% endif %}"
@@ -185,8 +185,8 @@ sales_ebay as (
         itg_sales.country,
         null as sub_customer_name
     from itg_kr_ecommerce_offtake_sales_ebay itg_sales
-    left join itg_kr_ecommerce_offtake_product_master prod_dim on itg_sales.sku_code = prod_dim.retailer_sku_code
-    left join edw_retailer_mapping mapping on mapping.retailer_cd = itg_sales.retailer_code
+    left join itg_kr_ecommerce_offtake_product_master prod_dim on rtrim(itg_sales.sku_code) = rtrim(prod_dim.retailer_sku_code)
+    left join edw_retailer_mapping mapping on rtrim(mapping.retailer_cd) = rtrim(itg_sales.retailer_code)
     where itg_sales.load_date = (select max(load_date) from sdl_kr_ecommerce_offtake_sales_ebay)
 ),
 sales_copang as (
@@ -209,7 +209,7 @@ sales_copang as (
         itg_sales_copang.country,
         null as sub_customer_name
     from itg_kr_ecommerce_offtake_coupang_transaction itg_sales_copang
-    left join itg_kr_ecommerce_offtake_product_master prod_dim on itg_sales_copang.sku_code = prod_dim.retailer_sku_code
+    left join itg_kr_ecommerce_offtake_product_master prod_dim on rtrim(itg_sales_copang.sku_code) = rtrim(prod_dim.retailer_sku_code)
     where itg_sales_copang.load_date = (select max(load_date) from sdl_kr_ecommerce_offtake_coupang_transaction)
 ),
 transformed as (
