@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from {{ref('idnedw_integration__itg_id_ps_brand_blocking')}}
+    select * from {{ref('idnitg_integration__itg_id_ps_brand_blocking')}}
 ),
 final as
 (

@@ -2,7 +2,7 @@
     config
         (
         materialized='table',
-        post_hook=["UPDATE {{this}} SET CUST_GRP = edcd.CUST_GRP, CHNL_GRP = edcd.CHNL_GRP, CHNL_GRP2 = edcd.CHNL_GRP2, CUST_CRTD_DT = edcd.CUST_CRTD_DT FROM dev_dna_core.idnedw_integration.EDW_DISTRIBUTOR_CUSTOMER_DIM edcd WHERE  upper(trim({{this}}.KEY_OUTLET)) =  upper(trim(edcd.KEY_OUTLET));", "update {{this}} outletmaster set chnl_grp=channelgroup.chnl_grp from dev_dna_core.idnedw_integration.edw_channelgroup_metadata channelgroup where outletmaster.cust_grp2=channelgroup.cust_grp2;"]
+        post_hook=["UPDATE {{this}} SET CUST_GRP = edcd.CUST_GRP, CHNL_GRP = edcd.CHNL_GRP, CHNL_GRP2 = edcd.CHNL_GRP2, CUST_CRTD_DT = edcd.CUST_CRTD_DT FROM {{ref('idnedw_integration__edw_distributor_customer_dim')}} edcd WHERE  upper(trim({{this}}.KEY_OUTLET)) =  upper(trim(edcd.KEY_OUTLET));", "update {{this}} outletmaster set chnl_grp=channelgroup.chnl_grp from {{ source('idnedw_integration', 'edw_channelgroup_metadata') }} channelgroup where outletmaster.cust_grp2=channelgroup.cust_grp2;"]
         )
 }}
 
@@ -19,7 +19,7 @@ edw_distributor_customer_dim as
     select * from {{ref('idnedw_integration__edw_distributor_customer_dim')}}
 ),
 edw_channelgroup_metadata as (
-    select * from {{ref('idnedw_integration__edw_channelgroup_metadata')}}
+    select * from {{ source('idnedw_integration', 'edw_channelgroup_metadata') }}
 ),
 transformed as 
 (

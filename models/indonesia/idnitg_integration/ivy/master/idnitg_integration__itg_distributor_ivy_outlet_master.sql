@@ -22,7 +22,7 @@ edw_distributor_customer_dim as
 ),
 edw_channelgroup_metadata as 
 (
-    select * from {{ref('idnedw_integration__edw_channelgroup_metadata')}}
+    select * from {{ source('idnedw_integration', 'edw_channelgroup_metadata') }}
 ),
 itg_distributor_ivy_outlet_master as (
     select 
