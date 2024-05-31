@@ -29,3 +29,11 @@ models:
     config:
       alias: wks_kr_ecommerce_tca_sellout
       tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay
+    config:
+      alias: wks_kr_ecommerce_offtake_sales_ebay
+      tags: [""]
+  - name: ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction
+    config:
+      alias: wks_kr_ecommerce_offtake_coupang_transaction
+      tags: [""]
