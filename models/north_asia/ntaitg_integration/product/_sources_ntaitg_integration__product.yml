@@ -17,6 +17,28 @@ sources:
     - name: sdl_kr_jnj_price_guide
       tags: ["j_kr_price_master_data_ingestion","ingestion"]
     - name: sdl_kr_coupang_daily_brand_reviews
+      tags: ["j_kr_ecommerce_sellout_Naver_ingestion", "ingestion"]
+      tests:
+        - test_null:
+              select_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              not_null_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              name: TRATBL_sdl_kr_coupang_daily_brand_reviews__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+              model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }}"
+              date_column: "review_date"
+              filter: "(odd_mon.review_date) = (even_mon.review_date)
+                        and   (even_mon.review_date) = (feb.review_date)
+                        and   (odd_mon.result) = (even_mon.result)
+                        and   (even_mon.result) = (feb.result)"
+              failure_reason: "'review_date HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+              select_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              name: TRATBL_sdl_kr_coupang_daily_brand_reviews__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration 
     - name: sdl_mds_kr_sub_customer_master
       tags: ["gt_sellout_food_ws_cust_dim", "gt_sellout_nacf_cust_dim", "gt_sellout_otc", "ingestion"]
       tests:

@@ -31,7 +31,17 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_pos_emart_ssg
-      tags: [""]
+      tags: ["kr_ssg_ecvan", "ingestion"]
+      tests:
+          - test_lookup:
+              select_columns: ["str_nm"]
+              column: "nvl(str_nm ,'#')"
+              lookup_column: "nvl(store_nm,'#') as store_nm"
+              lookup_table: "ntaitg_integration.itg_sales_store_master"                                                                      #update the reference
+              name: TRATBL_sdl_kr_pos_emart_ssg__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
     - name: sdl_kr_ecom_naver_sellout_temp
       tags: [""]
     - name: sdl_kr_ecom_coupang
@@ -109,3 +119,22 @@ sources:
     tables:
     - name: edw_retailer_mapping
       tags: [""]
+
+    - name: sdl_kr_ecommerce_naver_sellout
+      tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              not_null_columns: ["transaction_date"]
+              name: TRATBL_sdl_kr_ecommerce_naver_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_format:
+              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              where_clause: "not regexp_like ('transaction_date', '[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]') and not regexp_like ('transaction_date', '[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]') and (transaction_date is not null and transaction_date != '')"              
+              failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
+              name: TRATBL_sdl_kr_ecommerce_naver_sellout__format_test
+              config:
+                store_failures: true
+                schema: ntawks_integration

@@ -120,7 +120,33 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_kr_coupang_pa_report
+      tags: ["kr_dads_coupang_pa_ads", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["ad_execution_option_id", "date"]
+            not_null_columns: ["ad_execution_option_id", "date"]
+            name: TRATBL_sdl_kr_coupang_pa_report__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+
     - name: sdl_kr_dads_coupang_price
+      tags: ["kr_dads_coupang_price", "ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["report_date"]
+              not_null_columns: ["report_date"]
+              name: TRATBL_sdl_kr_dads_coupang_price__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_format:
+              select_columns: ["report_date"]
+              where_clause: "not regexp_like ('substring(report_date,1,10)', '[2][0][0-9][0-9]-[0-1][0-9]-[0-3][0-9]') "
+              name: TRATBL_sdl_kr_dads_coupang_price__format_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
     - name: sdl_mds_kr_sales_store_master
       tags: ["mds_sdl_itg_load", "gt_sellout_daiso", "ingestion"]
       tests:
@@ -139,8 +165,35 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_coupang_bpa_report
+      tags: ["kr_dads_coupang_bpa_ads", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["campaign_start_date", "campaign_id", "date"]
+            not_null_columns: ["campaign_start_date", "campaign_id", "date"]
+            name: TRATBL_sdl_kr_coupang_bpa_report__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
     - name: sdl_kr_coupang_customer_brand_trend
-      tags: [""]
+      tags: ["gt_sellout_otc", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["date_yyyymm", "coupang_id", "category_depth1", "brand"]
+            not_null_columns: ["date_yyyymm", "coupang_id", "category_depth1", "brand"]
+            name: TRATBL_sdl_kr_coupang_customer_brand_trend__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+            model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_customer_brand_trend') }}"
+            date_column: "date_yyyymm"
+            filter: "(odd_mon.date_yyyymm) = (even_mon.date_yyyymm) and   (odd_mon.result) = (even_mon.result)"
+            failure_reason: "'date_yyyymm HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMM'"
+            select_columns: ["date_yyyymm", "coupang_id", "category_depth1", "brand"]
+            name: TRATBL_sdl_kr_coupang_customer_brand_trend__test_date_format_odd_eve_leap
+            config:
+              store_failures: true
+              schema: ntawks_integration
     - name: sdl_kr_coupang_brand_ranking
       tags: ["kr_coupang_premium_brandranking", "ingestion"]
       tests:
