@@ -167,6 +167,7 @@ sources:
     - name: edw_time_dim
       tags: ["","ingestion"]
     - name: edw_channelgroup_metadata
+    - name: edw_all_distributor_lppb_fact
 
   - name: idnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

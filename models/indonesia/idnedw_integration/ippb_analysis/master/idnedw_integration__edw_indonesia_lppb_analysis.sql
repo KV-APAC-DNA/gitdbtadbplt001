@@ -1,5 +1,5 @@
 with edw_all_distributor_lppb_fact as(
-	select * from {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }}
+	select * from {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }}
 ),
 EDW_TIME_DIM as(
 	select * from {{ source('idnedw_integration', 'edw_time_dim') }}
