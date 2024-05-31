@@ -1,13 +1,13 @@
-with wks_edw_pos_fact_korea as 
+with wks_edw_pos_fact_korea as
 (
-    select * from dev_dna_core.snapntawks_integration.wks_edw_pos_fact_korea
+    select * from {{ ref('ntawks_integration__wks_edw_pos_fact_korea') }}
 ),
 wks_pos_prc_condition_map as (
-    select * from snapntawks_integration.wks_pos_prc_condition_map
+    select * from {{ ref('ntawks_integration__wks_pos_prc_condition_map') }}
 ),
-current_table as 
+current_table as
 (
-    select 
+    select
         pos_dt,
         ean_num,
         sold_to_party,
@@ -24,7 +24,7 @@ current_table as
 ),
 wave_1 as
 (
-    select 
+    select
         pos_dt,
         ean_num,
         sold_to_party,
@@ -37,9 +37,9 @@ wave_1 as
         current_timestamp() as updt_dttm,
         null as sls_grp_cd,
         null as pricing_sold_to
-    from 
+    from
         (
-            select 
+            select
                 pos_dt,
                 sold_to_party,
                 ean_num,
@@ -48,18 +48,18 @@ wave_1 as
                 calc_invoice_price,
                 ROW_NUMBER() OVER ( PARTITION BY pos_dt, sold_to_party, ean_num ORDER BY calc_invoice_price DESC) AS rnk
             /*Changed from ASc to desc Req chnage on3-aug18*/
-        from 
+        from
             (
-                select 
+                select
                     pos_dt,
                     sold_to_party,
                     ean_num,
                     matl_num,
                     matl_desc,
                     sum (calc_price) as calc_invoice_price
-                from 
+                from
                     (
-                        select 
+                        select
                             pos_data.pos_dt,
                             pos_data.sold_to_party,
                             pos_data.ean_num,
@@ -70,7 +70,7 @@ wave_1 as
                             map.sold_to_cust_cd,
                             map.ean_num as pc_ean_num,
                             map.calc_price
-                        from 
+                        from
                             (
                                 select pos_dt,
                                     ltrim(sold_to_party, 0) as sold_to_party,
@@ -81,7 +81,7 @@ wave_1 as
                                     ltrim(sold_to_party, 0) as sold_to_party,
                                     ltrim(ean_num, 0) as ean_num
                                 from current_table
-                                    -- 
+                                    --
                             ) pos_data
                             inner join wks_pos_prc_condition_map map on pos_data.pos_dt between map.vld_frm and map.vld_to
                             and ltrim (pos_data.sold_to_party, 0) = ltrim (map.sold_to_cust_cd, 0)
@@ -100,9 +100,9 @@ wave_1 as
     where src.rnk = 1
 
 ),
-wks_pos_gross_prc_condition_map as 
+wks_pos_gross_prc_condition_map as
 (
-    select 
+    select
         pos_dt,
         sold_to_party,
         ean_num,
@@ -112,9 +112,9 @@ wks_pos_gross_prc_condition_map as
         calc_price,
         vld_frm,
         vld_to
-    from 
+    from
         (
-            select 
+            select
                 pos_data.pos_dt,
                 ltrim (pos_data.sold_to_party, 0) as sold_to_party,
                 ltrim (pos_data.ean_num, 0) as ean_num,
@@ -124,12 +124,12 @@ wks_pos_gross_prc_condition_map as
                 map.calc_price,
                 map.vld_frm,
                 map.vld_to,
-                ROW_NUMBER() OVER 
+                ROW_NUMBER() OVER
                 (
-                    PARTITION BY pos_data.pos_dt, ltrim(pos_data.sold_to_party, 0), ltrim(pos_data.ean_num, 0), map.matl_num, map.cnd_type 
+                    PARTITION BY pos_data.pos_dt, ltrim(pos_data.sold_to_party, 0), ltrim(pos_data.ean_num, 0), map.matl_num, map.cnd_type
                     ORDER BY map.vld_to desc, map.vld_frm desc
                 ) AS rownum
-            from 
+            from
                 (
                     select pos_dt,
                         ltrim(sold_to_party, 0) as sold_to_party,
@@ -139,13 +139,13 @@ wks_pos_gross_prc_condition_map as
                     select pos_dt,
                         ltrim(sold_to_party, 0) as sold_to_party,
                         ltrim(ean_num, 0) as ean_num
-                    from 
+                    from
                     (
                         select * from current_table
                         union all
                         select * from wave_1
                     )
-                    
+
                 ) pos_data
                 inner join wks_pos_prc_condition_map map on
                 /*pos_data.pos_dt between map.vld_frm and map.vld_to and*/
@@ -159,9 +159,9 @@ wks_pos_gross_prc_condition_map as
         ) wave2
     where wave2.rownum = 1
 ),
-wave_2 as 
+wave_2 as
 (
-    select 
+    select
         pos_dt,
         ean_num,
         sold_to_party,
@@ -174,9 +174,9 @@ wave_2 as
         current_timestamp() as updt_dttm,
         null as sls_grp_cd,
         null as pricing_sold_to
-    from 
+    from
         (
-            select 
+            select
                 pos_dt,
                 sold_to_party,
                 ean_num,
@@ -185,7 +185,7 @@ wave_2 as
                 calc_invoice_price,
                 ROW_NUMBER() OVER ( PARTITION BY pos_dt, sold_to_party, ean_num ORDER BY calc_invoice_price DESC) AS rnk
                 /*Changed from ASc to desc Req change on3-aug18*/
-            from 
+            from
                 (
                     select pos_dt,
                         sold_to_party,
@@ -193,9 +193,9 @@ wave_2 as
                         matl_num,
                         matl_desc,
                         sum (calc_price) as calc_invoice_price
-                    from 
+                    from
                         (
-                            select 
+                            select
                                 pos_dt,
                                 sold_to_party,
                                 ean_num,
@@ -207,7 +207,7 @@ wave_2 as
                                 vld_to
                             from wks_pos_gross_prc_condition_map
                             union
-                            select 
+                            select
                                 a.pos_dt,
                                 a.sold_to_party,
                                 a.ean_num,
@@ -235,9 +235,9 @@ wave_2 as
         ) source
     where source.rnk = 1
 ),
-wave_3 as 
+wave_3 as
 (
-    select 
+    select
         pos_dt,
         ean_num,
         edw_sold_to_party as sold_to_party,
@@ -250,9 +250,9 @@ wave_3 as
         current_timestamp() as updt_dttm,
         sales_grp_cd,
         pc_sold_to_party
-    from 
+    from
         (
-            select 
+            select
                 pos_dt,
                 edw_sold_to_party,
                 pc_sold_to_party,
@@ -267,9 +267,9 @@ wave_3 as
                     ean_num
                     ORDER BY calc_invoice_price DESC
                 ) AS rnk
-            from 
+            from
                 (
-                    select 
+                    select
                         pos_dt,
                         edw_sold_to_party,
                         pc_sold_to_party,
@@ -278,9 +278,9 @@ wave_3 as
                         matl_num,
                         matl_desc,
                         sum(calc_price) as calc_invoice_price
-                    from 
+                    from
                         (
-                            select 
+                            select
                                 pos_data.pos_dt,
                                 pos_data.edw_sold_to_party,
                                 pos_data.ean_num,
@@ -291,7 +291,7 @@ wave_3 as
                                 ltrim (map.sold_to_cust_cd, 0) as pc_sold_to_party,
                                 map.ean_num as pc_ean_num,
                                 map.calc_price
-                            from 
+                            from
                                 (
                                     select distinct pos_dt,
                                         ltrim(sold_to_party, 0) as edw_sold_to_party,
@@ -329,9 +329,9 @@ wave_3 as
                         /*TAKE HIGHEST AMONG POSITIVE PRICES*/
                 ) a
         ) src
-    where src.rnk = 1   
+    where src.rnk = 1
 ),
-final as 
+final as
 (
     select
         pos_dt::date as pos_dt,
@@ -346,7 +346,7 @@ final as
         updt_dttm::timestamp_ntz(9) as updt_dttm,
         sls_grp_cd::varchar(18) as sls_grp_cd,
         pricing_sold_to::varchar(100) as pricing_sold_to
-    from 
+    from
         (
             select * from wave_1
             union all

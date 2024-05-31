@@ -1,15 +1,14 @@
-with edw_sfmc_naver_data as 
+with edw_sfmc_naver_data as
 (
-    select * from ntaedw_integration__edw_sfmc_naver_data
-    -- {{ ('ntaedw_integration__edw_sfmc_naver_data') }} 
+    select * from ref{{ ('ntaedw_integration__edw_sfmc_naver_data') }}
 ),
-itg_query_parameters as 
+itg_query_parameters as
 (
     select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
-abc as 
+abc as
 (
-    SELECT 
+    SELECT
         a.cntry_cd,
         a.naver_id,
         a.birth_year,
@@ -82,10 +81,10 @@ abc as
             END
         ) AS coupon_usage_iss
     FROM edw_sfmc_naver_data a
-    WHERE 
+    WHERE
         (
             ("substring"((a.file_name)::text, 35, 4))::numeric(18, 0) >= (
-                select 
+                select
                     date_part
                         (
                             year,
@@ -106,13 +105,13 @@ abc as
                             (itg_query_parameters.parameter_type)::text = 'Report_data_retention'::text
                         )
                     )
-            
+
             )
         )
 ),
 final as
-(    
-    SELECT 
+(
+    SELECT
         abc.cntry_cd,
         abc.naver_id,
         abc.birth_year,
