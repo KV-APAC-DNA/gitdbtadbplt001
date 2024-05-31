@@ -37,8 +37,8 @@ final as
         dstrbtr_net_val::number(18,4) as dstrbtr_net_val,
         rtrn_qty::number(18,4) as rtrn_qty,
         rtrn_val::number(18,4) as rtrn_val,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         null::number(18,4) as sls_qty_raw,
         filename::varchar(255) as filename
     from source

@@ -35,7 +35,7 @@ final as (
         pos_cust::varchar(50) as pos_cust,
         yearmonth::varchar(18) as yearmonth,
         run_id::number(18, 0) as run_id,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm,
         file_name::varchar(100) as file_name
     from source
 )
