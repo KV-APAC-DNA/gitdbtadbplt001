@@ -1,8 +1,8 @@
 with itg_pos_prc_condition_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_PRC_CONDITION_MAP
+select * from {{ ref('ntaitg_integration__itg_pos_prc_condition_map') }}
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 transformed as (
   select 
