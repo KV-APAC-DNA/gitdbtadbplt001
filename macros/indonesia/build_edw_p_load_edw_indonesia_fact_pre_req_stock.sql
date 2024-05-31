@@ -3,7 +3,7 @@
     {{ log("Step1: Trying to fetch the distributor_cd,source_system, effective_from,effective_to from ITG table: idnitg_integration.itg_mds_id_dist_reporting_control_sellout_sales ") }}
     {{ log("===============================================================================================") }}
     {% set get_rows_query %}
-        SELECT DISTRIBUTOR_CD,UPPER(TRIM(SOURCE_SYSTEM)),EFFECTIVE_FROM,EFFECTIVE_TO FROM snapidnitg_integration.ITG_MDS_ID_DIST_REPORTING_CONTROL_STOCK
+        SELECT DISTRIBUTOR_CD,UPPER(TRIM(SOURCE_SYSTEM)),EFFECTIVE_FROM,EFFECTIVE_TO FROM {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_stock') }}
         ORDER BY DISTRIBUTOR_CD,EFFECTIVE_FROM;
     {% endset %}
     {{ log("Try to execute the query to fetch the distributor_cd,source_system, effective_from,effective_to ") }}
@@ -34,7 +34,7 @@
         			 	SOURCE_SYSTEM,
         			 	EFFECTIVE_FROM,
         			 	EFFECTIVE_TO
-        			 FROM snapidnitg_integration.ITG_MDS_ID_DIST_REPORTING_CONTROL_STOCK
+        			 FROM {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_stock') }}
         			 WHERE UPPER(TRIM(DISTRIBUTOR_CD)) = UPPER(TRIM('{{ i[0] }}'))
         			 AND   UPPER(TRIM(SOURCE_SYSTEM)) = UPPER(TRIM('{{ i[1] }}'))
         			 AND   EFFECTIVE_FROM = '{{ i[2] }}'
@@ -71,9 +71,9 @@
                         T1.SALEABLE_STOCK_VALUE,
                         T1.NON_SALEABLE_STOCK_QTY,
                         T1.NON_SALEABLE_STOCK_VALUE
-                    FROM snapidnitg_integration.ITG_STOCK_DIST_MAP T1,
+                    FROM {{ ref('idnitg_integration__itg_stock_dist_map') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_STOCK DIST_CNT,
-                        snapidnedw_integration.EDW_TIME_DIM T2
+                        {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.STOCK_DT) = TO_DATE(T2.CAL_DATE)
                     AND   UPPER(TRIM(T1.DSTRBTR_CD)) = UPPER(TRIM(DIST_CNT.DISTRIBUTOR_CD))
                     AND   T2.JJ_MNTH_ID >= DIST_CNT.EFFECTIVE_FROM

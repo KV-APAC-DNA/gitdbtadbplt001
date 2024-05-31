@@ -1,6 +1,5 @@
 with source as (
-    select * from -- ref('idnitg_integration__itg_all_distributor_sellout_sales_fact') 
-                snapidnitg_integration.itg_all_distributor_sellout_sales_fact
+    select * from {{ ref('idnitg_integration__itg_all_distributor_sellout_sales_fact') }}
 ),
 final as (
     select

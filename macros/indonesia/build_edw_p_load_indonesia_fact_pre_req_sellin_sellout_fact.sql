@@ -4,7 +4,7 @@
     {{ log("===============================================================================================") }}
     {% set get_rows_query %}
         select UPPER(TRIM(distributor_cd)),UPPER(TRIM(source_system)), effective_from,effective_to 
-        from snapidnitg_integration.itg_mds_id_dist_reporting_control_sellout_sales order by distributor_cd,effective_from;
+        from {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }} order by distributor_cd,effective_from;
     {% endset %}
     {{ log("Try to execute the query to fetch the distributor_cd,source_system, effective_from,effective_to ") }}
     {{ log("===============================================================================================") }}
@@ -34,7 +34,7 @@
                    SOURCE_SYSTEM,
                    EFFECTIVE_FROM,
                    EFFECTIVE_TO
-            FROM snapidnitg_integration.ITG_MDS_ID_DIST_REPORTING_CONTROL_SELLOUT_SALES
+            FROM {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }}
             WHERE UPPER(TRIM(DISTRIBUTOR_CD)) = UPPER(TRIM('{{ i[0] }}'))
             AND   UPPER(TRIM(SOURCE_SYSTEM)) = UPPER(TRIM('{{ i[1] }}'))
             AND   EFFECTIVE_FROM = '{{ i[2] }}'
@@ -97,9 +97,9 @@
                         T1.DSTRBTR_NET_VAL,
                         T1.RTRN_QTY,
                         T1.RTRN_VAL
-                    FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLOUT_SALES_FACT T1,
+                    FROM {{ ref('idnitg_integration__itg_all_distributor_sellout_sales_fact') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                        snapidnedw_integration.EDW_TIME_DIM T2
+                        {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                     AND   UPPER(TRIM(T1.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIST_CNT.DISTRIBUTOR_CD))
                     AND   T2.JJ_MNTH_ID >= DIST_CNT.EFFECTIVE_FROM
@@ -155,9 +155,9 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT T1,
-                            snapidnedw_integration.EDW_TIME_DIM T2,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
+                        FROM {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }} T1,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2,
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
@@ -303,10 +303,10 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapaspedw_integration.EDW_BILLING_FACT T1,
+                        FROM {{ ref('aspedw_integration__edw_billing_fact') }} T1,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
-                            snapidnedw_integration.EDW_TIME_DIM T2
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(DECODE(LTRIM(T1.SOLD_TO,0),'120166','115330','120167','115327','120168','115329','120169','115328','120170','116193','120165','116193','120171','116194','120173','116206','120174','116207','120172','116195','123537','119756','123685','123877','123686','123878','123687','123879','123688','123880','126000','125881','126001','125821','126003','125822','126002','125823','131389','119756','121413','122155','130200','130122','130196','130118','130197','125687','130199','129735','130198','125686','130961','130962','130774','123877','131653','109676','133685','133699','131587','131588','134432','134433','134679','134433','131595','131594','135355','135362',LTRIM(T1.SOLD_TO,0))) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
                         and T2.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)   
@@ -375,9 +375,9 @@
                         T1.DSTRBTR_NET_VAL,
                         T1.RTRN_QTY,
                         T1.RTRN_VAL
-                    FROM snapidnitg_integration.ITG_ALL_NON_IVY_DISTRIBUTOR_SELLOUT_SALES_FACT T1,
+                    FROM {{ ref('idnitg_integration__itg_all_non_ivy_distributor_sellout_sales_fact') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                        snapidnedw_integration.EDW_TIME_DIM T2
+                        {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                     AND   UPPER(TRIM(T1.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIST_CNT.DISTRIBUTOR_CD))
                     AND   T2.JJ_MNTH_ID >= DIST_CNT.EFFECTIVE_FROM
@@ -433,9 +433,9 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT T1,
-                            snapidnedw_integration.EDW_TIME_DIM T2,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
+                        FROM {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }} T1,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2,
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
@@ -581,10 +581,10 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapaspedw_integration.EDW_BILLING_FACT T1,
+                        FROM {{ ref('aspedw_integration__edw_billing_fact') }} T1,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
-                            snapidnedw_integration.EDW_TIME_DIM T2
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(DECODE(LTRIM(T1.SOLD_TO,0),'120166','115330','120167','115327','120168','115329','120169','115328','120170','116193','120165','116193','120171','116194','120173','116206','120174','116207','120172','116195','123537','119756','123685','123877','123686','123878','123687','123879','123688','123880','126000','125881','126001','125821','126003','125822','126002','125823','131389','119756','121413','122155','130200','130122','130196','130118','130197','125687','130199','129735','130198','125686','130961','130962','130774','123877','131653','109676','133685','133699','131587','131588','134432','134433','134679','134433','131595','131594','135355','135362',LTRIM(T1.SOLD_TO,0))) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
                         and T2.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)   
@@ -662,9 +662,9 @@
                             WHEN T1.GRS_VAL < 0 AND T1.SLS_QTY > 0 THEN (-1*T1.JJ_NET_VAL)
                             ELSE T1.RTRN_VAL
                         END AS RTRN_VAL
-                    FROM snapidnitg_integration.ITG_ALL_IVY_DISTRIBUTOR_SELLOUT_SALES_FACT T1,
+                    FROM {{ ref('idnitg_integration__itg_all_ivy_distributor_sellout_sales_fact') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                        snapidnedw_integration.EDW_TIME_DIM T2
+                        {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                     AND   UPPER(TRIM(T1.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIST_CNT.DISTRIBUTOR_CD))
                     AND   T2.JJ_MNTH_ID >= DIST_CNT.EFFECTIVE_FROM
@@ -720,9 +720,9 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT T1,
-                            snapidnedw_integration.EDW_TIME_DIM T2,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
+                        FROM {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }} T1,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2,
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
@@ -868,10 +868,10 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapaspedw_integration.EDW_BILLING_FACT T1,
+                        FROM {{ ref('aspedw_integration__edw_billing_fact') }} T1,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
-                            snapidnedw_integration.EDW_TIME_DIM T2
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(DECODE(LTRIM(T1.SOLD_TO,0),'120166','115330','120167','115327','120168','115329','120169','115328','120170','116193','120165','116193','120171','116194','120173','116206','120174','116207','120172','116195','123537','119756','123685','123877','123686','123878','123687','123879','123688','123880','126000','125881','126001','125821','126003','125822','126002','125823','131389','119756','121413','122155','130200','130122','130196','130118','130197','125687','130199','129735','130198','125686','130961','130962','130774','123877','131653','109676','133685','133699','131587','131588','134432','134433','134679','134433','131595','131594','135355','135362',LTRIM(T1.SOLD_TO,0))) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
                         and T2.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+) 
@@ -965,9 +965,9 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT T1,
-                            snapidnedw_integration.EDW_TIME_DIM T2,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
+                        FROM {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }} T1,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2,
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
@@ -1114,10 +1114,10 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapaspedw_integration.EDW_BILLING_FACT T1,
+                        FROM {{ ref('aspedw_integration__edw_billing_fact') }} T1,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
-                            snapidnedw_integration.EDW_TIME_DIM T2
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(DECODE(LTRIM(T1.SOLD_TO,0),'120166','115330','120167','115327','120168','115329','120169','115328','120170','116193','120165','116193','120171','116194','120173','116206','120174','116207','120172','116195','123537','119756','123685','123877','123686','123878','123687','123879','123688','123880','126000','125881','126001','125821','126003','125822','126002','125823','131389','119756','121413','122155','130200','130122','130196','130118','130197','125687','130199','129735','130198','125686','130961','130962','130774','123877','131653','109676','133685','133699','131587','131588','134432','134433','134679','134433','131595','131594','135355','135362',LTRIM(T1.SOLD_TO,0))) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
                         and T2.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)  
@@ -1180,9 +1180,9 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapidnitg_integration.ITG_ALL_DISTRIBUTOR_SELLIN_SALES_FACT T1,
-                            snapidnedw_integration.EDW_TIME_DIM T2,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
+                        FROM {{ ref('idnitg_integration__itg_all_distributor_sellin_sales_fact') }} T1,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2,
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
@@ -1328,10 +1328,10 @@
                                 0 AS DSTRBTR_NET_VAL,
                                 0 AS RTRN_QTY,
                                 0 AS RTRN_VAL
-                        FROM snapaspedw_integration.EDW_BILLING_FACT T1,
+                        FROM {{ ref('aspedw_integration__edw_billing_fact') }} T1,
                             WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
-                            snapidnedw_integration.EDW_DISTRIBUTOR_DIM EDD,
-                            snapidnedw_integration.EDW_TIME_DIM T2
+                            {{ ref('idnedw_integration__edw_distributor_dim') }} EDD,
+                            {{ source('idnedw_integration','edw_time_dim') }} T2
                         WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
                         AND   UPPER(DECODE(LTRIM(T1.SOLD_TO,0),'120166','115330','120167','115327','120168','115329','120169','115328','120170','116193','120165','116193','120171','116194','120173','116206','120174','116207','120172','116195','123537','119756','123685','123877','123686','123878','123687','123879','123688','123880','126000','125881','126001','125821','126003','125822','126002','125823','131389','119756','121413','122155','130200','130122','130196','130118','130197','125687','130199','129735','130198','125686','130961','130962','130774','123877','131653','109676','133685','133699','131587','131588','134432','134433','134679','134433','131595','131594','135355','135362',LTRIM(T1.SOLD_TO,0))) = UPPER(TRIM(EDD.JJ_SAP_DSTRBTR_ID))
                         and T2.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+) 
