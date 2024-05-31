@@ -1,32 +1,32 @@
 with edw_copa_trans_fact as (
-    select * from aspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_copa_trans_fact_adjustment as (
     select * from aspedw_integration.edw_copa_trans_fact_adjustment
 ),
 edw_customer_sales_dim as (
-    select * from aspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_material_dim as (
-    select * from aspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_profit_center_dim as (
-    select * from aspedw_integration.edw_profit_center_dim
+    select * from {{ ref('aspedw_integration__edw_profit_center_dim') }}
 ),
 edw_customer_base_dim as (
-    select * from aspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 v_intrm_crncy_exch as (
-    select * from ntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_company_dim as (
-    select * from aspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_attr_flat_dim as (
     select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_material_sales_dim as (
-    select * from aspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
     select * from aspedw_integration.edw_product_attr_dim

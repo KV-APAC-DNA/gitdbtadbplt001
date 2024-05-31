@@ -4,29 +4,29 @@ models:
   - name: ntaitg_integration__itg_kr_coupang_search_keyword_by_category
     config:
       alias: itg_kr_coupang_search_keyword_by_category
-      tags: []
+      tags: ["kr_coupang_premium_search_keyword_by_category","ingestion"]
   - name: ntaitg_integration__itg_kr_coupang_search_keyword_by_product
     config:
       alias: itg_kr_coupang_search_keyword_by_product
-      tags: []
+      tags: ["kr_coupang_premium_search_keyword_by_product","ingestion"]
   - name: ntaitg_integration__itg_kr_coupang_bpa_report
     config:
       alias: itg_kr_coupang_bpa_report
-      tags: []
+      tags: ["kr_dads_coupang_bpa_ads","ingestion"]
   - name: ntaitg_integration__itg_kr_coupang_pa_report
     config:
       alias: itg_kr_coupang_pa_report
-      tags: []
+      tags: ["kr_dads_coupang_pa_ads","ingestion"]
   - name: ntaitg_integration__itg_kr_dads_coupang_price
     config:
       alias: itg_kr_dads_coupang_price
-      tags: []
+      tags: ["kr_dads_coupang_price","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_coupang_bpa_report
     config:
       alias: sdl_raw_kr_coupang_bpa_report
-      tags: []
+      tags: ["kr_dads_coupang_bpa_ads","transformation"]
   - name: ntaitg_integration__sdl_raw_kr_coupang_pa_report
     config:
       alias: sdl_raw_kr_coupang_pa_report
-      tags: []
+      tags: ["kr_dads_coupang_pa_ads","transformation"]
 

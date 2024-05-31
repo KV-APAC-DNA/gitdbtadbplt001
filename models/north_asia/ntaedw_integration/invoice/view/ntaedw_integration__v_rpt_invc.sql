@@ -1,8 +1,8 @@
 with edw_calendar_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
+select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 v_intrm_invc_trans as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_INVC_TRANS
+select * from {{ ref('ntaedw_integration__v_intrm_invc_trans') }}
 ),
 final as (
 SELECT 
