@@ -1,44 +1,44 @@
 with itg_kr_coupang_pa_report as (
-    select * from ntaitg_integration.itg_kr_coupang_pa_report
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_pa_report') }}
 ),
 itg_mds_kr_brand_campaign_promotion as (
-    select * from ntaitg_integration.itg_mds_kr_brand_campaign_promotion
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_brand_campaign_promotion') }}
 ),
 itg_kr_coupang_productsalereport as (
-    select * from ntaitg_integration.itg_kr_coupang_productsalereport
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_productsalereport') }}
 ),
 itg_mds_kr_keyword_classifications as (
-    select * from ntaitg_integration.itg_mds_kr_keyword_classifications
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_keyword_classifications') }}
 ),
 itg_kr_coupang_bpa_report as (
-    select * from ntaitg_integration.itg_kr_coupang_bpa_report
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_bpa_report') }}
 ),
 itg_kr_dads_coupang_price as (
-    select * from ntaitg_integration.itg_kr_dads_coupang_price
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_coupang_price') }}
 ),
 itg_kr_dads_linkprice as (
-    select * from ntaitg_integration.itg_kr_dads_linkprice
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_linkprice') }}
 ),
 itg_mds_kr_naver_product_master as (
-    select * from ntaitg_integration.itg_mds_kr_naver_product_master
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_naver_product_master') }}
 ),
 itg_kr_dads_naver_gmv as (
-    select * from ntaitg_integration.itg_kr_dads_naver_gmv
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_gmv') }}
 ),
 edw_intrm_calendar as (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 itg_kr_dads_coupang_search_keyword as (
-    select * from ntaitg_integration.itg_kr_dads_coupang_search_keyword
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_coupang_search_keyword') }}
 ),
 itg_kr_dads_naver_keyword_search_volume as (
-    select * from ntaitg_integration.itg_kr_dads_naver_keyword_search_volume
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_keyword_search_volume') }}
 ),
 itg_kr_dads_naver_search_channel as (
-    select * from ntaitg_integration.itg_kr_dads_naver_search_channel
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_search_channel') }}
 ),
 itg_query_parameters as (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 final as (
 SELECT final.brand,

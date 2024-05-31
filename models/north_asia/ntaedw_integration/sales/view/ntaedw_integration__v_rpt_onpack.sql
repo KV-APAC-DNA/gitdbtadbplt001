@@ -1,32 +1,32 @@
 with edw_invoice_fact as (
-    select * from aspedw_integration.edw_invoice_fact
+    select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 edw_customer_sales_dim as (
-    select * from aspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_company_dim as (
-    select * from aspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_attr_flat_dim as (
     select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_material_sales_dim as (
-    select * from aspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
     select * from aspedw_integration.edw_product_attr_dim
 ),
 itg_sls_grp_text as (
-    select * from aspitg_integration.itg_sls_grp_text
+    select * from {{ ref('aspitg_integration__itg_sls_grp_text') }}
 ),
 v_rpt_onpack_inventory as (
-    select * from ntaedw_integration.v_rpt_onpack_inventory
+    select * from {{ ref('ntaedw_integration__v_rpt_onpack_inventory') }}
 ),
 edw_onpck_trgt as (
-    select * from ntaedw_integration.edw_onpck_trgt
+    select * from {{ ref('ntaedw_integration__edw_onpck_trgt') }}
 ),
 itg_kr_sales_store_map as (
-    select * from aspitg_integration.itg_kr_sales_store_map
+    select * from {{ ref('ntaitg_integration__itg_kr_sales_store_map') }}
 ),
 invc as (
     SELECT "substring"((a.fisc_yr)::text, 1, 4) AS fisc_yr,

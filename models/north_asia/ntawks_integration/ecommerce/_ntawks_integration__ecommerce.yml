@@ -16,7 +16,7 @@ models:
   - name: ntawks_integration__wks_kr_ecommerce_ebay_sellout
     config:
       alias: wks_kr_ecommerce_ebay_sellout
-      tags: [""]
+      tags: ["j_kr_ecommerce_ebay_etl_framework","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_trexi_sellout
     config:
       alias: wks_kr_ecommerce_trexi_sellout

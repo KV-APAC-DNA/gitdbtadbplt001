@@ -3,18 +3,18 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || nvl(ean_number,'#N/A') from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
-        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
-        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
-        delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || nvl(ean_number,'#N/A') from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
-        delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || nvl(ean_number,'#N/A')) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
+        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || nvl(ean_number,'#N/A') from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'EMART' AND UPPER(SUB_CUSTOMER_NAME) = 'SSG.COM' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'SSG.COM';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'NAVER' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '136250';
+        delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || nvl(ean_number,'#N/A') FROM {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
+        delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || nvl(ean_number,'#N/A') from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
+        delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || nvl(ean_number,'#N/A')) from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }});
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }});
         {% endif %}"
     )
 }}
 with itg_kr_ecommerce_sellout as (
-    select * from ntaitg_integration.itg_kr_ecommerce_sellout
+    select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }}
 ),
 sdl_kr_ecommerce_offtake_sales_ebay as (
     select * from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }}
@@ -23,13 +23,13 @@ sdl_kr_ecommerce_offtake_coupang_transaction as (
     select * from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }}
 ),
 itg_kr_ecommerce_offtake_product_master as (
-    select * from ntaitg_integration.itg_kr_ecommerce_offtake_product_master
+    select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_offtake_product_master') }}
 ),
 itg_kr_ecommerce_offtake_sales_ebay as (
-    select * from ntaitg_integration.itg_kr_ecommerce_offtake_sales_ebay
+    select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_offtake_sales_ebay') }}
 ),
 itg_kr_ecommerce_offtake_coupang_transaction as (
-    select * from ntaitg_integration.itg_kr_ecommerce_offtake_coupang_transaction
+    select * from {{ ref('ntaitg_integration__itg_kr_ecommerce_offtake_coupang_transaction') }}
 ),
 edw_retailer_mapping as (
     select * from {{ source('aspedw_integration', 'edw_retailer_mapping') }}

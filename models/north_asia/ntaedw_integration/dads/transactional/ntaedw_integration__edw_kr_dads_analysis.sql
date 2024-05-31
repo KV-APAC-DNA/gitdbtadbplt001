@@ -1,5 +1,5 @@
 with source as (
-    select * from ntaedw_integration.edw_vw_kr_dads_analysis
+    select * from {{ ref('ntaedw_integration__edw_vw_kr_dads_analysis') }}
 ),
 final as (
     select

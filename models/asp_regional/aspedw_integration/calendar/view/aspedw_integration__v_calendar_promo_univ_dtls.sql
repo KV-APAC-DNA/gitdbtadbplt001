@@ -1,5 +1,5 @@
 with edw_calendar_dim as (
-    select * from aspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 src1 as (
     SELECT edw_calendar_dim.cal_day,

@@ -1,8 +1,8 @@
 with edw_inventory_fact as (
-    select * from aspedw_integration.edw_inventory_fact
+    select * from {{ ref('aspedw_integration__edw_inventory_fact') }}
 ),
 edw_calendar_dim as (
-    select * from aspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 t1 as (
     SELECT t1.co_cd,

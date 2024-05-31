@@ -4,12 +4,12 @@ models:
   - name: ntaedw_integration__edw_trd_promo_actl
     config: 
       alias: edw_trd_promo_actl
-      tags: [""]
+      tags: ["j_kr_tp_actual_wrapper","transformation"]
   - name: ntaedw_integration__edw_trd_promo_pln
     config: 
       alias: edw_trd_promo_pln
-      tags: [""]
+      tags: ["j_kr_tp_plan_wrapper","transformation"]
   - name: ntaedw_integration__edw_kr_trade_promotion
     config:
         alias: edw_kr_trade_promotion
-        tags: ["",""]
+        tags: ["j_kr_trade_promotion_data_load","transformation"]

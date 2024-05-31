@@ -16,4 +16,4 @@ models:
   - name: ntaedw_integration__edw_intrm_calendar
     config:
       alias: edw_intrm_calendar
-      tags: [""]
+      tags: ["j_kr_tab_wkbk_trade_promotion","transformation"]

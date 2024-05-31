@@ -1,20 +1,20 @@
 with edw_pos_fact as (
-    select * from ntaedw_integration.edw_pos_fact
+    select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_customer_attr_flat_dim as (
     select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 v_interm_cust_hier_dim as (
-    select * from ntaedw_integration.v_interm_cust_hier_dim
+    select * from {{ ref('ntaedw_integration__v_interm_cust_hier_dim') }}
 ),
 edw_product_attr_dim as (
     select * from aspedw_integration.edw_product_attr_dim
 ),
 v_calendar_dtls as (
-    select * from aspedw_integration.v_calendar_dtls
+    select * from {{ ref('aspedw_integration__v_calendar_dtls') }}
 ),
 v_intrm_crncy_exch as (
-    select * from ntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 pos as (
     SELECT edw_pos_fact.pos_dt,
