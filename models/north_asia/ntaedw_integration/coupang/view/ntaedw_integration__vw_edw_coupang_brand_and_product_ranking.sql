@@ -1,12 +1,12 @@
 with 
 itg_kr_coupang_brand_ranking as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_COUPANG_BRAND_RANKING
+select * from {{ ref('ntaitg_integration__itg_kr_coupang_brand_ranking') }}
 ),
 vw_edw_coupang_product_ranking as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.VW_EDW_COUPANG_PRODUCT_RANKING
+select * from {{ ref('ntaedw_integration__vw_edw_coupang_product_ranking') }}
 ),
-ITG_MDS_KR_PRODUCT_EAN_MAPPING as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_KR_PRODUCT_EAN_MAPPING
+itg_mds_kr_product_ean_mapping as (
+select * from {{ ref('ntaitg_integration__itg_mds_kr_product_ean_mapping') }}
 ),
 final as (
 SELECT 

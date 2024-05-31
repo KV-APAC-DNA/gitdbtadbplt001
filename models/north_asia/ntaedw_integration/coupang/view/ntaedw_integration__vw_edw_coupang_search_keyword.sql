@@ -1,8 +1,8 @@
 with itg_kr_coupang_search_keyword_by_product as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_COUPANG_SEARCH_KEYWORD_BY_PRODUCT
+select * from {{ ref('ntaitg_integration__itg_kr_coupang_search_keyword_by_product') }}
 ),
 itg_kr_coupang_search_keyword_by_category as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_COUPANG_SEARCH_KEYWORD_BY_CATEGORY
+select * from {{ ref('ntaitg_integration__itg_kr_coupang_search_keyword_by_category') }}
 ),
 final as (
 SELECT 
