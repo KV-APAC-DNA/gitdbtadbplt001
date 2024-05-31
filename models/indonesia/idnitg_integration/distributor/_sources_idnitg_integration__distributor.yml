@@ -179,3 +179,16 @@ sources:
     tables:
     - name: itg_all_non_ivy_distributor_sellout_sales_fact
       tags: ["","ingestion"]
+
+  - name: idnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_itg_all_distributor_stock
+      tags: ["id_dist_control_pre_req_fact","ingestion"]
+    - name: wks_itg_all_distributor_sellin_sellout_fact
+      tags: ["id_dist_control_pre_req_fact","ingestion"]

@@ -11,7 +11,7 @@ edw_product_dim as (
     select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 itg_mds_id_lav_sellin_target as (
-    select * from {{ ref('idnedw_integration__itg_mds_id_lav_sellin_target') }}
+    select * from {{ ref('idnitg_integration__itg_mds_id_lav_sellin_target') }}
 ),
 abc as (
     select 

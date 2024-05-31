@@ -5,7 +5,7 @@ wks_indonesia_noo_analysis as
 ),
 edw_product_dim as 
 (
-    select * from  select * from {{ ref('idnedw_integration__edw_product_dim') }}
+    select * from  {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_distributor_dim as 
 (

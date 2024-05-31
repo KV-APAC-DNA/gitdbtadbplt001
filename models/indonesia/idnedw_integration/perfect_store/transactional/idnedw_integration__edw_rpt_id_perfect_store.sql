@@ -76,7 +76,7 @@ itg_id_ps_priority_store as
 ),
 edw_vw_ps_weights as
 (
-    select * from {{ref('idnitg_integration__edw_vw_ps_weights')}}
+    select * from {{ref('aspedw_integration__edw_vw_ps_weights')}}
 ),
 edw_vw_os_time_dim as
 (

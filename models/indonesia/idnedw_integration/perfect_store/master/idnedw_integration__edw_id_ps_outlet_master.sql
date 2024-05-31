@@ -1,5 +1,3 @@
-{{ config(materialized='table')}}
-
 with itg_id_ps_product_availability as 
 (
     select * from {{ref('idnitg_integration__itg_id_ps_product_availability')}}
