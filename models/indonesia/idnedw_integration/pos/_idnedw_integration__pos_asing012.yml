@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_vw_id_pos_sellout
+    config:
+      alias: edw_vw_id_pos_sellout
+      tags: ["cutomer_360_id","transformation"]
