@@ -8,8 +8,8 @@
         delete from {{this}} where to_date(TRANSACTION_DATE) || EAN IN (SELECT DISTINCT TRANSACTION_DATE || EAN_NUMBER FROM ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = '(JU) UNITOA_COUPANG' and upper(ctry_cd) = 'KR' ) AND RETAILER_CODE = '140555';
         delete from {{this}} where to_date(transaction_date) || ean in (select distinct transaction_date || ean_number from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'EBAY' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'EBAY';
         delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || ean_number) from ntaitg_integration.itg_kr_ecommerce_sellout where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
-        delete from {{this}} where source_file_name = (select distinct source_file_name from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction') }});
-        delete from {{this}} where source_file_name = (select distinct source_file_name from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay') }});
+        delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }});
+        delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }});
         {% endif %}"
     )
 }}
@@ -17,10 +17,10 @@ with itg_kr_ecommerce_sellout as (
     select * from ntaitg_integration.itg_kr_ecommerce_sellout
 ),
 sdl_kr_ecommerce_offtake_sales_ebay as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }}
 ),
 sdl_kr_ecommerce_offtake_coupang_transaction as (
-    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction') }}
+    select * from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }}
 ),
 itg_kr_ecommerce_offtake_product_master as (
     select * from ntaitg_integration.itg_kr_ecommerce_offtake_product_master
