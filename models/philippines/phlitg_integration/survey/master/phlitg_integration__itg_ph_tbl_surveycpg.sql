@@ -13,7 +13,7 @@ final as
 select
     custcode::varchar(10) as custcode,
 	slsperid::varchar(10) as slsperid,
-	branchcode::varchar(30) as branchcode,
+	branchcode::varchar(60) as branchcode,
 	createddate::timestamp_ntz(9) as createddate,
 	visitdate::timestamp_ntz(9) as visitdate,
 	filename::varchar(50) as filename,
