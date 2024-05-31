@@ -1,17 +1,17 @@
 with edw_ims_fact as (
-    select * from ntaedw_integration.edw_ims_fact
+    select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 wks_parameter_gt_sellout as (
     select * from ntawks_integration.wks_parameter_gt_sellout
 ),
 v_intrm_reg_crncy_exch_fiscper as (
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_intrm_calendar as (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 edw_customer_sales_dim as (
-    select * from aspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_attr_flat_dim as (
     select * from aspedw_integration.edw_customer_attr_flat_dim

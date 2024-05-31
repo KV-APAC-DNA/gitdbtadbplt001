@@ -4,12 +4,12 @@ models:
   - name: ntaedw_integration__edw_kr_sales_tgt
     config: 
       alias: edw_kr_sales_tgt
-      tags: [""]
+      tags: ["j_kr_nts_target_load","transformation"]
   - name: ntaedw_integration__edw_onpck_trgt
     config: 
       alias: edw_onpck_trgt
-      tags: [""]
+      tags: ["j_kr_onpack_target_wrapper","transformation"]
   - name: ntaedw_integration__v_rpt_onpack
     config: 
       alias: v_rpt_onpack
-      tags: [""]
+      tags: ["korea_views","transformation"]

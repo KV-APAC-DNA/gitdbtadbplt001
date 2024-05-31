@@ -1,44 +1,44 @@
 with itg_kr_coupang_pa_report as (
-    select * from ntaitg_integration.itg_kr_coupang_pa_report
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_pa_report') }}
 ),
 itg_mds_kr_brand_campaign_promotion as (
-    select * from ntaitg_integration.itg_mds_kr_brand_campaign_promotion
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_brand_campaign_promotion') }}
 ),
 itg_kr_coupang_productsalereport as (
-    select * from ntaitg_integration.itg_kr_coupang_productsalereport
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_productsalereport') }}
 ),
 itg_mds_kr_keyword_classifications as (
-    select * from ntaitg_integration.itg_mds_kr_keyword_classifications
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_keyword_classifications') }}
 ),
 itg_kr_coupang_bpa_report as (
-    select * from ntaitg_integration.itg_kr_coupang_bpa_report
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_bpa_report') }}
 ),
 itg_kr_dads_coupang_price as (
-    select * from ntaitg_integration.itg_kr_dads_coupang_price
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_coupang_price') }}
 ),
 itg_kr_dads_linkprice as (
-    select * from ntaitg_integration.itg_kr_dads_linkprice
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_linkprice') }}
 ),
 itg_mds_kr_naver_product_master as (
-    select * from ntaitg_integration.itg_mds_kr_naver_product_master
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_naver_product_master') }}
 ),
 itg_kr_dads_naver_gmv as (
-    select * from ntaitg_integration.itg_kr_dads_naver_gmv
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_gmv') }}
 ),
 edw_intrm_calendar as (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 itg_kr_dads_coupang_search_keyword as (
-    select * from ntaitg_integration.itg_kr_dads_coupang_search_keyword
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_coupang_search_keyword') }}
 ),
 itg_kr_dads_naver_keyword_search_volume as (
-    select * from ntaitg_integration.itg_kr_dads_naver_keyword_search_volume
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_keyword_search_volume') }}
 ),
 itg_kr_dads_naver_search_channel as (
-    select * from ntaitg_integration.itg_kr_dads_naver_search_channel
+    select * from {{ ref('ntaitg_integration__itg_kr_dads_naver_search_channel') }}
 ),
 itg_query_parameters as (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 final as (
 SELECT final.brand,
@@ -1084,24 +1084,24 @@ FROM (
                                             )::character varying AS keyword,
                                             NULL::character varying AS search_area,
                                             NULL::character varying AS ad_types,
-                                            a.click_count AS click,
-                                            a.impression,
-                                            a.consumed_cost AS ad_cost,
-                                            a.conversion_count AS total_order,
+                                            trunc(a.click_count::number(18,4),0) AS click,
+                                            trunc(a.impression::number(18,4),0) as impression,
+                                            trunc(a.consumed_cost::number(18,4),0) AS ad_cost,
+                                            trunc(a.conversion_count::number(18,4),0) AS total_order,
                                             NULL::character varying AS total_order_sku,
-                                            a.purchased_amount AS total_conversion_sales,
+                                            trunc(a.purchased_amount::number(18,4),0) AS total_conversion_sales,
                                             NULL::character varying AS total_conversion_sales_sku,
                                             a.file_name,
                                             'NAVER'::character varying AS retailer,
                                             'NAVER'::character varying AS sub_retailer,
-                                            (a.purchased_amount)::numeric(20, 4) AS sales_gmv,
+                                            trunc((a.purchased_amount)::numeric(20, 8),4) AS sales_gmv,
                                             NULL::numeric AS sales_gmv_sku,
                                             NULL::character varying AS product_name,
                                             NULL::character varying AS barcode,
                                             NULL::character varying AS sku_id,
                                             NULL::character varying AS pa_cost,
                                             NULL::character varying AS bpa_cost,
-                                            a.consumed_cost AS sa_cost,
+                                            trunc(a.consumed_cost::number(18,4),0) AS sa_cost,
                                             a.crtd_dttm AS data_refresh_time,
                                             COALESCE(
                                                 e.keyword_group,
@@ -1219,7 +1219,7 @@ FROM (
                                     a.file_name,
                                     'NAVER'::character varying AS retailer,
                                     'NAVER-Extra'::character varying AS sub_retailer,
-                                    (- (a.purchased_amount)::numeric(20, 4)) AS sales_gmv,
+                                    (- trunc((a.purchased_amount)::numeric(20, 8),4)) AS sales_gmv,
                                     NULL::numeric AS sales_gmv_sku,
                                     NULL::character varying AS product_name,
                                     NULL::character varying AS barcode,

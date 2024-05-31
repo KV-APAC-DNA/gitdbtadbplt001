@@ -4,8 +4,8 @@ models:
   - name: ntaedw_integration__edw_kr_dads_analysis
     config:
         alias: edw_kr_dads_analysis
-        tags: ["",""]
+        tags: ["kr_dads_datamart_refresh","transformation"]
   - name: ntaedw_integration__edw_vw_kr_dads_analysis
     config:
         alias: edw_vw_kr_dads_analysis
-        tags: ["",""]
+        tags: ["kr_dads_datamart_refresh","transformation"]

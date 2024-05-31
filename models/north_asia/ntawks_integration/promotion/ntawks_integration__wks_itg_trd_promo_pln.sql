@@ -3,13 +3,13 @@ with source as (
 ),
 final as(
     select 
-        substring(profit_center, 0, position('-' in profit_center)) as profit_center,
+        substring(profit_center, 0, position('-' in profit_center)-1) as profit_center,
         substring(profit_center, position('-' in profit_center) + 1, length(profit_center)) as profit_center_nm,
-        substring(customer_channel, 0, position('-' in customer_channel)) as customer_channel,
+        substring(customer_channel, 0, position('-' in customer_channel)-1) as customer_channel,
         substring(customer_channel, position('-' in customer_channel) + 1, length(customer_channel)) as customer_channel_nm,
         case
             when position('-' in customer_hq_code) <> 0
-            and length(customer_hq_code) <> 0 then substring(customer_hq_code, 0, position('-' in customer_hq_code))
+            and length(customer_hq_code) <> 0 then substring(customer_hq_code, 0, position('-' in customer_hq_code)-1)
             when position('-' in customer_hq_code) = 0
             and length(customer_hq_code) <> 0 then '#'
             else '#'

@@ -31,36 +31,31 @@ src2 as(
     WHERE (a.wkday = 5)
     ORDER BY a.cal_day
 ),
+x as (
+SELECT "max"(derived_table1.cal_day) AS cal_day,
+                            derived_table1.mo,
+                            derived_table1.cal_yr
+                        FROM (
+                                SELECT a.cal_day,
+                                    "date_part"(month, a.cal_day) AS mo,
+                                    a.cal_yr
+                                FROM edw_calendar_dim a
+                                WHERE (a.wkday = 4)
+                                ORDER BY a.cal_day
+                            ) derived_table1
+                        GROUP BY derived_table1.mo,
+                            derived_table1.cal_yr
+                        ORDER BY derived_table1.mo,
+                            derived_table1.cal_yr
+),
+y as (
+SELECT a.cal_day, row_number() OVER(PARTITION BY a.cal_yr ORDER BY a.cal_day) AS promo_week
+                    from edw_calendar_dim a
+                    WHERE (a.wkday = 5)
+),
 src3 as (
     SELECT CASE
-            WHEN (src2.promo_week IS NULL) THEN (
-                SELECT x.promo_week
-                FROM (
-                        SELECT a.cal_day,
-                            row_number() OVER(
-                                PARTITION BY a.cal_yr
-                                ORDER BY a.cal_day
-                            ) AS promo_week
-                        FROM edw_calendar_dim a
-                        WHERE (a.wkday = 5)
-                    ) x
-                WHERE (
-                        (
-                            datediff(
-                                day,
-                                (x.cal_day)::timestamp without time zone,
-                                (src1.cal_day)::timestamp without time zone
-                            ) >= 1
-                        )
-                        AND (
-                            datediff(
-                                day,
-                                (x.cal_day)::timestamp without time zone,
-                                (src1.cal_day)::timestamp without time zone
-                            ) <= 6
-                        )
-                    )
-            )
+            WHEN (src2.promo_week IS NULL) THEN y.promo_week
             ELSE src2.promo_week
         END AS promo_week,
         src1.cal_day,
@@ -77,37 +72,13 @@ src3 as (
         src1.pstng_per,
         src1.fisc_yr,
         src1.rec_mode,
-        (
-            SELECT CASE
-                    WHEN (src1.cal_day <= x.cal_day) THEN x.mo
+        CASE WHEN (src1.cal_day <= x.cal_day) THEN x.mo
                     ELSE (x.mo + 1)
-                END AS mo
-            FROM (
-                    SELECT "max"(derived_table1.cal_day) AS cal_day,
-                        derived_table1.mo,
-                        derived_table1.cal_yr
-                    FROM (
-                            SELECT a.cal_day,
-                                date_part(month, a.cal_day) AS mo,
-                                a.cal_yr
-                            FROM edw_calendar_dim a
-                            WHERE (a.wkday = 4)
-                            ORDER BY a.cal_day
-                        ) derived_table1
-                    GROUP BY derived_table1.mo,
-                        derived_table1.cal_yr
-                    ORDER BY derived_table1.mo,
-                        derived_table1.cal_yr
-                ) x
-            WHERE (
-                    (
-                        date_part(month, src1.cal_day) = x.mo
-                    )
-                    AND (src1.cal_yr = x.cal_yr)
-                )
-        ) AS promo_month
+                END AS promo_month
     FROM src1
         LEFT JOIN src2 ON ((src1.cal_day = src2.cal_day))
+        left join x on date_part(month, src1.cal_day) = x.mo AND (src1.cal_yr = x.cal_yr)
+        left join y on datediff(day, (y.cal_day)::timestamp without time zone, (src1.cal_day)::timestamp without time zone) >= 1 AND datediff(day, (y.cal_day)::timestamp without time zone, (src1.cal_day)::timestamp without time zone) <= 6     
     ORDER BY src1.cal_day
 ),
 final as (
@@ -181,20 +152,20 @@ final as (
                                         ORDER BY src3.cal_day
                                     ) % (7)::bigint
                                 ) = 0
-                            ) THEN (
+                            ) THEN trunc((
                                 row_number() OVER(
                                     PARTITION BY src3.cal_yr
                                     ORDER BY src3.cal_day
                                 ) / 7
-                            )
-                            ELSE (
+                            ),0)
+                            ELSE trunc((
                                 (
                                     row_number() OVER(
                                         PARTITION BY src3.cal_yr
                                         ORDER BY src3.cal_day
                                     ) / 7
                                 ) + 1
-                            )
+                            ),0)
                         END
                     )::character varying
                 )::text,
@@ -210,20 +181,20 @@ final as (
                         ORDER BY src3.cal_day
                     ) % (7)::bigint
                 ) = 0
-            ) THEN (
+            ) THEN trunc((
                 row_number() OVER(
                     PARTITION BY substring(((src3.cal_day)::character varying)::text, 1, 7)
                     ORDER BY src3.cal_day
                 ) / 7
-            )
-            ELSE (
+            ),0)
+            ELSE trunc((
                 (
                     row_number() OVER(
                         PARTITION BY substring(((src3.cal_day)::character varying)::text, 1, 7)
                         ORDER BY src3.cal_day
                     ) / 7
                 ) + 1
-            )
+            ),0)
         END AS univ_week_month
     from src3
 )

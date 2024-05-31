@@ -15,7 +15,7 @@
 }}
 
 with itg_sales_store_master as (
-    select * from snapntaitg_integration.itg_sales_store_master
+    select * from {{ ref('ntaitg_integration__itg_sales_store_master') }}
 ),
 sdl_kr_pos_emart_ssg as (
     select * from {{ ref('ntawks_integration__wks_kr_pos_emart_ssg') }}
