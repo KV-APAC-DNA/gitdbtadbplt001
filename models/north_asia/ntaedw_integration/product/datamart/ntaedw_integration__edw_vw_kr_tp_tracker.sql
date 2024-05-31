@@ -11,13 +11,13 @@ edw_customer_attr_flat_dim as(
     select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
 ),
 edw_intrm_calendar as(
-    select * from ntaedw_integration__edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 v_intrm_copa_trans as(
-    select * from ntaedw_integration__v_intrm_copa_trans
+    select * from {{ ref('ntaedw_integration__v_intrm_copa_trans') }}
 ),
 itg_kr_tp_tracker_target as(
-    select * from ntaitg_integration__itg_kr_tp_tracker_target
+    select * from {{ ref('ntaitg_integration__itg_kr_tp_tracker_target') }}
 ),
 itg_query_parameters_na as(
     select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}

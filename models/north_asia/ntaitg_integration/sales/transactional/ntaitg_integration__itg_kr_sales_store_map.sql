@@ -4,12 +4,12 @@ with source as (
 final as 
 (
     select 
-        sls_ofc_code::varchar(50) as sls_ofc,
-        sls_ofc_desc::varchar(200) as sls_ofc_desc,
-        channel::varchar(200) as channel,
-        store_type::varchar(200) as store_type,
-        sales_group_code_code::varchar(200) as sales_group_code,
-        sales_group_nm::varchar(200) as sales_group_nm,
+        sls_ofc_code::varchar(4) as sls_ofc,
+        sls_ofc_desc::varchar(40) as sls_ofc_desc,
+        channel::varchar(25) as channel,
+        store_type::varchar(25) as store_type,
+        sales_group_code_code::varchar(18) as sales_group_code,
+        sales_group_nm::varchar(100) as sales_grp_nm,
         convert_timezone('UTC', current_timestamp)::timestamp_ntz(9) as crt_dttm,
         convert_timezone('UTC', current_timestamp)::timestamp_ntz(9) as updt_dttm,
         customer_segmentation_code::varchar(256) as customer_segmentation_code,

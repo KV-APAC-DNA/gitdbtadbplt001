@@ -1,6 +1,6 @@
 with v_intrm_copa_trans as 
 (
-    select * from ntaedw_integration.v_intrm_copa_trans
+    select * from {{ ref('ntaedw_integration__v_intrm_copa_trans') }}
 ),
 final as
 (

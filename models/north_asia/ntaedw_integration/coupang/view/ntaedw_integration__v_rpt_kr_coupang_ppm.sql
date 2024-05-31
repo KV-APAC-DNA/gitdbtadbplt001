@@ -1,11 +1,11 @@
 with itg_kr_coupang_productsalereport as (
-    select * from ntaitg_integration.itg_kr_coupang_productsalereport
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_productsalereport') }} 
 ),
 itg_query_parameters as (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_intrm_calendar as (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }} 
 ),
 edw_product_attr_dim as (
     select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}

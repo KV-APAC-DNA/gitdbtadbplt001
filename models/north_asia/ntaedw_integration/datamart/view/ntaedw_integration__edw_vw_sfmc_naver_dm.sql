@@ -1,10 +1,11 @@
 with edw_sfmc_naver_data as 
 (
-    select * from ntaedw_integration.edw_sfmc_naver_data
+    select * from ntaedw_integration__edw_sfmc_naver_data
+    -- {{ ('ntaedw_integration__edw_sfmc_naver_data') }} 
 ),
 itg_query_parameters as 
 (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 abc as 
 (

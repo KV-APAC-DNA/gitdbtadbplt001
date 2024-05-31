@@ -1,9 +1,9 @@
 with vw_edw_coupang_premium_intrm as (
-    select * from ntaedw_integration.vw_edw_coupang_premium_intrm
+    select * from {{ ref('ntaedw_integration__vw_edw_coupang_premium_intrm') }} 
 ),
 edw_intrm_calendar as 
 (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }} 
 ),
 edw_product_attr_dim as 
 (

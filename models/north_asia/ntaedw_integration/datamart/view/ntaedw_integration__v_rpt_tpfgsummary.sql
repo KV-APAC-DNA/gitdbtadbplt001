@@ -8,7 +8,7 @@ edw_fert_material_fact as
 ),
 itg_mds_kr_cost_of_goods as
 (
-    select * from ntaitg_integration__itg_mds_kr_cost_of_goods
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_cost_of_goods') }} 
 ),
 itg_kr_sales_store_map as
 (
@@ -32,7 +32,7 @@ edw_billing_fact as
 ),
 edw_intrm_calendar as
 (
-    select * from ntaedw_integration__edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }} 
 ),
 edw_material_sales_dim as
 (
@@ -40,7 +40,7 @@ edw_material_sales_dim as
 ),
 itg_kr_sales_tgt as
 (
-    select * from ntaitg_integration__itg_kr_sales_tgt
+    select * from {{ ref('ntaitg_integration__itg_kr_sales_tgt') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as
 (
@@ -48,7 +48,7 @@ v_intrm_reg_crncy_exch_fiscper as
 ),
 itg_kr_tp_tracker_target as
 (
-    select * from ntaitg_integration__itg_kr_tp_tracker_target
+    select * from {{ ref('ntaitg_integration__itg_kr_tp_tracker_target') }}
 ),
 prod_hier as 
 (
