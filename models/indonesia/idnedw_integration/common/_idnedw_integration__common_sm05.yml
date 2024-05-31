@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_vw_id_customer_dim
+    config:
+      alias: edw_vw_id_customer_dim
+      tags: ["indonesia_views","transformation"]
+
+  - name: idnedw_integration__edw_vw_id_material_dim
+    config:
+      alias: edw_vw_id_material_dim
+      tags: ["indonesia_views","transformation"]

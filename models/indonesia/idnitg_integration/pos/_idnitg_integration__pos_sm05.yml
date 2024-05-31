@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_id_pos_daily_basedline_sellout
+    config:
+      alias: itg_id_pos_daily_basedline_sellout
+      tags: ["id_pos_daily_basedline_sellout","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_daily_sat_sellout
+    config:
+      alias: itg_id_pos_daily_sat_sellout
+      tags: ["id_pos_daily_sat_sellout","transformation"]
+
+  - name: idnitg_integration__itg_id_pos_guardian_stock
+    config:
+      alias: itg_id_pos_guardian_stock
+      tags: ["id_pos_guardian","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_idm_sellout
+    config:
+      alias: itg_id_pos_idm_sellout
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_idm_stock
+    config:
+      alias: itg_id_pos_idm_stock
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_igr_stock
+    config:
+      alias: itg_id_pos_igr_stock
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_igr_sellout
+    config:
+      alias: itg_id_pos_igr_sellout
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_matahari_beauty_stock
+    config:
+      alias: itg_id_pos_matahari_beauty_stock
+      tags: ["id_pos_matahari","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_matahari_jb_stock
+    config:
+      alias: itg_id_pos_matahari_jb_stock
+      tags: ["id_pos_matahari","ingestion"]
+
+  - name: idnitg_integration__itg_id_pos_matahari_otc_stock
+    config:
+      alias: itg_id_pos_matahari_otc_stock
+      tags: ["id_pos_matahari","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_daily_basedline_sellout
+    config:
+      alias: sdl_raw_id_pos_daily_basedline_sellout
+      tags: ["id_pos_daily_basedline_sellout","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_daily_sat_sellout
+    config:
+      alias: sdl_raw_id_pos_daily_sat_sellout
+      tags: ["id_pos_daily_sat_sellout","transformation"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_guardian_stock
+    config:
+      alias: sdl_raw_id_pos_guardian_stock
+      tags: ["id_pos_guardian","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_idm_sellout
+    config:
+      alias: sdl_raw_id_pos_idm_sellout
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_idm_stock
+    config:
+      alias: sdl_raw_id_pos_idm_stock
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_igr_sellout
+    config:
+      alias: sdl_raw_id_pos_igr_sellout
+      tags: ["id_pos_idm","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_igr_stock
+    config:
+      alias: sdl_raw_id_pos_igr_stock
+      tags: ["id_pos_idm","ingestion"]
+      
+  - name: idnitg_integration__sdl_raw_id_pos_matahari_beauty_stock
+    config:
+      alias: sdl_raw_id_pos_matahari_beauty_stock
+      tags: ["id_pos_matahari","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_matahari_otc_stock
+    config:
+      alias: sdl_raw_id_pos_matahari_otc_stock
+      tags: ["id_pos_matahari","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_pos_matahari_jb_stock
+    config:
+      alias: sdl_raw_id_pos_matahari_jb_stock
+      tags: ["id_pos_matahari","ingestion"]

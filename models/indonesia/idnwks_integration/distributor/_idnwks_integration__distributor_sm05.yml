@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: idnwks_integration__wks_csa_raw_sellout_sales_fact
+    config:
+      alias: wks_csa_raw_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+  - name: idnwks_integration__wks_csa_sellout_sales_fact
+    config:
+      alias: wks_csa_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+  - name: idnwks_integration__wks_dnr_raw_sellout_sales_fact
+    config:
+      alias: wks_dnr_raw_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+  - name: idnwks_integration__wks_dnr_sellout_sales_fact
+    config:
+      alias: wks_dnr_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+  - name: idnwks_integration__wks_pp_raw_sellout_sales_fact
+    config:
+      alias: wks_pp_raw_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+
+  - name: idnwks_integration__wks_sdn_raw_sellout_sales_fact
+    config:
+      alias: wks_sdn_raw_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+
+  - name: idnwks_integration__wks_sdn_sellout_sales_fact
+    config:
+      alias: wks_sdn_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+      
+  - name: idnwks_integration__wks_spr_raw_sellout_sales_fact
+    config:
+      alias: wks_spr_raw_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
+
+  - name: idnwks_integration__wks_spr_sellout_sales_fact
+    config:
+      alias: wks_spr_sellout_sales_fact
+      tags: ["id_sellout_sales","ingestion"]
