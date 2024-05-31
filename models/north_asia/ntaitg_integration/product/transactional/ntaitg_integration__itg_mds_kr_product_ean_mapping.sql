@@ -1,7 +1,6 @@
 with source as
 (
-   -- select * from {{ source('ntasdl_raw', 'sdl_mds_kr_product_ean_mapping') }}
-   select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_MDS_KR_PRODUCT_EAN_MAPPING
+   select * from {{ source('ntasdl_raw', 'sdl_mds_kr_product_ean_mapping') }}
 ),
 final as
 (
