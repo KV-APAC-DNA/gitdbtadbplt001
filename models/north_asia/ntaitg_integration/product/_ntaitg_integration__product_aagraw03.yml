@@ -4,4 +4,4 @@ models:
   - name: ntaitg_integration__itg_kr_price_tracker
     config:
       alias: itg_kr_price_tracker
-      tags: [""]
+      tags: ["j_kr_price_tracker_daily_data_ingestion","j_kr_price_tracker_monthly_data_ingestion","transformation"]

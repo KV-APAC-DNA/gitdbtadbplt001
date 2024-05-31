@@ -4,4 +4,4 @@ models:
   - name: ntaedw_integration__vw_edw_coupang_product_ranking
     config: 
       alias: vw_edw_coupang_product_ranking
-      tags: [""]
+      tags: ["korea_views","transformation"]

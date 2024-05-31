@@ -1,5 +1,5 @@
 with source as (
-    select * from ntaedw_integration.v_intrm_calendar
+    select * from {{ ref('ntaedw_integration__v_intrm_calendar') }}
 ),
 final as (
     select
