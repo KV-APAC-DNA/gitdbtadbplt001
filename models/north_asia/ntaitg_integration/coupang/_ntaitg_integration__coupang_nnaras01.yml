@@ -21,4 +21,12 @@ models:
     config:
       alias: itg_kr_dads_coupang_price
       tags: []
+  - name: ntaitg_integration__sdl_raw_kr_coupang_bpa_report
+    config:
+      alias: sdl_raw_kr_coupang_bpa_report
+      tags: []
+  - name: ntaitg_integration__sdl_raw_kr_coupang_pa_report
+    config:
+      alias: sdl_raw_kr_coupang_pa_report
+      tags: []
 

@@ -5,4 +5,12 @@ models:
     config:
       alias: itg_kr_dads_coupang_search_keyword
       tags: []
+  - name: ntaitg_integration__sdl_raw_kr_dads_coupang_price
+    config:
+      alias: sdl_raw_kr_dads_coupang_price
+      tags: []
+  - name: ntaitg_integration__sdl_raw_kr_dads_coupang_search_keyword
+    config:
+      alias: sdl_raw_kr_dads_coupang_search_keyword
+      tags: []
   
