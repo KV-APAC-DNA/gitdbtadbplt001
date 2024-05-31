@@ -19,7 +19,7 @@ final as (
 SELECT DISTINCT 'KR' AS COUNTRY_CD,
        'GT_SELLOUT' AS PARAMETER_NAME,
        dstr_nm
-from na_itg.itg_kr_gt_sellout
+from itg_kr_gt_sellout
 WHERE UPPER(DSTR_CD) in ('NH','OTC')
 )
 select * from final 
