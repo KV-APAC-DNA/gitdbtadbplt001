@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_rpt_kr_trade_promotion
+    config: 
+      alias: v_rpt_kr_trade_promotion
+      tags: ["korea_views","transformation"]
+ 

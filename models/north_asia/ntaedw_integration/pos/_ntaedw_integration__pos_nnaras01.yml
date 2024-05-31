@@ -4,5 +4,5 @@ models:
   - name: ntaedw_integration__v_rpt_pos_offtake_wkly_korea
     config:
       alias: v_rpt_pos_offtake_wkly_korea
-      tags: ["","transformation"]
+      tags: ["korea_views","transformation"]
   
