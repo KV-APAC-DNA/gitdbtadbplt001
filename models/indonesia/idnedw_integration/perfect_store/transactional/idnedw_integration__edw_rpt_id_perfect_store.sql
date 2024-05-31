@@ -1,86 +1,86 @@
 with edw_id_ps_msl_osa as
 (
-    select * from snapidnedw_integration.edw_id_ps_msl_osa
+    select * from {{ref('idnedw_integration__edw_id_ps_msl_osa')}}
 ),
 itg_id_ps_msl_reference as
 (
-    select * from snapidnitg_integration.itg_id_ps_msl_reference
+    select * from {{ref('idnitg_integration__itg_id_ps_msl_reference')}}
 ),
 edw_id_ps_outlet_master as
 (
-    select * from snapidnedw_integration.edw_id_ps_outlet_master
+    select * from {{ref('idnedw_integration__edw_id_ps_msl_osa')}}
 ),
 edw_id_ps_merchandiser_master as
 (
-    select * from snapidnedw_integration.edw_id_ps_merchandiser_master
+    select * from {{ref('idnedw_integration__edw_id_ps_merchandiser_master')}}
 ),
 edw_id_ps_product_master as
 (
-    select * from snapidnedw_integration.edw_id_ps_product_master
+    select * from {{ref('idnedw_integration__edw_id_ps_product_master')}}
 ),
 edw_id_ps_promotion as
 (
-    select * from snapidnedw_integration.edw_id_ps_promotion
+    select * from {{ref('idnedw_integration__edw_id_ps_promotion')}}
 ),
 edw_id_ps_planogram as
 (
-    select * from snapidnedw_integration.edw_id_ps_planogram
+    select * from {{ref('idnedw_integration__edw_id_ps_planogram')}}
 ),
 edw_id_ps_brand_blocking as
 (
-    select * from snapidnedw_integration.edw_id_ps_brand_blocking
+    select * from {{ref('idnedw_integration__edw_id_ps_brand_blocking')}}
 ),
 edw_id_ps_visibility as
 (
-    select * from snapidnedw_integration.edw_id_ps_visibility
+    select * from {{ref('idnedw_integration__edw_id_ps_visibility')}}
 ),
 edw_indonesia_noo_analysis as
 (
-    select * from snapidnedw_integration.edw_indonesia_noo_analysis
+    select * from {{ref('idnedw_integration__edw_indonesia_noo_analysis')}}
 ),
 edw_distributor_ivy_merchandising as
 (
-    select * from snapidnedw_integration.edw_distributor_ivy_merchandising
+    select * from {{ref('idnedw_integration__edw_distributor_ivy_merchandising')}}
 ),
 edw_time_dim as
 (
-    select * from snapidnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_distributor_ivy_outlet_master as
 (
-    select * from snapidnedw_integration.edw_distributor_ivy_outlet_master
+    select * from {{ref('idnedw_integration__edw_distributor_ivy_outlet_master')}}
 ),
 edw_distributor_customer_dim as
 (
-    select * from snapidnedw_integration.edw_distributor_customer_dim
+    select * from {{ref('idnedw_integration__edw_distributor_customer_dim')}}
 ),
 edw_distributor_dim as
 (
-    select * from snapidnedw_integration.edw_distributor_dim
+    select * from {{ref('idnedw_integration__edw_distributor_dim')}}
 ),
 itg_mds_id_5ps_store_mapping as
 (
-    select * from snapidnitg_integration.itg_mds_id_5ps_store_mapping
+    select * from {{ref('idnitg_integration__itg_mds_id_5ps_store_mapping')}}
 ),
 itg_id_ps_brand as
 (
-    select * from snapidnitg_integration.itg_id_ps_brand
+    select * from {{ref('idnitg_integration__itg_id_ps_brand')}}
 ),
 itg_mcs_gt as
 (
-    select * from snapidnitg_integration.itg_mcs_gt
+    select * from {{ref('idnitg_integration__itg_mcs_gt')}}
 ),
 itg_id_ps_priority_store as
 (
-    select * from snapidnitg_integration.itg_id_ps_priority_store
+    select * from {{ref('idnitg_integration__itg_id_ps_priority_store')}}
 ),
 edw_vw_ps_weights as
 (
-    select * from aspedw_integration.edw_vw_ps_weights
+    select * from {{ref('idnitg_integration__edw_vw_ps_weights')}}
 ),
 edw_vw_os_time_dim as
 (
-    select * from SNENAV01_WORKSPACE.edw_vw_os_time_dim
+    select * from {{ref('sgpedw_integration__edw_vw_os_time_dim')}}
 ),
 final as 
 (

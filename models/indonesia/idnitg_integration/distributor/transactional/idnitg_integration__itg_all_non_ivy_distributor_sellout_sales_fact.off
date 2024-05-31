@@ -3,16 +3,16 @@
     (
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook=" delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_TIME_DIM dm, DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_spr_raw_sellout_sales_fact ds where to_date(dm.cal_date) = to_date(trim(ds.tgl_faktur)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = upper('spr');
-                   delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.SNAPIDNEDW_INTEGRATION.EDW_TIME_DIM dm, DEV_DNA_LOAD.SNAPIDNSDL_RAW.sdl_sdn_raw_sellout_sales_fact ds where to_date(dm.cal_date) = to_date( trim(ds.tgl_faktur)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'sdn';
+        pre_hook=" delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from {{ source('idnedw_integration', 'edw_time_dim') }} dm, {{ source('idnsdl_raw', 'sdl_spr_raw_sellout_sales_fact') }} ds where to_date(dm.cal_date) = to_date(trim(ds.tgl_faktur)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = upper('spr');
+                   delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from {{ source('idnedw_integration', 'edw_time_dim') }} dm, {{ source('idnsdl_raw', 'sdl_sdn_raw_sellout_sales_fact') }} ds where to_date(dm.cal_date) = to_date( trim(ds.tgl_faktur)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'sdn';
                     "
     )
 }}
 with union1 as(
-    select * from DEV_DNA_CORE.sm05_workspace.idnwks_integration__wks_sdn_sellout_sales_fact
+    select * from {{ ref('idnwks_integration__wks_sdn_sellout_sales_fact') }}
 ),
 union2 as(
-    select * from DEV_DNA_CORE.sm05_workspace.idnwks_integration__wks_spr_sellout_sales_fact
+    select * from {{ ref('idnwks_integration__wks_spr_sellout_sales_fact') }}
 ),
 transformed as(
     select * from union1

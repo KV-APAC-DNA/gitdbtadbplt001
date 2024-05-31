@@ -1,22 +1,17 @@
 with edw_invoice_fact as (
-    select * from  --ref('aspedw_integration__edw_invoice_fact') 
-                aspedw_integration.edw_invoice_fact
+    select * from  {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 edw_time_dim as (
-    select * from -- ref('idnedw_integration__edw_time_dim') 
-                    idnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_distributor_dim as (
-    select * from -- ref('idnedw_integration__edw_distributor_dim') 
-                snapidnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as (
-    select * from -- ref('idnedw_integration__edw_product_dim') 
-                        snapidnedw_integration.edw_product_dim
+    select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 itg_mds_id_lav_sellin_target as (
-    select * from -- ref('idnitg_integration__itg_mds_id_lav_sellin_target') 
-                snapidnitg_integration.itg_mds_id_lav_sellin_target
+    select * from {{ ref('idnedw_integration__itg_mds_id_lav_sellin_target') }}
 ),
 abc as (
     select 

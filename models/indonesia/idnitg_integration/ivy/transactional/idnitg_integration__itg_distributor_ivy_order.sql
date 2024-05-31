@@ -25,20 +25,16 @@ with source as (
    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
 ),
 edw_distributor_dim as (
-   select * from -- ref('idnedw_integration__edw_distributor_dim')
-                   snapidnedw_integration.edw_distributor_dim
+   select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as (
-   select * from -- ref('idnedw_integration__edw_product_dim')
-               idnedw_integration.edw_product_dim
+   select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_distributor_ivy_outlet_master as (
-   select * from -- ref('idnedw_integration__edw_distributor_ivy_outlet_master')
-               snapidnedw_integration.edw_distributor_ivy_outlet_master
+   select * from {{ ref('idnedw_integration__edw_distributor_ivy_outlet_master') }}
 ),
 edw_time_dim as (
-   select * from -- ref('idnedw_integration__edw_time_dim')
-               snapidnedw_integration.edw_time_dim
+   select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 transformed as (
    select

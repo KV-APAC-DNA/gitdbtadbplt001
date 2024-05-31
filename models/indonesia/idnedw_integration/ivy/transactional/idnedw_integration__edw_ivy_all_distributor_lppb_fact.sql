@@ -3,26 +3,26 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["jj_mnth_id"],
-        pre_hook= ["{{build_edw_p_load_lppb_fact_upd()}}","delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from snapidnedw_integration.edw_time_dim where to_date(cal_date) = to_date(sysdate()));"]
+        pre_hook= ["{{build_edw_p_load_lppb_fact_upd()}}","delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from {{ source('idnedw_integration', 'edw_time_dim') }} where to_date(cal_date) = to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)));"]
     )
 }}
 
 with itg_all_distributor_sellin_sales_fact as
 (
-    select * from snapidnitg_integration.itg_all_distributor_sellin_sales_fact
+    select * from {{ref('idnitg_integration__itg_all_distributor_sellin_sales_fact')}}
 ),
 edw_time_dim as
 (
-    select * from snapidnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }} 
 ),
 edw_distributor_dim as
 (
-    select * from snapidnedw_integration.edw_distributor_dim
+    select * from {{ref('idnedw_integration__edw_distributor_dim')}}
 ),
 vw_all_distributor_sellout_sales_fact as
 (
-    select * from APAHIL01_WORKSPACE.idnedw_integration__vw_all_distributor_sellout_sales_fact
-    --snapidnedw_integration.vw_all_distributor_sellout_sales_fact
+    select * from {{ref('idnedw_integration__vw_all_distributor_sellout_sales_fact')}}
+
 ),
 vw_all_distributor_ivy_sellout_sales_fact as
 (
@@ -30,7 +30,7 @@ vw_all_distributor_ivy_sellout_sales_fact as
 ),
 edw_all_distributor_lppb_fact as
 (
-    select * from snapidnedw_integration.edw_all_distributor_lppb_fact
+    select * from {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }} 
 ),
 final as
 (

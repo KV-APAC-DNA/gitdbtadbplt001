@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
 with source as (
     select * from {{ ref('idnedw_integration__edw_vw_order_sell_in_analysis') }}
 ),

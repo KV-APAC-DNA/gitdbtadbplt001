@@ -29,7 +29,7 @@
 with 
 itg_id_ps_targets as (
     select * from -- ref('idnitg_integration__itg_id_ps_targets')
-            snapidnitg_integration.itg_id_ps_targets
+            {{ref('idnitg_integration__itg_id_ps_targets')}}
 )
 -- ,itg_mds_sg_ps_targets as (
 --     select * from -- ref('sgpitg_integration__itg_mds_sg_ps_targets') 

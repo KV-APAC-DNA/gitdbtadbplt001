@@ -1,12 +1,6 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
 with source as (
- select * from -- ref('idnitg_integration__itg_distributor_customer_dim') 
-            snapidnitg_integration.itg_distributor_customer_dim
+ select * from  {{ref('idnitg_integration__itg_distributor_customer_dim')}}
+ 
 ),
 final as (
     SELECT 

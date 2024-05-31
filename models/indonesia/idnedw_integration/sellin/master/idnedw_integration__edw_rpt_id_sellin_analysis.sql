@@ -1,20 +1,24 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
-with edw_id_sellin_fact_temp as (
-    select * from -- ref('idnedw_integration__edw_id_sellin_fact_temp') 
-                    snapidnedw_integration.edw_id_sellin_fact_temp
+with edw_vw_id_sellin_fact as (
+    select * from {{ ref('idnedw_integration__edw_vw_id_sellin_fact') }}
+),
+edw_id_sellin_fact_temp as (
+   select rec_key,
+       cust_prod_cd,
+       bill_dt,
+       bill_doc,
+       jj_mnth_id,
+       jj_sap_dstrbtr_id,
+       jj_sap_prod_id,
+       sellin_qty,
+       sellin_val,
+       gross_sellin_val
+    from edw_vw_id_sellin_fact
 ),
 edw_distributor_dim as (
-    select * from -- ref('idnedw_integration__edw_distributor_dim') 
-                snapidnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as (
-    select * from -- ref('idnedw_integration__edw_product_dim') 
-                snapidnedw_integration.edw_product_dim
+    select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 etd as (
     select distinct jj_year,
@@ -30,8 +34,7 @@ etd as (
         jj_mnth_wk_no,
         jj_date,
         cal_date
- from -- ref('idnedw_integration__edw_time_dim') 
-        snapidnedw_integration.edw_time_dim
+ from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}

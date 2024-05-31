@@ -51,7 +51,7 @@ sources:
             failure_reason: "missing outlet compared with outlet master AND distributor_code"
             column: "TRIM(distributor_code)"
             lookup_column: "TRIM(jj_sap_dstrbtr_id)"
-            lookup_table: " snapidnedw_integration.edw_distributor_ivy_outlet_master" #Change to Refernce of EDW table later
+            lookup_table: " {{ ref('idnedw_integration__edw_distributor_ivy_outlet_master') }}" #Change to Refernce of EDW table later
             name: TRATBL_sdl_distributor_ivy_order__test_lookup__ff
             config:
               store_failures: true
@@ -70,7 +70,7 @@ sources:
             failure_reason: "missing outlet compared with outlet master AND distributor_code"
             column: "TRIM(distributor_code)"
             lookup_column: "TRIM(jj_sap_dstrbtr_id)"
-            lookup_table: " snapidnedw_integration.edw_distributor_ivy_outlet_master"  #Change to Refernce of EDW table later
+            lookup_table: " {{ ref('idnedw_integration__edw_distributor_ivy_outlet_master') }}"  #Change to Refernce of EDW table later
             name: TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff
             config:
               store_failures: true

@@ -1,44 +1,29 @@
-{{    config
-    (
-        materialized="table",
-    )
-}}
-
 with vw_all_distributor_sellout_sales_fact as (
     select * from {{ ref('idnedw_integration__vw_all_distributor_sellout_sales_fact') }}
 ),
 vw_all_distributor_ivy_sellout_sales_fact as (
-    select * from --ref('idnedw_integration__vw_all_distributor_ivy_sellout_sales_fact')
-                    apahil01_workspace.idnedw_integration__vw_all_distributor_ivy_sellout_sales_fact  
-
+    select * from {{ ref('idnedw_integration__vw_all_distributor_ivy_sellout_sales_fact') }}
 ),
 edw_distributor_dim as (
-    select * from  -- ref('idnedw_integration__edw_distributor_dim') 
-                    snapidnedw_integration.edw_distributor_dim
+    select * from  {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as (
-    select * from -- ref('idnedw_integration__edw_product_dim') 
-                snapidnedw_integration.edw_product_dim
+    select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_distributor_customer_dim as (
-    select * from -- ref('idnedw_integration__edw_distributor_customer_dim') 
-                snapidnedw_integration.edw_distributor_customer_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_customer_dim') }}
 ),
 edw_distributor_salesman_dim as (
-    select * from -- ref('idnedw_integration__edw_distributor_salesman_dim') 
-                snapidnedw_integration.edw_distributor_salesman_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_salesman_dim') }}
 ),
 edw_time_dim as (
-    select * from -- ref('idnedw_integration__edw_time_dim')
-                snapidnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_distributor_ivy_outlet_master as (
-    select * from  --ref('idnedw_integration__edw_distributor_ivy_outlet_master') 
-                    snapidnedw_integration.edw_distributor_ivy_outlet_master
+    select * from {{ ref('idnedw_integration__edw_distributor_ivy_outlet_master') }}
 ),
 itg_target_dist_brand_channel as (
-    select * from  --ref('idnedw_integration__itg_target_dist_brand_channel') 
-                    snapidnitg_integration.itg_target_dist_brand_channel
+    select * from  {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
 ),
 vw_all_distributor_sellout_sales_fact_grouped as (
     select 

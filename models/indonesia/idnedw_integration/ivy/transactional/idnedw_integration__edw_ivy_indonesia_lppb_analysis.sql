@@ -4,23 +4,23 @@ with edw_ivy_all_distributor_lppb_fact as
 ),
 edw_distributor_dim as
 (
-    select * from snapidnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as
 (
-    select * from snapidnedw_integration.edw_product_dim
+    select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 edw_time_dim as
 (
-    select * from snapidnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 itg_target_bp_s_op as
 (
-    select * from snapidnitg_integration.itg_target_bp_s_op
+    select * from {{ ref('idnitg_integration__itg_target_bp_s_op') }}
 ),
 itg_target_dist_brand_channel as
 (
-    select * from snapidnitg_integration.itg_target_dist_brand_channel
+    select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
 ),
 final as
 (

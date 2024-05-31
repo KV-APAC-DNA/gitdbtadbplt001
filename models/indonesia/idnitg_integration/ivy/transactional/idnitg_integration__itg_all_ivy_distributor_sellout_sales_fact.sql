@@ -18,7 +18,7 @@
                                         (
                                             select distinct distributor_cd 
                                             from -- ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales')
-                                                  snapidnitg_integration.itg_mds_id_dist_reporting_control_sellout_sales      
+                                                  {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }}      
                                             where source_system = 'DMS')
                                     );
                                     
@@ -31,28 +31,22 @@ with source as (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
 ),
 itg_mds_id_dist_reporting_control_sellout_sales as (
-    select * from -- ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales')
-                    snapidnitg_integration.itg_mds_id_dist_reporting_control_sellout_sales
+    select * from {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }}
 ),
 edw_time_dim as (
-    select * from -- ref('idnedw_integration__edw_time_dim')
-                snapidnedw_integration.edw_time_dim
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 edw_distributor_dim as (
-    select * from  -- ref('idnedw_integration__edw_distributor_dim') 
-                    snapidnedw_integration.edw_distributor_dim
+    select * from  {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
 edw_product_dim as (
-    select * from -- ref('idnedw_integration__edw_product_dim') 
-                idnedw_integration.edw_product_dim
+    select * from {{ ref('idnedw_integration__edw_product_dim') }}
 ),
 itg_mds_id_dms_dist_margin_control as (
-    select * from -- ref('idnitg_integration__itg_mds_id_dms_dist_margin_control')
-                snapidnitg_integration.itg_mds_id_dms_dist_margin_control
+    select * from {{ ref('idnitg_integration__itg_mds_id_dms_dist_margin_control') }}
 ),
 edw_distributor_ivy_outlet_master as (
-    select * from  --ref('idnedw_integration__edw_distributor_ivy_outlet_master') 
-                    snapidnedw_integration.edw_distributor_ivy_outlet_master
+    select * from  {{ ref('idnedw_integration__edw_distributor_ivy_outlet_master') }}
 ),
 sdii as (
     select t1.*

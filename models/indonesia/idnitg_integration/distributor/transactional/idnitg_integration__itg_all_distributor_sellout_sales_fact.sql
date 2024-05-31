@@ -5,8 +5,8 @@
         incremental_strategy="append",
         pre_hook=" {% if is_incremental() %}
                     delete from {{this}} where dstrbtr_grp_cd||jj_mnth_id in (select distinct dstrbtr_cd||jj_mnth_id from {{ source('idnsdl_raw', 'sdl_all_distributor_sellout_sales_fact') }});
-                   -- delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM dm, DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_CSA_RAW_SELLOUT_SALES_FACT ds where trim(to_date(dm.cal_date)) = to_date(ds.tgl_inv::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'CSA';
-                   -- delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM dm, DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_DNR_RAW_SELLOUT_SALES_FACT ds where to_date(dm.cal_date) = to_date(trim(ds.bill_date)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'DNR';
+                   -- delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM dm, {{ source('idnsdl_raw', 'SDL_CSA_RAW_SELLOUT_SALES_FACT') }} ds where trim(to_date(dm.cal_date)) = to_date(ds.tgl_inv::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'CSA';
+                   -- delete from {{this}} where trim(jj_mnth_id) in ( select distinct trim(dm.jj_mnth_id) from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM dm, {{ source('idnsdl_raw', 'SDL_DNR_RAW_SELLOUT_SALES_FACT') }} ds where to_date(dm.cal_date) = to_date(trim(ds.bill_date)::timestamp_ntz(9)) ) and trim(upper(dstrbtr_grp_cd)) = 'DNR';
                     {% endif %}"
     )
 }}
