@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_vw_ps_targets
+    config:
+      alias: edw_vw_ps_targets
+      tags: ["","transformation"] 
+  - name: aspedw_integration__edw_vw_ps_weights
+    config:
+      alias: edw_vw_ps_weights
+      tags: ["","transformation"]   
