@@ -13,3 +13,8 @@ models:
     config:
       alias: edw_vw_order_sell_in_analysis
       tags: ["id_order_sellin_analysis","transformation"]
+
+  - name: idnedw_integration__edw_vw_id_sellin_fact
+    config:
+      alias: edw_vw_id_sellin_fact
+      tags: ["indonesia_views","transformation"]

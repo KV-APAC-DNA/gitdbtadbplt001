@@ -1,10 +1,10 @@
 with edw_vw_os_time_dim as
 (
-    select * from sgpedw_integration.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_indonesia_base_detail as
 (
-    select * from idnwks_integration.wks_indonesia_base_detail
+    select * from {{ ref('idnwks_integration__wks_indonesia_base_detail') }}
 ),
 final as 
 (

@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnitg_integration__itg_id_ps_priority_store
-    config:
-      alias: itg_id_ps_priority_store
-      tags: ["id_mds_itg_load","ingestion"]

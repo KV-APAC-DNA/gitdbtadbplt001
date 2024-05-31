@@ -27,4 +27,25 @@ models:
     config:
       alias: itg_all_ivy_distributor_sellout_sales_fact
       tags: ["id_ivy_invoice","ingestion"]
-    
+
+  - name: idnitg_integration__itg_distributor_ivy_merchandising
+    config:
+      alias: itg_distributor_ivy_merchandising
+      tags: ["id_ivy_merchandising","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_merchandising
+    config:
+      alias: sdl_raw_distributor_ivy_merchandising
+      tags: ["id_ivy_merchandising","ingestion"]
+  - name : idnitg_integration__itg_distributor_ivy_user_master
+    config:
+      alias: itg_distributor_ivy_user_master
+      tags: ["id_ivy_usermaster","ingestion"]
+  - name : idnitg_integration__sdl_raw_distributor_ivy_user_master
+    config:
+      alias: sdl_raw_distributor_ivy_user_master
+      tags: ["id_ivy_usermaster","ingestion"]
+
+  - name: idnitg_integration__sdl_distributor_ivy_outlet_master_mds_sync
+    config:
+      alias: sdl_distributor_ivy_outlet_master_mds_sync
+      tags: ["id_cd_server_data","ingestion"]

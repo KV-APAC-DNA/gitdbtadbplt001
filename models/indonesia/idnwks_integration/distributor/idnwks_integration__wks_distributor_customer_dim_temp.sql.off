@@ -1,35 +1,35 @@
 with 
 sdl_mds_id_ref_pp_customer as 
 (
-    select * from dev_dna_load.idnsdl_raw.sdl_mds_id_ref_pp_customer
+    select * from {{ source('idnsd_raw', 'sdl_mds_id_ref_pp_customer') }}
 ),
 sdl_sdn_raw_sellout_sales_fact as 
 (
-    select * from dev_dna_load.idnsdl_raw.sdl_sdn_raw_sellout_sales_fact
+    select * from {{ source('idnsd_raw', 'sdl_sdn_raw_sellout_sales_fact') }}
 ),
 edw_distributor_channel_dim as 
 (
-    select * from idnedw_integration.edw_distributor_channel_dim
+    select * from {{ ref('idnedw_interation__edw_distributor_channel_dim') }}
 ),
 edw_distributor_dim as 
 (
-    select * from idnedw_integration.edw_distributor_dim
+    select * from {{ ref('idnedw_interation__edw_distributor_dim') }}
 ),
 sdl_pp_raw_sellout_sales_fact as 
 (
-    select * from dev_dna_load.idnsdl_raw.sdl_pp_raw_sellout_sales_fact
+    select * from {{ source('idnsd_raw', 'sdl_pp_raw_sellout_sales_fact') }}
 ),
 itg_distributor_customer_dim as 
 (
-    select * from idnitg_integration.itg_distributor_customer_dim
+    select * from {{ source('idnitg_interation_', 'itg_distributor_customer_dim') }}
 ),
 edw_outlet_type_dim as 
 (
-    select * from idnedw_integration.edw_outlet_type_dim
+    select * from {{ ref('idnedw_interation__edw_outlet_type_dim') }}
 ),
 edw_tiering_metadata as 
 (
-    select * from idnedw_integration.edw_tiering_metadata
+    select * from {{ ref('idnedw_interation__edw_tiering_metadata') }}
 ),
 WKS_PP_CUSTOMER
 AS

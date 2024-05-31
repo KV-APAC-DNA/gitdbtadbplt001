@@ -5,7 +5,7 @@ itg_all_distributor_sellout_sales_fact as
 ),
 itg_all_non_ivy_distributor_sellout_sales_fact as 
 (
-    select * from {{ ref('idnitg_integration__itg_all_non_ivy_distributor_sellout_sales_fact') }}
+    select * from {{ source('idnitg_integration', 'itg_all_non_ivy_distributor_sellout_sales_fact') }}
 ),
 itg_all_ivy_distributor_sellout_sales_fact as 
 (

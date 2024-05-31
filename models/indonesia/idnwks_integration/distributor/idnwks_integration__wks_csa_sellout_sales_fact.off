@@ -1,20 +1,20 @@
 with sdl_csa_raw_sellout_sales_fact as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_CSA_RAW_SELLOUT_SALES_FACT
+    select * from {{ source('idnsd_raw', 'sdl_csa_raw_sellout_sales_fact') }}
 ),
-EDW_DISTRIBUTOR_CHANNEL_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CHANNEL_DIM
+edw_distributor_channel_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_channel_dim') }}
 ),
-EDW_DISTRIBUTOR_METADATA_LKP as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_METADATA_LKP
+edw_distributor_metadata_lkp as(
+    select * from {{ source('idnedw_integration', 'edw_distributor_metadata_lkp') }}
 ),
-EDW_TIME_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM
+edw_time_dim as(
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
-EDW_DISTRIBUTOR_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
+edw_distributor_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_dim') }}
 ),
-EDW_DISTRIBUTOR_PRODUCT_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_PRODUCT_DIM
+edw_distributor_product_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_product_dim') }}
 ),
 wks_csa_sellout_sales_fact AS (
 		SELECT TRIM(UPPER(SCRSSF.CABANG || SCRSSF.KODECUST || DECODE(SCRSSF.SHIPCODE, NULL, '', SCRSSF.SHIPCODE) || SCRSSF.KODEBARANG || SCRSSF.NO_INV || TO_CHAR(SCRSSF.TGL_INV, 'YYYY-MM-DD'))) AS TRANS_KEY,

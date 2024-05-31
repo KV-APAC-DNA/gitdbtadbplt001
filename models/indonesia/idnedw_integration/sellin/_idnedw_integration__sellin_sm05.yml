@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnedw_integration__edw_vw_id_sellin_fact
-    config:
-      alias: edw_vw_id_sellin_fact
-      tags: ["indonesia_views","transformation"]

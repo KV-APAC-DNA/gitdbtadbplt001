@@ -30,3 +30,28 @@ models:
     config:
       alias: itg_mds_id_5ps_store_mapping
       tags: ["id_mds_itg_load","ingestion"] 
+
+  - name: idnitg_integration__itg_id_ps_priority_store
+    config:
+      alias: itg_id_ps_priority_store
+      tags: ["id_mds_itg_load","ingestion"]
+
+  - name: idnitg_integration__itg_id_ps_planogram
+    config:
+      alias: itg_id_ps_planogram
+      tags: ["id_ps_planogram","ingestion"]
+
+  - name: idnitg_integration__itg_id_ps_secondary_display
+    config:
+      alias: itg_id_ps_secondary_display
+      tags: ["id_ps_secondary_display","ingestion"]
+      
+  - name: idnitg_integration__sdl_raw_id_ps_planogram
+    config:
+      alias: sdl_raw_id_ps_planogram
+      tags: ["id_ps_planogram","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_id_ps_secondary_display
+    config:
+      alias: sdl_raw_id_ps_secondary_display
+      tags: ["id_ps_secondary_display","ingestion"]

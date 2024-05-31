@@ -13,3 +13,13 @@ models:
     config:
       alias: edw_id_ps_promotion_competitor
       tags: ["id_ps_promo_competitor","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_planogram
+    config:
+      alias: edw_id_ps_planogram
+      tags: ["id_ps_planogram","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_secondary_display
+    config:
+      alias: edw_id_ps_secondary_display
+      tags: ["id_ps_secondary_display","transformation"]

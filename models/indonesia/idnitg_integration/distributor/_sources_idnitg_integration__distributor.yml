@@ -133,3 +133,48 @@ sources:
               config:
                 store_failures: true
                 schema: idnwks_integration
+
+    - name: sdl_distributor_customer_dim
+      tags: ["id_cd_server_data","transformation"]
+      # tests:
+      #   - test_null:
+      #       select_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       not_null_columns: ["account","descp","plu", "branch_name"]  
+      #       name: TRATBL_sdl_id_pos_daily_idm_sellout__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: idnwks_integration
+      #   - test_duplicate:
+      #       select_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       group_by_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       name: TRATBL_sdl_id_pos_daily_idm_sellout__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: idnwks_integration
+    - name: sdl_all_distributor_sellin_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+    - name: sdl_all_distributor_sellout_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+
+  - name: idnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_time_dim
+      tags: ["","ingestion"]
+    - name: edw_channelgroup_metadata
+
+  - name: idnitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_all_non_ivy_distributor_sellout_sales_fact
+      tags: ["","ingestion"]

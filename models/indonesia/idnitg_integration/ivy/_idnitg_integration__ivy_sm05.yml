@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnitg_integration__sdl_distributor_ivy_outlet_master_mds_sync
-    config:
-      alias: sdl_distributor_ivy_outlet_master_mds_sync
-      tags: ["id_cd_server_data","ingestion"]

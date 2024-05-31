@@ -4,7 +4,7 @@ with indonesia_propagate_from_to as
 ),
 wks_indonesia_base_detail as
 (
-    select * from idnwks_integration.wks_indonesia_base_detail
+    select * from {{ ref('idnwks_integration__wks_indonesia_base_detail') }}
 ),
 wks_indonesia_siso_propagate_to_details as
 (

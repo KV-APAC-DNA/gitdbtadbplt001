@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_CSA_RAW_SELLOUT_SALES_FACT
+    select * from {{ source('idnsd_raw', 'sdl_csa_raw_sellout_sales_fact') }}
 ), 
 transformed as(
     select 

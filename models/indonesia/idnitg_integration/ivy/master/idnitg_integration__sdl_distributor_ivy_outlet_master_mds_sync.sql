@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ ref('idnitg_integration__itg_distributor_ivy_outlet_master') }} 
+    select * from idnitg_integration.itg_distributor_ivy_outlet_master
 ),
 EDW_DISTRIBUTOR_DIM as (
     select * from  {{ ref('idnedw_integration__edw_distributor_dim') }}

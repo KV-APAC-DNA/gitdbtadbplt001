@@ -31,3 +31,12 @@ models:
     config:
       alias: edw_distributor_ivy_inventory
       tags: ["id_ivy_inventory","transformation"]
+
+  - name: idnedw_integration__edw_distributor_ivy_merchandising
+    config:
+      alias: edw_distributor_ivy_merchandising
+      tags: ["id_ivy_merchandising","transformation"]
+  - name: idnedw_integration__edw_distributor_ivy_user_master
+    config:
+      alias: edw_distributor_ivy_user_master
+      tags: ["id_ivy_usermaster","transformation"]

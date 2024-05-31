@@ -4,11 +4,11 @@ with indonesia_propagate_from_to as
 ),
 wks_indonesia_base_detail as
 (
-    select * from idnwks_integration.wks_indonesia_base_detail
+    select * from {{ ref('idnwks_integration__wks_indonesia_base_detail') }}
 ),
 final as 
 (
-    SELECT p_from_to.jj_sap_dstrbtr_nm,       
+    SELECT p_from_to.jj_sap_dstrbtr_nm,
            p_from_to.sap_parent_customer_key,
            p_from_to.sap_parent_customer_desc,
            propagate_to as month,
@@ -26,11 +26,14 @@ final as
            base.last_6months_so_value,
            base.last_12months_so_value,
     	   base.last_36months_so_value,
-           propagate_from ,
+           'Y' as Propagation_Flag,
+           propagate_from,
+           reason,
            base.replicated_flag
-        FROM wks_indonesia_base_detail  base ,indonesia_propagate_from_to p_from_to
-        where base.jj_sap_dstrbtr_nm = p_from_to.jj_sap_dstrbtr_nm 
+        FROM wks_indonesia_base_detail  base,indonesia_propagate_from_to p_from_to
+        where  base.jj_sap_dstrbtr_nm = p_from_to.jj_sap_dstrbtr_nm
         and base.sap_parent_customer_key = p_from_to.sap_parent_customer_key 
-        and base.month = p_from_to.propagate_to
+        and base.sap_parent_customer_desc = p_from_to.sap_parent_customer_desc
+        and base.month = p_from_to.propagate_from
 )
 select * from final

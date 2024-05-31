@@ -1,23 +1,23 @@
 with SDL_DNR_RAW_SELLOUT_SALES_FACT as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_DNR_RAW_SELLOUT_SALES_FACT
+    select * from {{ source('idnsdl_raw', 'sdl_dnr_raw_sellout_sales_fact') }}
 ),
 SDL_DNR_CUSTOMER_DIM as(
-    select * from DEV_DNA_LOAD.SNAPIDNSDL_RAW.SDL_DNR_CUSTOMER_DIM
+    select * from {{ source('idnsdl_raw', 'sdl_dnr_raw_sellout_sales_fact') }}
 ),
-EDW_DISTRIBUTOR_CHANNEL_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_CHANNEL_DIM
+edw_distributor_channel_dim as(
+    select * from  {{ ref('idnedw_interation__edw_distributor_channel_dim') }}
 ),
 EDW_DISTRIBUTOR_METADATA_LKP as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_METADATA_LKP
+    select * from {{ source('idnedw_integration', 'edw_distributor_metadata_lkp') }}
 ),
-EDW_TIME_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_TIME_DIM
+edw_time_dim as(
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
-EDW_DISTRIBUTOR_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_DIM
+edw_distributor_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_dim') }}
 ),
-EDW_DISTRIBUTOR_PRODUCT_DIM as(
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_DISTRIBUTOR_PRODUCT_DIM
+edw_distributor_product_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_product_dim') }}
 ),
 
 wks_dnr_sellout_sales_fact AS (
