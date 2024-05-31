@@ -23,3 +23,32 @@ models:
     config:
       alias: edw_id_ps_secondary_display
       tags: ["id_ps_secondary_display","transformation"]
+  - name: idnedw_integration__edw_id_ps_msl_osa
+    config:
+      alias: edw_id_ps_msl_osa
+      tags: ["id_ps_product_availability","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_merchandiser_master
+    config:
+      alias: edw_id_ps_merchandiser_master
+      tags: ["id_ps_product_availability","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_product_master
+    config:
+      alias: edw_id_ps_product_master
+      tags: ["id_ps_product_availability","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_outlet_master
+    config:
+      alias: edw_id_ps_outlet_master
+      tags: ["id_ps_product_availability","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_visibility
+    config:
+      alias: edw_id_ps_visibility
+      tags: ["id_ps_visibility","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_brand_blocking
+    config:
+      alias: edw_id_ps_brand_blocking
+      tags: ["id_ps_brand_blocking","transformation"]

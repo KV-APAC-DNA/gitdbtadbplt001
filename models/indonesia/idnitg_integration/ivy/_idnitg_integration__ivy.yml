@@ -49,3 +49,7 @@ models:
     config:
       alias: sdl_distributor_ivy_outlet_master_mds_sync
       tags: ["id_cd_server_data","ingestion"]
+  - name: idnitg_integration__itg_distributor_ivy_outlet_master
+    config:
+      alias: itg_distributor_ivy_outlet_master
+      tags: ["id_ivy_outletmaster_manual_upload","ingestion"]

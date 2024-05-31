@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnedw_integration__edw_distributor_ivy_outlet_master
-    config:
-      alias: edw_distributor_ivy_outlet_master
-      tags: ["id_ivy_outletmaster_manual_upload","ingestion"]

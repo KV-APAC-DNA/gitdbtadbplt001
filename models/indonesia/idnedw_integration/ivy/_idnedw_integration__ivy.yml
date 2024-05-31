@@ -40,3 +40,7 @@ models:
     config:
       alias: edw_distributor_ivy_user_master
       tags: ["id_ivy_usermaster","transformation"]
+  - name: idnedw_integration__edw_distributor_ivy_outlet_master
+    config:
+      alias: edw_distributor_ivy_outlet_master
+      tags: ["id_ivy_outletmaster_manual_upload","ingestion"]
