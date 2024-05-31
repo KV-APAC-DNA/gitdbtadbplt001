@@ -74,7 +74,7 @@ final as
         0 as TRGT_HNA,
         0 as TRGT_NIV,
         NULL AS TRGT_BP_S_OP_FLAG,
-                NULL AS TRGT_DIST_BRND_CHNL_FLAG
+        NULL AS TRGT_DIST_BRND_CHNL_FLAG
         FROM
         (SELECT *
         FROM EDW_IVY_ALL_DISTRIBUTOR_LPPB_FACT
@@ -246,14 +246,12 @@ final as
                    FROM EDW_TIME_DIM) AS ETD
                ON T1.year = ETD.jj_year
               AND UPPER (TRIM (T1.jj_mnth_long)) = UPPER (TRIM (ETD.JJ_MNTH_LONG))
-              ) ITDBC,
-              edw_distributor_dim EDD,
-              (SELECT DISTINCT brand, franchise,effective_from,effective_to FROM edw_product_dim) EPD
-              WHERE TRIM (UPPER (ITDBC.jj_sap_dstrbtr_id)) = TRIM (UPPER (EDD.jj_sap_dstrbtr_id))
-		      AND ITDBC.jj_mnth_id between EDD.effective_from(+) and EDD.effective_to(+)
-              AND CASE WHEN ITDBC.brand IS NOT NULL
-              AND UPPER (TRIM (ITDBC.brand)) = UPPER (TRIM (EPD.brand)) THEN 1 END = 1
-              AND ITDBC.jj_mnth_id between EPD.effective_from(+) and EPD.effective_to(+)
+              ) ITDBC
+              LEFT JOIN edw_distributor_dim EDD ON TRIM (UPPER (ITDBC.jj_sap_dstrbtr_id)) = TRIM (UPPER (EDD.jj_sap_dstrbtr_id))
+		      and ITDBC.jj_mnth_id between EDD.effective_from and EDD.effective_to 
+              LEFT JOIN (SELECT DISTINCT brand, franchise,effective_from,effective_to FROM edw_product_dim) EPD ON
+		                CASE WHEN ITDBC.brand IS NOT NULL
+              AND UPPER (TRIM (ITDBC.brand)) = UPPER (TRIM (EPD.brand)) and ITDBC.jj_mnth_id between EPD.effective_from and EPD.effective_to  THEN 1 END = 1
               
 			  
 )

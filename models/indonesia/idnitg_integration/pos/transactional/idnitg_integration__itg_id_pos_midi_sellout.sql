@@ -13,17 +13,17 @@ with source as
 final as
 (
     select
-    no,
-    plu,
-    description,
-    branch,
-    type,
-    "values",
-    pos_cust,
-    yearmonth,
-    run_id,
-    current_timestamp()::timestamp_ntz AS crtd_dttm,
-    filename
+    no::varchar(10) as no,
+    plu::varchar(50) as plu,
+    description::varchar(200) as description,
+    branch::varchar(100) as branch,
+    type::varchar(10) as type,
+    "values"::number(18,2) as "values",
+    pos_cust::varchar(50) as pos_cust,
+    yearmonth::varchar(10) as yearmonth,
+    run_id::number(14,0) as run_id,
+    current_timestamp()::timestamp_ntz as crtd_dttm,
+    filename::varchar(100) as filename
     from source
 )
 select * from final

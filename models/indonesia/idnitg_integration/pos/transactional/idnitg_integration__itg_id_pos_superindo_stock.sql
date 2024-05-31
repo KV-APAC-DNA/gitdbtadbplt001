@@ -13,24 +13,24 @@ with source as
 final as
 (
     select
-    COMPANY,          	
-	CODE,            			
-	DESCRIPTION,       		
-	tag1, 	  				
-	CNV,     				
-	EQ,     					
-	Stock_DC_Regular_Qty,    
-	Stock_DC_Regular_DSI,       
-	Stock_all_stores_QTY,     
-	Stock_all_stores_DSI,        
-	STOK_ALL,       	 	 	
-	Day_SALES,       	  		
-	DSI,
-    pos_cust,
-    yearmonth,
-    run_id,
-    current_timestamp()::timestamp_ntz AS crtd_dttm,
-    filename
+    company::varchar(100) as company,
+    code::varchar(20) as code,
+    description::varchar(200) as description,
+    tag1::varchar(10) as tag1,
+    cnv::varchar(10) as cnv,
+    eq::varchar(10) as eq,
+    stock_dc_regular_qty::number(18,2) as stock_dc_regular_qty,
+    stock_dc_regular_dsi::number(18,2) as stock_dc_regular_dsi,
+    stock_all_stores_qty::number(18,2) as stock_all_stores_qty,
+    stock_all_stores_dsi::number(18,2) as stock_all_stores_dsi,
+    stok_all::number(18,2) as stok_all,
+    day_sales::number(18,2) as day_sales,
+    dsi::number(18,2) as dsi,
+    pos_cust::varchar(50) as pos_cust,
+    yearmonth::varchar(10) as yearmonth,
+    run_id::number(14,0) as run_id,
+    current_timestamp()::timestamp_ntz as crtd_dttm,
+    filename::varchar(100) as filename
     from source
 )
 select * from final

@@ -3,17 +3,13 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["jj_mnth_id"],
-        pre_hook= ["{% if is_incremental() %}
-        delete from {{this}} where jj_mnth_id = 
-        (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from snapidnedw_integration.edw_time_dim where to_date(cal_date) = to_date(sysdate()));
-        {% endif %}"]
+        pre_hook= ["{{build_edw_p_load_lppb_fact_upd()}}","delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from snapidnedw_integration.edw_time_dim where to_date(cal_date) = to_date(sysdate()));"]
     )
 }}
 
 with itg_all_distributor_sellin_sales_fact as
 (
     select * from snapidnitg_integration.itg_all_distributor_sellin_sales_fact
-    ---"{{build_edw_p_load_lppb_fact_upd()}}",
 ),
 edw_time_dim as
 (
