@@ -1,8 +1,8 @@
 with itg_kr_coupang_daily_brand_reviews as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_COUPANG_DAILY_BRAND_REVIEWS
+select * from {{ ref('ntaitg_integration__itg_kr_coupang_daily_brand_reviews') }}
 ),
 itg_mds_kr_product_ean_mapping as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_KR_PRODUCT_EAN_MAPPING
+select * from {{ ref('ntaitg_integration__itg_mds_kr_product_ean_mapping') }}
 ),
 final as (
 SELECT 

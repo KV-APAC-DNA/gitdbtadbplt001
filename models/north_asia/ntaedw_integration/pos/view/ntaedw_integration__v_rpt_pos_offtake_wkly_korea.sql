@@ -1,20 +1,20 @@
 with edw_pos_fact as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_POS_FACT
+select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_customer_attr_flat_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
 ),
 v_interm_cust_hier_dim as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTERM_CUST_HIER_DIM
+select * from {{ ref('ntaedw_integration__v_interm_cust_hier_dim') }}
 ),
 edw_product_attr_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 ),
 v_calendar_dtls as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.V_CALENDAR_DTLS
+select * from {{ ref('ntaedw_integration__v_calendar_dtls') }}
 ),
 v_intrm_crncy_exch as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_CRNCY_EXCH
+select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 a as (
               SELECT 

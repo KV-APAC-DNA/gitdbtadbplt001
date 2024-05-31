@@ -9,13 +9,6 @@
               CUST_CD,
               EAN_NUM
               ) IN (
-              SELECT DISTINCT TO_DATE(Year || Month || '15', 'YYYYMMDD') AS IMS_TXN_DT,
-                     UPPER(DSTR_NM),
-                     CUST_CD,
-                     EAN
-              FROM DEV_DNA_LOAD.NTASDL_RAW.SDL_KR_DAISO_GT_SELLOUT
-              
-              UNION ALL
               
               SELECT DISTINCT TO_DATE(IMS_TXN_DT || '15', 'YYYYMMDD') AS IMS_TXN_DT,
                      UPPER(DSTR_NM),
@@ -35,13 +28,13 @@
                      EAN
               FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_AK_GT_SELLOUT
               
-              UNION ALL
+            --   UNION ALL
               
-              SELECT TO_DATE(replace(IMS_TXN_DT,'.','-'), 'YYYY-MM-DD'),
-                     UPPER(DSTR_NM),
-                     CUST_CD,
-                     EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
+            --   SELECT TO_DATE(replace(IMS_TXN_DT,'.','-'), 'YYYY-MM-DD'),
+            --          UPPER(DSTR_NM),
+            --          CUST_CD,
+            --          EAN
+            --   FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
               
               UNION ALL
               
@@ -118,14 +111,40 @@
                      EAN
               FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NACF_GT_SELLOUT
               )
-            "]
+            ","
+            DELETE
+FROM {{this}}
+WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
+                                              UPPER(DSTR_NM) DSTR_NM,
+                                              EAN,customer_code
+                                       FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NH_GT_SELLOUT sng
+                                        LEFT JOIN (SELECT FISC_PER,
+                    MAX(CAL_DAY) CAL_DAY
+             FROM aspedw_integration.edw_calendar_dim
+             WHERE WKDAY = '7'
+             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',2),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) );
+             ",
+             "
+             DELETE
+             FROM {{this}}
+                WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd,SUB_CUSTOMER_CODE) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
+                                                            UPPER(DSTR_NM) DSTR_NM,
+                                                            EAN,customer_code,pcode
+                                                    FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_OTC_SELLOUT SNG
+                                                        LEFT JOIN (SELECT FISC_PER,
+                                    MAX(CAL_DAY) CAL_DAY
+                            FROM aspedw_integration.EDW_CALENDAR_DIM
+                            WHERE WKDAY = '7'
+                            GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',3),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) )
+             "  ]
     )
 }}
 
 
 
-with SDL_KR_DAISO_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.NTASDL_RAW.SDL_KR_DAISO_GT_SELLOUT
+with 
+SDL_KR_OTC_SELLOUT as (
+select * from  DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_OTC_SELLOUT
 ),
 SDL_KR_JU_HJ_LIFE_GT_SELLOUT as (
 select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
@@ -157,6 +176,9 @@ select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DONGBU_LSD_GT_SELLOUT
 SDL_KR_DA_IN_SANG_SA_GT_SELLOUT as (
 select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DA_IN_SANG_SA_GT_SELLOUT
 ),
+SDL_KR_NH_GT_SELLOUT as (
+    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NH_GT_SELLOUT
+),
 SDL_KR_IL_DONG_HU_DI_S_DEOK_SEONG_SANG_SA_GT_SELLOUT as (
 select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_IL_DONG_HU_DI_S_DEOK_SEONG_SANG_SA_GT_SELLOUT
 ),
@@ -164,65 +186,31 @@ SDL_KR_DU_BAE_RO_YU_TONG_GT_SELLOUT as (
 select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DU_BAE_RO_YU_TONG_GT_SELLOUT
 ),
 ITG_KR_GT_FOOD_WS as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_KR_GT_FOOD_WS
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_FOOD_WS
 ),
 ITG_KR_GT_DAISO_PRICE as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_KR_GT_DAISO_PRICE
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_DAISO_PRICE
 ),
 ITG_KR_GT_NACF_CUST_DIM as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_KR_GT_NACF_CUST_DIM
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_NACF_CUST_DIM
 ),
 ITG_KR_GT_DPT_DAISO as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_KR_GT_DPT_DAISO
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_DPT_DAISO
+),
+EDW_CALENDAR_DIM as (
+select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
 ),
 EDW_CUSTOMER_BASE_DIM as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
 ),
 ITG_POP6_PRODUCTS as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCTS
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_PRODUCTS
 ),
 EDW_PRODUCT_ATTR_DIM as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from DEV_DNA_CORE.aspEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 ),
-daiso as (
-SELECT TO_DATE(SDG.Year||SDG.Month||'15','YYYYMMDD') AS IMS_TXN_DT,
-       'NA' AS DSTR_CD,
-       UPPER(SDG.DSTR_NM) AS DSTR_NM,
-       SDG.CUST_CD,
-       RCT.CUST_NM,
-       RPT.MATERIALNUMBER AS PROD_CD,
-       RPT.PRODUCTNAME AS PROD_NM,
-       SDG.EAN AS EAN_NUM,
-       IDP.UNIT_PRICE AS UNIT_PRC,
-       (IDP.UNIT_PRICE*try_to_number(SDG.QTY)) AS SLS_AMT,
-       try_to_number(SDG.QTY) SLS_QTY,
-       LCD.SUB_CUSTOMER_CODE,
-       SDG.SUB_CUSTOMER_NAME,
-       'KR' AS CTRY_CD,
-       'KRW' AS CRNCY_CD,
-       current_timestamp() AS CRT_DTTM,
-       current_timestamp() AS UPDT_DTTM,
-       null as SALES_PRIORITY,
-       null as sales_stores,
-       null as sales_rate
-FROM SDL_KR_DAISO_GT_SELLOUT SDG
-  LEFT JOIN ITG_KR_GT_DAISO_PRICE IDP ON SDG.EAN = IDP.EAN
-  LEFT JOIN ITG_KR_GT_DPT_DAISO LCD
-         ON SDG.CUST_CD = LCD.CUSTOMER_CODE
-        AND SDG.SUB_CUSTOMER_NAME = LCD.SUB_CUSTOMER_NAME
-  LEFT JOIN (SELECT DISTINCT CUST_NUM AS CUST_CD,
-                    CUST_NM
-             FROM EDW_CUSTOMER_BASE_DIM) RCT ON SDG.CUST_CD = LTRIM (RCT.CUST_CD,0)
-  LEFT JOIN (SELECT DISTINCT PP.CNTRY_CD,
-                    PP.BARCODE AS EANNUMBER,
-                    PA.SAP_MATL_NUM AS MATERIALNUMBER,
-                    PP.SKU_ENGLISH AS PRODUCTNAME
-             FROM ITG_POP6_PRODUCTS PP
-               LEFT JOIN EDW_PRODUCT_ATTR_DIM PA
-                      ON PP.BARCODE = PA.EAN
-                     AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
-             WHERE UPPER(PP.CNTRY_CD) = 'KR'
-             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SDG.EAN = RPT.EANNUMBER
+ITG_MDS_KR_SUB_CUSTOMER_MASTER as (
+select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_KR_SUB_CUSTOMER_MASTER
 ),
 hyundai as (
 SELECT TO_DATE(SHG.IMS_TXN_DT||'15','YYYYMMDD') AS IMS_TXN_DT,
@@ -305,47 +293,6 @@ FROM SDL_KR_LOTTE_AK_GT_SELLOUT SLA
              WHERE UPPER(PP.CNTRY_CD) = 'KR'
              AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SLA.EAN = RPT.EANNUMBER
 ),
-hj_details as (
-SELECT TO_DATE(replace(JHL.IMS_TXN_DT,'.','-'), 'YYYY-MM-DD') AS IMS_TXN_DT,
-  'NA' AS DSTR_CD,
-  JHL.DSTR_NM,
-  JHL.CUST_CD,
-  RCT.CUST_NM,
-  RPT.MATERIALNUMBER AS PROD_CD,
-  RPT.PRODUCTNAME AS PROD_NM,
-  JHL.EAN AS EAN_NUM,
-  CAST(REPLACE(JHL.UNIT, ',', '') AS NUMERIC(21, 5)) AS UNIT_PRC,
-  (REPLACE(JHL.UNIT, ',', '') * CAST(JHL.QTY AS NUMERIC(21, 5))) AS SLS_AMT,
-  CAST(JHL.QTY AS INTEGER) SLS_QTY,
-  IFS.SUB_CUSTOMER_CODE,
-  JHL.SUB_CUSTOMER_NAME,
-  'KR' AS CTRY_CD,
-  'KRW' AS CRNCY_CD,
-  current_timestamp() AS CRT_DTTM,
-  current_timestamp() AS UPDT_DTTM,
-  null as SALES_PRIORITY,
-       null as sales_stores,
-       null as sales_rate
-FROM SDL_KR_JU_HJ_LIFE_GT_SELLOUT JHL
-LEFT JOIN ITG_KR_GT_FOOD_WS IFS ON JHL.CUST_CD = IFS.CUSTOMER_CODE
-  AND JHL.SUB_CUSTOMER_NAME = IFS.SUB_CUSTOMER_NAME
-LEFT JOIN (
-  SELECT DISTINCT CUST_NUM AS CUST_CD,
-    CUST_NM
-  FROM EDW_CUSTOMER_BASE_DIM
-  ) RCT ON JHL.CUST_CD = LTRIM(RCT.CUST_CD, 0)
-LEFT JOIN (
-  SELECT DISTINCT PP.CNTRY_CD,
-    PP.BARCODE AS EANNUMBER,
-    PA.SAP_MATL_NUM AS MATERIALNUMBER,
-    PP.SKU_ENGLISH AS PRODUCTNAME
-  FROM ITG_POP6_PRODUCTS PP
-  LEFT JOIN EDW_PRODUCT_ATTR_DIM PA ON PP.BARCODE = PA.EAN
-    AND UPPER(PP.CNTRY_CD) = UPPER(PA.CNTRY)
-  WHERE UPPER(PP.CNTRY_CD) = 'KR'
-    AND UPPER(PP.ACTIVE) = 'Y'
-  ) RPT ON JHL.EAN = RPT.EANNUMBER
-  ),
 jong_hap as (
 SELECT TO_DATE(SBY.IMS_TXN_DT, 'YYYY-MM-DD') AS IMS_TXN_DT,
   'NA' AS DSTR_CD,
@@ -429,48 +376,7 @@ LEFT JOIN (
   ) RPT ON SDIG.EAN = RPT.EANNUMBER
   ),
 dongbu_lsd as ( 
-SELECT TO_DATE(SPLIT_PART(SDL.IMS_TXN_DT, ' ', 6) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 2) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 3), 'YYYY-MON-DD') AS IMS_TXN_DT,
-  'NA' AS DSTR_CD,
-  DSTR_NM,
-  SDL.CUST_CD,
-  RCT.CUST_NM,
-  RPT.MATERIALNUMBER AS PROD_CD,
-  RPT.PRODUCTNAME AS PROD_NM,
-  SDL.EAN AS EAN_NUM,
-  SDL.UNIT_PRICE AS UNIT_PRC,
-  (SDL.UNIT_PRICE * CAST(SDL.QTY AS NUMERIC(21, 5))) AS SLS_AMT,
-  CAST(SDL.QTY AS INTEGER) SLS_QTY,
-  IFS.SUB_CUSTOMER_CODE,
-  SDL.SUB_CUSTOMER_NAME,
-  'KR' AS CTRY_CD,
-  'KRW' AS CRNCY_CD,
-  current_timestamp() AS CRT_DTTM,
-  current_timestamp() AS UPDT_DTTM,
-  null as SALES_PRIORITY,
-       null as sales_stores,
-       null as sales_rate
-FROM SDL_KR_DONGBU_LSD_GT_SELLOUT SDL
-LEFT JOIN ITG_KR_GT_FOOD_WS IFS ON SDL.CUST_CD = IFS.CUSTOMER_CODE
-  AND SDL.SUB_CUSTOMER_NAME = IFS.SUB_CUSTOMER_NAME
-LEFT JOIN (
-  SELECT DISTINCT CUST_NUM AS CUST_CD,
-    CUST_NM
-  FROM EDW_CUSTOMER_BASE_DIM
-  ) RCT ON SDL.CUST_CD = LTRIM(RCT.CUST_CD, 0)
-LEFT JOIN (
-  SELECT DISTINCT PP.CNTRY_CD,
-    PP.BARCODE AS EANNUMBER,
-    PA.SAP_MATL_NUM AS MATERIALNUMBER,
-    PP.SKU_ENGLISH AS PRODUCTNAME
-  FROM ITG_POP6_PRODUCTS PP
-  LEFT JOIN EDW_PRODUCT_ATTR_DIM PA ON PP.BARCODE = PA.EAN
-    AND UPPER(PP.CNTRY_CD) = UPPER(PA.CNTRY)
-  WHERE UPPER(PP.CNTRY_CD) = 'KR'
-    AND UPPER(PP.ACTIVE) = 'Y'
-  ) RPT ON SDL.EAN = RPT.EANNUMBER
-  ),
-dongbu_lsd as (
-SELECT TO_DATE(SPLIT_PART(SDL.IMS_TXN_DT, ' ', 6) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 2) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 3), 'YYYY-MON-DD') AS IMS_TXN_DT,
+SELECT TO_DATE(SPLIT_PART(SDL.IMS_TXN_DT, ' ', 6) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 2) || '-' || SPLIT_PART(SDL.IMS_TXN_DT, ' ', 3), 'YYYY-MON-DD'),
   'NA' AS DSTR_CD,
   DSTR_NM,
   SDL.CUST_CD,
@@ -593,7 +499,7 @@ LEFT JOIN (
   ) RPT ON SIDH.EAN = RPT.EANNUMBER
   ),
 jungseok as (
-SELECT TO_DATE(SJG.IMS_TXN_DT||'15','YYYYMMDD') AS IMS_TXN_DT,
+SELECT TRY_TO_DATE(SJG.IMS_TXN_DT||'15','YYYYMMDD') AS IMS_TXN_DT,
        'NA' AS DSTR_CD,
        UPPER(DSTR_NM) AS DSTR_NM,
        SJG.CUST_CD,
@@ -634,7 +540,7 @@ FROM SDL_KR_JUNGSEOK_GT_SELLOUT SJG
                      AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
              WHERE UPPER(PP.CNTRY_CD) = 'KR'
              AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SJG.EAN = RPT.EANNUMBER
-),
+) ,
 nu_ri_zion as 
 (SELECT TO_DATE(SNR.IMS_TXN_DT, 'YYYYMMDD') AS IMS_TXN_DT,
   'NA' AS DSTR_CD,
@@ -754,14 +660,98 @@ LEFT JOIN (
     AND UPPER(PP.ACTIVE) = 'Y'
   ) RPT ON SNG.EAN = RPT.EANNUMBER
 ),
+nh as (
+SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') 
+END AS IMS_TXN_DT,
+       SNG.DSTR_NM AS DSTR_CD,
+       RCT.CUST_NM AS DSTR_NM,
+       LTRIM(RCT.CUST_CD,0) AS CUST_CD,
+       RCT.CUST_NM,
+       RPT.MATERIALNUMBER AS PROD_CD,
+       RPT.PRODUCTNAME AS PROD_NM,
+       SNG.EAN AS EAN_NUM,
+       CAST(SNG.AMOUNT AS NUMERIC(21,5)) / nullif(CAST(SNG.QUANTITY AS NUMERIC(21,5)),0) AS UNIT_PRC,
+       SNG.AMOUNT AS SLS_AMT,
+       CAST(SNG.QUANTITY AS INTEGER) SLS_QTY,
+       'NA' AS SUB_CUSTOMER_CODE,
+       SNG.ACCOUNT_NAME AS SUB_CUSTOMER_NAME,
+       'KR' AS CTRY_CD,
+       'KRW' AS CRNCY_CD,
+       current_timestamp() AS CRT_DTTM,
+       current_timestamp() AS UPDT_DTTM,
+       null as SALES_PRIORITY,
+       null as sales_stores,
+       null as sales_rate
+FROM SDL_KR_NH_GT_SELLOUT SNG
+   LEFT JOIN (SELECT FISC_PER,
+                    MAX(CAL_DAY) CAL_DAY
+             FROM EDW_CALENDAR_DIM
+             WHERE WKDAY = '7'
+             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',2),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7)
+  LEFT JOIN (SELECT DISTINCT CUST_NUM AS CUST_CD,
+                    CUST_NM
+             FROM EDW_CUSTOMER_BASE_DIM) RCT ON SNG.CUSTOMER_CODE = LTRIM (RCT.CUST_CD,0)
+  LEFT JOIN (SELECT DISTINCT PP.CNTRY_CD,
+                    PP.BARCODE AS EANNUMBER,
+                    PA.SAP_MATL_NUM AS MATERIALNUMBER,
+                    PP.SKU_ENGLISH AS PRODUCTNAME
+             FROM ITG_POP6_PRODUCTS PP
+               LEFT JOIN EDW_PRODUCT_ATTR_DIM PA
+                      ON PP.BARCODE = PA.EAN
+                     AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
+             WHERE UPPER(PP.CNTRY_CD) = 'KR'
+             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SNG.EAN = RPT.EANNUMBER
+),
+otc as (
+SELECT CAST ((CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') 
+END) AS date) as  IMS_TXN_DT ,
+       SNG.DSTR_NM AS DSTR_CD,
+       RCT.CUST_NM AS DSTR_NM,
+	   LTRIM(RCT.CUST_CD,0) AS CUST_CD,
+       RCT.CUST_NM,
+       RPT.MATERIALNUMBER AS PROD_CD,
+       RPT.PRODUCTNAME AS PROD_NM,
+       SNG.EAN AS EAN_NUM,
+       CAST(SNG.AMOUNT AS NUMERIC(21,5)) / nullif(CAST(SNG.QUANTITY AS NUMERIC(21,5)),0) AS UNIT_PRC,
+       CAST(SNG.AMOUNT AS NUMERIC(21,5)) AS SLS_AMT,
+       CAST(SNG.QUANTITY AS INTEGER) SLS_QTY,
+       V2.OUTLET_CODE AS SUB_CUSTOMER_CODE,
+       V2.NAME AS SUB_CUSTOMER_NAME,
+       'KR' AS CTRY_CD,
+       'KRW' AS CRNCY_CD,
+       current_timestamp() AS CRT_DTTM,
+       current_timestamp() AS UPDT_DTTM,
+        null as SALES_PRIORITY,
+       null as sales_stores,
+       null as sales_rate
+FROM SDL_KR_OTC_SELLOUT SNG
+   LEFT JOIN (SELECT FISC_PER,
+                    MAX(CAL_DAY) CAL_DAY
+             FROM EDW_CALENDAR_DIM
+             WHERE WKDAY = '7'
+             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',3),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7)
+  LEFT JOIN (SELECT DISTINCT CUST_NUM AS CUST_CD,
+                    CUST_NM
+             FROM EDW_CUSTOMER_BASE_DIM) RCT ON SNG.CUSTOMER_CODE = LTRIM (RCT.CUST_CD,0)
+  LEFT JOIN (SELECT DISTINCT PP.CNTRY_CD,
+                    PP.BARCODE AS EANNUMBER,
+                    PA.SAP_MATL_NUM AS MATERIALNUMBER,
+                    PP.SKU_ENGLISH AS PRODUCTNAME
+             FROM ITG_POP6_PRODUCTS PP
+               LEFT JOIN EDW_PRODUCT_ATTR_DIM PA
+                      ON PP.BARCODE = PA.EAN
+                     AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
+             WHERE UPPER(PP.CNTRY_CD) = 'KR'
+             AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SNG.EAN = RPT.EANNUMBER
+	LEFT JOIN (SELECT DISTINCT OUTLET_CODE,NAME,PHARMACY_NAME,SAP_CUSTOMER_CODE FROM ITG_MDS_KR_SUB_CUSTOMER_MASTER) V2
+	ON V2.PHARMACY_NAME = SNG.ACCOUNT_NAME and V2.SAP_CUSTOMER_CODE = SNG.CUSTOMER_CODE and V2.outlet_code = SNG.pcode
+WHERE SNG.QUANTITY not like '%.%'
+),
 final as (
-select * from daiso
-union all 
+
 select * from hyundai
 union all
 select * from lotte
-union all
-select * from hj_details
 union all
 select * from sang_sa
 union all
@@ -769,21 +759,20 @@ select * from jong_hap
 union all
 select * from dongbu_lsd
 union all
-select * from DU_BAE_RO_YU_TONG
+select * from du_bae_ro_yu_tong
 union all
 select * from il_dong_hu
-union all
-select * from jungseok
 union all
 select * from nu_ri_zion
 union all
 select * from yang_ju
 union all
+select * from jungseok
+union all
 select * from nacf
+union all
+select * from nh
+union all
+select * from otc
 )
 select * from final
-
-
-
-
-  

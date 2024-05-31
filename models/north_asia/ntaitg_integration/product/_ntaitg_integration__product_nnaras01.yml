@@ -5,5 +5,8 @@ models:
     config: 
       alias: itg_kr_coupang_daily_brand_reviews
       tags: []
-
   
+  - name: ntaitg_integration__sdl_raw_kr_coupang_daily_brand_reviews
+    config: 
+      alias: sdl_raw_kr_coupang_daily_brand_reviews
+      tags: []

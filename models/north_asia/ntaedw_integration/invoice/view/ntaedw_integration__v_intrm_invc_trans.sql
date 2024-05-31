@@ -1,38 +1,38 @@
 with edw_billing_fact as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_BILLING_FACT
+select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_query_parameters as (
 select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 edw_intrm_calendar as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_INTRM_CALENDAR
+select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 edw_company_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COMPANY_DIM
+select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_base_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
+select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 v_intrm_crncy_exch as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_CRNCY_EXCH
+select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_customer_attr_flat_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 ),
 edw_invoice_fact as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_INVOICE_FACT
+select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 edw_customer_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_MATERIAL_DIM as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+edw_material_dim as (
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 final as (
 SELECT 

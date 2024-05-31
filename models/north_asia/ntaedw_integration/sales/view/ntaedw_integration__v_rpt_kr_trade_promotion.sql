@@ -1,20 +1,20 @@
 with edw_kr_trade_promotion as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_KR_TRADE_PROMOTION
+select * from {{ ref('ntaedw_integration__edw_kr_trade_promotion') }}
 ),
 edw_intrm_calendar as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_INTRM_CALENDAR
+select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 itg_sap_billing_condition as (
-select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_SAP_BILLING_CONDITION
+select * from {{ ref('aspitg_integration__itg_sap_billing_condition') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.V_INTRM_REG_CRNCY_EXCH_FISCPER
+select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_customer_attr_flat_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM

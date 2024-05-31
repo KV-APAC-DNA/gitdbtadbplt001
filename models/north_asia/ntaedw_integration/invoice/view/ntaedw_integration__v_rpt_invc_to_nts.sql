@@ -1,8 +1,8 @@
 with v_intrm_copa_trans as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_COPA_TRANS
+select * from {{ ref('ntaedw_integration__v_intrm_copa_trans') }}
 ),
 edw_acct_ciw_hier as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_ACCT_CIW_HIER
+select * from {{ ref('aspedw_integration__edw_acct_ciw_hier') }}
 ),
 final as (
 SELECT 

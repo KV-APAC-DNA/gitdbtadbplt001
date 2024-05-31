@@ -16,7 +16,7 @@ itg_pos as (
 select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS
 ),
 itg_sales_store_master as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_SALES_STORE_MASTER
+select * from {{ ref('ntaitg_integration__itg_sales_store_master') }}
 ),
 itg_pos_str_sls_grp_map as (
 select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_STR_SLS_GRP_MAP
@@ -30,8 +30,8 @@ select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 itg_pos_str_sls_grp_map as (
 select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_STR_SLS_GRP_MAP
 ),
-ITG_SALES_CUST_PROD_MASTER as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_SALES_CUST_PROD_MASTER
+itg_sales_cust_prod_master as (
+select * from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }}
 ),
 transformed as (
 SELECT src.pos_dt,

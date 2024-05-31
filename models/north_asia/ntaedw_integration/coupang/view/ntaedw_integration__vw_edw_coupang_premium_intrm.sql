@@ -1,5 +1,5 @@
 with vw_edw_coupang_brand_and_product_ranking as (
-select * from dev_dna_core.ntaedw_integration.vw_edw_coupang_brand_and_product_ranking
+select * from {{ ref('ntaedw_integration__vw_edw_coupang_brand_and_product_ranking') }}
 ),
 vw_edw_coupang_user_review as (
 select * from {{ ref('ntaedw_integration__vw_edw_coupang_user_review') }}

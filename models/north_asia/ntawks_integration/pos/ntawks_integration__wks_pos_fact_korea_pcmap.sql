@@ -1,8 +1,8 @@
 with wks_edw_pos_fact_korea as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_EDW_POS_FACT_KOREA
+select * from {{ ref('ntawks_integration__wks_edw_pos_fact_korea') }}
 ),
 itg_pos_invoice_prc_lookup as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_INVOICE_PRC_LOOKUP
+select * from {{ ref('ntaitg_integration__itg_pos_invoice_prc_lookup') }}
 ),
 transformed as (
 select 

@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__sdl_raw_kr_dongbu_lsd_gt_sellout
+    config: 
+        alias: sdl_raw_kr_dongbu_lsd_gt_sellout
+        tags: ["","transformation"]
+  - name: ntaitg_integration__sdl_raw_kr_nu_ri_zon_gt_sellout
+    config: 
+        alias: sdl_raw_kr_nu_ri_zon_gt_sellout
+        tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_bo_young_jong_hap_logistics_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_bo_young_jong_hap_logistics_gt_sellout
+  #       tags: ["","transformation"]
+
+  # - name: ntaitg_integration__sdl_raw_kr_da_in_sang_sa_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_da_in_sang_sa_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_du_bae_ro_yu_tong_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_du_bae_ro_yu_tong_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_hyundai_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_hyundai_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_ju_hj_life_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_ju_hj_life_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_jungseok_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_jungseok_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_lotte_ak_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_lotte_ak_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_lotte_logistics_yang_ju_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_lotte_logistics_yang_ju_gt_sellout
+  #       tags: ["","transformation"]
+  # - name: ntaitg_integration__sdl_raw_kr_nacf_gt_sellout
+  #   config: 
+  #       alias: sdl_raw_kr_nacf_gt_sellout
+  #       tags: ["","transformation"]
+ 

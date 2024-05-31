@@ -1,5 +1,5 @@
 with itg_kr_coupang_customer_brand_trend as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_COUPANG_CUSTOMER_BRAND_TREND
+select * from {{ ref('ntaitg_integration__itg_kr_coupang_customer_brand_trend') }}
 ),
 final as (
 SELECT 

@@ -1,16 +1,16 @@
 with v_intrm_copa_trans as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_COPA_TRANS limit 10
+select * from {{ ref('ntaedw_integration__v_intrm_copa_trans') }} 
 ),
 edw_kr_sales_tgt as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_KR_SALES_TGT
+select * from {{ ref('ntaedw_integration__edw_kr_sales_tgt') }}
 ),
-V_INTRM_CRNCY_EXCH as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_CRNCY_EXCH
+v_intrm_crncy_exch as (
+select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
-EDW_CALENDAR_DIM as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
+edw_calendar_dim as (
+select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
-EDW_CUSTOMER_ATTR_FLAT_DIM as (
+edw_customer_attr_flat_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
 ),
 final as (
