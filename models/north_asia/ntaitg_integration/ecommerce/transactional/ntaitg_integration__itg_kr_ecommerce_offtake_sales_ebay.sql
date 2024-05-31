@@ -7,7 +7,7 @@
                     where 
                     source_file_name = (
                                             select distinct source_file_name 
-                                            from dev_dna_load.snapntasdl_raw.sdl_kr_ecommerce_offtake_sales_ebay
+                                            from source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay')
                                         )"
     )
 }}
@@ -16,8 +16,7 @@
 
 with source as
 (
-    --select * from {{source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay')}} add to prehook as well
-    select * from dev_dna_load.snapntasdl_raw.sdl_kr_ecommerce_offtake_sales_ebay
+    select * from {{source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_sales_ebay')}} 
 ),
 
 trans as

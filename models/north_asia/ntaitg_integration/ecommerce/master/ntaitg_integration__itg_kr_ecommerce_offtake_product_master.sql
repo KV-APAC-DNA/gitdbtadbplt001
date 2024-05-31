@@ -3,7 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if var('job_to_execute') == 'j_kr_ecomm_offtake_product_master_load' %}
-                    delete from {{this}} where (trim(retailer_sku_code),upper(trim(retailer_type))) in (select trim(retailer_sku_code) as retailer_sku_code, upper(trim(name)) as retailer_type from dev_dna_load.snapaspsdl_raw.sdl_mds_kr_ecom_offtake_product_mapping );
+                    delete from {{this}} where (trim(retailer_sku_code),upper(trim(retailer_type))) in (select trim(retailer_sku_code) as retailer_sku_code, upper(trim(name)) as retailer_type from source('ntasdl_raw', 'sdl_mds_kr_ecom_offtake_product_mapping') );
                     {% elif var('job_to_execute') == 'j_kr_generic_query_execution' %}
                     delete from {{this}};
                     {% endif %}"
@@ -13,13 +13,12 @@
 
 with sdl_mds_kr_ecom_offtake_product_mapping as
 (
-    --select * from {{ source('ntasdl_raw', 'sdl_mds_kr_ecom_offtake_product_mapping')}} (add to prehook as well)
-    select * from dev_dna_load.snapaspsdl_raw.sdl_mds_kr_ecom_offtake_product_mapping
+    select * from {{ source('ntasdl_raw', 'sdl_mds_kr_ecom_offtake_product_mapping')}}
 ),
  
 sdl_kr_ecommerce_offtake_product_master as
 (
-    select * from dev_dna_load.snapaspsdl_raw.sdl_kr_ecommerce_offtake_product_master
+    select * from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_product_master')}}
 ),
 
 {% if var("job_to_execute") == 'j_kr_ecomm_offtake_product_master_load' %}

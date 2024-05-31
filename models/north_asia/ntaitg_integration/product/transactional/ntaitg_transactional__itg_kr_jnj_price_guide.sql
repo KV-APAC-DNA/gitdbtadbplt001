@@ -1,7 +1,6 @@
 with source as
 (
-    --select * from {{'ntasdl_raw', 'itg_kr_jnj_price_guide'}}
-    select * from dev_dna_core.snapntaitg_integration.itg_kr_jnj_price_guide
+    select * from {{'ntasdl_raw', 'itg_kr_jnj_price_guide'}}
 ),
 final as
 (

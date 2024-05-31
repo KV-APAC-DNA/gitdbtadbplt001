@@ -40,7 +40,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_weekly') }} "
+          model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_product_ranking_monthly') }} "
           date_column: "product_ranking_date"
           filter: "(odd_mon.product_ranking_date) = (even_mon.product_ranking_date) and (even_mon.product_ranking_date) = (feb.product_ranking_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'product_ranking_date HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -126,7 +126,7 @@ sources:
       tests:
         - test_duplicate:
             select_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
-            group_by_columns: ["code"]
+            group_by_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
             name: TRATBL_sdl_mds_kr_sales_store_master__duplicate_test
             config:
               store_failures: true
