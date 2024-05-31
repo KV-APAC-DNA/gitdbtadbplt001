@@ -25,3 +25,7 @@ models:
     config:
       alias: edw_distributor_channel_dim
       tags: ["id_mds_itg_load","transformation"]
+  - name: idnedw_integration__edw_distributor_group_dim
+    config:
+      alias: edw_distributor_group_dim
+      tags: ["id_mds_itg_load","transformation"]
