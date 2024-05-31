@@ -1,26 +1,26 @@
-with itg_pos as 
+with itg_pos as
 (
     select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
-itg_pos_store_product as 
+itg_pos_store_product as
 (
-    select * from snapntaitg_integration.itg_pos_store_product  
+    select * from {{ ref('ntaitg_integration__itg_pos_store_product') }}
 ),
-edw_product_attr_dim as 
+edw_product_attr_dim as
 (
-    select * from{{ source('aspedw_integration', 'edw_product_attr_dim') }}
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
-itg_sales_cust_prod_master as 
+itg_sales_cust_prod_master as
 (
-    select * from snapntaitg_integration.itg_sales_cust_prod_master
+    select * from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }}
 ),
-v_kr_ecommerce_sellout as 
+v_kr_ecommerce_sellout as
 (
-    select * from snapntaedw_integration.v_kr_ecommerce_sellout
+    select * from {{ ref('ntaedw_integration__v_kr_ecommerce_sellout') }}
 ),
 union_1 as
 (
-    select 
+    select
         p.src_sys_cd,
         ean_num,
         case
@@ -56,7 +56,7 @@ union_1 as
         vend_prod_nm,
         product_nm
 ),
-union_2 as 
+union_2 as
 (
     select distinct ecomm.distributor_name src_sys_cd,
         ecomm.ean ean_num,
@@ -75,15 +75,15 @@ union_2 as
         ecomm.product_name
 ),
 final as
-(    
-    select 
+(
+    select
         src_sys_cd,
         ean_num,
         vend_prod_nm,
         record_count,
         min_pos_dt,
         max_pos_dt
-    from 
+    from
         (
             select * from union_1
             union all

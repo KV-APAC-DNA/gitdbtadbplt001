@@ -1,14 +1,14 @@
-with itg_pos as 
+with itg_pos as
 (
     select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
-itg_pos_store_product as 
+itg_pos_store_product as
 (
-    select * from snapntaitg_integration.itg_pos_store_product  
+    select * from {{ ref('ntaitg_integration__itg_pos_store_product') }}
 ),
-itg_sales_store_master as 
+itg_sales_store_master as
 (
-    select * from snapntaitg_integration.itg_sales_store_master
+    select * from {{ ref('ntaitg_integration__itg_sales_store_master') }}
 ),
 edw_customer_attr_flat_dim as
 (
