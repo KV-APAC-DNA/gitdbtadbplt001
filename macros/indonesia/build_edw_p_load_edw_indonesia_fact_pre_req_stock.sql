@@ -73,7 +73,7 @@
                         T1.NON_SALEABLE_STOCK_VALUE
                     FROM {{ ref('idnitg_integration__itg_stock_dist_map') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_STOCK DIST_CNT,
-                        {{ source('idnedw_integration', 'edw_time_dim') }} T2
+                        {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.STOCK_DT) = TO_DATE(T2.CAL_DATE)
                     AND   UPPER(TRIM(T1.DSTRBTR_CD)) = UPPER(TRIM(DIST_CNT.DISTRIBUTOR_CD))
                     AND   T2.JJ_MNTH_ID >= DIST_CNT.EFFECTIVE_FROM
