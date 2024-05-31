@@ -22,4 +22,4 @@ SELECT DISTINCT 'KR' AS COUNTRY_CD,
 from na_itg.itg_kr_gt_sellout
 WHERE UPPER(DSTR_CD) in ('NH','OTC')
 )
-select * from fianal 
+select * from final 
