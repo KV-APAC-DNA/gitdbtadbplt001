@@ -1,5 +1,5 @@
 with v_intrm_copa_trans as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_COPA_TRANS limit 10
+select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_COPA_TRANS 
 ),
 edw_kr_sales_tgt as (
 select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_KR_SALES_TGT
