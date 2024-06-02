@@ -1,5 +1,5 @@
 with v_calendar_promo_univ_fisc as(
-    select * from  {{ ref('ntaedw_integration__v_calendar_promo_univ_fisc') }}
+    select * from  {{ ref('aspedw_integration__v_calendar_promo_univ_fisc') }}
 ),
 transformed as(
 

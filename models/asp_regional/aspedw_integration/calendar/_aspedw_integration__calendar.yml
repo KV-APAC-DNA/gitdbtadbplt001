@@ -7,3 +7,7 @@ models:
     config: 
       alias: v_calendar_dtls
       tags: ["taiwan_views","transformation"]
+  - name: aspedw_integration__v_calendar_promo_univ_fisc
+    config: 
+      alias: v_calendar_promo_univ_fisc
+      tags: ["taiwan_views","transformation"]
