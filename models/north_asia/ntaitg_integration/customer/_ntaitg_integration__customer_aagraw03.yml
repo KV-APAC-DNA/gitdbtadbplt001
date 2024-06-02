@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaitg_integration__itg_mds_kr_sub_customer_master
-    config:
-      alias: itg_mds_kr_sub_customer_master
-      tags: ["gt_sellout_otc","ingestion"]

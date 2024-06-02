@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__v_intrm_copa_trans
-    config: 
-        alias: v_intrm_copa_trans
-        tags: []

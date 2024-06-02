@@ -21,3 +21,11 @@ models:
     config:
       alias: wks_itg_kr_sales_target_am_brand
       tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+  - name: ntawks_integration__wks_itg_sales_store_master
+    config:
+      alias: wks_itg_sales_store_master
+      tags: ["mds_sdl_itg_load","transformation"]
+  - name: ntawks_integration__wks_itg_sales_cust_prod_master
+    config:
+      alias: wks_itg_sales_cust_prod_master
+      tags: ["mds_sdl_itg_load","transformation"]

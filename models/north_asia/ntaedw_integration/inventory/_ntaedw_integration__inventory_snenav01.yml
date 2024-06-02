@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__edw_kr_otc_inventory
-    config: 
-      alias: edw_kr_otc_inventory
-      tags: ["j_kr_otc_inv_etl_framework","transformation"]

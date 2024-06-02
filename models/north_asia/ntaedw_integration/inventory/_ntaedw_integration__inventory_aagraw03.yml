@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__v_rpt_onpack_inventory
-    config: 
-      alias: v_rpt_onpack_inventory
-      tags: ["korea_views","transformation"]

@@ -49,3 +49,11 @@ models:
     config: 
         alias: sdl_raw_kr_nacf_gt_sellout
         tags: []
+  - name: ntaitg_integration__sdl_raw_kr_dongbu_lsd_gt_sellout
+    config: 
+        alias: sdl_raw_kr_dongbu_lsd_gt_sellout
+        tags: ["","transformation"]
+  - name: ntaitg_integration__sdl_raw_kr_nu_ri_zon_gt_sellout
+    config: 
+        alias: sdl_raw_kr_nu_ri_zon_gt_sellout
+        tags: ["","transformation"]

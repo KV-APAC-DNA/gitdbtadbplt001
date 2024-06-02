@@ -173,3 +173,19 @@ models:
     config:
       alias: wks_kr_pos_costco_vmimst
       tags: ["uplus_ucost01_invrpt","inactive"]
+  - name: ntawks_integration__wks_edw_pos_fact_korea
+    config:
+      alias: wks_edw_pos_fact_korea
+      tags: ["kr_pos_edw_load","ingestion"]
+  - name: ntawks_integration__wks_pos_fact_korea_pcmap
+    config:
+      alias: wks_pos_fact_korea_pcmap
+      tags: ["kr_sdl_to_itg","ingestion"]
+  - name: ntawks_integration__wks_pos_gross_prc_condition_map
+    config:
+      alias: wks_pos_gross_prc_condition_map
+      tags: ["kr_pos_edw_load","ingestion"]
+  - name: ntawks_integration__wks_pos_prc_condition_map
+    config:
+      alias: wks_pos_prc_condition_map
+      tags: ["kr_pos_edw_load","ingestion"]

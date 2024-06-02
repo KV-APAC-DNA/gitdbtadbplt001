@@ -5,13 +5,27 @@ models:
     config: 
       alias: v_interm_cust_hier_dim
       tags: ["taiwan_views","transformation"]
-
   - name: ntaedw_integration__edw_vw_gt_msl_items
     config: 
       alias: edw_vw_gt_msl_items
       tags: ["taiwan_views","transformation"]
-
   - name: ntaedw_integration__v_calendar_promo_univ_fisc
     config: 
       alias: v_calendar_promo_univ_fisc
       tags: ["taiwan_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_product_ranking
+    config: 
+      alias: vw_edw_coupang_product_ranking
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__edw_sfmc_naver_dm
+    config: 
+      alias: edw_sfmc_naver_dm
+      tags: ["kr_sfmc_analysis_refresh","transformation"]
+  - name: ntaedw_integration__edw_vw_sfmc_naver_dm
+    config: 
+      alias: edw_vw_sfmc_naver_dm
+      tags: ["kr_sfmc_analysis_refresh","transformation"]
+  - name: ntaedw_integration__v_rpt_tpfgsummary
+    config: 
+      alias: v_rpt_tpfgsummary
+      tags: ["korea_views","transformation"]

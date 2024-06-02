@@ -21,4 +21,15 @@ models:
     config:
       alias: itg_tw_sales_target
       tags: ["j_tw_sales_target_wrapper","transformation"]
-
+  - name: ntaitg_integration__itg_mds_hk_customer_hierarchy
+    config:
+      alias: itg_mds_k_customer_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
+  - name: ntaitg_integration__itg_mds_tw_customer_hierarchy
+    config:
+      alias: itg_mds_tw_customer_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
+  - name: ntaitg_integration__itg_mds_kr_sub_customer_master
+    config:
+      alias: itg_mds_kr_sub_customer_master
+      tags: ["gt_sellout_otc","ingestion"]
