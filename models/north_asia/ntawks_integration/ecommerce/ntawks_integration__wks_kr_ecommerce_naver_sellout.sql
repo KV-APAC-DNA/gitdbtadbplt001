@@ -1,9 +1,8 @@
 with source as (
-    select * from dev_dna_load.ntasdl_raw.sdl_kr_ecom_naver_sellout_temp
-    -- select * from {{ source('ntasdl_raw', 'sdl_kr_ecom_naver_sellout_temp') }}
+    select * from {{ source('ntasdl_raw', 'sdl_kr_ecom_naver_sellout_temp') }}
 ),
 v_calendar_promo_univ_dtls as (
-    select * from aspedw_integration.v_calendar_promo_univ_dtls
+    select * from {{ ref ('aspedw_integration__v_calendar_promo_univ_dtls') }}
 ),
 transformed as (
     select 

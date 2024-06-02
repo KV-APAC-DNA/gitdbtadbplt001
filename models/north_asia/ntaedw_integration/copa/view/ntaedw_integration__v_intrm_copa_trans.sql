@@ -2,7 +2,7 @@ with edw_copa_trans_fact as (
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_copa_trans_fact_adjustment as (
-    select * from aspedw_integration.edw_copa_trans_fact_adjustment
+    select * from {{ source('aspedw_integration','edw_copa_trans_fact_adjustment') }}
 ),
 edw_customer_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}

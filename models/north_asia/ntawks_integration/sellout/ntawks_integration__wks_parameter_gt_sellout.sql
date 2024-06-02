@@ -14,7 +14,7 @@
 }}
 with itg_kr_gt_sellout as (
     select * from {{ ref('ntaitg_integration__itg_kr_gt_sellout') }}
-)
+),
 final as (
 SELECT DISTINCT 'KR' AS COUNTRY_CD,
        'GT_SELLOUT' AS PARAMETER_NAME,

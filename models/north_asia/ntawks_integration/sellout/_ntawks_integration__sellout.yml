@@ -21,6 +21,7 @@ models:
     config:
       alias: wks_edw_pos_fact
       tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]
-   
- 
-  
+  - name: ntawks_integration__wks_parameter_gt_sellout
+    config:
+      alias: wks_parameter_gt_sellout
+      tags: ["gt_sellout_nh","transformation"]

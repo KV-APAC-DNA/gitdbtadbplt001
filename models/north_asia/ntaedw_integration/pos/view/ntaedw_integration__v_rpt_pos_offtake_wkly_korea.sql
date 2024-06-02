@@ -11,7 +11,7 @@ edw_product_attr_dim as (
 select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 ),
 v_calendar_dtls as (
-select * from {{ ref('ntaedw_integration__v_calendar_dtls') }}
+select * from {{ ref('aspedw_integration__v_calendar_dtls') }}
 ),
 v_intrm_crncy_exch as (
 select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}

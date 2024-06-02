@@ -2,7 +2,7 @@ with edw_ims_fact as (
     select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 wks_parameter_gt_sellout as (
-    select * from ntawks_integration.wks_parameter_gt_sellout
+    select * from {{ ref('ntawks_integration__wks_parameter_gt_sellout') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as (
     select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
