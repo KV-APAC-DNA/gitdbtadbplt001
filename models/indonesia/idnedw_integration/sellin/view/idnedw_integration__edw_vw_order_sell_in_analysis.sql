@@ -27,7 +27,7 @@ abc as (
         ,sum(sof.ord_qty_pc) as order_qty
         ,sum(sof.net_ord_val) as order_gross
         ,sum(sof.est_nts) as nts_order_val
-        ,to_date((sof.doc_dt)) as order_dt
+        ,date((sof.doc_dt)) as order_dt
         ,sof.sls_doc
         ,t2.jj_year
         ,t2.jj_qrtr
@@ -74,7 +74,7 @@ abc as (
         ,(null::numeric)::numeric(18, 0) as order_qty
         ,(null::numeric)::numeric(18, 0) as order_gross
         ,(null::numeric)::numeric(18, 0) as nts_order_val
-        ,to_date(NULL) as order_dt
+        ,to_date(null) as order_dt
         ,null::character varying as sls_doc
         ,t2.jj_year
         ,t2.jj_qrtr
@@ -299,7 +299,7 @@ FROM (
 transformed as (
     select * from transformed_1
     union 
-    select * from transformed_1
+    select * from transformed_2
 )
 
 select * from transformed
