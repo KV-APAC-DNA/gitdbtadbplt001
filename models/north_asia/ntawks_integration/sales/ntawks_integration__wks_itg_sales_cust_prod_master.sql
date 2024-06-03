@@ -12,7 +12,7 @@ sdl_sales_cust_prod_reject_master as (
     select * from {{ source('ntasdl_raw', 'sdl_sales_cust_prod_reject_master') }}
 ),
 itg_sales_cust_prod_master_temp as (
-    select * from {{ source('ntaitg_integration', 'ntaitg_integration__itg_sales_cust_prod_master_temp') }}
+    select * from {{ source('ntaitg_integration', 'itg_sales_cust_prod_master_temp') }}
 ),
 transformed as (
 SELECT sales_grp_cd,

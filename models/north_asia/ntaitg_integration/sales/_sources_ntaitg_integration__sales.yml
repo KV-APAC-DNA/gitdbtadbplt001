@@ -70,11 +70,11 @@ sources:
               schema: ntawks_integration
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: nnaras01_workspace
+    schema: ntaitg_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-    - name: ntaitg_integration__itg_sales_store_master_temp
-    - name: ntaitg_integration__itg_sales_cust_prod_master_temp
+    - name: itg_sales_store_master_temp
+    - name: itg_sales_cust_prod_master_temp
