@@ -52,3 +52,7 @@ models:
     config:
       alias: edw_id_ps_brand_blocking
       tags: ["id_perfectstore_part_one","transformation"]
+  - name: idnedw_integration__edw_rpt_id_perfect_store
+    config:
+      alias: edw_rpt_id_perfect_store
+      tags: ["id_ps_datamart","transformation"]
