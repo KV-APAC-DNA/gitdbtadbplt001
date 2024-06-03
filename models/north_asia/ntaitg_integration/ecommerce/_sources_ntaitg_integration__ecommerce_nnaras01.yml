@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_kr_ecom_coupang
-      tags: [""]
+      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","transformation"]
       tests:
           - test_null:
               select_columns:  ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
