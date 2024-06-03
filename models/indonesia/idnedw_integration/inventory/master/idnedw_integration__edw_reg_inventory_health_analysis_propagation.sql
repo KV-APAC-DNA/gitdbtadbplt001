@@ -70,7 +70,7 @@ final as(
         reason::varchar(100) as reason,
         last_36months_so_val::number(38,4) as last_36months_so_val,
         healthy_inventory::varchar(1) as healthy_inventory,
-        min_date::date as min_date,
+        to_date(min_date) as min_date,
         diff_weeks::number(18,0) as diff_weeks,
         l12m_weeks::number(18,0) as l12m_weeks,
         l6m_weeks::number(18,0) as l6m_weeks,

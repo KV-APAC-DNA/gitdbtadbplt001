@@ -13,7 +13,7 @@ final as
     merchandiser_id::varchar(20) as merchandiser_id,
     merchandiser_name::varchar(50) as merchandiser_name,
     cust_group::varchar(50) as cust_group,
-    input_date::date as input_date,
+    to_date(input_date) as input_date,
     day_name::varchar(20) as day_name,
     promo_desc::varchar(255) as promo_desc,
     photo_link::varchar(100) as photo_link,

@@ -1,9 +1,4 @@
-{{
-    config
-    (
-        pre_hook = "{{ build_edw_p_load_edw_indonesia_fact_pre_req_stock() }}"
-    )
-}}
+
 
 with source as
 (

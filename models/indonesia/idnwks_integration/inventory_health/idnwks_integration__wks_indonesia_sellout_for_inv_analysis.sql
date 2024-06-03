@@ -458,7 +458,7 @@ final as
     select 
         dstrbtr_grp_name::varchar(83) as dstrbtr_grp_name,
         dstrbtr_grp_cd::varchar(30) as dstrbtr_grp_cd,
-        min_date::date as min_date,
+        to_date(min_date) as min_date,
         sap_prnt_cust_key::varchar(12) as sap_prnt_cust_key,
         pka_size_desc::varchar(30) as pka_size_desc,
         pka_product_key::varchar(68) as pka_product_key,

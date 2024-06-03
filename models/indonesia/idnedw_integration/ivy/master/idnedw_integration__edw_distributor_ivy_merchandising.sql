@@ -14,7 +14,7 @@ final as
 	retailer_code::varchar(25) as retailer_code,
 	retailer_name::varchar(100) as retailer_name,
 	month::varchar(30) as month,
-	surveydate::date as surveydate,
+	to_date(surveydate) as surveydate,
 	aq_name::varchar(500) as aq_name,
 	srd_answer::varchar(100) as srd_answer,
 	link::varchar(500) as link,
