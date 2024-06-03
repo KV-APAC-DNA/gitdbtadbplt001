@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_distributor_ivy_inventory
-      tags: ["id_ivy_inventory","ingestion"]
+      tags: ["id_ivy","ingestion"]
       #tests:
       #   - test_null:
       #        select_columns: ["source_file_name","distributor_code","product_code","cdl_dttm"]
@@ -38,7 +38,7 @@ sources:
                 schema: idnitg_integration
 
     - name: sdl_distributor_ivy_order
-      tags: ["id_ivy_order","ingestion"]
+      tags: ["id_ivy","ingestion"]
       tests:
         - test_null__ff:
             not_null_columns: ["distributor_code","order_id","product_code","order_date"]
@@ -57,7 +57,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_distributor_ivy_invoice
-      tags: ["id_ivy_invoice","ingestion"]
+      tags: ["id_ivy","ingestion"]
       tests:
       - test_null__ff:
             not_null_columns: ["distributor_code","invoice_no","product_code","invoice_date"]
@@ -77,7 +77,7 @@ sources:
               schema: idnwks_integration
 
     - name: sdl_distributor_ivy_merchandising
-      tags: ["id_ivy_merchandising","ingestion"]
+      tags: ["id_ivy","ingestion"]
       tests:
           - test_null:
               select_columns: ["source_file_name","distributor_code","sales_repcode","retailer_code","surveydate","aq_name"]
@@ -96,7 +96,7 @@ sources:
     - name: sdl_distributor_ivy_user_master
       tags: ["id_ivy_usermaster","ingestion"]
     - name: sdl_distributor_ivy_outlet_master
-      tags: ["id_ps_visibility","ingestion"]
+      tags: ["id_ivy","ingestion"]
       tests:
         - test_null:
             select_columns: ["source_file_name", "distributorcode", "outletcode"]
