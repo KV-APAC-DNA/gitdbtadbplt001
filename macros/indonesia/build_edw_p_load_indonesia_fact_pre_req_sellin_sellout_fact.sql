@@ -375,7 +375,7 @@
                         T1.DSTRBTR_NET_VAL,
                         T1.RTRN_QTY,
                         T1.RTRN_VAL
-                    FROM {{ ref('idnitg_integration__itg_all_non_ivy_distributor_sellout_sales_fact') }} T1,
+                    FROM {{ source('idnitg_integration', 'itg_all_non_ivy_distributor_sellout_sales_fact') }} T1,
                         WKS_MDS_ID_DIST_REPORTING_CONTROL_SELLIN_SELLOUT_FACT DIST_CNT,
                         {{ source('idnedw_integration','edw_time_dim') }} T2
                     WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
