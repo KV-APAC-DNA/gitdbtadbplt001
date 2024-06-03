@@ -7,14 +7,14 @@
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_sent_data') }}) and cntry_cd = 'TH';
                     {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_sent_data') }}) and cntry_cd = 'PH';
-                    {% elif var('sfmc_job_to_execute') == 'nta_sfmc_files' %}
+                    {% elif var('sfmc_job_to_execute') == 'tw_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('ntasdl_raw','sdl_tw_sfmc_sent_data') }}) and cntry_cd = 'TW';
                     {% endif %}
                 "
     )
 }}
 
-with source as(
+with source as (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw','sdl_th_sfmc_sent_data') }}
 ),
 source_ph as
@@ -24,9 +24,9 @@ source_ph as
 source_nta as
 (
     select *,dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('ntasdl_raw', 'sdl_tw_sfmc_sent_data') }}
-)
+),
 {% if var("sfmc_job_to_execute") == 'th_sfmc_files' %}
-,
+
 final as(
     select
         'TH'::varchar(10) as cntry_cd,
@@ -52,7 +52,7 @@ final as(
 select * from final
 
 {% elif var("sfmc_job_to_execute") == 'ph_sfmc_files' %}
-,
+
 final as(
     select
         'PH'::varchar(10) as cntry_cd,
@@ -77,8 +77,8 @@ final as(
 )
 select * from final
 
-{% elif var("sfmc_job_to_execute") == 'nta_sfmc_files' %}
-,
+{% elif var("sfmc_job_to_execute") == 'tw_sfmc_files' %}
+
 final as(
     select
         'TW'::varchar(10) as cntry_cd,
