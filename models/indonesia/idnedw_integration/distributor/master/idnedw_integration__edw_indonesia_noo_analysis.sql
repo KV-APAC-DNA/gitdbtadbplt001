@@ -17,7 +17,7 @@ edw_time_dim as
 ),
 itg_target_dist_brand_channel as 
 (
-    select * from select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
+    select * from {{ ref('idnitg_integration__itg_target_dist_brand_channel') }}
 ),
 itg_mcs_gt as 
 (

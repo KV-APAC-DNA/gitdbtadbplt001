@@ -38,8 +38,9 @@ etd as (
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
-)
-select eadlf.bill_dt::DATE as bill_dt,
+),
+final as (
+select to_date(eadlf.bill_dt) as bill_dt,
        eadlf.bill_doc::varchar(100) as bill_doc,
        etd.jj_year::number(18,0) as jj_year,
        etd.jj_qrtr::varchar(24) as jj_qrtr,
@@ -122,3 +123,5 @@ group by eadlf.bill_dt,
          epd.variant3,
          epd.variant3 || ' ' || nvl(cast(epd.put_up as varchar),''),
          epd.status
+)
+select * from final

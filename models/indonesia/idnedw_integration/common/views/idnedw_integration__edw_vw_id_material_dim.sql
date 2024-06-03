@@ -7,7 +7,10 @@ edw_material_sales_dim as (
 edw_material_uom as (
     select * from {{ ref('aspedw_integration__edw_material_uom') }}
 ),
-
+edw_gch_producthierarchy as 
+(
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+),
 md as(
 		SELECT edw_material_dim.matl_num
 						,edw_material_dim.matl_desc

@@ -8,7 +8,7 @@ itg_id_ps_msl_reference as
 ),
 edw_id_ps_outlet_master as
 (
-    select * from {{ref('idnedw_integration__edw_id_ps_msl_osa')}}
+    select * from {{ref('idnedw_integration__edw_id_ps_outlet_master')}}
 ),
 edw_id_ps_merchandiser_master as
 (

@@ -35,7 +35,7 @@ final as
         itg.jnj_month::varchar(2) as jnj_month,
         itg.jnj_week::varchar(5) as jnj_week,
         itg.day_name::varchar(20) as day_name,
-        itg.input_date::date as input_date,
+        to_date(itg.input_date) as input_date,
         itg.franchise::varchar(50) as franchise,
         itg.product_cmp_competitor_jnj::varchar(50) as product_cmp_competitor_jnj,
         itg.number_of_facing::varchar(20) as number_of_facing,

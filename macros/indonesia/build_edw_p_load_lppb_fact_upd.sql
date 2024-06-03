@@ -31,7 +31,7 @@
                 SELECT DISTINCT UPPER(TRIM(IDENTIFIER)) AS IDENTIFIER,UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)) AS JJ_SAP_DSTRBTR_ID,
             					   UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) AS DSTRBTR_GRP_CD,
             						 SLS.JJ_MNTH_ID
-            					FROM {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }} SLS,
+            					FROM {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }} SLS,
             					   wks_lppb_fact_dist_grp_sellin_sellout SLS1,
             					   {{ ref('idnwks_integration__wks_itg_all_distributor_sellin_sellout_master') }} DIM
             					WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
@@ -43,7 +43,7 @@
             					SELECT DISTINCT UPPER(TRIM(IDENTIFIER)),UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)),
             					       UPPER(TRIM(SLS.DSTRBTR_GRP_CD)),
             							   SLS.JJ_MNTH_ID
-            						FROM {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }} SLS,
+            						FROM {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }} SLS,
             							 wks_lppb_fact_dist_grp_sellin_sellout SLS1,
             							 {{ ref('idnwks_integration__wks_itg_all_distributor_sellin_sellout_master') }} DIM
             						WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
@@ -55,7 +55,7 @@
             					 SELECT DISTINCT UPPER(TRIM(IDENTIFIER)),UPPER(TRIM(SLS.JJ_SAP_DSTRBTR_ID)),
             							 UPPER(TRIM(SLS.DSTRBTR_GRP_CD)),
             							SLS.JJ_MNTH_ID
-            					 FROM {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }} SLS,
+            					 FROM {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }} SLS,
             						  wks_lppb_fact_dist_grp_sellin_sellout SLS1,
             						  {{ ref('idnwks_integration__wks_itg_all_distributor_sellin_sellout_master') }} DIM
             					 WHERE UPPER(TRIM(SLS.DSTRBTR_GRP_CD)) = UPPER(TRIM(DIM.DSTRBTR_GRP_CD))
@@ -265,7 +265,7 @@
                 SUM(0) AS SALEABLE_STOCK_VALUE,
                 SUM(0) AS NON_SALEABLE_STOCK_QTY,
                 SUM(0) AS NON_SALEABLE_STOCK_VALUE
-            FROM {{ ref('idnedw_integration__edw_all_distributor_lppb_fact') }} T1,
+            FROM {{ source('idnedw_integration', 'edw_all_distributor_lppb_fact') }} T1,
                 (SELECT DISTINCT DSTRBTR_GRP_CD,JJ_MNTH_ID FROM {{ ref('idnwks_integration__wks_itg_all_distributor_sellin_sellout_master') }}) DIM,
                 WKS_LPPB_FACT_DIST_GRP_SELLIN_SELLOUT M
             WHERE T1.JJ_MNTH_ID = TO_CHAR(ADD_MONTHS(TO_DATE(M.JJ_MNTH_ID,'YYYYMM'),-1),'YYYYMM')

@@ -7,7 +7,7 @@ final as(
         sap_cntry_nm::varchar(9) as sap_cntry_nm,
         dataset::varchar(7) as dataset,
         dstrbtr_grp_cd::varchar(25) as dstrbtr_grp_cd,
-        year::varchar(10) as year,
+        "year"::varchar(10) as year,
         yearmonth::varchar(10) as yearmonth,
         customer_brnch_code::varchar(100) as customer_brnch_code,
         customer_brnch_name::varchar(100) as customer_brnch_name,

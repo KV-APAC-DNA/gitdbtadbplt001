@@ -4,7 +4,7 @@
         incremental_strategy='append',
         sql_header='use warehouse DEV_DNA_CORE_app2_wh;',
         pre_hook="{% if is_incremental() %}
-                delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from {{ ref('idnwks_integration__wks_itg_all_distributor_sellin_sellout_fact') }} where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');
+                delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from {{ source('idnwks_integration', 'wks_itg_all_distributor_sellin_sellout_fact') }} where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');
                 {% endif %}"     
     )
 }}

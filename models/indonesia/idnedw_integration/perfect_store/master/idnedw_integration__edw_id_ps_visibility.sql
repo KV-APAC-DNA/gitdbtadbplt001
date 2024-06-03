@@ -17,7 +17,7 @@ final as
         VI.merchandiser_id::varchar(20) as merchandiser_id,
         VI.merchandiser_name::varchar(50) as merchandiser_name,
         VI.cust_group::varchar(50) as cust_group,
-        VI.input_date::date as input_date,
+        to_date(VI.input_date) as input_date,
         VI.day_name::varchar(20) as day_name,
         VI.franchise::varchar(50) as franchise,
         VI.product_cmp_competitor_jnj::varchar(50) as product_cmp_competitor_jnj,

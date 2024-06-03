@@ -4,7 +4,7 @@ with source as (
 final as (
     select
         datasrc::varchar(20) as datasrc,
-        invoice_dt::date as invoice_dt,
+        to_date(invoice_dt) as invoice_dt,
         bill_doc::varchar(75) as bill_doc,
         jj_year::number(18,0) as jj_year,
         jj_qrtr::varchar(24) as jj_qrtr,
@@ -44,7 +44,7 @@ final as (
         order_qty::number(38,4) as order_qty,
         order_gross::number(38,4) as order_gross,
         nts_order_val::number(38,4) as nts_order_val,
-        order_dt::date as order_dt,
+        to_date(order_dt) as order_dt,
         order_doc::varchar(20) as order_doc,
         target_niv::number(25,7) as target_niv,
         target_hna::number(25,7) as target_hna
