@@ -44,8 +44,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-    - name: sdl_kr_dads_naver_keyword_search_volume
-      tags: [""]
     - name: sdl_kr_dads_naver_search_channel
       tags: ["kr_dads_naver_search_channel", "ingestion"]
       tests:
