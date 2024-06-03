@@ -93,4 +93,3 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
-  
