@@ -11,7 +11,6 @@
         {% endif %}"
     )
 }}
-
 with sdl_distributor_ivy_outlet_master as 
 (
     select * from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
@@ -27,35 +26,35 @@ edw_channelgroup_metadata as
 itg_distributor_ivy_outlet_master as (
     select 
         trim(distributorcode) as distributorcode,
-        usercode,
+        trim(usercode) as usercode,
         locationcode,
         trim(outletcode) as outletcode,
         outletname,
         outletaddress,
-        pincode,
+        trim(nvl(pincode,'')) as pincode,
         subchannelname,
-        classcode,
-        routecode,
-        visit_frequency,
-        visitday,
-        jnj_id,
+        trim(classcode) as classcode,
+        trim(routecode) as routecode,
+        trim(visit_frequency) as visit_frequency,
+        trim(visitday) as visitday,
+        trim(jnj_id) as jnj_id,
         contactperson,
         credit_limit,
         invoice_limit,
         credit_period,
-        tin,
-        is_diamond_store,
-        id_no,
-        master_code,
-        store_cluster,
-        lattitude,
-        longitude,
+        trim(tin) as tin,
+        trim(is_diamond_store) as is_diamond_store,
+        trim(id_no) as id_no,
+        trim(master_code) as master_code,
+        trim(store_cluster) as store_cluster,
+        trim(nvl(lattitude,'')) as lattitude,
+        trim(nvl(longitude,'')) as longitude,
         cdl_dttm,
         channelname,
         tieringname,
         run_id,
         row_number() over (partition by distributorcode, outletcode order by run_id) as rn
-    from SDL_DISTRIBUTOR_IVY_OUTLET_MASTER
+    from sdl_distributor_ivy_outlet_master
 ),
 final as (
     select 
@@ -123,18 +122,18 @@ updt as(
         final.lattitude as lattitude,
         final.longitude as longitude,
         final.cdl_dttm as cdl_dttm,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.CUST_GRP,final.cust_grp) as cust_grp,
+        nvl(edw_distributor_customer_dim.cust_grp,final.cust_grp) as cust_grp,
         final.chnl as chnl,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.chnl_grp, final.chnl_grp) as chnl_grp,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.CUST_GRP,final.cust_id_map) as cust_id_map,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.CUST_GRP,final.cust_nm_map) as cust_nm_map,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.chnl_grp2, final.chnl_grp2) as chnl_grp2,
-        nvl(EDW_DISTRIBUTOR_CUSTOMER_DIM.cust_crtd_dt, final.cust_crtd_dt) as cust_crtd_dt,
+        nvl(edw_distributor_customer_dim.chnl_grp, final.chnl_grp) as chnl_grp,
+        nvl(edw_distributor_customer_dim.cust_id_map,final.cust_id_map) as cust_id_map,
+        nvl(edw_distributor_customer_dim.cust_nm_map,final.cust_nm_map) as cust_nm_map,
+        nvl(edw_distributor_customer_dim.chnl_grp2, final.chnl_grp2) as chnl_grp2,
+        nvl(edw_distributor_customer_dim.cust_crtd_dt, final.cust_crtd_dt) as cust_crtd_dt,
         final.cust_grp2 as cust_grp2,
         final.run_id as run_id 
     from final
-    left join EDW_DISTRIBUTOR_CUSTOMER_DIM
-    on (upper(trim(final.distributorcode)) || upper(trim(final.outletcode))) = upper(trim(EDW_DISTRIBUTOR_CUSTOMER_DIM.KEY_OUTLET))
+    left join edw_distributor_customer_dim
+    on (upper(trim(final.distributorcode)) || upper(trim(final.outletcode))) = upper(trim(edw_distributor_customer_dim.key_outlet))
 ),
 updt2 as(
     select 
@@ -173,7 +172,7 @@ updt2 as(
         updt.cust_grp2 as cust_grp2,
         updt.run_id as run_id
     from updt 
-    left join EDW_CHANNELGROUP_METADATA channelgroup
+    left join edw_channelgroup_metadata channelgroup
     on updt.cust_grp2 = channelgroup.cust_grp2
 )
 select * from updt2
