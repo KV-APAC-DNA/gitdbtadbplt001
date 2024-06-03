@@ -21,7 +21,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
-              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for create_time'"
               name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test1
               config:
@@ -29,7 +29,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
-              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for task_action_time'"
               name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test2
               config:
@@ -37,7 +37,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","store_name","task_name","create_time","kpi","manufacturer","value"]
-              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for plan_finish_time'"
               name: TRATBL_sdl_ph_clobotics_task_raw_data__format_test3
               config:
@@ -55,7 +55,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
-              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for plan_finish_time'"
               name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test1
               config:
@@ -63,7 +63,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
-              where_clause: "not regexp_like (trim(plan_start_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(plan_start_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(plan_start_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for plan_start_time'"
               name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test2
               config:
@@ -71,7 +71,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","display_username","store_code","plan_start_time","plan_upload_time","sku_id","manufacturer","kpi","value"]
-              where_clause: "not regexp_like (trim(plan_upload_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(plan_upload_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(plan_upload_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for plan_upload_time'"
               name: TRATBL_sdl_ph_clobotics_store_raw_data__format_test3
               config:
@@ -89,7 +89,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
-              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(create_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for create_time'"
               name: TRATBL_sdl_ph_clobotics_survey_data__format_test1
               config:
@@ -97,7 +97,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
-              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(task_action_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for task_action_time'"
               name: TRATBL_sdl_ph_clobotics_survey_data__format_test2
               config:
@@ -105,7 +105,7 @@ sources:
                 schema: phlwks_integration
           - test_format:
               select_columns: ["plan_status","plan_finish_time","username","store_code","task_name","create_time","qn_name","question_content","question_answer_code","question_answer_value"]
-              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]','[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
+              where_clause: "not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]') and not regexp_like (trim(plan_finish_time),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9][0-9]')"
               failure_reason: "'Date time not correct for plan_finish_time'"
               name: TRATBL_sdl_ph_clobotics_survey_data__format_test3
               config:

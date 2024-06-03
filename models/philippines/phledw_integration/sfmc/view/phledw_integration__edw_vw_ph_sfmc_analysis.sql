@@ -95,68 +95,69 @@ temp_a as
             ) THEN 'UNDEFINED'::character varying
             ELSE ifc.birth_year
         END AS birth_year,
-        ifc.consumer_age,
+        case when ifc.consumer_age = '99999' then 'UNDEFINED'
+        else ifc.consumer_age end as consumer_age,
         CASE
             WHEN (
                 (
                     (
-                        (ifc.consumer_age)::text = ('UNDEFINED'::character varying)::text
+                        trunc(ifc.consumer_age,0)::text = ('99999'::character varying)::text
                     )
                     OR (ifc.consumer_age IS NULL)
                 )
                 OR (
-                    (ifc.consumer_age)::text = (''::character varying)::text
+                    trunc(ifc.consumer_age,0)::text = (''::character varying)::text
                 )
             ) THEN 'UNDEFINED'::character varying
             WHEN (
-                (ifc.consumer_age)::numeric(18, 0) < ((0)::numeric)::numeric(18, 0)
+                trunc(ifc.consumer_age,0)::numeric(18, 0) < ((0)::numeric)::numeric(18, 0)
             ) THEN 'UNDEFINED'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((17)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((17)::numeric)::numeric(18, 0)
                 )
             ) THEN '<=17'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((18)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((18)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((24)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((24)::numeric)::numeric(18, 0)
                 )
             ) THEN '18-24'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((25)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((25)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((34)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((34)::numeric)::numeric(18, 0)
                 )
             ) THEN '25-34'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((35)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((35)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((44)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((44)::numeric)::numeric(18, 0)
                 )
             ) THEN '35-44'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((45)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((45)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((54)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((54)::numeric)::numeric(18, 0)
                 )
             ) THEN '45-54'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((55)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((55)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((64)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((64)::numeric)::numeric(18, 0)
                 )
             ) THEN '55-64'::character varying
             ELSE '>=65'::character varying
@@ -214,53 +215,54 @@ temp_a as
         END AS child_birth_year,
         isc.child_gender,
         isc.child_number,
-        isc.child_age,
+        case when isc.child_age = '99999' then 'UNDEFINED' 
+        else isc.child_age end as child_age,
         CASE
             WHEN (
                 (
                     (
-                        (isc.child_age)::text = ('UNDEFINED'::character varying)::text
+                        trunc(isc.child_age,0)::text = ('99999'::character varying)::text
                     )
                     OR (isc.child_age IS NULL)
                 )
                 OR (
-                    (isc.child_age)::text = (''::character varying)::text
+                    trunc(isc.child_age,0)::text = (''::character varying)::text
                 )
             ) THEN 'UNDEFINED'::character varying
             WHEN (
                 (
-                    (isc.child_age)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (isc.child_age)::numeric(18, 0) < ((1)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) < ((1)::numeric)::numeric(18, 0)
                 )
             ) THEN '0-11 Months'::character varying
             WHEN (
                 (
-                    (isc.child_age)::numeric(18, 0) >= ((1)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) >= ((1)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (isc.child_age)::numeric(18, 0) < ((3)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) < ((3)::numeric)::numeric(18, 0)
                 )
             ) THEN '>=1,<3 Yrs'::character varying
             WHEN (
                 (
-                    (isc.child_age)::numeric(18, 0) >= ((3)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) >= ((3)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (isc.child_age)::numeric(18, 0) < ((7)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) < ((7)::numeric)::numeric(18, 0)
                 )
             ) THEN '>=3,<6 Yrs'::character varying
             WHEN (
                 (
-                    (isc.child_age)::numeric(18, 0) >= ((7)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) >= ((7)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (isc.child_age)::numeric(18, 0) < ((12)::numeric)::numeric(18, 0)
+                    trunc(isc.child_age,0)::numeric(18, 0) < ((12)::numeric)::numeric(18, 0)
                 )
             ) THEN '>=7,<12 Yrs'::character varying
             WHEN (
-                (isc.child_age)::numeric(18, 0) >= ((12)::numeric)::numeric(18, 0)
+                trunc(isc.child_age,0)::numeric(18, 0) >= ((12)::numeric)::numeric(18, 0)
             ) THEN '>=12 Yrs'::character varying
             ELSE 'UNDEFINED'::character varying
         END AS child_group,
@@ -453,7 +455,7 @@ temp_a as
                                     )::numeric(18, 0) / ((12)::character varying)::numeric(18, 0)
                                 )
                             )::character varying
-                            ELSE 'UNDEFINED'::character varying
+                            ELSE '99999'::character varying
                         END
                     END AS consumer_age
                 FROM (
@@ -572,7 +574,7 @@ temp_a as
                                     )::numeric(18, 0) / ((12)::character varying)::numeric(18, 0)
                                 )
                             )::character varying
-                            ELSE 'UNDEFINED'::character varying
+                            ELSE '99999'::character varying
                         END
                     END AS child_age,
                     COALESCE(
@@ -689,63 +691,63 @@ temp_a as
             WHEN (
                 (
                     (
-                        (ifc.consumer_age)::text = ('UNDEFINED'::character varying)::text
+                        trunc(ifc.consumer_age,0)::text = ('99999'::character varying)::text
                     )
                     OR (ifc.consumer_age IS NULL)
                 )
                 OR (
-                    (ifc.consumer_age)::text = (''::character varying)::text
+                    trunc(ifc.consumer_age,0)::text = (''::character varying)::text
                 )
             ) THEN 'UNDEFINED'::character varying
             WHEN (
-                (ifc.consumer_age)::numeric(18, 0) < ((0)::numeric)::numeric(18, 0)
+                trunc(ifc.consumer_age,0)::numeric(18, 0) < ((0)::numeric)::numeric(18, 0)
             ) THEN 'UNDEFINED'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((0)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((17)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((17)::numeric)::numeric(18, 0)
                 )
             ) THEN '<=17'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((18)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((18)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((24)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((24)::numeric)::numeric(18, 0)
                 )
             ) THEN '18-24'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((25)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((25)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((34)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((34)::numeric)::numeric(18, 0)
                 )
             ) THEN '25-34'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((35)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((35)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((44)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((44)::numeric)::numeric(18, 0)
                 )
             ) THEN '35-44'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((45)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((45)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((54)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((54)::numeric)::numeric(18, 0)
                 )
             ) THEN '45-54'::character varying
             WHEN (
                 (
-                    (ifc.consumer_age)::numeric(18, 0) >= ((55)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) >= ((55)::numeric)::numeric(18, 0)
                 )
                 AND (
-                    (ifc.consumer_age)::numeric(18, 0) <= ((64)::numeric)::numeric(18, 0)
+                    trunc(ifc.consumer_age,0)::numeric(18, 0) <= ((64)::numeric)::numeric(18, 0)
                 )
             ) THEN '55-64'::character varying
             ELSE '>=65'::character varying
@@ -976,7 +978,7 @@ temp_a as
                                     )::numeric(18, 0) / ((12)::character varying)::numeric(18, 0)
                                 )
                             )::character varying
-                            ELSE 'UNDEFINED'::character varying
+                            ELSE '99999'::character varying
                         END
                     END AS consumer_age
                 FROM (
