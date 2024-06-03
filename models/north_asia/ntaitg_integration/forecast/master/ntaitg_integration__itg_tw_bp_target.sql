@@ -3,7 +3,9 @@
         materialized="incremental",
         incremental_strategy = "append",
         unique_key=["bu_version", "forecast_on_year", "forecast_on_month"],
-        pre_hook= "delete from {{this}} using {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} bp_sdl where {{this}}.bp_version=bp_sdl.bp_version and {{this}}.forecast_on_year=bp_sdl.forecast_on_year and {{this}}.forecast_on_month=bp_sdl.forecast_on_month "
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} using {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} bp_sdl where {{this}}.bp_version=bp_sdl.bp_version and {{this}}.forecast_on_year=bp_sdl.forecast_on_year and {{this}}.forecast_on_month=bp_sdl.forecast_on_month;
+        {% endif %}"
     )
 }}
 

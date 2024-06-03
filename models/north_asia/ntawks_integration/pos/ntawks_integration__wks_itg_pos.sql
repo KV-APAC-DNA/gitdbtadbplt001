@@ -115,7 +115,4 @@ final as
         AND 'KR' = TGT.ctry_cd
     where SRC.rnk = 1
 )
-select count(*)
--- ,count(distinct pos_dt,ean_num,str_cd,src_sys_cd) 
-from final
-where src_sys_cd = 'Homeplus'
+select * from final

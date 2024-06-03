@@ -1,5 +1,5 @@
 with edw_vw_store_dim as (
-	select * from ref{{('ntaedw_integration__edw_vw_store_dim')}}
+	select * from {{ ref('ntaedw_integration__edw_vw_store_dim')}}
 ),
 final as (
     select

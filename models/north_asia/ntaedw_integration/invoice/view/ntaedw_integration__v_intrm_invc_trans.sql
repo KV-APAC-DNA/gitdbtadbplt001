@@ -2,7 +2,7 @@ with edw_billing_fact as (
 select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_query_parameters as (
-select * from {{ sourece('ntaitg_integration', 'itg_query_parameters') }}
+select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_intrm_calendar as (
 select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
