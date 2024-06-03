@@ -13,7 +13,7 @@ final as
 (
     select 
         code::varchar(500) as prft_ctr,
-        local_brand_classification_code::varchar(200) as local_brand_classification_code,
+        local_brand_classification_code::varchar(200) as local_brand_classification,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
     from source
 )

@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from snapntaitg_integration.itg_kr_otc_inventory
+    select * from {{ ref('ntaitg_integration__itg_kr_otc_inventory') }}
 ),
 final as 
 (

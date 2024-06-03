@@ -1,18 +1,18 @@
 with itg_kr_coupang_productsalereport as (
-    select * from ntaitg_integration.itg_kr_coupang_productsalereport
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_productsalereport') }}
 ),
 itg_query_parameters as (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_intrm_calendar as (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 edw_product_attr_dim as (
     select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
 ),
-kr_coupang_ppm as 
+kr_coupang_ppm as
 (
-    SELECT 
+    SELECT
         'KR'::character varying AS ctry_cd,
         'SOUTH KOREA'::character varying AS ctry_nm,
         'KRW'::character varying AS crncy_cd,
@@ -93,17 +93,17 @@ kr_coupang_ppm as
                 ELSE itg_kr_coupang_productsalereport.cost_of_purchase
             END
         ) AS ppm
-    FROM 
+    FROM
         (
             itg_kr_coupang_productsalereport
-            LEFT JOIN 
+            LEFT JOIN
             (
                 SELECT DISTINCT itg_query_parameters.country_code,
                     itg_query_parameters.parameter_name,
                     itg_query_parameters.parameter_value,
                     itg_query_parameters.parameter_type
                 FROM itg_query_parameters
-                WHERE 
+                WHERE
                     (
                         (
                             (itg_query_parameters.country_code)::text = ('KR'::character varying)::text
@@ -112,7 +112,7 @@ kr_coupang_ppm as
                             (itg_query_parameters.parameter_name)::text = ('coupang_ppm_margin_value'::character varying)::text
                         )
                     )
-            ) mv ON 
+            ) mv ON
             (
                 (
                     upper(
@@ -124,7 +124,7 @@ kr_coupang_ppm as
 ),
 final as
 (
-    SELECT 
+    SELECT
         kr_coupang_ppm.ctry_cd,
         kr_coupang_ppm.ctry_nm,
         kr_coupang_ppm.crncy_cd,
@@ -182,9 +182,9 @@ final as
         prod.prod_hier_l9,
         prod.lcl_prod_nm
     FROM kr_coupang_ppm
-        LEFT JOIN 
+        LEFT JOIN
         (
-            SELECT 
+            SELECT
                 ecd.fisc_yr AS "year",
                 ecd.fisc_per,
                 CASE
@@ -396,18 +396,18 @@ final as
                                     ) AS cal_yr_wk_num,
                                     min(edw_intrm_calendar.cal_day) OVER(
                                         PARTITION BY edw_intrm_calendar.cal_mo_1 order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED
-                                        FOLLOWING 
+                                        FOLLOWING
                                     ) AS min_day,
                                     "max"(edw_intrm_calendar.cal_day) OVER(
                                         PARTITION BY edw_intrm_calendar.cal_mo_1 order by null ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
                                     ) AS max_day
-                                FROM ntaedw_integration.edw_intrm_calendar
+                                FROM edw_intrm_calendar
                             ) derived_table1
                     ) derived_table2
             ) cmfmwk
             WHERE (ecd.cal_day = cmfmwk.cal_day)
-        ) cal ON ((kr_coupang_ppm.transaction_date = cal.cal_day)) 
-        LEFT JOIN 
+        ) cal ON ((kr_coupang_ppm.transaction_date = cal.cal_day))
+        LEFT JOIN
         (
             SELECT DISTINCT edw_product_attr_dim.ean AS ean_num,
                 edw_product_attr_dim.cntry,
@@ -423,7 +423,7 @@ final as
                 edw_product_attr_dim.prod_hier_l9,
                 edw_product_attr_dim.lcl_prod_nm
             FROM edw_product_attr_dim
-        ) prod ON 
+        ) prod ON
         (
             (
                 (
@@ -433,7 +433,7 @@ final as
                     rtrim(kr_coupang_ppm.barcode)::text = rtrim(prod.ean_num)::text
                 )
             )
-        )  
+        )
     GROUP BY kr_coupang_ppm.ctry_cd,
     kr_coupang_ppm.ctry_nm,
     kr_coupang_ppm.crncy_cd,

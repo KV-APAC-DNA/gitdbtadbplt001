@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: ntaedw_integration__v_rpt_copa
+    config:
+      alias: v_rpt_copa
+      tags: ["korea_views","transformation"]
