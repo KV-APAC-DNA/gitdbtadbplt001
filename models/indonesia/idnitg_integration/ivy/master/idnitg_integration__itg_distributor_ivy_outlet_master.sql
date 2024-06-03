@@ -5,9 +5,9 @@
         incremental_strategy = "append",
         pre_hook = "{% if is_incremental() %}
         delete from {{this}}
-        where (upper(trim(distributorcode)), upper(trim(outletcode))) 
-        in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
-        from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}});
+    where (upper(trim(distributorcode)), upper(trim(outletcode))) 
+    in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
+    from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}});
         {% endif %}"
     )
 }}
