@@ -3,7 +3,7 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["jj_mnth_id"],
-        pre_hook= ["{{build_edw_p_load_lppb_fact_upd()}}","delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from {{ source('idnedw_integration', 'edw_time_dim') }} where to_date(cal_date) = to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)));"]
+        pre_hook= ["delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from {{ source('idnedw_integration', 'edw_time_dim') }} where to_date(cal_date) = to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)));"]
     )
 }}
 
@@ -49,7 +49,7 @@ final as
        SUM(STRT_INV_VAL)::NUMBER(18,4) AS STRT_INV_VAL,
        SUM(STRT_INV_VAL + SELLIN_VAL - SELLOUT_VAL)::NUMBER(18,4) AS END_INV_VAL,
        SUM(SELLOUT_LAST_TWO_MNTHS_VAL)::NUMBER(18,4) AS SELLOUT_LAST_TWO_MNTHS_VAL,
-       MAX(SYSDATE())::timestamp_ntz AS CRTD_DTTM,
+       MAX(convert_timezone('UTC', current_timestamp()))::timestamp_ntz AS CRTD_DTTM,
        MAX(CAST(NULL AS TIMESTAMP)) AS UPTD_DTTM
 FROM 
 (
@@ -72,7 +72,7 @@ SELECT T2.JJ_MNTH_ID,
       WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
       AND   T2.JJ_MNTH_ID = (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                              FROM edw_time_dim
-                             WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                             WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id))   NOT IN (SELECT DISTINCT TRIM(UPPER(jj_sap_dstrbtr_id))                                                                       
                                          FROM edw_distributor_dim
                                          WHERE region='NATIONAL ACCOUNT')
@@ -181,7 +181,7 @@ UNION ALL
       AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID))!='DAOG20'
       AND   T2.JJ_MNTH_ID = (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                              FROM edw_time_dim
-                             WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                             WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id)) NOT IN (SELECT DISTINCT TRIM(UPPER(jj_sap_dstrbtr_id))
                                          FROM edw_distributor_dim
                                           WHERE region='NATIONAL ACCOUNT')
@@ -194,7 +194,7 @@ UNION ALL
 --3      
 SELECT (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
               FROM edw_time_dim
-              WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+              WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AS JJ_MNTH_ID,
              TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID)) AS JJ_SAP_DSTRBTR_ID,
              TRIM(UPPER(T1.JJ_SAP_PROD_ID)) AS JJ_SAP_PROD_ID,
@@ -295,15 +295,15 @@ SELECT trans_key,
       AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID))!='DAOG20'
       AND   T2.JJ_MNTH_ID BETWEEN (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-3,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                                    FROM edw_time_dim
-                                   WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE())) AND (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-2,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
+                                   WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp()))) AND (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-2,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                                                                                 FROM edw_time_dim
-                                                                                WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                                                                                WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id)) NOT IN (SELECT DISTINCT TRIM(UPPER(jj_sap_dstrbtr_id))
                                          FROM edw_distributor_dim
                                          WHERE region='NATIONAL ACCOUNT')
       GROUP BY (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                 FROM edw_time_dim
-                WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE())),T1.JJ_SAP_DSTRBTR_ID,
+                WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp()))),T1.JJ_SAP_DSTRBTR_ID,
                T1.JJ_SAP_PROD_ID
                
 UNION ALL
@@ -311,7 +311,7 @@ UNION ALL
 --4
 SELECT (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
               FROM edw_time_dim
-              WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+              WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AS JJ_MNTH_ID,
              TRIM(UPPER(T1.JJ_SAP_DSTRBTR_ID)) AS JJ_SAP_DSTRBTR_ID,
              TRIM(UPPER(T1.JJ_SAP_PROD_ID)) AS JJ_SAP_PROD_ID,
@@ -328,10 +328,10 @@ SELECT (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID 
       FROM EDW_ALL_DISTRIBUTOR_LPPB_FACT T1
       WHERE T1.JJ_MNTH_ID = (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-2,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                              FROM edw_time_dim
-                             WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                             WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       GROUP BY (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                 FROM edw_time_dim
-                WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE())),T1.JJ_SAP_DSTRBTR_ID,
+                WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp()))),T1.JJ_SAP_DSTRBTR_ID,
                T1.JJ_SAP_PROD_ID
                
 UNION ALL
@@ -359,7 +359,7 @@ SELECT T2.JJ_MNTH_ID,
       WHERE TO_DATE(T1.BILL_DT) = TO_DATE(T2.CAL_DATE)
       AND   T2.JJ_MNTH_ID = (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                              FROM edw_time_dim
-                             WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                             WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id)) = TRIM(UPPER(T3.jj_sap_dstrbtr_id))
 	  and   T2.JJ_MNTH_ID between T3.effective_from(+) and T3.effective_to(+) 
       GROUP BY T2.JJ_MNTH_ID,
@@ -473,7 +473,7 @@ SELECT trans_key,
       AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID))!='DAOG20'
       AND   T2.JJ_MNTH_ID = (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                              FROM edw_time_dim
-                             WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                             WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id)) = TRIM(UPPER(T3.jj_sap_dstrbtr_id))
 	  and   T1.jj_mnth_id between T3.effective_from(+) and T3.effective_to(+) 
       GROUP BY T2.JJ_MNTH_ID,
@@ -485,7 +485,7 @@ UNION ALL
 --7      
 SELECT (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
               FROM edw_time_dim
-              WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+              WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AS JJ_MNTH_ID,
              T3.AREA AS JJ_SAP_DSTRBTR_ID,
              TRIM(UPPER(T1.JJ_SAP_PROD_ID)) AS JJ_SAP_PROD_ID,
@@ -589,14 +589,14 @@ SELECT trans_key,
       AND   TRIM(UPPER(T1.JJ_SAP_PROD_ID))!='DAOG20'
       AND   T2.JJ_MNTH_ID BETWEEN (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-3,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                                    FROM edw_time_dim
-                                   WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE())) AND (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-2,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
+                                   WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp()))) AND (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-2,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                                                                                 FROM edw_time_dim
-                                                                                WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE()))
+                                                                                WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp())))
       AND   TRIM(UPPER(T1.jj_sap_dstrbtr_id)) = TRIM(UPPER(T3.jj_sap_dstrbtr_id))
 	  and T1.jj_mnth_id between T3.effective_from(+) and T3.effective_to(+) 
       GROUP BY (SELECT CAST(TO_CHAR(TO_DATE(DATEADD ('MONTH',-1,TO_DATE(CAST(JJ_MNTH_ID AS VARCHAR),'YYYYMM'))),'YYYYMM') AS INTEGER)
                 FROM edw_time_dim
-                WHERE TO_DATE(CAL_DATE) = TO_DATE(SYSDATE())),T3.AREA,
+                WHERE TO_DATE(CAL_DATE) = TO_DATE(convert_timezone('UTC', current_timestamp()))),T3.AREA,
                T1.JJ_SAP_PROD_ID
 )
                
