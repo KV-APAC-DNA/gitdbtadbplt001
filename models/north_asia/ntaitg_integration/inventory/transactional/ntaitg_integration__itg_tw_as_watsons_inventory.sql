@@ -4,13 +4,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['filename'],
-        pre_hook= "delete from {{this}} where nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') in (select distinct nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') from  {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }});"
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') in (select distinct nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') from  {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }});
+        {% endif %}"
     )
 }}
-
-
-with
-sdl_tw_as_watsons_inventory as (
+with sdl_tw_as_watsons_inventory as (
     select * from {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }}
 ),
 final as (

@@ -2,9 +2,10 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= " delete from {{this}}
-                    where report_date in  (select distinct report_date from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }});"
-                                               )
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where report_date in  (select distinct report_date from {{ source('ntasdl_raw', 'sdl_kr_dads_coupang_price') }});
+        {% endif %}"
+)
 }}
 
 

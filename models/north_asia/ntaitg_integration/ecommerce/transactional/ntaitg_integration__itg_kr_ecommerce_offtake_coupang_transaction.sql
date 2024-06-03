@@ -3,20 +3,15 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        pre_hook = "delete from {{this}} 
-                    where 
-                    source_file_name = (
-                                            select distinct source_file_name 
-                                            from source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction');"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where source_file_name = (select distinct source_file_name from {{ source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction') }};
+        {% endif %}"
     )
 }}
-
-
 with source as
 (
     select * from {{source('ntasdl_raw', 'sdl_kr_ecommerce_offtake_coupang_transaction')}} 
 ),
-
 trans as
 (
     select 
@@ -62,7 +57,6 @@ trans as
     from source
 
 ),
-
 final as 
 (
     select 

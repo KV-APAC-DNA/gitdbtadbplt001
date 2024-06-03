@@ -1,6 +1,6 @@
 with edw_sfmc_naver_data as
 (
-    select * from ref{{ ('ntaedw_integration__edw_sfmc_naver_data') }}
+    select * from {{ ref('ntaedw_integration__edw_sfmc_naver_data') }}
 ),
 itg_query_parameters as
 (

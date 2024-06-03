@@ -2,9 +2,10 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= " delete from {{this}}
-                    where date in  (select distinct date from {{ source('ntasdl_raw', 'sdl_kr_coupang_pa_report') }});"
-                                               )
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where date in  (select distinct date from {{ source('ntasdl_raw', 'sdl_kr_coupang_pa_report') }});
+        {% endif %}"
+)
 }}
 
 
