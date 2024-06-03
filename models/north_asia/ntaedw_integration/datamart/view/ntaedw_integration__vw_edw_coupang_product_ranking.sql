@@ -1,14 +1,14 @@
 with vw_edw_coupang_product_ranking_daily as (
-    select * from ntaedw_integration.vw_edw_coupang_product_ranking_daily
+    select * from {{ ref('ntaedw_integration__vw_edw_coupang_product_ranking_daily') }}
 ),
 itg_kr_coupang_product_ranking_daily as(
-    select * from ntaitg_integration.itg_kr_coupang_product_ranking_daily
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_product_ranking_daily') }}
 ),
 itg_kr_coupang_product_summary_weekly as (
-    select * from ntaitg_integration.itg_kr_coupang_product_summary_weekly
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_product_summary_weekly') }}
 ),
 itg_kr_coupang_product_summary_monthly as (
-    select * from ntaitg_integration.itg_kr_coupang_product_summary_monthly
+    select * from {{ ref('ntaitg_integration__itg_kr_coupang_product_summary_monthly') }}
 ),
 cte1 as (
     SELECT 

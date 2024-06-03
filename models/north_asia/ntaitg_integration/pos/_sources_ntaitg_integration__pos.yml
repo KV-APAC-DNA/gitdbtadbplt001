@@ -295,6 +295,7 @@ sources:
       - name: itg_sls_grp_to_customer_mapping
       - name: itg_pos_cust_prod_to_sap_prod_map
       - name: itg_kr_sales_target_am_brand_temp
+      - name: itg_pos_str_sls_grp_map
   
 
   - name: ntaedw_integration

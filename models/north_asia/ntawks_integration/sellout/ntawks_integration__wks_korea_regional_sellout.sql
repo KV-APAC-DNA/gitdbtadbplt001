@@ -1,65 +1,62 @@
 with edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_ims_fact as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 wks_parameter_gt_sellout as (
-select * from DEV_DNA_CORE.NTAWKS_INTEGRATION.WKS_PARAMETER_GT_SELLOUT
+select * from {{ ref('ntawks_integration__wks_parameter_gt_sellout') }}
 ),
 v_kr_ecommerce_sellout as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_KR_ECOMMERCE_SELLOUT
+select * from {{ ref('ntaedw_integration__v_kr_ecommerce_sellout') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 wks_korea_regional_sellout_base as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_KOREA_REGIONAL_SELLOUT_BASE
-),
-EDW_SUBCHNL_RETAIL_ENV_MAPPING as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_SUBCHNL_RETAIL_ENV_MAPPING
-),
-edw_material_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
-),
-edw_gch_producthierarchy as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
-),
-edw_gch_customerhierarchy as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_CUSTOMERHIERARCHY
-),
-edw_customer_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
-),
-edw_customer_base_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
-),
-edw_company_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COMPANY_DIM
-),
-edw_dstrbtn_chnl as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_DSTRBTN_CHNL
-),
-edw_sales_org_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_SALES_ORG_DIM
-),
-edw_code_descriptions as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CODE_DESCRIPTIONS
+select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_base') }}
 ),
 edw_subchnl_retail_env_mapping as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_SUBCHNL_RETAIL_ENV_MAPPING
+select * from {{ source('aspedw_integration','edw_subchnl_retail_env_mapping') }}
+),
+edw_material_dim as (
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
+edw_gch_producthierarchy as (
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+),
+edw_gch_customerhierarchy as (
+select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
+edw_customer_sales_dim as (
+select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
+),
+edw_customer_base_dim as (
+select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
+),
+edw_company_dim as (
+select * from {{ ref('aspedw_integration__edw_company_dim') }}
+),
+edw_dstrbtn_chnl as (
+select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+),
+edw_sales_org_dim as (
+select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
+),
+edw_code_descriptions as (
+select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_code_descriptions_manual as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CODE_DESCRIPTIONS_MANUAL
+select * from {{ source('aspedw_integration','edw_code_descriptions_manual') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.VW_EDW_REG_EXCH_RATE
+select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
-EDW_PRODUCT_KEY_ATTRIBUTES as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_KEY_ATTRIBUTES
+edw_product_key_attributes as (
+select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 transformed as (
 SELECT 

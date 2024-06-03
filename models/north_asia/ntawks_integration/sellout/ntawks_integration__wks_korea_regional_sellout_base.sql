@@ -1,23 +1,23 @@
 with edw_pos_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_POS_FACT
+select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_ims_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 wks_parameter_gt_sellout as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_PARAMETER_GT_SELLOUT
+select * from {{ ref('ntawks_integration__wks_parameter_gt_sellout') }}
 ),
 v_kr_ecommerce_sellout as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_KR_ECOMMERCE_SELLOUT
+select * from {{ ref('ntaedw_integration__v_kr_ecommerce_sellout') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 SELECT

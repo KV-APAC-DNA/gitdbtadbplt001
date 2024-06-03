@@ -3,32 +3,26 @@
     config(
         post_hook= "update {{this}} wks_edw_pos_fact_korea
                     set ean_num = ltrim (b.ean_cd ,0)
-                    from dev_dna_core.snapntaitg_integration.itg_sales_cust_prod_master b 
+                    from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }} b 
                     where  ltrim (wks_edw_pos_fact_korea.ean_num,0) = ltrim(b.cust_prod_cd,0) 
                     and upper(trim(wks_edw_pos_fact_korea.src_sys_cd))= upper(trim(b.src_sys_cd)); "         
         )
 }}
 
-
-
-with
-itg_pos as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS
+with itg_pos as (
+select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 itg_sales_store_master as (
 select * from {{ ref('ntaitg_integration__itg_sales_store_master') }}
 ),
 itg_pos_str_sls_grp_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_STR_SLS_GRP_MAP
+select * from {{ source('ntaitg_integration','itg_pos_str_sls_grp_map') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
-),
-itg_pos_str_sls_grp_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POS_STR_SLS_GRP_MAP
+select * from aspedw_integration.edw_product_attr_dim
 ),
 itg_sales_cust_prod_master as (
 select * from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }}

@@ -1,29 +1,29 @@
 with edw_ecommerce_offtake as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_ECOMMERCE_OFFTAKE
+select * from {{ ref('ntaedw_integration__edw_ecommerce_offtake') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from aspedw_integration.edw_product_attr_dim
 ),
 edw_intrm_calendar as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_INTRM_CALENDAR
+select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.V_INTRM_REG_CRNCY_EXCH_FISCPER
+select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_gch_producthierarchy as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_ims_fact as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 v_intrm_copa_trans as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_INTRM_COPA_TRANS
+select * from {{ ref('ntaedw_integration__v_intrm_copa_trans') }}
 ),
 final as (
 SELECT 

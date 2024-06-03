@@ -1,5 +1,5 @@
 with WKS_KOREA_REGIONAL_SELLOUT as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_KOREA_REGIONAL_SELLOUT
+select * from {{ ref('ntawks_integration__wks_korea_regional_sellout') }}
 ),
 transformed as (
 SELECT *,

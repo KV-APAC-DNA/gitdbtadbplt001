@@ -11,7 +11,7 @@ edw_calendar_dim as (
 select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 final as (
 SELECT 

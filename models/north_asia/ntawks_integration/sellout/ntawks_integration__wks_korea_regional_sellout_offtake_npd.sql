@@ -1,8 +1,8 @@
 with WKS_KOREA_REGIONAL_SELLOUT_NPD as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_KOREA_REGIONAL_SELLOUT_NPD
+select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_npd') }}
 ),
 ITG_MDS_AP_CUSTOMER360_CONFIG as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 SELECT *,

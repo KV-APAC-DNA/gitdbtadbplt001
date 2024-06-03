@@ -2,7 +2,7 @@ with edw_billing_fact as (
 select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_query_parameters as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_QUERY_PARAMETERS
+select * from {{ sourece('ntaitg_integration', 'itg_query_parameters') }}
 ),
 edw_intrm_calendar as (
 select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
@@ -17,13 +17,13 @@ v_intrm_crncy_exch as (
 select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_material_sales_dim as (
 select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from aspedw_integration.edw_product_attr_dim
 ),
 edw_invoice_fact as (
 select * from {{ ref('aspedw_integration__edw_invoice_fact') }}

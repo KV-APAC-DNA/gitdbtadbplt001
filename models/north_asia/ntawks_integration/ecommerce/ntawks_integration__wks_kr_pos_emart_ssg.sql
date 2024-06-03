@@ -2,7 +2,7 @@ with sdl_kr_pos_emart_ssg as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_pos_emart_ssg') }}
 ),
 itg_sales_store_master as (
-    select * from snapntaitg_integration.itg_sales_store_master
+    select * from {{ ref('ntaitg_integration__itg_sales_store_master') }}
 ),
 final as (
     select 

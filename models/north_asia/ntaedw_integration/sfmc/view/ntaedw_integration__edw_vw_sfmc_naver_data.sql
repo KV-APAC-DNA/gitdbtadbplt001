@@ -1,9 +1,9 @@
 with 
 itg_kr_sfmc_naver_data as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_SFMC_NAVER_DATA
+select * from {{ ref('ntaitg_integration__itg_kr_sfmc_naver_data') }}
 ),
 itg_kr_sfmc_naver_data_additional as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_SFMC_NAVER_DATA_ADDITIONAL
+select * from {{ ref('ntaitg_integration__itg_kr_sfmc_naver_data_additional') }}
 ),
 final as (
 SELECT 
