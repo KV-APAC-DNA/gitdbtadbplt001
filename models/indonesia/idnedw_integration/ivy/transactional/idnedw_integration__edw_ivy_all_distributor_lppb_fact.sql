@@ -3,7 +3,7 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["jj_mnth_id"],
-        pre_hook= ["delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from {{ source('idnedw_integration', 'edw_time_dim') }} where to_date(cal_date) = to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)));"]
+        pre_hook= "delete from {{this}} where jj_mnth_id = (select cast(to_char(to_date(dateadd ('month',-1,to_date(cast(jj_mnth_id as varchar),'yyyymm'))),'yyyymm') as integer) from {{ source('idnedw_integration', 'edw_time_dim') }} where to_date(cal_date) = to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)));"
     )
 }}
 
