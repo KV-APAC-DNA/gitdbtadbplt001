@@ -21,7 +21,7 @@ edw_company_dim as(
 ),
 edw_subchnl_retail_env_mapping as(
 	select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
-)
+),
 t as(
 	SELECT ltrim((cbd.cust_num)::TEXT, ((0)::CHARACTER VARYING)::TEXT) AS sap_cust_id
 		,cbd.cust_nm AS sap_cust_nm

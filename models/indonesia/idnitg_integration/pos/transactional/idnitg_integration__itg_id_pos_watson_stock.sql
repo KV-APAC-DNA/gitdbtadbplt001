@@ -1,8 +1,12 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy= "delete+insert",
-        unique_key= ["filename"]
+        incremental_strategy= "append",
+        unique_key= ["filename"],
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where (filename) in (
+        select filename from {{ source('idnsdl_raw', 'sdl_id_pos_watson_stock') }});
+        {% endif %}"
     )
 }}
 

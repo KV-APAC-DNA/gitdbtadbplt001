@@ -3,6 +3,10 @@ edw_distributor_group_dim as
 (
     select * from {{ ref('idnedw_integration__edw_distributor_group_dim') }}
 ),
+itg_id_pos_midi_stock as 
+(
+    select * from {{ ref('idnitg_integration__itg_id_pos_midi_stock') }}
+),
 itg_id_pos_superindo_stock as 
 (
     select * from {{ ref('idnitg_integration__itg_id_pos_superindo_stock') }}

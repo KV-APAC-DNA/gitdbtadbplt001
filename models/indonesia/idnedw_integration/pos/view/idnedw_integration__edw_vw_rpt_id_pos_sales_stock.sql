@@ -13,7 +13,7 @@ SELECT edw_vw_id_pos_sellout.sap_cntry_cd
 	,edw_vw_id_pos_sellout.sap_cntry_nm
 	,edw_vw_id_pos_sellout.dataset
 	,edw_vw_id_pos_sellout.dstrbtr_grp_cd
-	,edw_vw_id_pos_sellout.year
+	,edw_vw_id_pos_sellout."year"
 	,edw_vw_id_pos_sellout.yearmonth
 	,edw_vw_id_pos_sellout.customer_brnch_code
 	,edw_vw_id_pos_sellout.customer_brnch_name
@@ -51,7 +51,7 @@ SELECT edw_vw_id_pos_stock.sap_cntry_cd
 	,edw_vw_id_pos_stock.sap_cntry_nm
 	,edw_vw_id_pos_stock.dataset
 	,edw_vw_id_pos_stock.dstrbtr_grp_cd
-	,edw_vw_id_pos_stock.year
+	,edw_vw_id_pos_stock."year"
 	,edw_vw_id_pos_stock.yearmonth
 	,edw_vw_id_pos_stock.customer_brnch_code
 	,edw_vw_id_pos_stock.customer_brnch_name
