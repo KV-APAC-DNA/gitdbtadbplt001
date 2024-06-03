@@ -172,7 +172,7 @@ final as (
             CAST ( try_to_number(pka_package_desc_v1) * try_to_decimal(pka_size_desc_v1,38,2) AS VARCHAR(30)) AS TS
             -- End Add new column total_size = size*package AEBU-10288
         FROM EDW_MATERIAL_DIM
-        WHERE upper(pka_size_desc)!='REGULAR' AND MATL_NUM IN (SELECT DISTINCT MATL_NUM
+        WHERE upper(coalesce(pka_size_desc,''))!='REGULAR' AND MATL_NUM IN (SELECT DISTINCT MATL_NUM
                         FROM (SELECT MATL_NUM,
                                         FISC_YR_PER,
                                         SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
@@ -188,7 +188,7 @@ final as (
                         SELECT MATL_NUM
                         FROM EDW_MATERIAL_DIM MAT
                         WHERE MAT.MATL_TYPE_CD IN ('FERT')
-                        AND   to_date(crt_on) >= to_date('2019-01-01'))
+                        )
         ) mat
         LEFT JOIN EDW_GCH_PRODUCTHIERARCHY gch
         ON MAT.MATL_NUM = GCH.MATERIALNUMBER
