@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapntasdl_raw
+    schema: ntasdl_raw
     quoting:
       database: false
       schema: false
@@ -48,7 +48,7 @@ sources:
             select_columns: ["year_code", "channel_code", "store_type_code", "sales_group_code", "target_type_code", "brand_name_code", "target_category_name"]
             column: "upper(trim(sales_group_code))"
             lookup_column: "upper(trim(sls_grp_cd))"
-            lookup_table: "aspedw_integration.edw_customer_attr_flat_dim"                                 #update the reference
+            lookup_table: "{{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}"                                 
             lookup_filter: "upper(county) = 'KR' and trim(sls_grp_cd) is not null and trim(sls_grp_cd) <> ''"
             filter: "trim(sales_group_code) is not null and trim(sales_group_code) <> ''"
             failure_reason: "'MISSING SLS_GRP_CD COMPARED TO MASTER TABLE FOR : SALES_GROUP_CD'"

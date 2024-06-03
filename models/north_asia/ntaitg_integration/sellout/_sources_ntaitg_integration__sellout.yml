@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapntasdl_raw
+    schema: ntasdl_raw
     quoting:
       database: false
       schema: false
@@ -54,7 +54,7 @@ sources:
               select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
               column: "cust_cd,sub_customer_name"
               lookup_column: "trim(customer_code) customer_code, trim(sub_customer_name) sub_customer_name"
-              lookup_table: "ntaitg_integration.itg_kr_gt_dpt_daiso"                                                                      #update the reference
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}"                                                                      
               failure_reason: "'missing customer information data compared with master file: ims_txn_dt, cust_cd, sub_customer_name'"
               name: TRATBL_sdl_kr_hyundai_gt_sellout__lookup_test
               config:
@@ -114,7 +114,7 @@ sources:
               select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
               column: "cust_cd,sub_customer_name"
               lookup_column: "trim(customer_code) customer_code, trim(sub_customer_name) sub_customer_name"
-              lookup_table: "ntaitg_integration.itg_kr_gt_dpt_daiso"                                                                      #update the reference
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}"                                                                      
               failure_reason: "'missing customer information data compared with master file: ims_txn_dt, cust_cd, sub_customer_name'"
               name: TRATBL_sdl_kr_lotte_ak_gt_sellout__lookup_test
               config:
@@ -144,7 +144,7 @@ sources:
               select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
               column: "customer_code"
               lookup_column: " coalesce(nacf_customer_code,'NULL') customer_code"
-              lookup_table: "ntaitg_integration.itg_kr_gt_nacf_cust_dim"                                                                      #update the reference
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_nacf_cust_dim') }}"                                                                      
               failure_reason: "'missing customer code compared with master file: customer_code'"
               name: TRATBL_sdl_kr_nacf_gt_selloutt__lookup_test
               config:

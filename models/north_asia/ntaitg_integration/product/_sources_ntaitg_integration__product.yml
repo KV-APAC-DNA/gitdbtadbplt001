@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapntasdl_raw
+    schema: ntasdl_raw
     quoting:
       database: false
       schema: false
@@ -172,7 +172,7 @@ sources:
             select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
             column: "customer_code"
             lookup_column: "coalesce(ltrim(cust_num,0),'NULL') customer_code"
-            lookup_table: "aspedw_integration.edw_customer_base_dim"                                                                      #update the reference
+            lookup_table: "{{ ref('aspedw_integration__edw_customer_base_dim') }}"                                                                      
             failure_reason: "missing customer code compared with master file: customer_code'"
             name: TRATBL_sdl_kr_nh_gt_sellout__lookup_test
             config:
