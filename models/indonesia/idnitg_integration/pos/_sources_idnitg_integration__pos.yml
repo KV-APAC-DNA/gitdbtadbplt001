@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_id_pos_superindo_sellout
-      tags: ["id_pos_superindo","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"]
@@ -35,7 +35,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_superindo_stock
-      tags: ["id_pos_superindo","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth"]
@@ -60,7 +60,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_carrefour_sellout
-      tags: ["id_pos_carrefour","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","fdesc","scc","scc_name","sales_qty","net_sales","share","yearmonth"]
@@ -85,7 +85,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_carrefour_stock
-      tags: ["id_pos_carrefour","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","dep_desc","stock_qty","stock_amt","stock_days","yearmonth"]
@@ -110,7 +110,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_watson_sellout
-      tags: ["id_pos_watson","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth"]
@@ -135,7 +135,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_watson_stock
-      tags: ["id_pos_watson","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","yearmonth"]
@@ -160,7 +160,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_sat_sellout
-      tags: ["id_pos_alfamart","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
@@ -185,7 +185,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_sat_stock
-      tags: ["id_pos_alfamart","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
@@ -210,7 +210,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_midi_sellout
-      tags: ["id_pos_alfamidi","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
@@ -235,7 +235,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_midi_stock
-      tags: ["id_pos_alfamidi","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
@@ -260,7 +260,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_pos_diamond_sellout
-      tags: ["id_pos_diamond","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename","pos_cust","branch","nama_barang","qty","sales","yearmonth"]
@@ -286,7 +286,7 @@ sources:
                   schema: idnwks_integration
 
     - name: sdl_id_pos_daily_idm_sellout
-      tags: ["id_pos_daily_idm_sellout","ingestion"]
+      tags: ["id_pos_daily","ingestion"]
       tests:
         - test_null:
                 select_columns: ["filename","pos_cust","account","kode_branch","branch_name","tgl","plu","descp","type","value","yearmonth"]
@@ -389,7 +389,7 @@ sources:
                 schema: idnwks_integration
 
     - name: sdl_id_pos_guardian_stock
-      tags: ["id_pos_guardian","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"] 
@@ -413,7 +413,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_idm_sellout
-      tags: ["id_pos_idm","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "\"values\"", "yearmonth"] 
@@ -438,7 +438,7 @@ sources:
         #       schema: idnwks_integration
 
     - name: sdl_id_pos_idm_stock
-      tags: ["id_pos_idm","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"] 
@@ -462,7 +462,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_igr_stock
-      tags: ["id_pos_idm","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"] 
@@ -486,7 +486,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_igr_sellout
-      tags: ["id_pos_idm","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
@@ -510,7 +510,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_otc_stock
-      tags: ["id_pos_matahari","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"] 
@@ -534,7 +534,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_jb_stock
-      tags: ["id_pos_matahari","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"] 
@@ -558,7 +558,7 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_matahari_beauty_stock
-      tags: ["id_pos_matahari","ingestion"]
+      tags: ["id_pos","ingestion"]
       tests:
         - test_null:
             select_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"] 
@@ -582,9 +582,9 @@ sources:
         #       store_failures: true
         #       schema: idnwks_integration
     - name: sdl_id_pos_daily_sat_sellout
-      tags: ["id_pos_daily_sat_sellout","transformation"]
+      tags: ["id_pos_daily","ingestion"]
     - name: sdl_id_pos_daily_basedline_sellout
-      tags: ["id_pos_daily_basedline_sellout","ingestion"]
+      tags: ["id_pos_daily","ingestion"]
       tests:
         - test_null:
             select_columns: ["key_account", "plu", "month", "year", "roi_month"] 

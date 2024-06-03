@@ -4,51 +4,51 @@ models:
   - name: idnedw_integration__edw_id_ps_pricing
     config:
       alias: edw_id_ps_pricing
-      tags: ["id_ps_pricing","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]
   - name: idnedw_integration__edw_id_ps_promotion
     config:
       alias: edw_id_ps_promotion
-      tags: ["id_ps_promo","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]
   - name: idnedw_integration__edw_id_ps_promotion_competitor
     config:
       alias: edw_id_ps_promotion_competitor
-      tags: ["id_ps_promo_competitor","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]
 
   - name: idnedw_integration__edw_id_ps_planogram
     config:
       alias: edw_id_ps_planogram
-      tags: ["id_ps_planogram","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]
 
   - name: idnedw_integration__edw_id_ps_secondary_display
     config:
       alias: edw_id_ps_secondary_display
-      tags: ["id_ps_secondary_display","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]
   - name: idnedw_integration__edw_id_ps_msl_osa
     config:
       alias: edw_id_ps_msl_osa
-      tags: ["id_ps_product_availability","transformation"]
+      tags: ["id_perfectstore_part_two","transformation"]
 
   - name: idnedw_integration__edw_id_ps_merchandiser_master
     config:
       alias: edw_id_ps_merchandiser_master
-      tags: ["id_ps_product_availability","transformation"]
+      tags: ["id_perfectstore_part_two","transformation"]
 
   - name: idnedw_integration__edw_id_ps_product_master
     config:
       alias: edw_id_ps_product_master
-      tags: ["id_ps_product_availability","transformation"]
+      tags: ["id_perfectstore_part_two","transformation"]
 
   - name: idnedw_integration__edw_id_ps_outlet_master
     config:
       alias: edw_id_ps_outlet_master
-      tags: ["id_ps_product_availability","transformation"]
+      tags: ["id_perfectstore_part_two","transformation"]
 
   - name: idnedw_integration__edw_id_ps_visibility
     config:
       alias: edw_id_ps_visibility
-      tags: ["id_ps_visibility","transformation"]
+      tags: ["id_perfectstore_part_two","transformation"]
 
   - name: idnedw_integration__edw_id_ps_brand_blocking
     config:
       alias: edw_id_ps_brand_blocking
-      tags: ["id_ps_brand_blocking","transformation"]
+      tags: ["id_perfectstore_part_one","transformation"]

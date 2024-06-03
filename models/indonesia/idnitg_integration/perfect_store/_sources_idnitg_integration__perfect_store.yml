@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_id_ps_pricing
-      tags: ["id_ps_pricing","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id","merchandiser_id","input_date","put_up","competitor","price_type"]
@@ -27,7 +27,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_ps_promotion
-      tags: ["id_ps_promo","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id","merchandiser_id","input_date","promo_desc"]
@@ -44,7 +44,7 @@ sources:
                   store_failures: true
                   schema: idnwks_integration
     - name: sdl_id_ps_promotion_competitor
-      tags: ["id_ps_promo_competitor","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id","merchandiser_id","input_date","franchise"]
@@ -98,7 +98,7 @@ sources:
                 schema: idnwks_integration
 
     - name: sdl_id_ps_planogram
-      tags: ["id_ps_planogram","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id", "merchandiser_id", "input_date", "franchise","photo_link"] 
@@ -116,7 +116,7 @@ sources:
               schema: idnwks_integration 
 
     - name: sdl_id_ps_secondary_display
-      tags: [id_ps_secondary_display","ingestion"]
+      tags: [id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id", "merchandiser_id", "input_date", "franchise","photo_link"] 
@@ -133,7 +133,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_brand
-      tags: ["id_ps_brand","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["franchise", "brand", "rg_brand"]
@@ -150,7 +150,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_weights
-      tags: ["id_ps_weights","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["channel", "kpi", "re"]
@@ -167,7 +167,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_targets
-      tags: ["id_ps_targets","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["channel", "kpi"]
@@ -177,7 +177,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_mds_id_ps_msl
-      tags: ["id_ps_msl","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["sku", "cust_group", "channel", "identifier"]
@@ -194,7 +194,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_id_ps_product_availability
-      tags: ["id_ps_product_availability_detail","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id", "merchandiser_id", "input_date", "put_up_sku"]
@@ -211,7 +211,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_id_ps_visibility
-      tags: ["id_ps_visibility","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id", "merchandiser_id", "input_date", "franchise", "product_cmp_competitor_jnj", "photo_link"]
@@ -228,7 +228,7 @@ sources:
               store_failures: true
               schema: idnwks_integration
     - name: sdl_raw_id_ps_brand_blocking
-      tags: ["id_ps_visibility","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       tests:
         - test_null:
             select_columns: ["outlet_id", "merchandiser_id", "input_date", "franchise", "photo_link"]

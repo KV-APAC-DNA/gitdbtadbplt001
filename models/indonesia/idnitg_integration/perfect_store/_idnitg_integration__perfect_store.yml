@@ -4,27 +4,27 @@ models:
   - name: idnitg_integration__sdl_raw_id_ps_pricing
     config: 
       alias: sdl_raw_id_ps_pricing
-      tags: ["id_ps_pricing","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__itg_id_ps_pricing
     config: 
       alias: itg_id_ps_pricing
-      tags: ["id_ps_pricing","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__sdl_raw_id_ps_promotion
     config: 
       alias: sdl_raw_id_ps_promotion
-      tags: ["id_ps_promo","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__itg_id_ps_promotion
     config: 
       alias: itg_id_ps_promotion
-      tags: ["id_ps_promo","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__sdl_raw_id_ps_promotion_competitor
     config: 
       alias: sdl_raw_id_ps_promotion_competitor
-      tags: ["id_ps_promo_competitor","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__itg_id_ps_promotion_competitor
     config: 
       alias: itg_id_ps_promotion_competitor
-      tags: ["id_ps_promo_competitor","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_mds_id_5ps_store_mapping
     config:
@@ -39,68 +39,68 @@ models:
   - name: idnitg_integration__itg_id_ps_planogram
     config:
       alias: itg_id_ps_planogram
-      tags: ["id_ps_planogram","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_secondary_display
     config:
       alias: itg_id_ps_secondary_display
-      tags: ["id_ps_secondary_display","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
       
   - name: idnitg_integration__sdl_raw_id_ps_planogram
     config:
       alias: sdl_raw_id_ps_planogram
-      tags: ["id_ps_planogram","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__sdl_raw_id_ps_secondary_display
     config:
       alias: sdl_raw_id_ps_secondary_display
-      tags: ["id_ps_secondary_display","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
   - name: idnitg_integration__itg_id_ps_brand
     config:
       alias: itg_id_ps_brand
-      tags: ["id_ps_brand","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_weights
     config:
       alias: itg_id_ps_weights
-      tags: ["id_ps_weights","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_targets
     config:
       alias: itg_id_ps_targets
-      tags: ["id_ps_targets","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_msl_reference
     config:
       alias: itg_id_ps_msl_reference
-      tags: ["id_ps_msl_reference","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_product_availability
     config:
       alias: itg_id_ps_product_availability
-      tags: ["id_ps_product_availability","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
 
   - name: idnitg_integration__sdl_raw_id_ps_product_availability
     config:
       alias: sdl_raw_id_ps_product_availability
-      tags: ["id_ps_product_availability","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_visibility
     config:
       alias: itg_id_ps_visibility
-      tags: ["id_ps_visibility","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
 
   - name: idnitg_integration__sdl_raw_id_ps_visibility
     config:
       alias: sdl_raw_id_ps_visibility
-      tags: ["id_ps_visibility","ingestion"]
+      tags: ["id_perfectstore_part_two","ingestion"]
 
   - name: idnitg_integration__itg_id_ps_brand_blocking
     config:
       alias: itg_id_ps_brand_blocking
-      tags: ["id_ps_brand_blocking","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]
 
   - name: idnitg_integration__sdl_raw_id_ps_brand_blocking
     config:
       alias: sdl_raw_id_ps_brand_blocking
-      tags: ["id_ps_brand_blocking","ingestion"]
+      tags: ["id_perfectstore_part_one","ingestion"]

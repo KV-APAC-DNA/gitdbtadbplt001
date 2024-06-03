@@ -38,10 +38,6 @@ edw_distributor_dim as
 (
     select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
 ),
-wks_indonesia_inventory_health_analysis_propagation_prestep as 
-(
-    select * from {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_prestep') }}
-),
 v_edw_customer_sales_dim as 
 (
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
