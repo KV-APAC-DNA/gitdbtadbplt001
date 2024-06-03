@@ -1,0 +1,603 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_id_pos_superindo_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"]
+            not_null_columns: ["company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply"]
+            name: TRATBL_sdl_id_pos_superindo_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"]
+                group_by_columns: ["filename","pos_cust","company","company_original","region","grp","product","mon_sales_percent","mon_order","mon_supply","yearmonth"] 
+                name: TRATBL_sdl_id_pos_superindo_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_superindo_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_superindo_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth"]
+            not_null_columns: ["code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi"]
+            name: TRATBL_sdl_id_pos_superindo_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth"]
+                group_by_columns: ["code","description","stock_dc_regular_qty","stock_dc_regular_dsi","stock_all_stores_qty","stock_all_stores_dsi","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_superindo_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_superindo_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_carrefour_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","fdesc","scc","scc_name","sales_qty","net_sales","share","yearmonth"]
+            not_null_columns: ["fdesc","scc","scc_name","sales_qty","net_sales"]
+            name: TRATBL_sdl_id_pos_carrefour_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","fdesc","scc","scc_name","sales_qty","net_sales","share","yearmonth"]
+                group_by_columns: ["fdesc","scc","scc_name","sales_qty","net_sales","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_carrefour_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_carrefour_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_carrefour_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","dep_desc","stock_qty","stock_amt","stock_days","yearmonth"]
+            not_null_columns: ["dep_desc","stock_qty","stock_amt"]
+            name: TRATBL_sdl_id_pos_carrefour_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","dep_desc","stock_qty","stock_amt","stock_days","yearmonth"]
+                group_by_columns: ["dep_desc","stock_qty","stock_amt","stock_days","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_carrefour_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_carrefour_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_watson_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth"]
+            not_null_columns: ["str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale"]
+            name: TRATBL_sdl_id_pos_watson_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth"]
+                group_by_columns: ["sale_date","str_code","str_name","dept_idnt","dept_desc","brand","prdt_code","prdt_desc","range_desc","division","div_desc","str_class","str_format","sale_qty","net_sale","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_watson_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_watson_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_watson_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","yearmonth"]
+            not_null_columns: ["store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\""]
+            name: TRATBL_sdl_id_pos_watson_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+              select_columns: ["filename","pos_cust","store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","yearmonth"]
+              group_by_columns: ["store","dept","dept_name","item_brand","item","item_name","grp","group_name","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+              name: TRATBL_sdl_id_pos_watson_stock__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_watson_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_sat_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","type","\"values\""]
+            name: TRATBL_sdl_id_pos_sat_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_sat_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_sat_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_sat_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","store_dc","type","\"values\""]
+            name: TRATBL_sdl_id_pos_sat_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","store_dc","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_sat_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_sat_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_midi_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","type","\"values\""]
+            name: TRATBL_sdl_id_pos_midi_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_midi_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_midi_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_midi_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+            not_null_columns: ["plu","description","branch","store_dc","type","\"values\""]
+            name: TRATBL_sdl_id_pos_midi_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","plu","description","branch","store_dc","type","\"values\"","yearmonth"]
+                group_by_columns: ["plu","description","branch","store_dc","type","\"values\"","pos_cust","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_midi_stock__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_midi_stock__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_id_pos_diamond_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename","pos_cust","branch","nama_barang","qty","sales","yearmonth"]
+            not_null_columns: ["nama_barang","qty","sales"]
+            name: TRATBL_sdl_id_pos_diamond_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+                select_columns: ["filename","pos_cust","branch","nama_barang","qty","sales","yearmonth"]
+                group_by_columns: ["branch","nama_barang","qty","sales","yearmonth","run_id","crtd_dttm","filename"] 
+                name: TRATBL_sdl_id_pos_diamond_sellout__duplicate_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+        - test_format:
+                select_columns: ["yearmonth"]
+                failure_reason: "'Column yearmonth is not in expected format, expected format is yyyymm'"
+                where_clause: "(TRIM(yearmonth) != '' OR TRIM(yearmonth) IS NOT NULL) AND NOT REGEXP_LIKE(TRIM(yearmonth),'[1-2][0-9][0-9][0-9][0-1][0-9]')" 
+                name: TRATBL_sdl_id_pos_diamond_sellout__date_format_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+
+    - name: sdl_id_pos_daily_idm_sellout
+      tags: ["id_pos_daily","ingestion"]
+      tests:
+        - test_null:
+                select_columns: ["filename","pos_cust","account","kode_branch","branch_name","tgl","plu","descp","type","value","yearmonth"]
+                name: TRATBL_sdl_id_pos_daily_idm_sellout__null_test
+                config:
+                  store_failures: true
+                  schema: idnwks_integration
+    - name: sdl_mds_id_lav_hero_list
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              not_null_columns: ["sap_code","distributor_code","year"]
+              name: TRATBL_sdl_mds_id_lav_hero_list__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              where_clause: "Distributor_Code IN (SELECT DISTINCT REPLACE(Distributor_Code, '.0', '') AS Distributor_Code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.dstrbtr_id FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE a.Distributor_Code = b.dstrbtr_id)"
+              name: TRATBL_sdl_mds_id_lav_hero_list__lookup_test
+              config:
+                store_failures: true
+                schema: idnwks_integration 
+          - test_format:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              where_clause: "region in ( SELECT DISTINCT region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.region FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_distributor_dim') }} b WHERE a.region = b.region)"
+              name: TRATBL_sdl_mds_id_lav_hero_list__lookup_test2
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_format:
+              select_columns: ["year","region","distributor_code","sap_code","target_growth","target_coverage"]
+              where_clause: "SAP_Code IN ( SELECT DISTINCT SAP_Code FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} x MINUS SELECT DISTINCT b.jj_sap_prod_id FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_hero_list') }} a, {{ ref('idnedw_integration__edw_product_dim') }} b WHERE a.SAP_Code = b.jj_sap_prod_id )"
+              name: TRATBL_sdl_mds_id_lav_hero_list__lookup_test3
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name: sdl_mds_id_lav_mcs_list
+      tags: ["id_mds_itg_load","transformation"]
+    - name: sdl_mds_id_lav_npi_sku_list
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["year","npi_sku_code","sku_npi","benchmark_sku_code","sku_benchmark"]
+              not_null_columns: ["year","npi_sku_code","benchmark_sku_code",]
+              name: TRATBL_sdl_mds_id_lav_npi_sku_list__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name : sdl_mds_id_pos_cust_prod_mapping
+      tags: ["id_mds_itg_load","ingestion"] 
+      tests:
+          - test_null__ff:
+              not_null_columns: ["account","plu_sku_desc","jj_sap_code"]
+              name: TRATBL_sdl_mds_id_pos_cust_prod_mapping__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["account","plu_sku_desc","jj_sap_code"]
+              name: TRATBL_sdl_mds_id_pos_cust_prod_mapping__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name: sdl_mds_id_lav_inventory_intransit
+      tags: ["id_mds_itg_load","ingestion"] 
+      tests:
+          - test_null__ff:
+              not_null_columns: ["document","material","'ship-to'"]
+              name: TRATBL_sdl_mds_id_lav_inventory_intransit__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["document","material","'ship-to'"]
+              name: TRATBL_sdl_mds_id_lav_inventory_intransit__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_lookup:
+              select_columns: ["document","material","description",'"ship-to"',"name1"]
+              failure_reason: "'SHIT-TO CODE VALIDITY CHECK FAILED'"
+              column: ltrim(nvl("ship-to", '#'), '0')
+              lookup_column: "ltrim(nvl (jj_sap_dstrbtr_id, '#'), '0')"
+              lookup_table: "{{ ref('idnedw_integration__edw_distributor_dim') }}"
+              name: TRATBL_sdl_mds_id_lav_inventory_intransit__test_lookup
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_lookup:
+              select_columns: ["document","material","description",'"ship-to"',"name1"]
+              failure_reason: "'MATERIAL CODE VALIDITY CHECK FAILED'"
+              column: "ltrim(nvl(material, '#'), '0')"
+              lookup_column: "ltrim(nvl (jj_sap_prod_id, '#'), '0')"
+              lookup_table: "{{ ref('idnedw_integration__edw_product_dim') }}"
+              name: TRATBL_sdl_mds_id_lav_inventory_intransit__test_lookup2
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_id_pos_guardian_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"] 
+            not_null_columns: ["category","article_desc","article"]  
+            name: TRATBL_sdl_id_pos_guardian_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_format:
+            select_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"]
+            where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+            name: TRATBL_sdl_id_pos_guardian_stock__date_check
+            config:
+              store_failures: true
+              schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "article", "article_desc", "category", "soh_stores", "soh_dc", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_guardian_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_idm_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "\"values\"", "yearmonth"] 
+            not_null_columns: ["item", "description", "plu", "branch"]  
+            name: TRATBL_sdl_id_pos_idm_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "values", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_idm_sellout__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "values", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "item", "description", "plu", "branch", "type", "values", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_idm_sellout__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+
+    - name: sdl_id_pos_idm_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"] 
+            not_null_columns: ["item", "branch", "dc_qty", "store_qty", "units"]  
+            name: TRATBL_sdl_id_pos_idm_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_idm_stock__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "item", "branch", "dc_qty", "store_qty", "units", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_idm_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_igr_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"] 
+            not_null_columns: ["item", "branch", "qty", "unit"]  
+            name: TRATBL_sdl_id_pos_igr_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_igr_stock__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "item", "branch", "qty", "unit", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_igr_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_igr_sellout
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "description", "branch", "type", "\"values\"", "yearmonth"] 
+            not_null_columns: ["description", "branch", "type", "\"values\""]  
+            name: TRATBL_sdl_id_pos_igr_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_igr_sellout__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "description", "branch", "type", "values", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_igr_sellout__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_matahari_otc_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"] 
+            not_null_columns: ["type", "loc", "store_name", "item", "item_desc", "soh"]  
+            name: TRATBL_sdl_id_pos_matahari_otc_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_matahari_otc_stock__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "type", "loc", "store_name", "item", "item_desc", "soh", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_matahari_otc_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_matahari_jb_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"] 
+            not_null_columns: ["sku", "sku_desc", "qty", "retail_values"]  
+            name: TRATBL_sdl_id_pos_matahari_jb_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        # - test_format:
+        #     select_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"]
+        #     where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+        #     name: TRATBL_sdl_id_pos_matahari_jb_stock__date_check
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "sku", "sku_desc", "qty", "retail_values", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_matahari_jb_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_matahari_beauty_stock
+      tags: ["id_pos","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"] 
+            not_null_columns: ["month", "sku", "sku_desc", "year_qty", "retail_values"]  
+            name: TRATBL_sdl_id_pos_matahari_beauty_stock__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_format:
+            select_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"]
+            where_clause: "(TRIM(yearmonth) != '' and TRIM(yearmonth) IS NOT NULL) and regexp_like(TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( TRIM(yearmonth), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9][0-9][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-2][0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-3][0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-1][0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]') and  regexp_like( UPPER(TRIM(yearmonth)), '[0-9]_[0-9]_[1-2][0-9]_[0-9]:[0-5][0-9]')"
+            name: TRATBL_sdl_id_pos_matahari_beauty_stock__date_check
+            config:
+              store_failures: true
+              schema: idnwks_integration 
+        # - test_duplicate:
+        #     select_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"] 
+        #     group_by_columns: ["filename", "pos_cust", "month", "sku", "sku_desc", "year_qty", "retail_values", "yearmonth"] 
+        #     name: TRATBL_sdl_id_pos_matahari_beauty_stock__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: idnwks_integration
+    - name: sdl_id_pos_daily_sat_sellout
+      tags: ["id_pos_daily","ingestion"]
+    - name: sdl_id_pos_daily_basedline_sellout
+      tags: ["id_pos_daily","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["key_account", "plu", "month", "year", "roi_month"] 
+            not_null_columns: ["key_account", "plu"]  
+            name: TRATBL_sdl_id_pos_daily_basedline_sellout__null_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+        - test_duplicate:
+            select_columns: ["key_account", "plu", "month", "year", "roi_month"] 
+            group_by_columns: ["plu","roi_month","run_id","crtd_dttm" ] 
+            name: TRATBL_sdl_id_pos_daily_basedline_sellout__duplicate_test
+            config:
+              store_failures: true
+              schema: idnwks_integration
+

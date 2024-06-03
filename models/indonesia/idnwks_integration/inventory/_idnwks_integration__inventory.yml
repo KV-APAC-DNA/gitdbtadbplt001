@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_final
+    config:
+      alias: wks_indonesia_inventory_health_analysis_propagation_final
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+  - name: idnwks_integration__wks_indonesia_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_indonesia_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+ 
+  - name: idnwks_integration__indonesia_propagate_from_to
+    config:
+      alias: indonesia_propagate_from_to
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+
+  - name: idnwks_integration__indonesia_propagate_to
+    config:
+      alias: indonesia_propagate_to
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+
+  - name: idnwks_integration__wks_indonesia_siso_propagate_final
+    config:
+      alias: wks_indonesia_siso_propagate_final
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+
+  - name: idnwks_integration__wks_indonesia_siso_propagate_to_details
+    config:
+      alias: wks_indonesia_siso_propagate_to_details
+      tags: ["j_ap_id_reg_data_refresh","transformation"]
+
+  - name: idnwks_integration__wks_indonesia_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_indonesia_siso_propagate_to_existing_dtls
+      tags: ["j_ap_id_reg_data_refresh","transformation"]

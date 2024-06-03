@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
 --Import CTE 
 with rg_wks_wks_edw_perfect_store_hash as
 ( select * 

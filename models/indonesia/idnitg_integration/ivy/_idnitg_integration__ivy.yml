@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_distributor_ivy_inventory
+    config:
+      alias: itg_distributor_ivy_inventory
+      tags: ["id_ivy","ingestion"] 
+
+  - name: idnitg_integration__itg_mds_id_dms_dist_margin_control
+    config:
+      alias: itg_mds_id_dms_dist_margin_control
+      tags: ["id_mds_itg_load","ingestion"]
+
+  - name: idnitg_integration__sdl_raw_distributor_ivy_order
+    config:
+      alias: sdl_raw_distributor_ivy_order
+      tags: ["id_ivy","ingestion"]
+  - name: idnitg_integration__itg_distributor_ivy_order
+    config:
+      alias: itg_distributor_ivy_order
+      tags: ["id_ivy","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_invoice
+    config:
+      alias: sdl_raw_distributor_ivy_invoice
+      tags: ["id_ivy","ingestion"]
+  - name: idnitg_integration__itg_all_ivy_distributor_sellout_sales_fact
+    config:
+      alias: itg_all_ivy_distributor_sellout_sales_fact
+      tags: ["id_ivy","ingestion"]
+
+  - name: idnitg_integration__itg_distributor_ivy_merchandising
+    config:
+      alias: itg_distributor_ivy_merchandising
+      tags: ["id_ivy","ingestion"]
+  - name: idnitg_integration__sdl_raw_distributor_ivy_merchandising
+    config:
+      alias: sdl_raw_distributor_ivy_merchandising
+      tags: ["id_ivy","ingestion"]
+  - name : idnitg_integration__itg_distributor_ivy_user_master
+    config:
+      alias: itg_distributor_ivy_user_master
+      tags: ["id_ivy","ingestion"]
+  - name : idnitg_integration__sdl_raw_distributor_ivy_user_master
+    config:
+      alias: sdl_raw_distributor_ivy_user_master
+      tags: ["id_ivy","ingestion"]
+
+  - name: idnitg_integration__sdl_distributor_ivy_outlet_master_mds_sync
+    config:
+      alias: sdl_distributor_ivy_outlet_master_mds_sync
+      tags: ["id_cd_server_data","ingestion"]
+  - name: idnitg_integration__itg_distributor_ivy_outlet_master
+    config:
+      alias: itg_distributor_ivy_outlet_master
+      tags: ["id_ivy_outletmaster_manual_upload","ingestion"]

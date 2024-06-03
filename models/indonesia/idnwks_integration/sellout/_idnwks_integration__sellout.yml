@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: idnwks_integration__wks_indonesia_regional_sellout
+    config:
+      alias: wks_indonesia_regional_sellout
+      tags: ["customer_360_id","transformation"]
+
+  - name: idnwks_integration__wks_indonesia_regional_sellout_base
+    config:
+      alias: wks_indonesia_regional_sellout_base
+      tags: ["customer_360_id","transformation"]
+
+  - name: idnwks_integration__wks_indonesia_regional_sellout_npd
+    config:
+      alias: wks_indonesia_regional_sellout_npd
+      tags: ["customer_360_id","transformation"]
+
+  - name: idnwks_integration__wks_rpt_regional_id_sellout_offtake_npd
+    config:
+      alias: wks_rpt_regional_id_sellout_offtake_npd
+      tags: ["customer_360_id","transformation"]
