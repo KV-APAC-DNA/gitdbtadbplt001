@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= ["DELETE FROM {{this}}
+        pre_hook= ["{% if is_incremental() %}
+        DELETE FROM {{this}}
         WHERE (
               IMS_TXN_DT,
               UPPER(DSTR_NM),
@@ -98,8 +99,9 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_LOGISTICS_YANG_JU_GT_SELLOUT)",
-              "
+              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_LOGISTICS_YANG_JU_GT_SELLOUT)
+              {% endif %}",
+              "{% if is_incremental() %}
               DELETE FROM {{this}}
               WHERE (
               IMS_TXN_DT,
@@ -111,7 +113,8 @@
                      EAN
               FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NACF_GT_SELLOUT
               )
-            ","
+            {% endif %}","
+            {% if is_incremental() %}
             DELETE
 FROM {{this}}
 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
@@ -123,8 +126,8 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
              FROM aspedw_integration.edw_calendar_dim
              WHERE WKDAY = '7'
              GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',2),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) );
-             ",
-             "
+             {% endif %}",
+             "{% if is_incremental() %}
              DELETE
              FROM {{this}}
                 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd,SUB_CUSTOMER_CODE) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
@@ -136,7 +139,7 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                             FROM aspedw_integration.EDW_CALENDAR_DIM
                             WHERE WKDAY = '7'
                             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',3),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) )
-             "  ]
+             {% endif %}"  ]
     )
 }}
 

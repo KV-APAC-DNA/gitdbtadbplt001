@@ -14,7 +14,7 @@ final as
         to_date(datefrom,'yyyymmdd') as vld_frm,
         to_date(dateto,'yyyymmdd') as vld_to,
         cond_curr as cond_curr,
-        doc_currcy as doc_cur,
+        doc_currcy as doc_currcy,
         recordmode as recordmode,
         'KR' as ctry_cd,
         current_timestamp::timestamp_ntz(9) as crt_dttm,

@@ -2,13 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="delete from {{this}} where ims_txn_dt in 
-                    (   select distinct transaction_date from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
-                    )
-                    and dstr_cd in (
-                        select distinct distributor_code from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
-                    )
-                    and ctry_cd = 'TW';"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where ims_txn_dt in (select distinct transaction_date from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and dstr_cd in (select distinct distributor_code from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and ctry_cd = 'TW';
+        {% endif %}"
     )
 }}
 
