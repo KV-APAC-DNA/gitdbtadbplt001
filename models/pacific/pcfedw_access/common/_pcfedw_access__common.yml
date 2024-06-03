@@ -77,3 +77,7 @@ models:
     config:
       alias: vw_px_master_analysis
       tags: ["pacific_view","transformation"]
+  - name: pcfedw_access__edw_material_dim
+    config:
+      alias: edw_material_dim
+      tags: ["pacific_view","transformation"]
