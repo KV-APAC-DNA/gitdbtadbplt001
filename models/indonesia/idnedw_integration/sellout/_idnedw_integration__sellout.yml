@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: idnedw_integration__edw_id_pos_sellout
-    config:
-      alias: edw_id_pos_sellout
-      tags: ["customer_360_id","transformation"]
