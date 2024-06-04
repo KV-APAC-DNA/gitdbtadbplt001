@@ -469,7 +469,7 @@ sales_1 as
         a.prod_minor,
         a.sls_grp,
         COALESCE(
-            store_map.sales_group_nm,
+            store_map.sales_grp_nm,
             'NA'::character varying
         ) AS sls_grp_desc,
         COALESCE(
@@ -669,7 +669,7 @@ sales_south_korea as
         'NA' AS prod_minor,
         bill_fact.sls_grp,
         COALESCE(
-            store_map.sales_group_nm,
+            store_map.sales_grp_nm,
             'NA'::character varying
         ) AS sls_grp_desc,
         COALESCE(store_map.sls_ofc, 'NA'::character varying) AS sls_ofc,
