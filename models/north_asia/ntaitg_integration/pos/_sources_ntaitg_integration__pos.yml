@@ -295,6 +295,7 @@ sources:
       - name: itg_kr_sales_target_am_brand_temp
       - name: itg_pos_str_sls_grp_map
       - name: itg_pos_prom_prc_map_temp
+      - name: itg_pos_str_cd_sold_to_map_temp
   
 
   - name: ntaedw_integration
