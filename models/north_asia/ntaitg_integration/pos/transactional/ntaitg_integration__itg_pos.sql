@@ -46,7 +46,7 @@
                     )
                     and upper(itg_pos.src_sys_cd) = 'EMART'
                     and upper(itg_pos.ctry_cd) = 'KR';
-                    delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }}
+                    delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }} wks_itg_pos
                     where wks_itg_pos.pos_dt = itg_pos.pos_dt
                         and wks_itg_pos.ean_num = itg_pos.ean_num
                         and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd

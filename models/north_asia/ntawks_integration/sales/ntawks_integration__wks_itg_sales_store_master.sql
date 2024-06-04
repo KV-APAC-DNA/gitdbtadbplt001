@@ -9,7 +9,7 @@ with sdl_mds_kr_sales_store_master as (
     select * from {{ source('ntasdl_raw', 'sdl_mds_kr_sales_store_master') }}
 ),
 itg_sales_store_master_temp as (
-    select * from {{ source('ntaitg_integration', 'ntaitg_integration__itg_sales_store_master_temp') }}
+    select * from {{ source('ntaitg_integration', 'itg_sales_store_master_temp') }}
 ),
 transformed as (
 SELECT distinct channel,

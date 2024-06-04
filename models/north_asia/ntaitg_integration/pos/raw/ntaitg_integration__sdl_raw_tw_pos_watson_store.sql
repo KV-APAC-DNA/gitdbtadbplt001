@@ -15,7 +15,7 @@ final as
     select
         *,
         -- null as filename,
-        null as run_id
+        -- null as run_id
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

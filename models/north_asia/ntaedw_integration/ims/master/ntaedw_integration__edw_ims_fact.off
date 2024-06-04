@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook="delete from {{this}} where dstr_cd in ( select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }};"
+        pre_hook="delete from {{this}} where dstr_cd in ( select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }});"
     )
 }}
 with wks_edw_ims_sls_std as (

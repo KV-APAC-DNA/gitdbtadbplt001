@@ -2,7 +2,7 @@ with edw_ims_fact as (
 select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_tw_ims_dstr_prod_price_map as (
-select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}
+select * from ntaitg_integration.itg_tw_ims_dstr_prod_price_map
 ),
 edw_vw_store_dim as (
 select * from {{ ref('ntaedw_integration__edw_vw_store_dim') }}

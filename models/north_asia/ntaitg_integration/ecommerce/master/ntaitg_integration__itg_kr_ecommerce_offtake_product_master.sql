@@ -3,9 +3,13 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if var('job_to_execute') == 'j_kr_ecomm_offtake_product_master_load' %}
-                    delete from {{this}} where (trim(retailer_sku_code),upper(trim(retailer_type))) in (select trim(retailer_sku_code) as retailer_sku_code, upper(trim(name)) as retailer_type from source('ntasdl_raw', 'sdl_mds_kr_ecom_offtake_product_mapping') );
+                    {% if is_incremental() %}
+                    delete from {{this}} where (trim(retailer_sku_code),upper(trim(retailer_type))) in (select trim(retailer_sku_code) as retailer_sku_code, upper(trim(name)) as retailer_type from {{ source('ntasdl_raw', 'sdl_mds_kr_ecom_offtake_product_mapping') }} );
+                    {% endif %}
                     {% elif var('job_to_execute') == 'j_kr_generic_query_execution' %}
+                    {% if is_incremental() %}
                     delete from {{this}};
+                    {% endif %}
                     {% endif %}"
     )
 }}

@@ -68,6 +68,9 @@ models:
         +materialized: table
         +transient: false
         +schema: ASPEDW_INTEGRATION
+        calendar:
+          view:
+            +materialized: view
         sap_and_sellin:
           view:
             +materialized: view
@@ -378,6 +381,51 @@ models:
         +materialized: table
         +transient: false
         +schema: NTAEDW_INTEGRATION
+        calendar:
+          config:
+            +materialized: view
+        common:
+          config:
+            +materialized: view
+        copa:
+          config:
+            +materialized: view
+        coupang:
+          config:
+            +materialized: view
+        dads:
+          config:
+            +materialized: view
+        datamart:
+          config:
+            +materialized: view
+        ecommerce:
+          config:
+            +materialized: view
+        forecast:
+          config:
+            +materialized: view
+        inventory:
+          config:
+            +materialized: view
+        invoice:
+          config:
+            +materialized: view
+        pos:
+          config:
+            +materialized: view
+        sales:
+          config:
+            +materialized: view
+        sellout:
+          config:
+            +materialized: view
+        sfmc:
+          config:
+            +materialized: view
+        store:
+          config:
+            +materialized: view
       ntawks_integration:
         +materialized: table
         +schema: NTAWKS_INTEGRATION

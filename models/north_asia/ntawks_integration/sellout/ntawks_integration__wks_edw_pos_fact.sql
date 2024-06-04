@@ -19,6 +19,9 @@ select * from {{ ref('aspedw_integration__edw_material_dim') }}
 itg_pos_cust_prod_to_sap_prod_map as (
 select * from {{ source('ntaitg_integration', 'itg_pos_cust_prod_to_sap_prod_map') }}
 ),
+itg_query_parameters as (
+    select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
+),
 nonqp as (
 SELECT src.pos_dt,
   src.vend_cd,

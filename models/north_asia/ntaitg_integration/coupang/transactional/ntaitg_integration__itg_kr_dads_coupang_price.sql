@@ -46,7 +46,7 @@ final as (
         previous_day_diff_amount::varchar(100) as previous_day_diff_amount,
         promotion_text::varchar(100) as promotion_text,
         url::varchar(100) as url,
-        file_name::varchar(255) as file_name  
+        file_name::varchar(255) as file_name,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     FROM sdl_kr_dads_coupang_price

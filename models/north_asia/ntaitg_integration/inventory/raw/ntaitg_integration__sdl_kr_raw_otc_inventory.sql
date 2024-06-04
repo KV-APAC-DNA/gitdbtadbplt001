@@ -23,7 +23,7 @@ final as
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    where source.crtd_dttm > (select max(crtd_dttm) from {{ this }}) 
     {% endif %}
 )
 select * from final
