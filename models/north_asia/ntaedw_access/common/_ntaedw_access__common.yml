@@ -69,3 +69,19 @@ models:
     config:
       alias: vw_tw_forecast
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_ims_inventory_fact
+    config:
+      alias: edw_ims_inventory_fact
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_dly_plan_ims_enrich
+    config:
+      alias: v_rpt_dly_plan_ims_enrich
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_pos_offtake_daily_nonkorea
+    config:
+      alias: v_rpt_pos_offtake_daily_nonkorea
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_pos_offtake_wkly_nonkorea
+    config:
+      alias: v_rpt_pos_offtake_wkly_nonkorea
+      tags: ["north_asia_views","transformation"]
