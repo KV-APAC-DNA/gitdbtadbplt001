@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
 --Final CTE
 with final as 
   (SELECT hashkey,
