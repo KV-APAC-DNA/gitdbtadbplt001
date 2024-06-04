@@ -482,8 +482,6 @@ sources:
       identifier: false
     tables:
     - name: itg_ims_invnt_temp
-    - name: itg_gt_msl_items
-      tags: ["","ingestion"]
 
   - name: ntawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -495,5 +493,3 @@ sources:
     tables:
     - name: tw_ims_distributor_ingestion_metadata
       tags: ["","ingestion"]
-    - name: wks_edw_customer_attr_flat_dim
-

@@ -11,10 +11,10 @@ edw_store_dim as (
     select * from {{ ref('ntaedw_integration__edw_store_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+    select * from aspedw_integration.edw_product_attr_dim
 ),
 edw_sls_rep_dim as (
-    select * from  {{ source('ntaedw_integration', 'edw_sls_rep_dim') }}
+    select * from ntaedw_integration.edw_sls_rep_dim
 ),
 v_intrm_crncy_exch as (
     select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}    

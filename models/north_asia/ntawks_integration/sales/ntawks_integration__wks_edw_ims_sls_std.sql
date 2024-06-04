@@ -2,7 +2,7 @@ with itg_ims as (
     select * from {{ ref('ntaitg_integration__itg_ims') }}
 ),
 itg_tw_ims_dstr_prod_price_map as (
-    select * from {{ source('ntaitg_integration', 'itg_tw_ims_dstr_prod_price_map') }}
+    select * from ntaitg_integration.itg_tw_ims_dstr_prod_price_map
 ),
 itg_tw_ims_dstr_prod_map as (
     select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}  

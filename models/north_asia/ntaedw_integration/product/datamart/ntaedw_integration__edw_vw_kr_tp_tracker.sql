@@ -8,7 +8,7 @@ v_intrm_reg_crncy_exch_fiscper as(
     select * from  {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+    select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 edw_intrm_calendar as(
     select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}

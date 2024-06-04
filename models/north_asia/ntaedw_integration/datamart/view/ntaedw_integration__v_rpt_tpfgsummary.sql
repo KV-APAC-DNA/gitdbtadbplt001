@@ -20,7 +20,7 @@ edw_gch_producthierarchy as
 ),
 edw_product_attr_dim as
 (
-    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+    select * from aspedw_integration.edw_product_attr_dim
 ),
 edw_product_key_attributes as
 (

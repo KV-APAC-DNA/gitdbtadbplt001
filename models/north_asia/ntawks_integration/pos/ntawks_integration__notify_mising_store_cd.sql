@@ -12,7 +12,7 @@ itg_sales_store_master as
 ),
 edw_customer_attr_flat_dim as
 (
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+    select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 final as
 (

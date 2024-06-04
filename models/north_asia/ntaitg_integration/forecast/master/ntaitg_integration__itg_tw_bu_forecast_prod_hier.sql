@@ -16,7 +16,7 @@
                      WHEN wks.sls_grp <> wks.target_sls_grp THEN 'Y'
                      ELSE 'N'
                     END AS flag
-                    FROM  {{ source('ntawks_integration', 'wks_edw_customer_attr_flat_dim') }}
+                    FROM  ntawks_integration.wks_edw_customer_attr_flat_dim
                       wks)
                     WHERE flag = 'Y') cust
                     Where cust.target_sls_grp =itg.sls_grp;

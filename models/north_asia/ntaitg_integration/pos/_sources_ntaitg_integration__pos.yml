@@ -287,27 +287,10 @@ sources:
       - name: itg_query_parameters
       - name: itg_pos_temp
       - name: itg_pos_invnt_temp
-      - name: itg_sales_rep_so_target_fact
-      - name: itg_tw_ims_dstr_customer_mapping
-      - name: itg_tw_ims_dstr_prod_price_map
-      - name: itg_sls_grp_to_customer_mapping
       - name: itg_pos_cust_prod_to_sap_prod_map
       - name: itg_kr_sales_target_am_brand_temp
       - name: itg_pos_str_sls_grp_map
       - name: itg_pos_prom_prc_map_temp
-  
-
-  - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: edw_sales_rep_route_plan
-      - name: edw_sls_rep_dim
-      - name: edw_vw_pop6_store
 
   - name: bwa_access
     database: "{{ env_var('DBT_ENV_CDL_DB') }}"

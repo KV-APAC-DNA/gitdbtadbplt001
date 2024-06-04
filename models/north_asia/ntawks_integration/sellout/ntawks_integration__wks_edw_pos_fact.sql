@@ -2,13 +2,13 @@ with itg_pos as (
 select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+select * from aspedw_integration.edw_customer_attr_flat_dim
 ),
 itg_pos_cust_prod_cd_ean_map as (
 select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 ),
 edw_product_attr_dim as (
-select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+select * from aspedw_integration.edw_product_attr_dim
 ),
 itg_pos_prom_prc_map as (
 select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
