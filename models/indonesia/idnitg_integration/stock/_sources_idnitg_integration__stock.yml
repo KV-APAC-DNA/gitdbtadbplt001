@@ -10,6 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_stock_dist_map
+        tags: ["id_stock_load", "ingestion"]
         tests:
         - test_lookup__ff:
               failure_reason: "Lookup failed for distributor_id. distributor_id is not present in SAPBW"
