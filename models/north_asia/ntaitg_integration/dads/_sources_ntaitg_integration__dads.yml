@@ -78,3 +78,20 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+    - name: sdl_kr_dads_naver_keyword_search_volume
+      tags: ["kr_dads_naver_keyword_volume", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["keyword", "product_category_s", "product_id"]
+            not_null_columns: ["keyword", "Total_monthly_searches", "product_id"]
+            name: tratbl_sdl_kr_dads_naver_keyword_search_volume__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_format:
+            select_columns: ["product_category_m", "product_category_s", "product_id"]
+            where_clause: "not regexp_like ('substring(file_name,28,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            name: tratbl_sdl_kr_dads_naver_keyword_search_volume__format_test
+            config:
+              store_failures: true
+              schema: ntawks_integration

@@ -113,6 +113,42 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
+    - name: sdl_kr_ecom_coupang
+      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","transformation"]
+      tests:
+          - test_null:
+              select_columns:  ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
+              not_null_columns: ["transaction_date"]
+              name: TRATBL_sdl_kr_ecom_coupang__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_format:
+                  select_columns: ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
+                  where_clause:  " (TRANSACTION_DATE IS NOT NULL AND TRANSACTION_DATE != '') AND (not regexp_like(TRANSACTION_DATE,'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]'))  
+                                  AND (not regexp_like(TRANSACTION_DATE,'[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-1][0-9]/[1-2][0-9][0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-1][0-9]/[0-9][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[0-9][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[1-2][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-1][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-9]/[0-9][0-9]'))"              
+                  failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
+                  name: TRATBL_sdl_kr_ecom_coupang__format_test
+                  config:
+                    store_failures: true
+                    schema: ntawks_integration
+    - name: sdl_kr_ecommerce_tca_sellout
+      tags: [""]
+    - name: sdl_kr_ecommerce_unitoa_sellout
+      tags: [""]
+    - name: sdl_kr_ecommerce_offtake_coupang_transaction
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+
+    - name: sdl_kr_ecommerce_offtake_sales_ebay
+      tags: ["j_kr_generic_query_execution", "ingestion"]
 
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
