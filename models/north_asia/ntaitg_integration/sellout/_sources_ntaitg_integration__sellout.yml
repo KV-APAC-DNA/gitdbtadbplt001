@@ -146,7 +146,7 @@ sources:
               lookup_column: " coalesce(nacf_customer_code,'NULL') customer_code"
               lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_nacf_cust_dim') }}"                                                                      
               failure_reason: "'missing customer code compared with master file: customer_code'"
-              name: TRATBL_sdl_kr_nacf_gt_selloutt__lookup_test
+              name: TRATBL_sdl_kr_nacf_gt_sellout__lookup_test
               config:
                 store_failures: true
                 schema: ntawks_integration
