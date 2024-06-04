@@ -1,0 +1,119 @@
+with SDL_DNR_RAW_SELLOUT_SALES_FACT as(
+    select * from {{ source('idnsdl_raw', 'sdl_dnr_raw_sellout_sales_fact') }}
+),
+SDL_DNR_CUSTOMER_DIM as(
+    select * from {{ source('idnsdl_raw', 'sdl_dnr_raw_sellout_sales_fact') }}
+),
+edw_distributor_channel_dim as(
+    select * from  {{ ref('idnedw_interation__edw_distributor_channel_dim') }}
+),
+EDW_DISTRIBUTOR_METADATA_LKP as(
+    select * from {{ source('idnedw_integration', 'edw_distributor_metadata_lkp') }}
+),
+edw_time_dim as(
+    select * from {{ source('idnedw_integration', 'edw_time_dim') }}
+),
+edw_distributor_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_dim') }}
+),
+edw_distributor_product_dim as(
+    select * from {{ ref('idnedw_interation__edw_distributor_product_dim') }}
+),
+
+wks_dnr_sellout_sales_fact AS (
+		SELECT TRIM(UPPER(SDRSSF.SALESOFFICE_ID || SDRSSF.CUST_ID || SDRSSF.PRD_ID || SDRSSF.BILL_DOC || TO_CHAR(TO_TIMESTAMP_NTZ(TO_DATE(substr(SDRSSF.bill_date,'0','9'), 'MM/DD/YYYY')), 'YYYY-MM-DD'))) AS TRANS_KEY,
+			TRIM(SDRSSF.BILL_DOC) AS BILL_DOC,
+			TRIM(SDRSSF.BILL_DATE)::timestamp_ntz(9) AS BILL_DT,
+			TRIM(ETD.JJ_MNTH_ID) AS JJ_MNTH_ID,
+			TRIM(ETD.JJ_WK) AS JJ_WK,
+			TRIM(UPPER(SDRSSF.SALESOFFICE_ID)) AS DSTRBTR_ID,
+			TRIM(UPPER(EDD.JJ_SAP_DSTRBTR_ID)) AS JJ_SAP_DSTRBTR_ID,
+			TRIM(UPPER(SDRSSF.PRD_ID)) AS DSTRBTR_PROD_ID,
+			TRIM(UPPER(EDPD.JJ_SAP_PROD_ID)) AS JJ_SAP_PROD_ID,
+			TRIM(EDPD.JJ_SAP_PROD_DESC) AS DSTRBTR_PROD_DESC,
+			TRIM(UPPER(SDRSSF.CUST_ID)) AS DSTRBTR_CUST_ID,
+			TRIM(UPPER(SDRSSF.DISTCHAN)) AS DSTRBTR_CHNL,
+			TRIM(UPPER(EDCD.JNJ_CHNL_TYPE_ID)) AS JNJ_CHNL_TYPE_ID,
+			TRIM(UPPER(SDRSSF.SALESM_ID)) AS DSTRBTR_SLSMN_ID,
+			(SDRSSF.SALESQTY / EDPD.denominator) AS SLS_QTY, --------/* New logic */ -------------
+			--TRIM(SDRSSF.SALESQTY/decode(EDPD.denominator,0,1,EDPD.denominator)) AS SLS_QTY, --------/* New logic */ -------------
+			(SDRSSF.GROSSVALUE) AS GRS_VAL,
+			SDRSSF.GROSSVALUE * EDML.NET_VAL_CAL_FACTOR AS JJ_NET_VAL,
+			(TDISC) AS TRD_DSCNT,
+			(SDRSSF.NETVALUE) AS DSTRBTR_NET_VAL,
+			(
+				(
+					CASE 
+						WHEN DECODE(SDRSSF.PRD_ID, '006-11401', SDRSSF.SALESQTY / 10, '006-11432', SDRSSF.SALESQTY / 10, '006-02103', SDRSSF.SALESQTY / 25, '006-02113', SDRSSF.SALESQTY / 25, '006-02112', SDRSSF.SALESQTY / 25, '006-40311', SDRSSF.SALESQTY / 24, SDRSSF.SALESQTY) < 0
+							THEN DECODE(SDRSSF.PRD_ID, '006-11401', SDRSSF.SALESQTY / 10, '006-11432', SDRSSF.SALESQTY / 10, '006-02103', SDRSSF.SALESQTY / 25, '006-02113', SDRSSF.SALESQTY / 25, '006-02112', SDRSSF.SALESQTY / 25, '006-40311', SDRSSF.SALESQTY / 24, SDRSSF.SALESQTY) * - 1
+						ELSE 0
+						END
+					)
+				) AS RTRN_QTY,
+			(
+				(
+					CASE 
+						WHEN DECODE(SDRSSF.PRD_ID, '006-11401', SDRSSF.SALESQTY / 10, '006-11432', SDRSSF.SALESQTY / 10, '006-02103', SDRSSF.SALESQTY / 25, '006-02113', SDRSSF.SALESQTY / 25, '006-02112', SDRSSF.SALESQTY / 25, '006-40311', SDRSSF.SALESQTY / 24, SDRSSF.SALESQTY) < 0
+							THEN (SDRSSF.GROSSVALUE * EDML.NET_VAL_CAL_FACTOR) * - 1
+						ELSE 0
+						END
+					)
+				) AS RTRN_VAL,
+			(DECODE(SDRSSF.PRD_ID, '006-11401', SDRSSF.SALESQTY / 10, '006-11432', SDRSSF.SALESQTY / 10, '006-02103', SDRSSF.SALESQTY / 25, '006-02113', SDRSSF.SALESQTY / 25, '006-02112', SDRSSF.SALESQTY / 25, '006-40311', SDRSSF.SALESQTY / 24, SDRSSF.SALESQTY)) AS SLS_QTY_RAW --------/* Existing logic and new column added */ -------------
+		FROM SDL_DNR_RAW_SELLOUT_SALES_FACT AS SDRSSF,
+			SDL_DNR_CUSTOMER_DIM AS SDCM,
+			(
+				SELECT *
+				FROM EDW_DISTRIBUTOR_CHANNEL_DIM
+				WHERE trim(upper(DSTRBTR_GRP_CD)) = 'DNR'
+				) AS EDCD,
+			EDW_DISTRIBUTOR_DIM AS EDD,
+			(
+				SELECT *
+				FROM EDW_DISTRIBUTOR_PRODUCT_DIM
+				WHERE trim(upper(DSTRBTR_GRP_CD)) = 'DNR'
+				) AS EDPD,
+			EDW_TIME_DIM AS ETD,
+			(
+				SELECT NET_VAL_CAL_FACTOR,
+					GROSS_VAL_CAL_FACTOR,
+					TRADE_DISC_CAL_FACTOR,
+					DIST_NET_VAL_CAL_FACTOR
+				FROM EDW_DISTRIBUTOR_METADATA_LKP
+				WHERE trim(upper(DSTRBTR_CD)) = 'DNR'
+				) AS EDML
+		WHERE TRIM(UPPER(EDD.DSTRBTR_ID(+))) = TRIM(UPPER(SDRSSF.SALESOFFICE_ID))
+			AND TRIM(UPPER(EDPD.DSTRBTR_PROD_ID(+))) = TRIM(UPPER(SDRSSF.PRD_ID))
+			AND TRIM(UPPER(SDCM.CUST_ID(+))) = TRIM(UPPER(SDRSSF.CUST_ID))
+			AND TRIM(UPPER(EDCD.DSTRBTR_CHNL_TYPE_ID(+))) = TRIM(UPPER(SDCM.GRCUST))
+			AND to_date(ETD.CAL_DATE) = to_date(TRIM(SDRSSF.BILL_DATE)::timestamp_ntz(9))
+        ),
+transformed as(
+SELECT w.TRANS_KEY as TRANS_KEY,
+	w.BILL_DOC as BILL_DOC,
+	w.BILL_DT as BILL_DT,
+	w.JJ_MNTH_ID as JJ_MNTH_ID,
+	w.JJ_WK as JJ_WK,
+	'DNR' as DSTRBTR_grp_CD,
+	w.DSTRBTR_ID as DSTRBTR_ID,
+	w.JJ_SAP_DSTRBTR_ID as JJ_SAP_DSTRBTR_ID,
+	w.DSTRBTR_CUST_ID as DSTRBTR_CUST_ID,
+	w.DSTRBTR_PROD_ID as DSTRBTR_PROD_ID,
+	w.JJ_SAP_PROD_ID as JJ_SAP_PROD_ID,
+	w.JNJ_CHNL_TYPE_ID as DSTRBTN_CHNL,
+	w.JNJ_CHNL_TYPE_ID as GRP_OUTLET,
+	w.DSTRBTR_SLSMN_ID as DSTRBTR_SLSMN_ID,
+	w.SLS_QTY as SLS_QTY,
+	w.GRS_VAL as GRS_VAL,
+	w.JJ_NET_VAL as JJ_NET_VAL,
+	w.TRD_DSCNT as TRD_DSCNT,
+	w.DSTRBTR_NET_VAL as DSTRBTR_NET_VAL,
+	w.RTRN_QTY as RTRN_QTY,
+	w.RTRN_VAL as RTRN_VAL,
+	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as CRTD_DTTM,
+	NULL::timestamp_ntz(9) as UPDT_DTTM,
+    null as filename,
+	SLS_QTY_RAW as SLS_QTY_RAW --------/* EXISTING logic */ -------------
+FROM WKS_DNR_SELLOUT_SALES_FACT w
+)
+select * from transformed

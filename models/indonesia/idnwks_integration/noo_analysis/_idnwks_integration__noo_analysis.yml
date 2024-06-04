@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: idnwks_integration__wks_indonesia_noo_analysis
+    config:
+      alias: wks_indonesia_noo_analysis
+      tags: ["id_noo_analysis","transformation"]
+
+ 

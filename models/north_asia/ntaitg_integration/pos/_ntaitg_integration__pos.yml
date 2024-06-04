@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_tw_pos_watson_store
+    config:
+        alias: itg_tw_pos_watson_store
+        tags: ["tw_pos_watson","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_watson_store
+    config:
+        alias: sdl_raw_tw_pos_watson_store
+        tags: ["tw_pos_watson","ingestion"]
+  - name: ntaitg_integration__itg_tw_strategic_cust_hier
+    config:
+        alias: itg_tw_strategic_cust_hier
+        tags: ["tw_strategic_customer_hierarchy","ingestion"]
+
+  - name: ntaitg_integration__sdl_raw_tw_pos_7eleven
+    config:
+      alias: sdl_raw_tw_pos_7eleven
+      tags: ["tw_sfmc","transformation"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_poya
+    config:
+      alias: sdl_raw_tw_pos_poya
+      tags: ["tw_sfmc","transformation"]
+
+  - name: ntaitg_integration__itg_mds_hk_pos_product_mapping
+    config: 
+      alias: itg_mds_hk_pos_product_mapping
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_mds_hk_pos_promo_calendar
+    config: 
+      alias: itg_mds_hk_pos_promo_calendar
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_mds_hk_ref_pos_accounts
+    config: 
+      alias: itg_mds_hk_ref_pos_accounts
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_cust_prod_cd_ean_map
+    config: 
+      alias: itg_pos_cust_prod_cd_ean_map
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_prom_prc_map
+    config: 
+      alias: itg_pos_prom_prc_map
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__itg_pos_str_cd_sold_to_map
+    config: 
+      alias: itg_pos_str_cd_sold_to_map
+      tags: ["j_pa_grocery_inv","transformation"]
+
+  - name: ntaitg_integration__sdl_raw_tw_pos_carrefour
+    config: 
+      alias: sdl_raw_tw_pos_carrefour
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_ec
+    config: 
+      alias: sdl_raw_tw_pos_ec
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__itg_pos
+    config: 
+      alias: itg_pos
+      tags: ["tw_pos","transformation"]
+  - name: ntaitg_integration__itg_pos_invnt
+    config: 
+      alias: tg_pos_invnt
+      tags: ["tw_pos","transformation"]

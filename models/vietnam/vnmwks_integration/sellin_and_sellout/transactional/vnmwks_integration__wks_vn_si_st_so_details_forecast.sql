@@ -249,7 +249,7 @@ final as (
     asm_id::varchar(100) as asm_id,
     asm_name::varchar(200) as asm_name,
     dstrb_region::varchar(20) as dstrb_region,
-    outlet_name::varchar(100) as outlet_name,
+    outlet_name::varchar(500) as outlet_name,
     shop_type::varchar(100) as shop_type,
     group_hierarchy::varchar(100) as group_hierarchy,
     top_door_group::varchar(100) as top_door_group,

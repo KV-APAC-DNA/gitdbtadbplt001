@@ -1,0 +1,318 @@
+with itg_id_ps_weights as(
+	select * from {{ ref('idnitg_integration__itg_id_ps_weights') }}
+ ),
+--itg_mds_pacific_ps_weights as(
+--	select * from ref('ntaitg_integration__itg_mds_pacific_ps_weights') 
+--),
+--itg_mds_vn_ps_weights as(
+--	select * from ref('vnmitg_integration__itg_mds_vn_ps_weights') 
+--),
+--itg_mds_th_ps_weights as(
+--	select * from ref('thnitg_integration__itg_mds_th_ps_weights') 
+--),
+--itg_mds_ph_ps_weights as(
+--	select * from ref('phnitg_integration__itg_mds_ph_ps_weights') 
+--),
+--itg_mds_sg_ps_weights as(
+--	select * from ref('sgpitg_integration__itg_mds_sg_ps_weights') 
+--),
+--itg_mds_tw_ps_weights as(
+--	select * from ref('ntaitg_integration__itg_mds_tw_ps_weights') 
+--),
+--itg_mds_kr_ps_weights as(
+--	select * from ref('kroitg_integration__itg_mds_kr_ps_weights') 
+--),
+--itg_mds_hk_ps_weights as(
+--	select * from ref('hknitg_integration__itg_mds_hk_ps_weights') 
+--),
+--itg_mds_in_ps_weights  as(
+--	select * from ref('inditg_integration__itg_mds_in_ps_weights') 
+--),
+--itg_mds_jp_ps_weights  as(
+--	select * from ref('jpnitg_integration__itg_mds_jp_ps_weights') 
+--),
+--itg_mds_pacific_ps_weights as(
+--	select * from ref('ntaitg_integration__itg_mds_pacific_ps_weights') 
+--),
+transformed as(
+    SELECT 'Indonesia' AS market,
+		(
+			CASE 
+				WHEN (upper((itg_id_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					THEN 'OSA COMPLIANCE'::TEXT
+				WHEN (upper((itg_id_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					THEN 'Planogram compliance'::TEXT
+				WHEN (upper((itg_id_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					THEN 'Promo Compliance'::TEXT
+				WHEN (upper((itg_id_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					THEN 'soa compliance'::TEXT
+				WHEN (upper((itg_id_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					THEN 'sos compliance'::TEXT
+				ELSE upper((itg_id_ps_weights.kpi)::TEXT)
+				END
+			)::CHARACTER VARYING AS kpi
+		,itg_id_ps_weights.channel
+		,itg_id_ps_weights.retail_env AS retail_environment
+		,itg_id_ps_weights.weight
+	FROM itg_id_ps_weights
+
+	--union all
+--
+		--SELECT 'Vietnam' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_vn_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_vn_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_vn_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_vn_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_vn_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_vn_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_vn_ps_weights.channel
+	--,itg_mds_vn_ps_weights.retail_env AS retail_environment
+	--,itg_mds_vn_ps_weights.weight
+	--FROM itg_mds_vn_ps_weights
+--
+--
+	--union all
+--
+	--SELECT 'Thailand' AS market,
+	--(
+			--CASE 
+				--WHEN (upper((itg_mds_th_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					--THEN 'OSA COMPLIANCE'::TEXT
+				--WHEN (upper((itg_mds_th_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					--THEN 'Planogram compliance'::TEXT
+				--WHEN (upper((itg_mds_th_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					--THEN 'Promo Compliance'::TEXT
+				--WHEN (upper((itg_mds_th_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					--THEN 'soa compliance'::TEXT
+				--WHEN (upper((itg_mds_th_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					--THEN 'sos compliance'::TEXT
+				--ELSE upper((itg_mds_th_ps_weights.kpi)::TEXT)
+				--END
+			--)::CHARACTER VARYING AS kpi
+		--,itg_mds_th_ps_weights.channel
+		--,itg_mds_th_ps_weights.retail_env AS retail_environment
+		--,itg_mds_th_ps_weights.weight
+	--FROM itg_mds_th_ps_weights
+--
+--
+	--union all
+--
+	--SELECT 'Philippines' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_ph_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_ph_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_ph_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_ph_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_ph_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_ph_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_ph_ps_weights.channel
+	--,itg_mds_ph_ps_weights.retail_env AS retail_environment
+	--,itg_mds_ph_ps_weights.weight
+	--FROM itg_mds_ph_ps_weights
+--
+--
+	--union all
+--
+	--SELECT 'Singapore' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_sg_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_sg_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_sg_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_sg_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_sg_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_sg_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_sg_ps_weights.channel
+	--,itg_mds_sg_ps_weights.retail_env AS retail_environment
+	--,itg_mds_sg_ps_weights.weight
+	--FROM itg_mds_sg_ps_weights
+--
+--
+	--union all
+--
+	--SELECT 'Malaysia' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_my_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_my_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_my_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_my_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_my_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_my_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_my_ps_weights.channel
+	--,itg_mds_my_ps_weights.retail_env AS retail_environment
+	--,itg_mds_my_ps_weights.weight
+	--FROM itg_mds_my_ps_weights
+--
+	--union all
+--
+	--SELECT 'Taiwan' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_tw_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_tw_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_tw_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_tw_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_tw_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_tw_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_tw_ps_weights.channel
+	--,itg_mds_tw_ps_weights.retail_env AS retail_environment
+	--,itg_mds_tw_ps_weights.weight
+	--FROM itg_mds_tw_ps_weights
+--
+--
+	--union all
+--
+	--SELECT 'Korea' AS market,
+	--(
+		--CASE 
+			--WHEN (upper((itg_mds_kr_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+				--THEN 'OSA COMPLIANCE'::TEXT
+			--WHEN (upper((itg_mds_kr_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+				--THEN 'Planogram compliance'::TEXT
+			--WHEN (upper((itg_mds_kr_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+				--THEN 'Promo Compliance'::TEXT
+			--WHEN (upper((itg_mds_kr_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+				--THEN 'soa compliance'::TEXT
+			--WHEN (upper((itg_mds_kr_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+				--THEN 'sos compliance'::TEXT
+			--ELSE upper((itg_mds_kr_ps_weights.kpi)::TEXT)
+			--END
+		--)::CHARACTER VARYING AS kpi
+	--,itg_mds_kr_ps_weights.channel
+	--,itg_mds_kr_ps_weights.retail_env AS retail_environment
+	--,itg_mds_kr_ps_weights.weight
+	--FROM itg_mds_kr_ps_weights
+--
+--
+	--UNION ALL
+--						
+	--SELECT 'Hong Kong' AS market,
+	--(
+			--CASE 
+				--WHEN (upper((itg_mds_hk_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					--THEN 'OSA COMPLIANCE'::TEXT
+				--WHEN (upper((itg_mds_hk_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					--THEN 'Planogram compliance'::TEXT
+				--WHEN (upper((itg_mds_hk_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					--THEN 'Promo Compliance'::TEXT
+				--WHEN (upper((itg_mds_hk_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					--THEN 'soa compliance'::TEXT
+				--WHEN (upper((itg_mds_hk_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					--THEN 'sos compliance'::TEXT
+				--ELSE upper((itg_mds_hk_ps_weights.kpi)::TEXT)
+				--END
+			--)::CHARACTER VARYING AS kpi
+		--,itg_mds_hk_ps_weights.channel
+		--,itg_mds_hk_ps_weights.retail_env AS retail_environment
+		--,itg_mds_hk_ps_weights.weight
+	--FROM itg_mds_hk_ps_weights
+--
+	--UNION ALL
+--					
+	--SELECT 'Japan' AS market,
+	--(
+			--CASE 
+				--WHEN (upper((itg_mds_jp_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					--THEN 'OSA COMPLIANCE'::TEXT
+				--WHEN (upper((itg_mds_jp_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					--THEN 'Planogram compliance'::TEXT
+				--WHEN (upper((itg_mds_jp_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					--THEN 'Promo Compliance'::TEXT
+				--WHEN (upper((itg_mds_jp_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					--THEN 'soa compliance'::TEXT
+				--WHEN (upper((itg_mds_jp_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					--THEN 'sos compliance'::TEXT
+				--ELSE upper((itg_mds_jp_ps_weights.kpi)::TEXT)
+				--END
+			--)::CHARACTER VARYING AS kpi
+		--,itg_mds_jp_ps_weights.channel
+		--,itg_mds_jp_ps_weights.retail_env AS retail_environment
+		--,itg_mds_jp_ps_weights.weight
+	--FROM itg_mds_jp_ps_weights
+--
+	--UNION ALL
+--				
+	--SELECT 'India' AS market
+		--,(
+			--CASE 
+				--WHEN (upper((itg_mds_in_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					--THEN 'OSA COMPLIANCE'::TEXT
+				--WHEN (upper((itg_mds_in_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					--THEN 'Planogram compliance'::TEXT
+				--WHEN (upper((itg_mds_in_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					--THEN 'Promo Compliance'::TEXT
+				--WHEN (upper((itg_mds_in_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					--THEN 'soa compliance'::TEXT
+				--WHEN (upper((itg_mds_in_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					--THEN 'sos compliance'::TEXT
+				--ELSE upper((itg_mds_in_ps_weights.kpi)::TEXT)
+				--END
+			--)::CHARACTER VARYING AS kpi
+		--,itg_mds_in_ps_weights.channel
+		--,itg_mds_in_ps_weights.retail_env AS retail_environment
+		--,itg_mds_in_ps_weights.weight
+	--FROM itg_mds_in_ps_weights
+--
+	--union all
+--
+	--SELECT itg_mds_pacific_ps_weights.market
+		--,(
+			--CASE 
+				--WHEN (upper((itg_mds_pacific_ps_weights.kpi)::TEXT) = 'OOS Compliance'::TEXT)
+					--THEN 'OSA COMPLIANCE'::TEXT
+				--WHEN (upper((itg_mds_pacific_ps_weights.kpi)::TEXT) = 'Planogram'::TEXT)
+					--THEN 'Planogram compliance'::TEXT
+				--WHEN (upper((itg_mds_pacific_ps_weights.kpi)::TEXT) = 'promo'::TEXT)
+					--THEN 'Promo Compliance'::TEXT
+				--WHEN (upper((itg_mds_pacific_ps_weights.kpi)::TEXT) = 'Share of Assortment'::TEXT)
+					--THEN 'soa compliance'::TEXT
+				--WHEN (upper((itg_mds_pacific_ps_weights.kpi)::TEXT) = 'Share of Shelf'::TEXT)
+					--THEN 'sos compliance'::TEXT
+				--ELSE upper((itg_mds_pacific_ps_weights.kpi)::TEXT)
+				--END
+			--)::CHARACTER VARYING AS kpi
+		--,itg_mds_pacific_ps_weights.channel
+		--,itg_mds_pacific_ps_weights.retail_env AS retail_environment
+		--,itg_mds_pacific_ps_weights.weight
+	--FROM itg_mds_pacific_ps_weights
+)
+select * from transformed
