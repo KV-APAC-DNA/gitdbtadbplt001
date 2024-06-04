@@ -46,11 +46,9 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-    - name: sdl_mds_kr_sales_cust_prod_master
     - name: sdl_sales_cust_prod_reject_master
     - name: sdl_kr_sales_target_am_cust_link
     - name: sdl_kr_sales_target_am_sls_grp
-    - name: sdl_mds_kr_sales_store_map
     - name: sdl_tsi_target_data
       tags: ["twsi_target_ingestion","ingestion"]
       tests:

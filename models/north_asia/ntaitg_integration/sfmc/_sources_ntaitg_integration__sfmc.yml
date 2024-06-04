@@ -9,8 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-        - name: sdl_kr_sfmc_naver_data
-          tags: ["",""]
+ 
         - name: sdl_kr_sfmc_naver_data_additional
           tags: ["mds_sdl_itg_load", "gt_sellout_daiso", "ingestion"]
           tests:

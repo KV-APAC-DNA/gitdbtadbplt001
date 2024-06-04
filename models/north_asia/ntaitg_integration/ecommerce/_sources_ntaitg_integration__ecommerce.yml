@@ -60,8 +60,6 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-    - name: sdl_kr_ecom_coupang
-      tags: [""]
     - name: sdl_kr_ecommerce_trexi_sellout
       tags: ["j_kr_ecommerce_ebay_etl_framework", "ingestion"]
       tests:
@@ -83,10 +81,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-    - name: sdl_kr_ecommerce_tca_sellout
-      tags: [""]
-    - name: sdl_kr_ecommerce_unitoa_sellout
-      tags: [""]
     - name: sdl_kr_ecom_dstr_sellout_stock
       tags: ["kr_ecom_regional_inv_health", "ingestion"]
       tests:
@@ -119,11 +113,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-    - name: sdl_kr_ecommerce_offtake_coupang_transaction
-      tags: ["j_kr_generic_query_execution", "ingestion"]
-
-    - name: sdl_kr_ecommerce_offtake_sales_ebay
-      tags: ["j_kr_generic_query_execution", "ingestion"]
 
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
