@@ -1,0 +1,194 @@
+version: 2
+
+sources:
+  - name: idnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: idnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_id_ref_mapping_channel
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["dist_group","type_dist_id"]
+              name: TRATBL_sdl_mds_id_ref_mapping_channel__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["dist_group","effective_from","type_dist_id"]
+              name: TRATBL_sdl_mds_id_ref_mapping_channel__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name: sdl_mds_id_lav_customer_hierarchy
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["customer_id"]
+              name: TRATBL_sdl_mds_id_lav_customer_hierarchy__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["customer_id","effective_from"]
+              name: TRATBL_sdl_mds_id_lav_customer_hierarchy__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_mds_id_ref_distributor_group
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["distributor_code"]
+              name: TRATBL_sdl_mds_id_ref_distributor_group__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["distributor_code"]
+              name: TRATBL_sdl_mds_id_ref_distributor_group__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name: sdl_mds_id_ref_mapping_product
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["product_key"]
+              name: TRATBL_sdl_mds_id_ref_mapping_product__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["product_key","effective_from"]
+              name: TRATBL_sdl_mds_id_ref_mapping_product__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+    - name: sdl_mds_id_ref_province
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["prov_id"]
+              name: TRATBL_sdl_mds_id_ref_province__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["prov_id"]
+              name: TRATBL_sdl_mds_id_ref_province__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_mds_id_distributor_group_ingest_include
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["enable_adhoc_load","code","name","source"]
+              name: TRATBL_sdl_mds_id_distributor_group_ingest_include__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["source"]
+              name: TRATBL_sdl_mds_id_distributor_group_ingest_include__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_mds_id_ref_salesman
+      tags: ["id_mds_itg_load","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["salesman_id","sales_office_id_jnj"]
+              name: TRATBL_sdl_mds_id_ref_salesman__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["key_field","effective_from"]
+              name: TRATBL_sdl_mds_id_ref_salesman__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_mds_id_distributor_customer_update
+      tags: ["id_mds_sdl_itg_load_dist_cust_dim","ingestion"]
+      tests:
+          - test_null__ff:
+              not_null_columns: ["cust_id","sales_office_id_jnj"]
+              name: TRATBL_sdl_mds_id_distributor_customer_update__null_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["effective_to","cust_id","sales_office_id_jnj"]
+              name: TRATBL_sdl_mds_id_distributor_customer_update__duplicate_test
+              config:
+                store_failures: true
+                schema: idnwks_integration
+
+    - name: sdl_distributor_customer_dim
+      tags: ["id_cd_server_data","transformation"]
+      # tests:
+      #   - test_null:
+      #       select_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       not_null_columns: ["account","descp","plu", "branch_name"]  
+      #       name: TRATBL_sdl_id_pos_daily_idm_sellout__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: idnwks_integration
+      #   - test_duplicate:
+      #       select_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       group_by_columns: ["filename", "pos_cust", "account", "kode_branch", "branch_name", "tgl", "plu", "descp", "type", "value", "yearmonth"] 
+      #       name: TRATBL_sdl_id_pos_daily_idm_sellout__duplicate_test
+      #       config:
+      #         store_failures: true
+      #         schema: idnwks_integration
+    - name: sdl_all_distributor_sellin_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+    - name: sdl_all_distributor_sellout_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+
+  - name: idnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_time_dim
+      tags: ["","ingestion"]
+    - name: edw_channelgroup_metadata
+    - name: edw_all_distributor_lppb_fact
+
+  - name: idnitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_all_non_ivy_distributor_sellout_sales_fact
+      tags: ["","ingestion"]
+
+  - name: idnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_itg_all_distributor_stock
+      tags: ["id_dist_control_pre_req_fact","ingestion"]
+    - name: wks_itg_all_distributor_sellin_sellout_fact
+      tags: ["id_dist_control_pre_req_fact","ingestion"]
