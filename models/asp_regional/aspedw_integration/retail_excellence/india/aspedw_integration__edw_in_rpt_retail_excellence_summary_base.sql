@@ -120,7 +120,7 @@ final as (
     select 
     fisc_yr::numeric(18,0) AS fisc_yr,
     fisc_per::numeric(18,0) AS fisc_per,
-    cluster::VARCHAR(100) AS cluster,
+    cluster::VARCHAR(100) as cluster,
     market::VARCHAR(5) AS market,
     flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
     data_src::VARCHAR(8) AS data_src,
