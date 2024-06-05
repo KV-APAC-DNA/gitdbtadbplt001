@@ -1,10 +1,3 @@
---Overwriding default SQL header as we dont want to change timezone to Singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --Import CTE
 with cnsc_edw_rpt_retail_excellence as (
     select * from {{ source('chnedw_integration', 'v_edw_rpt_retail_excellence_cnsc') }}
@@ -120,6 +113,79 @@ Select FISC_YR,
        product_code
 
 )
-
+,
+final as (
+    select
+    fisc_yr::VARCHAR(16) AS fisc_yr,
+fisc_per::numeric(18,0) AS fisc_per,
+cluster::VARCHAR(100) as cluster,
+market::VARCHAR(50) AS market,
+flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
+data_src::VARCHAR(8) AS data_src,
+distributor_code::VARCHAR(100) AS distributor_code,
+distributor_name::VARCHAR(356) AS distributor_name,
+sell_out_channel::VARCHAR(150) AS sell_out_channel,
+region::VARCHAR(150) AS region,
+zone_name::VARCHAR(150) AS zone_name,
+city::VARCHAR(2) AS city,
+retail_environment::VARCHAR(150) AS retail_environment,
+prod_hier_l1::VARCHAR(50) AS prod_hier_l1,
+prod_hier_l2::VARCHAR(1) AS prod_hier_l2,
+prod_hier_l3::VARCHAR(50) AS prod_hier_l3,
+prod_hier_l4::VARCHAR(50) AS prod_hier_l4,
+prod_hier_l5::VARCHAR(1) AS prod_hier_l5,
+prod_hier_l6::VARCHAR(1) AS prod_hier_l6,
+prod_hier_l7::VARCHAR(1) AS prod_hier_l7,
+prod_hier_l8::VARCHAR(1) AS prod_hier_l8,
+prod_hier_l9::VARCHAR(1) AS prod_hier_l9,
+global_product_franchise::VARCHAR(30) AS global_product_franchise,
+global_product_brand::VARCHAR(30) AS global_product_brand,
+global_product_sub_brand::VARCHAR(100) AS global_product_sub_brand,
+global_product_segment::VARCHAR(50) AS global_product_segment,
+global_product_subsegment::VARCHAR(100) AS global_product_subsegment,
+global_product_category::VARCHAR(50) AS global_product_category,
+global_product_subcategory::VARCHAR(50) AS global_product_subcategory,
+store_code::VARCHAR(100) AS store_code,
+product_code::VARCHAR(150) AS product_code,
+sales_value::NUMERIC(38,6) AS sales_value,
+sales_qty::NUMERIC(38,6) AS sales_qty,
+avg_sales_qty::NUMERIC(38,6) AS avg_sales_qty,
+lm_sales::NUMERIC(38,6) AS lm_sales,
+lm_sales_qty::NUMERIC(38,6) AS lm_sales_qty,
+lm_avg_sales_qty::NUMERIC(38,6) AS lm_avg_sales_qty,
+p3m_sales::NUMERIC(38,6) AS p3m_sales,
+p3m_qty::NUMERIC(38,6) AS p3m_qty,
+p3m_avg_qty::NUMERIC(38,6) AS p3m_avg_qty,
+p6m_sales::NUMERIC(38,6) AS p6m_sales,
+p6m_qty::NUMERIC(38,6) AS p6m_qty,
+p6m_avg_qty::NUMERIC(38,6) AS p6m_avg_qty,
+p12m_sales::NUMERIC(38,6) AS p12m_sales,
+p12m_qty::NUMERIC(38,6) AS p12m_qty,
+p12m_avg_qty::NUMERIC(38,6) AS p12m_avg_qty,
+f3m_sales::NUMERIC(38,6) AS f3m_sales,
+f3m_qty::NUMERIC(38,6) AS f3m_qty,
+f3m_avg_qty::NUMERIC(38,6) AS f3m_avg_qty,
+list_price::NUMERIC(38,6) AS list_price,
+lm_sales_flag::numeric(18,0) AS lm_sales_flag,
+p3m_sales_flag::numeric(18,0) AS p3m_sales_flag,
+p6m_sales_flag::numeric(18,0) AS p6m_sales_flag,
+p12m_sales_flag::numeric(18,0) AS p12m_sales_flag,
+mdp_flag::numeric(18,0) AS mdp_flag,
+size_of_price_lm::NUMERIC(38,14) AS size_of_price_lm,
+size_of_price_p3m::NUMERIC(38,14) AS size_of_price_p3m,
+size_of_price_p6m::NUMERIC(38,14) AS size_of_price_p6m,
+size_of_price_p12m::NUMERIC(38,14) AS size_of_price_p12m,
+sales_value_list_price::NUMERIC(38,12) AS sales_value_list_price,
+lm_sales_lp::NUMERIC(38,12) AS lm_sales_lp,
+p3m_sales_lp::NUMERIC(38,12) AS p3m_sales_lp,
+p6m_sales_lp::NUMERIC(38,12) AS p6m_sales_lp,
+p12m_sales_lp::NUMERIC(38,12) AS p12m_sales_lp,
+size_of_price_lm_lp::NUMERIC(38,20) AS size_of_price_lm_lp,
+size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
+size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
+size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
+target_complaince::numeric(18,0) AS target_complaince
+from cnsc_edw_rpt_retail_excellence_summary_base
+)
 --Final select
-select * from cnsc_edw_rpt_retail_excellence_summary_base 
+select * from  final 
