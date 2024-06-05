@@ -366,21 +366,21 @@ models:
       phledw_access:
         +materialized: view
         +schema: PHLEDW_ACCESS
-    north_asia:
+    indonesia:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      ntaitg_integration:
+      idnedw_integration:
         +materialized: table
         +transient: false
-        +schema: NTAITG_INTEGRATION
-      ntaedw_integration:
+        +schema: IDNEDW_INTEGRATION
+      idnitg_integration:
         +materialized: table
         +transient: false
-        +schema: NTAEDW_INTEGRATION
-      ntawks_integration:
+        +schema: IDNITG_INTEGRATION
+      idnwks_integration:
         +materialized: table
-        +schema: NTAWKS_INTEGRATION
-      ntaedw_access:
+        +schema: IDNWKS_INTEGRATION
+      idnedw_access:
         +materialized: view
-        +schema: NTAEDW_ACCESS
+        +schema: IDNEDW_ACCESS

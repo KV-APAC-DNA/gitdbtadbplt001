@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_indonesia_lppb_analysis
+    config:
+      alias: edw_indonesia_lppb_analysis
+      tags: ["id_lppb_analysis","transformation"]
