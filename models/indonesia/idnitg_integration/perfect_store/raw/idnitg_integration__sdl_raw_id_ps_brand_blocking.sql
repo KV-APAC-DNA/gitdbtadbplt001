@@ -8,7 +8,7 @@
 
 with source as
 (
-    select * from {{source('idnsdl_raw', 'sdl_raw_id_ps_brand_blocking')}}
+    select * from {{source('idnsdl_raw', 'sdl_id_ps_brand_blocking')}}
 ),
 final as
 (

@@ -28,7 +28,7 @@ models:
   - name: idnitg_integration__itg_distributor_customer_dim
     config:
       alias: itg_distributor_customer_dim
-      tags: ["id_sellout_sales","transformation"]
+      tags: ["id_mds_sdl_itg_load_dist_cust_dim","ingestion"]
 
   - name: idnitg_integration__itg_mds_id_lav_inventory_intransit
     config:
