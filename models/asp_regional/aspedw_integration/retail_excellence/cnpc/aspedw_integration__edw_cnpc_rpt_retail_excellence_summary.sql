@@ -81,7 +81,7 @@ SELECT FISC_YR,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
- current_timestamp()::date 		--// SYSDATE
+ current_timestamp()::date 	as CRT_DTTM	--// SYSDATE
 FROM cnpc_edw_rpt_retail_excellence_summary_base		--// FROM CN_EDW.CNPC_EDW_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
 WHERE  Market='China Personal Care' AND data_src is not null and
     RETAIL_ENVIRONMENT not in (select distinct parameter_value from itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='CNPC') and		--//     RETAIL_ENVIRONMENT not in (select distinct parameter_value from rg_itg.itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='CNPC') and
