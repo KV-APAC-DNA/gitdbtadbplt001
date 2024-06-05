@@ -8,14 +8,14 @@
         delete from {{this}} itg
         where (itg.outlet_id, itg.merchandiser_id, itg.input_date, upper(itg.franchise), coalesce(itg.photo_link, 'NA')) 
         in (select distinct trim(sdl.outlet_id), trim(sdl.merchandiser_id), to_date(trim(sdl.input_date)), upper(trim(sdl.franchise)), coalesce(trim(sdl.photo_link), 'NA') 
-        from {{source('idnsdl_raw', 'sdl_raw_id_ps_brand_blocking')}} SDL);
+        from {{source('idnsdl_raw', 'sdl_id_ps_brand_blocking')}} SDL);
         {% endif %}"
     )
 }}
 
 with source as 
 (
-    select * from  {{source('idnsdl_raw', 'sdl_raw_id_ps_brand_blocking')}}
+    select * from  {{source('idnsdl_raw', 'sdl_id_ps_brand_blocking')}}
 ),
 final as
 (
