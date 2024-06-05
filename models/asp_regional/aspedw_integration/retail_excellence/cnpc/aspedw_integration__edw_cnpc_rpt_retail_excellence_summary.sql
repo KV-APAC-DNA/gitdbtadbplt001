@@ -1,10 +1,3 @@
---Overwriding default SQL header as we dont want to change timezone to Singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --Import CTE
 with cnpc_edw_rpt_retail_excellence_summary_base as (
     select * from {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_summary_base') }}
@@ -16,7 +9,6 @@ itg_query_parameters as (
 
 --Final CTE
 cnpc_edw_rpt_retail_excellence_summary as (
-
 SELECT FISC_YR,
        FISC_PER,
        CLUSTER,
@@ -133,8 +125,83 @@ GROUP BY FISC_YR,
       MDP_FLAG,
 	  TARGET_COMPLAINCE
 
+),
+final as(
+    select
+    fisc_yr::VARCHAR(11) as fisc_yr
+    ,fisc_per::numeric(18,0) as fisc_per        
+    ,cluster::VARCHAR(100) as cluster
+    ,market::VARCHAR(50) as market  
+    ,data_src::VARCHAR(14) as   data_src    
+    ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    
+    ,distributor_code::VARCHAR(500) as  distributor_code    
+    ,distributor_name::VARCHAR(500) as  distributor_name    
+    ,sell_out_channel::VARCHAR(255) as  sell_out_channel    
+    ,region::VARCHAR(255) as    region  
+    ,zone_name::VARCHAR(510) as zone_name  
+    ,city::VARCHAR(255)  as city    
+    ,retail_environment::VARCHAR(500) as retail_environment    
+    ,prod_hier_l1::VARCHAR(100) as  prod_hier_l1    
+    ,prod_hier_l2::VARCHAR(50) as   prod_hier_l2    
+    ,prod_hier_l3::VARCHAR(255) as  prod_hier_l3    
+    ,prod_hier_l4::VARCHAR(255) as  prod_hier_l4    
+    ,prod_hier_l5::VARCHAR(255) as  prod_hier_l5    
+    ,prod_hier_l6::VARCHAR(255) as  prod_hier_l6    
+    ,prod_hier_l7::VARCHAR(50) as   prod_hier_l7    
+    ,prod_hier_l8::VARCHAR(50) as   prod_hier_l8    
+    ,prod_hier_l9::VARCHAR(50) as   prod_hier_l9    
+    ,global_product_franchise::VARCHAR(30) as   global_product_franchise    
+    ,global_product_brand::VARCHAR(30) as   global_product_brand    
+    ,global_product_sub_brand::VARCHAR(100) as  global_product_sub_brand    
+    ,global_product_segment::VARCHAR(200) as    global_product_segment  
+    ,global_product_subsegment::VARCHAR(100) as global_product_subsegment  
+    ,global_product_category::VARCHAR(200) as global_product_category      
+    ,global_product_subcategory::VARCHAR(200) as global_product_subcategory    
+    ,lm_sales_flag::VARCHAR(1) as   lm_sales_flag  
+    ,p3m_sales_flag::VARCHAR(1) as  p3m_sales_flag  
+    ,p6m_sales_flag::VARCHAR(1) as  p6m_sales_flag  
+    ,p12m_sales_flag::VARCHAR(1) as p12m_sales_flag
+    ,mdp_flag::VARCHAR(1) as    mdp_flag    
+    ,target_complaince::numeric(18,0) as target_complaince      
+    ,sales_value::NUMERIC(38,6) as  sales_value
+    ,sales_qty::NUMERIC(38,6) as sales_qty      
+    ,avg_sales_qty::NUMERIC(38,6) as avg_sales_qty      
+    ,lm_sales::NUMERIC(38,6) as lm_sales    
+    ,lm_sales_qty::NUMERIC(38,6) as lm_sales_qty    
+    ,lm_avg_sales_qty::NUMERIC(38,6) as lm_avg_sales_qty    
+    ,p3m_sales::NUMERIC(38,6) as p3m_sales      
+    ,p3m_qty::NUMERIC(38,6) as  p3m_qty
+    ,p3m_avg_qty::NUMERIC(38,6) as  p3m_avg_qty
+    ,p6m_sales::NUMERIC(38,6) as p6m_sales      
+    ,p6m_qty::NUMERIC(38,6) as  p6m_qty
+    ,p6m_avg_qty::NUMERIC(38,6) as  p6m_avg_qty
+    ,p12m_sales::NUMERIC(38,6) as p12m_sales        
+    ,p12m_qty::NUMERIC(38,6) as p12m_qty    
+    ,p12m_avg_qty::NUMERIC(38,6) as p12m_avg_qty    
+    ,f3m_sales::NUMERIC(38,6) as    f3m_sales  
+    ,f3m_qty::NUMERIC(38,6) as f3m_qty      
+    ,f3m_avg_qty::NUMERIC(38,6) as  f3m_avg_qty
+    ,size_of_price_lm::NUMERIC(38,14) as    size_of_price_lm    
+    ,size_of_price_p3m::NUMERIC(38,14) as size_of_price_p3m    
+    ,size_of_price_p6m::NUMERIC(38,14) as   size_of_price_p6m  
+    ,size_of_price_p12m::NUMERIC(38,14) as  size_of_price_p12m  
+    ,lm_sales_flag_count::numeric(38,0)  as lm_sales_flag_count
+    ,p3m_sales_flag_count::numeric(38,0) as p3m_sales_flag_count        
+    ,p6m_sales_flag_count::numeric(38,0) as p6m_sales_flag_count        
+    ,p12m_sales_flag_count::numeric(38,0) as p12m_sales_flag_count  
+    ,mdp_flag_count::numeric(38,0)   as mdp_flag_count  
+    ,list_price::NUMERIC(20,4) as list_price        
+    ,sales_value_list_price::NUMERIC(38,6) as   sales_value_list_price  
+    ,lm_sales_lp::NUMERIC(38,6) as  lm_sales_lp
+    ,p3m_sales_lp::NUMERIC(38,6) as p3m_sales_lp    
+    ,p6m_sales_lp::NUMERIC(38,6) as p6m_sales_lp    
+    ,p12m_sales_lp::NUMERIC(38,6) as p12m_sales_lp      
+    ,size_of_price_lm_lp::NUMERIC(38,14) as size_of_price_lm_lp
+    ,size_of_price_p3m_lp::NUMERIC(38,14) as size_of_price_p3m_lp      
+    ,size_of_price_p6m_lp::NUMERIC(38,14) as size_of_price_p6m_lp      
+    ,size_of_price_p12m_lp::NUMERIC(38,14) as size_of_price_p12m_lp    
+    ,crt_dttm :: date as crt_dttm
+    from cnpc_edw_rpt_retail_excellence_summary
 )
-
-
 --Final select
-select * from cnpc_edw_rpt_retail_excellence_summary 
+select * from final 
