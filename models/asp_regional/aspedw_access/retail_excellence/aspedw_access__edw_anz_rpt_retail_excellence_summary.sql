@@ -1,5 +1,5 @@
 with edw_anz_rpt_retail_excellence_summary as (
-    select * from {{ ref('aspedw_integration__edw_rpt_retail_excellence_summary_anz') }}
+    select * from {{ ref('aspedw_integration__edw_anz_rpt_retail_excellence_summary') }}
 ),
 
 final as (
