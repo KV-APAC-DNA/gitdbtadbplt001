@@ -108,6 +108,8 @@ sources:
       - name: edw_rpt_regional_sellout_offtake
       - name: edw_vw_cal_retail_excellence_dim
       - name: edw_calendar_dim
+      - name: edw_company_dim
+      
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

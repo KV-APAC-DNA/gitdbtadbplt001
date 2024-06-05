@@ -29,7 +29,7 @@ edw_vw_pop6_products as (
 sg_rpt_retail_excellence_mdp  as (
 SELECT DISTINCT MDP.*,
        COM.*,
-       SYSDATE AS CRT_DTTM
+       SYSDATE() AS CRT_DTTM
 FROM (SELECT CAST(TARGET.YEAR AS INTEGER) AS FISC_YR,
              TARGET.MNTH_ID AS FISC_PER,
              COALESCE(ACTUAL.CNTRY_NM,'Singapore') AS MARKET,
@@ -195,7 +195,7 @@ FROM (SELECT CAST(TARGET.YEAR AS INTEGER) AS FISC_YR,
       
         LEFT JOIN (SELECT * from product_key_attribute
                       where ctry_nm = 'Singapore') PROD_KEY1 ON LTRIM (COALESCE (ACTUAL.MAPPED_SKU_CD,TARGET.MAPPED_SKU_CD),'0') = LTRIM (PROD_KEY1.SKU,'0')) MDP,
-     (SELECT DISTINCT CLUSTER
+     (SELECT DISTINCT "cluster"
       FROM edw_company_dim
       WHERE CTRY_GROUP = 'Singapore') COM
 WHERE FISC_PER <= (SELECT MAX(mnth_id)
@@ -205,7 +205,7 @@ sg_rpt_retail_excellence_non_mdp as
 (
 SELECT DISTINCT NON_MDP.*,
        COM.*,
-       SYSDATE AS CRT_DTTM
+       SYSDATE() AS CRT_DTTM
 FROM (SELECT CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
              CAST(ACTUAL.MNTH_ID AS INTEGER) AS MNTH_ID,
              ACTUAL.CNTRY_NM AS MARKET,
@@ -373,7 +373,7 @@ FROM (SELECT CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
       
         LEFT JOIN (SELECT * from product_key_attribute
                       where ctry_nm = 'Singapore') PROD_KEY1 ON LTRIM (ACTUAL.MAPPED_SKU_CD,'0') = LTRIM (PROD_KEY1.sku,'0')) NON_MDP,
-     (SELECT DISTINCT CLUSTER
+     (SELECT DISTINCT "cluster"
       FROM edw_company_dim
       WHERE CTRY_GROUP = 'Singapore') COM
 ),

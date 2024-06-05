@@ -1,5 +1,6 @@
 with EDW_PRODUCT_KEY_ATTRIBUTES as (
-    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
+      select * from {{ source('aspedw_integration','edw_product_key_attributes') }}
+
 ),
 
 transformation as(

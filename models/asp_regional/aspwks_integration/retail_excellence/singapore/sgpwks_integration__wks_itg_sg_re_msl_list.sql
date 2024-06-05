@@ -1,10 +1,4 @@
 --overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --import cte
 with itg_re_msl_input_definition as (
     select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
