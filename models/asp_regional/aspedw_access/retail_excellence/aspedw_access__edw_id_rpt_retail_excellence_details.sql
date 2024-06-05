@@ -4,7 +4,7 @@ with edw_id_rpt_retail_excellence_details as (
 
 final as (
     select
-      fisc_yr as "fisc_yr",
+    fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
 cluster as "cluster",
 market as "market",
@@ -134,7 +134,7 @@ size_of_price_p3m_lp as "size_of_price_p3m_lp",
 size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
 soldto_code as "soldto_code",
-crt_dttm as "crt_dttm"  
+crt_dttm as "crt_dttm" 
     from edw_id_rpt_retail_excellence_details
 )
 

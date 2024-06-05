@@ -1,5 +1,5 @@
-with edw_in_rpt_retail_excellence_details as (
-    select * from {{ ref('aspedw_integration__edw_in_rpt_retail_excellence_details') }}
+with edw_sg_rpt_retail_excellence_details as (
+    select * from {{ ref('aspedw_integration__edw_rpt_retail_excellence_details_sg') }}
 ),
 
 final as (
@@ -135,7 +135,7 @@ size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
 soldto_code as "soldto_code",
 crt_dttm as "crt_dttm"
-      from edw_in_rpt_retail_excellence_details
+    from edw_sg_rpt_retail_excellence_details
 )
 
 select * from final

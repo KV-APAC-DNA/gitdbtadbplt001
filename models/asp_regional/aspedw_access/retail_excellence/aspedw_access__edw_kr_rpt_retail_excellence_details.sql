@@ -1,10 +1,10 @@
-with edw_in_rpt_retail_excellence_details as (
-    select * from {{ ref('aspedw_integration__edw_in_rpt_retail_excellence_details') }}
+with edw_kr_rpt_retail_excellence_details as (
+    select * from {{ ref('aspedw_integration__edw_rpt_retail_excellence_details_kr') }}
 ),
 
 final as (
     select
-      fisc_yr as "fisc_yr",
+     fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
 cluster as "cluster",
 market as "market",
@@ -133,9 +133,9 @@ size_of_price_lm_lp as "size_of_price_lm_lp",
 size_of_price_p3m_lp as "size_of_price_p3m_lp",
 size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
-soldto_code as "soldto_code",
+sold_to_code as "sold_to_code",
 crt_dttm as "crt_dttm"
-      from edw_in_rpt_retail_excellence_details
+      from edw_kr_rpt_retail_excellence_details
 )
 
 select * from final

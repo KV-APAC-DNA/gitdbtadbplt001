@@ -1,5 +1,5 @@
-with edw_in_rpt_retail_excellence_details as (
-    select * from {{ ref('aspedw_integration__edw_in_rpt_retail_excellence_details') }}
+with edw_th_rpt_retail_excellence_details as (
+    select * from {{ ref('aspedw_integration__edw_rpt_retail_excellence_details_th') }}
 ),
 
 final as (
@@ -85,8 +85,6 @@ global_product_category as "global_product_category",
 global_product_subcategory as "global_product_subcategory",
 global_put_up_description as "global_put_up_description",
 ean as "ean",
-sku_code as "sku_code",
-sku_description as "sku_description",
 pka_product_key as "pka_product_key",
 pka_product_key_description as "pka_product_key_description",
 sales_value as "sales_value",
@@ -135,7 +133,7 @@ size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
 soldto_code as "soldto_code",
 crt_dttm as "crt_dttm"
-      from edw_in_rpt_retail_excellence_details
+    from edw_th_rpt_retail_excellence_details
 )
 
 select * from final

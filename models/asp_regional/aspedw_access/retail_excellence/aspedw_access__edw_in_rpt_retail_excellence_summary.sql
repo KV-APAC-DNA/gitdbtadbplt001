@@ -76,7 +76,7 @@ size_of_price_lm_lp as "size_of_price_lm_lp",
 size_of_price_p3m_lp as "size_of_price_p3m_lp",
 size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
-sysdate() as "sysdate()"
+crt_dttm as "crt_dttm"
     from edw_in_rpt_retail_excellence_summary
 )
 
