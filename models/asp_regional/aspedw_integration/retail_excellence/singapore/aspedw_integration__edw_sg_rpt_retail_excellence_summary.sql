@@ -87,11 +87,11 @@ current_timestamp()::date  as crt_dttm
                                     FROM edw_sg_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
 AND   FISC_PER <= (SELECT MAX(fisc_per)
                    FROM edw_sg_rpt_retail_excellence_summary_base)		--//                    FROM OS_EDW.EDW_SG_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE)
-AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN ()
-GROUP BY FISC_YR,SELECT DISTINCT parameter_value
+AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
                                  FROM itg_query_parameters
                                  WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
-                                 AND   country_code = 'SG'
+                                 AND   country_code = 'SG')
+GROUP BY FISC_YR,
        FISC_PER,
        CLUSTER,
        MARKET,
