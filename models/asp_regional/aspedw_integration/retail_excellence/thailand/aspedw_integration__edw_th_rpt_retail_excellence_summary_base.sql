@@ -1,13 +1,6 @@
---Overwriding default SQL header as we dont want to change timezone to Singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --Import CTE
-with v_edw_rpt_anz_re as (
-    select * from {{ source('pcfedw_integration', 'v_edw_rpt_anz_re') }}
+with v_edw_rpt_retail_excellence_th as (
+    select * from {{ source('thaedw_integration', 'v_edw_rpt_retail_excellence_th') }}
 ),
 --Logical CTE
 
@@ -18,28 +11,28 @@ Select FISC_YR,
        CLUSTER,
        MARKET,
               MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')
-            ||nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
-           nvl(PROD_HIER_L3,'ph3')||nvl(PROD_HIER_L4,'ph4')||
+            ||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
+           nvl(PROD_HIER_L3,'ph3')||nvl(PROD_HIER_L4,'ph4')||nvl(PROD_HIER_L5,'ph5')||
            nvl(GLOBAL_PRODUCT_FRANCHISE,'gpf')||nvl(GLOBAL_PRODUCT_BRAND,'gpb')||
            nvl(GLOBAL_PRODUCT_SUB_BRAND,'gpsb')||nvl(GLOBAL_PRODUCT_SEGMENT,'gps')||
            nvl(GLOBAL_PRODUCT_SUBSEGMENT,'gpss')||nvl(GLOBAL_PRODUCT_CATEGORY,'gpc')||
            nvl(GLOBAL_PRODUCT_SUBCATEGORY,'gpsc')) AS FLAG_AGG_DIM_KEY,
-       data_src,
+       DATA_SRC,
        DISTRIBUTOR_CODE,
        DISTRIBUTOR_NAME,
        SELL_OUT_CHANNEL,
        REGION,
        ZONE_NAME,
-       CITY,
+       NULL AS CITY,
        RETAIL_ENVIRONMENT,
        PROD_HIER_L1,
        PROD_HIER_L2,
        PROD_HIER_L3,
        PROD_HIER_L4,
        PROD_HIER_L5,
-       NULL as PROD_HIER_L6,
-       NULL as PROD_HIER_L7,
-       NULL as PROD_HIER_L8,
+      NUll AS PROD_HIER_L6,
+       NULL AS PROD_HIER_L7,
+       NULL AS PROD_HIER_L8,
        NULL AS PROD_HIER_L9,
        GLOBAL_PRODUCT_FRANCHISE,
        GLOBAL_PRODUCT_BRAND,
@@ -88,14 +81,14 @@ Select FISC_YR,
        max(size_of_price_p6m_lp) AS   size_of_price_p6m_lp,
        max(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
        TARGET_COMPLAINCE
- FROM v_edw_rpt_anz_re	FLAGS	--//  FROM AU_EDW.EDW_RPT_AnZ_RE FLAGS
- GROUP BY FLAGS.FISC_YR,		--//  GROUP BY FLAGS.FISC_YR,
+FROM v_edw_rpt_retail_excellence_th FLAGS WHERE market='Thailand'		--// FROM OS_EDW.EDW_RPT_RETAIL_EXCELLENCE_TH FLAGS WHERE market='Thailand'
+GROUP BY FLAGS.FISC_YR,		--// GROUP BY FLAGS.FISC_YR,
        FLAGS.FISC_PER,		--//        FLAGS.FISC_PER,
        FLAGS.CLUSTER,		--//        FLAGS."CLUSTER",
        FLAGS.MARKET,		--//        FLAGS.MARKET,
        MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')
-            ||nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
-           nvl(PROD_HIER_L3,'ph3')||nvl(PROD_HIER_L4,'ph4')||
+            ||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
+           nvl(PROD_HIER_L3,'ph3')||nvl(PROD_HIER_L4,'ph4')||nvl(PROD_HIER_L5,'ph5')||
            nvl(GLOBAL_PRODUCT_FRANCHISE,'gpf')||nvl(GLOBAL_PRODUCT_BRAND,'gpb')||
            nvl(GLOBAL_PRODUCT_SUB_BRAND,'gpsb')||nvl(GLOBAL_PRODUCT_SEGMENT,'gps')||
            nvl(GLOBAL_PRODUCT_SUBSEGMENT,'gpss')||nvl(GLOBAL_PRODUCT_CATEGORY,'gpc')||
@@ -106,13 +99,13 @@ Select FISC_YR,
        FLAGS.SELL_OUT_CHANNEL,		--//        FLAGS.SELL_OUT_CHANNEL,
        FLAGS.REGION,		--//        FLAGS.REGION,
        FLAGS.ZONE_NAME,		--//        FLAGS.ZONE_NAME,
-       FLAGS.CITY,		--//        FLAGS.CITY,
+       --FLAGS.CITY,
        FLAGS.RETAIL_ENVIRONMENT,		--//        FLAGS.RETAIL_ENVIRONMENT,
        FLAGS.PROD_HIER_L1,		--//        FLAGS.PROD_HIER_L1,
        FLAGS.PROD_HIER_L2,		--//        FLAGS.PROD_HIER_L2,
        FLAGS.PROD_HIER_L3,		--//        FLAGS.PROD_HIER_L3,
        FLAGS.PROD_HIER_L4,		--//        FLAGS.PROD_HIER_L4,
-	   FLAGS.PROD_HIER_L5,		--// 	   FLAGS.PROD_HIER_L5,
+       FLAGS.PROD_HIER_L5,		--//        FLAGS.PROD_HIER_L5,
        FLAGS.GLOBAL_PRODUCT_FRANCHISE,		--//        FLAGS.GLOBAL_PRODUCT_FRANCHISE,
        FLAGS.GLOBAL_PRODUCT_BRAND,		--//        FLAGS.GLOBAL_PRODUCT_BRAND,
        FLAGS.GLOBAL_PRODUCT_SUB_BRAND,		--//        FLAGS.GLOBAL_PRODUCT_SUB_BRAND,

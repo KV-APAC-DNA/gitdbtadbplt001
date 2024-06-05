@@ -1,10 +1,3 @@
---Overwriding default SQL header as we dont want to change timezone to Singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --Import CTE
 with v_edw_kr_rpt_retail_excellence as (
     select * from {{ source('ntaedw_integration', 'v_edw_kr_rpt_retail_excellence') }}
@@ -153,7 +146,6 @@ GROUP BY FLAGS.FISC_YR,		--// GROUP BY FLAGS.FISC_YR,
          TARGET_COMPLAINCE,
          STORE_CODE,
          PRODUCT_CODE
-
 )
 
 

@@ -1,10 +1,3 @@
---Overwriding default SQL header as we dont want to change timezone to Singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --Import CTE
 with v_edw_sg_rpt_retail_excellence as (
     select * from {{ source('sgpedw_integration', 'v_edw_sg_rpt_retail_excellence') }}
