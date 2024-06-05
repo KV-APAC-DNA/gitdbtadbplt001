@@ -80,7 +80,7 @@ SELECT FISC_YR,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp ,
-        current_timestamp()::date		--// SYSDATE
+        current_timestamp()::date	as CRT_DTTM	--// SYSDATE
  FROM my_edw_rpt_retail_excellence_summary_base		--//  FROM OS_EDW.EDW_MY_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
 WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(fisc_per)::varchar,'YYYYMM')
                                     FROM my_edw_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_MY_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
