@@ -1,0 +1,15 @@
+version: 2
+
+sources:  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_xdm_supplier
+        tags: ["in_supplier","ingestion"]
+      - name: sdl_xdm_salesheirarchy
+        tags: ["in_sales_heirarchy","ingestion"]

@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_xdm_supplier
+    config: 
+      alias: itg_xdm_supplier
+      tags: ["in_supplier","ingestion"]
+  - name: inditg_integration__itg_xdm_salesheirarchy
+    config: 
+      alias: itg_xdm_salesheirarchy
+      tags: ["in_supplier","ingestion"]

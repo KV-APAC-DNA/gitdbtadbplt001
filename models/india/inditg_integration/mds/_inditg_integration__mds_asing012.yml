@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_mds_channel_mapping
+    config: 
+      alias: itg_in_mds_channel_mapping
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_international_customer_details
+    config: 
+      alias: itg_mds_in_international_customer_details
+      tags: ["in_mds_refresh","transformation"]
