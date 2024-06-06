@@ -25,7 +25,7 @@
                 
     {% endif %}
     )
-    {%- if filters !=None -%}
+    {%- if filters !=None %}
                 and    {{filters}}
     {% endif %}
     ) 
