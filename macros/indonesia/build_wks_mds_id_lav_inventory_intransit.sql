@@ -1,11 +1,11 @@
-{% macro build_itg_mds_id_lav_inventory_intransit() %}
+{% macro build_wks_mds_id_lav_inventory_intransit() %}
     
     {% set query %}
         CREATE TABLE if not exists 
         {% if target.name=='prod' %}
-                    idnitg_integration.itg_mds_id_lav_inventory_intransit
+                    idnwks_integration.wks_mds_id_lav_inventory_intransit
                 {% else %}
-                    {{schema}}.idnitg_integration__itg_mds_id_lav_inventory_intransit
+                    {{schema}}.idnwks_integration__wks_mds_id_lav_inventory_intransit
                 {% endif %}
         (
                 		month varchar(10),
