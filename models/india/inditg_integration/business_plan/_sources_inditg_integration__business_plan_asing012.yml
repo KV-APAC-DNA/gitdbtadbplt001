@@ -9,11 +9,9 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_mds_in_channel_mapping
+      - name: sdl_mds_in_businessplan_brand
         tags: ["in_mds_refresh","transformation"]
-      - name: sdl_mds_in_international_customer_details
+      - name: sdl_mds_in_businessplan_channel
         tags: ["in_mds_refresh","transformation"]
-      - name: sdl_mds_in_sap_distribution_channel
-        tags: ["in_mds_refresh","ingestion"]
-      - name: sdl_mds_in_gl_account_master
-        tags: ["in_mds_refresh","ingestion"]
+      - name: sdl_mds_in_businessplan_zonewise
+        tags: ["in_mds_refresh","transformation"]

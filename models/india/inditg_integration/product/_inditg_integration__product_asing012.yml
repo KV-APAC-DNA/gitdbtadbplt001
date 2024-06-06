@@ -1,0 +1,12 @@
+version: 2
+
+models:
+
+  - name: inditg_integration__itg_mds_in_product_hierarchy
+    config: 
+      alias: itg_mds_in_product_hierarchy
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_vent_prod_msku_mapping
+    config: 
+      alias: itg_mds_in_vent_prod_msku_mapping
+      tags: ["in_mds_refresh","ingestion"]

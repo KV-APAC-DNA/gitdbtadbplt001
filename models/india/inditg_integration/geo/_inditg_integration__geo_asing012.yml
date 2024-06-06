@@ -9,3 +9,8 @@ models:
     config: 
       alias: sdl_raw_in_rretailergeoextension
       tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__itg_mds_in_geo_tracker_coordinates
+    config: 
+      alias: itg_mds_in_geo_tracker_coordinates
+      tags: ["in_mds_refresh","transformation"]
+      
