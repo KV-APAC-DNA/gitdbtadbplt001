@@ -24,7 +24,7 @@
     {% endif %}
     )
     {%- if filters !=None %}
-                and  {{filters}}
+            and  {{filters}}
     {% endif %}
     ) 
     {%- if additional_filter !=None -%}
