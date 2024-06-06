@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook="{{build_itg_mds_id_lav_inventory_intransit()}}"
+        pre_hook="{{build_wks_mds_id_lav_inventory_intransit()}}"
     )
 }}
 with
