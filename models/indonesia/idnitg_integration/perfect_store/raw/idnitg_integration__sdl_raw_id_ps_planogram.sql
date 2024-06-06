@@ -23,10 +23,10 @@ final as(
         file_name as file_name,
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm
     from source
-    -- {% if is_incremental() %}
-    -- -- this filter will only be applied on an incremental run
-    -- where crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    -- {% endif %}
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    {% endif %}
 )
 
 select * from final

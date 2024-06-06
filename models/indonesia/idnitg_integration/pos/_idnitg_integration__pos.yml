@@ -114,6 +114,10 @@ models:
     config:
       alias: itg_mds_id_lav_inventory_intransit_history
       tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_mds_id_pos_cust_prod_mapping
+    config:
+      alias: itg_mds_id_pos_cust_prod_mapping
+      tags: ["id_mds_itg_load","ingestion"]
 
   - name: idnitg_integration__itg_id_pos_daily_basedline_sellout
     config:

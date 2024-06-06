@@ -23,8 +23,8 @@
                 
     {% endif %}
     )
-    {%- if filters !=None -%}
-                and    {{filter}}
+    {%- if filters !=None %}
+                and  {{filters}}
     {% endif %}
     ) 
     {%- if additional_filter !=None -%}
