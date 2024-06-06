@@ -3,7 +3,6 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        unique_key = ["year_code","month_code"],
         pre_hook = "{% if is_incremental() %}
         delete from {{this}}
         where  (year,month1) in (select distinct year_code,month_code
