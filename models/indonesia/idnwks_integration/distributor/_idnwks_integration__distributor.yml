@@ -8,7 +8,7 @@ models:
   - name: idnwks_integration__wks_mds_id_lav_inventory_intransit
     config:
       alias: wks_mds_id_lav_inventory_intransit
-      tags: ["id_mds_itg_load","transformation"]
+      tags: ["id_mds_itg_load","ingestion"]
 
   # - name: idnwks_integration__wks_csa_raw_sellout_sales_fact
   #   config:
