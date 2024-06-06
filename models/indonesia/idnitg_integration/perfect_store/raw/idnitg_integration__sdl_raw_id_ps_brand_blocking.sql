@@ -36,5 +36,6 @@ final as
     -- {% if is_incremental() %}
     --     -- this filter will only be applied on an incremental run
     --     where crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    -- {% endif %})
+    -- {% endif %}
+    )
 select * from final
