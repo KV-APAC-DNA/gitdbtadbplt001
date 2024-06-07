@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_intrm_copa_tgt
+    config: 
+      alias: v_intrm_copa_tgt
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl_gts
+    config:
+      alias: v_intrm_sls_pln_actl_gts
+      tags: ["","transformation"]
