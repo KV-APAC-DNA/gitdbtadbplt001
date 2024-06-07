@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_rtlheader
+    config:
+      alias: itg_in_rtlheader
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]

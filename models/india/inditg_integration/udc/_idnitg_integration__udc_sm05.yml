@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_udcmaster
+    config:
+      alias: itg_udcmaster
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_udcmaster_raw
+    config:
+      alias: sdl_csl_udcmaster_raw
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]

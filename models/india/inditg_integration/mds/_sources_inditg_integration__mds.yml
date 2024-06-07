@@ -114,3 +114,9 @@ sources:
             data_type: number
           - name: validationstatus
             data_type: varchar
+      - name: sdl_mds_in_sv_kapf_month_end_dates
+
+      - name: sdl_mds_in_ps_weights
+      - name: sdl_mds_in_product_category_mapping
+
+      - name: sdl_mds_in_ecom_nts_adjustment
