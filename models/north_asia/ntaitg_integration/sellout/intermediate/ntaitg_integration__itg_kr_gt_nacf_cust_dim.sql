@@ -11,7 +11,7 @@
                             ) in (
                             select nacf_customer_code,
                                 sap_customer_code
-                            from na_sdl.sdl_kr_gt_nacf_cust_dim
+                            from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_GT_NACF_CUST_DIM
                             );
                     {% endif %}
                     "

@@ -3,13 +3,13 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= " {% if is_incremental() %}
-                    delete from na_itg.itg_kr_gt_food_ws where (
+                    delete from {{this}} where (
                     customer_code,
                     coalesce(sub_customer_code, 'NA')
                     ) in (
                     select cast(customer_code as varchar) as customer_code,
                         'NA' as sub_customer_code
-                    from na_sdl.sdl_mds_kr_sub_customer_master
+                    from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_MDS_KR_SUB_CUSTOMER_MASTER
                     where upper(trim(retailer_code)) = 'FOOD_WS'
                     );
                     {% endif %}
