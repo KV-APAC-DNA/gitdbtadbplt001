@@ -1,6 +1,9 @@
 with edw_invoice_fact as (
     select * from  {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
+edw_billing_fact as (
+    select * from  {{ ref('aspedw_integration__edw_billing_fact') }}
+),
 edw_time_dim as (
     select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
