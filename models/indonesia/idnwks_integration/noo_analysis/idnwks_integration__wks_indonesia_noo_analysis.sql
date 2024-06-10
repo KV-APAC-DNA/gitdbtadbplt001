@@ -14,6 +14,7 @@ select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 wks_itg_all_distributor_sellin_sellout_fact as(
 select * from {{ source('idnwks_integration', 'wks_itg_all_distributor_sellin_sellout_fact') }}
+-- loaded from macro 
 ),
 EDW_DISTRIBUTOR_DIM as(
 select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
