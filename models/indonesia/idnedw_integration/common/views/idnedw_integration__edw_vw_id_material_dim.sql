@@ -4,8 +4,8 @@ with edw_material_plant_dim as (
 edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
-edw_material_uom as (
-    select * from {{ ref('aspedw_integration__edw_material_uom') }}
+edw_material_dim as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as 
 (

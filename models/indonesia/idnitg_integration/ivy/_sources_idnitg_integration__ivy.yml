@@ -94,7 +94,7 @@ sources:
                 store_failures: true
                 schema: idnwks_integration
     - name: sdl_distributor_ivy_user_master
-      tags: ["id_ivy_usermaster","ingestion"]
+      tags: ["id_ivy","ingestion"]
     - name: sdl_distributor_ivy_outlet_master
       tags: ["id_ivy","ingestion"]
       tests:

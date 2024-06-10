@@ -1,0 +1,40 @@
+with source as
+(
+    select * from {{source('idnsdl_raw','sdl_mds_id_lav_product_hierarchy')}}
+)
+
+select id as "id",
+    muid as "muid",
+    versionname as "versionname",
+    versionnumber as "versionnumber",
+    version_id as "version_id",
+    versionflag as "versionflag",
+    name as "name",
+    code as "code",
+    changetrackingmask as "changetrackingmask",
+    sap_code as "sap_code",
+    sku_description as "sku_description",
+    franchise as "franchise",
+    brand as "brand",
+    variant1 as "variant1",
+    variant2 as "variant2",
+    variant3 as "variant3",
+    status as "status",
+    put_up as "put_up",
+    uom as "uom",
+    sap_upgrade as "sap_upgrade",
+    sku_description2 as "sku_description2",
+    price as "price",
+    sku_class as "sku_class",
+    sap_code_mapping as "sap_code_mapping",
+    sku_description3 as "sku_description3",
+    enterdatetime as "enterdatetime",
+    enterusername as "enterusername",
+    enterversionnumber as "enterversionnumber",
+    lastchgdatetime as "lastchgdatetime",
+    lastchgusername as "lastchgusername",
+    lastchgversionnumber as "lastchgversionnumber",
+    validationstatus as "validationstatus",
+    effective_from as "effective_from",
+    effective_to as "effective_to"
+from source
