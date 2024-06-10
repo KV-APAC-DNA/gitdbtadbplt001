@@ -6,7 +6,6 @@
 }}
 
 --import cte
-
 with wks_singapore_base_retail_excellence as (
     select * from {{ ref('sgpwks_integration__wks_singapore_base_retail_excellence') }}
 ),
