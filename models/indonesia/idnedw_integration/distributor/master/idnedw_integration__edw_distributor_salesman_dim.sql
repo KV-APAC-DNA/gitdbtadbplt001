@@ -43,9 +43,9 @@ final as
         effective_from::varchar(10) as effective_from,
         effective_to::varchar(10) as effective_to
     from itg_distributor_salesman_dim
-)
+),
 
-,final2 as 
+final2 as 
 (
     select * from final 
     union all
