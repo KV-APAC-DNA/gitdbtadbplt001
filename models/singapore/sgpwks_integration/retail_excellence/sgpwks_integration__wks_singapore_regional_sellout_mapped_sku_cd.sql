@@ -23,6 +23,5 @@ from (select distinct ltrim(msl_product_code,'0') as master_code,
 where rno = 1
 )
 
-
 --final select
 select * from singapore_regional_sellout_mapped_sku_cd

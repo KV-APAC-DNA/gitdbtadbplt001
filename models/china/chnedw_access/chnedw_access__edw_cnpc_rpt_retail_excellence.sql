@@ -4,7 +4,7 @@ with edw_cnpc_rpt_retail_excellence_details as (
 
 final as (
     select
-       fisc_yr as "fisc_yr",
+fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
 cluster as "cluster",
 market as "market",
