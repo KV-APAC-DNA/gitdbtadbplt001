@@ -122,7 +122,7 @@ select re_base_dim.cntry_cd,
          when p12m_sales > 0 then 'y'
          else 'n'
        end as p12m_sales_flag,
-sysdate()		
+sysdate() as crt_dttm		
 from wks_singapore_regional_sellout_basedim base_dim		
   left join wks_singapore_re_basedim_values re_base_dim		
          on re_base_dim.cntry_cd = base_dim.cntry_cd		
@@ -168,7 +168,79 @@ where base_dim.month >= (select last_18mnths
                         from edw_vw_cal_retail_excellence_dim)::numeric		
 and   base_dim.month <= (select prev_mnth from edw_vw_cal_retail_excellence_dim)::numeric		
 
+),
+final as(
+select 		
+    cntry_cd::varchar(2) as cntry_cd ,		
+    cntry_nm :: varchar(50) as cntry_nm ,		
+    year :: varchar(16) as year ,		
+    mnth_id :: varchar(23) as  mnth_id,		
+    distributor_code :: varchar(100) as  distributor_code,		
+    soldto_code :: varchar(255) as  soldto_code,		
+    distributor_name ::varchar(356) as  distributor_name,		
+    store_code::varchar(100) as  store_code,		
+    store_name ::varchar(601) as  store_name,		
+    store_type ::varchar(255) as  store_type,		
+    master_code ::varchar(150) as  master_code,		
+    master_code_desc ::varchar(150) as master_code_desc ,		
+    sap_parent_customer_key ::varchar(12) as  sap_parent_customer_key,		
+    sap_parent_customer_description ::varchar(75) as  sap_parent_customer_description,		
+    sap_customer_channel_key ::varchar(12) as sap_customer_channel_key ,		
+    sap_customer_channel_description ::varchar(75) as sap_customer_channel_description ,		
+    sap_customer_sub_channel_key ::varchar(12) as  sap_customer_sub_channel_key,		
+    sap_sub_channel_description ::varchar(75) as sap_sub_channel_description ,		
+    sap_go_to_mdl_key ::varchar(12) as sap_go_to_mdl_key ,		
+    sap_go_to_mdl_description ::varchar(75) as sap_go_to_mdl_description ,		
+    sap_banner_key ::varchar(12) as  sap_banner_key,		
+    sap_banner_description ::varchar(75) as sap_banner_description ,		
+    sap_banner_format_key:: varchar(12) as sap_banner_format_key ,		
+    sap_banner_format_description ::varchar(75) as  sap_banner_format_description,		
+    retail_environment:: varchar(150) as  retail_environment,		
+    region ::varchar(150) as  region,		
+    zone_or_area ::varchar(150) as zone_or_area ,		
+    customer_segment_key ::varchar(12) as  customer_segment_key,		
+    customer_segment_description ::varchar(50) as  customer_segment_description,		
+    global_product_franchise:: varchar(30) as  global_product_franchise,		
+    global_product_brand ::varchar(30) as global_product_brand ,		
+    global_product_sub_brand ::varchar(100) as global_product_sub_brand ,		
+    global_product_variant:: varchar(100) as global_product_variant ,		
+    global_product_segment ::varchar(50) as global_product_segment ,		
+    global_product_subsegment ::varchar(100) as  global_product_subsegment,		
+    global_product_category ::varchar(50) as  global_product_category,		
+    global_product_subcategory ::varchar(50) as global_product_subcategory ,		
+    global_put_up_description ::varchar(100) as global_put_up_description ,		
+    mapped_sku_cd ::varchar(40) as  mapped_sku_cd,		
+    pka_product_key ::varchar(68) as  pka_product_key,		
+    pka_product_key_description ::varchar(255) as pka_product_key_description ,		
+    cm_sales_qty ::numeric(38,6) as  cm_sales_qty,		
+    cm_sales ::numeric(38,6) as  cm_sales,		
+    cm_avg_sales_qty ::numeric(38,6) as cm_avg_sales_qty ,		
+    cm_sales_value_list_price ::numeric(38,12) as  cm_sales_value_list_price,		
+    lm_sales ::numeric(38,6) as lm_sales ,		
+    lm_sales_qty ::numeric(38,6) as  lm_sales_qty,		
+    lm_avg_sales_qty ::numeric(38,6) as lm_avg_sales_qty ,		
+    lm_sales_lp ::numeric(38,12) as  lm_sales_lp,		
+    p3m_sales ::numeric(38,6) as p3m_sales ,		
+    p3m_qty ::numeric(38,6) as  p3m_qty,		
+    p3m_avg_qty ::numeric(38,6) as p3m_avg_qty ,		
+    p3m_sales_lp ::numeric(38,12) as p3m_sales_lp ,		
+    f3m_sales ::numeric(38,6) as f3m_sales ,		
+    f3m_qty ::numeric(38,6) as f3m_qty ,		
+    f3m_avg_qty ::numeric(38,6) as f3m_avg_qty ,		
+    p6m_sales ::numeric(38,6) as p6m_sales ,		
+    p6m_qty ::numeric(38,6) as  p6m_qty,		
+    p6m_avg_qty ::numeric(38,6) as p6m_avg_qty ,		
+    p6m_sales_lp ::numeric(38,12) as p6m_sales_lp ,		
+    p12m_sales ::numeric(38,6) as p12m_sales ,		
+    p12m_qty:: numeric(38,6) as  p12m_qty,		
+    p12m_avg_qty ::numeric(38,6) as p12m_avg_qty ,		
+    p12m_sales_lp ::numeric(38,12) as p12m_sales_lp ,		
+    lm_sales_flag:: varchar(1) as lm_sales_flag ,		
+    p3m_sales_flag ::varchar(1) as p3m_sales_flag ,		
+    p6m_sales_flag ::varchar(1) as  p6m_sales_flag,		
+    p12m_sales_flag ::varchar(1) as p12m_sales_flag ,		
+    crt_dttm ::timestamp without time zone as 	crt_dttm	
+  from singapore_regional_sellout_actuals
 )
-
 --final select
-select * from singapore_regional_sellout_actuals
+select * from final
