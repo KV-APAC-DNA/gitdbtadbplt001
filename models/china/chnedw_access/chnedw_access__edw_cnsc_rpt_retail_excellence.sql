@@ -1,5 +1,5 @@
-with edw_sg_rpt_retail_excellence_details as (
-    select * from {{ ref('sgpedw_integration__edw_sg_rpt_retail_excellence') }}
+with edw_cnsc_rpt_retail_excellence_details as (
+    select * from {{ source('chnedw_integration','edw_rpt_retail_excellence_cnsc') }}
 ),
 
 final as (
@@ -175,7 +175,7 @@ p6m_sales_flag_count as "p6m_sales_flag_count",
 p12m_sales_flag_count as "p12m_sales_flag_count",
 mdp_flag_count as "mdp_flag_count",
 crt_dttm as "crt_dttm"
-from edw_sg_rpt_retail_excellence_details
+from edw_cnsc_rpt_retail_excellence_details
 )
 
 select * from final
