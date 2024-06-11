@@ -22,7 +22,7 @@ from wks_singapore_regional_sellout_allmonths so
 final as
 (
     select 
-       cntry_cd::varchar(2) as "cntry_cd",		
+       cntry_cd::varchar(2) as cntry_cd,		
     sellout_dim_key ::varchar(32) as sellout_dim_key,	
     month ::varchar(23) as month,		
     so_sls_value ::numeric(38,6) as so_sls_value,		

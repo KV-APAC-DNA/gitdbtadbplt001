@@ -1,11 +1,3 @@
---overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
-
 with wks_singapore_regional_sellout_act_lm as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_act_lm') }}
 ),

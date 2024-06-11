@@ -20,14 +20,14 @@ order by so.cntry_cd,
 final as
 (
     select 
-     cntry_cd::varchar(2),		  
-    sellout_dim_key::varchar(32) ,
-    month ::varchar(23),		
-    so_sls_value::numeric(38,6),		
-    l12m_sales_qty:: numeric(38,6),
-    l12m_sales ::numeric(38,6),		
-    l12m_avg_sales_qty ::numeric(38,6),		
-    l12m_sales_lp ::numeric(38,12)
+     cntry_cd::varchar(2) as cntry_cd,		  
+    sellout_dim_key::varchar(32) as sellout_dim_key ,
+    month ::varchar(23) as month,		
+    so_sls_value::numeric(38,6) as so_sls_value,		
+    l12m_sales_qty:: numeric(38,6) as l12m_sales_qty,
+    l12m_sales ::numeric(38,6) as l12m_sales,		
+    l12m_avg_sales_qty ::numeric(38,6) as l12m_avg_sales_qty,		
+    l12m_sales_lp ::numeric(38,12) as l12m_sales_lp
     from singapore_regional_sellout_act_l12m
 )
 
