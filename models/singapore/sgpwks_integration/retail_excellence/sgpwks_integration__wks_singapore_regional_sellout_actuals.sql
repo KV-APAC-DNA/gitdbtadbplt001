@@ -170,6 +170,5 @@ and   base_dim.month <= (select prev_mnth from edw_vw_cal_retail_excellence_dim)
 
 )
 
-
 --final select
 select * from singapore_regional_sellout_actuals
