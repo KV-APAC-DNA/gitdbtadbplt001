@@ -6,13 +6,13 @@ edw_company_dim as (
 ),
 final as (
     select inv.country_name :: varchar(40) as market,
-	cd."cluster",	
+	cd."cluster" :: varchar(100) as "cluster",	
 	month_year :: varchar(23) as month_id,
-	'INVENTORY' as kpi,
-	healthy_inventory_usd :: numeric(38,5),
-	total_inventory_val :: numeric(38,5),
-	total_inventory_val_usd :: numeric(38,5),
-	l12m_weeks_avg_sales_usd :: numeric(38,5)
+	'INVENTORY' :: varchar(100) as kpi,
+	healthy_inventory_usd :: numeric(38,5) as healthy_inventory_usd,
+	total_inventory_val :: numeric(38,5) as total_inventory_val,
+	total_inventory_val_usd :: numeric(38,5) as total_inventory_val_usd,
+	l12m_weeks_avg_sales_usd :: numeric(38,5) as l12m_weeks_avg_sales_usd
 from (
 select month_year,
 case when country_name like 'China%' then 'China Personal Care' else country_name end as country_name,
