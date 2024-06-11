@@ -20,7 +20,6 @@ wks_singapore_regional_sellout_act_l12m as (
 wks_singapore_base_retail_excellence as (
     select * from {{ ref('sgpwks_integration__wks_singapore_base_retail_excellence') }}
 ),
-
 wks_singapore_regional_sellout_basedim as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_basedim') }}
 ),

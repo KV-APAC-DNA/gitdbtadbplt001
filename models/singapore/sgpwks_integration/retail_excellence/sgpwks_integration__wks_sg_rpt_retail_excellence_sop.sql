@@ -336,7 +336,7 @@ FROM wks_sg_rpt_retail_excellence MAIN
 final as 
 (
 select 
-fisc_yr::numeric(18,0) as  fisc_yr,		
+    fisc_yr::numeric(18,0) as  fisc_yr,		
     fisc_per ::varchar(22) as  fisc_per,		
     "cluster":: varchar(100) as "cluster" ,		
     market ::varchar(50) as  market,		

@@ -24,10 +24,10 @@ from (select cntry_cd,
              month
       from wks_singapore_regional_sellout_act_lm		
       where lm_sales is not null
-      union all
-      select cntry_cd,
-             sellout_dim_key,
-             month
+     union all
+     select cntry_cd,
+            sellout_dim_key,
+           month
       from wks_singapore_regional_sellout_act_l3m		
       where l3m_sales is not null
       union all

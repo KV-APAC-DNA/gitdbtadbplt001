@@ -388,7 +388,7 @@ final as
 select 
 
 FISC_YR :: number(38,0) as FISC_YR,
-	FISC_PER :: number(38,5) as FISC_PER,
+	FISC_PER :: varchar(22) as FISC_PER,
 	MARKET :: varchar(50) as MARKET,
 	CHANNEL_NAME :: varchar(50) as CHANNEL_NAME,
 	SOLDTO_CODE :: varchar(255) as SOLDTO_CODE,
