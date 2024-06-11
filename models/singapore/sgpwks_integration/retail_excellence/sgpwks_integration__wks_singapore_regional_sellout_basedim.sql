@@ -51,7 +51,6 @@ final as
 sellout_dim_key::varchar(32) AS sellout_dim_key,
 month::varchar(23) AS month
 from singapore_regional_sellout_basedim
-
 )
 
 --final select

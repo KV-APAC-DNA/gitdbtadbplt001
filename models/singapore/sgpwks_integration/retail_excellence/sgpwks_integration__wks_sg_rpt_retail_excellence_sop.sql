@@ -338,7 +338,7 @@ final as
 select 
    fisc_yr::numeric(18,0) AS fisc_yr,
 fisc_per::varchar(22) AS fisc_per,
-cluster::varchar(100) AS cluster,
+"cluster"::varchar(100) AS "cluster",
 market::varchar(50) AS market,
 data_src::varchar(3) AS data_src,
 channel_name::varchar(75) AS channel_name,
