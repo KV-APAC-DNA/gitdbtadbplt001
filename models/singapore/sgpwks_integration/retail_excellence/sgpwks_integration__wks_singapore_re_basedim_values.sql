@@ -1,10 +1,3 @@
---overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --import cte
 with wks_singapore_base_retail_excellence as (
     select * from {{ ref('sgpwks_integration__wks_singapore_base_retail_excellence') }}

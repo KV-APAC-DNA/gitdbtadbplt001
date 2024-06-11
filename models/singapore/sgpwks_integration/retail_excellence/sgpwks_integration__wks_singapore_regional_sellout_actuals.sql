@@ -1,10 +1,3 @@
---overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 --import cte
 with edw_vw_cal_retail_excellence_dim as (
     select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}

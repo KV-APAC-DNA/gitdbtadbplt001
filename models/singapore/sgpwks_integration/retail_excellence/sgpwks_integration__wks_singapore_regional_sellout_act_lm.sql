@@ -1,11 +1,3 @@
---overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
-
 with wks_singapore_regional_sellout_allmonths as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_allmonths') }}
 ),
@@ -25,9 +17,22 @@ order by so.cntry_cd,
          so.sellout_dim_key,		
          month
 
+),
+final as 
+(
+    select 
+     cntry_cd::varchar(2) as cntry_cd,		
+    sellout_dim_key ::varchar(32) as sellout_dim_key,	
+    month ::varchar(23) as month,		
+    so_sls_value ::numeric(38,6) as so_sls_value,		
+    lm_sales_qty ::numeric(38,6) as lm_sales_qty,		
+    lm_sales ::numeric(38,6) as lm_sales,		
+    lm_avg_sales_qty ::numeric(38,6) as lm_avg_sales_qty,
+    lm_sales_lp ::numeric(38,12) as lm_sales_lp	
+    from singapore_regional_sellout_act_lm
 )
 
 
 --final select
-select * from singapore_regional_sellout_act_lm
+select * from final
 

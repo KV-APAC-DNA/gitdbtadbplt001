@@ -1,10 +1,3 @@
---overwriding default sql header as we dont want to change timezone to singapore
-{{
-    config(
-        sql_header= ""
-    )
-}}
-
 with edw_vw_cal_retail_excellence_dim as (
     select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
 ),
@@ -43,8 +36,20 @@ from (select distinct cntry_cd,
          on all_months.cntry_cd = base.cntry_cd		
         and all_months.sellout_dim_key = base.sellout_dim_key		
         and all_months.month = base.mnth_id		
+),
+final as 
+(
+    select 
+     cntry_cd ::varchar(2) as cntry_cd,		
+    sellout_dim_key ::varchar(32) as sellout_dim_key,	
+    month ::varchar(23) as month,		
+    so_sls_qty ::numeric(38,6) as so_sls_qty,		
+    so_sls_value ::numeric(38,6) as so_sls_value,		
+    so_avg_qty ::numeric(38,6) as so_avg_qty,		
+    sales_value_list_price ::numeric(38,12) as sales_value_list_price	
+    from singapore_regional_sellout_allmonths
 )
 
 --final select
-select * from singapore_regional_sellout_allmonths
+select * from final
 
