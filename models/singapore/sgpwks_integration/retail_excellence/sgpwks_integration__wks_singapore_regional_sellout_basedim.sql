@@ -43,8 +43,17 @@ from (select cntry_cd,
       from wks_singapore_regional_sellout_act_l12m		
       where l12m_sales is not null)
 
+),
+final as
+(
+    select 
+    cntry_cd::varchar(2) AS cntry_cd,
+sellout_dim_key::varchar(32) AS sellout_dim_key,
+month::varchar(23) AS month
+from singapore_regional_sellout_basedim
+
 )
 
 --final select
-select * from singapore_regional_sellout_basedim
+select * from final
 

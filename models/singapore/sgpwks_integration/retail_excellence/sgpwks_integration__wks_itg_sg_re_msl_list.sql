@@ -102,8 +102,33 @@ AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)
 AND   STORE_CODE IS NOT NULL
 AND   DISTRIBUTOR_CODE IS NOT NULL
 
+),
+final as
+(
+    select 
+    year::numeric(18,0) AS year,
+mnth_id::varchar(22) AS mnth_id,
+sold_to_code::varchar(255) AS sold_to_code,
+distributor_code::varchar(100) AS distributor_code,
+distributor_name::varchar(356) AS distributor_name,
+store_code::varchar(100) AS store_code,
+store_name::varchar(601) AS store_name,
+store_type::varchar(255) AS store_type,
+customer_segmentation_code::varchar(256) AS customer_segmentation_code,
+customer_segmentation_level_2_code::varchar(256) AS customer_segmentation_level_2_code,
+sellout_channel::varchar(50) AS sellout_channel,
+customer_group_code::varchar(100) AS customer_group_code,
+customer_number::varchar(10) AS customer_number,
+region::varchar(2) AS region,
+zone_name::varchar(2) AS zone_name,
+channel::varchar(50) AS channel,
+customer_name::varchar(50) AS customer_name,
+master_code::varchar(100) AS master_code,
+customer_product_desc::varchar(150) AS customer_product_desc,
+mapped_sku_cd::varchar(40) AS mapped_sku_cd,
+crt_dttm::timestamp without time zone AS crt_dttm
+from sg_itg_re_msl_list
 )
-
 --final select
-select * from sg_itg_re_msl_list
+select * from final
 

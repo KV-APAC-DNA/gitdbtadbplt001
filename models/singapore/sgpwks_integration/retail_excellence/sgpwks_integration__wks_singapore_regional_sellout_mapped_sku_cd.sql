@@ -14,7 +14,16 @@ from (select distinct ltrim(msl_product_code,'0') as master_code,
       where country_code = 'SG'
       and   data_source = 'POS')
 where rno = 1
+),
+final as(
+
+    select 
+    master_code::varchar(150) AS master_code,
+mapped_sku_cd::varchar(40) AS mapped_sku_cd,
+sku_description::varchar(150) AS sku_description,
+rno::numeric(38,0) AS rno
+from singapore_regional_sellout_mapped_sku_cd
 )
 
 --final select
-select * from singapore_regional_sellout_mapped_sku_cd
+select * from final

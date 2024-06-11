@@ -40,13 +40,14 @@ from (select distinct cntry_cd,
 final as 
 (
     select 
-     cntry_cd ::varchar(2) as cntry_cd,		
-    sellout_dim_key ::varchar(32) as sellout_dim_key,	
-    month ::varchar(23) as month,		
-    so_sls_qty ::numeric(38,6) as so_sls_qty,		
-    so_sls_value ::numeric(38,6) as so_sls_value,		
-    so_avg_qty ::numeric(38,6) as so_avg_qty,		
-    sales_value_list_price ::numeric(38,12) as sales_value_list_price	
+     cntry_cd::varchar(2) AS cntry_cd,
+sellout_dim_key::varchar(32) AS sellout_dim_key,
+month::varchar(23) AS month,
+so_sls_qty::numeric(38,6) AS so_sls_qty,
+so_sls_value::numeric(38,6) AS so_sls_value,
+so_avg_qty::numeric(38,6) AS so_avg_qty,
+sales_value_list_price::numeric(38,12) AS sales_value_list_price
+
     from singapore_regional_sellout_allmonths
 )
 
