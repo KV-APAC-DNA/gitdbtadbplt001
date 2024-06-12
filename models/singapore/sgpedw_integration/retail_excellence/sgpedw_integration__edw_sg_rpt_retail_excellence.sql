@@ -337,7 +337,6 @@ p12m_sales_flag_count::numeric(38,0) AS p12m_sales_flag_count,
 mdp_flag_count::numeric(38,0) AS mdp_flag_count,
 crt_dttm::timestamp without time zone AS crt_dttm
 from edw_sg_rpt_retail_excellence
-
 )
 --Final select
 select * from final 
