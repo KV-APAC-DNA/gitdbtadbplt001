@@ -316,6 +316,4 @@ sources:
                     name: TRATBL_sdl_tw_ims_dstr_std_customer_136454_customer__duplicate_test
                     config:
                       store_failures: true
-                      schema: ntawks_integration
-
-            
+                      schema: ntawks_integration     

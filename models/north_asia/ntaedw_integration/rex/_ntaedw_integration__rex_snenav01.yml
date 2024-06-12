@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_prod_product
+    config: 
+      alias: v_prod_product
+      tags: ["",""]
+  - name: ntaedw_integration__v_vst_visit
+    config: 
+      alias: v_vst_visit
+      tags: ["",""]
