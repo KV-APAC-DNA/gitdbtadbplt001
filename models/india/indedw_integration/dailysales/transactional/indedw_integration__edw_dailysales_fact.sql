@@ -330,5 +330,42 @@ transformed as(
 	select * from union2
 	union all
 	select * from union3
+),
+final as(
+    select 
+        distcode::varchar(50) as customer_code,
+        salinvno::varchar(50) as invoice_no,
+        salinvdate::number(18,0) as invoice_date,
+        rtrcode::varchar(100) as retailer_code,
+        rtrname::varchar(100) as retailer_name,
+        prdcode::varchar(50) as product_code,
+        salesmancode::varchar(100) as salesman_code,
+        salesmanname::varchar(200) as salesman_name,
+        salesroutecode::varchar(100) as route_code,
+        salesroutename::varchar(200) as route_name,
+        prdqty::number(38,0) as quantity,
+        prdgrossamt::number(38,6) as gross_amt,
+        prdtaxamt::number(38,6) as tax_amt,
+        prdnetamt::number(38,6) as net_amt,
+        nrvalue::number(38,6) as nr_value,
+        achievement_nr_val::number(38,6) as achievement_nr_val,
+        srnreftype::varchar(100) as srnreftype,
+        salinvmode::varchar(100) as salinvmode,
+        salinvtype::varchar(100) as salinvtype,
+        sku_rec_qty::number(38,0) as sku_rec_qty,
+        sku_rec_amt::number(38,6) as sku_rec_amt,
+        sum_qps_qty::number(38,0) as qps_qty,
+        qps_amt::number(38,6) as qps_amt,
+        achievement_amt::number(38,6) as achievement_amt,
+        prdschdiscamt::number(38,6) as prd_sch_disc_amt,
+        no_of_lines::number(38,0) as no_of_lines,
+        no_of_reco_sku_lines::number(38,0) as no_of_reco_sku_lines,
+        createddate::timestamp_ntz(9) as createddate,
+        saleflag::varchar(1) as saleflag,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        updt_dttm::timestamp_ntz(9) as updt_dttm,
+        status::varchar(20) as status,
+        prdfreeqty::number(18,0) as prdfreeqty
+    from transformed
 )
-select * from transformed
+select * from final

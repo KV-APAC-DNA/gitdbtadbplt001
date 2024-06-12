@@ -18,7 +18,7 @@ final as
     select
         kpi::varchar(100) as kpi,
         channel::varchar(100) as channel,
-        retail_env::varchar(100) as retail_env,
+        name::varchar(100) as retail_env,
         weight::number(20,4) as weight,
         convert_timezone('UTC', current_timestamp()) AS crtd_dttm,
     from source

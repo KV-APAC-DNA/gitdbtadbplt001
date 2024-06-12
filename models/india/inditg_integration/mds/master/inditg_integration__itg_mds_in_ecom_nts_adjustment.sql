@@ -7,7 +7,7 @@ final as
     select
         valid_from::varchar(20) as valid_from,
         valid_to::varchar(20) as valid_to,
-        value::numeric(31, 4) as value,
+        value::numeric(31,4) as value,
         convert_timezone('UTC', current_timestamp()) as crt_dttm,
         convert_timezone('UTC', current_timestamp()) as updt_dttm
     from source
