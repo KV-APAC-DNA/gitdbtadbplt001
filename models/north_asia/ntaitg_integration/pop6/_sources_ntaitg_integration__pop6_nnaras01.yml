@@ -9,6 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
-     - name: ntaitg_integration__itg_pop6_pops
+     - name: ntaitg_integration__itg_pop6_pops_temp
+     - name: ntaitg_integration__itg_pop6_product_lists_pops_temp
 
       
