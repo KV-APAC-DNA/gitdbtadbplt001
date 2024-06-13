@@ -22,6 +22,9 @@ edw_customer_sales_dim as (
 edw_customer_base_dim as (
     select * from snapaspedw_integration.edw_customer_base_dim
 ),
+edw_material_dim as (
+    select * from snapaspedw_integration.edw_material_dim
+),
 a as (
     SELECT x.matl_num,
         x.div,
@@ -164,15 +167,7 @@ final as (
         date_part(
             day,
             last_day(
-                (
-                    (
-                        (
-                            (
-                                "substring"(((a.fisc_yr_per)::character varying)::text, 1, 4) || "substring"(((a.fisc_yr_per)::character varying)::text, 6, 7)
-                            ) || ('01'::character varying)::text
-                        )
-                    )::date
-                )::timestamp without time zone
+                (to_date((("substring"(((a.fisc_yr_per)::character varying)::text, 1, 4) || "substring"(((a.fisc_yr_per)::character varying)::text, 6, 7)) || ('01'::character varying)::text), 'yyyymmdd'))::timestamp without time zone
             )
         ) AS no_of_days
     FROM a
@@ -213,12 +208,12 @@ final as (
             (cbd.cust_num)::text,
             ((0)::character varying)::text
         )
-        LEFT JOIN md ON ltrim(
+        LEFT JOIN md ON rtrim(ltrim(
             (a.matl_num)::text,
-            ((0)::character varying)::text
-        ) = ltrim(
+            ((0)::character varying)::text)
+        ) = rtrim(ltrim(
             (md.matl_num)::text,
-            ((0)::character varying)::text
+            ((0)::character varying)::text)
         )
     GROUP BY d.ctry_nm,
         a.cust_num,
@@ -254,15 +249,7 @@ final as (
         date_part(
             day,
             last_day(
-                (
-                    (
-                        (
-                            (
-                                substring(((a.fisc_yr_per)::character varying)::text, 1, 4) || substring(((a.fisc_yr_per)::character varying)::text, 6, 7)
-                            ) || ('01'::character varying)::text
-                        )
-                    )::date
-                )::timestamp without time zone
+                (to_date((("substring"(((a.fisc_yr_per)::character varying)::text, 1, 4) || "substring"(((a.fisc_yr_per)::character varying)::text, 6, 7)) || ('01'::character varying)::text), 'yyyymmdd'))::timestamp without time zone
             )
         )
 )
