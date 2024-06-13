@@ -7,7 +7,7 @@
 with
 source as
 (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_sg_product_attribute_audits') }}
+    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_product_attribute_audits') }}
 ),
 
 final as
