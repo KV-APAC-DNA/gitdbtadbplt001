@@ -33,6 +33,26 @@ sources:
         tags: ["", ""]
       - name: sdl_pop6_tw_general_audits
         tags: ["", ""]
+      - name: sdl_pop6_kr_service_levels
+        tags: ["", ""]
+      - name: sdl_pop6_kr_planned_visits
+        tags: ["", ""]
+      - name: sdl_pop6_kr_sku_audits
+        tags: ["", ""]
+      - name: sdl_pop6_kr_product_attribute_audits
+        tags: ["", ""]
+      - name: sdl_pop6_kr_display_plans
+        tags: ["", ""]
+      - name: sdl_pop6_kr_displays
+        tags: ["", ""]
+      - name: sdl_pop6_kr_promotion_plans
+        tags: ["", ""]
+      - name: sdl_pop6_kr_promotions
+        tags: ["", ""]
+      - name: sdl_pop6_kr_tasks
+        tags: ["", ""]
+      - name: sdl_pop6_kr_exclusion
+        tags: ["", ""]
   - name: jpnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: snapjpnsdl_raw
@@ -48,6 +68,14 @@ sources:
       - name: sdl_pop6_jp_executed_visits   
         tags: ["", ""]
       - name: sdl_pop6_jp_general_audits   
+        tags: ["", ""]
+      - name: sdl_pop6_jp_promotion_plans
+        tags: ["", ""]
+      - name: sdl_pop6_jp_promotions
+        tags: ["", ""]
+      - name: sdl_pop6_jp_tasks
+        tags: ["", ""]
+      - name: sdl_pop6_jp_exclusion
         tags: ["", ""]
 
   - name: sgpsdl_raw
@@ -65,6 +93,12 @@ sources:
       - name: sdl_pop6_sg_executed_visits   
         tags: ["", ""]
       - name: sdl_pop6_sg_general_audits   
+        tags: ["", ""]
+      - name: sdl_pop6_sg_tasks
+        tags: ["", ""]
+      - name: sdl_pop6_sg_sku_audits
+        tags: ["", ""]
+      - name: sdl_pop6_sg_product_attribute_audits
         tags: ["", ""]
   
   - name: thasdl_raw
