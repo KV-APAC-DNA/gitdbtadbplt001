@@ -41,7 +41,7 @@
                     {% endif %}	
             ),
             final as (
-                SELECT 
+                SELECT distinct
                     cntry_cd::varchar(5) as cntry_cd,
                     crncy_cd::varchar(5) as crncy_cd,
                     routeid::varchar(50) as routeid,
