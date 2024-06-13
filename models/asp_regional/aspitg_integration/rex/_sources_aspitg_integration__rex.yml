@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapaspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: prodtr_producttranslation
+      - name: mrchr_responses
+      - name: mrchr_merchandisingresponse

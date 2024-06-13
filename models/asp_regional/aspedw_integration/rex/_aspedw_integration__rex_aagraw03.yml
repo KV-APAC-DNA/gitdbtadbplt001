@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: aspedw_integration__v_prodtr_producttranslation
+    config:
+      alias: v_prodtr_producttranslation
+      tags: ["","transformation"]  
+  - name: aspedw_integration__v_mrchr_responses
+    config:
+      alias: v_mrchr_responses
+      tags: ["","transformation"]  
+  - name: aspedw_integration__v_mrchr_merchandisingresponse
+    config:
+      alias: v_mrchr_merchandisingresponse
+      tags: ["","transformation"]  

@@ -4,12 +4,12 @@
         incremental_strategy='append',
         pre_hook="{% if is_incremental() %}
         delete from {{this}} where ims_txn_dt in (select distinct transaction_date from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and dstr_cd in (select distinct distributor_code from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and ctry_cd = 'TW';
+        delete from {{this}} as itg_ims using {{ ref('ntawks_integration__wks_itg_ims_sls') }} as wks_itg_ims_sls where itg_ims.ims_txn_dt = wks_itg_ims_sls.ims_txn_dt and itg_ims.cust_cd = wks_itg_ims_sls.cust_cd and itg_ims.prod_cd = wks_itg_ims_sls.prod_cd and itg_ims.doc_type = wks_itg_ims_sls.doc_type and wks_itg_ims_sls.chng_flg = 'U' and itg_ims.dstr_cd = '110256';
+        delete from {{this}} as itg_ims using {{ ref('ntawks_integration__wks_itg_ims_sls') }} as wks_itg_ims_sls where itg_ims.ims_txn_dt = wks_itg_ims_sls.ims_txn_dt and itg_ims.cust_cd = wks_itg_ims_sls.cust_cd and itg_ims.prod_cd = wks_itg_ims_sls.prod_cd and itg_ims.doc_type = wks_itg_ims_sls.doc_type and wks_itg_ims_sls.chng_flg = 'U' and itg_ims.dstr_cd = '100681';
         {% endif %}"
     )
 }}
-
-with sdl_tw_ims_dstr_std_sel_out as 
-(
+with sdl_tw_ims_dstr_std_sel_out as (
     select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}
 ),
 itg_ims_dstr_cust_attr as (
@@ -19,8 +19,10 @@ tw_ims_distributor_ingestion_metadata as (
     select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
     --source
 ),
-
-transformed as 
+wks_itg_ims_sls as (
+    select * from {{ ref('ntawks_integration__wks_itg_ims_sls') }}
+),
+tw_transformed as 
 (    
     SELECT 
         transaction_date AS ims_txn_dt,
@@ -78,8 +80,8 @@ transformed as
         NULL AS sku_per_box,
         'TW' AS ctry_cd,
         'TWD' AS crncy_cd,
-        current_timestamp AS crt_dttm,
-        current_timestamp AS updt_dttm
+        current_timestamp::timestamp_ntz(9) AS crt_dttm,
+        current_timestamp::timestamp_ntz(9) AS updt_dttm
     FROM sdl_tw_ims_dstr_std_sel_out sell_out
     LEFT OUTER JOIN 
     (
@@ -97,6 +99,57 @@ transformed as
         WHERE subject_area = 'Sell-Out'
             AND ctry_cd = 'TW'
     ) meta ON sell_out.distributor_code = meta.distributor_code
+),
+hk_transformed as (
+    SELECT ims_txn_dt,
+        dstr_cd,
+        dstr_nm,
+        cust_cd,
+        cust_nm,
+        prod_cd,
+        prod_nm,
+        rpt_per_strt_dt,
+        rpt_per_end_dt,
+        ean_num,
+        uom,
+        unit_prc,
+        sls_amt,
+        sls_qty,
+        rtrn_qty,
+        rtrn_amt,
+        ship_cust_nm,
+        cust_cls_grp,
+        cust_sub_cls,
+        prod_spec,
+        itm_agn_nm,
+        ordr_co,
+        rtrn_rsn,
+        sls_ofc_cd,
+        sls_grp_cd,
+        sls_ofc_nm,
+        sls_grp_nm,
+        acc_type,
+        co_cd,
+        sls_rep_cd,
+        sls_rep_nm,
+        doc_dt,
+        doc_type,
+        doc_num,
+        invc_num,
+        remark_desc,
+        gift_qty,
+        sls_bfr_tax_amt,
+        sku_per_box,
+        ctry_cd,
+        crncy_cd,
+        case when chng_flg = 'I' THEN convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) else tgt_crt_dttm end as crt_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm
+    FROM wks_itg_ims_sls
+),
+transformed as (
+    select * from tw_transformed
+    union all
+    select * from hk_transformed
 ),
 final as 
 (

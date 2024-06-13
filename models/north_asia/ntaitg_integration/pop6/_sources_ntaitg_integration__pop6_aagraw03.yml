@@ -1,0 +1,73 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_hk_pop_lists   
+      - name: sdl_pop6_kr_pop_lists  
+      - name: sdl_pop6_tw_pop_lists
+      - name: sdl_pop6_hk_product_lists_products
+      - name: sdl_pop6_kr_product_lists_products  
+      - name: sdl_pop6_tw_product_lists_products
+      - name: sdl_pop6_kr_displays
+      - name: sdl_pop6_tw_displays
+      - name: sdl_pop6_hk_displays
+      - name: sdl_pop6_kr_product_attribute_audits
+      - name: sdl_pop6_tw_product_attribute_audits
+      - name: sdl_pop6_hk_product_attribute_audits
+
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_jp_pop_lists
+      - name: sdl_pop6_jp_product_lists_products
+      - name: sdl_pop6_jp_displays
+      - name: sdl_pop6_jp_product_attribute_audits
+
+  - name: sgpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snaposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_sg_pop_lists
+      - name: sdl_pop6_sg_product_lists_products
+      - name: sdl_pop6_sg_displays
+      - name: sdl_pop6_sg_product_attribute_audits
+
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snaposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_th_pop_lists
+      - name: sdl_pop6_th_product_lists_products
+      - name: sdl_pop6_th_displays
+      - name: sdl_pop6_th_product_attribute_audits
+
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_pop6_pop_lists_temp
+      - name: itg_pop6_product_lists_products_temp
