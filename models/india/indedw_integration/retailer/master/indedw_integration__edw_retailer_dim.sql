@@ -1,8 +1,8 @@
 with source as 
 (
-    select * from snapindwks_integration.wks_retailermaster_upd
+    select * from indwks_integration.wks_retailermaster_upd
 ),
-final as 
+temp_a as 
 (
     select 
     retailer_code::varchar(50) as retailer_code,
@@ -37,8 +37,8 @@ final as
 	status_cd::varchar(50) as status_cd,
 	status_desc::varchar(10) as status_desc,
 	csrtrcode::varchar(50) as csrtrcode,
-	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	updt_dttm::timestamp_ntz(9) as updt_dttm,
+	convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as crt_dttm, 
+    convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as updt_dttm,
 	actv_flg::varchar(1) as actv_flg,
 	retailer_category_cd::varchar(25) as retailer_category_cd,
 	retailer_category_name::varchar(50) as retailer_category_name,
@@ -48,7 +48,64 @@ final as
 	createddate::timestamp_ntz(9) as createddate,
 	file_rec_dt::date as file_rec_dt,
 	type_name::varchar(50) as type_name,
-	town_code::varchar(50) as town_code,
+	town_code::varchar(50) as town_code
     from source
+),
+temp_b as 
+(
+    select 
+    '-1' as retailer_code, 
+    convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as start_date, 
+    TO_DATE('99991231','YYYYMMDD')::timestamp_ntz(9) as end_date, 
+    '-1' as customer_code, 
+    'Unknown' as customer_name, 
+    'Unknown' as retailer_name, 
+    'Unknown' as retailer_address1, 
+    'Unknown' as retailer_address2, 
+    'Unknown' as retailer_address3, 
+    '-1'as region_code, 
+    'Unknown' as region_name, 
+    '-1'as zone_code, 
+    'Unknown' as zone_name, 
+    'Unknown' as zone_classification, 
+    '-1'as territory_code, 
+    'Unknown' as territory_name, 
+    'Unknown' as territory_classification, 
+    '-1'as state_code, 
+    'Unknown' as state_name, 
+    -- '-1'as town_code, 
+    'Unknown' as town_name, 
+    'Unknown' as town_classification, 
+    'Unknown' as class_code, 
+    'Unknown' as class_desc, 
+    null as  outlet_type,--not there
+    'Unknown' as channel_code, 
+    'Unknown' as channel_name, 
+    null as business_channel,--not there
+    null as loyalty_desc,--not there
+    NULL as registration_date, 
+    '1' as status_cd, 
+    'Y' as status_desc, 
+    'Unknown' as csrtrcode, 
+    convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as crt_dttm, 
+    convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as updt_dttm, 
+    'Y' as actv_flg, 
+    'Unknown' as retailer_Category_cd, 
+    'Unknown' as Retailer_Category_Name, 
+    'Unknown' as RtrLatitude, 
+    'Unknown' as RtrLongitude, 
+    'Unknown' as RtrUniquecode, 
+    convert_timezone('UTC' , current_timestamp())::timestamp_ntz(9) as Createddate,
+    null as  file_rec_dt, 
+    'Unknown' as Type_Name,
+    '-1' as town_code
+    
+  from source
+),
+final as 
+(
+    select * from temp_a 
+    union all
+    select * from temp_b
 )
 select * from final
