@@ -10,7 +10,49 @@ sources:
       identifier: false
     tables:
       - name: sdl_hk_ims_viva_sel_out
+        tests:
+          - test_null:
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              not_null_columns: ["calendar_sid"]
+              name: TRATBL_sdl_hk_ims_viva_sel_out__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "calendar_sid"
+              filter: "(odd_mon.calendar_sid) = (even_mon.calendar_sid) and (even_mon.calendar_sid) = (feb.calendar_sid) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYYMMDD'"
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              name: TRATBL_sdl_hk_ims_viva_sel_out__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
+
       - name: sdl_hk_ims_wingkeung_sel_out
+        tests:
+          # - test_duplicate:
+          #     group_by_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+          #     need_counts: "no"
+          #     name: TRATBL_sdl_hk_ims_wingkeung_sel_out__duplicate_test
+          #     config:
+          #       store_failures: true
+          #       schema: ntawks_integration
+          - test_null:
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              not_null_columns: ["calendar_sid"]
+              name: TRATBL_sdl_hk_ims_wingkeung_sel_out__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "calendar_sid"
+              filter: "(odd_mon.calendar_sid) = (even_mon.calendar_sid) and (even_mon.calendar_sid) = (feb.calendar_sid) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYYMMDD'"
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              name: TRATBL_sdl_hk_ims_wingkeung_sel_out__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: snapntaitg_integration
