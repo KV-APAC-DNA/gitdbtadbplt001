@@ -23,22 +23,22 @@ v_intrm_calendar_ims as
     select * from dev_dna_core.snapntaedw_integration.v_intrm_calendar_ims
 ),
 
-final as
+transformed as
 (
     select
         'HK' as ctry_cd, 
         '110256' as dstr_cd,
-        sls_rep_cd_nm as sls_rep_cd_nm,
-        sls_rep_cd as sls_rep_cd,
-        sls_rep_nm as sls_rep_nm,
-        store_cd as store_cd,
-        store_nm as store,
-        store_class as store_class,
-        visit_freq as visit_freq,
-        week as week,
-        day as day,
-        to_date(convert_timezone('UTC', current_timestamp())) as file_rec_dt ,
-        period as period,
+        sls_rep_cd_nm,
+        sls_rep_cd,
+        sls_rep_nm,
+        store_cd,
+        store_nm,
+        store_class,
+        visit_freq,
+        week,
+        day,
+        to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)) ,
+        period,
         (
             select min(cal_day)
             from v_intrm_calendar_ims b
@@ -46,6 +46,26 @@ final as
                     and b.wkday = 1
         ) as file_eff_dt
     from source a
+),
+
+final as
+(
+    select 
+        ctry_cd::varchar(5)  as ctry_cd,
+		dstr_cd::varchar(10)  as dstr_cd,
+		sls_rep_cd_nm::varchar(100)  as sls_rep_cd_nm,
+		sls_rep_cd::varchar(20)  as sls_rep_cd,
+		sls_rep_nm::varchar(50)  as sls_rep_nm,
+		store_cd::varchar(20)  as store_cd,
+		store_nm::varchar(100) as store_nm,
+		store_class::varchar(3)  as store_class,
+		visit_freq::number(18,0) as visit_freq,
+		week::number(18,0)  as week,
+		day::varchar(20)  as day,
+		to_date(convert_timezone('UTC', current_timestamp())::timestamp_ntz(9))  as file_rec_dt,
+		period::number(18,0)  as period,
+		file_eff_dt::date as file_eff_dt
+    from transformed
 )
 
 select * from final

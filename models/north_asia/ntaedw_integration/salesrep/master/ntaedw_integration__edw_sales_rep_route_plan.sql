@@ -62,7 +62,7 @@ direct as
         WHERE t1.ctry_cd = t2.ctry_cd
                 AND t1.dstr_cd = t2.dstr_cd
                 AND t1.effctv_strt_dt = t2.effctv_strt_dt
-                AND DECODE(t1.effctv_end_dt, TO_DATE('9999-12-31', 'YYYY-MM-DD'), to_date(convert_timezone('UTC', current_timestamp())), t1.effctv_end_dt) = t2.effctv_end_dt
+                AND DECODE(t1.effctv_end_dt, TO_DATE('9999-12-31', 'YYYY-MM-DD'),'2024-06-06', t1.effctv_end_dt) = t2.effctv_end_dt
                 AND (
                     CASE 
                             WHEN t1.DAY = 'Monday'
@@ -79,7 +79,7 @@ direct as
                     ) = t2.wkday
                 AND t1.week = t2.week_no
                 AND t1.effctv_strt_dt < t1.effctv_end_dt
-      )
+      )t1
 ),
 
 indirect as
@@ -126,7 +126,7 @@ indirect as
         WHERE t1.ctry_cd = t2.ctry_cd
                 AND t1.dstr_cd = t2.dstr_cd
                 AND t1.effctv_strt_dt = t2.effctv_strt_dt
-                AND DECODE(t1.effctv_end_dt, TO_DATE('9999-12-31', 'YYYY-MM-DD'), to_date(convert_timezone('UTC', current_timestamp())), t1.effctv_end_dt) = t2.effctv_end_dt
+                AND DECODE(t1.effctv_end_dt, TO_DATE('9999-12-31', 'YYYY-MM-DD'), '2024-06-06', t1.effctv_end_dt) = t2.effctv_end_dt
                 AND (
                     CASE 
                             WHEN t1.DAY = 'Monday'
@@ -143,7 +143,7 @@ indirect as
                     ) = t2.wkday
                 AND t1.week = t2.week_no
                 AND t1.effctv_strt_dt < t1.effctv_end_dt
-      )
+      )t1
 ),
 
 transformed as
