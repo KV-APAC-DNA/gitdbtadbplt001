@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_distributoractivation
+    config:
+      alias: itg_distributoractivation
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      

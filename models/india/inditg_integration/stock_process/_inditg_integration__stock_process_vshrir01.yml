@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_rmrpstockprocess_opstk
+    config:
+      alias: itg_rmrpstockprocess_opstk
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_rmrpstockprocess_opstk_hist
+    config:
+        alias: itg_rmrpstockprocess_opstk_hist
+        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_rmrpstockprocess_clstk
+    config:
+        alias: itg_rmrpstockprocess_clstk
+        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_rmrpstockprocess_clstk_hist
+    config:
+        alias: itg_rmrpstockprocess_clstk_hist
+        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
