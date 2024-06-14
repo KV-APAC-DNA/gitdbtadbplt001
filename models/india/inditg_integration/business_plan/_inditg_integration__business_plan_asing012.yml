@@ -1,0 +1,40 @@
+version: 2
+
+models:
+
+  - name: inditg_integration__itg_mds_in_businessplan_brand_raw
+    config: 
+      alias: itg_mds_in_businessplan_brand_raw
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_brand
+    config: 
+      alias: itg_mds_in_businessplan_brand
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_brand_final
+    config: 
+      alias: itg_mds_in_businessplan_brand_final
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_channel_raw
+    config: 
+      alias: itg_mds_in_businessplan_channel_raw
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_channel
+    config: 
+      alias: itg_mds_in_businessplan_channel
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_channel_final
+    config: 
+      alias: itg_mds_in_businessplan_channel_final
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_zonewise_raw
+    config: 
+      alias: itg_mds_in_businessplan_zonewise_raw
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_zonewise
+    config: 
+      alias: itg_mds_in_businessplan_zonewise
+      tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_mds_in_businessplan_zonewise_final
+    config: 
+      alias: itg_mds_in_businessplan_zonewise_final
+      tags: ["in_mds_refresh","transformation"]

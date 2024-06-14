@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_rtlsalesman
+    config: 
+      alias: itg_in_rtlsalesman
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__sdl_raw_in_rtlsalesman
+    config: 
+      alias: sdl_raw_in_rtlsalesman
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__itg_in_rtldistributor
+    config: 
+      alias: itg_in_rtldistributor
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__sdl_raw_in_rtldistributor
+    config: 
+      alias: sdl_raw_in_rtldistributor
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
