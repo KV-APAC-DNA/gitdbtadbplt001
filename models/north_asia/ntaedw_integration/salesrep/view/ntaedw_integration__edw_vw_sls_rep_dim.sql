@@ -1,18 +1,18 @@
 with edw_sales_rep_route_plan as (
-    select * from snapntaedw_integration.edw_sales_rep_route_plan
+    select * from ntaedw_integration.edw_sales_rep_route_plan
 ),
 edw_ims_fact as (
-    select * from snapntaedw_integration.edw_ims_fact
+    select * from ntaedw_integration.edw_ims_fact
 ),
 c as (
-    SELECT edw_ims_fact.sls_rep_cd,
+    SELECT rtrim(edw_ims_fact.sls_rep_cd) as sls_rep_cd,
         max(edw_ims_fact.ims_txn_dt) AS ims_txn_dt
     FROM edw_ims_fact
     WHERE (
             (
                 NOT (
-                    edw_ims_fact.sls_rep_cd IN (
-                        SELECT DISTINCT edw_sales_rep_route_plan.sls_rep_cd
+                    rtrim(edw_ims_fact.sls_rep_cd) IN (
+                        SELECT DISTINCT rtrim(edw_sales_rep_route_plan.sls_rep_cd)
                         FROM edw_sales_rep_route_plan
                     )
                 )
@@ -21,7 +21,7 @@ c as (
                 (edw_ims_fact.sls_rep_nm)::text not like ('%?%'::character varying)::text
             )
         )
-    GROUP BY edw_ims_fact.sls_rep_cd
+    GROUP BY rtrim(edw_ims_fact.sls_rep_cd)
 ),
 derived_table1 as (
     SELECT DISTINCT a.ctry_cd,
@@ -34,7 +34,7 @@ derived_table1 as (
         edw_ims_fact b
     WHERE (
             ((a.ctry_cd)::text = (b.ctry_cd)::text)
-            AND ((a.dstr_cd)::text = (b.dstr_cd)::text)
+            AND (rtrim(a.dstr_cd)::text = rtrim(b.dstr_cd)::text)
         )
     UNION
     SELECT DISTINCT a.ctry_cd,
@@ -46,7 +46,7 @@ derived_table1 as (
     FROM edw_ims_fact a
             JOIN c ON (
                 (
-                    ((a.sls_rep_cd)::text = (c.sls_rep_cd)::text)
+                    (rtrim(a.sls_rep_cd)::text = rtrim(c.sls_rep_cd)::text)
                     AND (a.ims_txn_dt = c.ims_txn_dt)
                 )
             )

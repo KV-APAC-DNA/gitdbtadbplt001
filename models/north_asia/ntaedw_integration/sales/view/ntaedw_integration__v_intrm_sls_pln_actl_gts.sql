@@ -1,8 +1,8 @@
 with v_intrm_copa_sls_cust_hier as (
-    select * from snapntaedw_integration.v_intrm_copa_sls_cust_hier
+    select * from ntaedw_integration.v_intrm_copa_sls_cust_hier
 ),
 v_intrm_invc_sls_cust_hier as (
-    select * from snapntaedw_integration.v_intrm_invc_sls_cust_hier
+    select * from ntaedw_integration.v_intrm_invc_sls_cust_hier
 ),
 v_intrm_copa_sls as (
     SELECT v_intrm_copa_sls_cust_hier.ctry_nm,
@@ -769,13 +769,13 @@ final as (
                                 day,
                                 last_day(
                                     (
-                                        (
+                                        to_date(
                                             (
                                                 (
                                                     substring((derived_table1.fisc_yr_per)::text, 1, 4) || substring((derived_table1.fisc_yr_per)::text, 6, 7)
                                                 ) || ('01'::character varying)::text
                                             )
-                                        )::date
+                                        ,'yyyymmdd')
                                     )::timestamp without time zone
                                 )
                             )
