@@ -46,7 +46,7 @@ temp_a as
 	rtrlongitude::varchar(40) as rtrlongitude,
 	rtruniquecode::varchar(100) as rtruniquecode,
 	createddate::timestamp_ntz(9) as createddate,
-	file_rec_dt::date as file_rec_dt,
+	to_date(file_rec_dt) as file_rec_dt,
 	type_name::varchar(50) as type_name,
 	town_code::varchar(50) as town_code
     from source
