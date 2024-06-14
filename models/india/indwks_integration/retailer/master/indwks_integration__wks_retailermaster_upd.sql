@@ -1,19 +1,19 @@
 with 
 itg_retailermaster as 
 (
-    select * from snapinditg_integration.itg_retailermaster
+    select * from {{ ref('inditg_integration__itg_retailermaster') }}
 ),
 edw_customer_dim  as 
 (
-    select * from snapindedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 itg_udcdetails as 
 (
-    select * from snapinditg_integration.itg_udcdetails
+    select * from {{ ref('inditg_integration__itg_udcdetails') }}
 ),
 itg_csl_retailerhierarchy as 
 (
-    select * from snapinditg_integration.itg_csl_retailerhierarchy
+    select * from {{ ref('inditg_integration__itg_csl_retailerhierarchy') }}
 ),
 trans as 
 (

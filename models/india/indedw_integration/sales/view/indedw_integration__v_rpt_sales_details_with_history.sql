@@ -5,78 +5,80 @@
 }}
 with 
 itg_in_rtlsalesman as 
-(select * from inditg_integration.itg_in_rtlsalesman),
+(
+select * from {{ ref('inditg_integration__itg_in_rtlsalesman') }}
+),
 edw_retailer_calendar_dim as 
 (
-select * from indedw_integration.edw_retailer_calendar_dim
+select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_retailer_dim as 
 (
-select * from indedw_integration.edw_retailer_dim
+select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 v_retail_fran_chanl as 
 (
-select * from indedw_integration.v_retail_fran_chanl
+select * from {{ ref('indedw_integration__v_retail_fran_chanl') }}
 ),
 itg_distributoractivation as 
 (
-select * from inditg_integration.itg_distributoractivation
+select * from {{ ref('inditg_integration__itg_distributoractivation') }}
 ),
 itg_retailerroute as 
 (
-select * from inditg_integration.itg_retailerroute
+select * from {{ ref('inditg_integration__itg_retailerroute') }}
 ),
 itg_salesmanmaster as 
 (
-select * from inditg_integration.itg_salesmanmaster
+select * from {{ ref('inditg_integration__itg_salesmanmaster') }}
 ),
 edw_product_dim as 
 (
-select * from indedw_integration.edw_product_dim
+select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 v_retailer_udc_map as 
 (
-select * from indedw_integration.v_retailer_udc_map
+select * from {{ ref('indedw_integration__v_retailer_udc_map') }}
 ),
 edw_customer_dim as 
 (
-select * from indedw_integration.edw_customer_dim
+select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_dailysales_fact as 
 (
-select * from indedw_integration.edw_dailysales_fact
+select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
 itg_in_rcustomerroute as 
 (
-select * from inditg_integration.itg_in_rcustomerroute
+select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }}
 ),
 itg_in_rroute as 
 (
-select * from inditg_integration.itg_in_rroute
+select * from {{ ref('inditg_integration__itg_in_rroute') }}
 ),
 itg_in_rsalesmanroute as 
 (
-select * from inditg_integration.itg_in_rsalesmanroute
+select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
 ),
 itg_in_rsalesman as 
 (
-select * from inditg_integration.itg_in_rsalesman
+select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
 ),
 itg_in_rtlheader as 
 (
-select * from inditg_integration.itg_in_rtlheader
+select * from {{ ref('inditg_integration__itg_in_rtlheader') }}
 ),
 itg_in_rrsrheader as 
 (
-select * from inditg_integration.itg_in_rrsrheader
+select * from {{ ref('inditg_integration__itg_in_rrsrheader') }}
 ),
 itg_in_rrsrdistributor as 
 (
-select * from inditg_integration.itg_in_rrsrdistributor
+select * from {{ ref('inditg_integration__itg_in_rrsrdistributor') }}
 ),
 itg_in_rretailergeoextension as 
 (
-select * from inditg_integration.itg_in_rretailergeoextension
+select * from {{ ref('inditg_integration__itg_in_rretailergeoextension') }}
 ),
 final as 
 (
