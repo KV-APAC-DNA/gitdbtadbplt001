@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_csl_udcdetails
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+    
+    

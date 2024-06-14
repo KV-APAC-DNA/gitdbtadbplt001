@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_ruralstoreorderheader
+    config:
+      alias: itg_ruralstoreorderheader
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+
+  - name: inditg_integration__itg_ruralstoreorderdetail
+    config:
+      alias: itg_ruralstoreorderdetail
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]

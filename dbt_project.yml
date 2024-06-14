@@ -384,3 +384,4 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
+    

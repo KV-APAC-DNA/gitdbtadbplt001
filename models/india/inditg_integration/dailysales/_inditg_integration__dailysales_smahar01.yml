@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_dailysales
+    config:
+      alias: itg_dailysales
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+  - name: inditg_integration__itg_dailysales_undelivered
+    config:
+      alias: itg_dailysales_undelivered
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+  - name: inditg_integration__sdl_csl_dailysales_raw
+    config:
+      alias: sdl_csl_dailysales_raw
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
