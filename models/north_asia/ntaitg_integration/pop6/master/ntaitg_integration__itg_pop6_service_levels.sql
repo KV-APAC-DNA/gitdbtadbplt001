@@ -42,7 +42,7 @@ kr AS
 	SELECT 
 		'KR'as cntry_cd,
 		substring(file_name, 1, 8) as src_file_date,
-		NULL,
+		NULL::varchar(200) AS customer,
 		customer_grade,
 		NULL as channel,
 		retail_environment_ps,
@@ -204,7 +204,7 @@ final AS
 	select 
 		cntry_cd::varchar(10) as cntry_cd,
 		src_file_date::varchar(10) as src_file_date,
-		null as customer,
+		customer::varchar(200) as customer,
 		customer_grade::varchar(200) as customer_grade,
 		channel::varchar(200) as channel,
 		retail_environment_ps::varchar(200) as retail_environment_ps,
