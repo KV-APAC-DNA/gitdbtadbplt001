@@ -19,7 +19,7 @@
                 popdb_id varchar(255),
                 pop_code varchar(50),
                 pop_name varchar(100),
-                address varchar(100),
+                address varchar(255),
                 longitude number(18,5),
                 latitude number(18,5),
                 country varchar(200),
