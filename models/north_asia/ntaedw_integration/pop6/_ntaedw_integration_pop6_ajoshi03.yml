@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_vw_pop6_salesperson
+    config:
+        alias: edw_vw_pop6_salesperson
+        tags: []
+
+
+  - name: ntaedw_integration__edw_vw_pop6_visits_display
+    config:
+        alias: edw_vw_pop6_visits_display
+        tags: []
+
+        
+  - name: ntaedw_integration__edw_vw_pop6_promotions
+    config:
+        alias: edw_vw_pop6_promotions
+        tags: []
+
+
+  - name: ntaedw_integration__edw_vw_pop6_planned_visits
+    config:
+        alias: edw_vw_pop6_planned_visits
+        tags: []
