@@ -20,7 +20,7 @@ itg_mds_ap_sales_ops_map as (
 
 
 --Final CTE
-final as (select RGN_MKT_CD, fiscal_yr_mo, sum(numerator) as numerator, sum(denominator) as denominator
+final as (select RGN_MKT_CD, fiscal_yr_mo, segment_information, sum(numerator) as numerator, sum(denominator) as denominator
 from (
 SELECT
 FISC_YR_NBR as fiscal_yr,
@@ -28,6 +28,7 @@ FISC_YR_MO_NUM as fiscal_yr_mo,
 FISC_YR_WK_NUM as fiscal_yr_wk,
 RGN_CD AS region,
 SLORG_NUM as sls_org,
+GCPH_GFO_DESC  as segment_information,
 trim(RGN_MKT_CD) as RGN_MKT_CD,
 ltrim(SOLD_TO_CUST_NUM, '0') as sold_to,
 ltrim(MATL_NUM, '0') as matl_num,
@@ -43,13 +44,14 @@ and AFFL_IND = '0'
 and NO_CHRG_IND = '0'
 and RGN_CD = 'APAC'
 and (OTIF_EXCL_IND = 0 or OTIF_EXCL_IND = 1)
-Group by FISC_YR_NBR,FISC_YR_MO_NUM,FISC_YR_WK_NUM,RGN_CD,SLORG_NUM,trim(RGN_MKT_CD),ltrim(SOLD_TO_CUST_NUM, '0'),ltrim(MATL_NUM, '0')
-) a Group by RGN_MKT_CD,fiscal_yr_mo
+Group by FISC_YR_NBR,FISC_YR_MO_NUM,FISC_YR_WK_NUM,RGN_CD,SLORG_NUM,segment_information,
+trim(RGN_MKT_CD),ltrim(SOLD_TO_CUST_NUM, '0'),ltrim(MATL_NUM, '0')
+) a Group by RGN_MKT_CD,fiscal_yr_mo,segment_information
  
 UNION ALL
  
 -- OLD: before 202308
-select market,fiscal_yr_mo, sum(numerator) as numerator, sum(denominator) as denominator from (
+select market,fiscal_yr_mo,segment_information, sum(numerator) as numerator, sum(denominator) as denominator from (
 SELECT MAP.DESTINATION_MARKET AS Market,		--// SELECT map.destination_market AS "market",
        MAP.DESTINATION_CLUSTER AS cluster,		--//        map.destination_cluster AS "cluster",
        fiscal_yr,
@@ -57,6 +59,7 @@ SELECT MAP.DESTINATION_MARKET AS Market,		--// SELECT map.destination_market AS 
        fiscal_yr_wk,
        region,
        salesorg as sls_org,
+       worldwide_franchise as segment_information,
        ltrim(sold_to_nbr, '0') as sold_to,
        ltrim(material, '0') as matl_num,
        SUM(case when country = 'JP' then num_unit_otifd_ship_confirm else numerator_unit_otifd_delivery end) AS numerator,
@@ -70,9 +73,9 @@ WHERE region = 'APAC'
 AND   no_charge_ind = 'Revenue'
 AND   affiliate_flag = '0'
 AND   fiscal_yr_mo <= '2023_07'
-GROUP BY 1,2,3,4,5,6,7,8,9
+GROUP BY 1,2,3,4,5,6,7,8,9,10
 //ORDER BY 1,2,3,4,5,6,7,8,9
-) group by 1,2
+) group by 1,2,3
 )
 select * from final
 
