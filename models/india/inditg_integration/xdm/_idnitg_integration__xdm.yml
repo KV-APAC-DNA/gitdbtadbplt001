@@ -34,3 +34,12 @@ models:
     config: 
       alias: itg_xdm_salesheirarchy
       tags: ["in_supplier","ingestion"]
+
+  - name: inditg_integration__itg_xdm_channelmaster
+    config: 
+      alias: itg_xdm_channelmaster
+      tags: ["in_supplier","ingestion"]
+  - name: inditg_integration__itg_xdm_distributor
+    config: 
+      alias: itg_xdm_distributor
+      tags: ["in_supplier","ingestion"]

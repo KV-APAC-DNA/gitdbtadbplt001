@@ -26,3 +26,9 @@ sources:
       tags: ["in_supplier","ingestion"]
     - name: sdl_xdm_salesheirarchy
       tags: ["in_sales_heirarchy","ingestion"]
+
+    - name: sdl_xdm_channelmaster
+      tags: ["in_sales_heirarchy","ingestion"]
+
+    - name: sdl_xdm_distributor
+      tags: ["in_sales_heirarchy","ingestion"]

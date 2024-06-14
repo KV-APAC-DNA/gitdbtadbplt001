@@ -4,7 +4,7 @@ with sdl_xdm_distributor_supplier as
 ),
 sdl_xdm_supplier as 
 (
-    select * from dev_dna_load.snapindsdl_raw.sdl_xdm_supplier
+    select * from {{ source('indsdl_raw', 'sdl_xdm_supplier') }}
 ),
 final as 
 (

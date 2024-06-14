@@ -1,6 +1,6 @@
 with itg_xdm_distributor as
 (
-    select * from inditg_integration.itg_xdm_distributor
+    select * from {{ ref('inditg_integration__itg_xdm_distributor') }}
 ),
 itg_xdm_distributor_supplier as
 (
@@ -8,11 +8,11 @@ itg_xdm_distributor_supplier as
 ),
 itg_xdm_supplier as
 (
-    select * from inditg_integration.itg_xdm_supplier
+    select * from {{ ref('inditg_integration__itg_xdm_supplier') }}
 ),
 itg_xdm_salesheirarchy as
 (
-    select * from inditg_integration.itg_xdm_salesheirarchy
+    select * from {{ ref('inditg_integration__itg_xdm_salesheirarchy') }}
 ),
 itg_xdm_geohierarchy as
 (
@@ -20,7 +20,7 @@ itg_xdm_geohierarchy as
 ),
 itg_xdm_channelmaster as
 (
-    select * from inditg_integration.itg_xdm_channelmaster
+    select * from {{ ref('inditg_integration__itg_xdm_channelmaster') }}
 ),
 edw_customer_dim as
 (
