@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_mds_in_subdtown_district_master
+    config:
+      alias: itg_mds_in_subdtown_district_master
+      tags: ["in_mi_dashboard_datamart","ingestion"]
+  - name: inditg_integration__itg_xdm_geohierarchy
+    config:
+      alias: itg_xdm_geohierarchy
+      tags: ["in_geo_heirarchy","ingestion"]
+  - name: inditg_integration__itg_xdm_product
+    config:
+      alias: itg_xdm_product
+      tags: ["in_product","ingestion"]
+  - name: inditg_integration__itg_xdm_productuom
+    config:
+      alias: itg_xdm_productuom
+      tags: ["in_productuom","ingestion"]
+  - name: inditg_integration__itg_xdm_distributor_supplier
+    config:
+      alias: itg_xdm_distributor_supplier
+      tags: ["in_distributor_supplier","ingestion"]
+  - name: inditg_integration__itg_xdm_batchmaster
+    config:
+      alias: itg_xdm_batchmaster
+      tags: ["in_batchmaster","ingestion"]
