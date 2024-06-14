@@ -1,0 +1,21 @@
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_csl_distributoractivation
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_distributoractivation_temp
