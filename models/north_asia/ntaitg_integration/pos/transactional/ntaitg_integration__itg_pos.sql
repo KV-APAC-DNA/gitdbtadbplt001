@@ -6,63 +6,29 @@
         pre_hook= [" {% if is_incremental() %}
                     {% if var('pos_job_to_execute') == 'tw_pos' %}
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd) in
-                    (
-                        select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from
-                        (
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }}
-                        )
-                        where chng_flg = 'U'
+                    ( select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_poya') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_7eleven') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_ec') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_cosmed') }} ) where chng_flg = 'U'
                     );
                     delete from {{this}} where (pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd) in
-                    (
-                        select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from
-                        (
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_carrefour') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_rt_mart') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }}
-                        )
-                        where chng_flg = 'U'
+                    ( select distinct pos_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_carrefour') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_rt_mart') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_px_civila') }} ) where chng_flg = 'U'
                     );
                     delete from {{this}} where (pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd) in
-                    (
-                        select distinct pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd from
-                        (
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_watson_store') }}
-                        )
-                        where chng_flg = 'U'
+                    ( select distinct pos_dt,coalesce(vend_prod_cd,'#'),src_sys_cd,ctry_cd,str_cd from (     select * from {{ ref('ntawks_integration__wks_itg_pos_watson_store') }} ) where chng_flg = 'U'
                     );
+
                     {% elif var('pos_job_to_execute') == 'kr_pos' %}
                     delete from {{this}} itg_pos where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) in 
                     (
                         select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
                     )
-                    and upper(itg_pos.src_sys_cd) = 'EMART'
-                    and upper(itg_pos.ctry_cd) = 'KR';
+                    and upper(itg_pos.src_sys_cd) = 'EMART'and upper(itg_pos.ctry_cd) = 'KR';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }} wks_itg_pos
-                    where wks_itg_pos.pos_dt = itg_pos.pos_dt
-                        and wks_itg_pos.ean_num = itg_pos.ean_num
-                        and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd
-                        and wks_itg_pos.ctry_cd = itg_pos.ctry_cd
-                        and wks_itg_pos.chng_flg = 'U'
-                        and itg_pos.src_sys_cd not in ('Emart', 'Costco')
-                        and wks_itg_pos.str_cd = itg_pos.str_cd;
+                    where wks_itg_pos.pos_dt = itg_pos.pos_dt and wks_itg_pos.ean_num = itg_pos.ean_num and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos.ctry_cd = itg_pos.ctry_cd and wks_itg_pos.chng_flg = 'U' and itg_pos.src_sys_cd not in ('Emart', 'Costco') and wks_itg_pos.str_cd = itg_pos.str_cd;
                     delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd) in
                     (
-                        select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from
-                        (
-                            
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }}
-                        )
-                        where chng_flg = 'U'
+                        select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }} ) where chng_flg = 'U'
                     );
+                    {% elif var('pos_job_to_execute') == 'hk_pos' %}
+                    delete from {{this}} itg using {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }} sdl where to_date (sdl.date::character varying::text,'dd/mm/yyyy'::character varying::text) = itg.pos_dt  AND  itg.src_sys_cd = 'Mannings' AND  itg.ctry_cd = 'HK';
                     {% endif %}
                     {% endif %}   
                     "
@@ -104,6 +70,9 @@ wks_itg_pos_emart as (
 ),
 wks_itg_pos_emart_ecvan_ssg as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
+),
+sdl_hk_pos_scorecard_mannings as (
+    select * from {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }}
 )
 {% if var('pos_job_to_execute') == 'tw_pos' %}
 ,
@@ -693,6 +662,102 @@ final as
         union all
         select * from emart_combined
     )   
+)
+select * from final
+{% elif var("pos_job_to_execute") == 'hk_pos' %}
+,
+final as
+(   
+    select
+        TO_DATE (
+            date::CHARACTER VARYING::TEXT,
+            'dd/mm/yyyy'::CHARACTER VARYING::TEXT
+        ) AS pos_dt,
+        vendorid::varchar(40) AS vend_cd,
+        vendordesc::varchar(100) AS vend_nm,
+        productdesc::varchar(100) AS prod_nm,
+        productid::varchar(40) AS vend_prod_cd,
+        null::varchar(600) AS vend_prod_nm,
+        brand::varchar(40) AS brnd_nm,
+        null::varchar(100) AS ean_num,
+        null::varchar(40) AS str_cd,
+        null::varchar(100) AS str_nm,
+        salesqty::number(18,0) AS sls_qty,
+        salesvalue::number(16,5) AS sls_amt,
+        null::number(16,5) AS unit_prc_amt,
+        null::number(16,5) AS sls_excl_vat_amt,
+        null::number(16,5) AS stk_rtrn_amt,
+        null::number(16,5) AS stk_recv_amt,
+        null::number(16,5) AS avg_sell_qty,
+        null::number(18,0) AS cum_ship_qty,
+        null::number(18,0) AS cum_rtrn_qty,
+        null::number(18,0) AS web_ordr_takn_qty,
+        null::number(18,0) AS web_ordr_acpt_qty,
+        null::number(18,0) AS dc_invnt_qty,
+        null::number(18,0) AS invnt_qty,
+        null::number(16,5) AS invnt_amt,
+        null::date AS invnt_dt,
+        null::varchar(40) AS serial_num,
+        null::varchar(40) AS prod_delv_type,
+        null::varchar(40) AS prod_type,
+        null::varchar(40) AS dept_cd,
+        null::varchar(100) AS dept_nm,
+        null::varchar(100) AS spec_1_desc,
+        null::varchar(100) AS spec_2_desc,
+        null::varchar(100) AS cat_big,
+        null::varchar(40) AS cat_mid,
+        null::varchar(40) AS cat_small,
+        null::varchar(40) AS dc_prod_cd,
+        null::varchar(100) AS cust_dtls,
+        null::varchar(40) AS dist_cd,
+        'HKD'::varchar(10) AS crncy_cd,
+        null::varchar(40) AS src_txn_sts,
+        null::number(18,0) AS src_seq_num,
+        'Mannings'::varchar(30) AS src_sys_cd,
+        'HK'::varchar(10) AS ctry_cd,
+        null::varchar(35) as src_mesg_no,
+        null::varchar(3) as src_mesg_code,
+        null::varchar(3) as src_mesg_func_code,
+        null::date as src_mesg_date,
+        null::varchar(3) as src_sale_date_form,
+        null::varchar(10) as src_send_code,
+        null::varchar(13) as src_send_ean_code,
+        null::varchar(30) as src_send_name,
+        null::varchar(13) as src_recv_qual,
+        null::varchar(10) as src_recv_ean_code,
+        null::varchar(35) as src_recv_name,
+        null::varchar(3) as src_part_qual,
+        null::varchar(13) as src_part_ean_code,
+        null::varchar(10) as src_part_id,
+        null::varchar(30) as src_part_name,
+        null::varchar(35) as src_sender_id,
+        null::varchar(10) as src_recv_date,
+        null::varchar(6) as src_recv_time,
+        null::number(8,0) as src_file_size,
+        null::varchar(128) as src_file_path,
+        null::varchar(1) as src_lega_tran,
+        null::varchar(10) as src_regi_date,
+        null::number(6,0) as src_line_no,
+        null::varchar(20) as src_instore_code,
+        null::number(15,0) as src_mnth_sale_amnt,
+        null::varchar(3) as src_qty_unit,
+        null::number(10,0) as src_mnth_sale_qty,
+        null::varchar(5) as unit_of_pkg_sales,
+        null::date as doc_send_date,
+        null::varchar(5) as unit_of_pkg_invt,
+        null::varchar(6) as doc_fun,
+        null::varchar(40) as doc_no,
+        null::varchar(6) as doc_fun_cd,
+        null::varchar(40) as buye_loc_cd,
+        null::varchar(40) as vend_loc_cd,
+        null::varchar(40) as provider_loc_cd,
+        null::number(18,0) as comp_qty,
+        null::varchar(5) as unit_of_pkg_comp,
+        null::number(18,0) as order_qty,
+        null::varchar(5) as unit_of_pkg_order,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) AS crt_dttm,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) AS UPD_DTTM
+    FROM sdl_hk_pos_scorecard_mannings
 )
 select * from final
 {% endif %}

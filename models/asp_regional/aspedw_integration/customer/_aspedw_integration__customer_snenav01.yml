@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_customer_attr_flat_dim
+    config: 
+      alias: edw_customer_attr_flat_dim
+      tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]
