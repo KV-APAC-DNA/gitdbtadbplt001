@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: idnitg_integration__itg_distributor_channel_dim
+    config:
+      alias: itg_distributor_channel_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_dim
+    config:
+      alias: itg_distributor_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_group_dim
+    config:
+      alias: itg_distributor_group_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_product_dim
+    config:
+      alias: itg_distributor_product_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_province_dim
+    config:
+      alias: itg_distributor_province_dim
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_mds_id_distributor_group_ingest_include
+    config:
+      alias: itg_mds_id_distributor_group_ingest_include
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_customer_dim
+    config:
+      alias: itg_distributor_customer_dim
+      tags: ["id_mds_sdl_itg_load_dist_cust_dim","ingestion"]
+
+  - name: idnitg_integration__itg_mds_id_lav_inventory_intransit
+    config:
+      alias: itg_mds_id_lav_inventory_intransit
+      tags: ["id_mds_itg_load","ingestion"]
+  - name: idnitg_integration__itg_distributor_salesman_dim
+    config:
+      alias: itg_distributor_salesman_dim
+      tags: ["id_mds_itg_load","transformation"]
+
+  - name: idnitg_integration__sdl_distributor_customer_dim_raw
+    config:
+      alias: sdl_distributor_customer_dim_raw
+      tags: ["id_cd_server_data","ingestion"]
+
+  - name: idnitg_integration__itg_all_distributor_sellin_sales_fact
+    config:
+      alias: itg_all_distributor_sellin_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+
+  - name: idnitg_integration__itg_all_distributor_sellout_sales_fact
+    config:
+      alias: itg_all_distributor_sellout_sales_fact
+      tags: ["id_cd_server_data","transformation"]
+
+  - name: idnitg_integration__sdl_distributor_altryx_cust_dim_mds_sync
+    config:
+      alias: sdl_distributor_altryx_cust_dim_mds_sync
+      tags: ["id_cd_server_data","transformation"]
+
+  # - name: idnitg_integration__itg_all_non_ivy_distributor_sellout_sales_fact
+  #   config:
+  #     alias: itg_all_non_ivy_distributor_sellout_sales_fact
+  #     tags: ["id_sellout_sales","transformation"]
+
+  # - name: idnitg_integration__itg_all_distributor_raw_fact
+  #   config:
+  #     alias: itg_all_distributor_raw_fact
+  #     tags: ["id_sellout_sales","transformation"]

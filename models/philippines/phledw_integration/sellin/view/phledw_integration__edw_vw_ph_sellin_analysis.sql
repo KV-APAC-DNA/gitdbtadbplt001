@@ -178,36 +178,37 @@ from (select mnth_id
              sum(nts_val) as nts_val,
              sum(tp_val) as tp_val
       from edw_vw_ph_sellin_sales_fact veossf1,
-           (select "year",
-                   qrtr_no,
-                   qrtr,
-                   mnth_id,
-                   mnth_desc,
-                   mnth_no,
-                   mnth_shrt,
-                   mnth_long,
-                   mnth_wk_no,
+           (select a."year",
+                   a.qrtr_no,
+                   a.qrtr,
+                   a.mnth_id,
+                   a.mnth_desc,
+                   a.mnth_no,
+                   a.mnth_shrt,
+                   a.mnth_long,
+                   a.mnth_wk_no,
                    case
-                     when mnth_wk_no = 1 then '19000101'
-                     else (min(cal_date_id))
+                     when a.mnth_wk_no = 1 then '19000101'
+                     else (min(a.cal_date_id))
                    end as first_day,
                    case
-                     when mnth_wk_no = (select max(mnth_wk_no)
-                                        from edw_vw_os_time_dim b
-                                        where b.mnth_id = mnth_id
-                                        ) then '20991231'
-                     else (max(cal_date_id))
+                     when a.mnth_wk_no = b.mnth_wk_no then '20991231'
+                     else (max(a.cal_date_id))
                    end as last_day
             from edw_vw_os_time_dim a
-            group by "year",
-                     qrtr_no,
-                     qrtr,
-                     mnth_id,
-                     mnth_desc,
-                     mnth_no,
-                     mnth_shrt,
-                     mnth_long,
-                     mnth_wk_no) veotd
+            join
+             (select mnth_id,max(mnth_wk_no) as mnth_wk_no from edw_vw_os_time_dim group by mnth_id) b
+             on a.mnth_id = b.mnth_id
+            group by a."year",
+                     a.qrtr_no,
+                     a.qrtr,
+                     a.mnth_id,
+                     a.mnth_desc,
+                     a.mnth_no,
+                     a.mnth_shrt,
+                     a.mnth_long,
+                     a.mnth_wk_no,
+                     b.mnth_wk_no) veotd
       where (sls_qty <> 0 or ret_qty <> 0 or gts_val <> 0 or ret_val <> 0 or nts_val <> 0 or tp_val <> 0)
       and   cntry_nm = 'PH'
       and   trim(veossf1.jj_mnth_id) = trim(cast((veotd.mnth_id) as varchar))

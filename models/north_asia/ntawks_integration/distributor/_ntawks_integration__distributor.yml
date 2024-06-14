@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_tw_ims_dstr_prod_map
+    config: 
+      alias: wks_itg_tw_ims_dstr_prod_map
+      tags: ["tw_ims_distributor_prod_map","ingestion"]
+
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107482_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107482_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107483_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107483_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107485_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107485_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107501_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107501_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107507_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107507_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107510_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_107510_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_116047_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_116047_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_120812_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_120812_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_122296_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_122296_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_123291_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_123291_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_131953_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_131953_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_132222_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_132222_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_132349_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_132349_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_132508_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_132508_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_134478_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_134478_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_135307_sellout 
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_135307_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_136454_sellout    
+    config:
+        alias: wks_sdl_tw_ims_dstr_std_sel_out_136454_sellout
+        tags: ["tw_ims_distributor_standard_sell_out","ingestion"]

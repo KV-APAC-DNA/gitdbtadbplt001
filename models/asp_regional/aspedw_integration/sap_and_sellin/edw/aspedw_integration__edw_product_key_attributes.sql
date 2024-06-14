@@ -143,6 +143,8 @@ final as (
         FROM (SELECT *
         -- Start Add new column total_size = size*package AEBU-10288
                 ,CASE
+                WHEN UPPER(pka_package_desc) = 'PREMIX' THEN '1'
+                WHEN COALESCE(pka_package_desc, '0') = '0' THEN '0' -- Replace NULL with '0'
                 WHEN SUBSTRING(pka_package_desc,1,1) = 'x' THEN SUBSTRING(pka_package_desc,2,LENGTH(pka_package_desc))
                 WHEN UPPER(pka_package_desc) = 'ASSORTED PACK' THEN '1' --'PACK'
                 WHEN UPPER(pka_package_desc) = 'MIX PACK' THEN '1'
@@ -159,15 +161,18 @@ final as (
                 WHEN UPPER(pka_package_desc) = 'TWIN PACK' THEN '2'
                 ELSE pka_package_desc
             END AS pka_package_desc_v1,
-            CASE WHEN UPPER(pka_size_desc) = 'PACK' THEN '11111'
-                    WHEN UPPER(pka_size_desc) = 'BULK' THEN '99999'
+            CASE 
+                WHEN COALESCE(pka_size_desc, '0') = '0' THEN '0'
+                WHEN pka_size_desc is null THEN '0'
+                WHEN UPPER(pka_size_desc) = 'PACK' THEN '11111'
+                WHEN UPPER(pka_size_desc) = 'BULK' THEN '99999'
                 ELSE replace(substring(pka_size_desc,1,regexp_instr(pka_size_desc,'[a-z]|[A-Z]') -1),',','.')
                 -- ELSE REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pka_size_desc,'millilitre',''),'gram',''),'piece',''),'meter',''),'sheet',''),'spray',''),',','')
             END  AS pka_size_desc_v1,
             CAST ( try_to_number(pka_package_desc_v1) * try_to_decimal(pka_size_desc_v1,38,2) AS VARCHAR(30)) AS TS
             -- End Add new column total_size = size*package AEBU-10288
         FROM EDW_MATERIAL_DIM
-        WHERE MATL_NUM IN (SELECT DISTINCT MATL_NUM
+        WHERE upper(coalesce(pka_size_desc,''))!='REGULAR' AND MATL_NUM IN (SELECT DISTINCT MATL_NUM
                         FROM (SELECT MATL_NUM,
                                         FISC_YR_PER,
                                         SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
@@ -183,7 +188,7 @@ final as (
                         SELECT MATL_NUM
                         FROM EDW_MATERIAL_DIM MAT
                         WHERE MAT.MATL_TYPE_CD IN ('FERT')
-                        AND   to_date(crt_on) >= to_date('2019-01-01'))
+                        )
         ) mat
         LEFT JOIN EDW_GCH_PRODUCTHIERARCHY gch
         ON MAT.MATL_NUM = GCH.MATERIALNUMBER
