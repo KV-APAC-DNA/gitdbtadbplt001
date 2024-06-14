@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: inditg_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: inditg_raw
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
     quoting:
       database: false
       schema: false
