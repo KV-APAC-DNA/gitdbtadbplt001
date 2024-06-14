@@ -25,3 +25,7 @@ models:
     config:
       alias: wks_parameter_gt_sellout
       tags: ["gt_sellout_nh","transformation"]
+  - name: ntawks_integration__wks_itg_ims_sls
+    config:
+      alias: wks_itg_ims_sls
+      tags: ["na_trxn_ims","transformation"]

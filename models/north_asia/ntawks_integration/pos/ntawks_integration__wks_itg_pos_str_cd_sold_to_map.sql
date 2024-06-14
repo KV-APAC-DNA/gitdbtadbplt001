@@ -1,3 +1,8 @@
+{{
+    config(
+        pre_hook='{{build_itg_pos_str_cd_sold_to_map_temp()}}'
+    )
+}}
 with source as(
     select * from {{ source('ntasdl_raw', 'sdl_mds_kr_pos_store_code_sold_to_map') }}
 ),

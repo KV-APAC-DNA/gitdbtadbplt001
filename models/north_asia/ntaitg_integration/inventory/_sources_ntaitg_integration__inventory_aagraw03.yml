@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_hk_ims_wingkeung_inv
+        tests:
+          - test_null:
+              select_columns: ["date","stk_code","prod_code"]
+              not_null_columns: ["date"]
+              name: TRATBL_sdl_hk_ims_wingkeung_inv__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "date"
+              filter: "(odd_mon.date) = (even_mon.date) and (even_mon.date) = (feb.date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYY-MM-DD'"
+              select_columns: ["date","stk_code","prod_code"]
+              name: TRATBL_sdl_hk_ims_wingkeung_inv__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
