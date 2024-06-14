@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_vw_id_pos_sellout
+    config:
+      alias: edw_vw_id_pos_sellout
+      tags: ["customer_360_id","transformation"]
+
+  - name: idnedw_integration__edw_vw_rpt_id_pos_sales_stock
+    config:
+      alias: edw_vw_rpt_id_pos_sales_stock
+      tags: ["customer_360_id","transformation"]
