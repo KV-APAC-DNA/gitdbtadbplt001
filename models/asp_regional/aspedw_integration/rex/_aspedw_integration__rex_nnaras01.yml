@@ -5,4 +5,7 @@ models:
     config:
       alias: v_prodbu_productbusinessunit
       tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
-  
+  - name: aspedw_integration__v_slsp_salesperson
+    config:
+      alias: v_slsp_salesperson
+      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 

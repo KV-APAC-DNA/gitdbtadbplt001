@@ -11,5 +11,6 @@ sources:
     tables:
      - name: ntaitg_integration__itg_pop6_pops_temp
      - name: ntaitg_integration__itg_pop6_product_lists_pops_temp
+     - name: ntaitg_integration__itg_pop6_products_temp
 
       
