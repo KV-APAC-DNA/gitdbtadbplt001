@@ -19,7 +19,7 @@ select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 EDW_VW_POP6_STORE as (
 select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_STORE
 ),
-final as (
+transformed as (
 SELECT
 BASE.data_src,
 BASE.cntry_cd,
@@ -124,6 +124,37 @@ where ctry_cd = 'HK' and crncy_cd = 'HKD'  and not (sls.prod_cd like '1U%' OR sl
 WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
 AND BASE.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_hk')='ALL' THEN '190001' ELSE to_char(add_months(to_date(current_date::varchar, 'YYYY-MM-DD'), -((select param_value from itg_mds_ap_customer360_config where code='base_load_hk')::integer)), 'YYYYMM')
 END)
+),
+final as (
+select
+data_src::varchar(8) as data_src,
+cntry_cd::varchar(2) as cntry_cd,
+cntry_nm::varchar(9) as cntry_nm,
+year::number(18,0) as year,
+mnth_id::number(18,0) as mnth_id,
+day::date as day,
+univ_year::number(18,0) as univ_year,
+univ_month::number(18,0) as univ_month,
+soldto_code::varchar(100) as soldto_code,
+distributor_code::varchar(10) as distributor_code,
+distributor_name::varchar(100) as distributor_name,
+store_cd::varchar(50) as store_cd,
+store_name::varchar(100) as store_name,
+store_type::varchar(100) as store_type,
+ean::varchar(100) as ean,
+matl_num::varchar(255) as matl_num,
+customer_product_desc::varchar(255) as customer_product_desc,
+region::varchar(2) as region,
+zone_or_area::varchar(2) as zone_or_area,
+so_sls_qty::number(18,0) as so_sls_qty,
+so_sls_value::number(22,5) as so_sls_value,
+msl_product_code::varchar(20) as msl_product_code,
+msl_product_desc::varchar(255) as msl_product_desc,
+store_grade::varchar(200) as store_grade,
+retail_env::varchar(300) as retail_env,
+crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+updt_dttm::timestamp_ntz(9 as updt_dttm)
+from transformed
 )
 select * from final
 

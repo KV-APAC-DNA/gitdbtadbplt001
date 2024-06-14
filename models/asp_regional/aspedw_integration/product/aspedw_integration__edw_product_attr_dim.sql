@@ -22,7 +22,7 @@
     )
 }}
 with wks_edw_product_attr_dim as (
-    select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }}
+    select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }} where chng_flg!='I'
 ),
 wks_edw_product_attr_dim_1 as (
     select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim_2') }}
@@ -76,9 +76,31 @@ wks_2 as
 		order by aw_remote_key desc) as d_rnk from wks_edw_product_attr_dim_1 a) SRC where SRC.d_rnk=1
 
 ),
-final as (
+transformed as (
     select * from wks_1
     union all
     select * from wks_2
+),
+final as (
+select 
+aw_remote_key::varchar(100) as aw_remote_key,
+awrefs_prod_remotekey::varchar(100) as awrefs_prod_remotekey,
+awrefs_buss_unit::varchar(100) as awrefs_buss_unit,
+sap_matl_num::varchar(100) as sap_matl_num,
+cntry::varchar(10) as cntry,
+ean::varchar(20) as ean,
+prod_hier_l1::varchar(500) as prod_hier_l1,
+prod_hier_l2::varchar(500) as prod_hier_l2,
+prod_hier_l3::varchar(500) as prod_hier_l3,
+prod_hier_l4::varchar(500) as prod_hier_l4,
+prod_hier_l5::varchar(500) as prod_hier_l5,
+prod_hier_l6::varchar(500) as prod_hier_l6,
+prod_hier_l7::varchar(500) as prod_hier_l7,
+prod_hier_l8::varchar(500) as prod_hier_l8,
+prod_hier_l9::varchar(500) as prod_hier_l9,
+crt_dttm::timestamp_ntz(9) as crt_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm,
+lcl_prod_nm::varchar(100) as lcl_prod_nm,
+from transformed
 )
 select * from final
