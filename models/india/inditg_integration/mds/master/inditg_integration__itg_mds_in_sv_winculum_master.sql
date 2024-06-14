@@ -303,8 +303,8 @@ final as(
         effective_to::timestamp_ntz(9) as effective_to,
         active::varchar(2) as active,
         run_id::number(18,0) as run_id,
-        convert_timezone('UTC', current_timestamp()) as crtd_dttm,
-        convert_timezone('UTC', current_timestamp()) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from transformed
 )
 select * from final

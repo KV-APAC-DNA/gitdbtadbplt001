@@ -51,8 +51,8 @@ final as
 	NULL::number(18,0) as nwcregion,
 	NULL::number(18,0) as nwczone,
 	NULL::number(18,0) as nwcterritory, 
-	convert_timezone('UTC', current_timestamp()) AS crt_dttm,
-	convert_timezone('UTC', current_timestamp()) AS updt_dttm
+	current_timestamp()::timestamp_ntz(9) AS crt_dttm,
+	current_timestamp()::timestamp_ntz(9) AS updt_dttm
 	FROM
 	(Select distinct * from source) src
 )

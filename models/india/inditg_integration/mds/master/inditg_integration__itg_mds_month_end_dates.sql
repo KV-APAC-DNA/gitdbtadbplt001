@@ -35,7 +35,7 @@ final as
         key_account_month_end::timestamp_ntz(9) AS key_account_month_end,
         pathfinder_month_end::timestamp_ntz(9) AS pathfinder_month_end,
         lastchgdatetime::timestamp_ntz(9) AS mds_lastchgdatetime,
-        convert_timezone('UTC', current_timestamp()) AS updtddatetime,
+        current_timestamp()::timestamp_ntz(9) AS updtddatetime,
         NULL::number(14,0) as run_id
     from source
 )

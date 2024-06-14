@@ -20,7 +20,7 @@ final as
         channel::varchar(100) as channel,
         name::varchar(100) as retail_env,
         weight::number(20,4) as weight,
-        convert_timezone('UTC', current_timestamp()) AS crtd_dttm,
+        current_timestamp()::timestamp_ntz(9) AS crtd_dttm,
     from source
 )
 select * from final

@@ -14,7 +14,7 @@ final as
        product_category2_code::varchar(200) as product_category2,
        product_category3_code::varchar(200) as product_category3,
        product_category4_code::varchar(200) as product_category4,
-       convert_timezone('UTC', current_timestamp()) as crt_dtm,
+       current_timestamp()::timestamp_ntz(9) as crt_dtm,
        enterdatetime::timestamp_ntz(9) as enterdatetime,
        lastchgdatetime::timestamp_ntz(9) as last_change_datetime
     from source

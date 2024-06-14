@@ -42,8 +42,8 @@ final as
         moddt::timestamp_ntz(9) as moddt,
         modusercode::varchar(50) as modusercode,
         createddt::timestamp_ntz(9) as createddt,
-        convert_timezone('UTC', current_timestamp()) AS crt_dttm,
-        convert_timezone('UTC', current_timestamp()) AS updt_dttm
+        current_timestamp()::timestamp_ntz(9) AS crt_dttm,
+        current_timestamp()::timestamp_ntz(9) AS updt_dttm
 	FROM
 	(Select distinct * from source) src
 )
