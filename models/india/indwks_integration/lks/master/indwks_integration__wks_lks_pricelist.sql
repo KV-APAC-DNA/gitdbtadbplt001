@@ -1,11 +1,10 @@
 with itg_xdm_batchmaster as 
 (
-    select * from snapinditg_integration.itg_xdm_batchmaster
-    --{{ ref('inditg_integration__itg_xdm_batchmaster') }}
+    select * from {{ ref('inditg_integration__itg_xdm_batchmaster') }}
 ),
 sdl_xdm_product as 
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_xdm_product') }}
+    select * from {{ source('indsdl_raw', 'sdl_xdm_product') }}
 ),
 final as 
 (

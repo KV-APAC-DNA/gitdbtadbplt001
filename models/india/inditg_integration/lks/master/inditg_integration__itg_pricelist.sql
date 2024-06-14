@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ ref('inditg_integration__sdl_lks_pricelist') }}
+    select * from {{ ref('indwks_integration__wks_lks_pricelist') }}
 ),
 final as 
 (

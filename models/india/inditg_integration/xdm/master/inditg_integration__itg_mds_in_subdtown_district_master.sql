@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_mds_in_subdtown_district_master') }}
+    select * from {{ source('indsdl_raw', 'sdl_mds_in_subdtown_district_master') }}
 ),
 
 final as 

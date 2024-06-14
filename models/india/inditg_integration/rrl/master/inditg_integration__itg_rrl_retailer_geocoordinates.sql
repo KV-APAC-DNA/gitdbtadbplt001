@@ -8,7 +8,7 @@
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_rrl_retailer_geocoordinates') }}
+    select * from {{ source('indsdl_raw', 'sdl_rrl_retailer_geocoordinates') }}
     qualify row_number() over(partition by rgc_id order by crt_dttm desc)=1 
 ),
 final as

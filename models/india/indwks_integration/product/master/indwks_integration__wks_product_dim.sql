@@ -8,8 +8,7 @@ itg_xdm_productuom as
 ),
 edw_product_dim as
 (
-    select * from alaksh01_workspace.indedw_integration__edw_product_dim
-    --{{ source('indedw_integration', 'edw_product_dim') }}
+    select * from {{ source('indedw_integration', 'edw_product_dim') }}
 ),
 final as
 (

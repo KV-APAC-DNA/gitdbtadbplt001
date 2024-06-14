@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: snapinditg_integration
+  - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapinditg_integration
+    schema: inditg_integration
     quoting:
       database: false
       schema: false

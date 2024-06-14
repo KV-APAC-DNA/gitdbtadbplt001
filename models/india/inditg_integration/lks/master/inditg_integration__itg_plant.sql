@@ -5,7 +5,7 @@
         unique_key= ["plantcode"],
         pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}} ITG_PLANT
-        USING {{ ref('indwks_integration_wks_lks_plant') }} WKS_LKS_PLANT
+        USING {{ ref('indwks_integration__wks_lks_plant') }} WKS_LKS_PLANT
         WHERE ITG_PLANT.plantcode = WKS_LKS_PLANT.plantcode
         AND WKS_LKS_PLANT.CHNG_FLG='U';
         {% endif %}"
@@ -14,7 +14,7 @@
 
 with source as
 (
-    select * from {{ ref('indwks_integration_wks_lks_plant') }}
+    select * from {{ ref('indwks_integration__wks_lks_plant') }}
 ),
 final as 
 (

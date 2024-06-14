@@ -6,9 +6,9 @@ final as
 (
     select data_source::varchar(10) as data_source,
             week::number(18,0) as week,
-            "month"::varchar(3) as "month",
+            month::varchar(3) as month,
             qtr::number(18,0) as qtr,
-            "year"::number(18,0) as "year",
+            year::number(18,0) as year,
             mth_mm::number(18,0) as mth_mm,
             superstockiest_code::varchar(50) as superstockiest_code,
             superstockiest_name::varchar(225) as superstockiest_name,

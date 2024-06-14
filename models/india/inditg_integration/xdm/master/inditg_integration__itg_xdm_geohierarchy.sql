@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_xdm_geohierarchy') }}
+    select * from {{ source('indsdl_raw', 'sdl_xdm_geohierarchy') }}
 ),
 
 final as 

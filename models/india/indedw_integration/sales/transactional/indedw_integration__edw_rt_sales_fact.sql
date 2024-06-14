@@ -1,10 +1,10 @@
 with itg_ruralstoreorderdetail as
 (
-    select * from snapinditg_integration.itg_ruralstoreorderdetail
+    select * from inditg_integration.itg_ruralstoreorderdetail
 ),
 itg_ruralstoreorderheader as
 (
-    select * from snapinditg_integration.itg_ruralstoreorderheader
+    select * from inditg_integration.itg_ruralstoreorderheader
 ),
 final as 
 (

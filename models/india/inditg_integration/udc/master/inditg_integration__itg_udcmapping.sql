@@ -6,14 +6,14 @@
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} where (upper(distCode),upper(RsdCode),upper(OutletCode),
         upper(UserCode),upper(UdcCode)) in (select distinct upper(distCode),upper(RsdCode),
-        upper(OutletCode),upper(UserCode),upper(UdcCode) from {{ source('snapindsdl_raw', 'sdl_rrl_udcmapping') }} ) ;
+        upper(OutletCode),upper(UserCode),upper(UdcCode) from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }} ) ;
         {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_rrl_udcmapping') }}
+    select * from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }}
 ),
 final as
 (

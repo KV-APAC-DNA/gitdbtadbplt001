@@ -6,13 +6,11 @@
 
 with edw_subd_retailer_dim as
 (
-    select * from snapindedw_integration.edw_subd_retailer_dim
-    --{{ ref('indedw_integration__edw_subd_retailer_dim') }}
+    select * from {{ ref('indedw_integration__edw_subd_retailer_dim') }}
 ),
 itg_mds_in_subdtown_district_master as 
 (
-    select * from snapinditg_integration.itg_mds_in_subdtown_district_master
-    --{{ ref('inditg_integration__itg_mds_in_subdtown_district_master') }}
+    select * from {{ ref('inditg_integration__itg_mds_in_subdtown_district_master') }}
 ),
 final as 
 (

@@ -1,11 +1,10 @@
 with sdl_lks_plant as
 (
-    select * from dev_dna_load.snapindsdl_raw.sdl_lks_plant
-    --{{ ref('inditg_integration__sdl_lks_plant') }}
+    select * from {{ ref('indwks_integration__wks_sdl_lks_plant') }}
 ),
 itg_plant as 
 (
-    select * from {{ source('snapinditg_integration', 'itg_plant') }}
+    select * from {{ source('inditg_integration', 'itg_plant') }}
 ),
 final as 
 (

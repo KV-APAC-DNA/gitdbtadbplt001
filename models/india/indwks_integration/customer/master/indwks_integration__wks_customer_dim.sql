@@ -1,18 +1,18 @@
 with itg_xdm_distributor as
 (
-    select * from snapinditg_integration.itg_xdm_distributor
+    select * from inditg_integration.itg_xdm_distributor
 ),
 itg_xdm_distributor_supplier as
 (
-    select * from snapinditg_integration.itg_xdm_distributor_supplier
+    select * from {{ ref('inditg_integration__itg_xdm_distributor_supplier') }}
 ),
 itg_xdm_supplier as
 (
-    select * from snapinditg_integration.itg_xdm_supplier
+    select * from inditg_integration.itg_xdm_supplier
 ),
 itg_xdm_salesheirarchy as
 (
-    select * from snapinditg_integration.itg_xdm_salesheirarchy
+    select * from inditg_integration.itg_xdm_salesheirarchy
 ),
 itg_xdm_geohierarchy as
 (
@@ -20,12 +20,11 @@ itg_xdm_geohierarchy as
 ),
 itg_xdm_channelmaster as
 (
-    select * from snapinditg_integration.itg_xdm_channelmaster
+    select * from inditg_integration.itg_xdm_channelmaster
 ),
 edw_customer_dim as
 (
-    select * from alaksh01_workspace.indedw_integration__edw_customer_dim
-    --{{ source('indedw_integration', 'edw_customer_dim') }}
+    select * from {{ source('indedw_integration', 'edw_customer_dim') }}
 ),
 final as
 (

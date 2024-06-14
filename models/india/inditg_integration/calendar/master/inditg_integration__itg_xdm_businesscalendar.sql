@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_xdm_businesscalendar') }}
+    select * from {{ source('indsdl_raw', 'sdl_xdm_businesscalendar') }}
 ),
 final as 
 (

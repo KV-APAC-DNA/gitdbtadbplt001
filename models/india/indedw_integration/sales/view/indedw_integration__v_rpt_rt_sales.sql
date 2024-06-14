@@ -6,59 +6,51 @@
 
 with edw_rt_sales_fact as
 (
-    select * from snapindedw_integration.edw_rt_sales_fact
-    --{{ ref('indedw_integration__edw_rt_sales_fact') }}
+    select * from {{ ref('indedw_integration__edw_rt_sales_fact') }}
 ),
 edw_subd_retailer_dim as
 (
-    select * from snapindedw_integration.edw_subd_retailer_dim
-    --{{ ref('indedw_integration__edw_subd_retailer_dim') }}
+    select * from {{ ref('indedw_integration__edw_subd_retailer_dim') }}
 ),
 itg_ruralstoreorderheader as
 (
-    select * from snapinditg_integration.itg_ruralstoreorderheader
+    select * from inditg_integration.itg_ruralstoreorderheader
 ),
 itg_townmaster as
 (
-    select * from snapinditg_integration.itg_townmaster
+    select * from inditg_integration.itg_townmaster
 ),
 edw_product_dim as
 (
-    select * from snapindedw_integration.edw_product_dim
-    --{{ ref('indedw_integration__edw_product_dim') }}
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_retailer_dim as
 (
-    select * from snapindedw_integration.edw_retailer_dim
+    select * from indedw_integration.edw_retailer_dim
 ),
 edw_retailer_geocoordinates as
 (
-    select * from snapindedw_integration.edw_retailer_geocoordinates
-    --{{ ref('indedw_integration__edw_retailer_geocoordinates') }}
+    select * from {{ ref('indedw_integration__edw_retailer_geocoordinates') }}
 ),
 itg_udcmapping as
 (
-    select * from snapinditg_integration.itg_udcmapping
-    --{{ ref('inditg_integration__itg_udcmapping') }}
+    select * from {{ ref('inditg_integration__itg_udcmapping') }}
 ),
 itg_rrl_udcmaster as
 (
-    select * from snapinditg_integration.itg_rrl_udcmaster
-    --{{ ref('inditg_integration__itg_rrl_udcmaster') }}
+    select * from {{ ref('inditg_integration__itg_rrl_udcmaster') }}
 ),
 itg_salesmanmaster as
 (
-    select * from snapinditg_integration.itg_salesmanmaster
+    select * from inditg_integration.itg_salesmanmaster
 ),
 v_edw_subd_retailer_dim as
 (
@@ -107,9 +99,9 @@ final as
           base.variant_name,
           base.day,
           base.week,
-          base."month",
+          base.month,
           base.qtr,
-          base."year",
+          base.year,
           base.csrtrcode,
           base.rgc_latitude,
           base.rgc_longtitude,
@@ -169,9 +161,9 @@ final as
                   p.variant_name,
                   d.day,
                   d.week,
-                  d.month_nm_shrt AS "month",
+                  d.month_nm_shrt AS month,
                   d.qtr,
-                  d.fisc_yr AS "year",
+                  d.fisc_yr AS year,
                   ret.csrtrcode,
                   geo.rgc_latitude,
                   geo.rgc_longtitude,

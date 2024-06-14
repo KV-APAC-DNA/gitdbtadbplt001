@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from snapindedw_integration.edw_rpt_sales_details
+    select * from indedw_integration.edw_rpt_sales_details
 ),
 final as 
 (

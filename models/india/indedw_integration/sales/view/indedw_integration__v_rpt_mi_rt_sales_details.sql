@@ -10,25 +10,23 @@ with v_rpt_rt_sales as
 ),
 itg_query_parameters as
 (
-    select * from snapinditg_integration.itg_query_parameters
+    select * from inditg_integration.itg_query_parameters
 ),
 edw_mi_sales_details as
 (
-    select * from snapindedw_integration.edw_mi_sales_details
-    --{{ ref('indedw_integration__edw_mi_sales_details') }}
+    select * from {{ ref('indedw_integration__edw_mi_sales_details') }}
 ),
 itg_mds_in_subdtown_district_master as
 (
-    select * from snapinditg_integration.itg_mds_in_subdtown_district_master
-    --{{ ref('inditg_integration__itg_mds_in_subdtown_district_master') }}
+    select * from {{ ref('inditg_integration__itg_mds_in_subdtown_district_master') }}
 ),
 final as
 (
     SELECT   'RT_CUBE'::character VARYING AS data_source,
          v_rpt_rt_sales.week,
-         v_rpt_rt_sales."month",
+         v_rpt_rt_sales.month,
          v_rpt_rt_sales.qtr,
-         v_rpt_rt_sales."year",
+         v_rpt_rt_sales.year,
          ("substring"(((v_rpt_rt_sales.day)::character VARYING)::text, 1, 6))::integer AS mth_mm,
          v_rpt_rt_sales.superstockiest_code,
          (upper(rtrim((v_rpt_rt_sales.superstockiest_name)::text, ('.'::character VARYING)::text)))::character VARYING AS superstockiest_name,
@@ -53,15 +51,15 @@ final as
          v_rpt_rt_sales.product_category_name,
          v_rpt_rt_sales.variant_name
         FROM v_rpt_rt_sales
-        WHERE ((v_rpt_rt_sales."year")::DOUBLE PRECISION >= (date_part('year', current_timestamp()) - ((SELECT (itg_query_parameters.parameter_value)::integer AS parameter_value 
+        WHERE ((v_rpt_rt_sales.year)::DOUBLE PRECISION >= (date_part('year', current_timestamp()) - ((SELECT (itg_query_parameters.parameter_value)::integer AS parameter_value 
         FROM itg_query_parameters WHERE(((upper((itg_query_parameters.country_code)::text) = ('IN'::character VARYING)::text) 
         AND ( upper((itg_query_parameters.parameter_name)::text) = ('IN_MI_TDE_DATA_RETENTION_PERIOD'::character VARYING)::text)) 
         AND (upper((itg_query_parameters.parameter_type)::text) = ('DATA_RETENTION_PERIOD'::character VARYING)::text))))::DOUBLE PRECISION))
         GROUP BY 1,
          v_rpt_rt_sales.week,
-         v_rpt_rt_sales."month",
+         v_rpt_rt_sales.month,
          v_rpt_rt_sales.qtr,
-         v_rpt_rt_sales."year",
+         v_rpt_rt_sales.year,
          ("substring"(((v_rpt_rt_sales.day)::character VARYING)::text, 1, 6))::integer,
          v_rpt_rt_sales.superstockiest_code,
          v_rpt_rt_sales.superstockiest_name,
@@ -89,7 +87,7 @@ final as
           sc.week,
           sc.month,
           sc.qtr,
-          sc.fisc_yr AS "year",
+          sc.fisc_yr AS year,
           sc.mth_mm,
           sc.customer_code  AS superstockiest_code,
           (upper(rtrim((sc.customer_name)::text, ('.'::character VARYING)::text)))::character VARYING AS superstockiest_name,

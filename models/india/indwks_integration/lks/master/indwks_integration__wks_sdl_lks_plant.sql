@@ -1,6 +1,6 @@
 with sdl_xdm_distributor_supplier as 
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_xdm_distributor_supplier') }}
+    select * from {{ source('indsdl_raw', 'sdl_xdm_distributor_supplier') }}
 ),
 sdl_xdm_supplier as 
 (
