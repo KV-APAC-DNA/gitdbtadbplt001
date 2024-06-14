@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaitg_integration__sdl_raw_hk_pos_scorecard_mannings
-    config:
-        alias: sdl_raw_hk_pos_scorecard_mannings
-        tags: ["hk_pos","ingestion"]

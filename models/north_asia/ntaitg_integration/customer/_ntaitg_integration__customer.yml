@@ -33,3 +33,11 @@ models:
     config:
       alias: itg_mds_kr_sub_customer_master
       tags: ["gt_sellout_otc","ingestion"]
+  - name: ntaitg_integration__itg_tw_ims_dstr_customer_mapping
+    config:
+      alias: itg_tw_ims_dstr_customer_mapping
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration__itg_gt_msl_items
+    config:
+      alias: itg_gt_msl_items
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]

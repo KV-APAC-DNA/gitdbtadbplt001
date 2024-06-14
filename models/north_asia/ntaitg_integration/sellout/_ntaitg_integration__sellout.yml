@@ -57,3 +57,11 @@ models:
     config: 
         alias: sdl_raw_kr_nu_ri_zon_gt_sellout
         tags: ["","transformation"]
+  - name: ntaitg_integration__sdl_raw_hk_ims_wingkeung_sel_out
+    config: 
+        alias: sdl_raw_hk_ims_wingkeung_sel_out
+        tags: ["",""]
+  - name: ntaitg_integration__sdl_raw_hk_ims_viva_sel_out
+    config: 
+        alias: sdl_raw_hk_ims_viva_sel_out
+        tags: ["",""]

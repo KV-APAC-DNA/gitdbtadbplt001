@@ -14,7 +14,7 @@ SDL_POP6_TW_PRODUCTS as (
     select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_TW_PRODUCTS
 ),
 itg_pop6_products as (
-    select * from {{ source('ntaitg_integration', 'ntaitg_integration__itg_pop6_products_temp') }}
+    select * from {{ source('ntaitg_integration', 'itg_pop6_products_temp') }}
 ),
 sdl as  (
                                    SELECT 'HK' AS CNTRY_CD,

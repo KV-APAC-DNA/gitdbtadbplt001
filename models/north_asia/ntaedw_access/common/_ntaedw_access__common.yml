@@ -85,3 +85,15 @@ models:
     config:
       alias: v_rpt_pos_offtake_wkly_nonkorea
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__itg_tw_ims_dstr_prod_price_map
+    config:
+      alias: itg_tw_ims_dstr_prod_price_map
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__itg_tw_ims_dstr_prod_map
+    config:
+      alias: itg_tw_ims_dstr_prod_map
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__itg_tw_ims_dstr_customer_mapping
+    config:
+      alias: itg_tw_ims_dstr_customer_mapping
+      tags: ["north_asia_views","transformation"]

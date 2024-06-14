@@ -1,9 +1,7 @@
 with source as
 (
-    -- select * from {{ source('ntasdl_raw', 'sdl_mds_tw_ims_dstr_prod_price_map') }}
-    select * from dev_dna_load.snapntasdl_raw.sdl_mds_tw_ims_dstr_prod_price_map
+    select * from {{ source('ntasdl_raw', 'sdl_mds_tw_ims_dstr_prod_price_map') }}
 ),
-
 final as
 (
     select
@@ -19,5 +17,4 @@ final as
 		current_timestamp()::timestamp_ntz(9) as updt_dttm      
     from source
 )
-
 select * from final

@@ -23,7 +23,7 @@ sdl_pop6_th_product_lists_pops as (
     select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.sdl_pop6_th_product_lists_pops
 ),
 itg_pop6_product_lists_pops as (
-    select * from {{ source('ntaitg_integration', 'ntaitg_integration__itg_pop6_product_lists_pops_temp') }}
+    select * from {{ source('ntaitg_integration', 'itg_pop6_product_lists_pops_temp') }}
 ),
 SDL AS
 		(SELECT 'HK' AS CNTRY_CD,

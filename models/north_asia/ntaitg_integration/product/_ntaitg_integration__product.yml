@@ -53,3 +53,11 @@ models:
     config:
         alias: sdl_raw_kr_gt_daiso_price
         tags: ["gt_sellout_daiso","","ingestion"]
+  - name: ntaitg_integration__itg_tw_ims_dstr_prod_price_map
+    config:
+      alias: itg_tw_ims_dstr_prod_price_map
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration___itg_gt_msl_items
+    config:
+      alias: itg_gt_msl_items
+      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]  

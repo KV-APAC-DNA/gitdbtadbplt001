@@ -9,6 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_hk_pos_scorecard_mannings
       - name: sdl_tw_pos_watson_store
         tags: ["tw_pos_watson","ingestion"]
         tests:
