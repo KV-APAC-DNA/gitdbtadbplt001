@@ -64,17 +64,23 @@ models:
         sap_and_sellin:
           staging:
             +materialized: view
+        rex:
+          view:
+            +materialized: view
       aspedw_integration:
         +materialized: table
         +transient: false
         +schema: ASPEDW_INTEGRATION
-        calendar:
-          view:
-            +materialized: view
         sap_and_sellin:
           view:
             +materialized: view
         sfmc:
+          view:
+            +materialized: view
+        calendar:
+          view:
+            +materialized: view
+        rex:
           view:
             +materialized: view
       aspwks_integration:
@@ -369,6 +375,36 @@ models:
       phledw_access:
         +materialized: view
         +schema: PHLEDW_ACCESS
+    indonesia:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      idnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNEDW_INTEGRATION
+        common:
+          view:
+            +materialized: view
+        ivy:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        sellin:
+          view:
+            +materialized: view
+      idnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNITG_INTEGRATION
+      idnwks_integration:
+        +materialized: table
+        +schema: IDNWKS_INTEGRATION
+      idnedw_access:
+        +materialized: view
+        +schema: IDNEDW_ACCESS
     north_asia:
       config:
         +enabled: true
@@ -377,54 +413,69 @@ models:
         +materialized: table
         +transient: false
         +schema: NTAITG_INTEGRATION
+        pos:
+          staging:
+            +materialized: view
       ntaedw_integration:
         +materialized: table
         +transient: false
         +schema: NTAEDW_INTEGRATION
         calendar:
-          config:
+          view:
             +materialized: view
         common:
-          config:
+          view:
             +materialized: view
         copa:
-          config:
+          view:
             +materialized: view
         coupang:
-          config:
+          view:
             +materialized: view
         dads:
-          config:
+          view:
             +materialized: view
         datamart:
-          config:
+          view:
             +materialized: view
         ecommerce:
-          config:
+          view:
             +materialized: view
         forecast:
-          config:
+          view:
+            +materialized: view
+        ims:
+          view:
             +materialized: view
         inventory:
-          config:
+          view:
             +materialized: view
         invoice:
-          config:
+          view:
+            +materialized: view
+        pop6:
+          view:
             +materialized: view
         pos:
-          config:
+          view:
+            +materialized: view
+        product:
+          view:
             +materialized: view
         sales:
-          config:
+          view:
+            +materialized: view
+        salesrep:
+          view:
             +materialized: view
         sellout:
-          config:
+          view:
             +materialized: view
         sfmc:
-          config:
+          view:
             +materialized: view
         store:
-          config:
+          view:
             +materialized: view
       ntawks_integration:
         +materialized: table

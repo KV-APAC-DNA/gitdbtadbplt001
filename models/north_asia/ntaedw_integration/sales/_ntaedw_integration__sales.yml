@@ -37,3 +37,11 @@ models:
     config: 
       alias: edw_brand_sls_target
       tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+  - name: ntaedw_integration__v_intrm_copa_tgt
+    config: 
+      alias: v_intrm_copa_tgt
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl_gts
+    config:
+      alias: v_intrm_sls_pln_actl_gts
+      tags: ["","transformation"]

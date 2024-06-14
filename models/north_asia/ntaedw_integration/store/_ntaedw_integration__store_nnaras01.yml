@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__edw_vw_store_master_rex_pop6
-    config:
-      alias: edw_vw_store_master_rex_pop6
-      tags: ["","transformation"]
-  

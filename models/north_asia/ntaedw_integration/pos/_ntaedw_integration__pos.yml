@@ -25,3 +25,11 @@ models:
     config:
       alias: v_rpt_pos_offtake_daily_korea
       tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_offtake_daily_nonkorea
+    config:
+      alias: v_rpt_pos_offtake_daily_nonkorea
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_nonkorea
+    config:
+      alias: v_rpt_pos_nonkorea
+      tags: ["","transformation"]
