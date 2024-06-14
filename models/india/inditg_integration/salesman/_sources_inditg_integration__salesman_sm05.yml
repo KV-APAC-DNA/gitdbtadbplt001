@@ -3,14 +3,14 @@ version: 2
 sources:
   - name: indsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapindsdl_raw
+    schema: indsdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
     - name: sdl_in_salesman
-      tags: ["id_mds_itg_load","ingestion"]
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
       tests:
           - test_null:
               select_columns: ["filename", "distcode", "smcode"]
@@ -28,7 +28,7 @@ sources:
                 schema: indwks_integration
 
     - name: sdl_in_salesman_route
-      tags: ["id_mds_itg_load","ingestion"]
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
       tests:
           - test_null:
               select_columns: ["filename", "distrcode", "salesmancode", "routecode"]
@@ -46,7 +46,7 @@ sources:
                 schema: indwks_integration
 
     - name: sdl_in_route
-      tags: ["id_mds_itg_load","ingestion"]
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
       tests:
           - test_null:
               select_columns: ["filename", "distcode", "rmcode"]

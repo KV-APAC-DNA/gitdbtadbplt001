@@ -3,7 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["musername"],
-        merge_exclude_columns= ["crt_dttm"]
+        merge_exclude_columns= ["crt_dttm", "updt_dttm"]
     )
 }}
 

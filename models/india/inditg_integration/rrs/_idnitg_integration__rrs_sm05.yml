@@ -4,4 +4,14 @@ models:
   - name: inditg_integration__itg_in_rrsrheader
     config:
       alias: itg_in_rrsrheader
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+
+  - name: inditg_integration__itg_in_rrsrdistributor
+    config:
+      alias: itg_in_rrsrdistributor
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]
+
+  - name: inditg_integration__sdl_raw_in_rrsrheader
+    config:
+      alias: sdl_raw_in_rrsrheader
+      tags: ["m_wrp_india_etl_xdm_tlrsr_nielsen_load","ingestion"]

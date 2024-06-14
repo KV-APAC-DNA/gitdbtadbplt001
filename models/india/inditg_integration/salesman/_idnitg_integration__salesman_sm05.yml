@@ -4,4 +4,29 @@ models:
   - name: inditg_integration__itg_in_rsalesman
     config:
       alias: itg_in_rsalesman
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+
+  - name: inditg_integration__itg_in_rroute
+    config:
+      alias: itg_in_rroute
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+
+  - name: inditg_integration__itg_in_rsalesmanroute
+    config:
+      alias: itg_in_rsalesmanroute
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+
+  - name: inditg_integration__sdl_raw_in_route
+    config:
+      alias: sdl_raw_in_route
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+
+  - name: inditg_integration__sdl_raw_in_salesman
+    config:
+      alias: sdl_raw_in_salesman
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+
+  - name: inditg_integration__sdl_raw_in_salesman_route
+    config:
+      alias: sdl_raw_in_salesman_route
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]

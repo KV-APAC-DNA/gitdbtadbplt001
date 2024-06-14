@@ -1,8 +1,8 @@
 with itg_udcdetails as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_UDCDETAILS
+	select * from {{ ref('inditg_integration__itg_udcdetails') }}
 ),
 itg_udcmaster as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.itg_udcmaster
+	select * from {{ ref('inditg_integration__itg_udcmaster') }}
 ),
 transformed as(
 SELECT derived_table1.distcode AS customer_code_udc
@@ -808,8 +808,8 @@ SELECT derived_table1.distcode AS customer_code_udc
 				END
 			)::TEXT
 		) AS udc_specialtyprofessional2024
-	,getdate() AS crt_dttm
-	,getdate() AS updt_dttm
+	,convert_timezone('UTC', current_timestamp()) AS crt_dttm
+	,convert_timezone('UTC', current_timestamp()) AS updt_dttm
 FROM (
 	SELECT udc_1.distcode
 		,udc_1.mastervaluecode

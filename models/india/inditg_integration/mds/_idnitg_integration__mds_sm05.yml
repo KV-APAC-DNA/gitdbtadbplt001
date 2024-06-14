@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_mds_product_category_mapping
+    config:
+      alias: itg_in_mds_product_category_mapping
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_ecom_nts_adjustment
+    config:
+      alias: itg_mds_in_ecom_nts_adjustment
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_ps_weights
+    config:
+      alias: itg_mds_in_ps_weights
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_sv_winculum_master
+    config:
+      alias: itg_mds_in_sv_winculum_master
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_mds_month_end_dates
+    config:
+      alias: itg_mds_month_end_dates
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]

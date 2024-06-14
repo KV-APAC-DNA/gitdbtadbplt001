@@ -1,8 +1,8 @@
 with edw_retailer_dim as(
-	select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_RETAILER_DIM
+	select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 itg_in_mds_channel_mapping as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_IN_MDS_CHANNEL_MAPPING
+	select * from {{ ref('inditg_integration__itg_in_mds_channel_mapping') }}
 ),
 rd as(
 		SELECT derived_table1.rn

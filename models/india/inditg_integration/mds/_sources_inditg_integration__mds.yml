@@ -3,7 +3,7 @@ version: 2
 sources:  
   - name: indsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapindsdl_raw
+    schema: indsdl_raw
     quoting:
       database: false
       schema: false
@@ -114,29 +114,3 @@ sources:
             data_type: number
           - name: validationstatus
             data_type: varchar
-      - name: sdl_mds_in_sv_kapf_month_end_dates
-
-      - name: sdl_mds_in_ps_weights
-        tags: ["id_mds_itg_load","ingestion"]
-        tests:
-            - test_null:
-                select_columns: ["name", "channel", "kpi"]
-                not_null_columns: ["name", "channel", "kpi"]
-                name: TRATBL_sdl_mds_in_ps_weights__null_test
-                config:
-                  store_failures: true
-                  schema: indwks_integration
-            - test_duplicate:
-                group_by_columns: ["name"]
-                select_columns: ["name", "channel", "kpi"] 
-                name: TRATBL_sdl_mds_in_ps_weights__duplicate_test
-                config:
-                  store_failures: true
-                  schema: indwks_integration
-      - name: sdl_mds_in_product_category_mapping
-        tags: ["id_mds_itg_load","ingestion"]
-
-      - name: sdl_mds_in_ecom_nts_adjustment
-        tags: ["id_mds_itg_load","ingestion"]
-      - name: sdl_mds_in_sv_winculum_master
-        tags: ["id_mds_itg_load","ingestion"]

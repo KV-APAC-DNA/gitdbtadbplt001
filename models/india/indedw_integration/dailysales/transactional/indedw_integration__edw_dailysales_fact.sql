@@ -1,14 +1,14 @@
 with itg_dailysales as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_DAILYSALES
+	select * from {{ ref('inditg_integration__itg_dailysales') }}
 ),
 itg_salesmanmaster as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_SALESMANMASTER
+	select * from {{ ref('inditg_integration__itg_salesmanmaster') }}
 ),
 itg_dailysales_undelivered as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_DAILYSALES_UNDELIVERED
+	select * from {{ ref('inditg_integration__itg_dailysales_undelivered') }}
 ),
 itg_salesreturn as(
-	select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_SALESRETURN
+	select * from {{ ref('inditg_integration__itg_salesreturn') }}
 ),
 union1 as (
 	SELECT SRC.DistCode,
