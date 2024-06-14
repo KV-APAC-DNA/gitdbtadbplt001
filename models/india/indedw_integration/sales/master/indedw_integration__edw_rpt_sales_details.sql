@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from indedw_integration.v_rpt_sales_details
+    select * from {{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 final as 
 (

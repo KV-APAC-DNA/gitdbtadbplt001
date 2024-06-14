@@ -5,3 +5,11 @@ models:
     config: 
       alias: edw_rpt_sales_details
       tags: ["m_wrp_in_edw_sales_order","transformation"]
+  - name: indedw_integration__v_rpt_sales_details_with_history
+    config: 
+      alias: v_rpt_sales_details_with_history
+      tags: ["m_wrp_in_edw_sales_order","transformation"]
+  - name: indedw_integration__v_rpt_sales_details
+    config: 
+      alias: v_rpt_sales_details
+      tags: ["m_wrp_in_edw_sales_order","transformation"]

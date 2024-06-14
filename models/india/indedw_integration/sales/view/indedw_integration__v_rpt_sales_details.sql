@@ -1,6 +1,6 @@
 with v_rpt_sales_details_with_history as 
 (
-    select * from indedw_integration.v_rpt_sales_details_with_history
+    select * from {{ ref('indedw_integration__v_rpt_sales_details_with_history') }}
 ),
 final as 
 (

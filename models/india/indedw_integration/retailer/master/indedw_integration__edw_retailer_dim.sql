@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from indwks_integration.wks_retailermaster_upd
+    select * from {{ ref('indwks_integration__wks_retailermaster_upd') }}
 ),
 temp_a as 
 (
