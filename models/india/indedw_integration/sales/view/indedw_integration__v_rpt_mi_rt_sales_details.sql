@@ -1,16 +1,10 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with v_rpt_rt_sales as
 (
     select * from {{ ref('indedw_integration__v_rpt_rt_sales') }}
 ),
 itg_query_parameters as
 (
-    select * from inditg_integration.itg_query_parameters
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 edw_mi_sales_details as
 (

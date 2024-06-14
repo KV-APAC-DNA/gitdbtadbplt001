@@ -8,7 +8,7 @@
 
 with source as
 (
-    select * from {{source('indsdl_raw', 'sdl_csl_distributoractivation_raw')}}
+    select * from {{source('indsdl_raw', 'sdl_csl_distributoractivation')}}
 ),
 final as
 (

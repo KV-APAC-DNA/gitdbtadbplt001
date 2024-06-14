@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_xdm_geohierarchy
+      tags: ["in_geo_heirarchy","ingestion"]
+    - name: sdl_xdm_product
+      tags: ["in_product","ingestion"]
+    - name: sdl_xdm_productuom
+      tags: ["in_productuom","ingestion"]
+    - name: sdl_mds_in_subdtown_district_master
+      tags: ["in_mi_dashboard_datamart","ingestion"]
+    - name: sdl_xdm_distributor_supplier
+      tags: ["in_distributor_supplier","ingestion"]
+    - name: sdl_xdm_batchmaster
+      tags: ["in_batchmaster","ingestion"]
+
+    - name: sdl_xdm_supplier
+      tags: ["in_supplier","ingestion"]
+    - name: sdl_xdm_salesheirarchy
+      tags: ["in_sales_heirarchy","ingestion"]

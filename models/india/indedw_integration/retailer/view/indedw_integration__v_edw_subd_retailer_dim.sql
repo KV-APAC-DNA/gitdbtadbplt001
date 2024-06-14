@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with edw_subd_retailer_dim as
 (
     select * from {{ ref('indedw_integration__edw_subd_retailer_dim') }}

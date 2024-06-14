@@ -1,58 +1,58 @@
 with itg_rrl_retailermaster as
 (
-    select * from inditg_integration.itg_rrl_retailermaster
+    select * from {{ ref('inditg_integration__itg_rrl_retailermaster') }}
 ),
 itg_retailervalueclass as
 (
-    select * from inditg_integration.itg_retailervalueclass
+    select * from {{ ref('inditg_integration__itg_retailervalueclass') }}
 ),
 itg_retailercategory as
 (
-    select * from inditg_integration.itg_retailercategory
+    select * from {{ ref('inditg_integration__itg_retailercategory') }}
 ),
 itg_distributoractivation as
 (
-    select * from inditg_integration.itg_distributoractivation
+    select * from {{ ref('inditg_integration__itg_distributoractivation') }}
 ),
 itg_customer as
 (
-    select * from inditg_integration.itg_customer
+    select * from {{ source('inditg_integration', 'itg_customer') }}
 ),
 itg_region as
 (
-    select * from inditg_integration.itg_region
+    select * from {{ source('inditg_integration', 'itg_region') }}
 ),
 itg_zone as
 (
-    select * from inditg_integration.itg_zone
+    select * from {{ source('inditg_integration', 'itg_zone') }}
 ),
 itg_territory as
 (
-    select * from inditg_integration.itg_territory
+    select * from {{ source('inditg_integration', 'itg_territory') }}
 ),
 itg_rsdmaster as
 (
-    select * from inditg_integration.itg_rsdmaster
+    select * from {{ ref('inditg_integration__itg_rsdmaster') }}
 ),
 itg_routemaster as
 (
-    select * from inditg_integration.itg_routemaster
+    select * from {{ ref('inditg_integration__itg_routemaster') }}
 ),
 itg_townmaster as
 (
-    select * from inditg_integration.itg_townmaster
+    select * from {{ ref('inditg_integration__itg_townmaster') }}
 ),
 itg_rrl_usermaster as
 (
-    select * from inditg_integration.itg_rrl_usermaster
+    select * from {{ ref('inditg_integration__itg_rrl_usermaster') }}
 ),
 itg_retailermaster as
 (
-    select * from inditg_integration.itg_retailermaster
+    select * from {{ ref('inditg_integration__itg_retailermaster') }}
 ),
 itg_salesmanmaster as
 (
-    select * from inditg_integration.itg_salesmanmaster
+    select * from {{ ref('inditg_integration__itg_salesmanmaster') }}
 ),
 final as 
 (

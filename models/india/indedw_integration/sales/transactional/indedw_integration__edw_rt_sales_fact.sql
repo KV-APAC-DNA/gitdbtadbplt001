@@ -1,10 +1,10 @@
 with itg_ruralstoreorderdetail as
 (
-    select * from inditg_integration.itg_ruralstoreorderdetail
+    select * from {{ ref('inditg_integration__itg_ruralstoreorderdetail') }}
 ),
 itg_ruralstoreorderheader as
 (
-    select * from inditg_integration.itg_ruralstoreorderheader
+    select * from {{ ref('inditg_integration__itg_ruralstoreorderheader') }}
 ),
 final as 
 (

@@ -7,14 +7,14 @@
                     DELETE FROM {{this}}
                     WHERE (COALESCE(TRIM(distcode), 'NA'),COALESCE(UPPER(TRIM(salinvno)), 'NA')) 
                     IN (SELECT DISTINCT COALESCE(TRIM(distcode), 'NA'),COALESCE(UPPER(TRIM(salinvno)), 'NA')
-                    FROM {{source('inditg_integration', 'itg_dailysales_del')}});
+                    FROM {{ ref('inditg_integration__itg_dailysales_del') }});
                     {% endif %}"
     )
 }}
 
 with itg_dailysales_del as 
 (
-    select * from {{source('inditg_integration', 'itg_dailysales_del')}}
+    select * from {{ ref('inditg_integration__itg_dailysales_del') }}
 ),
 final as 
 (

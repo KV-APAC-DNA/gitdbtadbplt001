@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_rrl_udcmaster
+      tags: ["in_rt_udcmaster","ingestion"]
+    - name: sdl_rrl_retailer_geocoordinates
+      tags: ["in_rt_geocoordinates","ingestion"]
+
+    - name: sdl_rrl_rsdmaster
+      tags: ["in_rt_rsdmaster","ingestion"]
+    - name: sdl_rrl_retailermaster
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+      
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_tmp_date
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_rrl_retailermaster
+      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]

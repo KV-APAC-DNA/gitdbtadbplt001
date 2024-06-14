@@ -7,14 +7,14 @@
                     DELETE FROM {{this}}
                     WHERE (distcode,transdate) 
                         IN (SELECT DISTINCT distcode,transdate
-                        FROM {{source('inditg_integration', 'itg_rmrpstockprocess_clstk')}});
+                        FROM {{ ref('inditg_integration__itg_rmrpstockprocess_clstk') }});
                     {% endif %}"
     )
 }}
 
 with itg_rmrpstockprocess_clstk as 
 (
-    select * from {{source('inditg_integration', 'itg_rmrpstockprocess_clstk')}}
+    select * from {{ ref('inditg_integration__itg_rmrpstockprocess_clstk') }}
 ),
 final as 
 (

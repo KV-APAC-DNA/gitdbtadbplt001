@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with edw_rt_sales_fact as
 (
     select * from {{ ref('indedw_integration__edw_rt_sales_fact') }}
@@ -14,11 +8,11 @@ edw_subd_retailer_dim as
 ),
 itg_ruralstoreorderheader as
 (
-    select * from inditg_integration.itg_ruralstoreorderheader
+    select * from {{ ref('inditg_integration__itg_ruralstoreorderheader') }}
 ),
 itg_townmaster as
 (
-    select * from inditg_integration.itg_townmaster
+    select * from {{ ref('inditg_integration__itg_townmaster') }}
 ),
 edw_product_dim as
 (
@@ -34,7 +28,7 @@ edw_retailer_calendar_dim as
 ),
 edw_retailer_dim as
 (
-    select * from indedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 edw_retailer_geocoordinates as
 (
@@ -50,7 +44,7 @@ itg_rrl_udcmaster as
 ),
 itg_salesmanmaster as
 (
-    select * from inditg_integration.itg_salesmanmaster
+    select * from {{ ref('inditg_integration__itg_salesmanmaster') }}
 ),
 v_edw_subd_retailer_dim as
 (

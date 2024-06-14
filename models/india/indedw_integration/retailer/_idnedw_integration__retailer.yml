@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_subd_retailer_dim
+    config:
+      alias: edw_subd_retailer_dim
+      tags: ["in_rt_data_mart","transformation"]
+  - name: indedw_integration__v_edw_subd_retailer_dim
+    config:
+      alias: v_edw_subd_retailer_dim
+      tags: ["in_rt_data_mart","transformation"]
+
+  - name: indedw_integration__edw_retailer_dim
+    config: 
+      alias: edw_retailer_dim
+      tags: ["m_wrp_in_edw_retailer_dim","transformation"]

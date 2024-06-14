@@ -1,10 +1,10 @@
 with itg_rkeyacccustomer as 
 (
-    select * from {{source('inditg_integration', 'itg_rkeyacccustomer')}}
+    select * from {{ ref('inditg_integration__itg_rkeyacccustomer') }}
 ),
 itg_mds_in_sv_winculum_master as 
 (
-    select * from {{source('inditg_integration', 'itg_mds_in_sv_winculum_master')}}
+    select * from {{ ref('inditg_integration__itg_mds_in_sv_winculum_master') }}
 ),
 
 ct1 as 

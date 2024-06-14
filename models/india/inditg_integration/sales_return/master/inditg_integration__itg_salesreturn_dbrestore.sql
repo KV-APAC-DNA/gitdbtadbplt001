@@ -7,14 +7,14 @@
                     DELETE FROM {{this}}
                     WHERE (COALESCE(TRIM(distcode), 'NA'),COALESCE(UPPER(TRIM(srnrefno)), 'NA')) 
                     IN (SELECT DISTINCT COALESCE(TRIM(distcode), 'NA'),COALESCE(UPPER(TRIM(srnrefno)), 'NA')
-                    FROM {{source('inditg_integration', 'itg_salesreturn_del')}});
+                    FROM {{ ref('inditg_integration__itg_salesreturn_del') }});
                     {% endif %}"
     )
 }}
 
 with itg_salesreturn_del as 
 (
-    select * from {{source('inditg_integration', 'itg_salesreturn_del')}}
+    select * from {{ ref('inditg_integration__itg_salesreturn_del') }}
 ),
 final as 
 (

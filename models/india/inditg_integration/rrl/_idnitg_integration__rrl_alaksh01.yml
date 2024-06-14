@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: inditg_integration__itg_rrl_udcmaster
-    config:
-      alias: itg_rrl_udcmaster
-      tags: ["in_rt_udcmaster","ingestion"]

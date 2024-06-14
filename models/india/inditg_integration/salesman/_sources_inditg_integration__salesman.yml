@@ -1,0 +1,77 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_in_salesman
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["filename", "distcode", "smcode"]
+              not_null_columns: ["distcode", "smcode"]
+              name: TRATBL_sdl_in_salesman__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["distcode", "smcode"]
+              select_columns: ["filename", "distcode", "smcode"] 
+              name: TRATBL_sdl_in_salesman__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+
+    - name: sdl_in_salesman_route
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["filename", "distrcode", "salesmancode", "routecode"]
+              not_null_columns: ["distrcode", "salesmancode"]
+              name: TRATBL_sdl_in_salesman_route__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["distrcode", "salesmancode", "routecode"]
+              select_columns: ["filename", "distrcode", "salesmancode", "routecode"] 
+              name: TRATBL_sdl_in_salesman_route__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+
+    - name: sdl_in_route
+      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["filename", "distcode", "rmcode"]
+              not_null_columns: ["distcode", "rmcode"]
+              name: TRATBL_sdl_in_route__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["distcode", "rmcode"]
+              select_columns: ["filename", "distcode", "rmcode"] 
+              name: TRATBL_sdl_in_route__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+
+    - name: sdl_csl_salesmanmaster
+      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_salesmanmaster_temp
