@@ -3,7 +3,8 @@
     (
         materialized ='incremental',
         incremental_strategy = 'append',
-        pre_hook = "update {{this}} a
+        pre_hook = "{% if is_incremental() %}
+        update {{this}} a
                     set updt_dttm = convert_timezone('UTC', current_timestamp())::timestamp_ntz(9),
                         effctv_end_dt = (
                                 select max(file_eff_dt) - 1
@@ -48,7 +49,7 @@
                         and a.store_class = t.store_class
                         and a.week = t.week
                         and a.day = t.day;
-                    "
+        {% endif %}"
     )
 }}
 

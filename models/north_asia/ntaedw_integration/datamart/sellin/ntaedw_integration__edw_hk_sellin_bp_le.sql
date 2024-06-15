@@ -1,38 +1,38 @@
 with edw_copa_trans_fact as
 (
-    select * from aspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_copa_plan_fact as
 (
-    select * from snapaspedw_integration.edw_copa_plan_fact
+    select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
 ),
 edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_calendar_dim as
 (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_query_parameters as
 (
-    select * from snapntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 v_edw_customer_sales_dim as
 (
-    select * from snapaspedw_integration.v_edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 itg_mds_hk_le_targets as
 (
-    select * from snapntaitg_integration.itg_mds_hk_le_targets
+    select * from ntaitg_integration.itg_mds_hk_le_targets
 ),
 v_intrm_reg_crncy_exch_fiscper as
 (
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_gch_producthierarchy as
 (
-    select * from snapaspedw_integration.edw_gch_producthierarchy
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 tp_acc_date as 
 (

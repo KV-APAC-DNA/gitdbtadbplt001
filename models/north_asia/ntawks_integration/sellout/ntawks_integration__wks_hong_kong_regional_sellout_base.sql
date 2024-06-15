@@ -153,7 +153,7 @@ msl_product_desc::varchar(255) as msl_product_desc,
 store_grade::varchar(200) as store_grade,
 retail_env::varchar(300) as retail_env,
 crtd_dttm::timestamp_ntz(9) as crtd_dttm,
-updt_dttm::timestamp_ntz(9 as updt_dttm)
+updt_dttm::timestamp_ntz(9) as updt_dttm
 from transformed
 )
 select * from final

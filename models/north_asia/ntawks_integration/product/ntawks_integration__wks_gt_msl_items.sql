@@ -4,11 +4,9 @@
     (
         materialized ='incremental',
         incremental_strategy = 'append',
-        pre_hook = "delete
-                    from {{this}}
-                    where file_rec_dt = '2024-06-05'
-                    and ctry_cd = 'HK'
-                    and dstr_cd = '110256';"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where file_rec_dt = '2024-06-05' and ctry_cd = 'HK' and dstr_cd = '110256';
+        {% endif %}"
     )
 }}
 
