@@ -56,7 +56,7 @@ final as
 		sls_rep_cd::varchar(20)  as sls_rep_cd,
 		sls_rep_nm::varchar(50)  as sls_rep_nm,
 		store_cd::varchar(20)  as store_cd,
-		store_nm::varchar(100) as store,
+		store_nm::varchar(100) as store_nm,
 		store_class::varchar(3)  as store_class,
 		week::number(18,0)  as week,
 		day::varchar(20)  as day,

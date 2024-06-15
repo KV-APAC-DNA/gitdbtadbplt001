@@ -97,3 +97,39 @@ models:
     config:
       alias: itg_tw_ims_dstr_customer_mapping
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_ims_inventory
+    config:
+      alias: v_rpt_ims_inventory
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_sls_pln_actl
+    config:
+      alias: v_rpt_sls_pln_actl
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_rpt_hk_pos
+    config:
+      alias: edw_rpt_hk_pos
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_vw_pop6_analysis_active_data
+    config:
+      alias: edw_vw_pop6_analysis_active_data
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_ims
+    config:
+      alias: v_rpt_ims
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_sls_copa_tgt
+    config:
+      alias: v_rpt_sls_copa_tgt
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_sls_pln_actl_lst_txn_dt
+    config:
+      alias: v_rpt_sls_pln_actl_lst_txn_dt
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_hk_sellin_bp_le
+    config:
+      alias: edw_hk_sellin_bp_le
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_tw_si_so_pos_sls
+    config:
+      alias: v_rpt_tw_si_so_pos_sls
+      tags: ["north_asia_views","transformation"]
