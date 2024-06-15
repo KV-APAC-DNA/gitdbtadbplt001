@@ -2,21 +2,21 @@ with itg_pop6_executed_visits as (
   select 
     * 
   from 
-    dev_dna_core.snapntaitg_integration.itg_pop6_executed_visits
+    {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ), 
 
 itg_pop6_exclusion as (
   select 
     * 
   from 
-    dev_dna_core.snapntaitg_integration.itg_pop6_exclusion
+    {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
 ), 
 
 itg_pop6_displays as (
   select 
     * 
   from 
-    dev_dna_core.snapntaitg_integration.itg_pop6_displays
+    {{ ref('ntaitg_integration__itg_pop6_displays') }}
 ), 
 
 disp as (

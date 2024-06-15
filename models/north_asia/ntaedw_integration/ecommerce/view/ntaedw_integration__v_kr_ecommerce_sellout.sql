@@ -2,7 +2,7 @@ with edw_ecommerce_offtake as (
 select * from {{ ref('ntaedw_integration__edw_ecommerce_offtake') }}
 ),
 edw_product_attr_dim as (
-select * from aspedw_integration.edw_product_attr_dim
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_intrm_calendar as (
 select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
@@ -17,7 +17,7 @@ edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_ims_fact as (
 select * from {{ ref('ntaedw_integration__edw_ims_fact') }}

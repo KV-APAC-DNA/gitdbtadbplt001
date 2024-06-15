@@ -4,19 +4,19 @@
     )
 }}
 with v_prod_product as (
-    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_PROD_PRODUCT
+    select * from {{ ref('aspitg_integration__v_prod_product') }}
 ),
 v_prodbu_productbusinessunit as (
-    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_PRODBU_PRODUCTBUSINESSUNIT
+    select * from {{ ref('aspitg_integration__v_prodbu_productbusinessunit') }}
 ),
 v_prodtr_producttranslation as (
-    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_PRODTR_PRODUCTTRANSLATION
+    select * from {{ ref('aspitg_integration__v_prodtr_producttranslation') }}
 ),
-EDW_VW_POP6_PRODUCTS as (
-    select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PRODUCTS
+edw_vw_pop6_products as (
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
 ),
 edw_material_sales_dim as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
     select * from {{ source('aspitg_integration', 'aspedw_integration__edw_product_attr_dim_temp') }}

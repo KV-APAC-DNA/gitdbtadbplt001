@@ -11,14 +11,14 @@
                             ) in (
                             select nacf_customer_code,
                                 sap_customer_code
-                            from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_GT_NACF_CUST_DIM
+                            from {{ source('ntasdl_raw','sdl_kr_gt_nacf_cust_dim') }}
                             );
                     {% endif %}
                     "
     )
 }}
-with  SDL_KR_GT_NACF_CUST_DIM as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_GT_NACF_CUST_DIM
+with  sdl_kr_gt_nacf_cust_dim as (
+    select * from {{ source('ntasdl_raw','sdl_kr_gt_nacf_cust_dim') }}
 ),
 final as (
 SELECT 

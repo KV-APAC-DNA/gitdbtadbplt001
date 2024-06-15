@@ -7,7 +7,7 @@
                     set updt_dttm = convert_timezone('UTC', current_timestamp())::timestamp_ntz(9),
                         effctv_end_dt = (
                                 select max(file_eff_dt) - 1
-                                from dev_dna_core.snapntawks_integration.wks_direct_sales_rep_route_plan
+                                from {{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
                                 )
                     from (
                         select t1.*
@@ -18,10 +18,10 @@
                                 ) t1,        
                                 (
                                     select *
-                                    from dev_dna_core.snapntawks_integration.wks_direct_sales_rep_route_plan
+                                    from {{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
                                     where file_eff_dt = (
                                                 select max(file_eff_dt)
-                                                from dev_dna_core.snapntawks_integration.wks_direct_sales_rep_route_plan
+                                                from {{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
                                                 )
                                     ) t2
                         where trim(t1.ctry_cd) = trim(t2.ctry_cd(+))
@@ -57,12 +57,12 @@
 
 with itg_direct_sales_rep_route_plan as
 (
-    select * from dev_dna_core.snapntaitg_integration.itg_direct_sales_rep_route_plan
+    select * from {{ ref('ntaitg_integration__itg_direct_sales_rep_route_plan') }}
 ),
 
 wks_direct_sales_rep_route_plan as
 (
-    select * from dev_dna_core.snapntawks_integration.wks_direct_sales_rep_route_plan
+    select * from{{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
 ),
 
 transformed as

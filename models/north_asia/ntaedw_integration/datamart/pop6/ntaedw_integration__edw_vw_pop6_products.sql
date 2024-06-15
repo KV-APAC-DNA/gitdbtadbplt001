@@ -1,6 +1,6 @@
 with itg_pop6_products as 
 (
-    select * from snapntaitg_integration.itg_pop6_products
+    select * from {{ ref('ntaitg_integration__itg_pop6_products') }}
 ),
 final as
 (    

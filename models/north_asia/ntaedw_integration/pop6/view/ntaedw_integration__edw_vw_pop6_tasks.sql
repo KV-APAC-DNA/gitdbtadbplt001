@@ -1,11 +1,11 @@
 with itg_pop6_tasks as (
-    select * from snapntaitg_integration.itg_pop6_tasks
+    select * from {{ ref('ntaitg_integration__itg_pop6_tasks') }}
 ),
 itg_pop6_executed_visits as (
-    select * from snapntaitg_integration.itg_pop6_executed_visits
+    select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_exclusion as (
-    select * from snapntaitg_integration.itg_pop6_exclusion
+    select * from {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
 ),
 tasks as (
     SELECT tasks.src_file_date,

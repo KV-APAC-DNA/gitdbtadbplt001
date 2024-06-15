@@ -8,8 +8,7 @@ with sdl_hk_ims_dstr_cust_attr as(
 ),
 itg_ims_dstr_cust_attr as 
 (
-    -- select * from {{ source('ntaitg_integration', 'itg_ims_dstr_cust_attr_temp') }}
-    select * from ntaitg_integration__itg_ims_dstr_cust_attr_temp
+    select * from {{ source('ntaitg_integration', 'itg_ims_dstr_cust_attr_temp') }}
 ),
 final as (
     select src.dstr_code,

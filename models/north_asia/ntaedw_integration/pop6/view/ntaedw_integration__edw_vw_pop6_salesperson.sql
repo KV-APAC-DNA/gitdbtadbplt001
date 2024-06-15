@@ -1,6 +1,6 @@
 with source as
 (
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_USERS
+    select * from {{ ref('ntaitg_integration__itg_pop6_users') }}
 ),
 
 final as

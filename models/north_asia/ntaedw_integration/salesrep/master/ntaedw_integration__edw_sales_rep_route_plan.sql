@@ -1,21 +1,21 @@
 with itg_direct_sales_rep_route_plan as
 (
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_DIRECT_SALES_REP_ROUTE_PLAN
+    select * from {{ ref('ntaitg_integration__itg_direct_sales_rep_route_plan') }}
 ),
 
 vw_dir_route_plan_week_map as
 (
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.VW_DIR_ROUTE_PLAN_WEEK_MAP
+    select * from {{ ref('ntaedw_integration__vw_dir_route_plan_week_map') }}
 ),
 
 itg_indirect_sales_rep_route_plan as
 (
-    select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.itg_indirect_sales_rep_route_plan
+    select * from {{ ref('ntaitg_integration__itg_indirect_sales_rep_route_plan') }}
 ),
 
 vw_indir_route_plan_week_map as
 (
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.vw_indir_route_plan_week_map
+    select * from {{ ref('ntaedw_integration__vw_indir_route_plan_week_map') }}
 ),
 
 direct as

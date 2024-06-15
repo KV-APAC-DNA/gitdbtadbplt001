@@ -15,8 +15,7 @@
 
 with source as
 (
-    -- select * from {{ source ( 'ntasdl_raw', 'sdl_mds_hk_wingkeung_gt_msl_items')}}
-    select * from dev_dna_load.snapntasdl_raw.sdl_mds_hk_wingkeung_gt_msl_items
+    select * from {{ source ( 'ntasdl_raw', 'sdl_mds_hk_wingkeung_gt_msl_items')}}
 ),
 
 union1 as

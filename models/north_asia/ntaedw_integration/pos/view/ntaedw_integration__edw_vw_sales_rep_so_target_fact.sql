@@ -1,6 +1,6 @@
 with
 itg_sales_rep_so_target_fact as (
-select * from ntaitg_integration.itg_sales_rep_so_target_fact
+select * from {{ ref('ntaitg_integration__itg_sales_rep_so_target_fact') }}
 ),
 v_intrm_calendar_ims as (
 select * from {{ ref('ntaedw_integration__v_intrm_calendar_ims') }}

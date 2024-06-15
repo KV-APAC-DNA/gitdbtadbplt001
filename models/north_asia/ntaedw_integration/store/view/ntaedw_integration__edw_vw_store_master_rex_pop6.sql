@@ -1,8 +1,8 @@
 with edw_vw_pop6_store as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_STORE
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
 ),
 cust_customer as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.CUST_CUSTOMER
+select * from {{ source('aspsdl_raw','cust_customer') }}
 ),
 final as (
 SELECT 

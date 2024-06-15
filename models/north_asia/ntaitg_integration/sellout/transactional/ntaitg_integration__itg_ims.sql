@@ -17,7 +17,6 @@ itg_ims_dstr_cust_attr as (
 ),
 tw_ims_distributor_ingestion_metadata as (
     select * from {{ source('ntawks_integration', 'tw_ims_distributor_ingestion_metadata') }}
-    --source
 ),
 wks_itg_ims_sls as (
     select * from {{ ref('ntawks_integration__wks_itg_ims_sls') }}

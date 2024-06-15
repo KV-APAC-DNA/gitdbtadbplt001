@@ -1,17 +1,17 @@
 with edw_copa_trans_fact as (
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_customer_sales_dim as (
-    select * from snapaspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as (
-    select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as (
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-    select * from snapaspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 a as (
     SELECT x.matl_num,

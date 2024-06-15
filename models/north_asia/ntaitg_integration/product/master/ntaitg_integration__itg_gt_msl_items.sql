@@ -1,7 +1,7 @@
 with source as
 (
     
-    select * from dev_dna_core.snapntawks_integration.wks_gt_msl_items
+    select * from {{ ref('ntawks_integration__wks_gt_msl_items') }}
 ),
 
 

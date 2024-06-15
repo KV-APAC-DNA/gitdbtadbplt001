@@ -1,6 +1,6 @@
 
 with slsp_salesperson as (
-    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.SLSP_SALESPERSON
+    select * from {{ source('aspsdl_raw', 'slsp_salesperson') }}
 ),
 final as (
 SELECT rank() OVER (

@@ -1,5 +1,5 @@
 with prodbu_productbusinessunit as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.PRODBU_PRODUCTBUSINESSUNIT
+select * from {{ source('aspsdl_raw', 'prodbu_productbusinessunit') }}
 ),
 final as (SELECT rank() OVER (
 		PARTITION BY t1.region

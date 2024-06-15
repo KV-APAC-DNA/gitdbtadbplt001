@@ -19,10 +19,10 @@ itg_pos_str_sls_grp_map as (
 select * from {{ source('ntaitg_integration','itg_pos_str_sls_grp_map') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_product_attr_dim as (
-select * from aspedw_integration.edw_product_attr_dim
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 itg_sales_cust_prod_master as (
 select * from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }}

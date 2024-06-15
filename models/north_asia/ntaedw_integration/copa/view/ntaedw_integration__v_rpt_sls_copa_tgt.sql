@@ -2,19 +2,19 @@ with v_intrm_copa_tgt AS (
   SELECT 
     * 
   FROM 
-    dev_dna_core.snapntaedw_integration.v_intrm_copa_tgt
+    {{ ref('ntaedw_integration__v_intrm_copa_tgt') }}
 ), 
 v_intrm_internal_tgt AS (
   SELECT 
     * 
   FROM 
-    dev_dna_core.snapntaedw_integration.v_intrm_internal_tgt
+    {{ ref('ntaedw_integration__v_intrm_internal_tgt') }}
 ), 
 v_intrm_crncy_exch AS (
   SELECT 
     * 
   FROM 
-    dev_dna_core.snapntaedw_integration.v_intrm_crncy_exch
+    {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ), 
 derived_table1 AS (
   SELECT 

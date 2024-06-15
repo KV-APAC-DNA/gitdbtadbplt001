@@ -1,5 +1,5 @@
 with source as (
-    select * from ntaedw_integration.v_rpt_pos_offtake_daily_nonkorea
+    select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_daily_nonkorea') }}
 ),
 final as (
     select

@@ -1,5 +1,5 @@
 with v_intrm_copa_sls_cust_hier as (
-    select * from ntaedw_integration.v_intrm_copa_sls_cust_hier
+    select * from {{ ref('ntaedw_integration__v_intrm_copa_sls_cust_hier') }}
 ),
 v_intrm_invc_sls_cust_hier as (
     select * from ntaedw_integration.v_intrm_invc_sls_cust_hier

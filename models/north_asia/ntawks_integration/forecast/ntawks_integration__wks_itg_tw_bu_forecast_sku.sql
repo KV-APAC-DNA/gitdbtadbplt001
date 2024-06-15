@@ -5,7 +5,7 @@ edw_customer_attr_hier_dim as (
 select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 cust_attr as(
 	SELECT sold_to_party,

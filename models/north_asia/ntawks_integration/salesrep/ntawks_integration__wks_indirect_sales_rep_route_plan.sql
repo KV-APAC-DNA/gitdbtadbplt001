@@ -13,14 +13,12 @@
 
 with source as
 (
-    --select * from {{ source("ntasdl_raw", "sdl_hk_wingkeung_direct_sales_rep_route_plan")}}
-    select * from dev_dna_load.snapntasdl_raw.sdl_hk_wingkeung_indirect_sales_rep_route_plan
+    select * from {{ source("ntasdl_raw", "sdl_hk_wingkeung_direct_sales_rep_route_plan")}}
 ),
 
 v_intrm_calendar_ims as
 (
-    -- select * from {{ ref("ntaedw_integration__v_intrm_calendar_ims")}}
-    select * from dev_dna_core.snapntaedw_integration.v_intrm_calendar_ims
+    select * from {{ ref("ntaedw_integration__v_intrm_calendar_ims")}}
 ),
 
 transformed as

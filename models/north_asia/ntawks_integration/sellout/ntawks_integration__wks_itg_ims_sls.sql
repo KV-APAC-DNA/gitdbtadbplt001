@@ -10,8 +10,7 @@ sdl_hk_ims_wingkeung_sel_out as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_sel_out') }}
 ),
 itg_ims as (
-    -- select * from {{ source('ntaitg_integration','itg_ims_temp') }}
-    select * from ntaitg_integration__itg_ims_temp
+    select * from {{ source('ntaitg_integration','itg_ims_temp') }}
 ),
 viva as (
     SELECT calendar_sid AS ims_txn_dt,

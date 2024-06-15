@@ -1,6 +1,6 @@
 with itg_pop6_planned_visits as
 (
-    select * from dev_dna_core.snapntaitg_integration.itg_pop6_planned_visits
+    select * from {{ ref('ntaitg_integration__itg_pop6_planned_visits') }}
 ),
 
 

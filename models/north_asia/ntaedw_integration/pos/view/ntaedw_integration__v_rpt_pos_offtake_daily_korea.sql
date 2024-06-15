@@ -2,13 +2,13 @@ with edw_pos_fact as (
     select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_customer_attr_flat_dim as (
-    select * from aspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 v_interm_cust_hier_dim as (
     select * from {{ ref('ntaedw_integration__v_interm_cust_hier_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 v_calendar_dtls as (
     select * from {{ ref('aspedw_integration__v_calendar_dtls') }}

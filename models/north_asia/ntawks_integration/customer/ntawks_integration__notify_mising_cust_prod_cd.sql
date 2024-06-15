@@ -8,7 +8,7 @@ itg_pos_store_product as
 ),
 edw_product_attr_dim as
 (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 itg_sales_cust_prod_master as
 (

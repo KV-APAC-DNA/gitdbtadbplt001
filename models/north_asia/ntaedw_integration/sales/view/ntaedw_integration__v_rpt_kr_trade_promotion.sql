@@ -11,13 +11,13 @@ v_intrm_reg_crncy_exch_fiscper as (
 select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_material_sales_dim as (
 select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-select * from aspedw_integration.edw_product_attr_dim
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 final as (
 SELECT 

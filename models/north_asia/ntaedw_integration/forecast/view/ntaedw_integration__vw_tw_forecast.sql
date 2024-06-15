@@ -8,7 +8,7 @@ edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_copa_trans_fact as (
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
@@ -17,7 +17,7 @@ edw_customer_attr_hier_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-    select * from aspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 v_intrm_crncy_exch as (
     select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }} 

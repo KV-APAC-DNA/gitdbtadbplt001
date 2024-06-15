@@ -2,8 +2,7 @@ with sdl_hk_ims_wingkeung_inv as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_inv') }}
 ),
 itg_ims_invnt as (
-    -- select * from {{ source('ntaitg_integration', 'itg_ims_invnt_temp') }}
-    select * from ntaitg_integration__itg_ims_invnt_temp
+    select * from {{ source('ntaitg_integration', 'itg_ims_invnt_temp') }}
 ),
 final as (
     select src.invnt_dt,

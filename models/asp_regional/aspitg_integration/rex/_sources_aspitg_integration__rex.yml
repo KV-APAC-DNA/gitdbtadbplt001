@@ -12,3 +12,8 @@ sources:
       - name: prodtr_producttranslation
       - name: mrchr_responses
       - name: mrchr_merchandisingresponse
+      - name: prod_product
+      - name: prodbu_productbusinessunit
+      - name: slsp_salesperson
+      - name: vst_visit
+      - name: cust_customer

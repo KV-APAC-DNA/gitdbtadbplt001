@@ -1,5 +1,5 @@
 with source as (
-    select * from snapntaedw_integration.edw_vw_sls_rep_dim
+    select * from {{ ref('ntaedw_integration__edw_vw_sls_rep_dim') }}
 ),
 final as (
     select

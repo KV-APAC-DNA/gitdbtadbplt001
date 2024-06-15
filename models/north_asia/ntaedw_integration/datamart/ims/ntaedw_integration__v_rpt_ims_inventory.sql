@@ -4,7 +4,7 @@ with edw_ims_inventory_fact as
 ),
 itg_tw_ims_dstr_prod_price_map as
 (
-    select * from  ntaitg_integration.itg_tw_ims_dstr_prod_price_map
+    select * from  {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_price_map') }}
 ),
 v_intrm_calendar_ims as
 (
@@ -12,7 +12,7 @@ v_intrm_calendar_ims as
 ),
 edw_product_attr_dim as
 (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_customer_attr_flat_dim as
 (
@@ -20,7 +20,7 @@ edw_customer_attr_flat_dim as
 ),
 itg_ims_dstr_cust_attr as
 (
-    select * from snapntaitg_integration.itg_ims_dstr_cust_attr
+    select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 v_dly_ims_txn_msl as
 (

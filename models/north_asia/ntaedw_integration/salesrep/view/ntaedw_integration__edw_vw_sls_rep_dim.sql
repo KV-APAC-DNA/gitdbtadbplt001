@@ -1,8 +1,8 @@
 with edw_sales_rep_route_plan as (
-    select * from ntaedw_integration.edw_sales_rep_route_plan
+    select * from {{ ref('ntaedw_integration__edw_sales_rep_route_plan') }}
 ),
 edw_ims_fact as (
-    select * from ntaedw_integration.edw_ims_fact
+    select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 c as (
     SELECT rtrim(edw_ims_fact.sls_rep_cd) as sls_rep_cd,

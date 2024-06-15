@@ -4,47 +4,47 @@ with rpt_regional_scorecard as
 ),
 edw_vw_greenlight_skus as 
 (
-    select * from aspedw_integration.edw_vw_greenlight_skus
+    select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
 v_edw_customer_sales_dim as 
 (
-    select * from aspedw_integration.v_edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 edw_gch_producthierarchy as 
 (
-    select * from aspedw_integration.edw_gch_producthierarchy
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as 
 (
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 edw_copa_trans_fact as 
 (
-    select * from aspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_vw_promo_calendar as 
 (
-    select * from ntaedw_integration.edw_vw_promo_calendar
+    select * from {{ ref('ntaedw_integration__edw_vw_promo_calendar') }}
 ),
 edw_intrm_calendar as 
 (
-    select * from ntaedw_integration.edw_intrm_calendar
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 edw_pos_fact as 
 (
-    select * from ntaedw_integration.edw_pos_fact
+    select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 itg_mds_hk_ref_pos_accounts as 
 (
-    select * from ntaitg_integration.itg_mds_hk_ref_pos_accounts
+    select * from {{ ref('ntaitg_integration__itg_mds_hk_ref_pos_accounts') }}
 ),
 itg_mds_hk_pos_product_mapping as 
 (
-    select * from ntaitg_integration.itg_mds_hk_pos_product_mapping
+    select * from {{ ref('ntaitg_integration__itg_mds_hk_pos_product_mapping') }}
 ),
 itg_query_parameters as 
 (
-    select * from ntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 exch_rate as 
 (

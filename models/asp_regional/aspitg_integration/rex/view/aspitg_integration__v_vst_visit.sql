@@ -1,6 +1,6 @@
 with vst_visit as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.vst_visit
+    select * from {{ source('aspsdl_raw', 'vst_visit') }}
 ),
 final as
 (   

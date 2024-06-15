@@ -1,6 +1,6 @@
 with prod_product as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.prod_product
+    select * from {{ source('aspsdl_raw', 'prod_product') }}
 ),
 final as
 (   

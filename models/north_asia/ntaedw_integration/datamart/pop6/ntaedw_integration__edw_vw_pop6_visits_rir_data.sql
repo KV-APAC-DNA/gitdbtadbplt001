@@ -1,18 +1,18 @@
 with itg_pop6_rir_data as 
 (
-    select * from snapntaitg_integration.itg_pop6_rir_data
+    select * from {{ ref('ntaitg_integration__itg_pop6_rir_data') }}
 ),
 itg_pop6_executed_visits as 
 (
-    select * from snapntaitg_integration.itg_pop6_executed_visits
+    select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_product_lists_pops as 
 (
-    select * from snapntaitg_integration.itg_pop6_product_lists_pops
+    select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_pops') }}
 ),
 itg_pop6_product_lists_products as 
 (
-    select * from snapntaitg_integration.itg_pop6_product_lists_products
+    select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_products') }}
 ),
 visit as 
 (

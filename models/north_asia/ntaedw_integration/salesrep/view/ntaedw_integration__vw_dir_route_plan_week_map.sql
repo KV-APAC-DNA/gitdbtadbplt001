@@ -1,15 +1,12 @@
 with itg_direct_sales_rep_route_plan as
 (
-    select * from dev_dna_core.snapntaitg_integration.itg_direct_sales_rep_route_plan
+    select * from {{ ref('ntaitg_integration__itg_direct_sales_rep_route_plan') }}
 ),
 
 v_intrm_calendar_ims as
 (
-    select * from dev_dna_core.snapntaedw_integration.v_intrm_calendar_ims
+    select * from {{ ref('ntaedw_integration__v_intrm_calendar_ims') }}
 ),
-
-
-
 t1 as
 (
       select distinct ctry_cd,
@@ -20,7 +17,6 @@ t1 as
             effctv_end_dt) as effctv_end_dt
       from itg_direct_sales_rep_route_plan
 ),
-
 t2 as
 (
     select cal_day,
@@ -29,7 +25,6 @@ t2 as
             cast((substring(fisc_per, 1, 4) || substring(fisc_per, 6, 2)) as integer) as jj_mnth_id
     from v_intrm_calendar_ims
 ),
-
 transformed as
 (
     select 
@@ -64,7 +59,6 @@ transformed as
         wkday,
         week_no
 ),
-
 final as
 (
     select
@@ -79,11 +73,4 @@ final as
         week_no::number(38,0) as week_no
     from transformed
 )
-
-
 select * from final
-
-
-
-
-

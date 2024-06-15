@@ -17,13 +17,13 @@ v_intrm_crncy_exch as (
 select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_material_sales_dim as (
 select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-select * from aspedw_integration.edw_product_attr_dim
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_invoice_fact as (
 select * from {{ ref('aspedw_integration__edw_invoice_fact') }}

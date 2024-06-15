@@ -1,15 +1,15 @@
 
 with itg_pop6_exclusion as
 (
-    select * from snapntaitg_integration.itg_pop6_exclusion
+    select * from {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
 ),
 itg_pop6_sku_audits as
 (
-    select * from snapntaitg_integration.itg_pop6_sku_audits
+    select * from {{ ref('ntaitg_integration__itg_pop6_sku_audits') }}
 ),
 itg_pop6_executed_visits as
 (
-    select * from snapntaitg_integration.itg_pop6_executed_visits
+    select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ),
 visit as 
 (

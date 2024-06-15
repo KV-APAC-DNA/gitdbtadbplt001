@@ -1,7 +1,6 @@
 with source as
 (
-    -- select * from {{ ref('ntawks_integration__wks_sales_rep_so_target_fact')}}
-    select * from dev_dna_core.snapntawks_integration.wks_sales_rep_so_target_fact
+    select * from {{ ref('ntawks_integration__wks_sales_rep_so_target_fact')}}
 ),
 
 t2 as

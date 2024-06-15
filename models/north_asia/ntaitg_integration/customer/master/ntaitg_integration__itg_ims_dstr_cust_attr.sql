@@ -18,7 +18,7 @@ tw_ims_distributor_ingestion_metadata as
 ), --static
 itg_tw_ims_dstr_customer_mapping as
 (
-    select * from ntaitg_integration.itg_tw_ims_dstr_customer_mapping
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }}
 ), --take as a source
 wks_itg_hk_ims_dstr_cust_attr as (
     select * from {{ ref('ntawks_integration__wks_itg_hk_ims_dstr_cust_attr') }}
