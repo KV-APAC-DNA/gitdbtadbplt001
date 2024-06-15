@@ -55,14 +55,9 @@
 
 
 
-with itg_direct_sales_rep_route_plan as
+with wks_direct_sales_rep_route_plan as
 (
-    select * from {{ ref('ntaitg_integration__itg_direct_sales_rep_route_plan') }}
-),
-
-wks_direct_sales_rep_route_plan as
-(
-    select * from{{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
+    select * from {{ ref('ntawks_integration__wks_direct_sales_rep_route_plan') }}
 ),
 
 transformed as
@@ -84,7 +79,7 @@ transformed as
       CAST(NULL AS DATE) AS updt_dttm FROM 
       (
         SELECT *
-        FROM itg_direct_sales_rep_route_plan
+        FROM {{this}}
         WHERE effctv_end_dt = to_date('9999-12-31', 'YYYY-MM-DD')
       ) t1,
       (

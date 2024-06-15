@@ -14,8 +14,7 @@
 
 with source as
 (
-    -- select * from {{ source ( 'ntasdl_raw', 'sdl_hk_wingkeung_sales_rep_so_tgt_fact')}}
-    select * from dev_dna_load.ntasdl_raw.sdl_hk_wingkeung_sales_rep_so_tgt_fact
+    select * from {{ source ( 'ntasdl_raw', 'sdl_hk_wingkeung_sales_rep_so_tgt_fact')}}
 ),
 
 final as
