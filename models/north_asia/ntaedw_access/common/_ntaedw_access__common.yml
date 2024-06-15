@@ -133,3 +133,15 @@ models:
     config:
       alias: v_rpt_tw_si_so_pos_sls
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_ims_fact
+    config:
+      alias: edw_ims_fact
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__edw_rpt_tw_sales_incentive
+    config:
+      alias: edw_rpt_tw_sales_incentive
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_access__v_rpt_pos_nonkorea
+    config:
+      alias: v_rpt_pos_nonkorea
+      tags: ["north_asia_views","transformation"]
