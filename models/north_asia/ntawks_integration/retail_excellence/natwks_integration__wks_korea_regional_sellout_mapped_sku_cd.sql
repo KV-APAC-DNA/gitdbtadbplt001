@@ -14,11 +14,11 @@ WHERE COUNTRY_CODE = 'KR'
 AND   data_source in ('SELL-OUT','POS')) WHERE rno = 1
 ),
 final as(
-
+select 
     ean_num::varchar(150) AS ean_num,
 sku_code::varchar(40) AS sku_code,
 sku_description::varchar(300) AS sku_description,
-rno::numeric(38,0) AS rno,
+rno::numeric(38,0) AS rno
 from korea_regional_sellout_mapped_sku_cd
 )
 
