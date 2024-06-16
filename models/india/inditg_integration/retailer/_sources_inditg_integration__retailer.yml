@@ -68,5 +68,5 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: itg_retailerroute_temp
-    - name: itg_retailermaster_temp
+    - name: itg_retailerroute
+    - name: itg_retailermaster

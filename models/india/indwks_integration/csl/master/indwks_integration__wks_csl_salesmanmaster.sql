@@ -11,7 +11,7 @@ with sdl_csl_salesmanmaster as
 ),
 itg_salesmanmaster_temp as
 (
-    select * from {{ source('inditg_integration', 'itg_salesmanmaster_temp') }}
+    select * from {{ source('inditg_integration', 'itg_salesmanmaster') }}
 ),
 transformed as 
 (

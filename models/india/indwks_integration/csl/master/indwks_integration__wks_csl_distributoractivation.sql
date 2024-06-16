@@ -11,7 +11,7 @@ with sdl_csl_distributoractivation as
 ),
 itg_distributoractivation as
 (
-    select * from {{ source('inditg_integration', 'itg_distributoractivation_temp') }}
+    select * from {{ source('inditg_integration', 'itg_distributoractivation') }}
 ),
 transformed as
 (

@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('indsdl_raw', 'sdl_in_salesman') }} 
+    select * from {{ source('indsdl_raw', 'sdl_in_salesman_route') }} 
 ),
 final as(
     select 

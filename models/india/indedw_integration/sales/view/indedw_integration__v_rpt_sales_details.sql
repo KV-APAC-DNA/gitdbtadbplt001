@@ -40,7 +40,7 @@ final as
     v_rpt_sales_details_with_history.cal_yr,
     v_rpt_sales_details_with_history.fisc_yr,
     v_rpt_sales_details_with_history.week,
-    v_rpt_sales_details_with_history.month,
+    v_rpt_sales_details_with_history."month" as month,
     v_rpt_sales_details_with_history.retailer_name,
     v_rpt_sales_details_with_history.salesman_name,
     v_rpt_sales_details_with_history.salesman_code,
