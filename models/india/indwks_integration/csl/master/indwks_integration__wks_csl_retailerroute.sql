@@ -11,7 +11,7 @@ with sdl_csl_retailerroute as
 ),
 itg_retailerroute as 
 (
-    select * from {{ source('inditg_integration', 'itg_retailerroute_temp') }}
+    select * from {{ source('inditg_integration', 'itg_retailerroute') }}
 ),
 transformed as
 (

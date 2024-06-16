@@ -74,4 +74,4 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: itg_salesmanmaster_temp
+    - name: itg_salesmanmaster

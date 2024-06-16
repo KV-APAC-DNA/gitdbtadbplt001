@@ -10,24 +10,24 @@ with source as(
 ),
 final as(
     select 
-        cmpcode as cmpcode
-        tlcode as tlcode
-        tlname as tlname
-        emailid as emailid
-        phoneno as phoneno
-        dateofbirth as dateofbirth
-        dateofjoin as dateofjoin
-        isactive as isactive
-        modusercode as modusercode
-        moddt as moddt
-        approvalstatus as approvalstatus
-        dailyallowance as dailyallowance
-        monthlysalary as monthlysalary
-        aadharno as aadharno
-        imagepath as imagepath
-        createddt as createddt
-        filename as filename
-        run_id as run_id
+        cmpcode as cmpcode,
+        tlcode as tlcode,
+        tlname as tlname,
+        emailid as emailid,
+        phoneno as phoneno,
+        dateofbirth as dateofbirth,
+        dateofjoin as dateofjoin,
+        isactive as isactive,
+        modusercode as modusercode,
+        moddt as moddt,
+        approvalstatus as approvalstatus,
+        dailyallowance as dailyallowance,
+        monthlysalary as monthlysalary,
+        aadharno as aadharno,
+        imagepath as imagepath,
+        createddt as createddt,
+        filename as filename,
+        run_id as run_id,
         crt_dttm as crt_dttm
     from source
     {% if is_incremental() %}

@@ -18,4 +18,4 @@ sources:
       schema: false
       identifier: false
     tables:
-    - name: itg_distributoractivation_temp
+    - name: itg_distributoractivation

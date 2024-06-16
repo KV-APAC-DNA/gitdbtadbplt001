@@ -11,7 +11,7 @@ with sdl_csl_retailermaster as
 ),
 itg_retailermaster as
 (
-    select * from {{ source('inditg_integration', 'itg_retailermaster_temp') }}
+    select * from {{ source('inditg_integration', 'itg_retailermaster') }}
 ),
 wks_tmp_date as 
 (
