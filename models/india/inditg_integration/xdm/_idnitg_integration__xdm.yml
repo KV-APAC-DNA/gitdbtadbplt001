@@ -8,15 +8,15 @@ models:
   - name: inditg_integration__itg_xdm_geohierarchy
     config:
       alias: itg_xdm_geohierarchy
-      tags: ["in_geo_heirarchy","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_product
     config:
       alias: itg_xdm_product
-      tags: ["in_product","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_productuom
     config:
       alias: itg_xdm_productuom
-      tags: ["in_productuom","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_distributor_supplier
     config:
       alias: itg_xdm_distributor_supplier
@@ -29,17 +29,17 @@ models:
   - name: inditg_integration__itg_xdm_supplier
     config: 
       alias: itg_xdm_supplier
-      tags: ["in_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_salesheirarchy
     config: 
       alias: itg_xdm_salesheirarchy
-      tags: ["in_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
 
   - name: inditg_integration__itg_xdm_channelmaster
     config: 
       alias: itg_xdm_channelmaster
-      tags: ["in_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_distributor
     config: 
       alias: itg_xdm_distributor
-      tags: ["in_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]

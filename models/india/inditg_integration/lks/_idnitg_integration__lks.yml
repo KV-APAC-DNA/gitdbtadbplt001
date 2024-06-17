@@ -4,8 +4,8 @@ models:
   - name: inditg_integration__itg_plant
     config:
       alias: itg_plant
-      tags: ["in_click_edw","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_pricelist
     config:
       alias: itg_pricelist
-      tags: ["in_click_edw","ingestion"]
+      tags: ["in_xdm_master","ingestion"]

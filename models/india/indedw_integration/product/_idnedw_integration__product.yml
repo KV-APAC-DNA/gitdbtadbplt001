@@ -4,4 +4,4 @@ models:
   - name: indedw_integration__edw_product_dim
     config:
       alias: edw_product_dim
-      tags: ["in_click_edw","transformation"]
+      tags: ["in_xdm_master","transformation"]

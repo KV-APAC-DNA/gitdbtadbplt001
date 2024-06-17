@@ -10,11 +10,11 @@ sources:
       identifier: false
     tables:
     - name: sdl_xdm_geohierarchy
-      tags: ["in_geo_heirarchy","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
     - name: sdl_xdm_product
-      tags: ["in_product","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
     - name: sdl_xdm_productuom
-      tags: ["in_productuom","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
     - name: sdl_mds_in_subdtown_district_master
       tags: ["in_mi_dashboard_datamart","ingestion"]
     - name: sdl_xdm_distributor_supplier
@@ -23,12 +23,12 @@ sources:
       tags: ["in_batchmaster","ingestion"]
 
     - name: sdl_xdm_supplier
-      tags: ["in_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
     - name: sdl_xdm_salesheirarchy
-      tags: ["in_sales_heirarchy","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
 
     - name: sdl_xdm_channelmaster
-      tags: ["in_sales_heirarchy","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
 
     - name: sdl_xdm_distributor
-      tags: ["in_sales_heirarchy","ingestion"]
+      tags: ["in_xdm_master","ingestion"]

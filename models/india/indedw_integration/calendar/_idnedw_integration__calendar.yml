@@ -4,4 +4,4 @@ models:
   - name: indedw_integration__edw_retailer_calendar_dim
     config:
       alias: edw_retailer_calendar_dim
-      tags: ["in_click_edw","transformation"]
+      tags: ["in_xdm_master","transformation"]
