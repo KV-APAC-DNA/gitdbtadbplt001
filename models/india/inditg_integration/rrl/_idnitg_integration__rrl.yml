@@ -4,13 +4,17 @@ models:
   - name: inditg_integration__itg_rrl_udcmaster
     config:
       alias: itg_rrl_udcmaster
-      tags: ["in_rt_udcmaster","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
 
   - name: inditg_integration__itg_rsdmaster
     config:
       alias: itg_rsdmaster
-      tags: ["in_rt_rsdmaster","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
   - name: inditg_integration__itg_rrl_retailermaster
     config:
       alias: itg_rrl_retailermaster
       tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+  - name: inditg_integration__itg_rrl_retailer_geocoordinates
+    config:
+      alias: itg_rrl_retailer_geocoordinates
+      tags: ["in_rt_sales","ingestion"]

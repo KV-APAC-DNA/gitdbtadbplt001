@@ -29,7 +29,8 @@ trans as
       from source sdl_rvc)
 where rnum = '1'
 )
-,final as 
+,
+final as 
 (
     select 
     classid,

@@ -4,7 +4,7 @@ models:
   - name: inditg_integration__itg_udcmapping
     config:
       alias: itg_udcmapping
-      tags: ["in_rt_udcmapping","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
 
   - name: inditg_integration__itg_udcdetails
     config:

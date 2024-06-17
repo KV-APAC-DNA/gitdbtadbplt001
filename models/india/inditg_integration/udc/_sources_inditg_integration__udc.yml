@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_rrl_udcmapping
-      tags: ["in_rt_udcmapping","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
 
     - name: sdl_csl_udcmaster
       tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]

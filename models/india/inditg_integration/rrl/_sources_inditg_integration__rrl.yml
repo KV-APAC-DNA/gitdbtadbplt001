@@ -10,12 +10,12 @@ sources:
       identifier: false
     tables:
     - name: sdl_rrl_udcmaster
-      tags: ["in_rt_udcmaster","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
     - name: sdl_rrl_retailer_geocoordinates
-      tags: ["in_rt_geocoordinates","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
 
     - name: sdl_rrl_rsdmaster
-      tags: ["in_rt_rsdmaster","ingestion"]
+      tags: ["in_rt_sales","ingestion"]
     - name: sdl_rrl_retailermaster
       tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
       
