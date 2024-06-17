@@ -36,7 +36,7 @@ models:
   - name: ntaitg_integration__itg_kr_dads_coupang_search_keyword
     config:
       alias: itg_kr_dads_coupang_search_keyword
-      tags: []
+      tags: ["kr_dads_coupang_search_keyword",""]
   - name: ntaitg_integration__sdl_raw_kr_dads_coupang_price
     config:
       alias: sdl_raw_kr_dads_coupang_price
