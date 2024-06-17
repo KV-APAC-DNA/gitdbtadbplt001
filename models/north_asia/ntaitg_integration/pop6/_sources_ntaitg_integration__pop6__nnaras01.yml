@@ -18,3 +18,5 @@ sources:
       - name : sdl_pop6_tw_sku_audits
       - name : sdl_pop6_tw_product_attribute_audits
       - name : sdl_pop6_tw_display_plans
+      - name : sdl_pop6_tw_promotion_plans
+      - name : sdl_pop6_tw_exclusion
