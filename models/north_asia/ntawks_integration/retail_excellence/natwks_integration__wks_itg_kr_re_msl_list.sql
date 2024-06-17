@@ -74,7 +74,7 @@ ATTR  as
  (
  select * from  REG_SO
             LEFT JOIN  ATTR
-                   ON ATTR.AW_REMOTE_KEY = REG_SO.SOLD_TO_CODE		--//                    ON ATTR.aw_remote_key = REG_SO.SOLD_TO_CODE
+                   ON ATTR.AW_REMOTE_KEY = REG_SO.SOLD_TO_CODE		
                   AND ATTR.COUNTRY = REG_SO.CNTRY_CD
  ),
 --final cte

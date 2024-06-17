@@ -72,7 +72,7 @@ SELECT COUNTRY_CODE AS CNTRY_CD,
        SUM(SELLOUT_SALES_VALUE) :: NUMERIC(38,6) AS SO_SLS_VALUE,
        AVG(SELLOUT_SALES_QUANTITY) :: DECIMAL(38,6) AS SO_AVG_QTY,		--// AVG
        SUM(SALES_VALUE_LIST_PRICE) AS SALES_VALUE_LIST_PRICE,
-      SYSDATE()	as crt_dttm	
+SYSDATE() as CRT_DTTM		--// SYSDATE
 FROM (SELECT COUNTRY_CODE,
              COUNTRY_NAME,
              DATA_SOURCE,
@@ -169,13 +169,14 @@ FROM (SELECT COUNTRY_CODE,
                    SELLOUT_SALES_QUANTITY,
                    SELLOUT_SALES_VALUE,
                    SELLOUT_VALUE_LIST_PRICE AS SALES_VALUE_LIST_PRICE
-            FROM edw_rpt_regional_sellout_offtake		
+            FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE		--//             FROM RG_EDW.EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
             WHERE COUNTRY_CODE = 'KR'
             AND   DATA_SOURCE IN ('SELL-OUT','POS')
-            AND   MNTH_ID >= (SELECT last_26mnths
-                              FROM edw_vw_cal_retail_excellence_dim)::NUMERIC		
-            AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC) MAIN		
-        LEFT JOIN wks_korea_regional_sellout_mapped_sku_cd MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))		
+            /*AND   MNTH_ID >= (SELECT last_36mnths
+                              FROM RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		--//                               FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC
+            AND   MNTH_ID <= (SELECT prev_mnth FROM RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC*/		--//             AND   MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC*/
+			) MAIN
+        LEFT JOIN WKS_KOREA_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))		--//         LEFT JOIN NA_WKS.WKS_KOREA_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))
 GROUP BY COUNTRY_CODE,
          COUNTRY_NAME,
          DATA_SOURCE,
