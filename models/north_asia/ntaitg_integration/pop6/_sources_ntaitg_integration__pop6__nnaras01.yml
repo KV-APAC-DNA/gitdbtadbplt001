@@ -1,0 +1,20 @@
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name : sdl_pop6_sg_displays
+      - name : sdl_pop6_sg_display_plans
+      - name : sdl_pop6_sg_promotion_plans
+      - name : sdl_pop6_sg_promotions
+      - name : sdl_pop6_sg_service_levels
+      - name : sdl_pop6_sg_planned_visits
+      - name : sdl_pop6_sg_executed_visits
+      - name : sdl_pop6_tw_service_levels
+      - name : sdl_pop6_tw_sku_audits
+      - name : sdl_pop6_tw_product_attribute_audits
+      - name : sdl_pop6_tw_display_plans

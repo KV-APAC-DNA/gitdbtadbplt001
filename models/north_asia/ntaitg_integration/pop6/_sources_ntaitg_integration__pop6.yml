@@ -45,13 +45,11 @@ sources:
       - name: sdl_pop6_tw_general_audits
       - name: sdl_pop6_tw_planned_visits
       - name: sdl_pop6_tw_pop_lists
-      - name: sdl_pop6_tw_product_attribute_audits
       - name: sdl_pop6_tw_product_groups_lists
       - name: sdl_pop6_tw_product_lists_allocation
       - name: sdl_pop6_tw_product_lists_products
       - name: sdl_pop6_tw_promotion_plans
       - name: sdl_pop6_tw_promotions
-      - name: sdl_pop6_tw_service_levels
       - name: sdl_pop6_tw_tasks
       - name: sdl_pop6_tw_users
 
