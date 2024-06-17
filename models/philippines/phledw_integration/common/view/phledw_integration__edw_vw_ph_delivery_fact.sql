@@ -29,13 +29,13 @@ SELECT
     '0' :: text
   ) AS matl_num, 
   edw_delivery_fact.item_categ AS item_catgy, 
-  edw_delivery_fact.eanupc AS ean_num, 
+  coalesce(edw_delivery_fact.eanupc,'') AS ean_num, 
   edw_delivery_fact.sls_org, 
   ltrim(
     (edw_delivery_fact.ship_to):: text, 
     '0' :: text
   ) AS ship_to, 
-  edw_delivery_fact.bill_block AS billing_block, 
+  coalesce(edw_delivery_fact.bill_block,'') AS billing_block, 
   edw_delivery_fact.whse_num, 
   edw_delivery_fact.base_uom, 
   edw_delivery_fact.zdelqtybu AS delvrd_qty_pc, 

@@ -47,7 +47,7 @@ models:
       schema: CORE_ACCESS
     integration:
       materialized: table
-      schema: CORE_INTEGRATION 
+      schema: CORE_INTEGRATION
       arsadpprd001_raw:
         materialized: view
     asp_regional:
