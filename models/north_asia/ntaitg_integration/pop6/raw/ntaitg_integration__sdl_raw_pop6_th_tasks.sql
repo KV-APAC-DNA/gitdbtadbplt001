@@ -7,8 +7,7 @@
 with
 source as
 (
-    select * from 
-    DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_TH_TASKS
+    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_TH_TASKS
 ),
 
 final as
