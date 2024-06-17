@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__msl_extract_combine_program_type
+    config:
+      alias: msl_extract_combine_program_type
+      tags: ["in_sss_scorecard_data_mart","transformation"]

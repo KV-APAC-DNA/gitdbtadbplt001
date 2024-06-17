@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_sss_msl_sales_combined_master_data
+    config:
+      alias: wks_sss_msl_sales_combined_master_data
+      tags: ["in_sss_scorecard_data_mart","transformation"]
