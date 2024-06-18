@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_issue_rev_pf_weekly_sales_flag
+    config:
+      alias: wks_issue_rev_pf_weekly_sales_flag
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_pf_weekly_sales_flag_pivot
+    config:
+      alias: wks_issue_pf_weekly_sales_flag_pivot
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_pf_cuml_sales
+    config:
+      alias: wks_issue_pf_cuml_sales
+      tags: ["in_os_mgm_rpt_datamart","transformation"]

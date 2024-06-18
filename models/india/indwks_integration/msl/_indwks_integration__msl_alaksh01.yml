@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_sku_recom_spike_msl_mthly_analytics
+    config:
+      alias: wks_sku_recom_spike_msl_mthly_analytics
+      tags: ["in_os_mgm_rpt_datamart","transformation"]

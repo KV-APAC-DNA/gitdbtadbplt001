@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_issue_pf_ret_dim
+    config:
+      alias: wks_issue_pf_ret_dim
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_pf_orng_perc
+    config:
+      alias: wks_issue_pf_orng_perc
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_pf_os_flag
+    config:
+      alias: wks_issue_pf_os_flag
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__pf_weekly_os_perc_actual_logic_sm
+    config:
+      alias: pf_weekly_os_perc_actual_logic_sm
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_issue_rev_sku_recom_sm_nongtm
+    config:
+      alias: wks_issue_rev_sku_recom_sm_nongtm
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_rev_sku_recom_tmp2
+    config:
+      alias: wks_issue_rev_sku_recom_tmp2
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_issue_rev_sku_recom_tmp3
+    config:
+      alias: wks_issue_rev_sku_recom_tmp3
+      tags: ["in_os_mgm_rpt_datamart","transformation"]

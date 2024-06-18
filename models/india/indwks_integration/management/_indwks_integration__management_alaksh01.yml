@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_mngmnt_rpt_nup
+    config:
+      alias: wks_mngmnt_rpt_nup
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_mngmnt_rpt_nup_l3m
+    config:
+      alias: wks_mngmnt_rpt_nup_l3m
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_mgmnt_orange_stores
+    config:
+      alias: wks_mgmnt_orange_stores
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+  - name: indwks_integration__wks_mngmnt_rpt_nup_l3m_with_os
+    config:
+      alias: wks_mngmnt_rpt_nup_l3m_with_os
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
