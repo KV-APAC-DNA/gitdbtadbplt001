@@ -120,7 +120,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_kr_coupang_pa_report
-      tags: ["kr_dads_coupang_pa_ads", "ingestion"]
+      tags: ["kr_dads", "ingestion"]
       tests:
         - test_null:
             select_columns: ["ad_execution_option_id", "date"]
@@ -131,7 +131,7 @@ sources:
               schema: ntawks_integration
 
     - name: sdl_kr_dads_coupang_price
-      tags: ["kr_dads_coupang_price", "ingestion"]
+      tags: ["kr_dads", "ingestion"]
       tests:
           - test_null:
               select_columns: ["report_date"]
@@ -165,7 +165,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_coupang_bpa_report
-      tags: ["kr_dads_coupang_bpa_ads", "ingestion"]
+      tags: ["kr_dads", "ingestion"]
       tests:
         - test_null:
             select_columns: ["campaign_start_date", "campaign_id", "date"]

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_kr_dads_linkprice
-      tags: ["kr_dads_naver_ads", "ingestion"]
+      tags: ["kr_dads","ingestion"]
       tests:
         - test_null:
             select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
@@ -28,7 +28,7 @@ sources:
               schema: ntawks_integration
 
     - name: sdl_kr_dads_naver_gmv
-      tags: ["kr_dads_naver_gmv", "ingestion"]
+      tags: ["kr_dads","ingestion"]
       tests:
         - test_null:
             select_columns: ["product_category_m", "product_category_s", "product_id"]
@@ -45,7 +45,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_dads_naver_search_channel
-      tags: ["kr_dads_naver_search_channel", "ingestion"]
+      tags: ["kr_dads","ingestion"]
       tests:
         - test_null:
             select_columns: ["channel_properties", "channel_groups", "channel_name"]
@@ -62,7 +62,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_dads_coupang_search_keyword
-      tags: ["kr_dads_coupang_search_keyword", "ingestion"]
+      tags: ["kr_dads","ingestion"]
       tests:
         - test_null:
             select_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
@@ -79,7 +79,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_dads_naver_keyword_search_volume
-      tags: ["kr_dads_naver_keyword_volume", "ingestion"]
+      tags: ["kr_dads","ingestion"]
       tests:
         - test_null:
             select_columns: ["keyword", "product_category_s", "product_id"]
