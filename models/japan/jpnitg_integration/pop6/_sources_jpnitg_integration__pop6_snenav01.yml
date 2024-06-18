@@ -1,0 +1,13 @@
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_jp_exclusion
+      - name: sdl_pop6_jp_promotion_plans
+      - name: sdl_pop6_jp_promotions
+      - name: sdl_pop6_jp_tasks

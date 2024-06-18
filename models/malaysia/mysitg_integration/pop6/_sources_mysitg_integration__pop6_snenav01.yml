@@ -1,0 +1,13 @@
+sources:
+  - name: sgpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: sgpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_sg_product_attribute_audits
+      - name: sdl_pop6_sg_sku_audits
+      - name: sdl_pop6_sg_tasks
+      - name: sdl_pop6_sg_general_audits

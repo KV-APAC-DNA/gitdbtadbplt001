@@ -64,7 +64,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_pop6_jp_displays
-      - name: sdl_pop6_jp_exclusion
+      # - name: sdl_pop6_jp_exclusion
       - name: sdl_pop6_jp_executed_visits
       - name: sdl_pop6_jp_general_audits
       - name: sdl_pop6_jp_planned_visits
@@ -72,10 +72,10 @@ sources:
       - name: sdl_pop6_jp_product_attribute_audits
       - name: sdl_pop6_jp_product_lists_allocation
       - name: sdl_pop6_jp_product_lists_products
-      - name: sdl_pop6_jp_promotion_plans
-      - name: sdl_pop6_jp_promotions
+      # - name: sdl_pop6_jp_promotion_plans
+      # - name: sdl_pop6_jp_promotions
       - name: sdl_pop6_jp_service_levels
-      - name: sdl_pop6_jp_tasks
+      # - name: sdl_pop6_jp_tasks
       - name: sdl_pop6_jp_users
 
   - name: sgpsdl_raw
@@ -90,16 +90,16 @@ sources:
       - name: sdl_pop6_sg_executed_visits
       - name: sdl_pop6_sg_planned_visits
       - name: sdl_pop6_sg_pop_lists
-      - name: sdl_pop6_sg_product_attribute_audits
+      # - name: sdl_pop6_sg_product_attribute_audits
       - name: sdl_pop6_sg_product_lists_allocation
       - name: sdl_pop6_sg_product_lists_products
       - name: sdl_pop6_sg_promotion_plans
       - name: sdl_pop6_sg_promotions
       - name: sdl_pop6_sg_service_levels
-      - name: sdl_pop6_sg_sku_audits
-      - name: sdl_pop6_sg_tasks
+      # - name: sdl_pop6_sg_sku_audits
+      # - name: sdl_pop6_sg_tasks
       - name: sdl_pop6_sg_users
-      - name: sdl_pop6_sg_general_audits
+      # - name: sdl_pop6_sg_general_audits
 
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
@@ -123,7 +123,7 @@ sources:
       - name: sdl_pop6_th_service_levels
       - name: sdl_pop6_th_tasks
       - name: sdl_pop6_th_users
-  
+
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: ntaitg_integration
