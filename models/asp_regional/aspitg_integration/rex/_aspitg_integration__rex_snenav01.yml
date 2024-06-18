@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: aspitg_integration__v_cust_customer
+    config:
+      alias: v_cust_customer
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_ms_mastersurvey
+    config:
+      alias: v_ms_mastersurvey
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_slsc_mastertasks
+    config:
+      alias: v_slsc_mastertasks
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_slsc_salescampaign
+    config:
+      alias: v_slsc_salescampaign
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_slsc_targetgroups
+    config:
+      alias: v_slsc_targetgroups
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_slscyc_salescycle
+    config:
+      alias: v_slscyc_salescycle
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_sr_response_values
+    config:
+      alias: v_sr_response_values
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_sr_responses
+    config:
+      alias: v_sr_responses
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_sr_surveyresponse
+    config:
+      alias: v_sr_surveyresponse
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_tgtg_items
+    config:
+      alias: v_tgtg_items
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_tgtg_targetgroup
+    config:
+      alias: v_tgtg_targetgroup
+      tags: ["","transformation"]
+  - name: aspitg_integration__v_tsk_task
+    config:
+      alias: v_tsk_task
+      tags: ["","transformation"]
