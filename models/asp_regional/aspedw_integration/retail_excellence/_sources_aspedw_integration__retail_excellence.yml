@@ -109,7 +109,6 @@ sources:
       - name: edw_vw_cal_retail_excellence_dim
       - name: edw_calendar_dim
       - name: edw_company_dim
-     
       
 
   - name: aspitg_integration
@@ -131,3 +130,13 @@ sources:
       identifier: false
     tables:
       - name: itg_mds_sg_customer_hierarchy
+
+  - name: snapntaedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapntaedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: v_rpt_pop6_perfectstore

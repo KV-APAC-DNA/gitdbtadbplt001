@@ -25,7 +25,7 @@ ORDER BY SO.CNTRY_CD,
 ),
 final as
 (
- select 
+    select 
 cntry_cd::varchar(2) AS cntry_cd,
 dim_key::varchar(32) AS dim_key,
 data_source::varchar(14) AS data_source,
@@ -34,7 +34,10 @@ so_sls_value::numeric(38,6) AS so_sls_value,
 l3m_sales_qty::numeric(38,6) AS l3m_sales_qty,
 l3m_sales::numeric(38,6) AS l3m_sales,
 l3m_avg_sales_qty::numeric(38,6) AS l3m_avg_sales_qty,
-l3m_sales_lp::numeric(38,12) AS l3m_sales_lp
+l3m_sales_lp::numeric(38,12) AS l3m_sales_lp,
+f3m_sales_qty::numeric(38,6) AS f3m_sales_qty,
+f3m_sales::numeric(38,6) AS f3m_sales,
+f3m_avg_sales_qty::numeric(38,6) AS f3m_avg_sales_qty
 from korea_regional_sellout_act_l3m
 )
 
