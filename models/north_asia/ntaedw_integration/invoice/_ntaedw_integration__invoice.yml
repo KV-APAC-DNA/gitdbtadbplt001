@@ -11,6 +11,6 @@ models:
         tags: ["korea_views","transformation"]
   - name: ntaedw_integration__v_rpt_invc
     config: 
-        alias: v_rpt_invc_to_nts
+        alias: v_rpt_invc
         tags: ["korea_views","transformation"]
   
