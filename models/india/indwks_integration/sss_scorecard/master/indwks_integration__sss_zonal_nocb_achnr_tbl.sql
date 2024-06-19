@@ -1,0 +1,41 @@
+with 
+sss_zonal_base_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_base_tbl') }}
+),
+edw_rpt_sales_details as 
+(
+    select * from {{ ref('indedw_integration__edw_rpt_sales_details') }}
+),
+trans as
+(
+    SELECT base.zone_name,
+       base.mth_mm,
+       base.fisc_yr,
+       base.month,
+       count(distinct sales.num_buying_retailers) as nocb,
+       sum(sales.achievement_nr) as achievement_nr
+FROM sss_zonal_base_tbl base
+LEFT OUTER JOIN edw_rpt_sales_details sales
+ON    base.zone_name = sales.zone_name
+AND   base.mth_mm = sales.mth_mm
+AND   sales.channel_name = 'Self Service Store'
+GROUP BY base.zone_name,
+         base.mth_mm,
+         base.fisc_yr,
+         base.month
+ORDER BY base.mth_mm DESC,
+         base.zone_name
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	fisc_yr::number(18,0) as fisc_yr,
+	month::varchar(3) as month,
+	nocb::number(38,0) as nocb,
+	achievement_nr::number(38,6) as achievement_nr
+    from trans
+)
+select * from final

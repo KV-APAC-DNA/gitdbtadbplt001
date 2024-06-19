@@ -1,0 +1,36 @@
+with 
+sss_zonal_final_tmp_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_final_tmp_tbl') }}
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	cur_yr::number(18,0) as cur_yr,
+	prev_yr::number(18,0) as prev_yr,
+	cur_mnth::varchar(3) as cur_mnth,
+	prev_mnth::varchar(3) as prev_mnth,
+	cur_nocb::number(38,0) as cur_nocb,
+	prev_nocb::number(38,0) as prev_nocb,
+	nocb_growth_percent::number(34,22) as nocb_growth_percent,
+	cur_achvmnt_nr::number(38,6) as cur_achvmnt_nr,
+	prev_achvmnt_nr::number(38,6) as prev_achvmnt_nr,
+	achievement_nr_growth_percent::number(38,4) as achievement_nr_growth_percent,
+	cur_achvmnt_nr_tot::number(38,6) as cur_achvmnt_nr_tot,
+	prev_achvmnt_nr_tot::number(38,6) as prev_achvmnt_nr_tot,
+	tot_growth_percent::number(38,4) as tot_growth_percent,
+	cur_achvmnt_nr_signature::number(38,6) as cur_achvmnt_nr_signature,
+	prev_achvmnt_nr_signature::number(38,6) as prev_achvmnt_nr_signature,
+	signature_growth_percent::number(38,4) as signature_growth_percent,
+	cur_achvmnt_nr_premium::number(38,6) as cur_achvmnt_nr_premium,
+	prev_achvmnt_nr_premium::number(38,6) as prev_achvmnt_nr_premium,
+	premium_growth_percent::number(38,4) as premium_growth_percent,
+	cur_achvmnt_nr_nonprog::number(38,6) as cur_achvmnt_nr_nonprog,
+	prev_achvmnt_nr_nonprog::number(38,6) as prev_achvmnt_nr_nonprog,
+	nonprog_growth_percent::number(38,4) as nonprog_growth_percent,
+	convert_timezone('UTC','Asia/Kolkata',dateadd(minute,210,CURRENT_TIMESTAMP :: timestamp))::timestamp_ntz(9)
+    from sss_zonal_final_tmp_tbl
+)
+select * from final

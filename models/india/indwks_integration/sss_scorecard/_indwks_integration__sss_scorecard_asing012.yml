@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: indwks_integration__sss_zonal_base_tbl
+    config:
+      alias: sss_zonal_base_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_nocb_achnr_tbl
+    config:
+      alias: sss_zonal_nocb_achnr_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_nocb_achnr_growth_tbl
+    config:
+      alias: sss_zonal_nocb_achnr_growth_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_tot_tbl
+    config:
+      alias: sss_zonal_tot_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_totgrowth_tbl
+    config:
+      alias: sss_zonal_totgrowth_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_sign_tbl
+    config:
+      alias: sss_zonal_sign_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_sign_growth_tbl
+    config:
+      alias: sss_zonal_sign_growth_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_prem_tbl
+    config:
+      alias: sss_zonal_prem_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_prem_growth_tbl
+    config:
+      alias: sss_zonal_prem_growth_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_nonprog_tbl
+    config:
+      alias: sss_zonal_nonprog_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_nonprog_growth_tbl
+    config:
+      alias: sss_zonal_nonprog_growth_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indwks_integration__sss_zonal_final_tmp_tbl
+    config:
+      alias: sss_zonal_final_tmp_tbl
+      tags: ["in_sss_zonal_datamart","transformation"]

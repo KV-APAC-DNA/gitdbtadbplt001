@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_sss_zonal
+    config:
+      alias: edw_rpt_sss_zonal
+      tags: ["in_sss_zonal_datamart","transformation"]
