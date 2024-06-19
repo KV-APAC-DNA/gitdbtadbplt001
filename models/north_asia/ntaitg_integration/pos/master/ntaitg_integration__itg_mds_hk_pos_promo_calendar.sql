@@ -3,7 +3,9 @@
         materialized='incremental',
         incremental_strategy='append',
         unique_key=["customer_name", "calendardate"],
-        pre_hook= "delete from {{this}} WHERE coalesce(concat(rtrim(ltrim(customer_name)),rtrim(ltrim(calendardate))),'NA') IN (SELECT coalesce(concat(rtrim(ltrim(customer_name)),rtrim(ltrim(calendardate))),'NA') from {{ source('ntasdl_raw', 'sdl_mds_hk_pos_promo_calendar') }});"
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} WHERE coalesce(concat(rtrim(ltrim(customer_name)),rtrim(ltrim(calendardate))),'NA') IN (SELECT coalesce(concat(rtrim(ltrim(customer_name)),rtrim(ltrim(calendardate))),'NA') from {{ source('ntasdl_raw', 'sdl_mds_hk_pos_promo_calendar') }});
+        {% endif %}"
     )
 }}
 

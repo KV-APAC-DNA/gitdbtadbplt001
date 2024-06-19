@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_ecommerce_offtake
+    config:
+        alias: edw_ecommerce_offtake
+        tags: ["",""]

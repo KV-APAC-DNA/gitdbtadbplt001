@@ -3,25 +3,13 @@
     (
         materialized="incremental",
         incremental_strategy='append',
-        pre_hook= ["delete from {{this}} where (invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd) in
-                    (
-                        select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd from
-                        (
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_poya_invnt') }}
-                        )
-                        where chng_flg = 'U'
-                    );",
-                    "delete from {{this}} where (invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd) in
-                    (
-                        select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from
-                        (
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_pxcivilia_invnt') }}
-                            union all
-                            select * from {{ ref('ntawks_integration__wks_itg_pos_rtmart_invnt') }}
-                        )
-                        where chng_flg = 'U'
-                    );"
-                ]
+        pre_hook= ["{% if is_incremental() %}
+        delete from {{this}} where (invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd) in (select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd from (select * from {{ ref('ntawks_integration__wks_itg_pos_poya_invnt') }}) where chng_flg = 'U');
+        {% endif %}",
+        "{% if is_incremental() %}
+        delete from {{this}} where (invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd) in (select distinct invnt_dt,vend_prod_cd,src_sys_cd,ctry_cd,str_cd from (select * from {{ ref('ntawks_integration__wks_itg_pos_pxcivilia_invnt') }} union all select * from {{ ref('ntawks_integration__wks_itg_pos_rtmart_invnt') }}) where chng_flg = 'U');
+        {% endif %}"
+        ]
     )
 }}
 
