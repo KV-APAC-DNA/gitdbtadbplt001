@@ -169,25 +169,3 @@ sources:
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_pre_apsc_master
         tags: ["MDS","rg_mds_to_dna","ingestion"]
-
-  - name: aspedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name:  edw_customer_attr_flat_dim       
-      - name: edw_product_attr_dim 
-
-
-  - name: aspitg_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: aspitg_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: itg_mds_ap_customer360_config

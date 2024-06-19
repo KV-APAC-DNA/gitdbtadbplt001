@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_sls_rep_dim
+    config: 
+      alias: edw_sls_rep_dim
+      tags: ["","transformation"]
+  - name: ntaedw_integration__edw_vw_sls_rep_dim
+    config: 
+      alias: edw_vw_sls_rep_dim
+      tags: ["","transformation"]
+  - name: ntaedw_integration__vw_indir_route_plan_week_map
+    config:
+        alias: vw_indir_route_plan_week_map
+        tags: []
+  - name: ntaedw_integration__vw_dir_route_plan_week_map
+    config:
+        alias: vw_indir_route_plan_week_map
+        tags: []
+  - name: ntaedw_integration__edw_sales_rep_route_plan
+    config:
+        alias: edw_sales_rep_route_plan
+        tags: []
