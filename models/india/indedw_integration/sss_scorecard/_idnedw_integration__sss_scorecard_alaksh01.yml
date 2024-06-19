@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_skurecom_gt_sss
+    config:
+      alias: edw_rpt_skurecom_gt_sss
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]

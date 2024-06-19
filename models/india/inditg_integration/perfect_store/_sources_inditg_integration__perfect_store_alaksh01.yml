@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: snapindsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_in_perfectstore_msl
+      tags: ["in_perfect_store_transaction","ingestion"]
+    - name: sdl_in_perfectstore_sos
+      tags: ["in_perfect_store_transaction","ingestion"]
+    - name: sdl_in_perfectstore_promo
+      tags: ["in_perfect_store_transaction","ingestion"]
+    - name: sdl_in_perfectstore_paid_display
+      tags: ["in_perfect_store_transaction","ingestion"]
+  
