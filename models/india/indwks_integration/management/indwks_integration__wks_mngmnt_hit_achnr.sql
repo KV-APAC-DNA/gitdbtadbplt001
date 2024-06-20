@@ -1,10 +1,11 @@
-with edw_product_dim as(
-    select * from DEV_DNA_CORE.snapINDedw_INTEGRATION.edw_product_dim
-),
-edw_sku_recom_spike_msl as(
+with edw_sku_recom_spike_msl as(
     select * from DEV_DNA_CORE.snapINDedw_INTEGRATION.edw_sku_recom_spike_msl
 ),
-transformed as(
+edw_product_dim as(
+    select * from DEV_DNA_CORE.snapINDedw_INTEGRATION.edw_product_dim
+),
+
+transformed as(    
     SELECT sku.mth_mm
         ,sku.region_name
         ,sku.zone_name
@@ -16,10 +17,7 @@ transformed as(
         ,pd.brand_name
         ,pd.product_category_name
         ,pd.variant_name
-        ,pd.mothersku_name
-        ,COUNT(DISTINCT cust_cd||retailer_cd||salesman_code) AS total_stores
-        ,SUM(sku.ms_flag) AS total_recos
-        ,SUM(sku.hit_ms_flag) AS total_hits
+        ,SUM(sku.achievement_nr_val) AS achievement_nr_msl_msku
     FROM edw_sku_recom_spike_msl sku
     LEFT JOIN (SELECT franchise_name,
                     brand_name,
@@ -31,6 +29,8 @@ transformed as(
             WHERE NVL(delete_flag,'XYZ') <> 'N'
             GROUP BY 1, 2, 3, 4, 5, 6) pd
         ON sku.mother_sku_cd = pd.mothersku_code
-    GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
+    WHERE sku.hit_ms_flag = 1
+    AND sku.business_channel = 'GT'
+    GROUP BY 1,2,3,4,5,6,7,8,9,10,11
 )
 select * from transformed
