@@ -9,4 +9,4 @@ models:
   - name: inditg_integration__sdl_raw_in_retailer_route
     config:
       alias: sdl_raw_in_retailer_route
-      tags: ["in_etl_xdm_load","ingestion"]
+      tags: ["in_sdlitg_gtsales","ingestion"]

@@ -4,7 +4,7 @@ models:
   - name: inditg_integration__itg_mds_in_subdtown_district_master
     config:
       alias: itg_mds_in_subdtown_district_master
-      tags: ["in_mi_dashboard_datamart","ingestion"]
+      tags: ["in_mi_dashboard_datamart","transformation"]
   - name: inditg_integration__itg_xdm_geohierarchy
     config:
       alias: itg_xdm_geohierarchy
