@@ -10,3 +10,5 @@ sources:
       identifier: false
     tables:
       - name: edw_market_mirror_fact
+      - name: edw_rpt_ecomm_oneview
+      - name: v_rpt_copa_commercial_excellence_sync
