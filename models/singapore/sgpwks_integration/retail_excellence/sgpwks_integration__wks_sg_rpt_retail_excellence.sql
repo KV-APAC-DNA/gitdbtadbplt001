@@ -4,11 +4,6 @@ with itg_sg_re_msl_list as (
 wks_singapore_regional_sellout_actuals as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_actuals') }}
 ),
-
-customer_heirarchy as (
-    select * from {{ ref('aspedw_integration__edw_generic_customer_hierarchy') }}
-),
-
 product_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_product_hierarchy') }}
 ),
@@ -17,13 +12,13 @@ product_key_attribute as (
     select * from {{ ref('aspedw_integration__edw_generic_product_key_attributes') }}
 ),
 edw_company_dim as (
-    select * from {{ source('aspedw_integration','edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
-    select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}
+    select * from {{ source('snapntaedw_integration','edw_vw_pop6_products') }}
 ),
 
 sg_rpt_retail_excellence_mdp  as (SELECT DISTINCT MDP.*,		--// SELECT DISTINCT MDP.*,
@@ -261,7 +256,7 @@ FROM (SELECT CAST(TARGET.YEAR AS numeric(18,0) ) AS FISC_YR,		--// INTEGER // FR
               AND RNK = 1
       --product key attribute selection
 
-        LEFT JOIN (select * from prod_key
+        LEFT JOIN (select * from product_key_attribute
 
                       where ctry_nm = 'Singapore') PROD_KEY1 ON LTRIM (COALESCE (ACTUAL.MAPPED_SKU_CD,TARGET.MAPPED_SKU_CD),'0') = LTRIM (PROD_KEY1.SKU,'0')) MDP,		--//                       where ctry_nm = 'Singapore') PROD_KEY1 ON LTRIM (COALESCE (ACTUAL.MAPPED_SKU_CD,TARGET.MAPPED_SKU_CD),'0') = LTRIM (PROD_KEY1.SKU,'0')) MDP,
      (SELECT DISTINCT CLUSTER
@@ -509,7 +504,7 @@ FROM (SELECT CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
               AND RNK = 1
       ---------product key attribute selection
       
-        LEFT JOIN (select * from prod_key
+        LEFT JOIN (select * from product_key_attribute
                       where ctry_nm = 'Singapore') PROD_KEY1 ON LTRIM (ACTUAL.MAPPED_SKU_CD,'0') = LTRIM (PROD_KEY1.sku,'0')) NON_MDP,
      (SELECT DISTINCT CLUSTER
       FROM EDW_COMPANY_DIM
