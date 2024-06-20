@@ -386,6 +386,7 @@ LEFT JOIN (
 		,gcph_subcategory
 	FROM (
 		-- Get GCPH by EAN by latest date
+        -- Use _integration instead of _access
 		SELECT ctry_nm
 			,gcph_category
 			,gcph_subcategory
