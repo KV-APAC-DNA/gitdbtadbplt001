@@ -26,7 +26,7 @@ edw_pacific_perfect_store_targets as(
 select * from {{ ref('pcfedw_integration__edw_pacific_perfect_store_targets') }}
 ),
 edw_product_key_attributes as(
-select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
+select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_pacific_metcash_dstrbtn_analysis as(
 select * from {{ ref('pcfedw_integration__edw_pacific_metcash_dstrbtn_analysis') }}
