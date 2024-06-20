@@ -4,4 +4,4 @@ models:
   - name: inditg_integration__itg_jnjreport_muser
     config:
       alias: itg_jnjreport_muser
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]

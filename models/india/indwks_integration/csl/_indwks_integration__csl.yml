@@ -4,19 +4,19 @@ models:
   - name: indwks_integration__wks_csl_retailerroute
     config:
       alias: wks_csl_retailerroute
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
 
   - name: indwks_integration__wks_csl_retailermaster
     config:
       alias: wks_csl_retailermaster
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
 
   - name: indwks_integration__wks_csl_salesmanmaster
     config:
       alias: wks_csl_salesmanmaster
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
 
   - name: indwks_integration__wks_csl_distributoractivation
     config:
       alias: wks_csl_distributoractivation
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]

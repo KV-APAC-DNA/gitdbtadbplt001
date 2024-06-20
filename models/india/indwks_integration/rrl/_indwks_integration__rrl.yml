@@ -4,4 +4,4 @@ models:
   - name: indwks_integration__wks_rrl_retailermaster
     config:
       alias: wks_rrl_retailermaster
-      tags: ["m_wrp_in_sdlitg_gtsales","transformation"]
+      tags: ["in_sdlitg_gtsales","transformation"]

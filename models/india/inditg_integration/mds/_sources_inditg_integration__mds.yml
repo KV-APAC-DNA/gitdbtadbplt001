@@ -154,7 +154,7 @@ sources:
                 schema: indwks_integration
 
       - name: sdl_mds_in_sv_kapf_month_end_dates
-        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+        tags: ["in_sdlitg_salescube_master","ingestion"]
       - name: sdl_mds_in_ps_weights
         tags: ["in_mds_refresh","ingestion"]
         tests:
@@ -178,4 +178,4 @@ sources:
       - name: sdl_mds_in_ecom_nts_adjustment
         tags: ["in_mds_refresh","ingestion"]
       - name: sdl_mds_in_sv_winculum_master
-        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+        tags: ["in_sdlitg_salescube_master","ingestion"]

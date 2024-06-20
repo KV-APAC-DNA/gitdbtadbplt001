@@ -20,7 +20,7 @@ sources:
     - name: sdl_xdm_distributor_supplier
       tags: ["in_distributor_supplier","ingestion"]
     - name: sdl_xdm_batchmaster
-      tags: ["in_batchmaster","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
 
     - name: sdl_xdm_supplier
       tags: ["in_xdm_master","ingestion"]

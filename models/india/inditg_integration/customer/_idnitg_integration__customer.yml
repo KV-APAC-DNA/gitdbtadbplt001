@@ -4,12 +4,12 @@ models:
   - name: inditg_integration__itg_in_rcustomer
     config:
       alias: itg_in_rcustomer
-      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+      tags: ["in_etl_xdm_load","ingestion"]
 
   - name: inditg_integration__sdl_raw_in_retailer
     config:
       alias: sdl_raw_in_retailer
-      tags: ["m_wrp_india_etl_xdm_load","ingestion"]
+      tags: ["in_etl_xdm_load","ingestion"]
 
   - name: inditg_integration__itg_rkeyacccustomer
     config:

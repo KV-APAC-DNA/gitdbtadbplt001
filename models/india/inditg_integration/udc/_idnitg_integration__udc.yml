@@ -9,14 +9,14 @@ models:
   - name: inditg_integration__itg_udcdetails
     config:
       alias: itg_udcdetails
-      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+      tags: ["in_sdlitg_gtsales","ingestion"]
 
   - name: inditg_integration__itg_udcmaster
     config:
       alias: itg_udcmaster
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]
 
   - name: inditg_integration__sdl_csl_udcmaster_raw
     config:
       alias: sdl_csl_udcmaster_raw
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]

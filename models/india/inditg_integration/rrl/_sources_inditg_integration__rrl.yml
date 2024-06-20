@@ -17,7 +17,7 @@ sources:
     - name: sdl_rrl_rsdmaster
       tags: ["in_rt_sales","ingestion"]
     - name: sdl_rrl_retailermaster
-      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+      tags: ["in_sdlitg_gtsales","ingestion"]
       
   - name: indwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -38,4 +38,4 @@ sources:
       identifier: false
     tables:
     - name: itg_rrl_retailermaster
-      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+      tags: ["in_sdlitg_gtsales","ingestion"]

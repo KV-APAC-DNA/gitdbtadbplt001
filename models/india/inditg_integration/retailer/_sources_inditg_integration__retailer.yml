@@ -56,9 +56,9 @@ sources:
                 schema: indwks_integration
 
       - name: sdl_csl_retailerroute
-        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+        tags: ["in_sdlitg_salescube_master","ingestion"]
       - name: sdl_csl_retailermaster
-        tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+        tags: ["in_sdlitg_salescube_master","ingestion"]
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

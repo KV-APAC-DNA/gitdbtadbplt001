@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_csl_udcdetails
-      tags: ["m_wrp_in_sdlitg_gtsales","ingestion"]
+      tags: ["in_sdlitg_gtsales","ingestion"]
     
     - name: sdl_csl_retailerhierarchy
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]

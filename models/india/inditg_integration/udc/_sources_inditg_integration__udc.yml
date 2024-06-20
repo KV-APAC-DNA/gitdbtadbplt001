@@ -13,7 +13,7 @@ sources:
       tags: ["in_rt_sales","ingestion"]
 
     - name: sdl_csl_udcmaster
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]
       # tests:
       #     - test_null__ff:
       #         not_null_columns: ["dist_group","type_dist_id"]

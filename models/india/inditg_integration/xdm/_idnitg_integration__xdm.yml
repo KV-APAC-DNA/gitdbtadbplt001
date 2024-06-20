@@ -20,11 +20,11 @@ models:
   - name: inditg_integration__itg_xdm_distributor_supplier
     config:
       alias: itg_xdm_distributor_supplier
-      tags: ["in_distributor_supplier","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
   - name: inditg_integration__itg_xdm_batchmaster
     config:
       alias: itg_xdm_batchmaster
-      tags: ["in_batchmaster","ingestion"]
+      tags: ["in_xdm_master","ingestion"]
 
   - name: inditg_integration__itg_xdm_supplier
     config: 

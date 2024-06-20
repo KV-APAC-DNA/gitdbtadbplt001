@@ -8,7 +8,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_csl_distributoractivation
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

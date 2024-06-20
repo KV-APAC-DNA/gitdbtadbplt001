@@ -8,6 +8,6 @@ sources:
       identifier: false
     tables:
     - name: sdl_rmrpstockprocess_clstk
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]
     - name: sdl_rmrpstockprocess_opstk
-      tags: ["m_wrp_in_sdlitg_salescube_master","ingestion"]
+      tags: ["in_sdlitg_salescube_master","ingestion"]
