@@ -20,7 +20,8 @@ By_search_term_ranking
 ,goods
 ,My_Products,
 null as file_name,
-current_timestamp() as crtd_dttm
+file_date as file_date,
+crtd_dttm as crtd_dttm
 from source
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
