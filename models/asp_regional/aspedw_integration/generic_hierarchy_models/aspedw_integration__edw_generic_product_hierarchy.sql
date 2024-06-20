@@ -1,13 +1,12 @@
 with EDW_MATERIAL_DIM as (
     select * from {{ source('aspedw_integration','edw_material_dim') }}
 ),
-
 EDW_GCH_PRODUCTHIERARCHY as (
    select * from {{ source('aspedw_integration','edw_gch_producthierarchy') }}
 ),
 
 TRANSFORMED as (select distinct
-EMD.MATL_NUM as SAP_MATL_NUM,
+EMD.MATL_ID as SAP_MATL_NUM,
                                 EMD.MATL_DESC as SAP_MAT_DESC,
                                 EMD.MATL_TYPE_CD as SAP_MAT_TYPE_CD,
                                 EMD.MATL_TYPE_DESC as SAP_MAT_TYPE_DESC,
