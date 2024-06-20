@@ -55,6 +55,10 @@ models:
     config: 
       alias: edw_perenso_prod_dim
       tags: ["anz_perenso_dimension_load","transformation"]
+  - name: pcfedw_integration__edw_perenso_prod_metcashid_dim
+    config: 
+      alias: edw_perenso_prod_metcashid_dim
+      tags: ["anz_perenso_dimension_load","transformation"]
 
   - name: pcfedw_integration__edw_perenso_account_metcash_dim
     config: 

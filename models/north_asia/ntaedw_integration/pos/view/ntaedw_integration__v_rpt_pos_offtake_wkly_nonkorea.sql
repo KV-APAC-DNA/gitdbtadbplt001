@@ -1,7 +1,7 @@
 with
 edw_customer_attr_flat_dim as
 (
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ), 
 v_interm_cust_hier_dim as
 (
@@ -9,11 +9,11 @@ v_interm_cust_hier_dim as
 ),
 edw_product_attr_dim as
 (
-    select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ), 
 v_calendar_dtls as
 (
-    select * from {{ ref('ntaedw_integration__v_calendar_dtls') }}
+    select * from {{ ref('aspedw_integration__v_calendar_dtls') }}
 ), 
 v_intrm_crncy_exch as
 (
