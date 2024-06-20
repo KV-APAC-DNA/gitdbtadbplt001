@@ -21,7 +21,7 @@ sources:
               schema: ntawks_integration
         - test_format:
             select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            where_clause: "not regexp_like ('substring(file_name,15,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            where_clause: "not regexp_like (substring(file_name,15,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
             name: TRATBL_sdl_kr_dads_linkprice_format_test
             config:
               store_failures: true
@@ -39,7 +39,7 @@ sources:
               schema: ntawks_integration
         - test_format:
             select_columns: ["product_category_m", "product_category_s", "product_id"]
-            where_clause: "not regexp_like ('substring(file_name,28,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            where_clause: "not regexp_like (substring(file_name,28,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
             name: TRATBL_sdl_kr_dads_naver_gmv__format_test
             config:
               store_failures: true
@@ -56,7 +56,7 @@ sources:
               schema: ntawks_integration
         - test_format:
             select_columns: ["channel_properties", "channel_groups", "channel_name"]
-            where_clause: "not regexp_like ('substring(file_name,16,6)', '[2][0][0-9][0-9][0-1][0-9]') or substring(file_name,16,6) = '' "
+            where_clause: "not regexp_like (substring(file_name,16,6), '[2][0][0-9][0-9][0-1][0-9]') or substring(file_name,16,6) = '' "
             name: TRATBL_dl_kr_dads_naver_search_channel__format_test
             config:
               store_failures: true
@@ -73,7 +73,7 @@ sources:
               schema: ntawks_integration
         - test_format:
             select_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
-            where_clause: "not regexp_like ('substring(file_name,46,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            where_clause: "not regexp_like (substring(file_name,46,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
             name: TRATBL_sdl_kr_dads_coupang_search_keyword__format_test
             config:
               store_failures: true
