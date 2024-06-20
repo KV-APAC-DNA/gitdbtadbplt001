@@ -17,12 +17,12 @@ itg_mds_tw_incentive_schemes as
 ),
 itg_mds_tw_sales_representative as
 (
-    select * from {{ source('ntaitg_integration', 'itg_mds_tw_sales_representative') }}
-), --as a source
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_sales_representative') }}
+),
 itg_mds_tw_customer_sales_rep_mapping as 
 (
-    select * from {{ source('ntaitg_integration', 'itg_mds_tw_customer_sales_rep_mapping') }}
-), --as a source
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}
+),
 v_rpt_copa_ciw as
 (
     select * from {{ ref('aspedw_integration__v_rpt_copa_ciw') }}
