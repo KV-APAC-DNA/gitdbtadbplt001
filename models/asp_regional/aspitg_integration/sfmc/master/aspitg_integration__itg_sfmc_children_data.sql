@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
-                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH';
+                    delete from {{this}} where cntry_cd = 'TH';
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd = 'PH'
                     {% elif var('crm_job_to_execute') == 'tw_crm_files' %}
@@ -76,10 +76,6 @@ final as
         left join itg_mds_rg_sfmc_gender gen on
         upper(trim(gen.gender_raw::text)) = upper(trim(isc.child_gender::text))
     where rnk=1
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-        and isc.crtd_dttm > (select max(crtd_dttm) from {{ this }})
-    {% endif %}
 )
 
 select * from final

@@ -8,7 +8,7 @@ with source as(
     select * from {{ source('ntasdl_raw', 'sdl_mds_tw_pos_promotional_price_ean_map') }}
 ),
 itg_pos_prom_prc_map_temp as(
-    select * from {{ source('ntaitg_integration', 'ntaitg_integration__itg_pos_prom_prc_map_temp') }}
+    select * from {{ source('ntaitg_integration', 'itg_pos_prom_prc_map_temp') }}
 ),
 transformed as(
     SELECT SRC.customer,

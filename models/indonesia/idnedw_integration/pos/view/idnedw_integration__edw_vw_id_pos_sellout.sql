@@ -588,7 +588,7 @@ final as
                         )
                     )
 
-                    left join itg_id_pos_sat_sellout as idr on (
+                    left join itg_id_pos_sat_sellout_idr as idr on (
                         (
                             (
                                 (

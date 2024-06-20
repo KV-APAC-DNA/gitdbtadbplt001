@@ -52,4 +52,4 @@ models:
   - name: idnitg_integration__itg_distributor_ivy_outlet_master
     config:
       alias: itg_distributor_ivy_outlet_master
-      tags: ["id_ivy_outletmaster_manual_upload","ingestion"]
+      tags: ["id_ivy","ingestion"]
