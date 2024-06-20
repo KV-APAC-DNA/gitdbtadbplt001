@@ -1,0 +1,11 @@
+sources:
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_photo_mgmnt_url_temp
+      - name: numbersequence

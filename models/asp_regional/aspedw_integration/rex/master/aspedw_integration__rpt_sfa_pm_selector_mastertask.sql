@@ -1,0 +1,10 @@
+with source as (
+    select * from ntaedw_integration.edw_rpt_sfa_pm
+),
+final as (
+    select 
+        distinct rpt.country as country,
+        rpt.salescampaignname as salescampaignname
+    from source as rpt
+)
+select * from final

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_wt_mnth_cname
+    config:
+      alias: wks_edw_perfect_store_kpi_wt_mnth_cname
+      tags: ["pop6_edw_load","transformation"] 

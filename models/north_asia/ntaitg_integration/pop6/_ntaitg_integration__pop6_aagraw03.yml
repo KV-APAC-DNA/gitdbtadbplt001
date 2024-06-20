@@ -21,3 +21,7 @@ models:
     config:
       alias: itg_pop6_product_attribute_audits_temp
       tags: ["",""]
+  - name: ntaitg_integration__itg_photo_mgmnt_url
+    config:
+      alias: itg_photo_mgmnt_url
+      tags: ["pop6_photo_management_pre_conversion","transformation"]

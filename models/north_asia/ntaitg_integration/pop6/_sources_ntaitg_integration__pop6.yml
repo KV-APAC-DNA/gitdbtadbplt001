@@ -109,18 +109,18 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_pop6_th_displays
-      - name: sdl_pop6_th_executed_visits
-      - name: sdl_pop6_th_general_audits
-      - name: sdl_pop6_th_planned_visits
+      # - name: sdl_pop6_th_displays
+      # - name: sdl_pop6_th_executed_visits
+      # - name: sdl_pop6_th_general_audits
+      # - name: sdl_pop6_th_planned_visits
       - name: sdl_pop6_th_pop_lists
-      - name: sdl_pop6_th_product_attribute_audits
+      # - name: sdl_pop6_th_product_attribute_audits
       - name: sdl_pop6_th_product_lists_allocation
       - name: sdl_pop6_th_product_lists_products
-      - name: sdl_pop6_th_promotion_plans
-      - name: sdl_pop6_th_promotions
-      - name: sdl_pop6_th_rir_data
-      - name: sdl_pop6_th_service_levels
+      # - name: sdl_pop6_th_promotion_plans
+      # - name: sdl_pop6_th_promotions
+      # - name: sdl_pop6_th_rir_data
+      # - name: sdl_pop6_th_service_levels
       - name: sdl_pop6_th_tasks
       - name: sdl_pop6_th_users
   

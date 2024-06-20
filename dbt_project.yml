@@ -83,6 +83,9 @@ models:
         rex:
           view:
             +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
