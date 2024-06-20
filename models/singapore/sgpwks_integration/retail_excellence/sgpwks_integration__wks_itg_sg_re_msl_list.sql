@@ -7,7 +7,7 @@ edw_calendar_dim as (
     select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
-    select * from {{ source('sgpitg_integration', 'itg_mds_sg_customer_hierarchy') }}
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
@@ -77,8 +77,8 @@ FROM (SELECT DISTINCT CAL.FISC_YR AS YEAR,		--// FROM (SELECT DISTINCT CAL.FISC_
                           CUSTOMER_PRODUCT_DESC,
                           MAPPED_SKU_CD,
                           STORE_TYPE
-                   FROM wks_singapore_base_retail_excellence) BASE		--//                    FROM OS_WKS.WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE) BASE
-               LEFT JOIN (SELECT * FROM itg_mds_sg_customer_hierarchy) CUST ON LTRIM (BASE.SOLDTO_CODE,'0') = LTRIM (CUST.CUSTOMER_NUMBER,'0')		--//                LEFT JOIN (SELECT * FROM OS_ITG.ITG_MDS_SG_CUSTOMER_HIERARCHY) CUST ON LTRIM (BASE.SOLDTO_CODE,'0') = LTRIM (CUST.CUSTOMER_NUMBER,'0')
+                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE) BASE		--//                    FROM OS_WKS.WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE) BASE
+               LEFT JOIN (SELECT * FROM ITG_MDS_SG_CUSTOMER_HIERARCHY) CUST ON LTRIM (BASE.SOLDTO_CODE,'0') = LTRIM (CUST.CUSTOMER_NUMBER,'0')		--//                LEFT JOIN (SELECT * FROM OS_ITG.ITG_MDS_SG_CUSTOMER_HIERARCHY) CUST ON LTRIM (BASE.SOLDTO_CODE,'0') = LTRIM (CUST.CUSTOMER_NUMBER,'0')
              GROUP BY BASE.SOLDTO_CODE,		--//              GROUP BY BASE.SOLDTO_CODE,
                       BASE.DISTRIBUTOR_CODE,		--//                       BASE.DISTRIBUTOR_CODE,
                       BASE.DISTRIBUTOR_NAME,		--//                       BASE.DISTRIBUTOR_NAME,
@@ -97,8 +97,8 @@ FROM (SELECT DISTINCT CAL.FISC_YR AS YEAR,		--// FROM (SELECT DISTINCT CAL.FISC_
          ON UPPER (LTRIM (MSL.CUSTOMER,'0')) = UPPER (LTRIM (STORE_DET.CUSTOMER_GROUP_CODE,'0'))		--//          ON UPPER (LTRIM (MSL.CUSTOMER,'0')) = UPPER (LTRIM (STORE_DET.CUSTOMER_GROUP_CODE,'0'))
         AND MSL.SKU_UNIQUE_IDENTIFIER = STORE_DET.MASTER_CODE		--//         AND MSL.SKU_UNIQUE_IDENTIFIER = STORE_DET.MASTER_CODE
 WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths		--// WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths
-                         FROM edw_vw_cal_retail_excellence_dim)		--//                          FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
-AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)		--// AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
+                         FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		--//                          FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
+AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		--// AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
 AND   STORE_CODE IS NOT NULL
 AND   DISTRIBUTOR_CODE IS NOT NULL
 

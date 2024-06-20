@@ -5,15 +5,16 @@ with edw_rpt_regional_sellout_offtake as (
 
 --final cte
 singapore_regional_sellout_mapped_sku_cd  as (
-select *
-from (select distinct ltrim(msl_product_code,'0') as master_code,
-             ltrim(sku_code,'0') as mapped_sku_cd,
-             sku_description,
-             row_number() over (partition by ltrim(msl_product_code,0) order by cal_date desc,length(ltrim(sku_code,'0')) desc) as rno
-      from edw_rpt_regional_sellout_offtake
-      where country_code = 'SG'
-      and   data_source = 'POS')
-where rno = 1
+SELECT *
+FROM (SELECT DISTINCT LTRIM(MSL_PRODUCT_CODE,'0') AS MASTER_CODE,
+             LTRIM(SKU_CODE,'0') AS MAPPED_SKU_CD,
+             SKU_DESCRIPTION,
+             ROW_NUMBER() OVER (PARTITION BY LTRIM(MSL_PRODUCT_CODE,0) ORDER BY cal_date DESC,LENGTH(LTRIM(SKU_CODE,'0')) DESC) AS RNO
+      FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
+      WHERE COUNTRY_CODE = 'SG'
+      AND   DATA_SOURCE = 'POS')
+WHERE RNO = 1
+
 ),
 final as(
 
