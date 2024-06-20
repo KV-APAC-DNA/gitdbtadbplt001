@@ -19,7 +19,7 @@
             COALESCE(sdl.brand, 'NA'),
             sdl.quarter,
             sdl.year
-        FROM in_sdl.sdl_sss_scorecard_data SDL
+        FROM {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }} SDL
             INNER JOIN {{this}} ITG ON Upper(SDL.program_type) = Upper(ITG.program_type)
             AND Upper(SDL.jnj_id) = Upper(ITG.jnj_id)
             AND Upper(SDL.kpi) = Upper(ITG.kpi)
@@ -37,7 +37,7 @@
 }}
 with source as 
 (
-    select *, dense_rank() over(partition by null order by filename desc) as rnk from {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }}
+    select * from {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }}
 ),
 final as 
 (
