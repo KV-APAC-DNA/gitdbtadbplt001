@@ -5,3 +5,11 @@ models:
     config:
       alias: edw_rpt_sss_zonal
       tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indedw_integration__edw_sss_kpi_data
+    config:
+      alias: edw_sss_kpi_data
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indedw_integration__edw_sss_kpi_data_final
+    config:
+      alias: edw_sss_kpi_data_final
+      tags: ["in_sss_scorecard_data_mart","transformation"]
