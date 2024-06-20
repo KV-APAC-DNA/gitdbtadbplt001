@@ -33,6 +33,7 @@ models:
 
   - name: aspedw_access__edw_product_key_attributes
     config:
+      quote_columns: true
       alias: edw_product_key_attributes
       tags: ["pka_datamart","transformation","regional_views"]
   - name: aspedw_access__edw_company_dim
