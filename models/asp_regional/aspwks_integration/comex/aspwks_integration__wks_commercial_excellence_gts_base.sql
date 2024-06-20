@@ -1,51 +1,39 @@
-with edw_market_mirror_fact as (
+with v_rpt_copa_commercial_excellence as (
     select * from {{ source('snapaspedw_integration', 'v_rpt_copa_commercial_excellence_sync') }}
 ),
-itg_query_parameters as ( 
-    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+vw_itg_custgp_customer_hierarchy as ( 
+    select * from {{ source('snapaspitg_integration', 'vw_itg_custgp_customer_hierarchy_sync') }}
 ),
-itg_mds_ap_sales_ops_map as (
-    select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
+edw_vw_os_time_dim as (
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 final as (
-    SELECT market :: varchar(40) as market,
-    "cluster" :: varchar(100) as "cluster",
-    month_id :: varchar(23) as month_id,
-    kpi :: varchar(100) as kpi,
-    kv_val_usd :: numeric(38,5) as kv_val_usd,
-    KV_VAL_LC :: numeric(38,5) as KV_VAL_LC,
-    CAT_VAL_USD :: numeric(38,5) as CAT_VAL_USD,
-    CAT_VAL_LC :: numeric(38,5) as CAT_VAL_LC
-     FROM (
-select CASE
-	WHEN market = 'China' AND trans.supplier = 'IQVIA' THEN 'China Selfcare'
-	WHEN market = 'China' AND trans.supplier <> 'IQVIA' THEN 'China Personal Care'
-	ELSE market_map.destination_market
-END AS market,
-destination_cluster AS "cluster",
-extract(year from time_period)||LPAD(extract(month from time_period),2,'00') AS month_id,
-'MARKET SHARE' AS kpi,
-sum(case when upper(manufacturer) in (SELECT DISTINCT parameter_value AS manufacturer
-	FROM itg_query_parameters
-	WHERE country_code = 'APAC' AND parameter_name = 'price_tracker_mfr')
-	then sku_value_sales_usd else 0 end) as kv_val_usd,
-sum(case when upper(manufacturer) in (SELECT DISTINCT parameter_value AS manufacturer
-	FROM itg_query_parameters
-	WHERE country_code = 'APAC' AND parameter_name = 'price_tracker_mfr')
-	then sku_value_sales_lc else 0 end) as kv_val_lc,
-sum(sku_value_sales_usd) as cat_val_usd,
-sum(sku_value_sales_lc) as cat_val_lc
-FROM edw_market_mirror_fact trans left join itg_mds_ap_sales_ops_map market_map
-ON UPPER(market_map.source_market) = UPPER(trans.ggh_country) AND market_map.dataset = 'Market Share QSD'
-where channel_type = 'Total'
-and date_type = 'Monthly'
-and ggh_region = 'APAC'
-group by 1,2,3,4
-	) WHERE month_id::INT<=(select (extract(year from min(latest_date))  || lpad(extract(month from min(latest_date)),2,'0'))::INT  as mkt_shr_max_dt from(
-	select market, max(time_period) as latest_date from edw_market_mirror_fact
-	where channel_type = 'Total'
-	and date_type = 'Monthly'
-	and ggh_region = 'APAC'
-	group by 1 order by 1))
+select NVL(copa.ctry_nm,'NA') :: varchar(40) AS market,
+NVL(copa."cluster",'NA') :: varchar(100) AS "cluster",
+NVL(cust_seg.customer_segmentation,'NA') :: varchar(500) as cust_seg,
+NVL(copa."b1 mega-brand",'NA') :: varchar(100) as mega_brand,
+	'GTS' :: varchar(100) AS kpi,
+	(extract(year from fisc_day)||LPAD(extract(month from fisc_day),2,'00')) :: varchar(23) AS month_id,
+	CASE WHEN (left(fisc_yr_per,4)||right(fisc_yr_per,2))=time_dim.mnth_id and copa.caln_day=time_dim.cal_date_id THEN time_dim.mnth_wk_no
+		WHEN (left(fisc_yr_per,4)||right(fisc_yr_per,2))=m_time_dim.mnth_id and copa.caln_day>m_time_dim.max_cal_date_id THEN m_time_dim.max_mnth_wk_no
+		WHEN (left(fisc_yr_per,4)||right(fisc_yr_per,2))=m_time_dim.mnth_id and copa.caln_day<m_time_dim.min_cal_date_id THEN m_time_dim.min_mnth_wk_no
+		END AS week,
+	gts_usd :: numeric(38,5) as gts_usd,
+	gts_lcy :: numeric(38,5) as gts_lcy,
+	from_crncy  :: varchar(5) as from_crncy
+from v_rpt_copa_commercial_excellence copa
+ left join (select ctry_nm, cust_num, customer_segmentation from vw_itg_custgp_customer_hierarchy
+	where customer_segmentation is not null and customer_segmentation <> ''
+	and customer_segmentation <> 'Not Available') cust_seg
+on copa.ctry_nm=cust_seg.ctry_nm and LTRIM(copa.cust_num,0)= LTRIM(cust_seg.cust_num,0)
+left join edw_vw_os_time_dim time_dim
+  on (left(fisc_yr_per,4)||right(fisc_yr_per,2))=time_dim.mnth_id and copa.caln_day=time_dim.cal_date_id
+left join
+((select distinct mnth_id,max(cal_date_id) OVER (PARTITION BY mnth_id) as max_cal_date_id, max(mnth_wk_no) OVER (PARTITION BY mnth_id) as max_mnth_wk_no,
+min(cal_date_id) OVER (PARTITION BY mnth_id) as min_cal_date_id, min(mnth_wk_no) OVER (PARTITION BY mnth_id) as min_mnth_wk_no from
+ edw_vw_os_time_dim
+	)) m_time_dim
+  on (left(fisc_yr_per,4)||right(fisc_yr_per,2))=m_time_dim.mnth_id and (copa.caln_day>m_time_dim.max_cal_date_id or copa.caln_day<m_time_dim.min_cal_date_id)
+
 )
 select * from final 
