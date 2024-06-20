@@ -20,7 +20,8 @@ itg_mds_ap_sales_ops_map as (
 
 
 --Final CTE
-final as (select RGN_MKT_CD, fiscal_yr_mo, segment_information, sum(numerator) as numerator, sum(denominator) as denominator
+final as (select region,RGN_MKT_CD, fiscal_yr_mo, segment_information, sum(numerator) as numerator, 
+sum(denominator) as denominator,DIV0(sum(numerator),sum(denominator)) as otif
 from (
 SELECT
 FISC_YR_NBR as fiscal_yr,
@@ -46,12 +47,13 @@ and upper(RGN_CD) = 'APAC'
 and (OTIF_EXCL_IND = 0 or OTIF_EXCL_IND = 1)
 Group by FISC_YR_NBR,FISC_YR_MO_NUM,FISC_YR_WK_NUM,upper(RGN_CD),SLORG_NUM,segment_information,
 upper(trim(RGN_MKT_CD)),ltrim(SOLD_TO_CUST_NUM, '0'),ltrim(MATL_NUM, '0')
-) a Group by RGN_MKT_CD,fiscal_yr_mo,segment_information
+) a Group by region,RGN_MKT_CD,fiscal_yr_mo,segment_information
  
 UNION ALL
  
 -- OLD: before 202308
-select market,fiscal_yr_mo,segment_information, sum(numerator) as numerator, sum(denominator) as denominator from (
+select region,market,fiscal_yr_mo,segment_information, sum(numerator) as numerator, sum(denominator) as denominator,
+DIV0(sum(numerator),sum(denominator)) as otif from (
 SELECT upper(MAP.DESTINATION_MARKET) AS Market,		--// SELECT map.destination_market AS "market",
        upper(MAP.DESTINATION_CLUSTER) AS cluster,		--//        map.destination_cluster AS "cluster",
        fiscal_yr,
@@ -75,7 +77,7 @@ AND   affiliate_flag = '0'
 AND   fiscal_yr_mo <= '2023_07'
 GROUP BY 1,2,3,4,5,6,7,8,9,10
 //ORDER BY 1,2,3,4,5,6,7,8,9
-) group by 1,2,3
+) group by 1,2,3,4
 )
 select * from final
 
