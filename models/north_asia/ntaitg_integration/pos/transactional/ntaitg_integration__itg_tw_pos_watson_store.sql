@@ -2,7 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook = "delete from {{this}} where (store_no,product_code,start_date) IN (SELECT DISTINCT store_no,product_code,start_date from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }} );"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where (store_no,product_code,start_date) IN (SELECT DISTINCT store_no,product_code,start_date from {{ source('ntasdl_raw', 'sdl_tw_pos_watson_store') }});
+        {% endif %}"
     )
 }}
 with source as
