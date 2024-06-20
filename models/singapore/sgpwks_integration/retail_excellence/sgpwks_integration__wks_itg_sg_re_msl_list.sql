@@ -4,7 +4,7 @@ with itg_re_msl_input_definition as (
     select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
-    select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
     select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
