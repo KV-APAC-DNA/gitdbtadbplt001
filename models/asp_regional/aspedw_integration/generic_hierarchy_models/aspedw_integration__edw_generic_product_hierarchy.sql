@@ -6,7 +6,8 @@ EDW_GCH_PRODUCTHIERARCHY as (
 ),
 
 TRANSFORMED as (select distinct
-EMD.MATL_ID as SAP_MATL_NUM,
+EMD.MATL_NUM as SAP_MATL_NUM,
+--EMD.MATL_ID as SAP_MATL_NUM,
                                 EMD.MATL_DESC as SAP_MAT_DESC,
                                 EMD.MATL_TYPE_CD as SAP_MAT_TYPE_CD,
                                 EMD.MATL_TYPE_DESC as SAP_MAT_TYPE_DESC,
