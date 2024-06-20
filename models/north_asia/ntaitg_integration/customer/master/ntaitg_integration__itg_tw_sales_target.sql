@@ -4,7 +4,8 @@
         materialized="incremental",
         incremental_strategy="merge",
         unique_key=["fisc_yr_per","co_cd","sls_org","dstn_chnl","div","matl","cust_num"],
-        pre_hook="delete from {{this}} as itg_tw_sales_target
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} as itg_tw_sales_target
         using {{ ref('ntawks_integration__wks_itg_tw_sales_target') }} as wks_itg_tw_sales_target
         where  wks_itg_tw_sales_target.fiscal_year_period=itg_tw_sales_target.fisc_yr_per
         and wks_itg_tw_sales_target.company_code=itg_tw_sales_target.co_cd
@@ -12,7 +13,8 @@
         and wks_itg_tw_sales_target.distribution_channel=itg_tw_sales_target.dstn_chnl
         and wks_itg_tw_sales_target.division=itg_tw_sales_target.div
         and wks_itg_tw_sales_target.material=itg_tw_sales_target.matl
-        and wks_itg_tw_sales_target.customer_number=itg_tw_sales_target.cust_num ;"
+        and wks_itg_tw_sales_target.customer_number=itg_tw_sales_target.cust_num;
+        {% endif %}"
     )
 }}
 with source as
