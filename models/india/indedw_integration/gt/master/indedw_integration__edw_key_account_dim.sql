@@ -6,15 +6,15 @@ edw_customer_dim as
 itg_jnjreport_muser as 
 (
     select * from inditg_integration.itg_jnjreport_muser
-),
+), --built
 itg_customer_retailer as 
 (
     select * from inditg_integration.itg_customer_retailer
-),
+), --built
 itg_plant as 
 (
     select * from inditg_integration.itg_plant
-),
+), --source
 trans as 
 (
     Select 

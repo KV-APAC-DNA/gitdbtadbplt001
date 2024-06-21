@@ -20,7 +20,7 @@ trans as
         '-1' as rmcode,
         'Unknown' as smname,
         'Unknown' as rmname,
-        current_timestamp()::timestamp_ntz(9) as CRT_DTTM
+        current_timestamp() as crt_dttm
 ),
 final as 
 (

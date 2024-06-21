@@ -16,7 +16,7 @@ trans as
         '-1' as distcode,
         '-1' as smcode,
         'Unknown' as smname,
-        current_timestamp()::timestamp_ntz(9) as CRT_DTTM
+        current_timestamp() as crt_dttm
 ),
 final as 
 (
