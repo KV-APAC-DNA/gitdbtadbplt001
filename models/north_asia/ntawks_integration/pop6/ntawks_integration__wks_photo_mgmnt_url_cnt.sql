@@ -1,23 +1,23 @@
 with itg_pop6_displays as (
-    select * from ntaitg_integration.itg_pop6_displays
-)
+    select * from snapntaitg_integration.itg_pop6_displays
+),
 itg_pop6_product_attribute_audits as (
-    select * from ntaitg_integration.itg_pop6_product_attribute_audits
+    select * from snapntaitg_integration.itg_pop6_product_attribute_audits
 ),
 itg_pop6_tasks as (
-    select * from ntaitg_integration.itg_pop6_tasks
+    select * from snapntaitg_integration.itg_pop6_tasks
 ),
 itg_pop6_general_audits as (
-    select * from ntaitg_integration.itg_pop6_general_audits
+    select * from snapntaitg_integration.itg_pop6_general_audits
 ),
 itg_pop6_promotions as (
-    select * from ntaitg_integration.itg_pop6_promotions
+    select * from snapntaitg_integration.itg_pop6_promotions
 ),
 itg_pop6_sku_audits as (
-    select * from ntaitg_integration.itg_pop6_sku_audits
+    select * from snapntaitg_integration.itg_pop6_sku_audits
 ),
 itg_photo_mgmnt_url as (
-    select * from ntaitg_integration.itg_photo_mgmnt_url
+    select * from snapntaitg_integration.itg_photo_mgmnt_url
     -- select * from {{ source('ntaitg_integration', 'itg_photo_mgmnt_url_temp')}}
 ),
 displays as (

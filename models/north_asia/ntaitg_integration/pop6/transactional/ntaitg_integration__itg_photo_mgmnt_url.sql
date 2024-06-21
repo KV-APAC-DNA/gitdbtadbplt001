@@ -1,14 +1,14 @@
-with WKS_PHOTO_MGMNT_URL_WRK1 as (
+with wks_photo_mgmnt_url_wrk1 as (
     select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk1') }}
 ),
-EDW_RPT_SFA_PM as (
-    select * from ntaedw_integration.EDW_RPT_SFA_PM
+edw_rpt_sfa_pm as (
+    select * from snapntaedw_integration.edw_rpt_sfa_pm
 ),
-WKS_PHOTO_MGMNT_URL_WRK2 as (
+wks_photo_mgmnt_url_wrk2 as (
     select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }}
 ),
 numbersequence as (
-    select * from numbersequence
+    select * from aagraw03_workspace.numbersequence
     -- select * from {{ source('ntaitg_integration','numbersequence')}}
 ),
 wrk1 as (

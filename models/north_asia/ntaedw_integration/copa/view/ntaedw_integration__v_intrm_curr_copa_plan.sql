@@ -11,13 +11,13 @@ edw_product_attr_dim as (
     select * from snapaspedw_integration.edw_product_attr_dim
 ),
 edw_company_dim as (
-    select * from snapaspedw_integration.edw_company_dimom 
+    select * from snapaspedw_integration.edw_company_dim
 ),
 edw_customer_base_dim as (
     select * from snapaspedw_integration.edw_customer_base_dim
 ),
 edw_material_dim as (
-    select * from snapaspedw_integration.edw_material_dimm 
+    select * from snapaspedw_integration.edw_material_dim
 ),
 cte1 as (
     SELECT p.obj_crncy,

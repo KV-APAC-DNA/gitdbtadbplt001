@@ -420,7 +420,6 @@ ps_data as (
     union all
     select *
     from cte5
-    union all
 ),
 final as (
     SELECT PS_DATA.DATASET,

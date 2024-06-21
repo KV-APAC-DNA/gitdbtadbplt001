@@ -3,7 +3,7 @@ with wks_edw_perfect_store_hash as (
 ),
 cte1 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -14,7 +14,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             customerid,
             scheduleddate,
             PROD_HIER_L4
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0
@@ -29,7 +29,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
 ),
 cte2 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -46,7 +46,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             scheduleddate,
             PROD_HIER_L3,
             PROD_HIER_L4
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0
@@ -62,7 +62,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
 ),
 cte3 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -73,7 +73,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             customerid,
             scheduleddate,
             PROD_HIER_L3
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0
@@ -88,7 +88,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
 ),
 cte4 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -106,7 +106,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             scheduleddate,
             PROD_HIER_L3,
             PROD_HIER_L4
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0
@@ -122,7 +122,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
 ),
 cte5 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -140,7 +140,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             scheduleddate,
             PROD_HIER_L4,
             nvl(PROD_HIER_L5, 'x')
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0
@@ -156,7 +156,7 @@ where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
 ),
 cte6 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
-from rg_wks.wks_edw_perfect_store_hash
+from wks_edw_perfect_store_hash
 where kpi in ('SOS COMPLIANCE')
     and mkt_share is NOT NULL
     and QUES_TYPE in ('DENOMINATOR', 'NUMERATOR')
@@ -167,7 +167,7 @@ where kpi in ('SOS COMPLIANCE')
             customerid,
             scheduleddate,
             PROD_HIER_L5
-        from rg_wks.wks_edw_perfect_store_hash
+        from wks_edw_perfect_store_hash
         where kpi in ('SOS COMPLIANCE')
             and mkt_share is NOT NULL
             and REGEXP_COUNT(ACTUAL_VALUE, '^[0.00-9]+$') > 0

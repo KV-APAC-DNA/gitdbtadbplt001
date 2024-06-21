@@ -8,7 +8,7 @@ final as (
         row_number() over (
             partition by md5(
                 dataset || customerid || nvl (salespersonid, 'a') || nvl (visitid, 'b') || nvl (questiontext, 'c') || nvl (productid, 'd') || nvl (kpi, 'e') || nvl (scheduleddate, '2999-12-12') || nvl (latestdate, '2999-12-12') || nvl (fisc_yr, 2099) || nvl (fisc_per, 12) || nvl (merchandiser_name, 'f') || nvl (customername, 'g') || nvl (country, 'h') || nvl (state, 'i') || nvl (parent_customer, 'j') || nvl (retail_environment, 'k') || nvl (channel, 'l') || nvl (retailer, 'm') || nvl (business_unit, 'n') || nvl (eannumber, 'o') || nvl (matl_num, 'p') || nvl (prod_hier_l1, 'q') || nvl (prod_hier_l2, 'r') || nvl (prod_hier_l3, 's') || nvl (prod_hier_l4, 't') || nvl (prod_hier_l5, 'u') || nvl (prod_hier_l6, 'v') || nvl (prod_hier_l7, 'w') || nvl (prod_hier_l8, 'x') || nvl (prod_hier_l9, 'y') || nvl (ques_type, 'z') || nvl ("y/n_flag", 'a1') || nvl (priority_store_flag, 'b1') || nvl (add_info, 'c1') || nvl (response, 'd1') || nvl (response_score, 'e1') || nvl (kpi_chnl_wt, 99) || nvl (mkt_share, 99) || nvl (salience_val, 99) || nvl(channel_weightage, 99) || nvl (actual_value, '99999') || nvl (ref_value, '99999') || nvl(kpi_actual_wt_val, '99999') || nvl(kpi_ref_val, '99999') || nvl(kpi_ref_wt_val, '99999') || nvl(photo_url, 'p')
-            )
+            ) order by null
         ) hash_row,
         dataset,
         customerid,

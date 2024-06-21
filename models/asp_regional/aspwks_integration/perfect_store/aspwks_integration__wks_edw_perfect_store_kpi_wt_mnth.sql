@@ -1,6 +1,9 @@
 with wks_edw_perfect_store_hash as (
     select * from snapaspwks_integration.wks_edw_perfect_store_hash
 ),
+wks_perfect_store_sos_soa_custid_ind as (
+    select * from snapaspwks_integration.wks_perfect_store_sos_soa_custid_ind
+),
 cte1 as (
     select country,
         nvl(customerid, 'x') as customerid,

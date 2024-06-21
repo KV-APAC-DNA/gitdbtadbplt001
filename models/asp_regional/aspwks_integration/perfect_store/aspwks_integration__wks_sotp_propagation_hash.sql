@@ -1,5 +1,5 @@
 with edw_perfect_store_rebase_wt_temp as (
-    select * from snapaspwks_integration.edw_perfect_store_rebase_wt_temp
+    select * from snapntaedw_integration.edw_perfect_store_rebase_wt_temp
 ),
 final as (
     SELECT *,

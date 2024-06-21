@@ -2,7 +2,7 @@ with edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_perfect_store_rebase_wt_temp as (
-    select * from snapaspwks_integration.edw_perfect_store_rebase_wt_temp
+    select * from snapntaedw_integration.edw_perfect_store_rebase_wt_temp
 ),
 fisc_per_table as (
     select country,
@@ -28,7 +28,7 @@ fisc_per_table as (
                     from EDW_PERFECT_STORE_REBASE_WT_temp
                     WHERE kpi = 'SIZE OF THE PRIZE'
                 ) a
-                join edw_vw_os_time_dim b on substring(a.fisc_per, 1, 4) = b.year
+                join edw_vw_os_time_dim b on substring(a.fisc_per, 1, 4) = b."year"
             group by substring(a.fisc_per, 1, 4)
         ) b on substring(a.fisc_per, 1, 4) = b.fisc_yr
     group by country,
@@ -60,9 +60,9 @@ final as (
     from (
             select distinct mnth_id
             from edw_vw_os_time_dim
-            where year in (
+            where "year" in (
                     select distinct substring(fisc_per, 1, 4)
-                    from RG_EDW.EDW_PERFECT_STORE_REBASE_WT_temp
+                    from EDW_PERFECT_STORE_REBASE_WT_temp
                     WHERE kpi = 'SIZE OF THE PRIZE'
                 )
         ) a

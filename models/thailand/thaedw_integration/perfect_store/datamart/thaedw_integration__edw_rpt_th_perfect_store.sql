@@ -35,7 +35,7 @@ final as (
         prod_hier_l8::varchar(100) as prod_hier_l8,
         prod_hier_l9::varchar(513) as prod_hier_l9,
         kpi_chnl_wt::float as kpi_chnl_wt,
-        "y/n_flag" varchar(3) as "y/n_flag",
+        "y/n_flag"::varchar(3) as "y/n_flag",
         posm_execution_flag::varchar(1) as posm_execution_flag,
         priority_store_flag::varchar(1) as priority_store_flag,
         questiontext::varchar(500) as questiontext,
@@ -44,8 +44,8 @@ final as (
         mkt_share::number(32,4) as mkt_share,
         rej_reason::varchar(255) as rej_reason,
         photo_url::varchar(1) as photo_url,
-        category::varchar(255) as category,
-        brand::varchar(255) as brand
+        null::varchar(255) as category,
+        null::varchar(255) as brand
     from source
 )
 select * from final

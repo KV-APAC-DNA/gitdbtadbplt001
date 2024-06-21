@@ -117,28 +117,6 @@ final as (
         p.eannumber,
         p.productname
     FROM merch
-        LEFT JOIN p ON (((merch.productid)::text = (p.productid)::text))SELECT DISTINCT merch.visitid,
-        merch.merchandisingresponseid,
-        merch.salespersonid,
-        merch.salescampaignid,
-        merch.merchandisingid,
-        merch.presence,
-        merch.pricepresence,
-        merch.pricedetails,
-        merch.stockcount,
-        merch.outofstock_cause,
-        merch.productid,
-        merch.customerid,
-        merch.mustcarryitem,
-        merch.facings,
-        merch.verticalposition,
-        merch.storeposition,
-        merch.promodetails,
-        merch.startdate,
-        p.remotekey AS prod_remotekey,
-        p.eannumber,
-        p.productname
-    FROM merch
         LEFT JOIN p ON (((merch.productid)::text = (p.productid)::text))
 )
 select * from final

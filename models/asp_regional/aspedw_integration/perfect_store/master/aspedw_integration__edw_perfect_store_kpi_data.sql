@@ -67,7 +67,16 @@ cte2 as (
         -- and per_str.scheduleddate = '2019-05-28'
 ),
 cte3 as (
-    select per_st.*
+    select per_st.*,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_edw_perfect_store_hash per_st
     where kpi in (
             'PROMO COMPLIANCE',
@@ -76,7 +85,16 @@ cte3 as (
         )
         and country in ('Hong Kong', 'Korea', 'Taiwan')
     minus
-    select per_str.*
+    select per_str.*,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_edw_perfect_store_hash per_str
     where kpi in (
             'PROMO COMPLIANCE',
@@ -106,12 +124,30 @@ cte4 as (
         -- and per_str.scheduleddate = '2019-05-28'
 ),
 cte5 as (
-    select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
+    select *, --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_edw_perfect_store_hash
     where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
         and country in ('Hong Kong', 'Korea', 'Taiwan')
     minus
-    select *
+    select *,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_perfect_store_sos_soa_mnth
 ),
 cte6 as (
@@ -249,7 +285,16 @@ cte10 as (
         -- and per_str.scheduleddate = '2019-05-28'
 ),
 cte11 as (
-    select per_st.*
+    select per_st.*,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_edw_perfect_store_hash per_st
     where kpi in (
             'PROMO COMPLIANCE',
@@ -259,7 +304,16 @@ cte11 as (
         and country not in ('Hong Kong', 'Korea', 'Taiwan') -- and country = 'Korea'
     minus
     (
-        select per_str.*
+        select per_str.*,
+            null as total_weight,
+            null as calc_weight,
+            null as weight_msl,
+            null as weight_oos,
+            null as weight_soa,
+            null as weight_sos,
+            null as weight_promo,
+            null as weight_planogram,
+            null as weight_display
         from wks_edw_perfect_store_hash per_str
         where kpi in ('PLANOGRAM COMPLIANCE')
             and country not in (
@@ -272,20 +326,47 @@ cte11 as (
             )
             and REF_VALUE = 1
         union all
-        select per_str.*
+        select per_str.*,
+            null as total_weight,
+            null as calc_weight,
+            null as weight_msl,
+            null as weight_oos,
+            null as weight_soa,
+            null as weight_sos,
+            null as weight_promo,
+            null as weight_planogram,
+            null as weight_display
         from wks_edw_perfect_store_hash per_str
         where kpi in ('PROMO COMPLIANCE', 'DISPLAY COMPLIANCE')
             and country not in ('Hong Kong', 'Korea', 'Taiwan')
             and REF_VALUE = 1 --and nvl(kpi_chnl_wt,0) > 0  
             --and country = 'Korea'
         union all
-        select per_str.*
+        select per_str.*,
+            null as total_weight,
+            null as calc_weight,
+            null as weight_msl,
+            null as weight_oos,
+            null as weight_soa,
+            null as weight_sos,
+            null as weight_promo,
+            null as weight_planogram,
+            null as weight_display
         from wks_edw_perfect_store_hash per_str
         where kpi = 'PLANOGRAM COMPLIANCE'
             and mkt_share is not null
             and country in ('Australia', 'New Zealand')
         union all
-        select per_str.*
+        select per_str.*,
+            null as total_weight,
+            null as calc_weight,
+            null as weight_msl,
+            null as weight_oos,
+            null as weight_soa,
+            null as weight_sos,
+            null as weight_promo,
+            null as weight_planogram,
+            null as weight_display
         from wks_edw_perfect_store_hash per_str
         where kpi = 'PLANOGRAM COMPLIANCE'
             and country = 'China'
@@ -318,12 +399,30 @@ cte12 as (
         -- and per_str.scheduleddate = '2019-05-28'
 ),
 cte13 as (
-    SELECT *
+    SELECT *,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     FROM wks_edw_perfect_store_hash per_str
     WHERE country = 'Philippines'
         and per_str.kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
     minus
-    SELECT *
+    SELECT *,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     FROM wks_edw_perfect_store_hash per_st
     WHERE country = 'Philippines'
         and kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
@@ -350,7 +449,16 @@ cte14 as (
         -- and per_str.scheduleddate = '2019-05-28'
 ),
 cte15 as (
-    select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
+    select *, --country, customerid, scheduleddate, kpi, kpi_chnl_wt 
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_edw_perfect_store_hash
     where kpi in ('SOS COMPLIANCE', 'SOA COMPLIANCE')
         and country in(
@@ -366,7 +474,16 @@ cte15 as (
             'Vietnam'
         )
     minus
-    select *
+    select *,
+        null as total_weight,
+        null as calc_weight,
+        null as weight_msl,
+        null as weight_oos,
+        null as weight_soa,
+        null as weight_sos,
+        null as weight_promo,
+        null as weight_planogram,
+        null as weight_display
     from wks_perfect_store_sos_soa_custid_ind
 ),
 final as (

@@ -30,6 +30,6 @@ final as (
         file_name::varchar(255) as file_name,
         yearmo::varchar(255) as yearmo,
         current_timestamp()::timestamp as crtd_dttm
-    from final
+    from source
 )
 select * from final

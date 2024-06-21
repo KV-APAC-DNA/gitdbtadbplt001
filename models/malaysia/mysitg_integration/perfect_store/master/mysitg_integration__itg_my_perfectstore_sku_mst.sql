@@ -21,6 +21,6 @@ final as (
         run_id::numeric(14) as run_id,
         file_name::varchar(255) as file_name,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
-    from final
+    from source
 )
 select * from final
