@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__rx_cx_rxrtl_qtly_agg
+    config:
+        alias: rx_cx_rxrtl_qtly_agg
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_hcp_presc
+    config:
+        alias: rx_cx_hcp_presc
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_presc_rtl_hist
+    config:
+        alias: rx_cx_presc_rtl_hist
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_urc_ventasys_rtl
+    config:
+        alias: rx_cx_urc_ventasys_rtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_achnr_qty
+    config:
+        alias: rx_cx_sales_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]

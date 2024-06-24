@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_rpt_pob_cx_final
+    config:
+        alias: edw_rpt_pob_cx_final
+        tags: ["in_pob_to_cx_datamart","transformation"]

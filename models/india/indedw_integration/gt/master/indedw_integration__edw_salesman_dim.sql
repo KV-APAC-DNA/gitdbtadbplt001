@@ -9,7 +9,7 @@ trans as
         salesman.distcode as distcode,
         salesman.smcode as smcode,
         salesman.smname as smname,
-        getdate() as CRT_DTTM
+        current_timestamp() as CRT_DTTM
         FROM itg_salesmanmaster salesman
         Union All
         Select 
