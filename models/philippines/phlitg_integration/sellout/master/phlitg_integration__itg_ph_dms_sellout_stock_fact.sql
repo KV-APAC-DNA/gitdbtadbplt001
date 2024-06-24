@@ -9,7 +9,7 @@
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_stock_fact') }}
+    select *, dense_rank() over(partition by dstrbtr_grp_cd,invoice_dt order by cdl_dttm desc) as rnk from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_stock_fact') }}
 ),
 final as(
     select 
@@ -25,6 +25,7 @@ final as(
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         null::timestamp_ntz(9)  as updt_dttm
     from source
+    where rnk = 1
 )
 
 select * from final
