@@ -486,7 +486,7 @@ cte15 as (
         null as weight_display
     from wks_perfect_store_sos_soa_custid_ind
 ),
-final as (
+transformed as (
     select * from cte1
     union all
     select * from cte2
@@ -516,5 +516,68 @@ final as (
     select * from cte14
     union all
     select * from cte15
+),
+final as (
+    select
+        hashkey::varchar(32) as hashkey,
+        hash_row::number(19,0) as hash_row,
+        dataset::varchar(128) as dataset,
+        customerid::varchar(255) as customerid,
+        salespersonid::varchar(255) as salespersonid,
+        visitid::varchar(255) as visitid,
+        questiontext::varchar(513) as questiontext,
+        productid::varchar(255) as productid,
+        kpi::varchar(573) as kpi,
+        scheduleddate::timestamp_ntz(9) as scheduleddate,
+        latestdate::timestamp_ntz(9) as latestdate,
+        fisc_yr::number(10,0) as fisc_yr,
+        fisc_per::number(10,0) as fisc_per,
+        merchandiser_name::varchar(770) as merchandiser_name,
+        customername::varchar(771) as customername,
+        country::varchar(200) as country,
+        state::varchar(256) as state,
+        parent_customer::varchar(382) as parent_customer,
+        retail_environment::varchar(382) as retail_environment,
+        channel::varchar(382) as channel,
+        retailer::varchar(382) as retailer,
+        business_unit::varchar(200) as business_unit,
+        eannumber::varchar(255) as eannumber,
+        matl_num::varchar(100) as matl_num,
+        prod_hier_l1::varchar(500) as prod_hier_l1,
+        prod_hier_l2::varchar(500) as prod_hier_l2,
+        prod_hier_l3::varchar(510) as prod_hier_l3,
+        prod_hier_l4::varchar(510) as prod_hier_l4,
+        prod_hier_l5::varchar(2000) as prod_hier_l5,
+        prod_hier_l6::varchar(500) as prod_hier_l6,
+        prod_hier_l7::varchar(500) as prod_hier_l7,
+        prod_hier_l8::varchar(500) as prod_hier_l8,
+        prod_hier_l9::varchar(2258) as prod_hier_l9,
+        ques_type::varchar(382) as ques_type,
+        "y/n_flag"::varchar(150) as "y/n_flag",
+        priority_store_flag::varchar(256) as priority_store_flag,
+        add_info::varchar(65535) as add_info,
+        response::varchar(65535) as response,
+        response_score::varchar(65535) as response_score,
+        kpi_chnl_wt::float as kpi_chnl_wt,
+        mkt_share::float as mkt_share,
+        salience_val::number(20,4) as salience_val,
+        channel_weightage::number(28,2) as channel_weightage,
+        actual_value::number(14,4) as actual_value,
+        ref_value::number(22,4) as ref_value,
+        kpi_actual_wt_val::varchar(40) as kpi_actual_wt_val,
+        kpi_ref_val::varchar(40) as kpi_ref_val,
+        kpi_ref_wt_val::varchar(150) as kpi_ref_wt_val,
+        photo_url::varchar(500) as photo_url,
+        store_grade::varchar(50) as store_grade,
+        total_weight::number(20,4) as total_weight,
+        calc_weight::number(11,6) as calc_weight,
+        weight_msl::number(19,10) as weight_msl,
+        weight_oos::number(19,10) as weight_oos,
+        weight_soa::number(19,10) as weight_soa,
+        weight_sos::number(19,10) as weight_sos,
+        weight_promo::number(19,10) as weight_promo,
+        weight_planogram::number(19,10) as weight_planogram,
+        weight_display::number(19,10) as weight_display
+    from transformed
 )
 select * from final
