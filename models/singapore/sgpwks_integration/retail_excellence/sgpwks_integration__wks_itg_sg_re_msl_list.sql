@@ -10,7 +10,7 @@ itg_mds_sg_customer_hierarchy as (
     select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_singapore_base_retail_excellence as (
     select * from {{ ref('sgpwks_integration__wks_singapore_base_retail_excellence') }}
