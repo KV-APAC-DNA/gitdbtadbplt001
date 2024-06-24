@@ -3,7 +3,7 @@ with edw_rpt_regional_sellout_offtake as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 WKS_SINGAPORE_REGIONAL_SELLOUT_MAPPED_SKU_CD as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_mapped_sku_cd') }}

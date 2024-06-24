@@ -1,6 +1,6 @@
 --import cte
 with edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_singapore_regional_sellout_act_lm as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_act_lm') }}
