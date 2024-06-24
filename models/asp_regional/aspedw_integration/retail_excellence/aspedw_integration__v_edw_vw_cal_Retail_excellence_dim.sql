@@ -1,9 +1,16 @@
 with edw_vw_cal_retail_excellence_dim as (
     select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
 ),
-EDW_VW_CAL_RETAIL_EXCELLENCE_DIM as
+EDW_VW_CAL_RETAIL_EXCELLENCE_DIM_trans as
 (
-SELECT to_char((current_timestamp::character varying)::timestamp without time zone, ('YYYYMM'::varchar)::text) AS curr_mnth,		--// SELECT to_char(('now'::character varying)::timestamp without time zone, ('YYYYMM'::character varying)::text) AS curr_mnth, // character varying
+SELECT to_char((current_timestamp::character varying)::timestamp without time zone, ('YYYYMM'::varchar)::text) AS curr_mnth,		--// SELECT to_char(('now'::character varying)::timestamp without time zone, ('YYYYMM'::character varying)::text) AS curr_mnth, // character varyingmodels
+asp_regional
+aspedw_integration
+retail_excellence
+aspedw_integration__v_edw_vw_cal_Retail_excellence_dim.sql
+
+Save
+987563412
  to_char(add_months((current_timestamp::varchar)::timestamp without time zone, (- (1)::bigint)),		--//  to_char(add_months(('now'::character varying)::timestamp without time zone, (- (1)::bigint)), // character varying
  ('YYYYMM'::character varying)::text) AS prev_mnth, to_char(add_months((current_timestamp::varchar)::timestamp without time zone,		--//  ('YYYYMM'::character varying)::text) AS prev_mnth, to_char(add_months(('now'::character varying)::timestamp without time zone, // character varying
  (- (2)::bigint)), ('YYYYMM'::character varying)::text) AS last_2mnths, to_char(add_months((current_timestamp::varchar)::timestamp without time zone,		--//  (- (2)::bigint)), ('YYYYMM'::character varying)::text) AS last_2mnths, to_char(add_months(('now'::character varying)::timestamp without time zone, // character varying
@@ -16,6 +23,6 @@ to_char(add_months((current_timestamp::character varying)::timestamp without tim
  to_char(add_months((current_timestamp::varchar)::timestamp		--//  to_char(add_months(('now'::character varying)::timestamp // character varying
  without time zone, (- (37)::bigint)), ('YYYYMM'::varchar)::text) AS last_37mnths
  )
- select * from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM
+ select * from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM_trans
  
 
