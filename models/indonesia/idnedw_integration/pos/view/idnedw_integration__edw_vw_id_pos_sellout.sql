@@ -359,7 +359,7 @@ final as
                         LEFT JOIN itg_mds_id_pos_cust_prod_mapping mds ON (
                             (
                                 (
-                                    (igr.description)::text = (mds.plu_sku_desc)::text
+                                    rtrim(igr.description)::text = (mds.plu_sku_desc)::text
                                 )
                                 AND (
                                     upper((mds.account)::text) = upper(('Indogrosir'::character varying)::text)

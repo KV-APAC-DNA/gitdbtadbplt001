@@ -1,0 +1,30 @@
+version: 2
+
+sources:  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_in_rretailergeoextension
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["filename", "cmpcode","distrcode","customercode"]
+              not_null_columns: ["cmpcode","distrcode","customercode"]
+              name: TRATBL_sdl_in_rretailergeoextension__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["cmpcode","distrcode"]
+              select_columns: ["filename", "cmpcode","distrcode","customercode"]
+              name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_mds_in_geo_tracker_coordinates
+        tags: ["in_mds_refresh","transformation"]
