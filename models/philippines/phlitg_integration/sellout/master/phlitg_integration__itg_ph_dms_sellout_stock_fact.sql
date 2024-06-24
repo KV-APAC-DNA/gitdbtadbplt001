@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_grp_cd', 'inv_dt'],
-        pre_hook= ["delete from {{this}} where dstrbtr_grp_cd || inv_dt in ( select distinct dstrbtr_grp_cd || to_date(invoice_dt, 'YYYYMMDD') from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_stock_fact') }} );"]
+        pre_hook= "delete from {{this}} where dstrbtr_grp_cd || inv_dt in ( select distinct dstrbtr_grp_cd || to_date(invoice_dt, 'YYYYMMDD') from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_stock_fact') }} );"
+
     )
 }}
 
