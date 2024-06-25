@@ -3,7 +3,7 @@ with source as (
 ),
 final as (
     select 
-        distinct rpt.country as country
-    from source as rpt
+        distinct trim(country) as country
+    from source
 )
 select * from final
