@@ -1,10 +1,10 @@
 with source as (
-    select * from snapntaedw_integration.edw_rpt_sfa_pm
+    select * from ntaedw_integration.edw_rpt_sfa_pm
 ),
 final as (
     select 
-        distinct rpt.country as country,
-        rpt.salescampaignname as salescampaignname
-    from source as rpt
+        distinct trim(country) as country,
+        trim(salescampaignname) as salescampaignname
+    from source
 )
 select * from final
