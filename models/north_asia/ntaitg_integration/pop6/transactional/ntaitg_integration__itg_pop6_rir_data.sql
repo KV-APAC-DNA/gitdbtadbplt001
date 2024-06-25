@@ -23,7 +23,7 @@ with source as
 final as
 (
     SELECT 
-		'TH' as cntry_cd,
+		'TH'::varchar(10) as cntry_cd,
 		visit_id::varchar(255) as visit_id,
 		sku_id::varchar(255) as sku_id,
 		sku::varchar(255) as sku,

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: phledw_integration__edw_vw_ph_survey_details
+    config:
+      alias: edw_vw_ph_survey_details
+      tags: ["North Asia Common Views","ingestion"]

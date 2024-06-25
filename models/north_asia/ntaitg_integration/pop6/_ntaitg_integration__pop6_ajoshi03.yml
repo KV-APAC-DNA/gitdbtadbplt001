@@ -33,3 +33,62 @@ models:
     config: 
         alias: itg_pop6_product_itg_pop6_exclusion
         tags: ['pop6_na_master', 'ingestion']
+  - name: ntaitg_integration__sdl_raw_pop6_hk_service_levels
+    config: 
+        alias: sdl_raw_pop6_hk_service_levels
+        tags: ['pop6_hk_master', 'ingestion']
+      
+  - name: ntaitg_integration__sdl_raw_pop6_hk_planned_visits
+    config: 
+        alias: sdl_raw_pop6_hk_planned_visits
+        tags: ['pop6_hk_master', 'ingestion']
+  
+  - name: ntaitg_integration__sdl_raw_pop6_hk_executed_visits
+    config: 
+        alias: sdl_raw_pop6_hk_executed_visits
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_sku_audits
+    config: 
+        alias: sdl_raw_pop6_hk_sku_audits
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_product_attribute_audits
+    config: 
+        alias: sdl_raw_pop6_hk_product_attribute_audits
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_general_audits
+    config: 
+        alias: sdl_raw_pop6_hk_general_audits
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_display_plans
+    config: 
+        alias: sdl_raw_pop6_hk_display_plans
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_displays
+    config: 
+        alias: sdl_raw_pop6_hk_displays
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_promotion_plans
+    config: 
+        alias: sdl_raw_pop6_hk_promotion_plans
+        tags: ['pop6_hk_master', 'ingestion']
+  
+  - name: ntaitg_integration__sdl_raw_pop6_hk_promotions
+    config: 
+        alias: sdl_raw_pop6_hk_promotions
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_tasks
+    config: 
+        alias: sdl_raw_pop6_hk_tasks
+        tags: ['pop6_hk_master', 'ingestion']
+
+  - name: ntaitg_integration__sdl_raw_pop6_hk_exclusion
+    config: 
+        alias: sdl_raw_pop6_hk_exclusion
+        tags: ['pop6_hk_master', 'ingestion']
