@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: c_tbdmsndhist
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+
+      - name: c_tbecdeptmst
+        tags: ["m_DCL_ITG_Job1","ingestion"]

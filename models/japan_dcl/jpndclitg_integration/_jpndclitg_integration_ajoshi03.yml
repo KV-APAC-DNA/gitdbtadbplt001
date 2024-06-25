@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: jpndclitg_integration__c_tbdmsndhist
+    config:
+      alias: c_tbdmsndhist
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecdeptmst
+    config:
+      alias: c_tbecdeptmst
+      tags: ["m_DCL_ITG_Job1","ingestion"]
