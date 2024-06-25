@@ -1,8 +1,8 @@
 with v_intrm_copa_sls_cust_hier as (
-    select * from snapntaedw_integration.v_intrm_copa_sls_cust_hier
+    select * from ntaedw_integration.v_intrm_copa_sls_cust_hier
 ),
 v_intrm_invc_sls_cust_hier as (
-    select * from snapntaedw_integration.v_intrm_invc_sls_cust_hier
+    select * from ntaedw_integration.v_intrm_invc_sls_cust_hier
 ),
 v_intrm_copa_sls as (
     SELECT v_intrm_copa_sls_cust_hier.ctry_nm,
