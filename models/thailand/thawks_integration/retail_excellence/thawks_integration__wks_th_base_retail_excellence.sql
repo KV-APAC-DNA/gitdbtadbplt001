@@ -1,5 +1,5 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as(
-    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ source('snapaspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
 WKS_TH_REGIONAL_SELLOUT_MAPPED_SKU_CD as(
     select * from {{ ref('thawks_integration__wks_th_regional_sellout_mapped_sku_cd') }}

@@ -175,6 +175,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
              PKA_PRODUCT_KEY,
              PKA_PRODUCT_KEY_DESCRIPTION
              FROM WKS_TH_BASE_RETAIL_EXCELLENCE
+             --changed to last_26mnths
 			 where MNTH_ID >= (select last_36mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	           and mnth_id <= (select  prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric) RE_BASE_DIM
          ON RE_BASE_DIM.cntry_cd = BASE_DIM.cntry_cd
@@ -187,6 +188,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
                           avg_qty,
                           SALES_VALUE_LIST_PRICE
                    FROM WKS_TH_BASE_RETAIL_EXCELLENCE
+                   ----changed to last_26mnths
 				   where MNTH_ID >= (select last_36mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	           and mnth_id <= (select  prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric) CM
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
