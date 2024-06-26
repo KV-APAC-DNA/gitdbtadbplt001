@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: jpndclitg_integration__c_tbecinquiremeisai
+    config: 
+      alias: c_tbecinquiremeisai
+      tags: ["in_mds_refresh","transformation"]
