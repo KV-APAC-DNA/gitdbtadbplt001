@@ -30,7 +30,7 @@ final as
 	cur_achvmnt_nr_nonprog::number(38,6) as cur_achvmnt_nr_nonprog,
 	prev_achvmnt_nr_nonprog::number(38,6) as prev_achvmnt_nr_nonprog,
 	nonprog_growth_percent::number(38,4) as nonprog_growth_percent,
-	convert_timezone('UTC','Asia/Kolkata',dateadd(minute,210,CURRENT_TIMESTAMP :: timestamp))::timestamp_ntz(9)
+	convert_timezone('UTC','Asia/Kolkata',dateadd(minute,210,current_timestamp :: timestamp))::timestamp_ntz(9) as load_datetime
     from sss_zonal_final_tmp_tbl
 )
 select * from final

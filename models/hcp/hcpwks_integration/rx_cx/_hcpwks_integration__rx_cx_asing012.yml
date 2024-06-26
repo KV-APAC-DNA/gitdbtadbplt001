@@ -21,3 +21,67 @@ models:
     config:
         alias: rx_cx_sales_achnr_qty
         tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_achnr_qty
+    config:
+        alias: rx_cx_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_ret_dim
+    config:
+        alias: rx_cx_ret_dim
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_consist_ratio_region_cohort
+    config:
+        alias: rx_cx_consist_ratio_region_cohort
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_presc_ideal_ratio
+    config:
+          alias: rx_cx_sales_presc_ideal_ratio
+          tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_prod_reg_cutoffs
+    config:
+        alias: rx_cx_prod_reg_cutoffs
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_prod_reg_cutoffs_stable
+    config:
+        alias: rx_cx_prod_reg_cutoffs_stable
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_missing_urc_prod_list
+    config:
+        alias: rx_cx_missing_urc_prod_list
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_achnr_qty_recom
+    config:
+        alias: rx_cx_sales_achnr_qty_recom
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_miss_urc_prod_sales_rx
+    config:
+        alias: rx_cx_miss_urc_prod_sales_rx
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_consist_ratio_region_cohort
+    config:
+        alias: rx_cx_consist_ratio_region_cohort
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_cy_target
+    config:
+        alias: rx_cx_cy_target
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__retailer_dim_tmp
+    config:
+        alias: retailer_dim_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__hcp_master_data 
+    config:
+        alias: hcp_master_data
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__master_hcp_urc_mapp
+    config:
+        alias: master_hcp_urc_mapp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__product_dim_tmp
+    config:
+        alias: product_dim_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__udc_gtm_flag_tmp
+    config:
+        alias: udc_gtm_flag_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
