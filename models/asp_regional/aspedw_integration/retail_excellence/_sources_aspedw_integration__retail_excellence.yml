@@ -94,3 +94,38 @@ sources:
     tables:
       - name: v_edw_rpt_retail_excellence
 
+  - name: aspedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_rpt_regional_sellout_offtake
+      - name: edw_vw_cal_retail_excellence_dim
+      - name: edw_calendar_dim
+      - name: edw_company_dim
+      - name: edw_list_price
+
+
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_re_msl_input_definition
+
+
+  - name: snapaspedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapaspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_material_dim
