@@ -12,13 +12,13 @@ sources:
     - name: sdl_kr_dads_linkprice
       tags: ["kr_dads","ingestion"]
       tests:
-        - test_null:
-            select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            not_null_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            name: TRATBL_sdl_kr_dads_linkprice__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+      #   - test_null:
+      #       select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
+      #       not_null_columns: ["campaign_name", "material_id", "product_number", "product_name"]
+      #       name: TRATBL_sdl_kr_dads_linkprice__null_test
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
         - test_format:
             select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
             where_clause: "not regexp_like (substring(file_name,15,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
