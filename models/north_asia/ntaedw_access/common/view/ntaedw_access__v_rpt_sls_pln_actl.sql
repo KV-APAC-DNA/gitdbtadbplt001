@@ -1,0 +1,46 @@
+with source as (
+    select * from {{ ref('ntaedw_integration__v_rpt_sls_pln_actl') }}
+),
+final as (
+    select
+        ctry_nm as "ctry_nm",
+        cust_num as "cust_num",
+        cust_nm as "cust_nm",
+        matl_num as "matl_num",
+        matl_desc as "matl_desc",
+        mega_brnd_desc as "mega_brnd_desc",
+        brnd_desc as "brnd_desc",
+        prod_hier_l1 as "prod_hier_l1",
+        prod_hier_l2 as "prod_hier_l2",
+        prod_hier_l3 as "prod_hier_l3",
+        prod_hier_l4 as "prod_hier_l4",
+        prod_hier_l5 as "prod_hier_l5",
+        prod_hier_l6 as "prod_hier_l6",
+        prod_hier_l7 as "prod_hier_l7",
+        prod_hier_l8 as "prod_hier_l8",
+        prod_hier_l9 as "prod_hier_l9",
+        cust_hier_l1 as "cust_hier_l1",
+        cust_hier_l2 as "cust_hier_l2",
+        cust_hier_l3 as "cust_hier_l3",
+        cust_hier_l4 as "cust_hier_l4",
+        cust_hier_l5 as "cust_hier_l5",
+        sls_grp as "sls_grp",
+        sls_ofc_desc as "sls_ofc_desc",
+        channel as "channel",
+        store_type as "store_type",
+        fisc_yr_per as "fisc_yr_per",
+        acct_hier_shrt_desc as "acct_hier_shrt_desc",
+        from_crncy as "from_crncy",
+        to_crncy as "to_crncy",
+        ex_rt_typ as "ex_rt_typ",
+        ex_rt as "ex_rt",
+        copa_val as "copa_val",
+        net_bill_val as "net_bill_val",
+        ord_qty_pc as "ord_qty_pc",
+        rf_total as "rf_total",
+        bp_total as "bp_total",
+        le_total as "le_total",
+        timegone as "timegone"
+    from source
+)
+select * from final

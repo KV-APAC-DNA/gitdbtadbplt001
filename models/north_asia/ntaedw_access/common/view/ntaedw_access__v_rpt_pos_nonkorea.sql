@@ -1,0 +1,48 @@
+with source as (
+    select * from {{ ref('ntaedw_integration__v_rpt_pos_nonkorea') }}
+),
+final as (
+    select
+        fisc_per as "fisc_per",
+        fisc_wk as "fisc_wk",
+        fisc_wk_num as "fisc_wk_num",
+        max_wk_flg as "max_wk_flg",
+        curr_month_ind as "curr_month_ind",
+        sls_qty as "sls_qty",
+        sls_amt_customer as "sls_amt_customer",
+        invnt_qty as "invnt_qty",
+        invnt_amt as "invnt_amt",
+        sls_amt as "sls_amt",
+        crncy_cd as "crncy_cd",
+        src_sys_cd as "src_sys_cd",
+        ctry_nm as "ctry_nm",
+        sls_grp as "sls_grp",
+        sls_grp_cd as "sls_grp_cd",
+        sold_to_party as "sold_to_party",
+        store_typ as "store_typ",
+        my_sls_brand_nm as "my_sls_brand_nm",
+        channel as "channel",
+        to_crncy as "to_crncy",
+        ex_rt_typ as "ex_rt_typ",
+        ex_rt as "ex_rt",
+        ean_num as "ean_num",
+        str_cd as "str_cd",
+        str_nm as "str_nm",
+        cust_hier_l1 as "cust_hier_l1",
+        cust_hier_l2 as "cust_hier_l2",
+        cust_hier_l3 as "cust_hier_l3",
+        cust_hier_l4 as "cust_hier_l4",
+        cust_hier_l5 as "cust_hier_l5",
+        prod_hier_l1 as "prod_hier_l1",
+        prod_hier_l2 as "prod_hier_l2",
+        prod_hier_l3 as "prod_hier_l3",
+        prod_hier_l4 as "prod_hier_l4",
+        prod_hier_l5 as "prod_hier_l5",
+        prod_hier_l6 as "prod_hier_l6",
+        prod_hier_l7 as "prod_hier_l7",
+        prod_hier_l8 as "prod_hier_l8",
+        prod_hier_l9 as "prod_hier_l9",
+        lcl_prod_nm as "lcl_prod_nm"
+    from source
+)
+select * from final

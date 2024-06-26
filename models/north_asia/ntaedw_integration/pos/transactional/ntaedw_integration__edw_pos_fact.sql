@@ -2,12 +2,12 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= ["
+        pre_hook= ["{% if is_incremental() %}
                     delete
                     from {{this}}
                     where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_fact') }})
                     and   hist_flg ilike  '%n%';
-                    "]
+                    {% endif %}"]
         )
 }}
 
