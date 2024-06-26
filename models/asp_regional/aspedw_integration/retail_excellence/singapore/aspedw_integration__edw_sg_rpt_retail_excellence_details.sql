@@ -153,11 +153,7 @@ final as(
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-<<<<<<< feature_dev_retail_excellence
 "cluster"::VARCHAR(100) as cluster,
-=======
-cluster::VARCHAR(100) as cluster,
->>>>>>> feature_dev_retail_excellence_th_jc3
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
