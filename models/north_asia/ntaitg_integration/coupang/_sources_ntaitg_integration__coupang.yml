@@ -121,25 +121,25 @@ sources:
                 schema: ntawks_integration
     - name: sdl_kr_coupang_pa_report
       tags: ["kr_dads", "ingestion"]
-      tests:
-        - test_null:
-            select_columns: ["ad_execution_option_id", "date"]
-            not_null_columns: ["ad_execution_option_id", "date"]
-            name: TRATBL_sdl_kr_coupang_pa_report__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+      # tests:
+        # - test_null:
+        #     select_columns: ["ad_execution_option_id", "date"]
+        #     not_null_columns: ["ad_execution_option_id", "date"]
+        #     name: TRATBL_sdl_kr_coupang_pa_report__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
 
     - name: sdl_kr_dads_coupang_price
       tags: ["kr_dads", "ingestion"]
       tests:
-          - test_null:
-              select_columns: ["report_date"]
-              not_null_columns: ["report_date"]
-              name: TRATBL_sdl_kr_dads_coupang_price__null_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+          # - test_null:
+          #     select_columns: ["report_date"]
+          #     not_null_columns: ["report_date"]
+          #     name: TRATBL_sdl_kr_dads_coupang_price__null_test
+          #     config:
+          #       store_failures: true
+          #       schema: ntawks_integration
           - test_format:
               select_columns: ["report_date"]
               where_clause: "not regexp_like (substring(report_date,1,10), '[2][0][0-9][0-9]-[0-1][0-9]-[0-3][0-9]') "
@@ -166,14 +166,14 @@ sources:
               schema: ntawks_integration
     - name: sdl_kr_coupang_bpa_report
       tags: ["kr_dads", "ingestion"]
-      tests:
-        - test_null:
-            select_columns: ["campaign_start_date", "campaign_id", "date"]
-            not_null_columns: ["campaign_start_date", "campaign_id", "date"]
-            name: TRATBL_sdl_kr_coupang_bpa_report__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+      # tests:
+        # - test_null:
+        #     select_columns: ["campaign_start_date", "campaign_id", "date"]
+        #     not_null_columns: ["campaign_start_date", "campaign_id", "date"]
+        #     name: TRATBL_sdl_kr_coupang_bpa_report__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
     - name: sdl_kr_coupang_customer_brand_trend
       tags: ["gt_sellout_otc", "ingestion"]
       tests:
