@@ -8,7 +8,7 @@ with v_edw_sg_rpt_retail_excellence as (
 final as (
 select fisc_yr,
        cast(fisc_per as numeric(18,0) ) as fisc_per,		--// integer
-       cluster,
+       "cluster",
        market,
        md5(nvl(sell_out_channel,'soc')||nvl(retail_environment,'re')||nvl(region,'reg')||nvl(zone_name,'zn')||
 		   nvl(city,'cty')||nvl(prod_hier_l1,'ph1')||nvl(prod_hier_l2,'ph2')||
@@ -84,7 +84,7 @@ select fisc_yr,
  from v_edw_sg_rpt_retail_excellence flags	--//  from os_edw.edw_sg_rpt_retail_excellence flags
  group by flags.fisc_yr,		--//  group by flags.fisc_yr,
        flags.fisc_per,		--//        flags.fisc_per,
-       flags.cluster,		--//        flags.cluster,
+       flags."cluster",		--//        flags.cluster,
        flags.market,		--//        flags.market,
        md5(nvl(sell_out_channel,'soc')||nvl(retail_environment,'re')||nvl(region,'reg')||nvl(zone_name,'zn')||
            nvl(city,'cty')||nvl(prod_hier_l1,'ph1')||nvl(prod_hier_l2,'ph2')||
@@ -118,7 +118,5 @@ select fisc_yr,
        store_code,
        product_code
 )
-
-
 --Final select
 select * from final 

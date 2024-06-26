@@ -11,11 +11,7 @@ itg_query_parameters as (
 edw_sg_rpt_retail_excellence as (
 SELECT FISC_YR,
        CAST(FISC_PER AS numeric(18,0)) AS FISC_PER,		--// INTEGER
-<<<<<<< feature_dev_retail_excellence
        "cluster",
-=======
-       CLUSTER,
->>>>>>> feature_dev_retail_excellence_th_jc3
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
