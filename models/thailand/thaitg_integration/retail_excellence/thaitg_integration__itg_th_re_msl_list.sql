@@ -5,7 +5,7 @@ edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_th_base_retail_excellence as (
     select * from {{ ref('thawks_integration__wks_th_base_retail_excellence') }}
