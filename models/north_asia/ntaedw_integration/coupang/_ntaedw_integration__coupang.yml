@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__vw_edw_coupang_brand_and_product_ranking
+    config: 
+        alias: vw_edw_coupang_brand_and_product_ranking
+        tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_brand_trend
+    config: 
+        alias: vw_edw_coupang_brand_trend
+        tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_premium_intrm
+    config: 
+        alias: vw_edw_coupang_premium_intrm
+        tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_search_keyword
+    config: 
+        alias: vw_edw_coupang_search_keyword
+        tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_user_review
+    config: 
+        alias: vw_edw_coupang_user_review
+        tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__v_rpt_kr_coupang_ppm
+    config:
+      alias: v_rpt_kr_coupang_ppm
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_premium
+    config:
+      alias: vw_edw_coupang_premium
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__vw_edw_coupang_product_ranking_daily
+    config:
+      alias: vw_edw_coupang_product_ranking_daily
+      tags: ["korea_views","transformation"]

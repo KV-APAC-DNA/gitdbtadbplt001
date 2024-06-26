@@ -268,13 +268,13 @@ BASE_DATA as (
         sum(last_12months_so_value) as last_12months_so_val,
         sum(last_36months_so_value) as last_36months_so_val,
         cast(
-            (sum(last_3months_so_value) * T2.Exch_rate) as numeric(38, 5)
+            (sum(last_3months_so_value * T2.Exch_rate)) as numeric(38, 5)
         ) as last_3months_so_val_usd,
         cast(
-            (sum(last_6months_so_value) * T2.Exch_rate) as numeric(38, 5)
+            (sum(last_6months_so_value * T2.Exch_rate)) as numeric(38, 5)
         ) as last_6months_so_val_usd,
         cast(
-            (sum(last_12months_so_value) * T2.Exch_rate) as numeric(38, 5)
+            (sum(last_12months_so_value * T2.Exch_rate)) as numeric(38, 5)
         ) as last_12months_so_val_usd,
         propagate_flag,
         propagate_from,

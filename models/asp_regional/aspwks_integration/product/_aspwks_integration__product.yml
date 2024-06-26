@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_edw_product_attr_dim
+    config:
+      alias: wks_edw_product_attr_dim
+      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
+  - name: aspwks_integration__wks_edw_product_attr_dim_2
+    config:
+      alias: wks_edw_product_attr_dim_2
+      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
