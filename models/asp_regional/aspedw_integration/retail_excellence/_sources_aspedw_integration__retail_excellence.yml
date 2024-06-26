@@ -128,9 +128,9 @@ sources:
     tables:
       - name: itg_mds_sg_customer_hierarchy
 
-  - name: snapntaedw_integration
+  - name: ntaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapntaedw_integration
+    schema: ntaedw_integration
     quoting:
       database: false
       schema: false
