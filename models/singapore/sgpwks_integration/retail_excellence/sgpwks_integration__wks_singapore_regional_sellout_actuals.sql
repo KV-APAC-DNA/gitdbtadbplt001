@@ -123,7 +123,7 @@ FROM WKS_SINGAPORE_REGIONAL_SELLOUT_BASEDIM BASE_DIM
                           so_sls_value,
                           so_avg_qty,
                           sales_value_list_price
-                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_26mnths
+                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_36mnths
                         FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
       AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC) CM
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD

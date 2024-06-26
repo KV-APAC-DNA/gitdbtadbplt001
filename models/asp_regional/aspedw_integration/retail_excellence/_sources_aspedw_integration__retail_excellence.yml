@@ -10,11 +10,9 @@ sources:
       identifier: false
     tables:
       - name: v_edw_kr_rpt_retail_excellence
-<<<<<<< feature_dev_retail_excellence
       - name: edw_vw_pop6_products  
 
-=======
->>>>>>> feature_dev_retail_excellence_th_jc3
+
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: idnedw_integration
@@ -69,12 +67,8 @@ sources:
       identifier: false
     tables:
       - name: v_edw_sg_rpt_retail_excellence
-<<<<<<< feature_dev_retail_excellence
       - name: edw_vw_os_time_dim
-        
-=======
 
->>>>>>> feature_dev_retail_excellence_th_jc3
   - name: thaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaedw_integration
@@ -103,11 +97,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
-<<<<<<< feature_dev_retail_excellence
-      
-=======
 
->>>>>>> feature_dev_retail_excellence_th_jc3
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -117,18 +107,13 @@ sources:
       identifier: false
     tables:
       - name: edw_rpt_regional_sellout_offtake
-<<<<<<< feature_dev_retail_excellence
-      - name: edw_vw_cal_retail_excellence_dim      
-=======
+
       - name: edw_vw_cal_retail_excellence_dim
       - name: edw_calendar_dim
       - name: edw_company_dim
       - name: edw_list_price
 
-       
-
->>>>>>> feature_dev_retail_excellence_th_jc3
-
+ 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
@@ -139,25 +124,11 @@ sources:
     tables:
       - name: itg_re_msl_input_definition
 
-<<<<<<< feature_dev_retail_excellence
   - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: sgpitg_integration
-=======
-
-  - name: snapaspedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapaspedw_integration
->>>>>>> feature_dev_retail_excellence_th_jc3
-    quoting:
-      database: false
-      schema: false
-      identifier: false
     tables:
-<<<<<<< feature_dev_retail_excellence
       - name: itg_mds_sg_customer_hierarchy
 
  
-=======
-      - name: edw_rpt_regional_sellout_offtake
->>>>>>> feature_dev_retail_excellence_th_jc3
+

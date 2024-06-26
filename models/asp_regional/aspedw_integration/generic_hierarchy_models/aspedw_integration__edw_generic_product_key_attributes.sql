@@ -1,9 +1,5 @@
 with EDW_PRODUCT_KEY_ATTRIBUTES as (
-<<<<<<< feature_dev_retail_excellence
-
-=======
->>>>>>> feature_dev_retail_excellence_th_jc3
-    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
+ select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 
 transformation as(
