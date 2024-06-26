@@ -2,7 +2,7 @@ with WKS_TH_BASE_RETAIL_EXCELLENCE as (
     select * from {{ ref('thawks_integration__wks_th_base_retail_excellence') }}
     ),
 EDW_VW_CAL_RETAIL_EXCELLENCE_DIM as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
     ),
 EDW_VW_OS_TIME_DIM as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}

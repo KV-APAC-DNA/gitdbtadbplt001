@@ -1,11 +1,11 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as(
-    select * from {{ source('snapaspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
+    select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
 WKS_TH_REGIONAL_SELLOUT_MAPPED_SKU_CD as(
     select * from {{ ref('thawks_integration__wks_th_regional_sellout_mapped_sku_cd') }}
 ),
 edw_vw_cal_Retail_excellence_Dim as(
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 
 transformation as (SELECT  COUNTRY_CODE AS CNTRY_CD,
