@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_kr_rpt_retail_excellence
-      - name: edw_vw_pop6_products
+      - name: edw_vw_pop6_products  
 
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -128,14 +128,4 @@ sources:
     tables:
       - name: itg_mds_sg_customer_hierarchy
 
-  - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: edw_vw_pop6_products
-      
-
+ 
