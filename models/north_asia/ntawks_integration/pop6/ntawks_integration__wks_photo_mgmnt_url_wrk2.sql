@@ -2,7 +2,7 @@ with sdl_photo_mgmnt_url_cnt as (
     select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_cnt') }}
 ),
 itg_photo_mgmnt_url as (
-    select * from snapntaitg_integration.itg_photo_mgmnt_url
+    select * from ntaitg_integration.itg_photo_mgmnt_url
     -- select * from {{ source('ntaitg_integration', 'itg_photo_mgmnt_url_temp')}}
 ),
 final as (

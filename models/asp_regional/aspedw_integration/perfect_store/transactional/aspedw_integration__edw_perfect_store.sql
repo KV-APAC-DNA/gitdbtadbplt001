@@ -1,10 +1,10 @@
 {{
     config(
-        post_hook="delete from {{this}} where country='Malaysia' and channel='GT' and storetype='SUPERMARKET' and customername not in (select distinct customername from  snaposeedw_integration.my_perfect_store_supermarket_adjust);"
+        post_hook="delete from {{this}} where country='Malaysia' and channel='GT' and storetype='SUPERMARKET' and customername not in (select distinct customername from  {{ source('mysedw_integration','my_perfect_store_supermarket_adjust') }});"
     )
 }}
 with source as (
-    select * from snapaspedw_integration.v_rpt_perfect_store
+    select * from aspedw_integration.v_rpt_perfect_store
 ),
 final as (
     select

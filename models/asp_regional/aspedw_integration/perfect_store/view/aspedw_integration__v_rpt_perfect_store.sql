@@ -1,80 +1,80 @@
 with v_rpt_rex_perfect_store as (
-    select * from snapaspedw_integration.v_rpt_rex_perfect_store
+    select * from aspedw_integration.v_rpt_rex_perfect_store
 ),
 edw_vw_pop6_products as (
-    select * from snapntaedw_integration.edw_vw_pop6_products
+    select * from ntaedw_integration.edw_vw_pop6_products
 ),
 v_rpt_pop6_perfectstore as (
-    select * from snapntaedw_integration.v_rpt_pop6_perfectstore
+    select * from ntaedw_integration.v_rpt_pop6_perfectstore
 ),
 itg_query_parameters as (
-    select * from snapaspitg_integration.itg_query_parameters
+    select * from aspitg_integration.itg_query_parameters
 ),
 edw_pacific_perfect_store as (
-    select * from snappcfedw_integration.edw_pacific_perfect_store
+    select * from pcfedw_integration.edw_pacific_perfect_store
 ),
 v_rpt_ph_perfect_store as (
-    select * from snaposeedw_integration.v_rpt_ph_perfect_store
+    select * from oseedw_integration.v_rpt_ph_perfect_store
 ),
 v_rpt_id_regional_perfect_store as (
-    select * from snapidnedw_integration.v_rpt_id_regional_perfect_store
+    select * from idnedw_integration.v_rpt_id_regional_perfect_store
 ),
 v_rpt_jp_pop6_perfect_store as (
-    select * from snapntaedw_integration.v_rpt_jp_pop6_perfect_store
+    select * from ntaedw_integration.v_rpt_jp_pop6_perfect_store
 ),
 v_rpt_sg_pop6_perfect_store as (
-    select * from snapntaedw_integration.v_rpt_sg_pop6_perfect_store
+    select * from ntaedw_integration.v_rpt_sg_pop6_perfect_store
 ),
 v_rpt_th_pop6_perfect_store as (
-    select * from snapntaedw_integration.v_rpt_th_pop6_perfect_store
+    select * from ntaedw_integration.v_rpt_th_pop6_perfect_store
 ),
 v_rpt_my_perfect_store_snapshot as (
-    select * from snaposeedw_integration.v_rpt_my_perfect_store_snapshot
+    select * from oseedw_integration.v_rpt_my_perfect_store_snapshot
 ),
 v_rpt_my_perfect_store as (
-    select * from snaposeedw_integration.v_rpt_my_perfect_store
+    select * from oseedw_integration.v_rpt_my_perfect_store
 ),
 edw_sku_recom as (
-    select * from snapindedw_integration.edw_sku_recom
+    select * from indedw_integration.edw_sku_recom
 ),
 itg_udcdetails as (
-    select * from snapinditg_integration.itg_udcdetails
+    select * from inditg_integration.itg_udcdetails
 ),
 edw_calendar_dim as (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from aspedw_integration.edw_calendar_dim
 ),
 edw_sku_recom as (
-    select * from snapindedw_integration.edw_sku_recom
+    select * from indedw_integration.edw_sku_recom
 ),
 edw_vw_ps_weights as (
-    select * from snapaspedw_integration.edw_vw_ps_weights
+    select * from aspedw_integration.edw_vw_ps_weights
 ),
 itg_in_perfectstore_msl as (
-    select * from snapinditg_integration.itg_in_perfectstore_msl
+    select * from inditg_integration.itg_in_perfectstore_msl
 ),
 edw_product_key_attributes as (
-    select * from snapaspedw_integration.edw_product_key_attributes
+    select * from aspedw_integration.edw_product_key_attributes
 ),
 itg_in_perfectstore_sos as (
-    select * from snapinditg_integration.itg_in_perfectstore_sos
+    select * from inditg_integration.itg_in_perfectstore_sos
 ),
 edw_vw_ps_targets as (
-    select * from snapaspedw_integration.edw_vw_ps_targets
+    select * from aspedw_integration.edw_vw_ps_targets
 ),
 itg_in_perfectstore_promo as (
-    select * from snapinditg_integration.itg_in_perfectstore_promo
+    select * from inditg_integration.itg_in_perfectstore_promo
 ),
 itg_in_perfectstore_paid_display as (
-    select * from snapinditg_integration.itg_in_perfectstore_paid_display
+    select * from inditg_integration.itg_in_perfectstore_paid_display
 ),
 rpt_in_perfect_store as (
-    select * from snapindedw_integration.rpt_in_perfect_store
+    select * from indedw_integration.rpt_in_perfect_store
 ),
 edw_rpt_th_perfect_store as (
-    select * from snaposeedw_integration.edw_rpt_th_perfect_store
+    select * from oseedw_integration.edw_rpt_th_perfect_store
 ),
 v_rpt_vn_perfect_store as (
-    select * from snaposeedw_integration.v_rpt_vn_perfect_store
+    select * from oseedw_integration.v_rpt_vn_perfect_store
 ),
 rex as (
     SELECT UPPER(derived_table1.dataset)::CHARACTER VARYING AS dataset,

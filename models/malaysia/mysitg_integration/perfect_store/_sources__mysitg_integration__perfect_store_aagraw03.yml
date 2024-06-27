@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: myssdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: myssdl_raw
     quoting:
       database: false
       schema: false
@@ -27,3 +27,12 @@ sources:
               config:
                 store_failures: true
                 schema: myswks_integration
+  - name: mysedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: mysedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: my_perfect_store_supermarket_adjust

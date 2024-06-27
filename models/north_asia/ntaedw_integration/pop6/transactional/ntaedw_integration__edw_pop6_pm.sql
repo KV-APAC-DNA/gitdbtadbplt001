@@ -1,35 +1,35 @@
 with edw_vw_pop6_visits_display as (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_display
+    select * from ntaedw_integration.edw_vw_pop6_visits_display
 ),
 edw_vw_pop6_store as (
-    select * from snapntaedw_integration.edw_vw_pop6_store
+    select * from ntaedw_integration.edw_vw_pop6_store
 ),
 edw_vw_pop6_salesperson as (
-    select * from snapntaedw_integration.edw_vw_pop6_salesperson
+    select * from ntaedw_integration.edw_vw_pop6_salesperson
 ),
 edw_vw_pop6_visits_prod_attribute_audits as (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
+    select * from ntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
 ),
 edw_vw_pop6_tasks as (
-    select * from snapntaedw_integration.edw_vw_pop6_tasks
+    select * from ntaedw_integration.edw_vw_pop6_tasks
 ),
 edw_vw_pop6_visits_sku_audits as (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_sku_audits
+    select * from ntaedw_integration.edw_vw_pop6_visits_sku_audits
 ),
 edw_vw_pop6_products as (
-    select * from snapntaedw_integration.edw_vw_pop6_products
+    select * from ntaedw_integration.edw_vw_pop6_products
 ),
 itg_photo_mgmnt_url as (
-    select * from snapntaitg_integration.itg_photo_mgmnt_url
+    select * from ntaitg_integration.itg_photo_mgmnt_url
 ),
 itg_pop6_executed_visits as (
-    select * from snapntaitg_integration.itg_pop6_executed_visits
+    select * from ntaitg_integration.itg_pop6_executed_visits
 ),
 itg_pop6_promotions as (
-    select * from snapntaitg_integration.itg_pop6_promotions
+    select * from ntaitg_integration.itg_pop6_promotions
 ),
 itg_pop6_general_audits as (
-    select * from snapntaitg_integration.itg_pop6_general_audits
+    select * from ntaitg_integration.itg_pop6_general_audits
 ),
 display as (
     SELECT 'display' AS data_type,
