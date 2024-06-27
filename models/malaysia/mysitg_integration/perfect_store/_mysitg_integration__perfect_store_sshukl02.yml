@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: mysitg_integration__sdl_raw_my_perfectstore_oos
+    config:
+      alias: sdl_raw_my_perfectstore_oos
+      tags: ["my_perfect_store_transaction","transformation"]
+  - name: mysitg_integration__itg_my_perfectstore_oos
+    config:
+      alias: itg_my_perfectstore_oos
+      tags: ["my_perfect_store_transaction","transformation"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_promocomp
+    config:
+      alias: sdl_raw_my_perfectstore_promocomp
+      tags: ["my_perfect_store_transaction","transformation"]
+  - name: mysitg_integration__itg_my_perfectstore_promocomp
+    config:
+      alias: itg_my_perfectstore_promocomp
+      tags: ["my_perfect_store_transaction","transformation"]
+  - name: mysitg_integration__itg_mds_my_ps_msl
+    config:
+      alias: itg_mds_my_ps_msl
+      tags: ["my_perfect_store_mds_itg_refresh","transformation"]
+  - name: mysitg_integration__itg_mds_my_ps_targets
+    config:
+      alias: itg_mds_my_ps_targets
+      tags: ["my_perfect_store_mds_itg_refresh","transformation"]
+  - name: mysitg_integration__itg_mds_my_ps_weights
+    config:
+      alias: itg_mds_my_ps_weights
+      tags: ["my_perfect_store_mds_itg_refresh","transformation"]

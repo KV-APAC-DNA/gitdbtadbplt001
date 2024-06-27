@@ -1,0 +1,139 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_jp_service_levels
+        tests:
+          - test_null:
+              select_columns: ["visit_frequency"]
+              not_null_columns: ["visit_frequency"]
+              name: TRATBL_sdl_pop6_jp_service_levels__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_frequency"]
+              group_by_columns: ["visit_frequency"]
+              name: TRATBL_sdl_pop6_jp_service_levels__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_planned_visits
+        tests:
+          - test_null:
+              select_columns: ["popdb_id"]
+              not_null_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_jp_planned_visits__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["popdb_id"]
+              group_by_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_jp_planned_visits__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_sku_audits
+        tests:
+          - test_null:
+              select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              not_null_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              name: TRATBL_sdl_pop6_jp_sku_audits__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              group_by_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              name: TRATBL_sdl_pop6_jp_sku_audits__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_display_plans
+        tests:
+          - test_null:
+              select_columns: ["display_plan_id"]
+              not_null_columns: ["display_plan_id"]
+              name: TRATBL_sdl_pop6_jp_display_plans__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["display_plan_id"]
+              group_by_columns: ["display_plan_id"]
+              name: TRATBL_sdl_pop6_jp_display_plans__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_executed_visits  
+        tests:
+          - test_null:
+              select_columns: ["visit_id","popdb_id"]
+              not_null_columns: ["visit_id","popdb_id"]
+              name: TRATBL_sdl_pop6_jp_executed_visits__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","popdb_id"]
+              group_by_columns: ["visit_id","popdb_id"]
+              name: TRATBL_sdl_pop6_jp_executed_visits__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration    
+      - name: sdl_pop6_jp_product_attribute_audits
+        tests:
+          - test_null:
+              select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              name: TRATBL_sdl_pop6_jp_product_attribute_audits__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              group_by_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              name: TRATBL_sdl_pop6_jp_product_attribute_audits__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_general_audits
+        tests:
+          - test_null:
+              select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              name: TRATBL_sdl_pop6_jp_general_audits__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              group_by_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              name: TRATBL_sdl_pop6_jp_general_audits__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+      - name: sdl_pop6_jp_displays
+        tests:
+          - test_null:
+              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_jp_displays__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              group_by_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_jp_displays__test_duplicate
+              config:
+                store_failures: true
+                schema: jpnwks_integration

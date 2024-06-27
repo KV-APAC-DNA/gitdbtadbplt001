@@ -63,18 +63,18 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_pop6_jp_displays
+      # - name: sdl_pop6_jp_displays
       - name: sdl_pop6_jp_exclusion
-      - name: sdl_pop6_jp_executed_visits
-      - name: sdl_pop6_jp_general_audits
-      - name: sdl_pop6_jp_planned_visits
+      # - name: sdl_pop6_jp_executed_visits
+      # - name: sdl_pop6_jp_general_audits
+      # - name: sdl_pop6_jp_planned_visits
       - name: sdl_pop6_jp_pop_lists
-      - name: sdl_pop6_jp_product_attribute_audits
+      # - name: sdl_pop6_jp_product_attribute_audits
       - name: sdl_pop6_jp_product_lists_allocation
       - name: sdl_pop6_jp_product_lists_products
       - name: sdl_pop6_jp_promotion_plans
       - name: sdl_pop6_jp_promotions
-      - name: sdl_pop6_jp_service_levels
+      # - name: sdl_pop6_jp_service_levels
       - name: sdl_pop6_jp_tasks
       - name: sdl_pop6_jp_users
 
