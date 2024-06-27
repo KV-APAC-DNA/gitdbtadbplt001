@@ -12,7 +12,7 @@ WITH sales_cube_mgmnt_agg as
 sku_recom_mgmnt_agg
 AS
 (SELECT cust_cd, retailer_cd, mother_sku_cd
- FROM indedw_integration.edw_sku_recom_spike_msl sku
+ FROM snapindedw_integration.edw_sku_recom_spike_msl sku
  WHERE mth_mm >= 202201
  AND business_channel = 'GT'
  GROUP BY cust_cd, retailer_cd, mother_sku_cd

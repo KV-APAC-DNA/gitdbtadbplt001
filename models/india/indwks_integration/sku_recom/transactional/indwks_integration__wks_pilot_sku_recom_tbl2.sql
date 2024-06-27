@@ -47,8 +47,8 @@ final as
        NVL(sku.salesman_code,msku_sales.latest_salesman_code) AS salesman_code,
        NVL(sku.salesman_name,msku_sales.latest_salesman_name) AS salesman_name,
        NVL(sku.unique_sales_code,msku_sales.latest_uniquesalescode) AS unique_sales_code,
-       sku.route_code,
-       sku.route_name,
+       trim(sku.route_code) as route_code,
+       trim(sku.route_name) as route_name,
        CASE WHEN (sku.ms_flag = 1 OR sku.cs_flag = 1) THEN 'RECO_YES' ELSE 'RECO_NO' END AS reco_flag,
        CASE WHEN msku_sales.rtruniquecode IS NOT NULL THEN 'SALES_YES_CY' ELSE 'SALES_NO_CY' END AS sales_flag
     FROM  wks_pilot_sku_recom_tbl1_integ sku

@@ -8,8 +8,8 @@ itg_udcdetails as
 ),
 edw_calendar_dim as
 (
-    select * from snenav01_workspace.aspedw_integration__edw_calendar_dim
-    --{{ ref('aspedw_integration__edw_calendar_dim') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
+    --snenav01_workspace.aspedw_integration__edw_calendar_dim
 ),
 final as 
 (
@@ -59,11 +59,11 @@ final as
                 INNER JOIN ( SELECT derived_table1."year", derived_table1.quarter, derived_table1."month", derived_table1.distcode, derived_table1.retailer_code, min(derived_table1.columnname::text) AS columnname, "max"(derived_table1.program_name::text) AS program_name
                             FROM ( SELECT t.cal_yr AS "year", t.cal_qtr_1 AS quarter, t.cal_mo_2 AS "month", u.columnname, u.columnvalue AS program_name, u.mastervaluecode AS retailer_code, u.distcode
                                     FROM itg_udcdetails u
-                                JOIN edw_calendar_dim t ON "right"(u.columnname::text, 4) = t.cal_yr::character varying::text AND "left"(split_part(u.columnname::text, ' Q'::character varying::text, 2), 1) = t.cal_qtr_1::character varying::text AND (u.columnname::text like '%SSS Program Q%'::character varying::text OR u.columnname::text like '%Platinum Q%'::character varying::text)
+                                JOIN edw_calendar_dim t ON right(u.columnname::text, 4) = t.cal_yr::character varying::text AND left(split_part(u.columnname::text, ' Q'::character varying::text, 2), 1) = t.cal_qtr_1::character varying::text AND (u.columnname::text like '%SSS Program Q%'::character varying::text OR u.columnname::text like '%Platinum Q%'::character varying::text)
                                 WHERE u.mastername::text = 'Retailer Master'::character varying::text AND u.columnvalue IS NOT NULL AND u.columnvalue::text <> 'No'::character varying::text
                                 GROUP BY t.cal_yr, t.cal_qtr_1, t.cal_mo_2, u.columnname, u.columnvalue, u.mastervaluecode, u.distcode) derived_table1
                             GROUP BY derived_table1."year", derived_table1.quarter, derived_table1."month", derived_table1.distcode, derived_table1.retailer_code) c
-                ON a.retailer_cd::text = c.retailer_code::text AND a.qtr = c.quarter AND ltrim("left"(a.mth_mm::character varying::text, 4), '0'::character varying::text) = c."year"::character varying::text AND ltrim("right"(a.mth_mm::character varying::text, 2), '0'::character varying::text) = c."month"::character varying::text AND c.distcode::text = a.cust_cd::text
+                ON a.retailer_cd::text = c.retailer_code::text AND a.qtr = c.quarter AND ltrim(left(a.mth_mm::character varying::text, 4), '0'::character varying::text) = c."year"::character varying::text AND ltrim(right(a.mth_mm::character varying::text, 2), '0'::character varying::text) = c."month"::character varying::text AND c.distcode::text = a.cust_cd::text
                 WHERE LEFT(mth_mm,4) >= 2022
                 GROUP BY 1) tb2
             ON tb1.mth_mm = tb2.mth_mm

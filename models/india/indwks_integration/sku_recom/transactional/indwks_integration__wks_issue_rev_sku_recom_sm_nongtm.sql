@@ -1,14 +1,14 @@
 with wks_issue_rev_sku_recom_tmp1 as
 (
-    select * from indwks_integration.wks_issue_rev_sku_recom_tmp1
+    select * from snapindwks_integration.wks_issue_rev_sku_recom_tmp1
 ),
 wks_issue_rev_udc_details as
 (
-    select * from indwks_integration.wks_issue_rev_udc_details
+    select * from snapindwks_integration.wks_issue_rev_udc_details
 ),
 wks_issue_rev_itg_in_rsalesman as
 (
-    select * from indwks_integration.wks_issue_rev_itg_in_rsalesman
+    select * from snapindwks_integration.wks_issue_rev_itg_in_rsalesman
 ),
 final as
 (

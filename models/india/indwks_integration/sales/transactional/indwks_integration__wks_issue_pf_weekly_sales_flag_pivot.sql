@@ -22,10 +22,6 @@ final as
        SUM(CASE WHEN week = 4 THEN sales_flag ELSE 0 END) AS week4_sales_flag,
        SUM(CASE WHEN week = 5 THEN sales_flag ELSE (CASE WHEN RIGHT(mnth_id,2) IN (03,06,09,12) THEN 0 ELSE NULL END) END) AS week5_sales_flag
     FROM wks_issue_rev_pf_weekly_sales_flag
-    GROUP BY 1,
-            2,
-            3,
-            4,
-            5,6,7,8,9,10,11
+    GROUP BY 1,2,3,4,5,6,7,8,9,10,11
 )
 select * from final

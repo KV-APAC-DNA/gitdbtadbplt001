@@ -20,7 +20,7 @@
 
 with v_rpt_sales_details as
 (
-    select * from indedw_integration.v_rpt_sales_details
+    select * from snapindedw_integration.v_rpt_sales_details
     --{{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 wks_pilot_ly_actual_nup as
@@ -29,7 +29,7 @@ wks_pilot_ly_actual_nup as
 ),
 final as
 (
-    SELECT LEFT(sf.mth_mm,4)::integer +1 || RIGHT(sf.mth_mm,2) AS mth_mm,
+    SELECT (LEFT(sf.mth_mm,4) +1)::integer || RIGHT(sf.mth_mm,2) AS mth_mm,
        sf.qtr,
        sf.fisc_yr + 1  AS fisc_yr,
        sf.month,
@@ -44,14 +44,14 @@ final as
        CASE WHEN sf.class_desc IN ('A','SA') THEN 1 ELSE 0 END AS class_desc_a_sa_flag,
        sf.channel_name,
        sf.business_channel,
-       sf.retailer_name,
+       trim(sf.retailer_name) as retailer_name,
        sf.retailer_category_name,
        sf.status_desc,
        NVL(sf.latest_salesman_code,sf.salesman_code) AS salesman_code,
        NVL(sf.latest_salesman_name,sf.salesman_name) AS salesman_name,
        NVL(sf.latest_uniquesalescode,sf.unique_sales_code) AS unique_sales_code,
-       sf.route_code,
-       sf.route_name,
+       trim(sf.route_code) as route_code,
+       trim(sf.route_name) as route_name,
        nup_ly.nup AS nup_actual_ly
     FROM  v_rpt_sales_details sf
     LEFT JOIN wks_pilot_ly_actual_nup nup_ly
@@ -75,14 +75,14 @@ final as
         CASE WHEN sf.class_desc IN ('A','SA') THEN 1 ELSE 0 END,
         sf.channel_name,
         sf.business_channel,
-        sf.retailer_name,
+        trim(sf.retailer_name),
         sf.retailer_category_name,
         sf.status_desc,
         NVL(sf.latest_salesman_code,sf.salesman_code),
         NVL(sf.latest_salesman_name,sf.salesman_name),
         NVL(sf.latest_uniquesalescode,sf.unique_sales_code),
-        sf.route_code,
-        sf.route_name,
+        trim(sf.route_code),
+        trim(sf.route_name),
         nup_ly.nup
 )
 select * from final

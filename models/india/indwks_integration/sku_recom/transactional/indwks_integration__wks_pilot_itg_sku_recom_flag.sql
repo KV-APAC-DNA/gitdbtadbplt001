@@ -4,7 +4,7 @@ with itg_sku_recom_flag_msl_spike as
 ),
 itg_query_parameters as 
 (
-    select * from inditg_integration.itg_query_parameters
+    select * from snapinditg_integration.itg_query_parameters
 ),
 final as
 (

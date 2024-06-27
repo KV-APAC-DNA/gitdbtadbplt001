@@ -4,7 +4,7 @@ with wks_pilot_sku_recom_tbl1 as
 ),
 itg_pilot_nup_target as
 (
-    select * from inditg_integration.itg_pilot_nup_target
+    select * from snapinditg_integration.itg_pilot_nup_target
 ),
 wks_pilot_edw_prod_dim as
 (
@@ -38,7 +38,7 @@ final as
        sku.business_channel,
        sku.status_desc,
        sku.actv_flg,
-       sku.retailer_name,
+       trim(sku.retailer_name) as retailer_name,
        sku.retailer_category_name,
        sku.csrtrcode,
        nup_tgt.nup_target,
@@ -50,8 +50,8 @@ final as
        sm.smcode AS salesman_code,
        sm.smname AS salesman_name,
        sm.uniquesalescode AS unique_sales_code,
-       sm.rmcode AS route_code,
-       sm.rmname AS route_name
+       trim(sm.rmcode) AS route_code,
+       trim(sm.rmname) AS route_name
     FROM  wks_pilot_sku_recom_tbl1 sku
     LEFT JOIN (SELECT mth_mm, rtruniquecode, MAX(nup_target) AS nup_target
             FROM itg_pilot_nup_target

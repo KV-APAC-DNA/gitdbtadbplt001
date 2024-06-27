@@ -8,11 +8,12 @@ wks_mi_psr_salesman_master as
 ),
 edw_retailer_calendar_dim as
 (
-    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from snapindedw_integration.edw_retailer_calendar_dim
+    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_query_parameters as
 (
-    select * from inditg_integration.itg_query_parameters
+    select * from snapinditg_integration.itg_query_parameters
 ),
 final as
 (

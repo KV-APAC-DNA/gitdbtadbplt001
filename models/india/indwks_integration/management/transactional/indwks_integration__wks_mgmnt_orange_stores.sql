@@ -1,6 +1,6 @@
 with edw_sku_recom_spike_msl as
 (
-    select * from indedw_integration.edw_sku_recom_spike_msl
+    select * from snapindedw_integration.edw_sku_recom_spike_msl
 ),
 final as 
 (

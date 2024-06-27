@@ -11,7 +11,7 @@
 
 with source as
 (
-    select * from inditg_integration.itg_sku_recom_flag
+    select * from snapinditg_integration.itg_sku_recom_flag
 ),
 final as
 (

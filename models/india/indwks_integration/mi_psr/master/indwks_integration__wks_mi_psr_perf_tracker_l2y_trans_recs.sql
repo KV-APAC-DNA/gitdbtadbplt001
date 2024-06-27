@@ -1,6 +1,7 @@
 with v_rpt_rt_sales as
 (
-    select * from {{ ref('indedw_integration__v_rpt_rt_sales') }}
+    select * from snapindedw_integration.v_rpt_rt_sales
+    --{{ ref('indedw_integration__v_rpt_rt_sales') }}
 ),
 final as
 (

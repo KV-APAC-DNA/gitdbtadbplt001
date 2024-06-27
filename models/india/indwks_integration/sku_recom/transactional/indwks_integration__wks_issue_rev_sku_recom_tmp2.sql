@@ -1,6 +1,6 @@
 with wks_issue_rev_sku_recom_sm_gtm as
 (
-    select * from indwks_integration.wks_issue_rev_sku_recom_sm_gtm
+    select * from snapindwks_integration.wks_issue_rev_sku_recom_sm_gtm
 ),
 wks_issue_rev_sku_recom_sm_nongtm as
 (

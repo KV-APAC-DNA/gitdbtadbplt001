@@ -1,6 +1,6 @@
 with source as
 (
-    select * from indedw_integration.edw_rpt_sales_details
+    select * from snapindedw_integration.edw_rpt_sales_details
     --{{ ref('indedw_integration__edw_rpt_sales_details') }}
 ),
 final as

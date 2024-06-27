@@ -403,3 +403,22 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+    
+    hcp:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      hcpedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPEDW_INTEGRATION
+      hcpitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPITG_INTEGRATION
+      hcpwks_integration:
+        +materialized: table
+        +schema: HCPWKS_INTEGRATION
+      hcpedw_access:
+        +materialized: view
+        +schema: HCPEDW_ACCESS

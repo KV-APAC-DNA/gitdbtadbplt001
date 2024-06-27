@@ -4,7 +4,7 @@ with wks_mi_psr_ret_dim as
 ),
 v_rpt_sales_details as
 (
-    select * from indedw_integration.v_rpt_sales_details
+    select * from snapindedw_integration.v_rpt_sales_details
     --{{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 final as

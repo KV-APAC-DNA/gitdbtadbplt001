@@ -11,10 +11,101 @@ sources:
     tables:
     - name: sdl_in_perfectstore_msl
       tags: ["in_perfect_store_transaction","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_code","product_name","msl","cost_inr","quantity","amount_inr","priority_store"]
+            not_null_columns: ["visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_code","product_name","msl","cost_inr","quantity","amount_inr","priority_store"]
+            name: TRATBL_sdl_in_perfectstore_msl__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
+        - test_duplicate:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_code","product_name","msl","cost_inr","quantity","amount_inr","priority_store"]
+                group_by_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_code","product_name","msl","cost_inr","quantity","amount_inr","priority_store"] 
+                name: TRATBL_sdl_in_perfectstore_msl__duplicate_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+        - test_format:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_code","product_name","msl","cost_inr","quantity","amount_inr","priority_store"]
+                failure_reason: "'Column visit_datetime is not in expected format, expected format is dd-mon-yy | dd-mon-yyyy | mm-dd-yy | mm-dd-yyyy'"
+                where_clause: "(TRIM(visit_datetime) != '' AND TRIM(visit_datetime) IS NOT NULL) AND (NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9][0-9][0-9]'))" 
+                name: TRATBL_sdl_in_perfectstore_msl__date_format_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
     - name: sdl_in_perfectstore_sos
       tags: ["in_perfect_store_transaction","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["file_name","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","jnjisp_name","month","year","format","chain_code","chain","store_code","store_name","category","prod_facings","total_facings","priority_store"]
+            not_null_columns: ["visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","jnjisp_name","month","year","format","chain_code","chain","store_code","store_name","category","prod_facings","total_facings","priority_store"]
+            name: TRATBL_sdl_in_perfectstore_sos__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
+        - test_duplicate:
+                select_columns: ["file_name","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","jnjisp_name","month","year","format","chain_code","chain","store_code","store_name","category","prod_facings","total_facings","priority_store"]
+                group_by_columns: ["file_name","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","jnjisp_name","month","year","format","chain_code","chain","store_code","store_name","category","prod_facings","total_facings","priority_store"] 
+                name: TRATBL_sdl_in_perfectstore_sos__duplicate_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+        - test_format:
+                select_columns: ["file_name","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","jnjisp_name","month","year","format","chain_code","chain","store_code","store_name","category","prod_facings","total_facings","priority_store"]
+                failure_reason: "'Column visit_datetime is not in expected format, expected format is dd-mon-yy | dd-mon-yyyy | mm-dd-yy | mm-dd-yyyy'"
+                where_clause: "(TRIM(visit_datetime) != '' OR TRIM(visit_datetime) IS NOT NULL) AND (NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9][0-9][0-9]'))" 
+                name: TRATBL_sdl_in_perfectstore_sos__date_format_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
     - name: sdl_in_perfectstore_promo
       tags: ["in_perfect_store_transaction","ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_category","product_brand","promotion_product_code","promotion_product_name","ispromotionavailable","photopath","countoffacing","promotionoffertype","notavailablereason","price_off","priority_store"]
+            not_null_columns: ["visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_category","product_brand","promotion_product_code","promotion_product_name","ispromotionavailable","photopath","countoffacing","promotionoffertype","notavailablereason","price_off","priority_store"]
+            name: TRATBL_sdl_in_perfectstore_promo__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
+        - test_duplicate:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_category","product_brand","promotion_product_code","promotion_product_name","ispromotionavailable","photopath","countoffacing","promotionoffertype","notavailablereason","price_off","priority_store"]
+                group_by_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_category","product_brand","promotion_product_code","promotion_product_name","ispromotionavailable","photopath","countoffacing","promotionoffertype","notavailablereason","price_off","priority_store"] 
+                name: TRATBL_sdl_in_perfectstore_promo__duplicate_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+        - test_format:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","product_category","product_brand","promotion_product_code","promotion_product_name","ispromotionavailable","photopath","countoffacing","promotionoffertype","notavailablereason","price_off","priority_store"]
+                failure_reason: "'Column visit_datetime is not in expected format, expected format is dd-mon-yy | dd-mon-yyyy | mm-dd-yy | mm-dd-yyyy'"
+                where_clause: "(TRIM(visit_datetime) != '' OR TRIM(visit_datetime) IS NOT NULL) AND (NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9][0-9][0-9]'))" 
+                name: TRATBL_sdl_in_perfectstore_promo__date_format_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
     - name: sdl_in_perfectstore_paid_display
       tags: ["in_perfect_store_transaction","ingestion"]
-  
+      tests:
+        - test_null:
+            select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","asset","product_category","product_brand","posm_brand","start_date","end_date","audit_status","is_available","availability_points","visibility_type","visibility_condition","is_planogram_availbale","select_brand","is_correct_brand_displayed","brandavailability_points","stock_status","stock_points","is_near_category","nearcategory_points","audit_score","paid_visibility_score","reason","priority_store"]
+            not_null_columns: ["visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","asset","product_category","product_brand","posm_brand","start_date","end_date","audit_status","is_available","availability_points","visibility_type","visibility_condition","is_planogram_availbale","select_brand","is_correct_brand_displayed","brandavailability_points","stock_status","stock_points","is_near_category","nearcategory_points","audit_score","paid_visibility_score","reason","priority_store"]
+            name: TRATBL_sdl_in_perfectstore_paid_display__null_test
+            config:
+              store_failures: true
+              schema: indwks_integration
+        - test_duplicate:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","asset","product_category","product_brand","posm_brand","start_date","end_date","audit_status","is_available","availability_points","visibility_type","visibility_condition","is_planogram_availbale","select_brand","is_correct_brand_displayed","brandavailability_points","stock_status","stock_points","is_near_category","nearcategory_points","audit_score","paid_visibility_score","reason","priority_store"]
+                group_by_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","asset","product_category","product_brand","posm_brand","start_date","end_date","audit_status","is_available","availability_points","visibility_type","visibility_condition","is_planogram_availbale","select_brand","is_correct_brand_displayed","brandavailability_points","stock_status","stock_points","is_near_category","nearcategory_points","audit_score","paid_visibility_score","reason","priority_store"] 
+                name: TRATBL_sdl_in_perfectstore_paid_display__duplicate_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+        - test_format:
+                select_columns: ["file_name","visit_id","visit_datetime","region","jnjrkam","jnjzm_code","jnj_abi_code","jnjsupervisor_code","isp_code","isp_name","month","year","format","chain_code","chain","store_code","store_name","asset","product_category","product_brand","posm_brand","start_date","end_date","audit_status","is_available","availability_points","visibility_type","visibility_condition","is_planogram_availbale","select_brand","is_correct_brand_displayed","brandavailability_points","stock_status","stock_points","is_near_category","nearcategory_points","audit_score","paid_visibility_score","reason","priority_store"]
+                failure_reason: "'Column visit_datetime is not in expected format, expected format is dd-mon-yy | dd-mon-yyyy | mm-dd-yy | mm-dd-yyyy'"
+                where_clause: "(TRIM(visit_datetime) != '' OR TRIM(visit_datetime) IS NOT NULL) AND (NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9][0-9][0-9]') AND NOT REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9][0-9][0-9]'))" 
+                name: TRATBL_sdl_in_perfectstore_paid_display__date_format_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
