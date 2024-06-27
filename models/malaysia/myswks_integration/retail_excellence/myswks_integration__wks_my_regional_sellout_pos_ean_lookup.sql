@@ -32,7 +32,14 @@ LEFT JOIN (SELECT DISTINCT FISC_YR,
            ON TO_CHAR(TO_DATE (A.START_DATE,'MM/DD/YYYY'),'YYYYMM') <=CAL.JJ_MNTH_ID		
            AND TO_CHAR(TO_DATE (A.END_DATE,'MM/DD/YYYY'),'YYYYMM') >= CAL.JJ_MNTH_ID		
  WHERE MARKET = 'MALAYSIA')MSL ON BASEEAN.MNTH_ID = MSL.JJ_MNTH_ID AND BASEEAN.EAN = MSL.EAN)where rn= 1
-)
+),
 
 --final select
-select * from MY_REGIONAL_SELLOUT_POS_EAN_LOOKUP
+final as (
+select 
+mnth_id::varchar(23) as mnth_id,	
+sku_code::varchar(40) as sku_code,	
+ean::varchar(500) as ean
+from MY_REGIONAL_SELLOUT_POS_EAN_LOOKUP
+)
+select * from final

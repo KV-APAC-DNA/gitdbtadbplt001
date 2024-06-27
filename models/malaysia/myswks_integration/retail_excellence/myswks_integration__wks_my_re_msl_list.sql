@@ -55,7 +55,31 @@ left join (select distinct soldto_code,distributor_Code,distributor_name,retail_
 															case when MSL.RETAIL_ENVIRONMENT = 'GT' then upper(nvl(msl.store_grade,custhier.store_type))		
 																 when MSL.RETAIL_ENVIRONMENT = 'MT' then upper(msl.store_grade) end = upper(custhier.store_type)		
 															AND  MSL.SKU_UNIQUE_IDENTIFIER = CUSTHIER.EAN
-)
+),
 
 --final select
-select * from MY_RE_MSL_LIST
+final as (
+select 
+jj_year::varchar(22) as jj_year ,
+jj_mnth_id::varchar(22) as jj_mnth_id ,
+soldto_code::varchar(255) as soldto_code ,
+distributor_code::varchar(100) as distributor_code ,
+distributor_name::varchar(356) as distributor_name ,
+store_code::varchar(100) as store_code ,
+store_name::varchar(601) as store_name ,
+store_type::varchar(255) as store_type ,
+ean::varchar(500) as ean ,
+store_grade::varchar(20) as store_grade ,
+retail_environment::varchar(75) as retail_environment ,
+channel::varchar(75) as channel ,
+sell_out_channel::varchar(573) as sell_out_channel ,
+market::varchar(50) as market ,
+prod_hier_l1::varchar(8) as prod_hier_l1 ,
+prod_hier_l2::varchar(1) as prod_hier_l2 ,
+prod_hier_l3::varchar(100) as prod_hier_l3 ,
+prod_hier_l4::varchar(100) as prod_hier_l4 ,
+sku_code::varchar(40) as sku_code ,
+product_name::varchar(300) as product_name 
+ from MY_RE_MSL_LIST
+)
+select * from final

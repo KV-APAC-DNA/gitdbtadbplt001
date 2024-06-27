@@ -16,7 +16,14 @@ FROM (SELECT DISTINCT ean,
       AND   DATA_SOURCE IN ('SELL-OUT','POS')
       AND   sku_code IS NOT NULL)
 WHERE rno = 1
-)
+),
 
 --final select
-select * from MY_REGIONAL_SELLOUT_MAPPED_SKU_CD
+final as (
+select 
+ean::varchar(500) as ean,
+sku_code::varchar(40) as sku_code,	
+msl_product_desc::varchar(300) as msl_product_desc 
+ from MY_REGIONAL_SELLOUT_MAPPED_SKU_CD
+)
+select * from final
