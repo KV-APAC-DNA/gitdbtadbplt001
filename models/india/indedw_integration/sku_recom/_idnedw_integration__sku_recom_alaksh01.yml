@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__edw_rpt_sku_recom_management
-    config:
-      alias: edw_rpt_sku_recom_management
-      tags: ["in_os_mgm_rpt_datamart","transformation"]
