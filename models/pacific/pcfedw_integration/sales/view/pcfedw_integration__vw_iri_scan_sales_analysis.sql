@@ -85,7 +85,10 @@ sales as
         bar_cd_map.prod_mnr_cd,
         bar_cd_map.prod_mnr_desc,
         bar_cd_map.scan_units,
-        bar_cd_map.scan_sales
+        bar_cd_map.scan_sales,
+		bar_cd_map.numeric_distribution,
+		bar_cd_map.weighted_distribution,
+		bar_cd_map.store_count_where_scanned
     FROM 
         (
             SELECT sales_derived.time_id,
@@ -139,7 +142,10 @@ sales as
                 vmd.prod_mnr_cd,
                 vmd.prod_mnr_desc,
                 sales_derived.scan_units,
-                sales_derived.scan_sales
+                sales_derived.scan_sales,
+				sales_derived.numeric_distribution,
+				sales_derived.weighted_distribution,
+                sales_derived.store_count_where_scanned
             FROM 
                 (
                     (
@@ -155,6 +161,9 @@ sales as
                                 iss.sales_grp_desc,
                                 iss.scan_sales,
                                 iss.scan_units,
+								iss.numeric_distribution, 
+								iss.weighted_distribution,
+								iss.store_count_where_scanned,
                                 etd.cal_date,
                                 etd.time_id,
                                 etd.jj_wk,
@@ -486,7 +495,10 @@ sales as
         vmd.prod_mnr_cd,
         vmd.prod_mnr_desc,
         sales_derived.scan_units,
-        sales_derived.scan_sales
+        sales_derived.scan_sales,
+		sales_derived.numeric_distribution,
+		sales_derived.weighted_distribution,
+		sales_derived.store_count_where_scanned
     FROM 
         (
             SELECT iss.iri_market,
@@ -500,6 +512,9 @@ sales as
                 iss.sales_grp_desc,
                 iss.scan_sales,
                 iss.scan_units,
+				iss.numeric_distribution,
+				iss.weighted_distribution,
+				iss.store_count_where_scanned,
                 etd.cal_date,
                 etd.time_id,
                 etd.jj_wk,
@@ -974,7 +989,10 @@ sales as
                                     vmd.prod_mnr_cd,
                                     vmd.prod_mnr_desc,
                                     sales_derived.scan_units,
-                                    sales_derived.scan_sales
+                                    sales_derived.scan_sales,
+									sales_derived.numeric_distribution,
+                                    sales_derived.weighted_distribution,
+                                    sales_derived.store_count_where_scanned
                                 FROM (
                                         (
                                             (
@@ -989,6 +1007,9 @@ sales as
                                                     iss.sales_grp_desc,
                                                     iss.scan_sales,
                                                     iss.scan_units,
+													iss.numeric_distribution,
+													iss.weighted_distribution,
+													iss.store_count_where_scanned,
                                                     etd.cal_date,
                                                     etd.time_id,
                                                     etd.jj_wk,
@@ -1315,6 +1336,9 @@ issa as
         sales_cte.prod_mnr_desc,
         sales_cte.scan_units,
         sales_cte.scan_sales,
+		sales_cte.numeric_distribution,
+		sales_cte.weighted_distribution,
+		sales_cte.store_count_where_scanned,
         COALESCE(
             CASE
                 WHEN (
@@ -1436,7 +1460,10 @@ issa as
                         sales.prod_mnr_cd,
                         sales.prod_mnr_desc,
                         sales.scan_units,
-                        sales.scan_sales
+                        sales.scan_sales,
+						sales.numeric_distribution,
+						sales.weighted_distribution,
+						sales.store_count_where_scanned
                     FROM sales
                         LEFT JOIN
                         (
@@ -1722,7 +1749,10 @@ issa as
                                                 sales.prod_mnr_cd,
                                                 sales.prod_mnr_desc,
                                                 sales.scan_units,
-                                                sales.scan_sales
+                                                sales.scan_sales,
+												sales.numeric_distribution,
+												sales.weighted_distribution,
+												sales.store_count_where_scanned
                                             FROM (
                                                     (
                                                         SELECT bar_cd_map.time_id,
@@ -1773,7 +1803,10 @@ issa as
                                                             bar_cd_map.prod_mnr_cd,
                                                             bar_cd_map.prod_mnr_desc,
                                                             bar_cd_map.scan_units,
-                                                            bar_cd_map.scan_sales
+                                                            bar_cd_map.scan_sales,
+															bar_cd_map.numeric_distribution,
+															bar_cd_map.weighted_distribution,
+															bar_cd_map.store_count_where_scanned
                                                         FROM (
                                                                 SELECT sales_derived.time_id,
                                                                     sales_derived.jj_year,
@@ -1826,7 +1859,10 @@ issa as
                                                                     vmd.prod_mnr_cd,
                                                                     vmd.prod_mnr_desc,
                                                                     sales_derived.scan_units,
-                                                                    sales_derived.scan_sales
+                                                                    sales_derived.scan_sales,
+																	sales_derived.numeric_distribution,
+																	sales_derived.weighted_distribution,
+																	sales_derived.store_count_where_scanned
                                                                 FROM (
                                                                         (
                                                                             (
@@ -1841,6 +1877,9 @@ issa as
                                                                                     iss.sales_grp_desc,
                                                                                     iss.scan_sales,
                                                                                     iss.scan_units,
+																					iss.numeric_distribution, 
+																					iss.weighted_distribution,
+																					iss.store_count_where_scanned,
                                                                                     etd.cal_date,
                                                                                     etd.time_id,
                                                                                     etd.jj_wk,
@@ -2163,7 +2202,10 @@ issa as
                                                             vmd.prod_mnr_cd,
                                                             vmd.prod_mnr_desc,
                                                             sales_derived.scan_units,
-                                                            sales_derived.scan_sales
+                                                            sales_derived.scan_sales,
+															sales_derived.numeric_distribution,
+															sales_derived.weighted_distribution,
+															sales_derived.store_count_where_scanned
                                                         FROM (
                                                                 (
                                                                     (
@@ -2178,6 +2220,9 @@ issa as
                                                                             iss.sales_grp_desc,
                                                                             iss.scan_sales,
                                                                             iss.scan_units,
+																			iss.numeric_distribution, 
+																			iss.weighted_distribution,
+																			iss.store_count_where_scanned,
                                                                             etd.cal_date,
                                                                             etd.time_id,
                                                                             etd.jj_wk,
@@ -2642,7 +2687,10 @@ issa as
                                                                                     vmd.prod_mnr_cd,
                                                                                     vmd.prod_mnr_desc,
                                                                                     sales_derived.scan_units,
-                                                                                    sales_derived.scan_sales
+                                                                                    sales_derived.scan_sales,
+																					sales_derived.numeric_distribution,
+                                                                                    sales_derived.weighted_distribution,
+                                                                                    sales_derived.store_count_where_scanned
                                                                                 FROM (
                                                                                         (
                                                                                             (
@@ -2657,6 +2705,9 @@ issa as
                                                                                                     iss.sales_grp_desc,
                                                                                                     iss.scan_sales,
                                                                                                     iss.scan_units,
+																									iss.numeric_distribution, 
+																									iss.weighted_distribution,
+																									iss.store_count_where_scanned,
                                                                                                     etd.cal_date,
                                                                                                     etd.time_id,
                                                                                                     etd.jj_wk,
@@ -3126,6 +3177,9 @@ final as
         COALESCE(issa.prod_mnr_desc, ph_emd.prod_mnr_desc) AS prod_mnr_desc,
         issa.scan_units,
         issa.scan_sales,
+		issa.numeric_distribution,
+		issa.weighted_distribution,
+		issa.store_count_where_scanned,
         issa.pka_productkey,
         issa.pka_productdesc,
         issa.lst_sku,

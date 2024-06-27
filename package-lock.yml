@@ -1,18 +1,18 @@
 packages:
-- package: dbt-labs/dbt_utils
-  version: 1.1.1
-- package: dbt-labs/codegen
-  version: 0.11.0
-- package: dbt-labs/audit_helper
-  version: 0.9.0
-- package: elementary-data/elementary
-  version: 0.13.0
-- package: calogica/dbt_expectations
-  version: 0.10.1
-- package: Montreal-Analytics/snowflake_utils
-  version: 0.6.1
-- package: brooklyn-data/dbt_artifacts
-  version: 2.6.2
-- package: calogica/dbt_date
-  version: 0.10.0
-sha1_hash: fb2d19f7ea2d496f2a1fbfd5c61f575af17a8406
+  - package: dbt-labs/dbt_utils
+    version: 1.1.1
+  - package: dbt-labs/codegen
+    version: 0.11.0
+  - package: dbt-labs/audit_helper
+    version: 0.9.0
+  - package: elementary-data/elementary
+    version: 0.13.0
+  - package: calogica/dbt_expectations
+    version: 0.10.1
+  - package: Montreal-Analytics/snowflake_utils
+    version: 0.6.1
+  - package: brooklyn-data/dbt_artifacts
+    version: 2.6.3
+  - package: calogica/dbt_date
+    version: 0.10.1
+sha1_hash: 31c2c21fd77d5e5a7747ea63c0c0c875130e317c
