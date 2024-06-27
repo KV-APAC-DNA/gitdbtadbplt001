@@ -1,3 +1,4 @@
+--REQ000000180060: SSR O&A display points content change
 with itg_perenso_over_and_above_state as (
     select * from {{ ref('pcfitg_integration__itg_perenso_over_and_above_state') }}
 ),

@@ -1,3 +1,4 @@
+-- REQ000000180060: SSR O&A display points content change
 with source as
 (
     select * from {{ source('pcfsdl_raw', 'sdl_over_and_above_points') }}
