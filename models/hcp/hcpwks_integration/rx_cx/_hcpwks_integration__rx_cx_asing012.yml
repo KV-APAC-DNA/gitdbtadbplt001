@@ -57,10 +57,6 @@ models:
     config:
         alias: rx_cx_miss_urc_prod_sales_rx
         tags: ["in_rx_to_cx_datamart","transformation"]
-  - name: hcpwks_integration__rx_cx_consist_ratio_region_cohort
-    config:
-        alias: rx_cx_consist_ratio_region_cohort
-        tags: ["in_rx_to_cx_datamart","transformation"]
   - name: hcpwks_integration__rx_cx_cy_target
     config:
         alias: rx_cx_cy_target
@@ -88,4 +84,40 @@ models:
   - name: hcpwks_integration__sales_actual_achnr_qty
     config:
         alias: sales_actual_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_pre_rpt_tbl
+    config:
+        alias: rx_cx_pre_rpt_tbl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__salesman_details
+    config:
+        alias: salesman_details
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_rpt_tbl
+    config:
+        alias: rx_cx_rpt_tbl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_base_rtl
+    config:
+        alias: wks_rx_to_cx_to_pob_base_rtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_rtl_dim
+    config:
+        alias: wks_rx_to_cx_to_pob_rtl_dim
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_sales_cube
+    config:
+        alias: wks_rx_to_cx_to_pob_sales_cube
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_salesman_master
+    config:
+        alias: wks_rx_to_cx_to_pob_salesman_master
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_rxrtl
+    config:
+        alias: wks_rx_to_cx_to_pob_rxrtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob
+    config:
+        alias: wks_rx_to_cx_to_pob
         tags: ["in_rx_to_cx_datamart","transformation"]

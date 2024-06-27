@@ -25,10 +25,10 @@ FROM (SELECT itg_udcdetails.distcode,
              UPPER(itg_udcdetails.mastervaluename::TEXT) AS mastervaluename,
              itg_udcdetails.columnname,
              CASE
-               WHEN itg_udcdetails.columnvalue IS NULL OR BTRIM(itg_udcdetails.columnvalue::TEXT) = ''::CHARACTER VARYING::TEXT THEN NULL::CHARACTER VARYING::TEXT
+               WHEN itg_udcdetails.columnvalue IS NULL OR trim(itg_udcdetails.columnvalue::TEXT) = ''::CHARACTER VARYING::TEXT THEN NULL::CHARACTER VARYING::TEXT
                ELSE UPPER(itg_udcdetails.columnvalue::TEXT)
              END AS columnvalue,
-             pg_catalog.row_number() OVER (PARTITION BY itg_udcdetails.distcode,itg_udcdetails.mastervaluecode,itg_udcdetails.columnname ORDER BY itg_udcdetails.createddate DESC,itg_udcdetails.columnvalue DESC NULLS LAST) AS rn,
+             row_number() OVER (PARTITION BY itg_udcdetails.distcode,itg_udcdetails.mastervaluecode,itg_udcdetails.columnname ORDER BY itg_udcdetails.createddate DESC,itg_udcdetails.columnvalue DESC NULLS LAST) AS rn,
              ret.rtruniquecode
       FROM itg_udcdetails itg_udcdetails
         LEFT JOIN itg_udcmaster udcmaster ON itg_udcdetails.columnname::TEXT = udcmaster.columnname::TEXT

@@ -20,7 +20,7 @@ final as
              WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) = 0 THEN 1
              WHEN ratio = 0 THEN lysq_presc
              WHEN ratio <= lower_cut AND NVL(lysq_presc,0) != 0 AND NVL(lysq_qty,0) != 0 THEN lysq_presc
-             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0) AND NVL(lysq_qty != 0) THEN (lysq_qty/upper_cut)
+             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0,0) AND NVL(lysq_qty != 0,0) THEN (lysq_qty/upper_cut)
              WHEN ratio > lower_cut AND ratio < upper_cut THEN lysq_presc
         END) AS target_presc,
        (CASE WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) != 0 THEN lysq_qty
@@ -36,19 +36,19 @@ final as
              WHEN ratio <= lower_cut AND NVL(lysq_presc,0) != 0 AND NVL(lysq_qty,0) != 0 THEN 4
              WHEN ratio >= upper_cut AND lysq_presc != 0 AND lysq_qty != 0 THEN 5
              WHEN ratio > lower_cut AND ratio < upper_cut THEN 6
-        END) AS case,
+        END)::number(18,0) AS "case",
        (CASE WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) != 0 THEN 'convert'
              WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) = 0 THEN 'convert'
              WHEN ratio = 0 THEN 'maintain'
              WHEN ratio <= lower_cut AND NVL(lysq_presc,0) != 0 AND NVL(lysq_qty,0) != 0 THEN 'maintain'
-             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0) AND NVL(lysq_qty != 0) THEN 'need prescriptions'
+             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0,0) AND NVL(lysq_qty != 0,0) THEN 'need prescriptions'
              WHEN ratio > lower_cut AND ratio < upper_cut THEN 'maintain'
         END) AS prescription_action,
        (CASE WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) != 0 THEN 'maintain'
              WHEN NVL(lysq_presc,0) = 0 AND NVL(lysq_qty,0) = 0 THEN 'basic sell-in'
              WHEN ratio = 0 THEN 'basic sell-in'
              WHEN ratio <= lower_cut AND NVL(lysq_presc,0) != 0 AND NVL(lysq_qty,0) != 0 THEN 'grow sales'
-             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0) AND NVL(lysq_qty != 0) THEN 'maintain'
+             WHEN ratio >= upper_cut AND NVL(lysq_presc != 0,0) AND NVL(lysq_qty != 0,0) THEN 'maintain'
              WHEN ratio > lower_cut AND ratio < upper_cut THEN 'maintain'
         END) AS sales_action
 FROM   rx_cx_consist_ratio_region_cohort tmp
