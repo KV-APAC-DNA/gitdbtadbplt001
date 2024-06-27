@@ -1,3 +1,4 @@
+--REQ000000180060: SSR O&A display points content change
 with edw_pacific_field_sales as
 (
     select * from {{ ref('pcfedw_integration__edw_pacific_field_sales') }}
