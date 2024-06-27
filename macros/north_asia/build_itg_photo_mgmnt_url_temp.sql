@@ -28,16 +28,6 @@
         {% else %}
             {{schema}}.ntaitg_integration__itg_photo_mgmnt_url
         {% endif %};
-        create or replace temporary table {% if target.name=='prod' %} ntaitg_integration.numbersequence {% else %} {{schema}}.numbersequence {% endif %}
-        as 
-        with recursive numbers(number) as (
-            select 1
-            union all
-            select number + 1 from numbers
-            where number < (select max(url_cnt) from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }})
-        )
-        select * from numbers;
     {% endset %}
-
     {% do run_query(query) %}
 {% endmacro %}

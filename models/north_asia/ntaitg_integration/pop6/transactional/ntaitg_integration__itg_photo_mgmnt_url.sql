@@ -1,15 +1,24 @@
 with wks_photo_mgmnt_url_wrk1 as (
-    select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk1') }}
+    select * from ntawks_integration.wks_photo_mgmnt_url_wrk1
+    -- select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk1') }}
 ),
 edw_rpt_sfa_pm as (
-    select * from snapntaedw_integration.edw_rpt_sfa_pm
+    select * from ntaedw_integration.edw_rpt_sfa_pm
+    -- select * from {{ ref('ntaedw_integration__edw_rpt_sfa_pm') }}
 ),
 wks_photo_mgmnt_url_wrk2 as (
-    select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }}
+    select * from ntawks_integration.wks_photo_mgmnt_url_wrk2
+    -- select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }}
 ),
 numbersequence as (
-    select * from aagraw03_workspace.numbersequence
-    -- select * from {{ source('ntaitg_integration','numbersequence')}}
+    with recursive numbers(number) as 
+    (
+        select 1
+        union all
+        select number + 1 from numbers
+        where number < (select max(url_cnt) from wks_photo_mgmnt_url_wrk2)
+    )
+    select * from numbers
 ),
 wrk1 as (
     SELECT ORIGINAL_PHOTO_KEY,
