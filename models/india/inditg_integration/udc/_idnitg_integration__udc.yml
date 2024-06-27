@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_udcmapping
+    config:
+      alias: itg_udcmapping
+      tags: ["in_rt_sales","ingestion"]
+
+  - name: inditg_integration__itg_udcdetails
+    config:
+      alias: itg_udcdetails
+      tags: ["in_sdlitg_gtsales","ingestion"]
+
+  - name: inditg_integration__itg_udcmaster
+    config:
+      alias: itg_udcmaster
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_udcmaster_raw
+    config:
+      alias: sdl_csl_udcmaster_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]

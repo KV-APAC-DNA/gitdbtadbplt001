@@ -40,15 +40,15 @@ ippri as(
     select * from itg_perenso_product_reln_id
     where
       (prod_key, field_key) in (
-        select
+        select distinct
           prod_key,
           field_key
         from itg_perenso_product_reln_id
-        group by
-          prod_key,
-          field_key
-        having
-          count(*) = 1
+        -- group by
+        --   prod_key,
+        --   field_key
+        -- having
+        --   count(*) = 1
       )
 ),
 transformed as(

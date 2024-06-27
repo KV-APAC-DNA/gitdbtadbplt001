@@ -1,0 +1,17 @@
+version: 2
+
+sources:  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_in_businessplan_brand
+        tags: ["in_mds_refresh","transformation"]
+      - name: sdl_mds_in_businessplan_channel
+        tags: ["in_mds_refresh","transformation"]
+      - name: sdl_mds_in_businessplan_zonewise
+        tags: ["in_mds_refresh","transformation"]

@@ -1,0 +1,165 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_ecommerce_ebay_sellout
+      tags: ["j_kr_ecommerce_ebay_etl_framework", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
+            not_null_columns: ["ean_num", "transaction_date"]
+            name: TRATBL_sdl_kr_ecommerce_ebay_sellout__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_lookup:
+            select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
+            column: "ean_num"
+            lookup_column: "ltrim(ean,'0')"
+            lookup_table: "{{ ref('aspedw_integration__edw_product_attr_dim') }}"                                                                      
+            lookup_filter: "cntry = 'KR'"
+            failure_reason: "'MISSING EAN NUMBER IN DIMENSION TABLE'"
+            name: TRATBL_sdl_kr_ecommerce_ebay_sellout__lookup_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_kr_pos_emart_ssg
+      tags: ["kr_ssg_ecvan", "ingestion"]
+      tests:
+          - test_lookup:
+              select_columns: ["str_nm"]
+              column: "nvl(str_nm ,'#')"
+              lookup_column: "nvl(store_nm,'#') as store_nm"
+              lookup_table: "{{ ref('ntaitg_integration__itg_sales_store_master') }}"                                                                      
+              name: TRATBL_sdl_kr_pos_emart_ssg__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+    - name: sdl_kr_ecom_naver_sellout_temp
+      tags: ["j_kr_tp_tracker_data_ingestion", "ingestion"]
+      tests:
+          - test_null:
+              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              not_null_columns: ["transaction_date"]
+              name: TRATBL_sdl_kr_ecom_naver_sellout_temp__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_format:
+              select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
+              where_clause: "not regexp_like (transaction_date, '[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]') and not regexp_like (transaction_date, '[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]') and (transaction_date is not null and transaction_date != '')"              
+              failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
+              name: TRATBL_sdl_kr_ecom_naver_sellout_temp__format_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+    - name: sdl_kr_ecommerce_trexi_sellout
+      tags: ["j_kr_ecommerce_ebay_etl_framework", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
+            not_null_columns: ["ean_num", "transaction_date", "cust_nm"]
+            name: TRATBL_sdl_kr_ecommerce_trexi_sellout__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_lookup:
+            select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
+            column: "ean_num"
+            lookup_column: "ltrim(ean,'0')"
+            lookup_table: "{{ ref('aspedw_integration__edw_product_attr_dim') }}"                                                                      
+            lookup_filter: "cntry = 'KR'"
+            failure_reason: "'MISSING EAN NUMBER IN DIMENSION TABLE'"
+            name: TRATBL_sdl_kr_ecommerce_trexi_sellout__lookup_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_kr_ecom_dstr_sellout_stock
+      tags: ["kr_ecom_regional_inv_health", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["file_name", "data_src", "dstr_cd", "sap", "ean_code", "transaction_date"]
+            not_null_columns: ["dstr_cd", "sap", "ean_code"]
+            name: TRATBL_sdl_kr_ecom_dstr_sellout_stock__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration    
+        - test_lookup:
+            select_columns: ["file_name", "data_src", "dstr_cd", "sap", "ean_code", "transaction_date"]
+            column: "coalesce(sap,'NA')"
+            lookup_column: "coalesce(ltrim(matl_num,0),'NA')"
+            lookup_table: "{{ ref('aspedw_integration__edw_material_dim') }}"                                   
+            filter: "trim(sap) <> '' and trim(sap) is not null"
+            failure_reason: "'missing material compared with master for: ' || 'FILE_NAME' || '(OR)' || 'DSTR_CD' || '(OR)' || 'SAP' || '(OR)' || 'EAN_CODE'"
+            name: TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_sap
+            config:
+              store_failures: true
+              schema: ntawks_integration      
+        - test_lookup:
+            select_columns: ["file_name", "data_src", "dstr_cd", "sap", "ean_code", "transaction_date"]
+            column: "coalesce(dstr_cd,'NA')"
+            lookup_column: "coalesce(ltrim(cust_num,0),'NA')"                               
+            lookup_table: "{{ ref('aspedw_integration__edw_customer_base_dim') }}"                                
+            filter: "trim(dstr_cd) <> '' and trim(dstr_cd) is not null"
+            failure_reason: "'missing distributor compared with master for: ' || 'FILE_NAME' || '(OR)' || 'DSTR_CD' || '(OR)' || 'SAP' || '(OR)' || 'EAN_CODE'"
+            name: TRATBL_sdl_kr_ecom_dstr_sellout_stock__lookup_test_dstr_cd
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_kr_ecom_coupang
+      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","transformation"]
+      tests:
+          - test_null:
+              select_columns:  ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
+              not_null_columns: ["transaction_date"]
+              name: TRATBL_sdl_kr_ecom_coupang__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_format:
+                  select_columns: ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
+                  where_clause:  " (TRANSACTION_DATE IS NOT NULL AND TRANSACTION_DATE != '') AND (not regexp_like(TRANSACTION_DATE,'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]'))  
+                                  AND (not regexp_like(TRANSACTION_DATE,'[1-2][0-9][0-9][0-9]/[0-1][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-1][0-9]/[1-2][0-9][0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-1][0-9]/[0-9][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[0-9][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9]/[1-2][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-1][0-9]/[0-9][0-9]'))
+                                  AND (not regexp_like(TRANSACTION_DATE,'[0-9][0-9]/[0-9]/[0-9][0-9]'))"              
+                  failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
+                  name: TRATBL_sdl_kr_ecom_coupang__format_test
+                  config:
+                    store_failures: true
+                    schema: ntawks_integration
+    - name: sdl_kr_ecommerce_tca_sellout
+      tags: [""]
+    - name: sdl_kr_ecommerce_unitoa_sellout
+      tags: [""]
+    - name: sdl_kr_ecommerce_offtake_coupang_transaction
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+
+    - name: sdl_kr_ecommerce_offtake_sales_ebay
+      tags: ["j_kr_generic_query_execution", "ingestion"]
+
+  - name: aspedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_retailer_mapping
+      tags: [""]
+    - name: edw_copa_trans_fact_adjustment
+
+    

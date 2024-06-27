@@ -5,7 +5,7 @@ itg_pos_invnt as(
   select * from {{ ref('ntaitg_integration__itg_pos_invnt') }}
 ),
 edw_customer_attr_flat_dim as(
-  select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+  select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 itg_query_parameters as(
   select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
@@ -17,7 +17,7 @@ itg_pos_prom_prc_map as(
   select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
 edw_product_attr_dim as(
-  select * from {{ source('aspedw_integration', 'edw_product_attr_dim') }}
+  select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 
 x as(

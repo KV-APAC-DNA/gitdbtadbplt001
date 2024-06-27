@@ -1,0 +1,47 @@
+with source as (
+    select * from {{ ref('ntaedw_integration__v_rpt_ims_inventory') }}
+),
+final as (
+    select
+        invnt_dt as "invnt_dt",
+        dstr_cd as "dstr_cd",
+        dstr_nm as "dstr_nm",
+        cust_name as "cust_name",
+        channel1 as "channel1",
+        channel2 as "channel2",
+        fisc_per as "fisc_per",
+        fisc_wk as "fisc_wk",
+        no_of_wks as "no_of_wks",
+        fisc_wk_num as "fisc_wk_num",
+        prod_cd as "prod_cd",
+        prod_nm as "prod_nm",
+        ean_num as "ean_num",
+        invnt_qty as "invnt_qty",
+        invnt_amt as "invnt_amt",
+        sls_rep_nm as "sls_rep_nm",
+        sls_rep_cd as "sls_rep_cd",
+        ctry_nm as "ctry_nm",
+        from_crncy as "from_crncy",
+        to_crncy as "to_crncy",
+        chn_uom as "chn_uom",
+        ex_rt as "ex_rt",
+        prod_hier_l1 as "prod_hier_l1",
+        prod_hier_l2 as "prod_hier_l2",
+        prod_hier_l3 as "prod_hier_l3",
+        prod_hier_l4 as "prod_hier_l4",
+        prod_hier_l5 as "prod_hier_l5",
+        prod_hier_l6 as "prod_hier_l6",
+        prod_hier_l7 as "prod_hier_l7",
+        prod_hier_l8 as "prod_hier_l8",
+        prod_hier_l9 as "prod_hier_l9",
+        sap_matl_num as "sap_matl_num",
+        lcl_prod_nm as "lcl_prod_nm",
+        sls_grp as "sls_grp",
+        store_typ as "store_typ",
+        non_sellable_product as "non_sellable_product",
+        sell_in_price_manual as "sell_in_price_manual",
+        storage_name as "storage_name",
+        area as "area"
+    from source
+)
+select * from final

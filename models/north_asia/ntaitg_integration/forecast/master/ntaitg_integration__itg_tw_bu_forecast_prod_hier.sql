@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['sap_code', 'item_idnt'],
-        pre_hook= ["UPDATE {{this}} SET sls_grp = cust.sls_grp,
+        pre_hook= ["{% if is_incremental() %}
+                    UPDATE {{this}} SET sls_grp = cust.sls_grp,
                     channel = cust.channel,
                     sls_ofc = cust.sls_ofc,
                     sls_ofc_desc = cust.sls_ofc_desc 
@@ -15,22 +16,24 @@
                      WHEN wks.sls_grp <> wks.target_sls_grp THEN 'Y'
                      ELSE 'N'
                     END AS flag
-                    FROM  {{ source('ntawks_integration', 'wks_edw_customer_attr_flat_dim') }}
+                    FROM  ntawks_integration.wks_edw_customer_attr_flat_dim
                       wks)
                     WHERE flag = 'Y') cust
-                    Where cust.target_sls_grp =itg.sls_grp
-                    ","delete from {{this}} itg_tw_bu_forecast_prod_hier
-                        using
-                        {{ ref('ntawks_integration__wks_itg_tw_bu_forecast_prod_hier') }} wks_prod_hier
-                        where
-                        itg_tw_bu_forecast_prod_hier.sls_grp=wks_prod_hier.sls_grp
-                        and
-                        itg_tw_bu_forecast_prod_hier.bu_version=wks_prod_hier.bu_version
-                        and
-                        itg_tw_bu_forecast_prod_hier.forecast_on_year=wks_prod_hier.forecast_on_year
-                        and
-                        itg_tw_bu_forecast_prod_hier.forecast_on_month=wks_prod_hier.forecast_on_month;
-                    "]
+                    Where cust.target_sls_grp =itg.sls_grp;
+                    {% endif %}",
+                    "{% if is_incremental() %}
+                    delete from {{this}} itg_tw_bu_forecast_prod_hier
+                    using
+                    {{ ref('ntawks_integration__wks_itg_tw_bu_forecast_prod_hier') }} wks_prod_hier
+                    where
+                    itg_tw_bu_forecast_prod_hier.sls_grp=wks_prod_hier.sls_grp
+                    and
+                    itg_tw_bu_forecast_prod_hier.bu_version=wks_prod_hier.bu_version
+                    and
+                    itg_tw_bu_forecast_prod_hier.forecast_on_year=wks_prod_hier.forecast_on_year
+                    and
+                    itg_tw_bu_forecast_prod_hier.forecast_on_month=wks_prod_hier.forecast_on_month;
+                    {% endif %}"]
         )
 }}
 

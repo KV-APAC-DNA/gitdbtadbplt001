@@ -1,7 +1,7 @@
 with 
 edw_intrm_calendar as 
 (
-    select * from {{ source('ntaedw_integration', 'edw_intrm_calendar') }}
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 itg_mds_hk_pos_promo_calendar as 
 (

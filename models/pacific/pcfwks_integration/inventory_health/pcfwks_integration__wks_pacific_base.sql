@@ -61,7 +61,7 @@ inv_so as
    SELECT SAP_PRNT_CUST_KEY,
       SAP_PRNT_CUST_DESC,
       matl_id,
-      month,
+      "month",
       sum(so_qty) as so_qty,
       sum(so_value) as so_value,
       0 as inv_qty,
@@ -70,7 +70,7 @@ inv_so as
    GROUP BY SAP_PRNT_CUST_KEY,
       SAP_PRNT_CUST_DESC,
       matl_id,
-      month
+      "month"
 ),
 gts as
 (

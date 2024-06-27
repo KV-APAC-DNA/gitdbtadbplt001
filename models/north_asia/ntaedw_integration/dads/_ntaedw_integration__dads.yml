@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_kr_dads_analysis
+    config:
+        alias: edw_kr_dads_analysis
+        tags: ["kr_dads","transformation"]
+  - name: ntaedw_integration__edw_vw_kr_dads_analysis
+    config:
+        alias: edw_vw_kr_dads_analysis
+        tags: ["kr_dads","transformation"]

@@ -1,8 +1,3 @@
-{{
-    config(
-        pre_hook= '{{build_itg_ims_invnt_temp()}}'
-    )
-}}
 with sdl_tw_ims_dstr_std_stock as(
     select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_stock') }}
 ),

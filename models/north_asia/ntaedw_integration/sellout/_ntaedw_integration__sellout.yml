@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__vw_kr_gt_sellout
+    config:
+        alias: vw_kr_gt_sellout
+        tags: ["korea_views","transformation"]

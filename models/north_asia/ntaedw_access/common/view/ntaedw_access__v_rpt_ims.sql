@@ -1,0 +1,46 @@
+with source as (
+    select * from {{ ref('ntaedw_integration__v_rpt_ims') }}
+),
+final as (
+    select
+        dstr_cd as "dstr_cd",
+        dstr_nm as "dstr_nm",
+        cust_cd as "cust_cd",
+        cust_nm as "cust_nm",
+        channel1 as "channel1",
+        channel2 as "channel2",
+        ims_txn_dt as "ims_txn_dt",
+        fisc_per as "fisc_per",
+        fisc_wk as "fisc_wk",
+        no_of_wks as "no_of_wks",
+        fisc_wk_num as "fisc_wk_num",
+        prod_cd as "prod_cd",
+        prod_nm as "prod_nm",
+        ean_num as "ean_num",
+        sls_amt as "sls_amt",
+        sls_qty as "sls_qty",
+        rtrn_qty as "rtrn_qty",
+        rtrn_amt as "rtrn_amt",
+        sls_rep_nm as "sls_rep_nm",
+        sls_rep_cd as "sls_rep_cd",
+        ctry_nm as "ctry_nm",
+        from_crncy as "from_crncy",
+        to_crncy as "to_crncy",
+        ex_rt as "ex_rt",
+        prod_hier_l1 as "prod_hier_l1",
+        prod_hier_l2 as "prod_hier_l2",
+        prod_hier_l3 as "prod_hier_l3",
+        prod_hier_l4 as "prod_hier_l4",
+        prod_hier_l5 as "prod_hier_l5",
+        prod_hier_l6 as "prod_hier_l6",
+        prod_hier_l7 as "prod_hier_l7",
+        prod_hier_l8 as "prod_hier_l8",
+        prod_hier_l9 as "prod_hier_l9",
+        sap_matl_num as "sap_matl_num",
+        lcl_prod_nm as "lcl_prod_nm",
+        sls_grp as "sls_grp",
+        store_typ as "store_typ",
+        non_sellable_product as "non_sellable_product"
+    from source
+)
+select * from final

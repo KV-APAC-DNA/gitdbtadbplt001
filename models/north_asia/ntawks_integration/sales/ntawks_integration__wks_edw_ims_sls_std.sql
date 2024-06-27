@@ -2,10 +2,10 @@ with itg_ims as (
     select * from {{ ref('ntaitg_integration__itg_ims') }}
 ),
 itg_tw_ims_dstr_prod_price_map as (
-    select * from {{ source('ntaitg_integration', 'itg_tw_ims_dstr_prod_price_map') }}
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_price_map') }}
 ),
 itg_tw_ims_dstr_prod_map as (
-    select * from {{ ref('ntawks_integration__wks_itg_tw_ims_dstr_prod_map') }}  
+    select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}  
 ),
 edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}

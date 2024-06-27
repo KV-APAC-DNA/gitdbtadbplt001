@@ -4,7 +4,8 @@
         materialized="incremental",
         incremental_strategy="merge",
         unique_key=["fisc_yr_per","co_cd","sls_org","dstn_chnl","div","matl","cust_num"],
-        pre_hook="delete from {{this }} as edw_internal_target_fact
+        pre_hook="{% if is_incremental() %}
+        delete from {{this }} as edw_internal_target_fact
         using {{ ref('ntaitg_integration__itg_tw_sales_target') }} as wks_edw_internal_target_fact
         where  wks_edw_internal_target_fact.fisc_yr_per=edw_internal_target_fact.fisc_yr_per
         and wks_edw_internal_target_fact.co_cd=edw_internal_target_fact.co_cd
@@ -12,7 +13,8 @@
         and wks_edw_internal_target_fact.dstn_chnl=edw_internal_target_fact.dstn_chnl
         and wks_edw_internal_target_fact.div=edw_internal_target_fact.div
         and wks_edw_internal_target_fact.matl=edw_internal_target_fact.matl
-        and wks_edw_internal_target_fact.cust_num=edw_internal_target_fact.cust_num ;"
+        and wks_edw_internal_target_fact.cust_num=edw_internal_target_fact.cust_num;
+        {% endif %}"
     )
 }}
 with source as

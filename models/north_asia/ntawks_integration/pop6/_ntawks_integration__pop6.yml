@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_pop6_display_plans
+    config:
+      alias: wks_pop6_display_plans
+      tags: ["",""]
+  - name: ntawks_integration__wks_pop6_sku_audits
+    config:
+      alias: wks_pop6_sku_audits
+      tags: ["",""]

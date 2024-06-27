@@ -13,3 +13,7 @@ models:
     config:
       alias: edw_vw_promo_calendar
       tags: ["taiwan_views","transformation"]
+  - name: ntaedw_integration__edw_intrm_calendar
+    config:
+      alias: edw_intrm_calendar
+      tags: ["j_kr_tab_wkbk_trade_promotion","transformation"]

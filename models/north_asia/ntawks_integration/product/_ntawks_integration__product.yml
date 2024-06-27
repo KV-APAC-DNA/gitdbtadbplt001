@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_gt_msl_items
+    config:
+      alias: wks_gt_msl_items
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]

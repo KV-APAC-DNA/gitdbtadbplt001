@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_kr_price_tracker
+    config:
+      alias: itg_kr_price_tracker
+      tags: ["j_kr_price_tracker_daily_data_ingestion","j_kr_price_tracker_monthly_data_ingestion","transformation"]
+  - name: ntaitg_integration__itg_mds_kr_product_ean_mapping
+    config: 
+      alias: itg_mds_kr_product_ean_mapping
+      tags: ["kr_mds_refresh","ingestion"]
+  - name: ntaitg_integration__itg_kr_jnj_price_guide
+    config: 
+      alias: itg_kr_jnj_price_guide
+      tags: ["j_kr_price_master_data_ingestione","ingestion"]
+  - name: ntaitg_integration__itg_kr_coupang_daily_brand_reviews
+    config: 
+      alias: itg_kr_coupang_daily_brand_reviews
+      tags: []
+  - name: ntaitg_integration__sdl_raw_kr_coupang_daily_brand_reviews
+    config: 
+      alias: sdl_raw_kr_coupang_daily_brand_reviews
+      tags: []
+  - name: ntaitg_integration__itg_mds_hk_product_hierarchy
+    config:
+        alias: itg_mds_hk_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_keyword_classifications
+    config:
+        alias: itg_mds_kr_keyword_classifications
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_naver_product_master
+    config:
+        alias: itg_mds_kr_naver_product_master
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_kr_gt_dpt_daiso
+    config:
+        alias: itg_kr_gt_dpt_daiso
+        tags: ["gt_sellout_dept_daiso_cust_dim","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_brand_campaign_promotion
+    config:
+        alias: itg_mds_kr_brand_campaign_promotion
+        tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+  - name: ntaitg_integration__itg_mds_kr_product_hierarchy
+    config:
+        alias: itg_mds_kr_product_hierarchy
+        tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration__itg_kr_gt_daiso_price
+    config:
+        alias: itg_kr_gt_daiso_price
+        tags: ["gt_sellout_daiso","gt_sellout_daiso_price_master","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_gt_daiso_price
+    config:
+        alias: sdl_raw_kr_gt_daiso_price
+        tags: ["gt_sellout_daiso","ingestion"]
+  - name: ntaitg_integration__itg_tw_ims_dstr_prod_price_map
+    config:
+      alias: itg_tw_ims_dstr_prod_price_map
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
+  - name: ntaitg_integration___itg_gt_msl_items
+    config:
+      alias: itg_gt_msl_items
+      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]  

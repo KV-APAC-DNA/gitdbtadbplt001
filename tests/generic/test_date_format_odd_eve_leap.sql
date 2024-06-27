@@ -1,4 +1,4 @@
-{% test test_date_format_odd_eve_leap(model,model_nm,filter=None,select_columns=None,date_column=None,failure_reason=None) %}
+{% test test_date_format_odd_eve_leap(model,model_nm=model,filter=None,select_columns=None,date_column=None,failure_reason=None) %}
 {% if select_columns!=None %}
     SELECT
     {%- for item in select_columns %}

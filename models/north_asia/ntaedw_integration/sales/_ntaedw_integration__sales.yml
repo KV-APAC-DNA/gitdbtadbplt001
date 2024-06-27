@@ -5,13 +5,43 @@ models:
     config: 
       alias: edw_v_rpt_tw_sales_incentive
       tags: ["twsi_datamart_load","transformation"]
-
   - name: ntaedw_integration__edw_rpt_tw_sales_incentive
     config: 
       alias: edw_rpt_tw_sales_incentive
       tags: ["twsi_datamart_load","transformation"]
-
   - name: ntaedw_integration__v_rpt_dly_plan_ims_enrich
     config: 
       alias: v_rpt_dly_plan_ims_enrich
       tags: ["taiwan_views","transformation"]
+  - name: ntaedw_integration__edw_kr_sales_tgt
+    config: 
+      alias: edw_kr_sales_tgt
+      tags: ["j_kr_nts_target_load","transformation"]
+  - name: ntaedw_integration__edw_onpck_trgt
+    config: 
+      alias: edw_onpck_trgt
+      tags: ["j_kr_onpack_target_wrapper","transformation"]
+  - name: ntaedw_integration__v_rpt_onpack
+    config: 
+      alias: v_rpt_onpack
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__v_rpt_kr_trade_promotion
+    config: 
+      alias: v_rpt_kr_trade_promotion
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__edw_catg_sls_target
+    config: 
+      alias: edw_catg_sls_target
+      tags: ["j_kr_sales_target_am_sales_group_wrapper","transformation"]
+  - name: ntaedw_integration__edw_brand_sls_target
+    config: 
+      alias: edw_brand_sls_target
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+  - name: ntaedw_integration__v_intrm_copa_tgt
+    config: 
+      alias: v_intrm_copa_tgt
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl_gts
+    config:
+      alias: v_intrm_sls_pln_actl_gts
+      tags: ["","transformation"]

@@ -9,7 +9,6 @@ models:
     config:
       alias: edw_internal_target_fact
       tags: ["j_tw_sales_target_wrapper","transformation"]
-
   - name: ntaedw_integration__edw_vw_sales_rep_so_target_fact
     config:
       alias: edw_vw_sales_rep_so_target_fact
@@ -18,3 +17,19 @@ models:
     config:
       alias: edw_pos_fact
       tags: ["tw_pos","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_offtake_wkly_korea
+    config:
+      alias: v_rpt_pos_offtake_wkly_korea
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_offtake_daily_korea
+    config:
+      alias: v_rpt_pos_offtake_daily_korea
+      tags: ["korea_views","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_offtake_daily_nonkorea
+    config:
+      alias: v_rpt_pos_offtake_daily_nonkorea
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_nonkorea
+    config:
+      alias: v_rpt_pos_nonkorea
+      tags: ["","transformation"]

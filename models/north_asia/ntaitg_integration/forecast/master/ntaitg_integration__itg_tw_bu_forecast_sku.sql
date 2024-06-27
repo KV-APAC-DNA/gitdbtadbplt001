@@ -3,8 +3,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ["sls_grp", "forecast_on_year", "bu_version", "forecast_on_month"],
-        pre_hook= ["update {{this}} SET sls_grp = cust.sls_grp, channel = cust.channel, sls_ofc = cust.sls_ofc, sls_ofc_desc = cust.sls_ofc_desc FROM {{this}} itg, ( SELECT sls_grp, target_sls_grp, channel, sls_ofc, sls_ofc_desc FROM ( SELECT DISTINCT wks.sls_grp, wks.target_sls_grp, wks.channel, sls_ofc, sls_ofc_desc, CASE  WHEN wks.sls_grp <> wks.target_sls_grp THEN 'Y' ELSE 'N' END AS flag FROM  {{ source('ntawks_integration', 'wks_edw_customer_attr_flat_dim') }} wks ) WHERE flag = 'Y' ) cust WHERE cust.target_sls_grp = itg.sls_grp;",
-        "delete from {{this}} itg_tw_bu_forecast_sku using {{ ref('ntawks_integration__wks_itg_tw_bu_forecast_sku') }} wks_sku where itg_tw_bu_forecast_sku.sls_grp=wks_sku.sls_grp and itg_tw_bu_forecast_sku.bu_version=wks_sku.bu_version and itg_tw_bu_forecast_sku.forecast_on_year=wks_sku.forecast_on_year and itg_tw_bu_forecast_sku.forecast_on_month=wks_sku.forecast_on_month;"]
+        pre_hook= ["{% if is_incremental() %}
+        update {{this}} SET sls_grp = cust.sls_grp, channel = cust.channel, sls_ofc = cust.sls_ofc, sls_ofc_desc = cust.sls_ofc_desc FROM {{this}} itg, ( SELECT sls_grp, target_sls_grp, channel, sls_ofc, sls_ofc_desc FROM ( SELECT DISTINCT wks.sls_grp, wks.target_sls_grp, wks.channel, sls_ofc, sls_ofc_desc, CASE  WHEN wks.sls_grp <> wks.target_sls_grp THEN 'Y' ELSE 'N' END AS flag FROM  ntawks_integration.wks_edw_customer_attr_flat_dim wks ) WHERE flag = 'Y' ) cust WHERE cust.target_sls_grp = itg.sls_grp;
+        {% endif %}",
+        "{% if is_incremental() %}
+        delete from {{this}} itg_tw_bu_forecast_sku using {{ ref('ntawks_integration__wks_itg_tw_bu_forecast_sku') }} wks_sku where itg_tw_bu_forecast_sku.sls_grp=wks_sku.sls_grp and itg_tw_bu_forecast_sku.bu_version=wks_sku.bu_version and itg_tw_bu_forecast_sku.forecast_on_year=wks_sku.forecast_on_year and itg_tw_bu_forecast_sku.forecast_on_month=wks_sku.forecast_on_month;
+        {% endif %}"]
         )
 }}
 

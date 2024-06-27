@@ -3,7 +3,9 @@
         materialized="incremental",
         incremental_strategy= "delete+insert",
         unique_key=  ['filename'],
-        pre_hook = "delete from {{this}} where year_month in ( select distinct date from {{ source('ntasdl_raw', 'sdl_tsi_target_data') }});"
+        pre_hook = "{% if is_incremental() %}
+        delete from {{this}} where year_month in ( select distinct date from {{ source('ntasdl_raw', 'sdl_tsi_target_data') }});
+        {% endif %}"
     )
 }}
 with source as (

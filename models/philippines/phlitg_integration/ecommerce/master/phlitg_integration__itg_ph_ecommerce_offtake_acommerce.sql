@@ -24,7 +24,7 @@ final as(
         marketplace_day::number(18,0) as marketplace_day,
         delivered_date::timestamp_ntz(9) as delivered_date,
         order_id::varchar(30) as order_id,
-        partner_order_id::varchar(100) as partner_order_id,
+        partner_order_id::varchar(500) as partner_order_id,
         delivery_status::varchar(30) as delivery_status,
         item_sku::varchar(20) as item_sku,
         acommerce_item_sku::varchar(20) as acommerce_item_sku,

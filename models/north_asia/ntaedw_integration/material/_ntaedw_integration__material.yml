@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_fert_material_fact
+    config: 
+      alias: edw_fert_material_fact
+      tags: ["j_kr_fert_material_wrapper","transformation"]

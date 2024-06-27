@@ -3,7 +3,9 @@
         materialized="incremental",
         incremental_strategy = "append",
         unique_key=["src_sys_cd"],
-        pre_hook="delete from {{this}} where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_inventory_fact') }}) and {{this}}.hist_flg = 'N';"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_inventory_fact') }}) and {{this}}.hist_flg = 'N';
+        {% endif %}"
     )
 }}
 

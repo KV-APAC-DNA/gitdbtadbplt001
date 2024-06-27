@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_itg_trd_promo_pln
+    config:
+      alias: wks_itg_trd_promo_pln
+      tags: ["j_kr_tp_plan_wrapper","transformation"]

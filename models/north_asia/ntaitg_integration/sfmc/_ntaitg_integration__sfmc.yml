@@ -46,6 +46,19 @@ models:
     config:
       alias: sdl_raw_tw_sfmc_click_data
       tags: ["tw_sfmc_files","ingestion"]
-  
- 
-  
+  - name: ntaitg_integration__itg_kr_sfmc_naver_data
+    config:
+      alias: itg_kr_sfmc_naver_data
+      tags: ["kr_sfmc_naver_data","ingestion"]
+  - name: ntaitg_integration__itg_kr_sfmc_naver_data_additional
+    config:
+      alias: itg_kr_sfmc_naver_data_additional
+      tags: ["kr_sfmc_naver_data","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_sfmc_naver_data_additional
+    config: 
+      alias: sdl_raw_kr_sfmc_naver_data_additional
+      tags: ["kr_sfmc_naver_data","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_sfmc_naver_data
+    config: 
+      alias: sdl_raw_kr_sfmc_naver_data
+      tags: ["kr_sfmc_naver_data","ingestion"]

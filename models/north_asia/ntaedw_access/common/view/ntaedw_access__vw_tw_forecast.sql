@@ -1,0 +1,46 @@
+with source as (
+    select * from {{ ref('ntaedw_integration__vw_tw_forecast') }}
+),
+final as (
+    select
+        subsource_type as "subsource_type",
+        cntry_cd as "cntry_cd",
+        crncy_cd as "crncy_cd",
+        bu_version as "bu_version",
+        forecast_on_year as "forecast_on_year",
+        forecast_on_month as "forecast_on_month",
+        forecast_for_year as "forecast_for_year",
+        forecast_for_mnth as "forecast_for_mnth",
+        caln_day as "caln_day",
+        latest_date as "latest_date",
+        latest_fisc_yrmnth as "latest_fisc_yrmnth",
+        sls_grp as "sls_grp",
+        channel as "channel",
+        sls_ofc as "sls_ofc",
+        sls_ofc_desc as "sls_ofc_desc",
+        strategy_customer_hierachy_name as "strategy_customer_hierachy_name",
+        lph_level_6 as "lph_level_6",
+        gts_bp_tgt as "gts_bp_tgt",
+        gts_bu_forecast as "gts_bu_forecast",
+        gts as "gts",
+        trading_term_act as "trading_term_act",
+        hidden_discnt_act as "hidden_discnt_act",
+        rtn_act as "rtn_act",
+        gts_act as "gts_act",
+        nts_bp_tgt as "nts_bp_tgt",
+        nts_bu_forecast as "nts_bu_forecast",
+        nts_act as "nts_act",
+        tp_bp_tgt as "tp_bp_tgt",
+        tp_bu_forecast as "tp_bu_forecast",
+        tp_act as "tp_act",
+        price_off_bu_forecast as "price_off_bu_forecast",
+        display_bu_forecast as "display_bu_forecast",
+        dm_bu_forecast as "dm_bu_forecast",
+        other_support_bu_forecast as "other_support_bu_forecast",
+        sr_bu_forecast as "sr_bu_forecast",
+        brand as "brand",
+        to_crncy as "to_crncy",
+        ex_rt as "ex_rt"
+    from source
+)
+select * from final

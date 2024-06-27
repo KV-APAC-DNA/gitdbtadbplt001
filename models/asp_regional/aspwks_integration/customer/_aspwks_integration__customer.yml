@@ -1,0 +1,17 @@
+models:
+  - name: aspwks_integration__wks_edw_customer_attr_flat_dim_pop6_store
+    config: 
+      alias: wks_edw_customer_attr_flat_dim_pop6_store
+      tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]
+  - name: aspwks_integration__wks_edw_customer_attr_flat_dim_rex_pop6
+    config: 
+      alias: wks_edw_customer_attr_flat_dim_rex_pop6
+      tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]
+  - name: aspwks_integration__wks_edw_customer_attr_flat_dim_sap
+    config: 
+      alias: wks_edw_customer_attr_flat_dim_sap
+      tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]
+  - name: aspwks_integration__wks_edw_customer_attr_flat_dim_v_cust
+    config: 
+      alias: wks_edw_customer_attr_flat_dim_v_cust
+      tags: ["m_edw_mysales_sap_js_ex_customer_attr_flat","transformation"]

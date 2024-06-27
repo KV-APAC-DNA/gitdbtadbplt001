@@ -2,8 +2,10 @@
     config
     (
         materialized="incremental",
-        incremental_strategy= "delete+insert",
-        unique_key= ["yearmonth"]
+        incremental_strategy= "append",
+        pre_hook="DELETE FROM {{this}}
+                    WHERE yearmonth  IN (SELECT distinct yearmonth 
+					   FROM {{ source('idnsdl_raw', 'sdl_id_pos_daily_idm_sellout') }})"
     )
 }}
 with source as 

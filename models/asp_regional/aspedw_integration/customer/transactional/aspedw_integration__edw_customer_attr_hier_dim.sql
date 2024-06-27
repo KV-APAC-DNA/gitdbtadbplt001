@@ -2,7 +2,7 @@ with itg_tw_strategic_cust_hier as(
     select * from {{ ref('ntaitg_integration__itg_tw_strategic_cust_hier') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 transformed as(
     select 

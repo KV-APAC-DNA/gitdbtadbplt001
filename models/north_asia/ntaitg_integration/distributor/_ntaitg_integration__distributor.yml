@@ -5,7 +5,6 @@ models:
     config: 
       alias: itg_tw_ims_dstr_prod_map
       tags: ["tw_ims_distributor_prod_map","transformation"]
-
   - name: ntaitg_integration__sdl_raw_tw_ims_dstr_std_sel_out
     config: 
         alias: sdl_raw_tw_ims_dstr_std_sel_out
