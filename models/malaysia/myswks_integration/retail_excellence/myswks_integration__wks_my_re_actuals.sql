@@ -1,6 +1,6 @@
 --import cte  
 with edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_my_base_re as (
     select * from {{ ref('myswks_integration__wks_my_base_re') }}

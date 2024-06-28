@@ -196,7 +196,7 @@ MY_RPT_RE_non_mdp  as (
 SELECT Q.*,
        COM.*
 FROM (SELECT DISTINCT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
-             CAST(ACTUAL.MNTH_ID AS INTEGER) AS MNTH_ID,
+             ACTUAL.MNTH_ID  AS MNTH_ID,
              -- COM.CLUSTER,			 			
              ACTUAL.CNTRY_NM AS MARKET,
              nvl(actual.channel_name,'NA') AS CHANNEL,
