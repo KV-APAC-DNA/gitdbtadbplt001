@@ -1,192 +1,224 @@
--- with itg_mds_cn_ps_targets as (
+ with 
+-- itg_mds_cn_ps_targets as (
 --     select * from --Not sure where this model needs to be created
 --                     snapntaitg_integration.itg_mds_cn_ps_targets
 -- ),
--- itg_mds_pacific_ps_targets as (
---     select * from -- ref('pcfitg_integration__itg_mds_pacific_ps_targets') 
---                     snappcfitg_integration.itg_mds_pacific_ps_targets
--- ),
--- itg_mds_jp_ps_targets as (
---     select * from -- ref('jpnitg_integration__itg_mds_jp_ps_targets') 
---             snapntaitg_integration.itg_mds_jp_ps_targets
--- ),
--- itg_mds_hk_ps_targets as (
---     select * from -- ref('ntaitg_integration__itg_mds_hk_ps_targets') 
---                 snapntaitg_integration.itg_mds_hk_ps_targets
--- ),
--- itg_mds_tw_ps_targets as (
---     select * from -- ref('ntaitg_integration__itg_mds_tw_ps_targets')
---             snapntaitg_integration.itg_mds_tw_ps_targets
--- ),
--- itg_mds_kr_ps_targets as (
---     select * from -- ref('ntaitg_integration__itg_mds_kr_ps_targets')
---             snapntaitg_integration.itg_mds_kr_ps_targets
--- ),
--- itg_mds_in_ps_targets as (
---     select * from -- ref('inditg_integration__itg_mds_in_ps_targets')
---             snapinditg_integration.itg_mds_in_ps_targets
--- ),
-with 
+itg_mds_pacific_ps_targets as (
+    select * from -- ref('pcfitg_integration__itg_mds_pacific_ps_targets') 
+                    pcfitg_integration.itg_mds_pacific_ps_targets
+),
+itg_mds_jp_ps_targets as (
+    select * from -- ref('jpnitg_integration__itg_mds_jp_ps_targets') 
+            jpnitg_integration.itg_mds_jp_ps_targets
+),
+itg_mds_hk_ps_targets as (
+    select * from -- ref('ntaitg_integration__itg_mds_hk_ps_targets') 
+                ntaitg_integration.itg_mds_hk_ps_targets
+),
+itg_mds_tw_ps_targets as (
+    select * from -- ref('ntaitg_integration__itg_mds_tw_ps_targets')
+            ntaitg_integration.itg_mds_tw_ps_targets
+),
+itg_mds_kr_ps_targets as (
+    select * from -- ref('ntaitg_integration__itg_mds_kr_ps_targets')
+            ntaitg_integration.itg_mds_kr_ps_targets
+),
+itg_mds_in_ps_targets as (
+    select * from -- ref('inditg_integration__itg_mds_in_ps_targets')
+            inditg_integration.itg_mds_in_ps_targets
+),
 itg_id_ps_targets as (
-    select * from  {{ ref('idnitg_integration__itg_id_ps_targets') }}
-           -- snapidnitg_integration.itg_id_ps_targets
+    select * from  idnitg_integration.itg_id_ps_targets
+    -- {{ ref('idnitg_integration__itg_id_ps_targets') }}
+           -- 
 )
--- ,itg_mds_sg_ps_targets as (
---     select * from -- ref('sgpitg_integration__itg_mds_sg_ps_targets') 
+,itg_mds_sg_ps_targets as (
+    select * from sgpitg_integration.itg_mds_sg_ps_targets
+    -- ref('sgpitg_integration__itg_mds_sg_ps_targets') 
+),
+itg_mds_th_ps_targets as (
+    select * from thaitg_integration.itg_mds_th_ps_targets
+    -- ref('thaitg_integration__itg_mds_th_ps_targets')
+),
+itg_mds_vn_ps_targets as (
+    select * from vnmitg_integration.itg_mds_vn_ps_targets
+    
+    -- ref('vnmitg_integration__itg_mds_vn_ps_targets') 
+),
+itg_mds_ph_ps_targets as (
+    select * from phlitg_integration.itg_mds_ph_ps_targets
+    -- ref('phlitg_integration__itg_mds_ph_ps_targets')
+),
+itg_mds_my_ps_targets as (
+    select * from -- ref('itg_mds_my_ps_targets') Ref Model name currectly here
+                mysitg_integration.itg_mds_my_ps_targets
+),
+-- china as
+-- (       
+--         SELECT 
+--                 'China' AS market
+--                 ,itg_mds_cn_ps_targets.kpi
+--                 ,itg_mds_cn_ps_targets.channel
+--                 ,itg_mds_cn_ps_targets.retail_env AS retail_environment
+--                 ,itg_mds_cn_ps_targets.attribute_1
+--                 ,itg_mds_cn_ps_targets.attribute_2
+--                 ,itg_mds_cn_ps_targets.target AS value
+--         FROM itg_mds_cn_ps_targets
 -- ),
--- itg_mds_th_ps_targets as (
---     select * from -- ref('thaitg_integration__itg_mds_th_ps_targets')
--- ),
--- itg_mds_vn_ps_targets as (
---     select * from -- ref('vnmitg_integration__itg_mds_vn_ps_targets') 
--- ),
--- itg_mds_ph_ps_targets as (
---     select * from -- ref('phlitg_integration__itg_mds_ph_ps_targets')
--- ),
--- itg_mds_my_ps_targets as (
---     select * from -- ref('itg_mds_my_ps_targets') Ref Model name currectly here
---                 snapntaitg_integration.itg_mds_my_ps_targets
--- )
-
-
-
--- SELECT 'China' AS market
--- 	,itg_mds_cn_ps_targets.kpi
--- 	,itg_mds_cn_ps_targets.channel
--- 	,itg_mds_cn_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_cn_ps_targets.attribute_1
--- 	,itg_mds_cn_ps_targets.attribute_2
--- 	,itg_mds_cn_ps_targets."target" AS value
--- FROM itg_mds_cn_ps_targets
-
--- UNION ALL
-
--- SELECT itg_mds_pacific_ps_targets.market
--- 	,itg_mds_pacific_ps_targets.kpi
--- 	,itg_mds_pacific_ps_targets.channel
--- 	,itg_mds_pacific_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_pacific_ps_targets.attribute_1
--- 	,itg_mds_pacific_ps_targets.attribute_2
--- 	,itg_mds_pacific_ps_targets."target" AS value
--- FROM itg_mds_pacific_ps_targets
-
--- UNION ALL
-
--- SELECT 'Japan' AS market
--- 	,itg_mds_jp_ps_targets.kpi
--- 	,itg_mds_jp_ps_targets.channel
--- 	,itg_mds_jp_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_jp_ps_targets.attribute_1
--- 	,itg_mds_jp_ps_targets.attribute_2
--- 	,itg_mds_jp_ps_targets."target" AS value
--- FROM itg_mds_jp_ps_targets
-
--- UNION ALL
-
--- SELECT 'Hong Kong' AS market
--- 	,itg_mds_hk_ps_targets.kpi
--- 	,itg_mds_hk_ps_targets.channel
--- 	,itg_mds_hk_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_hk_ps_targets.attribute_1
--- 	,itg_mds_hk_ps_targets.attribute_2
--- 	,itg_mds_hk_ps_targets."target" AS value
--- FROM itg_mds_hk_ps_targets
-
--- UNION ALL
-
--- SELECT 'Taiwan' AS market
--- 	,itg_mds_tw_ps_targets.kpi
--- 	,itg_mds_tw_ps_targets.channel
--- 	,itg_mds_tw_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_tw_ps_targets.attribute_1
--- 	,itg_mds_tw_ps_targets.attribute_2
--- 	,itg_mds_tw_ps_targets."target" AS value
--- FROM itg_mds_tw_ps_targets
-
--- UNION ALL
-
--- SELECT 'Korea' AS market
--- 	,itg_mds_kr_ps_targets.kpi
--- 	,itg_mds_kr_ps_targets.channel
--- 	,itg_mds_kr_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_kr_ps_targets.attribute_1
--- 	,itg_mds_kr_ps_targets.attribute_2
--- 	,itg_mds_kr_ps_targets."target" AS value
--- FROM itg_mds_kr_ps_targets
-
--- UNION ALL
-
--- SELECT 'India' AS market
--- 	,itg_mds_in_ps_targets.kpi
--- 	,itg_mds_in_ps_targets.channel
--- 	,itg_mds_in_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_in_ps_targets.attribute_1
--- 	,itg_mds_in_ps_targets.attribute_2
--- 	,itg_mds_in_ps_targets."target" AS value
--- FROM itg_mds_in_ps_targets
-
--- UNION ALL
-
-SELECT 'Indonesia' AS market
-	,itg_id_ps_targets.kpi
-	,itg_id_ps_targets.channel
-	,itg_id_ps_targets.retail_env AS retail_environment
-	,itg_id_ps_targets.attribute_1
-	,itg_id_ps_targets.attribute_2
-	,itg_id_ps_targets.target AS value
-FROM itg_id_ps_targets
-
--- UNION ALL
-
--- SELECT 'Singapore' AS market
--- 	,itg_mds_sg_ps_targets.kpi
--- 	,itg_mds_sg_ps_targets.channel
--- 	,itg_mds_sg_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_sg_ps_targets.attribute_1
--- 	,itg_mds_sg_ps_targets.attribute_2
--- 	,itg_mds_sg_ps_targets."target" AS value
--- FROM itg_mds_sg_ps_targets
-
--- UNION ALL
-
--- SELECT 'Thailand' AS market
--- 	,itg_mds_th_ps_targets.kpi
--- 	,itg_mds_th_ps_targets.channel
--- 	,itg_mds_th_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_th_ps_targets.attribute_1
--- 	,itg_mds_th_ps_targets.attribute_2
--- 	,itg_mds_th_ps_targets."target" AS value
--- FROM itg_mds_th_ps_targets
-
--- UNION ALL
-
--- SELECT 'Vietnam' AS market
--- 	,itg_mds_vn_ps_targets.kpi
--- 	,itg_mds_vn_ps_targets.channel
--- 	,itg_mds_vn_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_vn_ps_targets.attribute_1
--- 	,itg_mds_vn_ps_targets.attribute_2
--- 	,itg_mds_vn_ps_targets."target" AS value
--- FROM itg_mds_vn_ps_targets
-
--- UNION ALL
-
--- SELECT 'Philippines' AS market
--- 	,itg_mds_ph_ps_targets.kpi
--- 	,itg_mds_ph_ps_targets.channel
--- 	,itg_mds_ph_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_ph_ps_targets.attribute_1
--- 	,itg_mds_ph_ps_targets.attribute_2
--- 	,itg_mds_ph_ps_targets."target" AS value
--- FROM itg_mds_ph_ps_targets
-
--- UNION ALL
-
--- SELECT 'Malaysia' AS market
--- 	,itg_mds_my_ps_targets.kpi
--- 	,itg_mds_my_ps_targets.channel
--- 	,itg_mds_my_ps_targets.retail_env AS retail_environment
--- 	,itg_mds_my_ps_targets.attribute_1
--- 	,itg_mds_my_ps_targets.attribute_2
--- 	,itg_mds_my_ps_targets."target" AS value
--- FROM itg_mds_my_ps_targets
+pacific as
+(       
+        SELECT itg_mds_pacific_ps_targets.market
+                ,itg_mds_pacific_ps_targets.kpi
+                ,itg_mds_pacific_ps_targets.channel
+                ,itg_mds_pacific_ps_targets.retail_env AS retail_environment
+                ,itg_mds_pacific_ps_targets.attribute_1
+                ,itg_mds_pacific_ps_targets.attribute_2
+                ,itg_mds_pacific_ps_targets.target AS value
+        FROM itg_mds_pacific_ps_targets
+),
+japan as
+(       
+        SELECT 'Japan' AS market
+                ,itg_mds_jp_ps_targets.kpi
+                ,itg_mds_jp_ps_targets.channel
+                ,itg_mds_jp_ps_targets.retail_env AS retail_environment
+                ,itg_mds_jp_ps_targets.attribute_1
+                ,itg_mds_jp_ps_targets.attribute_2
+                ,itg_mds_jp_ps_targets.target AS value
+        FROM itg_mds_jp_ps_targets
+),
+hongkong as
+(       
+        SELECT 'Hong Kong' AS market
+                ,itg_mds_hk_ps_targets.kpi
+                ,itg_mds_hk_ps_targets.channel
+                ,itg_mds_hk_ps_targets.retail_env AS retail_environment
+                ,itg_mds_hk_ps_targets.attribute_1
+                ,itg_mds_hk_ps_targets.attribute_2
+                ,itg_mds_hk_ps_targets.target AS value
+        FROM itg_mds_hk_ps_targets
+),
+taiwan as
+(       
+        SELECT 'Taiwan' AS market
+                ,itg_mds_tw_ps_targets.kpi
+                ,itg_mds_tw_ps_targets.channel
+                ,itg_mds_tw_ps_targets.retail_env AS retail_environment
+                ,itg_mds_tw_ps_targets.attribute_1
+                ,itg_mds_tw_ps_targets.attribute_2
+                ,itg_mds_tw_ps_targets.target AS value
+        FROM itg_mds_tw_ps_targets
+),
+korea as
+(       
+    SELECT 'Korea' AS market
+            ,itg_mds_kr_ps_targets.kpi
+            ,itg_mds_kr_ps_targets.channel
+            ,itg_mds_kr_ps_targets.retail_env AS retail_environment
+            ,itg_mds_kr_ps_targets.attribute_1
+            ,itg_mds_kr_ps_targets.attribute_2
+            ,itg_mds_kr_ps_targets.target AS value
+    FROM itg_mds_kr_ps_targets
+),
+india as
+(       
+        SELECT 'India' AS market
+                ,itg_mds_in_ps_targets.kpi
+                ,itg_mds_in_ps_targets.channel
+                ,itg_mds_in_ps_targets.retail_env AS retail_environment
+                ,itg_mds_in_ps_targets.attribute_1
+                ,itg_mds_in_ps_targets.attribute_2
+                ,itg_mds_in_ps_targets.target AS value
+        FROM itg_mds_in_ps_targets
+),
+indonesia as
+(       
+        SELECT 'Indonesia' AS market
+                ,itg_id_ps_targets.kpi
+                ,itg_id_ps_targets.channel
+                ,itg_id_ps_targets.retail_env AS retail_environment
+                ,itg_id_ps_targets.attribute_1
+                ,itg_id_ps_targets.attribute_2
+                ,itg_id_ps_targets.target AS value
+        FROM itg_id_ps_targets
+),
+singapore as
+(       
+    SELECT 'Singapore' AS market
+            ,itg_mds_sg_ps_targets.kpi
+            ,itg_mds_sg_ps_targets.channel
+            ,itg_mds_sg_ps_targets.retail_env AS retail_environment
+            ,itg_mds_sg_ps_targets.attribute_1
+            ,itg_mds_sg_ps_targets.attribute_2
+            ,itg_mds_sg_ps_targets.target AS value
+    FROM itg_mds_sg_ps_targets
+),
+thailand as
+(       
+        SELECT 'Thailand' AS market
+                ,itg_mds_th_ps_targets.kpi
+                ,itg_mds_th_ps_targets.channel
+                ,itg_mds_th_ps_targets.retail_env AS retail_environment
+                ,itg_mds_th_ps_targets.attribute_1
+                ,itg_mds_th_ps_targets.attribute_2
+                ,itg_mds_th_ps_targets.target AS value
+        FROM itg_mds_th_ps_targets
+),
+vietnam as
+(       
+        SELECT 'Vietnam' AS market
+                ,itg_mds_vn_ps_targets.kpi
+                ,itg_mds_vn_ps_targets.channel
+                ,itg_mds_vn_ps_targets.retail_env AS retail_environment
+                ,itg_mds_vn_ps_targets.attribute_1
+                ,itg_mds_vn_ps_targets.attribute_2
+                ,itg_mds_vn_ps_targets.target AS value
+        FROM itg_mds_vn_ps_targets
+),
+philippines as
+(        SELECT 'Philippines' AS market
+                ,itg_mds_ph_ps_targets.kpi
+                ,itg_mds_ph_ps_targets.channel
+                ,itg_mds_ph_ps_targets.retail_env AS retail_environment
+                ,itg_mds_ph_ps_targets.attribute_1
+                ,itg_mds_ph_ps_targets.attribute_2
+                ,itg_mds_ph_ps_targets.target AS value
+        FROM itg_mds_ph_ps_targets
+),
+malaysia as
+(        SELECT 'Malaysia' AS market
+                ,itg_mds_my_ps_targets.kpi
+                ,itg_mds_my_ps_targets.channel
+                ,itg_mds_my_ps_targets.retail_env AS retail_environment
+                ,itg_mds_my_ps_targets.attribute_1
+                ,itg_mds_my_ps_targets.attribute_2
+                ,itg_mds_my_ps_targets.target AS value
+        FROM itg_mds_my_ps_targets
+),
+final as 
+(
+        select * from pacific
+        union all
+        select * from japan
+        union all
+        select * from hongkong
+        union all
+        select * from taiwan
+        union all
+        select * from korea
+        union all
+        select * from india
+        union all
+        select * from indonesia
+        union all
+        select * from singapore
+        union all
+        select * from thailand
+        union all
+        select * from vietnam
+        union all
+        select * from philippines  
+        union all
+        select * from malaysia       
+)
+select * from final

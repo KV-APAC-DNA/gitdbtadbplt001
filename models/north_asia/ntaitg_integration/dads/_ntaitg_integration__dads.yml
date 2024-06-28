@@ -4,44 +4,44 @@ models:
   - name: ntaitg_integration__itg_kr_dads_linkprice
     config:
         alias: itg_kr_dads_linkprice
-        tags: ["kr_dads_naver_ads",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_linkprice
     config:
         alias: sdl_raw_kr_dads_linkprice
-        tags: ["kr_dads_naver_ads",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__itg_kr_dads_naver_gmv
     config:
         alias: itg_kr_dads_naver_gmv
-        tags: ["kr_dads_naver_gmv",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_naver_gmv
     config:
         alias: sdl_raw_kr_dads_naver_gmv
-        tags: ["kr_dads_naver_gmv",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__itg_kr_dads_naver_keyword_search_volume
     config:
         alias: itg_kr_dads_naver_keyword_search_volume
-        tags: ["kr_dads_naver_keyword_volume",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_naver_keyword_search_volume
     config:
         alias: sdl_raw_kr_dads_naver_keyword_search_volume
-        tags: ["kr_dads_naver_keyword_volume",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__itg_kr_dads_naver_search_channel
     config:
         alias: itg_kr_dads_naver_search_channel
-        tags: ["kr_dads_naver_search_channel",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_naver_search_channel
     config:
         alias: sdl_raw_kr_dads_naver_search_channel
-        tags: ["kr_dads_naver_search_channel",""]
+        tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__itg_kr_dads_coupang_search_keyword
     config:
       alias: itg_kr_dads_coupang_search_keyword
-      tags: ["kr_dads_coupang_search_keyword",""]
+      tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_coupang_price
     config:
       alias: sdl_raw_kr_dads_coupang_price
-      tags: []
+      tags: ["kr_dads","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dads_coupang_search_keyword
     config:
       alias: sdl_raw_kr_dads_coupang_search_keyword
-      tags: []
+      tags: ["kr_dads","ingestion"]

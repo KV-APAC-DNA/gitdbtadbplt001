@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_intrm_cust_tp_plan_actl
+    config: 
+        alias: v_intrm_cust_tp_plan_actl
+        tags: ["",""]
+  - name: ntaedw_integration__edw_customer_attr_hier_dim
+    config: 
+        alias: edw_customer_attr_hier_dim
+        tags: ["",""]

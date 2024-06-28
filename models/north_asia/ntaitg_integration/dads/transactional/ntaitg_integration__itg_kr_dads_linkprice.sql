@@ -35,5 +35,6 @@ final as (
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         file_date::varchar(10) as file_date
     from source
+    where campaign_name is not null
 )
 select * from final

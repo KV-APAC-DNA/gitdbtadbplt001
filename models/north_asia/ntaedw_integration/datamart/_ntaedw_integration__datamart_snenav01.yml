@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+    config: 
+      alias: v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_invc_trend
+    config: 
+      alias: v_rpt_invc_trend
+      tags: ["","transformation"]
+  - name: ntaedw_integration__vw_tw_actual_forecast_tp_elements
+    config: 
+      alias: vw_tw_actual_forecast_tp_elements
+      tags: ["","transformation"]

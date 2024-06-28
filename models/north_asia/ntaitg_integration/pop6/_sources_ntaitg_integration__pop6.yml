@@ -12,22 +12,22 @@ sources:
       - name: sdl_pop6_hk_product_lists_allocation
       - name: sdl_pop6_hk_product_lists_products
       - name: sdl_pop6_hk_users
-      - name: sdl_pop6_kr_display_plans
-      - name: sdl_pop6_kr_displays
-      - name: sdl_pop6_kr_exclusion
-      - name: sdl_pop6_kr_executed_visits
-      - name: sdl_pop6_kr_general_audits
-      - name: sdl_pop6_kr_planned_visits
+      # - name: sdl_pop6_kr_display_plans
+      # - name: sdl_pop6_kr_displays
+      # - name: sdl_pop6_kr_exclusion
+      # - name: sdl_pop6_kr_executed_visits
+      # - name: sdl_pop6_kr_general_audits
+      # - name: sdl_pop6_kr_planned_visits
       - name: sdl_pop6_kr_pop_lists
-      - name: sdl_pop6_kr_product_attribute_audits
+      # - name: sdl_pop6_kr_product_attribute_audits
       - name: sdl_pop6_kr_product_groups_lists
       - name: sdl_pop6_kr_product_lists_allocation
       - name: sdl_pop6_kr_product_lists_products
-      - name: sdl_pop6_kr_promotion_plans
-      - name: sdl_pop6_kr_promotions
-      - name: sdl_pop6_kr_service_levels
-      - name: sdl_pop6_kr_sku_audits
-      - name: sdl_pop6_kr_tasks
+      # - name: sdl_pop6_kr_promotion_plans
+      # - name: sdl_pop6_kr_promotions
+      # - name: sdl_pop6_kr_service_levels
+      # - name: sdl_pop6_kr_sku_audits
+      # - name: sdl_pop6_kr_tasks
       - name: sdl_pop6_kr_users
       - name: sdl_pop6_tw_displays
       - name: sdl_pop6_tw_exclusion
@@ -44,24 +44,6 @@ sources:
       - name: sdl_pop6_tw_service_levels
       - name: sdl_pop6_tw_tasks
       - name: sdl_pop6_tw_users
-
-  - name: jpnsdl_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: jpnsdl_raw
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: sdl_pop6_jp_exclusion
-      - name: sdl_pop6_jp_pop_lists
-      - name: sdl_pop6_jp_product_lists_allocation
-      - name: sdl_pop6_jp_product_lists_products
-      - name: sdl_pop6_jp_promotion_plans
-      - name: sdl_pop6_jp_promotions
-      - name: sdl_pop6_jp_tasks
-      - name: sdl_pop6_jp_users
-
   - name: sgpsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: sgpsdl_raw
@@ -74,16 +56,16 @@ sources:
       - name: sdl_pop6_sg_executed_visits
       - name: sdl_pop6_sg_planned_visits
       - name: sdl_pop6_sg_pop_lists
-      - name: sdl_pop6_sg_product_attribute_audits
+      # - name: sdl_pop6_sg_product_attribute_audits
       - name: sdl_pop6_sg_product_lists_allocation
       - name: sdl_pop6_sg_product_lists_products
       - name: sdl_pop6_sg_promotion_plans
       - name: sdl_pop6_sg_promotions
       - name: sdl_pop6_sg_service_levels
-      - name: sdl_pop6_sg_sku_audits
-      - name: sdl_pop6_sg_tasks
+      # - name: sdl_pop6_sg_sku_audits
+      # - name: sdl_pop6_sg_tasks
       - name: sdl_pop6_sg_users
-      - name: sdl_pop6_sg_general_audits
+      # - name: sdl_pop6_sg_general_audits
 
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
@@ -93,21 +75,21 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: sdl_pop6_th_displays
-      - name: sdl_pop6_th_executed_visits
-      - name: sdl_pop6_th_general_audits
-      - name: sdl_pop6_th_planned_visits
+      # - name: sdl_pop6_th_displays
+      # - name: sdl_pop6_th_executed_visits
+      # - name: sdl_pop6_th_general_audits
+      # - name: sdl_pop6_th_planned_visits
       - name: sdl_pop6_th_pop_lists
-      - name: sdl_pop6_th_product_attribute_audits
+      # - name: sdl_pop6_th_product_attribute_audits
       - name: sdl_pop6_th_product_lists_allocation
       - name: sdl_pop6_th_product_lists_products
-      - name: sdl_pop6_th_promotion_plans
-      - name: sdl_pop6_th_promotions
-      - name: sdl_pop6_th_rir_data
-      - name: sdl_pop6_th_service_levels
+      # - name: sdl_pop6_th_promotion_plans
+      # - name: sdl_pop6_th_promotions
+      # - name: sdl_pop6_th_rir_data
+      # - name: sdl_pop6_th_service_levels
       - name: sdl_pop6_th_tasks
       - name: sdl_pop6_th_users
-  
+
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: ntaitg_integration
