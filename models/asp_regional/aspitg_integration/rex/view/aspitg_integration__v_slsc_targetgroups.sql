@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.slsc_targetgroups
+    select * from {{ source('aspsdl_raw', 'slsc_targetgroups') }}
 ),
 final as
 (   

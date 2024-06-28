@@ -37,7 +37,7 @@ tgtg as
 (
     SELECT 
         targetgroupid,
-        "target"
+        target as "target"
     FROM v_tgtg_targetgroup
     WHERE (rank = 1) AND  ("target")::text = ('customer'::character varying)::text
 ),
@@ -45,7 +45,7 @@ tgtg_items as
 (
     SELECT v_tgtg_items.targetgroupid,
         v_tgtg_items.itemid
-    FROM rex_raw.v_tgtg_items
+    FROM v_tgtg_items
     WHERE (v_tgtg_items.rank = 1)
 ),
 final as 

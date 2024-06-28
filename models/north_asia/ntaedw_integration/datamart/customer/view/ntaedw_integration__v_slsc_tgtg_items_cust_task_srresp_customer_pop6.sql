@@ -1,14 +1,14 @@
 with edw_vw_pop6_visits_prod_attribute_audits as (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
+    select * from ntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
 ),
 edw_vw_pop6_store as (
-    select * from snapntaedw_integration.edw_vw_pop6_store
+    select * from ntaedw_integration.edw_vw_pop6_store
 ),
 edw_vw_pop6_salesperson as (
-    select * from snapntaedw_integration.edw_vw_pop6_salesperson
+    select * from ntaedw_integration.edw_vw_pop6_salesperson
 ),
 edw_vw_pop6_visits_display as (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_display
+    select * from ntaedw_integration.edw_vw_pop6_visits_display
 ),
 union_1 as
 (   
@@ -84,11 +84,11 @@ union_1 as
         'Y' AS flag
     FROM
         edw_vw_pop6_visits_prod_attribute_audits prod
-        LEFT JOIN edw_vw_pop6_store pop ON (((prod.popdb_id)::text = (pop.popdb_id)::text))
-        LEFT JOIN edw_vw_pop6_salesperson usr ON (((prod.username)::text = (usr.username)::text))
+        LEFT JOIN edw_vw_pop6_store pop ON ((rtrim(prod.popdb_id)::text = rtrim(pop.popdb_id)::text))
+        LEFT JOIN edw_vw_pop6_salesperson usr ON ((rtrim(prod.username)::text = rtrim(usr.username)::text))
     WHERE 
-        upper((prod.field_type)::text) <> ('IMAGE'::character varying)::text
-        AND upper((prod.field_type)::text) <> ('PHOTO'::character varying)::text
+        rtrim(upper((prod.field_type)::text)) <> ('IMAGE'::character varying)::text
+        AND rtrim(upper((prod.field_type)::text)) <> ('PHOTO'::character varying)::text
 ),
 union_2 as
 (
@@ -183,9 +183,9 @@ union_2 as
         )::character varying AS salespersonname,
         'Y' AS flag
     FROM edw_vw_pop6_visits_display disp
-        LEFT JOIN edw_vw_pop6_store pop ON (((disp.popdb_id)::text = (pop.popdb_id)::text))
-        LEFT JOIN edw_vw_pop6_salesperson usr ON (((disp.username)::text = (usr.username)::text))
-    WHERE upper((disp.field_type)::text) <> ('PHOTO'::character varying)::text
+        LEFT JOIN edw_vw_pop6_store pop ON ((rtrim(disp.popdb_id)::text = rtrim(pop.popdb_id)::text))
+        LEFT JOIN edw_vw_pop6_salesperson usr ON ((rtrim(disp.username)::text = rtrim(usr.username)::text))
+    WHERE rtrim(upper((disp.field_type)::text)) <> ('PHOTO'::character varying)::text
 ),
 final as
 (

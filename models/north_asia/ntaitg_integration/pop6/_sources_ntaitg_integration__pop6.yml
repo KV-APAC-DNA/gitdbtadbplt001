@@ -22,22 +22,22 @@ sources:
       - name: sdl_pop6_hk_service_levels
       - name: sdl_pop6_hk_tasks
       - name: sdl_pop6_hk_users
-      - name: sdl_pop6_kr_display_plans
-      - name: sdl_pop6_kr_displays
-      - name: sdl_pop6_kr_exclusion
-      - name: sdl_pop6_kr_executed_visits
-      - name: sdl_pop6_kr_general_audits
-      - name: sdl_pop6_kr_planned_visits
+      # - name: sdl_pop6_kr_display_plans
+      # - name: sdl_pop6_kr_displays
+      # - name: sdl_pop6_kr_exclusion
+      # - name: sdl_pop6_kr_executed_visits
+      # - name: sdl_pop6_kr_general_audits
+      # - name: sdl_pop6_kr_planned_visits
       - name: sdl_pop6_kr_pop_lists
-      - name: sdl_pop6_kr_product_attribute_audits
+      # - name: sdl_pop6_kr_product_attribute_audits
       - name: sdl_pop6_kr_product_groups_lists
       - name: sdl_pop6_kr_product_lists_allocation
       - name: sdl_pop6_kr_product_lists_products
-      - name: sdl_pop6_kr_promotion_plans
-      - name: sdl_pop6_kr_promotions
-      - name: sdl_pop6_kr_service_levels
-      - name: sdl_pop6_kr_sku_audits
-      - name: sdl_pop6_kr_tasks
+      # - name: sdl_pop6_kr_promotion_plans
+      # - name: sdl_pop6_kr_promotions
+      # - name: sdl_pop6_kr_service_levels
+      # - name: sdl_pop6_kr_sku_audits
+      # - name: sdl_pop6_kr_tasks
       - name: sdl_pop6_kr_users
       - name: sdl_pop6_tw_displays
       - name: sdl_pop6_tw_exclusion

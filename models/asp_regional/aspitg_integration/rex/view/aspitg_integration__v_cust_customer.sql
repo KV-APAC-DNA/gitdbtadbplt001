@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.cust_customer
+    select * from {{ source('aspsdl_raw', 'cust_customer') }}
 ),
 final as
 (   

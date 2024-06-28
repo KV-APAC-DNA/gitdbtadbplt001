@@ -1,11 +1,11 @@
 with source as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.tgtg_items
+    select * from {{ source('aspsdl_raw', 'tgtg_items') }}
 ),
 final as
 (   
     SELECT 
-        pg_catalog.rank() OVER( PARTITION BY t1.region, t1.targetgroupid ORDER BY t1.azuredatetime DESC ) AS rank,
+        rank() OVER( PARTITION BY t1.region, t1.targetgroupid ORDER BY t1.azuredatetime DESC ) AS rank,
         t1.region as "region",
         t1.fetcheddatetime,
         t1.fetchedsequence,
