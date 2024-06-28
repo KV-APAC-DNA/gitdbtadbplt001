@@ -18,9 +18,9 @@
             "
     )
 }}
--- with wks_edw_ims_sls_std as (
---     select * from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }}
--- ),
+with wks_edw_ims_sls_std as (
+    select * from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }}
+),
 with
 itg_kr_gt_sellout as (
     select * from {{ ref('ntaitg_integration__itg_kr_gt_sellout')}}
