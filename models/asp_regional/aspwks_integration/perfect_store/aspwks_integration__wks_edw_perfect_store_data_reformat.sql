@@ -1,18 +1,18 @@
-with edw_perfect_store as 
+with edw_perfect_store as
 (
     select * from snapaspedw_integration.edw_perfect_store
 ),
-itg_mds_rg_ps_channel_weights as 
+itg_mds_rg_ps_channel_weights as
 (
     select * from snapaspitg_integration.itg_mds_rg_ps_channel_weights
 ),
-itg_mds_rg_ps_market_coverage as 
+itg_mds_rg_ps_market_coverage as
 (
     select * from snapaspitg_integration.itg_mds_rg_ps_market_coverage
 ),
-msl as 
+msl as
 (
-    select 
+    select
         dataset as dataset,
         customerid as customerid,
         salespersonid as salespersonid,
@@ -65,7 +65,7 @@ msl as
         AND UPPER(VST_STATUS) = 'COMPLETED'
         AND UPPER(MUSTCARRYITEM) = 'TRUE'
 ),
-oos as 
+oos as
 (
     select --'ps_data' as identifier,
         dataset as dataset,
@@ -121,7 +121,7 @@ oos as
         AND UPPER(MUSTCARRYITEM) = 'TRUE'
         AND UPPER(PRESENCE) = 'TRUE'
 ),
-other as 
+other as
 (
     SELECT --'PS_DATA' AS IDENTIFIER,
         DATASET AS DATASET,
@@ -262,7 +262,7 @@ other as
     FROM EDW_PERFECT_STORE
     WHERE UPPER(KPI) NOT IN ('MSL COMPLIANCE', 'OOS COMPLIANCE')
 ),
-ps_data as 
+ps_data as
 (
     select * from msl
     union all
@@ -271,8 +271,8 @@ ps_data as
     select * from other
 ),
 final as
-(   
-    SELECT 
+(
+    SELECT
         PS_DATA.DATASET,
         PS_DATA.CUSTOMERID,
         PS_DATA.SALESPERSONID,
@@ -320,12 +320,12 @@ final as
         PS_DATA.ACTUAL_VALUE,
         PS_DATA.REF_VALUE,
         PS_DATA.PHOTO_URL
-    FROM PS_DATA 
+    FROM PS_DATA
         --JOIN (SELECT 'PS_DATA' AS IDENTIFIER,
         --TO_DATE(DATE_PART('YEAR',SYSDATE) ||DATE_PART ('MONTH',SYSDATE) ||15,'YYYYMMDD') AS LATEST_DATE
         --FROM EDW_PERFECT_STORE) MAX_DATE ON MAX_DATE.IDENTIFIER = PS_DATA.IDENTIFIER
         LEFT JOIN itg_mds_rg_ps_channel_weights CHNL_WEIGHT ON UPPER (PS_DATA.COUNTRY) = UPPER (CHNL_WEIGHT.COUNTRY)
-        AND 
+        AND
         (
             CASE
                 WHEN UPPER (CHNL_WEIGHT.channel_re) = 'RE' THEN UPPER (PS_DATA.RETAIL_ENVIRONMENT)
