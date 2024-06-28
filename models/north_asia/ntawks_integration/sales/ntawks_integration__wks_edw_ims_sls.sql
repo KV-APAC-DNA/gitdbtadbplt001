@@ -10,7 +10,7 @@ select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_IMS_DSTR_PROD_PRICE_MAP
 edw_material_sales_dim as (
 select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
 ),
-final as (
+transformed as (
 SELECT src.ims_txn_dt,
   src.dstr_cd,
   src.dstr_nm,
@@ -300,7 +300,53 @@ FROM (
 WHERE --src.dstr_cd in  ('110238','100496','119671','100681','110256','107479','107481','107482','107490','107483','107485','107507','107510','115973','116047','122296','132222','132349')
   src.dstr_cd IN ('100681', '110256')
   AND upper(trim(src.ctry_cd)) = 'HK'
-)
+),
+final as (
+    select ims_txn_dt::date as ims_txn_dt,
+dstr_cd::varchar(10) as dstr_cd,
+dstr_nm::varchar(100) as dstr_nm,
+cust_cd::varchar(50) as cust_cd,
+cust_nm::varchar(100) as cust_nm,
+prod_cd::varchar(20) as prod_cd,
+prod_nm::varchar(100) as prod_nm,
+rpt_per_strt_dt::date as rpt_per_strt_dt,
+rpt_per_end_dt::date as rpt_per_end_dt,
+ean_num::varchar(20) as ean_num,
+uom::varchar(10) as uom,
+unit_prc::number(21,5) as unit_prc,
+sls_amt::number(21,5) as sls_amt,
+sls_qty::number(18,0) as sls_qty,
+rtrn_qty::number(18,0) as rtrn_qty,
+rtrn_amt::number(24,5) as rtrn_amt,
+ship_cust_nm::varchar(100) as ship_cust_nm,
+cust_cls_grp::varchar(20) as cust_cls_grp,
+cust_sub_cls::varchar(20) as cust_sub_cls,
+prod_spec::varchar(50) as prod_spec,
+itm_agn_nm::varchar(100) as itm_agn_nm,
+ordr_co::varchar(20) as ordr_co,
+rtrn_rsn::varchar(100) as rtrn_rsn,
+sls_ofc_cd::varchar(10) as sls_ofc_cd,
+sls_grp_cd::varchar(10) as sls_grp_cd,
+sls_ofc_nm::varchar(20) as sls_ofc_nm,
+sls_grp_nm::varchar(20) as sls_grp_nm,
+acc_type::varchar(10) as acc_type,
+co_cd::varchar(20) as co_cd,
+sls_rep_cd::varchar(20) as sls_rep_cd,
+sls_rep_nm::varchar(50) as sls_rep_nm,
+doc_dt::date as doc_dt,
+doc_num::varchar(20) as doc_num,
+invc_num::varchar(15) as invc_num,
+remark_desc::varchar(100) as remark_desc,
+gift_qty::number(18,0) as gift_qty,
+sls_bfr_tax_amt::number(22,5) as sls_bfr_tax_amt,
+sku_per_box::number(21,5) as sku_per_box,
+ctry_cd::varchar(2) as ctry_cd,
+crncy_cd::varchar(3) as crncy_cd,
+prom_sls_amt::number(38,4) as prom_sls_amt,
+prom_rtrn_amt::number(38,4) as prom_rtrn_amt,
+prom_prc_amt::number(31,5) as prom_prc_amt,
+crt_dttm::timestamp_ntz(9) as crt_dttm
+from transformed)
+select * from final
 
-select * from final 
 

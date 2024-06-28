@@ -7,7 +7,7 @@ select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_IMS_DSTR_PROD_MAP
 edw_material_sales_dim as (
 select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
 ),
-final as (
+transformed as (
 SELECT x.invnt_dt,
   x.dstr_cd,
   x.dstr_nm,
@@ -63,6 +63,35 @@ LEFT JOIN (
   ) lkp2 ON LTRIM(trim(x.prod_cd), 0) = lkp2.matl_num
 WHERE x.dstr_cd IN ('100496', '100681', '110256', '107479', '107481', '107482', '107483', '107485', '107490', '107507', '107510', '115973', '116047', '122296', '132222', '132349', '120812')
 
+),
+final as (
+select 
+invnt_dt::date as invnt_dt,
+dstr_cd::varchar(30) as dstr_cd,
+dstr_nm::varchar(100) as dstr_nm,
+prod_cd::varchar(20) as prod_cd,
+prod_nm::varchar(200) as prod_nm,
+ean_num::varchar(20) as ean_num,
+cust_nm::varchar(100) as cust_nm,
+invnt_qty::number(21,5) as invnt_qty,
+invnt_amt::number(21,5) as invnt_amt,
+avg_prc_amt::number(21,5) as avg_prc_amt,
+safety_stock::number(21,5) as safety_stock,
+bad_invnt_qty::number(21,5) as bad_invnt_qty,
+book_invnt_qty::number(21,5) as book_invnt_qty,
+convs_amt::number(21,5) as convs_amt,
+prch_disc_amt::number(21,5) as prch_disc_amt,
+end_invnt_qty::number(21,5) as end_invnt_qty,
+batch_no::varchar(20) as batch_no,
+uom::varchar(20) as uom,
+sls_rep_cd::varchar(20) as sls_rep_cd,
+sls_rep_nm::varchar(50) as sls_rep_nm,
+ctry_cd::varchar(2) as ctry_cd,
+crncy_cd::varchar(3) as crncy_cd,
+crt_dttm::timestamp_ntz(9) as crt_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm,
+chn_uom::varchar(100) as chn_uom
+from transformed
 )
 select * from final 
 
