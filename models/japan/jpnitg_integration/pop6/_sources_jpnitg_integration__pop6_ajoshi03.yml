@@ -1,0 +1,32 @@
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_pop6_jp_service_levels
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_planned_visits
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_executed_visits
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_sku_audits
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_product_attribute_audits
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_general_audits
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_display_plans
+        tags: ["pop6_jp_transaction", "ingestion"]
+
+      - name: sdl_pop6_jp_displays
+        tags: ["pop6_jp_transaction", "ingestion"]
