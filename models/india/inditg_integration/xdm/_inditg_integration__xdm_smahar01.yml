@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_xdm_salesmanskulinemapping
+    config:
+      alias: itg_xdm_salesmanskulinemapping
+      tags: ["in_salesmanskumapping","ingestion"]

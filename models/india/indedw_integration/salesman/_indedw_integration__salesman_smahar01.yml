@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_salesman_target
+    config:
+      alias: edw_salesman_target
+      tags: ["j_in_salesman_target_load","transformation"]
