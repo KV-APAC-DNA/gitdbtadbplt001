@@ -45,17 +45,9 @@ models:
     config:
         alias: rx_cx_prod_reg_cutoffs_stable
         tags: ["in_rx_to_cx_datamart","transformation"]
-  - name: hcpwks_integration__rx_cx_missing_urc_prod_list
-    config:
-        alias: rx_cx_missing_urc_prod_list
-        tags: ["in_rx_to_cx_datamart","transformation"]
   - name: hcpwks_integration__rx_cx_sales_achnr_qty_recom
     config:
         alias: rx_cx_sales_achnr_qty_recom
-        tags: ["in_rx_to_cx_datamart","transformation"]
-  - name: hcpwks_integration__rx_cx_miss_urc_prod_sales_rx
-    config:
-        alias: rx_cx_miss_urc_prod_sales_rx
         tags: ["in_rx_to_cx_datamart","transformation"]
   - name: hcpwks_integration__rx_cx_cy_target
     config:

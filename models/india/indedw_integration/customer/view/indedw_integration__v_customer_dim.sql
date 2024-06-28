@@ -53,7 +53,7 @@ itg_muser as
 ),
 itg_distributoractivation as 
 (
-    select * from inditg_integration.itg_distributoractivation
+    select * from {{ ref('inditg_integration__itg_distributoractivation') }}
 ),
 final as 
 (
