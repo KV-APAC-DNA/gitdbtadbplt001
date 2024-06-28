@@ -89,22 +89,6 @@ models:
     config:
         alias: itg_pop6_users
         tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_promotion_plans
-    config:
-        alias: sdl_raw_pop6_jp_promotion_plans
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_promotions
-    config:
-        alias: sdl_raw_pop6_jp_promotions
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_tasks
-    config:
-        alias: sdl_raw_pop6_jp_tasks
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_exclusion
-    config:
-        alias: sdl_raw_pop6_jp_exclusion
-        tags: ["",""]
   - name: ntaitg_interation__sdl_raw_pop6_kr_service_levels
     config:
         alias: sdl_raw_pop6_kr_service_levels
@@ -152,20 +136,4 @@ models:
   - name: ntaitg_interation__sdl_raw_pop6_kr_exclusion
     config:
         alias: sdl_raw_pop6_kr_exclusion
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_tasks
-    config:
-        alias: sdl_raw_pop6_sg_tasks
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_sku_audits
-    config:
-        alias: sdl_raw_pop6_sg_sku_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_product_attribute_audits
-    config:
-        alias: sdl_raw_pop6_sg_product_attribute_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_general_audits
-    config:
-        alias: sdl_raw_pop6_sg_general_audits
         tags: ["",""]
