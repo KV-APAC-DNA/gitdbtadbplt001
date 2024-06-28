@@ -3,16 +3,17 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where c_dikesaiid in (select c_dikesaiid from {{ source('jpndclsdl_raw', 'c_tbeckesai') }});
+                delete from {{this}} where diorderhistid in (select diorderhistid from {{ source('jpndclsdl_raw', 'c_tbeckesaihistory') }}) AND c_dikesaiid in (select id1 from ITG_SCHEMA.tmp_c_tbEcKesaihistory);
                     {% endif %}"
     )
 }}
 
 with source as(
-    select * from DEV_DNA_LOAD.JPDCLSDL_RAW.C_TBECKESAI
+    select * from {{ source('jpndclsdl_raw', 'c_tbeckesaihistory') }}
 ),
 final as(
     select 
+        diorderhistid::number(38,0) as diorderhistid,
         c_dikesaiid::number(38,0) as c_dikesaiid,
         diorderid::number(38,0) as diorderid,
         diecusrid::number(38,0) as diecusrid,
@@ -131,7 +132,6 @@ final as(
         c_dirakutencardtradepass::varchar(384) as c_dirakutencardtradepass,
         c_dsrakutensyuseists::varchar(3) as c_dsrakutensyuseists,
         c_dsrakutencancelsts::varchar(3) as c_dsrakutencancelsts,
-        c_didiscountticketissuekesaiid::number(38,0) as c_didiscountticketissuekesaiid,
         ditodokeid::number(38,0) as ditodokeid,
         c_dsgmoshoptransactionid::varchar(75) as c_dsgmoshoptransactionid,
         c_dsgmotransactionid::varchar(16) as c_dsgmotransactionid,

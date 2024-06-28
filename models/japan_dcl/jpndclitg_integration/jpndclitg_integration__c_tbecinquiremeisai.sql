@@ -1,5 +1,17 @@
+{{
+    config(
+        materialized= "incremental",
+        incremental_strategy= "append",
+        pre_hook = "{% if is_incremental() %}
+                    delete from {{this}} where dimeisaiid in (select dimeisaiid from {{ source('jpndclsdl_raw', 'c_tbecinquiremeisai') }}) and
+                    diinquireid	in (select diinquireid from {{ source('jpndclsdl_raw', 'c_tbecinquiremeisai') }}) and
+                    diinquirekesaiid in (select diinquirekesaiid from {{ source('jpndclsdl_raw', 'c_tbecinquiremeisai') }});
+                    {% endif %}"
+    )
+}}
+
 with source as(
-    select * from DEV_DNA_LOAD.JPDCLSDL_RAW.C_TBECINQUIREMEISAI
+    select * from {{ source('jpndclsdl_raw', 'c_tbecinquiremeisai') }}
 ),
 final as(
     select 
@@ -56,11 +68,11 @@ final as(
         c_diexchangenum::number(38,0) as c_diexchangenum,
         c_dstaxkbn::varchar(3) as c_dstaxkbn,
         ditaxrate::number(38,0) as ditaxrate,
-        'NULL'::varchar(10) as source_file_date,
+        NULL::varchar(10) as source_file_date,
         current_timestamp()::timestamp_ntz(9) as inserted_date,
-        'NULL'::varchar(10) as inserted_by,
+        NULL::varchar(10) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
-        'NULL'::varchar(100) as updated_by
+        NULL::varchar(100) as updated_by
     from source
 )
 select * from final

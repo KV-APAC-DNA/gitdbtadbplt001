@@ -3,30 +3,26 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where c_dspaymentptnkbn in (select c_dspaymentptnkbn from {{ source('jpndclsdl_raw', 'c_tbecpaymentpatternmst') }});
-                        {% endif %}"
+            delete from {{this}} where c_dsusrcommentclasskbn in (select c_dsusrcommentclasskbn from {{ source('jpndclsdl_raw', 'c_tbecusrcommentclassmst') }});
+                    {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('jpndclsdl_raw', 'c_tbecpaymentpatternmst') }}
+    select * from {{ source('jpndclsdl_raw', 'c_tbecusrcommentclassmst') }}
 ),
 final as(
     select 
-        c_dspaymentptnkbn::varchar(3) as c_dspaymentptnkbn,
-        c_dspaymentlongname::varchar(48) as c_dspaymentlongname,
-        c_dspaymentnameryaku::varchar(15) as c_dspaymentnameryaku,
-        c_dspaymentoutputname::varchar(15) as c_dspaymentoutputname,
-        c_dseffectflg::varchar(1) as c_dseffectflg,
-        didisporder::number(38,0) as didisporder,
-        c_dsteikitekiyoflg::varchar(1) as c_dsteikitekiyoflg,
+        c_dsusrcommentclasskbn::varchar(3) as c_dsusrcommentclasskbn,
+        c_dsusrcommentclassname::varchar(96) as c_dsusrcommentclassname,
+        disortid::number(38,0) as disortid,
         current_timestamp()::timestamp_ntz(9) as dsprep,
         current_timestamp()::timestamp_ntz(9) as dsren,
         dselim::timestamp_ntz(9) as dselim,
         diprepusr::number(38,0) as diprepusr,
         direnusr::number(38,0) as direnusr,
         dielimusr::number(38,0) as dielimusr,
-        dielimflg::varchar(1) as dielimflg,
+        dielimflg::varchar(4) as dielimflg,
         NULL::varchar(10) as source_file_date,
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         NULL::varchar(10) as inserted_by,

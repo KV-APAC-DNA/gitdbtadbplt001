@@ -3,23 +3,21 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where c_dspaymentptnkbn in (select c_dspaymentptnkbn from {{ source('jpndclsdl_raw', 'c_tbecpaymentpatternmst') }});
-                        {% endif %}"
+                delete from {{this}} where dihenpinriyuid in (select dihenpinriyuid from {{ source('jpndclsdl_raw', 'tbechenpinriyu') }});
+                    {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('jpndclsdl_raw', 'c_tbecpaymentpatternmst') }}
+    select * from {{ source('jpndclsdl_raw', 'tbechenpinriyu') }}
 ),
 final as(
     select 
-        c_dspaymentptnkbn::varchar(3) as c_dspaymentptnkbn,
-        c_dspaymentlongname::varchar(48) as c_dspaymentlongname,
-        c_dspaymentnameryaku::varchar(15) as c_dspaymentnameryaku,
-        c_dspaymentoutputname::varchar(15) as c_dspaymentoutputname,
-        c_dseffectflg::varchar(1) as c_dseffectflg,
+        dihenpinriyuid::number(38,0) as dihenpinriyuid,
+        dshenpinriyu::varchar(48) as dshenpinriyu,
+        dshenpinriyushosai::varchar(96) as dshenpinriyushosai,
         didisporder::number(38,0) as didisporder,
-        c_dsteikitekiyoflg::varchar(1) as c_dsteikitekiyoflg,
+        c_dieditableflg::varchar(1) as c_dieditableflg,
         current_timestamp()::timestamp_ntz(9) as dsprep,
         current_timestamp()::timestamp_ntz(9) as dsren,
         dselim::timestamp_ntz(9) as dselim,

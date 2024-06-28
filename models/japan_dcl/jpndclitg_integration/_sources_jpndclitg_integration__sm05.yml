@@ -11,3 +11,32 @@ sources:
     tables:
       - name: c_tbecinquiremeisai
         tags: ["in_mds_refresh","transformation"]
+
+      - name: c_tbeckesai
+      - name: c_tbecpaymentpatternmst
+      - name: c_tbecprivilegekesai
+      - name: c_tbecprivilegemst
+      - name: c_tbecrankaddamountadm
+      - name: tbechenpinriyu
+      - name: c_tbecprivilegeinquirekesai
+      - name: c_tbecpointadm
+      - name: tbecsalesroutemst
+      - name: c_tbecranksumamount
+      - name: tbecsoko
+      - name: c_tbecordermeisaihistory
+      - name: c_tbeckesaihistory
+      - name: c_tbecorderhistory
+      - name: c_tbecusrcomment
+      - name: tbpromotion
+      - name: c_tbecusrcommentclassmst
+      - name: c_tbtelcompanymst
+      - name: c_tbecpointregistdivmst
+      - name: c_tbecregularoperatehist
+      - name: c_tbecpribuycategory
+      - name: c_tbecprimembclass
+      - name: c_tbecpripresentitem
+      - name: c_tbecpribuyitem
+      - name: c_tbecpriroute
+      - name: c_tbecpriusrsts
+      - name: tbpromotioncate
+      - name: tbuser

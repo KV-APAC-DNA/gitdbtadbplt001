@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: jpndclitg_integration__sfmc_bounces
+    config: 
+      alias: sfmc_bounces
+      tags: ["in_mds_refresh","transformation"]
