@@ -1,16 +1,16 @@
 version: 2
 
 models:
-  - name: ntaedw_access__v_intrm_curr_copa_plan_bp
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_bp
     config:
-      alias: v_intrm_curr_copa_plan_bp
+      alias: v_intrm_curr_copa_plan_denorm_bp
       tags: ["north_asia_common_views","transformation"]
-  - name: ntaedw_access__v_intrm_curr_copa_plan_rf
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_rf
     config:
-      alias: v_intrm_curr_copa_plan_rf
+      alias: v_intrm_curr_copa_plan_denorm_rf
       tags: ["north_asia_common_views","transformation"]
-  - name: ntaedw_access__v_intrm_curr_copa_plan_le
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_le
     config:
-      alias: v_intrm_curr_copa_plan_le
+      alias: v_intrm_curr_copa_plan_denorm_le
       tags: ["north_asia_common_views","transformation"]
   
