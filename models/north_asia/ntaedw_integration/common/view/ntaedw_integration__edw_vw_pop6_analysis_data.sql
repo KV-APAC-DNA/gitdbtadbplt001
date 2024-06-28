@@ -4,58 +4,58 @@
 ) }}
 
 with edw_vw_ps_targets as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_VW_PS_TARGETS
+select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_TARGETS
 ),
 pop6_kpi2data_mapping as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.POP6_KPI2DATA_MAPPING
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.POP6_KPI2DATA_MAPPING
 ),
 edw_vw_pop6_visits_sku_audits as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_SKU_AUDITS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_SKU_AUDITS
 ),
 edw_vw_pop6_visits_prod_attribute_audits as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.edw_vw_pop6_visits_prod_attribute_audits
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.edw_vw_pop6_visits_prod_attribute_audits
 ),
 edw_vw_pop6_visits_display as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_DISPLAY
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_DISPLAY
 ),
 edw_vw_pop6_products as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_PRODUCTS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PRODUCTS
 ),
 edw_vw_pop6_promotions as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_PROMOTIONS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PROMOTIONS
 ),
 edw_vw_pop6_tasks as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_TASKS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_TASKS
 ),
 edw_vw_pop6_visits_general_audits as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_GENERAL_AUDITS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_GENERAL_AUDITS
 ),
 edw_vw_pop6_salesperson as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_SALESPERSON
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_SALESPERSON
 ),
 edw_vw_pop6_store as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_STORE
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_STORE
 ),
 edw_vw_pop6_planned_visits as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_PLANNED_VISITS
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PLANNED_VISITS
 ),
 edw_vw_pop6_visits_rir_data as (
-select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_RIR_DATA
+select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_RIR_DATA
 ),
 itg_pop6_rir_data as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_RIR_DATA
+select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_RIR_DATA
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
 ),
 itg_pop6_executed_visits as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_EXECUTED_VISITS
+select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_EXECUTED_VISITS
 ),
 itg_pop6_product_lists_pops as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_POPS
+select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_POPS
 ),
 itg_pop6_product_lists_products as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_PRODUCTS
+select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_PRODUCTS
 ),
 sku_audit as ((
                         SELECT 
@@ -2720,7 +2720,7 @@ display_2 as (
                             (srv.field_code):: text
                           ), 
                           0, 
-                          7
+                          6
                         ) = ('PS_SOS' :: character varying):: text
                       ) THEN 'SOS COMPLIANCE' :: character varying WHEN (
                         "substring"(

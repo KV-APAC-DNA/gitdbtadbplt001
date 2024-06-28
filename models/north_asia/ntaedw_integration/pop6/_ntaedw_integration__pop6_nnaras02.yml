@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+    config: 
+      alias: v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+      tags: ["","transformation"]
+  

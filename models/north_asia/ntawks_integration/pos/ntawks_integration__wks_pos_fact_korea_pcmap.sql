@@ -127,10 +127,10 @@ matl_desc::varchar(100) as matl_desc,
 prom_sls_amt::number(27,5) as prom_sls_amt,
 prom_prc_amt::number(16,5) as prom_prc_amt,
 hist_flg::varchar(1) as hist_flg,
+crt_dttm::timestamp_ntz(9) as crt_dttm,
+updt_dttm::timestamp_ntz(9) as updt_dttm,
 sls_grp_cd::varchar(20) as sls_grp_cd,
 channel::varchar(25) as channel,
 store_type::varchar(25) as store_type,
-crt_dttm::timestamp_ntz(9) as crt_dttm,
-updt_dttm::timestamp_ntz(9) as updt_dttm
 from transformed)
 select * from final
