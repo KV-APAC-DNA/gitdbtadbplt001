@@ -15,7 +15,7 @@ models:
         tags: []
   - name: ntaedw_integration__vw_dir_route_plan_week_map
     config:
-        alias: vw_indir_route_plan_week_map
+        alias: vw_dir_route_plan_week_map
         tags: []
   - name: ntaedw_integration__edw_sales_rep_route_plan
     config:

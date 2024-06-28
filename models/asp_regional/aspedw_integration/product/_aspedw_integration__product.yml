@@ -3,6 +3,6 @@ version: 2
 models:
   - name: aspedw_integration__edw_product_attr_dim
     config:
-      alias: edw_ecomm_plan
+      alias: edw_product_attr_dim
       tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
   

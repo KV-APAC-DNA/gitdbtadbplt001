@@ -54,7 +54,7 @@ sources:
                 schema: ntawks_integration
           - test_format:
               select_columns: ["transaction_date", "cust_nm", "ean_num", "year", "month", "week", "prod_desc", "sellout_qty", "sellout_amount"]
-              where_clause: "not regexp_like ('transaction_date', '[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]') and not regexp_like ('transaction_date', '[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]') and (transaction_date is not null and transaction_date != '')"              
+              where_clause: "not regexp_like (transaction_date, '[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]') and not regexp_like (transaction_date, '[0-1][0-9]/[0-9][0-9]/[1-2][0-9][0-9][0-9]') and (transaction_date is not null and transaction_date != '')"              
               failure_reason: "'TRANSACTION DATE RECEIVED IS INVALID'"
               name: TRATBL_sdl_kr_ecom_naver_sellout_temp__format_test
               config:

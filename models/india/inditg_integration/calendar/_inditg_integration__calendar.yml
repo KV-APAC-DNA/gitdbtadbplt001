@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_xdm_businesscalendar
+    config:
+      alias: itg_xdm_businesscalendar
+      tags: ["in_xdm_master","ingestion"]

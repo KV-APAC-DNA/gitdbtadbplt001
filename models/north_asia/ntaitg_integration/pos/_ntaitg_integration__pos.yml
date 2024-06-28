@@ -65,7 +65,7 @@ models:
       tags: ["tw_pos","transformation"]
   - name: ntaitg_integration__itg_pos_invnt
     config:
-      alias: tg_pos_invnt
+      alias: itg_pos_invnt
       tags: ["tw_pos","transformation"]
   - name: ntaitg_integration__itg_pos_store_product
     config:

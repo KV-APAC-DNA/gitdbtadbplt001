@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_xdm_businesscalendar
+      tags: ["in_business_calendar","ingestion"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_query_parameters
+    - name: itg_customer
+    - name: itg_region
+    - name: itg_zone
+    - name: itg_territory
+    - name: itg_townmaster

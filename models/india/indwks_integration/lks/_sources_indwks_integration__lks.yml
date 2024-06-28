@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_plant
+      tags: ["in_click_edw","ingestion"]

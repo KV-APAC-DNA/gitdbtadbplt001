@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_product_dim
+    config:
+      alias: wks_product_dim
+      tags: ["in_xdm_master","transformation"]

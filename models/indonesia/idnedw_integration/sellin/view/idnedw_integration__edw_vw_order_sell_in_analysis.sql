@@ -143,8 +143,8 @@ transformed_1  as (
 			,epd.jj_sap_cd_mp_prod_id
 			,epd.jj_sap_cd_mp_prod_desc
             ,((((epd.jj_sap_upgrd_prod_desc)::TEXT || (' ^'::CHARACTER VARYING)::TEXT) || (epd.jj_sap_upgrd_prod_id)::TEXT))::CHARACTER VARYING AS sap_prod_code_name
-            ,epd.franchise
-			,epd.brand
+            ,upper(epd.franchise) as franchise
+			,upper(epd.brand) as brand
 			,epd.variant1 AS sku_grp_or_variant
 			,epd.variant2 AS sku_grp1_or_variant1
 			,epd.variant3 AS sku_grp2_or_variant2

@@ -114,3 +114,68 @@ sources:
             data_type: number
           - name: validationstatus
             data_type: varchar
+      - name: sdl_mds_in_channel_mapping
+        tags: ["in_mds_refresh","transformation"]
+      - name: sdl_mds_in_international_customer_details
+        tags: ["in_mds_refresh","transformation"]
+      - name: sdl_mds_in_sap_distribution_channel
+        tags: ["in_mds_refresh","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["code"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_in_sap_distribution_channel__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code"]
+              name: TRATBL_sdl_mds_in_sap_distribution_channel__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_mds_in_gl_account_master
+        tags: ["in_mds_refresh","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["code"]
+              not_null_columns: ["code"]
+              name: TRATBL_sdl_mds_in_gl_account_master__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate:
+              group_by_columns: ["code"]
+              select_columns: ["code"]
+              name: TRATBL_sdl_mds_in_gl_account_master__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+
+      - name: sdl_mds_in_sv_kapf_month_end_dates
+        tags: ["in_sdlitg_salescube_master","ingestion"]
+      - name: sdl_mds_in_ps_weights
+        tags: ["in_mds_refresh","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["name", "channel", "kpi"]
+                not_null_columns: ["name", "channel", "kpi"]
+                name: TRATBL_sdl_mds_in_ps_weights__null_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+            - test_duplicate:
+                group_by_columns: ["name"]
+                select_columns: ["name", "channel", "kpi"] 
+                name: TRATBL_sdl_mds_in_ps_weights__duplicate_test
+                config:
+                  store_failures: true
+                  schema: indwks_integration
+      - name: sdl_mds_in_product_category_mapping
+        tags: ["in_mds_refresh","ingestion"]
+
+      - name: sdl_mds_in_ecom_nts_adjustment
+        tags: ["in_mds_refresh","ingestion"]
+      - name: sdl_mds_in_sv_winculum_master
+        tags: ["in_sdlitg_salescube_master","ingestion"]

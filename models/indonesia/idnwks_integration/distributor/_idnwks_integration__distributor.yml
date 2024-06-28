@@ -14,10 +14,10 @@ models:
     config:
       alias: wks_itg_all_distributor_sellin_sellout_master
       tags: ["id_noo_analysis","transformation"]
-  # - name: idnwks_integration__wks_csa_sellout_sales_fact
-  #   config:
-  #     alias: wks_csa_sellout_sales_fact
-  #     tags: ["id_sellout_sales","ingestion"]
+  - name: idnwks_integration__wks_itg_all_distributor_stock_master
+    config:
+      alias: wks_itg_all_distributor_stock_master
+      tags: ["id_noo_analysis","transformation"]
   # - name: idnwks_integration__wks_dnr_raw_sellout_sales_fact
   #   config:
   #     alias: wks_dnr_raw_sellout_sales_fact
