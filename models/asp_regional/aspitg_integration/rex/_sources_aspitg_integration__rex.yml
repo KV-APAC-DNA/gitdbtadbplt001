@@ -16,4 +16,4 @@ sources:
       - name: prodbu_productbusinessunit
       - name: slsp_salesperson
       - name: vst_visit
-      - name: cust_customer
+      # - name: cust_customer
