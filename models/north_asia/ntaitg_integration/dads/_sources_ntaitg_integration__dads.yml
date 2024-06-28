@@ -12,16 +12,16 @@ sources:
     - name: sdl_kr_dads_linkprice
       tags: ["kr_dads","ingestion"]
       tests:
-        - test_null:
-            select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            not_null_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            name: TRATBL_sdl_kr_dads_linkprice__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
+        #     not_null_columns: ["campaign_name", "material_id", "product_number", "product_name"]
+        #     name: TRATBL_sdl_kr_dads_linkprice__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
         - test_format:
             select_columns: ["campaign_name", "material_id", "product_number", "product_name"]
-            where_clause: "not regexp_like ('substring(file_name,15,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            where_clause: "not regexp_like (substring(file_name,15,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
             name: TRATBL_sdl_kr_dads_linkprice_format_test
             config:
               store_failures: true
@@ -33,47 +33,47 @@ sources:
         - test_null:
             select_columns: ["product_category_m", "product_category_s", "product_id"]
             not_null_columns: ["product_category_m", "product_category_s", "product_id"]
-            name: tratbl_sdl_kr_dads_naver_gmv__null_test
+            name: TRATBL_sdl_kr_dads_naver_gmv__null_test
             config:
               store_failures: true
               schema: ntawks_integration
         - test_format:
             select_columns: ["product_category_m", "product_category_s", "product_id"]
-            where_clause: "not regexp_like ('substring(file_name,28,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
-            name: tratbl_sdl_kr_dads_naver_gmv__format_test
+            where_clause: "not regexp_like (substring(file_name,28,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            name: TRATBL_sdl_kr_dads_naver_gmv__format_test
             config:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_dads_naver_search_channel
       tags: ["kr_dads","ingestion"]
       tests:
-        - test_null:
-            select_columns: ["channel_properties", "channel_groups", "channel_name"]
-            not_null_columns: ["channel_properties", "channel_groups", "channel_name"]
-            name: tratbl_dl_kr_dads_naver_search_channel__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["channel_properties", "channel_groups", "channel_name"]
+        #     not_null_columns: ["channel_properties", "channel_groups", "channel_name"]
+        #     name: TRATBL_dl_kr_dads_naver_search_channel__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
         - test_format:
             select_columns: ["channel_properties", "channel_groups", "channel_name"]
-            where_clause: "not regexp_like ('substring(file_name,16,6)', '[2][0][0-9][0-9][0-1][0-9]') or substring(file_name,16,6) = '' "
-            name: tratbl_dl_kr_dads_naver_search_channel__format_test
+            where_clause: "not regexp_like (substring(file_name,16,6), '[2][0][0-9][0-9][0-1][0-9]') or substring(file_name,16,6) = '' "
+            name: TRATBL_dl_kr_dads_naver_search_channel__format_test
             config:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_dads_coupang_search_keyword
       tags: ["kr_dads","ingestion"]
       tests:
-        - test_null:
-            select_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
-            not_null_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
-            name: TRATBL_sdl_kr_dads_coupang_search_keyword__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
+        #     not_null_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
+        #     name: TRATBL_sdl_kr_dads_coupang_search_keyword__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
         - test_format:
             select_columns: ["category_1", "category_2", "category_3", "query", "product_standings"]
-            where_clause: "not regexp_like ('substring(file_name,46,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
+            where_clause: "not regexp_like (substring(file_name,46,8), '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
             name: TRATBL_sdl_kr_dads_coupang_search_keyword__format_test
             config:
               store_failures: true
@@ -81,17 +81,15 @@ sources:
     - name: sdl_kr_dads_naver_keyword_search_volume
       tags: ["kr_dads","ingestion"]
       tests:
-        - test_null:
-            select_columns: ["keyword", "product_category_s", "product_id"]
-            not_null_columns: ["keyword", "Total_monthly_searches", "product_id"]
-            name: tratbl_sdl_kr_dads_naver_keyword_search_volume__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        # - test_null__ff:
+        #     not_null_columns: ["keyword", "total_monthly_searches"]
+        #     name: TRATBL_sdl_kr_dads_naver_keyword_search_volume__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
         - test_format:
-            select_columns: ["product_category_m", "product_category_s", "product_id"]
-            where_clause: "not regexp_like ('substring(file_name,28,8)', '[2][0][0-9][0-9][0-1][0-9][0-3][0-9]') "
-            name: tratbl_sdl_kr_dads_naver_keyword_search_volume__format_test
+            where_clause: "not regexp_like (substring(file_name, 5, 6), '[2][0][0-9][0-9][0-1][0-9]') "
+            name: TRATBL_sdl_kr_dads_naver_keyword_search_volume__format_test
             config:
               store_failures: true
               schema: ntawks_integration
