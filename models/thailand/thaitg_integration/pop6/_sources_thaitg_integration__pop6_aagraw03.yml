@@ -10,13 +10,134 @@ sources:
       identifier: false
     tables:
       - name: sdl_pop6_th_displays
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_displays__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_displays__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_executed_visits
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","popdb_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_executed_visits__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","popdb_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_executed_visits__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+
       - name: sdl_pop6_th_general_audits
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_general_audits__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_general_audits__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_planned_visits
       - name: sdl_pop6_th_product_attribute_audits
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_product_attribute_audits__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              group_by_columns: ["visit_id","audit_form_id","section_id","field_id","field_type","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              name: TRATBL_sdl_pop6_th_product_attribute_audits__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_promotion_plans
+        tests:
+          - test_null:
+              not_null_columns: ["promotion_plan_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_promotion_plans__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["promotion_plan_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_promotion_plans__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_promotions
+        tests:
+          - test_null:
+              not_null_columns: ["promotion_plan_id","visit_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_promotions__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["promotion_plan_id","visit_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_promotions__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_rir_data
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","sku_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_rir_data__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","sku_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_rir_data__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_service_levels
       - name: sdl_pop6_th_sku_audits
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","field_id","dependent_on_field_id","section_id","sku_id"]
+              condition: "and"
+              name: TRATBL_sdl_pop6_th_sku_audits__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","field_id","dependent_on_field_id","section_id","sku_id"]
+              need_counts: "no"
+              name: TRATBL_sdl_pop6_th_sku_audits__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_display_plans
