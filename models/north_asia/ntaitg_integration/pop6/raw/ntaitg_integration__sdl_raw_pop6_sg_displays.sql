@@ -5,7 +5,7 @@
         incremental_strategy="append"
     )}}
 with sdl_pop6_sg_displays as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_sg_displays') }}
+    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_displays') }}
 ),
 final as (
 SELECT *

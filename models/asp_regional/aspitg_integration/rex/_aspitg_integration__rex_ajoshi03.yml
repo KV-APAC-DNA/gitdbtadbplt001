@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: aspitg_integration__v_bi_survey_response_values
-    config:
-      alias: v_bi_survey_response_values
-      tags: ["North Asia Common Views", "transformation"] 

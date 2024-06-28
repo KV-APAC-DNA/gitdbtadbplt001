@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__vw_ph_clobotics_perfect_store
-    config:
-      alias: vw_ph_clobotics_perfect_store
-      tags: ["","transformation"]
- 

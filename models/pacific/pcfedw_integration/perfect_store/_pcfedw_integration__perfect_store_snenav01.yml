@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: pcfedw_integration__edw_pacific_perfect_store
-    config: 
-      alias: edw_pacific_perfect_store
-      tags: ["","transformation"]

@@ -17,3 +17,7 @@ models:
     config: 
       alias: v_intrm_copa_sls_cust_hier
       tags: ["","transformation"]
+  - name: ntaedw_integration__v_intrm_curr_copa_plan
+    config: 
+        alias: v_intrm_curr_copa_plan
+        tags: []

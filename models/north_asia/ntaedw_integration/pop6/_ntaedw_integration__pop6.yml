@@ -29,3 +29,11 @@ models:
     config:
         alias: edw_vw_pop6_planned_visits
         tags: []
+  - name: ntaedw_integration__edw_pop6_pm
+    config: 
+      alias: edw_pop6_pm
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: ntaedw_integration__edw_rpt_sfa_pm
+    config: 
+      alias: edw_rpt_sfa_pm
+      tags: ["pop6_photo_management_pre_conversion","transformation"]

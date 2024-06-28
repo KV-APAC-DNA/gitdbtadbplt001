@@ -61,3 +61,31 @@ models:
     config: 
       alias: edw_hk_sellin_bp_le
       tags: ["j_pac_sls_evol_refresh_hk_daily_sales","transformation"]
+  - name: ntaedw_integration__v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+    config: 
+      alias: v_slsc_tgtg_items_cust_task_srresp_customer_pop6
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_invc_trend
+    config: 
+      alias: v_rpt_invc_trend
+      tags: ["","transformation"]
+  - name: ntaedw_integration__vw_tw_actual_forecast_tp_elements
+    config: 
+      alias: vw_tw_actual_forecast_tp_elements
+      tags: ["","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_bp
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_bp
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_rf
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_rf
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_le
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_le
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_integration__edw_rpt_hk_pos
+    config:
+      alias: edw_rpt_hk_pos
+      tags: ["","transformation"]

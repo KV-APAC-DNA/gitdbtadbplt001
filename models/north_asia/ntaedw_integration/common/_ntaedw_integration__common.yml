@@ -25,3 +25,15 @@ models:
     config:
       alias: v_rpt_sls_pln_actl
       tags: ["","transformation"]
+  - name: ntaedw_integration__vw_ph_clobotics_perfect_store
+    config:
+      alias: vw_ph_clobotics_perfect_store
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_dly_planned_ims
+    config:
+      alias: v_dly_planned_ims
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_nts_vs_tgt
+    config:
+      alias: v_rpt_nts_vs_tgt
+      tags: ["","transformation"]
