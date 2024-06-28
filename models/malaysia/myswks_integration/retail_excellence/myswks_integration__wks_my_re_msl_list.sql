@@ -3,7 +3,7 @@ with edw_calendar_dim as (
     select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_re_msl_input_definition as (
     select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}

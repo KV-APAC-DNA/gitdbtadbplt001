@@ -1,6 +1,6 @@
 --Import CTE
-with my_edw_rpt_retail_excellence as (
-    select * from {{ source('mysedw_integration', 'v_edw_rpt_my_re') }}
+with edw_rpt_my_re as (
+    select * from {{ ref('mysedw_integration__edw_rpt_my_re') }}
 ),
 --Logical CTE
 
@@ -8,7 +8,7 @@ with my_edw_rpt_retail_excellence as (
 my_edw_rpt_retail_excellence_summary_base as (
 Select FISC_YR,
        CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,		--// INTEGER
-       "CLUSTER",
+       "cluster",
        MARKET,
        MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')||
 		   nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
@@ -81,10 +81,10 @@ Select FISC_YR,
        max(size_of_price_p6m_lp) AS   size_of_price_p6m_lp,
        max(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
        TARGET_COMPLAINCE
- FROM my_edw_rpt_retail_excellence FLAGS		--//  FROM OS_EDW.EDW_RPT_MY_RE FLAGS
+ FROM edw_rpt_my_re FLAGS		--//  FROM OS_EDW.EDW_RPT_MY_RE FLAGS
  GROUP BY FLAGS.FISC_YR,		--//  GROUP BY FLAGS.FISC_YR,
        FLAGS.FISC_PER,		--//        FLAGS.FISC_PER,
-       FLAGS."CLUSTER",		--//        FLAGS."CLUSTER",
+       FLAGS."cluster",		--//        FLAGS."CLUSTER",
        FLAGS.MARKET,		--//        FLAGS.MARKET,
        MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')||
            nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
@@ -122,7 +122,7 @@ final as (
     select
     fisc_yr::VARCHAR(16) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(50) AS market,
 flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
 data_src::VARCHAR(50) AS data_src,

@@ -1,6 +1,6 @@
 --Import CTE
-with my_edw_rpt_retail_excellence as (
-    select * from {{ source('mysedw_integration', 'v_edw_rpt_my_re') }}
+with edw_rpt_my_re as (
+    select * from {{ ref('mysedw_integration__edw_rpt_my_re') }}
 ),
 
 itg_query_parameters as (
@@ -11,7 +11,7 @@ itg_query_parameters as (
 my_edw_rpt_retail_excellence_details as (
 SELECT FISC_YR,
        CAST(FISC_PER AS INTEGER) AS FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -140,10 +140,10 @@ SELECT FISC_YR,
        SIZE_OF_PRICE_P12M_LP,
        SOLDTO_CODE,
        current_timestamp()::date AS CRT_DTTM
-FROM my_edw_rpt_retail_excellence
+FROM edw_rpt_my_re
 WHERE FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(FISC_PER)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER 
-                   FROM my_edw_rpt_retail_excellence)
-AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM my_edw_rpt_retail_excellence)
+                   FROM edw_rpt_my_re)
+AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM edw_rpt_my_re)
 AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DISTINCT parameter_value
                                  FROM itg_query_parameters
                                  WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
@@ -154,7 +154,7 @@ final as (
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
