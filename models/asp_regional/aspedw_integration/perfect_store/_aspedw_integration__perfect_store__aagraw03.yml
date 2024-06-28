@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_perfect_store
+    config:
+      alias: edw_perfect_store
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__v_rpt_perfect_store
+    config:
+      alias: v_rpt_perfect_store
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__edw_perfect_store_kpi_data
+    config:
+      alias: edw_perfect_store_kpi_data
+      tags: ["pop6_edw_load","transformation"]
