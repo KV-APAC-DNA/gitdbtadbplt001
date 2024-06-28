@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_edw_ims_invnt
+    config:
+      alias: wks_edw_ims_invnt
+      tags: ["","transformation"]
+ 
