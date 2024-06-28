@@ -238,7 +238,7 @@ final as
           product_group_status::number(18,0) as product_group_status,
           product_group::varchar(25) as product_group,
           product_list_status::number(18,0) as product_list_status,
-          product_list::varchar(30) as product_list,
+          product_list::varchar(1000) as product_list,
           productdb_id::varchar(255) as productdb_id,
           sku::varchar(150) as sku,
           prod_grp_date::date as prod_grp_date,
