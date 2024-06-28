@@ -18,9 +18,10 @@
             "
     )
 }}
-with wks_edw_ims_sls_std as (
-    select * from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }}
-),
+-- with wks_edw_ims_sls_std as (
+--     select * from {{ ref('ntawks_integration__wks_edw_ims_sls_std') }}
+-- ),
+with
 itg_kr_gt_sellout as (
     select * from {{ ref('ntaitg_integration__itg_kr_gt_sellout')}}
 
@@ -194,24 +195,17 @@ sku_per_box::number(21,5) as sku_per_box,
 ctry_cd::varchar(2) as ctry_cd,
 crncy_cd::varchar(3) as crncy_cd,
 crt_dttm::timestamp_ntz(9) as crt_dttm,
-updt_dttm::timestamp_ntz(9) as updt_dttm,
+current_timestamp()::timestamp_ntz(9) as updt_dttm,
 prom_sls_amt::number(16,5) as prom_sls_amt,
 prom_rtrn_amt::number(16,5) as prom_rtrn_amt,
 prom_prc_amt::number(16,5) as prom_prc_amt,
-sap_code::varchar(255) as sap_code,
-sku_type::varchar(20) as sku_type,
-sub_customer_code::varchar(50) as sub_customer_code,
-sub_customer_name::varchar(100) as sub_customer_name,
-sales_priority::varchar(10) as sales_priority,
-sales_stores::number(21,5) as sales_stores,
-sales_rate::number(21,5) as sales_rate ,
-null :: varchar(255) as sap_code,
-null :: varchar(20) as sku_type,
-null :: varchar(50) as sub_customer_code,
-null :: varchar(100) as sub_customer_name,
-null :: varchar(10) as sales_priority,
-null :: number(21, 5) as sales_stores,
-null :: number(21, 5) as sales_rate
+null::varchar(255) as sap_code,
+null::varchar(20) as sku_type,
+null::varchar(50) as sub_customer_code,
+null::varchar(100) as sub_customer_name,
+null::varchar(10) as sales_priority,
+null::number(21,5) as sales_stores,
+null::number(21,5) as sales_rate
 from wks_edw_ims_sls
 )
 select * from hk
