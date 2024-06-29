@@ -1,5 +1,5 @@
 with v_rpt_copa_commercial_excellence as (
-    select * from {{ source('snapaspedw_integration', 'v_rpt_copa_commercial_excellence_sync') }}
+    select * from {{ ref('aspedw_integration__v_rpt_copa_commercial_excellence') }}
 ),
 vw_itg_custgp_customer_hierarchy as ( 
     select * from {{ source('snapaspitg_integration', 'vw_itg_custgp_customer_hierarchy_sync') }}
