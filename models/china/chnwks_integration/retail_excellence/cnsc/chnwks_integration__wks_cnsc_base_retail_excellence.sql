@@ -1,0 +1,191 @@
+with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as (
+    select * from {{ source('aspedw_integration', 'EDW_RPT_REGIONAL_SELLOUT_OFFTAKE') }}
+),
+itg_CS_re_store as (
+    select * from {{ source('source_name', 'object_name') }}
+),
+edw_vw_cal_Retail_excellence_Dim as (
+    select * from {{ ref('edw_vw_cal_Retail_excellence_Dim') }}
+),
+itg_mds_cn_otc_product_mapping as (
+    select * from {{ source('source_name', 'object_name') }}
+)
+
+
+transformation as (
+SELECT COUNTRY_CODE AS CNTRY_CD,
+MD5(NVL (DISTRIBUTOR_CODE,'DC') ||NVL (DISTRIBUTOR_NAME,'DN') ||NVL (STORE_CODE,'SC') || NVL (STORE_NAME,'SN') 
+|| NVL (msl_product_code,'PC') ||NVL (msl_product_desc,'PN') ||NVL (CUSTOMER_PRODUCT_DESC,'CPD') || NVL (STORE_TYPE,'ST') 
+||NVL (SAP_PARENT_CUSTOMER_KEY,'SPCK') ||NVL (SAP_PARENT_CUSTOMER_DESCRIPTION,'SPSCD') || NVL (SAP_CUSTOMER_CHANNEL_KEY,'SCCK') 
+||NVL (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'SCCD') ||NVL (SAP_CUSTOMER_SUB_CHANNEL_KEY,'SCSCK') ||NVL (SAP_SUB_CHANNEL_DESCRIPTION,'SSCD') 
+||NVL (CUSTOMER_SEGMENT_KEY,'CSK') ||NVL (CUSTOMER_SEGMENT_DESCRIPTION,'CSD') || NVL (SAP_GO_TO_MDL_KEY,'SGMK') ||NVL (SAP_GO_TO_MDL_DESCRIPTION,'SGMD')
+||NVL (SAP_BANNER_KEY,'SBK') ||NVL (SAP_BANNER_DESCRIPTION,'SBD') ||NVL (SAP_BANNER_FORMAT_KEY,'SBFK') ||NVL (SAP_BANNER_FORMAT_DESCRIPTION,'SBFD') 
+||NVL (retail_env,'RE') ||NVL (PKA_PRODUCT_KEY,'PK') ||NVL (REGION,'region') ||NVL (ZONE_OR_AREA,'zone') ||NVL (PKA_PRODUCT_KEY_DESCRIPTION,'PKPD') 
+||NVL (SKU_DESCRIPTION,'SD') ||NVL (SKU_CODE,'SC')||NVL (PRODUCT_BRAND,'PD')||NVL (CHANNEL,'CHANNEL'))
+ AS SELLOUT_DIM_KEY,
+       COUNTRY_NAME AS CNTRY_NM,
+       DATA_SOURCE AS DATA_SRC,
+       YEAR,
+       MNTH_ID,
+       DISTRIBUTOR_CODE,
+       Distributor_Name,
+       STORE_CODE,
+       store_name,
+       store_type,
+       msl_product_code,-------------------------------------ADDED
+       msl_product_desc,----------------------------------------ADDED
+       CUSTOMER_PRODUCT_DESC,
+             SAP_PARENT_CUSTOMER_KEY,
+             SAP_PARENT_CUSTOMER_DESCRIPTION,
+             SAP_CUSTOMER_CHANNEL_KEY,
+             SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+             SAP_CUSTOMER_SUB_CHANNEL_KEY,
+             SAP_SUB_CHANNEL_DESCRIPTION,
+             SAP_GO_TO_MDL_KEY,
+             SAP_GO_TO_MDL_DESCRIPTION,
+             SAP_BANNER_KEY,
+             SAP_BANNER_DESCRIPTION,
+             SAP_BANNER_FORMAT_KEY,
+             SAP_BANNER_FORMAT_DESCRIPTION,
+             retail_env,
+             REGION,
+             ZONE_OR_AREA,
+             CUSTOMER_SEGMENT_KEY,
+             CUSTOMER_SEGMENT_DESCRIPTION,
+             PKA_PRODUCT_KEY,
+             PKA_PRODUCT_KEY_DESCRIPTION,  
+             SKU_CODE,
+             SKU_DESCRIPTION,			
+            SUM(SELLOUT_SALES_QUANTITY) AS SLS_QTY,
+            SUM(SELLOUT_SALES_VALUE) AS SLS_VALUE,
+            CAST(AVG(SELLOUT_SALES_QUANTITY) AS numeric(38,6)) AS AVG_QTY,
+            SUM(SALES_VALUE_LIST_PRICE)AS SALES_VALUE_LIST_PRICE,
+            PRODUCT_BRAND,
+			      channel,
+            SYSDATE() as Created_date
+FROM (SELECT COUNTRY_CODE,
+             COUNTRY_NAME,
+             DATA_SOURCE,
+             YEAR,
+             MNTH_ID,
+             DISTRIBUTOR_CODE,
+             SELLOUT.Distributor_Name||'#'||LTRIM(SELLOUT.Distributor_CODE,'0') AS Distributor_Name,
+             STORE_CODE,
+             SELLOUT.STORE_Name||'#'||ltrim(SELLOUT.STORE_CODE,'0') AS STORE_NAME,
+             SELLOUT.store_type,
+             msl_product_CODE,
+             msl_product_desc,      
+             CUSTOMER_PRODUCT_DESC,
+             SAP_PARENT_CUSTOMER_KEY,
+             SAP_PARENT_CUSTOMER_DESCRIPTION,
+             SAP_CUSTOMER_CHANNEL_KEY,
+             SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+             SAP_CUSTOMER_SUB_CHANNEL_KEY,
+             SAP_SUB_CHANNEL_DESCRIPTION,
+             SAP_GO_TO_MDL_KEY,
+             SAP_GO_TO_MDL_DESCRIPTION,
+             SAP_BANNER_KEY,
+             SAP_BANNER_DESCRIPTION,
+             SAP_BANNER_FORMAT_KEY,
+             SAP_BANNER_FORMAT_DESCRIPTION,
+             SELLOUT.retail_env,
+             REGION,
+             ZONE_OR_AREA,
+             CUSTOMER_SEGMENT_KEY,
+             CUSTOMER_SEGMENT_DESCRIPTION,
+             SKU_CODE,
+             SKU_DESCRIPTION,
+             PKA_PRODUCT_KEY,
+             PKA_PRODUCT_KEY_DESCRIPTION,
+             SELLOUT_SALES_QUANTITY,
+             SELLOUT_SALES_VALUE,
+             SALES_VALUE_LIST_PRICE,
+             LOCALBRAND.brand_en AS PRODUCT_BRAND,
+			       st.channel as channel
+       FROM(SELECT COUNTRY_CODE,
+             COUNTRY_NAME,
+             DATA_SOURCE,
+             YEAR,
+             MNTH_ID,
+             DISTRIBUTOR_CODE,
+             max(distributor_name) over (PARTITION BY distributor_code ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS distributor_name,
+             STORE_CODE,
+             max(store_name) over (PARTITION BY store_code ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS STORE_NAME,
+             store_type,
+             msl_product_CODE,
+             --msl_product_desc,  
+             max(msl_product_desc) over (PARTITION BY msl_product_CODE ORDER BY cal_date DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS msl_product_desc,			 
+             CUSTOMER_PRODUCT_DESC,
+             SAP_PARENT_CUSTOMER_KEY,
+             SAP_PARENT_CUSTOMER_DESCRIPTION,
+             SAP_CUSTOMER_CHANNEL_KEY,
+             SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+             SAP_CUSTOMER_SUB_CHANNEL_KEY,
+             SAP_SUB_CHANNEL_DESCRIPTION,
+             SAP_GO_TO_MDL_KEY,
+             SAP_GO_TO_MDL_DESCRIPTION,
+             SAP_BANNER_KEY,
+             SAP_BANNER_DESCRIPTION,
+             SAP_BANNER_FORMAT_KEY,
+             SAP_BANNER_FORMAT_DESCRIPTION,
+             retail_env,
+             REGION,
+             ZONE_OR_AREA,
+             CUSTOMER_SEGMENT_KEY,
+             CUSTOMER_SEGMENT_DESCRIPTION,
+             SKU_CODE,
+             SKU_DESCRIPTION,
+             PKA_PRODUCT_KEY,
+             PKA_PRODUCT_KEY_DESCRIPTION,
+             SELLOUT_SALES_QUANTITY,
+             SELLOUT_SALES_VALUE,
+             sellout_value_list_price as SALES_VALUE_LIST_PRICE
+      FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE 
+       WHERE COUNTRY_NAME='China Selfcare'
+       AND MNTH_ID >= (select last_37mnths from edw_vw_cal_Retail_excellence_Dim)
+	  and mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)
+	   )SELLOUT
+      LEFT JOIN (SELECT DISTINCT xjp_code, brand_en FROM itg_mds_cn_otc_product_mapping)localbrand ON localbrand.xjp_code=SELLOUT.msl_product_CODE 
+      LEFT JOIN (SELECT distinct store_type,
+                          channel,
+                          product_code
+						   FROM itg_CS_re_store) st
+               ON SELLOUT.Retail_Env = st.store_type
+              AND SELLOUT.msl_product_code = st.product_code	  
+      )
+GROUP BY  COUNTRY_CODE,
+         COUNTRY_NAME,
+         DATA_SOURCE,
+         YEAR,
+         MNTH_ID,
+         DISTRIBUTOR_CODE,
+         DISTRIBUTOR_NAME,
+         STORE_CODE,
+         STORE_NAME,
+         STORE_TYPE,
+         CUSTOMER_PRODUCT_DESC,
+         SAP_PARENT_CUSTOMER_KEY,
+         SAP_PARENT_CUSTOMER_DESCRIPTION,
+         SAP_CUSTOMER_CHANNEL_KEY,
+         SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+         SAP_CUSTOMER_SUB_CHANNEL_KEY,
+         SAP_SUB_CHANNEL_DESCRIPTION,
+         SAP_GO_TO_MDL_KEY,
+         SAP_GO_TO_MDL_DESCRIPTION,
+         SAP_BANNER_KEY,
+         SAP_BANNER_DESCRIPTION,
+         SAP_BANNER_FORMAT_KEY,
+         SAP_BANNER_FORMAT_DESCRIPTION,
+         retail_env,
+         MSL_PRODUCT_CODE,
+         MSL_PRODUCT_DESC,
+         REGION,
+		     channel,
+         ZONE_OR_AREA,
+         CUSTOMER_SEGMENT_KEY,
+         CUSTOMER_SEGMENT_DESCRIPTION,
+         SKU_CODE,
+		     SKU_DESCRIPTION,
+		     PRODUCT_BRAND,
+         PKA_PRODUCT_KEY,
+         PKA_PRODUCT_KEY_DESCRIPTION)
