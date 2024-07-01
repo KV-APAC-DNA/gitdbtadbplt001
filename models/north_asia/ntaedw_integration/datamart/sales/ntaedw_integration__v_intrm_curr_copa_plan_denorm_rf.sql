@@ -1,6 +1,6 @@
 with v_intrm_curr_copa_plan as
 (
-    select * from dev_dna_core.snapntaedw_integration.v_intrm_curr_copa_plan
+    select * from {{ ref('ntaedw_integration__v_intrm_curr_copa_plan') }}
 ),
 t1 as
 (

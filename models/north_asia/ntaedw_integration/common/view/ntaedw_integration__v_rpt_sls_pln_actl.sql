@@ -1,8 +1,8 @@
 with v_intrm_sls_pln_actl as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_INTRM_SLS_PLN_ACTL
+select * from ntaedw_integration.v_intrm_sls_pln_actl
 ),
 v_intrm_curr_copa_plan_flat as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_INTRM_CURR_COPA_PLAN_FLAT
+select * from ntaedw_integration.v_intrm_curr_copa_plan_flat
 ),
 derived_table1 as  (
     SELECT 

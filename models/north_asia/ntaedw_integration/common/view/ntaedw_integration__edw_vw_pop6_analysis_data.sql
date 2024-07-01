@@ -4,58 +4,58 @@
 ) }}
 
 with edw_vw_ps_targets as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_TARGETS
+select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 pop6_kpi2data_mapping as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.POP6_KPI2DATA_MAPPING
+select * from {{ source('ntaedw_integration','pop6_kpi2data_mapping') }}
 ),
 edw_vw_pop6_visits_sku_audits as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_SKU_AUDITS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_sku_audits') }}
 ),
 edw_vw_pop6_visits_prod_attribute_audits as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.edw_vw_pop6_visits_prod_attribute_audits
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
 ),
 edw_vw_pop6_visits_display as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_DISPLAY
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
 ),
 edw_vw_pop6_products as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PRODUCTS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
 ),
 edw_vw_pop6_promotions as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PROMOTIONS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_promotions') }}
 ),
 edw_vw_pop6_tasks as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_TASKS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_tasks') }}
 ),
 edw_vw_pop6_visits_general_audits as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_GENERAL_AUDITS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_general_audits') }}
 ),
 edw_vw_pop6_salesperson as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_SALESPERSON
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
 ),
 edw_vw_pop6_store as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_STORE
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
 ),
 edw_vw_pop6_planned_visits as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_PLANNED_VISITS
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_planned_visits') }}
 ),
 edw_vw_pop6_visits_rir_data as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_VISITS_RIR_DATA
+select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_rir_data') }}
 ),
 itg_pop6_rir_data as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_RIR_DATA
+select * from {{ ref('ntaitg_integration__itg_pop6_rir_data') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 itg_pop6_executed_visits as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_EXECUTED_VISITS
+select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_product_lists_pops as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_POPS
+select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_pops') }}
 ),
 itg_pop6_product_lists_products as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCT_LISTS_PRODUCTS
+select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_products') }}
 ),
 sku_audit as ((
                         SELECT 

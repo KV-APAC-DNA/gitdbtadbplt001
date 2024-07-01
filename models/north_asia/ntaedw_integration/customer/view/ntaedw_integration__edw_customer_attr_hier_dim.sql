@@ -1,5 +1,5 @@
 with edw_customer_attr_hier_dim as (
-    select * from snapaspedw_integration.edw_customer_attr_hier_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 hk as (
     SELECT DISTINCT edw_customer_attr_hier_dim.cntry,

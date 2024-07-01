@@ -582,3 +582,12 @@ sources:
       - name: itg_pop6_pops_temp
       - name: itg_photo_mgmnt_url_temp
       - name: numbersequence
+  - name: ntaedw_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntaedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: pop6_kpi2data_mapping

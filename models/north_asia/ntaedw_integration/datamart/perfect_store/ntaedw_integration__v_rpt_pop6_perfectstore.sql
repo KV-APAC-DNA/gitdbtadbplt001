@@ -5,15 +5,15 @@ with edw_vw_pop6_visits_sku_audits as
 ),
 edw_vw_pop6_store as 
 (
-    select * from snapntaedw_integration.edw_vw_pop6_store
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
 ),
 edw_vw_ps_weights as 
 (
-    select * from snapaspedw_integration.edw_vw_ps_weights
+    select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 edw_vw_pop6_salesperson as 
 (
-    select * from snapntaedw_integration.edw_vw_pop6_salesperson
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
 ),
 edw_vw_pop6_products as 
 (
@@ -21,23 +21,23 @@ edw_vw_pop6_products as
 ),
 edw_product_attr_dim as 
 (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 pop6_kpi2data_mapping as 
 (
-    select * from snapntaedw_integration.pop6_kpi2data_mapping
+    select * from {{ source('ntaedw_integration','pop6_kpi2data_mapping') }}
 ),
 edw_vw_pop6_visits_prod_attribute_audits as 
 (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
 ),
 edw_vw_ps_targets as 
 (
-    select * from snapaspedw_integration.edw_vw_ps_targets
+    select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 edw_vw_pop6_visits_display as 
 (
-    select * from snapntaedw_integration.edw_vw_pop6_visits_display
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
 ),
 msl_compliance as 
 (

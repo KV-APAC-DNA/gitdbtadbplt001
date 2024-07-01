@@ -1,23 +1,23 @@
 with edw_copa_plan_fact as (
-    select * from snapaspedw_integration.edw_copa_plan_fact
+    select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
 ),
 v_intrm_crncy_exch as (
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_material_sales_dim as (
-    select * from snapaspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_company_dim as (
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_base_dim as (
-    select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_material_dim as (
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 cte1 as (
     SELECT p.obj_crncy,

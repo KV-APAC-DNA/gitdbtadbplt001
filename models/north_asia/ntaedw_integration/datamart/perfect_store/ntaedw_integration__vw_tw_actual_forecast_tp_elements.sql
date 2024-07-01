@@ -1,41 +1,41 @@
 with itg_query_parameters as(
-    select * from snapntaitg_integration.itg_query_parameters
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 edw_copa_trans_fact as(
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_customer_attr_hier_dim as(
-    select * from snapaspedw_integration.edw_customer_attr_hier_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from snapaspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_copa_trans_fact as(
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_material_sales_dim as(
-    select * from snapaspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_material_dim as(
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_product_attr_dim as(
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 v_intrm_crncy_exch as(
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_tw_bu_forecast_sku as(
-    select * from snapntaedw_integration.edw_tw_bu_forecast_sku
+    select * from {{ ref('ntaedw_integration__edw_tw_bu_forecast_sku') }}
 ),
 edw_tw_bu_forecast_prod_hier as(
-    select * from snapntaedw_integration.edw_tw_bu_forecast_prod_hier
+    select * from {{ ref('ntaedw_integration__edw_tw_bu_forecast_prod_hier') }}
 ),
 edw_tw_bu_forecast_sku as(
-    select * from snapntaedw_integration.edw_tw_bu_forecast_sku
+    select * from {{ ref('ntaedw_integration__edw_tw_bu_forecast_sku') }}
 ),
 edw_tw_bp_target as(
-    select * from snapntaedw_integration.edw_tw_bp_target
+    select * from {{ ref('ntaedw_integration__edw_tw_bp_target') }}
 ),
 sapbw_actual as 
 (

@@ -1,12 +1,12 @@
 with 
 itg_pop6_executed_visits as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_EXECUTED_VISITS
+select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_exclusion as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_EXCLUSION
+select * from {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
 ),
 itg_pop6_product_attribute_audits as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_POP6_PRODUCT_ATTRIBUTE_AUDITS
+select * from {{ ref('ntaitg_integration__itg_pop6_product_attribute_audits') }}
 ),
 final as (
 SELECT 

@@ -1,10 +1,10 @@
 with v_intrm_invc_trans as 
 (
-    select * from ntaedw_integration.v_intrm_invc_trans
+    select * from {{ ref('ntaedw_integration__v_intrm_invc_trans') }}
 ),
 edw_calendar_dim as 
 (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 final as
 (   

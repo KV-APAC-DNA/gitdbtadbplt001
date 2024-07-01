@@ -1,14 +1,14 @@
 with edw_trd_promo_pln as (
-    select * from snapntaedw_integration.edw_trd_promo_pln
+    select * from {{ ref('ntaedw_integration__edw_trd_promo_pln') }}
 ),
 edw_trd_promo_actl as (
-    select * from snapntaedw_integration.edw_trd_promo_actl
+    select * from {{ ref('ntaedw_integration__edw_trd_promo_actl') }}
 ),
 edw_customer_attr_hier_dim as (
-    select * from snapaspedw_integration.edw_customer_attr_hier_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 v_intrm_crncy_exch as (
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 a as (
     SELECT CASE
