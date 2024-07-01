@@ -11,7 +11,6 @@ sources:
     tables:
       - name: edw_market_mirror_fact
       - name: edw_rpt_ecomm_oneview
-      - name: v_rpt_copa_commercial_excellence_sync
   - name: snapaspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: snapaspitg_integration
