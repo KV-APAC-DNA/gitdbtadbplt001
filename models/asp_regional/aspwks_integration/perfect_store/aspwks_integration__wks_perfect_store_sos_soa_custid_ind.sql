@@ -1,5 +1,5 @@
 with wks_edw_perfect_store_hash as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_hash
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_hash') }}
 ),
 cte1 as (
     select * --country, customerid, scheduleddate, kpi, kpi_chnl_wt 

@@ -1,38 +1,38 @@
 with itg_jnj_consumerreach_cvs as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_CONSUMERREACH_CVS
+select * from {{ ref('thaitg_integration__itg_jnj_consumerreach_cvs') }}
 ),
 itg_jnj_consumerreach_cvs as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_CONSUMERREACH_CVS
+select * from {{ ref('thaitg_integration__itg_jnj_consumerreach_cvs') }}
 ),
 itg_jnj_consumerreach_711 as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_CONSUMERREACH_711
+select * from {{ ref('thaitg_integration__itg_jnj_consumerreach_711') }}
 ),
 itg_jnj_consumerreach_sfm as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_CONSUMERREACH_SFM
+select * from {{ ref('thaitg_integration__itg_jnj_consumerreach_sfm') }}
 ),
 itg_mds_th_ps_store as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_TH_PS_STORE
+select * from {{ ref('thaitg_integration__itg_mds_th_ps_store') }}
 ),
 edw_product_key_attributes as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_KEY_ATTRIBUTES
+select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_vw_ps_weights as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_WEIGHTS
+select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 edw_vw_ps_targets as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_TARGETS
+select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 itg_jnj_osa_oos_report as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_OSA_OOS_REPORT
+select * from {{ ref('thaitg_integration__itg_jnj_osa_oos_report') }}
 ),
 itg_jnj_mer_share_of_shelf as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_MER_SHARE_OF_SHELF
+select * from {{ ref('thaitg_integration__itg_jnj_mer_share_of_shelf') }}
 ),
 itg_jnj_mer_cop as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_JNJ_MER_COP
+select * from {{ ref('thaitg_integration__itg_jnj_mer_cop') }}
 ),
 itg_th_lookup_question as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_TH_LOOKUP_QUESTION
+select * from {{ source('thaitg_integration','itg_th_lookup_question') }}
 ),
 adecco_msl as       (     SELECT 
               'Adecco' AS dataset, 

@@ -1,5 +1,5 @@
 with wks_edw_perfect_store_kpi_wt_mnth_cname as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_kpi_wt_mnth_cname
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_kpi_wt_mnth_cname') }}
 ),
 final as (
     select country,

@@ -1,19 +1,19 @@
 WITH v_sr_surveyresponse
 AS (
     SELECT *
-    FROM dev_dna_load.snapaspsdl_raw.v_sr_surveyresponse
+    FROM {{ ref('aspitg_integration__v_sr_surveyresponse') }}
     ),
 
 v_sr_responses
 AS (
     SELECT *
-    FROM dev_dna_load.snapaspsdl_raw.v_sr_responses
+    FROM {{ ref('aspitg_integration__v_sr_responses') }}
     ),
 
 v_sr_response_values
 AS (
     SELECT *
-    FROM dev_dna_load.snapaspsdl_raw.v_sr_response_values
+    FROM {{ ref('aspitg_integration__v_sr_response_values') }}
     ),
 
 resp

@@ -4,7 +4,7 @@
     )
 }}
 with source as (
-    select * from aspedw_integration.v_rpt_perfect_store
+    select * from {{ ref('aspedw_integration__v_rpt_perfect_store') }}
 ),
 final as (
     select

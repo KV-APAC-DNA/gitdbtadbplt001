@@ -1,5 +1,5 @@
 with source as (
-    select * from snaposeedw_integration.v_rpt_th_perfect_store
+    select * from {{ ref('thaedw_integration__v_rpt_th_perfect_store') }}
 ),
 final as (
     select

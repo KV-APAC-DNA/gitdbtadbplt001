@@ -21,3 +21,7 @@ models:
     config:
       alias: edw_vw_my_ps_sos
       tags: ["","transformation"]
+  - name: mysedw_integration__v_rpt_my_perfect_store
+    config:
+      alias: v_rpt_my_perfect_store
+      tags: ["","transformation"]

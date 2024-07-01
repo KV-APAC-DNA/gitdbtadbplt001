@@ -1,6 +1,6 @@
 with source as
 (
-    select * from dev_dna_core.snapindedw_integration.v_rpt_in_perfect_store
+    select * from {{  ref('indedw_integration__v_rpt_in_perfect_store') }}
 ),
 
 final as

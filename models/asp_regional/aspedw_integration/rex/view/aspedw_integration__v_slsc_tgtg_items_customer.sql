@@ -1,18 +1,18 @@
 with v_slsc_salescampaign as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_slsc_salescampaign
+    select * from {{ ref('aspitg_integration__v_slsc_salescampaign') }}
 ),
 v_slsc_targetgroups as
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_slsc_targetgroups
+    select * from {{ ref('aspitg_integration__v_slsc_targetgroups') }}
 ),
 v_tgtg_targetgroup as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_tgtg_targetgroup
+    select * from {{ ref('aspitg_integration__v_tgtg_targetgroup') }}
 ),
 v_tgtg_items as 
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_tgtg_items
+    select * from {{ ref('aspitg_integration__v_tgtg_items') }}
 ),
 slsc as 
 (

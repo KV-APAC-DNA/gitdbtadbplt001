@@ -5,31 +5,31 @@
 }}
 with edw_perfect_store_kpi_data as 
 (
-    select * from aspedw_integration.edw_perfect_store_kpi_data
+    select * from {{ ref('aspedw_integration__edw_perfect_store_kpi_data') }}
 ),
 edw_perfect_store_rebase_wt_temp as 
 (
-    select * from aspedw_integration.edw_perfect_store_rebase_wt_temp
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt_temp') }}
 ),
 edw_vw_perfect_store_trax_products as 
 (
-    select * from pcfedw_integration.edw_vw_perfect_store_trax_products  
+    select * from {{ ref('pcfedw_integration__edw_vw_perfect_store_trax_products') }}
 ),
 edw_sales_reporting as 
 (
-    select * from pcfedw_integration.edw_sales_reporting
+    select * from {{ ref('pcfedw_integration__edw_sales_reporting') }}
 ),
 sdl_mds_pacific_ps_benchmarks as 
 (
-    select * from dev_dna_load.aspsdl_raw.sdl_mds_pacific_ps_benchmarks
+    select * from {{ source('aspsdl_raw','sdl_mds_pacific_ps_benchmarks') }}
 ),
 edw_pacific_perenso_ims_analysis as
 (
-    select * from pcfedw_integration.edw_pacific_perenso_ims_analysis    
+    select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
 ),
 edw_product_key_attributes as 
 (
-    select * from aspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 union_1 as 
 (   

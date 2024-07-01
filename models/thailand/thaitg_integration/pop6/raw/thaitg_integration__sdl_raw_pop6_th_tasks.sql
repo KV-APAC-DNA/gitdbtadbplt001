@@ -7,7 +7,7 @@
 with
 source as
 (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_TH_TASKS
+    select * from {{ source('thasdl_raw','sdl_pop6_th_tasks') }}
 ),
 
 final as

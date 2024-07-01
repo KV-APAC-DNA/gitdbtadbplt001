@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from sm05_workspace.pcfedw_integration__v_rpt_pacific_perfect_store
+    select * from {{ ref('pcfedw_integration__v_rpt_pacific_perfect_store') }}
 ),
 final as 
 (

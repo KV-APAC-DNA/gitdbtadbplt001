@@ -1,11 +1,11 @@
 with v_mrchr_merchandisingresponse as (
-    select * from dev_dna_load.snapaspsdl_raw.v_mrchr_merchandisingresponse
+    select * from {{ ref('aspitg_integration__v_mrchr_merchandisingresponse') }}
 ),
 v_mrchr_responses as (
-    select * from dev_dna_load.snapaspsdl_raw.v_mrchr_responses
+    select * from {{ ref('aspitg_integration__v_mrchr_responses') }}
 ),
 v_prod_product as (
-    select * from dev_dna_load.snapaspsdl_raw.v_prod_product
+    select * from {{ ref('aspitg_integration__v_prod_product') }}
 ),
 mr as (
     SELECT DISTINCT mr.merchandisingresponseid,

@@ -1,8 +1,8 @@
 with wks_edw_perfect_store_kpi_wt_mnth as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_kpi_wt_mnth
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_kpi_wt_mnth') }}
 ),
 wks_edw_perfect_store_kpi_agg_wt_mnth as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_kpi_agg_wt_mnth
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_kpi_agg_wt_mnth') }}
 ),
 final as (
     select wt.country,

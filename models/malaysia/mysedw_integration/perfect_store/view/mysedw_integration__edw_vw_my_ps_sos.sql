@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from snaposeitg_integration.itg_my_perfectstore_sos
+    select * from  {{ ref('mysitg_integration__itg_my_perfectstore_sos') }}
 ),
 
 final as 

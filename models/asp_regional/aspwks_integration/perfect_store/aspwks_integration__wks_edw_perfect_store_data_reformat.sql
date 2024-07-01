@@ -1,14 +1,14 @@
 with edw_perfect_store as 
 (
-    select * from snapaspedw_integration.edw_perfect_store
+    select * from {{ ref('aspedw_integration__edw_perfect_store') }}
 ),
 itg_mds_rg_ps_channel_weights as 
 (
-    select * from snapaspitg_integration.itg_mds_rg_ps_channel_weights
+    select * from aspitg_integration.itg_mds_rg_ps_channel_weights
 ),
 itg_mds_rg_ps_market_coverage as 
 (
-    select * from snapaspitg_integration.itg_mds_rg_ps_market_coverage
+    select * from {{ ref('aspitg_integration__itg_mds_rg_ps_market_coverage') }}
 ),
 msl as 
 (

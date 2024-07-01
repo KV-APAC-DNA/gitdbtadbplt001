@@ -2,37 +2,37 @@ with v_rpt_rex_perfect_store as (
     select * from aspedw_integration.v_rpt_rex_perfect_store
 ),
 edw_vw_pop6_products as (
-    select * from ntaedw_integration.edw_vw_pop6_products
+    select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from ntaedw_integration.v_rpt_pop6_perfectstore
+    select * from {{ ref('ntaedw_integration__v_rpt_pop6_perfectstore') }}
 ),
 itg_query_parameters as (
-    select * from aspitg_integration.itg_query_parameters
+    select * from {{ source('aspitg_integration','itg_query_parameters') }}
 ),
 edw_pacific_perfect_store as (
-    select * from pcfedw_integration.edw_pacific_perfect_store
+    select * from {{ ref('pcfedw_integration__edw_pacific_perfect_store') }}
 ),
 v_rpt_ph_perfect_store as (
-    select * from oseedw_integration.v_rpt_ph_perfect_store
+    select * from {{ ref('phledw_integration__v_rpt_ph_perfect_store') }}
 ),
 v_rpt_id_regional_perfect_store as (
     select * from idnedw_integration.v_rpt_id_regional_perfect_store
 ),
 v_rpt_jp_pop6_perfect_store as (
-    select * from ntaedw_integration.v_rpt_jp_pop6_perfect_store
+    select * from {{ ref('ntaedw_integration__v_rpt_jp_pop6_perfect_store') }}
 ),
 v_rpt_sg_pop6_perfect_store as (
-    select * from ntaedw_integration.v_rpt_sg_pop6_perfect_store
+    select * from {{ ref('sgpedw_integration__v_rpt_sg_pop6_perfect_store') }}
 ),
 v_rpt_th_pop6_perfect_store as (
-    select * from ntaedw_integration.v_rpt_th_pop6_perfect_store
+    select * from {{ ref('ntaedw_integration__v_rpt_th_pop6_perfect_store') }}
 ),
 v_rpt_my_perfect_store_snapshot as (
-    select * from oseedw_integration.v_rpt_my_perfect_store_snapshot
+    select * from mysedw_integration.v_rpt_my_perfect_store_snapshot
 ),
 v_rpt_my_perfect_store as (
-    select * from oseedw_integration.v_rpt_my_perfect_store
+    select * from {{ ref('mysedw_integration__v_rpt_my_perfect_store') }}
 ),
 edw_sku_recom as (
     select * from indedw_integration.edw_sku_recom
@@ -41,25 +41,25 @@ itg_udcdetails as (
     select * from inditg_integration.itg_udcdetails
 ),
 edw_calendar_dim as (
-    select * from aspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_sku_recom as (
     select * from indedw_integration.edw_sku_recom
 ),
 edw_vw_ps_weights as (
-    select * from aspedw_integration.edw_vw_ps_weights
+    select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 itg_in_perfectstore_msl as (
     select * from inditg_integration.itg_in_perfectstore_msl
 ),
 edw_product_key_attributes as (
-    select * from aspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_in_perfectstore_sos as (
     select * from inditg_integration.itg_in_perfectstore_sos
 ),
 edw_vw_ps_targets as (
-    select * from aspedw_integration.edw_vw_ps_targets
+    select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 itg_in_perfectstore_promo as (
     select * from inditg_integration.itg_in_perfectstore_promo
@@ -71,10 +71,10 @@ rpt_in_perfect_store as (
     select * from indedw_integration.rpt_in_perfect_store
 ),
 edw_rpt_th_perfect_store as (
-    select * from oseedw_integration.edw_rpt_th_perfect_store
+    select * from {{ ref('thaedw_integration__edw_rpt_th_perfect_store') }}
 ),
 v_rpt_vn_perfect_store as (
-    select * from oseedw_integration.v_rpt_vn_perfect_store
+    select * from {{ ref('vnmedw_integration__v_rpt_vn_perfect_store') }}
 ),
 rex as (
     SELECT UPPER(derived_table1.dataset)::CHARACTER VARYING AS dataset,

@@ -1,13 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy = "append",
-        pre_hook="{% if is_incremental() %}
-        DELETE FROM {{this}} WHERE (SELECT COUNT(*) FROM {{source('myssdl_raw','sdl_mds_my_ps_targets')}}) != 0;
-        {% endif %}"
-    )
-}}
-
 WITH sources
 AS (
     SELECT *

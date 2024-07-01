@@ -1,17 +1,17 @@
 with wks_edw_perfect_store_hash as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_hash
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_hash') }}
 ),
 wks_edw_perfect_store_kpi_rebased_wt_mnth_cname as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_kpi_rebased_wt_mnth_cname
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_kpi_rebased_wt_mnth_cname') }}
 ),
 wks_perfect_store_sos_soa_mnth as (
-    select * from snapaspwks_integration.wks_perfect_store_sos_soa_mnth
+    select * from {{ ref('aspwks_integration__wks_perfect_store_sos_soa_mnth') }}
 ),
 wks_perfect_store_sos_soa_custid_ind as (
-    select * from snapaspwks_integration.wks_perfect_store_sos_soa_custid_ind
+    select * from {{ ref('aspwks_integration__wks_perfect_store_sos_soa_custid_ind') }}
 ),
 wks_edw_perfect_store_kpi_rebased_wt_mnth as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_kpi_rebased_wt_mnth
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_kpi_rebased_wt_mnth') }}
 ),
 cte1 as (
     select per_str.*,

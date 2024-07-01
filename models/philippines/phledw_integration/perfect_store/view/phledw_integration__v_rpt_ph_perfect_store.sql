@@ -1,57 +1,57 @@
 with 
 edw_vw_ph_survey_details as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_VW_PH_SURVEY_DETAILS
+select * from {{ ref('phledw_integration__edw_vw_ph_survey_details') }}
 ),
 itg_mds_ph_product_hierarchy as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_PRODUCT_HIERARCHY
+select * from {{ ref('phlitg_integration__itg_mds_ph_product_hierarchy') }}
 ),
 itg_ph_tbl_isebranchmaster as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_TBL_ISEBRANCHMASTER
+select * from {{ ref('phlitg_integration__itg_ph_tbl_isebranchmaster') }}
 ),
 itg_mds_ph_ise_weights as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_ISE_WEIGHTS
+select * from {{ ref('phlitg_integration__itg_mds_ph_ise_weights') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 ph_kpi2data_mapping as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.PH_KPI2DATA_MAPPING
+select * from {{ source('phledw_integration','ph_kpi2data_mapping') }}
 ),
 itg_mds_ph_ise_sos_targets as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_ISE_SOS_TARGETS
+select * from {{ ref('phlitg_integration__itg_mds_ph_ise_sos_targets') }}
 ),
 itg_ph_non_ise_msl_osa as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_NON_ISE_MSL_OSA
+select * from {{ ref('phlitg_integration__itg_ph_non_ise_msl_osa') }}
 ),
 itg_mds_ph_lav_product as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_LAV_PRODUCT
+select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
 itg_mds_ph_pos_customers as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_POS_CUSTOMERS
+select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers') }}
 ),
 itg_ph_ps_retailer_soldto_map as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_PS_RETAILER_SOLDTO_MAP
+select * from {{ ref('phlitg_integration__itg_ph_ps_retailer_soldto_map') }}
 ),
 itg_mds_ph_ise_parent as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_ISE_PARENT
+select * from {{ ref('phlitg_integration__itg_mds_ph_ise_parent') }}
 ),
 itg_mds_ph_ref_parent_customer as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_PH_REF_PARENT_CUSTOMER
+select * from {{ ref('phlitg_integration__itg_mds_ph_ref_parent_customer') }}
 ),
 itg_ph_tbl_surveyisequestion as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_TBL_SURVEYISEQUESTION
+select * from {{ ref('phlitg_integration__itg_ph_tbl_surveyisequestion') }}
 ),
 itg_ph_tbl_surveyisehdr as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_TBL_SURVEYISEHDR
+select * from {{ ref('phlitg_integration__itg_ph_tbl_surveyisehdr') }}
 ),
 itg_ph_tbl_surveychoices as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_TBL_SURVEYCHOICES
+select * from {{ ref('phlitg_integration__itg_ph_tbl_surveychoices') }}
 ),
 itg_ph_non_ise_weights as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_PH_NON_ISE_WEIGHTS
+select * from {{ ref('phlitg_integration__itg_ph_non_ise_weights') }}
 ),
 vw_ph_clobotics_perfect_store as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.VW_PH_CLOBOTICS_PERFECT_STORE
+select * from {{ ref('phledw_integration__vw_ph_clobotics_perfect_store') }}
 ),
 union_1 as 				(
 						SELECT 'Merchandising_Response' AS dataset

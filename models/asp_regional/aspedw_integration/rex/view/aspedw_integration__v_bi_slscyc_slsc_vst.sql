@@ -1,11 +1,11 @@
 with v_slscyc_salescycle as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_SLSCYC_SALESCYCLE
+select * from {{ ref('aspitg_integration__v_slscyc_salescycle') }}
 ),
 v_vst_visit as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_VST_VISIT
+select * from {{ ref('aspitg_integration__v_vst_visit') }}
 ),
 v_cust_customer as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_CUST_CUSTOMER
+select * from {{ ref('aspitg_integration__v_cust_customer') }}
 ),
 final as (
 SELECT 

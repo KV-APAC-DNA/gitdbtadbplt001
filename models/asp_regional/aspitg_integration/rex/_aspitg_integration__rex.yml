@@ -29,17 +29,9 @@ models:
     config: 
       alias: v_vst_visit
       tags: ["",""]
-  - name: aspitg_integration__v_bi_survey_response_values
-    config:
-      alias: v_bi_survey_response_values
-      tags: ["North Asia Common Views", "transformation"]
   - name: aspitg_integration__v_slsc_tgtg_items_cust_task_srresp
     config:
       alias: v_slsc_tgtg_items_cust_task_srresp
-      tags: ["","transformation"]
-  - name: aspitg_integration__v_bi_slscyc_slsc_vst
-    config:
-      alias: v_bi_slscyc_slsc_vst
       tags: ["","transformation"]
   - name: aspitg_integration__v_cust_customer
     config:

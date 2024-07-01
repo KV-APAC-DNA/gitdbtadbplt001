@@ -1,5 +1,5 @@
 with edw_perfect_store_rebase_wt_temp as (
-    select * from aspedw_integration.edw_perfect_store_rebase_wt_temp
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt_temp') }}
 ),
 final as (
     SELECT *,

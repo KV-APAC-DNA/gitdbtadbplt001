@@ -1,10 +1,10 @@
 with edw_perfect_store_kpi_data as 
 (
-    select * from aspedw_integration.edw_perfect_store_kpi_data
+    select * from {{ ref('aspedw_integration__edw_perfect_store_kpi_data') }}
 ),
 edw_vw_os_time_dim as 
 (
-    select * from sgpedw_integration__edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 msl as
 (   

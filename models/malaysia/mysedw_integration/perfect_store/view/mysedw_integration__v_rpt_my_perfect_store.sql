@@ -1,58 +1,58 @@
 with edw_vw_ps_targets as
 (
-    select * from aspedw_integration.edw_vw_ps_targets
+    select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 edw_vw_ps_weights as
 (
-    select * from aspedw_integration.edw_vw_ps_weights
+    select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 edw_calendar_dim as
 (
-    select * from aspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_my_sellout_analysis as
 (
-    select * from mysedw_integration.edw_my_sellout_analysis
+    select * from {{ ref('mysedw_integration__edw_my_sellout_analysis') }}
 ),
 edw_vw_my_ps_osa as
 (
-    select * from mysedw_integration.edw_vw_my_ps_osa
+    select * from {{ ref('mysedw_integration__edw_vw_my_ps_osa') }}
 ),
 edw_vw_my_ps_outlet_mst as
 (
-    select * from mysedw_integration.edw_vw_my_ps_outlet_mst
+    select * from {{ ref('mysedw_integration__edw_vw_my_ps_outlet_mst') }}
 ),
 edw_vw_my_ps_promocomp as
 (
-    select * from mysedw_integration.edw_vw_my_ps_promocomp
+    select * from {{ ref('mysedw_integration__edw_vw_my_ps_promocomp') }}
 ),
 edw_vw_my_ps_sku_mst as
 (
-    select * from mysedw_integration.edw_vw_my_ps_sku_mst
+    select * from {{ ref('mysedw_integration__edw_vw_my_ps_sku_mst') }}
 ),
 edw_vw_my_ps_sos as
 (
-    select * from mysedw_integration.edw_vw_my_ps_sos
+    select * from {{ ref('mysedw_integration__edw_vw_my_ps_sos') }}
 ),
 edw_vw_os_time_dim as
 (
-    select * from mysedw_integration.edw_vw_os_time_dim
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_mds_my_ps_msl as
 (
-    select * from mysitg_integration.itg_mds_my_ps_msl
+    select * from {{ ref('mysitg_integration__itg_mds_my_ps_msl') }}
 ),
 itg_my_dstrbtr_cust_dim as
 (
-    select * from mysitg_integration.itg_my_dstrbtr_cust_dim
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }}
 ),
 itg_my_material_dim as
 (
-    select * from mysitg_integration.itg_my_material_dim
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
 ),
 itg_my_dstrbtrr_dim as 
 (
-    select * from mysitg_integration.itg_my_dstrbtrr_dim
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
 ),
 merchandising_response_gt_msl as
 (
@@ -268,21 +268,21 @@ merchandising_response_gt_msl as
                                                         FROM 
                                                             (
                                                                 (
-                                                                    mysitg_integration.itg_mds_my_ps_msl a
-                                                                    JOIN mysitg_integration.itg_my_dstrbtr_cust_dim c ON (
+                                                                    {{ ref('mysitg_integration__itg_mds_my_ps_msl') }} a
+                                                                    JOIN {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }} c ON (
                                                                         (
                                                                             rtrim(upper((c.outlet_type1)::text)) = rtrim(upper((a.channel_nm)::text))
                                                                         )
                                                                     )
                                                                 )
-                                                                JOIN mysitg_integration.itg_my_dstrbtrr_dim dist ON (((c.cust_id)::text = (dist.cust_id)::text))
+                                                                JOIN {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }} dist ON (((c.cust_id)::text = (dist.cust_id)::text))
                                                             )
                                                         WHERE 
                                                             (
                                                                 (dist.lvl5)::text = ('Active'::character varying)::text
                                                             )
                                                     ) a
-                                                    LEFT JOIN mysitg_integration.itg_my_material_dim d ON (
+                                                    LEFT JOIN {{ ref('mysitg_integration__itg_my_material_dim') }} d ON (
                                                         (
                                                             ltrim((a.ean)::text, ('0'::character varying)::text) = ltrim(
                                                                 (d.item_bar_cd)::text,
@@ -1024,7 +1024,7 @@ merchandising_response_mt_msl as
                     edw_vw_ps_weights.channel,
                     edw_vw_ps_weights.retail_environment,
                     edw_vw_ps_weights.weight
-                FROM aspedw_integration.edw_vw_ps_weights
+                FROM {{ ref('aspedw_integration__edw_vw_ps_weights') }}
                 WHERE (
                         (
                             (

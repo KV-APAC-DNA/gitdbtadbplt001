@@ -1,5 +1,5 @@
 with source as (
-    select * from snapaspwks_integration.wks_edw_perfect_store_data_reformat
+    select * from {{ ref('aspwks_integration__wks_edw_perfect_store_data_reformat') }}
 ),
 final as (
     select md5(

@@ -1,36 +1,35 @@
-
 with itg_vn_interface_ise_header as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_ISE_HEADER
+select * from {{ ref('vnmitg_integration__itg_vn_interface_ise_header') }}
 ),
 itg_vn_interface_branch as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_BRANCH
+select * from {{ ref('vnmitg_integration__itg_vn_interface_branch') }}
 ),
 itg_vn_interface_question as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_QUESTION
+select * from {{ ref('vnmitg_integration__itg_vn_interface_question') }}
 ),
 itg_vn_interface_choices as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_CHOICES
+select * from {{ ref('vnmitg_integration__itg_vn_interface_choices') }}
 ),
 itg_vn_interface_answers as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_ANSWERS
+select * from {{ ref('vnmitg_integration__itg_vn_interface_answers') }}
 ),
 itg_vn_interface_notes as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_INTERFACE_NOTES
+select * from {{ ref('vnmitg_integration__itg_vn_interface_notes') }}
 ),
 edw_product_key_attributes as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRODUCT_KEY_ATTRIBUTES
+select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_vn_product_mapping as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_VN_PRODUCT_MAPPING
+select * from {{ ref('vnmitg_integration__itg_vn_product_mapping') }}
 ),
 itg_mds_vn_ps_targets as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_PS_TARGETS
+select * from {{ ref('vnmitg_integration__itg_mds_vn_ps_targets') }}
 ),
 itg_mds_vn_ps_weights as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_PS_WEIGHTS
+select * from {{ ref('vnmitg_integration__itg_mds_vn_ps_weights') }}
 ),
 itg_mds_vn_ps_store_tagging as (
-select * from DEV_DNA_CORE.SNAPOSEITG_INTEGRATION.ITG_MDS_VN_PS_STORE_TAGGING
+select * from {{ ref('vnmitg_integration__itg_mds_vn_ps_store_tagging') }}
 ),
 union_1 as 		(
 			SELECT 'Spiral' AS dataset

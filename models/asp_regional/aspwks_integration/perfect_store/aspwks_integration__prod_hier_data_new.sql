@@ -2,7 +2,7 @@ with edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_perfect_store_rebase_wt_temp as (
-    select * from aspedw_integration.edw_perfect_store_rebase_wt_temp
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt_temp') }}
 ),
 fisc_per_table as (
     select country,

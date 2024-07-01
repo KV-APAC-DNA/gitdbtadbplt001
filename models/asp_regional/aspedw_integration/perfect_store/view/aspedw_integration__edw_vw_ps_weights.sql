@@ -1,38 +1,38 @@
 with itg_id_ps_weights as(
-	select * from idnitg_integration.itg_id_ps_weights
+	select * from {{ ref('idnitg_integration__itg_id_ps_weights') }}
  ),
 itg_mds_pacific_ps_weights as(
-	select * from pcfitg_integration.itg_mds_pacific_ps_weights 
+	select * from {{ ref('pcfitg_integration__itg_mds_pacific_ps_weights') }} 
 ),
 itg_mds_vn_ps_weights as(
-	select * from vnmitg_integration.itg_mds_vn_ps_weights 
+	select * from {{ ref('vnmitg_integration__itg_mds_vn_ps_weights') }} 
 ),
 itg_mds_th_ps_weights as(
-	select * from thaitg_integration.itg_mds_th_ps_weights 
+	select * from {{ ref('thaitg_integration__itg_mds_th_ps_weights') }} 
 ),
 itg_mds_ph_ps_weights as(
-	select * from phlitg_integration.itg_mds_ph_ps_weights 
+	select * from {{ ref('phlitg_integration__itg_mds_ph_ps_weights') }} 
 ),
 itg_mds_sg_ps_weights as(
-	select * from sgpitg_integration.itg_mds_sg_ps_weights 
+	select * from {{ ref('sgpitg_integration__itg_mds_sg_ps_weights') }} 
 ),
 itg_mds_tw_ps_weights as(
-	select * from ntaitg_integration.itg_mds_tw_ps_weights 
+	select * from {{ ref('ntaitg_integration__itg_mds_tw_ps_weights') }} 
 ),
 itg_mds_kr_ps_weights as(
-	select * from ntaitg_integration.itg_mds_kr_ps_weights 
+	select * from {{ ref('ntaitg_integration__itg_mds_kr_ps_weights') }} 
 ),
 itg_mds_hk_ps_weights as(
-	select * from ntaitg_integration.itg_mds_hk_ps_weights 
+	select * from {{ ref('ntaitg_integration__itg_mds_hk_ps_weights') }} 
 ),
 itg_mds_in_ps_weights  as(
-	select * from inditg_integration.itg_mds_in_ps_weights 
+	select * from inditg_integration.itg_mds_in_ps_weights
 ),
 itg_mds_jp_ps_weights  as(
-	select * from jpnitg_integration.itg_mds_jp_ps_weights 
+	select * from jpnitg_integration.itg_mds_jp_ps_weights
 ),
 itg_mds_my_ps_weights as(
-	select * from mysitg_integration.itg_mds_my_ps_weights 
+	select * from {{ ref('mysitg_integration__itg_mds_my_ps_weights') }} 
 ),
 indonesia as 
 (

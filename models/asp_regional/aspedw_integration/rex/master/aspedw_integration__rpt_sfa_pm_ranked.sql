@@ -1,5 +1,5 @@
 with source as (
-    select * from ntaedw_integration.edw_rpt_sfa_pm
+    select * from {{ ref('ntaedw_integration__edw_rpt_sfa_pm') }}
 ),
 final as (
     select *,

@@ -9,6 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_mds_pacific_ps_benchmarks
       - name: sdl_mds_apac_dcl_customers
         tags: ["MDS","rg_travel_retail_channel_product_target","ingestion"]
         tests:

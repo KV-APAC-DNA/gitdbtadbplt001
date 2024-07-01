@@ -10,8 +10,7 @@
 
 with source as
 (
-    -- select * from {{ source('myssdl_raw','sdl_my_perfectstore_promocomp') }}
-    select * from dev_dna_load.snaposesdl_raw.sdl_my_perfectstore_promocomp
+    select * from {{ source('myssdl_raw','sdl_my_perfectstore_promocomp') }}
 ),
 final as
 (

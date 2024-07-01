@@ -4,54 +4,40 @@
 --                     snapntaitg_integration.itg_mds_cn_ps_targets
 -- ),
 itg_mds_pacific_ps_targets as (
-    select * from -- ref('pcfitg_integration__itg_mds_pacific_ps_targets') 
-                    pcfitg_integration.itg_mds_pacific_ps_targets
+    select * from {{ ref('pcfitg_integration__itg_mds_pacific_ps_targets') }}
 ),
 itg_mds_jp_ps_targets as (
-    select * from -- ref('jpnitg_integration__itg_mds_jp_ps_targets') 
-            jpnitg_integration.itg_mds_jp_ps_targets
+    select * from jpnitg_integration.itg_mds_jp_ps_targets
 ),
 itg_mds_hk_ps_targets as (
-    select * from -- ref('ntaitg_integration__itg_mds_hk_ps_targets') 
-                ntaitg_integration.itg_mds_hk_ps_targets
+    select * from {{ ref('ntaitg_integration__itg_mds_hk_ps_targets') }}
 ),
 itg_mds_tw_ps_targets as (
-    select * from -- ref('ntaitg_integration__itg_mds_tw_ps_targets')
-            ntaitg_integration.itg_mds_tw_ps_targets
+    select * from {{ ref('ntaitg_integration__itg_mds_tw_ps_targets') }}
 ),
 itg_mds_kr_ps_targets as (
-    select * from -- ref('ntaitg_integration__itg_mds_kr_ps_targets')
-            ntaitg_integration.itg_mds_kr_ps_targets
+    select * from {{ ref('ntaitg_integration__itg_mds_kr_ps_targets') }}
 ),
 itg_mds_in_ps_targets as (
-    select * from -- ref('inditg_integration__itg_mds_in_ps_targets')
-            inditg_integration.itg_mds_in_ps_targets
+    select * from inditg_integration.itg_mds_in_ps_targets
 ),
 itg_id_ps_targets as (
-    select * from  idnitg_integration.itg_id_ps_targets
-    -- {{ ref('idnitg_integration__itg_id_ps_targets') }}
-           -- 
-)
-,itg_mds_sg_ps_targets as (
-    select * from sgpitg_integration.itg_mds_sg_ps_targets
-    -- ref('sgpitg_integration__itg_mds_sg_ps_targets') 
+    select * from  {{ ref('idnitg_integration__itg_id_ps_targets') }}
+),
+itg_mds_sg_ps_targets as (
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_ps_targets') }}
 ),
 itg_mds_th_ps_targets as (
-    select * from thaitg_integration.itg_mds_th_ps_targets
-    -- ref('thaitg_integration__itg_mds_th_ps_targets')
+    select * from {{ ref('thaitg_integration__itg_mds_th_ps_targets') }}
 ),
 itg_mds_vn_ps_targets as (
-    select * from vnmitg_integration.itg_mds_vn_ps_targets
-    
-    -- ref('vnmitg_integration__itg_mds_vn_ps_targets') 
+    select * from {{ ref('vnmitg_integration__itg_mds_vn_ps_targets') }}
 ),
 itg_mds_ph_ps_targets as (
-    select * from phlitg_integration.itg_mds_ph_ps_targets
-    -- ref('phlitg_integration__itg_mds_ph_ps_targets')
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ps_targets') }}
 ),
 itg_mds_my_ps_targets as (
-    select * from -- ref('itg_mds_my_ps_targets') Ref Model name currectly here
-                mysitg_integration.itg_mds_my_ps_targets
+    select * from {{ ref('mysitg_integration__itg_mds_my_ps_targets') }}
 ),
 -- china as
 -- (       

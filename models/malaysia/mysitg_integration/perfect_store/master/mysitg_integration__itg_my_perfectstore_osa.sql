@@ -3,7 +3,7 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where upper(trim(date)) || upper(trim(outlet_no)) || upper(trim(product_barcode)) || upper(trim(answer)) || upper(trim(yearmo)) in (select distinct upper(trim(date)) || upper(trim(outlet_no)) || upper(trim(product_barcode)) || upper(trim(answer)) || upper(trim(yearmo)) from {{ source('myssdl_raw','sdl_my_perfectstore_osa') }})
+        delete from {{this}} where upper(trim(date)) || upper(trim(outlet_no)) || upper(trim(product_barcode)) || upper(trim(answer)) || upper(trim(yearmo)) in (select distinct upper(trim(date)) || upper(trim(outlet_no)) || upper(trim(product_barcode)) || upper(trim(answer)) || upper(trim(yearmo)) from {{ source('myssdl_raw','sdl_my_perfectstore_osa') }});
         {% endif %}"
     )}}
 

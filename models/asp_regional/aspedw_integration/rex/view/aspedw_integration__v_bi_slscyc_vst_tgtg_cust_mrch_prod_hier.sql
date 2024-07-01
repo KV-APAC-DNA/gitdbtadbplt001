@@ -1,14 +1,14 @@
 with v_bi_slscyc_slsc_vst as
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_bi_slscyc_slsc_vst
+    select * from {{ ref('aspedw_integration__v_bi_slscyc_slsc_vst') }}
 ),
 v_bi_mrch_resp_prod as
 (
-    select * from dev_dna_load.snapaspsdl_raw.v_bi_mrch_resp_prod
+    select * from {{ ref('aspedw_integration__v_bi_mrch_resp_prod') }}
 ),
 edw_product_attr_dim as
 (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 c as 
 (

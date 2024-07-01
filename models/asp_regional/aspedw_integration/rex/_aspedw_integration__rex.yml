@@ -41,3 +41,11 @@ models:
     config:
       alias: v_slsc_tgtg_items_customer
       tags: ["","transformation"]
+  - name: aspedw_integration__v_bi_survey_response_values
+    config:
+      alias: v_bi_survey_response_values
+      tags: ["north_asia_views", "transformation"]
+  - name: aspedw_integration__v_bi_slscyc_slsc_vst
+    config:
+      alias: v_bi_slscyc_slsc_vst
+      tags: ["north_asia_views", "transformation"]
