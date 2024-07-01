@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__v_retailer_udc_map
-    config:
-      alias: v_retailer_udc_map
-      tags: ["india_views","transformation"]

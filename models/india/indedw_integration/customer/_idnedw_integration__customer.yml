@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__edw_customer_dim
-    config:
-      alias: edw_customer_dim
-      tags: ["in_xdm_master","transformation"]

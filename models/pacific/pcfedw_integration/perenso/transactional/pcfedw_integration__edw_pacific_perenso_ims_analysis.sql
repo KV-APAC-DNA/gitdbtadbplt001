@@ -76,10 +76,6 @@ select * from {{ ref('pcfitg_integration__itg_perenso_prod_chk_distribution') }}
 edw_perenso_account_dim as (
 select * from {{ ref('pcfedw_integration__edw_perenso_account_dim') }}
 ),
-edw_perenso_prod_metcashid_dim as (
-select * from {{ ref('pcfedw_integration__edw_perenso_prod_metcashid_dim') }}
-),
-
 ETD AS
 (SELECT ETD.*,
              ETDW.JJ_MNTH_WK,
@@ -965,10 +961,8 @@ WHERE ACCT_METCASH_ID NOT IN (SELECT ACCT_METCASH_ID
                               GROUP BY ACCT_METCASH_ID
                               HAVING COUNT(*) > 1)) EPAD
 ON rtrim(BASE.METCASH_STORE_CODE) = rtrim(EPAD.ACCT_METCASH_ID)
--- LEFT JOIN EDW_PERENSO_PROD_DIM EPPD
--- ON BASE.PRODUCT_ID::varchar = LTRIM(EPPD.PROD_METCASH_CODE,0)
-LEFT JOIN edw_perenso_prod_metcashid_dim EPPD ------------------added as part od metcash mapping issue
-ON BASE.PRODUCT_ID::varchar = LTRIM(EPPD.product_probe_id,0) 
+LEFT JOIN EDW_PERENSO_PROD_DIM EPPD
+ON BASE.PRODUCT_ID::varchar = LTRIM(EPPD.PROD_METCASH_CODE,0)
 LEFT JOIN EDW_PS_MSL_ITEMS EPMI
 ON ltrim(EPPD.PROD_EAN,0) = ltrim(EPMI.EAN,0) and upper(EPMI.RETAIL_ENVIRONMENT) = 'AU INDY PHARMACY'
 and EPMI.latest_record='Y' ----(we need to add)
