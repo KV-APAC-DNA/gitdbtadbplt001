@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_retailer_geocoordinates
+    config:
+      alias: edw_retailer_geocoordinates
+      tags: ["in_rt_sales","transformation"]

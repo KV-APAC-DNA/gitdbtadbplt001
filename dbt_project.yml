@@ -486,3 +486,21 @@ models:
       ntaedw_access:
         +materialized: view
         +schema: NTAEDW_ACCESS
+    india:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      indedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDEDW_INTEGRATION
+      inditg_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDITG_INTEGRATION
+      indwks_integration:
+        +materialized: table
+        +schema: INDWKS_INTEGRATION
+      indedw_access:
+        +materialized: view
+        +schema: INDEDW_ACCESS
