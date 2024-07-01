@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_hcp_sales_hierarchy_mapping
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
+      tests:
+        - test_format:
+                select_columns: ["brand_name_code","region_code","zone_code"]
+                failure_reason: "'Column value mismatch'"
+                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM dev_dna_core.snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.zone_code) = upper(t2.zone_code))" 
+                name: TRATBL_sdl_mds_in_hcp_sales_hierarchy_mapping__test_format
+                config:
+                  store_failures: true
+                  schema: hcpwks_integration
+    - name: sdl_mds_in_hcp_sales_rep_mapping
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
+      tests:
+        - test_format:
+                select_columns: ["brand_name_code","region_code","zone_code"]
+                failure_reason: "'Column value mismatch'"
+                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM dev_dna_core.snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.zone_code) = upper(t2.zone_code))" 
+                name: TRATBL_sdl_mds_in_hcp_sales_rep_mapping__test_format
+                config:
+                  store_failures: true
+                  schema: hcpwks_integration
