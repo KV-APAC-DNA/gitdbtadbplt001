@@ -180,4 +180,14 @@ sources:
     - name: itg_all_non_ivy_distributor_sellout_sales_fact
       tags: ["","ingestion"]
 
+  - name: idnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: idnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_indonesia_noo_analysis_temp
+      tags: ["","ingestion"]
  

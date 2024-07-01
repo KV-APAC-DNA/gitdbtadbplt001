@@ -1,8 +1,12 @@
 {{
     config(
-        transient=false,
+        materialized='incremental',
+        incremental_strategy='merge',
+        unique_key=['jj_sap_dstrbtr_id', 'jj_mnth'],
         sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
-        pre_hook="{{build_wks_indonesia_noo_analysis_temp()}}"     
+        pre_hook="{% if is_incremental() %}
+                delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from {{ source('idnwks_integration', 'wks_itg_all_distributor_sellin_sellout_fact') }} where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');
+                {% endif %}"     
     )
 }}
 
@@ -33,9 +37,6 @@ select * from {{ ref('idnedw_integration__edw_distributor_customer_dim') }}
 ),
 EDW_DISTRIBUTOR_SALESMAN_DIM as(
 select * from {{ ref('idnedw_integration__edw_distributor_salesman_dim') }}
-),
-wks_indonesia_noo_analysis_temp as(
-    select * from {{ source('idnwks_integration', 'wks_indonesia_noo_analysis_temp') }}
 ),
 union1 as 
 (
@@ -684,10 +685,10 @@ updt2 as(
         left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(updt.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
 )
 
-
+{% if is_incremental() %}
 ,
 filtered_noo as (
-    select * from wks_indonesia_noo_analysis_temp as noo where (jj_sap_dstrbtr_id, jj_mnth) not in (select distinct jj_sap_dstrbtr_id, jj_mnth from updt2)
+    select * from {{this}} as noo where (jj_sap_dstrbtr_id, jj_mnth) not in (select distinct jj_sap_dstrbtr_id, jj_mnth from updt2)
 ),
 updated_noo as (
     select 
@@ -977,8 +978,12 @@ transformed_noo as (
         left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(updated_noo.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
         left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(updated_noo.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
 )
+{% endif %}
 
 --Final select
 select * from updt2
+--Union logic added here to compensate update on records which exist in edw_material_dim and not in wks_material_dim
+{% if is_incremental() %}
 union 
 select * from transformed_noo
+{% endif %}
