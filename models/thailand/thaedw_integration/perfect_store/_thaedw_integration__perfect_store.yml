@@ -5,3 +5,7 @@ models:
     config: 
       alias: edw_rpt_th_perfect_store
       tags: ["pop6_edw_load","transformation"]
+  - name: thaedw_integration__v_rpt_th_perfect_store
+    config: 
+      alias: v_rpt_th_perfect_store
+      tags: ["north_asia_views","transformation"]

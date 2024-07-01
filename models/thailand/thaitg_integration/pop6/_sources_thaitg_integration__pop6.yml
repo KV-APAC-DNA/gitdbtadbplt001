@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: thasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: thasdl_raw
     quoting:
       database: false
       schema: false
@@ -141,3 +141,8 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_pop6_th_display_plans
+      - name: sdl_pop6_th_pop_lists
+      - name: sdl_pop6_th_product_lists_allocation
+      - name: sdl_pop6_th_product_lists_products
+      - name: sdl_pop6_th_tasks
+      - name: sdl_pop6_th_users

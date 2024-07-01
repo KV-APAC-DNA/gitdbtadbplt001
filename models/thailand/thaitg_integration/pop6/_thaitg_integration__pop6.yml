@@ -45,3 +45,7 @@ models:
     config: 
       alias: sdl_raw_pop6_th_rir_data
       tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_tasks
+    config: 
+      alias: sdl_raw_pop6_th_tasks
+      tags: [""]

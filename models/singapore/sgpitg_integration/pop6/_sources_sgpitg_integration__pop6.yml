@@ -1,7 +1,7 @@
 sources:
   - name: sgpsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snaposesdl_raw
+    schema: sgpsdl_raw
     quoting:
       database: false
       schema: false
@@ -196,3 +196,7 @@ sources:
                 config:
                   store_failures: true
                   schema: sgpwks_integration
+      - name: sdl_pop6_sg_pop_lists
+      - name: sdl_pop6_sg_product_lists_allocation
+      - name: sdl_pop6_sg_product_lists_products
+      - name: sdl_pop6_sg_users

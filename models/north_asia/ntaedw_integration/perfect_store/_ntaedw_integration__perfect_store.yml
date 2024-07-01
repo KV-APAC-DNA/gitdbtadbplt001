@@ -1,28 +1,11 @@
 version: 2
 
 models:
-  - name: ntaedw_integration__v_rpt_th_perfect_store
-    config: 
-        alias: v_rpt_th_perfect_store
-        tags: ["","transformation"]
-  - name: ntaedw_integration__v_rpt_ph_perfect_store
-    config: 
-        alias: v_rpt_ph_perfect_store
-        tags: ["","transformation"]
-  - name: ntaedw_integration__v_rpt_vn_perfect_store
-    config: 
-        alias: v_rpt_vn_perfect_store
-        tags: ["","transformation"]
-  - name: ntaedw_integration__v_rpt_sg_pop6_perfect_store
-    config: 
-        alias: v_rpt_sg_pop6_perfect_store
-        tags: ['North Asia Common Views', 'transformation']
-
   - name: ntaedw_integration__v_rpt_th_pop6_perfect_store
     config: 
         alias: v_rpt_th_pop6_perfect_store
-        tags: ['North Asia Common Views', 'transformation']
+        tags: ['north_asia_views', 'transformation']
   - name: ntaedw_integration__v_rpt_jp_pop6_perfect_store
     config: 
         alias: v_rpt_jp_pop6_perfect_store
-        tags: ['North Asia Common Views', 'transformation'] 
+        tags: ['north_asia_views', 'transformation']
