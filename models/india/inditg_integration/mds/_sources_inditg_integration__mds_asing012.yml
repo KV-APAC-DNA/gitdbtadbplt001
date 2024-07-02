@@ -93,4 +93,5 @@ sources:
       schema: false
       identifier: false
     tables:
+
       - name: edw_in_invoice_fact_temp

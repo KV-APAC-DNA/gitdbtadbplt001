@@ -12,7 +12,7 @@
                     and nvl(wks_in_invoice_fact.invoice_date,'9999-01-01') = nvl(edw_in_invoice_fact.invoice_date,'9999-01-01')
                     and wks_in_invoice_fact.invoice_val = edw_in_invoice_fact.invoice_val
                     and wks_in_invoice_fact.invoice_qty = edw_in_invoice_fact.invoice_qty
-                and wks_in_invoice_fact.chng_flg in ('U')
+                and wks_in_invoice_fact.chng_flg in ('U');
                     {% endif %}"
     )
 }}

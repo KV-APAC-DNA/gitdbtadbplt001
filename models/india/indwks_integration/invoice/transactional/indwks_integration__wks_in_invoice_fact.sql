@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook = build_edw_in_invoice_fact_temp()
+        pre_hook = "{{build_edw_in_invoice_fact_temp()}}"
     )
 }}
 with 
@@ -49,7 +49,7 @@ b as
     bill_date, 
     sales_unit, 
     sum(knval) as knval,
-    sum(isnull(case when right(inv_qty, 1) = '-' then cast(rtrim(rtrim(inv_qty, '-'),' ') as float)*(-1)
+    sum(ifnull(case when right(inv_qty, 1) = '-' then cast(rtrim(rtrim(inv_qty, '-'),' ') as float)*(-1)
     else cast(inv_qty as float) end,0)) as sls_inv_qty from itg_billing_conditions 
     where knart = 'ZDN2' and comp_code = '8080'  
     group by sold_to, material, bill_num, bill_type, bill_date, sales_unit
@@ -59,7 +59,7 @@ marm as
     select 
         material, 
         mat_unit, 
-        isnull(numerator,0.00) as numerator 
+        ifnull(numerator,0.00) as numerator 
     from itg_product_uom_master 
         where material is not null 
         and mat_unit is not null 
