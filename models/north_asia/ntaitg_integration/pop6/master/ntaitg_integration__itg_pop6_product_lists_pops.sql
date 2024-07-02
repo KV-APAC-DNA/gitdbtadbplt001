@@ -5,22 +5,22 @@
 }}
 
 with sdl_pop6_hk_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.sdl_pop6_hk_product_lists_pops
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_product_lists_pops') }}
 ),
 sdl_pop6_kr_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.sdl_pop6_kr_product_lists_pops
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_product_lists_pops') }}
 ),
 sdl_pop6_tw_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.sdl_pop6_tw_product_lists_pops
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_product_lists_pops') }}
 ),
 sdl_pop6_jp_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPJPNSDL_RAW.sdl_pop6_jp_product_lists_pops
+    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_product_lists_pops') }}
 ),
 sdl_pop6_sg_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.sdl_pop6_sg_product_lists_pops
+    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_product_lists_pops') }}
 ),
 sdl_pop6_th_product_lists_pops as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.sdl_pop6_th_product_lists_pops
+    select * from {{ source('thasdl_raw', 'sdl_pop6_th_product_lists_pops') }}
 ),
 itg_pop6_product_lists_pops as (
     select * from {{ source('ntaitg_integration', 'itg_pop6_product_lists_pops_temp') }}

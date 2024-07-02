@@ -4,14 +4,14 @@
     )
 }}
 
-with SDL_POP6_HK_PRODUCTS as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_HK_PRODUCTS
+with sdl_pop6_hk_products as (
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_products') }}
 ),
-SDL_POP6_KR_PRODUCTS as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_KR_PRODUCTS
+sdl_pop6_kr_products as (
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_products') }}
 ),
-SDL_POP6_TW_PRODUCTS as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_TW_PRODUCTS
+sdl_pop6_tw_products as (
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_products') }}
 ),
 itg_pop6_products as (
     select * from {{ source('ntaitg_integration', 'itg_pop6_products_temp') }}

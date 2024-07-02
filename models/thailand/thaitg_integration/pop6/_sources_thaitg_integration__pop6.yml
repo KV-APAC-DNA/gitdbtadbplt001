@@ -9,6 +9,8 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_pop6_th_product_lists_pops
+      - name: sdl_pop6_th_pops
       - name: sdl_pop6_th_displays
         tests:
           - test_null:

@@ -8,32 +8,32 @@
 
 with sdl_pop6_kr_service_levels as 
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_kr_service_levels
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_service_levels') }}
 ),
 
 sdl_pop6_tw_service_levels as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_tw_service_levels
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_service_levels') }}
 ),
 
 sdl_pop6_hk_service_levels as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_hk_service_levels
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_service_levels') }}
 ),
 
 sdl_pop6_jp_service_levels as
 (
-	select * from dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_service_levels
+	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_service_levels') }}
 ),
 
 sdl_pop6_sg_service_levels as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_sg_service_levels
+	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_service_levels') }}
 ),
 
 sdl_pop6_th_service_levels as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_th_service_levels
+	select * from {{ source('thasdl_raw', 'sdl_pop6_th_service_levels') }}
 ),
 
 

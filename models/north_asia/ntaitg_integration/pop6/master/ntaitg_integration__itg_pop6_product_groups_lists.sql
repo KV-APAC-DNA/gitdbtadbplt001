@@ -5,19 +5,19 @@
     )
 }}
 
-with sdl_pop6_hk_product_groups_lists AS
+with sdl_pop6_hk_product_groups_lists as
 (
-     select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_HK_PRODUCT_GROUPS_LISTS
+     select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_product_groups_lists') }}
 ),
 
-sdl_pop6_kr_product_groups_lists AS
+sdl_pop6_kr_product_groups_lists as
 (
-     select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_KR_PRODUCT_GROUPS_LISTS
+     select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_product_groups_lists') }}
 ),
 
 sdl_pop6_tw_product_groups_lists as 
 (
-     select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_TW_PRODUCT_GROUPS_LISTS
+     select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_product_groups_lists') }}
 ),
 
 

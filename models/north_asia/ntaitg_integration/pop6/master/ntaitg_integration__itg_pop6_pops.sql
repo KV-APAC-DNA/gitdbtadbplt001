@@ -4,23 +4,23 @@
     )
 }}
 
-with sdl_pop6_JP_pops as (
-    select * from DEV_DNA_LOAD.SNAPJPNSDL_RAW.SDL_POP6_JP_POPS
+with sdl_pop6_jp_pops as (
+    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_pops') }}
 ),
 sdl_pop6_hk_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_HK_POPS
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_pops') }}
 ),
 sdl_pop6_kr_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.sdl_pop6_kr_pops
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_pops') }}
 ),
 sdl_pop6_tw_pops as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.sdl_pop6_tw_pops
+    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_pops') }}
 ),
 sdl_pop6_sg_pops as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_SG_POPS
+    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_pops') }}
 ),
 sdl_pop6_th_pops as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.sdl_pop6_th_pops
+    select * from {{ source('thasdl_raw', 'sdl_pop6_th_pops') }}
 ),
 itg_pop6_pops_temp as (
     select * from {{ source('ntaitg_integration', 'itg_pop6_pops_temp') }}

@@ -8,32 +8,32 @@
 
 with sdl_pop6_kr_tasks as 
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_kr_tasks
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_tasks') }}
 ),
 
 sdl_pop6_tw_tasks as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_tw_tasks
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_tasks') }}
 ),
 
 sdl_pop6_hk_tasks as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_hk_tasks
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_tasks') }}
 ),
 
 sdl_pop6_jp_tasks as
 (
-	select * from dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_tasks
+	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_tasks') }}
 ),
 
 sdl_pop6_sg_tasks as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_sg_tasks
+	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_tasks') }}
 ),
 
 sdl_pop6_th_tasks as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_th_tasks
+	select * from {{ source('thasdl_raw', 'sdl_pop6_th_tasks') }}
 ),
 
 

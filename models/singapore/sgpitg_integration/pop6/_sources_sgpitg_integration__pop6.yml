@@ -7,6 +7,7 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_pop6_sg_pops
       - name: sdl_pop6_sg_product_attribute_audits
         tags: ["pop6_sg_transaction","ingestion"]
         tests:
@@ -200,3 +201,4 @@ sources:
       - name: sdl_pop6_sg_product_lists_allocation
       - name: sdl_pop6_sg_product_lists_products
       - name: sdl_pop6_sg_users
+      - name: sdl_pop6_sg_product_lists_pops

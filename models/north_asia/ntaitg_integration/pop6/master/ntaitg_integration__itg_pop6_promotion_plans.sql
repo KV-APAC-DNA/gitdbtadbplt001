@@ -8,32 +8,32 @@
 
 with sdl_pop6_kr_promotion_plans as 
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_kr_promotion_plans
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_promotion_plans') }}
 ),
 
 sdl_pop6_tw_promotion_plans as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_tw_promotion_plans
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_promotion_plans') }}
 ),
 
 sdl_pop6_hk_promotion_plans as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_hk_promotion_plans
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_promotion_plans') }}
 ),
 
 sdl_pop6_jp_promotion_plans as
 (
-	select * from dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_promotion_plans
+	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_promotion_plans') }}
 ),
 
 sdl_pop6_sg_promotion_plans as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_sg_promotion_plans
+	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_promotion_plans') }}
 ),
 
 sdl_pop6_th_promotion_plans as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_th_promotion_plans
+	select * from {{ source('thasdl_raw', 'sdl_pop6_th_promotion_plans') }}
 ),
 
 

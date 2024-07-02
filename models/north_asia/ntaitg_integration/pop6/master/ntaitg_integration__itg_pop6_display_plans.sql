@@ -5,22 +5,22 @@
 )}}
 
 with sdl_pop6_kr_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_KR_display_plans
+    select * from {{ source('ntasdl_raw','sdl_pop6_kr_display_plans') }}
 ),
 sdl_pop6_tw_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_TW_display_plans
+    select * from {{ source('ntasdl_raw','sdl_pop6_tw_display_plans') }}
 ),
-SDL_POP6_HK_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_HK_display_plans
+sdl_pop6_hk_display_plans as (
+    select * from {{ source('ntasdl_raw','sdl_pop6_hk_display_plans') }}
 ),
-SDL_POP6_JP_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPJPNSDL_RAW.SDL_POP6_JP_display_plans
+sdl_pop6_jp_display_plans as (
+    select * from {{ source('jpnsdl_raw','sdl_pop6_jp_display_plans') }}
 ),
 sdl_pop6_sg_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_SG_display_plans
+    select * from {{ source('sgpsdl_raw','sdl_pop6_sg_display_plans') }}
 ),
 sdl_pop6_th_display_plans as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_TH_display_plans
+    select * from {{ source('thasdl_raw','sdl_pop6_th_display_plans') }}
 ),
 transformed as (
 SELECT  

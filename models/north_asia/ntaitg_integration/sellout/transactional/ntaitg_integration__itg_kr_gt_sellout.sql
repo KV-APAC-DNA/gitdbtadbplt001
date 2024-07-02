@@ -15,7 +15,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_HYUNDAI_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_hyundai_gt_sellout') }}
               
               UNION ALL
               
@@ -27,7 +27,7 @@
                             END AS DSTR_NM,
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_AK_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_lotte_ak_gt_sellout') }}
               
             --   UNION ALL
               
@@ -35,7 +35,7 @@
             --          UPPER(DSTR_NM),
             --          CUST_CD,
             --          EAN
-            --   FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
+            --   FROM {{ source('ntasdl_raw','sdl_kr_ju_hj_life_gt_sellout') }}
               
               UNION ALL
               
@@ -43,7 +43,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_BO_YOUNG_JONG_HAP_LOGISTICS_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
               
               UNION ALL
               
@@ -51,7 +51,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DA_IN_SANG_SA_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_da_in_sang_sa_gt_sellout') }}
               
               UNION ALL
               
@@ -59,7 +59,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DONGBU_LSD_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_dongbu_lsd_gt_sellout') }}
               
               UNION ALL
               
@@ -67,7 +67,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DU_BAE_RO_YU_TONG_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
               
               UNION ALL
               
@@ -75,7 +75,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_IL_DONG_HU_DI_S_DEOK_SEONG_SANG_SA_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
               
               UNION ALL
               
@@ -83,7 +83,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JUNGSEOK_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_jungseok_gt_sellout') }}
               
               UNION ALL
               
@@ -91,7 +91,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NU_RI_ZON_GT_SELLOUT 
+              FROM {{ source('ntasdl_raw','sdl_kr_nu_ri_zon_gt_sellout') }} 
               
               UNION ALL
               
@@ -99,7 +99,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_LOGISTICS_YANG_JU_GT_SELLOUT)
+              FROM {{ source('ntasdl_raw','sdl_kr_lotte_logistics_yang_ju_gt_sellout') }})
               {% endif %}",
               "{% if is_incremental() %}
               DELETE FROM {{this}}
@@ -111,7 +111,7 @@
               SELECT TO_DATE(IMS_TXN_DT, 'YYYY-MM-DD'),
                      UPPER(DSTR_NM),
                      EAN
-              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NACF_GT_SELLOUT
+              FROM {{ source('ntasdl_raw','sdl_kr_nacf_gt_sellout') }}
               )
             {% endif %}","
             {% if is_incremental() %}
@@ -120,7 +120,7 @@ FROM {{this}}
 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
                                               UPPER(DSTR_NM) DSTR_NM,
                                               EAN,customer_code
-                                       FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NH_GT_SELLOUT sng
+                                       FROM {{ source('ntasdl_raw','sdl_kr_nh_gt_sellout') }} sng
                                         LEFT JOIN (SELECT FISC_PER,
                     MAX(CAL_DAY) CAL_DAY
              FROM aspedw_integration.edw_calendar_dim
@@ -133,7 +133,7 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd,SUB_CUSTOMER_CODE) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
                                                             UPPER(DSTR_NM) DSTR_NM,
                                                             EAN,customer_code,pcode
-                                                    FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_OTC_SELLOUT SNG
+                                                    FROM {{ source('ntasdl_raw','sdl_kr_otc_sellout') }} SNG
                                                         LEFT JOIN (SELECT FISC_PER,
                                     MAX(CAL_DAY) CAL_DAY
                             FROM aspedw_integration.EDW_CALENDAR_DIM
@@ -146,74 +146,74 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
 
 
 with 
-SDL_KR_OTC_SELLOUT as (
-select * from  DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_OTC_SELLOUT
+sdl_kr_otc_sellout as (
+select * from  {{ source('ntasdl_raw','sdl_kr_otc_sellout') }}
 ),
-SDL_KR_JU_HJ_LIFE_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
+sdl_kr_ju_hj_life_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_ju_hj_life_gt_sellout') }}
 ),
-SDL_KR_JUNGSEOK_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JUNGSEOK_GT_SELLOUT
+sdl_kr_jungseok_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_jungseok_gt_sellout') }}
 ),
-SDL_KR_NACF_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NACF_GT_SELLOUT
+sdl_kr_nacf_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_nacf_gt_sellout') }}
 ),
-SDL_KR_HYUNDAI_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_HYUNDAI_GT_SELLOUT
+sdl_kr_hyundai_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_hyundai_gt_sellout') }}
 ),
-SDL_KR_BO_YOUNG_JONG_HAP_LOGISTICS_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_BO_YOUNG_JONG_HAP_LOGISTICS_GT_SELLOUT
+sdl_kr_bo_young_jong_hap_logistics_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
 ),
-SDL_KR_LOTTE_LOGISTICS_YANG_JU_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_LOGISTICS_YANG_JU_GT_SELLOUT
+sdl_kr_lotte_logistics_yang_ju_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_lotte_logistics_yang_ju_gt_sellout') }}
 ),
-SDL_KR_NU_RI_ZON_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NU_RI_ZON_GT_SELLOUT 
+sdl_kr_nu_ri_zon_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_nu_ri_zon_gt_sellout') }} 
 ),
-SDL_KR_LOTTE_AK_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_AK_GT_SELLOUT
+sdl_kr_lotte_ak_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_lotte_ak_gt_sellout') }}
 ),
-SDL_KR_DONGBU_LSD_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DONGBU_LSD_GT_SELLOUT
+sdl_kr_dongbu_lsd_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_dongbu_lsd_gt_sellout') }}
 ),
-SDL_KR_DA_IN_SANG_SA_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DA_IN_SANG_SA_GT_SELLOUT
+sdl_kr_da_in_sang_sa_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_da_in_sang_sa_gt_sellout') }}
 ),
-SDL_KR_NH_GT_SELLOUT as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_NH_GT_SELLOUT
+sdl_kr_nh_gt_sellout as (
+    select * from {{ source('ntasdl_raw','sdl_kr_nh_gt_sellout') }}
 ),
-SDL_KR_IL_DONG_HU_DI_S_DEOK_SEONG_SANG_SA_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_IL_DONG_HU_DI_S_DEOK_SEONG_SANG_SA_GT_SELLOUT
+sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
 ),
-SDL_KR_DU_BAE_RO_YU_TONG_GT_SELLOUT as (
-select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_DU_BAE_RO_YU_TONG_GT_SELLOUT
+sdl_kr_du_bae_ro_yu_tong_gt_sellout as (
+select * from {{ source('ntasdl_raw','sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
 ),
-ITG_KR_GT_FOOD_WS as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_FOOD_WS
+itg_kr_gt_food_ws as (
+select * from {{ ref('ntaitg_integration__itg_kr_gt_food_ws') }}
 ),
-ITG_KR_GT_DAISO_PRICE as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_DAISO_PRICE
+itg_kr_gt_daiso_price as (
+select * from {{ ref('ntaitg_integration__itg_kr_gt_daiso_price') }}
 ),
-ITG_KR_GT_NACF_CUST_DIM as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_NACF_CUST_DIM
+itg_kr_gt_nacf_cust_dim as (
+select * from {{ ref('ntaitg_integration__itg_kr_gt_nacf_cust_dim') }}
 ),
-ITG_KR_GT_DPT_DAISO as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_GT_DPT_DAISO
+itg_kr_gt_dpt_daiso as (
+select * from {{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}
 ),
-EDW_CALENDAR_DIM as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
+edw_calendar_dim as (
+select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
-EDW_CUSTOMER_BASE_DIM as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
+edw_customer_base_dim as (
+select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-ITG_POP6_PRODUCTS as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POP6_PRODUCTS
+itg_pop6_products as (
+select * from {{ ref('ntaitg_integration__itg_pop6_products') }}
 ),
-EDW_PRODUCT_ATTR_DIM as (
-select * from DEV_DNA_CORE.aspEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+edw_product_attr_dim as (
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-ITG_MDS_KR_SUB_CUSTOMER_MASTER as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_KR_SUB_CUSTOMER_MASTER
+itg_mds_kr_sub_customer_master as (
+select * from {{ ref('ntaitg_integration__itg_mds_kr_sub_customer_master') }}
 ),
 hyundai as (
 SELECT TO_DATE(SHG.IMS_TXN_DT||'15','YYYYMMDD') AS IMS_TXN_DT,

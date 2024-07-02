@@ -1,14 +1,11 @@
 with wks_photo_mgmnt_url_wrk1 as (
-    select * from ntawks_integration.wks_photo_mgmnt_url_wrk1
-    -- select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk1') }}
+    select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk1') }}
 ),
 edw_rpt_sfa_pm as (
-    select * from ntaedw_integration.edw_rpt_sfa_pm
-    -- select * from {{ ref('ntaedw_integration__edw_rpt_sfa_pm') }}
+    select * from {{ ref('ntaedw_integration__edw_rpt_sfa_pm') }}
 ),
 wks_photo_mgmnt_url_wrk2 as (
-    select * from ntawks_integration.wks_photo_mgmnt_url_wrk2
-    -- select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }}
+    select * from {{ ref('ntawks_integration__wks_photo_mgmnt_url_wrk2') }}
 ),
 numbersequence as (
     with recursive numbers(number) as 

@@ -7,6 +7,7 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_pop6_jp_product_lists_pops
       - name: sdl_pop6_jp_exclusion
         tags: ["pop6_jp_transaction","ingestion"]
         tests:
@@ -213,3 +214,4 @@ sources:
       - name: sdl_pop6_jp_pop_lists
       - name: sdl_pop6_jp_users
       - name: sdl_pop6_jp_product_lists_allocation
+      - name: sdl_pop6_jp_pops

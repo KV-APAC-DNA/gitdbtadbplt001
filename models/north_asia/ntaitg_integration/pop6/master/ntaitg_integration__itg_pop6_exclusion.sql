@@ -7,32 +7,32 @@
                     DELETE
                     FROM {{this}}
                     WHERE ( visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') ) IN 
-                    ( SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM dev_dna_load.snapntasdl_raw.sdl_pop6_hk_exclusion WHERE upper(operation_type) = 'D'  
-                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM dev_dna_load.snapntasdl_raw.sdl_pop6_kr_exclusion WHERE upper(operation_type) = 'D'  
-                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM dev_dna_load.snapntasdl_raw.sdl_pop6_tw_exclusion WHERE upper(operation_type) = 'D'  
-                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_exclusion WHERE upper(operation_type) = 'D' );
+                    ( SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM {{ source('ntasdl_raw', 'sdl_pop6_hk_exclusion') }} WHERE upper(operation_type) = 'D'  
+                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM {{ source('ntasdl_raw', 'sdl_pop6_kr_exclusion') }} WHERE upper(operation_type) = 'D'  
+                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM {{ source('ntasdl_raw', 'sdl_pop6_tw_exclusion') }} WHERE upper(operation_type) = 'D'  
+                    UNION ALL SELECT visit_date, pop_code, country, merchandiser_userid, nvl(audit_form_name, ''), nvl(section_name, '') FROM {{ source('jpnsdl_raw', 'sdl_pop6_jp_exclusion') }} WHERE upper(operation_type) = 'D' );
                     {% endif %}"
     )
 }}
 
 with sdl_pop6_kr_exclusion as 
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_kr_exclusion
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_exclusion') }}
 ),
 
 sdl_pop6_tw_exclusion as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_tw_exclusion
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_exclusion') }}
 ),
 
 sdl_pop6_hk_exclusion as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_hk_exclusion
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_exclusion') }}
 ),
 
 sdl_pop6_jp_exclusion as
 (
-	select * from dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_exclusion
+	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_exclusion') }}
 ),
 
 

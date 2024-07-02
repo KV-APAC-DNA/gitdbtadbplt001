@@ -8,32 +8,32 @@
 
 with sdl_pop6_kr_planned_visits as 
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_kr_planned_visits
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_planned_visits') }}
 ),
 
 sdl_pop6_tw_planned_visits as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_tw_planned_visits
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_planned_visits') }}
 ),
 
 sdl_pop6_hk_planned_visits as
 (
-	select * from dev_dna_load.snapntasdl_raw.sdl_pop6_hk_planned_visits
+	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_planned_visits') }}
 ),
 
 sdl_pop6_jp_planned_visits as
 (
-	select * from dev_dna_load.snapjpnsdl_raw.sdl_pop6_jp_planned_visits
+	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_planned_visits') }}
 ),
 
 sdl_pop6_sg_planned_visits as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_sg_planned_visits
+	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_planned_visits') }}
 ),
 
 sdl_pop6_th_planned_visits as
 (
-	select * from dev_dna_load.snaposesdl_raw.sdl_pop6_th_planned_visits
+	select * from {{ source('thasdl_raw', 'sdl_pop6_th_planned_visits') }}
 ),
 
 
