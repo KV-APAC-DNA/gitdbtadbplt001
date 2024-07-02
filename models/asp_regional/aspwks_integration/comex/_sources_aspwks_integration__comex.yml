@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: snapaspedw_integration
+  - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapaspedw_integration
+    schema: aspedw_integration
     quoting:
       database: false
       schema: false
@@ -11,9 +11,9 @@ sources:
     tables:
       - name: edw_market_mirror_fact
       - name: edw_rpt_ecomm_oneview
-  - name: snapaspitg_integration
+  - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapaspitg_integration
+    schema: aspitg_integration
     quoting:
       database: false
       schema: false

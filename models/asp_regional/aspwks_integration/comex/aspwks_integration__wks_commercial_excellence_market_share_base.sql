@@ -1,5 +1,5 @@
 with edw_market_mirror_fact as (
-    select * from {{ source('snapaspedw_integration', 'edw_market_mirror_fact') }}
+    select * from {{ source('aspedw_integration', 'edw_market_mirror_fact') }}
 ),
 itg_query_parameters as ( 
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}

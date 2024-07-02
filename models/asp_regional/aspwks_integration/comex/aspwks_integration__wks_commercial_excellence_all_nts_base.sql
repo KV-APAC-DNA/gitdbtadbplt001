@@ -2,7 +2,7 @@ with v_rpt_copa_commercial_excellence as (
     select * from {{ ref('aspedw_integration__v_rpt_copa_commercial_excellence') }}
 ),
 vw_itg_custgp_customer_hierarchy as ( 
-    select * from {{ source('snapaspitg_integration', 'vw_itg_custgp_customer_hierarchy_sync') }}
+    select * from {{ source('aspitg_integration', 'vw_itg_custgp_customer_hierarchy_sync') }}
 ),
 edw_vw_os_time_dim as (
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}

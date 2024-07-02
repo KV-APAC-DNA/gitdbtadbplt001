@@ -1,5 +1,5 @@
 with edw_rpt_ecomm_oneview as (
-    select * from {{ source('snapaspedw_integration', 'edw_rpt_ecomm_oneview') }}
+    select * from {{ source('aspedw_integration', 'edw_rpt_ecomm_oneview') }}
 ),
 final as ( 
     select 
