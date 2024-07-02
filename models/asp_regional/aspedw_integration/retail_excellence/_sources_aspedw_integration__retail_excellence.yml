@@ -10,7 +10,8 @@ sources:
       identifier: false
     tables:
       - name: v_edw_kr_rpt_retail_excellence
-      - name: edw_vw_pop6_products
+      - name: edw_vw_pop6_products  
+
 
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -67,7 +68,7 @@ sources:
     tables:
       - name: v_edw_sg_rpt_retail_excellence
       - name: edw_vw_os_time_dim
-        
+
   - name: thaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: thaedw_integration
@@ -96,7 +97,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
-      
+
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -106,8 +107,13 @@ sources:
       identifier: false
     tables:
       - name: edw_rpt_regional_sellout_offtake
-      - name: edw_vw_cal_retail_excellence_dim      
 
+      - name: edw_vw_cal_retail_excellence_dim
+      - name: edw_calendar_dim
+      - name: edw_company_dim
+      - name: edw_list_price
+
+ 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
@@ -121,21 +127,8 @@ sources:
   - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: sgpitg_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
     tables:
       - name: itg_mds_sg_customer_hierarchy
 
-  - name: snapntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapntaedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: edw_vw_pop6_products
-      
+ 
 

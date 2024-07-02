@@ -18,7 +18,7 @@ itg_mds_sg_customer_hierarchy as (
     select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ source('snapntaedw_integration','edw_vw_pop6_products') }}
+    select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}
 ),
 
 EDW_GCH_CUSTOMERHIERARCHY as(

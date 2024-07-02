@@ -49,7 +49,7 @@ SELECT DISTINCT CNTRY_CD,
        --SKU_CODE,SKU_DESCRIPTION,
        PKA_PRODUCT_KEY,
        PKA_PRODUCT_KEY_DESCRIPTION
-FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_26mnths
+FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_36mnths
                         FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
       AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
 	),
