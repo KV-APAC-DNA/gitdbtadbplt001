@@ -1,20 +1,20 @@
 with edw_copa_trans_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_company_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COMPANY_DIM
+select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 v_intrm_crncy_exch as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_INTRM_CRNCY_EXCH
+select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 EDW_CUSTOMER_ATTR_HIER_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_HIER_DIM
+select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 final as (SELECT 
   x.co_cd, 

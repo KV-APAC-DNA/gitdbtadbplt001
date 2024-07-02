@@ -568,7 +568,7 @@ sources:
                 schema: ntawks_integration
 
   - name: ntaitg_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: ntaitg_integration
     quoting:
       database: false
@@ -583,7 +583,7 @@ sources:
       - name: itg_photo_mgmnt_url_temp
       - name: numbersequence
   - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: ntaedw_integration
     quoting:
       database: false
@@ -591,3 +591,13 @@ sources:
       identifier: false
     tables:
       - name: pop6_kpi2data_mapping
+
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_sfa_pm

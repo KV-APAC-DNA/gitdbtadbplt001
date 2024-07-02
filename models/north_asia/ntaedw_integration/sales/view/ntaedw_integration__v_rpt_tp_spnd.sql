@@ -1,11 +1,11 @@
 with v_intrm_copa_trd_prc_tp_spend as (
-    select * from snapntaedw_integration.v_intrm_copa_trd_prc_tp_spend
+    select * from {{ ref('ntaedw_integration__v_intrm_copa_trd_prc_tp_spend') }}
 ),
 v_intrm_cust_tp_plan_actl as (
-    select * from snapntaedw_integration.v_intrm_cust_tp_plan_actl
+    select * from {{ ref('ntaedw_integration__v_intrm_cust_tp_plan_actl') }}
 ),
 edw_calendar_dim as (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 b as (
     SELECT b.prft_ctr,

@@ -4,7 +4,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;',
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
         pre_hook= ["DELETE FROM
                     {{this}}
                     WHERE
@@ -82,14 +82,14 @@
                     "{% if is_incremental() %}
                     delete
                     from {{this}}
-                    where src_sys_cd in (select distinct src_sys_cd from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_POS_FACT_KOREA_PCMAP)
+                    where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_pos_fact_korea_pcmap') }})
                     and    upper(hist_flg) =  'N' and ctry_cd = 'KR';
                     {% endif %}",
                     "
                     {% if is_incremental() %}
                     delete
                     from {{this}}
-                    where src_sys_cd in (select distinct src_sys_cd from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_POS_FACT_KOREA_PCMAP)
+                    where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_pos_fact_korea_pcmap') }})
                     and    upper(hist_flg) =  'N' and ctry_cd = 'KR';
                     {% endif %}
                     "
@@ -102,7 +102,7 @@ with wks_edw_pos_fact as (
     select * from {{ ref('ntawks_integration__wks_edw_pos_fact_1') }}
 ),
 wks_pos_fact_korea_pcmap as (
-    select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_POS_FACT_KOREA_PCMAP
+    select * from {{ ref('ntawks_integration__wks_pos_fact_korea_pcmap') }}
 ),
 tw_pos as (
     select * from {{ ref('ntawks_integration__tw_pos') }}

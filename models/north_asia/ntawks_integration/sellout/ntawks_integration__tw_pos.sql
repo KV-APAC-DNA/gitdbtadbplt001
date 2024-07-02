@@ -1,35 +1,35 @@
 with itg_pos as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS
+select * from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 itg_pos_cust_prod_cd_ean_map as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_CUST_PROD_CD_EAN_MAP
+select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 ),
 edw_product_attr_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-ITG_POS_INVNT as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_INVNT
+itg_pos_invnt as (
+select * from {{ ref('ntaitg_integration__itg_pos_invnt') }}
 ),
 itg_pos_prom_prc_map as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_PROM_PRC_MAP
+select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 itg_pos_cust_prod_to_sap_prod_map as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_CUST_PROD_TO_SAP_PROD_MAP
+select * from {{ source('ntaitg_integration','itg_pos_cust_prod_to_sap_prod_map') }}
 ),
-ITG_MDS_HK_POS_PRODUCT_MAPPING as (
-select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_HK_POS_PRODUCT_MAPPING
+itg_mds_hk_pos_product_mapping as (
+select * from {{ ref('ntaitg_integration__itg_mds_hk_pos_product_mapping') }}
 ),
 itg_query_parameters as (
-    select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 tw_pos as (
 SELECT src.pos_dt,

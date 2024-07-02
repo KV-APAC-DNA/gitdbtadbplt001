@@ -1,42 +1,42 @@
 WITH edw_vw_pop6_visits_sku_audits
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_visits_sku_audits
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_sku_audits') }}
     ),
     
 edw_vw_pop6_store
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_store
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
     ),
 edw_vw_pop6_products
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_products
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
     ),
 edw_vw_pop6_salesperson
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_salesperson
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
     ),
 edw_vw_pop6_visits_display
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_visits_display
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
     ),
 edw_vw_pop6_visits_prod_attribute_audits
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
     ),
 edw_vw_ps_weights AS (
     SELECT *
-    FROM dev_dna_core.snapaspedw_integration.edw_vw_ps_weights
+    FROM {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 
 edw_vw_ps_targets AS (
     SELECT *
-    FROM dev_dna_core.snapaspedw_integration.edw_vw_ps_targets
+    FROM {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 ct1
 AS (

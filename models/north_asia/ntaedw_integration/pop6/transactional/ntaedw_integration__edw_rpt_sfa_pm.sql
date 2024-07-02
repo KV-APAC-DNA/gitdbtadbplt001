@@ -1,8 +1,8 @@
 with edw_pop6_pm as (
-    select * from snapntaedw_integration.edw_pop6_pm
+    select * from {{ ref('ntaedw_integration__edw_pop6_pm') }}
 ),
 itg_sfa_pm as (
-    select * from dev_dna_load.snapaspsdl_raw.itg_sfa_pm
+    select * from {{ source('aspsdl_raw','itg_sfa_pm') }}
 ),
 cte1 as (
     select distinct data_type,

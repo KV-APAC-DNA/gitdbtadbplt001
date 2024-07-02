@@ -2,8 +2,6 @@ with itg_pop6_planned_visits as
 (
     select * from {{ ref('ntaitg_integration__itg_pop6_planned_visits') }}
 ),
-
-
 final as
 (
     SELECT 
@@ -18,5 +16,4 @@ final as
         itg_pop6_planned_visits.user_full_name
     FROM itg_pop6_planned_visits
 )
-
 select * from final

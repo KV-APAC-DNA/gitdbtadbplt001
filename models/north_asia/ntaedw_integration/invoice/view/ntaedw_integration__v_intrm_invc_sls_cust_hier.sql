@@ -1,29 +1,29 @@
 with edw_invoice_fact as (
-    select * from snapaspedw_integration.edw_invoice_fact
+    select * from {{ ref('aspedw_integration__edw_invoice_fact') }}
 ),
 edw_material_dim as (
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_company_dim as (
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_material_sales_dim as (
-    select * from snapaspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_customer_base_dim as (
-    select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_customer_sales_dim as (
-    select * from snapaspedw_integration.edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_attr_hier_dim as (
-    select * from snapntaedw_integration.edw_customer_attr_hier_dim
+    select * from {{ ref('ntaedw_integration__edw_customer_attr_hier_dim') }}
 ),
 v_intrm_crncy_exch as (
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 c as (
     SELECT DISTINCT edw_material_dim.matl_num,

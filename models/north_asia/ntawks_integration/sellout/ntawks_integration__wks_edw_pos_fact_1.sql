@@ -1,50 +1,50 @@
 {{ config(
-    sql_header = 'use warehouse DEV_DNA_CORE_app2_wh;'
+    sql_header = "USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     ) 
 }} 
 with itg_pos as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS
+    from {{ ref('ntaitg_integration__itg_pos') }}
 ),
 edw_customer_attr_flat_dim as (
     select *
-    from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_ATTR_FLAT_DIM
+    from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 itg_pos_cust_prod_cd_ean_map as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_CUST_PROD_CD_EAN_MAP
+    from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 ),
 edw_product_attr_dim as (
     select *
-    from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRODUCT_ATTR_DIM
+    from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 ITG_POS_INVNT as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_INVNT
+    from {{ ref('ntaitg_integration__itg_pos_invnt') }}
 ),
 itg_pos_prom_prc_map as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_PROM_PRC_MAP
+    from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
 edw_material_dim as (
     select *
-    from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+    from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_material_sales_dim as (
     select *
-    from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+    from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 itg_pos_cust_prod_to_sap_prod_map as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_POS_CUST_PROD_TO_SAP_PROD_MAP
+    from {{ source('ntaitg_integration','itg_pos_cust_prod_to_sap_prod_map') }}
 ),
 ITG_MDS_HK_POS_PRODUCT_MAPPING as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_MDS_HK_POS_PRODUCT_MAPPING
+    from {{ ref('ntaitg_integration__itg_mds_hk_pos_product_mapping') }}
 ),
 itg_query_parameters as (
     select *
-    from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    from {{ source('ntaitg_integration','itg_query_parameters') }}
 ),
 Mannings as (
     SELECT src.pos_dt,
