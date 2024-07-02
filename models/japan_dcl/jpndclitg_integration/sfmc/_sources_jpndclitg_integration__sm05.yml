@@ -26,3 +26,11 @@ sources:
     tables:
       - name: tt01_henpin_riyu
         tags: ["in_mds_refresh","transformation"]
+      - name: keirokbn
+      - name: hanyo_attr
+      - name: kesai_h_data_mart_sub_n_rirek
+      - name: kesai_h_data_mart_sub_old
+      - name: cit80saleh_ikou
+      - name: conv_mst_smkeiroid
+      - name: cim01kokya
+      - name: kokyano_list_016_manual
