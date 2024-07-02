@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_in_invoice_fact
+    config:
+      alias: wks_in_invoice_fact
+      tags: ["m_wrp_in_edw_invc","transformation"]
