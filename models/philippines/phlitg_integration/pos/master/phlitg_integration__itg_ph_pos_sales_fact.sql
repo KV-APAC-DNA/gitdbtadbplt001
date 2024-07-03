@@ -633,20 +633,30 @@ WITH itg_mds_ph_pos_pricelist AS (
 					sales.tot_qty,
 					sales.tot_amt
 				FROM (
-					SELECT *
+					SELECT SPM.*,
+                        CUST_ITEM_CD,
+                        CUST_CD,
+                        SAP_ITEM_CD,
+                        CUST_CONV_FACTOR,
+                        JNJ_PC_PER_CUST_UNIT,
+                        LST_PERIOD,
+                        EARLY_BK_PERIOD
 					FROM (
-						SELECT DISTINCT yearmonth,
+						SELECT DISTINCT mnth_id,
 							item_cd AS cust_item_cd,
 							cust_cd,
 							sap_item_cd,
 							cust_conv_factor,
+							jnj_pc_per_cust_unit,
 							lst_period,
 							early_bk_period
-						FROM itg_ph_711_product_dim
+						FROM itg_mds_ph_pos_product
+						WHERE active = 'Y'
+							AND upper(cust_cd) = 'PSC'
 						) ipppd,
 						sdl_ph_pos_711 spm
 					WHERE upper(trim(ipppd.cust_item_cd(+))) = upper(trim(spm.item_cd))
-						AND ipppd.yearmonth(+) = spm.mnth_id
+						AND ipppd.mnth_id(+) = spm.mnth_id
 					) AS sales,
 					itg_ph_pricelist ipp
 				WHERE ipp.jj_mnth_id(+) = sales.mnth_id
