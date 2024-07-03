@@ -1,92 +1,52 @@
-WITH itg_jnj_consumerreach_cvs
+WITH edw_product_key_attributes
 AS (
     SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_consumerreach_cvs
-    ),
-itg_jnj_consumerreach_711
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_consumerreach_711
-    ),
-itg_jnj_consumerreach_sfm
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_consumerreach_sfm
-    ),
-itg_mds_th_ps_store
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_mds_th_ps_store
-    ),
-edw_product_key_attributes
-AS (
-    SELECT *
-    FROM dev_dna_core.snapaspedw_integration.edw_product_key_attributes
+    FROM {{ ref('aspedw_integration__edw_product_key_attributes') }}
     ),
 edw_vw_ps_weights
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_ps_weights
+    FROM {{ ref('aspedw_integration__edw_vw_ps_weights') }}
     ),
 edw_vw_ps_targets
 AS (
     SELECT *
-    FROM dev_dna_core.snapntaedw_integration.edw_vw_ps_targets
-    ),
-itg_jnj_osa_oos_report
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_osa_oos_report
-    ),
-itg_jnj_mer_share_of_shelf
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_mer_share_of_shelf
-    ),
-itg_jnj_mer_cop
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_jnj_mer_cop
-    ),
-itg_th_lookup_question
-AS (
-    SELECT *
-    FROM dev_dna_core.snaposeitg_integration.itg_th_lookup_question
+    FROM {{ ref('aspedw_integration__edw_vw_ps_targets') }}
     ),
 edw_sku_recom_spike_msl
 AS (
     SELECT *
-    FROM dev_dna_core.indedw_integration.edw_sku_recom_spike_msl
+    FROM indedw_integration.edw_sku_recom_spike_msl
     ),
 itg_udcdetails
 AS (
     SELECT *
-    FROM dev_dna_core.inditg_integration.itg_udcdetails
+    FROM inditg_integration.itg_udcdetails
     ),
 edw_calendar_dim
 AS (
     SELECT *
-    FROM dev_dna_core.snapaspedw_integration.edw_calendar_dim
+    FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
     ),
 itg_in_perfectstore_msl
 AS (
     SELECT *
-    FROM dev_dna_core.inditg_integration.itg_in_perfectstore_msl
+    FROM inditg_integration.itg_in_perfectstore_msl
     ),
 itg_in_perfectstore_sos
 AS (
     SELECT *
-    FROM dev_dna_core.inditg_integration.itg_in_perfectstore_sos
+    FROM inditg_integration.itg_in_perfectstore_sos
     ),
 itg_in_perfectstore_promo
 AS (
     SELECT *
-    FROM dev_dna_core.inditg_integration.itg_in_perfectstore_promo
+    FROM inditg_integration.itg_in_perfectstore_promo
     ),
 itg_in_perfectstore_paid_display
 AS (
     SELECT *
-    FROM dev_dna_core.inditg_integration.itg_in_perfectstore_paid_display
+    FROM inditg_integration.itg_in_perfectstore_paid_display
     ),
 ct1
 AS (
