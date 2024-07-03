@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_fin_sim_copa_trans_fact
+    config:
+      alias: wks_fin_sim_copa_trans_fact
+      tags: ["in_finance_simulator_datamart","transformation"]

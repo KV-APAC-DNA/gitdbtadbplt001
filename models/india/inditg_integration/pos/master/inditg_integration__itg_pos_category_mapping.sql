@@ -1,14 +1,8 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy= "append"
-    )
-}}
-with sdl_pos_category_mapping as 
+with sdl_pos_category_mapping as
 (
     select * from {{ source('indsdl_raw', 'sdl_pos_category_mapping') }}
 ),
-final as 
+final as
 (
     select
         account_name::varchar(255) as account_name,
@@ -28,12 +22,8 @@ final as
 	    external_sub_category::varchar(255) as external_sub_category,
 	    filename::varchar(100) as filename,
 	    run_id::number(14,0) as run_id,
-	    current_timestamp()::timestamp_ntz(9) as crt_dttm    
+	    crt_dttm::timestamp_ntz(9) as crt_dttm
            
     from sdl_pos_category_mapping
-        {% if is_incremental() %}
-    --this filter will only be applied on an incremental run
-    where sdl_pos_category_mapping.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
 )
 select * from final
