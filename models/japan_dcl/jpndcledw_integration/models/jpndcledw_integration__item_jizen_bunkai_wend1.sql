@@ -1,0 +1,70 @@
+WITH item_jizen_bunkai_wend
+AS (
+	SELECT *
+	FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_wend') }}
+	),
+item_jizen_bunkai_wz
+AS (
+	SELECT *
+	FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_wz') }}
+	),
+item_jizen_bunkai_wh
+AS (
+	SELECT *
+	FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_wh') }}
+	),
+item_jizen_bunkai_wend1
+AS (
+	SELECT *
+	FROM dev_dna_core.snapjpdcledw_integration.item_jizen_bunkai_wend1
+	),
+
+
+transformed
+AS (
+	SELECT itemcode,
+		kosecode,
+		suryo,
+		koseritsu,
+		1 AS bunkaikbn
+	FROM item_jizen_bunkai_wend
+	
+	UNION ALL
+	
+	SELECT m03.itemcode AS itemcode,
+		m03.itemcode AS kosecode,
+		1 AS suryo,
+		1 AS koseritsu,
+		0 AS bunkaikbn
+	FROM item_jizen_bunkai_wz m03
+	WHERE NOT EXISTS (
+			SELECT 'X'
+			FROM item_jizen_bunkai_wend1 w3
+			WHERE w3.itemcode = m03.itemcode
+			)
+	
+	UNION ALL
+	
+	SELECT m03.itemcode AS itemcode,
+		m03.itemcode AS kosecode,
+		1 AS suryo,
+		1 AS koseritsu,
+		0 AS bunkaikbn
+	FROM item_jizen_bunkai_wh m03
+	WHERE NOT EXISTS (
+			SELECT 'X'
+			FROM item_jizen_bunkai_wend1 w3
+			WHERE w3.itemcode = m03.itemcode
+			)
+	),
+final
+AS (
+	SELECT itemcode::VARCHAR(20) AS itemcode,
+		kosecode::VARCHAR(20) AS kosecode,
+		suryo::DECIMAL(16, 8) AS suryo,
+		koseritsu::DECIMAL(16, 8) AS koseritsu,
+		bunkaikbn::VARCHAR(10) AS bunkaikbn
+	FROM transformed
+	)
+SELECT *
+FROM final

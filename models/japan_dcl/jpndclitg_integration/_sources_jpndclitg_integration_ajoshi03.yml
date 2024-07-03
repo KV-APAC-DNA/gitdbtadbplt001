@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: jpdclsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: jpdclsdl_raw
+    schema: snapjpdclsdl_raw
     quoting:
       database: false
       schema: false
@@ -15,3 +15,93 @@ sources:
 
       - name: c_tbecdeptmst
         tags: ["m_DCL_ITG_Job1","ingestion"]
+
+      - name: c_tbecclient  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: c_tbecinquirekesai  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: c_tbecregularcoursemst  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: c_tbecregnumitemconvhist  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: sfmc_sent  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: sfmc_unsubs  
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+
+      - name: tbperson
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+
+      - name: c_tbecinquire
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+
+      - name: tbusrpram  
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+      
+      - name: tbecpointhistory  
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+      
+      - name: c_tbecshippingresults  
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+      
+      - name: c_tbecusercard  
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+      
+      - name: c_tbeccardcompanymst  
+        tags: ["m_DCL_ITG_Job2","ingestion"]
+
+      - name: tbecitem
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: tbecordermeisai
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: tbecorder  
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: c_tbecprivilegekesaihistory  
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: tbecorderhist  
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: c_tbecregularcontract  
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: c_tbecregularmeisai  
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: c_tbecpridiscratecategory
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+
+      - name: c_tbecpridiscrateitem
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+
+      - name: c_tbecregnumitemconvmst
+        tags: ["m_DCL_ITG_Job1","ingestion"]
+      
+      - name: c_tbmembunitrel
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: tbecsetitem
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: c_tbecpripromotion
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: c_tbecprimembtype
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+
+      - name: contact_hist
+        tags: ["m_DCL_ITG_Job3","ingestion"]
+      
+      - name: sfcc_product_category
+        tags: ["m_DCL_ITG_Job5","ingestion"]
+      
+      - name: sfcc_product_mst
+        tags: ["m_DCL_ITG_Job5","ingestion"]

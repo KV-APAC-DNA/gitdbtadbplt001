@@ -1,0 +1,38 @@
+with item_jizen_bunkai_tbl as (
+    select *
+    from {{ ref('jpndcledw_integration__item_jizen_bunkai_tbl') }}
+),
+
+tm14shkos_mainte_work as (
+    select *
+    from dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work
+),
+
+transformed as (
+    select
+        tm14.item_cd as itemcode,
+        tm14.kosei_cd as kosecode,
+        tm14.suryo,
+        tm14.koseritsu
+    from item_jizen_bunkai_tbl as tm14
+    where tm14.item_cd in (
+        select w.itemcode
+        from tm14shkos_mainte_work as w
+    )
+),
+
+final as (
+    select
+        itemcode::varchar(45) as itemcode,
+        kosecode::varchar(45) as kosecode,
+        suryo::number(13, 4) as suryo,
+        koseritsu::number(16, 8) as koseritsu,
+        current_timestamp()::timestamp_ntz(9) as inserted_date,
+        null::varchar(100) as inserted_by,
+        current_timestamp()::timestamp_ntz(9) as updated_date,
+        null::varchar(100) as updated_by
+    from transformed
+)
+
+select *
+from final

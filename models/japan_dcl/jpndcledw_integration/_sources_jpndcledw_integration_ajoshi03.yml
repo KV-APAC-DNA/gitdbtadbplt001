@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: sdl_mds_jp_dcl_partner_master
+        tags: ["m_DCL_EDW_Job1","ingestion"] 
+
+      - name: sdl_mds_jp_dcl_product_master
+        tags: ["m_DCL_EDW_Job1","ingestion"]     
+        
+      - name: sdl_mds_jp_dcl_mt_h_product
+        tags: ["m_DCL_EDW_Job1","ingestion"]     

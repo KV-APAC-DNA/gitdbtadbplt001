@@ -1,3 +1,12 @@
+{{
+    config
+    (
+        materialized='incremental',
+        incremental_strategy= 'delete+insert',
+        unique_key= ['c_disendid']
+    )
+}}
+
 with source as
 (
     select * from {{ source('jpdclsdl_raw', 'c_tbdmsndhist') }}
@@ -27,9 +36,9 @@ final as
 		dielimusr::number(38,0) as dielimusr,
 		c_diusrchanelid::number(38,0) as c_diusrchanelid,
 		null::varchar(10) as source_file_date,
-		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		inserted_date::timestamp_ntz(9) as inserted_date,
 		null::varchar(100) as inserted_by,
-		current_timestamp()::timestamp_ntz(9) as updated_date,
+		updated_date::timestamp_ntz(9) as updated_date,
 		null::varchar(100) as updated_by,
 		null::varchar(250) as rowid
     from source
