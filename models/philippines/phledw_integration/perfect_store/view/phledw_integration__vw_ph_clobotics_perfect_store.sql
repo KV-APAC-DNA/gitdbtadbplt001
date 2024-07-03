@@ -70,9 +70,6 @@ select * from {{ ref('phlitg_integration__itg_ph_tbl_surveychoices') }}
 itg_ph_non_ise_weights as (
 select * from {{ ref('phlitg_integration__itg_ph_non_ise_weights') }}
 ),
-vw_ph_clobotics_perfect_store as (
-select * from {{ ref('phledw_integration__vw_ph_clobotics_perfect_store') }}
-),
 final as (
 (
   (

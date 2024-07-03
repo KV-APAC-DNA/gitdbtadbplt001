@@ -600,6 +600,7 @@ sources:
       identifier: false
     tables:
       - name: pop6_kpi2data_mapping
+      - name: edw_rpt_sfa_pm
 
   - name: aspsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
