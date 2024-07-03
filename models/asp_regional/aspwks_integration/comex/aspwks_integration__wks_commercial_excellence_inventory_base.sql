@@ -1,5 +1,5 @@
 with edw_reg_inventory_health_analysis_propagation as (
-    select * from {{ ref('aspedw_integration__edw_reg_inventory_health_analysis_propagation') }}
+    select * from {{ source('aspedw_integration', 'edw_reg_inventory_health_analysis_propagation_sync') }}
 ),
 edw_company_dim as (
     select * from {{ ref('aspedw_integration__edw_company_dim') }}

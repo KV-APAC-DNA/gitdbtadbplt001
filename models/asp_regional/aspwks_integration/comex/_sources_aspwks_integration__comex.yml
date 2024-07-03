@@ -11,6 +11,7 @@ sources:
     tables:
       - name: edw_market_mirror_fact
       - name: edw_rpt_ecomm_oneview
+      - name: edw_reg_inventory_health_analysis_propagation_sync
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
