@@ -75,9 +75,9 @@ final as
     salfreeqtyvalue::number(38,6) as salfreeqtyvalue,
     nrvalue::number(18,6) as nrvalue,
     vcpschemeamount::number(18,6) as vcpschemeamount,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    current_timestamp()::timestamp_ntz(9) as modifieddate
+    modifieddate::timestamp_ntz(9) as modifieddate
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

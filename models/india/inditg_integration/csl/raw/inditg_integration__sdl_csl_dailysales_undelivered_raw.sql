@@ -71,7 +71,7 @@ final as
     mrp::number(18,6) as mrp,
 	nrvalue::number(18,6) as nrvalue,
 	run_id::number(14,0) as run_id,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm, 
+	crt_dttm::timestamp_ntz(9) as crt_dttm,
 	file_name::varchar(50) as file_name
             
     from source
