@@ -1,10 +1,8 @@
 {{
     config(
         materialized= "incremental",
-        incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
-            delete from {{this}}  where diecusrid in (select diecusrid from {{ source('jpndclsdl_raw', 'c_tbecranksumamount') }} ) and c_dsaggregateym in (select c_dsaggregateym from itg_schema.tmp_c_tbecranksumamount );
-                    {% endif %}"
+        incremental_strategy= "delete+insert",
+        unique_key=['DIECUSRID', 'C_DSAGGREGATEYM']
     )
 }}
 

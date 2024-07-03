@@ -801,5 +801,48 @@ transformed as(
     union all
     select * from union8
     
+),
+final as(
+    select 
+        saleno::varchar(64) as saleno,
+        gyono::number(18,0) as gyono,
+        meisaikbn::varchar(36) as meisaikbn,
+        itemcode::varchar(60) as itemcode,
+        itemname::varchar(190) as itemname,
+        diid::varchar(60) as diid,
+        disetid::varchar(60) as disetid,
+        suryo::number(18,0) as suryo,
+        tanka::number(18,0) as tanka,
+        kingaku::number(18,0) as kingaku,
+        meisainukikingaku::number(18,0) as meisainukikingaku,
+        wariritu::number(18,0) as wariritu,
+        warimaekomitanka::number(18,0) as warimaekomitanka,
+        warimaenukikingaku::number(18,0) as warimaenukikingaku,
+        warimaekomikingaku::number(18,0) as warimaekomikingaku,
+        bun_tanka::number(18,0) as bun_tanka,
+        bun_kingaku::number(18,0) as bun_kingaku,
+        bun_meisainukikingaku::number(18,0) as bun_meisainukikingaku,
+        bun_wariritu::number(18,0) as bun_wariritu,
+        bun_warimaekomitanka::number(18,0) as bun_warimaekomitanka,
+        bun_warimaenukikingaku::number(18,0) as bun_warimaenukikingaku,
+        bun_warimaekomikingaku::number(18,0) as bun_warimaekomikingaku,
+        dispsaleno::varchar(64) as dispsaleno,
+        kesaiid::varchar(64) as kesaiid,
+        diorderid::number(10,0) as diorderid,
+        c_dspointitemflg::varchar(3) as c_dspointitemflg,
+        c_diitemtype::varchar(5) as c_diitemtype,
+        c_diadjustprc::number(18,0) as c_diadjustprc,
+        ditotalprc::number(18,0) as ditotalprc,
+        diitemtax::number(18,0) as diitemtax,
+        c_diitemtotalprc::number(18,0) as c_diitemtotalprc,
+        c_didiscountmeisai::number(18,0) as c_didiscountmeisai,
+        disetmeisaiid::number(18,0) as disetmeisaiid,
+        c_dssetitemkbn::varchar(8) as c_dssetitemkbn,
+        maker::number(18,0) as maker,
+        current_timestamp()::timestamp_ntz(9) as inserted_date,
+        null::varchar(100) as inserted_by ,
+        current_timestamp()::timestamp_ntz(9) as updated_date,
+        null::varchar(100) as updated_by
+    from transformed
 )
-select * from transformed
+select * from final

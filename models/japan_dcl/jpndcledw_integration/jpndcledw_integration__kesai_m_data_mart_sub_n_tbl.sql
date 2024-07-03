@@ -263,5 +263,45 @@ transformed as(
     select * from union3
     union all
     select * from union4
+),
+final as(
+    select 
+       	saleno::varchar(63) as saleno,
+        gyono::number(18,0) as gyono,
+        meisaikbn::varchar(36) as meisaikbn,
+        itemcode::varchar(60) as itemcode,
+        itemname::varchar(192) as itemname,
+        diid::varchar(60) as diid,
+        disetid::varchar(60) as disetid,
+        suryo::number(18,0) as suryo,
+        tanka::number(18,0) as tanka,
+        kingaku::number(18,0) as kingaku,
+        meisainukikingaku::number(18,0) as meisainukikingaku,
+        wariritu::number(18,0) as wariritu,
+        warimaekomitanka::number(18,0) as warimaekomitanka,
+        warimaenukikingaku::number(18,0) as warimaenukikingaku,
+        warimaekomikingaku::number(18,0) as warimaekomikingaku,
+        bun_tanka::number(18,0) as bun_tanka,
+        bun_kingaku::number(18,0) as bun_kingaku,
+        bun_meisainukikingaku::number(18,0) as bun_meisainukikingaku,
+        bun_wariritu::number(18,0) as bun_wariritu,
+        bun_warimaekomitanka::number(18,0) as bun_warimaekomitanka,
+        bun_warimaenukikingaku::number(18,0) as bun_warimaenukikingaku,
+        bun_warimaekomikingaku::number(18,0) as bun_warimaekomikingaku,
+        dispsaleno::varchar(63) as dispsaleno,
+        kesaiid::varchar(62) as kesaiid,
+        diorderid::number(18,0) as diorderid,
+        henpinsts::varchar(8) as henpinsts,
+        c_dspointitemflg::varchar(8) as c_dspointitemflg,
+        c_diitemtype::varchar(8) as c_diitemtype,
+        c_diadjustprc::number(18,0) as c_diadjustprc,
+        ditotalprc::number(18,0) as ditotalprc,
+        diitemtax::number(18,0) as diitemtax,
+        c_diitemtotalprc::number(18,0) as c_diitemtotalprc,
+        c_didiscountmeisai::number(18,0) as c_didiscountmeisai,
+        disetmeisaiid::number(18,0) as disetmeisaiid,
+        c_dssetitemkbn::varchar(8) as c_dssetitemkbn,
+        maker::number(18,0) as maker
+    from transformed
 )
-select * from transformed
+select * from final

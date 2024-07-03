@@ -50,5 +50,13 @@ transformed as(
     --end-add 20200108 d.yamashita ***変更19855(jj連携処理の追加におけるdwhデータの差分抽出実現化)****
     from inquirekesai
     where num > 1
+),
+final as(
+    select
+        c_dikesaiid_before::number(10,0) as c_dikesaiid_before,
+        c_dikesaiid_after::varchar(62) as c_dikesaiid_after,
+        diinquireid::number(10,0) as diinquireid,
+        c_diinquirekesaiid::number(10,0) as c_diinquirekesaiid
+    from transformed
 )
-select * from transformed
+select * from final

@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_LOAD.JPDCLSDL_RAW.c_tbecpriroute
+    select * from {{ source('jpndclsdl_raw', 'c_tbecpriroute') }}
 ),
 final as(
     select * from source

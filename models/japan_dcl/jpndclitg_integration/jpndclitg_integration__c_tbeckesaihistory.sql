@@ -3,7 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where diorderhistid in (select diorderhistid from {{ source('jpndclsdl_raw', 'c_tbeckesaihistory') }}) AND c_dikesaiid in (select id1 from ITG_SCHEMA.tmp_c_tbEcKesaihistory);
+                delete from {{this}} where diorderhistid in (select diorderhistid from {{ source('jpndclsdl_raw', 'c_tbeckesaihistory') }}) AND c_dikesaiid in (select c_dikesaiid from {{ source('jpndclsdl_raw', 'c_tbeckesaihistory') }});
                     {% endif %}"
     )
 }}

@@ -4,7 +4,12 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}} where diorderhistid in (select diorderhistid from {{ source('jpndclsdl_raw', 'c_tbecorderhistory') }}) and diorderid in (select diorderid from {{ source('jpndclsdl_raw', 'c_tbecorderhistory') }});
-                    {% endif %}"
+                    {% endif %}",
+        post_hook= ["UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'TNP', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND C_DSTEMPOCODE IS NOT NULL;",
+                    "UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'WEB', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND dirouteid = '5';",
+                    "UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'FAX', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND dirouteid = '3';",
+                    "UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'MAL', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND dirouteid = '4';",
+                    "UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'SHN', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND dirouteid = '6';"]
     )
 }}
 
