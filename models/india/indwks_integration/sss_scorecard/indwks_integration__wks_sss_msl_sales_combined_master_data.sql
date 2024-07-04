@@ -1,14 +1,14 @@
 with itg_mds_in_sss_ps_msl as(
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_SSS_PS_MSL
+    select * from {{ ref('inditg_integration__itg_mds_in_sss_ps_msl') }}
 ),
 edw_retailer_calendar_dim as(
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_RETAILER_CALENDAR_DIM
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 wks_sss_sales_base_data_for_msl as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_SSS_SALES_BASE_DATA_FOR_MSL
+    select * from {{ ref('indwks_integration__wks_sss_sales_base_data_for_msl') }}
 ),
 edw_product_dim as(
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_PRODUCT_DIM
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 msl as(
     SELECT DISTINCT MSL.re,

@@ -1,8 +1,8 @@
 with sss_scorecard_msl_extract as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.sss_scorecard_msl_extract
+    select * from {{ ref('indwks_integration__sss_scorecard_msl_extract') }}
 ),
 itg_sss_scorecard_data as(
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.itg_sss_scorecard_data
+    select * from {{ ref('inditg_integration__itg_sss_scorecard_data') }}
 ),
 sss as(
     select right(quarter, 1) as "QUARTER",

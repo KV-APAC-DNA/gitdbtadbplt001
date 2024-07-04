@@ -1,8 +1,8 @@
 with edw_retailer_calendar_dim as(
-    select * from DEV_DNA_CORE.indedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_msl_spike_mi_msku_list as(
-    select * from DEV_DNA_CORE.indedw_integration.edw_msl_spike_mi_msku_list
+    select * from {{ ref('indedw_integration__edw_msl_spike_mi_msku_list') }}
 ),
 union1 as(		
         SELECT lkp.region_name,

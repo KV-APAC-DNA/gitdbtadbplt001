@@ -1,8 +1,8 @@
 with WKS_RPT_SSS_SCORECARD_BASE as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_RPT_SSS_SCORECARD_BASE
+    select * from {{ ref('indwks_integration__wks_rpt_sss_scorecard_base') }}
 ),
 WKS_STORES_WITH_MSL_IN_YEAR_QTR as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_STORES_WITH_MSL_IN_YEAR_QTR
+    select * from {{ ref('indwks_integration__wks_stores_with_msl_in_year_qtr') }}
 ),
 transformed as(
     SELECT SSS.TABLE_RN,

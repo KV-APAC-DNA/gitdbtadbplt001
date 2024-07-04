@@ -1,8 +1,8 @@
 with wks_sss_msl_sales_combined_master_data as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.wks_sss_msl_sales_combined_master_data
+    select * from {{ ref('indwks_integration__wks_sss_msl_sales_combined_master_data') }}
 ),
 wks_sss_sales_base_data_for_msl as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.wks_sss_sales_base_data_for_msl
+    select * from {{ ref('indwks_integration__wks_sss_sales_base_data_for_msl') }}
 ),
 transformed as(
     SELECT 

@@ -1,11 +1,11 @@
 with wks_mi_msl_sales_vs_reco_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_sales_vs_reco_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_sales_vs_reco_tbl') }}
 ),
 wks_mi_msl_agg_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_agg_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_agg_tbl) }}
 ),
 wks_mi_msl_reco_vs_sold as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_reco_vs_sold
+    select * from {{ ref('indwks_integration__wks_mi_msl_reco_vs_sold') }}
 ),
 union1 as(
 SELECT mth_mm as mth_mm

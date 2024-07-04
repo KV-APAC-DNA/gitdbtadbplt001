@@ -1,14 +1,14 @@
 with wks_issue_rev_sku_recom_tmp1 as(
-    select * from DEV_DNA_CORE.snapindwks_integration.wks_issue_rev_sku_recom_tmp1
+    select * from {{ ref('indwks_integration__wks_issue_rev_sku_recom_tmp1') }}
 ),
 wks_issue_rev_udc_details as(
-    select * from DEV_DNA_CORE.snapindwks_integration.wks_issue_rev_udc_details
+    select * from {{ ref('indwks_integration__wks_issue_rev_udc_details') }}
 ),
 itg_xdm_salesmanskulinemapping as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_xdm_salesmanskulinemapping
+    select * from {{ ref('inditg_integration__itg_xdm_salesmanskulinemapping') }}
 ),
 wks_issue_rev_itg_in_rsalesman as(
-    select * from DEV_DNA_CORE.snapindwks_integration.wks_issue_rev_itg_in_rsalesman
+    select * from {{ ref('indwks_integration__wks_issue_rev_itg_in_rsalesman') }}
 ),
 transformed as(
     SELECT sku.mnth_id,

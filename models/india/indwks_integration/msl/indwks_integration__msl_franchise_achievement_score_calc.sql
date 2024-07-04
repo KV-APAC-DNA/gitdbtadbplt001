@@ -1,8 +1,8 @@
 with msl_extract_combine_program_type as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.msl_extract_combine_program_type
+    select * from {{ ref('indwks_integration__msl_extract_combine_program_type') }}
 ),
 itg_mds_in_sss_score as(
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.itg_mds_in_sss_score
+    select * from {{ ref('inditg_integration__itg_mds_in_sss_score') }}
 ),
 temp as (
     select

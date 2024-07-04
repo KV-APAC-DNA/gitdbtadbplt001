@@ -1,14 +1,14 @@
 with v_rpt_sales_details as(
-    select * from DEV_DNA_CORE.indedw_integration.v_rpt_sales_details
+    select * from {{ ref('indedw_integration__v_rpt_sales_details') }}.
 ),
 wks_mi_msl_lkp_mnthly_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_lkp_mnthly_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_lkp_mnthly_tbl') }}
 ),
 edw_product_dim as(
-    select * from DEV_DNA_CORE.indedw_integration.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}.
 ),
 WKS_MI_MSL_RET_DIM_SUBD_CNT as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__WKS_MI_MSL_RET_DIM_SUBD_CNT
+    select * from {{ ref('indwks_integration__wks_mi_msl_ret_dim_subd_cnt') }}
 ),
 sales_cube_mi_msl AS (
     SELECT mth_mm,

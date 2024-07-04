@@ -1,8 +1,8 @@
 with wks_mngmnt_sales_achnr as(
-    select * from DEV_DNA_CORE.snapINDwks_INTEGRATION.wks_mngmnt_sales_achnr
+    select * from {{ ref('indwks_integration__wks_mngmnt_sales_achnr') }}
 ),
 wks_mngmnt_hit_achnr as(
-    select * from DEV_DNA_CORE.snapINDwks_INTEGRATION.wks_mngmnt_hit_achnr
+    select * from {{ ref('indwks_integration__wks_mngmnt_hit_achnr') }}
 ),
 transformed as(
     SELECT all_sales.mth_mm

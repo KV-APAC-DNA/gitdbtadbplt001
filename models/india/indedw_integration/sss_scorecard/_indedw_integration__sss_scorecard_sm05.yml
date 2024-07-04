@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_mi_msl_dashboard
+    config:
+      alias: edw_rpt_mi_msl_dashboard
+      tags: ["","transformation"]
+  - name: indedw_integration__edw_rpt_mt_sellin_vs_sellout_tbl
+    config:
+      alias: edw_rpt_mt_sellin_vs_sellout_tbl
+      tags: ["","transformation"]
+  - name: indedw_integration__edw_rpt_sss_scorecard
+    config:
+      alias: edw_rpt_sss_scorecard
+      tags: ["","transformation"]

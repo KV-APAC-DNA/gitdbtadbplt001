@@ -1,11 +1,11 @@
 with WKS_RPT_SSS_SCORECARD_BASE as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.wks_rpt_sss_scorecard_base
+    select * from {{ ref('indwks_integration__wks_rpt_sss_scorecard_base') }}
 ),
 WKS_RPT_SSS_SCORECARD as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.wks_rpt_sss_scorecard
+    select * from {{ ref('indwks_integration__wks_rpt_sss_scorecard') }}
 ),
 ITG_QUERY_PARAMETERS as(
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 sto as(
     SELECT STORE_CODE,

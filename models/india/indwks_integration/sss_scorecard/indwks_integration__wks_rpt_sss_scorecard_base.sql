@@ -1,8 +1,8 @@
 with WKS_RPT_SSS_SCORECARD as (
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_RPT_SSS_SCORECARD
+    select * from {{ ref('indwks_integration__wks_rpt_sss_scorecard') }}
 ),
 ITG_MDS_IN_SSS_PS_PROMOTER_STORE_MAP as (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_SSS_PS_PROMOTER_STORE_MAP
+    select * from {{ ref('inditg_integration__itg_mds_in_sss_ps_promoter_store_map') }}
 ),
 cte as(
         select MAP.RTRUNIQUECODE

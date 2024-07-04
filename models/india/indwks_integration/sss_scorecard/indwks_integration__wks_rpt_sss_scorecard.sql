@@ -1,20 +1,20 @@
 with EDW_RPT_SALES_DETAILS as (
-	select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_RPT_SALES_DETAILS
+	select * from {{ ref('indedw_integration__edw_rpt_sales_details') }}
 ),
 ITG_MDS_IN_SSS_SCORE as (
-	select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_SSS_SCORE
+	select * from {{ ref('inditg_integration__itg_mds_in_sss_score') }}
 ),
 ITG_SSS_SCORECARD_DATA as (
-	select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_SSS_SCORECARD_DATA
+	select * from {{ ref('inditg_integration__itg_sss_scorecard_data') }}
 ),
 EDW_SSS_KPI_DATA_FINAL as (
-	select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_SSS_KPI_DATA_FINAL
+	select * from {{ ref('indedw_integration__edw_sss_kpi_data_final') }}
 ),
 MSL_FRANCHISE_ACHIEVEMENT_SCORE_CALC as (
-	select * from DEV_DNA_CORE.INDWKS_INTEGRATION.MSL_FRANCHISE_ACHIEVEMENT_SCORE_CALC
+	select * from {{ ref('indwks_integration__msl_franchise_achievement_score_calc') }}
 ),
 ITG_MDS_IN_SSS_WEIGHTS as (
-	select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_SSS_WEIGHTS
+	select * from {{ ref('inditg_integration__itg_mds_in_sss_weights') }}
 ),
 sales as(
 	SELECT DISTINCT B.CAL_YR,

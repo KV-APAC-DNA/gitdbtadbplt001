@@ -2,10 +2,10 @@ with itg_query_parameters as(
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 edw_retailer_calendar_dim as(
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 wks_jnj_calendar as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_JNJ_CALENDAR
+    select * from {{ ref('indwks_integration__wks_jnj_calendar') }}
 ),
 int_fact AS
 (

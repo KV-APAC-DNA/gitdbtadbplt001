@@ -1,8 +1,8 @@
 with edw_product_dim as(
-    select * from DEV_DNA_CORE.snapINDedw_INTEGRATION.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_sku_recom_spike_msl as(
-    select * from DEV_DNA_CORE.snapINDedw_INTEGRATION.edw_sku_recom_spike_msl
+    select * from {{ ref('indedw_integration__edw_sku_recom_spike_msl') }}
 ),
 transformed as(
     SELECT sku.mth_mm

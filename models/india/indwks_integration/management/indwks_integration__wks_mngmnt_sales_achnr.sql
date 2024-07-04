@@ -1,8 +1,8 @@
 WITH edw_rpt_sales_details AS (
-	SELECT * FROM DEV_DNA_CORE.snapINDEDW_INTEGRATION.edw_rpt_sales_details
+	SELECT * FROM {{ ref('indedw_integration__edw_rpt_sales_details') }}
 ),
 itg_in_mds_channel_mapping AS (
-	SELECT * FROM DEV_DNA_CORE.snapINDITG_INTEGRATION.itg_in_mds_channel_mapping
+	SELECT * FROM {{ ref('inditg_integration__itg_in_mds_channel_mapping') }}
 ),
 transformed AS (
 	SELECT base.mth_mm,

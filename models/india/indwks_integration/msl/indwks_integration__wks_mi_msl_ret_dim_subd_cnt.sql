@@ -1,8 +1,8 @@
 with edw_retailer_dim as(
-    select * from DEV_DNA_CORE.indedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 edw_customer_dim as(
-    select * from DEV_DNA_CORE.indedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 transformed as(
     SELECT ret.region_name,

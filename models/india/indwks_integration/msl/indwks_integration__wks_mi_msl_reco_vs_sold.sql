@@ -1,11 +1,11 @@
 WITH wks_mi_msl_lkp_mnthly_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_lkp_mnthly_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_lkp_mnthly_tbl') }}
 ),
 wks_mi_msl_sales_vs_reco_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_sales_vs_reco_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_sales_vs_reco_tbl') }}
 ),
 edw_product_dim as(
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 sales_ret_sku_list AS (
     SELECT msl.*,

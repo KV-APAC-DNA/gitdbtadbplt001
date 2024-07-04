@@ -1,14 +1,14 @@
 with itg_in_rcustomerroute as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_in_rcustomerroute
+    select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }} 
 ),
 itg_in_rroute as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_in_rroute
+    select * from {{ ref('inditg_integration__itg_in_rroute') }}
 ),
 itg_in_rsalesmanroute as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_in_rsalesmanroute
+    select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
 ),
 itg_in_rsalesman as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_in_rsalesman
+    select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
 ),
 transformed as(
     SELECT cr.distcode,

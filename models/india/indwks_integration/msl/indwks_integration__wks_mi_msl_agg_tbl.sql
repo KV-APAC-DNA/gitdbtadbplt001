@@ -1,5 +1,5 @@
 with wks_mi_msl_sales_vs_reco_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mi_msl_sales_vs_reco_tbl
+    select * from {{ ref('indwks_integration__wks_mi_msl_sales_vs_reco_tbl') }}
 ),
 transformed as(    
     SELECT m1.mth_mm, m1.customer_code, m1.customer_name, m1.retailer_code, m1.retailer_name, m1.rtruniquecode, m1.region_name, m1.zone_name, m1.territory_name,

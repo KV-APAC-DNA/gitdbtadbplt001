@@ -1,5 +1,5 @@
 with wks_mt_sellin_tbl as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mt_sellin_tbl
+    select * from {{ ref('indwks_integration__wks_mt_sellin_tbl') }}
 ),
 transformed as(
     SELECT fisc_yr

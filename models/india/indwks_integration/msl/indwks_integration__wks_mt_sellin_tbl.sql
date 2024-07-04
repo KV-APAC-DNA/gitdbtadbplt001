@@ -1,8 +1,8 @@
 with v_ecomm_sales_inv_acc_ch_grp as(
-    select * from DEV_DNA_CORE.INDedw_INTEGRATION.v_ecomm_sales_inv_acc_ch_grp
+    select * from {{ ref('indedw_integration__v_ecomm_sales_inv_acc_ch_grp') }}
 ),
 wks_mt_paramet_accounts as(
-    select * from DEV_DNA_CORE.sm05_workspace.INDWKS_INTEGRATION__wks_mt_paramet_accounts
+    select * from {{ ref('indwks_integration__wks_mt_paramet_accounts') }}
 ),
 itg_query_parameters as(
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}

@@ -1,5 +1,5 @@
 with WKS_SSS_SCORE_DET_FOR_REBASE as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_SSS_SCORE_DET_FOR_REBASE
+    select * from {{ ref('indwks_integration__wks_sss_score_det_for_rebase') }}
 ),
 det as(
     SELECT DET.STORE_CODE,
