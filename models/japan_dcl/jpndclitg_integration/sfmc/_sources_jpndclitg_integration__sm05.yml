@@ -22,20 +22,3 @@ sources:
       - name: sfmc_kokya_subskey_mapping
         tags: ["m_dcl_itg_job6","transformation"]
 
-  - name: jpdcledw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpdcledw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: tt01_henpin_riyu
-      - name: keirokbn
-      - name: hanyo_attr
-      - name: kesai_h_data_mart_sub_n_rirek
-      - name: kesai_h_data_mart_sub_old
-      - name: cit80saleh_ikou
-      - name: conv_mst_smkeiroid
-      - name: cim01kokya
-      - name: kokyano_list_016_manual

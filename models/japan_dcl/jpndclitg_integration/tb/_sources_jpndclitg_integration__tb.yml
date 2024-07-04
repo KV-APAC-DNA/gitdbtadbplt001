@@ -1,0 +1,87 @@
+version: 2
+
+sources:  
+  - name: jpndclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: c_tbecinquiremeisai
+        tags: ["","transformation"]
+      - name: c_tbeckesai
+        tags: ["","transformation"]
+      - name: c_tbecpaymentpatternmst
+        tags: ["","transformation"]
+      - name: c_tbecprivilegekesai
+        tags: ["","transformation"]
+      - name: c_tbecprivilegemst
+        tags: ["","transformation"]
+      - name: c_tbecrankaddamountadm
+        tags: ["","transformation"]
+      - name: tbechenpinriyu
+        tags: ["","transformation"]
+      - name: c_tbecprivilegeinquirekesai
+        tags: ["","transformation"]
+      - name: c_tbecpointadm
+        tags: ["","transformation"]
+      - name: tbecsalesroutemst
+        tags: ["","transformation"]
+      - name: c_tbecranksumamount
+        tags: ["","transformation"]
+      - name: tbecsoko
+        tags: ["","transformation"]
+      - name: c_tbecordermeisaihistory
+        tags: ["","transformation"]
+      - name: c_tbeckesaihistory
+        tags: ["","transformation"]
+      - name: c_tbecorderhistory
+        tags: ["","transformation"]
+      - name: c_tbecusrcomment
+        tags: ["","transformation"]
+      - name: tbpromotion
+        tags: ["","transformation"]
+      - name: c_tbecusrcommentclassmst
+        tags: ["","transformation"]
+      - name: c_tbtelcompanymst
+        tags: ["","transformation"]
+      - name: c_tbecpointregistdivmst
+        tags: ["","transformation"]
+      - name: c_tbecregularoperatehist
+        tags: ["","transformation"]
+      - name: c_tbecpribuycategory
+        tags: ["","transformation"]
+      - name: c_tbecprimembclass
+        tags: ["","transformation"]
+      - name: c_tbecpripresentitem
+        tags: ["","transformation"]
+      - name: c_tbecpribuyitem
+        tags: ["","transformation"]
+      - name: c_tbecpriroute
+        tags: ["","transformation"]
+      - name: c_tbecpriusrsts
+        tags: ["","transformation"]
+      - name: tbpromotioncate
+        tags: ["","transformation"]
+      - name: tbuser
+        tags: ["","transformation"]
+
+  - name: jpdcledw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapjpdcledw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: tt01_henpin_riyu
+      - name: keirokbn
+      - name: hanyo_attr
+      - name: kesai_h_data_mart_sub_n_rirek
+      - name: kesai_h_data_mart_sub_old
+      - name: cit80saleh_ikou
+      - name: conv_mst_smkeiroid
+      - name: cim01kokya
+      - name: kokyano_list_016_manual

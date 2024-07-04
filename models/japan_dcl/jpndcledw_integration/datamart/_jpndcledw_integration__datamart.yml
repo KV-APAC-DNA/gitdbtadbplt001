@@ -106,3 +106,67 @@ models:
       alias: temp_u_new_016
       tags: ["", "transformation"]
 
+  - name: jpndcledw_integration__kesai_h_data_mart_mv
+    config:
+      alias: kesai_h_data_mart_mv
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_kizuna
+    config:
+      alias: kesai_h_data_mart_sub_kizuna
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n
+    config:
+      alias: kesai_h_data_mart_sub_n
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_h
+    config:
+      alias: kesai_h_data_mart_sub_n_h
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_u
+    config:
+      alias: kesai_h_data_mart_sub_n_u
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_mv
+    config:
+      alias: kesai_m_data_mart_mv
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_before_kizuna
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_kizuna
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n
+    config:
+      alias: kesai_m_data_mart_sub_n
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h
+    config:
+      alias: kesai_m_data_mart_sub_n_h
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp
+    config:
+      alias: kesai_m_data_mart_sub_n_h_notp
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_u
+    config:
+      alias: kesai_m_data_mart_sub_n_u
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesaiid_dummy
+    config:
+      alias: kesaiid_dummy
+      tags: ["","transformation"]
