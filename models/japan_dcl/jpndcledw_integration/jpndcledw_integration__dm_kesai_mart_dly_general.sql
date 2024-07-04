@@ -98,7 +98,8 @@ amount_header AS (
         (c_didiscountprc + didiscountall) AS new_discount,
         ROUND((c_didiscountprc + didiscountall)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT) AS new_discount_notax
     FROM kesai_h_data_mart_mv_kizuna cn
-    ),
+    ),--,
+    -- select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_h_data_mart_mv_kizuna where saleno_trm like 'T1%' limit 100;
 kesai AS (
     SELECT h.kokyano,
         h.saleno_key,
@@ -173,17 +174,17 @@ kesai AS (
     LEFT JOIN tbpromotion prom ON h.dipromid = prom.dipromid
     LEFT JOIN amount_header wh ON wh.saleno_key = h.saleno_key
     LEFT JOIN prev_ship ON h.kokyano = prev_ship.kokyano
-        AND to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = 0, NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
+        AND to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
     LEFT JOIN prev_order ON h.kokyano = prev_order.kokyano
-        AND to_date(IFF(CAST(h.juchdate AS STRING) = 0, NULL, CAST(h.juchdate AS STRING)),'YYYYMMDD') = prev_order.order_dt
+        AND to_date(IFF(CAST(h.juchdate AS STRING) = '0', NULL, CAST(h.juchdate AS STRING)),'YYYYMMDD') = prev_order.order_dt
     LEFT JOIN c_tbecclient client ON h.tenpocode = client.c_dstempocode
-    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = 0, NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = x.ymd_dt
-    LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid = a.c_dikesaiid
+    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = x.ymd_dt
+    LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid::varchar = a.c_dikesaiid::varchar
         AND h.ordercode = a.diordercode
         AND m.gyono = a.dimeisaiid
     WHERE --ship_dt < '1-jan-2012' and 
         h.juchkbn IN (0, 1, 2) --返品除く
-        AND (
+        and (
             m.MEISAINUKIKINGAKU >= 1 -- 1円以上
             OR m.MEISAINUKIKINGAKU < 0 -- 0円未満
             --     OR m.suryo <> 0            -- 数量<>0
@@ -261,7 +262,7 @@ kesai AS (
     LEFT JOIN tbpromotion prom ON h.dipromid = prom.dipromid
     LEFT JOIN amount_header wh ON wh.saleno_key = h.saleno_key
     LEFT JOIN c_tbecclient client ON h.tenpocode = client.c_dstempocode
-    LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid = a.c_dikesaiid
+    LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid::varchar = a.c_dikesaiid::varchar
         AND h.ordercode = a.diordercode
         AND m.gyono = a.dimeisaiid
     WHERE --ship_dt < '1-jan-2012' and 
@@ -734,5 +735,76 @@ transformed as(
 	AND u_lapsed_F1_order.year = to_char(bs.order_dt, 'YYYY') --a.year --and bs.order_dt = u_lapsed_F1_order.order_dt
 	LEFT OUTER JOIN kr_frequency_1yn_900_kizuna kr_f ON bs.saleno = kr_f.saleno LEFT OUTER JOIN f_order fo ON bs.saleno = fo.saleno LEFT OUTER JOIN f_ship fs ON bs.saleno = fs.saleno
 
+),
+final as(
+    select 
+        kokyano::varchar(68) as kokyano,
+        saleno_key::varchar(83) as saleno_key,
+        saleno::varchar(63) as saleno,
+        gyono::number(18,0) as gyono,
+        bun_gyono::number(18,0) as bun_gyono,
+        to_date(order_dt) as order_dt,
+        to_date(ship_dt) as ship_dt,
+        tokuiname::varchar(346) as tokuiname,
+        storename::varchar(131) as storename,
+        f_order::varchar(5) as f_order,
+        f_ship445::varchar(5) as f_ship445,
+        channel::varchar(20) as channel,
+        dspromcode::number(18,0) as dspromcode,
+        dspromname::varchar(384) as dspromname,
+        juchkbn::varchar(3) as juchkbn,
+        meisaikbn::varchar(36) as meisaikbn,
+        h_o_item_code::varchar(30) as h_o_item_code,
+        h_o_item_name::varchar(200) as h_o_item_name,
+        h_o_item_cname::varchar(240) as h_o_item_cname,
+        h_o_item_anbun_qty::number(16,8) as h_o_item_anbun_qty,
+        h_item_code::varchar(60) as h_item_code,
+        z_o_item_code::varchar(45) as z_o_item_code,
+        z_item_code::varchar(45) as z_item_code,
+        ratio::number(16,8) as ratio,
+        z_item_suryo::number(18,0) as z_item_suryo,
+        z_item_hen_suryo::number(18,0) as z_item_hen_suryo,
+        anbun_amount_tax110_ex::float as anbun_amount_tax110_ex,
+        z_item_amount_tax_ex::float as z_item_amount_tax_ex,
+        ratio2::number(16,8) as ratio2,
+        anbun_soryo::float as anbun_soryo,
+        anbun_point_tax_ex::float as anbun_point_tax_ex,
+        anbun_tokuten::float as anbun_tokuten,
+        gts::float as gts,
+        gts_qty::float as gts_qty,
+        ciw_discount::float as ciw_discount,
+        ciw_point::float as ciw_point,
+        ciw_return::float as ciw_return,
+        ciw_return_qty::float as ciw_return_qty,
+        nts::float as nts,
+        teikikeiyaku::varchar(20) as teikikeiyaku,
+        f::number(38,18) as f,
+        meisainukikingaku::number(18,0) as meisainukikingaku,
+        warimaenukikingaku::number(18,0) as warimaenukikingaku,
+        soryo::number(18,0) as soryo,
+        point::number(18,0) as point,
+        discount::number(18,0) as discount,
+        h_o_suryo::number(18,0) as h_o_suryo,
+        hensu::number(18,0) as hensu,
+        y_order_f::number(18,0) as y_order_f,
+        y_ship_f::number(18,0) as y_ship_f,
+        h_koseritsu::number(16,8) as h_koseritsu,
+        z_koseritsu::number(16,8) as z_koseritsu,
+        h_bun_suryo::number(18,0) as h_bun_suryo,
+        z_bun_suryo::number(18,0) as z_bun_suryo,
+        c_diregularcontractid::number(38,0) as c_diregularcontractid,
+        smkeiroid::number(18,0) as smkeiroid,
+        uketsuketelcompanycd::varchar(8) as uketsuketelcompanycd,
+        diordercode::varchar(16) as diordercode,
+        kesaiid::varchar(62) as kesaiid,
+        diorderid::number(18,0) as diorderid,
+        new_discount::float as new_discount,
+        ciw_discount_notax::float as ciw_discount_notax,
+        sub_cnt::number(18,0) as sub_cnt,
+        current_timestamp()::timestamp_ntz(9) as inserted_date,
+        null::varchar(100) as inserted_by ,
+        current_timestamp()::timestamp_ntz(9) as updated_date,
+        null::varchar(100) as updated_by
+    from transformed
 )
-select * from transformed
+select * from final limit 10

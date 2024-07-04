@@ -1162,5 +1162,13 @@ UNION ALL
 
 SELECT *
 FROM u_month_end_existing_ship445_365
+),
+final as(
+    select 
+        base::varchar(11) as base,
+        kokyano::varchar(60) as kokyano,
+        dt::timestamp_ntz(9) as dt,
+        status::varchar(8) as status
+    from transformed
 )
-select * from transformed
+select * from final

@@ -1,5 +1,5 @@
 with source as(
-    select * from DEV_DNA_LOAD.JPDCLSDL_RAW.tbuser
+    select * from {{ source('jpndclsdl_raw', 'tbuser') }} 
 ),
 final as(
     select * from source

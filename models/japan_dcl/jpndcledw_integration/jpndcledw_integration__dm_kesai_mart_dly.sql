@@ -102,7 +102,7 @@ SELECT
 			THEN ls.stage
 		ELSE 'レギュラー'::CHARACTER VARYING
 		END::VARCHAR(18) AS latest_stage,
-	ls.stage_ym::VARCHAR(9),
+	ls.stage_ym::VARCHAR(9) as stage_ym,
 	dly.y_order_f::NUMBER(38,0) as y_order_f,
 	dly.y_ship_f::NUMBER(38,0) as y_ship_f
 FROM dm_kesai_mart_dly_general dly

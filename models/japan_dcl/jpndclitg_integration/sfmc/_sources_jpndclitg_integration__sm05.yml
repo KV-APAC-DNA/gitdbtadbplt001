@@ -15,6 +15,7 @@ sources:
       - name: sfmc_notsent
       - name: sfmc_opens
       - name: sfmc_sendjobs
+      - name: sfmc_kokya_subskey_mapping
 
   - name: jpdcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
