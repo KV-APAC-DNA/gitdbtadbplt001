@@ -1,6 +1,26 @@
 version: 2
 
 models:
+  - name: indwks_integration__sss_scorecard_kpi_promo_pos
+    config:
+      alias: sss_scorecard_kpi_promo_pos
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indwks_integration__sss_scorecard_kpi_compliance_calc
+    config:
+      alias: sss_scorecard_kpi_compliance_calc
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indwks_integration__sss_scorecard_kpi_endcap_addn_visblty_score_calc
+    config:
+      alias: sss_scorecard_kpi_endcap_addn_visblty_score_calc
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indwks_integration__sss_scorecard_kpi_plano_score_calc
+    config:
+      alias: sss_scorecard_kpi_plano_score_calc
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indwks_integration__wks_sss_sales_base_data_for_msl
+    config:
+      alias: wks_sss_sales_base_data_for_msl
+      tags: ["in_sss_scorecard_data_mart","transformation"]
   # - name: indwks_integration__sss_zonal_base_tbl
   #   config:
   #     alias: sss_zonal_base_tbl
@@ -49,23 +69,3 @@ models:
   #   config:
   #     alias: sss_zonal_final_tmp_tbl
   #     tags: ["in_sss_zonal_datamart","transformation"]
-  - name: indwks_integration__sss_scorecard_kpi_promo_pos
-    config:
-      alias: sss_scorecard_kpi_promo_pos
-      tags: ["in_sss_scorecard_data_mart","transformation"]
-  - name: indwks_integration__sss_scorecard_kpi_compliance_calc
-    config:
-      alias: sss_scorecard_kpi_compliance_calc
-      tags: ["in_sss_scorecard_data_mart","transformation"]
-  - name: indwks_integration__sss_scorecard_kpi_endcap_addn_visblty_score_calc
-    config:
-      alias: sss_scorecard_kpi_endcap_addn_visblty_score_calc
-      tags: ["in_sss_scorecard_data_mart","transformation"]
-  - name: indwks_integration__sss_scorecard_kpi_plano_score_calc
-    config:
-      alias: sss_scorecard_kpi_plano_score_calc
-      tags: ["in_sss_scorecard_data_mart","transformation"]
-  - name: indwks_integration__wks_sss_sales_base_data_for_msl
-    config:
-      alias: wks_sss_sales_base_data_for_msl
-      tags: ["in_sss_scorecard_data_mart","transformation"]
