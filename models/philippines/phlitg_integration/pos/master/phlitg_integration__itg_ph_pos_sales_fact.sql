@@ -611,7 +611,11 @@ WITH itg_mds_ph_pos_pricelist AS (
 			NULL AS cdl_dttm,
 			current_timestamp() AS crtd_dttm,
 			NULL AS updt_dttm
-		FROM itg_ph_pricelist ipp2,
+		FROM (
+		SELECT *
+		FROM ITG_MDS_PH_POS_PRICELIST
+		WHERE ACTIVE = 'Y'
+		) ipp2,
 			(
 				SELECT sales.cust_item_cd,
 					'PSC' AS cust_cd,
@@ -658,7 +662,11 @@ WITH itg_mds_ph_pos_pricelist AS (
 					WHERE upper(trim(ipppd.cust_item_cd(+))) = upper(trim(spm.item_cd))
 						AND ipppd.mnth_id(+) = spm.mnth_id
 					) AS sales,
-					itg_ph_pricelist ipp
+					(
+					SELECT *
+					FROM ITG_MDS_PH_POS_PRICELIST
+					WHERE ACTIVE = 'Y'
+					) ipp
 				WHERE ipp.jj_mnth_id(+) = sales.mnth_id
 					AND ipp.item_cd(+) = sales.sap_item_cd
 				) AS ippd
