@@ -1,26 +1,25 @@
-{% macro build_itg_pop6_pop_lists_temp() %}
+{% macro build_itg_pop6_product_lists_products_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                ntaitg_integration.itg_pop6_pop_lists_temp
+                aspitg_integration.itg_pop6_product_lists_products_temp
             {% else %}
-                {{schema}}.ntaitg_integration__itg_pop6_pop_lists_temp
+                {{schema}}.aspitg_integration__itg_pop6_product_lists_products_temp
     {% endif %}
     {% endset %}
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_pop6_pop_lists
+                    aspitg_integration.itg_pop6_product_lists_products
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_pop6_pop_lists
+                    {{schema}}.aspitg_integration__itg_pop6_product_lists_products
                 {% endif %}
     (           cntry_cd varchar(10),
                 src_file_date varchar(10),
-                status number(18,0),
-                pop_list varchar(25),
-                popdb_id varchar(255),
-                pop_code varchar(50),
-                pop_name varchar(100),
-                pop_list_date date,
+                product_list varchar(100),
+                productdb_id varchar(255),
+                sku varchar(150),
+                msl_ranking varchar(20),
+                prod_grp_date date,
                 hashkey varchar(200),
                 effective_from timestamp_ntz(9),
                 effective_to timestamp_ntz(9),
@@ -28,13 +27,14 @@
                 file_name varchar(100),
                 run_id number(14,0),
                 crtd_dttm timestamp_ntz(9),
-                updt_dttm timestamp_ntz(9)
+                updt_dttm timestamp_ntz(9),
+                product_list_code varchar(100)
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            ntaitg_integration.itg_pop6_pop_lists
+            aspitg_integration.itg_pop6_product_lists_products
         {% else %}
-            {{schema}}.ntaitg_integration__itg_pop6_pop_lists
+            {{schema}}.aspitg_integration__itg_pop6_product_lists_products
         {% endif %};
     {% endset %}
 

@@ -3,9 +3,9 @@
     {% set query %}
         CREATE TABLE if not exists 
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_pop6_product_lists_allocation
+                    aspitg_integration.itg_pop6_product_lists_allocation
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_pop6_product_lists_allocation
+                    {{schema}}.aspitg_integration__itg_pop6_product_lists_allocation
                 {% endif %}
             (
                 	cntry_cd varchar(10),

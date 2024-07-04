@@ -3,9 +3,9 @@
     {% set query %}
         CREATE TABLE if not exists 
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_pop6_users
+                    aspitg_integration.itg_pop6_users
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_pop6_users
+                    {{schema}}.aspitg_integration__itg_pop6_users
                 {% endif %}
             (
                 cntry_cd varchar(10),

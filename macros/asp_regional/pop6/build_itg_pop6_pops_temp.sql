@@ -1,17 +1,17 @@
 {% macro build_itg_pop6_pops_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                ntaitg_integration.itg_pop6_pops_temp
+                aspitg_integration.itg_pop6_pops_temp
             {% else %}
-                {{schema}}.ntaitg_integration__itg_pop6_pops_temp
+                {{schema}}.aspitg_integration__itg_pop6_pops_temp
     {% endif %}
     {% endset %}
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_pop6_pops
+                    aspitg_integration.itg_pop6_pops
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_pop6_pops
+                    {{schema}}.aspitg_integration__itg_pop6_pops
                 {% endif %}
     (       	cntry_cd varchar(10),
                 src_file_date varchar(10),
@@ -45,9 +45,9 @@
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            ntaitg_integration.itg_pop6_pops
+            aspitg_integration.itg_pop6_pops
         {% else %}
-            {{schema}}.ntaitg_integration__itg_pop6_pops
+            {{schema}}.aspitg_integration__itg_pop6_pops
         {% endif %};
     {% endset %}
 

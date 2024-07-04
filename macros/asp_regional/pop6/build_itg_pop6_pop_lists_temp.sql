@@ -1,25 +1,26 @@
-{% macro build_itg_pop6_product_lists_pops_temp() %}
+{% macro build_itg_pop6_pop_lists_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                ntaitg_integration.itg_pop6_product_lists_pops_temp
+                aspitg_integration.itg_pop6_pop_lists_temp
             {% else %}
-                {{schema}}.ntaitg_integration__itg_pop6_product_lists_pops_temp
+                {{schema}}.aspitg_integration__itg_pop6_pop_lists_temp
     {% endif %}
     {% endset %}
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_pop6_product_lists_pops
+                    aspitg_integration.itg_pop6_pop_lists
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_pop6_product_lists_pops
+                    {{schema}}.aspitg_integration__itg_pop6_pop_lists
                 {% endif %}
-    (       	cntry_cd varchar(10),
+    (           cntry_cd varchar(10),
                 src_file_date varchar(10),
-                product_list varchar(100),
+                status number(18,0),
+                pop_list varchar(25),
                 popdb_id varchar(255),
                 pop_code varchar(50),
                 pop_name varchar(100),
-                prod_grp_date date,
+                pop_list_date date,
                 hashkey varchar(200),
                 effective_from timestamp_ntz(9),
                 effective_to timestamp_ntz(9),
@@ -31,9 +32,9 @@
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            ntaitg_integration.itg_pop6_product_lists_pops
+            aspitg_integration.itg_pop6_pop_lists
         {% else %}
-            {{schema}}.ntaitg_integration__itg_pop6_product_lists_pops
+            {{schema}}.aspitg_integration__itg_pop6_pop_lists
         {% endif %};
     {% endset %}
 
