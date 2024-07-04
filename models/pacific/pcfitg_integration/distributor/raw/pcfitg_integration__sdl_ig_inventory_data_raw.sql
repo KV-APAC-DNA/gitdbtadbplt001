@@ -59,7 +59,7 @@ final as
         item_details_inner_gtin,
         item_details_outer_gtin,
         sales_week_6,
-        sales_week_100,
+        sales_week_5,
         sales_week_4,
         sales_week_3,
         sales_week_2,
