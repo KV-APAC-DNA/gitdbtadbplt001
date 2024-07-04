@@ -452,7 +452,7 @@ sources:
             column: ["country", "visit_date", "pop_code", "merchandiser_userid"]
             filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
             lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
+            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_1
             config:
               store_failures: true
@@ -462,7 +462,7 @@ sources:
             column: ["country", "visit_date", "pop_code", "merchandiser_userid", "audit_form_name", "section_name"]
             filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
             lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
+            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_2
             config:
               store_failures: true
@@ -559,7 +559,7 @@ sources:
               select_columns: ["country","visit_date","pop_code","merchandiser_userid","exclude_kpi","audit_form_name","section_name","operation_type"]
               column: "country,visit_date,pop_code,merchandiser_userid"
               lookup_column: "cntry_cd,visit_date,pop_code,username"
-              lookup_table: "{{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
+              lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
               filter: "audit_form_name is null and section_name is null and operation_type = 'I'"
               name: TRATBL_sdl_pop6_tw_exclusion__lookup_test_1
               config:
@@ -569,7 +569,7 @@ sources:
               select_columns: ["country","visit_date","pop_code","merchandiser_userid","exclude_kpi","audit_form_name","section_name","operation_type"]
               column: "country,visit_date,pop_code,merchandiser_userid,audit_form_name,section_name"
               lookup_column: "cntry_cd,visit_date,pop_code,username,audit_form,section"
-              lookup_table: "{{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
+              lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
               filter: "audit_form_name is not null and section_name is not null and operation_type = 'I'"
               name: TRATBL_sdl_pop6_tw_exclusion__lookup_test_2
               config:

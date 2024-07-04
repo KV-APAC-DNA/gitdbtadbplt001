@@ -1,37 +1,37 @@
 WITH itg_ph_tbl_surveyanswers
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveyanswers
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveyanswers') }}
     ),
 itg_ph_tbl_surveycustomers
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveycustomers
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveycustomers') }}
     ),
 itg_ph_tbl_acctexec
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_acctexec
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_acctexec') }}
     ),
 itg_ph_tbl_surveychoices
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveychoices
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveychoices') }}
     ),
 itg_ph_tbl_surveyisequestion
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveyisequestion
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveyisequestion') }}
     ),
 itg_ph_tbl_surveyisehdr
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveyisehdr
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveyisehdr') }}
     ),
 itg_ph_tbl_surveynotes
 AS (
     SELECT *
-    FROM dev_dna_core.phlitg_integration.itg_ph_tbl_surveynotes
+    FROM {{ ref('phlitg_integration__itg_ph_tbl_surveynotes') }}
     ),
 srv_ans
 AS (
@@ -180,16 +180,20 @@ AS (
             itg_ph_tbl_surveynotes.answerseq,
             itg_ph_tbl_surveynotes.answernotes,
             itg_ph_tbl_surveynotes.filename_dt,
+            --need to change this in j&j as well to match answernotes as we have to add all cols used in left join in row_no function
             row_number() OVER (
-                PARTITION BY itg_ph_tbl_surveynotes.iseid,
+                PARTITION BY itg_ph_tbl_surveynotes.iseid,slsperid,custcode,branchcode,createddate,
                 itg_ph_tbl_surveynotes.answernotes ORDER BY itg_ph_tbl_surveynotes.filename_dt DESC
                 ) AS rnk
+            -- row_number() OVER (
+            --     PARTITION BY itg_ph_tbl_surveynotes.iseid,
+            --     itg_ph_tbl_surveynotes.answernotes ORDER BY itg_ph_tbl_surveynotes.filename_dt DESC
+            --     ) AS rnk
         FROM itg_ph_tbl_surveynotes
         ) derived_table6
     WHERE (derived_table6.rnk = 1)
     ),
-srv_hdr
-AS (
+srv_hdr AS (
     SELECT derived_table5.iseid,
         derived_table5.isedesc,
         derived_table5.startdate,
@@ -208,9 +212,8 @@ AS (
         FROM itg_ph_tbl_surveyisehdr
         ) derived_table5
     WHERE (derived_table5.rnk = 1)
-    ),
-final
-AS (
+),
+final AS (
     SELECT srv_ans.branchcode,
         srv_ans.slsperid,
         srv_ans.custcode,
@@ -236,70 +239,53 @@ AS (
         srv_hdr.startdate,
         srv_hdr.enddate,
         srv_notes.answernotes
-    FROM (
+    FROM
+        srv_ans
+        LEFT JOIN srv_cust ON 
         (
+                rtrim(srv_ans.custcode)::TEXT = rtrim(srv_cust.custcode)::TEXT
+            AND rtrim(srv_ans.slsperid)::TEXT = rtrim(srv_cust.slsperid)::TEXT
+            AND rtrim(srv_ans.branchcode)::TEXT = rtrim(srv_cust.branchcode)::TEXT
+            AND rtrim(srv_ans.iseid)::TEXT = rtrim(srv_cust.iseid)::TEXT
+            AND srv_ans.createddate = srv_cust.visitdate
+        )
+        LEFT JOIN (
+            SELECT DISTINCT itg_ph_tbl_acctexec.slsperid,
+                itg_ph_tbl_acctexec.name
+            FROM itg_ph_tbl_acctexec
+        ) acct_exec ON (
+            (
+                rtrim(srv_ans.slsperid)::TEXT = rtrim(acct_exec.slsperid)::TEXT
+            )
+        )
+        LEFT JOIN srv_choices ON (
             (
                 (
                     (
-                        (
-                            srv_ans LEFT JOIN srv_cust ON (
-                                    (
-                                        (
-                                            (
-                                                (
-                                                    ((srv_ans.custcode)::TEXT = (srv_cust.custcode)::TEXT)
-                                                    AND ((srv_ans.slsperid)::TEXT = (srv_cust.slsperid)::TEXT)
-                                                    )
-                                                AND ((srv_ans.branchcode)::TEXT = (srv_cust.branchcode)::TEXT)
-                                                )
-                                            AND ((srv_ans.iseid)::TEXT = (srv_cust.iseid)::TEXT)
-                                            )
-                                        AND (srv_ans.createddate = srv_cust.visitdate)
-                                        )
-                                    )
-                            ) LEFT JOIN (
-                            SELECT DISTINCT itg_ph_tbl_acctexec.slsperid,
-                                itg_ph_tbl_acctexec.name
-                            FROM itg_ph_tbl_acctexec
-                            ) acct_exec ON (((srv_ans.slsperid)::TEXT = (acct_exec.slsperid)::TEXT))
-                        ) LEFT JOIN srv_choices ON (
-                            (
-                                (
-                                    ((srv_ans.iseid)::TEXT = (srv_choices.iseid)::TEXT)
-                                    AND (srv_ans.quesno = srv_choices.quesno)
-                                    )
-                                AND (srv_ans.answerseq = srv_choices.answerseq)
-                                )
-                            )
-                    ) LEFT JOIN srv_ques ON (
-                        (
-                            ((srv_ans.iseid)::TEXT = (srv_ques.iseid)::TEXT)
-                            AND (srv_ans.quesno = srv_ques.quesno)
-                            )
-                        )
-                ) LEFT JOIN srv_hdr ON (((srv_ans.iseid)::TEXT = (srv_hdr.iseid)::TEXT))
-            ) LEFT JOIN srv_notes ON (
-                (
-                    (
-                        (
-                            (
-                                (
-                                    (
-                                        ((srv_ans.iseid)::TEXT = (srv_notes.iseid)::TEXT)
-                                        AND ((srv_ans.slsperid)::TEXT = (srv_notes.slsperid)::TEXT)
-                                        )
-                                    AND ((srv_ans.custcode)::TEXT = (srv_notes.custcode)::TEXT)
-                                    )
-                                AND ((srv_ans.branchcode)::TEXT = (srv_notes.branchcode)::TEXT)
-                                )
-                            AND (srv_ans.createddate = srv_notes.createddate)
-                            )
-                        AND (srv_ans.quesno = srv_notes.questionno)
-                        )
-                    AND (srv_ans.answerseq = srv_notes.answerseq)
+                        rtrim(srv_ans.iseid)::TEXT = rtrim(srv_choices.iseid)::TEXT
                     )
+                    AND rtrim(srv_ans.quesno) = rtrim(srv_choices.quesno)
                 )
+                AND rtrim(srv_ans.answerseq) = rtrim(srv_choices.answerseq)
+            )
         )
-    )
+        LEFT JOIN srv_ques ON (
+            (
+                (rtrim(srv_ans.iseid)::TEXT = rtrim(srv_ques.iseid)::TEXT)
+                AND rtrim(srv_ans.quesno) = rtrim(srv_ques.quesno)
+            )
+        )
+        LEFT JOIN srv_hdr ON ((rtrim(srv_ans.iseid)::TEXT = rtrim(srv_hdr.iseid)::TEXT))
+        LEFT JOIN srv_notes ON 
+        (
+                rtrim(srv_ans.iseid)::TEXT = rtrim(srv_notes.iseid)::TEXT
+            AND rtrim(srv_ans.slsperid)::TEXT = rtrim(srv_notes.slsperid)::TEXT
+            AND rtrim(srv_ans.custcode)::TEXT = rtrim(srv_notes.custcode)::TEXT
+            AND rtrim(srv_ans.branchcode)::TEXT = rtrim(srv_notes.branchcode)::TEXT
+            AND rtrim(srv_ans.createddate) = rtrim(srv_notes.createddate)
+            AND rtrim(srv_ans.quesno) = rtrim(srv_notes.questionno)
+            AND rtrim(srv_ans.answerseq) = rtrim(srv_notes.answerseq)
+        )
+)
 SELECT *
 FROM final 
