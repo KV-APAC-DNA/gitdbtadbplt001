@@ -47,7 +47,7 @@ models:
       schema: CORE_ACCESS
     integration:
       materialized: table
-      schema: CORE_INTEGRATION 
+      schema: CORE_INTEGRATION
       arsadpprd001_raw:
         materialized: view
     asp_regional:
@@ -64,6 +64,9 @@ models:
         sap_and_sellin:
           staging:
             +materialized: view
+        rex:
+          view:
+            +materialized: view
       aspedw_integration:
         +materialized: table
         +transient: false
@@ -72,6 +75,12 @@ models:
           view:
             +materialized: view
         sfmc:
+          view:
+            +materialized: view
+        calendar:
+          view:
+            +materialized: view
+        rex:
           view:
             +materialized: view
       aspwks_integration:
@@ -366,6 +375,36 @@ models:
       phledw_access:
         +materialized: view
         +schema: PHLEDW_ACCESS
+    indonesia:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      idnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNEDW_INTEGRATION
+        common:
+          view:
+            +materialized: view
+        ivy:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        sellin:
+          view:
+            +materialized: view
+      idnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: IDNITG_INTEGRATION
+      idnwks_integration:
+        +materialized: table
+        +schema: IDNWKS_INTEGRATION
+      idnedw_access:
+        +materialized: view
+        +schema: IDNEDW_ACCESS
     north_asia:
       config:
         +enabled: true
@@ -374,13 +413,106 @@ models:
         +materialized: table
         +transient: false
         +schema: NTAITG_INTEGRATION
+        pos:
+          staging:
+            +materialized: view
       ntaedw_integration:
         +materialized: table
         +transient: false
         +schema: NTAEDW_INTEGRATION
+        calendar:
+          view:
+            +materialized: view
+        common:
+          view:
+            +materialized: view
+        copa:
+          view:
+            +materialized: view
+        coupang:
+          view:
+            +materialized: view
+        dads:
+          view:
+            +materialized: view
+        datamart:
+          view:
+            +materialized: view
+        ecommerce:
+          view:
+            +materialized: view
+        forecast:
+          view:
+            +materialized: view
+        ims:
+          view:
+            +materialized: view
+        inventory:
+          view:
+            +materialized: view
+        invoice:
+          view:
+            +materialized: view
+        pop6:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        product:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        salesrep:
+          view:
+            +materialized: view
+        sellout:
+          view:
+            +materialized: view
+        sfmc:
+          view:
+            +materialized: view
+        store:
+          view:
+            +materialized: view
       ntawks_integration:
         +materialized: table
         +schema: NTAWKS_INTEGRATION
       ntaedw_access:
         +materialized: view
         +schema: NTAEDW_ACCESS
+    india:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      indedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDEDW_INTEGRATION
+        customer:
+          view:
+            +materialized: view
+        retail:
+          view:
+            +materialized: view
+        retailer:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        udc:
+          view:
+            +materialized: view
+      inditg_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDITG_INTEGRATION
+      indwks_integration:
+        +materialized: table
+        +schema: INDWKS_INTEGRATION
+      indedw_access:
+        +materialized: view
+        +schema: INDEDW_ACCESS

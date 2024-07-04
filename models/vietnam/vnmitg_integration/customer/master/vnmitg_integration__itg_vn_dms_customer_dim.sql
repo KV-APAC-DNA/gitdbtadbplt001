@@ -17,7 +17,7 @@ select
 	dstrbtr_id::varchar(30) as dstrbtr_id,
 	cntry_code::varchar(10) as cntry_code,
 	outlet_id::varchar(30) as outlet_id,
-	outlet_name::varchar(100) as outlet_name,
+	outlet_name::varchar(500) as outlet_name,
 	address_1::varchar(200) as address_1,
 	address_2::varchar(200) as address_2,
 	telephone::varchar(100) as telephone,
