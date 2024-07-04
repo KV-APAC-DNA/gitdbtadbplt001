@@ -6,7 +6,7 @@ AS (
 edw_vw_pop6_th_visits_prod_attribute_audits
 AS (
     SELECT *
-    FROM ntaedw_integration.edw_vw_pop6_th_visits_prod_attribute_audits
+    FROM {{ ref('ntaedw_integration__edw_vw_pop6_th_visits_prod_attribute_audits') }}
     ),
 edw_vw_pop6_store
 AS (
