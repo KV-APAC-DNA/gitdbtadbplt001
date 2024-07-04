@@ -207,7 +207,7 @@ edw_customer_base_dim as (
 select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 itg_pop6_products as (
-select * from {{ ref('ntaitg_integration__itg_pop6_products') }}
+select * from {{ ref('aspitg_integration__itg_pop6_products') }}
 ),
 edw_product_attr_dim as (
 select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}

@@ -1,20 +1,20 @@
 with itg_pop6_displays as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_displays') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_displays') }}
 ),
 itg_pop6_product_attribute_audits as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_product_attribute_audits') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_product_attribute_audits') }}
 ),
 itg_pop6_tasks as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_tasks') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_tasks') }}
 ),
 itg_pop6_general_audits as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_general_audits') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_general_audits') }}
 ),
 itg_pop6_promotions as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_promotions') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_promotions') }}
 ),
 itg_pop6_sku_audits as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_sku_audits') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_sku_audits') }}
 ),
 itg_photo_mgmnt_url as (
     select * from {{ source('ntaitg_integration', 'itg_photo_mgmnt_url_temp')}}

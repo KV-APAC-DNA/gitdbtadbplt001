@@ -43,19 +43,19 @@ edw_vw_pop6_visits_rir_data as (
 select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_rir_data') }}
 ),
 itg_pop6_rir_data as (
-select * from {{ ref('ntaitg_integration__itg_pop6_rir_data') }}
+select * from {{ ref('aspitg_integration__itg_pop6_rir_data') }}
 ),
 edw_product_attr_dim as (
 select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 itg_pop6_executed_visits as (
-select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
+select * from {{ ref('aspitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_product_lists_pops as (
-select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_pops') }}
+select * from {{ ref('aspitg_integration__itg_pop6_product_lists_pops') }}
 ),
 itg_pop6_product_lists_products as (
-select * from {{ ref('ntaitg_integration__itg_pop6_product_lists_products') }}
+select * from {{ ref('aspitg_integration__itg_pop6_product_lists_products') }}
 ),
 sku_audit as ((
                         SELECT 

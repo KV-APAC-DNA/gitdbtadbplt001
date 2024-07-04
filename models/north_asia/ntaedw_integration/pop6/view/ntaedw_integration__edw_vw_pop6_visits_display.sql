@@ -2,21 +2,21 @@ with itg_pop6_executed_visits as (
   select 
     * 
   from 
-    {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
+    {{ ref('aspitg_integration__itg_pop6_executed_visits') }}
 ), 
 
 itg_pop6_exclusion as (
   select 
     * 
   from 
-    {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
+    {{ ref('aspitg_integration__itg_pop6_exclusion') }}
 ), 
 
 itg_pop6_displays as (
   select 
     * 
   from 
-    {{ ref('ntaitg_integration__itg_pop6_displays') }}
+    {{ ref('aspitg_integration__itg_pop6_displays') }}
 ), 
 
 disp as (

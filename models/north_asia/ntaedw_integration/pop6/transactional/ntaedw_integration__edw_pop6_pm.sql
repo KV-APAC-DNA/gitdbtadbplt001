@@ -23,13 +23,13 @@ itg_photo_mgmnt_url as (
     select * from {{ ref('ntaitg_integration__itg_photo_mgmnt_url') }}
 ),
 itg_pop6_executed_visits as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_promotions as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_promotions') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_promotions') }}
 ),
 itg_pop6_general_audits as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_general_audits') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_general_audits') }}
 ),
 display as (
     SELECT 'display' AS data_type,

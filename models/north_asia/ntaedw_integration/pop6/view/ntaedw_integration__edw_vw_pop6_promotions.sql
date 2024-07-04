@@ -1,16 +1,16 @@
 with itg_pop6_promotions AS
 (
-       select * from {{ ref('ntaitg_integration__itg_pop6_promotions') }}
+       select * from {{ ref('aspitg_integration__itg_pop6_promotions') }}
 ),
 
 itg_pop6_executed_visits AS
 (
-       select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
+       select * from {{ ref('aspitg_integration__itg_pop6_executed_visits') }}
 ),
 
 itg_pop6_exclusion AS
 (
-       select * from {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
+       select * from {{ ref('aspitg_integration__itg_pop6_exclusion') }}
 ),
 
 visit AS

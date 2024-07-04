@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ ref('ntaitg_integration__itg_pop6_pops') }}
+    select * from {{ ref('aspitg_integration__itg_pop6_pops') }}
 ),
 final as (
     select cntry_cd,

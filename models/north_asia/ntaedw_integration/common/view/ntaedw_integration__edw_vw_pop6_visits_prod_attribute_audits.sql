@@ -1,12 +1,12 @@
 with 
 itg_pop6_executed_visits as (
-select * from {{ ref('ntaitg_integration__itg_pop6_executed_visits') }}
+select * from {{ ref('aspitg_integration__itg_pop6_executed_visits') }}
 ),
 itg_pop6_exclusion as (
-select * from {{ ref('ntaitg_integration__itg_pop6_exclusion') }}
+select * from {{ ref('aspitg_integration__itg_pop6_exclusion') }}
 ),
 itg_pop6_product_attribute_audits as (
-select * from {{ ref('ntaitg_integration__itg_pop6_product_attribute_audits') }}
+select * from {{ ref('aspitg_integration__itg_pop6_product_attribute_audits') }}
 ),
 final as (
 SELECT 
