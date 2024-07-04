@@ -37,10 +37,6 @@ models:
     config:
       alias: itg_scheme_header
       tags: ["m_wrp_in_sdlitg_master","transformation"]
-  - name: inditg_integration__sdl_csl_scheme_header_raw
-    config:
-      alias: sdl_csl_scheme_header_raw
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
   - name: inditg_integration__itg_ittarget
     config:
       alias: itg_ittarget
