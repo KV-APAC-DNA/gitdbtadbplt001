@@ -6,59 +6,59 @@
 with 
 edw_retailer_dim as 
 (
-    select * from indedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 edw_customer_dim as 
 (
-    select * from indedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_product_dim as 
 (
-    select * from indedw_integration.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_dailysales_fact as 
 (
-    select * from indedw_integration.edw_dailysales_fact
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
 edw_retailer_calendar_dim as 
 (
-    select * from indedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_sku_recom_orangestoretarget as 
 (
-    select * from inditg_integration.itg_sku_recom_orangestoretarget
+    select * from {{ ref('inditg_integration__itg_sku_recom_orangestoretarget') }}
 ),
 itg_xdm_salesmanskulinemapping as 
 (
-    select * from inditg_integration.itg_xdm_salesmanskulinemapping
+    select * from {{ ref('inditg_integration__itg_xdm_salesmanskulinemapping') }}
 ),
 itg_in_rcustomerroute as 
 (
-    select * from inditg_integration.itg_in_rcustomerroute
+    select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }}
 ),
 itg_in_rroute as 
 (
-    select * from inditg_integration.itg_in_rroute
+    select * from {{ ref('inditg_integration__itg_in_rroute') }}
 ),
 itg_in_rsalesman as 
 (
-    select * from inditg_integration.itg_in_rsalesman
+    select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
 ),
 itg_in_rsalesmanroute as 
 (
-    select * from inditg_integration.itg_in_rsalesmanroute
+    select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
 ),
 itg_udcmaster as 
 (
-    select * from inditg_integration.itg_udcmaster
+    select * from {{ ref('inditg_integration__itg_udcmaster') }}
 ),
 itg_sku_recom_flag as 
 (
-    select * from inditg_integration.itg_sku_recom_flag
+    select * from {{ ref('inditg_integration__itg_sku_recom_flag') }}
 ),
 itg_udcdetails as 
 (
-    select * from inditg_integration.itg_udcdetails
+    select * from {{ ref('inditg_integration__itg_udcdetails') }}
 ),
 final as 
 (

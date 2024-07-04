@@ -40,4 +40,4 @@ models:
   - name: inditg_integration__itg_ittarget
     config:
       alias: itg_ittarget
-      tags: ["",""]
+      tags: ["m_wrp_in_sdlitg_master","transformation"]

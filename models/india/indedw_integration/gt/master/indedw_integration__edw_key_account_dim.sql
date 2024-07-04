@@ -1,20 +1,20 @@
 with 
 edw_customer_dim as 
 (
-    select * from indedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 itg_jnjreport_muser as 
 (
-    select * from inditg_integration.itg_jnjreport_muser
-), --built
+    select * from {{ ref('inditg_integration__itg_jnjreport_muser') }}
+), 
 itg_customer_retailer as 
 (
-    select * from inditg_integration.itg_customer_retailer
-), --built
+    select * from {{ ref('inditg_integration__itg_customer_retailer') }}
+), 
 itg_plant as 
 (
-    select * from inditg_integration.itg_plant
-), --source
+    select * from {{ source('inditg_integration', 'itg_plant') }}
+), 
 trans as 
 (
     Select 

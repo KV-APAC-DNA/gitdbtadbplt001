@@ -9,15 +9,15 @@ wks_geotag_udc_program as
 ),
 itg_program_store_target as 
 (
-    select * from snapinditg_integration.itg_program_store_target
-), --find script
+    select * from {{ source('inditg_integration', 'itg_program_store_target') }}
+), 
 edw_retailer_dim as 
 (
-    select * from snapindedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 itg_mds_in_geo_tracker_coordinates as 
 (
-    select * from snapinditg_integration.itg_mds_in_geo_tracker_coordinates
+    select * from {{ ref('inditg_integration__itg_mds_in_geo_tracker_coordinates') }}
 ),
 pst_mth as 
 (

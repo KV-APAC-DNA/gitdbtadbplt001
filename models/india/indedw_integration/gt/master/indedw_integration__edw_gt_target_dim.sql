@@ -5,11 +5,11 @@ itg_businesscalender as
 ),
 itg_rdssmweeklytarget_output as 
 (
-    select * from inditg_integration.itg_rdssmweeklytarget_output
+    select * from {{ ref('inditg_integration__itg_rdssmweeklytarget_output') }}
 ),
 v_customer_dim as 
 (
-    select * from indedw_integration.v_customer_dim
+    select * from {{ ref('indedw_integration__v_customer_dim') }}
 ),
 
 trans as 

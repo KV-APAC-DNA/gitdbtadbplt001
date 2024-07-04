@@ -1,11 +1,11 @@
 with 
 itg_ittarget as 
 (
-    select * from inditg_integration.itg_ittarget
+    select * from {{ ref('inditg_integration__itg_ittarget') }}
 ),
 itg_territory as 
 (
-    select * from inditg_integration.itg_Territory
+    select * from {{ source('inditg_integration', 'itg_territory') }}
 ),
 itg_businesscalender as 
 (

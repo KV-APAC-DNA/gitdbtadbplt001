@@ -5,7 +5,7 @@ itg_tbl_schemewise_apno as
 ),
 itg_scheme_header as 
 (
-    select * from inditg_integration.itg_scheme_header
+    select * from {{ ref('inditg_integration__itg_scheme_header') }}
 ),
 trans as 
 (

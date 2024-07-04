@@ -6,18 +6,18 @@ itg_pf_retail_mth_ds as
 final  as 
 (
 Select 
-year, 
-month, 
-customer_code, 
-product_code,
-sum(Sec_Prd_Qty)Sec_Prd_Qty,
-sum(Sec_Prd_Qty_Ret)Sec_Prd_Qty_Ret,
-sum(Sec_Prd_NR_Value)Sec_Prd_NR_Value,
-sum( Sec_Prd_NR_Value_Ret)Sec_Prd_NR_Value_Ret,
-sum(Sec_Late_Prd_Qty)Sec_Late_Prd_Qty,
-sum(Sec_Late_Prd_Qty_Ret)Sec_Late_Prd_Qty_Ret,
-sum(Sec_Late_Prd_NR_Value)Sec_Late_Prd_NR_Value,
-sum(Sec_Late_Prd_NR_Value_Ret)Sec_Late_Prd_NR_Value_Ret
+    year, 
+    month, 
+    customer_code, 
+    product_code,
+    sum(Sec_Prd_Qty)Sec_Prd_Qty,
+    sum(Sec_Prd_Qty_Ret)Sec_Prd_Qty_Ret,
+    sum(Sec_Prd_NR_Value)Sec_Prd_NR_Value,
+    sum( Sec_Prd_NR_Value_Ret)Sec_Prd_NR_Value_Ret,
+    sum(Sec_Late_Prd_Qty)Sec_Late_Prd_Qty,
+    sum(Sec_Late_Prd_Qty_Ret)Sec_Late_Prd_Qty_Ret,
+    sum(Sec_Late_Prd_NR_Value)Sec_Late_Prd_NR_Value,
+    sum(Sec_Late_Prd_NR_Value_Ret)Sec_Late_Prd_NR_Value_Ret
 FROM(
                 select year,month,ifnull(customer_code,'-1') customer_code,ifnull(product_code,'-1') product_code,
                 sum(Sec_Prd_Qty)Sec_Prd_Qty,sum(Sec_Prd_Qty_Ret)Sec_Prd_Qty_Ret,sum(Sec_Prd_NR_Value)Sec_Prd_NR_Value,sum( Sec_Prd_NR_Value_Ret)Sec_Prd_NR_Value_Ret,

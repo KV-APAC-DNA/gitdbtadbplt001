@@ -11,6 +11,10 @@ sources:
     tables:
       - name: sdl_mds_in_key_accounts_mapping
         tags: ["in_ecom_datamart","transformation"]
+      - name: sdl_csl_scheme_header
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_ittarget
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
       - name: sdl_mds_in_sss_weights
         tags: ["in_sss_scorecard_mds_refresh","ingestion"]
         tests:
@@ -84,6 +88,28 @@ sources:
         tags: ["in_sss_zonal_datamart","transformation"]
       - name: sdl_csl_rdssmweeklytarget_output
         tags: ["m_wrp_in_sdlitg_master","transformation"]
+
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_customertype
+      - name: itg_territory_classification
+      - name: itg_state
+      - name: itg_town
+      - name: itg_town_classification
+      - name: itg_muser
+      - name: itg_rdssize
+      - name: itg_zone_classification
+      - name: itg_invoicing_calendar_2022
+      - name: itg_program_store_target
+
+      
 
   - name: indedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

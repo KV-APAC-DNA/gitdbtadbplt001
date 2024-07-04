@@ -1,55 +1,55 @@
 with 
 edw_customer_base_dim as 
 (
-    select * from aspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 itg_region as 
 (
-    select * from inditg_integration.itg_region
+    select * from {{ source('inditg_integration', 'itg_region') }}
 ),
 itg_zone as 
 (
-    select * from inditg_integration.itg_zone
+    select * from {{ source('inditg_integration', 'itg_zone') }}
 ),
 itg_zone_classification as 
 (
-    select * from inditg_integration.itg_zone_classification
+    select * from {{ source('inditg_integration', 'itg_zone_classification') }}
 ),
 itg_territory as 
 (
-    select * from inditg_integration.itg_territory
+    select * from {{ source('inditg_integration', 'itg_territory') }}
 ),
 itg_territory_classification as 
 (
-    select * from inditg_integration.itg_territory_classification
+    select * from {{ source('inditg_integration', 'itg_territory_classification') }}
 ),
 itg_state as 
 (
-    select * from inditg_integration.itg_state
+    select * from {{ source('inditg_integration', 'itg_state') }}
 ),
 itg_town as 
 (
-    select * from inditg_integration.itg_town
+    select * from {{ source('inditg_integration', 'itg_town') }}
 ),
 itg_town_classification as 
 (
-    select * from inditg_integration.itg_town_classification
+    select * from {{ source('inditg_integration', 'itg_town_classification') }}
 ),
 itg_customer as 
 (
-    select * from inditg_integration.itg_customer
+    select * from {{ source('inditg_integration', 'itg_customer') }}
 ),
 itg_customertype as 
 (
-    select * from inditg_integration.itg_customertype
+    select * from {{ source('inditg_integration', 'itg_customertype') }}
 ),
 itg_rdssize as 
 (
-    select * from inditg_integration.itg_rdssize
+    select * from {{ source('inditg_integration', 'itg_rdssize') }}
 ),
 itg_muser as 
 (
-    select * from inditg_integration.itg_muser
+    select * from {{ source('inditg_integration', 'itg_muser') }}
 ),
 itg_distributoractivation as 
 (

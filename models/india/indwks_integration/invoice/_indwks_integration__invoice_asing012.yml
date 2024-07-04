@@ -17,3 +17,11 @@ models:
     config:
       alias: wks_cg_retail_ds
       tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: indwks_integration__wks_csl_scheme_header
+    config:
+      alias: wks_csl_scheme_header
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+  - name: indwks_integration__wks_ittarget
+    config:
+      alias: wks_ittarget
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
