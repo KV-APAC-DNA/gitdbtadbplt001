@@ -10,12 +10,17 @@ sources:
       identifier: false
     tables:
       - name: sfmc_bounces
-        tags: ["in_mds_refresh","transformation"]
+        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_clicks
+        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_notsent
+        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_opens
+        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_sendjobs
+        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_kokya_subskey_mapping
+        tags: ["m_dcl_itg_job6","transformation"]
 
   - name: jpdcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -26,7 +31,6 @@ sources:
       identifier: false
     tables:
       - name: tt01_henpin_riyu
-        tags: ["in_mds_refresh","transformation"]
       - name: keirokbn
       - name: hanyo_attr
       - name: kesai_h_data_mart_sub_n_rirek

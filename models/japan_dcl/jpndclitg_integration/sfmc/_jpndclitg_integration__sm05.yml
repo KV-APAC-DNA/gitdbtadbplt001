@@ -5,4 +5,29 @@ models:
   - name: jpndclitg_integration__sfmc_bounces
     config: 
       alias: sfmc_bounces
-      tags: ["in_mds_refresh","transformation"]
+      tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_clicks
+    config: 
+      alias: sfmc_clicks
+      tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_kokya_subskey_mapping
+    config: 
+      alias: sfmc_kokya_subskey_mapping
+      tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_notsent
+    config: 
+      alias: sfmc_notsent
+      tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_opens
+    config: 
+      alias: sfmc_opens
+      tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_sendjobs
+    config: 
+      alias: sfmc_sendjobs
+      tags: ["m_dcl_itg_job6","transformation"]
