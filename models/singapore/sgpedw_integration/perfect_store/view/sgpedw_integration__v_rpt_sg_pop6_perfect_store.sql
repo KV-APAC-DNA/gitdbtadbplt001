@@ -1,31 +1,31 @@
 WITH edw_vw_pop6_visits_sku_audits AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_sku_audits') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_visits_sku_audits') }}
 ),
 
 edw_vw_pop6_store AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 
 edw_vw_pop6_products AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 
 edw_vw_pop6_salesperson AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_salesperson') }}
 ),
 
 edw_vw_pop6_visits_display AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_visits_display') }}
 ),
 
 edw_vw_pop6_visits_prod_attribute_audits AS (
     SELECT *
-    FROM {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
+    FROM {{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
 ),
 
 edw_vw_ps_weights AS (

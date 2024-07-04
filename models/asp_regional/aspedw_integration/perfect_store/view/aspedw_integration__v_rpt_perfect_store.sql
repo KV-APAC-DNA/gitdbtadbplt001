@@ -2,10 +2,10 @@ with v_rpt_rex_perfect_store as (
     select * from aspedw_integration.v_rpt_rex_perfect_store
 ),
 edw_vw_pop6_products as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from {{ ref('ntaedw_integration__v_rpt_pop6_perfectstore') }}
+    select * from {{ ref('aspedw_integration__v_rpt_pop6_perfectstore') }}
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration','itg_query_parameters') }}

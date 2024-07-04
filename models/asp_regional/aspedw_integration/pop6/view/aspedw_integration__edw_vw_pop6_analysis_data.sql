@@ -10,37 +10,37 @@ pop6_kpi2data_mapping as (
 select * from {{ source('ntaedw_integration','pop6_kpi2data_mapping') }}
 ),
 edw_vw_pop6_visits_sku_audits as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_sku_audits') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_sku_audits') }}
 ),
 edw_vw_pop6_visits_prod_attribute_audits as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
 ),
 edw_vw_pop6_visits_display as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_display') }}
 ),
 edw_vw_pop6_products as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 edw_vw_pop6_promotions as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_promotions') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_promotions') }}
 ),
 edw_vw_pop6_tasks as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_tasks') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_tasks') }}
 ),
 edw_vw_pop6_visits_general_audits as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_general_audits') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_general_audits') }}
 ),
 edw_vw_pop6_salesperson as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_salesperson') }}
 ),
 edw_vw_pop6_store as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 edw_vw_pop6_planned_visits as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_planned_visits') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_planned_visits') }}
 ),
 edw_vw_pop6_visits_rir_data as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_rir_data') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_rir_data') }}
 ),
 itg_pop6_rir_data as (
 select * from {{ ref('aspitg_integration__itg_pop6_rir_data') }}

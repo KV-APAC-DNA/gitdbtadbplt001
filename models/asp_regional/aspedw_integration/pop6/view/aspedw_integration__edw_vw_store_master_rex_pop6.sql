@@ -1,5 +1,5 @@
 with edw_vw_pop6_store as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 cust_customer as (
 select * from {{ source('aspsdl_raw','cust_customer') }}

@@ -1,14 +1,14 @@
 with edw_vw_pop6_visits_sku_audits as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_sku_audits') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_sku_audits') }}
 ),
 edw_vw_pop6_products as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 edw_vw_pop6_salesperson as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_salesperson') }}
 ),
 edw_vw_pop6_store as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }} 
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }} 
 ),
 final as (SELECT 
   vst.popdb_id AS customerid, 

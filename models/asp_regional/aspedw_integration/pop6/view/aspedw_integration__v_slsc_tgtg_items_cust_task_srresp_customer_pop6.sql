@@ -1,14 +1,14 @@
 with edw_vw_pop6_visits_prod_attribute_audits as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}
 ),
 edw_vw_pop6_store as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 edw_vw_pop6_salesperson as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_salesperson') }}
 ),
 edw_vw_pop6_visits_display as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_visits_display') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_display') }}
 ),
 union_1 as
 (   

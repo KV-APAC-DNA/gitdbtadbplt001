@@ -1,5 +1,5 @@
 with edw_pop6_pm as (
-    select * from {{ ref('ntaedw_integration__edw_pop6_pm') }}
+    select * from {{ ref('aspedw_integration__edw_pop6_pm') }}
 ),
 itg_sfa_pm as (
     select * from {{ source('aspsdl_raw','itg_sfa_pm') }}

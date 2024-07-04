@@ -1,5 +1,5 @@
 with edw_vw_pop6_analysis_data as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_analysis_data') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_analysis_data') }}
 ),
 final as (
 SELECT 

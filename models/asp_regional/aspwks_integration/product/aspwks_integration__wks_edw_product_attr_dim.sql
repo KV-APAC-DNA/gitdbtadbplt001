@@ -13,7 +13,7 @@ v_prodtr_producttranslation as (
     select * from {{ ref('aspitg_integration__v_prodtr_producttranslation') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}

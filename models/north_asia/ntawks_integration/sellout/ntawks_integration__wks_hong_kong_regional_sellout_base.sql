@@ -17,7 +17,7 @@ itg_query_parameters as (
 select * from {{ source('aspitg_integration','itg_query_parameters') }}
 ),
 edw_vw_pop6_store as (
-select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 transformed as (
 SELECT
