@@ -1,26 +1,26 @@
 with edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
+    select * from indedw_integration.edw_customer_dim
     --{{ ref('indedw_integration__edw_customer_dim') }}
 ),
 itg_rmrpstockprocess_clstk as
 (
-    select * from snapinditg_integration.itg_rmrpstockprocess_clstk
+    select * from inditg_integration.itg_rmrpstockprocess_clstk
     --{{ ref('inditg_integration__itg_rmrpstockprocess_clstk') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
+    select * from indedw_integration.edw_retailer_calendar_dim
     --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_mds_month_end_dates as
 (
-    select * from snapinditg_integration.itg_mds_month_end_dates
+    select * from inditg_integration.itg_mds_month_end_dates
     --{{ ref('inditg_integration__itg_mds_month_end_dates') }}
 ),
 itg_rmrpstockprocess_opstk as
 (
-    select * from snapinditg_integration.itg_rmrpstockprocess_opstk
+    select * from inditg_integration.itg_rmrpstockprocess_opstk
     --{{ ref('inditg_integration__itg_rmrpstockprocess_opstk') }}
 ),
 final as
@@ -99,9 +99,9 @@ final as
                                     transdate,
                                     createddate,
                                     productcode AS prdcode,
-                                    SUM(salclsstock*lsp) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0) AS lp,
-                                    SUM(salclsstock*selrate) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0) AS ptr,
-                                    SUM(salclsstock*nrvalue) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0) AS nr,
+                                    TRUNC(SUM(salclsstock*lsp) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0),3) AS lp,
+                                    TRUNC(SUM(salclsstock*selrate) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0),3) AS ptr,
+                                    TRUNC(SUM(salclsstock*nrvalue) OVER (PARTITION BY distcode,productcode,transdate) / NULLIF(SUM(salclsstock) OVER (PARTITION BY distcode,productcode,transdate),0),3) AS nr,
                                     SUM(lsp*salclsstock) OVER (PARTITION BY distcode,productcode,transdate) AS lpvalue,
                                     SUM(selrate*salclsstock) OVER (PARTITION BY distcode,productcode,transdate) AS ptrvalue,
                                     SUM(nrvalue*salclsstock) OVER (PARTITION BY distcode,productcode,transdate) AS value,

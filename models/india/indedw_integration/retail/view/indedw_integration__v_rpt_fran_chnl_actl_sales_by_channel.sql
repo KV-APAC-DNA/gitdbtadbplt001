@@ -21,7 +21,7 @@ edw_customer_dim as
 ),
 v_retail_frnch_categ_mapping as
 (
-    select * from indwks_integration.v_retail_frnch_categ_mapping
+    select * from indedw_integration.v_retail_frnch_categ_mapping
 ),
 v_retail_fran_chanl as
 (
