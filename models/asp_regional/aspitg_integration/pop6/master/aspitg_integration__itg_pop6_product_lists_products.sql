@@ -22,7 +22,7 @@ sdl_pop6_th_product_lists_products as (
     select * from {{ source('thasdl_raw', 'sdl_pop6_th_product_lists_products') }}
 ),
 itg_pop6_product_lists_products as (
-    select * from {{ source('ntaitg_integration','itg_pop6_product_lists_products_temp') }}
+    select * from {{ source('aspitg_integration','itg_pop6_product_lists_products_temp') }}
 ),
 sdl as (
     SELECT 'HK' AS CNTRY_CD,
