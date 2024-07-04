@@ -18,6 +18,8 @@ final as
         src.Cl_Stck_Value,
         src.Wt_Stock_Qty,
         current_timestamp() as updt_dttm
+        current_timestamp() as crt_dttm,
+        null as chng_flg
         FROM
         (
         select

@@ -1,7 +1,7 @@
 with 
 itg_tbl_schemewise_apno as 
 (
-    select * from inditg_integration.itg_tbl_schemewise_apno
+    select * from {{ ref('inditg_integration__itg_tbl_schemewise_apno') }}
 ),
 itg_scheme_header as 
 (

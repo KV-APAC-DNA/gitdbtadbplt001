@@ -1,7 +1,7 @@
 with 
 itg_businesscalender as 
 (
-    select * from inditg_integration.itg_businesscalender
+    select * from {{ ref('inditg_integration__itg_businesscalender') }}
 ),
 itg_rdssmweeklytarget_output as 
 (

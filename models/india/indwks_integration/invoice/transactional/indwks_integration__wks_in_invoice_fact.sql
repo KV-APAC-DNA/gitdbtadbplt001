@@ -10,15 +10,15 @@ edw_invoice_fact as
 ),
 itg_billing_conditions as 
 (
-    select * from snapinditg_integration.itg_billing_conditions
-), --Job status unknown
+    select * from {{ ref('inditg_integration__itg_billing_conditions') }}
+), 
 itg_product_uom_master as 
 (
-    select * from snapinditg_integration.itg_product_uom_master
-), -- job status unknown
+    select * from {{ ref('inditg_integration__itg_product_uom_master') }}
+), 
 itg_businesscalender as 
 (
-    select * from snapinditg_integration.itg_businesscalender
+    select * from {{ ref('inditg_integration__itg_businesscalender') }}
 ),
 edw_product_dim as 
 (

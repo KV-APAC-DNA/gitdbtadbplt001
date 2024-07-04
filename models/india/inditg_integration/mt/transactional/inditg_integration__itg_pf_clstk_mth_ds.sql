@@ -1,7 +1,7 @@
 with itg_tblpf_clstkm as 
 (
-    select * from inditg_integration.itg_tblpf_clstkm
-), --done in this sprint
+    select * from {{ ref('inditg_integration__itg_tblpf_clstkm') }}
+), 
 final as 
 (
     select 
