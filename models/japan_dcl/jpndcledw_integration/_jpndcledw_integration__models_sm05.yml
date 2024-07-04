@@ -9,7 +9,7 @@ models:
   - name: jpndcledw_integration__dm_kesai_mart_dly_general
     config:
       alias: dm_kesai_mart_dly_general
-      tags: ["", "transformation"]
+      tags: ["", "transformation"] 
       
   - name: jpndcledw_integration__dm_user_status
     config:
