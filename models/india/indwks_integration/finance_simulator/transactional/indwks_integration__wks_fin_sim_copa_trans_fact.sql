@@ -1,8 +1,10 @@
 with edw_copa_trans_fact as (
-    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
+    --select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+    select * from {{ source('aspedw_integration', 'edw_copa_trans_fact') }}
 ),
 itg_query_parameters as
 (
+    --select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_QUERY_PARAMETERS
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 transformed as
@@ -22,7 +24,7 @@ transformed as
     SUM(amt_obj_crncy) AS amt_obj_crncy,
     SUM(qty) AS qty FROM edw_copa_trans_fact WHERE co_cd IN ('8080', '9860')
     AND acct_hier_shrt_desc <> 'NTS'
-    AND LEFT(caln_yr_mo, 4) >= EXTRACT(YEAR FROM SYSDATE) - (
+    AND LEFT(caln_yr_mo, 4) >= EXTRACT(YEAR FROM CURRENT_DATE()) - (
       SELECT CAST(PARAMETER_VALUE AS INTEGER) AS PARAMETER_VALUE
       FROM ITG_QUERY_PARAMETERS
       WHERE UPPER(COUNTRY_CODE) = 'IN'

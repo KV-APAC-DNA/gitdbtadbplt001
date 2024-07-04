@@ -25,7 +25,7 @@ final as
 	motherskucode::varchar(50) as motherskucode,
 	filename::varchar(100) as filename,
 	run_id::varchar(50) as run_id,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm,
+	crt_dttm::timestamp_ntz(9) as crt_dttm,
     convert_timezone('UTC', 'Asia/Kolkata', current_timestamp())::timestamp_ntz(9) as updt_dttm
     from
     (select *, row_number() over (partition by distrcode,salesmancode,motherskucode order by createddt desc)  rn 

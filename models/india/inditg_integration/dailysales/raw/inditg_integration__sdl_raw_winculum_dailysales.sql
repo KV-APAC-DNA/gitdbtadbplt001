@@ -21,7 +21,7 @@ final as
 	tax::number(38,6) as tax,
 	filename::varchar(100) as filename,
 	run_id::number(14,0) as run_id,
-	current_timestamp()::timestamp_ntz(9) as crtd_dttm    	
+	crtd_dttm::timestamp_ntz(9) as crtd_dttm   	
     
     from source
     {% if is_incremental() %}

@@ -25,7 +25,7 @@ final as
 	tax::number(38,6) as tax,
 	filename::varchar(100) as filename,
 	run_id::number(14,0) as run_id,
-    current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+    crtd_dttm::timestamp_ntz(9) as crtd_dttm,
     convert_timezone('Asia/Singapore', CURRENT_TIMESTAMP())::timestamp_ntz(9) as updt_dttm
     from sdl_winculum_dailysales
 )
