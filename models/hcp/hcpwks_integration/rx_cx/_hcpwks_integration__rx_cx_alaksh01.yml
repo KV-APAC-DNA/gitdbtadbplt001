@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpwks_integration__rx_cx_pre_rpt_tbl
-    config:
-      alias: rx_cx_pre_rpt_tbl
-      tags: ["in_rx_to_cx_datamart","transformation"]
