@@ -21,4 +21,8 @@ sources:
         tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_kokya_subskey_mapping
         tags: ["m_dcl_itg_job6","transformation"]
+      - name: sfmc_sent  
+        tags: ["m_dcl_itg_job1","ingestion"]
+      - name: sfmc_unsubs  
+        tags: ["m_dcl_itg_job1","ingestion"]
 

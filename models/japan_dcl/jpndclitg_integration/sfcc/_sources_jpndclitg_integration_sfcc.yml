@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      
+      - name: sfcc_product_category
+        tags: ["m_dcl_itg_job5","ingestion"]
+      
+      - name: sfcc_product_mst
+        tags: ["m_dcl_itg_job5","ingestion"]

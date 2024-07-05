@@ -31,3 +31,13 @@ models:
     config: 
       alias: sfmc_sendjobs
       tags: ["m_dcl_itg_job6","transformation"]
+
+  - name: jpndclitg_integration__sfmc_sent
+    config:
+      alias: sfmc_sent
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__sfmc_unsubs
+    config:
+      alias: sfmc_unsubs
+      tags: ["m_DCL_ITG_Job1","ingestion"]

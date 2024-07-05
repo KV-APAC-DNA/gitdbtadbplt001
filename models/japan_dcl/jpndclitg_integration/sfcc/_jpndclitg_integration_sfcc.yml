@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  
+  - name: jpndclitg_integration__sfcc_product_category
+    config: 
+      alias: sfcc_product_category
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__sfcc_product_mst
+    config: 
+      alias: sfcc_product_mst
+      tags: ["m_DCL_ITG_Job3","ingestion"]

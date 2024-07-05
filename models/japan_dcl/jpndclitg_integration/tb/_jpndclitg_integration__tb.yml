@@ -1,121 +1,6 @@
 version: 2
 
 models:
-
-  - name: jpndclitg_integration__c_tbecinquiremeisai
-    config:
-      alias: c_tbecinquiremeisai
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbeckesai
-    config:
-      alias: c_tbeckesai
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbeckesaihistory
-    config:
-      alias: c_tbeckesaihistory
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecorderhistory
-    config:
-      alias: c_tbecorderhistory
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecordermeisaihistory
-    config:
-      alias: c_tbecordermeisaihistory
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpaymentpatternmst
-    config:
-      alias: c_tbecpaymentpatternmst
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpointadm
-    config:
-      alias: c_tbecpointadm
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpointregistdivmst
-    config:
-      alias: c_tbecpointregistdivmst
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpribuycategory
-    config:
-      alias: c_tbecpribuycategory
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpribuyitem
-    config:
-      alias: c_tbecpribuyitem
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecprimembclass
-    config:
-      alias: c_tbecprimembclass
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpripresentitem
-    config:
-      alias: c_tbecpripresentitem
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpriroute
-    config:
-      alias: c_tbecpriroute
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecpriusrsts
-    config:
-      alias: c_tbecpriusrsts
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecprivilegeinquirekesai
-    config:
-      alias: c_tbecprivilegeinquirekesai
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecprivilegekesai
-    config:
-      alias: c_tbecprivilegekesai
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecprivilegemst
-    config:
-      alias: c_tbecprivilegemst
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecrankaddamountadm
-    config:
-      alias: c_tbecrankaddamountadm
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecranksumamount
-    config:
-      alias: c_tbecranksumamount
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecregularoperatehist
-    config:
-      alias: c_tbecregularoperatehist
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecusrcomment
-    config:
-      alias: c_tbecusrcomment
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbecusrcommentclassmst
-    config:
-      alias: c_tbecusrcommentclassmst
-      tags: ["", "transformation"]
-      
-  - name: jpndclitg_integration__c_tbtelcompanymst
-    config:
-      alias: c_tbtelcompanymst
-      tags: ["", "transformation"]
       
   - name: jpndclitg_integration__tbechenpinriyu
     config:
@@ -146,3 +31,43 @@ models:
     config:
       alias: tbuser
       tags: ["", "transformation"]
+
+  - name: jpndclitg_integration__tbperson
+    config:
+      alias: tbecitem
+      tags: ["m_dcl_itg_job2","transformation"]
+
+  - name: jpndclitg_integration__tbusrpram
+    config:
+      alias: tbusrpram 
+      tags: ["m_dcl_itg_job2","transformation"]
+
+  - name: jpndclitg_integration__tbecpointhistory
+    config:
+      alias: tbecpointhistory
+      tags: ["m_dcl_itg_job2","transformation"]
+
+  - name: jpndclitg_integration__tbecitem
+    config:
+      alias: tbecitem
+      tags: ["m_dcl_itg_job3","transformation"]
+
+  - name: jpndclitg_integration__tbecordermeisai
+    config:
+      alias: tbecordermeisai
+      tags: ["m_dcl_itg_job3","transformation"]
+  
+  - name: jpndclitg_integration__tbecorder 
+    config:
+      alias: tbecorder 
+      tags: ["m_dcl_itg_job3","transformation"]
+
+  - name: jpndclitg_integration__tbecorderhist
+    config:
+      alias: tbecorderhist
+      tags: ["m_dcl_itg_job3","transformation"]
+
+  - name: jpndclitg_integration__tbecsetitem
+    config: 
+      alias: tbecsetitem
+      tags: ["m_dcl_itg_job3","transformation"]
