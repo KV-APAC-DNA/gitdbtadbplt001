@@ -4,44 +4,44 @@ models:
   - name: sgpitg_interation__sdl_raw_pop6_sg_tasks
     config:
         alias: sdl_raw_pop6_sg_tasks
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_interation__sdl_raw_pop6_sg_sku_audits
     config:
         alias: sdl_raw_pop6_sg_sku_audits
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_interation__sdl_raw_pop6_sg_product_attribute_audits
     config:
         alias: sdl_raw_pop6_sg_product_attribute_audits
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_interation__sdl_raw_pop6_sg_general_audits
     config:
         alias: sdl_raw_pop6_sg_general_audits
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_display_plans
     config:
         alias: sdl_raw_pop6_sg_display_plans
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_displays
     config:
         alias: sdl_raw_pop6_sg_displays
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_executed_visits
     config:
         alias: sdl_raw_pop6_sg_executed_visits
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_planned_visits
     config:
         alias: sdl_raw_pop6_sg_planned_visits
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_promotion_plans
     config:
         alias: sdl_raw_pop6_sg_promotion_plans
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_promotions
     config:
         alias: sdl_raw_pop6_sg_promotions
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]
   - name: sgpitg_integration__sdl_raw_pop6_sg_service_levels
     config:
         alias: sdl_raw_pop6_sg_service_levels
-        tags: ["",""]
+        tags: ["pop6_sg_transaction","ingestion"]

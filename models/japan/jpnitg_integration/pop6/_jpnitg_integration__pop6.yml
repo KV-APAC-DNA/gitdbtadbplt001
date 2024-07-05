@@ -4,54 +4,48 @@ models:
   - name: jpnitg_interation__sdl_raw_pop6_jp_promotion_plans
     config:
         alias: sdl_raw_pop6_jp_promotion_plans
-        tags: ["",""]
+        tags: ["pop6_jp_transaction","ingestion"]
   - name: jpnitg_interation__sdl_raw_pop6_jp_promotions
     config:
         alias: sdl_raw_pop6_jp_promotions
-        tags: ["",""]
+        tags: ["pop6_jp_transaction","ingestion"]
   - name: jpnitg_interation__sdl_raw_pop6_jp_tasks
     config:
         alias: sdl_raw_pop6_jp_tasks
-        tags: ["",""]
+        tags: ["pop6_jp_transaction","ingestion"]
   - name: jpnitg_interation__sdl_raw_pop6_jp_exclusion
     config:
         alias: sdl_raw_pop6_jp_exclusion
-        tags: ["",""]
+        tags: ["pop6_jp_transaction","ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_planned_visits
     config: 
         alias: sdl_raw_pop6_jp_planned_visits
-        tags: ['pop6_jp_master', 'ingestion']
-
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_executed_visits
     config: 
         alias: sdl_raw_pop6_jp_executed_visits
-        tags: ['pop6_jp_master', 'ingestion']
-
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_sku_audits
     config: 
         alias: sdl_raw_pop6_jp_sku_audits
-        tags: ['pop6_jp_master', 'ingestion']
-
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_product_attribute_audits
     config: 
         alias: sdl_raw_pop6_jp_product_attribute_audits
-        tags: ['pop6_jp_master', 'ingestion']
-  
+        tags: ["pop6_jp_transaction", "ingestion"]  
   - name: jpnitg_integration__sdl_raw_pop6_jp_general_audits
     config: 
         alias: sdl_raw_pop6_jp_general_audits
-        tags: ['pop6_jp_master', 'ingestion']
-
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_display_plans
     config: 
         alias: sdl_raw_pop6_jp_display_plans
-        tags: ['pop6_jp_master', 'ingestion']
-
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_displays
     config: 
         alias: sdl_raw_pop6_jp_displays
-        tags: ['pop6_jp_master', 'ingestion']
+        tags: ["pop6_jp_transaction", "ingestion"]
   - name: jpnitg_integration__sdl_raw_pop6_jp_service_levels
     config: 
         alias: sdl_raw_pop6_jp_service_levels
-        tags: ['pop6_jp_transaction', 'ingestion']
+        tags: ["pop6_jp_transaction", "ingestion"]

@@ -36,11 +36,11 @@ models:
   - name: aspedw_integration__v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier
     config:
       alias: v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier
-      tags: ["","transformation"]  
+      tags: ["north_asia_views","transformation"]  
   - name: aspedw_integration__v_slsc_tgtg_items_customer
     config:
       alias: v_slsc_tgtg_items_customer
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: aspedw_integration__v_bi_survey_response_values
     config:
       alias: v_bi_survey_response_values

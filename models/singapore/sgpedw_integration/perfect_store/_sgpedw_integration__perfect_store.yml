@@ -4,4 +4,4 @@ models:
   - name: sgpedw_integration__v_rpt_sg_pop6_perfect_store
     config: 
         alias: v_rpt_sg_pop6_perfect_store
-        tags: ['north_asia_views', 'transformation']
+        tags: ['pop6_views', 'transformation']
