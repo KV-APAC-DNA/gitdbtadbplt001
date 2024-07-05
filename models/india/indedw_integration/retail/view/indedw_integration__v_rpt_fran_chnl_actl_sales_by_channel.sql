@@ -18,7 +18,7 @@ edw_customer_dim as
 ),
 v_retail_frnch_categ_mapping as
 (
-    select * from indedw_integration.v_retail_frnch_categ_mapping
+    select * from {{ ref('indedw_integration__v_retail_frnch_categ_mapping') }}
 ),
 v_retail_fran_chanl as
 (
@@ -30,7 +30,7 @@ itg_mds_msku_internal_product_mapping_ka as
 ),
 itg_mds_in_key_accounts_mapping as
 (
-    select * from inditg_integration.itg_mds_in_key_accounts_mapping
+    select * from {{ ref('inditg_integration__itg_mds_in_key_accounts_mapping') }}
 ),
 edw_billing_fact as
 (

@@ -26,7 +26,7 @@ edw_retailer_calendar_dim as
 ),
 edw_route_dim as
 (
-    select * from indedw_integration.edw_route_dim
+    select * from {{ ref('indedw_integration__edw_route_dim') }}
 ),
 edw_retailer_dim as
 (

@@ -6,7 +6,7 @@
 
 with v_rpt_ka_sales as
 (
-    select * from indedw_integration.v_rpt_ka_sales
+    select * from {{ ref('indedw_integration__v_rpt_ka_sales') }}
 ),
 edw_vw_pos_offtake as
 (

@@ -6,15 +6,15 @@
 
 with edw_ka_sales_fact as
 (
-    select * from indedw_integration.edw_ka_sales_fact
+    select * from {{ ref('indedw_integration__edw_ka_sales_fact') }}
 ),
 edw_key_account_dim as
 (
-    select * from indedw_integration.edw_key_account_dim
+    select * from {{ ref('indedw_integration__edw_key_account_dim') }}
 ),
 v_product_dim as
 (
-    select * from indedw_integration.v_product_dim
+    select * from {{ ref('indedw_integration__v_product_dim') }}
 ),
 edw_retailer_calendar_dim as
 (
@@ -26,7 +26,7 @@ itg_mds_in_businessplan_brand as
 ),
 itg_mds_in_key_accounts_mapping as
 (
-    select * from inditg_integration.itg_mds_in_key_accounts_mapping
+    select * from {{ ref('inditg_integration__itg_mds_in_key_accounts_mapping') }}
 ),
 itg_mds_msku_internal_product_mapping_ka as
 (

@@ -1,14 +1,14 @@
 with itg_orderbooking as 
 (
-    select * from inditg_integration.itg_orderbooking
+    select * from {{ ref('inditg_integration__itg_orderbooking') }}
 ),
 itg_salesinvoiceorders as
 (
-    select * from inditg_integration.itg_salesinvoiceorders
+    select * from {{ ref('inditg_integration__itg_salesinvoiceorders') }}
 ),
 itg_retailermaster as
 (
-    select * from inditg_integration.itg_retailermaster
+    select * from {{ ref('inditg_integration__itg_retailermaster') }}
 ),
 final as
 (
