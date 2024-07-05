@@ -14,13 +14,11 @@ itg_mds_in_hcp_sales_rep_mapping as(
 	select * from snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping
 ),
 v_invoice_tde as(
-	select * from {{ ref('indedw_integration__v_invoice_tde') }}
-    --snapindedw_integration.v_invoice_tde
-),
+	select * from snapindedw_integration.v_invoice_tde
+),    
 itg_mds_in_hcp_sales_hierarchy_mapping as(
-	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
-    --snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping
-),--hcp
+	select * from snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping
+),    --{{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
 sales_data as
 (
 	select

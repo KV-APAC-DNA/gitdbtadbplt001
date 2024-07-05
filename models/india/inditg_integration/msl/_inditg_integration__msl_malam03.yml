@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_sku_recom_flag_msl_spike_mi
+    config: 
+      alias: itg_sku_recom_flag_msl_spike_mi
+      tags: ["in_skurecom_mslspike_mi_datamart","transformation"]
