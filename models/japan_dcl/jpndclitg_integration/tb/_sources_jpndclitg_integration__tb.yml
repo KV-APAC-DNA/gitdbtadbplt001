@@ -9,64 +9,43 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: c_tbecinquiremeisai
-        tags: ["","transformation"]
-      - name: c_tbeckesai
-        tags: ["","transformation"]
-      - name: c_tbecpaymentpatternmst
-        tags: ["","transformation"]
-      - name: c_tbecprivilegekesai
-        tags: ["","transformation"]
-      - name: c_tbecprivilegemst
-        tags: ["","transformation"]
-      - name: c_tbecrankaddamountadm
-        tags: ["","transformation"]
+     
       - name: tbechenpinriyu
         tags: ["","transformation"]
-      - name: c_tbecprivilegeinquirekesai
-        tags: ["","transformation"]
-      - name: c_tbecpointadm
-        tags: ["","transformation"]
+  
       - name: tbecsalesroutemst
         tags: ["","transformation"]
-      - name: c_tbecranksumamount
-        tags: ["","transformation"]
+      
       - name: tbecsoko
         tags: ["","transformation"]
-      - name: c_tbecordermeisaihistory
-        tags: ["","transformation"]
-      - name: c_tbeckesaihistory
-        tags: ["","transformation"]
-      - name: c_tbecorderhistory
-        tags: ["","transformation"]
-      - name: c_tbecusrcomment
-        tags: ["","transformation"]
+      
       - name: tbpromotion
         tags: ["","transformation"]
-      - name: c_tbecusrcommentclassmst
-        tags: ["","transformation"]
-      - name: c_tbtelcompanymst
-        tags: ["","transformation"]
-      - name: c_tbecpointregistdivmst
-        tags: ["","transformation"]
-      - name: c_tbecregularoperatehist
-        tags: ["","transformation"]
-      - name: c_tbecpribuycategory
-        tags: ["","transformation"]
-      - name: c_tbecprimembclass
-        tags: ["","transformation"]
-      - name: c_tbecpripresentitem
-        tags: ["","transformation"]
-      - name: c_tbecpribuyitem
-        tags: ["","transformation"]
-      - name: c_tbecpriroute
-        tags: ["","transformation"]
-      - name: c_tbecpriusrsts
-        tags: ["","transformation"]
+      
       - name: tbpromotioncate
         tags: ["","transformation"]
       - name: tbuser
         tags: ["","transformation"]
+      - name: tbperson
+        tags: ["m_dcl_itg_job2","ingestion"]
+
+      - name: tbusrpram  
+        tags: ["m_dcl_itg_job2","ingestion"]
+      
+      - name: tbecpointhistory  
+        tags: ["m_dcl_itg_job2","ingestion"]
+
+      - name: tbecitem
+        tags: ["m_dcl_itg_job3","ingestion"]
+
+      - name: tbecordermeisai
+        tags: ["m_dcl_itg_job3","ingestion"]
+
+      - name: tbecorder  
+        tags: ["m_dcl_itg_job3","ingestion"]
+
+      - name: tbecsetitem
+        tags: ["m_dcl_itg_job3","ingestion"]
 
   - name: jpndcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
