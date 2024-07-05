@@ -501,21 +501,3 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
-    japan_dcl:
-      config:
-        +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
-      jpndcledw_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPDCLEDW_INTEGRATION
-      jpndclitg_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPDCLITG_INTEGRATION
-      jpndclwks_integration:
-        +materialized: table
-        +schema: JPDCLWKS_INTEGRATION
-      jpndcledw_access:
-        +materialized: view
-        +schema: JPDCLEDW_ACCESS
