@@ -3,7 +3,7 @@ version: 2
 sources:  
   - name: jpndclsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapjpdclsdl_raw
+    schema: jpdclsdl_raw
     quoting:
       database: false
       schema: false
@@ -49,7 +49,7 @@ sources:
 
   - name: jpndcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpdcledw_integration
+    schema: jpdcledw_integration
     quoting:
       database: false
       schema: false

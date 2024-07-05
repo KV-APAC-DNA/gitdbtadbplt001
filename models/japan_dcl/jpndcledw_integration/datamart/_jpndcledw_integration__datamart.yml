@@ -170,3 +170,13 @@ models:
     config:
       alias: kesaiid_dummy
       tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_mv_kizuna
+    config:
+      alias: kesai_h_data_mart_mv_kizuna
+      tags: ["","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_kizuna
+    config:
+      alias: kesai_m_data_mart_mv_kizuna
+      tags: ["","transformation"]
