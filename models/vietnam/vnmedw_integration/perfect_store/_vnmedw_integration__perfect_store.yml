@@ -4,4 +4,4 @@ models:
   - name: phledw_integration__v_rpt_vn_perfect_store
     config: 
         alias: v_rpt_vn_perfect_store
-        tags: ["north_asia_views","transformation"]
+        tags: ["pop6_views","transformation"]

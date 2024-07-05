@@ -3,60 +3,60 @@ models:
   - name: mysitg_integration__itg_my_perfectstore_osa
     config:
       alias: itg_my_perfectstore_osa
-      tags: [""]
+      tags: ["my_perfect_store_transaction","ingestion"]
   - name: mysitg_integration__itg_my_perfectstore_sku_mst
     config:
       alias: itg_my_perfectstore_sku_mst
-      tags: [""]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_osa
-    config:
-      alias: sdl_raw_my_perfectstore_osa
-      tags: [""]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_sku_mst
-    config:
-      alias: sdl_raw_my_perfectstore_sku_mst
-      tags: [""]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_oos
-    config:
-      alias: sdl_raw_my_perfectstore_oos
-      tags: ["my_perfect_store_transaction","transformation"]
+      tags: ["my_perfect_store_master","ingestion"]
   - name: mysitg_integration__itg_my_perfectstore_oos
     config:
       alias: itg_my_perfectstore_oos
-      tags: ["my_perfect_store_transaction","transformation"]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_promocomp
-    config:
-      alias: sdl_raw_my_perfectstore_promocomp
-      tags: ["my_perfect_store_transaction","transformation"]
+      tags: ["my_perfect_store_transaction","ingestion"]
   - name: mysitg_integration__itg_my_perfectstore_promocomp
     config:
       alias: itg_my_perfectstore_promocomp
-      tags: ["my_perfect_store_transaction","transformation"]
+      tags: ["my_perfect_store_transaction","ingestion"]
   - name: mysitg_integration__itg_mds_my_ps_msl
     config:
       alias: itg_mds_my_ps_msl
-      tags: ["my_perfect_store_mds_itg_refresh","transformation"]
+      tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
   - name: mysitg_integration__itg_mds_my_ps_targets
     config:
       alias: itg_mds_my_ps_targets
-      tags: ["my_perfect_store_mds_itg_refresh","transformation"]
+      tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
   - name: mysitg_integration__itg_mds_my_ps_weights
     config:
       alias: itg_mds_my_ps_weights
-      tags: ["my_perfect_store_mds_itg_refresh","transformation"]
+      tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
   - name: mysitg_integration__itg_my_perfectstore_outlet_mst
     config:
       alias: itg_my_perfectstore_outlet_mst
-      tags: ["","transformation"]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_outlet_mst
-    config:
-      alias: sdl_raw_my_perfectstore_outlet_mst
-      tags: ["","transformation"]
-  - name: mysitg_integration__sdl_raw_my_perfectstore_sos
-    config:
-      alias: sdl_raw_my_perfectstore_sos
-      tags: ["","transformation"]
+      tags: ["my_perfect_store_master","ingestion"]
   - name: mysitg_integration__itg_my_perfectstore_sos
     config:
       alias: itg_my_perfectstore_sos
-      tags: ["","transformation"]
+      tags: ["my_perfect_store_master","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_osa
+    config:
+      alias: sdl_raw_my_perfectstore_osa
+      tags: ["my_perfect_store_transaction","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_sku_mst
+    config:
+      alias: sdl_raw_my_perfectstore_sku_mst
+      tags: ["my_perfect_store_transaction","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_oos
+    config:
+      alias: sdl_raw_my_perfectstore_oos
+      tags: ["my_perfect_store_transaction","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_promocomp
+    config:
+      alias: sdl_raw_my_perfectstore_promocomp
+      tags: ["my_perfect_store_transaction","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_outlet_mst
+    config:
+      alias: sdl_raw_my_perfectstore_outlet_mst
+      tags: ["my_perfect_store_master","ingestion"]
+  - name: mysitg_integration__sdl_raw_my_perfectstore_sos
+    config:
+      alias: sdl_raw_my_perfectstore_sos
+      tags: ["my_perfect_store_transaction","ingestion"]
