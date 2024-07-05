@@ -29,13 +29,13 @@
                      EAN
               FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_LOTTE_AK_GT_SELLOUT
               
-            --   UNION ALL
+              UNION ALL
               
-            --   SELECT TO_DATE(replace(IMS_TXN_DT,'.','-'), 'YYYY-MM-DD'),
-            --          UPPER(DSTR_NM),
-            --          CUST_CD,
-            --          EAN
-            --   FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
+              SELECT TO_DATE(replace(IMS_TXN_DT,'.','-'), 'YYYY-MM-DD'),
+                     UPPER(DSTR_NM),
+                     CUST_CD,
+                     EAN
+              FROM DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_KR_JU_HJ_LIFE_GT_SELLOUT
               
               UNION ALL
               
@@ -253,6 +253,47 @@ FROM SDL_KR_HYUNDAI_GT_SELLOUT SHG
                      AND UPPER (PP.CNTRY_CD) = UPPER (PA.CNTRY)
              WHERE UPPER(PP.CNTRY_CD) = 'KR'
              AND   UPPER(PP.ACTIVE) = 'Y') RPT ON SHG.EAN = RPT.EANNUMBER
+),
+ju_hj_life as (
+SELECT TO_DATE(replace(JHL.IMS_TXN_DT,'.','-'), 'YYYY-MM-DD') AS IMS_TXN_DT,
+  'NA' AS DSTR_CD,
+  JHL.DSTR_NM,
+  JHL.CUST_CD,
+  RCT.CUST_NM,
+  RPT.MATERIALNUMBER AS PROD_CD,
+  RPT.PRODUCTNAME AS PROD_NM,
+  JHL.EAN AS EAN_NUM,
+  CAST(REPLACE(JHL.UNIT, ',', '') AS NUMERIC(21, 5)) AS UNIT_PRC,
+  (REPLACE(JHL.UNIT, ',', '') * CAST(JHL.QTY AS NUMERIC(21, 5))) AS SLS_AMT,
+  CAST(JHL.QTY AS INTEGER) SLS_QTY,
+  IFS.SUB_CUSTOMER_CODE,
+  JHL.SUB_CUSTOMER_NAME,
+  'KR' AS CTRY_CD,
+  'KRW' AS CRNCY_CD,
+  current_timestamp() AS CRT_DTTM,
+  current_timestamp() AS UPDT_DTTM,
+  null as SALES_PRIORITY,
+       null as sales_stores,
+       null as sales_rate
+FROM SDL_KR_JU_HJ_LIFE_GT_SELLOUT JHL
+LEFT JOIN ITG_KR_GT_FOOD_WS IFS ON JHL.CUST_CD = IFS.CUSTOMER_CODE
+  AND JHL.SUB_CUSTOMER_NAME = IFS.SUB_CUSTOMER_NAME
+LEFT JOIN (
+  SELECT DISTINCT CUST_NUM AS CUST_CD,
+    CUST_NM
+  FROM EDW_CUSTOMER_BASE_DIM
+  ) RCT ON JHL.CUST_CD = LTRIM(RCT.CUST_CD, 0)
+LEFT JOIN (
+  SELECT DISTINCT PP.CNTRY_CD,
+    PP.BARCODE AS EANNUMBER,
+    PA.SAP_MATL_NUM AS MATERIALNUMBER,
+    PP.SKU_ENGLISH AS PRODUCTNAME
+  FROM ITG_POP6_PRODUCTS PP
+  LEFT JOIN EDW_PRODUCT_ATTR_DIM PA ON PP.BARCODE = PA.EAN
+    AND UPPER(PP.CNTRY_CD) = UPPER(PA.CNTRY)
+  WHERE UPPER(PP.CNTRY_CD) = 'KR'
+    AND UPPER(PP.ACTIVE) = 'Y'
+  ) RPT ON JHL.EAN = RPT.EANNUMBER
 ),
 lotte as (
 SELECT TO_DATE(SLA.IMS_TXN_DT||'15','YYYYMMDD') AS IMS_TXN_DT,
@@ -777,5 +818,7 @@ union all
 select * from nh
 union all
 select * from otc
+union all
+select * from ju_hj_life
 )
 select * from final
