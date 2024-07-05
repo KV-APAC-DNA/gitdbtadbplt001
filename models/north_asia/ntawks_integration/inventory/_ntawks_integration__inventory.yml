@@ -63,7 +63,7 @@ models:
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
   - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxstock
     config:
-      alias: s_tw_ims_dstr_std_stock_134478_pxstock
+      alias: wks_tw_ims_dstr_std_stock_134478_pxstock
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
   - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxstore
     config:
@@ -92,19 +92,19 @@ models:
   - name: ntawks_integration__wks_edw_ims_invnt_std
     config:
       alias: wks_edw_ims_invnt_std
-      tags: ["",""]
+      tags: ["tw_ims_distributor_standard_stock","transformation"]
   - name: ntawks_integration__wks_itg_ims_invnt
     config:
       alias: wks_itg_ims_invnt
-      tags: ["",""]
+      tags: ["na_trxn_ims_inv","ingestion"]
   - name: ntawks_integration__wks_itg_ims_invnt_std
     config:
       alias: wks_itg_ims_invnt_std
-      tags: ["",""]
+      tags: ["tw_ims_distributor_standard_stock","transformation"]
   - name: ntawks_integration__wks_edw_ims_invnt
     config:
       alias: wks_edw_ims_invnt
-      tags: ["","transformation"]
+      tags: ["na_trxn_ims_inv","transformation"]
   - name: ntawks_integration__taiwan_propagate_from_to
     config:
       alias: taiwan_propagate_from_to
@@ -184,4 +184,8 @@ models:
   - name: ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis
     config:
       alias: wks_hk_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_sellout_for_inv_analysis
+    config:
+      alias: wks_hk_sellout_for_inv_analysis
       tags: ["j_ap_ph_reg_data_refresh","transformation"]

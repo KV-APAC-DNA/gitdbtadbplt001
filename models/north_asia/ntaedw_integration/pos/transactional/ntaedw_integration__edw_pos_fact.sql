@@ -76,7 +76,7 @@
                    "{% if is_incremental() %}
                     delete
                     from {{this}}
-                    where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_fact_1') }})
+                    where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_fact') }})
                     and   upper(hist_flg) =  'N';
                     {% endif %}",
                     "{% if is_incremental() %}
@@ -99,7 +99,7 @@
 
 
 with wks_edw_pos_fact as (
-    select * from {{ ref('ntawks_integration__wks_edw_pos_fact_1') }}
+    select * from {{ ref('ntawks_integration__wks_edw_pos_fact') }}
 ),
 wks_pos_fact_korea_pcmap as (
     select * from {{ ref('ntawks_integration__wks_pos_fact_korea_pcmap') }}
