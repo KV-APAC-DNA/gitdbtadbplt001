@@ -666,7 +666,7 @@ WITH itg_mds_ph_pos_pricelist AS (
                         WHERE ACTIVE = 'Y'
                             AND UPPER(CUST_CD) = 'PSC'
                     ) IPPPD,
-                    prod_dna_load.phlsdl_raw.SDL_PH_POS_711 SPM
+                    SDL_PH_POS_711 SPM
                 WHERE UPPER(TRIM(IPPPD.CUST_ITEM_CD(+))) = UPPER(TRIM(SPM.ITEM_CD))
                     AND IPPPD.MNTH_ID(+) = SPM.MNTH_ID
             ) as SALES,
