@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_fin_sim_copa_trans_fact
+    config:
+      alias: wks_fin_sim_copa_trans_fact
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp1
+    config:
+      alias: wks_fin_sim_base_temp1
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp2
+    config:
+      alias: wks_fin_sim_base_temp2
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp3
+    config:
+      alias: wks_fin_sim_base_temp3
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp4
+    config:
+      alias: wks_fin_sim_base_temp4
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp5
+    config:
+      alias: wks_fin_sim_base_temp5
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp6
+    config:
+      alias: wks_fin_sim_base_temp6
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp7
+    config:
+      alias: wks_fin_sim_base_temp7
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp8
+    config:
+      alias: wks_fin_sim_base_temp8
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp9
+    config:
+      alias: wks_fin_sim_base_temp9
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp10
+    config:
+      alias: wks_fin_sim_base_temp10
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp11
+    config:
+      alias: wks_fin_sim_base_temp11
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp12
+    config:
+      alias: wks_fin_sim_base_temp12
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp13
+    config:
+      alias: wks_fin_sim_base_temp13
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base_temp14
+    config:
+      alias: wks_fin_sim_base_temp14
+      tags: ["in_finance_simulator_datamart","transformation"]
+  - name: indwks_integration__wks_fin_sim_base
+    config:
+      alias: wks_fin_sim_base
+      tags: ["in_finance_simulator_datamart","transformation"]
