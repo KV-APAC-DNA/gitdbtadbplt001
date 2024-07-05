@@ -1,3 +1,8 @@
+{{ 
+    config(materialized='table', 
+    transient=true,
+    cluster_by=['jj_year']) 
+    }}
 with edw_time_dim as
 (
     select * from {{ source('pcfedw_integration', 'edw_time_dim') }}

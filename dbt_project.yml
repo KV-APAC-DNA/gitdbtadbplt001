@@ -284,6 +284,7 @@ models:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       pcfedw_integration:
+        +automatic_clustering: true
         +materialized: table
         +transient: false
         +schema: PCFEDW_INTEGRATION
