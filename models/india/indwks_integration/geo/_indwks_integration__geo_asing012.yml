@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_geotag_salescube_base
+    config:
+      alias: wks_geotag_salescube_base
+      tags: ["in_geo_tagg_datamart","transformation"]
+  - name: indwks_integration__wks_geotag_udc_program
+    config:
+      alias: wks_geotag_udc_program
+      tags: ["in_geo_tagg_datamart","transformation"]
+  - name: indwks_integration__wks_geotag_final_integ
+    config:
+      alias: wks_geotag_final_integ
+      tags: ["in_geo_tagg_datamart","transformation"]

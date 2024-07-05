@@ -1,0 +1,2338 @@
+{{
+    config(
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+    )
+}}
+with 
+edw_retailer_dim as 
+(
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
+),
+edw_customer_dim as 
+(
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
+),
+edw_product_dim as 
+(
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
+),
+edw_dailysales_fact as 
+(
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
+),
+edw_retailer_calendar_dim as 
+(
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+),
+itg_sku_recom_orangestoretarget as 
+(
+    select * from {{ ref('inditg_integration__itg_sku_recom_orangestoretarget') }}
+),
+itg_xdm_salesmanskulinemapping as 
+(
+    select * from {{ ref('inditg_integration__itg_xdm_salesmanskulinemapping') }}
+),
+itg_in_rcustomerroute as 
+(
+    select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }}
+),
+itg_in_rroute as 
+(
+    select * from {{ ref('inditg_integration__itg_in_rroute') }}
+),
+itg_in_rsalesman as 
+(
+    select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
+),
+itg_in_rsalesmanroute as 
+(
+    select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
+),
+itg_udcmaster as 
+(
+    select * from {{ ref('inditg_integration__itg_udcmaster') }}
+),
+itg_sku_recom_flag as 
+(
+    select * from {{ ref('inditg_integration__itg_sku_recom_flag') }}
+),
+itg_udcdetails as 
+(
+    select * from {{ ref('inditg_integration__itg_udcdetails') }}
+),
+final as 
+(
+SELECT 
+    inn.customer_code,
+    inn.retailer_code,
+    inn.product_code,
+    inn.mothersku_code,
+    inn.salesman_code,
+    inn.route_code,
+    inn.rtruniquecode,
+    inn.customer_name,
+    inn.region_name,
+    inn.zone_name,
+    inn.territory_name,
+    inn.class_desc,
+    inn.channel_name,
+    inn.business_channel,
+    inn.status_desc,
+    inn.product_name,
+    inn.franchise_name,
+    inn.brand_name,
+    inn.product_category_name,
+    inn.variant_name,
+    inn.mothersku_name,
+    inn.mth_mm,
+    inn.qtr,
+    inn.fisc_yr,
+    inn.month,
+    inn.retailer_name,
+    inn.salesman_name,
+    inn.unique_sales_code,
+    inn.route_name,
+    inn.quantity,
+    inn.achievement_nr_val,
+    inn.achievement_amt,
+    inn.num_packs,
+    inn.num_lines,
+    inn.retailer_category_name,
+    inn.csrtrcode,
+    inn.target_oos,
+    inn.target_ms,
+    inn.target_cs,
+    inn.target_soq,
+    inn.hit_oos_flag,
+    inn.hit_ms_flag,
+    inn.hit_cs_flag,
+    inn.ms_target_sku_name,
+    inn.cs_target_sku_name,
+    COALESCE(
+        (
+            orng.percentage / ((100)::numeric)::numeric(18, 0)
+        ),
+        0.35
+    ) AS orange_percentage
+FROM (
+        (
+            SELECT sku.customer_code,
+                sku.retailer_code,
+                sku.product_code,
+                sku.mothersku_code,
+                sku.salesman_code,
+                sku.route_code,
+                sku.rtruniquecode,
+                sku.customer_name,
+                sku.region_name,
+                sku.zone_name,
+                sku.territory_name,
+                sku.class_desc,
+                sku.channel_name,
+                sku.business_channel,
+                sku.status_desc,
+                sku.product_name,
+                sku.franchise_name,
+                sku.brand_name,
+                sku.product_category_name,
+                sku.variant_name,
+                sku.mothersku_name,
+                sku.mth_mm,
+                sku.qtr,
+                sku.fisc_yr,
+                sku.month,
+                sku.retailer_name,
+                sku.salesman_name,
+                sku.unique_sales_code,
+                sku.route_name,
+                sku.quantity,
+                sku.achievement_nr_val,
+                sku.achievement_amt,
+                sku.num_packs,
+                sku.num_lines,
+                sku.retailer_category_name,
+                sku.csrtrcode,
+                sku.target_oos,
+                sku.target_ms,
+                sku.target_cs,
+                sku.target_soq,
+                CASE
+                    WHEN (
+                        (
+                            (sku.target_oos)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_oos)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sku.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_oos)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_oos_flag,
+                CASE
+                    WHEN (
+                        (
+                            (sku.target_ms)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_ms)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sku.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_ms)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_ms_flag,
+                CASE
+                    WHEN (
+                        (
+                            (sku.target_cs)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_cs)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sku.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.target_cs)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sku.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_cs_flag,
+                NULL::character varying AS ms_target_sku_name,
+                NULL::character varying AS cs_target_sku_name
+            FROM (
+                    (
+                        (
+                            (
+                                SELECT sku.cust_cd AS customer_code,
+                                    sku.retailer_cd AS retailer_code,
+                                    sku.mother_sku_cd AS mothersku_code,
+                                    sku.mnth_id,
+                                    sales.product_code,
+                                    sku.mother_sku_cd,
+                                    rm.smcode AS salesman_code,
+                                    rm.rmcode AS route_code,
+                                    rd.rtruniquecode,
+                                    cud.customer_name,
+                                    cud.region_name,
+                                    cud.zone_name,
+                                    cud.territory_name,
+                                    rd.class_desc,
+                                    rd.channel_name,
+                                    rd.business_channel,
+                                    rd.status_desc,
+                                    sales.product_name,
+                                    pd_dim.franchise_name,
+                                    pd_dim.brand_name,
+                                    pd_dim.product_category_name,
+                                    pd_dim.variant_name,
+                                    pd_dim.mothersku_name,
+                                    cd.mth_mm,
+                                    cd.qtr,
+                                    cd.fisc_yr,
+                                    cd.month_nm_shrt AS month,
+                                    rd.retailer_name,
+                                    rm.smname AS salesman_name,
+                                    rm.uniquesalescode AS unique_sales_code,
+                                    rm.rmname AS route_name,
+                                    sales.quantity,
+                                    sales.achievement_nr_val,
+                                    sales.achievement_amt,
+                                    sales.num_packs,
+                                    sales.num_lines,
+                                    rd.retailer_category_name,
+                                    rd.csrtrcode,
+                                    sku.oos_flag AS target_oos,
+                                    sku.ms_flag AS target_ms,
+                                    sku.cs_flag AS target_cs,
+                                    sku.soq AS target_soq,
+                                    rd.rn,
+                                    udc.columnvalue
+                                FROM (
+                                        (
+                                            (
+                                                (
+                                                    (
+                                                        (
+                                                            (
+                                                                (
+                                                                    SELECT itg_sku_recom_flag.mnth_id,
+                                                                        itg_sku_recom_flag.mother_sku_cd,
+                                                                        itg_sku_recom_flag.dist_outlet_cd,
+                                                                        itg_sku_recom_flag.cust_cd,
+                                                                        itg_sku_recom_flag.oos_flag,
+                                                                        itg_sku_recom_flag.ms_flag,
+                                                                        itg_sku_recom_flag.cs_flag,
+                                                                        itg_sku_recom_flag.soq,
+                                                                        itg_sku_recom_flag.unique_ret_cd,
+                                                                        itg_sku_recom_flag.retailer_cd,
+                                                                        itg_sku_recom_flag.route_code,
+                                                                        itg_sku_recom_flag.salesman_code,
+                                                                        itg_sku_recom_flag.crtd_dttm
+                                                                    FROM itg_sku_recom_flag
+                                                                    WHERE (
+                                                                            NOT (
+                                                                                (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                                OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                                            )
+                                                                        )
+                                                                ) sku
+                                                                LEFT JOIN edw_customer_dim cud ON (
+                                                                    (
+                                                                        (
+                                                                            COALESCE(cud.customer_code, '0'::character varying)
+                                                                        )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                    )
+                                                                )
+                                                            )
+                                                            JOIN (
+                                                                SELECT udc_1.distcode,
+                                                                    udc_1.mastervaluecode,
+                                                                    udc_1.mastervaluename,
+                                                                    udc_1.columnname,
+                                                                    udc_1.columnvalue,
+                                                                    udc_1.rn
+                                                                FROM (
+                                                                        SELECT itg_udcdetails.distcode,
+                                                                            itg_udcdetails.mastervaluecode,
+                                                                            upper((itg_udcdetails.mastervaluename)::text) AS mastervaluename,
+                                                                            itg_udcdetails.columnname,
+                                                                            CASE
+                                                                                WHEN (
+                                                                                    (itg_udcdetails.columnvalue IS NULL)
+                                                                                    OR (
+                                                                                        trim((itg_udcdetails.columnvalue)::text) = (''::character varying)::text
+                                                                                    )
+                                                                                ) THEN (NULL::character varying)::text
+                                                                                ELSE upper((itg_udcdetails.columnvalue)::text)
+                                                                            END AS columnvalue,
+                                                                            row_number() OVER(
+                                                                                PARTITION BY itg_udcdetails.distcode,
+                                                                                itg_udcdetails.mastervaluecode,
+                                                                                itg_udcdetails.columnname
+                                                                                ORDER BY itg_udcdetails.createddate DESC,
+                                                                                    itg_udcdetails.columnvalue DESC NULLS LAST
+                                                                            ) AS rn
+                                                                        FROM (
+                                                                                itg_udcdetails itg_udcdetails
+                                                                                LEFT JOIN itg_udcmaster udcmaster ON (
+                                                                                    (
+                                                                                        (itg_udcdetails.columnname)::text = (udcmaster.columnname)::text
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        WHERE (
+                                                                                (
+                                                                                    (
+                                                                                        (itg_udcdetails.mastername)::text = ('Retailer Master'::character varying)::text
+                                                                                    )
+                                                                                    AND (udcmaster.udcstatus = 1)
+                                                                                )
+                                                                                AND (
+                                                                                    (itg_udcdetails.columnname)::text = ('New GTM'::character varying)::text
+                                                                                )
+                                                                            )
+                                                                    ) udc_1
+                                                                WHERE (udc_1.rn = 1)
+                                                            ) udc ON (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (COALESCE(udc.distcode, '0'::character varying))::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                        )
+                                                                        AND (
+                                                                            (
+                                                                                COALESCE(udc.mastervaluecode, '0'::character varying)
+                                                                            )::text = (
+                                                                                COALESCE(sku.retailer_cd, '0'::character varying)
+                                                                            )::text
+                                                                        )
+                                                                    )
+                                                                    AND (
+                                                                        upper(udc.columnvalue) = ('YES'::character varying)::text
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                        LEFT JOIN (
+                                                            SELECT edw_retailer_dim.retailer_code,
+                                                                edw_retailer_dim.start_date,
+                                                                edw_retailer_dim.end_date,
+                                                                edw_retailer_dim.customer_code,
+                                                                edw_retailer_dim.customer_name,
+                                                                edw_retailer_dim.retailer_name,
+                                                                edw_retailer_dim.retailer_address1,
+                                                                edw_retailer_dim.retailer_address2,
+                                                                edw_retailer_dim.retailer_address3,
+                                                                edw_retailer_dim.region_code,
+                                                                edw_retailer_dim.region_name,
+                                                                edw_retailer_dim.zone_code,
+                                                                edw_retailer_dim.zone_name,
+                                                                edw_retailer_dim.zone_classification,
+                                                                edw_retailer_dim.territory_code,
+                                                                edw_retailer_dim.territory_name,
+                                                                edw_retailer_dim.territory_classification,
+                                                                edw_retailer_dim.state_code,
+                                                                edw_retailer_dim.state_name,
+                                                                edw_retailer_dim.town_code,
+                                                                edw_retailer_dim.town_name,
+                                                                edw_retailer_dim.town_classification,
+                                                                edw_retailer_dim.class_code,
+                                                                edw_retailer_dim.class_desc,
+                                                                edw_retailer_dim.outlet_type,
+                                                                edw_retailer_dim.channel_code,
+                                                                edw_retailer_dim.channel_name,
+                                                                edw_retailer_dim.business_channel,
+                                                                edw_retailer_dim.loyalty_desc,
+                                                                edw_retailer_dim.registration_date,
+                                                                edw_retailer_dim.status_cd,
+                                                                edw_retailer_dim.status_desc,
+                                                                edw_retailer_dim.csrtrcode,
+                                                                edw_retailer_dim.crt_dttm,
+                                                                edw_retailer_dim.updt_dttm,
+                                                                edw_retailer_dim.actv_flg,
+                                                                edw_retailer_dim.retailer_category_cd,
+                                                                edw_retailer_dim.retailer_category_name,
+                                                                edw_retailer_dim.rtrlatitude,
+                                                                edw_retailer_dim.rtrlongitude,
+                                                                edw_retailer_dim.rtruniquecode,
+                                                                edw_retailer_dim.createddate,
+                                                                edw_retailer_dim.file_rec_dt,
+                                                                row_number() OVER(
+                                                                    PARTITION BY edw_retailer_dim.customer_code,
+                                                                    edw_retailer_dim.retailer_code
+                                                                    ORDER BY edw_retailer_dim.end_date DESC
+                                                                ) AS rn
+                                                            FROM edw_retailer_dim
+                                                        ) rd ON (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        COALESCE(rd.retailer_code, '0'::character varying)
+                                                                    )::text = (
+                                                                        COALESCE(sku.retailer_cd, '0'::character varying)
+                                                                    )::text
+                                                                )
+                                                                AND (
+                                                                    (
+                                                                        COALESCE(rd.customer_code, '0'::character varying)
+                                                                    )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                    LEFT JOIN (
+                                                        SELECT edw_retailer_calendar_dim.mth_mm,
+                                                            edw_retailer_calendar_dim.fisc_yr,
+                                                            edw_retailer_calendar_dim.month_nm_shrt,
+                                                            edw_retailer_calendar_dim.qtr
+                                                        FROM edw_retailer_calendar_dim
+                                                        GROUP BY edw_retailer_calendar_dim.mth_mm,
+                                                            edw_retailer_calendar_dim.fisc_yr,
+                                                            edw_retailer_calendar_dim.month_nm_shrt,
+                                                            edw_retailer_calendar_dim.qtr
+                                                    ) cd ON (
+                                                        (
+                                                            ((cd.mth_mm)::character varying)::text = (sku.mnth_id)::text
+                                                        )
+                                                    )
+                                                )
+                                                LEFT JOIN (
+                                                    SELECT sf.customer_code,
+                                                        sf.retailer_code,
+                                                        pd.product_name,
+                                                        sf.product_code AS num_packs,
+                                                        pd.franchise_name,
+                                                        pd.brand_name,
+                                                        pd.product_category_name,
+                                                        pd.variant_name,
+                                                        pd.mothersku_name,
+                                                        sf.retailer_name,
+                                                        sf.quantity,
+                                                        sf.nr_value,
+                                                        sf.no_of_lines AS num_lines,
+                                                        sf.achievement_nr_val,
+                                                        sf.achievement_amt,
+                                                        sf.product_code,
+                                                        pd.mothersku_code,
+                                                        cd.mth_mm AS year_mo
+                                                    FROM (
+                                                            (
+                                                                edw_dailysales_fact sf
+                                                                LEFT JOIN edw_product_dim pd ON (
+                                                                    (
+                                                                        (sf.product_code)::text = (pd.product_code)::text
+                                                                    )
+                                                                )
+                                                            )
+                                                            LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                                        )
+                                                ) sales ON (
+                                                    (
+                                                        (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        COALESCE(sales.mothersku_code, '0'::character varying)
+                                                                    )::text = (
+                                                                        COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                                    )::text
+                                                                )
+                                                                AND (
+                                                                    (
+                                                                        COALESCE(sales.customer_code, '0'::character varying)
+                                                                    )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                )
+                                                            )
+                                                            AND (
+                                                                (
+                                                                    COALESCE(sales.retailer_code, '0'::character varying)
+                                                                )::text = (
+                                                                    COALESCE(sku.retailer_cd, '0'::character varying)
+                                                                )::text
+                                                            )
+                                                        )
+                                                        AND (
+                                                            ((sales.year_mo)::character varying)::text = (sku.mnth_id)::text
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            LEFT JOIN (
+                                                SELECT DISTINCT edw_product_dim.franchise_name,
+                                                    edw_product_dim.brand_name,
+                                                    edw_product_dim.product_category_name,
+                                                    edw_product_dim.variant_name,
+                                                    edw_product_dim.mothersku_code,
+                                                    edw_product_dim.mothersku_name
+                                                FROM edw_product_dim
+                                            ) pd_dim ON (
+                                                (
+                                                    (
+                                                        COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                                    )::text = (
+                                                        COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                    )::text
+                                                )
+                                            )
+                                        )
+                                        LEFT JOIN (
+                                            SELECT cr.distcode,
+                                                "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                                cr.rmcode,
+                                                r.rmname,
+                                                s.smcode,
+                                                s.smname,
+                                                s.status,
+                                                s.uniquesalescode
+                                            FROM itg_in_rcustomerroute cr,
+                                                itg_in_rroute r,
+                                                itg_in_rsalesmanroute rs,
+                                                itg_in_rsalesman s
+                                            WHERE (
+                                                    (
+                                                        (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            ((cr.routetype)::character(10) = 'S'::char)
+                                                                            AND ((cr.distcode)::text = (r.distcode)::text)
+                                                                        )
+                                                                        AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                                    )
+                                                                    AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                                )
+                                                                AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                            )
+                                                            AND ((s.distcode)::text = (rs.distrcode)::text)
+                                                        )
+                                                        AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                                    )
+                                                    AND ((s.status)::character(10) = 'Y'::char)
+                                                )
+                                        ) rm ON (
+                                            (
+                                                ((sku.cust_cd)::text = (rm.distcode)::text)
+                                                AND (
+                                                    (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                                )
+                                            )
+                                        )
+                                    )
+                            ) sku
+                            JOIN itg_xdm_salesmanskulinemapping msku ON (
+                                (
+                                    (
+                                        (
+                                            (sku.customer_code)::text = (msku.distrcode)::text
+                                        )
+                                        AND (
+                                            (sku.salesman_code)::text = (msku.salesmancode)::text
+                                        )
+                                    )
+                                    AND (
+                                        (sku.mother_sku_cd)::text = (msku.motherskucode)::text
+                                    )
+                                )
+                            )
+                        )
+                        LEFT JOIN (
+                            SELECT derived_table1.mnth_id,
+                                derived_table1.cust_cd,
+                                derived_table1.retailer_cd,
+                                listagg(
+                                    DISTINCT derived_table1.ms_mother_sku,
+                                    ','
+                                ) WITHIN GROUP(
+                                    ORDER BY derived_table1.ms_mother_sku
+                                ) AS ms_target_mother_sku
+                            FROM (
+                                    SELECT ms_target_calc_base.mnth_id,
+                                        ms_target_calc_base.cust_cd,
+                                        ms_target_calc_base.retailer_cd,
+                                        ms_target_calc_base.ms_flag,
+                                        sum(ms_target_calc_base.achievement_nr_val) AS sum,
+                                        CASE
+                                            WHEN (
+                                                (
+                                                    (ms_target_calc_base.ms_flag)::text = ('0'::character varying)::text
+                                                )
+                                                AND (
+                                                    sum(ms_target_calc_base.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '0'::character varying
+                                            WHEN (
+                                                (
+                                                    (ms_target_calc_base.ms_flag)::text = ('1'::character varying)::text
+                                                )
+                                                AND (
+                                                    COALESCE(
+                                                        sum(ms_target_calc_base.achievement_nr_val),
+                                                        ((0)::numeric)::numeric(18, 0)
+                                                    ) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '0'::character varying
+                                            WHEN (
+                                                (
+                                                    (ms_target_calc_base.ms_flag)::text = ('1'::character varying)::text
+                                                )
+                                                AND (
+                                                    sum(ms_target_calc_base.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '1'::character varying
+                                            ELSE (0)::character varying
+                                        END AS hit_ms_flag,
+                                        CASE
+                                            WHEN (
+                                                (
+                                                    (ms_target_calc_base.ms_flag)::text = ((1)::character varying)::text
+                                                )
+                                                AND (
+                                                    (
+                                                        CASE
+                                                            WHEN (
+                                                                (
+                                                                    (ms_target_calc_base.ms_flag)::text = ('0'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    sum(ms_target_calc_base.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '0'::character varying
+                                                            WHEN (
+                                                                (
+                                                                    (ms_target_calc_base.ms_flag)::text = ('1'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    COALESCE(
+                                                                        sum(ms_target_calc_base.achievement_nr_val),
+                                                                        ((0)::numeric)::numeric(18, 0)
+                                                                    ) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '0'::character varying
+                                                            WHEN (
+                                                                (
+                                                                    (ms_target_calc_base.ms_flag)::text = ('1'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    sum(ms_target_calc_base.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '1'::character varying
+                                                            ELSE (0)::character varying
+                                                        END
+                                                    )::text = ((0)::character varying)::text
+                                                )
+                                            ) THEN ms_target_calc_base.mothersku_name
+                                            ELSE NULL::character varying
+                                        END AS ms_mother_sku
+                                    FROM (
+                                            (
+                                                SELECT sku.mnth_id,
+                                                    sku.cust_cd,
+                                                    sku.retailer_cd,
+                                                    dsf.achievement_nr_val,
+                                                    sku.ms_flag,
+                                                    pd_dim.mothersku_name,
+                                                    sku.mother_sku_cd,
+                                                    rm.smcode
+                                                FROM (
+                                                        (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        SELECT itg_sku_recom_flag.mnth_id,
+                                                                            itg_sku_recom_flag.mother_sku_cd,
+                                                                            itg_sku_recom_flag.dist_outlet_cd,
+                                                                            itg_sku_recom_flag.cust_cd,
+                                                                            itg_sku_recom_flag.oos_flag,
+                                                                            itg_sku_recom_flag.ms_flag,
+                                                                            itg_sku_recom_flag.cs_flag,
+                                                                            itg_sku_recom_flag.soq,
+                                                                            itg_sku_recom_flag.unique_ret_cd,
+                                                                            itg_sku_recom_flag.retailer_cd,
+                                                                            itg_sku_recom_flag.route_code,
+                                                                            itg_sku_recom_flag.salesman_code,
+                                                                            itg_sku_recom_flag.crtd_dttm
+                                                                        FROM itg_sku_recom_flag
+                                                                        WHERE (
+                                                                                NOT (
+                                                                                    (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                                    OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                                                )
+                                                                            )
+                                                                    ) sku
+                                                                    JOIN (
+                                                                        SELECT udc_1.distcode,
+                                                                            udc_1.mastervaluecode,
+                                                                            udc_1.mastervaluename,
+                                                                            udc_1.columnname,
+                                                                            udc_1.columnvalue,
+                                                                            udc_1.rn
+                                                                        FROM (
+                                                                                SELECT itg_udcdetails.distcode,
+                                                                                    itg_udcdetails.mastervaluecode,
+                                                                                    upper((itg_udcdetails.mastervaluename)::text) AS mastervaluename,
+                                                                                    itg_udcdetails.columnname,
+                                                                                    CASE
+                                                                                        WHEN (
+                                                                                            (itg_udcdetails.columnvalue IS NULL)
+                                                                                            OR (
+                                                                                                trim((itg_udcdetails.columnvalue)::text) = (''::character varying)::text
+                                                                                            )
+                                                                                        ) THEN (NULL::character varying)::text
+                                                                                        ELSE upper((itg_udcdetails.columnvalue)::text)
+                                                                                    END AS columnvalue,
+                                                                                    row_number() OVER(
+                                                                                        PARTITION BY itg_udcdetails.distcode,
+                                                                                        itg_udcdetails.mastervaluecode,
+                                                                                        itg_udcdetails.columnname
+                                                                                        ORDER BY itg_udcdetails.createddate DESC,
+                                                                                            itg_udcdetails.columnvalue DESC NULLS LAST
+                                                                                    ) AS rn
+                                                                                FROM (
+                                                                                        itg_udcdetails itg_udcdetails
+                                                                                        LEFT JOIN itg_udcmaster udcmaster ON (
+                                                                                            (
+                                                                                                (itg_udcdetails.columnname)::text = (udcmaster.columnname)::text
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                WHERE (
+                                                                                        (
+                                                                                            (
+                                                                                                (itg_udcdetails.mastername)::text = ('Retailer Master'::character varying)::text
+                                                                                            )
+                                                                                            AND (udcmaster.udcstatus = 1)
+                                                                                        )
+                                                                                        AND (
+                                                                                            (itg_udcdetails.columnname)::text = ('New GTM'::character varying)::text
+                                                                                        )
+                                                                                    )
+                                                                            ) udc_1
+                                                                        WHERE (udc_1.rn = 1)
+                                                                    ) udc ON (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    (COALESCE(udc.distcode, '0'::character varying))::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                                )
+                                                                                AND (
+                                                                                    (
+                                                                                        COALESCE(udc.mastervaluecode, '0'::character varying)
+                                                                                    )::text = (
+                                                                                        COALESCE(sku.retailer_cd, '0'::character varying)
+                                                                                    )::text
+                                                                                )
+                                                                            )
+                                                                            AND (
+                                                                                upper(udc.columnvalue) = ('YES'::character varying)::text
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                LEFT JOIN (
+                                                                    SELECT cr.distcode,
+                                                                        "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                                                        cr.rmcode,
+                                                                        r.rmname,
+                                                                        s.smcode,
+                                                                        s.smname,
+                                                                        s.status,
+                                                                        s.uniquesalescode
+                                                                    FROM itg_in_rcustomerroute cr,
+                                                                        itg_in_rroute r,
+                                                                        itg_in_rsalesmanroute rs,
+                                                                        itg_in_rsalesman s
+                                                                    WHERE (
+                                                                            (
+                                                                                (
+                                                                                    (
+                                                                                        (
+                                                                                            (
+                                                                                                (
+                                                                                                    ((cr.routetype)::character(10) = 'S'::char)
+                                                                                                    AND ((cr.distcode)::text = (r.distcode)::text)
+                                                                                                )
+                                                                                                AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                                                            )
+                                                                                            AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                                                        )
+                                                                                        AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                                                    )
+                                                                                    AND ((s.distcode)::text = (rs.distrcode)::text)
+                                                                                )
+                                                                                AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                                                            )
+                                                                            AND ((s.status)::character(10) = 'Y'::char)
+                                                                        )
+                                                                ) rm ON (
+                                                                    (
+                                                                        ((sku.cust_cd)::text = (rm.distcode)::text)
+                                                                        AND (
+                                                                            (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                            LEFT JOIN (
+                                                                SELECT sf.customer_code,
+                                                                    sf.retailer_code,
+                                                                    pd.product_name,
+                                                                    sf.product_code AS num_packs,
+                                                                    pd.franchise_name,
+                                                                    pd.brand_name,
+                                                                    pd.product_category_name,
+                                                                    pd.variant_name,
+                                                                    pd.mothersku_name,
+                                                                    sf.retailer_name,
+                                                                    sf.salesman_name,
+                                                                    sf.salesman_code,
+                                                                    sf.route_name,
+                                                                    sf.route_code,
+                                                                    sf.quantity,
+                                                                    sf.nr_value,
+                                                                    sf.no_of_lines AS num_lines,
+                                                                    sf.achievement_nr_val,
+                                                                    sf.achievement_amt,
+                                                                    sf.product_code,
+                                                                    pd.mothersku_code,
+                                                                    cd.mth_mm AS month_id
+                                                                FROM (
+                                                                        (
+                                                                            edw_dailysales_fact sf
+                                                                            LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                                                        )
+                                                                        LEFT JOIN edw_product_dim pd ON (
+                                                                            (
+                                                                                (sf.product_code)::text = (pd.product_code)::text
+                                                                            )
+                                                                        )
+                                                                    )
+                                                            ) dsf ON (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    (
+                                                                                        (sku.mnth_id)::text = ((dsf.month_id)::character varying)::text
+                                                                                    )
+                                                                                    AND ((sku.cust_cd)::text = (dsf.customer_code)::text)
+                                                                                )
+                                                                                AND (
+                                                                                    (sku.retailer_cd)::text = (dsf.retailer_code)::text
+                                                                                )
+                                                                            )
+                                                                            AND ((rm.rmcode)::text = (dsf.route_code)::text)
+                                                                        )
+                                                                        AND ((rm.smcode)::text = (dsf.salesman_code)::text)
+                                                                    )
+                                                                    AND (
+                                                                        (
+                                                                            COALESCE(dsf.mothersku_code, '0'::character varying)
+                                                                        )::text = (
+                                                                            COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                                        )::text
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                        LEFT JOIN (
+                                                            SELECT DISTINCT edw_product_dim.franchise_name,
+                                                                edw_product_dim.brand_name,
+                                                                edw_product_dim.product_category_name,
+                                                                edw_product_dim.variant_name,
+                                                                edw_product_dim.mothersku_code,
+                                                                edw_product_dim.mothersku_name
+                                                            FROM edw_product_dim
+                                                        ) pd_dim ON (
+                                                            (
+                                                                (
+                                                                    COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                                                )::text = (
+                                                                    COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                                )::text
+                                                            )
+                                                        )
+                                                    )
+                                            ) ms_target_calc_base
+                                            JOIN itg_xdm_salesmanskulinemapping msku ON (
+                                                (
+                                                    (
+                                                        (
+                                                            (ms_target_calc_base.cust_cd)::text = (msku.distrcode)::text
+                                                        )
+                                                        AND (
+                                                            (ms_target_calc_base.smcode)::text = (msku.salesmancode)::text
+                                                        )
+                                                    )
+                                                    AND (
+                                                        (ms_target_calc_base.mother_sku_cd)::text = (msku.motherskucode)::text
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    GROUP BY ms_target_calc_base.mnth_id,
+                                        ms_target_calc_base.cust_cd,
+                                        ms_target_calc_base.retailer_cd,
+                                        ms_target_calc_base.ms_flag,
+                                        ms_target_calc_base.mothersku_name
+                                ) derived_table1
+                            GROUP BY derived_table1.mnth_id,
+                                derived_table1.cust_cd,
+                                derived_table1.retailer_cd
+                        ) ms_target_calc ON (
+                            (
+                                (
+                                    (
+                                        (ms_target_calc.cust_cd)::text = (sku.customer_code)::text
+                                    )
+                                    AND (
+                                        (ms_target_calc.retailer_cd)::text = (sku.retailer_code)::text
+                                    )
+                                )
+                                AND (
+                                    (ms_target_calc.mnth_id)::text = ((sku.mth_mm)::character varying)::text
+                                )
+                            )
+                        )
+                    )
+                    LEFT JOIN (
+                        SELECT derived_table2.mnth_id,
+                            derived_table2.cust_cd,
+                            derived_table2.retailer_cd,
+                            listagg(
+                                DISTINCT derived_table2.cs_mother_sku,
+                                ','
+                            ) WITHIN GROUP(
+                                ORDER BY derived_table2.cs_mother_sku
+                            ) AS cs_target_mother_sku
+                        FROM (
+                                SELECT cs_target_calc_base.mnth_id,
+                                    cs_target_calc_base.cust_cd,
+                                    cs_target_calc_base.retailer_cd,
+                                    cs_target_calc_base.cs_flag,
+                                    sum(cs_target_calc_base.achievement_nr_val) AS sum,
+                                    CASE
+                                        WHEN (
+                                            (
+                                                (cs_target_calc_base.cs_flag)::text = ('0'::character varying)::text
+                                            )
+                                            AND (
+                                                sum(cs_target_calc_base.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '0'::character varying
+                                        WHEN (
+                                            (
+                                                (cs_target_calc_base.cs_flag)::text = ('1'::character varying)::text
+                                            )
+                                            AND (
+                                                COALESCE(sum(cs_target_calc_base.achievement_nr_val),0) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '0'::character varying
+                                        WHEN (
+                                            (
+                                                (cs_target_calc_base.cs_flag)::text = ('1'::character varying)::text
+                                            )
+                                            AND (
+                                                sum(cs_target_calc_base.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '1'::character varying
+                                        ELSE (0)::character varying
+                                    END AS hit_cs_flag,
+                                    CASE
+                                        WHEN (
+                                            (
+                                                (cs_target_calc_base.cs_flag)::text = ((1)::character varying)::text
+                                            )
+                                            AND (
+                                                (
+                                                    CASE
+                                                        WHEN (
+                                                            (
+                                                                (cs_target_calc_base.cs_flag)::text = ('0'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                sum(cs_target_calc_base.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '0'::character varying
+                                                        WHEN (
+                                                            (
+                                                                (cs_target_calc_base.cs_flag)::text = ('1'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                COALESCE(sum(cs_target_calc_base.achievement_nr_val),0) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '0'::character varying
+                                                        WHEN (
+                                                            (
+                                                                (cs_target_calc_base.cs_flag)::text = ('1'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                sum(cs_target_calc_base.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '1'::character varying
+                                                        ELSE (0)::character varying
+                                                    END
+                                                )::text = ((0)::character varying)::text
+                                            )
+                                        ) THEN cs_target_calc_base.mothersku_name
+                                        ELSE NULL::character varying
+                                    END AS cs_mother_sku
+                                FROM (
+                                        (
+                                            SELECT sku.mnth_id,
+                                                sku.cust_cd,
+                                                sku.retailer_cd,
+                                                dsf.achievement_nr_val,
+                                                sku.cs_flag,
+                                                pd_dim.mothersku_name,
+                                                sku.mother_sku_cd,
+                                                rm.smcode
+                                            FROM (
+                                                    (
+                                                        (
+                                                            (
+                                                                (
+                                                                    SELECT itg_sku_recom_flag.mnth_id,
+                                                                        itg_sku_recom_flag.mother_sku_cd,
+                                                                        itg_sku_recom_flag.dist_outlet_cd,
+                                                                        itg_sku_recom_flag.cust_cd,
+                                                                        itg_sku_recom_flag.oos_flag,
+                                                                        itg_sku_recom_flag.ms_flag,
+                                                                        itg_sku_recom_flag.cs_flag,
+                                                                        itg_sku_recom_flag.soq,
+                                                                        itg_sku_recom_flag.unique_ret_cd,
+                                                                        itg_sku_recom_flag.retailer_cd,
+                                                                        itg_sku_recom_flag.route_code,
+                                                                        itg_sku_recom_flag.salesman_code,
+                                                                        itg_sku_recom_flag.crtd_dttm
+                                                                    FROM itg_sku_recom_flag
+                                                                    WHERE (
+                                                                            NOT (
+                                                                                (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                                OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                                            )
+                                                                        )
+                                                                ) sku
+                                                                JOIN (
+                                                                    SELECT udc_1.distcode,
+                                                                        udc_1.mastervaluecode,
+                                                                        udc_1.mastervaluename,
+                                                                        udc_1.columnname,
+                                                                        udc_1.columnvalue,
+                                                                        udc_1.rn
+                                                                    FROM (
+                                                                            SELECT itg_udcdetails.distcode,
+                                                                                itg_udcdetails.mastervaluecode,
+                                                                                upper((itg_udcdetails.mastervaluename)::text) AS mastervaluename,
+                                                                                itg_udcdetails.columnname,
+                                                                                CASE
+                                                                                    WHEN (
+                                                                                        (itg_udcdetails.columnvalue IS NULL)
+                                                                                        OR (
+                                                                                            trim((itg_udcdetails.columnvalue)::text) = (''::character varying)::text
+                                                                                        )
+                                                                                    ) THEN (NULL::character varying)::text
+                                                                                    ELSE upper((itg_udcdetails.columnvalue)::text)
+                                                                                END AS columnvalue,
+                                                                                row_number() OVER(
+                                                                                    PARTITION BY itg_udcdetails.distcode,
+                                                                                    itg_udcdetails.mastervaluecode,
+                                                                                    itg_udcdetails.columnname
+                                                                                    ORDER BY itg_udcdetails.createddate DESC,
+                                                                                        itg_udcdetails.columnvalue DESC NULLS LAST
+                                                                                ) AS rn
+                                                                            FROM (
+                                                                                    itg_udcdetails itg_udcdetails
+                                                                                    LEFT JOIN itg_udcmaster udcmaster ON (
+                                                                                        (
+                                                                                            (itg_udcdetails.columnname)::text = (udcmaster.columnname)::text
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            WHERE (
+                                                                                    (
+                                                                                        (
+                                                                                            (itg_udcdetails.mastername)::text = ('Retailer Master'::character varying)::text
+                                                                                        )
+                                                                                        AND (udcmaster.udcstatus = 1)
+                                                                                    )
+                                                                                    AND (
+                                                                                        (itg_udcdetails.columnname)::text = ('New GTM'::character varying)::text
+                                                                                    )
+                                                                                )
+                                                                        ) udc_1
+                                                                    WHERE (udc_1.rn = 1)
+                                                                ) udc ON (
+                                                                    (
+                                                                        (
+                                                                            (
+                                                                                (COALESCE(udc.distcode, '0'::character varying))::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                                            )
+                                                                            AND (
+                                                                                (
+                                                                                    COALESCE(udc.mastervaluecode, '0'::character varying)
+                                                                                )::text = (
+                                                                                    COALESCE(sku.retailer_cd, '0'::character varying)
+                                                                                )::text
+                                                                            )
+                                                                        )
+                                                                        AND (
+                                                                            upper(udc.columnvalue) = ('YES'::character varying)::text
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                            LEFT JOIN (
+                                                                SELECT cr.distcode,
+                                                                    "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                                                    cr.rmcode,
+                                                                    r.rmname,
+                                                                    s.smcode,
+                                                                    s.smname,
+                                                                    s.status,
+                                                                    s.uniquesalescode
+                                                                FROM itg_in_rcustomerroute cr,
+                                                                    itg_in_rroute r,
+                                                                    itg_in_rsalesmanroute rs,
+                                                                    itg_in_rsalesman s
+                                                                WHERE (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    (
+                                                                                        (
+                                                                                            (
+                                                                                                ((cr.routetype)::character(10) = 'S'::char)
+                                                                                                AND ((cr.distcode)::text = (r.distcode)::text)
+                                                                                            )
+                                                                                            AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                                                        )
+                                                                                        AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                                                    )
+                                                                                    AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                                                )
+                                                                                AND ((s.distcode)::text = (rs.distrcode)::text)
+                                                                            )
+                                                                            AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                                                        )
+                                                                        AND ((s.status)::character(10) = 'Y'::char)
+                                                                    )
+                                                            ) rm ON (
+                                                                (
+                                                                    ((sku.cust_cd)::text = (rm.distcode)::text)
+                                                                    AND (
+                                                                        (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                        LEFT JOIN (
+                                                            SELECT sf.customer_code,
+                                                                sf.retailer_code,
+                                                                pd.product_name,
+                                                                sf.product_code AS num_packs,
+                                                                pd.franchise_name,
+                                                                pd.brand_name,
+                                                                pd.product_category_name,
+                                                                pd.variant_name,
+                                                                pd.mothersku_name,
+                                                                sf.retailer_name,
+                                                                sf.salesman_name,
+                                                                sf.salesman_code,
+                                                                sf.route_name,
+                                                                sf.route_code,
+                                                                sf.quantity,
+                                                                sf.nr_value,
+                                                                sf.no_of_lines AS num_lines,
+                                                                sf.achievement_nr_val,
+                                                                sf.achievement_amt,
+                                                                sf.product_code,
+                                                                pd.mothersku_code,
+                                                                cd.mth_mm AS month_id
+                                                            FROM (
+                                                                    (
+                                                                        edw_dailysales_fact sf
+                                                                        LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                                                    )
+                                                                    LEFT JOIN edw_product_dim pd ON (
+                                                                        (
+                                                                            (sf.product_code)::text = (pd.product_code)::text
+                                                                        )
+                                                                    )
+                                                                )
+                                                        ) dsf ON (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    (sku.mnth_id)::text = ((dsf.month_id)::character varying)::text
+                                                                                )
+                                                                                AND ((sku.cust_cd)::text = (dsf.customer_code)::text)
+                                                                            )
+                                                                            AND (
+                                                                                (sku.retailer_cd)::text = (dsf.retailer_code)::text
+                                                                            )
+                                                                        )
+                                                                        AND ((rm.rmcode)::text = (dsf.route_code)::text)
+                                                                    )
+                                                                    AND ((rm.smcode)::text = (dsf.salesman_code)::text)
+                                                                )
+                                                                AND (
+                                                                    (
+                                                                        COALESCE(dsf.mothersku_code, '0'::character varying)
+                                                                    )::text = (
+                                                                        COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                                    )::text
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                    LEFT JOIN (
+                                                        SELECT DISTINCT edw_product_dim.franchise_name,
+                                                            edw_product_dim.brand_name,
+                                                            edw_product_dim.product_category_name,
+                                                            edw_product_dim.variant_name,
+                                                            edw_product_dim.mothersku_code,
+                                                            edw_product_dim.mothersku_name
+                                                        FROM edw_product_dim
+                                                    ) pd_dim ON (
+                                                        (
+                                                            (
+                                                                COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                                            )::text = (
+                                                                COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                            )::text
+                                                        )
+                                                    )
+                                                )
+                                        ) cs_target_calc_base
+                                        JOIN itg_xdm_salesmanskulinemapping msku ON (
+                                            (
+                                                (
+                                                    (
+                                                        (cs_target_calc_base.cust_cd)::text = (msku.distrcode)::text
+                                                    )
+                                                    AND (
+                                                        (cs_target_calc_base.smcode)::text = (msku.salesmancode)::text
+                                                    )
+                                                )
+                                                AND (
+                                                    (cs_target_calc_base.mother_sku_cd)::text = (msku.motherskucode)::text
+                                                )
+                                            )
+                                        )
+                                    )
+                                GROUP BY cs_target_calc_base.mnth_id,
+                                    cs_target_calc_base.cust_cd,
+                                    cs_target_calc_base.retailer_cd,
+                                    cs_target_calc_base.cs_flag,
+                                    cs_target_calc_base.mothersku_name
+                            ) derived_table2
+                        GROUP BY derived_table2.mnth_id,
+                            derived_table2.cust_cd,
+                            derived_table2.retailer_cd
+                    ) cs_target_calc ON (
+                        (
+                            (
+                                (
+                                    (cs_target_calc.cust_cd)::text = (sku.customer_code)::text
+                                )
+                                AND (
+                                    (cs_target_calc.retailer_cd)::text = (sku.retailer_code)::text
+                                )
+                            )
+                            AND (
+                                (cs_target_calc.mnth_id)::text = ((sku.mth_mm)::character varying)::text
+                            )
+                        )
+                    )
+                )
+            WHERE (sku.rn = 1)
+            UNION ALL
+            SELECT sku.cust_cd AS customer_code,
+                sku.retailer_cd AS retailer_code,
+                sales.product_code,
+                sku.mother_sku_cd AS mothersku_code,
+                rm.smcode AS salesman_code,
+                rm.rmcode AS route_code,
+                rd.rtruniquecode,
+                cud.customer_name,
+                cud.region_name,
+                cud.zone_name,
+                cud.territory_name,
+                rd.class_desc,
+                rd.channel_name,
+                rd.business_channel,
+                rd.status_desc,
+                sales.product_name,
+                pd_dim.franchise_name,
+                pd_dim.brand_name,
+                pd_dim.product_category_name,
+                pd_dim.variant_name,
+                pd_dim.mothersku_name,
+                cd.mth_mm,
+                cd.qtr,
+                cd.fisc_yr,
+                cd.month_nm_shrt AS month,
+                rd.retailer_name,
+                rm.smname AS salesman_name,
+                rm.uniquesalescode AS unique_sales_code,
+                rm.rmname AS route_name,
+                sales.quantity,
+                sales.achievement_nr_val,
+                sales.achievement_amt,
+                sales.num_packs,
+                sales.num_lines,
+                rd.retailer_category_name,
+                rd.csrtrcode,
+                sku.oos_flag AS target_oos,
+                sku.ms_flag AS target_ms,
+                sku.cs_flag AS target_cs,
+                sku.soq AS target_soq,
+                CASE
+                    WHEN (
+                        (
+                            (sku.oos_flag)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.oos_flag)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sales.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.oos_flag)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_oos_flag,
+                CASE
+                    WHEN (
+                        (
+                            (sku.ms_flag)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.ms_flag)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sales.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.ms_flag)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_ms_flag,
+                CASE
+                    WHEN (
+                        (
+                            (sku.cs_flag)::text = ('0'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.cs_flag)::text = ('1'::character varying)::text
+                        )
+                        AND COALESCE(
+                            (
+                                sales.achievement_nr_val <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                            ),0
+                        )
+                    ) THEN '0'::character varying
+                    WHEN (
+                        (
+                            (sku.cs_flag)::text = ('1'::character varying)::text
+                        )
+                        AND (
+                            sales.achievement_nr_val > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                        )
+                    ) THEN '1'::character varying
+                    ELSE (0)::character varying
+                END AS hit_cs_flag,
+                NULL::character varying AS ms_target_sku_name,
+                NULL::character varying AS cs_target_sku_name
+            FROM (
+                    (
+                        (
+                            (
+                                (
+                                    (
+                                        (
+                                            (
+                                                (
+                                                    (
+                                                        SELECT itg_sku_recom_flag.mnth_id,
+                                                            itg_sku_recom_flag.mother_sku_cd,
+                                                            itg_sku_recom_flag.dist_outlet_cd,
+                                                            itg_sku_recom_flag.cust_cd,
+                                                            itg_sku_recom_flag.oos_flag,
+                                                            itg_sku_recom_flag.ms_flag,
+                                                            itg_sku_recom_flag.cs_flag,
+                                                            itg_sku_recom_flag.soq,
+                                                            itg_sku_recom_flag.unique_ret_cd,
+                                                            itg_sku_recom_flag.retailer_cd,
+                                                            itg_sku_recom_flag.route_code,
+                                                            itg_sku_recom_flag.salesman_code,
+                                                            itg_sku_recom_flag.crtd_dttm
+                                                        FROM itg_sku_recom_flag
+                                                        WHERE (
+                                                                NOT (
+                                                                    (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                    OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                                )
+                                                            )
+                                                    ) sku
+                                                    LEFT JOIN edw_customer_dim cud ON (
+                                                        (
+                                                            (
+                                                                COALESCE(cud.customer_code, '0'::character varying)
+                                                            )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                        )
+                                                    )
+                                                )
+                                                LEFT JOIN (
+                                                    SELECT udc_1.distcode,
+                                                        udc_1.mastervaluecode,
+                                                        udc_1.mastervaluename,
+                                                        udc_1.columnname,
+                                                        udc_1.columnvalue,
+                                                        udc_1.rn
+                                                    FROM (
+                                                            SELECT itg_udcdetails.distcode,
+                                                                itg_udcdetails.mastervaluecode,
+                                                                upper((itg_udcdetails.mastervaluename)::text) AS mastervaluename,
+                                                                itg_udcdetails.columnname,
+                                                                CASE
+                                                                    WHEN (
+                                                                        (itg_udcdetails.columnvalue IS NULL)
+                                                                        OR (
+                                                                            trim((itg_udcdetails.columnvalue)::text) = (''::character varying)::text
+                                                                        )
+                                                                    ) THEN (NULL::character varying)::text
+                                                                    ELSE upper((itg_udcdetails.columnvalue)::text)
+                                                                END AS columnvalue,
+                                                                row_number() OVER(
+                                                                    PARTITION BY itg_udcdetails.distcode,
+                                                                    itg_udcdetails.mastervaluecode,
+                                                                    itg_udcdetails.columnname
+                                                                    ORDER BY itg_udcdetails.createddate DESC,
+                                                                        itg_udcdetails.columnvalue DESC NULLS LAST
+                                                                ) AS rn
+                                                            FROM (
+                                                                    itg_udcdetails itg_udcdetails
+                                                                    LEFT JOIN itg_udcmaster udcmaster ON (
+                                                                        (
+                                                                            (itg_udcdetails.columnname)::text = (udcmaster.columnname)::text
+                                                                        )
+                                                                    )
+                                                                )
+                                                            WHERE (
+                                                                    (
+                                                                        (
+                                                                            (itg_udcdetails.mastername)::text = ('Retailer Master'::character varying)::text
+                                                                        )
+                                                                        AND (udcmaster.udcstatus = 1)
+                                                                    )
+                                                                    AND (
+                                                                        (itg_udcdetails.columnname)::text = ('New GTM'::character varying)::text
+                                                                    )
+                                                                )
+                                                        ) udc_1
+                                                    WHERE (udc_1.rn = 1)
+                                                ) udc ON (
+                                                    (
+                                                        (
+                                                            (COALESCE(udc.distcode, '0'::character varying))::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                        )
+                                                        AND (
+                                                            (
+                                                                COALESCE(udc.mastervaluecode, '0'::character varying)
+                                                            )::text = (
+                                                                COALESCE(sku.retailer_cd, '0'::character varying)
+                                                            )::text
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            LEFT JOIN (
+                                                SELECT edw_retailer_dim.retailer_code,
+                                                    edw_retailer_dim.start_date,
+                                                    edw_retailer_dim.end_date,
+                                                    edw_retailer_dim.customer_code,
+                                                    edw_retailer_dim.customer_name,
+                                                    edw_retailer_dim.retailer_name,
+                                                    edw_retailer_dim.retailer_address1,
+                                                    edw_retailer_dim.retailer_address2,
+                                                    edw_retailer_dim.retailer_address3,
+                                                    edw_retailer_dim.region_code,
+                                                    edw_retailer_dim.region_name,
+                                                    edw_retailer_dim.zone_code,
+                                                    edw_retailer_dim.zone_name,
+                                                    edw_retailer_dim.zone_classification,
+                                                    edw_retailer_dim.territory_code,
+                                                    edw_retailer_dim.territory_name,
+                                                    edw_retailer_dim.territory_classification,
+                                                    edw_retailer_dim.state_code,
+                                                    edw_retailer_dim.state_name,
+                                                    edw_retailer_dim.town_code,
+                                                    edw_retailer_dim.town_name,
+                                                    edw_retailer_dim.town_classification,
+                                                    edw_retailer_dim.class_code,
+                                                    edw_retailer_dim.class_desc,
+                                                    edw_retailer_dim.outlet_type,
+                                                    edw_retailer_dim.channel_code,
+                                                    edw_retailer_dim.channel_name,
+                                                    edw_retailer_dim.business_channel,
+                                                    edw_retailer_dim.loyalty_desc,
+                                                    edw_retailer_dim.registration_date,
+                                                    edw_retailer_dim.status_cd,
+                                                    edw_retailer_dim.status_desc,
+                                                    edw_retailer_dim.csrtrcode,
+                                                    edw_retailer_dim.crt_dttm,
+                                                    edw_retailer_dim.updt_dttm,
+                                                    edw_retailer_dim.actv_flg,
+                                                    edw_retailer_dim.retailer_category_cd,
+                                                    edw_retailer_dim.retailer_category_name,
+                                                    edw_retailer_dim.rtrlatitude,
+                                                    edw_retailer_dim.rtrlongitude,
+                                                    edw_retailer_dim.rtruniquecode,
+                                                    edw_retailer_dim.createddate,
+                                                    edw_retailer_dim.file_rec_dt,
+                                                    row_number() OVER(
+                                                        PARTITION BY edw_retailer_dim.customer_code,
+                                                        edw_retailer_dim.retailer_code
+                                                        ORDER BY edw_retailer_dim.end_date DESC
+                                                    ) AS rn
+                                                FROM edw_retailer_dim
+                                            ) rd ON (
+                                                (
+                                                    (
+                                                        (
+                                                            COALESCE(rd.retailer_code, '0'::character varying)
+                                                        )::text = (
+                                                            COALESCE(sku.retailer_cd, '0'::character varying)
+                                                        )::text
+                                                    )
+                                                    AND (
+                                                        (
+                                                            COALESCE(rd.customer_code, '0'::character varying)
+                                                        )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                    )
+                                                )
+                                            )
+                                        )
+                                        LEFT JOIN (
+                                            SELECT edw_retailer_calendar_dim.mth_mm,
+                                                edw_retailer_calendar_dim.fisc_yr,
+                                                edw_retailer_calendar_dim.month_nm_shrt,
+                                                edw_retailer_calendar_dim.qtr
+                                            FROM edw_retailer_calendar_dim
+                                            GROUP BY edw_retailer_calendar_dim.mth_mm,
+                                                edw_retailer_calendar_dim.fisc_yr,
+                                                edw_retailer_calendar_dim.month_nm_shrt,
+                                                edw_retailer_calendar_dim.qtr
+                                        ) cd ON (
+                                            (
+                                                ((cd.mth_mm)::character varying)::text = (sku.mnth_id)::text
+                                            )
+                                        )
+                                    )
+                                    LEFT JOIN (
+                                        SELECT sf.customer_code,
+                                            sf.retailer_code,
+                                            pd.product_name,
+                                            sf.product_code AS num_packs,
+                                            pd.franchise_name,
+                                            pd.brand_name,
+                                            pd.product_category_name,
+                                            pd.variant_name,
+                                            pd.mothersku_name,
+                                            sf.retailer_name,
+                                            sf.quantity,
+                                            sf.nr_value,
+                                            sf.no_of_lines AS num_lines,
+                                            sf.achievement_nr_val,
+                                            sf.achievement_amt,
+                                            sf.product_code,
+                                            pd.mothersku_code,
+                                            cd.mth_mm AS year_mo
+                                        FROM (
+                                                (
+                                                    edw_dailysales_fact sf
+                                                    LEFT JOIN edw_product_dim pd ON (
+                                                        (
+                                                            (sf.product_code)::text = (pd.product_code)::text
+                                                        )
+                                                    )
+                                                )
+                                                LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                            )
+                                    ) sales ON (
+                                        (
+                                            (
+                                                (
+                                                    (
+                                                        (
+                                                            COALESCE(sales.mothersku_code, '0'::character varying)
+                                                        )::text = (
+                                                            COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                        )::text
+                                                    )
+                                                    AND (
+                                                        (
+                                                            COALESCE(sales.customer_code, '0'::character varying)
+                                                        )::text = (COALESCE(sku.cust_cd, '0'::character varying))::text
+                                                    )
+                                                )
+                                                AND (
+                                                    (
+                                                        COALESCE(sales.retailer_code, '0'::character varying)
+                                                    )::text = (
+                                                        COALESCE(sku.retailer_cd, '0'::character varying)
+                                                    )::text
+                                                )
+                                            )
+                                            AND (
+                                                ((sales.year_mo)::character varying)::text = (sku.mnth_id)::text
+                                            )
+                                        )
+                                    )
+                                )
+                                LEFT JOIN (
+                                    SELECT DISTINCT edw_product_dim.franchise_name,
+                                        edw_product_dim.brand_name,
+                                        edw_product_dim.product_category_name,
+                                        edw_product_dim.variant_name,
+                                        edw_product_dim.mothersku_code,
+                                        edw_product_dim.mothersku_name
+                                    FROM edw_product_dim
+                                ) pd_dim ON (
+                                    (
+                                        (
+                                            COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                        )::text = (
+                                            COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                        )::text
+                                    )
+                                )
+                            )
+                            LEFT JOIN (
+                                SELECT cr.distcode,
+                                    "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                    cr.rmcode,
+                                    r.rmname,
+                                    s.smcode,
+                                    s.smname,
+                                    s.status,
+                                    s.uniquesalescode
+                                FROM itg_in_rcustomerroute cr,
+                                    itg_in_rroute r,
+                                    itg_in_rsalesmanroute rs,
+                                    itg_in_rsalesman s
+                                WHERE (
+                                        (
+                                            (
+                                                (
+                                                    (
+                                                        (
+                                                            (
+                                                                ((cr.routetype)::character(10) = 'S'::char)
+                                                                AND ((cr.distcode)::text = (r.distcode)::text)
+                                                            )
+                                                            AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                        )
+                                                        AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                    )
+                                                    AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                )
+                                                AND ((s.distcode)::text = (rs.distrcode)::text)
+                                            )
+                                            AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                        )
+                                        AND ((s.status)::character(10) = 'Y'::char)
+                                    )
+                            ) rm ON (
+                                (
+                                    ((sku.cust_cd)::text = (rm.distcode)::text)
+                                    AND (
+                                        (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                    )
+                                )
+                            )
+                        )
+                        LEFT JOIN (
+                            SELECT derived_table1.mnth_id,
+                                derived_table1.cust_cd,
+                                derived_table1.retailer_cd,
+                                listagg(
+                                    DISTINCT derived_table1.ms_mother_sku,
+                                    ','
+                                ) WITHIN GROUP(
+                                    ORDER BY derived_table1.ms_mother_sku
+                                ) AS ms_target_mother_sku
+                            FROM (
+                                    SELECT sku.mnth_id,
+                                        sku.cust_cd,
+                                        sku.retailer_cd,
+                                        sku.ms_flag,
+                                        sum(dsf.achievement_nr_val) AS sum,
+                                        CASE
+                                            WHEN (
+                                                (
+                                                    (sku.ms_flag)::text = ('0'::character varying)::text
+                                                )
+                                                AND (
+                                                    sum(dsf.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '0'::character varying
+                                            WHEN (
+                                                (
+                                                    (sku.ms_flag)::text = ('1'::character varying)::text
+                                                )
+                                                AND (
+                                                    COALESCE(
+                                                        sum(dsf.achievement_nr_val),
+                                                        ((0)::numeric)::numeric(18, 0)
+                                                    ) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '0'::character varying
+                                            WHEN (
+                                                (
+                                                    (sku.ms_flag)::text = ('1'::character varying)::text
+                                                )
+                                                AND (
+                                                    sum(dsf.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                )
+                                            ) THEN '1'::character varying
+                                            ELSE (0)::character varying
+                                        END AS hit_ms_flag,
+                                        CASE
+                                            WHEN (
+                                                (
+                                                    (sku.ms_flag)::text = ((1)::character varying)::text
+                                                )
+                                                AND (
+                                                    (
+                                                        CASE
+                                                            WHEN (
+                                                                (
+                                                                    (sku.ms_flag)::text = ('0'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    sum(dsf.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '0'::character varying
+                                                            WHEN (
+                                                                (
+                                                                    (sku.ms_flag)::text = ('1'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    COALESCE(
+                                                                        sum(dsf.achievement_nr_val),
+                                                                        ((0)::numeric)::numeric(18, 0)
+                                                                    ) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '0'::character varying
+                                                            WHEN (
+                                                                (
+                                                                    (sku.ms_flag)::text = ('1'::character varying)::text
+                                                                )
+                                                                AND (
+                                                                    sum(dsf.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                                )
+                                                            ) THEN '1'::character varying
+                                                            ELSE (0)::character varying
+                                                        END
+                                                    )::text = ((0)::character varying)::text
+                                                )
+                                            ) THEN pd_dim.mothersku_name
+                                            ELSE NULL::character varying
+                                        END AS ms_mother_sku
+                                    FROM (
+                                            (
+                                                (
+                                                    (
+                                                        SELECT itg_sku_recom_flag.mnth_id,
+                                                            itg_sku_recom_flag.mother_sku_cd,
+                                                            itg_sku_recom_flag.dist_outlet_cd,
+                                                            itg_sku_recom_flag.cust_cd,
+                                                            itg_sku_recom_flag.oos_flag,
+                                                            itg_sku_recom_flag.ms_flag,
+                                                            itg_sku_recom_flag.cs_flag,
+                                                            itg_sku_recom_flag.soq,
+                                                            itg_sku_recom_flag.unique_ret_cd,
+                                                            itg_sku_recom_flag.retailer_cd,
+                                                            itg_sku_recom_flag.route_code,
+                                                            itg_sku_recom_flag.salesman_code,
+                                                            itg_sku_recom_flag.crtd_dttm
+                                                        FROM itg_sku_recom_flag
+                                                        WHERE (
+                                                                NOT (
+                                                                    (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                    OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                                )
+                                                            )
+                                                    ) sku
+                                                    LEFT JOIN (
+                                                        SELECT cr.distcode,
+                                                            "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                                            cr.rmcode,
+                                                            r.rmname,
+                                                            s.smcode,
+                                                            s.smname,
+                                                            s.status,
+                                                            s.uniquesalescode
+                                                        FROM itg_in_rcustomerroute cr,
+                                                            itg_in_rroute r,
+                                                            itg_in_rsalesmanroute rs,
+                                                            itg_in_rsalesman s
+                                                        WHERE (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    (
+                                                                                        ((cr.routetype)::character(10) = 'S'::char)
+                                                                                        AND ((cr.distcode)::text = (r.distcode)::text)
+                                                                                    )
+                                                                                    AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                                                )
+                                                                                AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                                            )
+                                                                            AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                                        )
+                                                                        AND ((s.distcode)::text = (rs.distrcode)::text)
+                                                                    )
+                                                                    AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                                                )
+                                                                AND ((s.status)::character(10) = 'Y'::char)
+                                                            )
+                                                    ) rm ON (
+                                                        (
+                                                            ((sku.cust_cd)::text = (rm.distcode)::text)
+                                                            AND (
+                                                                (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                                LEFT JOIN (
+                                                    SELECT sf.customer_code,
+                                                        sf.retailer_code,
+                                                        pd.product_name,
+                                                        sf.product_code AS num_packs,
+                                                        pd.franchise_name,
+                                                        pd.brand_name,
+                                                        pd.product_category_name,
+                                                        pd.variant_name,
+                                                        pd.mothersku_name,
+                                                        sf.retailer_name,
+                                                        sf.salesman_name,
+                                                        sf.salesman_code,
+                                                        sf.route_name,
+                                                        sf.route_code,
+                                                        sf.quantity,
+                                                        sf.nr_value,
+                                                        sf.no_of_lines AS num_lines,
+                                                        sf.achievement_nr_val,
+                                                        sf.achievement_amt,
+                                                        sf.product_code,
+                                                        pd.mothersku_code,
+                                                        cd.mth_mm AS month_id
+                                                    FROM (
+                                                            (
+                                                                edw_dailysales_fact sf
+                                                                LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                                            )
+                                                            LEFT JOIN edw_product_dim pd ON (
+                                                                (
+                                                                    (sf.product_code)::text = (pd.product_code)::text
+                                                                )
+                                                            )
+                                                        )
+                                                ) dsf ON (
+                                                    (
+                                                        (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (sku.mnth_id)::text = ((dsf.month_id)::character varying)::text
+                                                                        )
+                                                                        AND ((sku.cust_cd)::text = (dsf.customer_code)::text)
+                                                                    )
+                                                                    AND (
+                                                                        (sku.retailer_cd)::text = (dsf.retailer_code)::text
+                                                                    )
+                                                                )
+                                                                AND ((rm.rmcode)::text = (dsf.route_code)::text)
+                                                            )
+                                                            AND ((rm.smcode)::text = (dsf.salesman_code)::text)
+                                                        )
+                                                        AND (
+                                                            (
+                                                                COALESCE(dsf.mothersku_code, '0'::character varying)
+                                                            )::text = (
+                                                                COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                            )::text
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            LEFT JOIN (
+                                                SELECT DISTINCT edw_product_dim.franchise_name,
+                                                    edw_product_dim.brand_name,
+                                                    edw_product_dim.product_category_name,
+                                                    edw_product_dim.variant_name,
+                                                    edw_product_dim.mothersku_code,
+                                                    edw_product_dim.mothersku_name
+                                                FROM edw_product_dim
+                                            ) pd_dim ON (
+                                                (
+                                                    (
+                                                        COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                                    )::text = (
+                                                        COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                    )::text
+                                                )
+                                            )
+                                        )
+                                    GROUP BY sku.mnth_id,
+                                        sku.cust_cd,
+                                        sku.retailer_cd,
+                                        rm.rmcode,
+                                        rm.smcode,
+                                        sku.ms_flag,
+                                        pd_dim.mothersku_name
+                                ) derived_table1
+                            GROUP BY derived_table1.mnth_id,
+                                derived_table1.cust_cd,
+                                derived_table1.retailer_cd
+                        ) ms_target_calc ON (
+                            (
+                                (
+                                    (
+                                        (ms_target_calc.cust_cd)::text = (sku.cust_cd)::text
+                                    )
+                                    AND (
+                                        (ms_target_calc.retailer_cd)::text = (sku.retailer_cd)::text
+                                    )
+                                )
+                                AND (
+                                    (ms_target_calc.mnth_id)::text = (sku.mnth_id)::text
+                                )
+                            )
+                        )
+                    )
+                    LEFT JOIN (
+                        SELECT derived_table2.mnth_id,
+                            derived_table2.cust_cd,
+                            derived_table2.retailer_cd,
+                            listagg(
+                                DISTINCT derived_table2.cs_mother_sku,
+                                ','
+                            ) WITHIN GROUP(
+                                ORDER BY derived_table2.cs_mother_sku
+                            ) AS cs_target_mother_sku
+                        FROM (
+                                SELECT sku.mnth_id,
+                                    sku.cust_cd,
+                                    sku.retailer_cd,
+                                    rm.rmcode,
+                                    sku.cs_flag,
+                                    sum(dsf.achievement_nr_val) AS sum,
+                                    CASE
+                                        WHEN (
+                                            (
+                                                (sku.cs_flag)::text = ('0'::character varying)::text
+                                            )
+                                            AND (
+                                                sum(dsf.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '0'::character varying
+                                        WHEN (
+                                            (
+                                                (sku.cs_flag)::text = ('1'::character varying)::text
+                                            )
+                                            AND (
+                                                COALESCE(sum(dsf.achievement_nr_val),0) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '0'::character varying
+                                        WHEN (
+                                            (
+                                                (sku.cs_flag)::text = ('1'::character varying)::text
+                                            )
+                                            AND (
+                                                sum(dsf.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                            )
+                                        ) THEN '1'::character varying
+                                        ELSE (0)::character varying
+                                    END AS hit_cs_flag,
+                                    CASE
+                                        WHEN (
+                                            (
+                                                (sku.cs_flag)::text = ((1)::character varying)::text
+                                            )
+                                            AND (
+                                                (
+                                                    CASE
+                                                        WHEN (
+                                                            (
+                                                                (sku.cs_flag)::text = ('0'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                sum(dsf.achievement_nr_val) >= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '0'::character varying
+                                                        WHEN (
+                                                            (
+                                                                (sku.cs_flag)::text = ('1'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                COALESCE(sum(dsf.achievement_nr_val),0) <= (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '0'::character varying
+                                                        WHEN (
+                                                            (
+                                                                (sku.cs_flag)::text = ('1'::character varying)::text
+                                                            )
+                                                            AND (
+                                                                sum(dsf.achievement_nr_val) > (((0)::numeric)::numeric(18, 0))::numeric(38, 6)
+                                                            )
+                                                        ) THEN '1'::character varying
+                                                        ELSE (0)::character varying
+                                                    END
+                                                )::text = ((0)::character varying)::text
+                                            )
+                                        ) THEN pd_dim.mothersku_name
+                                        ELSE NULL::character varying
+                                    END AS cs_mother_sku
+                                FROM (
+                                        (
+                                            (
+                                                (
+                                                    SELECT itg_sku_recom_flag.mnth_id,
+                                                        itg_sku_recom_flag.mother_sku_cd,
+                                                        itg_sku_recom_flag.dist_outlet_cd,
+                                                        itg_sku_recom_flag.cust_cd,
+                                                        itg_sku_recom_flag.oos_flag,
+                                                        itg_sku_recom_flag.ms_flag,
+                                                        itg_sku_recom_flag.cs_flag,
+                                                        itg_sku_recom_flag.soq,
+                                                        itg_sku_recom_flag.unique_ret_cd,
+                                                        itg_sku_recom_flag.retailer_cd,
+                                                        itg_sku_recom_flag.route_code,
+                                                        itg_sku_recom_flag.salesman_code,
+                                                        itg_sku_recom_flag.crtd_dttm
+                                                    FROM itg_sku_recom_flag
+                                                    WHERE (
+                                                            NOT (
+                                                                (itg_sku_recom_flag.cust_cd IS NULL)
+                                                                OR (itg_sku_recom_flag.retailer_cd IS NULL)
+                                                            )
+                                                        )
+                                                ) sku
+                                                LEFT JOIN (
+                                                    SELECT cr.distcode,
+                                                        "substring"((cr.rtrcode)::text, 7) AS rtrcode,
+                                                        cr.rmcode,
+                                                        r.rmname,
+                                                        s.smcode,
+                                                        s.smname,
+                                                        s.status,
+                                                        s.uniquesalescode
+                                                    FROM itg_in_rcustomerroute cr,
+                                                        itg_in_rroute r,
+                                                        itg_in_rsalesmanroute rs,
+                                                        itg_in_rsalesman s
+                                                    WHERE (
+                                                            (
+                                                                (
+                                                                    (
+                                                                        (
+                                                                            (
+                                                                                (
+                                                                                    ((cr.routetype)::character(10) = 'S'::char)
+                                                                                    AND ((cr.distcode)::text = (r.distcode)::text)
+                                                                                )
+                                                                                AND ((cr.rmcode)::text = (r.rmcode)::text)
+                                                                            )
+                                                                            AND ((rs.distrcode)::text = (r.distcode)::text)
+                                                                        )
+                                                                        AND ((rs.routecode)::text = (r.rmcode)::text)
+                                                                    )
+                                                                    AND ((s.distcode)::text = (rs.distrcode)::text)
+                                                                )
+                                                                AND ((s.smcode)::text = (rs.salesmancode)::text)
+                                                            )
+                                                            AND ((s.status)::character(10) = 'Y'::char)
+                                                        )
+                                                ) rm ON (
+                                                    (
+                                                        ((sku.cust_cd)::text = (rm.distcode)::text)
+                                                        AND (
+                                                            (sku.retailer_cd)::text = ((rm.rtrcode)::character varying)::text
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            LEFT JOIN (
+                                                SELECT sf.customer_code,
+                                                    sf.retailer_code,
+                                                    pd.product_name,
+                                                    sf.product_code AS num_packs,
+                                                    pd.franchise_name,
+                                                    pd.brand_name,
+                                                    pd.product_category_name,
+                                                    pd.variant_name,
+                                                    pd.mothersku_name,
+                                                    sf.retailer_name,
+                                                    sf.salesman_name,
+                                                    sf.salesman_code,
+                                                    sf.route_name,
+                                                    sf.route_code,
+                                                    sf.quantity,
+                                                    sf.nr_value,
+                                                    sf.no_of_lines AS num_lines,
+                                                    sf.achievement_nr_val,
+                                                    sf.achievement_amt,
+                                                    sf.product_code,
+                                                    pd.mothersku_code,
+                                                    cd.mth_mm AS month_id
+                                                FROM (
+                                                        (
+                                                            edw_dailysales_fact sf
+                                                            LEFT JOIN edw_retailer_calendar_dim cd ON ((sf.invoice_date = cd.day))
+                                                        )
+                                                        LEFT JOIN edw_product_dim pd ON (
+                                                            (
+                                                                (sf.product_code)::text = (pd.product_code)::text
+                                                            )
+                                                        )
+                                                    )
+                                            ) dsf ON (
+                                                (
+                                                    (
+                                                        (
+                                                            (
+                                                                (sku.mnth_id)::text = ((dsf.month_id)::character varying)::text
+                                                            )
+                                                            AND ((sku.cust_cd)::text = (dsf.customer_code)::text)
+                                                        )
+                                                        AND (
+                                                            (sku.retailer_cd)::text = (dsf.retailer_code)::text
+                                                        )
+                                                    )
+                                                    AND (
+                                                        (
+                                                            COALESCE(dsf.mothersku_code, '0'::character varying)
+                                                        )::text = (
+                                                            COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                        )::text
+                                                    )
+                                                )
+                                            )
+                                        )
+                                        LEFT JOIN (
+                                            SELECT DISTINCT edw_product_dim.franchise_name,
+                                                edw_product_dim.brand_name,
+                                                edw_product_dim.product_category_name,
+                                                edw_product_dim.variant_name,
+                                                edw_product_dim.mothersku_code,
+                                                edw_product_dim.mothersku_name
+                                            FROM edw_product_dim
+                                        ) pd_dim ON (
+                                            (
+                                                (
+                                                    COALESCE(pd_dim.mothersku_code, '0'::character varying)
+                                                )::text = (
+                                                    COALESCE(sku.mother_sku_cd, '0'::character varying)
+                                                )::text
+                                            )
+                                        )
+                                    )
+                                GROUP BY sku.mnth_id,
+                                    sku.cust_cd,
+                                    sku.retailer_cd,
+                                    rm.rmcode,
+                                    rm.smcode,
+                                    sku.cs_flag,
+                                    pd_dim.mothersku_name
+                            ) derived_table2
+                        GROUP BY derived_table2.mnth_id,
+                            derived_table2.cust_cd,
+                            derived_table2.retailer_cd
+                    ) cs_target_calc ON (
+                        (
+                            (
+                                (
+                                    (cs_target_calc.cust_cd)::text = (sku.cust_cd)::text
+                                )
+                                AND (
+                                    (cs_target_calc.retailer_cd)::text = (sku.retailer_cd)::text
+                                )
+                            )
+                            AND (
+                                (cs_target_calc.mnth_id)::text = (sku.mnth_id)::text
+                            )
+                        )
+                    )
+                )
+            WHERE (
+                    (
+                        (rd.rn = 1)
+                        AND (
+                            upper(udc.columnvalue) = ('NO'::character varying)::text
+                        )
+                    )
+                    OR (udc.columnvalue IS NULL)
+                )
+        ) inn
+        LEFT JOIN itg_sku_recom_orangestoretarget orng ON (
+            (
+                (
+                    (
+                        (
+                            (
+                                (
+                                    ((inn.region_name)::text = (orng.rsmname)::text)
+                                    AND ((inn.zone_name)::text = (orng.asmname)::text)
+                                )
+                                AND (
+                                    (inn.territory_name)::text = (orng.abiname)::text
+                                )
+                            )
+                            AND (
+                                (inn.channel_name)::text = (orng.channelname)::text
+                            )
+                        )
+                        AND (
+                            (inn.retailer_category_name)::text = (orng.subchannelname)::text
+                        )
+                    )
+                    AND (
+                        (COALESCE(inn.class_desc, 'X'::character varying))::text = (COALESCE(orng.class, 'X'::character varying))::text
+                    )
+                )
+                AND (inn.mth_mm = orng.mth_mm)
+            )
+        )
+    ))
+select * from final 

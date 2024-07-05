@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__rx_cx_rxrtl_qtly_agg
+    config:
+        alias: rx_cx_rxrtl_qtly_agg
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_hcp_presc
+    config:
+        alias: rx_cx_hcp_presc
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_presc_rtl_hist
+    config:
+        alias: rx_cx_presc_rtl_hist
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_urc_ventasys_rtl
+    config:
+        alias: rx_cx_urc_ventasys_rtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_achnr_qty
+    config:
+        alias: rx_cx_sales_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_achnr_qty
+    config:
+        alias: rx_cx_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_ret_dim
+    config:
+        alias: rx_cx_ret_dim
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_consist_ratio_region_cohort
+    config:
+        alias: rx_cx_consist_ratio_region_cohort
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_presc_ideal_ratio
+    config:
+          alias: rx_cx_sales_presc_ideal_ratio
+          tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_prod_reg_cutoffs
+    config:
+        alias: rx_cx_prod_reg_cutoffs
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_prod_reg_cutoffs_stable
+    config:
+        alias: rx_cx_prod_reg_cutoffs_stable
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_sales_achnr_qty_recom
+    config:
+        alias: rx_cx_sales_achnr_qty_recom
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_cy_target
+    config:
+        alias: rx_cx_cy_target
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__retailer_dim_tmp
+    config:
+        alias: retailer_dim_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__hcp_master_data 
+    config:
+        alias: hcp_master_data
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__master_hcp_urc_mapp
+    config:
+        alias: master_hcp_urc_mapp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__product_dim_tmp
+    config:
+        alias: product_dim_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__udc_gtm_flag_tmp
+    config:
+        alias: udc_gtm_flag_tmp
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__sales_actual_achnr_qty
+    config:
+        alias: sales_actual_achnr_qty
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_pre_rpt_tbl
+    config:
+        alias: rx_cx_pre_rpt_tbl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__salesman_details
+    config:
+        alias: salesman_details
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__rx_cx_rpt_tbl
+    config:
+        alias: rx_cx_rpt_tbl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_base_rtl
+    config:
+        alias: wks_rx_to_cx_to_pob_base_rtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_rtl_dim
+    config:
+        alias: wks_rx_to_cx_to_pob_rtl_dim
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_sales_cube
+    config:
+        alias: wks_rx_to_cx_to_pob_sales_cube
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_salesman_master
+    config:
+        alias: wks_rx_to_cx_to_pob_salesman_master
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob_rxrtl
+    config:
+        alias: wks_rx_to_cx_to_pob_rxrtl
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_rx_to_cx_to_pob
+    config:
+        alias: wks_rx_to_cx_to_pob
+        tags: ["in_rx_to_cx_datamart","transformation"]

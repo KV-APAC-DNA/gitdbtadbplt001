@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_mds_in_key_accounts_mapping
+    config:
+      alias: itg_mds_in_key_accounts_mapping
+      tags: ["in_ecom_datamart","transformation"]
+  - name: inditg_integration__itg_mds_in_sss_weights
+    config:
+      alias: itg_mds_in_sss_weights
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_score
+    config:
+      alias: itg_mds_in_sss_score
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_ps_msl
+    config:
+      alias: itg_mds_in_sss_ps_msl
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_ps_promoter_store_map
+    config:
+      alias: itg_mds_in_sss_ps_promoter_store_map
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_sss_scorecard_data
+    config:
+      alias: itg_sss_scorecard_data
+      tags: ["in_sss_scorecard_ingestion","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_zonal_rtr_program_mapping
+    config:
+      alias: itg_mds_in_sss_zonal_rtr_program_mapping
+      tags: ["in_sss_zonal_datamart","transformation"]
+  - name: inditg_integration__itg_rdssmweeklytarget_output
+    config:
+      alias: itg_rdssmweeklytarget_output
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+  - name: inditg_integration__itg_scheme_header
+    config:
+      alias: itg_scheme_header
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+  - name: inditg_integration__itg_ittarget
+    config:
+      alias: itg_ittarget
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
