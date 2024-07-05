@@ -8,32 +8,32 @@
 
 with sdl_pop6_kr_service_levels as 
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_kr_service_levels') }}
 ),
 
 sdl_pop6_tw_service_levels as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_tw_service_levels') }}
 ),
 
 sdl_pop6_hk_service_levels as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_hk_service_levels') }}
 ),
 
 sdl_pop6_jp_service_levels as
 (
-	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_service_levels') }}
+	select * {{ ref('aspwks_integration__wks_pop6_jp_service_levels') }}
 ),
 
 sdl_pop6_sg_service_levels as
 (
-	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_sg_service_levels') }}
 ),
 
 sdl_pop6_th_service_levels as
 (
-	select * from {{ source('thasdl_raw', 'sdl_pop6_th_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_th_service_levels') }}
 ),
 
 
