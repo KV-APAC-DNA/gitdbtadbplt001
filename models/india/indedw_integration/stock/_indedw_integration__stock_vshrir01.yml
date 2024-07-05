@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_day_cls_stock_fact
+    config:
+      alias: edw_day_cls_stock_fact
+      tags: ["in_daily_closing_stock_dm","transformation"]

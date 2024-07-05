@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_tblpf_clstkm
+    config:
+      alias: itg_tblpf_clstkm
+      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_rev_edw_retailer_dim
+    config: 
+      alias: wks_rev_edw_retailer_dim
+      tags: ["in_skurecom_mslspike_datamart","transformation"]

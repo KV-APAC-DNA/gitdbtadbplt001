@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_ka_sales_fact
+    config: 
+      alias: wks_ka_sales_fact
+      tags: ["m_wrp_in_edw_kasales","transformation"]

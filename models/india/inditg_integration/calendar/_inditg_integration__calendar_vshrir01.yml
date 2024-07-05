@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_businesscalender
+    config:
+      alias: itg_businesscalender
+      tags: ["","transformation"]
+
+  - name: inditg_integration__itg_tbl_schemewise_apno
+    config:
+      alias: itg_tbl_schemewise_apno
+      tags: ["","transformation"]
