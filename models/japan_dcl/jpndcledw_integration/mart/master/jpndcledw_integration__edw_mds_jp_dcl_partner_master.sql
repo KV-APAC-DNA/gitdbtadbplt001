@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'sdl_mds_jp_dcl_partner_master') }}
+    select * from {{ source('jpndclsdl_raw', 'sdl_mds_jp_dcl_partner_master') }}
 ),
 
 final as

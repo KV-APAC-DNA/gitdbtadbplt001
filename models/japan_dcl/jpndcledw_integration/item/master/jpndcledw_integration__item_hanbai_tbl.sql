@@ -1,7 +1,5 @@
 WITH c_tbecprivilegemst
 AS (
-    -- SELECT *
-    -- FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegemst
     select * from {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}
     ),
 tbecitem
@@ -11,15 +9,11 @@ AS (
     ),
 item_bunrval_v
 AS (
-    -- SELECT *
-    -- FROM dev_dna_core.snapjpdcledw_integration.item_bunrval_v
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__item_bunrval_v') }}
+    select * from {{ source('jpndcledw_integration', 'item_bunrval_v') }}
     ),
 cim03item_ikou
 AS (
-    -- SELECT *
-    -- FROM dev_dna_core.snapjpdcledw_integration.cim03item_ikou
-     select * from {{ source('jpndcledw', 'jpndcledw_integration__cim03item_ikou') }}
+     select * from {{ source('jpndcledw_integration', 'cim03item_ikou') }}
     ),
 ct1
 AS (

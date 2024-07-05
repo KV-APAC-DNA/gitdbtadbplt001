@@ -9,7 +9,7 @@
 
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'c_tbeccardcompanymst') }}
+    select * from {{ source('jpndclsdl_raw', 'c_tbeccardcompanymst') }}
 ),
 
 final as

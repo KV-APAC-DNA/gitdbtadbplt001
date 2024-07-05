@@ -1,8 +1,6 @@
 WITH report_006_a
 AS (
-    -- SELECT *
-    -- FROM dev_dna_core.snapjpdcledw_integration.report_006_a
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__report_006_a') }}
+    select * from {{ ref('jpndcledw_integration__report_006_a') }}
     ),
 final
 AS (

@@ -2,19 +2,19 @@ with dm_kesai_mart_dly_general as(
     select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
 cim01kokya as(
-    select * from {{ source('jpdcledw_integration', 'cim01kokya') }}
+    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
 ),
 cim08shkos_bunkai_qv as(
-    select * from {{ source('jpdcledw_integration', 'cim08shkos_bunkai_qv') }}
+    select * from {{ source('jpndcledw_integration', 'cim08shkos_bunkai_qv') }}
 ),
 edw_mds_jp_dcl_product_master as(
     select * from {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
 ),
 tm13item_qv as(
-    select * from {{ source('jpdcledw_integration', 'tm13item_qv') }}
+    select * from {{ source('jpndcledw_integration', 'tm13item_qv') }}
 ),
 kr_new_stage_point as(
-    select * from {{ source('jpdcledw_integration', 'kr_new_stage_point') }}
+    select * from {{ source('jpndcledw_integration', 'kr_new_stage_point') }}
 ),
 transformed as(
 SELECT 

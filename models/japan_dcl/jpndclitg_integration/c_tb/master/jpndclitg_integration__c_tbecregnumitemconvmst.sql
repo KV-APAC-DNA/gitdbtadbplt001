@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'c_tbecregnumitemconvmst') }}
+    select * from {{ source('jpndclsdl_raw', 'c_tbecregnumitemconvmst') }}
 ),
 
 

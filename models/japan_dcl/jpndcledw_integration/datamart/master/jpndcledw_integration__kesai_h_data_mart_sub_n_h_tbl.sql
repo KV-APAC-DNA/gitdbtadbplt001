@@ -20,16 +20,16 @@ tbpromotion as (
     select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
 hanyo_attr as(
-    select * from {{ source('jpdcledw_integration', 'hanyo_attr') }}
+    select * from {{ source('jpndcledw_integration', 'hanyo_attr') }}
 ),
 tt01_henpin_riyu as(
-    select * from {{ source('jpdcledw_integration', 'tt01_henpin_riyu') }}
+    select * from {{ source('jpndcledw_integration', 'tt01_henpin_riyu') }}
 ),
 KESAI_M_DATA_MART_SUB_N_H_NOTP as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp') }}
 ),
 KEIROKBN as(
-    select * from {{ source('jpdcledw_integration', 'keirokbn') }}
+    select * from {{ source('jpndcledw_integration', 'keirokbn') }}
 ),
 kesaiid_dummy as(
     select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}

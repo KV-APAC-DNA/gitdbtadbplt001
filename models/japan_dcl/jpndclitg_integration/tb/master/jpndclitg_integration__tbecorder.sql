@@ -4,7 +4,7 @@
         materialized='incremental',
         incremental_strategy= 'append',
         pre_hook = "{% if is_incremental() %}
-                    DELETE FROM {{this}} WHERE DIORDERID IN (SELECT DIORDERID FROM {{ source('jpdclsdl_raw', 'tbecorder') }});
+                    DELETE FROM {{this}} WHERE DIORDERID IN (SELECT DIORDERID FROM {{ source('jpndclsdl_raw', 'tbecorder') }});
                     {% endif %}",
         post_hook = "
                     UPDATE {{this}} SET C_DSUKETSUKETELCOMPANYCD = 'TNP', updated_date = GETDATE(), updated_by = 'ETL_Batch' WHERE C_DSUKETSUKETELCOMPANYCD = 'DCL' AND C_DSTEMPOCODE IS NOT NULL;
@@ -18,7 +18,7 @@
 
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'tbecorder') }}
+    select * from {{ source('jpndclsdl_raw', 'tbecorder') }}
 ),
 
 final as

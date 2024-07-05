@@ -68,7 +68,7 @@ sources:
     - name: kesai_h_data_mart_sub_n_rirek
     - name: kesai_h_data_mart_sub_old
     - name: kr_new_stage_point
-
+    - name: item_bunrval_v
     - name: hanyo_attr
     - name: kr_frequency_1yn_900_kizuna
     - name: tt01_henpin_riyu
@@ -77,3 +77,9 @@ sources:
     - name: kokyano_list_016_manual
     - name: conv_mst_smkeiroid  
     - name: keirokbn
+    - name: item_sap_v
+    - name: cim03item_zaiko_ikou_kizuna
+    - name: zaiko_shohin_attr
+    - name: cim03item_ikou
+    - name: dm_user_attr
+    - name: dm_user_attr_sfcc_v

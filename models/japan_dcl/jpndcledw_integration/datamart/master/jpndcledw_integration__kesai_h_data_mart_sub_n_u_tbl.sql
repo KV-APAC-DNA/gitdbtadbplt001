@@ -17,13 +17,13 @@ tbecorder as(
     select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 KEIROKBN as(
-    select * from {{ source('jpdcledw_integration', 'keirokbn') }}
+    select * from {{ source('jpndcledw_integration', 'keirokbn') }}
 ),
 kesai_h_data_mart_sub_n_rirek as(
-    select * from {{ source('jpdcledw_integration', 'kesai_h_data_mart_sub_n_rirek') }}
+    select * from {{ source('jpndcledw_integration', 'kesai_h_data_mart_sub_n_rirek') }}
 ),
 hanyo_attr as(
-    select * from {{ source('jpdcledw_integration', 'hanyo_attr') }}
+    select * from {{ source('jpndcledw_integration', 'hanyo_attr') }}
 ),
 kesaiid_dummy as(
     select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}

@@ -1,7 +1,6 @@
 WITH wk_kpi_06_04 AS
 (
-    -- SELECT * FROM dev_dna_core.snapjpdcledw_integration.wk_kpi_06_04
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__wk_kpi_06_04') }}
+    select * from {{ ref('jpndcledw_integration__wk_kpi_06_04') }}
 ),
 
 final AS

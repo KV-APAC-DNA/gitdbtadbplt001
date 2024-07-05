@@ -1,14 +1,10 @@
 with report_006_a
 as (
-    -- select *
-    -- from dev_dna_core.snapjpdcledw_integration.report_006_a
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__report_006_a') }}
+    select * from {{ ref('jpndcledw_integration__report_006_a') }}
     ),
 cld_m
 as (
-    -- select *
-    -- from dev_dna_core.snapjpdcledw_integration.cld_m
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__cld_m') }}
+    select * from {{ source('jpndcledw_integration', 'cld_m') }}
     ),
 transformed
 as (

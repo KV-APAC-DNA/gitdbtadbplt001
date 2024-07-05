@@ -1,7 +1,6 @@
 with source as
 (
-    -- select * from {{ source('jpdclsdl_raw', 'tbecsetitem') }}
-    select * from DEV_DNA_LOAD.JPDCLSDL_RAW.TBECSETITEM
+    select * from {{ source('jpndclsdl_raw', 'tbecsetitem') }}
 ),
 
 

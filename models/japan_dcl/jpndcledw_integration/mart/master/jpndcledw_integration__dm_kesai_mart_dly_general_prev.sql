@@ -1,6 +1,5 @@
 with source as
 (
-    --select * from dev_dna_core.snapjpdcledw_integration.dm_kesai_mart_dly_general
     select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
 

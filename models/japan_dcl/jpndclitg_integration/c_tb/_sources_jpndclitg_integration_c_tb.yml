@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: jpdclsdl_raw
+  - name: jpndclsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
     schema: snapjpdclsdl_raw
     quoting:

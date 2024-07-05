@@ -8,7 +8,7 @@ TBPERSON as(
     select * from {{ ref('jpndclitg_integration__tbperson') }}
 ),
 HANYO_ATTR as(
-        select * from {{ source('jpdcledw_integration', 'hanyo_attr') }}
+        select * from {{ source('jpndcledw_integration', 'hanyo_attr') }}
 ),
 union1 as(
     SELECT SALENO,

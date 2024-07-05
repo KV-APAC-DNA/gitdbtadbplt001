@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('jpdclsdl_raw', 'contact_hist') }}
+    select * from {{ source('jpndclsdl_raw', 'contact_hist') }}
 ),
 
 

@@ -7,7 +7,7 @@ with temp_kesai_016 as(
     select * from {{ ref('jpndcledw_integration__temp_kesai_016') }}
 ),
 cld_m as(
-    select * from {{ source('jpdcledw_integration', 'cld_m') }}
+    select * from {{ source('jpndcledw_integration', 'cld_m') }}
 ),
 temp_u_new_016 as(
     select * from {{ ref('jpndcledw_integration__temp_u_new_016') }}
