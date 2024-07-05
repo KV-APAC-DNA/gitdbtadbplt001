@@ -8,19 +8,19 @@ edw_vw_os_time_dim as
 ),
 edw_vw_pos_offtake as
 (
-    select * from dev_dna_core.indedw_integration.edw_vw_pos_offtake
+    select * from {{ ref('indedw_integration__edw_vw_pos_offtake') }}
 ),
 itg_mds_in_key_accounts_mapping as
 (
-    select * from dev_dna_core.inditg_integration.itg_mds_in_key_accounts_mapping
+    select * from {{ ref('inditg_integration__itg_mds_in_key_accounts_mapping') }}
 ),
 edw_ecommerce_offtake as
 (
-    select * from dev_dna_core.indedw_integration.edw_ecommerce_offtake
+    select * from {{ source('indedw_integration', 'edw_ecommerce_offtake') }}
 ),
 itg_mds_in_key_accounts_mapping_offtake_upd as
 (
-    select * from dev_dna_core.inditg_integration.itg_mds_in_key_accounts_mapping_offtake_upd
+    select * from {{ source('inditg_integration', 'itg_mds_in_key_accounts_mapping_offtake_upd') }}
 ),
 edw_product_key_attributes as
 (

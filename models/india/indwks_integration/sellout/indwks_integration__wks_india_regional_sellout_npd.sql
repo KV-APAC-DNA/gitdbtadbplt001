@@ -1,6 +1,6 @@
 with WKS_INDIA_REGIONAL_SELLOUT as
 (
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_INDIA_REGIONAL_SELLOUT
+    select * from {{ ref('indwks_integration__wks_india_regional_sellout') }}
 ),
 transformed as
 (

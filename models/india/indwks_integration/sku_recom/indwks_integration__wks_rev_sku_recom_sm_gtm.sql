@@ -12,7 +12,7 @@ wks_rev_itg_in_rsalesman as
 ),
 itg_xdm_salesmanskulinemapping as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_xdm_salesmanskulinemapping
+    select * from {{ ref('inditg_integration__itg_xdm_salesmanskulinemapping') }}
 ),
 final as
 (

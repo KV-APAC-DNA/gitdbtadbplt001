@@ -1,10 +1,10 @@
-with WKS_INDIA_REGIONAL_SELLOUT_NPD as
+with wks_india_regional_sellout_npd as
 (
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_INDIA_REGIONAL_SELLOUT_NPD
+    select * from {{ ref('indwks_integration__wks_india_regional_sellout_npd') }}
 ),
-ITG_MDS_AP_CUSTOMER360_CONFIG as
+itg_mds_ap_customer360_config as
 (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+    select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 offtake as
 (

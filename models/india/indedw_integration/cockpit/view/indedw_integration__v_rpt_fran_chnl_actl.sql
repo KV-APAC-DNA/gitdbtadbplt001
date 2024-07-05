@@ -1,30 +1,30 @@
 with edw_dailysales_fact as
 (
-    select * from dev_dna_core.indedw_integration.edw_dailysales_fact
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from dev_dna_core.indedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_customer_dim as
 (
-    select * from dev_dna_core.indedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 v_retail_frnch_categ_mapping as
 (
-    select * from dev_dna_core.indwks_integration.v_retail_frnch_categ_mapping
+    select * from {{ ref('indedw_integration__v_retail_frnch_categ_mapping') }}
 ),
 v_retail_fran_chanl as
 (
-    select * from dev_dna_core.indwks_integration.v_retail_fran_chanl
+    select * from {{ ref('indedw_integration__v_retail_fran_chanl') }}
 ),
 edw_billing_fact as
 (
-    select * from dev_dna_core.aspedw_integration.edw_billing_fact
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_mds_in_key_accounts_mapping as
 (
-    select * from dev_dna_core.inditg_integration.itg_mds_in_key_accounts_mapping
+    select * from {{ ref('inditg_integration__itg_mds_in_key_accounts_mapping') }}
 ),
 cte1 as
 (    SELECT sf_master.fisc_yr,

@@ -1,18 +1,18 @@
 with edw_key_account_dim as
 (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_KEY_ACCOUNT_DIM
+    select * from {{ ref('indedw_integration__edw_key_account_dim') }}
 ),
 edw_ka_sales_fact as
 (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_KA_SALES_FACT
+    select * from {{ ref('indedw_integration__edw_ka_sales_fact') }}
 ),
 v_product_dim as
 (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.V_PRODUCT_DIM
+    select * from {{ ref('indedw_integration__v_product_dim') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_RETAILER_CALENDAR_DIM
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 kdd as 
 (

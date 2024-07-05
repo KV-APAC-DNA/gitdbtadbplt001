@@ -1,34 +1,34 @@
 with v_customer_weekly_sales as 
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.V_CUSTOMER_WEEKLY_SALES
+    select * from {{ ref('indedw_integration__v_customer_weekly_sales') }}
 ),
 edw_customer_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_CUSTOMER_DIM
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_product_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_PRODUCT_DIM
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_retailer_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 edw_salesman_target as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_salesman_target
+    select * from {{ ref('indedw_integration__edw_salesman_target') }}
 ),
 itg_salesmanmaster as 
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.itg_salesmanmaster
+    select * from {{ ref('inditg_integration__itg_salesmanmaster') }}
 ),
 edw_gt_target_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_gt_target_dim
+    select * from {{ ref('indedw_integration__edw_gt_target_dim') }}
 ),
 cte1 as
 (SELECT rc.fisc_yr AS year,

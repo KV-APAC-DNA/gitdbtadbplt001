@@ -1,6 +1,6 @@
 with wks_ka_sales_fact as 
 (
-    select * from DEV_DNA_CORE.SNAPINDWKS_INTEGRATION.WKS_KA_SALES_FACT
+    select * from {{ ref('indwks_integration__wks_ka_sales_fact') }}
 ),
 final as 
 (
