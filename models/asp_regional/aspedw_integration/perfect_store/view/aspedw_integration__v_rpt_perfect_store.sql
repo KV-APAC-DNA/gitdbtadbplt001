@@ -1,5 +1,5 @@
 with v_rpt_rex_perfect_store as (
-    select * from aspedw_integration.v_rpt_rex_perfect_store
+    select * from {{ ref('aspedw_integration__v_rpt_rex_perfect_store') }}
 ),
 edw_vw_pop6_products as (
     select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
@@ -17,7 +17,7 @@ v_rpt_ph_perfect_store as (
     select * from {{ ref('phledw_integration__v_rpt_ph_perfect_store') }}
 ),
 v_rpt_id_regional_perfect_store as (
-    select * from idnedw_integration.v_rpt_id_regional_perfect_store
+    select * from {{ ref('idnedw_integration__v_rpt_id_regional_perfect_store') }}
 ),
 v_rpt_jp_pop6_perfect_store as (
     select * from {{ ref('ntaedw_integration__v_rpt_jp_pop6_perfect_store') }}
@@ -29,7 +29,7 @@ v_rpt_th_pop6_perfect_store as (
     select * from {{ ref('ntaedw_integration__v_rpt_th_pop6_perfect_store') }}
 ),
 v_rpt_my_perfect_store_snapshot as (
-    select * from mysedw_integration.v_rpt_my_perfect_store_snapshot
+    select * from {{ source('mysedw_integration', 'v_rpt_my_perfect_store_snapshot') }} -- static table
 ),
 v_rpt_my_perfect_store as (
     select * from {{ ref('mysedw_integration__v_rpt_my_perfect_store') }}
@@ -68,7 +68,7 @@ itg_in_perfectstore_paid_display as (
     select * from inditg_integration.itg_in_perfectstore_paid_display
 ),
 rpt_in_perfect_store as (
-    select * from indedw_integration.rpt_in_perfect_store
+    select * from {{ ref('indedw_integration__rpt_in_perfect_store') }}
 ),
 edw_rpt_th_perfect_store as (
     select * from {{ ref('thaedw_integration__edw_rpt_th_perfect_store') }}

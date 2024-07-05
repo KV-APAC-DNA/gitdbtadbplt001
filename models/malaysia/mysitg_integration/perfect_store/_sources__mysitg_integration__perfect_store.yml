@@ -122,3 +122,4 @@ sources:
       identifier: false
     tables:
       - name: my_perfect_store_supermarket_adjust
+      - name: v_rpt_my_perfect_store_snapshot
