@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_key_accounts_mapping
+      tags: ["in_mt_sellin_vs_sellout_datamart","ingestion"]

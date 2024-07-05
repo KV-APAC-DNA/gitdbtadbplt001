@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_sss_msl_sales_combined_master_data
+    config:
+      alias: wks_sss_msl_sales_combined_master_data
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__sss_scorecard_msl_extract
+    config:
+      alias: sss_scorecard_msl_extract
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__wks_rpt_sss_scorecard
+    config:
+      alias: wks_rpt_sss_scorecard
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__wks_rpt_sss_scorecard_base
+    config:
+      alias: wks_rpt_sss_scorecard_base
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__wks_sss_rebase_calculation
+    config:
+      alias: wks_sss_rebase_calculation
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__wks_sss_score_det_for_rebase
+    config:
+      alias: wks_sss_score_det_for_rebase
+      tags: ["in_sss_scorecard_data_mart","transformation"]
