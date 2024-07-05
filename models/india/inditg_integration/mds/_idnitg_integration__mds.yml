@@ -66,10 +66,10 @@ models:
     config:
       alias: itg_sss_scorecard_data
       tags: ["in_sss_scorecard_ingestion","ingestion"]
-  - name: inditg_integration__itg_mds_in_sss_zonal_rtr_program_mapping
-    config:
-      alias: itg_mds_in_sss_zonal_rtr_program_mapping
-      tags: ["in_sss_zonal_datamart","transformation"]
+  # - name: inditg_integration__itg_mds_in_sss_zonal_rtr_program_mapping
+  #   config:
+  #     alias: itg_mds_in_sss_zonal_rtr_program_mapping
+  #     tags: ["in_sss_zonal_datamart","transformation"]
   - name: inditg_integration__itg_rdssmweeklytarget_output
     config:
       alias: itg_rdssmweeklytarget_output

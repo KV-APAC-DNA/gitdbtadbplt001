@@ -4,7 +4,7 @@ with wks_skurecom_mi_target_tmp1 as
 ),
 edw_msl_spike_mi_msku_list as
 (
-    select * from {{ ref('indedw_integration__edw_msl_spike_mi_msku_list') }}
+    select * from {{ source('indedw_integration', 'edw_msl_spike_mi_msku_list') }}
 ),
 final as(
         SELECT tmp.*, msku.mothersku_name AS mothersku_name

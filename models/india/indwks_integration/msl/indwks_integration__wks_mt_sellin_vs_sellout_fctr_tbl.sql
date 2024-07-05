@@ -5,7 +5,7 @@ edw_retailer_calendar_dim as(
     select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 wks_jnj_calendar as(
-    select * from {{ ref('indwks_integration__wks_jnj_calendar') }}
+    select * from {{ source('indwks_integration', 'wks_jnj_calendar') }}
 ),
 int_fact AS
 (
