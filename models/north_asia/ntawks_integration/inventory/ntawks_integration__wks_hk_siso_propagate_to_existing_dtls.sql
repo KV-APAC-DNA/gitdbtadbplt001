@@ -1,10 +1,9 @@
-
-with wks_HK_base_detail as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE_DETAIL
+with wks_hk_base_detail as (
+select * from {{ ref('ntawks_integration__wks_hk_base_detail') }}
 ),
-HK_propagate_from_to as 
+hk_propagate_from_to as 
 (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.HK_PROPAGATE_FROM_TO
+select * from {{ ref('ntawks_integration__hk_propagate_from_to') }}
 ),
 transformed as 
 (SELECT p_from_to.sap_parent_customer_key,

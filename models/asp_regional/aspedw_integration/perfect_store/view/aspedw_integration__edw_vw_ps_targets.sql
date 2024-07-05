@@ -1,7 +1,6 @@
  with 
 -- itg_mds_cn_ps_targets as (
---     select * from --Not sure where this model needs to be created
---                     snapntaitg_integration.itg_mds_cn_ps_targets
+--     select * from ntaitg_integration.itg_mds_cn_ps_targets -- China out of scope
 -- ),
 itg_mds_pacific_ps_targets as (
     select * from {{ ref('pcfitg_integration__itg_mds_pacific_ps_targets') }}

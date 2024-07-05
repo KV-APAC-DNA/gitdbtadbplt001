@@ -2,19 +2,19 @@ with WKS_HK_base as (
   select 
     * 
   from 
-    DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE
+    {{ ref('ntawks_integration__wks_hk_base') }}
 ), 
 edw_vw_os_time_dim as (
   select 
     * 
   from 
-    DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+    {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ), 
 WKS_HK_base as (
   select 
     * 
   from 
-    DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE
+    {{ ref('ntawks_integration__wks_hk_base') }}
 ), 
 transformed as (
   select 

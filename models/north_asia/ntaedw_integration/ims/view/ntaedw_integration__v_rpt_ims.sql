@@ -1,6 +1,6 @@
 with 
 v_rpt_ims_inventory_analysis as (
-select * from ntaedw_integration.v_rpt_ims_inventory_analysis
+select * from {{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
 ),
 final as (
 SELECT 

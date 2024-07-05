@@ -1,37 +1,37 @@
 WITH v_rpt_ims_inventory
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_rpt_ims_inventory
+    FROM {{ ref('ntaedw_integration__v_rpt_ims_inventory') }}
     ),
 itg_parameter_reg_inventory
 AS (
     SELECT *
-    FROM snapaspitg_integration.itg_parameter_reg_inventory
+    FROM {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
     ),
 EDW_VW_OS_TIME_DIM
 AS (
     SELECT *
-    FROM snaposeedw_integration.EDW_VW_OS_TIME_DIM --{{ref ('sgpedw_integration__edw_vw_os_time_dim')}}
+    FROM {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
     ),
 v_rpt_ims_inventory_analysis
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_rpt_ims_inventory_analysis
+    FROM {{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
     ),
 edw_billing_fact
 AS (
     SELECT *
-    FROM aspedw_integration.edw_billing_fact
+    FROM {{ ref('aspedw_integration__edw_billing_fact') }}
     ),
 edw_list_price
 AS (
     SELECT *
-    FROM snapaspedw_integration.edw_list_price
+    FROM {{ ref('aspedw_integration__edw_list_price') }}
     ),
 edw_material_sales_dim
 AS (
     SELECT *
-    FROM aspedw_integration.edw_material_sales_dim
+    FROM {{ ref('aspedw_integration__edw_material_sales_dim') }}
     ),
 t1
 AS (
