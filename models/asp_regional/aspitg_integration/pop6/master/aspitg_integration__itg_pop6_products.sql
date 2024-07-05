@@ -5,13 +5,13 @@
 }}
 
 with sdl_pop6_hk_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_hk_products') }}
 ),
 sdl_pop6_kr_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_kr_products') }}
 ),
 sdl_pop6_tw_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_tw_products') }}
 ),
 itg_pop6_products as (
     select * from {{ source('aspitg_integration', 'itg_pop6_products_temp') }}

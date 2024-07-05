@@ -4,22 +4,22 @@
     )
 }}
 with sdl_pop6_hk_product_lists_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_hk_product_lists_products') }}
 ),
 sdl_pop6_kr_product_lists_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_kr_product_lists_products') }}
 ),
 sdl_pop6_tw_product_lists_products as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_tw_product_lists_products') }}
 ),
 sdl_pop6_jp_product_lists_products as (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_jp_product_lists_products') }}
 ),
 sdl_pop6_sg_product_lists_products as (
-    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_sg_product_lists_products') }}
 ),
 sdl_pop6_th_product_lists_products as (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_product_lists_products') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_th_product_lists_products') }}
 ),
 itg_pop6_product_lists_products as (
     select * from {{ source('aspitg_integration','itg_pop6_product_lists_products_temp') }}
