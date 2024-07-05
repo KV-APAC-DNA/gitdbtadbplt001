@@ -4,15 +4,15 @@ models:
   - name: ntaedw_integration__v_interm_cust_hier_dim
     config: 
       alias: v_interm_cust_hier_dim
-      tags: ["taiwan_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_vw_gt_msl_items
     config: 
       alias: edw_vw_gt_msl_items
-      tags: ["taiwan_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__vw_edw_coupang_product_ranking
     config: 
       alias: vw_edw_coupang_product_ranking
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_sfmc_naver_dm
     config: 
       alias: edw_sfmc_naver_dm
@@ -24,23 +24,23 @@ models:
   - name: ntaedw_integration__v_rpt_tpfgsummary
     config: 
       alias: v_rpt_tpfgsummary
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_ims_inventory
     config: 
       alias: v_rpt_ims_inventory
-      tags: ["na_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_tw_si_so_pos_sls
     config: 
       alias: v_rpt_tw_si_so_pos_sls
-      tags: ["na_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_internal_tgt
     config: 
       alias: v_intrm_internal_tgt
-      tags: ["na_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_sls_pln_actl_lst_txn_dt
     config: 
       alias: v_rpt_sls_pln_actl_lst_txn_dt
-      tags: ["na_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_hk_sellin_bp_le
     config: 
       alias: edw_hk_sellin_bp_le
@@ -48,24 +48,24 @@ models:
   - name: ntaedw_integration__v_rpt_invc_trend
     config: 
       alias: v_rpt_invc_trend
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__vw_tw_actual_forecast_tp_elements
     config: 
       alias: vw_tw_actual_forecast_tp_elements
-      tags: ["","transformation"]
-  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_bp
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_bp
     config:
       alias: v_intrm_curr_copa_plan_denorm_bp
       tags: ["north_asia_common_views","transformation"]
-  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_rf
+  - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_rf
     config:
       alias: v_intrm_curr_copa_plan_denorm_rf
       tags: ["north_asia_common_views","transformation"]
-  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_le
+  - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_le
     config:
       alias: v_intrm_curr_copa_plan_denorm_le
       tags: ["north_asia_common_views","transformation"]
   - name: ntaedw_integration__edw_rpt_hk_pos
     config:
       alias: edw_rpt_hk_pos
-      tags: ["","transformation"]
+      tags: ["hk_pos_mannings","transformation"]

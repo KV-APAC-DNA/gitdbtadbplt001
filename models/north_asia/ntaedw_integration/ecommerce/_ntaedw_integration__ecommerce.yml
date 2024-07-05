@@ -4,4 +4,8 @@ models:
   - name: ntaedw_integration__edw_ecommerce_offtake
     config:
         alias: edw_ecommerce_offtake
-        tags: ["",""]
+        tags: ["","transformation"]
+  - name: ntaedw_integration__v_kr_ecommerce_sellout
+    config:
+        alias: v_kr_ecommerce_sellout
+        tags: ["","transformation"]

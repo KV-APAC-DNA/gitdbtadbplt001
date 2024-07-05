@@ -3,25 +3,25 @@ version: 2
 models:
   - name: ntaedw_integration__v_intrm_copa_trans
     config: 
-        alias: v_intrm_copa_trans
-        tags: []
+      alias: v_intrm_copa_trans
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_copa
     config:
       alias: v_rpt_copa
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_sls_copa_tgt
     config: 
-        alias: v_rpt_sls_copa_tgt
-        tags: []
+      alias: v_rpt_sls_copa_tgt
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_copa_sls_cust_hier
     config: 
       alias: v_intrm_copa_sls_cust_hier
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_curr_copa_plan
     config: 
-        alias: v_intrm_curr_copa_plan
-        tags: []
+      alias: v_intrm_curr_copa_plan
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_curr_copa_plan_flat
     config: 
-        alias: v_intrm_curr_copa_plan_flat
-        tags: ["","transformation"]
+      alias: v_intrm_curr_copa_plan_flat
+      tags: ["north_asia_views","transformation"]
