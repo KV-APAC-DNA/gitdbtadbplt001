@@ -9,19 +9,15 @@ models:
     config:
       alias: v_intrm_crncy_exch
       tags: ["taiwan_views","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_analysis_active_data
-    config:
-      alias: edw_vw_pop6_analysis_active_data
-      tags: ["","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_analysis_data
-    config:
-      alias: edw_vw_pop6_analysis_data
-      tags: ["","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_visits_prod_attribute_audits
-    config:
-      alias: edw_vw_pop6_visits_prod_attribute_audits
-      tags: ["","transformation"]
   - name: ntaedw_integration__v_rpt_sls_pln_actl
     config:
       alias: v_rpt_sls_pln_actl
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_dly_planned_ims
+    config:
+      alias: v_dly_planned_ims
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_nts_vs_tgt
+    config:
+      alias: v_rpt_nts_vs_tgt
       tags: ["","transformation"]

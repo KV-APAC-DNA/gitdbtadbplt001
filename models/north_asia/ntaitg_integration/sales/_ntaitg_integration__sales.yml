@@ -32,7 +32,7 @@ models:
   - name: ntaitg_integration__sdl_raw_kr_coupang_productsalereport
     config:
       alias: sdl_raw_kr_coupang_productsalereport
-      tags: ["coupang_ppm_file","transformation"]
+      tags: ["coupang_ppm_file","ingestion"]
   - name: ntaitg_integration__itg_kr_sales_store_map
     config:
       alias: itg_kr_sales_store_map

@@ -5,7 +5,3 @@ models:
     config:
       alias: edw_vw_kr_tp_tracker
       tags: ["korea_views","transformation"]
-  - name: ntaedw_integration__v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier_slsp_pop6
-    config:
-      alias: v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier_slsp_pop6
-      tags: ["","transformation"]

@@ -29,22 +29,6 @@ models:
     config: 
       alias: v_rpt_ims_inventory
       tags: ["na_views","transformation"]
-  - name: ntaedw_integration__v_rpt_pop6_perfectstore
-    config: 
-      alias: v_rpt_pop6_perfectstore
-      tags: ["na_views","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_products
-    config: 
-      alias: edw_vw_pop6_products
-      tags: ["na_views","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_visits_rir_data
-    config: 
-      alias: edw_vw_pop6_visits_rir_data
-      tags: ["na_views","transformation"]
-  - name: ntaedw_integration__edw_vw_pop6_visits_sku_audits
-    config: 
-      alias: edw_vw_pop6_visits_sku_audits
-      tags: ["na_views","transformation"]
   - name: ntaedw_integration__v_rpt_tw_si_so_pos_sls
     config: 
       alias: v_rpt_tw_si_so_pos_sls
@@ -61,3 +45,27 @@ models:
     config: 
       alias: edw_hk_sellin_bp_le
       tags: ["j_pac_sls_evol_refresh_hk_daily_sales","transformation"]
+  - name: ntaedw_integration__v_rpt_invc_trend
+    config: 
+      alias: v_rpt_invc_trend
+      tags: ["","transformation"]
+  - name: ntaedw_integration__vw_tw_actual_forecast_tp_elements
+    config: 
+      alias: vw_tw_actual_forecast_tp_elements
+      tags: ["","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_bp
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_bp
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_rf
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_rf
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_access__v_intrm_curr_copa_plan_denorm_le
+    config:
+      alias: v_intrm_curr_copa_plan_denorm_le
+      tags: ["north_asia_common_views","transformation"]
+  - name: ntaedw_integration__edw_rpt_hk_pos
+    config:
+      alias: edw_rpt_hk_pos
+      tags: ["","transformation"]

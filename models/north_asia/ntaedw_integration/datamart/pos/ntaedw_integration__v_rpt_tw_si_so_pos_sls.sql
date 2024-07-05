@@ -1,46 +1,46 @@
 with edw_copa_trans_fact as
 (
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_sales_order_fact as
 (
-    select * from snapaspedw_integration.edw_sales_order_fact
+    select * from {{ ref('aspedw_integration__edw_sales_order_fact') }}
 ),
 edw_calendar_dim as
 (
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_material_sales_dim as
 (
-    select * from snapaspedw_integration.edw_material_sales_dim
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 v_intrm_crncy_exch as
 (
-    select * from snapntaedw_integration.v_intrm_crncy_exch
+    select * from {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
 ),
 edw_product_attr_dim as
 (
-    select * from snapaspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_customer_attr_flat_dim as
 (
-    select * from snapaspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_customer_attr_hier_dim as
 (
-    select * from snapaspedw_integration.edw_customer_attr_hier_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),
 edw_ims_fact as
 (
-    select * from snapntaedw_integration.edw_ims_fact
+    select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
-EDW_POS_FACT as
+edw_pos_fact as
 (
-    select * from snapntaedw_integration.EDW_POS_FACT
+    select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
-EDW_TW_BU_FORECAST_SKU as
+edw_tw_bu_forecast_sku as
 (
-    select * from ntaedw_integration.EDW_TW_BU_FORECAST_SKU
+    select * from {{ ref('ntaedw_integration__edw_tw_bu_forecast_sku') }}
 ),
 tw_except_rtn as
 (

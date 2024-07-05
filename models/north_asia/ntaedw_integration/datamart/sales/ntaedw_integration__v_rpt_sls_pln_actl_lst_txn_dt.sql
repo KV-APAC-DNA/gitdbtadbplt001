@@ -1,6 +1,6 @@
 with edw_copa_trans_fact as 
 (
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 final as
 (   

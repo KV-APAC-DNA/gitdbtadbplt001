@@ -13,13 +13,13 @@ v_prodtr_producttranslation as (
     select * from {{ ref('aspitg_integration__v_prodtr_producttranslation') }}
 ),
 edw_vw_pop6_products as (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_products') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
 ),
 edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from {{ source('aspitg_integration', 'aspedw_integration__edw_product_attr_dim_temp') }}
+    select * from {{ source('aspedw_integration', 'aspedw_integration__edw_product_attr_dim_temp') }}
 ),
 final as 
 (SELECT DISTINCT SRC.eannumber AS aw_remote_key,

@@ -1,21 +1,21 @@
 
 with v_slsc_tgtg_items_customer as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.V_SLSC_TGTG_ITEMS_CUSTOMER
+select * from {{ ref('aspedw_integration__v_slsc_tgtg_items_customer' ) }}
 ),
 v_slsc_mastertasks as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_SLSC_MASTERTASKS
+select * from {{ ref('aspitg_integration__v_slsc_mastertasks') }}
 ),
 v_tsk_task as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_TSK_TASK
+select * from {{ ref('aspitg_integration__v_tsk_task') }}
 ),
 v_bi_survey_response_values as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.V_BI_SURVEY_RESPONSE_VALUES
+select * from {{ ref('aspedw_integration__v_bi_survey_response_values' ) }}
 ),
 v_ms_mastersurvey as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_MS_MASTERSURVEY
+select * from {{ ref('aspitg_integration__v_ms_mastersurvey') }}
 ),
 v_slsp_salesperson as (
-select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.V_SLSP_SALESPERSON
+select * from {{ ref('aspitg_integration__v_slsp_salesperson') }}
 ),
 final as (SELECT 
   slsc_customer.salescampaignid, 

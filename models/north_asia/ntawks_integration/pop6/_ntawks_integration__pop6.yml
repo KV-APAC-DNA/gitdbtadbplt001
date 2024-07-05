@@ -9,3 +9,15 @@ models:
     config:
       alias: wks_pop6_sku_audits
       tags: ["",""]
+  - name: ntawks_integration__wks_photo_mgmnt_url_cnt
+    config:
+      alias: wks_photo_mgmnt_url_cnt
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: ntawks_integration__wks_photo_mgmnt_url_wrk1
+    config:
+      alias: wks_photo_mgmnt_url_wrk1
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: ntawks_integration__wks_photo_mgmnt_url_wrk2
+    config:
+      alias: wks_photo_mgmnt_url_wrk2
+      tags: ["pop6_photo_management_pre_conversion","transformation"]

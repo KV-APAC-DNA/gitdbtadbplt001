@@ -1,12 +1,35 @@
 version: 2
 
 models:
-  - name: aspedw_integration__edw_vw_ps_weights
+  - name: aspedw_integration__edw_perfect_store_kpi_data
     config:
-      alias: edw_vw_ps_weights
-      tags: ["indonesia_views","transformation"]
-
+      alias: edw_perfect_store_kpi_data
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__edw_perfect_store
+    config:
+      alias: edw_perfect_store
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__edw_perfect_store_rebase_wt
+    config:
+      alias: edw_perfect_store_rebase_wt
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__edw_perfect_store_rebase_wt_temp
+    config:
+      alias: edw_perfect_store_rebase_wt_temp
+      tags: ["pop6_edw_load","transformation"]
   - name: aspedw_integration__edw_vw_ps_targets
     config:
       alias: edw_vw_ps_targets
       tags: ["indonesia_views","transformation"]
+  - name: aspedw_integration__edw_vw_ps_weights
+    config:
+      alias: edw_vw_ps_weights
+      tags: ["indonesia_views","transformation"]
+  - name: aspedw_integration__v_rpt_perfect_store
+    config:
+      alias: v_rpt_perfect_store
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspedw_integration__v_rpt_pop6_perfectstore
+    config: 
+      alias: v_rpt_pop6_perfectstore
+      tags: ["na_views","transformation"]

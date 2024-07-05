@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: phledw_integration__v_rpt_ph_perfect_store
+    config: 
+        alias: v_rpt_ph_perfect_store
+        tags: ["north_asia_views","transformation"]
+  - name: phledw_integration__vw_ph_clobotics_perfect_store
+    config:
+      alias: vw_ph_clobotics_perfect_store
+      tags: ["north_asia_views","transformation"]

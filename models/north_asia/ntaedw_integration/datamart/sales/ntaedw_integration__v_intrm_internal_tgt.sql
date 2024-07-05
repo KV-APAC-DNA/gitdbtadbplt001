@@ -1,11 +1,11 @@
 with edw_internal_target_fact as (
-    select * from snapntaedw_integration.edw_internal_target_fact
+    select * from {{ ref('ntaedw_integration__edw_internal_target_fact') }}
 ),
 edw_customer_attr_flat_dim as (
-    select * from snapaspedw_integration.edw_customer_attr_flat_dim
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 edw_customer_base_dim as (
-    select * from snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 final as
 (    

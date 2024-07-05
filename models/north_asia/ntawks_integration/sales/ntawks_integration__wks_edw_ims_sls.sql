@@ -1,14 +1,14 @@
 with itg_ims as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_IMS
+select * from {{ ref('ntaitg_integration__itg_ims') }}
 ),
 itg_tw_ims_dstr_prod_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_IMS_DSTR_PROD_MAP
+select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_map') }}
 ),
 itg_tw_ims_dstr_prod_price_map as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_TW_IMS_DSTR_PROD_PRICE_MAP
+select * from {{ ref('ntaitg_integration__itg_tw_ims_dstr_prod_price_map') }}
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 transformed as (
 SELECT src.ims_txn_dt,

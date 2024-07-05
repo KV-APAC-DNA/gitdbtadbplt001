@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: thaitg_integration__sdl_raw_pop6_th_sku_audits
+    config: 
+      alias: sdl_raw_pop6_th_sku_audits
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_product_attribute_audits
+    config: 
+      alias: sdl_raw_pop6_th_product_attribute_audits
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_general_audits
+    config:
+      alias: sdl_raw_pop6_th_general_audits
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_display_plans
+    config: 
+      alias: sdl_raw_pop6_th_display_plans
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_displays
+    config: 
+      alias: sdl_raw_pop6_th_displays
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_promotion_plans
+    config: 
+      alias: sdl_raw_pop6_th_promotion_plans
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_promotions
+    config: 
+      alias: sdl_raw_pop6_th_promotions
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_service_levels
+    config: 
+      alias: sdl_raw_pop6_th_service_levels
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_planned_visits
+    config: 
+      alias: sdl_raw_pop6_th_planned_visits
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_executed_visits
+    config: 
+      alias: sdl_raw_pop6_th_executed_visits
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_rir_data
+    config: 
+      alias: sdl_raw_pop6_th_rir_data
+      tags: [""]
+  - name: thaitg_integration__sdl_raw_pop6_th_tasks
+    config: 
+      alias: sdl_raw_pop6_th_tasks
+      tags: [""]

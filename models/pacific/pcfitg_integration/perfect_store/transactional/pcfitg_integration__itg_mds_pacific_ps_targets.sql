@@ -1,11 +1,3 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy="append",
-        pre_hook="delete from {{this}} where (select count(*) from {{source('pcfsdl_raw','sdl_mds_pacific_ps_targets')}}) >0 "
-    )
-}}
 with source as
 (
     select * from {{source('pcfsdl_raw','sdl_mds_pacific_ps_targets')}}

@@ -101,3 +101,7 @@ models:
     config:
       alias: wks_itg_ims_invnt_std
       tags: ["",""]
+  - name: ntawks_integration__wks_edw_ims_invnt
+    config:
+      alias: wks_edw_ims_invnt
+      tags: ["","transformation"]

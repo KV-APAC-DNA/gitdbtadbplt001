@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: mysedw_integration__edw_vw_my_ps_osa
+    config:
+      alias: edw_vw_my_ps_osa
+      tags: ["","transformation"]
+  - name: mysedw_integration__edw_vw_my_ps_outlet_mst
+    config:
+      alias: edw_vw_my_ps_outlet_mst
+      tags: ["","transformation"]
+  - name: mysedw_integration__edw_vw_my_ps_promocomp
+    config:
+      alias: edw_vw_my_ps_promocomp
+      tags: ["","transformation"]
+  - name: mysedw_integration__edw_vw_my_ps_sku_mst
+    config:
+      alias: edw_vw_my_ps_sku_mst
+      tags: ["","transformation"]
+  - name: mysedw_integration__edw_vw_my_ps_sos
+    config:
+      alias: edw_vw_my_ps_sos
+      tags: ["","transformation"]
+  - name: mysedw_integration__v_rpt_my_perfect_store
+    config:
+      alias: v_rpt_my_perfect_store
+      tags: ["","transformation"]
