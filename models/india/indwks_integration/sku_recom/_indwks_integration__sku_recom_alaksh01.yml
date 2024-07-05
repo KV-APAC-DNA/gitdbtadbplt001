@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_pilot_itg_sku_recom_flag
+    config:
+      alias: wks_pilot_itg_sku_recom_flag
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_edw_retailer_dim
+    config:
+      alias: wks_pilot_edw_retailer_dim
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_sku_recom_tbl1
+    config:
+      alias: wks_pilot_sku_recom_tbl1
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_cy_actual_nup
+    config:
+      alias: wks_pilot_cy_actual_nup
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_msku_actuals
+    config:
+      alias: wks_pilot_msku_actuals
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_edw_prod_dim
+    config:
+      alias: wks_pilot_edw_prod_dim
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_sm_master
+    config:
+      alias: wks_pilot_sm_master
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_sku_recom_tbl1_integ
+    config:
+      alias: wks_pilot_sku_recom_tbl1_integ
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_sku_recom_tbl2
+    config:
+      alias: wks_pilot_sku_recom_tbl2
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_ly_actual_sales
+    config:
+      alias: wks_pilot_ly_actual_sales
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  - name: indwks_integration__wks_pilot_ly_actual_nup
+    config:
+      alias: wks_pilot_ly_actual_nup
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]

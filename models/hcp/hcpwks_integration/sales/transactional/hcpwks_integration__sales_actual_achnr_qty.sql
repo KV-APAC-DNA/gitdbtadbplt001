@@ -1,0 +1,56 @@
+with edw_dailysales_fact as
+(
+    select * from indedw_integration.edw_dailysales_fact
+    --{{ ref('indedw_integration__edw_dailysales_fact') }}
+),
+edw_retailer_calendar_dim as
+(
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+),
+edw_product_dim as
+(
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
+),
+itg_ventasys_jnj_prod_mapping as
+(
+    select * from inditg_integration.itg_ventasys_jnj_prod_mapping
+),
+edw_retailer_dim as
+(
+    select * from indedw_integration.edw_retailer_dim
+    --{{ ref('indedw_integration__edw_retailer_dim') }}
+),
+itg_query_parameters as
+(
+    select * from inditg_integration.itg_query_parameters
+),
+final as
+(
+    SELECT cal.cal_yr,
+        cal.qtr,
+        mapp.prod_vent,
+        ret.rtruniquecode as urc,
+        SUM(sales.achievement_nr_val) AS actual_ach_NR,
+        SUM(sales.quantity) AS actual_qty
+    FROM edw_dailysales_fact sales
+    INNER JOIN edw_retailer_calendar_dim cal 
+            ON sales.invoice_date = cal.day
+    INNER JOIN edw_product_dim prod
+            ON sales.product_code = prod.product_code
+    INNER JOIN itg_ventasys_jnj_prod_mapping mapp
+            ON mapp.prod_name = prod.variant_name
+            AND (mapp.prod_vent = 'ORSL (Core)'
+            OR mapp.prod_vent = 'ORSL (Plus)'
+            OR mapp.prod_vent = 'ORSL (Rehydrate)')
+    INNER JOIN edw_retailer_dim ret
+            ON sales.retailer_code = ret.retailer_code
+            AND sales.customer_code = ret.customer_code
+            AND ret.actv_flg = 'Y'
+    WHERE cal.fisc_yr > EXTRACT(YEAR FROM current_timestamp()) - (SELECT CAST(PARAMETER_VALUE AS INTEGER) AS PARAMETER_VALUE
+                                                    FROM  itg_query_parameters
+                                                    WHERE  UPPER(COUNTRY_CODE) = 'IN'
+                                                        AND  UPPER(PARAMETER_TYPE) = 'YEAR_RANGE'
+                                                        AND  UPPER(PARAMETER_NAME) = 'IN_RX_CX_DATA_RETENSION_PERIOD') 
+    GROUP BY 1,2,3,4
+)
+select * from final

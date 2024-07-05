@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_vw_pos_offtake
+    config:
+      alias: edw_vw_pos_offtake
+      tags: ["india_views","transformation"]
+  - name: indedw_integration__v_rpt_pos_offtake
+    config:
+      alias: v_rpt_pos_offtake
+      tags: ["india_views","transformation"]

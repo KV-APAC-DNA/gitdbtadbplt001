@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: indedw_integration__v_rpt_day_cls_stock
+    config:
+      alias: v_rpt_day_cls_stock
+      tags: ["india_views","transformation"]
+  - name: indedw_integration__v_rpt_mon_cls_stock
+    config:
+      alias: v_rpt_mon_cls_stock
+      tags: ["india_views","transformation"]

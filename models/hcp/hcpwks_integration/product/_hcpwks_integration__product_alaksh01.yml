@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__product_dim_tmp
+    config:
+      alias: product_dim_tmp
+      tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__udc_gtm_flag_tmp
+    config:
+      alias: udc_gtm_flag_tmp
+      tags: ["in_rx_to_cx_datamart","transformation"]

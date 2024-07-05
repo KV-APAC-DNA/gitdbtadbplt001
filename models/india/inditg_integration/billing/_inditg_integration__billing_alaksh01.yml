@@ -1,0 +1,12 @@
+version: 2
+
+models:
+
+  - name: inditg_integration__itg_billing_conditions
+    config: 
+      alias: itg_billing_conditions
+      tags: ["m_wrp_in_sdlitg_invc","ingestion"]
+  - name: inditg_integration__itg_billing_conditions_history_data
+    config: 
+      alias: itg_billing_conditions_history_data
+      tags: ["m_wrp_in_sdlitg_invc","ingestion"]
