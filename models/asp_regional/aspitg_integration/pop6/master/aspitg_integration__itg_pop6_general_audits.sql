@@ -7,33 +7,27 @@
 }}
 with sdl_pop6_kr_general_audits as
 (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_kr_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_kr_general_audits')}}
 ),
 sdl_pop6_tw_general_audits as
 (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_tw_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_tw_general_audits')}}
 ),
 sdl_pop6_hk_general_audits as
 (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_hk_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_hk_general_audits')}}
 ),
 sdl_pop6_jp_general_audits as
 (
-    select * from --{{ source('jpnsdl_raw', 'sdl_pop6_jp_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_jp_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_jp_general_audits')}}
 ),
 sdl_pop6_sg_general_audits as
 (
-    select * from --{{ source('sgpsdl_raw', 'sdl_pop6_sg_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_sg_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_sg_general_audits')}}
 ),
 sdl_pop6_th_general_audits as
 (
-    select * from --{{ source('thasdl_raw', 'sdl_pop6_th_general_audits') }}
-    {{ref('aspwks_integration__wks_pop6_th_general_audits')}}
+    select * from {{ref('aspwks_integration__wks_pop6_th_general_audits')}}
 ),
 transformed as 
 (    

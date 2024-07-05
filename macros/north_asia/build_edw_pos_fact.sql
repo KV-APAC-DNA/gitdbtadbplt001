@@ -71,19 +71,11 @@
                     store_type varchar(25),
                     sls_grp_cd varchar(18)
     );
-        create or replace table {{tablename}} clone
-        {% if target.name=='prod' %}
-            ntaedw_integration.edw_pos_fact
-        {% else %}
-            {{schema}}.ntaedw_integration__edw_pos_fact
-        {% endif %};
-         DELETE FROM
-                    {{this}}
+         DELETE FROM {{tablename}}
                     WHERE
                     ctry_cd = 'TW' 
                     AND hist_flg = 'N';
-        INSERT INTO
-                        {{this}}
+        INSERT INTO {{tablename}}
                         SELECT
                         pos_dt,
                         vend_cd,

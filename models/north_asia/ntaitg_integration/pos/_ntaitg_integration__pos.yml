@@ -127,3 +127,7 @@ models:
     config:
         alias: sdl_raw_hk_pos_scorecard_mannings
         tags: ["hk_pos","ingestion"]
+  - name: ntaitg_integration__sdl_kr_raw_pos_emart_evydy
+    config:
+        alias: sdl_kr_raw_pos_emart_evydy
+        tags: ["kr_pos",""]

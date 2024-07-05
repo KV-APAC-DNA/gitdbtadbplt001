@@ -5,28 +5,22 @@
     )
 }}
 with sdl_pop6_hk_displays as (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_displays') }}
-    {{ref('aspwks_integration__wks_pop6_hk_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_hk_display')}}
 ),
 sdl_pop6_kr_displays as (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_displays') }}
-    {{ref('aspwks_integration__wks_pop6_kr_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_kr_display')}}
 ),
 sdl_pop6_tw_displays as (
-    select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_displays') }}
-    {{ref('aspwks_integration__wks_pop6_tw_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_tw_display')}}
 ),
 sdl_pop6_jp_displays as (
-    select * from --{{ source('jpnsdl_raw', 'sdl_pop6_jp_displays') }}
-    {{ref('aspwks_integration__wks_pop6_jp_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_jp_display')}}
 ),
 sdl_pop6_sg_displays as (
-    select * from --{{ source('sgpsdl_raw', 'sdl_pop6_sg_displays') }}
-    {{ref('aspwks_integration__wks_pop6_sg_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_sg_display')}}
 ),
 sdl_pop6_th_displays as (
-    select * from --{{ source('thasdl_raw', 'sdl_pop6_th_displays') }}
-    {{ref('aspwks_integration__wks_pop6_th_display')}}
+    select * from {{ref('aspwks_integration__wks_pop6_th_display')}}
 ),
 transformed as (
     SELECT  
