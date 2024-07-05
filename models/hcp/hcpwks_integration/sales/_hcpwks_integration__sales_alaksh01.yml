@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpwks_integration__sales_actual_achnr_qty
-    config:
-      alias: sales_actual_achnr_qty
-      tags: ["in_rx_to_cx_datamart","transformation"]

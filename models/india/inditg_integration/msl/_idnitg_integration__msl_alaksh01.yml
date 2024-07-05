@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: inditg_integration__itg_sku_recom_flag_msl_spike
-    config:
-      alias: itg_sku_recom_flag_msl_spike
-      tags: ["in_skurecom_gt_sss_2024_datamart","ingestion"]

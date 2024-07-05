@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: indwks_integration__wks_issue_rev_udc_details
-    config: 
-      alias: wks_issue_rev_udc_details
-      tags: ["in_os_mgm_rpt_datamart","transformation"]
-

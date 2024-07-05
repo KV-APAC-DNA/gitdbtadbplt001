@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__v_rpt_fran_chnl_actl_sales_by_channel
-    config:
-      alias: v_rpt_fran_chnl_actl_sales_by_channel
-      tags: ["india_views","transformation"]

@@ -1,6 +1,6 @@
 with itg_keyaccountsales as
 (
-    select * from {{ source('inditg_integration', 'itg_keyaccountsales') }}
+    select * from {{ ref('inditg_integration__itg_keyaccountsales') }}
 ),
 edw_ka_sales_fact as 
 (

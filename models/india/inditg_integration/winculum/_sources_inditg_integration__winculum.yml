@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_mds_in_sv_winculum_master_wrk
+    - name: itg_day_cls_stock_fact_temp

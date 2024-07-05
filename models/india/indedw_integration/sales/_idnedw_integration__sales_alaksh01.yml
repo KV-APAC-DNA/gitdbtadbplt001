@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__v_rpt_ka_sales_internal
-    config:
-      alias: v_rpt_ka_sales_internal
-      tags: ["india_views","transformation"]

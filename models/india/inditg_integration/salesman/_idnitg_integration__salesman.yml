@@ -35,3 +35,7 @@ models:
     config:
       alias: itg_salesmanmaster
       tags: ["in_sdlitg_salescube_master","ingestion"]
+  - name: inditg_integration__itg_salesman_target
+    config:
+      alias: itg_salesman_target
+      tags: ["j_in_salesman_target_load","ingestion"]

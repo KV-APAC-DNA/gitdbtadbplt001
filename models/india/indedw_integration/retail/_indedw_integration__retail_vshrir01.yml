@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__v_retail_frnch_categ_mapping
-    config: 
-      materialized: view
-      alias: v_retail_frnch_categ_mapping
-      tags: ["j_ap_idc_etl_framework","transformation"]

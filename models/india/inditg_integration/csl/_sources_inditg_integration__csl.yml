@@ -14,3 +14,9 @@ sources:
     
     - name: sdl_csl_retailerhierarchy
       tags: ["in_sdlitg_salescube_master","ingestion"]
+    - name: sdl_csl_schemeutilization
+      tags: ["m_wrp_in_sdlitg_scheme","transformation"]
+    - name: sdl_csl_orderbooking
+      tags: ["m_wrp_in_sdlitg_order","transformation"]
+    - name: sdl_csl_salesinvoiceorders
+      tags: ["m_wrp_in_sdlitg_order","transformation"]

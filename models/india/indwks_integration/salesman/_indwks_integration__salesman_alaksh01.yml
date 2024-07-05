@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indwks_integration__wks_mi_psr_salesman_master
-    config:
-      alias: wks_mi_psr_salesman_master
-      tags: ["in_mi_psr_datamart","transformation"]

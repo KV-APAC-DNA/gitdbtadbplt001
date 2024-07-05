@@ -8,7 +8,7 @@ edw_customer_dim as
 ),
 itg_day_cls_stock_fact as
 (
-    select * from {{ source('inditg_integration', 'inditg_integration__itg_day_cls_stock_fact_temp') }}
+    select * from {{ source('inditg_integration', 'itg_day_cls_stock_fact_temp') }}
 ),
 transformed as
 (
