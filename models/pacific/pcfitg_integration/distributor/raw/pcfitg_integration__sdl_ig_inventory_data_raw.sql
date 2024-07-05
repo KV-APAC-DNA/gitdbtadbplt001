@@ -59,7 +59,7 @@ final as
         try_to_number(item_details_inner_gtin) as item_details_inner_gtin,
         try_to_number(item_details_outer_gtin) as item_details_outer_gtin,
         try_to_number(sales_week_6) as sales_week_6,
-        try_to_number(sales_week_100) as sales_week_100,
+        try_to_number(sales_week_5) as sales_week_5,
         try_to_number(sales_week_4) as sales_week_4,
         try_to_number(sales_week_3) as sales_week_3,
         try_to_number(sales_week_2) as sales_week_2,
