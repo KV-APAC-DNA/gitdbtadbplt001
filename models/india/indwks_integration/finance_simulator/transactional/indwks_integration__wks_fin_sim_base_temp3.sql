@@ -13,7 +13,7 @@ with itg_fin_sim_miscdata as (
 ),
 itg_mds_in_product_hierarchy as
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_PRODUCT_HIERARCHY
+    select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
 wks_fin_sim_base_temp2 as (
     select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}

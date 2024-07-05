@@ -2,17 +2,17 @@ with wks_fin_sim_copa_trans_fact as
 (
     select * from {{ ref('indwks_integration__wks_fin_sim_copa_trans_fact') }}
 ),
-ITG_MDS_IN_PRODUCT_HIERARCHY as
+itg_mds_in_product_hierarchy as
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_PRODUCT_HIERARCHY
+    select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
 itg_mds_in_gl_account_master as
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_GL_ACCOUNT_MASTER
+    select * from {{ ref('inditg_integration__itg_mds_in_gl_account_master') }}
 ),
 itg_mds_in_sap_distribution_channel as
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_MDS_IN_SAP_DISTRIBUTION_CHANNEL
+    select * from {{ ref('inditg_integration__itg_mds_in_sap_distribution_channel') }}
 ),
 final as
 (
@@ -70,7 +70,7 @@ final as
     prod_h.brand_group_1_code AS brand_group_1,
     prod_h.brand_group_2_code AS brand_group_2,
     trans.co_cd,
-    prod_h.brand_combi_var_code AS brand_combi_var FROM wks_fin_sim_copa_trans_fact trans LEFT JOIN ITG_MDS_IN_PRODUCT_HIERARCHY prod_h ON prod_h.code = LTRIM(trans.matl_num, 0) LEFT JOIN itg_mds_in_gl_account_master acc_m ON trans.chrt_acct || '\/' || LTRIM(trans.acct_num, 0) = acc_m.bw_gl LEFT JOIN (
+    prod_h.brand_combi_var_code AS brand_combi_var FROM wks_fin_sim_copa_trans_fact trans LEFT JOIN itg_mds_in_product_hierarchy prod_h ON prod_h.code = LTRIM(trans.matl_num, 0) LEFT JOIN itg_mds_in_gl_account_master acc_m ON trans.chrt_acct || '\/' || LTRIM(trans.acct_num, 0) = acc_m.bw_gl LEFT JOIN (
     SELECT CASE 
         WHEN code = 'Not assigned'
           THEN NULL

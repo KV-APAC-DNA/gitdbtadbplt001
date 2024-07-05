@@ -1,10 +1,8 @@
 with edw_copa_trans_fact as (
-    --select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
-    select * from {{ source('aspedw_integration', 'edw_copa_trans_fact') }}
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 itg_query_parameters as
 (
-    --select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_QUERY_PARAMETERS
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 transformed as

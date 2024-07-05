@@ -25,10 +25,6 @@ models:
     config:
       alias: sdl_raw_pos_category_mapping
       tags: ["j_india_key_account_offtake_category_mapping_data_ingestion","ingestion"]
-  - name: inditg_integration__itg_pos_offtake_fact
-    config:
-      alias: itg_pos_offtake_fact
-      tags: ["pos_tesco_files","pos_dmart_files","pos_frl_files","pos_dabur_files","pos_spencer_files","transformation"]
   - name: inditg_integration__sdl_raw_pos_tesco
     config:
       alias: sdl_raw_pos_tesco

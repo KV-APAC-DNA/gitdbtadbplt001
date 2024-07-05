@@ -28,7 +28,7 @@ final as
 	    external_sub_category::varchar(255) as external_sub_category,
 	    filename::varchar(100) as filename,
 	    run_id::number(14,0) as run_id,
-	    current_timestamp()::timestamp_ntz(9) as crt_dttm    
+	    crt_dttm::timestamp_ntz(9) as crt_dttm
     from sdl_pos_category_mapping
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

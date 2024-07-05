@@ -20,7 +20,7 @@ final as
 	    promotor::varchar(10) as promotor,
 	    filename::varchar(100) as filename,
 	    run_id::number(14,0) as run_id,
-	    current_timestamp()::timestamp_ntz(9) as crt_dttm    
+	    crt_dttm::timestamp_ntz(9) as crt_dttm    
     from sdl_pos_re_mapping
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run
