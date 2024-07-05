@@ -1,5 +1,5 @@
 with wks_taiwan_base as (
-    select * from snapntawks_integration.wks_taiwan_base
+    select * from {{ ref('ntawks_integration__wks_taiwan_base') }}
 ),
 edw_vw_os_time_dim as(
     select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}

@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: ntaedw_integration__edw_vw_tw_pos_inventory
-    config: 
-      alias: edw_vw_tw_pos_inventory
-      tags: ["","transformation"]

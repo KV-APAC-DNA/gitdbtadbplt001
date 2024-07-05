@@ -1,10 +1,10 @@
 with cust_customer as
 (
-    select * from aspitg_integration__cust_customer
+    select * from {{ source('aspsdl_raw', 'cust_customer') }}
 ),
 edw_vw_store_master_rex_pop6 as
 (
-    select * from {{ ref('ntaedw_integration__edw_vw_store_master_rex_pop6') }}
+    select * from {{ ref('aspedw_integration__edw_vw_store_master_rex_pop6') }}
 ),
 v_mrchr_merchandisingresponse as
 (
@@ -24,15 +24,15 @@ v_prod_product as
 ),
 edw_vw_pop6_salesperson as
 (
-    select * from {{ ref('ntaedw_integration__edw_vw_pop6_salesperson') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_salesperson') }}
 ),
 sdl_rex_pop6_usr_map as
 (
-    select * from dev_dna_load.snapntasdl_raw.sdl_rex_pop6_usr_map
+    select * from {{ source('ntasdl_raw', 'sdl_rex_pop6_usr_map') }}
 ),
 kpi2data_mapping as
 (
-    select * from aspitg_integration__kpi2data_mapping
+    select * from {{ source('aspitg_integration', 'kpi2data_mapping') }}
 ),
 v_ms_mastersurvey as
 (
@@ -52,7 +52,7 @@ v_slsp_salesperson as
 ),
 v_bi_survey_response_values as
 (
-    select * from {{ ref('aspitg_integration__v_bi_survey_response_values') }}
+    select * from {{ ref('aspedw_integration__v_bi_survey_response_values') }}
 ),
 merchandising_response_msl as
 (   

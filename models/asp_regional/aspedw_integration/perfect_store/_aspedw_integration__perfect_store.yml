@@ -32,4 +32,8 @@ models:
   - name: aspedw_integration__v_rpt_pop6_perfectstore
     config: 
       alias: v_rpt_pop6_perfectstore
-      tags: ["na_views","transformation"]
+      tags: ["north_asia_views","transformation"]
+  - name: aspedw_integration__v_rpt_rex_perfect_store
+    config: 
+      alias: v_rpt_rex_perfect_store
+      tags: ["north_asia_views","transformation"]

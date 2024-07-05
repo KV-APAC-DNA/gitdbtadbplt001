@@ -17,3 +17,11 @@ models:
     config: 
       alias: edw_kr_otc_inventory
       tags: ["j_kr_otc_inv_etl_framework","transformation"]
+  - name: ntaedw_integration__edw_vw_tw_pos_inventory
+    config: 
+      alias: edw_vw_tw_pos_inventory
+      tags: ["","transformation"]
+  - name: ntaedw_integration__v_rpt_ims_inventory_analysis
+    config: 
+      alias: v_rpt_ims_inventory_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]

@@ -21,3 +21,7 @@ models:
     config: 
         alias: v_intrm_curr_copa_plan
         tags: []
+  - name: ntaedw_integration__v_intrm_curr_copa_plan_flat
+    config: 
+        alias: v_intrm_curr_copa_plan_flat
+        tags: ["","transformation"]

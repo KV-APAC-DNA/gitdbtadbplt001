@@ -2,7 +2,7 @@ with wks_tw_inventory_health_analysis_propagation as (
     select * from {{ ref('aspwks_integration__wks_tw_inventory_health_analysis_propagation') }}
 ),
 wks_taiwan_sellout_for_inv_analysis as (
-    select * from ntawks_integration__wks_taiwan_sellout_for_inv_analysis
+    select * from {{ ref('ntawks_integration__wks_taiwan_sellout_for_inv_analysis') }}
 ),
 wks_tw_inventory_healthy_unhealthy_analysis as (
     select * from {{ ref('ntawks_integration__wks_tw_inventory_healthy_unhealthy_analysis') }}

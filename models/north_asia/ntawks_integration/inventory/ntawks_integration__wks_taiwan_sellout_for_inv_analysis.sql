@@ -1,93 +1,93 @@
-WITH EDW_GCH_CUSTOMERHIERARCHY
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_GCH_CUSTOMERHIERARCHY --{{ref('aspedw_integration__edw_gch_customerhierarchy')}}
+with edw_gch_customerhierarchy
+as (
+    select *
+    from {{ref('aspedw_integration__edw_gch_customerhierarchy')}}
     ),
-EDW_CUSTOMER_SALES_DIM
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_CUSTOMER_SALES_DIM --{{ref('aspedw_integration__edw_customer_sales_dim')}}
+edw_customer_sales_dim
+as (
+    select *
+    from {{ref('aspedw_integration__edw_customer_sales_dim')}}
     ),
-EDW_CUSTOMER_BASE_DIM
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_CUSTOMER_BASE_DIM --(ref('aspedw_integration__edw_customer_base_dim'))
+edw_customer_base_dim
+as (
+    select *
+    from {{ ref('aspedw_integration__edw_customer_base_dim') }}
     ),
-EDW_COMPANY_DIM
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_COMPANY_DIM --{{ref('aspedw_integration__edw_company_dim')}}
+edw_company_dim
+as (
+    select *
+    from {{ref('aspedw_integration__edw_company_dim')}}
     ),
-EDW_DSTRBTN_CHNL
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_DSTRBTN_CHNL --{{ref('aspedw_integration__edw_dstrbtn_chnl')}}
+edw_dstrbtn_chnl
+as (
+    select *
+    from {{ref('aspedw_integration__edw_dstrbtn_chnl')}}
 
     ),
-EDW_SALES_ORG_DIM
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_SALES_ORG_DIM --{{ref('aspedw_integration__edw_sales_org_dim')}}
+edw_sales_org_dim
+as (
+    select *
+    from {{ref('aspedw_integration__edw_sales_org_dim')}}
 
     ),
-EDW_CODE_DESCRIPTIONS
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_CODE_DESCRIPTIONS --{{ref('aspedw_integration__edw_code_descriptions')}}
+edw_code_descriptions
+as (
+    select *
+    from {{ref('aspedw_integration__edw_code_descriptions')}}
 
     ),
-EDW_SUBCHNL_RETAIL_ENV_MAPPING
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_SUBCHNL_RETAIL_ENV_MAPPING 
+edw_subchnl_retail_env_mapping
+as (
+    select *
+    from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }} 
 
     ),
-EDW_CUSTOMER_DIM
-AS (
-    SELECT *
-    FROM snapindedw_integration.EDW_CUSTOMER_DIM 
+edw_customer_dim
+as (
+    select *
+    from indedw_integration.edw_customer_dim 
 
     ),
 v_rpt_dly_plan_ims_enrich
-AS (
-    SELECT *
-    FROM snapntaedw_integration.v_rpt_dly_plan_ims_enrich --{{ref('ntaedw_integration__v_rpt_dly_plan_ims_enrich')}}
+as (
+    select *
+    from {{ref('ntaedw_integration__v_rpt_dly_plan_ims_enrich')}}
 
     ),
 edw_pos_fact
-AS (
-    SELECT *
-    FROM snapntaedw_integration.edw_pos_fact --{{ref('ntaedw_integration__edw_pos_fact')}}
+as (
+    select *
+    from {{ref('ntaedw_integration__edw_pos_fact')}}
 
     ),
 itg_pos_prom_prc_map
-AS (
-    SELECT *
-    FROM snapntaitg_integration.itg_pos_prom_prc_map --{{ref('ntaitg_integration__itg_pos_prom_prc_map')}}
+as (
+    select *
+    from {{ref('ntaitg_integration__itg_pos_prom_prc_map')}}
 
     ),
 edw_vw_greenlight_skus
-AS (
-    SELECT *
-    FROM snapaspedw_integration.edw_vw_greenlight_skus --{{ref('aspedw_integration__edw_vw_greenlight_skus')}}
+as (
+    select *
+    from {{ref('aspedw_integration__edw_vw_greenlight_skus')}}
 
     ),
 itg_parameter_reg_inventory
-AS (
-    SELECT *
-    FROM snapaspitg_integration.itg_parameter_reg_inventory 
+as (
+    select *
+    from {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
 
     ),
 edw_product_attr_dim
-AS (
-    SELECT *
-    FROM snapaspedw_integration.edw_product_attr_dim --{{ref('aspedw_integration__edw_product_attr_dim')}}
+as (
+    select *
+    from {{ref('aspedw_integration__edw_product_attr_dim')}}
 
     ),
-EDW_MATERIAL_DIM
-AS (
-    SELECT *
-    FROM snapaspedw_integration.EDW_MATERIAL_DIM --{{ref('aspedw_integration__edw_material_dim')}}
+edw_material_dim
+as (
+    select *
+    from {{ref('aspedw_integration__edw_material_dim')}}
 
     ),
 customer

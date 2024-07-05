@@ -1,32 +1,32 @@
 WITH edw_ims_fact
 AS (
     SELECT *
-    FROM snapntaedw_integration.edw_ims_fact --{{ref('ntaedw_integration__edw_ims_fact')}} --
+    FROM {{ref('ntaedw_integration__edw_ims_fact')}}
     ),
 v_intrm_calendar_ims
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_intrm_calendar_ims --{{ref('ntaedw_integration__v_intrm_calendar_ims')}}
+    FROM {{ref('ntaedw_integration__v_intrm_calendar_ims')}}
     ),
 edw_product_attr_dim
 AS (
     SELECT *
-    FROM snapaspedw_integration.edw_product_attr_dim --{{ref('aspedw_integration__edw_product_attr_dim')}}
+    FROM {{ref('aspedw_integration__edw_product_attr_dim')}}
     ),
 edw_customer_attr_flat_dim
 AS (
     SELECT *
-    FROM snapntaedw_integration.edw_customer_attr_flat_dim --{{ref('aspedw_integration__edw_customer_attr_flat_dim')}}
+    FROM {{ref('aspedw_integration__edw_customer_attr_flat_dim')}}
     ),
 itg_ims_dstr_cust_attr
 AS (
     SELECT *
-    FROM snapntaitg_integration.itg_ims_dstr_cust_attr
+    FROM {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
     ),
 v_intrm_crncy_exch
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_intrm_crncy_exch
+    FROM {{ ref('ntaedw_integration__v_intrm_crncy_exch') }}
     ),
 t1
 AS (

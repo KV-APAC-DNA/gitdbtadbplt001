@@ -56,3 +56,7 @@ models:
     config:
       alias: edw_rpt_id_perfect_store
       tags: ["id_ps_datamart","transformation"]
+  - name: idnedw_integration__v_rpt_id_regional_perfect_store
+    config: 
+        alias: v_rpt_id_regional_perfect_store
+        tags: ["", "transformation"]

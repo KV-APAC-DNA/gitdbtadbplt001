@@ -1,12 +1,12 @@
-WITH EDW_VW_OS_TIME_DIM
-AS (
-	SELECT *
-	FROM DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+with edw_vw_os_time_dim
+as (
+	select *
+	from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 	),
-wks_HK_base_detail
-AS (
-	SELECT *
-	FROM DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE_DETAIL
+wks_hk_base_detail
+as (
+	select *
+	from {{ ref('ntawks_integration__wks_hk_base_detail') }}
 	),
 transformed
 AS (

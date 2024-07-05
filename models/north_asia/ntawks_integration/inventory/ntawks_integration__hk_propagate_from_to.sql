@@ -1,12 +1,12 @@
-WITH HK_propagate_to
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.HK_PROPAGATE_TO
+WITH hk_propagate_to
+as (
+  select *
+  from {{ ref('ntawks_integration__hk_propagate_to') }}
   ),
-wks_HK_base_detail
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE_DETAIL
+wks_hk_base_detail
+as (
+  select *
+  from {{ ref('ntawks_integration__wks_hk_base_detail') }}
   ),
 transformed
 AS (

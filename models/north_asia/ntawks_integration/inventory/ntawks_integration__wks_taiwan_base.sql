@@ -1,57 +1,57 @@
 WITH v_rpt_ims_inventory
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_rpt_ims_inventory --{{ref('ntaedw_integration__v_rpt_ims_inventory')}}
+    FROM {{ref('ntaedw_integration__v_rpt_ims_inventory')}}
     ),
 edw_billing_fact
 AS (
     SELECT *
-    FROM snapaspedw_integration.edw_billing_fact --{{ref('aspedw_integration__edw_billing_fact')}}
+    FROM {{ref('aspedw_integration__edw_billing_fact')}}
     ),
 edw_material_sales_dim
 AS (
     SELECT *
-    FROM snapaspedw_integration.edw_material_sales_dim --{{ref('aspedw_integration__edw_material_sales_dim')}}
+    FROM {{ref('aspedw_integration__edw_material_sales_dim')}}
     ),
 v_rpt_dly_plan_ims_enrich
 AS (
     SELECT *
-    FROM snapntaedw_integration.v_rpt_dly_plan_ims_enrich --{{ref('ntaedw_integration__v_rpt_dly_plan_ims_enrich')}}
+    FROM {{ref('ntaedw_integration__v_rpt_dly_plan_ims_enrich')}}
     ),
 edw_pos_fact
 AS (
     SELECT *
-    FROM snapntaedw_integration.edw_pos_fact --{{ref('ntaedw_integration__edw_pos_fact')}}
+    FROM {{ref('ntaedw_integration__edw_pos_fact')}}
     ),
 EDW_CUSTOMER_SALES_DIM
 AS (
     SELECT *
-    FROM snapaspedw_integration.EDW_CUSTOMER_SALES_DIM --{{ref('aspedw_integration__edw_customer_sales_dim')}}
+    FROM {{ref('aspedw_integration__edw_customer_sales_dim')}}
     ),
 itg_parameter_reg_inventory
 AS (
     SELECT *
-    FROM snapaspitg_integration.itg_parameter_reg_inventory 
+    FROM {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }} 
     ),
 edw_vw_tw_pos_inventory
 AS (
     SELECT *
-    FROM snapntaedw_integration.edw_vw_tw_pos_inventory  --{{ref('mysedw_integration__edw_vw_my_pos_inventory')}}
+    FROM {{ref('mysedw_integration__edw_vw_my_pos_inventory')}}
     ),
 EDW_VW_OS_TIME_DIM
 AS (
     SELECT *
-    FROM snaposeedw_integration.EDW_VW_OS_TIME_DIM  --{{ref('sgpedw_integration__edw_vw_os_time_dim')}}
+    FROM {{ref('sgpedw_integration__edw_vw_os_time_dim')}}
     ),
 itg_pos_prom_prc_map
 AS (
     SELECT *
-    FROM snapntaitg_integration.itg_pos_prom_prc_map  --{{ref('ntaitg_integration__itg_pos_prom_prc_map')}}
+    FROM {{ref('ntaitg_integration__itg_pos_prom_prc_map')}}
     ),
 EDW_CODE_DESCRIPTIONS
 AS (
     SELECT *
-    FROM snapaspedw_integration.EDW_CODE_DESCRIPTIONS  --{{ref('aspedw_integration__edw_code_descriptions')}}
+    FROM {{ref('aspedw_integration__edw_code_descriptions')}}
     ),
 inv_max
 AS (

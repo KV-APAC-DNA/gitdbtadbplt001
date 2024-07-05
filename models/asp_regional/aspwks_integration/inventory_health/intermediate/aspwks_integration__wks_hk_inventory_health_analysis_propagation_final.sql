@@ -1,11 +1,12 @@
 
 with wks_hk_inventory_health_analysis_propagation as (
-select * from DEV_DNA_CORE.SNAPASPWKS_INTEGRATION.WKS_HK_INVENTORY_HEALTH_ANALYSIS_PROPAGATION),
+select * from {{ ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation') }}
+),
 wks_hk_sellout_for_inv_analysis as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_SELLOUT_FOR_INV_ANALYSIS
+select * from {{ ref('ntawks_integration__wks_hk_sellout_for_inv_analysis') }}
 ),
 wks_hk_inventory_healthy_unhealthy_analysis as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_INVENTORY_HEALTHY_UNHEALTHY_ANALYSIS
+select * from {{ ref('ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis') }}
 ),
 transformed as (
 SELECT inv.*,healthy_inv.healthy_inventory

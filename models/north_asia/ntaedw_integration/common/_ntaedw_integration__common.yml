@@ -21,3 +21,7 @@ models:
     config:
       alias: v_rpt_nts_vs_tgt
       tags: ["","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl
+    config:
+      alias: v_intrm_sls_pln_actl
+      tags: ["","transformation"]
