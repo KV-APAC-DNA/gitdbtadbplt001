@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: indedw_integration__v_product_dim
+    config:
+      materialized: view
+      alias: v_product_dim
+      tags: ["","transformation"]

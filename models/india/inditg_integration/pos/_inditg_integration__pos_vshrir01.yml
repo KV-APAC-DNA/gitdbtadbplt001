@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_pos_offtake_fact
+    config:
+      alias: itg_pos_offtake_fact
+      tags: ["pos_hg_files","pos_max_files","pos_vmm_files","pos_ril_files","pos_abrl_files","pos_apollo_files",
+            "pos_tesco_files","pos_dmart_files","pos_frl_files","pos_dabur_files","pos_spencer_files","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_hg
+    config:
+      alias: sdl_raw_pos_hg
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_max
+    config:
+      alias: sdl_raw_pos_max
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_vmm
+    config:
+      alias: sdl_raw_pos_vmm
+      tags: ["j_india_key_account_offtake_vmm_data_ingestion","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_ril
+    config:
+      alias: sdl_raw_pos_ril
+      tags: ["j_india_key_account_offtake_ril_data_ingestion","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_abrl
+    config:
+      alias: sdl_raw_pos_abrl
+      tags: ["j_india_key_account_offtake_abrl_data_ingestion","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_apollo
+    config:
+      alias: sdl_raw_pos_apollo
+      tags: ["j_india_key_account_offtake_apollo_data_ingestion","transformation"]

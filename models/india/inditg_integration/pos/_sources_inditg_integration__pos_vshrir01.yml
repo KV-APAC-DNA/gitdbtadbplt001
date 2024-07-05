@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_pos_hg
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+    - name: sdl_pos_max
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+    - name: sdl_pos_vmm
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+    - name: sdl_pos_ril
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+    - name: sdl_pos_abrl
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+    - name: sdl_pos_apollo
+      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__sdl_dailysales_del_raw
+    config:
+      alias: sdl_dailysales_del_raw
+      tags: ["m_wrp_in_sdlitg_gtsales","transformation"]
