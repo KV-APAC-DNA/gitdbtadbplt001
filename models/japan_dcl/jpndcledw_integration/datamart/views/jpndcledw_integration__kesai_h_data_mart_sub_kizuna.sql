@@ -1,0 +1,71 @@
+with kesai_h_data_mart_sub_tbl_kizuna as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_tbl_kizuna') }}
+),
+final as(
+    SELECT kesai_h_data_mart_sub_tbl_kizuna.saleno
+        ,kesai_h_data_mart_sub_tbl_kizuna.juchkbn
+        ,kesai_h_data_mart_sub_tbl_kizuna.juchym
+        ,kesai_h_data_mart_sub_tbl_kizuna.juchdate
+        ,kesai_h_data_mart_sub_tbl_kizuna.juchquarter
+        ,kesai_h_data_mart_sub_tbl_kizuna.juchjigyoki
+        ,kesai_h_data_mart_sub_tbl_kizuna.kokyano
+        ,kesai_h_data_mart_sub_tbl_kizuna.torikeikbn
+        ,kesai_h_data_mart_sub_tbl_kizuna.cancelflg
+        ,kesai_h_data_mart_sub_tbl_kizuna.hanrocode
+        ,kesai_h_data_mart_sub_tbl_kizuna.syohanrobunname
+        ,kesai_h_data_mart_sub_tbl_kizuna.chuhanrobunname
+        ,kesai_h_data_mart_sub_tbl_kizuna.daihanrobunname
+        ,kesai_h_data_mart_sub_tbl_kizuna.mediacode
+        ,kesai_h_data_mart_sub_tbl_kizuna.soryo
+        ,kesai_h_data_mart_sub_tbl_kizuna.tax
+        ,kesai_h_data_mart_sub_tbl_kizuna.sogokei
+        ,kesai_h_data_mart_sub_tbl_kizuna.tenpocode
+        ,kesai_h_data_mart_sub_tbl_kizuna.shukaym
+        ,kesai_h_data_mart_sub_tbl_kizuna.shukadate
+        ,kesai_h_data_mart_sub_tbl_kizuna.shukaquarter
+        ,kesai_h_data_mart_sub_tbl_kizuna.shukajigyoki
+        ,kesai_h_data_mart_sub_tbl_kizuna.zipcode
+        ,kesai_h_data_mart_sub_tbl_kizuna.todofukencode
+        ,kesai_h_data_mart_sub_tbl_kizuna.riyopoint
+        ,kesai_h_data_mart_sub_tbl_kizuna.happenpoint
+        ,kesai_h_data_mart_sub_tbl_kizuna.kessaikbn
+        ,kesai_h_data_mart_sub_tbl_kizuna.cardcorpcode
+        ,kesai_h_data_mart_sub_tbl_kizuna.henreasoncode
+        ,kesai_h_data_mart_sub_tbl_kizuna.motoinsertid
+        ,kesai_h_data_mart_sub_tbl_kizuna.motoinsertdate
+        ,kesai_h_data_mart_sub_tbl_kizuna.motoupdatedate
+        ,kesai_h_data_mart_sub_tbl_kizuna.insertdate
+        ,kesai_h_data_mart_sub_tbl_kizuna.inserttime
+        ,kesai_h_data_mart_sub_tbl_kizuna.insertid
+        ,kesai_h_data_mart_sub_tbl_kizuna.updatedate
+        ,kesai_h_data_mart_sub_tbl_kizuna.updatetime
+        ,kesai_h_data_mart_sub_tbl_kizuna.updateid
+        ,kesai_h_data_mart_sub_tbl_kizuna.rank
+        ,kesai_h_data_mart_sub_tbl_kizuna.dispsaleno
+        ,kesai_h_data_mart_sub_tbl_kizuna.kesaiid
+        ,kesai_h_data_mart_sub_tbl_kizuna.ordercode
+        ,kesai_h_data_mart_sub_tbl_kizuna.henreasonname
+        ,kesai_h_data_mart_sub_tbl_kizuna.uketsukeusrid
+        ,kesai_h_data_mart_sub_tbl_kizuna.uketsuketelcompanycd
+        ,kesai_h_data_mart_sub_tbl_kizuna.smkeiroid
+        ,kesai_h_data_mart_sub_tbl_kizuna.dipromid
+        ,kesai_h_data_mart_sub_tbl_kizuna.saleno_trm
+        ,kesai_h_data_mart_sub_tbl_kizuna.dicollectprc
+        ,kesai_h_data_mart_sub_tbl_kizuna.ditoujitsuhaisoprc
+        ,kesai_h_data_mart_sub_tbl_kizuna.didiscountall
+        ,kesai_h_data_mart_sub_tbl_kizuna.c_didiscountprc
+        ,kesai_h_data_mart_sub_tbl_kizuna.point_exchange
+        ,kesai_h_data_mart_sub_tbl_kizuna.logincode
+        ,kesai_h_data_mart_sub_tbl_kizuna.maker
+        ,kesai_h_data_mart_sub_tbl_kizuna.todofuken_code
+        ,kesai_h_data_mart_sub_tbl_kizuna.shukkasts
+        ,kesai_h_data_mart_sub_tbl_kizuna.divouchercode
+        ,kesai_h_data_mart_sub_tbl_kizuna.ditaxrate
+        ,kesai_h_data_mart_sub_tbl_kizuna.diseikyuremain
+        ,kesai_h_data_mart_sub_tbl_kizuna.dinyukinsts
+        ,kesai_h_data_mart_sub_tbl_kizuna.dicardnyukinsts
+        ,kesai_h_data_mart_sub_tbl_kizuna.disokoid
+        ,kesai_h_data_mart_sub_tbl_kizuna.dihaisokeitai
+    FROM kesai_h_data_mart_sub_tbl_kizuna
+)
+select * from final

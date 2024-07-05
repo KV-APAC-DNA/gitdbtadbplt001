@@ -505,17 +505,17 @@ models:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
-      jpdcledw_integration:
+      jpndcledw_integration:
         +materialized: table
         +transient: false
         +schema: JPDCLEDW_INTEGRATION
-      jpdclitg_integration:
+      jpndclitg_integration:
         +materialized: table
         +transient: false
         +schema: JPDCLITG_INTEGRATION
-      jpdclwks_integration:
+      jpndclwks_integration:
         +materialized: table
         +schema: JPDCLWKS_INTEGRATION
-      jpdcledw_access:
+      jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
