@@ -10,7 +10,7 @@
             {% endif %}
             {% elif var('invnt_job_to_execute') == 'edw_ims_inventory_fact_load' %}
             {% if is_incremental() %}
-            delete from {{this}} using (select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_invnt') }}) wks_edw_ims_invnt
+            delete from {{this}} edw_ims_inventory_fact using (select distinct dstr_cd from {{ ref('ntawks_integration__wks_edw_ims_invnt') }}) wks_edw_ims_invnt
             where edw_ims_inventory_fact.dstr_cd = wks_edw_ims_invnt.dstr_cd;
             {% endif %}
             {% endif %}
@@ -19,7 +19,8 @@
 }}
 
 
-with source as(
+with 
+source as(
     select * from {{ ref('ntawks_integration__wks_edw_ims_invnt_std') }}
 ),
 wks_edw_ims_invnt as (
@@ -59,7 +60,7 @@ taiwan as(
     from source
 )
 select * from taiwan
-{% elif var('ims_job_to_execute') == 'kr_edw_ims_fact' %}
+{% elif var('invnt_job_to_execute') == 'edw_ims_inventory_fact_load' %}
 ,
 
 hk as (
