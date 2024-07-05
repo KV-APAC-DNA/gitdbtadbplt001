@@ -1,7 +1,7 @@
 with source as
 (
     -- select * from dev_dna_core.snapjpdcledw_integration.teikikeiyaku_data_mart_uni
-    select * from {{ source('jpndcledw', 'jpndcledw_integration__teikikeiyaku_data_mart_uni') }}
+    select * from {{ source('jpndcledw_integration', 'jpndcledw_integration__teikikeiyaku_data_mart_uni') }}
 ),
 
 final as
