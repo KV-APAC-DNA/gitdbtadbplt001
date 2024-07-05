@@ -3,7 +3,7 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where UPPER(TRIM(date)) || UPPER(TRIM(outlet_no)) || UPPER(TRIM(brand)) || UPPER(TRIM(yearmo)) in (select distinct UPPER(TRIM(date)) || UPPER(TRIM(outlet_no)) || UPPER(TRIM(brand)) || UPPER(TRIM(yearmo)) from dev_dna_load.snaposesdl_raw.sdl_my_perfectstore_promocomp);
+        delete from {{this}} where UPPER(TRIM(date)) || UPPER(TRIM(outlet_no)) || UPPER(TRIM(brand)) || UPPER(TRIM(yearmo)) in (select distinct UPPER(TRIM(date)) || UPPER(TRIM(outlet_no)) || UPPER(TRIM(brand)) || UPPER(TRIM(yearmo)) from {{ source('myssdl_raw','sdl_my_perfectstore_promocomp') }});
         {% endif %}"
     )
 }}
