@@ -1,6 +1,7 @@
 with source as
 (
-    select * from dev_dna_core.snapjpdcledw_integration.DM_USER_ATTR
+    -- select * from dev_dna_core.snapjpdcledw_integration.DM_USER_ATTR
+    select * from {{ source('jpndcledw', 'jpndcledw_integration__DM_USER_ATTR') }}
 ),
 
 final as
@@ -12,3 +13,4 @@ final as
 )
 
 select * from final
+

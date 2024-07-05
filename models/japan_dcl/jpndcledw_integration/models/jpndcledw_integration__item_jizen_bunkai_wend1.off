@@ -13,11 +13,11 @@ AS (
 	SELECT *
 	FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_wh') }}
 	),
-item_jizen_bunkai_wend1
-AS (
-	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.item_jizen_bunkai_wend1
-	),
+-- item_jizen_bunkai_wend1
+-- AS (
+-- 	SELECT *
+-- 	FROM dev_dna_core.snapjpdcledw_integration.item_jizen_bunkai_wend1
+-- 	),
 
 
 transformed
@@ -39,7 +39,7 @@ AS (
 	FROM item_jizen_bunkai_wz m03
 	WHERE NOT EXISTS (
 			SELECT 'X'
-			FROM item_jizen_bunkai_wend1 w3
+			FROM {{this}} w3
 			WHERE w3.itemcode = m03.itemcode
 			)
 	
@@ -53,7 +53,7 @@ AS (
 	FROM item_jizen_bunkai_wh m03
 	WHERE NOT EXISTS (
 			SELECT 'X'
-			FROM item_jizen_bunkai_wend1 w3
+			FROM {{this}} w3
 			WHERE w3.itemcode = m03.itemcode
 			)
 	),

@@ -1,12 +1,12 @@
 WITH item_zaiko_tbl
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.item_zaiko_tbl
+	FROM {{ ref('jpndcledw_integration__item_zaiko_tbl') }}
 	),
 item_hanbai_tbl
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.item_hanbai_tbl
+	FROM {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
 	),
 transformed
 AS (

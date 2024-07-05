@@ -4,8 +4,9 @@ with item_jizen_bunkai_tbl as (
 ),
 
 tm14shkos_mainte_work as (
-    select *
-    from dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work
+    -- select *
+    -- from dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work
+    select * from {{ source('jpndcledw', 'jpndcledw_integration__tm14shkos_mainte_work') }}
 ),
 
 transformed as (

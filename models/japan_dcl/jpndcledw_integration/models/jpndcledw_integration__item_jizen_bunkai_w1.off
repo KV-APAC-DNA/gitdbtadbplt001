@@ -1,12 +1,14 @@
 WITH bom_sap_v
 AS (
-	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.bom_sap_v
+	-- SELECT *
+	-- FROM dev_dna_core.snapjpdcledw_integration.bom_sap_v
+    select * from {{ source('jpndcledw', 'jpndcledw_integration__bom_sap_v') }}
 	),
 item_bom_ikou_kizuna
 AS (
-	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.item_bom_ikou_kizuna
+	-- SELECT *
+	-- FROM dev_dna_core.snapjpdcledw_integration.item_bom_ikou_kizuna
+    select * from {{ source('jpndcledw', 'jpndcledw_integration__item_bom_ikou_kizuna') }}
 	),
 transformed
 AS (

@@ -2,8 +2,8 @@
     config
     (
         materialized='incremental',
-        incremental_strategy = 'append',
-        unique_key = ['subscriberkey']   
+        incremental_strategy = 'delete+insert',
+        unique_key = ['subscriberkey']
     )
 }}
 

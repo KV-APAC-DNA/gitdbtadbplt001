@@ -215,3 +215,28 @@ models:
     config:
       alias: dm_user_attr_sfcc_v_prev1
       tags: ["m_DCL_EDW_Job1","ingestion"]
+  
+  - name: jpndcledw_integration__report_006_a_present_data1
+    config:
+      alias: report_006_a_present_data1
+      tags: ["m_DCL_EDW_Job1","ingestion"]
+  
+  - name: jpndcledw_integration__wk_kpi_06_04_history
+    config:
+      alias: wk_kpi_06_04_history
+      tags: ["m_DCL_EDW_Job1","ingestion"]
+  
+  - name: jpndcledw_integration__report_006_a_history
+    config:
+      alias: report_006_a_history
+      tags: ["m_DCL_EDW_Job1","ingestion"]
+      
+  - name: jpndcledw_integration__item_zaiko_tbl
+    config:
+      alias: item_zaiko_tbl
+      tags: ["m_DCL_EDW_Job1","ingestion"]
+
+  - name: jpndcledw_integration__item_hanbal_tbl
+    config:
+      alias: item_hanbal_tbl
+      tags: ["m_DCL_EDW_Job1","ingestion"]
