@@ -1,0 +1,162 @@
+version: 2
+
+models:
+  - name: jpndclitg_integration__c_tbdmsndhist
+    config:
+      alias: c_tbdmsndhist
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecdeptmst
+    config:
+      alias: c_tbecdeptmst
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+  
+  - name: jpndclitg_integration__c_tbecclient
+    config:
+      alias: c_tbecclient
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecinquirekesai
+    config:
+      alias: c_tbecinquirekesai
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecregularcoursemst
+    config:
+      alias: c_tbecregularcoursemst
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecregnumitemconvhist
+    config:
+      alias: c_tbecregnumitemconvhist
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__sfmc_sent
+    config:
+      alias: sfmc_sent
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__sfmc_unsubs
+    config:
+      alias: sfmc_unsubs
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+
+  - name: jpndclitg_integration__tbperson
+    config:
+      alias: tbecitem
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecinquire
+    config:
+      alias: c_tbecinquire
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+  
+  - name: jpndclitg_integration__tbusrpram
+    config:
+      alias: tbusrpram 
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__tbecpointhistory
+    config:
+      alias: tbecpointhistory
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecshippingresults
+    config:
+      alias: c_tbecshippingresults
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecusercard
+    config:
+      alias: c_tbecusercard
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__c_tbeccardcompanymst
+    config:
+      alias: c_tbeccardcompanymst
+      tags: ["m_DCL_ITG_Job2","ingestion"]
+
+  - name: jpndclitg_integration__tbecitem
+    config:
+      alias: tbecitem
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__tbecordermeisai
+    config:
+      alias: tbecordermeisai
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+  
+  - name: jpndclitg_integration__tbecorder 
+    config:
+      alias: tbecorder 
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecprivilegekesaihistory
+    config:
+      alias: c_tbecprivilegekesaihistory
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__tbecorderhist
+    config:
+      alias: tbecorderhist
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecregularcontract
+    config:
+      alias: c_tbecregularcontract
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecregularmeisai
+    config:
+      alias: c_tbecregularmeisai
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+  
+  - name: jpndclitg_integration__c_tbecpridiscratecategory
+    config:
+      alias: c_tbecpridiscratecategory
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+  
+  - name: jpndclitg_integration__c_tbecpridiscrateitem
+    config: 
+      alias: c_tbecpridiscrateitem
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+  
+  - name: jpndclitg_integration__c_tbecregnumitemconvmst
+    config: 
+      alias: c_tbecregnumitemconvmst
+      tags: ["m_DCL_ITG_Job1","ingestion"]
+  
+  - name: jpndclitg_integration__c_tbmembunitrel
+    config: 
+      alias: c_tbmembunitrel
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__tbecsetitem
+    config: 
+      alias: tbecsetitem
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecpripromotion
+    config: 
+      alias: c_tbecpripromotion
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__c_tbecprimembtype
+    config: 
+      alias: c_tbecprimembtype
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__contact_hist
+    config: 
+      alias: contact_hist
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__sfcc_product_category
+    config: 
+      alias: sfcc_product_category
+      tags: ["m_DCL_ITG_Job3","ingestion"]
+
+  - name: jpndclitg_integration__sfcc_product_mst
+    config: 
+      alias: sfcc_product_mst
+      tags: ["m_DCL_ITG_Job3","ingestion"]

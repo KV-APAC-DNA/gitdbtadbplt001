@@ -1,0 +1,53 @@
+{{
+    config(
+        materialized = 'incremental',
+        incremental_strategy = 'append',
+        pre_hook = "{% if is_incremental() %}
+                    DELETE
+                    FROM {{this}}
+                    WHERE EXISTS 
+                    (
+                        SELECT 'X'
+                        FROM dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work t2
+                        WHERE {{this}}.itemcode = t2.itemcode
+                            AND t2.kosecode NOT LIKE '009%'
+                            AND t2.kosecode NOT LIKE '0082%'
+                            AND t2.kosecode NOT LIKE '019%'
+                            AND t2.kosecode NOT LIKE '0182%'
+                    );
+                    {% endif %}"
+    )
+}}
+
+
+WITH tm14shkos_mainte_work
+AS (
+	-- SELECT *
+	-- FROM dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work
+    select * from {{ source('jpndcledw', 'jpndcledw_integration__tm14shkos_mainte_work') }}
+	),
+
+transformed
+AS (
+	SELECT 
+		tm14.itemcode AS itemcode,
+		tm14.kosecode AS kosecode,
+		tm14.suryo AS suryo
+	FROM tm14shkos_mainte_work tm14
+	WHERE tm14.kosecode NOT LIKE '009%'
+		AND tm14.kosecode NOT LIKE '0082%'
+		AND tm14.kosecode NOT LIKE '019%'
+		AND tm14.kosecode NOT LIKE '0182%'
+	),
+
+final
+AS (
+	SELECT 
+		itemcode::VARCHAR(40) AS itemcode,
+		kosecode::VARCHAR(40) AS kosecode,
+		suryo::number(38, 4) AS suryo
+	FROM transformed
+	)
+
+SELECT *
+FROM final
