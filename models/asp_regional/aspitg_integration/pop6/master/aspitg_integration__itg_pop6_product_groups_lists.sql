@@ -7,17 +7,20 @@
 
 with sdl_pop6_hk_product_groups_lists as
 (
-     select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_product_groups_lists') }}
+     select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_product_groups_lists') }}
+     {{ref('aspwks_integration__wks_pop6_hk_product_groups_lists')}}
 ),
 
 sdl_pop6_kr_product_groups_lists as
 (
-     select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_product_groups_lists') }}
+     select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_product_groups_lists') }}
+     {{ref('aspwks_integration__wks_pop6_kr_product_groups_lists')}}
 ),
 
 sdl_pop6_tw_product_groups_lists as 
 (
-     select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_product_groups_lists') }}
+     select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_product_groups_lists') }}
+     {{ref('aspwks_integration__wks_pop6_tw_product_groups_lists')}}
 ),
 
 

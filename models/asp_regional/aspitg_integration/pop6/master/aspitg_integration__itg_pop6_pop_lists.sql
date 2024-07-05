@@ -4,25 +4,32 @@
     )
 }}
 with sdl_pop6_hk_pop_lists as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_pop_lists') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_hk_pop_lists')}}
 ),
 sdl_pop6_kr_pop_lists as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_pop_lists') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_kr_pop_lists')}}
 ),
 sdl_pop6_tw_pop_lists as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_pop_lists') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_tw_pop_lists')}}
 ),
 sdl_pop6_jp_pop_lists as (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_pop_lists') }}
+    select * from --{{ source('jpnsdl_raw', 'sdl_pop6_jp_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_jp_pop_lists')}}
 ),
 sdl_pop6_sg_pop_lists as (
-    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_pop_lists') }}
+    select * from --{{ source('sgpsdl_raw', 'sdl_pop6_sg_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_sg_pop_lists')}}
 ),
 sdl_pop6_th_pop_lists as (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_pop_lists') }}
+    select * from --{{ source('thasdl_raw', 'sdl_pop6_th_pop_lists') }}
+    {{ref('aspwks_integration__wks_pop6_th_pop_lists')}}
 ),
 itg_pop6_pop_lists as (
-    select * from {{ source('aspitg_integration','itg_pop6_pop_lists_temp') }}
+    select * from --{{ source('aspitg_integration','itg_pop6_pop_lists_temp') }}
+    {{ref('aspwks_integration__wks_pop6_pop_lists_temp')}}
 ),
 sdl as (
     SELECT 'HK' AS CNTRY_CD,
