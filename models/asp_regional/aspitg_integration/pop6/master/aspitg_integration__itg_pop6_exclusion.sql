@@ -17,22 +17,26 @@
 
 with sdl_pop6_kr_exclusion as 
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_exclusion') }}
+	select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_exclusion') }}
+    {{ref('aspwks_integration__wks_pop6_kr_exclusion')}}
 ),
 
 sdl_pop6_tw_exclusion as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_exclusion') }}
+	select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_exclusion') }}
+    {{ref('aspwks_integration__wks_pop6_tw_exclusion')}}
 ),
 
 sdl_pop6_hk_exclusion as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_exclusion') }}
+	select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_exclusion') }}
+    {{ref('aspwks_integration__wks_pop6_hk_exclusion')}}
 ),
 
 sdl_pop6_jp_exclusion as
 (
-	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_exclusion') }}
+	select * from --{{ source('jpnsdl_raw', 'sdl_pop6_jp_exclusion') }}
+    {{ref('aspwks_integration__wks_pop6_jp_exclusion')}}
 ),
 
 

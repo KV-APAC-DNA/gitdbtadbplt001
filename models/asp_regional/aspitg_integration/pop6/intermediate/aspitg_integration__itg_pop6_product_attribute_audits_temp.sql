@@ -1,20 +1,26 @@
 with sdl_pop6_kr_product_attribute_audits as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_product_attribute_audits') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_kr_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_kr_product_attribute_audits')}}
 ),
 sdl_pop6_tw_product_attribute_audits as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_product_attribute_audits') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_tw_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_tw_product_attribute_audits')}}
 ),
 sdl_pop6_hk_product_attribute_audits as (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_product_attribute_audits') }}
+    select * from --{{ source('ntasdl_raw', 'sdl_pop6_hk_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_hk_product_attribute_audits')}}
 ),
 sdl_pop6_jp_product_attribute_audits as (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_product_attribute_audits') }}
+    select * from --{{ source('jpnsdl_raw', 'sdl_pop6_jp_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_jp_product_attribute_audits')}}
 ),
 sdl_pop6_sg_product_attribute_audits as (
-    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_product_attribute_audits') }}
+    select * from --{{ source('sgpsdl_raw', 'sdl_pop6_sg_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_sg_product_attribute_audits')}}
 ),
 sdl_pop6_th_product_attribute_audits as (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_product_attribute_audits') }}
+    select * from --{{ source('thasdl_raw', 'sdl_pop6_th_product_attribute_audits') }}
+    {{ref('aspwks_integration__wks_pop6_th_product_attribute_audits')}}
 ),
 transformed as (
     SELECT 
