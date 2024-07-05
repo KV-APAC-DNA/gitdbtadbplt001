@@ -1,15 +1,15 @@
-WITH wks_HK_lastnmonths
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_LASTNMONTHS
+with wks_hk_lastnmonths
+as (
+  select *
+  from {{ ref('ntawks_integration__wks_hk_lastnmonths') }}
   ),
 edw_vw_os_time_dim
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+as (
+  select *
+  from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
-wks_HK_base as (
-  select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE
+wks_hk_base as (
+  select * from {{ ref('ntawks_integration__wks_hk_base') }}
   ),
 transformed
 AS (

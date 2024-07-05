@@ -1,8 +1,8 @@
 with v_intrm_sls_pln_actl as (
-select * from ntaedw_integration.v_intrm_sls_pln_actl
+select * from {{ ref('ntaedw_integration__v_intrm_sls_pln_actl') }}
 ),
 v_intrm_curr_copa_plan_flat as (
-select * from ntaedw_integration.v_intrm_curr_copa_plan_flat
+select * from {{ ref('ntaedw_integration__v_intrm_curr_copa_plan_flat') }}
 ),
 derived_table1 as  (
     SELECT 

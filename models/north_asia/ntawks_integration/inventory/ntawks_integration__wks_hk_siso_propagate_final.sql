@@ -1,14 +1,14 @@
-with wks_HK_base_detail as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_BASE_DETAIL
+with wks_hk_base_detail as (
+select * from {{ ref('ntawks_integration__wks_hk_base_detail') }}
 ),
-HK_propagate_from_to as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.HK_PROPAGATE_FROM_TO
+hk_propagate_from_to as (
+select * from {{ ref('ntawks_integration__hk_propagate_from_to') }}
 ),
-wks_HK_siso_propagate_to_details as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_SISO_PROPAGATE_TO_DETAILS
+wks_hk_siso_propagate_to_details as (
+select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_to_details') }}
 ),
-wks_HK_siso_propagate_to_existing_dtls as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_SISO_PROPAGATE_TO_EXISTING_DTLS
+wks_hk_siso_propagate_to_existing_dtls as (
+select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_to_existing_dtls') }}
 ),
 union_1 as (
 SELECT sap_parent_customer_key,

@@ -1,12 +1,12 @@
-WITH WKS_HK_allmonths_base
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_ALLMONTHS_BASE
+with wks_hk_allmonths_base
+as (
+  select *
+  from {{ ref('ntawks_integration__wks_hk_allmonths_base') }}
   ),
 edw_vw_os_time_dim
-AS (
-  SELECT *
-  FROM DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+as (
+  select *
+  from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 transformed
 AS (

@@ -1,54 +1,54 @@
 
-with EDW_VW_OS_TIME_DIM as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+with edw_vw_os_time_dim as (
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.VW_EDW_REG_EXCH_RATE
+select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_vw_greenlight_skus as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_GREENLIGHT_SKUS
+select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
 ),
-EDW_GCH_PRODUCTHIERARCHY as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+edw_gch_producthierarchy as (
+select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_material_sales_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
-EDW_GCH_CUSTOMERHIERARCHY as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_GCH_CUSTOMERHIERARCHY
+edw_gch_customerhierarchy as (
+select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
-EDW_CUSTOMER_SALES_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+edw_customer_sales_dim as (
+select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_CUSTOMER_BASE_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
+edw_customer_base_dim as (
+select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-EDW_COMPANY_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COMPANY_DIM
+edw_company_dim as (
+select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
-EDW_DSTRBTN_CHNL  as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_DSTRBTN_CHNL
+edw_dstrbtn_chnl  as (
+select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
-EDW_SALES_ORG_DIM as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_SALES_ORG_DIM
+edw_sales_org_dim as (
+select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
-EDW_CODE_DESCRIPTIONS as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CODE_DESCRIPTIONS
+edw_code_descriptions as (
+select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
-EDW_SUBCHNL_RETAIL_ENV_MAPPING as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_SUBCHNL_RETAIL_ENV_MAPPING
+edw_subchnl_retail_env_mapping as (
+select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
-EDW_CUSTOMER_DIM as (
-select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_CUSTOMER_DIM
+edw_customer_dim as (
+select * from indedw_integration.edw_customer_dim
 ),
-wks_HK_siso_propagate_final as (
-select * from DEV_DNA_CORE.SNAPNTAWKS_INTEGRATION.WKS_HK_SISO_PROPAGATE_FINAL
+wks_hk_siso_propagate_final as (
+select * from {{ ref('ntawks_integration__wks_hk_siso_propagate_final') }}
 ),
 vw_edw_reg_exch_rate as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.VW_EDW_REG_EXCH_RATE
+select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_copa_trans_fact as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 CUSTOMER AS
 (
