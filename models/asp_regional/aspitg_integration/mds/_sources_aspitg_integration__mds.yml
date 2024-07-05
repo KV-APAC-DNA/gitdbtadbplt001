@@ -179,3 +179,12 @@ sources:
       identifier: false
     tables:
       - name: aspedw_integration__edw_product_attr_dim_temp
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_mds_rg_ps_channel_weights # currently used as source, but need a confirmation from Kenvue team

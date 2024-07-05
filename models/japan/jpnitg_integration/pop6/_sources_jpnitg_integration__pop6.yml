@@ -15,7 +15,7 @@ sources:
               select_columns: ["exclude_kpi","visit_date","pop_code","country","merchandiser_userid","audit_form_name","section_name","operation_type"]
               column: "country,visit_date,pop_code,merchandiser_userid"
               lookup_column: "cntry_cd,visit_date,pop_code,username"
-              lookup_table: "snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits"
+              lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}"
               filter: "audit_form_name is null and section_name is null and operation_type = 'I'"
               name: TRATBL_sdl_pop6_jp_exclusion__lookup_test_1
               config:
@@ -25,7 +25,7 @@ sources:
               select_columns: ["exclude_kpi","visit_date","pop_code","country","merchandiser_userid","audit_form_name","section_name","operation_type"]
               column: "country,visit_date,pop_code,merchandiser_userid,audit_form_name,section_name"
               lookup_column: "cntry_cd,visit_date,pop_code,username,audit_form,section"
-              lookup_table: "snapntaedw_integration.edw_vw_pop6_visits_prod_attribute_audits"
+              lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}"
               filter: "audit_form_name is not null and section_name is not null and operation_type = 'I'"
               name: TRATBL_sdl_pop6_jp_exclusion__lookup_test_2
               config:

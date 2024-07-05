@@ -4,7 +4,7 @@ with edw_perfect_store as
 ),
 itg_mds_rg_ps_channel_weights as 
 (
-    select * from aspitg_integration.itg_mds_rg_ps_channel_weights
+    select * from {{ source('aspitg_integration', 'itg_mds_rg_ps_channel_weights') }} -- currently used as source, but need a confirmation from Kenvue team
 ),
 itg_mds_rg_ps_market_coverage as 
 (

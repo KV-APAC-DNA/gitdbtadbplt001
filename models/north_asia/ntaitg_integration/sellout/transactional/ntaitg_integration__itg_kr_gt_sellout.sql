@@ -123,7 +123,7 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                                        FROM {{ source('ntasdl_raw','sdl_kr_nh_gt_sellout') }} sng
                                         LEFT JOIN (SELECT FISC_PER,
                     MAX(CAL_DAY) CAL_DAY
-             FROM aspedw_integration.edw_calendar_dim
+             FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
              WHERE WKDAY = '7'
              GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',2),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) );
              {% endif %}",
@@ -136,7 +136,7 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                                                     FROM {{ source('ntasdl_raw','sdl_kr_otc_sellout') }} SNG
                                                         LEFT JOIN (SELECT FISC_PER,
                                     MAX(CAL_DAY) CAL_DAY
-                            FROM aspedw_integration.EDW_CALENDAR_DIM
+                            FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
                             WHERE WKDAY = '7'
                             GROUP BY FISC_PER) CAL ON SPLIT_PART(SPLIT_PART(SNG.FILE_NAME,'_',3),'.',1) = SUBSTRING (CAL.FISC_PER,1,4) ||SUBSTRING (CAL.FISC_PER,6,7) )
              {% endif %}"  ]
