@@ -1,0 +1,522 @@
+--import cte
+with wks_id_rpt_re as (
+    select * from {{ ref('idnwks_integration__wks_id_rpt_re') }}
+),
+
+--final cte
+wks_rpt_re_gcph as (
+    SELECT jj_YR,
+       jj_mnth_id,
+       "cluster",
+       MARKET,
+       data_src,
+       CHANNEL_NAME,
+       soldto_code,
+       DISTRIBUTOR_CODE,
+       DISTRIBUTOR_NAME,
+       SELL_OUT_CHANNEL,
+       STORE_TYPE,
+       PRIORITIZATION_SEGMENTATION,
+       STORE_CATEGORY,
+       STORE_CODE,
+       STORE_NAME,
+       STORE_GRADE,
+       STORE_SIZE,
+       REGION,
+       ZONE_NAME,
+       CITY,
+       RTRLATITUDE,
+       RTRLONGITUDE,
+       CUSTOMER_SEGMENT_KEY,
+       CUSTOMER_SEGMENT_DESCRIPTION,
+       RETAIL_ENVIRONMENT,
+       SAP_CUSTOMER_CHANNEL_KEY,
+       SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+       SAP_CUSTOMER_SUB_CHANNEL_KEY,
+       SAP_SUB_CHANNEL_DESCRIPTION,
+       SAP_PARENT_CUSTOMER_KEY,
+       SAP_PARENT_CUSTOMER_DESCRIPTION,
+       SAP_BANNER_KEY,
+       SAP_BANNER_DESCRIPTION,
+       SAP_BANNER_FORMAT_KEY,
+       SAP_BANNER_FORMAT_DESCRIPTION,
+       CUSTOMER_NAME,
+       LTRIM(CUSTOMER_CODE,'0') AS CUSTOMER_CODE,
+       PRODUCT_CODE,
+       PRODUCT_NAME,
+       PROD_HIER_L1,
+       PROD_HIER_L2,
+       PROD_HIER_L3,
+       PROD_HIER_L4,
+       PROD_HIER_L5,
+       PROD_HIER_L6,
+       PROD_HIER_L7,
+       PROD_HIER_L8,
+       PROD_HIER_L9,
+       MAPPED_SKU_CD,
+       SAP_PROD_SGMT_CD,
+       SAP_PROD_SGMT_DESC,
+       --SAP_BASE_PROD_CD,
+       SAP_BASE_PROD_DESC,
+       --SAP_MEGA_BRND_CD,
+       SAP_MEGA_BRND_DESC,
+       --SAP_BRND_CD,
+       SAP_BRND_DESC,
+       --SAP_VRNT_CD,
+       SAP_VRNT_DESC,
+       --SAP_PUT_UP_CD,
+       SAP_PUT_UP_DESC,
+       SAP_GRP_FRNCHSE_CD,
+       SAP_GRP_FRNCHSE_DESC,
+       SAP_FRNCHSE_CD,
+       SAP_FRNCHSE_DESC,
+       SAP_PROD_FRNCHSE_CD,
+       SAP_PROD_FRNCHSE_DESC,
+       SAP_PROD_MJR_CD,
+       SAP_PROD_MJR_DESC,
+       SAP_PROD_MNR_CD,
+       SAP_PROD_MNR_DESC,
+       SAP_PROD_HIER_CD,
+       SAP_PROD_HIER_DESC,
+       --PKA_FRANCHISE_CD,
+       PKA_FRANCHISE_DESC,
+       --PKA_BRAND_CD,
+       PKA_BRAND_DESC,
+       --PKA_SUB_BRAND_CD,
+       PKA_SUB_BRAND_DESC,
+       --PKA_VARIANT_CD,
+       PKA_VARIANT_DESC,
+       --PKA_SUB_VARIANT_CD,
+       PKA_SUB_VARIANT_DESC,
+       GLOBAL_PRODUCT_FRANCHISE,
+       GLOBAL_PRODUCT_BRAND,
+       GLOBAL_PRODUCT_SUB_BRAND,
+       GLOBAL_PRODUCT_VARIANT,
+       GLOBAL_PRODUCT_SEGMENT,
+       GLOBAL_PRODUCT_SUBSEGMENT,
+       GLOBAL_PRODUCT_CATEGORY,
+       GLOBAL_PRODUCT_SUBCATEGORY,
+       GLOBAL_PUT_UP_DESCRIPTION,
+       --EAN,
+       --SKU_CODE,
+       --SKU_DESCRIPTION,
+       --GREENLIGHT_SKU_FLAG,
+       CASE
+         WHEN PKA_PRODUCT_KEY IN ('N/A','NA') THEN 'NA'
+         ELSE PKA_PRODUCT_KEY
+       END AS PKA_PRODUCT_KEY,
+       CASE
+         WHEN PKA_PRODUCT_KEY_DESCRIPTION IN ('N/A','NA') THEN 'NA'
+         ELSE PKA_PRODUCT_KEY_DESCRIPTION
+       END AS PKA_PRODUCT_KEY_DESCRIPTION,
+       SALES_VALUE,
+       SALES_QTY,
+       AVG_SALES_QTY,
+       SALES_VALUE_LIST_PRICE,
+       LM_SALES,
+       LM_SALES_QTY,
+       LM_AVG_SALES_QTY,
+       LM_SALES_LP,
+       P3M_SALES,
+       P3M_QTY,
+       P3M_AVG_QTY,
+       P3M_SALES_LP,
+       P6M_SALES,
+       P6M_QTY,
+       P6M_AVG_QTY,
+       P6M_SALES_LP,
+       P12M_SALES,
+       P12M_QTY,
+       P12M_AVG_QTY,
+       P12M_SALES_LP,
+       F3M_SALES,
+       F3M_QTY,
+       F3M_AVG_QTY,
+       LM_SALES_FLAG,
+       P3M_SALES_FLAG,
+       P6M_SALES_FLAG,
+       P12M_SALES_FLAG,
+       MDP_FLAG,
+       TARGET_COMPLAINCE,
+       LIST_PRICE,
+       TOTAL_SALES_LM,
+       TOTAL_SALES_P3M,
+       TOTAL_SALES_P6M,
+       TOTAL_SALES_P12M,
+       TOTAL_SALES_BY_STORE_LM,
+       TOTAL_SALES_BY_STORE_P3M,
+       TOTAL_SALES_BY_STORE_P6M,
+       TOTAL_SALES_BY_STORE_P12M,
+       TOTAL_SALES_BY_SKU_LM,
+       TOTAL_SALES_BY_SKU_P3M,
+       TOTAL_SALES_BY_SKU_P6M,
+       TOTAL_SALES_BY_SKU_P12M,
+	   TOTAL_SALES_LM_LP,
+       TOTAL_SALES_P3M_LP,
+       TOTAL_SALES_P6M_LP,
+       TOTAL_SALES_P12M_LP,
+       TOTAL_SALES_BY_STORE_LM_LP,
+       TOTAL_SALES_BY_STORE_P3M_LP,
+       TOTAL_SALES_BY_STORE_P6M_LP,
+       TOTAL_SALES_BY_STORE_P12M_LP,
+       TOTAL_SALES_BY_SKU_LM_LP,
+       TOTAL_SALES_BY_SKU_P3M_LP,
+       TOTAL_SALES_BY_SKU_P6M_LP,
+       TOTAL_SALES_BY_SKU_P12M_LP,
+       (TOTAL_SALES_BY_STORE_LM / NULLIF(TOTAL_SALES_LM,0)) AS STORE_CONTRIBUTION_LM,
+       (TOTAL_SALES_BY_SKU_LM / NULLIF(TOTAL_SALES_LM,0)) AS SKU_CONTRIBUTION_LM,
+       (STORE_CONTRIBUTION_LM*SKU_CONTRIBUTION_LM*TOTAL_SALES_LM) AS SIZE_OF_PRICE_LM,
+       (TOTAL_SALES_BY_STORE_P3M / NULLIF(TOTAL_SALES_P3M,0)) AS STORE_CONTRIBUTION_P3M,
+       (TOTAL_SALES_BY_SKU_P3M / NULLIF(TOTAL_SALES_P3M,0)) AS SKU_CONTRIBUTION_P3M,
+       (STORE_CONTRIBUTION_P3M*SKU_CONTRIBUTION_P3M*TOTAL_SALES_P3M) AS SIZE_OF_PRICE_P3M,
+       (TOTAL_SALES_BY_STORE_P6M / NULLIF(TOTAL_SALES_P6M,0)) AS STORE_CONTRIBUTION_P6M,
+       (TOTAL_SALES_BY_SKU_P6M / NULLIF(TOTAL_SALES_P6M,0)) AS SKU_CONTRIBUTION_P6M,
+       (STORE_CONTRIBUTION_P6M*SKU_CONTRIBUTION_P6M*TOTAL_SALES_P6M) AS SIZE_OF_PRICE_P6M,
+       (TOTAL_SALES_BY_STORE_P12M / NULLIF(TOTAL_SALES_P12M,0)) AS STORE_CONTRIBUTION_P12M,
+       (TOTAL_SALES_BY_SKU_P12M / NULLIF(TOTAL_SALES_P12M,0)) AS SKU_CONTRIBUTION_P12M,
+       (STORE_CONTRIBUTION_P12M*SKU_CONTRIBUTION_P12M*TOTAL_SALES_P12M) AS SIZE_OF_PRICE_P12M,
+       (TOTAL_SALES_BY_STORE_LM_LP / NULLIF(TOTAL_SALES_LM_LP,0)) AS STORE_CONTRIBUTION_LM_LP,
+       (TOTAL_SALES_BY_SKU_LM_LP / NULLIF(TOTAL_SALES_LM_LP,0)) AS SKU_CONTRIBUTION_LM_LP,
+       (STORE_CONTRIBUTION_LM_LP*SKU_CONTRIBUTION_LM_LP*TOTAL_SALES_LM_LP) AS SIZE_OF_PRICE_LM_LP,
+       (TOTAL_SALES_BY_STORE_P3M_LP / NULLIF(TOTAL_SALES_P3M_LP,0)) AS STORE_CONTRIBUTION_P3M_LP,
+       (TOTAL_SALES_BY_SKU_P3M_LP / NULLIF(TOTAL_SALES_P3M_LP,0)) AS SKU_CONTRIBUTION_P3M_LP,
+       (STORE_CONTRIBUTION_P3M_LP*SKU_CONTRIBUTION_P3M_LP*TOTAL_SALES_P3M_LP) AS SIZE_OF_PRICE_P3M_LP,
+       (TOTAL_SALES_BY_STORE_P6M_LP / NULLIF(TOTAL_SALES_P6M_LP,0)) AS STORE_CONTRIBUTION_P6M_LP,
+       (TOTAL_SALES_BY_SKU_P6M_LP / NULLIF(TOTAL_SALES_P6M_LP,0)) AS SKU_CONTRIBUTION_P6M_LP,
+       (STORE_CONTRIBUTION_P6M_LP*SKU_CONTRIBUTION_P6M_LP*TOTAL_SALES_P6M_LP) AS SIZE_OF_PRICE_P6M_LP,
+       (TOTAL_SALES_BY_STORE_P12M_LP / NULLIF(TOTAL_SALES_P12M_LP,0)) AS STORE_CONTRIBUTION_P12M_LP,
+       (TOTAL_SALES_BY_SKU_P12M_LP / NULLIF(TOTAL_SALES_P12M_LP,0)) AS SKU_CONTRIBUTION_P12M_LP,
+       (STORE_CONTRIBUTION_P12M_LP*SKU_CONTRIBUTION_P12M_LP*TOTAL_SALES_P12M_LP) AS SIZE_OF_PRICE_P12M_LP,
+       MD5(soldto_code||DISTRIBUTOR_CODE||SELL_OUT_CHANNEL||RETAIL_ENVIRONMENT||nvl (CUSTOMER_SEGMENT_DESCRIPTION,'csd') || nvl (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'sccd') ||nvl (SAP_SUB_CHANNEL_DESCRIPTION,'sscd') ||nvl (SAP_PARENT_CUSTOMER_DESCRIPTION,'spscd') || nvl (SAP_BANNER_DESCRIPTION,'sbd') || nvl (SAP_BANNER_FORMAT_DESCRIPTION,'sbfd')) AS CUSTOMER_AGG_DIM_KEY,
+       MD5(nvl (SAP_BASE_PROD_DESC,'sbpd') || nvl (SAP_MEGA_BRND_DESC,'smbd') ||nvl (SAP_BRND_DESC,'sb') || nvl (SAP_FRNCHSE_DESC,'sfd') || nvl (SAP_PROD_MJR_DESC,'spmd') ||nvl (SAP_PROD_MNR_DESC,'spm') || nvl (PKA_FRANCHISE_DESC,'pfd') || nvl (PKA_BRAND_DESC,'pbd') ||nvl (PKA_SUB_BRAND_DESC,'pbsd') || nvl (GLOBAL_PRODUCT_FRANCHISE,'gpf') || nvl (GLOBAL_PRODUCT_BRAND,'gpb') ||nvl (GLOBAL_PRODUCT_SUB_BRAND,'gpsb') ||nvl (GLOBAL_PRODUCT_SEGMENT,'gps') || nvl (GLOBAL_PRODUCT_SUBSEGMENT,'gpss') ||nvl (GLOBAL_PRODUCT_CATEGORY,'gpc') ||nvl (GLOBAL_PRODUCT_SUBCATEGORY,'gpsc') ||nvl (GLOBAL_PUT_UP_DESCRIPTION,'gputup')) AS PRODUCT_AGG_DIM_KEY
+FROM (SELECT MAIN.jj_YR,
+             MAIN.jj_mnth_id,
+             MAIN."cluster",
+             MAIN.MARKET AS MARKET,
+             main.data_src,
+             MAIN.STORE_TYPE AS CHANNEL_NAME,
+             --MAIN.CHANNEL_NAME,
+             MAIN.soldto_code,
+             MAIN.DISTRIBUTOR_CODE,
+             MAIN.DISTRIBUTOR_NAME,
+             MAIN.SELL_OUT_CHANNEL,
+             MAIN.STORE_TYPE AS STORE_TYPE,
+             MAIN.PRIORITIZATION_SEGMENTATION,
+             MAIN.STORE_CATEGORY,
+             MAIN.STORE_CODE,
+             MAIN.STORE_NAME,
+             MAIN.STORE_GRADE,
+             MAIN.STORE_SIZE,
+             MAIN.REGION,
+             MAIN.ZONE_NAME,
+             MAIN.CITY,
+             MAIN.RTRLATITUDE,
+             MAIN.RTRLONGITUDE,
+             TRIM(NVL (NULLIF(MAIN.CUSTOMER_SEGMENT_KEY,''),'NA')) AS CUSTOMER_SEGMENT_KEY,
+             TRIM(NVL (NULLIF(MAIN.CUSTOMER_SEGMENT_DESCRIPTION,''),'NA')) AS CUSTOMER_SEGMENT_DESCRIPTION,
+             main.sell_out_RE AS RETAIL_ENVIRONMENT,
+             --TRIM(NVL (NULLIF(CUSTOMER.RETAIL_ENV,''),'NA')) AS RETAIL_ENVIRONMENT,
+             TRIM(NVL (NULLIF(MAIN.SAP_CUSTOMER_CHANNEL_KEY,''),'NA')) AS SAP_CUSTOMER_CHANNEL_KEY,
+             UPPER(TRIM(NVL (NULLIF(MAIN.SAP_CUSTOMER_CHANNEL_DESCRIPTION,''),'NA'))) AS SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+             TRIM(NVL (NULLIF(MAIN.SAP_CUSTOMER_SUB_CHANNEL_KEY,''),'NA')) AS SAP_CUSTOMER_SUB_CHANNEL_KEY,
+             UPPER(TRIM(NVL (NULLIF(MAIN.SAP_SUB_CHANNEL_DESCRIPTION,''),'NA'))) AS SAP_SUB_CHANNEL_DESCRIPTION,
+             TRIM(NVL (NULLIF(MAIN.SAP_PARENT_CUSTOMER_KEY,''),'NA')) AS SAP_PARENT_CUSTOMER_KEY,
+             UPPER(TRIM(NVL (NULLIF(MAIN.SAP_PARENT_CUSTOMER_DESCRIPTION,''),'NA'))) AS SAP_PARENT_CUSTOMER_DESCRIPTION,
+             TRIM(NVL (NULLIF(MAIN.SAP_BANNER_KEY,''),'NA')) AS SAP_BANNER_KEY,
+             UPPER(TRIM(NVL (NULLIF(MAIN.SAP_BANNER_DESCRIPTION,''),'NA'))) AS SAP_BANNER_DESCRIPTION,
+             TRIM(NVL (NULLIF(MAIN.SAP_BANNER_FORMAT_KEY,''),'NA')) AS SAP_BANNER_FORMAT_KEY,
+             UPPER(TRIM(NVL (NULLIF(MAIN.SAP_BANNER_FORMAT_DESCRIPTION,''),'NA'))) AS SAP_BANNER_FORMAT_DESCRIPTION,
+             TRIM(NVL (NULLIF(MAIN.CUSTOMER_NAME,''),'NA')) AS CUSTOMER_NAME,
+             TRIM(NVL (NULLIF(MAIN.CUSTOMER_CODE,''),'NA')) AS CUSTOMER_CODE,
+             MAIN.PRODUCT_CODE AS PRODUCT_CODE,
+             MAIN.PRODUCT_NAME AS PRODUCT_NAME,
+             MAIN.PROD_HIER_L1,
+             MAIN.PROD_HIER_L2,
+             MAIN.PROD_HIER_L3,
+             MAIN.PROD_HIER_L4,
+             MAIN.PROD_HIER_L5,
+             MAIN.PROD_HIER_L6,
+             MAIN.PROD_HIER_L7,
+             MAIN.PROD_HIER_L8,
+             MAIN.PROD_HIER_L9,
+             MAIN.MAPPED_SKU_CD,
+             MAIN.SAP_PROD_SGMT_CD,
+             MAIN.SAP_PROD_SGMT_DESC,
+             --PRODUCT.SAP_BASE_PROD_CD,
+             MAIN.SAP_BASE_PROD_DESC,
+             --PRODUCT.SAP_MEGA_BRND_CD,
+             MAIN.SAP_MEGA_BRND_DESC,
+             --PRODUCT.SAP_BRND_CD,
+             MAIN.SAP_BRND_DESC,
+             --PRODUCT.SAP_VRNT_CD,
+             MAIN.SAP_VRNT_DESC,
+             --PRODUCT.SAP_PUT_UP_CD,
+             MAIN.SAP_PUT_UP_DESC,
+             MAIN.SAP_GRP_FRNCHSE_CD,
+             MAIN.SAP_GRP_FRNCHSE_DESC,
+             MAIN.SAP_FRNCHSE_CD,
+             MAIN.SAP_FRNCHSE_DESC,
+             MAIN.SAP_PROD_FRNCHSE_CD,
+             MAIN.SAP_PROD_FRNCHSE_DESC,
+             MAIN.SAP_PROD_MJR_CD,
+             MAIN.SAP_PROD_MJR_DESC,
+             MAIN.SAP_PROD_MNR_CD,
+             MAIN.SAP_PROD_MNR_DESC,
+             MAIN.SAP_PROD_HIER_CD,
+             MAIN.SAP_PROD_HIER_DESC,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_FRANCHISE,''),'NA')) AS GLOBAL_PRODUCT_FRANCHISE,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_BRAND,''),'NA')) AS GLOBAL_PRODUCT_BRAND,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_SUB_BRAND,''),'NA')) AS GLOBAL_PRODUCT_SUB_BRAND,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_VARIANT,''),'NA')) AS GLOBAL_PRODUCT_VARIANT,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_SEGMENT,''),'NA')) AS GLOBAL_PRODUCT_SEGMENT,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_SUBSEGMENT,''),'NA')) AS GLOBAL_PRODUCT_SUBSEGMENT,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_CATEGORY,''),'NA')) AS GLOBAL_PRODUCT_CATEGORY,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PRODUCT_SUBCATEGORY,''),'NA')) AS GLOBAL_PRODUCT_SUBCATEGORY,
+             TRIM(NVL (NULLIF(MAIN.GLOBAL_PUT_UP_DESCRIPTION,''),'NA')) AS GLOBAL_PUT_UP_DESCRIPTION,
+             --TRIM(NVL (NULLIF(PRODUCT.EAN_NUM,''),'NA')) AS EAN,
+             --MAIN.PRODUCT_CODE AS SKU_CODE,
+             -- LTRIM(PRODUCT.SAP_MATL_NUM,0) AS SKU_CODE,
+             --MAIN.PRODUCT_CODE AS SKU_DESCRIPTION,
+             --UPPER(PRODUCT.SAP_MAT_DESC) AS SKU_DESCRIPTION,
+             --TRIM(NVL (NULLIF(PRODUCT.GREENLIGHT_SKU_FLAG,''),'NA')) AS GREENLIGHT_SKU_FLAG,
+             TRIM(NVL (NULLIF(MAIN.PKA_PRODUCT_KEY,''),'NA')) AS PKA_PRODUCT_KEY,
+             TRIM(NVL (NULLIF(MAIN.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) AS PKA_PRODUCT_KEY_DESCRIPTION,
+             --PRODUCT.PKA_FRANCHISE_CD,
+             MAIN.PKA_FRANCHISE_DESC,
+             --PRODUCT.PKA_BRAND_CD,
+             MAIN.PKA_BRAND_DESC,
+             --PRODUCT.PKA_SUB_BRAND_CD,
+             MAIN.PKA_SUB_BRAND_DESC,
+             --PRODUCT.PKA_VARIANT_CD,
+             MAIN.PKA_VARIANT_DESC,
+             --PRODUCT.PKA_SUB_VARIANT_CD,
+             MAIN.PKA_SUB_VARIANT_DESC,
+             MAIN.SALES_VALUE AS SALES_VALUE,
+             MAIN.SALES_QTY AS SALES_QTY,
+             MAIN.AVG_SALES_QTY AS AVG_SALES_QTY,
+             MAIN.SALES_VALUE_LIST_PRICE AS SALES_VALUE_LIST_PRICE,
+             MAIN.LM_SALES AS LM_SALES,
+             MAIN.LM_SALES_QTY AS LM_SALES_QTY,
+             MAIN.LM_AVG_SALES_QTY AS LM_AVG_SALES_QTY,
+             MAIN.LM_SALES_LP AS LM_SALES_LP,
+             MAIN.P3M_SALES AS P3M_SALES,
+             MAIN.P3M_QTY AS P3M_QTY,
+             MAIN.P3M_AVG_QTY AS P3M_AVG_QTY,
+             MAIN.P3M_SALES_LP AS P3M_SALES_LP,
+             MAIN.F3M_SALES AS F3M_SALES,
+             MAIN.F3M_QTY AS F3M_QTY,
+             MAIN.F3M_AVG_QTY AS F3M_AVG_QTY,
+             MAIN.P6M_SALES AS P6M_SALES,
+             MAIN.P6M_QTY AS P6M_QTY,
+             MAIN.P6M_AVG_QTY AS P6M_AVG_QTY,
+             MAIN.P6M_SALES_LP AS P6M_SALES_LP,
+             MAIN.P12M_SALES AS P12M_SALES,
+             MAIN.P12M_QTY AS P12M_QTY,
+             MAIN.P12M_AVG_QTY AS P12M_AVG_QTY,
+             MAIN.P12M_SALES_LP AS P12M_SALES_LP,
+             MAIN.LM_SALES_FLAG,
+             MAIN.P3M_SALES_FLAG,
+             MAIN.P6M_SALES_FLAG,
+             MAIN.P12M_SALES_FLAG,
+             MAIN.MDP_FLAG,
+             100 AS TARGET_COMPLAINCE,
+             main.LIST_PRICE,
+             SUM(MAIN.LM_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_LM,
+             SUM(MAIN.P3M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P3M,
+             SUM(MAIN.P6M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P6M,
+             SUM(MAIN.P12M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P12M,
+             SUM(MAIN.LM_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,STORE_CODE) AS TOTAL_SALES_BY_STORE_LM,
+             SUM(MAIN.P3M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,STORE_CODE) AS TOTAL_SALES_BY_STORE_P3M,
+             SUM(MAIN.P6M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,STORE_CODE) AS TOTAL_SALES_BY_STORE_P6M,
+             SUM(MAIN.P12M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,STORE_CODE) AS TOTAL_SALES_BY_STORE_P12M,
+             SUM(MAIN.LM_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_LM,
+             SUM(MAIN.P3M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P3M,
+             SUM(MAIN.P6M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P6M,
+             SUM(MAIN.P12M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P12M,
+             SUM(MAIN.LM_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_LM_LP,
+             SUM(MAIN.P3M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P3M_LP,
+             SUM(MAIN.P6M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P6M_LP,
+             SUM(MAIN.P12M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P12M_LP,
+             SUM(MAIN.LM_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_STORE_LM_LP,
+             SUM(MAIN.P3M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_STORE_P3M_LP,
+             SUM(MAIN.P6M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_STORE_P6M_LP,
+             SUM(MAIN.P12M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_STORE_P12M_LP,
+             SUM(MAIN.LM_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_LM_LP,
+             SUM(MAIN.P3M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P3M_LP,
+             SUM(MAIN.P6M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P6M_LP,
+             SUM(MAIN.P12M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P12M_LP
+      FROM wks_id_rpt_re MAIN
+        )
+),
+
+final as (
+    select 
+    jj_yr::varchar(16)
+    jj_mnth_id::numeric(18)
+    cluster::varchar(100)
+    market::varchar(50)
+    data_src::varchar(8)
+    channel_name::varchar(150)
+    soldto_code::varchar(255)
+    distributor_code::varchar(100)
+    distributor_name::varchar(356)
+    sell_out_channel::varchar(150)
+    store_type::varchar(150)
+    prioritization_segmentation::varchar(1)
+    store_category::varchar(1)
+    store_code::varchar(100)
+    store_name::varchar(601)
+    store_grade::varchar(20)
+    store_size::varchar(1)
+    region::varchar(150)
+    zone_name::varchar(150)
+    city::varchar(2)
+    rtrlatitude::varchar(1)
+    rtrlongitude::varchar(1)
+    customer_segment_key::varchar(12)
+    customer_segment_description::varchar(50)
+    retail_environment::varchar(150)
+    sap_customer_channel_key::varchar(12)
+    sap_customer_channel_description::varchar(112)
+    sap_customer_sub_channel_key::varchar(12)
+    sap_sub_channel_description::varchar(112)
+    sap_parent_customer_key::varchar(12)
+    sap_parent_customer_description::varchar(112)
+    sap_banner_key::varchar(12)
+    sap_banner_description::varchar(112)
+    sap_banner_format_key::varchar(12)
+    sap_banner_format_description::varchar(112)
+    customer_name::varchar(100)
+    customer_code::varchar(10)
+    product_code::varchar(150)
+    product_name::varchar(150)
+    prod_hier_l1::varchar(50)
+    prod_hier_l2::varchar(1)
+    prod_hier_l3::varchar(50)
+    prod_hier_l4::varchar(50)
+    prod_hier_l5::varchar(1)
+    prod_hier_l6::varchar(62)
+    prod_hier_l7::varchar(1)
+    prod_hier_l8::varchar(1)
+    prod_hier_l9::varchar(1)
+    mapped_sku_cd::varchar(50)
+    sap_prod_sgmt_cd::varchar(18)
+    sap_prod_sgmt_desc::varchar(100)
+    sap_base_prod_desc::varchar(100)
+    sap_mega_brnd_desc::varchar(100)
+    sap_brnd_desc::varchar(100)
+    sap_vrnt_desc::varchar(100)
+    sap_put_up_desc::varchar(100)
+    sap_grp_frnchse_cd::varchar(18)
+    sap_grp_frnchse_desc::varchar(100)
+    sap_frnchse_cd::varchar(18)
+    sap_frnchse_desc::varchar(100)
+    sap_prod_frnchse_cd::varchar(18)
+    sap_prod_frnchse_desc::varchar(100)
+    sap_prod_mjr_cd::varchar(18)
+    sap_prod_mjr_desc::varchar(100)
+    sap_prod_mnr_cd::varchar(18)
+    sap_prod_mnr_desc::varchar(100)
+    sap_prod_hier_cd::varchar(18)
+    sap_prod_hier_desc::varchar(100)
+    pka_franchise_desc::varchar(30)
+    pka_brand_desc::varchar(30)
+    pka_sub_brand_desc::varchar(30)
+    pka_variant_desc::varchar(30)
+    pka_sub_variant_desc::varchar(30)
+    global_product_franchise::varchar(30)
+    global_product_brand::varchar(30)
+    global_product_sub_brand::varchar(100)
+    global_product_variant::varchar(100)
+    global_product_segment::varchar(50)
+    global_product_subsegment::varchar(100)
+    global_product_category::varchar(50)
+    global_product_subcategory::varchar(50)
+    global_put_up_description::varchar(100)
+    pka_product_key::varchar(68)
+    pka_product_key_description::varchar(255)
+    sales_value::numeric(38,6)
+    sales_qty::numeric(38,6)
+    avg_sales_qty::numeric(10,2)
+    sales_value_list_price::numeric(38,12)
+    lm_sales::numeric(38,6)
+    lm_sales_qty::numeric(38,6)
+    lm_avg_sales_qty::numeric(10,2)
+    lm_sales_lp::numeric(38,12)
+    p3m_sales::numeric(38,6)
+    p3m_qty::numeric(38,6)
+    p3m_avg_qty::numeric(38,6)
+    p3m_sales_lp::numeric(38,12)
+    p6m_sales::numeric(38,6)
+    p6m_qty::numeric(38,6)
+    p6m_avg_qty::numeric(38,6)
+    p6m_sales_lp::numeric(38,12)
+    p12m_sales::numeric(38,6)
+    p12m_qty::numeric(38,6)
+    p12m_avg_qty::numeric(38,6)
+    p12m_sales_lp::numeric(38,12)
+    f3m_sales::numeric(38,6)
+    f3m_qty::numeric(38,6)
+    f3m_avg_qty::numeric(38,6)
+    lm_sales_flag::varchar(1)
+    p3m_sales_flag::varchar(1)
+    p6m_sales_flag::varchar(1)
+    p12m_sales_flag::varchar(1)
+    mdp_flag::varchar(1)
+    target_complaince::integer
+    list_price::numeric(38,6)
+    total_sales_lm::numeric(38,6)
+    total_sales_p3m::numeric(38,6)
+    total_sales_p6m::numeric(38,6)
+    total_sales_p12m::numeric(38,6)
+    total_sales_by_store_lm::numeric(38,6)
+    total_sales_by_store_p3m::numeric(38,6)
+    total_sales_by_store_p6m::numeric(38,6)
+    total_sales_by_store_p12m::numeric(38,6)
+    total_sales_by_sku_lm::numeric(38,6)
+    total_sales_by_sku_p3m::numeric(38,6)
+    total_sales_by_sku_p6m::numeric(38,6)
+    total_sales_by_sku_p12m::numeric(38,6)
+    total_sales_lm_lp::numeric(38,12)
+    total_sales_p3m_lp::numeric(38,12)
+    total_sales_p6m_lp::numeric(38,12)
+    total_sales_p12m_lp::numeric(38,12)
+    total_sales_by_store_lm_lp::numeric(38,12)
+    total_sales_by_store_p3m_lp::numeric(38,12)
+    total_sales_by_store_p6m_lp::numeric(38,12)
+    total_sales_by_store_p12m_lp::numeric(38,12)
+    total_sales_by_sku_lm_lp::numeric(38,12)
+    total_sales_by_sku_p3m_lp::numeric(38,12)
+    total_sales_by_sku_p6m_lp::numeric(38,12)
+    total_sales_by_sku_p12m_lp::numeric(38,12)
+    store_contribution_lm::numeric(38,4)
+    sku_contribution_lm::numeric(38,4)
+    size_of_price_lm::numeric(38,14)
+    store_contribution_p3m::numeric(38,4)
+    sku_contribution_p3m::numeric(38,4)
+    size_of_price_p3m::numeric(38,14)
+    store_contribution_p6m::numeric(38,4)
+    sku_contribution_p6m::numeric(38,4)
+    size_of_price_p6m::numeric(38,14)
+    store_contribution_p12m::numeric(38,4)
+    sku_contribution_p12m::numeric(38,4)
+    size_of_price_p12m::numeric(38,14)
+    store_contribution_lm_lp::numeric(38,4)
+    sku_contribution_lm_lp::numeric(38,4)
+    size_of_price_lm_lp::numeric(38,20)
+    store_contribution_p3m_lp::numeric(38,4)
+    sku_contribution_p3m_lp::numeric(38,4)
+    size_of_price_p3m_lp::numeric(38,20)
+    store_contribution_p6m_lp::numeric(38,4)
+    sku_contribution_p6m_lp::numeric(38,4)
+    size_of_price_p6m_lp::numeric(38,20)
+    store_contribution_p12m_lp::numeric(38,4)
+    sku_contribution_p12m_lp::numeric(38,4)
+    size_of_price_p12m_lp::numeric(38,20)
+    customer_agg_dim_key::varchar(32)
+    product_agg_dim_key::varchar(32) 
+    from wks_rpt_re_gcph
+)
+
+--final select
+select * from final
