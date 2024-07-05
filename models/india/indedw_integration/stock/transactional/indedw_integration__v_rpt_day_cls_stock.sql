@@ -6,8 +6,7 @@
 
 with edw_retailer_calendar_dim as
 (
-    select * from indedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_day_cls_stock_fact as
 (
@@ -15,13 +14,11 @@ edw_day_cls_stock_fact as
 ),
 edw_customer_dim as
 (
-    select * from indedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_product_dim as
 (
-    select * from indedw_integration.edw_product_dim
-    --{{ ref('indedw_integration__edw_product_dim') }}
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 final as
 (

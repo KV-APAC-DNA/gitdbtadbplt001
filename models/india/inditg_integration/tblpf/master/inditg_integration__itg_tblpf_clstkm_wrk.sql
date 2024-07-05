@@ -1,27 +1,22 @@
 with edw_customer_dim as
 (
-    select * from indedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 itg_rmrpstockprocess_clstk as
 (
-    select * from inditg_integration.itg_rmrpstockprocess_clstk
-    --{{ ref('inditg_integration__itg_rmrpstockprocess_clstk') }}
+    select * from {{ ref('inditg_integration__itg_rmrpstockprocess_clstk') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from indedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_mds_month_end_dates as
 (
-    select * from inditg_integration.itg_mds_month_end_dates
-    --{{ ref('inditg_integration__itg_mds_month_end_dates') }}
+    select * from {{ ref('inditg_integration__itg_mds_month_end_dates') }}
 ),
 itg_rmrpstockprocess_opstk as
 (
-    select * from inditg_integration.itg_rmrpstockprocess_opstk
-    --{{ ref('inditg_integration__itg_rmrpstockprocess_opstk') }}
+    select * from {{ ref('inditg_integration__itg_rmrpstockprocess_opstk') }}
 ),
 final as
 (

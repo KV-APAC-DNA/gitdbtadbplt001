@@ -46,14 +46,14 @@
             NotAvailableReason,
             Price_Off,
             Priority_Store
-        FROM {{ source('snapindsdl_raw', 'sdl_in_perfectstore_promo') }}));
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_promo') }}));
         {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_in_perfectstore_promo') }}
+    select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_promo') }}
 ),
 final as
 (

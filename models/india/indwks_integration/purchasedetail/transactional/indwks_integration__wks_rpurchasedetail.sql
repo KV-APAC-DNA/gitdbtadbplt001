@@ -4,13 +4,11 @@ with sdl_rpurchasedetail as
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_mds_month_end_dates as
 (
-    select * from snapinditg_integration.itg_mds_month_end_dates
-    --{{ ref('inditg_integration__itg_mds_month_end_dates') }}
+    select * from {{ ref('inditg_integration__itg_mds_month_end_dates') }}
 ),
 final as
 (

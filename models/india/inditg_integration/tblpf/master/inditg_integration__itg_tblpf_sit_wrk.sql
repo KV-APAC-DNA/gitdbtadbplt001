@@ -1,26 +1,22 @@
 with edw_billing_fact as
 (
-    select * from aspedw_integration.edw_billing_fact
-    --{{ ref('aspedw_integration__edw_billing_fact') }}
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_rpurchasedetail as
 (
-    select * from inditg_integration.itg_rpurchasedetail
-    --{{ ref('inditg_integration__itg_rpurchasedetail') }}
+    select * from {{ ref('inditg_integration__itg_rpurchasedetail') }}
 ),
 itg_customer as
 (
-    select * from inditg_integration.itg_customer
+    select * from {{ source('inditg_integration', 'itg_customer') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from indedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_mds_month_end_dates as
 (
-    select * from inditg_integration.itg_mds_month_end_dates
-    --{{ ref('inditg_integration__itg_mds_month_end_dates') }}
+    select * from {{ ref('inditg_integration__itg_mds_month_end_dates') }}
 ),
 final as
 (

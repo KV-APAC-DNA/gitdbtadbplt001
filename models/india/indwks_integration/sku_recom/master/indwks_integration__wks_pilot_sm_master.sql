@@ -1,22 +1,18 @@
 with itg_in_rcustomerroute as
 (
-    select * from snapinditg_integration.itg_in_rcustomerroute
-    --{{ ref('inditg_integration__itg_in_rcustomerroute') }}
+    select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }}
 ),
 itg_in_rroute as
 (
-    select * from snapinditg_integration.itg_in_rroute
-    --{{ ref('inditg_integration__itg_in_rroute') }}
+    select * from {{ ref('inditg_integration__itg_in_rroute') }}
 ),
 itg_in_rsalesmanroute as
 (
-    select * from snapinditg_integration.itg_in_rsalesmanroute
-    --{{ ref('inditg_integration__itg_in_rsalesmanroute') }}
+    select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
 ),
 itg_in_rsalesman as
 (
-    select * from snapinditg_integration.itg_in_rsalesman
-    --{{ ref('inditg_integration__itg_in_rsalesman') }}
+    select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
 ),
 final as
 (

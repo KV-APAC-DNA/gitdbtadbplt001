@@ -4,7 +4,7 @@ with wks_pilot_sku_recom_tbl1 as
 ),
 itg_pilot_nup_target as
 (
-    select * from snapinditg_integration.itg_pilot_nup_target
+    select * from {{ source('inditg_integration', 'itg_pilot_nup_target') }}
 ),
 wks_pilot_edw_prod_dim as
 (

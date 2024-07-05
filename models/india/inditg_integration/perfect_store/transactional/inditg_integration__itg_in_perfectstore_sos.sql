@@ -38,14 +38,14 @@
             Prod_Facings,
             Total_Facings,
             Priority_Store
-        FROM {{ source('snapindsdl_raw', 'sdl_in_perfectstore_sos') }}));
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}));
         {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_in_perfectstore_sos') }}
+    select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}
 ),
 final as
 (

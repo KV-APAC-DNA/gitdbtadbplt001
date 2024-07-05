@@ -10,19 +10,19 @@ with edw_retailer_calendar_dim as
 ),
 itg_pos_historical_btl as
 (
-    select * from snapinditg_integration.itg_pos_historical_btl
+    select * from inditg_integration.itg_pos_historical_btl
 ),
 itg_pos_offtake_fact as
 (
-    select * from snapinditg_integration.itg_pos_offtake_fact
+    select * from inditg_integration.itg_pos_offtake_fact
 ),
 itg_pos_re_mapping as
 (
-    select * from snapinditg_integration.itg_pos_re_mapping
+    select * from inditg_integration.itg_pos_re_mapping
 ),
 itg_pos_category_mapping as
 (
-    select * from snapinditg_integration.itg_pos_category_mapping
+    select * from inditg_integration.itg_pos_category_mapping
 ),
 final as
 (

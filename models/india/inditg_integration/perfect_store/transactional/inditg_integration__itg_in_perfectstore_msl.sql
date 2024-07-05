@@ -44,14 +44,14 @@
             Quantity,
             Amount_INR,
             Priority_Store
-        FROM {{ source('snapindsdl_raw', 'sdl_in_perfectstore_msl') }}));
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_msl') }}));
         {% endif %}"
     )
 }}
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_in_perfectstore_msl') }}
+    select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_msl') }}
 ),
 final as
 (

@@ -6,7 +6,7 @@
 }}
 
 with source as(
-    select * from {{ source('snapindsdl_raw', 'sdl_in_perfectstore_msl') }}
+    select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_msl') }}
 ),
 final as(
     select * from source

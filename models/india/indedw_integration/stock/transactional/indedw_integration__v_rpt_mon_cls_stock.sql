@@ -1,22 +1,22 @@
 with edw_mth_cls_stock_fact as
 (
-    select * from snapindedw_integration.edw_mth_cls_stock_fact
+    select * from {{ source('indedw_integration', 'edw_mth_cls_stock_fact') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_product_dim as
 (
-    select * from snapindedw_integration.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_user_dim as
 (
-    select * from snapindedw_integration.edw_user_dim
+    select * from {{ source('indedw_integration', 'edw_user_dim') }}
 ),
 final as
 (

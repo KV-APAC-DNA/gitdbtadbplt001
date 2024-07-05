@@ -1,26 +1,22 @@
 with itg_rtbl_idtmanagementupload as
 (
-    select * from snapinditg_integration.itg_rtbl_idtmanagementupload
-    --{{ ref('inditg_integration__itg_rtbl_idtmanagementupload') }}
+    select * from {{ ref('inditg_integration__itg_rtbl_idtmanagementupload') }}
 ),
 itg_customer as
 (
-    select * from snapinditg_integration.itg_customer
+    select * from {{ source('inditg_integration', 'itg_customer') }}
 ),
 itg_pricelist as
 (
-    select * from snapinditg_integration.itg_pricelist
-    --{{ ref('inditg_integration__itg_pricelist') }}
+    select * from {{ ref('inditg_integration__itg_pricelist') }}
 ),
 itg_mds_month_end_dates as
 (
-    select * from snapinditg_integration.itg_mds_month_end_dates
-    --{{ ref('inditg_integration__itg_mds_month_end_dates') }}
+    select * from {{ ref('inditg_integration__itg_mds_month_end_dates') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 final as
 (

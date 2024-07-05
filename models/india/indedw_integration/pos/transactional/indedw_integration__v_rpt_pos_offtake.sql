@@ -6,7 +6,7 @@
 
 with v_rpt_ka_sales as
 (
-    select * from snapindedw_integration.v_rpt_ka_sales
+    select * from indedw_integration.v_rpt_ka_sales
 ),
 edw_vw_pos_offtake as
 (
@@ -14,7 +14,7 @@ edw_vw_pos_offtake as
 ),
 itg_query_parameters as
 (
-    select * from aspitg_integration.itg_query_parameters
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 final as
 (

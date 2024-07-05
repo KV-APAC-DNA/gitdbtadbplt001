@@ -4,13 +4,11 @@ with wks_pilot_itg_sku_recom_flag as
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 wks_pilot_edw_retailer_dim as
 (
@@ -18,8 +16,7 @@ wks_pilot_edw_retailer_dim as
 ),
 itg_in_mds_channel_mapping as 
 (
-    select * from snapinditg_integration.itg_in_mds_channel_mapping
-    --{{ ref('inditg_integration__itg_in_mds_channel_mapping') }}
+    select * from {{ ref('inditg_integration__itg_in_mds_channel_mapping') }}
 ),
 final as 
 (

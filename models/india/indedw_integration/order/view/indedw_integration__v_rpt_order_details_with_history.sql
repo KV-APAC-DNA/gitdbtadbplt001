@@ -6,37 +6,31 @@
 
 with edw_order_fact as
 (
-    select * from snapindedw_integration.edw_order_fact
-    --{{ ref('indedw_integration__edw_order_fact') }}
+    select * from {{ ref('indedw_integration__edw_order_fact') }}
 ),
 edw_dailysales_fact as
 (
-    select * from snapindedw_integration.edw_dailysales_fact
-    --{{ ref('indedw_integration__edw_dailysales_fact') }}
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
 edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_product_dim as
 (
-    select * from snapindedw_integration.edw_product_dim
-    --{{ ref('indedw_integration__edw_product_dim') }}
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_route_dim as
 (
-    select * from snapindedw_integration.edw_route_dim
+    select * from indedw_integration.edw_route_dim
 ),
 edw_retailer_dim as
 (
-    select * from snapindedw_integration.edw_retailer_dim
-    --{{ ref('indedw_integration__edw_retailer_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 final as
 (

@@ -60,7 +60,7 @@
             Paid_Visibility_Score,
             Reason,
             Priority_Store
-        FROM {{ source('snapindsdl_raw', 'sdl_in_perfectstore_paid_display') }}
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_paid_display') }}
         ));
         {% endif %}"
     )
@@ -68,7 +68,7 @@
 
 with source as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_in_perfectstore_paid_display') }}
+    select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_paid_display') }}
 ),
 final as
 (

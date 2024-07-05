@@ -4,21 +4,19 @@ with wks_mi_psr_base as
 ),
 v_rpt_sales_details as
 (
-    select * from snapindedw_integration.v_rpt_sales_details
-    --{{ ref('indedw_integration__v_rpt_sales_details') }}
+    select * from {{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 itg_query_parameters as
 (
-    select * from snapinditg_integration.itg_query_parameters
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 v_rpt_rt_sales as
 (
-    select * from snapindedw_integration.v_rpt_rt_sales
-    --{{ ref('indedw_integration__v_rpt_rt_sales') }}
+    select * from {{ ref('indedw_integration__v_rpt_rt_sales') }}
 ),
 edw_rpt_mi_msl_dashboard as
 (
-    select * from snapindedw_integration.edw_rpt_mi_msl_dashboard
+    select * from indedw_integration.edw_rpt_mi_msl_dashboard
 ),
 wks_mi_psr_perf_tracker_l2y_trans_recs as
 (
@@ -26,8 +24,7 @@ wks_mi_psr_perf_tracker_l2y_trans_recs as
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 final as
 (

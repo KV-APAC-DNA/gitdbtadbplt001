@@ -1,7 +1,6 @@
 with edw_retailer_dim as
 (
-    select * from snapindedw_integration.edw_retailer_dim
-    --{{ ref('indedw_integration__edw_retailer_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 final as
 (

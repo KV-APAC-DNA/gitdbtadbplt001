@@ -1,7 +1,6 @@
 with v_rpt_sales_details as
 (
-    select * from snapindedw_integration.v_rpt_sales_details
-    --{{ ref('indedw_integration__v_rpt_sales_details') }}
+    select * from {{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 wks_pilot_sku_recom_tbl2 as
 (

@@ -6,8 +6,7 @@
 
 with edw_customer_dim as
 (
-    select * from indedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_calendar_dim as 
 (
@@ -15,12 +14,11 @@ edw_calendar_dim as
 ),
 itg_query_parameters as
 (
-    select * from inditg_integration.itg_query_parameters
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 edw_billing_fact as
 (
-    select * from aspedw_integration.edw_billing_fact
-    --{{ ref('aspedw_integration__edw_billing_fact') }}
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_product_dim as
 (

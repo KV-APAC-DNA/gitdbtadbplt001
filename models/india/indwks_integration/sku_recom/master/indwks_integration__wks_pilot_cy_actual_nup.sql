@@ -1,11 +1,10 @@
 with v_rpt_sales_details as
 (
-    select * from snapindedw_integration.v_rpt_sales_details
-    --{{ ref('indedw_integration__v_rpt_sales_details') }}
+    select * from {{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 itg_query_parameters as
 (
-    select * from snapinditg_integration.itg_query_parameters
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 final as 
 (

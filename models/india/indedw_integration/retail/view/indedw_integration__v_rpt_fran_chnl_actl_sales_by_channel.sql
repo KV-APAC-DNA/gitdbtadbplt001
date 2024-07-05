@@ -6,18 +6,15 @@
 
 with edw_dailysales_fact as
 (
-    select * from snapindedw_integration.edw_dailysales_fact
-    --{{ ref('indedw_integration__edw_dailysales_fact') }}
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
-    --{{ ref('indedw_integration__edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_customer_dim as
 (
-    select * from snapindedw_integration.edw_customer_dim
-    --{{ ref('indedw_integration__edw_customer_dim') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 v_retail_frnch_categ_mapping as
 (
@@ -25,21 +22,19 @@ v_retail_frnch_categ_mapping as
 ),
 v_retail_fran_chanl as
 (
-    select * from indedw_integration.v_retail_fran_chanl
-    --{{ ref('indedw_integration__v_retail_fran_chanl') }}
+    select * from {{ ref('indedw_integration__v_retail_fran_chanl') }}
 ),
 itg_mds_msku_internal_product_mapping_ka as
 (
-    select * from inditg_integration.itg_mds_msku_internal_product_mapping_ka
+    select * from {{ source('inditg_integration', 'itg_mds_msku_internal_product_mapping_ka') }}
 ),
 itg_mds_in_key_accounts_mapping as
 (
-    select * from snapinditg_integration.itg_mds_in_key_accounts_mapping
+    select * from inditg_integration.itg_mds_in_key_accounts_mapping
 ),
 edw_billing_fact as
 (
-    select * from snapaspedw_integration.edw_billing_fact
-    --{{ ref('aspedw_integration__edw_billing_fact') }}
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 final as
 (
