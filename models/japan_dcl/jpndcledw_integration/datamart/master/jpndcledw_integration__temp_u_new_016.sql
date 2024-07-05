@@ -1,8 +1,8 @@
 with temp_kesai_016 as(
-    select * from SNAPJPDCLEDW_INTEGRATION.temp_kesai_016
+    select * from {{ ref('jpndcledw_integration__temp_kesai_016') }} 
 ),
 cld_m as(
-    select * from SNAPJPDCLEDW_INTEGRATION.cld_m
+    select * from {{ source('jpndcledw_integration', 'cld_m') }}
 ),
 transformed as(
 SELECT kokyano,
@@ -19,5 +19,14 @@ FROM (
 	)
 LEFT JOIN cld_m x ON first_order_dt = x.ymd_dt
 LEFT JOIN cld_m y ON first_ship_dt = y.ymd_dt
+),
+final as(
+    select
+        kokyano::varchar(60) as kokyano,
+        first_order_year::varchar(4) as first_order_year,
+        first_ship_year::varchar(256) as first_ship_year,
+        to_date(first_order_dt) as first_order_dt,
+        to_date(first_ship_dt) as first_ship_dt
+    from transformed
 )
-select * from transformed
+select * from final

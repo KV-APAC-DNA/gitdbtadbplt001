@@ -1,23 +1,23 @@
-with C_TBECINQUIREKESAI as (
-    select * from snapjpdclitg_integration.C_TBECINQUIREKESAI
+with c_tbecinquirekesai as (
+    select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
-C_TBECINQUIRE as (
-    select * from snapjpdclitg_integration.C_TBECINQUIRE
+c_tbecinquire as (
+    select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
-C_TBECKESAI as (
-    select * from snapjpdclitg_integration.C_TBECKESAI
+c_tbeckesai as (
+    select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
-TBECORDER as (
-    select * from snapjpdclitg_integration.TBECORDER
+tbecorder as (
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
-C_TBECUSERCARD as (
-    select * from snapjpdclitg_integration.C_TBECUSERCARD
+c_tbecusercard as (
+    select * from {{ ref('jpndclitg_integration__c_tbecusercard') }}
 ),
-TBECHENPINRIYU as (
-    select * from snapjpdclitg_integration.TBECHENPINRIYU
+tbechenpinriyu as (
+    select * from {{ ref('jpndclitg_integration__tbechenpinriyu') }}
 ),
-TBPROMOTION as (
-    select * from snapjpdclitg_integration.TBPROMOTION
+tbpromotion as (
+    select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
 hanyo_attr as(
     select * from {{ source('jpdcledw_integration', 'hanyo_attr') }}
@@ -26,13 +26,13 @@ tt01_henpin_riyu as(
     select * from {{ source('jpdcledw_integration', 'tt01_henpin_riyu') }}
 ),
 KESAI_M_DATA_MART_SUB_N_H_NOTP as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp') }}
 ),
 KEIROKBN as(
     select * from {{ source('jpdcledw_integration', 'keirokbn') }}
 ),
 kesaiid_dummy as(
-    select * from {{ ref('jpndcledw_integration__kesaiid_dummy_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}
 ),
 transformed as(
 	SELECT CAST(('H' || C_TBECINQUIREKESAI.C_DIINQUIREKESAIID) AS VARCHAR) AS SALENO,

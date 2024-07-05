@@ -1,5 +1,5 @@
 with KESAI_H_DATA_MART_SUB_N as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_N
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
 ),
 union1 as(
 SELECT CN.SALENO,

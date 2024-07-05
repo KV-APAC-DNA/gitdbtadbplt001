@@ -1,5 +1,5 @@
 with KESAI_M_DATA_MART_SUB_BEFORE_kizuna as(
-    select * from SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_BEFORE_kizuna
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_before_kizuna') }}
 ),
 transformed as(
     SELECT SUB.SALENO,

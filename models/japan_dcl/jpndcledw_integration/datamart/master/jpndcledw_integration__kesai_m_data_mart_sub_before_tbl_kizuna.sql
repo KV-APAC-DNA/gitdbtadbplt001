@@ -1,11 +1,11 @@
 with item_hanbai_v as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_HANBAI_V
+    select * from {{ source('jpndcledw_integration', 'item_hanbai_v') }}
 ),
 kesai_h_data_mart_sub_n as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_N
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
 ),
 kesai_m_data_mart_sub_n as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_N
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n') }}
 ),
 hanbai as(
     SELECT h_itemcode AS itemcd,

@@ -68,7 +68,7 @@ sources:
       - name: tbuser
         tags: ["","transformation"]
 
-  - name: jpdcledw_integration
+  - name: jpndcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: snapjpdcledw_integration
     quoting:
@@ -76,12 +76,25 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: tt01_henpin_riyu
-      - name: keirokbn
-      - name: hanyo_attr
-      - name: kesai_h_data_mart_sub_n_rirek
-      - name: kesai_h_data_mart_sub_old
-      - name: cit80saleh_ikou
-      - name: conv_mst_smkeiroid
-      - name: cim01kokya
-      - name: kokyano_list_016_manual
+    - name: kesai_h_data_mart_sub_old_chsi
+    - name: item_hanbai_v
+    - name: kesai_m_data_mart_sub_old
+    - name: kesai_m_data_mart_sub_old_chsi
+    - name: cld_m
+    - name: teikikeiyaku_data_mart_uni
+    - name: syouhincd_henkan_qv
+    - name: tm14shkos_qv
+    - name: cim08shkos_bunkai_qv
+    - name: tm13item_qv
+    - name: kesai_h_data_mart_sub_n_rirek
+    - name: kesai_h_data_mart_sub_old
+    - name: kr_new_stage_point
+
+    - name: hanyo_attr
+    - name: kr_frequency_1yn_900_kizuna
+    - name: tt01_henpin_riyu
+    - name: cit80saleh_ikou
+    - name: cim01kokya 
+    - name: kokyano_list_016_manual
+    - name: conv_mst_smkeiroid  
+    - name: keirokbn

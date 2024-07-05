@@ -1,11 +1,11 @@
 with KESAI_H_DATA_MART_SUB_N_U as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_u_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_u') }}
 ),
 KESAI_H_DATA_MART_SUB_N_H as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_h_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_h') }}
 ),
 TBPERSON as(
-    select * from snapjpdclitg_integration.TBPERSON
+    select * from {{ ref('jpndclitg_integration__tbperson') }}
 ),
 HANYO_ATTR as(
         select * from {{ source('jpdcledw_integration', 'hanyo_attr') }}

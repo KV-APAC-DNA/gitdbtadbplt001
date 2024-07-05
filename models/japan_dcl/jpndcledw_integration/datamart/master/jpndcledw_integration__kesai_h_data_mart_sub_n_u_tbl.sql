@@ -1,20 +1,20 @@
-with C_TBECKESAIHISTORY as(
-    select * from snapjpdclitg_integration.C_TBECKESAIHISTORY
+with c_tbeckesaihistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbeckesaihistory') }}
 ),
-C_TBECORDERHISTORY as(
-    select * from snapjpdclitg_integration.C_TBECORDERHISTORY
+c_tbecorderhistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbecorderhistory') }}
 ),
-C_TBECUSERCARD as(
-    select * from snapjpdclitg_integration.C_TBECUSERCARD
+c_tbecusercard as(
+    select * from {{ ref('jpndclitg_integration__c_tbecusercard') }}
 ),
-TBPROMOTION as(
-    select * from snapjpdclitg_integration.TBPROMOTION
+tbpromotion as(
+    select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
-C_TBECKESAI as(
-    select * from snapjpdclitg_integration.C_TBECKESAI
+c_tbeckesai as(
+    select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
-TBECORDER as(
-    select * from snapjpdclitg_integration.TBECORDER
+tbecorder as(
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 KEIROKBN as(
     select * from {{ source('jpdcledw_integration', 'keirokbn') }}

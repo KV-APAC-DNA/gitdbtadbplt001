@@ -1,11 +1,11 @@
-with KESAI_M_DATA_MART_SUB_N_U as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_N_U
+with kesai_m_data_mart_sub_n_u as(
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_u') }}
 ),
-KESAI_M_DATA_MART_SUB_N_H as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_N_H
+kesai_m_data_mart_sub_n_h as(
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h') }}
 ),
-KESAI_H_DATA_MART_SUB_N as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_N
+kesai_h_data_mart_sub_n as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
 ),
 union1 as(
     SELECT SALENO, --売上No（KEY）

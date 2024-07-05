@@ -4,13 +4,13 @@
     )
 }}
 with temp_kesai_016 as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEMP_KESAI_016
+    select * from {{ ref('jpndcledw_integration__temp_kesai_016') }}
 ),
 cld_m as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
+    select * from {{ source('jpdcledw_integration', 'cld_m') }}
 ),
 temp_u_new_016 as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.temp_u_new_016
+    select * from {{ ref('jpndcledw_integration__temp_u_new_016') }}
 ),
 u_new_order AS (
     --Order starts

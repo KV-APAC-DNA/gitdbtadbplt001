@@ -1,31 +1,31 @@
 with kesai_h_data_mart_mv as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_MV
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }} 
    -- TO_DATE(CAST(date_column AS STRING), 'YYYYMMDD') 
 ),
 cim01kokya as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
+    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
 ),
 kokyano_list_016_manual as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KOKYANO_LIST_016_MANUAL
+    select * from {{ source('jpndcledw_integration', 'kokyano_list_016_manual') }}
 ),
 kesai_m_data_mart_mv as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_MV 
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }} 
 ),
 cld_m as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CLD_M
+    select * from {{ source('jpndcledw_integration', 'cld_m') }}
 ),
 kokyano_list AS (
     SELECT kokyano
     FROM kesai_h_data_mart_mv
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 3, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 3, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
     SELECT kokyano
     FROM cim01kokya
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 3, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 3, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
@@ -142,5 +142,34 @@ WHERE h.juchkbn IN (0, 1, 2) --返品除く
 	AND c.TESTUSRFLG <> 'テストユーザ' ---テストユーザ除く
 	AND c.kokyano <> '9999999944' ---不特定顧客除く
 	AND c.kokyano <> '0000000011'
+),
+final as(
+    select
+        kokyano::varchar(60) as kokyano,
+        saleno_key::varchar(44) as saleno_key,
+        saleno::varchar(63) as saleno,
+        to_date(order_dt) as order_dt,
+        to_date(ship_dt) as ship_dt,
+        to_date(prev_ship_dt) as prev_ship_dt,
+        to_date(prev_order_dt) as prev_order_dt,
+        channel::varchar(135) as channel,
+        juchkbn::varchar(3) as juchkbn,
+        rn_ship445::number(38,0) as rn_ship445,
+        rn_order::number(38,0) as rn_order,
+        rn_ship445_yearwise::number(38,0) as rn_ship445_yearwise,
+        rn_order_yearwise::number(38,0) as rn_order_yearwise,
+        pl_order_dt::timestamp_ntz(9) as pl_order_dt,
+        pl_ship_dt::timestamp_ntz(9) as pl_ship_dt,
+        kesai_itemcode::varchar(30) as kesai_itemcode,
+        setitemnm::varchar(192) as setitemnm,
+        total_price::number(18,0) as total_price,
+        qty::number(18,0) as qty,
+        "誕生日" as "誕生日",
+        "顧客現在ランク"::varchar(12000) as "顧客現在ランク",
+        "性別コード"::varchar(760) as "性別コード",
+        "職業"::varchar(12000) as "職業",
+        year_445::varchar(256) as year_445
+    from transformed
+
 )
-select * from transformed
+select * from final

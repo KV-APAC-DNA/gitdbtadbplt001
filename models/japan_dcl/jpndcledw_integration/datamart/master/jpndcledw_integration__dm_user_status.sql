@@ -3,7 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where kokyano in ( select kokyano from SNAPJPDCLEDW_INTEGRATION.temp_kesai_016 );
+                delete from {{this}} where kokyano in ( select kokyano from {{ ref('jpndcledw_integration__temp_kesai_016') }} );
                     {% endif %}"
     )
 }}
@@ -11,7 +11,7 @@
 
 
 with dm_user_status_tmp as(
-    select * from SNAPJPDCLEDW_INTEGRATION.dm_user_status_tmp
+    select * from {{ ref('jpndcledw_integration__dm_user_status_tmp') }}
 ),
 final as(
     select 

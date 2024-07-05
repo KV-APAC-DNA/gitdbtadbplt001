@@ -6,28 +6,28 @@
 
 
 with kesai_h_data_mart_sub_old as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_OLD
+    select * from {{ source('jpdcledw_integration', 'kesai_h_data_mart_sub_old') }}
 ),
 cit80saleh_ikou as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH_IKOU
+    select * from {{ source('jpdcledw_integration', 'cit80saleh_ikou') }}
 ),
 tbechenpinriyu as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECHENPINRIYU
+    select * from {{ ref('jpndclitg_integration__tbechenpinriyu') }}
 ),
 conv_mst_smkeiroid as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CONV_MST_SMKEIROID
+    select * from {{ source('jpdcledw_integration', 'conv_mst_smkeiroid') }}
 ),
 kesai_h_data_mart_sub_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_KIZUNA
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
 ),
 c_tbecinquirekesai as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIREKESAI
+    select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 c_tbecinquire as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
+    select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 kesai_h_data_mart_sub_old_chsi as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_OLD_CHSI
+    select * from {{ source('jpdcledw_integration', 'kesai_h_data_mart_sub_old_chsi') }}
 ),
 union1 as(
 SELECT 

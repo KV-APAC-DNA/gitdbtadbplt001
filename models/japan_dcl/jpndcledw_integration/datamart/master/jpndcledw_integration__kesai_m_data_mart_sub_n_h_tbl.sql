@@ -1,8 +1,8 @@
 with KESAI_M_DATA_MART_SUB_N_H_NOTP as(
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_N_H_NOTP
+select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp') }}
 ),
 KESAI_H_DATA_MART_SUB_N_H as(
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_N_H
+select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_h') }}
 ),
 union1 as(
  SELECT 

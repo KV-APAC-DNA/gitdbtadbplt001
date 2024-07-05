@@ -1,11 +1,11 @@
 with kesai_h_data_mart_mv as(
-    select * from SNAPJPDCLEDW_INTEGRATION.kesai_h_data_mart_mv
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
 ),
 cim01kokya as(
-    select * from SNAPJPDCLEDW_INTEGRATION.cim01kokya
+    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
 ),
 kesai_m_data_mart_mv as(
-    select * from SNAPJPDCLEDW_INTEGRATION.kesai_m_data_mart_mv
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}
 ),
 transformed as(
     SELECT DISTINCT h.kokyano,

@@ -6,40 +6,40 @@
 
 
 with kesai_h_data_mart_mv_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_MV_KIZUNA
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 kesai_m_data_mart_mv_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_m_data_mart_mv_kizuna
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
 ),
 cim01kokya as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
+    select * from {{ source('jpdcledw_integration', 'cim01kokya') }}
 ),
 tbpromotion as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBPROMOTION
+    select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
 c_tbecclient as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.c_tbecclient
+    select * from {{ ref('jpndclitg_integration__c_tbecclient') }}
 ),
 cld_m as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
+    select * from {{ source('jpdcledw_integration', 'cld_m') }}
 ),
 TEIKIKEIYAKU_DATA_MART_UNI as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_UNI
+    select * from {{ source('jpdcledw_integration', 'teikikeiyaku_data_mart_uni') }}
 ),
 SYOUHINCD_HENKAN_QV as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.SYOUHINCD_HENKAN_QV
+    select * from {{ source('jpdcledw_integration', 'syouhincd_henkan_qv') }}
 ),
 TM14SHKOS_QV as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM14SHKOS_QV
+    select * from {{ source('jpdcledw_integration', 'tm14shkos_qv') }}
 ),
 CIM08SHKOS_BUNKAI_QV as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM08SHKOS_BUNKAI_QV
+    select * from {{ source('jpdcledw_integration', 'cim08shkos_bunkai_qv') }}
 ),
 TM13ITEM_QV as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM13ITEM_QV
+    select * from {{ source('jpdcledw_integration', 'tm13item_qv') }}
 ),
 kr_frequency_1yn_900_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kr_frequency_1yn_900_kizuna
+    select * from {{ source('jpdcledw_integration', 'kr_frequency_1yn_900_kizuna') }}
 ),
 prev_ship AS (
     SELECT kokyano,
@@ -807,4 +807,4 @@ final as(
         null::varchar(100) as updated_by
     from transformed
 )
-select * from final limit 10
+select * from final

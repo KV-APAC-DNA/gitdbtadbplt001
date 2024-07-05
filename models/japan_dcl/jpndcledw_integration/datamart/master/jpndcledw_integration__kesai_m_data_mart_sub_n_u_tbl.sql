@@ -4,29 +4,29 @@
     )
 }}
 
-with C_TBECORDERMEISAIHISTORY as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECORDERMEISAIHISTORY
+with c_tbecordermeisaihistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbecordermeisaihistory') }}
 ),
-C_TBECKESAIHISTORY as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAIHISTORY
+c_tbeckesaihistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbeckesaihistory') }}
 ),
-C_TBECORDERHISTORY as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECORDERHISTORY
+c_tbecorderhistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbecorderhistory') }}
 ),
-TBECORDER as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+tbecorder as(
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
-KESAI_H_DATA_MART_SUB_N_RIREK as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_N_RIREK
+kesai_h_data_mart_sub_n_rirek as(
+    select * from {{ source('jpndcledw_integration', 'kesai_h_data_mart_sub_n_rirek') }}
 ),
-C_TBECPRIVILEGEKESAIHISTORY as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECPRIVILEGEKESAIHISTORY
+c_tbecprivilegekesaihistory as(
+    select * from {{ ref('jpndclitg_integration__c_tbecprivilegekesaihistory') }}
 ),
-C_TBECPRIVILEGEMST as(
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECPRIVILEGEMST
+c_tbecprivilegemst as(
+    select * from {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}
 ),
-KESAIID_DUMMY as(
-    select * from DEV_DNA_CORE.SM05_WORKSPACE.JPNDCLEDW_INTEGRATION__KESAIID_DUMMY_TBL
+kesaiid_dummy as(
+    select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}
 ),
 union1 as(
     SELECT 'U' || CAST((TBECORDERMEISAI.C_DIKESAIID) AS VARCHAR) AS SALENO,

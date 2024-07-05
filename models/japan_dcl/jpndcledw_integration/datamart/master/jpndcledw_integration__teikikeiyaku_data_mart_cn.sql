@@ -1,20 +1,20 @@
-with C_TBECREGULARMEISAI as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARMEISAI
+with c_tbecregularmeisai as(
+	select * from {{ ref('jpndclitg_integration__c_tbecregularmeisai') }} 
 ),
 c_tbecregularoperatehist as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULAROPERATEHIST
+	select * from {{ ref('jpndclitg_integration__c_tbecregularoperatehist') }} 
 ),
-C_TBECREGULARCONTRACT as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARCONTRACT
+c_tbecregularcontract as(
+	select * from {{ ref('jpndclitg_integration__c_tbecregularcontract') }} 
 ),
-TBECORDERMEISAI as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+tbecordermeisai as(
+	select * from {{ ref('jpndclitg_integration__tbecordermeisai') }} 
 ),
-TBECORDER as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+tbecorder as(
+	select * from {{ ref('jpndclitg_integration__tbecorder') }} 
 ),
-TBECITEM as(
-	select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECITEM
+tbecitem as(
+	select * from {{ ref('jpndclitg_integration__tbecitem') }} 
 ),
 OTODOKE_SHOKAI AS (
 	SELECT RCM.C_DIREGULARCONTRACTID, --定期契約ID

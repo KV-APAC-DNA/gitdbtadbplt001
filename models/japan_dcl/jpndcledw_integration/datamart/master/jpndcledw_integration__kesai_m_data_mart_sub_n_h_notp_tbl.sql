@@ -1,11 +1,11 @@
-with C_TBECINQUIREMEISAI as(
-    select * from dev_dna_core.snapjpdclitg_integration.C_TBECINQUIREMEISAI
+with c_tbecinquiremeisai as(
+    select * from {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
 ),
-C_TBECKESAI as(
-    select * from dev_dna_core.snapjpdclitg_integration.C_TBECKESAI
+c_tbeckesai as(
+    select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
-C_TBECINQUIREKESAI as(
-    select * from dev_dna_core.snapjpdclitg_integration.C_TBECINQUIREKESAI
+c_tbecinquirekesai as(
+    select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 KESAIID_DUMMY as(
     select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}

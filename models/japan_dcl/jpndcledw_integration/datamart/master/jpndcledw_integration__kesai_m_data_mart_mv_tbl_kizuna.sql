@@ -4,17 +4,17 @@
     )
 }}
 
-with KESAI_M_DATA_MART_SUB_OLD as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_OLD
+with kesai_m_data_mart_sub_old as(
+    select * from {{ source('jpndcledw_integration', 'kesai_m_data_mart_sub_old') }}
 ),
-KESAI_M_DATA_MART_SUB_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_TBL_KIZUNA
+kesai_m_data_mart_sub_kizuna as(
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_kizuna') }}
 ),
-KESAI_H_DATA_MART_SUB_kizuna as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_SUB_KIZUNA
+kesai_h_data_mart_sub_kizuna as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
 ),
-KESAI_M_DATA_MART_SUB_OLD_CHSI as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_OLD_CHSI_TBL
+kesai_m_data_mart_sub_old_chsi as(
+    select * from {{ source('jpndcledw_integration', 'kesai_m_data_mart_sub_old_chsi') }}
 ),
 
 union1 as(

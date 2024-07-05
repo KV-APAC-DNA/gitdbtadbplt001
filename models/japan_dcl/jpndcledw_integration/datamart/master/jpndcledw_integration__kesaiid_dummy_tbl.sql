@@ -1,8 +1,8 @@
 with c_tbecinquirekesai as(
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecinquirekesai 
+    select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}  
 ),
 c_tbecinquire as(
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecinquire 
+    select * from {{ ref('jpndclitg_integration__c_tbecinquire') }} 
 ),
 tt01_henpin_riyu as(
     select * from {{ source('jpdcledw_integration', 'tt01_henpin_riyu') }} 
