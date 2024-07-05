@@ -130,5 +130,12 @@ sources:
     tables:
       - name: itg_mds_sg_customer_hierarchy
 
+  - name: chnitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: chnitg_integration
+    tables:
+      - name: itg_mds_cn_otc_product_mapping
+      - name: itg_cs_re_store      
+
  
 
