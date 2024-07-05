@@ -1,0 +1,29 @@
+with itg_sku_recom_flag_msl_spike as(
+    select * from dev_dna_core.snapinditg_integration.itg_sku_recom_flag_msl_spike
+),
+transformed as(
+
+SELECT sku.mnth_id,
+       sku.cust_cd,
+       sku.retailer_cd,
+       sku.mother_sku_cd,
+       --sku.dist_outlet_cd,
+       AVG(sku.oos_flag) AS oos_flag,
+       AVG(sku.ms_flag) AS ms_flag,
+       AVG(sku.cs_flag) AS cs_flag,
+       AVG(sku.soq) AS soq,
+       --sku.unique_ret_cd,
+       --sku.route_code,
+       --sku.salesman_code,
+       -- sku.crtd_dttm,
+       TO_CHAR(TO_DATE(TO_CHAR(sku.mnth_id), 'YYYYMM'), 'YYYY-MM-DD') AS reco_date
+FROM itg_sku_recom_flag_msl_spike sku
+WHERE (sku.cust_cd IS not NULL OR sku.retailer_cd IS not NULL)
+GROUP BY sku.mnth_id,
+         sku.cust_cd,
+         sku.retailer_cd,
+         sku.mother_sku_cd,
+         TO_CHAR(TO_DATE(TO_CHAR(sku.mnth_id), 'YYYYMM'), 'YYYY-MM-DD')
+        -- TO_DATE((sku.mnth_id)::CHARACTER VARYING::TEXT,'YYYYMMDD'::CHARACTER VARYING::TEXT)
+)
+select * from transformed

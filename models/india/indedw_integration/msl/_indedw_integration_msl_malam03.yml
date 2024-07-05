@@ -1,0 +1,5 @@
+models:
+  - name: indedw_integration__edw_sku_recom_spike_msl_mi
+    config:
+      alias: edw_sku_recom_spike_msl_mi
+      tags: ["in_skurecom_mslspike_mi_datamart","transformation"]
