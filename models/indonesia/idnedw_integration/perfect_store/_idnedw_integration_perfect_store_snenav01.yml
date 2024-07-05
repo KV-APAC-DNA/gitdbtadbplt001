@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: idnedw_integration__v_rpt_id_regional_perfect_store
+    config: 
+        alias: v_rpt_id_regional_perfect_store
+        tags: ["", "transformation"]
+    
