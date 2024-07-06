@@ -188,4 +188,4 @@ models:
   - name: ntawks_integration__wks_kr_pos_emart_evydy
     config:
       alias: wks_kr_pos_emart_evydy
-      tags: ["kr_pos",""]
+      tags: ["kr_pos","ingestion"]
