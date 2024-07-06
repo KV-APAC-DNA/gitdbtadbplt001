@@ -56,15 +56,15 @@ models:
   - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_bp
     config:
       alias: v_intrm_curr_copa_plan_denorm_bp
-      tags: ["north_asia_common_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_rf
     config:
       alias: v_intrm_curr_copa_plan_denorm_rf
-      tags: ["north_asia_common_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_curr_copa_plan_denorm_le
     config:
       alias: v_intrm_curr_copa_plan_denorm_le
-      tags: ["north_asia_common_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_rpt_hk_pos
     config:
       alias: edw_rpt_hk_pos
