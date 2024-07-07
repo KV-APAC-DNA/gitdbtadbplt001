@@ -8,19 +8,19 @@ edw_vw_os_time_dim as
 ),
 edw_gch_producthierarchy as 
 (
-    select * from {{ ref('aspedw_access__edw_gch_producthierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_material_dim as 
 (
-    select * from {{ ref('aspedw_access__edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_product_key_attributes as
 (
-    select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_gch_customerhierarchy as
 (
-    select * from {{ ref('aspedw_access__edw_gch_customerhierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_customer_sales_dim as
 (
@@ -28,7 +28,7 @@ edw_customer_sales_dim as
 ),
 edw_customer_base_dim as
 (
-    select * from {{ ref('aspedw_access__edw_customer_base_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as
 (
@@ -48,11 +48,11 @@ edw_code_descriptions as
 ),
 edw_subchnl_retail_env_mapping as
 (
-    select * from {{ ref('aspedw_access__edw_subchnl_retail_env_mapping') }}
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_code_descriptions_manual as
 (
-    select * from dev_dna_core.aspedw_integration.edw_code_descriptions_manual
+    select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}
 ),
 vw_edw_reg_exch_rate as
 (

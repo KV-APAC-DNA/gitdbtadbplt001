@@ -38,7 +38,7 @@ final as
     COALESCE(txn.key_account_name, '#N/A' :: character varying) AS account_name, 
     COALESCE(re.store_name, '#N/A' :: character varying) AS store_name, 
     COALESCE(re.region, '#N/A' :: character varying) AS "region", 
-    COALESCE(re.zone, '#N/A' :: character varying) AS "zone", 
+    COALESCE(re.zone, '#N/A' :: character varying) AS zone, 
     COALESCE(re.re, '#N/A' :: character varying) AS re, 
     COALESCE(re.promotor, '#N/A' :: character varying) AS promotor, 
     COALESCE(acm.mother_sku_name, '#N/A' :: character varying) AS mother_sku_name, 

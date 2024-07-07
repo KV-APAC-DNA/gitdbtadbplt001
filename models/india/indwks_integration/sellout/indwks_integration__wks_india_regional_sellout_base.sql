@@ -24,7 +24,7 @@ itg_mds_in_key_accounts_mapping_offtake_upd as
 ),
 edw_product_key_attributes as
 (
-    select * from {{ ref('aspedw_access__edw_product_key_attributes') }}
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_mds_ap_customer360_config as
 (
@@ -57,7 +57,7 @@ union1 as
              SELLOUT.rtrlatitude AS rtrlatitude,
              SELLOUT.rtrlongitude AS rtrlongitude,								
              'NA' AS EAN,
-             B.YEAR::INT as YEAR,
+             B."year"::INT as YEAR,
              B.MNTH_ID::INT AS MNTH_ID,
              TO_DATE(TRIM(SELLOUT.INVOICE_DATE), 'YYYYMMDD') as DAY,
 			 B.cal_year as univ_year,
@@ -96,7 +96,7 @@ union1 as
                SELLOUT.rtrlatitude,
                SELLOUT.rtrlongitude,
                EAN,
-               B.YEAR,
+               B."year",
                B.MNTH_ID,             
                TO_DATE(TRIM(SELLOUT.INVOICE_DATE), 'YYYYMMDD'),
 			   B.cal_year,
@@ -115,7 +115,7 @@ union2 as
 	   ka.code as SOLD_TO_CODE,
 	   sap_cd AS SKU_CD,
 	   article_name AS CUSTOMER_PRODUCT_DESC,
-	   region as REGION,
+	   "region" as REGION,
 	   zone as ZONE_OR_AREA,
 	   'NA' AS RTRUNIQUECODE,
 		 'NA' AS region_name,
