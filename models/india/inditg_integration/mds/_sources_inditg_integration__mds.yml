@@ -261,6 +261,12 @@ sources:
 
       - name: sdl_mds_in_ps_targets
         tags: ["in_perfect_store_mds_itg_refresh","transformation"]
+      - name: sdl_lks_businesscalender
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_csl_tbl_schemewise_apno
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_winculum_salesreturn
+        tags: ["m_wrp_in_sdlitg_kasales","transformation"]
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

@@ -16,7 +16,7 @@ v_rpt_rt_sales as
 ),
 edw_rpt_mi_msl_dashboard as
 (
-    select * from indedw_integration.edw_rpt_mi_msl_dashboard
+    select * from {{ ref('indedw_integration__edw_rpt_mi_msl_dashboard') }}
 ),
 wks_mi_psr_perf_tracker_l2y_trans_recs as
 (

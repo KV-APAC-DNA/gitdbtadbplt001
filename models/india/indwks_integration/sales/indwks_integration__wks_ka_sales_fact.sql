@@ -4,7 +4,7 @@ with itg_keyaccountsales as
 ),
 edw_ka_sales_fact as 
 (
-    select * from {{ ref('indedw_integration__edw_ka_sales_fact') }}
+    select * from indedw_integration.edw_ka_sales_fact
 ),
 final as
 (
@@ -32,12 +32,12 @@ SELECT src.customer_code,
 	totalqtyunconfirmed,
 	src.buyingoutlets,
 	CASE 
-	WHEN tgt.crt_dttm IS NULL THEN getdate()
+	WHEN tgt.crt_dttm IS NULL THEN current_timestamp()
 	ELSE tgt.crt_dttm 
 	END AS crt_dttm ,
 	CASE 
 	WHEN tgt.crt_dttm IS NULL THEN NULL 
-	ELSE getdate() 
+	ELSE current_timestamp() 
 	END AS updt_dttm,
 	CASE 
 	WHEN tgt.crt_dttm IS NULL THEN 'I' 

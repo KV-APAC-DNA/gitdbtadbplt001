@@ -9,3 +9,12 @@ models:
     config:
       alias: wks_mi_psr_ret_dim_lat_cust
       tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_lks_businesscalender
+    config:
+      alias: wks_lks_businesscalender
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+
+  - name: indwks_integration__wks_csl_tbl_schemewise_apno
+    config:
+      alias: wks_csl_tbl_schemewise_apno
+      tags: ["m_wrp_in_sdlitg_master","transformation"]

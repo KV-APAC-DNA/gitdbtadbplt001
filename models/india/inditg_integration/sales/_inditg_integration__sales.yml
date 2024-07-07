@@ -20,3 +20,7 @@ models:
     config:
       alias: itg_winculum_salesreturn
       tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+  - name: inditg_integration__sdl_raw_winculum_salesreturn
+    config:
+      alias: sdl_raw_winculum_salesreturn
+      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
