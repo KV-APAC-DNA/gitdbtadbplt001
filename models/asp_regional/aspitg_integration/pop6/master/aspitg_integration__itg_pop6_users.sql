@@ -5,27 +5,27 @@
 }}
 with sdl_pop6_hk_users as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_hk_users') }}
 ),
 sdl_pop6_kr_users as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_kr_users') }}
 ),
 sdl_pop6_tw_users as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_tw_users') }}
 ),
 sdl_pop6_jp_users as 
 (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_jp_users') }}
 ),
 sdl_pop6_sg_users as 
 (
-    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_sg_users') }}
 ),
 sdl_pop6_th_users as 
 (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_users') }}
+    select * from {{ ref('aspwks_integration__wks_pop6_th_users') }}
 ),
 sdl AS 
 (

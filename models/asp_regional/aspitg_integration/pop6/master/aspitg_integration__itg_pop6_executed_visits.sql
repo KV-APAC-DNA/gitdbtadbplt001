@@ -7,27 +7,27 @@
 }}
 with sdl_pop6_kr_executed_visits as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_kr_executed_visits')}}
 ),
 sdl_pop6_tw_executed_visits as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_tw_executed_visits')}}
 ),
 sdl_pop6_hk_executed_visits as 
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_hk_executed_visits')}}
 ),
 sdl_pop6_jp_executed_visits as 
 (
-    select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_jp_executed_visits')}}
 ),
 sdl_pop6_sg_executed_visits as 
 (
-    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_sg_executed_visits')}}
 ),
 sdl_pop6_th_executed_visits as 
 (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_executed_visits') }}
+    select * from {{ref('aspwks_integration__wks_pop6_th_executed_visits')}}
 ),
 transformed as 
 (

@@ -4,7 +4,7 @@ models:
   - name: ntaedw_integration__v_rpt_pos_offtake_wkly_nonkorea
     config:
       alias: v_rpt_pos_offtake_wkly_nonkorea
-      tags: ["taiwan_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_internal_target_fact
     config:
       alias: edw_internal_target_fact
@@ -12,28 +12,32 @@ models:
   - name: ntaedw_integration__edw_vw_sales_rep_so_target_fact
     config:
       alias: edw_vw_sales_rep_so_target_fact
-      tags: ["taiwan_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_pos_fact
     config:
       alias: edw_pos_fact
-      tags: ["tw_pos","transformation"]
+      tags: ["pos_edw_load","transformation"]
   - name: ntaedw_integration__v_rpt_pos_offtake_wkly_korea
     config:
       alias: v_rpt_pos_offtake_wkly_korea
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_pos_offtake_daily_korea
     config:
       alias: v_rpt_pos_offtake_daily_korea
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_pos_offtake_daily_nonkorea
     config:
       alias: v_rpt_pos_offtake_daily_nonkorea
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_pos_nonkorea
     config:
       alias: v_rpt_pos_nonkorea
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_pos_korea
     config:
       alias: v_rpt_pos_korea
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__edw_vw_hk_pos
+    config:
+      alias: edw_vw_hk_pos
+      tags: ["north_asia_views","transformation"]

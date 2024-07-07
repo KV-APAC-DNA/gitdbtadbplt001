@@ -8,27 +8,27 @@
 
 with sdl_pop6_kr_tasks as 
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_tasks') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_kr_tasks') }}
 ),
 
 sdl_pop6_tw_tasks as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_tasks') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_tw_tasks') }}
 ),
 
 sdl_pop6_hk_tasks as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_tasks') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_hk_tasks') }}
 ),
 
 sdl_pop6_jp_tasks as
 (
-	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_tasks') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_jp_tasks') }}
 ),
 
 sdl_pop6_sg_tasks as
 (
-	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_tasks') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_sg_tasks') }}
 ),
 
 sdl_pop6_th_tasks as

@@ -185,3 +185,7 @@ models:
     config:
       alias: wks_pos_prc_condition_map
       tags: ["kr_pos_edw_load","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart_evydy
+    config:
+      alias: wks_kr_pos_emart_evydy
+      tags: ["kr_pos","ingestion"]

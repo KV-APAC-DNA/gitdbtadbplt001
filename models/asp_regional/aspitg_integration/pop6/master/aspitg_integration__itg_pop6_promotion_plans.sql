@@ -8,35 +8,33 @@
 
 with sdl_pop6_kr_promotion_plans as 
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_kr_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_kr_promotion_plans') }}
 ),
 
 sdl_pop6_tw_promotion_plans as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_tw_promotion_plans') }}
 ),
 
 sdl_pop6_hk_promotion_plans as
 (
-	select * from {{ source('ntasdl_raw', 'sdl_pop6_hk_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_hk_promotion_plans') }}
 ),
 
 sdl_pop6_jp_promotion_plans as
 (
-	select * from {{ source('jpnsdl_raw', 'sdl_pop6_jp_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_jp_promotion_plans') }}
 ),
 
 sdl_pop6_sg_promotion_plans as
 (
-	select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_sg_promotion_plans') }}
 ),
 
 sdl_pop6_th_promotion_plans as
 (
-	select * from {{ source('thasdl_raw', 'sdl_pop6_th_promotion_plans') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_th_promotion_plans') }}
 ),
-
-
 kr AS
 (
 	SELECT 

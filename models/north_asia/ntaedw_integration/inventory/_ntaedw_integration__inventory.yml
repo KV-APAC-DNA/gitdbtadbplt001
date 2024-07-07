@@ -12,7 +12,7 @@ models:
   - name: ntaedw_integration__v_rpt_onpack_inventory
     config: 
       alias: v_rpt_onpack_inventory
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_kr_otc_inventory
     config: 
       alias: edw_kr_otc_inventory
@@ -20,7 +20,7 @@ models:
   - name: ntaedw_integration__edw_vw_tw_pos_inventory
     config: 
       alias: edw_vw_tw_pos_inventory
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_ims_inventory_analysis
     config: 
       alias: v_rpt_ims_inventory_analysis
