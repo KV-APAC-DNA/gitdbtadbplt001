@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kr_last_stage_point
+    config:
+      alias: kr_last_stage_point
+      tags: ["m_dcl_edw_job1","ingestion"]
+
+  - name: jpndcledw_integration__kr_last_stage_point_wk_nayose
+    config:
+      alias: kr_last_stage_point_wk_nayose
+      tags: ["m_dcl_edw_job1","ingestion"]
+
+  - name: jpndcledw_integration__kr_last_stage_wk_raw
+    config:
+      alias: kr_last_stage_wk_raw
+      tags: ["m_dcl_edw_job1","ingestion"]
+  
+  - name: jpndcledw_integration__kr_this_point_granted
+    config:
+      alias: kr_this_point_granted
+      tags: ["m_dcl_edw_job1","ingestion"]
+  
+  - name: jpndcledw_integration__kr_this_stage_point_wk_rescue
+    config:
+      alias: kr_this_stage_point_wk_rescue
+      tags: ["m_dcl_edw_job1","ingestion"]

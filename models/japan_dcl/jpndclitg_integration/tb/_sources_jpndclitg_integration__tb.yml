@@ -83,3 +83,6 @@ sources:
     - name: cim03item_ikou
     - name: dm_user_attr
     - name: dm_user_attr_sfcc_v
+    - name: kr_this_stage_point_monthly
+    - name: dcl_calendar_sysdate
+    - name: kr_this_stage_point_rescue
