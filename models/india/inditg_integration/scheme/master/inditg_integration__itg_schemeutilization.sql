@@ -4,10 +4,18 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} WHERE modifieddate >= (SELECT min(modifieddate)
-                FROM {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }}WHERE DATEDIFF(day, CreatedDate, ModifiedDate) <= 7);
-                delete from {{this}} WHERE distcode || invoiceno IN (SELECT distcode || invoiceno
-                FROM {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }}WHERE DATEDIFF(day, CreatedDate, ModifiedDate) > 7);
+                DELETE FROM {{this}}
+                  WHERE modifieddate >=(
+                  SELECT min(modifieddate)
+                  FROM {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }}
+                  where DATEDIFF(day, CreatedDate, ModifiedDate) <= 7
+              );
+               DELETE FROM {{this}}
+                  WHERE distcode || invoiceno IN (
+                  select distcode || invoiceno
+                  FROM {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }}
+                  where DATEDIFF(day, CreatedDate, ModifiedDate) > 7
+              );
                 {% endif %}"
     )
 }}
@@ -44,9 +52,9 @@ final as
         schdiscperc::number(38,6) as schdiscperc,
         freeprdbatcode::varchar(100) as freeprdbatcode,
         billedrate::number(38,6) as billedrate,
-        ModifiedDate::timestamp_ntz(9) as modifieddate,
-        ServiceCRNRefNo::varchar(100) as servicecrnrefno,
-        RtrURCCode::varchar(100) as rtrurccode,
+        modifieddate::timestamp_ntz(9) as modifieddate,
+        servicecrnrefno::varchar(100) as servicecrnrefno,
+        rtrurccode::varchar(100) as rtrurccode,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source

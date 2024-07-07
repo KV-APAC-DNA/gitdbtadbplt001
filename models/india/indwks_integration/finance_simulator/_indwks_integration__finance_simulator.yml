@@ -57,10 +57,6 @@ models:
     config:
       alias: wks_fin_sim_base_temp13
       tags: ["in_finance_simulator_datamart","transformation"]
-  - name: indwks_integration__wks_fin_sim_base_temp14
-    config:
-      alias: wks_fin_sim_base_temp14
-      tags: ["in_finance_simulator_datamart","transformation"]
   - name: indwks_integration__wks_fin_sim_base
     config:
       alias: wks_fin_sim_base

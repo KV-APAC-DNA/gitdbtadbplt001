@@ -3,13 +3,13 @@
     (
         materialized="incremental",
         incremental_strategy = "merge",
-        unique_key=["salinvdate"],
+        unique_key=["schid"],
         merge_exclude_columns = ["crt_dttm"]
     )
 }}
 with wks_csl_tbl_schemewise_apno as 
 (
-  select * from dev_dna_core.snapindwks_integration.wks_csl_tbl_schemewise_apno
+  select * from {{ ref('indwks_integration__wks_csl_tbl_schemewise_apno') }}
 ),
 final as 
 (

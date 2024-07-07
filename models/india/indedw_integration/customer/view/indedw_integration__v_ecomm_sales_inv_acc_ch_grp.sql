@@ -15,7 +15,7 @@ final as
 	,ecomm.mth_mm
 	,ecomm.week
 	,ecomm.qtr
-	,upper((ecomm."month")::TEXT) AS month
+	,upper((ecomm.month)::TEXT) AS month
 	,upper((ecomm.region_name)::TEXT) AS region_name
 	,upper((ecomm.zone_name)::TEXT) AS zone_name
 	,upper((ecomm.territory_name)::TEXT) AS territory_name

@@ -26,13 +26,11 @@ final as
       prn_copa.acct_num,
       'NA' AS dstr_chnl,
       'NA' AS ctry_key,
-      (prn.fisc_yr || prn.month)::INTEGER AS caln_yr_mo,
-      prn.fisc_yr::INTEGER as fisc_yr,
-      (prn.fisc_yr || 0 || prn.month)::INTEGER AS fisc_yr_per,
-      --cogs AS amt_obj_crncy,
-      DECODE(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')), '', 0, CAST(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) AS NUMERIC(38, 2))) as amt_obj_crncy,
-      --volume AS qty,
-      CAST(TRIM(REPLACE(REPLACE(qty, ',', ''), '-', 0)) AS NUMERIC(38, 2)) as qty,
+      (prn.fisc_yr || prn.month) AS caln_yr_mo,
+      prn.fisc_yr as fisc_yr,
+      (prn.fisc_yr || 0 || prn.month) AS fisc_yr_per,
+      TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) as amt_obj_crncy,
+      TRIM(REPLACE(REPLACE(qty, ',', ''), '-', 0)) as qty,
       prn_copa.acct_hier_desc,
       prn_copa.acct_hier_shrt_desc,
       'NA' AS chnl_desc1,
@@ -46,8 +44,8 @@ final as
       prn.brand_combi,
       prod_h.franchise_code AS franchise,
       prod_h.group_code AS "group",
-      CAST(NULL AS NUMERIC(38, 2)) as mrp,
-      CAST(NULL AS NUMERIC(38, 2)) as cogs_per_unit,
+      NULL as mrp,
+      NULL as cogs_per_unit,
       NULL AS PLAN,
       prod_h.brand_group_1_code AS brand_group_1,
       prod_h.brand_group_2_code AS brand_group_2,
@@ -58,7 +56,7 @@ final as
       FROM itg_fin_sim_miscdata
       WHERE nature = 'PRN'
       ) prn
-    LEFT JOIN itg_mds_in_product_hierarchy prod_h ON prn.matl_num = prod_h.code
+    LEFT JOIN itg_mds_in_product_hierarchy prod_h ON prn.matl_num::varchar(20) = prod_h.code::varchar(20)
     LEFT JOIN (
       SELECT matl_num,
         chrt_acct,
@@ -72,6 +70,6 @@ final as
         3,
         4,
         5
-      ) prn_copa ON prn.matl_num = prn_copa.matl_num
+      ) prn_copa ON prn.matl_num::varchar(20) = prn_copa.matl_num::varchar(20)
 )
 select * from final

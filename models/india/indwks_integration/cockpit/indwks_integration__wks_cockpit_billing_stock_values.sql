@@ -12,7 +12,7 @@ edw_product_dim as
 ),
 edw_billing_fact as 
 (
-    select * from {{ ref('aspedw_access__edw_billing_fact') }}
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_retailer_calendar_dim as
 (

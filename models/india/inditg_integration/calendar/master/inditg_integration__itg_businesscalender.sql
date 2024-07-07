@@ -9,7 +9,7 @@
 }}
 with wks_lks_businesscalender as 
 (
-    select * from dev_dna_core.snapindwks_integration.wks_lks_businesscalender
+    select * from {{ ref('indwks_integration__wks_lks_businesscalender') }}
 ),
 final as
 (

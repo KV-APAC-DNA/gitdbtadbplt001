@@ -1,6 +1,6 @@
 with edw_material_dim as 
 (
-    select * from {{ ref('aspedw_access__edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_product_dim as
 (
@@ -66,7 +66,7 @@ SELECT '-1' AS product_code,
     'Y' AS active_flag,
     'N' AS delete_flag,
     0 AS shelf_life,
-    getdate() AS crt_dttm,
-    getdate() AS updt_dttm
+    current_timestamp() AS crt_dttm,
+    current_timestamp() AS updt_dttm
 )
 select * from final

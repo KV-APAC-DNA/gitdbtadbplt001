@@ -5,7 +5,7 @@
         incremental_strategy = "append",
         pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
-        WHERE TRUNC(closingdate) >= (SELECT MIN(TRUNC(closingdate)) FROM {{ source('indsdl_raw', 'sdl_rstockdiscrepancy_withproduct') }});
+        WHERE to_date(closingdate) >= (SELECT MIN(to_date(closingdate)) FROM {{ source('indsdl_raw', 'sdl_rstockdiscrepancy_withproduct') }});
         {% endif %}"
     )
 }}

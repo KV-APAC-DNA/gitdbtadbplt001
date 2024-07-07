@@ -3,11 +3,11 @@
         materialized="incremental",
         incremental_strategy= "append",    
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}}where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'DS') and  saleflag = 'DS';
-        delete from {{this}}where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'IS') and  saleflag = 'IS';
-        delete from {{this}}where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'IR') and  saleflag = 'IR';
-        delete from {{this}}where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'WIS') and  saleflag = 'WIS';
-        delete from {{this}}where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'WIR') and  saleflag = 'WIR';
+        delete from {{this}} where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'DS') and  saleflag = 'DS';
+        delete from {{this}} where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'IS') and  saleflag = 'IS';
+        delete from {{this}} where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'IR') and  saleflag = 'IR';
+        delete from {{this}} where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'WIS') and  saleflag = 'WIS';
+        delete from {{this}} where salinvdate >= (select min(salinvdate) from {{ ref('inditg_integration__itg_keyaccountsales_wrk') }} where saleflag = 'WIR') and  saleflag = 'WIR';
         {% endif %}"
     )
 }}

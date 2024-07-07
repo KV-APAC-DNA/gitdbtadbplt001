@@ -4,7 +4,7 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'NR' AND chnl_desc2 = 'Govt;
+        DELETE FROM {{this}} where nature = 'NR' AND chnl_desc2 = 'Govt';
         {% endif %}"
     )
 }}
