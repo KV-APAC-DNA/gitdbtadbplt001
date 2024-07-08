@@ -12,25 +12,25 @@ dly_sls_cust_attrb_lkp as(
 ),
 customer as(
 	SELECT DISTINCT cust.cust_num AS cust_no
-				,pac_lkup.cmp_id
-				,pac_lkup.chnl_cd AS channel_cd
-				,pac_lkup.chnl_desc AS channel_desc
+				,pac_lkup.cmp_id_code AS cmp_id
+				,pac_lkup.dstr_chnl_Code AS channel_cd
+				,pac_lkup.dstr_chnl_name AS channel_desc
 				,cust.ctry_key
-				,pac_lkup.country
+				,pac_lkup.cmp_id_name AS country
 				,cust.rgn AS state_cd
 				,cust.pstl_cd AS post_cd
 				,cust.city AS cust_suburb
 				,cust.cust_nm
-				,pac_lkup.sls_org
+				,pac_lkup.sls_org_code AS sls_org
 				,cust_sales.cust_del_flag
-				,pac_lkup.sls_ofc AS sales_office_cd
-				,pac_lkup.sls_ofc_desc AS sales_office_desc
+				,pac_lkup.sls_ofc_code AS sales_office_cd
+				,pac_lkup.sls_ofc_name AS sales_office_desc
 				,CASE 
 					WHEN (ltrim((cust.cust_num)::TEXT, '0'::TEXT) = ltrim((CONTROL.cust_no)::TEXT, '0'::TEXT))
 						THEN CONTROL.sls_grp
-					ELSE pac_lkup.sls_grp
+					ELSE pac_lkup.sls_grp_code
 					END AS sales_grp_cd
-				,pac_lkup.sls_grp_desc AS sales_grp_desc
+				,pac_lkup.sls_grp_name AS sales_grp_desc
 				,cust.fcst_chnl AS mercia_ref
 				,cust_sales.crncy_key AS curr_cd
 			FROM customer_control_tp_accrual_reversal_ac CONTROL
@@ -60,14 +60,14 @@ customer as(
 								)::TEXT) AS cust_del_flag
 					FROM edw_customer_sales_dim a
 						,(
-							SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org
+							SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org_code
 							FROM dly_sls_cust_attrb_lkp
 							) b
-					WHERE ((a.sls_org)::TEXT = (b.sls_org)::TEXT)
+					WHERE ((a.sls_org)::TEXT = (b.sls_org_code)::TEXT)
 					GROUP BY a.cust_num
 					) req_cust_rec
 				,(
-					edw_customer_sales_dim cust_sales LEFT JOIN dly_sls_cust_attrb_lkp pac_lkup ON (((cust_sales.sls_grp)::TEXT = (pac_lkup.sls_grp)::TEXT))
+					edw_customer_sales_dim cust_sales LEFT JOIN dly_sls_cust_attrb_lkp pac_lkup ON (((cust_sales.sls_grp)::TEXT = (pac_lkup.sls_grp_code)::TEXT))
 					)
 			WHERE (
 					(
@@ -101,21 +101,21 @@ customer as(
 ),
 transformed as(
 SELECT cust.cust_no
-	,pac_lkup.cmp_id
-	,pac_lkup.chnl_cd AS channel_cd
-	,pac_lkup.chnl_desc AS channel_desc
+	,pac_lkup.cmp_id_code AS cmp_id
+	,pac_lkup.dstr_chnl_code AS channel_cd
+	,pac_lkup.dstr_chnl_name AS channel_desc
 	,cust.ctry_key
-	,pac_lkup.country
+	,pac_lkup.dstr_chnl_name AS country
 	,cust.state_cd
 	,cust.post_cd
 	,cust.cust_suburb
 	,cust.cust_nm
-	,pac_lkup.sls_org
+	,pac_lkup.sls_org_code AS sls_org
 	,cust.cust_del_flag
-	,pac_lkup.sls_ofc AS sales_office_cd
-	,pac_lkup.sls_ofc_desc AS sales_office_desc
-	,pac_lkup.sls_grp AS sales_grp_cd
-	,pac_lkup.sls_grp_desc AS sales_grp_desc
+	,pac_lkup.sls_ofc_code AS sales_office_cd
+	,pac_lkup.sls_ofc_name AS sales_office_desc
+	,pac_lkup.sls_grp_code AS sales_grp_cd
+	,pac_lkup.sls_grp_name AS sales_grp_desc
 	,cust.mercia_ref
 	,cust.curr_cd
 FROM (
@@ -140,7 +140,7 @@ FROM (
 			,min((customer.curr_cd)::TEXT) AS curr_cd
 		FROM  customer
 		GROUP BY customer.cust_no
-		) cust LEFT JOIN dly_sls_cust_attrb_lkp pac_lkup ON ((((cust.sales_grp_cd)::CHARACTER VARYING)::TEXT = (pac_lkup.sls_grp)::TEXT))
+		) cust LEFT JOIN dly_sls_cust_attrb_lkp pac_lkup ON ((((cust.sales_grp_cd)::CHARACTER VARYING)::TEXT = (pac_lkup.sls_grp_code)::TEXT))
 	)
 WHERE (
 		(ltrim((cust.cust_no)::TEXT, ('0'::CHARACTER VARYING)::TEXT) not like ('7%'::CHARACTER VARYING)::TEXT)

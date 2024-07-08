@@ -15,8 +15,8 @@ sources:
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
-              select_columns: ["sls_org", "cmp_id", "market", "sls_grp"]
-              group_by_columns: ["sls_org", "cmp_id", "market", "sls_grp"]
+              select_columns: ["sls_org_code", "cmp_id_code", "cmp_id_name", "sls_grp_code"]
+              group_by_columns: ["sls_org_code", "cmp_id_code", "cmp_id_name", "sls_grp_code"]
               name: TRATBL_sdl_mds_pacific_cust_attrb__duplicate_test
               config:
                 store_failures: true

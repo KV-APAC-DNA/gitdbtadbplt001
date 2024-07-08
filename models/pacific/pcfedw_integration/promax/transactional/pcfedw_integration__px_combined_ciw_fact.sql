@@ -356,8 +356,8 @@ union_2 as
                                     ) as rank
                                 from edw_px_listprice lp,
                                     (
-                                        select distinct cmp_id,
-                                            sls_org
+                                        select distinct cmp_id_code as cmp_id,
+                                            sls_org_code as sls_org
                                         from dly_sls_cust_attrb_lkp
                                     ) lkp,
                                     (
@@ -557,8 +557,8 @@ union_3 as
                                         ) as rank
                                     from edw_px_listprice lp,
                                         (
-                                            select distinct cmp_id,
-                                                sls_org
+                                            select distinct cmp_id_code as cmp_id,
+                                                sls_org_code as sls_org
                                             from dly_sls_cust_attrb_lkp
                                         ) lkp,
                                         (
