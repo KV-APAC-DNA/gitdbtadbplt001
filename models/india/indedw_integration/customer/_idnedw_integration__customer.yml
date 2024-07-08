@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_customer_dim
+    config:
+      alias: edw_customer_dim
+      tags: ["in_xdm_master","transformation"]
+  - name: indedw_integration__v_rpt_cust_mast_inv_tde
+    config:
+      alias: v_rpt_cust_mast_inv_tde
+      tags: ["in_xdm_master","transformation"]

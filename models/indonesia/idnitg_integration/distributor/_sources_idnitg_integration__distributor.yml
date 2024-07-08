@@ -192,3 +192,5 @@ sources:
       tags: ["id_dist_control_pre_req_fact","ingestion"]
     - name: wks_itg_all_distributor_sellin_sellout_fact
       tags: ["id_dist_control_pre_req_fact","ingestion"]
+    - name: wks_indonesia_noo_analysis_temp
+      tags: ["","ingestion"]
