@@ -491,6 +491,21 @@ models:
         +materialized: table
         +transient: false
         +schema: INDEDW_INTEGRATION
+        customer:
+          view:
+            +materialized: view
+        retail:
+          view:
+            +materialized: view
+        retailer:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        udc:
+          view:
+            +materialized: view
       inditg_integration:
         +materialized: table
         +transient: false
