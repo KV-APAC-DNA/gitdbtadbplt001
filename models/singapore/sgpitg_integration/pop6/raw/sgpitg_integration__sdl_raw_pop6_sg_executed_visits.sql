@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy="append"
     )}}
-with sdl_pop6_sg_planned_visits as (
+with sdl_pop6_sg_executed_visits as (
     select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_executed_visits') }}
 ),
 final as (

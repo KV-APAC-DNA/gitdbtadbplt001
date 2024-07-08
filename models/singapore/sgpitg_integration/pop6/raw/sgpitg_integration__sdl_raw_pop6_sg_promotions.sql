@@ -9,7 +9,7 @@ with sdl_pop6_sg_promotions as (
 ),
 final as (
 SELECT *
-FROM sdl_pop6_sg_promotion_plans
+FROM sdl_pop6_sg_promotions
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     where crtd_dttm > (select max(crtd_dttm) from {{ this }})
