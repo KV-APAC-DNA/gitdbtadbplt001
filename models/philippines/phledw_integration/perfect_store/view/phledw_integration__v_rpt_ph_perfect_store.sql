@@ -274,7 +274,7 @@ union_1 as 				(
 							) time_dim ON srv_det.createddate = time_dim.cal_date
 						WHERE srv_det.quesclasscode = 1::CHARACTER VARYING::TEXT
 							AND date_part(year, srv_det.createddate::TIMESTAMP WITHOUT TIME zone) >= (date_part(year, convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) - 2::DOUBLE PRECISION)
-						) ,
+						),
 union_2 as 				(
 						
 					SELECT 'Survey_Response' AS dataset
@@ -394,7 +394,7 @@ union_2 as 				(
 						AND srv_det.answerscore::CHARACTER VARYING::TEXT = ques.identifier
 					WHERE srv_det.quesclasscode = '16'::CHARACTER VARYING::TEXT
 						AND srv_det.createddate < '2020-04-27'::DATE
-					),
+					) ,
 union_3 as 			(
 				
 				SELECT 'Survey_Response' AS dataset
@@ -527,7 +527,7 @@ union_3 as 			(
 					AND date_part(year, srv_det.createddate::TIMESTAMP WITHOUT TIME zone)::CHARACTER VARYING::TEXT = market_share.cal_year::TEXT
 				WHERE srv_det.quesclasscode = '16'::CHARACTER VARYING::TEXT
 					AND srv_det.createddate >= '2020-04-27'::DATE
-				)  ,				
+				) ,				
 union_4 as (			
 			
 			SELECT 'Survey_Response' AS dataset
@@ -648,7 +648,7 @@ union_4 as (
 				AND srv_det.quesclasscode <> '12'::CHARACTER VARYING::TEXT
 				AND date_part(year, srv_det.createddate::TIMESTAMP WITHOUT TIME zone) >= (date_part(year, convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) - 2::DOUBLE PRECISION)
 				AND kpi.kpi_name <> 'Promo Compliance'
-			) ,	
+			)  ,	
 union_5 as 	(		
 		SELECT 'Survey_Response' AS dataset
 			,srv_det.branchcode AS customerid
@@ -714,15 +714,12 @@ union_5 as 	(
 				,edw_vw_ph_survey_details.isedesc
 				,edw_vw_ph_survey_details.startdate
 				,edw_vw_ph_survey_details.enddate
-				,CASE 
-    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.*( n\.a| n/a| na| n a|\.n\.a|\.n/a|\.na|\.n a|,n\.a|,n/a|,na|,n a|-n\.a|-n/a|-na|-n a).*')
-        THEN 'na'
-    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '(n\.a |n/a |na |n a |n\.a\.|n/a\.|na\.|n a\.|n\.a,|n/a,|na,|n a,|n\.a-|n/a-|na-|n a-)')
-        THEN 'na'
-    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), 'n\.a|n/a|na|n a')
-        THEN 'na'
-    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.* n/a |not applicable.*')
-        THEN 'na'
+				,
+   CASE
+    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '( n\\.a| n/a| na| n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|-n\\.a|-n/a|-na|-n a|\\)n\\.a|\\)n/a|\\)na|\\)n a)' THEN 'na'
+    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '(n\\.a |n/a |na |n a |n\\.a\\.|n/a\\.|na\\.|n a\\.|n\\.a,|n/a,|na,|n a,|n\\.a-|n/a-|na-|n a-|n\\.a\\(|n/a\\(|na\\(|n a\\()' THEN 'na'
+    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP 'n\\.a|n/a|na|n a' THEN 'na'
+    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP ' n/a |not applicable' THEN 'na'
     ELSE edw_vw_ph_survey_details.answernotes
 END as answernotes
 			FROM edw_vw_ph_survey_details
@@ -731,7 +728,7 @@ END as answernotes
 			SELECT DISTINCT itg_mds_ph_product_hierarchy.franchise_cd
 				,itg_mds_ph_product_hierarchy.franchise_nm
 			FROM itg_mds_ph_product_hierarchy
-			) product ON srv_det.franchisecode::TEXT = product.franchise_cd::TEXT
+			) product ON rtrim(srv_det.franchisecode)::TEXT = rtrim(product.franchise_cd)::TEXT
 		LEFT JOIN (
 			SELECT DISTINCT itg_ph_tbl_isebranchmaster.branchcode
 				,itg_ph_tbl_isebranchmaster.branchname
@@ -741,460 +738,558 @@ END as answernotes
 				,itg_ph_tbl_isebranchmaster.parentname
 				,itg_ph_tbl_isebranchmaster.tradetype
 			FROM itg_ph_tbl_isebranchmaster
-			) branch_master ON srv_det.custcode::TEXT = branch_master.parentcode::TEXT
-			AND srv_det.branchcode::TEXT = branch_master.branchcode::TEXT
+			) branch_master ON rtrim(srv_det.custcode)::TEXT = rtrim(branch_master.parentcode)::TEXT
+			AND rtrim(srv_det.branchcode)::TEXT = rtrim(branch_master.branchcode)::TEXT
 		LEFT JOIN (
 			SELECT DISTINCT itg_mds_ph_ise_weights.iseid
 				,UPPER(trim(itg_mds_ph_ise_weights.kpi::TEXT)) AS kpi
 				,itg_mds_ph_ise_weights.weight / 100::NUMERIC::NUMERIC(18, 0) AS weight
 			FROM itg_mds_ph_ise_weights
 			) weight ON UPPER(trim(srv_det.quesclassdesc::TEXT)) like (('%'::CHARACTER VARYING::TEXT || weight.kpi) || '%'::CHARACTER VARYING::TEXT)
-			AND srv_det.iseid::TEXT = weight.iseid::TEXT
+			AND rtrim(srv_det.iseid)::TEXT = rtrim(weight.iseid)::TEXT
 		LEFT JOIN (
 			SELECT DISTINCT edw_vw_os_time_dim."year"
 				,edw_vw_os_time_dim.mnth_id
 				,edw_vw_os_time_dim.cal_date
 			FROM edw_vw_os_time_dim
-			) time_dim ON srv_det.createddate = time_dim.cal_date
+			) time_dim ON rtrim(srv_det.createddate) = rtrim(time_dim.cal_date)
 		LEFT JOIN (
 			SELECT DISTINCT ph_kpi2data_mapping.data_type
 				,ph_kpi2data_mapping.identifier
 				,ph_kpi2data_mapping.kpi_name
 			FROM ph_kpi2data_mapping
-			WHERE ph_kpi2data_mapping.ctry::TEXT = 'Philippines'::CHARACTER VARYING::TEXT
-				AND ph_kpi2data_mapping.data_type::TEXT = 'KPI'::CHARACTER VARYING::TEXT
-			) kpi ON srv_det.quesclasscode = kpi.identifier::TEXT
+			WHERE rtrim(ph_kpi2data_mapping.ctry)::TEXT = 'Philippines'::CHARACTER VARYING::TEXT
+				AND rtrim(ph_kpi2data_mapping.data_type)::TEXT = 'KPI'::CHARACTER VARYING::TEXT
+			) kpi ON rtrim(srv_det.quesclasscode) = rtrim(kpi.identifier)::TEXT
 		LEFT JOIN (
 			SELECT DISTINCT ph_kpi2data_mapping.data_type
 				,trim(ph_kpi2data_mapping.identifier::TEXT) AS identifier
 				,ph_kpi2data_mapping.kpi_name
 				,ph_kpi2data_mapping.value
 			FROM ph_kpi2data_mapping
-			WHERE ph_kpi2data_mapping.ctry::TEXT = 'Philippines'::CHARACTER VARYING::TEXT
-				AND ph_kpi2data_mapping.data_type::TEXT = 'Yes/No Flag'::CHARACTER VARYING::TEXT
-			) flag ON kpi.kpi_name::TEXT = flag.kpi_name::TEXT
-			AND srv_det.answerscore::CHARACTER VARYING::TEXT = flag.identifier
-		WHERE srv_det.quesclasscode = '12'::CHARACTER VARYING::TEXT
+			WHERE rtrim(ph_kpi2data_mapping.ctry)::TEXT = 'Philippines'::CHARACTER VARYING::TEXT
+				AND rtrim(ph_kpi2data_mapping.data_type)::TEXT = 'Yes/No Flag'::CHARACTER VARYING::TEXT
+			) flag ON rtrim(kpi.kpi_name)::TEXT = rtrim(flag.kpi_name)::TEXT
+			AND rtrim(srv_det.answerscore)::CHARACTER VARYING::TEXT = rtrim(flag.identifier)
+		WHERE rtrim(srv_det.quesclasscode) = '12'::CHARACTER VARYING::TEXT
 			AND date_part(year, srv_det.createddate::TIMESTAMP WITHOUT TIME zone) >= (date_part(year, convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) - 2::DOUBLE PRECISION)
 			AND (
 				(lower(srv_det.answernotes) != 'na')
 				OR lower(srv_det.answernotes) IS NULL
 				)
-		) ,		
+		) select count(*) from union_5;  ,		
 union_6 as (
-	SELECT 'Merchandising_Response' AS dataset
-	,(ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT)::CHARACTER VARYING AS customerid
-	,NULL AS salespersonid
-	,NULL AS mrch_resp_startdt
-	,NULL AS mrch_resp_enddt
-	,NULL AS survey_enddate
-	,NULL AS questiontext
-	,NULL AS value
-	,'true' AS mustcarryitem
-	,NULL AS answerscore
-	,CASE 
-		WHEN ippmo.osa_flag::TEXT = '1'::CHARACTER VARYING::TEXT
-			OR ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
-			THEN 'true'::CHARACTER VARYING
-		ELSE 'false'::CHARACTER VARYING
-		END AS presence
-	,CASE 
-		WHEN ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
-			THEN 'true'::CHARACTER VARYING
-		ELSE ''::CHARACTER VARYING
-		END AS outofstock
-	,'MSL Compliance' AS kpi
-	,ippmo.osa_check_date AS scheduleddate
-	,'completed' AS vst_status
-	,evotd."year" AS fisc_yr
-	,evotd.mnth_id::CHARACTER VARYING AS fisc_per
-	,('(Non-ISE) '::CHARACTER VARYING::TEXT || ippmo.team_leader::TEXT)::CHARACTER VARYING AS firstname
-	,'' AS lastname
-	,(ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT || ' - '::CHARACTER VARYING::TEXT || ippmo.brnch_nm::TEXT)::CHARACTER VARYING AS customername
-	,'Philippines' AS country
-	,cust.parentcustomername AS storereference
-	,ippmo.channeldesc AS storetype
-	,cust.rpt_grp_1_desc AS channel
-	,(cust.parentcustomername::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.ret_nm_prefix::TEXT)::CHARACTER VARYING AS salesgroup
-	,implp.scard_franchise_desc AS prod_hier_l3
-	,implp.scard_brand_desc AS prod_hier_l4
-	,implp.scard_varient_desc AS prod_hier_l5
-	,implp.scard_put_up_desc AS prod_hier_l6
-	,NULL AS category
-	,NULL AS segment
-	,ippmo.weight AS kpi_chnl_wt
-	,NULL AS mkt_share
-	,NULL AS ques_desc
-	,NULL AS "y/n_flag" FROM (
-	SELECT a.channeldesc
-		,b.ret_nm_prefix
-		,b.retailer_name
-		,b.team_leader
-		,b.branch_code
-		,b.brnch_nm
-		,b.scard_franchise_cd
-		,b.scard_franchise_desc
-		,b.scard_brand_cd
-		,b.scard_brand_desc
-		,a.brand
-		,b.scard_put_up_cd
-		,b.scard_put_up_desc
-		,b.barcode
-		,b.sku_code
-		,b.item_description
-		,b.osa_check_date
-		,a.msl_flag
-		,b.osa_flag
-		,b.weight
-	FROM (
-		SELECT DISTINCT b.startdate
-			,b.enddate
-			,a.iseid
-			,a.quesno
-			,a.quesclassdesc
-			,c.answerseq
-			,b.channelcode
-			,b.channeldesc
-			,b.isedesc
-			,a.franchisecode
-			,a.franchisedesc
-			,c.brandid
-			,c.brand
-			,c.putupid
-			,c.putupdesc
-			,a.product_flag AS msl_flag
-		FROM itg_ph_tbl_surveyisequestion a
-		LEFT JOIN itg_ph_tbl_surveyisehdr b ON a.iseid::TEXT = b.iseid::TEXT
-		JOIN itg_ph_tbl_surveychoices c ON b.iseid::TEXT = c.iseid::TEXT
-			AND a.quesno = c.quesno
-		JOIN itg_mds_ph_product_hierarchy e ON e.franchise_cd::TEXT = a.franchisecode::TEXT
-			AND e.brand_cd::TEXT = c.brandid::TEXT
-			AND e.ph_ref_repvarputup_cd::TEXT = c.putupid::TEXT
-		JOIN itg_mds_ph_lav_product i ON i.scard_put_up_cd::TEXT = e.ph_ref_repvarputup_cd::TEXT
-			AND e.brand_cd::TEXT = i.scard_brand_cd::TEXT
-			AND e.franchise_cd::TEXT = i.scard_franchise_cd::TEXT
-		WHERE upper(a.quesclassdesc::TEXT) = 'MUST CARRY LIST'::CHARACTER VARYING::TEXT
-			AND a.product_flag = 1
-			AND upper(i.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-		) a
-	LEFT JOIN (
-		SELECT a.team_leader
-			,a.ret_nm_prefix
-			,a.retailer_name
-			,a.branch_code
-			,c.brnch_nm
-			,c.store_mtrx
-			,b.scard_franchise_cd
-			,b.scard_franchise_desc
-			,b.scard_brand_cd
-			,b.scard_brand_desc
-			,b.scard_put_up_cd
-			,b.scard_put_up_desc
-			,a.barcode
-			,a.sku_code
-			,a.item_description
-			,a.osa_check_date
-			,a.osa_flag
-			,(
-				SELECT DISTINCT itg_ph_non_ise_weights.weight
-				FROM itg_ph_non_ise_weights
-				WHERE upper(itg_ph_non_ise_weights.kpi::TEXT) = 'MSL COMPLIANCE'::CHARACTER VARYING::TEXT
-				) AS weight
-		FROM itg_ph_non_ise_msl_osa a
-		LEFT JOIN (
-			SELECT DISTINCT itg_mds_ph_lav_product.item_cd
-				,itg_mds_ph_lav_product.scard_franchise_cd
-				,itg_mds_ph_lav_product.scard_franchise_desc
-				,itg_mds_ph_lav_product.scard_brand_cd
-				,itg_mds_ph_lav_product.scard_brand_desc
-				,itg_mds_ph_lav_product.scard_put_up_cd
-				,itg_mds_ph_lav_product.scard_put_up_desc
-			FROM itg_mds_ph_lav_product
-			WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-			) b ON ltrim(a.sku_code::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(b.item_cd::TEXT, '0'::CHARACTER VARYING::TEXT)
-		LEFT JOIN (
-			SELECT DISTINCT ltrim(itg_mds_ph_pos_customers.brnch_cd::TEXT, '0'::CHARACTER VARYING::TEXT) AS brnch_cd
-				,upper(itg_mds_ph_pos_customers.cust_cd::TEXT) AS cust_cd
-				,itg_mds_ph_pos_customers.brnch_nm
-				,itg_mds_ph_pos_customers.store_mtrx
-			FROM itg_mds_ph_pos_customers
-			WHERE upper(itg_mds_ph_pos_customers.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-			) c ON upper(c.brnch_cd) = upper(a.branch_code::TEXT)
-			AND upper(c.cust_cd) = upper(a.ret_nm_prefix::TEXT)
-		) b ON upper(b.store_mtrx::TEXT) = upper(a.channeldesc::TEXT)
-		AND a.franchisecode::TEXT = b.scard_franchise_cd::TEXT
-		AND a.brandid::TEXT = b.scard_brand_cd::TEXT
-		AND a.putupid::TEXT = b.scard_put_up_cd::TEXT
-		AND b.osa_check_date >= a.startdate
-		AND b.osa_check_date <= a.enddate
-	) ippmo LEFT JOIN (
-	SELECT DISTINCT itg_mds_ph_lav_product.item_cd
-		,itg_mds_ph_lav_product.scard_franchise_desc
-		,itg_mds_ph_lav_product.scard_brand_desc
-		,itg_mds_ph_lav_product.scard_varient_desc
-		,itg_mds_ph_lav_product.scard_put_up_desc
-	FROM itg_mds_ph_lav_product
-	WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-	) implp ON ltrim(implp.item_cd::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(ippmo.sku_code::TEXT, '0'::CHARACTER VARYING::TEXT) LEFT JOIN (
-	SELECT DISTINCT itg_ph_ps_retailer_soldto_map.retailer_name
-		,itg_ph_ps_retailer_soldto_map.sold_to
-	FROM itg_ph_ps_retailer_soldto_map
-	) ipprsm ON upper(trim(ipprsm.retailer_name::TEXT)) = upper(trim(ippmo.retailer_name::TEXT)) LEFT JOIN (
-	SELECT impip.soldtocode
-		,impip.parentcustomername
-		,imprpc.rpt_grp_12_desc
-		,imprpc.rpt_grp_1_desc
-	FROM (
-		SELECT DISTINCT itg_mds_ph_ise_parent.soldtocode
-			,itg_mds_ph_ise_parent.parentcustomercode
-			,itg_mds_ph_ise_parent.parentcustomername
-		FROM itg_mds_ph_ise_parent
-		) impip
-	LEFT JOIN (
-		SELECT DISTINCT itg_mds_ph_ref_parent_customer.parent_cust_cd
-			,itg_mds_ph_ref_parent_customer.rpt_grp_12_desc
-			,itg_mds_ph_ref_parent_customer.rpt_grp_1_desc
-		FROM itg_mds_ph_ref_parent_customer
-		WHERE upper(itg_mds_ph_ref_parent_customer.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-		) imprpc ON impip.parentcustomercode::TEXT = imprpc.parent_cust_cd::TEXT
-	) cust ON ipprsm.sold_to::TEXT = cust.soldtocode::TEXT LEFT JOIN (
-	SELECT DISTINCT edw_vw_os_time_dim."year"
-		,edw_vw_os_time_dim.mnth_id
-		,edw_vw_os_time_dim.cal_date
-	FROM edw_vw_os_time_dim
-	) evotd ON ippmo.osa_check_date = evotd.cal_date WHERE date_part(year, ippmo.osa_check_date::TIMESTAMP without TIME zone) >= (date_part(year, convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) - 2::DOUBLE PRECISION)
-	
-
-UNION ALL
-
-SELECT 'Merchandising_Response' AS dataset
-	,(ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT)::CHARACTER VARYING AS customerid
-	,NULL AS salespersonid
-	,NULL AS mrch_resp_startdt
-	,NULL AS mrch_resp_enddt
-	,NULL AS survey_enddate
-	,NULL AS questiontext
-	,NULL AS value
-	,'true' AS mustcarryitem
-	,NULL AS answerscore
-	,'true' AS presence
-	,CASE 
-		WHEN ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
-			THEN 'true'::CHARACTER VARYING
-		ELSE ''::CHARACTER VARYING
-		END AS outofstock
-	,'OOS Compliance' AS kpi
-	,ippmo.osa_check_date AS scheduleddate
-	,'completed' AS vst_status
-	,evotd."year" AS fisc_yr
-	,evotd.mnth_id::CHARACTER VARYING AS fisc_per
-	,('(Non-ISE) '::CHARACTER VARYING::TEXT || ippmo.team_leader::TEXT)::CHARACTER VARYING AS firstname
-	,'' AS lastname
-	,(ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT || ' - '::CHARACTER VARYING::TEXT || ippmo.brnch_nm::TEXT)::CHARACTER VARYING AS customername
-	,'Philippines' AS country
-	,cust.parentcustomername AS storereference
-	,ippmo.channeldesc AS storetype
-	,cust.rpt_grp_1_desc AS channel
-	,(cust.parentcustomername::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.ret_nm_prefix::TEXT)::CHARACTER VARYING AS salesgroup
-	,implp.scard_franchise_desc AS prod_hier_l3
-	,implp.scard_brand_desc AS prod_hier_l4
-	,implp.scard_varient_desc AS prod_hier_l5
-	,implp.scard_put_up_desc AS prod_hier_l6
-	,NULL AS category
-	,NULL AS segment
-	,ippmo.weight AS kpi_chnl_wt
-	,NULL AS mkt_share
-	,NULL AS ques_desc
-	,NULL AS "y/n_flag"
+SELECT 'Merchandising_Response' AS dataset,
+        (ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT)::CHARACTER VARYING AS customerid,
+        NULL AS salespersonid,
+        NULL AS mrch_resp_startdt,
+        NULL AS mrch_resp_enddt,
+        NULL AS survey_enddate,
+        NULL AS questiontext,
+        NULL AS value,
+        'true' AS mustcarryitem,
+        NULL AS answerscore,
+        CASE 
+                WHEN ippmo.osa_flag::TEXT = '1'::CHARACTER VARYING::TEXT
+                        OR ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
+                        THEN 'true'::CHARACTER VARYING
+                ELSE 'false'::CHARACTER VARYING
+                END AS presence,
+        CASE 
+                WHEN ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
+                        THEN 'true'::CHARACTER VARYING
+                ELSE ''::CHARACTER VARYING
+                END AS outofstock,
+        'MSL Compliance' AS kpi,
+        ippmo.osa_check_date AS scheduleddate,
+        'completed' AS vst_status,
+        evotd."year" AS fisc_yr,
+        evotd.mnth_id::CHARACTER VARYING AS fisc_per,
+        ('(Non-ISE) '::CHARACTER VARYING::TEXT || ippmo.team_leader::TEXT)::CHARACTER VARYING AS firstname,
+        '' AS lastname,
+        (ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT || ' - '::CHARACTER VARYING::TEXT || ippmo.brnch_nm::TEXT)::CHARACTER VARYING AS customername,
+        'Philippines' AS country,
+        cust.parentcustomername AS storereference,
+        ippmo.channeldesc AS storetype,
+        cust.rpt_grp_1_desc AS channel,
+        (cust.parentcustomername::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.ret_nm_prefix::TEXT)::CHARACTER VARYING AS salesgroup,
+        implp.scard_franchise_desc AS prod_hier_l3,
+        implp.scard_brand_desc AS prod_hier_l4,
+        implp.scard_varient_desc AS prod_hier_l5,
+        implp.scard_put_up_desc AS prod_hier_l6,
+        NULL AS category,
+        NULL AS segment,
+        ippmo.weight AS kpi_chnl_wt,
+        NULL AS mkt_share,
+        NULL AS ques_desc,
+        NULL AS "y/n_flag"
 FROM (
-	SELECT a.channeldesc
-		,b.ret_nm_prefix
-		,b.retailer_name
-		,b.team_leader
-		,b.branch_code
-		,b.brnch_nm
-		,b.scard_franchise_cd
-		,b.scard_franchise_desc
-		,b.scard_brand_cd
-		,b.scard_brand_desc
-		,a.brand
-		,b.scard_put_up_cd
-		,b.scard_put_up_desc
-		,b.barcode
-		,b.sku_code
-		,b.item_description
-		,b.osa_check_date
-		,a.msl_flag
-		,b.osa_flag
-		,b.weight
-	FROM (
-		SELECT DISTINCT b.startdate
-			,b.enddate
-			,a.iseid
-			,a.quesno
-			,a.quesclassdesc
-			,c.answerseq
-			,b.channelcode
-			,b.channeldesc
-			,b.isedesc
-			,a.franchisecode
-			,a.franchisedesc
-			,c.brandid
-			,c.brand
-			,c.putupid
-			,c.putupdesc
-			,a.product_flag AS msl_flag
-		FROM itg_ph_tbl_surveyisequestion a
-		LEFT JOIN itg_ph_tbl_surveyisehdr b ON a.iseid::TEXT = b.iseid::TEXT
-		JOIN itg_ph_tbl_surveychoices c ON b.iseid::TEXT = c.iseid::TEXT
-			AND a.quesno = c.quesno
-		JOIN itg_mds_ph_product_hierarchy e ON e.franchise_cd::TEXT = a.franchisecode::TEXT
-			AND e.brand_cd::TEXT = c.brandid::TEXT
-			AND e.ph_ref_repvarputup_cd::TEXT = c.putupid::TEXT
-		JOIN itg_mds_ph_lav_product i ON i.scard_put_up_cd::TEXT = e.ph_ref_repvarputup_cd::TEXT
-			AND e.brand_cd::TEXT = i.scard_brand_cd::TEXT
-			AND e.franchise_cd::TEXT = i.scard_franchise_cd::TEXT
-		WHERE upper(a.quesclassdesc::TEXT) = 'MUST CARRY LIST'::CHARACTER VARYING::TEXT
-			AND a.product_flag = 1
-			AND upper(i.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-		) a
-	LEFT JOIN (
-		SELECT a.team_leader
-			,a.ret_nm_prefix
-			,a.retailer_name
-			,a.branch_code
-			,c.brnch_nm
-			,c.store_mtrx
-			,b.scard_franchise_cd
-			,b.scard_franchise_desc
-			,b.scard_brand_cd
-			,b.scard_brand_desc
-			,b.scard_put_up_cd
-			,b.scard_put_up_desc
-			,a.barcode
-			,a.sku_code
-			,a.item_description
-			,a.osa_check_date
-			,a.osa_flag
-			,(
-				SELECT DISTINCT itg_ph_non_ise_weights.weight
-				FROM itg_ph_non_ise_weights
-				WHERE upper(itg_ph_non_ise_weights.kpi::TEXT) = 'OOS COMPLIANCE'::CHARACTER VARYING::TEXT
-				) AS weight
-		FROM itg_ph_non_ise_msl_osa a
-		LEFT JOIN (
-			SELECT DISTINCT itg_mds_ph_lav_product.item_cd
-				,itg_mds_ph_lav_product.scard_franchise_cd
-				,itg_mds_ph_lav_product.scard_franchise_desc
-				,itg_mds_ph_lav_product.scard_brand_cd
-				,itg_mds_ph_lav_product.scard_brand_desc
-				,itg_mds_ph_lav_product.scard_put_up_cd
-				,itg_mds_ph_lav_product.scard_put_up_desc
-			FROM itg_mds_ph_lav_product
-			WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-			) b ON ltrim(a.sku_code::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(b.item_cd::TEXT, '0'::CHARACTER VARYING::TEXT)
-		LEFT JOIN (
-			SELECT DISTINCT ltrim(itg_mds_ph_pos_customers.brnch_cd::TEXT, '0'::CHARACTER VARYING::TEXT) AS brnch_cd
-				,upper(itg_mds_ph_pos_customers.cust_cd::TEXT) AS cust_cd
-				,itg_mds_ph_pos_customers.brnch_nm
-				,itg_mds_ph_pos_customers.store_mtrx
-			FROM itg_mds_ph_pos_customers
-			WHERE upper(itg_mds_ph_pos_customers.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-			) c ON upper(c.brnch_cd) = upper(a.branch_code::TEXT)
-			AND upper(c.cust_cd) = upper(a.ret_nm_prefix::TEXT)
-		) b ON upper(b.store_mtrx::TEXT) = upper(a.channeldesc::TEXT)
-		AND a.franchisecode::TEXT = b.scard_franchise_cd::TEXT
-		AND a.brandid::TEXT = b.scard_brand_cd::TEXT
-		AND a.putupid::TEXT = b.scard_put_up_cd::TEXT
-		AND b.osa_check_date >= a.startdate
-		AND b.osa_check_date <= a.enddate
-	) ippmo
+        SELECT a.channeldesc,
+                b.ret_nm_prefix,
+                b.retailer_name,
+                b.team_leader,
+                b.branch_code,
+                b.brnch_nm,
+                b.scard_franchise_cd,
+                b.scard_franchise_desc,
+                b.scard_brand_cd,
+                b.scard_brand_desc,
+                a.brand,
+                b.scard_put_up_cd,
+                b.scard_put_up_desc,
+                b.barcode,
+                b.sku_code,
+                b.item_description,
+                b.osa_check_date,
+                a.msl_flag,
+                b.osa_flag,
+                b.weight
+        FROM (
+                SELECT DISTINCT b.startdate,
+                        b.enddate,
+                        a.iseid,
+                        a.quesno,
+                        a.quesclassdesc,
+                        c.answerseq,
+                        b.channelcode,
+                        b.channeldesc,
+                        b.isedesc,
+                        a.franchisecode,
+                        a.franchisedesc,
+                        c.brandid,
+                        c.brand,
+                        c.putupid,
+                        c.putupdesc,
+                        a.product_flag AS msl_flag
+                FROM itg_ph_tbl_surveyisequestion a
+                LEFT JOIN itg_ph_tbl_surveyisehdr b ON rtrim(a.iseid)::TEXT = rtrim(b.iseid)::TEXT
+                JOIN itg_ph_tbl_surveychoices c ON rtrim(b.iseid)::TEXT = rtrim(c.iseid)::TEXT
+                        AND a.quesno = c.quesno
+                JOIN itg_mds_ph_product_hierarchy e ON rtrim(e.franchise_cd)::TEXT = rtrim(a.franchisecode)::TEXT
+                        AND rtrim(e.brand_cd)::TEXT = rtrim(c.brandid)::TEXT
+                        AND rtrim(e.ph_ref_repvarputup_cd)::TEXT = rtrim(c.putupid)::TEXT
+                JOIN itg_mds_ph_lav_product i ON rtrim(i.scard_put_up_cd)::TEXT = rtrim(e.ph_ref_repvarputup_cd)::TEXT
+                        AND rtrim(e.brand_cd)::TEXT = rtrim(i.scard_brand_cd)::TEXT
+                        AND rtrim(e.franchise_cd)::TEXT = rtrim(i.scard_franchise_cd)::TEXT
+                WHERE upper(rtrim(a.quesclassdesc)::TEXT) = 'MUST CARRY LIST'::CHARACTER VARYING::TEXT
+                        AND a.product_flag = 1
+                        AND upper(rtrim(i.active)::TEXT) = 'Y'::CHARACTER VARYING::TEXT
+                ) a
+        LEFT JOIN (
+                SELECT a.team_leader,
+                        a.ret_nm_prefix,
+                        a.retailer_name,
+                        a.branch_code,
+                        c.brnch_nm,
+                        c.store_mtrx,
+                        b.scard_franchise_cd,
+                        b.scard_franchise_desc,
+                        b.scard_brand_cd,
+                        b.scard_brand_desc,
+                        b.scard_put_up_cd,
+                        b.scard_put_up_desc,
+                        a.barcode,
+                        a.sku_code,
+                        a.item_description,
+                        a.osa_check_date,
+                        a.osa_flag,
+                        (
+                                SELECT DISTINCT itg_ph_non_ise_weights.weight
+                                FROM itg_ph_non_ise_weights
+                                WHERE upper(itg_ph_non_ise_weights.kpi::TEXT) = 'MSL COMPLIANCE'::CHARACTER VARYING::TEXT
+                                ) AS weight
+                FROM itg_ph_non_ise_msl_osa a
+                LEFT JOIN (
+                        SELECT DISTINCT itg_mds_ph_lav_product.item_cd,
+                                itg_mds_ph_lav_product.scard_franchise_cd,
+                                itg_mds_ph_lav_product.scard_franchise_desc,
+                                itg_mds_ph_lav_product.scard_brand_cd,
+                                itg_mds_ph_lav_product.scard_brand_desc,
+                                itg_mds_ph_lav_product.scard_put_up_cd,
+                                itg_mds_ph_lav_product.scard_put_up_desc
+                        FROM itg_mds_ph_lav_product
+                        WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
+                        ) b ON ltrim(rtrim(a.sku_code)::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(rtrim(b.item_cd)::TEXT, '0'::CHARACTER VARYING::TEXT)
+                LEFT JOIN (
+                        SELECT DISTINCT ltrim(itg_mds_ph_pos_customers.brnch_cd::TEXT, '0'::CHARACTER VARYING::TEXT) AS brnch_cd,
+                                upper(itg_mds_ph_pos_customers.cust_cd::TEXT) AS cust_cd,
+                                itg_mds_ph_pos_customers.brnch_nm,
+                                itg_mds_ph_pos_customers.store_mtrx
+                        FROM itg_mds_ph_pos_customers
+                        WHERE upper(rtrim(itg_mds_ph_pos_customers.active)::TEXT) = 'Y'::CHARACTER VARYING::TEXT
+                        ) c ON upper(rtrim(c.brnch_cd)) = upper(rtrim(a.branch_code)::TEXT)
+                        AND upper(rtrim(c.cust_cd)) = upper(rtrim(a.ret_nm_prefix)::TEXT)
+                ) b ON upper(rtrim(b.store_mtrx)::TEXT) = upper(rtrim(a.channeldesc)::TEXT)
+                AND rtrim(a.franchisecode)::TEXT = rtrim(b.scard_franchise_cd)::TEXT
+                AND rtrim(a.brandid)::TEXT = rtrim(b.scard_brand_cd)::TEXT
+                AND rtrim(a.putupid)::TEXT = rtrim(b.scard_put_up_cd)::TEXT
+                AND b.osa_check_date >= a.startdate
+                AND b.osa_check_date <= a.enddate
+        ) ippmo
 LEFT JOIN (
-	SELECT DISTINCT itg_mds_ph_lav_product.item_cd
-		,itg_mds_ph_lav_product.scard_franchise_desc
-		,itg_mds_ph_lav_product.scard_brand_desc
-		,itg_mds_ph_lav_product.scard_varient_desc
-		,itg_mds_ph_lav_product.scard_put_up_desc
-	FROM itg_mds_ph_lav_product
-	WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-	) implp ON ltrim(implp.item_cd::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(ippmo.sku_code::TEXT, '0'::CHARACTER VARYING::TEXT)
+        SELECT DISTINCT itg_mds_ph_lav_product.item_cd,
+                itg_mds_ph_lav_product.scard_franchise_desc,
+                itg_mds_ph_lav_product.scard_brand_desc,
+                itg_mds_ph_lav_product.scard_varient_desc,
+                itg_mds_ph_lav_product.scard_put_up_desc
+        FROM itg_mds_ph_lav_product
+        WHERE upper(itg_mds_ph_lav_product.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
+        ) implp ON ltrim(rtrim(implp.item_cd)::TEXT, '0'::CHARACTER VARYING::TEXT) = ltrim(rtrim(ippmo.sku_code)::TEXT, '0'::CHARACTER VARYING::TEXT)
 LEFT JOIN (
-	SELECT DISTINCT itg_ph_ps_retailer_soldto_map.retailer_name
-		,itg_ph_ps_retailer_soldto_map.sold_to
-	FROM itg_ph_ps_retailer_soldto_map
-	) ipprsm ON upper(trim(ipprsm.retailer_name::TEXT)) = upper(trim(ippmo.retailer_name::TEXT))
+        SELECT DISTINCT itg_ph_ps_retailer_soldto_map.retailer_name,
+                itg_ph_ps_retailer_soldto_map.sold_to
+        FROM itg_ph_ps_retailer_soldto_map
+        ) ipprsm ON upper(trim(ipprsm.retailer_name::TEXT)) = upper(trim(ippmo.retailer_name::TEXT))
 LEFT JOIN (
-	SELECT impip.soldtocode
-		,impip.parentcustomername
-		,imprpc.rpt_grp_12_desc
-		,imprpc.rpt_grp_1_desc
-	FROM (
-		SELECT DISTINCT itg_mds_ph_ise_parent.soldtocode
-			,itg_mds_ph_ise_parent.parentcustomercode
-			,itg_mds_ph_ise_parent.parentcustomername
-		FROM itg_mds_ph_ise_parent
-		) impip
-	LEFT JOIN (
-		SELECT DISTINCT itg_mds_ph_ref_parent_customer.parent_cust_cd
-			,itg_mds_ph_ref_parent_customer.rpt_grp_12_desc
-			,itg_mds_ph_ref_parent_customer.rpt_grp_1_desc
-		FROM itg_mds_ph_ref_parent_customer
-		WHERE upper(itg_mds_ph_ref_parent_customer.active::TEXT) = 'Y'::CHARACTER VARYING::TEXT
-		) imprpc ON impip.parentcustomercode::TEXT = imprpc.parent_cust_cd::TEXT
-	) cust ON ipprsm.sold_to::TEXT = cust.soldtocode::TEXT
+        SELECT impip.soldtocode,
+                impip.parentcustomername,
+                imprpc.rpt_grp_12_desc,
+                imprpc.rpt_grp_1_desc
+        FROM (
+                SELECT DISTINCT itg_mds_ph_ise_parent.soldtocode,
+                        itg_mds_ph_ise_parent.parentcustomercode,
+                        itg_mds_ph_ise_parent.parentcustomername
+                FROM itg_mds_ph_ise_parent
+                ) impip
+        LEFT JOIN (
+                SELECT DISTINCT itg_mds_ph_ref_parent_customer.parent_cust_cd,
+                        itg_mds_ph_ref_parent_customer.rpt_grp_12_desc,
+                        itg_mds_ph_ref_parent_customer.rpt_grp_1_desc
+                FROM itg_mds_ph_ref_parent_customer
+                WHERE upper(rtrim(itg_mds_ph_ref_parent_customer.active)::TEXT) = 'Y'::CHARACTER VARYING::TEXT
+                ) imprpc ON rtrim(impip.parentcustomercode)::TEXT = rtrim(imprpc.parent_cust_cd)::TEXT
+        ) cust ON rtrim(ipprsm.sold_to)::TEXT = rtrim(cust.soldtocode)::TEXT
 LEFT JOIN (
-	SELECT DISTINCT edw_vw_os_time_dim."year"
-		,edw_vw_os_time_dim.mnth_id
-		,edw_vw_os_time_dim.cal_date
-	FROM edw_vw_os_time_dim
-	) evotd ON ippmo.osa_check_date = evotd.cal_date
-WHERE (
-		ippmo.osa_flag::TEXT = '1'::CHARACTER VARYING::TEXT
-		OR ippmo.osa_flag::TEXT = '0'::CHARACTER VARYING::TEXT
-		)
-	AND date_part(year, ippmo.osa_check_date::TIMESTAMP without TIME zone) >= (date_part(year, convert_timezone('UTC',current_timestamp())::timestamp_ntz(9)) - 2::DOUBLE PRECISION)
-
-UNION ALL
-
-SELECT dataset
-	,customerid
-	,salespersonid
-	,to_date(mrch_resp_startdt) AS mrch_resp_startdt
-	,to_date(mrch_resp_enddt) AS mrch_resp_enddt
-	,survey_enddate
-	,question_text AS questiontext
-	,cast(value AS VARCHAR) AS value
-	,mustcarryitem
-	,answerscore
-	,presence
-	,outofstock
-	,kpi
-	,scheduleddate
-	,vst_status
-	,fisc_yr
-	,fisc_per
-	,firstname
-	,lastname
-	,customername
-	,country
-	,storereference
-	,store_type AS storetype
-	,channel
-	,salesgroup
-	,prod_hier_l3
-	,prod_hier_l4
-	,prod_hier_l5
-	,prod_hier_l6
-	,category
-	,segment
-	,kpi_chnl_wt
-	,mkt_share
-	,ques_desc
-	,"y/n_flag"
+        SELECT DISTINCT edw_vw_os_time_dim."year",
+                edw_vw_os_time_dim.mnth_id,
+                edw_vw_os_time_dim.cal_date
+        FROM edw_vw_os_time_dim
+        ) evotd ON ippmo.osa_check_date = evotd.cal_date
+WHERE DATE_PART(year, ippmo.osa_check_date::TIMESTAMP without TIME zone) >= (DATE_PART(year, current_timestamp()) - 2::DOUBLE PRECISION) 
+),
+union_7 as (
+  SELECT 
+    'Merchandising_Response' AS dataset, 
+    (
+      ippmo.ret_nm_prefix :: TEXT || '-' :: CHARACTER VARYING :: TEXT || ippmo.branch_code :: TEXT
+    ):: CHARACTER VARYING AS customerid, 
+    NULL AS salespersonid, 
+    NULL AS mrch_resp_startdt, 
+    NULL AS mrch_resp_enddt, 
+    NULL AS survey_enddate, 
+    NULL AS questiontext, 
+    NULL AS value, 
+    'true' AS mustcarryitem, 
+    NULL AS answerscore, 
+    'true' AS presence, 
+    CASE WHEN ippmo.osa_flag :: TEXT = '0' :: CHARACTER VARYING :: TEXT THEN 'true' :: CHARACTER VARYING ELSE '' :: CHARACTER VARYING END AS outofstock, 
+    'OOS Compliance' AS kpi, 
+    ippmo.osa_check_date AS scheduleddate, 
+    'completed' AS vst_status, 
+    evotd."year" AS fisc_yr, 
+    evotd.mnth_id :: CHARACTER VARYING AS fisc_per, 
+    (
+      '(Non-ISE) ' :: CHARACTER VARYING :: TEXT || ippmo.team_leader :: TEXT
+    ):: CHARACTER VARYING AS firstname, 
+    '' AS lastname, 
+    (
+      ippmo.ret_nm_prefix :: TEXT || '-' :: CHARACTER VARYING :: TEXT || ippmo.branch_code :: TEXT || ' - ' :: CHARACTER VARYING :: TEXT || ippmo.brnch_nm :: TEXT
+    ):: CHARACTER VARYING AS customername, 
+    'Philippines' AS country, 
+    cust.parentcustomername AS storereference, 
+    ippmo.channeldesc AS storetype, 
+    cust.rpt_grp_1_desc AS channel, 
+    (
+      cust.parentcustomername :: TEXT || '-' :: CHARACTER VARYING :: TEXT || ippmo.ret_nm_prefix :: TEXT
+    ):: CHARACTER VARYING AS salesgroup, 
+    implp.scard_franchise_desc AS prod_hier_l3, 
+    implp.scard_brand_desc AS prod_hier_l4, 
+    implp.scard_varient_desc AS prod_hier_l5, 
+    implp.scard_put_up_desc AS prod_hier_l6, 
+    NULL AS category, 
+    NULL AS segment, 
+    ippmo.weight AS kpi_chnl_wt, 
+    NULL AS mkt_share, 
+    NULL AS ques_desc, 
+    NULL AS "y/n_flag" 
+  FROM 
+    (
+      SELECT 
+        a.channeldesc, 
+        b.ret_nm_prefix, 
+        b.retailer_name, 
+        b.team_leader, 
+        b.branch_code, 
+        b.brnch_nm, 
+        b.scard_franchise_cd, 
+        b.scard_franchise_desc, 
+        b.scard_brand_cd, 
+        b.scard_brand_desc, 
+        a.brand, 
+        b.scard_put_up_cd, 
+        b.scard_put_up_desc, 
+        b.barcode, 
+        b.sku_code, 
+        b.item_description, 
+        b.osa_check_date, 
+        a.msl_flag, 
+        b.osa_flag, 
+        b.weight 
+      FROM 
+        (
+          SELECT 
+            DISTINCT b.startdate, 
+            b.enddate, 
+            a.iseid, 
+            a.quesno, 
+            a.quesclassdesc, 
+            c.answerseq, 
+            b.channelcode, 
+            b.channeldesc, 
+            b.isedesc, 
+            a.franchisecode, 
+            a.franchisedesc, 
+            c.brandid, 
+            c.brand, 
+            c.putupid, 
+            c.putupdesc, 
+            a.product_flag AS msl_flag 
+          FROM 
+            itg_ph_tbl_surveyisequestion a 
+            LEFT JOIN itg_ph_tbl_surveyisehdr b ON rtrim(a.iseid):: TEXT = rtrim(b.iseid):: TEXT 
+            JOIN itg_ph_tbl_surveychoices c ON rtrim(b.iseid):: TEXT = rtrim(c.iseid):: TEXT 
+            AND rtrim(a.quesno) = rtrim(c.quesno) 
+            JOIN itg_mds_ph_product_hierarchy e ON rtrim(e.franchise_cd):: TEXT = rtrim(a.franchisecode):: TEXT 
+            AND rtrim(e.brand_cd):: TEXT = rtrim(c.brandid):: TEXT 
+            AND rtrim(e.ph_ref_repvarputup_cd):: TEXT = rtrim(c.putupid):: TEXT 
+            JOIN itg_mds_ph_lav_product i ON rtrim(i.scard_put_up_cd):: TEXT = rtrim(e.ph_ref_repvarputup_cd):: TEXT 
+            AND rtrim(e.brand_cd):: TEXT = rtrim(i.scard_brand_cd):: TEXT 
+            AND rtrim(e.franchise_cd):: TEXT = rtrim(i.scard_franchise_cd):: TEXT 
+          WHERE 
+            upper(
+              rtrim(a.quesclassdesc):: TEXT
+            ) = 'MUST CARRY LIST' :: CHARACTER VARYING :: TEXT 
+            AND a.product_flag = 1 
+            AND upper(
+              rtrim(i.active):: TEXT
+            ) = 'Y' :: CHARACTER VARYING :: TEXT
+        ) a 
+        LEFT JOIN (
+          SELECT 
+            a.team_leader, 
+            a.ret_nm_prefix, 
+            a.retailer_name, 
+            a.branch_code, 
+            c.brnch_nm, 
+            c.store_mtrx, 
+            b.scard_franchise_cd, 
+            b.scard_franchise_desc, 
+            b.scard_brand_cd, 
+            b.scard_brand_desc, 
+            b.scard_put_up_cd, 
+            b.scard_put_up_desc, 
+            a.barcode, 
+            a.sku_code, 
+            a.item_description, 
+            a.osa_check_date, 
+            a.osa_flag, 
+            (
+              SELECT 
+                DISTINCT itg_ph_non_ise_weights.weight 
+              FROM 
+                itg_ph_non_ise_weights 
+              WHERE 
+                upper(
+                  itg_ph_non_ise_weights.kpi :: TEXT
+                ) = 'OOS COMPLIANCE' :: CHARACTER VARYING :: TEXT
+            ) AS weight 
+          FROM 
+            itg_ph_non_ise_msl_osa a 
+            LEFT JOIN (
+              SELECT 
+                DISTINCT itg_mds_ph_lav_product.item_cd, 
+                itg_mds_ph_lav_product.scard_franchise_cd, 
+                itg_mds_ph_lav_product.scard_franchise_desc, 
+                itg_mds_ph_lav_product.scard_brand_cd, 
+                itg_mds_ph_lav_product.scard_brand_desc, 
+                itg_mds_ph_lav_product.scard_put_up_cd, 
+                itg_mds_ph_lav_product.scard_put_up_desc 
+              FROM 
+                itg_mds_ph_lav_product 
+              WHERE 
+                upper(
+                  rtrim(itg_mds_ph_lav_product.active):: TEXT
+                ) = 'Y' :: CHARACTER VARYING :: TEXT
+            ) b ON ltrim(
+              rtrim(a.sku_code):: TEXT, 
+              '0' :: CHARACTER VARYING :: TEXT
+            ) = ltrim(
+              rtrim(b.item_cd):: TEXT, 
+              '0' :: CHARACTER VARYING :: TEXT
+            ) 
+            LEFT JOIN (
+              SELECT 
+                DISTINCT ltrim(
+                  itg_mds_ph_pos_customers.brnch_cd :: TEXT, 
+                  '0' :: CHARACTER VARYING :: TEXT
+                ) AS brnch_cd, 
+                upper(
+                  itg_mds_ph_pos_customers.cust_cd :: TEXT
+                ) AS cust_cd, 
+                itg_mds_ph_pos_customers.brnch_nm, 
+                itg_mds_ph_pos_customers.store_mtrx 
+              FROM 
+                itg_mds_ph_pos_customers 
+              WHERE 
+                upper(
+                  rtrim(
+                    itg_mds_ph_pos_customers.active
+                  ):: TEXT
+                ) = 'Y' :: CHARACTER VARYING :: TEXT
+            ) c ON upper(
+              rtrim(c.brnch_cd)
+            ) = upper(
+              rtrim(a.branch_code):: TEXT
+            ) 
+            AND upper(
+              rtrim(c.cust_cd)
+            ) = upper(
+              rtrim(a.ret_nm_prefix :: TEXT)
+            )
+        ) b ON upper(
+          rtrim(b.store_mtrx):: TEXT
+        ) = upper(
+          rtrim(a.channeldesc):: TEXT
+        ) 
+        AND rtrim(a.franchisecode):: TEXT = rtrim(b.scard_franchise_cd):: TEXT 
+        AND rtrim(a.brandid):: TEXT = rtrim(b.scard_brand_cd):: TEXT 
+        AND rtrim(a.putupid):: TEXT = rtrim(b.scard_put_up_cd):: TEXT 
+        AND b.osa_check_date >= a.startdate 
+        AND b.osa_check_date <= a.enddate
+    ) ippmo 
+    LEFT JOIN (
+      SELECT 
+        DISTINCT itg_mds_ph_lav_product.item_cd, 
+        itg_mds_ph_lav_product.scard_franchise_desc, 
+        itg_mds_ph_lav_product.scard_brand_desc, 
+        itg_mds_ph_lav_product.scard_varient_desc, 
+        itg_mds_ph_lav_product.scard_put_up_desc 
+      FROM 
+        itg_mds_ph_lav_product 
+      WHERE 
+        upper(
+          rtrim(itg_mds_ph_lav_product.active):: TEXT
+        ) = 'Y' :: CHARACTER VARYING :: TEXT
+    ) implp ON ltrim(
+      rtrim(implp.item_cd):: TEXT, 
+      '0' :: CHARACTER VARYING :: TEXT
+    ) = ltrim(
+      rtrim(ippmo.sku_code):: TEXT, 
+      '0' :: CHARACTER VARYING :: TEXT
+    ) 
+    LEFT JOIN (
+      SELECT 
+        DISTINCT itg_ph_ps_retailer_soldto_map.retailer_name, 
+        itg_ph_ps_retailer_soldto_map.sold_to 
+      FROM 
+        itg_ph_ps_retailer_soldto_map
+    ) ipprsm ON upper(
+      trim(ipprsm.retailer_name :: TEXT)
+    ) = upper(
+      trim(ippmo.retailer_name :: TEXT)
+    ) 
+    LEFT JOIN (
+      SELECT 
+        impip.soldtocode, 
+        impip.parentcustomername, 
+        imprpc.rpt_grp_12_desc, 
+        imprpc.rpt_grp_1_desc 
+      FROM 
+        (
+          SELECT 
+            DISTINCT itg_mds_ph_ise_parent.soldtocode, 
+            itg_mds_ph_ise_parent.parentcustomercode, 
+            itg_mds_ph_ise_parent.parentcustomername 
+          FROM 
+            itg_mds_ph_ise_parent
+        ) impip 
+        LEFT JOIN (
+          SELECT 
+            DISTINCT itg_mds_ph_ref_parent_customer.parent_cust_cd, 
+            itg_mds_ph_ref_parent_customer.rpt_grp_12_desc, 
+            itg_mds_ph_ref_parent_customer.rpt_grp_1_desc 
+          FROM 
+            itg_mds_ph_ref_parent_customer 
+          WHERE 
+            upper(
+              rtrim(
+                itg_mds_ph_ref_parent_customer.active
+              ):: TEXT
+            ) = 'Y' :: CHARACTER VARYING :: TEXT
+        ) imprpc ON rtrim(impip.parentcustomercode):: TEXT = rtrim(imprpc.parent_cust_cd):: TEXT
+    ) cust ON rtrim(ipprsm.sold_to):: TEXT = rtrim(cust.soldtocode):: TEXT 
+    LEFT JOIN (
+      SELECT 
+        DISTINCT edw_vw_os_time_dim."year", 
+        edw_vw_os_time_dim.mnth_id, 
+        edw_vw_os_time_dim.cal_date 
+      FROM 
+        edw_vw_os_time_dim
+    ) evotd ON ippmo.osa_check_date = evotd.cal_date 
+  WHERE 
+    (
+      ippmo.osa_flag :: TEXT = '1' :: CHARACTER VARYING :: TEXT 
+      OR ippmo.osa_flag :: TEXT = '0' :: CHARACTER VARYING :: TEXT
+    ) 
+    AND date_part(
+      year, 
+      ippmo.osa_check_date :: TIMESTAMP without TIME zone
+    ) >= (
+      date_part(
+        year, 
+        current_timestamp()
+      ) -2 :: DOUBLE PRECISION
+    )
+),
+union_8 as (
+SELECT dataset,
+        customerid,
+        salespersonid,
+        to_date(mrch_resp_startdt) AS mrch_resp_startdt,
+        to_date(mrch_resp_enddt) AS mrch_resp_enddt,
+        survey_enddate,
+        question_text AS questiontext,
+        cast(value AS VARCHAR) AS value,
+        mustcarryitem,
+        answerscore,
+        presence,
+        outofstock,
+        kpi,
+        scheduleddate,
+        vst_status,
+        fisc_yr,
+        fisc_per,
+        firstname,
+        lastname,
+        customername,
+        country,
+        storereference,
+        store_type AS storetype,
+        channel,
+        salesgroup,
+        prod_hier_l3,
+        prod_hier_l4,
+        prod_hier_l5,
+        prod_hier_l6,
+        category,
+        segment,
+        kpi_chnl_wt,
+        mkt_share,
+        ques_desc,
+        "y/n_flag"
 FROM vw_ph_clobotics_perfect_store
-WHERE date_part(year, scheduleddate) >= (date_part(year, scheduleddate) - 2))
-select * from union_4;
-
+WHERE date_part(year, scheduleddate) >= (date_part(year, scheduleddate) - 2)
+),
 final as (
 select * from union_1
 union all
@@ -1207,7 +1302,9 @@ union all
 select * from union_5
 union all
 select * from union_6
+union all
+select * from union_7
+union all
+select * from union_8
 )
 select * from final
-
-
