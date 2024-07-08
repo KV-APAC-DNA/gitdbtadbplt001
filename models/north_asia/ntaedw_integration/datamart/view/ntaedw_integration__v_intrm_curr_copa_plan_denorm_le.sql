@@ -53,7 +53,7 @@ final as
     COALESCE(prod_hier_l9, '#'::CHARACTER VARYING) AS prod_hier_l9,
     acct_hier_shrt_desc,
     fisc_yr_per,
-    plan_val AS bp_total,
+    plan_val AS le_total,
     from_crncy,
     to_crncy,
     ex_rt

@@ -2,7 +2,7 @@ with source as (
     select * from {{ ref('ntawks_integration__wks_kr_pos_emart_evydy') }}
 ),
 final as (
-    SELECT CAST(SALE_DATE AS DATE) as pos_dt,
+    SELECT to_date(SALE_DATE) as pos_dt,
         NULL as business_cd,
         NULL as comp_nm,
         'ECVAN' as vend_nm,
@@ -16,7 +16,7 @@ final as (
         cast (sale_amnt as numeric(16, 5)) AS sellout_amt,
         NULL as mnth_tot_qty,
         NULL as mnth_tot_amt,
-        sysdate as crtd_dttm
+        convert_timezone('UTC', current_timestamp()) as crtd_dttm
     FROM source
     where mesg_from = 'RSHIN19'
 )

@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: ntasdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: ntasdl_raw
+    schema: snapntasdl_raw
     quoting:
       database: false
       schema: false

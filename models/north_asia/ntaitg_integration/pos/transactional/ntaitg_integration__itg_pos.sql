@@ -24,7 +24,7 @@
                     delete from {{this}} itg_pos where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) in
                     (
                         select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#'))
-                        from {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }}
+                        from {{ ref('ntawks_integration__wks_kr_pos_emart_ecvan') }}
                     )
                     and upper(itg_pos.src_sys_cd) = 'EMART' and upper(itg_pos.ctry_cd) = 'KR';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }} WKS_ITG_POS_EMART_EVYDY where wks_itg_pos_emart_evydy.pos_dt = itg_pos.pos_dt and wks_itg_pos_emart_evydy.ean_num = itg_pos.ean_num and wks_itg_pos_emart_evydy.str_cd = itg_pos.str_cd and wks_itg_pos_emart_evydy.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos_emart_evydy.ctry_cd = itg_pos.ctry_cd and wks_itg_pos_emart_evydy.chng_flg = 'U';
@@ -85,7 +85,7 @@ wks_itg_pos_emart_evydy as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }}
 ),
 wks_kr_pos_emart_ecvan as (
-      select * from {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }}
+      select * from {{ ref('ntawks_integration__wks_kr_pos_emart_ecvan') }}
 )
 {% if var('pos_job_to_execute') == 'tw_pos' %}
 ,
@@ -213,8 +213,8 @@ select * from final
 --         vend_prod_nm,
 --         brnd_nm,
 --         ean_num,
---         str_cd,
---         str_nm,
+--         str_cd::varchar,
+--         str_nm::varchar,
 --         sls_qty,
 --         sls_amt,
 --         unit_prc_amt,
@@ -306,8 +306,8 @@ allretailers as
         vend_prod_nm,
         brnd_nm,
         ean_num,
-        str_cd,
-        str_nm,
+        str_cd::varchar as str_cd,
+        str_nm::varchar as str_nm,
         sls_qty,
         sls_amt,
         unit_prc_amt,
@@ -382,12 +382,14 @@ allretailers as
         order_qty,
         unit_of_pkg_order,
         CASE
-            WHEN CHNG_FLG = 'I' THEN current_timestamp()
-            ELSE TGT_CRT_DTTM
+            WHEN CHNG_FLG = 'I' THEN current_timestamp()::timestamp_ntz(9)
+            ELSE TGT_CRT_DTTM::timestamp_ntz(9)
         END AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     FROM wks_itg_pos
-),
+)
+
+,
 emart_1 as 
 (
     select 
@@ -399,8 +401,8 @@ emart_1 as
         vend_prod_nm,
         brnd_nm,
         ean_num,
-        str_cd,
-        str_nm,
+        str_cd::varchar as str_cd,
+        str_nm::varchar as str_nm,
         sls_qty,
         sls_amt,
         unit_prc_amt,
@@ -475,8 +477,8 @@ emart_1 as
         order_qty,
         unit_of_pkg_order,
         CASE
-            WHEN CHNG_FLG = 'I' THEN current_timestamp()
-            ELSE TGT_CRT_DTTM
+            WHEN CHNG_FLG = 'I' THEN current_timestamp()::timestamp_ntz(9)
+            ELSE TGT_CRT_DTTM::timestamp_ntz(9)
         END AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     FROM wks_itg_pos_emart
@@ -492,8 +494,8 @@ emart_everyday as
         vend_prod_nm,
         brnd_nm,
         ean_num,
-        str_cd,
-        str_nm,
+        str_cd::varchar as str_cd,
+        str_nm::varchar as str_nm,
         sls_qty,
         sls_amt,
         unit_prc_amt,
@@ -568,8 +570,8 @@ emart_everyday as
         order_qty,
         unit_of_pkg_order,
         CASE
-            WHEN CHNG_FLG = 'I' THEN current_timestamp()
-            ELSE TGT_CRT_DTTM
+            WHEN CHNG_FLG = 'I' THEN current_timestamp()::timestamp_ntz(9)
+            ELSE TGT_CRT_DTTM::timestamp_ntz(9)
         END AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     FROM wks_itg_pos_emart_evydy
@@ -579,7 +581,8 @@ emart as
     select * from emart_1 
     union all
     select * from emart_everyday
-),
+)
+,
 emart_ecvan_ssg as 
 (
     select 
@@ -591,8 +594,8 @@ emart_ecvan_ssg as
         vend_prod_nm,
         brnd_nm,
         ean_num,
-        str_cd,
-        str_nm,
+        str_cd::varchar as str_cd,
+        str_nm::varchar as str_nm,
         sls_qty,
         sls_amt,
         unit_prc_amt,
@@ -629,7 +632,7 @@ emart_ecvan_ssg as
         src_mesg_no,
         src_mesg_code,
         src_mesg_func_code,
-        cast(src_mesg_date as date) as src_mesg_date,
+        to_date(src_mesg_date) as src_mesg_date,
         src_sale_date_form,
         src_send_code,
         src_send_ean_code,
@@ -666,10 +669,11 @@ emart_ecvan_ssg as
         unit_of_pkg_comp,
         order_qty,
         unit_of_pkg_order,
-        TGT_CRT_DTTM AS CRT_DTTM,
+        TGT_CRT_DTTM::timestamp_ntz(9) AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     from  wks_itg_pos_emart_ecvan_ssg
-),
+)
+,
 emart_ecvan as 
 (
     select 
@@ -681,8 +685,8 @@ emart_ecvan as
         vend_prod_nm,
         brnd_nm,
         ean_num,
-        str_cd,
-        str_nm,
+        str_cd::varchar as str_cd,
+        str_nm::varchar as str_nm,
         sls_qty,
         sls_amt,
         unit_prc_amt,
@@ -713,13 +717,13 @@ emart_ecvan as
         dist_cd,
         crncy_cd,
         src_txn_sts,
-        CAST(src_seq_num AS INTEGER) AS src_seq_num,
+        src_seq_num AS src_seq_num,
         src_sys_cd,
         ctry_cd,
         src_mesg_no,
         src_mesg_code,
         src_mesg_func_code,
-        cast(src_mesg_date as date) as src_mesg_date,
+        to_date(src_mesg_date) as src_mesg_date,
         src_sale_date_form,
         src_send_code,
         src_send_ean_code,
@@ -744,7 +748,7 @@ emart_ecvan as
         src_qty_unit,
         src_mnth_sale_qty,
         unit_of_pkg_sales,
-        CAST(doc_send_date AS DATE) AS doc_send_date,
+        to_date(doc_send_date) AS doc_send_date,
         unit_of_pkg_invt,
         doc_fun,
         doc_no,
@@ -756,22 +760,21 @@ emart_ecvan as
         unit_of_pkg_comp,
         order_qty,
         unit_of_pkg_order,
-        TGT_CRT_DTTM AS CRT_DTTM,
+        TGT_CRT_DTTM::timestamp_ntz(9) AS CRT_DTTM,
         current_timestamp() AS UPD_DTTM
     from  wks_kr_pos_emart_ecvan
-),
+)
+,
 emart_combined as 
 (
+    select * from emart
+    union all
     select * from emart_ecvan_ssg
     union all
     select * from emart_ecvan
-    union all
-    select * from emart 
-    where pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) not in
-    (
-        select distinct pos_dt || nvl(ean_num, '#') || nvl(str_cd, '#') || upper(nvl(vend_nm, '#')) from emart_ecvan_ssg
-    )
-),
+
+)
+,
 final as 
 (
     select

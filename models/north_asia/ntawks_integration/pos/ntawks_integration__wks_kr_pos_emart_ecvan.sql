@@ -5,7 +5,7 @@ with sdl_kr_pos_emart_ecvan as
 final as
 (   
     SELECT 
-        cast(SRC.pos_dt as date) AS pos_dt,
+        to_date(SRC.pos_dt) AS pos_dt,
         NULL AS vend_cd,
         vend_nm AS vend_nm,
         NULL AS prod_nm,
