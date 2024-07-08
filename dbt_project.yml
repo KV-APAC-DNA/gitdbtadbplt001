@@ -516,3 +516,18 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+# ADDED CHINA AS PART OF RETAIL EXCELLENCE
+    china:
+      config:
+        +enabled: true
+      chnitg_integration:
+        +materialized: table
+        +schema: CHNITG_INTEGRATION
+        +transient: false
+      chnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNEDW_INTEGRATION
+      chnwks_integration:
+        +materialized: table
+        +schema: CHNWKS_INTEGRATION        
