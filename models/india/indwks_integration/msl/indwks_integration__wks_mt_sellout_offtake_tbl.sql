@@ -15,7 +15,7 @@ union1 as(
       ,pos.period::text as period
       ,pos.fisc_year 
       ,pos.fis_month AS fisc_month
-      ,pos.level AS pos_offtake_level
+      ,pos."level" AS pos_offtake_level
       ,pos.account_name
       ,pos.mother_sku_name
       ,pos.brand_name
@@ -41,7 +41,7 @@ union1 as(
     GROUP BY pos.period::text
             ,pos.fisc_year
             ,pos.fis_month
-            ,pos.level
+            ,pos."level"
             ,pos.account_name
             ,pos.mother_sku_name
             ,pos.brand_name
