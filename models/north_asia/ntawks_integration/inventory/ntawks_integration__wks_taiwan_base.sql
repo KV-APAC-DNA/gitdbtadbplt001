@@ -36,7 +36,7 @@ AS (
 edw_vw_tw_pos_inventory
 AS (
     SELECT *
-    FROM {{ref('mysedw_integration__edw_vw_my_pos_inventory')}}
+    FROM {{ref('ntaedw_integration__edw_vw_tw_pos_inventory')}}
     ),
 EDW_VW_OS_TIME_DIM
 AS (
