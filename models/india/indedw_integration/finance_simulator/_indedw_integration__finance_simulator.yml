@@ -3,5 +3,5 @@ version: 2
 models:
   - name: indedw_integration__edw_rpt_finance_simulator
     config:
-      alias: edw_retailer_geocoordinates
+      alias: edw_rpt_finance_simulator
       tags: ["in_finance_simulator_datamart","transformation"]
