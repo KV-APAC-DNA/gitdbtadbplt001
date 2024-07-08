@@ -5,7 +5,7 @@ wks_mt_paramet_accounts as(
     select * from {{ ref('indwks_integration__wks_mt_paramet_accounts') }}
 ),
 edw_ecommerce_offtake as(
-    select * from {{ source('indedw_integration', 'edw_ecommerce_offtake') }}
+    select * from {{ ref('indedw_integration__edw_ecommerce_offtake') }}
 ),
 edw_product_dim as(
     select * from {{ ref('indedw_integration__edw_product_dim') }}

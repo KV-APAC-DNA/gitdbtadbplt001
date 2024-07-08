@@ -16,7 +16,7 @@ itg_mds_in_key_accounts_mapping as
 ),
 edw_ecommerce_offtake as
 (
-    select * from {{ source('indedw_integration', 'edw_ecommerce_offtake') }}
+    select * from {{ ref('indedw_integration__edw_ecommerce_offtake') }}
 ),
 itg_mds_in_key_accounts_mapping_offtake_upd as
 (
