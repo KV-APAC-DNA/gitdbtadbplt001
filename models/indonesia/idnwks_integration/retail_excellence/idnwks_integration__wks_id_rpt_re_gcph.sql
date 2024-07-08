@@ -4,7 +4,7 @@ with wks_id_rpt_re as (
 ),
 
 --final cte
-wks_rpt_re_gcph as (
+wks_rpt_id_re_gcph as (
     SELECT jj_YR,
        jj_mnth_id,
        "cluster",
@@ -351,171 +351,171 @@ FROM (SELECT MAIN.jj_YR,
 
 final as (
     select 
-    jj_yr::varchar(16)
-    jj_mnth_id::numeric(18)
-    cluster::varchar(100)
-    market::varchar(50)
-    data_src::varchar(8)
-    channel_name::varchar(150)
-    soldto_code::varchar(255)
-    distributor_code::varchar(100)
-    distributor_name::varchar(356)
-    sell_out_channel::varchar(150)
-    store_type::varchar(150)
-    prioritization_segmentation::varchar(1)
-    store_category::varchar(1)
-    store_code::varchar(100)
-    store_name::varchar(601)
-    store_grade::varchar(20)
-    store_size::varchar(1)
-    region::varchar(150)
-    zone_name::varchar(150)
-    city::varchar(2)
-    rtrlatitude::varchar(1)
-    rtrlongitude::varchar(1)
-    customer_segment_key::varchar(12)
-    customer_segment_description::varchar(50)
-    retail_environment::varchar(150)
-    sap_customer_channel_key::varchar(12)
-    sap_customer_channel_description::varchar(112)
-    sap_customer_sub_channel_key::varchar(12)
-    sap_sub_channel_description::varchar(112)
-    sap_parent_customer_key::varchar(12)
-    sap_parent_customer_description::varchar(112)
-    sap_banner_key::varchar(12)
-    sap_banner_description::varchar(112)
-    sap_banner_format_key::varchar(12)
-    sap_banner_format_description::varchar(112)
-    customer_name::varchar(100)
-    customer_code::varchar(10)
-    product_code::varchar(150)
-    product_name::varchar(150)
-    prod_hier_l1::varchar(50)
-    prod_hier_l2::varchar(1)
-    prod_hier_l3::varchar(50)
-    prod_hier_l4::varchar(50)
-    prod_hier_l5::varchar(1)
-    prod_hier_l6::varchar(62)
-    prod_hier_l7::varchar(1)
-    prod_hier_l8::varchar(1)
-    prod_hier_l9::varchar(1)
-    mapped_sku_cd::varchar(50)
-    sap_prod_sgmt_cd::varchar(18)
-    sap_prod_sgmt_desc::varchar(100)
-    sap_base_prod_desc::varchar(100)
-    sap_mega_brnd_desc::varchar(100)
-    sap_brnd_desc::varchar(100)
-    sap_vrnt_desc::varchar(100)
-    sap_put_up_desc::varchar(100)
-    sap_grp_frnchse_cd::varchar(18)
-    sap_grp_frnchse_desc::varchar(100)
-    sap_frnchse_cd::varchar(18)
-    sap_frnchse_desc::varchar(100)
-    sap_prod_frnchse_cd::varchar(18)
-    sap_prod_frnchse_desc::varchar(100)
-    sap_prod_mjr_cd::varchar(18)
-    sap_prod_mjr_desc::varchar(100)
-    sap_prod_mnr_cd::varchar(18)
-    sap_prod_mnr_desc::varchar(100)
-    sap_prod_hier_cd::varchar(18)
-    sap_prod_hier_desc::varchar(100)
-    pka_franchise_desc::varchar(30)
-    pka_brand_desc::varchar(30)
-    pka_sub_brand_desc::varchar(30)
-    pka_variant_desc::varchar(30)
-    pka_sub_variant_desc::varchar(30)
-    global_product_franchise::varchar(30)
-    global_product_brand::varchar(30)
-    global_product_sub_brand::varchar(100)
-    global_product_variant::varchar(100)
-    global_product_segment::varchar(50)
-    global_product_subsegment::varchar(100)
-    global_product_category::varchar(50)
-    global_product_subcategory::varchar(50)
-    global_put_up_description::varchar(100)
-    pka_product_key::varchar(68)
-    pka_product_key_description::varchar(255)
-    sales_value::numeric(38,6)
-    sales_qty::numeric(38,6)
-    avg_sales_qty::numeric(10,2)
-    sales_value_list_price::numeric(38,12)
-    lm_sales::numeric(38,6)
-    lm_sales_qty::numeric(38,6)
-    lm_avg_sales_qty::numeric(10,2)
-    lm_sales_lp::numeric(38,12)
-    p3m_sales::numeric(38,6)
-    p3m_qty::numeric(38,6)
-    p3m_avg_qty::numeric(38,6)
-    p3m_sales_lp::numeric(38,12)
-    p6m_sales::numeric(38,6)
-    p6m_qty::numeric(38,6)
-    p6m_avg_qty::numeric(38,6)
-    p6m_sales_lp::numeric(38,12)
-    p12m_sales::numeric(38,6)
-    p12m_qty::numeric(38,6)
-    p12m_avg_qty::numeric(38,6)
-    p12m_sales_lp::numeric(38,12)
-    f3m_sales::numeric(38,6)
-    f3m_qty::numeric(38,6)
-    f3m_avg_qty::numeric(38,6)
-    lm_sales_flag::varchar(1)
-    p3m_sales_flag::varchar(1)
-    p6m_sales_flag::varchar(1)
-    p12m_sales_flag::varchar(1)
-    mdp_flag::varchar(1)
-    target_complaince::integer
-    list_price::numeric(38,6)
-    total_sales_lm::numeric(38,6)
-    total_sales_p3m::numeric(38,6)
-    total_sales_p6m::numeric(38,6)
-    total_sales_p12m::numeric(38,6)
-    total_sales_by_store_lm::numeric(38,6)
-    total_sales_by_store_p3m::numeric(38,6)
-    total_sales_by_store_p6m::numeric(38,6)
-    total_sales_by_store_p12m::numeric(38,6)
-    total_sales_by_sku_lm::numeric(38,6)
-    total_sales_by_sku_p3m::numeric(38,6)
-    total_sales_by_sku_p6m::numeric(38,6)
-    total_sales_by_sku_p12m::numeric(38,6)
-    total_sales_lm_lp::numeric(38,12)
-    total_sales_p3m_lp::numeric(38,12)
-    total_sales_p6m_lp::numeric(38,12)
-    total_sales_p12m_lp::numeric(38,12)
-    total_sales_by_store_lm_lp::numeric(38,12)
-    total_sales_by_store_p3m_lp::numeric(38,12)
-    total_sales_by_store_p6m_lp::numeric(38,12)
-    total_sales_by_store_p12m_lp::numeric(38,12)
-    total_sales_by_sku_lm_lp::numeric(38,12)
-    total_sales_by_sku_p3m_lp::numeric(38,12)
-    total_sales_by_sku_p6m_lp::numeric(38,12)
-    total_sales_by_sku_p12m_lp::numeric(38,12)
-    store_contribution_lm::numeric(38,4)
-    sku_contribution_lm::numeric(38,4)
-    size_of_price_lm::numeric(38,14)
-    store_contribution_p3m::numeric(38,4)
-    sku_contribution_p3m::numeric(38,4)
-    size_of_price_p3m::numeric(38,14)
-    store_contribution_p6m::numeric(38,4)
-    sku_contribution_p6m::numeric(38,4)
-    size_of_price_p6m::numeric(38,14)
-    store_contribution_p12m::numeric(38,4)
-    sku_contribution_p12m::numeric(38,4)
-    size_of_price_p12m::numeric(38,14)
-    store_contribution_lm_lp::numeric(38,4)
-    sku_contribution_lm_lp::numeric(38,4)
-    size_of_price_lm_lp::numeric(38,20)
-    store_contribution_p3m_lp::numeric(38,4)
-    sku_contribution_p3m_lp::numeric(38,4)
-    size_of_price_p3m_lp::numeric(38,20)
-    store_contribution_p6m_lp::numeric(38,4)
-    sku_contribution_p6m_lp::numeric(38,4)
-    size_of_price_p6m_lp::numeric(38,20)
-    store_contribution_p12m_lp::numeric(38,4)
-    sku_contribution_p12m_lp::numeric(38,4)
-    size_of_price_p12m_lp::numeric(38,20)
-    customer_agg_dim_key::varchar(32)
-    product_agg_dim_key::varchar(32) 
-    from wks_rpt_re_gcph
+    jj_yr::varchar(16) as jj_yr,
+    jj_mnth_id::numeric(18) as jj_mnth_id,
+    "cluster"::varchar(100) as "cluster",
+    market::varchar(50) as market,
+    data_src::varchar(8) as data_src,
+    channel_name::varchar(150) as channel_name,
+    soldto_code::varchar(255) as soldto_code,
+    distributor_code::varchar(100) as distributor_code,
+    distributor_name::varchar(356) as distributor_name,
+    sell_out_channel::varchar(150) as sell_out_channel,
+    store_type::varchar(150) as store_type,
+    prioritization_segmentation::varchar(1) as prioritization_segmentation,
+    store_category::varchar(1) as store_category,
+    store_code::varchar(100) as store_code,
+    store_name::varchar(601) as store_name,
+    store_grade::varchar(20) as store_grade,
+    store_size::varchar(1) as store_size,
+    region::varchar(150) as region,
+    zone_name::varchar(150) as zone_name,
+    city::varchar(2) as city,
+    rtrlatitude::varchar(1) as rtrlatitude,
+    rtrlongitude::varchar(1) as rtrlongitude,
+    customer_segment_key::varchar(12) as customer_segment_key,
+    customer_segment_description::varchar(50) as customer_segment_description,
+    retail_environment::varchar(150) as retail_environment,
+    sap_customer_channel_key::varchar(12) as sap_customer_channel_key,
+    sap_customer_channel_description::varchar(112) as sap_customer_channel_description,
+    sap_customer_sub_channel_key::varchar(12) as sap_customer_sub_channel_key,
+    sap_sub_channel_description::varchar(112) as sap_sub_channel_description,
+    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
+    sap_parent_customer_description::varchar(112) as sap_parent_customer_description,
+    sap_banner_key::varchar(12) as sap_banner_key,
+    sap_banner_description::varchar(112) as sap_banner_description,
+    sap_banner_format_key::varchar(12) as sap_banner_format_key,
+    sap_banner_format_description::varchar(112) as sap_banner_format_description,
+    customer_name::varchar(100) as customer_name,
+    customer_code::varchar(10) as customer_code,
+    product_code::varchar(150) as product_code,
+    product_name::varchar(150) as product_name,
+    prod_hier_l1::varchar(50) as prod_hier_l1,
+    prod_hier_l2::varchar(1) as prod_hier_l2,
+    prod_hier_l3::varchar(50) as prod_hier_l3,
+    prod_hier_l4::varchar(50) as prod_hier_l4,
+    prod_hier_l5::varchar(1) as prod_hier_l5,
+    prod_hier_l6::varchar(62) as prod_hier_l6,
+    prod_hier_l7::varchar(1) as prod_hier_l7,
+    prod_hier_l8::varchar(1) as prod_hier_l8,
+    prod_hier_l9::varchar(1) as prod_hier_l9,
+    mapped_sku_cd::varchar(50) as mapped_sku_cd,
+    sap_prod_sgmt_cd::varchar(18) as sap_prod_sgmt_cd,
+    sap_prod_sgmt_desc::varchar(100) as sap_prod_sgmt_desc,
+    sap_base_prod_desc::varchar(100) as sap_base_prod_desc,
+    sap_mega_brnd_desc::varchar(100) as sap_mega_brnd_desc,
+    sap_brnd_desc::varchar(100) as sap_brnd_desc,
+    sap_vrnt_desc::varchar(100) as sap_vrnt_desc,
+    sap_put_up_desc::varchar(100) as sap_put_up_desc,
+    sap_grp_frnchse_cd::varchar(18) as sap_grp_frnchse_cd,
+    sap_grp_frnchse_desc::varchar(100) as sap_grp_frnchse_desc,
+    sap_frnchse_cd::varchar(18) as sap_frnchse_cd,
+    sap_frnchse_desc::varchar(100) as sap_frnchse_desc,
+    sap_prod_frnchse_cd::varchar(18) as sap_prod_frnchse_cd,
+    sap_prod_frnchse_desc::varchar(100) as sap_prod_frnchse_desc,
+    sap_prod_mjr_cd::varchar(18) as sap_prod_mjr_cd,
+    sap_prod_mjr_desc::varchar(100) as sap_prod_mjr_desc,
+    sap_prod_mnr_cd::varchar(18) as sap_prod_mnr_cd,
+    sap_prod_mnr_desc::varchar(100) as sap_prod_mnr_desc,
+    sap_prod_hier_cd::varchar(18) as sap_prod_hier_cd,
+    sap_prod_hier_desc::varchar(100) as sap_prod_hier_desc,
+    pka_franchise_desc::varchar(30) as pka_franchise_desc,
+    pka_brand_desc::varchar(30) as pka_brand_desc,
+    pka_sub_brand_desc::varchar(30) as pka_sub_brand_desc,
+    pka_variant_desc::varchar(30) as pka_variant_desc,
+    pka_sub_variant_desc::varchar(30) as pka_sub_variant_desc,
+    global_product_franchise::varchar(30) as global_product_franchise,
+    global_product_brand::varchar(30) as global_product_brand,
+    global_product_sub_brand::varchar(100) as global_product_sub_brand,
+    global_product_variant::varchar(100) as global_product_variant,
+    global_product_segment::varchar(50) as global_product_segment,
+    global_product_subsegment::varchar(100) as global_product_subsegment,
+    global_product_category::varchar(50) as global_product_category,
+    global_product_subcategory::varchar(50) as global_product_subcategory,
+    global_put_up_description::varchar(100) as global_put_up_description,
+    pka_product_key::varchar(68) as pka_product_key,
+    pka_product_key_description::varchar(255) as pka_product_key_description,
+    sales_value::numeric(38,6) as sales_value,
+    sales_qty::numeric(38,6) as sales_qty,
+    avg_sales_qty::numeric(10,2) as avg_sales_qty, 
+    sales_value_list_price::numeric(38,12) as sales_value_list_price,
+    lm_sales::numeric(38,6) as lm_sales,
+    lm_sales_qty::numeric(38,6) as lm_sales_qty,
+    lm_avg_sales_qty::numeric(10,2) as lm_avg_sales_qty,
+    lm_sales_lp::numeric(38,12) as lm_sales_lp,
+    p3m_sales::numeric(38,6) as p3m_sales,
+    p3m_qty::numeric(38,6) as p3m_qty,
+    p3m_avg_qty::numeric(38,6) as p3m_avg_qty,
+    p3m_sales_lp::numeric(38,12) as p3m_sales_lp,
+    p6m_sales::numeric(38,6) as p6m_sales,
+    p6m_qty::numeric(38,6) as p6m_qty,
+    p6m_avg_qty::numeric(38,6) as p6m_avg_qty,
+    p6m_sales_lp::numeric(38,12) as p6m_sales_lp,
+    p12m_sales::numeric(38,6) as p12m_sales,
+    p12m_qty::numeric(38,6) as p12m_qty,
+    p12m_avg_qty::numeric(38,6) as p12m_avg_qty,
+    p12m_sales_lp::numeric(38,12) as p12m_sales_lp,
+    f3m_sales::numeric(38,6) as f3m_sales,
+    f3m_qty::numeric(38,6) as f3m_qty,
+    f3m_avg_qty::numeric(38,6) as f3m_avg_qty,
+    lm_sales_flag::varchar(1) as lm_sales_flag,
+    p3m_sales_flag::varchar(1) as p3m_sales_flag,
+    p6m_sales_flag::varchar(1) as p6m_sales_flag,
+    p12m_sales_flag::varchar(1) as p12m_sales_flag,
+    mdp_flag::varchar(1) as mdp_flag,
+    target_complaince::integer as target_complaince,
+    list_price::numeric(38,6) as list_price,
+    total_sales_lm::numeric(38,6) as total_sales_lm,
+    total_sales_p3m::numeric(38,6) as total_sales_p3m,
+    total_sales_p6m::numeric(38,6) as total_sales_p6m,
+    total_sales_p12m::numeric(38,6) as total_sales_p12m,
+    total_sales_by_store_lm::numeric(38,6) as total_sales_by_store_lm,
+    total_sales_by_store_p3m::numeric(38,6) as total_sales_by_store_p3m,
+    total_sales_by_store_p6m::numeric(38,6) as total_sales_by_store_p6m,
+    total_sales_by_store_p12m::numeric(38,6) as total_sales_by_store_p12m,
+    total_sales_by_sku_lm::numeric(38,6) as total_sales_by_sku_lm,
+    total_sales_by_sku_p3m::numeric(38,6) as total_sales_by_sku_p3m,
+    total_sales_by_sku_p6m::numeric(38,6) as total_sales_by_sku_p6m,
+    total_sales_by_sku_p12m::numeric(38,6) as total_sales_by_sku_p12m,
+    total_sales_lm_lp::numeric(38,12) as total_sales_lm_lp,
+    total_sales_p3m_lp::numeric(38,12) as total_sales_p3m_lp,
+    total_sales_p6m_lp::numeric(38,12) as total_sales_p6m_lp,
+    total_sales_p12m_lp::numeric(38,12) as total_sales_p12m_lp,
+    total_sales_by_store_lm_lp::numeric(38,12) as total_sales_by_store_lm_lp,
+    total_sales_by_store_p3m_lp::numeric(38,12) as total_sales_by_store_p3m_lp,
+    total_sales_by_store_p6m_lp::numeric(38,12) as total_sales_by_store_p6m_lp,
+    total_sales_by_store_p12m_lp::numeric(38,12) as total_sales_by_store_p12m_lp,
+    total_sales_by_sku_lm_lp::numeric(38,12) as total_sales_by_sku_lm_lp,
+    total_sales_by_sku_p3m_lp::numeric(38,12) as total_sales_by_sku_p3m_lp,
+    total_sales_by_sku_p6m_lp::numeric(38,12) as total_sales_by_sku_p6m_lp,
+    total_sales_by_sku_p12m_lp::numeric(38,12) as total_sales_by_sku_p12m_lp,
+    store_contribution_lm::numeric(38,4) as store_contribution_lm,
+    sku_contribution_lm::numeric(38,4) as sku_contribution_lm,
+    size_of_price_lm::numeric(38,14) as size_of_price_lm,
+    store_contribution_p3m::numeric(38,4) as store_contribution_p3m,
+    sku_contribution_p3m::numeric(38,4) as sku_contribution_p3m,
+    size_of_price_p3m::numeric(38,14) as size_of_price_p3m,
+    store_contribution_p6m::numeric(38,4) as store_contribution_p6m,
+    sku_contribution_p6m::numeric(38,4) as sku_contribution_p6m,
+    size_of_price_p6m::numeric(38,14) as size_of_price_p6m,
+    store_contribution_p12m::numeric(38,4) as store_contribution_p12m,
+    sku_contribution_p12m::numeric(38,4) as sku_contribution_p12m,
+    size_of_price_p12m::numeric(38,14) as size_of_price_p12m,
+    store_contribution_lm_lp::numeric(38,4) as store_contribution_lm_lp,
+    sku_contribution_lm_lp::numeric(38,4)as sku_contribution_lm_lp,
+    size_of_price_lm_lp::numeric(38,20) as size_of_price_lm_lp,
+    store_contribution_p3m_lp::numeric(38,4) as store_contribution_p3m_lp,
+    sku_contribution_p3m_lp::numeric(38,4) as sku_contribution_p3m_lp,
+    size_of_price_p3m_lp::numeric(38,20) as size_of_price_p3m_lp,
+    store_contribution_p6m_lp::numeric(38,4)as store_contribution_p6m_lp,
+    sku_contribution_p6m_lp::numeric(38,4) as sku_contribution_p6m_lp,
+    size_of_price_p6m_lp::numeric(38,20) as size_of_price_p6m_lp,
+    store_contribution_p12m_lp::numeric(38,4) as store_contribution_p12m_lp,
+    sku_contribution_p12m_lp::numeric(38,4) as sku_contribution_p12m_lp,
+    size_of_price_p12m_lp::numeric(38,20) as size_of_price_p12m_lp,
+    customer_agg_dim_key::varchar(32) as customer_agg_dim_key,
+    product_agg_dim_key::varchar(32)  as product_agg_dim_key
+    from wks_rpt_id_re_gcph
 )
 
 --final select
