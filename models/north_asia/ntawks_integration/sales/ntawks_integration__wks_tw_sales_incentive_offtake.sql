@@ -2,7 +2,7 @@ with v_rpt_pos_offtake_wkly_nonkorea as (
     select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_wkly_nonkorea') }}
 ),
 itg_sls_grp_to_customer_mapping as (
-    select * from ntaitg_integration.itg_sls_grp_to_customer_mapping
+    select * from {{ source('ntaitg_integration','itg_sls_grp_to_customer_mapping') }}
 ),
 itg_mds_tw_customer_sales_rep_mapping as (
     select * from {{ ref('ntaitg_integration__itg_mds_tw_customer_sales_rep_mapping') }}

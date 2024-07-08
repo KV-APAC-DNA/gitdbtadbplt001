@@ -1,6 +1,6 @@
 with edw_vw_store_master_rex_pop6 as 
 (
-    select * from snapntaedw_integration.edw_vw_store_master_rex_pop6
+    select * from {{ ref('aspedw_integration__edw_vw_store_master_rex_pop6') }}
 ),
 edw_customer_base_dim as 
 (

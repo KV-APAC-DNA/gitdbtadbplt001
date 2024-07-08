@@ -16,11 +16,11 @@ models:
   - name: ntaitg_integration__itg_kr_coupang_daily_brand_reviews
     config: 
       alias: itg_kr_coupang_daily_brand_reviews
-      tags: []
+      tags: ["j_kr_ecommerce_sellout_Naver_ingestion","transformation"]
   - name: ntaitg_integration__sdl_raw_kr_coupang_daily_brand_reviews
     config: 
       alias: sdl_raw_kr_coupang_daily_brand_reviews
-      tags: []
+      tags: ["kr_coupang_premium_dailybrandreviews","ingestion"]
   - name: ntaitg_integration__itg_mds_hk_product_hierarchy
     config:
         alias: itg_mds_hk_product_hierarchy
@@ -57,7 +57,7 @@ models:
     config:
       alias: itg_tw_ims_dstr_prod_price_map
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
-  - name: ntaitg_integration___itg_gt_msl_items
+  - name: ntaitg_integration__itg_gt_msl_items
     config:
       alias: itg_gt_msl_items
-      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]  
+      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]

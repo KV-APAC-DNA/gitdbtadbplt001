@@ -1,21 +1,20 @@
-
 with sdl_pop6_kr_sku_audits as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_KR_SKU_AUDITS
+    select * from {{ source('ntasdl_raw','sdl_pop6_kr_sku_audits') }}
 ),
 sdl_pop6_tw_sku_audits as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_TW_SKU_AUDITS
+    select * from {{ source('ntasdl_raw','sdl_pop6_tw_sku_audits') }}
 ),
-SDL_POP6_HK_SKU_AUDITS as (
-    select * from DEV_DNA_LOAD.SNAPNTASDL_RAW.SDL_POP6_HK_SKU_AUDITS
+sdl_pop6_hk_sku_audits as (
+    select * from {{ source('ntasdl_raw','sdl_pop6_hk_sku_audits') }}
 ),
-SDL_POP6_JP_SKU_AUDITS as (
-    select * from DEV_DNA_LOAD.SNAPJPNSDL_RAW.SDL_POP6_JP_SKU_AUDITS
+sdl_pop6_jp_sku_audits as (
+    select * from {{ source('jpnsdl_raw','sdl_pop6_jp_sku_audits') }}
 ),
 sdl_pop6_sg_sku_audits as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_SG_SKU_AUDITS
+    select * from {{ source('sgpsdl_raw','sdl_pop6_sg_sku_audits') }}
 ),
 sdl_pop6_th_sku_audits as (
-    select * from DEV_DNA_LOAD.SNAPOSESDL_RAW.SDL_POP6_TH_SKU_AUDITS
+    select * from {{ source('thasdl_raw','sdl_pop6_th_sku_audits') }}
 ),
 transformed as (
 SELECT 

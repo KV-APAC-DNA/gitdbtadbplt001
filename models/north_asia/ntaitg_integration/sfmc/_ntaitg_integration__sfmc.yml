@@ -9,22 +9,18 @@ models:
     config:
       alias: sdl_raw_tw_sfmc_unsubscribe_data
       tags: ["tw_sfmc_files","ingestion"]
-
   - name: ntaitg_integration__sdl_raw_tw_sfmc_bounce_data
     config: 
       alias: sdl_raw_tw_sfmc_bounce_data
       tags: ["tw_sfmc_files","ingestion"]
-
   - name: ntaitg_integration__sdl_raw_tw_sfmc_invoice_data
     config: 
       alias: sdl_raw_tw_sfmc_invoice_data
       tags: ["tw_crm_files","ingestion"]
-
   - name: ntaitg_integration__sdl_raw_tw_sfmc_consumer_master
     config: 
       alias: sdl_raw_tw_sfmc_consumer_master
       tags: ["tw_crm_files_consumer_master","ingestion"]
-
   - name: ntaitg_integration__sdl_raw_tw_sfmc_children_data
     config: 
       alias: sdl_raw_tw_sfmc_children_data
@@ -33,7 +29,6 @@ models:
     config: 
       alias: sdl_raw_tw_sfmc_redemption_data
       tags: ["tw_crm_files","ingestion"]
-
   - name: ntaitg_integration__sdl_raw_tw_sfmc_open_data
     config:
       alias: sdl_raw_tw_sfmc_open_data

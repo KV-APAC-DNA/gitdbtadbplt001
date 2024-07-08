@@ -1,10 +1,10 @@
 with v_cust_customer as 
 (
-     select * from dev_dna_load.snapaspsdl_raw.v_cust_customer
+     select * from {{ ref('aspitg_integration__v_cust_customer') }}
 ),
 edw_vw_store_master_rex_pop6 as 
 (
-    select * from snapntaedw_integration.edw_vw_store_master_rex_pop6
+    select * from {{ ref('aspedw_integration__edw_vw_store_master_rex_pop6') }}
 ),
 edw_customer_base_dim as 
 (

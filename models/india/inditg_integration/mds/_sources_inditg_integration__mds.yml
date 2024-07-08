@@ -114,6 +114,7 @@ sources:
             data_type: number
           - name: validationstatus
             data_type: varchar
+<<<<<<< HEAD
       - name: sdl_mds_in_channel_mapping
         tags: ["in_mds_refresh","transformation"]
       - name: sdl_mds_in_international_customer_details
@@ -315,3 +316,5 @@ sources:
       identifier: false
     tables:
       - name: wks_jnj_calendar
+=======
+>>>>>>> f49c8c9b244be73a5e640252fad8d1fc4627688a

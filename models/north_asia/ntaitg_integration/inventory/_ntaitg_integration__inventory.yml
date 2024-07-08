@@ -25,3 +25,7 @@ models:
     config: 
       alias: sdl_kr_raw_otc_inventory
       tags: ["j_kr_otc_inv_etl_framework","ingestion"]
+  - name: ntaitg_integration__sdl_tw_as_watsons_inventory
+    config: 
+      alias: sdl_tw_as_watsons_inventory
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]

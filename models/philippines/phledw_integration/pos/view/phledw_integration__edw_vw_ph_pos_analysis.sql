@@ -137,7 +137,7 @@ veposf as(
 				where cntry_cd = 'PH'
 				) d,
 			(
-				select distinct cust_cd,
+				select cust_cd,
 					brnch_cd,
 					ae_nm,
 					ash_no,

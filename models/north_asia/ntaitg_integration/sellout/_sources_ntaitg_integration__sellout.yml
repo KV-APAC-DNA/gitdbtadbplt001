@@ -9,6 +9,7 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_kr_otc_sellout
       - name: sdl_kr_gt_nacf_cust_dim
       - name: sdl_kr_bo_young_jong_hap_logistics_gt_sellout
         tags: ["gt_sellout_bo_young_jong_hap_logistics", "ingestion"]
@@ -204,4 +205,5 @@ sources:
       identifier: false
     tables:
       - name: itg_ims_temp
+      - name: itg_mds_hk_le_targets
       

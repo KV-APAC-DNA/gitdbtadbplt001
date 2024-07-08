@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__v_rpt_th_pop6_perfect_store
+    config: 
+        alias: v_rpt_th_pop6_perfect_store
+        tags: ["north_asia_views", "transformation"]
+  - name: ntaedw_integration__v_rpt_jp_pop6_perfect_store
+    config: 
+        alias: v_rpt_jp_pop6_perfect_store
+        tags: ["north_asia_views", "transformation"]
+  - name: ntaedw_integration__edw_vw_pop6_th_visits_prod_attribute_audits
+    config: 
+        alias: edw_vw_pop6_th_visits_prod_attribute_audits
+        tags: ["north_asia_views", "transformation"]

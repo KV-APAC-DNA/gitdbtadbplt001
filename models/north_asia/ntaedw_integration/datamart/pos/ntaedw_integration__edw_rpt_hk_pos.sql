@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from ntaedw_integration.edw_vw_hk_pos
+    select * from {{ ref('ntaedw_integration__edw_vw_hk_pos') }}
 ),
 final as 
 (

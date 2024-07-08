@@ -1,0 +1,132 @@
+version: 2
+
+sources:
+  - name: myssdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: myssdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_my_perfectstore_sku_mst
+        tags: ["my_perfect_store_master","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["file_name", "description", "manufacture", "brand", "category", "product_barcode", "sku_no", "client", "packsize", "other", "sub_catgory", "sub_brand", "list_price_unit", "list_price_fib", "packing_config", "rcp"]
+              not_null_columns: ["description","manufacture","brand"]
+              name: TRATBL_sdl_my_perfectstore_sku_mst__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_my_perfectstore_osa
+        tags: ["my_perfect_store_transaction","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["file_name", "date", "region", "outlet", "outlet_no", "category", "brand", "product_barcode", "sku_description", "answer"]
+              not_null_columns: ["date","outlet_no","product_barcode","answer"]
+              name: TRATBL_sdl_my_perfectstore_osa__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_my_perfectstore_outlet_mst
+        tags: ["my_perfect_store_master","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["file_name","Outlet_NO","Channel_No","Name","Zone_NO","Chain_No"]
+              select_columns: ["file_name","Outlet_NO","Channel_No","Name","Zone_NO","Chain_No"]
+              name: TRATBL_sdl_my_perfectstore_outlet_mst__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_my_perfectstore_sos
+        tags: ["my_perfect_store_transaction","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["file_name","date","region","outlet","outlet_no","category","brand","sku_description","answer"]
+              select_columns: ["file_name","date","region","outlet","outlet_no","category","brand","sku_description","answer"]
+              name: TRATBL_sdl_my_perfectstore_sos__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_my_perfectstore_oos
+        tags: ["my_perfect_store_transaction","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["filename","date","region","outlet","outlet_no","category","brand","product_barcode","sku_description","answer"]
+              not_null_columns: ["date","outlet_no","product_barcode","answer"]
+              name: TRATBL_sdl_my_perfectstore_oos__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_my_perfectstore_promocomp
+        tags: ["my_perfect_store_transaction","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["filename","date","brand","region","category","outlet_no"]
+              not_null_columns: ["date","brand","outlet_no"]
+              name: TRATBL_sdl_my_perfectstore_promocomp__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_mds_my_ps_msl
+        tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["name","ean","product_name","valid_from","valid_to"]
+              not_null_columns: ["name","ean"]
+              name: TRATBL_sdl_mds_my_ps_msl__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_duplicate:
+              select_columns: ["name","ean","product_name","valid_from","valid_to"]
+              group_by_columns: ["name","ean","product_name","valid_from","valid_to"]
+              name: TRATBL_sdl_mds_my_ps_msl__test_duplicate
+              config:
+                store_failures: true
+                schema: myswks_integration
+      - name: sdl_mds_my_ps_targets
+        tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["kpi","channel","re","attribute1","attribute2","value"]
+              not_null_columns: ["kpi","channel","re","attribute1","attribute2","value"]
+              name: TRATBL_sdl_mds_my_ps_targets__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_duplicate:
+                select_columns: ["kpi","channel","re","attribute1","attribute2","value"]
+                group_by_columns: ["kpi","channel","re","attribute1","attribute2","value"]
+                name: TRATBL_sdl_mds_my_ps_targets__test_duplicate
+                config:
+                  store_failures: true
+                  schema: myswks_integration
+      - name: sdl_mds_my_ps_weights
+        tags: ["my_perfect_store_mds_itg_refresh","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["name","kpi","channel"]
+              not_null_columns: ["name","kpi","channel"]
+              name: TRATBL_sdl_mds_my_ps_weights__null_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+          - test_duplicate:
+              select_columns: ["name","kpi","channel"]
+              group_by_columns: ["name","kpi","channel"]
+              name: TRATBL_sdl_mds_my_ps_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: myswks_integration
+  - name: mysedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: mysedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: my_perfect_store_supermarket_adjust
+      - name: v_rpt_my_perfect_store_snapshot

@@ -1,7 +1,5 @@
 {{
     config(
-        materialized="incremental",
-        incremental_strategy= "append",
         pre_hook="{{build_wks_mds_id_lav_inventory_intransit()}}"
     )
 }}
@@ -10,23 +8,23 @@ sdl_mds_id_lav_inventory_intransit as
 (
     select * from {{ source('idnsdl_raw', 'sdl_mds_id_lav_inventory_intransit') }}
 ),
--- temp_a as 
--- (
---     SELECT *
--- FROM {{this}}
--- WHERE NVL(
---         LEFT (TO_CHAR(CREATED_ON1, 'YYYYMMDD'), 6),
---         '99991231'
---     ) || month NOT IN (
---         SELECT DISTINCT NVL(
---                 LEFT (
---                     TO_CHAR(CAST("created on1" AS DATE), 'YYYYMMDD'),
---                     6
---                 ),
---                 '99991231'
---             ) || month
---         FROM sdl_mds_id_lav_inventory_intransit)
--- ),
+temp_a as 
+(
+    SELECT *
+FROM {{this}}
+WHERE NVL(
+        LEFT (TO_CHAR(CREATED_ON1, 'YYYYMMDD'), 6),
+        '99991231'
+    ) || month NOT IN (
+        SELECT DISTINCT NVL(
+                LEFT (
+                    TO_CHAR(CAST("created on1" AS DATE), 'YYYYMMDD'),
+                    6
+                ),
+                '99991231'
+            ) || month
+        FROM sdl_mds_id_lav_inventory_intransit)
+),
 temp_b as 
 (
     select month as month,
@@ -68,17 +66,16 @@ temp_b as
     remarks,
     name1,
     cast("created on1" as date) as created_on1,
-    md5(nvl (month, '') || nvl (plant, '') || nvl (saty, '') || nvl (document, '') || nvl ("po number", '') || nvl (material, '') || nvl (description, '') || nvl ("ship-to", '') || nvl (rj, '') || nvl (reason, '') || nvl (billing, '') || nvl ("not invoiced", '') || nvl ("DOC. DATE", '9999-12-31') || nvl ("goods issue", '9999-12-31') || nvl ("billing date", '9999-12-31') || nvl (rdd, '9999-12-31') || nvl ("order qty", 0) || nvl ("confirm qty", 0) || nvl ("net value", 0) || nvl ("billing check", 0) || nvl ("order value", 0) || nvl ("billing value", 0) || nvl (unrecoverable, 0) || nvl ("open orders", 0) || nvl ("return value", 0) || nvl ("customer type", '') || nvl ("customer group", '') || nvl (customer, '') || nvl ("bill month", '') || nvl ("return billing", 0) || nvl ("unrecoverable billing", 0) || nvl ("ship-to 2", '') || nvl ("gi date/rdd", '9999-12-31') || nvl ("order week", '') || nvl (pod, '9999-12-31') || nvl (cast("1st day" as date), '9999-12-31') || nvl (remarks, '') || nvl (name1, '') || nvl (cast("created on1" as date), '9999-12-31')
+    md5(
+                      nvl (month, '') || nvl (plant, '') || nvl (saty, '') || nvl (document, '') || nvl ("po number", '') || nvl (material, '') || nvl (description, '') || nvl ("ship-to", '') || nvl (rj, '') || nvl (reason, '') || nvl (billing, '') || nvl ("not invoiced", '') || nvl ("DOC. DATE", '9999-12-31') || nvl ("goods issue", '9999-12-31') || nvl ("billing date", '9999-12-31') || nvl (rdd, '9999-12-31') || nvl ("order qty", 0) || nvl ("confirm qty", 0) || nvl ("net value", 0) || nvl ("billing check", 0) || nvl ("order value", 0) || nvl ("billing value", 0) || nvl (unrecoverable, 0) || nvl ("open orders", 0) || nvl ("return value", 0) || nvl ("customer type", '') || nvl ("customer group", '') || nvl (customer, '') || nvl ("bill month", '') || nvl ("return billing", 0) || nvl ("unrecoverable billing", 0) || nvl ("ship-to 2", '') || nvl ("gi date/rdd", '9999-12-31') || nvl ("order week", '') || nvl (pod, '9999-12-31') || nvl (cast("1st day" as date), '9999-12-31') || nvl (remarks, '') || nvl (name1, '') || nvl (cast("created on1" as date), '9999-12-31')
     ) AS HASHKEY,
     convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) AS crtd_dttm
 FROM sdl_mds_id_lav_inventory_intransit
 ),
-
 final as 
 (
-    -- select * from temp_a 
-    -- union all
+    select * from temp_a 
+    union all
     select * from temp_b
 )
-
 select * from final
