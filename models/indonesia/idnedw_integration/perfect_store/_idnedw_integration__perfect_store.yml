@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: idnedw_integration__edw_id_ps_pricing
+    config:
+      alias: edw_id_ps_pricing
+      tags: ["id_perfectstore_part_one","transformation"]
+  - name: idnedw_integration__edw_id_ps_promotion
+    config:
+      alias: edw_id_ps_promotion
+      tags: ["id_perfectstore_part_one","transformation"]
+  - name: idnedw_integration__edw_id_ps_promotion_competitor
+    config:
+      alias: edw_id_ps_promotion_competitor
+      tags: ["id_perfectstore_part_one","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_planogram
+    config:
+      alias: edw_id_ps_planogram
+      tags: ["id_perfectstore_part_one","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_secondary_display
+    config:
+      alias: edw_id_ps_secondary_display
+      tags: ["id_perfectstore_part_one","transformation"]
+  - name: idnedw_integration__edw_id_ps_msl_osa
+    config:
+      alias: edw_id_ps_msl_osa
+      tags: ["id_perfectstore_part_two","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_merchandiser_master
+    config:
+      alias: edw_id_ps_merchandiser_master
+      tags: ["id_perfectstore_part_two","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_product_master
+    config:
+      alias: edw_id_ps_product_master
+      tags: ["id_perfectstore_part_two","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_outlet_master
+    config:
+      alias: edw_id_ps_outlet_master
+      tags: ["id_perfectstore_part_two","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_visibility
+    config:
+      alias: edw_id_ps_visibility
+      tags: ["id_perfectstore_part_two","transformation"]
+
+  - name: idnedw_integration__edw_id_ps_brand_blocking
+    config:
+      alias: edw_id_ps_brand_blocking
+      tags: ["id_perfectstore_part_one","transformation"]
+  - name: idnedw_integration__edw_rpt_id_perfect_store
+    config:
+      alias: edw_rpt_id_perfect_store
+      tags: ["id_ps_datamart","transformation"]
+  - name: idnedw_integration__v_rpt_id_regional_perfect_store
+    config: 
+        alias: v_rpt_id_regional_perfect_store
+        tags: ["pop6_views", "transformation"]

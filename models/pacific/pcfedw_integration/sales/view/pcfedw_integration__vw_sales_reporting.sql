@@ -1330,7 +1330,7 @@ FROM
                       (pcf.px_ciw_tot):: numeric(38, 2) * currex.exch_rate
                     ) AS px_ciw_tot,
                     (
-                      (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                      trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                     ) AS px_cogs,
                     (
                       (
@@ -1340,7 +1340,7 @@ FROM
                           (pcf.px_ciw_tot):: numeric(38, 2) * currex.exch_rate
                         )
                       ) - (
-                        (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                        trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                       )
                     ) AS px_gp,
                     CASE WHEN (
@@ -1444,7 +1444,7 @@ FROM
                         (projprd.prev_jj_period):: numeric
                       ):: numeric(18, 0)
                     ) THEN (
-                      (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                      trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                     ) ELSE (
                       (0):: numeric
                     ):: numeric(18, 0) END AS projected_cogs_current,
@@ -1472,7 +1472,7 @@ FROM
                           (projprd.prev_jj_period):: numeric
                         ):: numeric(18, 0)
                       ) THEN (
-                        (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                        trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                       ) ELSE (
                         (0):: numeric
                       ):: numeric(18, 0) END
@@ -1482,7 +1482,7 @@ FROM
                         (projprd.prev_jj_period):: numeric
                       ):: numeric(18, 0)
                     ) THEN (
-                      (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                      trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                     ) ELSE (
                       (0):: numeric
                     ):: numeric(18, 0) END AS projected_cogs_actual,
@@ -1501,7 +1501,7 @@ FROM
                             (projprd.prev_jj_period):: numeric
                           ):: numeric(18, 0)
                         ) THEN (
-                          (pcf.px_ciw_tot):: numeric(38, 2) * currex.exch_rate
+                        (pcf.px_ciw_tot):: numeric(38, 2) * currex.exch_rate
                         ) ELSE (
                           (0):: numeric
                         ):: numeric(18, 0) END
@@ -1510,7 +1510,7 @@ FROM
                           (projprd.prev_jj_period):: numeric
                         ):: numeric(18, 0)
                       ) THEN (
-                        (pcf.px_cogs):: numeric(38, 2) * currex.exch_rate
+                        trunc(pcf.px_cogs, 2):: numeric(38, 2) * currex.exch_rate
                       ) ELSE (
                         (0):: numeric
                       ):: numeric(18, 0) END

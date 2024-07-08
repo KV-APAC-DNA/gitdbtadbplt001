@@ -1,0 +1,209 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_kr_otc_sellout
+      - name: sdl_kr_gt_nacf_cust_dim
+      - name: sdl_kr_bo_young_jong_hap_logistics_gt_sellout
+        tags: ["gt_sellout_bo_young_jong_hap_logistics", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              name: TRATBL_sdl_kr_bo_young_jong_hap_logistics_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+
+      - name: sdl_kr_da_in_sang_sa_gt_sellout
+        tags: ["gt_sellout_da_in_sang_sa", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_gt_sellout_da_in_sang_sa__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_dongbu_lsd_gt_sellout
+        tags: ["gt_sellout_dongbu_lsd", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_dongbu_lsd_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_hyundai_gt_sellout
+        tags: ["gt_sellout_hyundai", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_hyundai_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              column: "cust_cd,sub_customer_name"
+              lookup_column: "trim(customer_code) customer_code, trim(sub_customer_name) sub_customer_name"
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}"                                                                      
+              failure_reason: "'missing customer information data compared with master file: ims_txn_dt, cust_cd, sub_customer_name'"
+              name: TRATBL_sdl_kr_hyundai_gt_sellout__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_du_bae_ro_yu_tong_gt_sellout
+        tags: ["gt_sellout_du_bae_ro_yu_tong", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_du_bae_ro_yu_tong_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+        tags: ["gt_sellout_il_dong_hu_di_s_deok_seong_sang_sa", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_ju_hj_life_gt_sellout
+        tags: ["gt_sellout_ju_hj_life", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_ju_hj_life_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_jungseok_gt_sellout
+        tags: ["gt_sellout_jungseok", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_jungseok_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_lotte_ak_gt_sellout
+        tags: ["gt_sellout_lotte_ak", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_lotte_ak_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+              column: "cust_cd,sub_customer_name"
+              lookup_column: "trim(customer_code) customer_code, trim(sub_customer_name) sub_customer_name"
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_dpt_daiso') }}"                                                                      
+              failure_reason: "'missing customer information data compared with master file: ims_txn_dt, cust_cd, sub_customer_name'"
+              name: TRATBL_sdl_kr_lotte_ak_gt_sellout__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_lotte_logistics_yang_ju_gt_sellout
+        tags: ["gt_sellout_lotte_logistics_yang_ju", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_lotte_logistics_yang_ju_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_kr_nacf_gt_sellout
+        tags: ["gt_sellout_nacf", "ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
+              not_null_columns: ["ean"]
+              name: TRATBL_sdl_kr_nacf_gt_sellout__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_lookup:
+              select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
+              column: "customer_code"
+              lookup_column: " coalesce(nacf_customer_code,'NULL') customer_code"
+              lookup_table: "{{ ref('ntaitg_integration__itg_kr_gt_nacf_cust_dim') }}"                                                                      
+              failure_reason: "'missing customer code compared with master file: customer_code'"
+              name: TRATBL_sdl_kr_nacf_gt_sellout__lookup_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_hk_ims_viva_sel_out
+        tests:
+          - test_null:
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              not_null_columns: ["calendar_sid"]
+              name: TRATBL_sdl_hk_ims_viva_sel_out__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "calendar_sid"
+              filter: "(odd_mon.calendar_sid) = (even_mon.calendar_sid) and (even_mon.calendar_sid) = (feb.calendar_sid) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYYMMDD'"
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              name: TRATBL_sdl_hk_ims_viva_sel_out__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
+
+      - name: sdl_hk_ims_wingkeung_sel_out
+        tests:
+          # - test_duplicate:
+          #     group_by_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+          #     need_counts: "no"
+          #     name: TRATBL_sdl_hk_ims_wingkeung_sel_out__duplicate_test
+          #     config:
+          #       store_failures: true
+          #       schema: ntawks_integration
+          - test_null:
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              not_null_columns: ["calendar_sid"]
+              name: TRATBL_sdl_hk_ims_wingkeung_sel_out__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "calendar_sid"
+              filter: "(odd_mon.calendar_sid) = (even_mon.calendar_sid) and (even_mon.calendar_sid) = (feb.calendar_sid) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYYMMDD'"
+              select_columns: ["calendar_sid","sales_group","account_types","customer_number","product_number","transactiontype"]
+              name: TRATBL_sdl_hk_ims_wingkeung_sel_out__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_ims_temp
+      - name: itg_mds_hk_le_targets
+      

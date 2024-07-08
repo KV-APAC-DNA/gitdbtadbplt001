@@ -9,159 +9,280 @@ sources:
       schema: false
       identifier: false
     tables:
-        - name: sdl_tw_pos_watson_store
-          tags: ["tw_pos_watson","ingestion"]
-          tests:
+      - name: sdl_kr_pos_emart_evydy_header
+        tags: ["","ingestion"]     
+      - name: sdl_kr_pos_emart_evydy_line
+        tags: ["","ingestion"]
+      - name: sdl_kr_pos_emart_line
+      - name: sdl_kr_pos_emart_header
+      - name: sdl_hk_pos_scorecard_mannings
+      - name: sdl_tw_pos_watson_store
+        tags: ["tw_pos_watson","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["store_no","store_name"]
+              select_columns: ["store_no","product_code"]
+              name: TRATBL_sdl_tw_pos_watson_store__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_tw_strategic_cust_hier
+        tags: ["tw_strategic_customer_hierarchy","ingestion"]
+        tests:
+          - test_null:
+              select_columns: ["cust_cd"]
+              not_null_columns: ["cust_cd"]
+              name: TRATBL_sdl_tw_strategic_cust_hier__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+
+      - name: sdl_tw_pos_poya
+        tags: ["tw_pos","ingestion"]
+        tests:
             - test_null:
-                not_null_columns: ["store_no","store_name"]
-                select_columns: ["store_no","product_code"]
-                name: TRATBL_sdl_tw_pos_watson_store__null_test
+                select_columns: ["ean_code","customer_product_code"]
+                not_null_columns: ["ean_code","customer_product_code"]
+                name: TRATBL_sdl_tw_pos_poya__null_test
                 config:
                   store_failures: true
                   schema: ntawks_integration
-        - name: sdl_tw_strategic_cust_hier
-          tags: ["tw_strategic_customer_hierarchy","ingestion"]
-          tests:
+
+      - name: sdl_mds_kr_pos_store_code_sold_to_map
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
+                group_by_columns: ["seqid","src_sys_cd","cust_str_cd"]
+                name: TRATBL_sdl_mds_kr_pos_store_code_sold_to_map__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
             - test_null:
-                select_columns: ["cust_cd"]
-                not_null_columns: ["cust_cd"]
-                name: TRATBL_sdl_tw_strategic_cust_hier__null_test
+                not_null_columns: ["code","seqid","src_sys_cd"]
+                select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
+                name: TRATBL_sdl_mds_kr_pos_store_code_sold_to_map__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_mds_tw_pos_promotional_price_ean_map
+        tags: ["na_mds_sdl_itg_load","ingestion"]
+        tests:
+            - test_duplicate:
+                select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
+                group_by_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
+                name: TRATBL_sdl_mds_tw_pos_promotional_price_ean_map__duplicate_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_null:
+                not_null_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
+                select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
+                name: TRATBL_sdl_mds_tw_pos_promotional_price_ean_map__null_test
                 config:
                   store_failures: true
                   schema: ntawks_integration
 
-        - name: sdl_tw_pos_poya
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["ean_code","customer_product_code"]
-                  not_null_columns: ["ean_code","customer_product_code"]
-                  name: TRATBL_sdl_tw_pos_poya__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
+      - name: sdl_mds_hk_pos_product_mapping
+        tags: ["na_mds_sdl_itg_load","transformation"]
 
-        - name: sdl_mds_kr_pos_store_code_sold_to_map
-          tags: ["na_mds_sdl_itg_load","ingestion"]
-          tests:
-              - test_duplicate:
-                  select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
-                  group_by_columns: ["seqid","src_sys_cd","cust_str_cd"]
-                  name: TRATBL_sdl_mds_kr_pos_store_code_sold_to_map__duplicate_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-              - test_null:
-                  not_null_columns: ["code","seqid","src_sys_cd"]
-                  select_columns: ["code","seqid","src_sys_cd","cust_str_cd"]
-                  name: TRATBL_sdl_mds_kr_pos_store_code_sold_to_map__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-        - name: sdl_mds_tw_pos_promotional_price_ean_map
-          tags: ["na_mds_sdl_itg_load","ingestion"]
-          tests:
-              - test_duplicate:
-                  select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
-                  group_by_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
-                  name: TRATBL_sdl_mds_tw_pos_promotional_price_ean_map__duplicate_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-              - test_null:
-                  not_null_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
-                  select_columns: ["code","cust_prod_cd","barcode","customer","promotion_start_date","promotion_end_date"]
-                  name: TRATBL_sdl_mds_tw_pos_promotional_price_ean_map__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
+      - name: sdl_mds_hk_pos_promo_calendar
+        tags: ["na_mds_sdl_itg_load","transformation"]
 
-        - name: sdl_mds_hk_pos_product_mapping
-          tags: ["na_mds_sdl_itg_load","transformation"]
+      - name: sdl_mds_hk_ref_pos_accounts
+        tags: ["na_mds_sdl_itg_load","transformation"]
 
-        - name: sdl_mds_hk_pos_promo_calendar
-          tags: ["na_mds_sdl_itg_load","transformation"]
+      - name: sdl_tw_ims_dstr_prod_map
+        tags: ["tw_ims_distributor_prod_map","transformation"]
 
-        - name: sdl_mds_hk_ref_pos_accounts
-          tags: ["na_mds_sdl_itg_load","transformation"]
-
-        - name: sdl_tw_ims_dstr_prod_map
-          tags: ["tw_ims_distributor_prod_map","transformation"]
-
-              
-        - name: sdl_tw_pos_ec
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["pos_date","product_code"]
-                  not_null_columns: ["product_code","pos_date"]
-                  name: TRATBL_sdl_tw_pos_ec__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-        - name: sdl_tw_pos_carrefour
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["pos_date","product_code"]
-                  not_null_columns: ["product_code","pos_date"]
-                  name: TRATBL_sdl_tw_pos_carrefour__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-              - test_date_format_odd_eve_leap:
-                  model_nm: "{{ source('ntasdl_raw', 'sdl_tw_pos_carrefour') }}"
-                  date_column: "pos_date"
-                  filter: "(odd_mon.pos_date) = (even_mon.pos_date) and (even_mon.pos_date) = (feb.pos_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
-                  failure_reason: "'Pos-date having incorrect date-format. Expected: yyyyMMdd'"
-                  select_columns: ["pos_date","product_code"]
-                  name: TRATBL_sdl_tw_pos_carrefour__test_date_format_odd_eve_leap
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-        - name: sdl_tw_pos_7eleven
-          tags: ["tw_pos","ingestion"]
-          # tests:
-          #     - test_duplicate:
-          #         select_columns: ["pos_date","product_code"]
-          #         group_by_columns: ["pos_date","product_code","product_description","sales_qty","vendor_code","vendor_description"]
-          #         name: TRATBL_sdl_tw_pos_7eleven__duplicate_test
-          #         config:
-          #           store_failures: true
-          #           schema: ntawks_integration
-        - name: sdl_tw_pos_cosmed
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["product_name","product_code"]
-                  not_null_columns: [product_code]
-                  name: TRATBL_sdl_tw_pos_cosmed__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-        - name: sdl_tw_pos_px_civila
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["pos_date","civilian_product_code"]
-                  not_null_columns: ["civilian_product_code","ean_code","pos_date"]
-                  name: TRATBL_sdl_tw_pos_px_civila__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
-        - name: sdl_tw_pos_rt_mart
-          tags: ["tw_pos","ingestion"]
-          tests:
-              - test_null:
-                  select_columns: ["pos_date","product_code"]
-                  not_null_columns: ["ean_code","pos_date","product_code"]
-                  name: TRATBL_sdl_tw_pos_rt_mart__null_test
-                  config:
-                    store_failures: true
-                    schema: ntawks_integration
+            
+      - name: sdl_tw_pos_ec
+        tags: ["tw_pos","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["product_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_ec__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_carrefour
+        tags: ["tw_pos","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["product_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_carrefour__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+            - test_date_format_odd_eve_leap:
+                model_nm: "{{ source('ntasdl_raw', 'sdl_tw_pos_carrefour') }}"
+                date_column: "pos_date"
+                filter: "(odd_mon.pos_date) = (even_mon.pos_date) and (even_mon.pos_date) = (feb.pos_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+                failure_reason: "'Pos-date having incorrect date-format. Expected: yyyyMMdd'"
+                select_columns: ["pos_date","product_code"]
+                name: TRATBL_sdl_tw_pos_carrefour__test_date_format_odd_eve_leap
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_7eleven
+        tags: ["tw_pos","ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["pos_date","product_code"]
+        #         group_by_columns: ["pos_date","product_code","product_description","sales_qty","vendor_code","vendor_description"]
+        #         name: TRATBL_sdl_tw_pos_7eleven__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: ntawks_integration
+      - name: sdl_tw_pos_cosmed
+        tags: ["tw_pos","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["product_name","product_code"]
+                not_null_columns: [product_code]
+                name: TRATBL_sdl_tw_pos_cosmed__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_px_civila
+        tags: ["tw_pos","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","civilian_product_code"]
+                not_null_columns: ["civilian_product_code","ean_code","pos_date"]
+                name: TRATBL_sdl_tw_pos_px_civila__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_tw_pos_rt_mart
+        tags: ["tw_pos","ingestion"]
+        tests:
+            - test_null:
+                select_columns: ["pos_date","product_code"]
+                not_null_columns: ["ean_code","pos_date","product_code"]
+                name: TRATBL_sdl_tw_pos_rt_mart__null_test
+                config:
+                  store_failures: true
+                  schema: ntawks_integration
+      - name: sdl_kr_pos_eland
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["store_code","barcode"]
+            not_null_columns: ["store_code","barcode"]
+            name: TRATBL_sdl_kr_pos_eland__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_lotte_mart
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["store_name"]
+            not_null_columns: ["store_name"]
+            name: TRATBL_sdl_kr_pos_lotte_mart__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_homeplus_online
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["store_code","bar_code","number_of_sales","sales_revenue"]
+            not_null_columns: ["pos_date",store_code]
+            name: TRATBL_sdl_kr_pos_homeplus_online__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_format:
+            select_columns: ["store_code","bar_code","number_of_sales","sales_revenue"]
+            where_clause: "not regexp_like (trim(pos_date),'[1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-9][0-9]')"
+            failure_reason: "'is an invalid period for store_code,bar_code,number_of_sales,sales_revenue'"
+            name: TRATBL_sdl_kr_pos_homeplus_online__format_test
+            config:
+              store_failures: true
+            schema: ntawks_integration
+      - name: sdl_kr_pos_lohbs
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["store_code","store_name"]
+            not_null_columns: ["store_code","store_name"]
+            name: TRATBL_sdl_kr_pos_lohbs__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_homeplus
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["pos_date","store_code"]
+            not_null_columns: ["pos_date","store_code"]
+            name: TRATBL_sdl_kr_pos_homeplus__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_gs_super
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["pos_date","store_code"]
+            not_null_columns: ["pos_date","store_code"]
+            name: TRATBL_sdl_kr_pos_gs_super__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_lotte_super
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["store_name"]
+            not_null_columns: ["store_name"]
+            name: TRATBL_sdl_kr_pos_lotte_super__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_olive_young
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["barcode","store_code"]
+            not_null_columns: ["barcode","store_code"]
+            name: TRATBL_sdl_kr_pos_olive_young__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_lalavla
+        tags: ["kr_pos","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["pos_date"]
+            not_null_columns: ["pos_date"]
+            name: TRATBL_sdl_kr_pos_lalavla__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+      - name: sdl_kr_pos_emart
+        tags: ["kr_pos","ingestion"] 
+      - name: sdl_pos_prc_condition_map
+        tags: ["kr_pos","ingestion"]  
+      # - name: sdl_kr_pos_costco_invrpt_header
+      #   tags: ["kr_pos","ingestion"]
+      # - name: sdl_kr_pos_costco_invrpt_line
+      #   tags: ["kr_pos","ingestion"]
+      - name: sdl_kr_pos_costco_vmimst_line
+        tags: [""]
+      - name: sdl_kr_pos_costco_vmimst_header
+        tags: [""]
+      - name: sdl_kr_sales_target_am_brand
+        tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+      - name: sdl_kr_fert_material_fact
+        tags: ["j_kr_fert_material_wrapper","transformation"]
 
   - name: ntaitg_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: ntaitg_integration
     quoting:
       database: false
@@ -171,28 +292,20 @@ sources:
       - name: ntaitg_integration__itg_pos_prom_prc_map_temp
         tags: ["na_mds_sdl_itg_load","ingestion"]
       - name: itg_query_parameters
-      - name: itg_mds_tw_sales_representative
-      - name: itg_mds_tw_customer_sales_rep_mapping
       - name: itg_pos_temp
       - name: itg_pos_invnt_temp
-      - name: itg_sales_rep_so_target_fact
-      - name: itg_tw_ims_dstr_customer_mapping
-      - name: itg_tw_ims_dstr_prod_price_map
-      - name: itg_sls_grp_to_customer_mapping
       - name: itg_pos_cust_prod_to_sap_prod_map
+      - name: itg_kr_sales_target_am_brand_temp
+      - name: itg_pos_str_sls_grp_map
+      - name: itg_pos_prom_prc_map_temp
+      - name: itg_pos_str_cd_sold_to_map_temp
 
-  
-
-  - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
+  - name: bwa_access
+    database: "{{ env_var('DBT_ENV_CDL_DB') }}"
+    schema: bwa_access
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name:  edw_intrm_calendar 
-      - name: edw_sales_rep_route_plan
-      - name: edw_sls_rep_dim
-      - name: edw_vw_pop6_store
-
+      - name: bwa_kr_list_price

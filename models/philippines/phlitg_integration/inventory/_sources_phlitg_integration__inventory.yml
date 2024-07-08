@@ -28,7 +28,7 @@ sources:
                 failure_reason: "SUBSCRIBER_KEY NOT PRESENT IN COMSUMER MASTER LOOK UP TABLE :"
                 column: "nvl(item_cd, '#')"
                 lookup_column: "nvl(item_cd, '#')"
-                lookup_table: " phlitg_integration.itg_mds_ph_pos_product"
+                lookup_table: " {{ ref('phlitg_integration__itg_mds_ph_pos_product') }}"
                 name: TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff
                 config:
                   store_failures: true
