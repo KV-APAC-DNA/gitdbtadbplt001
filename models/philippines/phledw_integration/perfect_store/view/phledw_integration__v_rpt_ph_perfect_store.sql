@@ -777,7 +777,7 @@ END as answernotes
 				(lower(srv_det.answernotes) != 'na')
 				OR lower(srv_det.answernotes) IS NULL
 				)
-		) select count(*) from union_5;  ,		
+		),		
 union_6 as (
 SELECT 'Merchandising_Response' AS dataset,
         (ippmo.ret_nm_prefix::TEXT || '-'::CHARACTER VARYING::TEXT || ippmo.branch_code::TEXT)::CHARACTER VARYING AS customerid,
