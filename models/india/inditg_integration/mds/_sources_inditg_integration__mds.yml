@@ -291,6 +291,7 @@ sources:
       - name: itg_brand_focus_target
       - name: itg_business_plan_target
       - name: itg_mds_in_key_accounts_mapping_offtake_upd
+      - name: itg_mds_in_sv_winculum_master_temp
 
   - name: indedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

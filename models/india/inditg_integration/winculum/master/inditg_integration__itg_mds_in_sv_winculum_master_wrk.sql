@@ -9,6 +9,10 @@ with sdl_mds_in_sv_winculum_master as
 (
     select * from {{ source('indsdl_raw', 'sdl_mds_in_sv_winculum_master') }}
 ),
+itg_mds_in_sv_winculum_master as 
+(
+    select * from {{ source('inditg_integration', 'itg_mds_in_sv_winculum_master_temp') }}
+),
 wks as 
 (
     SELECT
@@ -54,7 +58,7 @@ wks as
                 sdl.distributorsapid
                 ORDER BY sdl.lastchgdatetime DESC
             ) AS rn
-        FROM sdl_mds_in_sv_winculum_master sdl, {{ this }} itg
+        FROM sdl_mds_in_sv_winculum_master sdl, itg_mds_in_sv_winculum_master itg
         WHERE sdl.lastchgdatetime != itg.lastchgdatetime
             AND sdl.wholesalercode = itg.wholesalercode
             AND sdl.distributorsapid = itg.distributorsapid
@@ -102,7 +106,7 @@ wks as
                 sdl.distributorsapid
                 ORDER BY sdl.lastchgdatetime DESC
             ) AS rn
-        FROM sdl_mds_in_sv_winculum_master sdl, {{ this }} itg
+        FROM sdl_mds_in_sv_winculum_master sdl, itg_mds_in_sv_winculum_master itg
         WHERE sdl.lastchgdatetime != itg.lastchgdatetime
             AND sdl.wholesalercode = itg.wholesalercode
             AND sdl.distributorsapid = itg.distributorsapid
@@ -153,7 +157,7 @@ wks as
                 sdl.distributorsapid
                 ORDER BY sdl.lastchgdatetime DESC
             ) AS rn
-        FROM sdl_mds_in_sv_winculum_master sdl, {{ this }} itg
+        FROM sdl_mds_in_sv_winculum_master sdl, itg_mds_in_sv_winculum_master itg
         WHERE sdl.lastchgdatetime = itg.lastchgdatetime
             AND sdl.wholesalercode = itg.wholesalercode
             AND sdl.distributorsapid = itg.distributorsapid
@@ -202,7 +206,7 @@ wks as
                 sdl.distributorsapid
                 ORDER BY sdl.lastchgdatetime DESC
             ) AS rn
-        FROM sdl_mds_in_sv_winculum_master sdl, {{ this }} itg
+        FROM sdl_mds_in_sv_winculum_master sdl, itg_mds_in_sv_winculum_master itg
         WHERE sdl.lastchgdatetime = itg.lastchgdatetime
             AND sdl.wholesalercode = itg.wholesalercode
             AND sdl.distributorsapid = itg.distributorsapid
@@ -258,7 +262,7 @@ wks as
                 ) NOT IN (
                 SELECT wholesalercode,
                     distributorsapid
-                FROM {{ this }}
+                FROM itg_mds_in_sv_winculum_master
                 )
     ) winm
     WHERE winm.rn = 1
@@ -269,7 +273,7 @@ transformed as
     
     UNION ALL
     
-    SELECT * FROM {{ this }} winm
+    SELECT * FROM itg_mds_in_sv_winculum_master winm
     WHERE (winm.wholesalercode,winm.distributorsapid) 
     NOT IN (SELECT wholesalercode,distributorsapid FROM wks)
 ),

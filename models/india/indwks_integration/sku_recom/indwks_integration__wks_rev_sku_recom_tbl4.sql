@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+    )
+}}
 with wks_rev_sku_recom_tbl3 as
 (
     select * from {{ ref('indwks_integration__wks_rev_sku_recom_tbl3') }}
