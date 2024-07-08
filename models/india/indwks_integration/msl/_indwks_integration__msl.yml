@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: indwks_integration__msl_extract_combine_program_type
+    config:
+      alias: msl_extract_combine_program_type
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__msl_franchise_achievement_score_calc
+    config:
+      alias: msl_franchise_achievement_score_calc
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+
+  - name: indwks_integration__wks_mi_msl_agg_tbl
+    config:
+      alias: wks_mi_msl_agg_tbl
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+
+  - name: indwks_integration__wks_mi_msl_lkp_mnthly_tbl
+    config:
+      alias: wks_mi_msl_lkp_mnthly_tbl
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+
+  - name: indwks_integration__wks_mi_msl_reco_vs_sold
+    config:
+      alias: wks_mi_msl_reco_vs_sold
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+
+  - name: indwks_integration__wks_mi_msl_ret_dim_subd_cnt
+    config:
+      alias: wks_mi_msl_ret_dim_subd_cnt
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+
+  - name: indwks_integration__wks_mi_msl_sales_vs_reco_tbl
+    config:
+      alias: wks_mi_msl_sales_vs_reco_tbl
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_paramet_accounts
+    config:
+      alias: wks_mt_paramet_accounts
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_dir_indir_agg_tbl
+    config:
+      alias: wks_mt_sellin_dir_indir_agg_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_tbl
+    config:
+      alias: wks_mt_sellin_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_vs_sellout_fctr_tbl
+    config:
+      alias: wks_mt_sellin_vs_sellout_fctr_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_vs_sellout_fctr_tbl_fnl
+    config:
+      alias: wks_mt_sellin_vs_sellout_fctr_tbl_fnl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_vs_sellout_pre_rpt_tbl
+    config:
+      alias: wks_mt_sellin_vs_sellout_pre_rpt_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellin_vs_sellout_tbl
+    config:
+      alias: wks_mt_sellin_vs_sellout_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_mt_sellout_offtake_tbl
+    config:
+      alias: wks_mt_sellout_offtake_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+
+  - name: indwks_integration__wks_stores_with_msl_in_year_qtr
+    config:
+      alias: wks_stores_with_msl_in_year_qtr
+      tags: ["in_sss_scorecard_data_mart","transformation"]

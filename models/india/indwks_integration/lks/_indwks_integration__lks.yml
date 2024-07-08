@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_lks_plant
+    config:
+      alias: wks_lks_plant
+      tags: ["in_xdm_master","ingestion"]
+  - name: indwks_integration__wks_lks_pricelist
+    config:
+      alias: wks_lks_pricelist
+      tags: ["in_xdm_master","ingestion"]
+  - name: indwks_integration__wks_sdl_lks_plant
+    config:
+      alias: wks_sdl_lks_plant
+      tags: ["in_xdm_master","ingestion"]
