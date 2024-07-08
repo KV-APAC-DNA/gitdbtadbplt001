@@ -1,7 +1,7 @@
 
 with sdl_kr_pos_emart_evydy_line as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_pos_emart_evydy_line') }}
-).
+),
 sdl_kr_pos_emart_evydy_header as (
     select * from {{ source('ntasdl_raw', 'sdl_kr_pos_emart_evydy_header') }}
 ),

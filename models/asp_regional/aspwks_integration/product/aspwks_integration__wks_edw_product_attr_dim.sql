@@ -19,7 +19,7 @@ edw_material_sales_dim as (
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 edw_product_attr_dim as (
-    select * from {{ source('aspedw_integration', 'aspedw_integration__edw_product_attr_dim_temp') }}
+    select * from {{ source('aspedw_integration', 'edw_product_attr_dim_temp') }}
 ),
 final as 
 (SELECT DISTINCT SRC.eannumber AS aw_remote_key,

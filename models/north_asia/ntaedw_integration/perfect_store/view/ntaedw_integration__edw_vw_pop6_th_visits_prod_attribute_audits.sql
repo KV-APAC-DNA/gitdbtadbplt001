@@ -78,7 +78,7 @@ visit as (
                 itg_pop6_executed_visits.cancelled_visit,
                 itg_pop6_executed_visits.cancellation_reason,
                 itg_pop6_executed_visits.cancellation_note,
-                pg_catalog.row_number() OVER(
+                row_number() OVER(
                     PARTITION BY itg_pop6_executed_visits.visit_id,
                     itg_pop6_executed_visits.popdb_id
                     ORDER BY itg_pop6_executed_visits.run_id DESC
