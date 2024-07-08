@@ -34,4 +34,5 @@ group by 1,2 order by 1,2) inv
 left join (select distinct ctry_group, "cluster" from edw_company_dim) cd
 on inv.country_name=cd.ctry_group
 )
+
 select * from final 
