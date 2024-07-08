@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: inditg_integration__sdl_csl_retailerroute_raw
+    config:
+      alias: sdl_csl_retailerroute_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_retailerhierarchy_raw
+    config:
+      alias: sdl_csl_retailerhierarchy_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_retailermaster_raw
+    config:
+      alias: sdl_csl_retailermaster_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_salesmanmaster_raw
+    config:
+      alias: sdl_csl_salesmanmaster_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_distributoractivation_raw
+    config:
+      alias: sdl_csl_distributoractivation_raw
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_csl_retailerhierarchy
+    config:
+      alias: itg_csl_retailerhierarchy
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_csl_udcdetails_raw
+    config:
+      alias: sdl_csl_udcdetails_raw
+      tags: ["in_sdlitg_gtsales","ingestion"]
+  
+  - name: inditg_integration__sdl_csl_dailysales_undelivered_raw
+    config:
+      alias: sdl_csl_dailysales_undelivered_raw
+      tags: ["in_sdlitg_gtsales","ingestion"]
+  - name: inditg_integration__sdl_csl_scheme_header_raw
+    config:
+      alias: sdl_csl_scheme_header_raw
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+  - name: inditg_integration__sdl_csl_schemeutilization_raw
+    config:
+      alias: sdl_csl_schemeutilization_raw
+      tags: ["m_wrp_in_sdlitg_scheme","transformation"]
+
+  - name: inditg_integration__sdl_csl_orderbooking_raw
+    config:
+      alias: sdl_csl_orderbooking_raw
+      tags: ["m_wrp_in_sdlitg_order","transformation"]
+
+  - name: inditg_integration__sdl_csl_salesinvoiceorders_raw
+    config:
+      alias: sdl_csl_salesinvoiceorders_raw
+      tags: ["m_wrp_in_sdlitg_order","transformation"]
