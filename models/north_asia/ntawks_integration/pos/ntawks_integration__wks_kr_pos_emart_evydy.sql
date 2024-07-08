@@ -7,7 +7,7 @@ sdl_kr_pos_emart_evydy_header as (
 ),
 final as (
 select
- cast(h.mesg_date as date) as mesg_date,
+ to_date(h.mesg_date, 'yyyymmdd') as mesg_date,
 h.mesg_code,
 h.mesg_func_code,
 h.send_date,

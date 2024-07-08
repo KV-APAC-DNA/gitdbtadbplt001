@@ -1,6 +1,6 @@
 with sdl_kr_pos_emart_ecvan as 
 (
-    select * from {{ ref('ntawks_integration__sdl_wks_kr_pos_emart_ecvan') }}
+    select * from {{ ref('ntawks_integration__wks_sdl_kr_pos_emart_ecvan') }}
 ),
 final as
 (   
