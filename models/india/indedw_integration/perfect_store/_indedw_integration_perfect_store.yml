@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: indedw_integration__v_rpt_in_perfect_store
+    config: 
+        alias: v_rpt_in_perfect_store
+        tags: ['pop6_edw_load', 'transformation']
+
+  - name: indedw_integration__rpt_in_perfect_store
+    config: 
+        alias: rpt_in_perfect_store
+        tags: ['pop6_edw_load', 'transformation']
+    

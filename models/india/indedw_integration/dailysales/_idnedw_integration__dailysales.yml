@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indedw_integration__edw_dailysales_fact
-    config:
-      alias: edw_dailysales_fact
-      tags: ["in_edw_sales_order","transformation"]

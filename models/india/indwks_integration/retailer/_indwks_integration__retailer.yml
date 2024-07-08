@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: indwks_integration__wks_retailermaster_upd
-    config: 
-      alias: wks_retailermaster_upd
-      tags: ["in_edw_retailer_dim","transformation"]

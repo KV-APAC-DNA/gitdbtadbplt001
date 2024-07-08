@@ -4,20 +4,20 @@ models:
   - name: ntaedw_integration__edw_sls_rep_dim
     config: 
       alias: edw_sls_rep_dim
-      tags: ["","transformation"]
+      tags: ["edw_ims_fact_load","transformation"]
   - name: ntaedw_integration__edw_vw_sls_rep_dim
     config: 
       alias: edw_vw_sls_rep_dim
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__vw_indir_route_plan_week_map
     config:
         alias: vw_indir_route_plan_week_map
-        tags: []
+        tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__vw_dir_route_plan_week_map
     config:
         alias: vw_dir_route_plan_week_map
-        tags: []
+        tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_sales_rep_route_plan
     config:
         alias: edw_sales_rep_route_plan
-        tags: []
+        tags: ["hk_ims_wingkeung_sales_rep_route_plan","transformation"]
