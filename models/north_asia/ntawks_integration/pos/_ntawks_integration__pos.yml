@@ -189,3 +189,15 @@ models:
     config:
       alias: wks_kr_pos_emart_evydy
       tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_emart_evydy
+    config:
+      alias: wks_itg_pos_emart_evydy
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart
+    config:
+      alias: wks_kr_pos_emart
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart_ecvan
+    config:
+      alias: wks_kr_pos_emart_ecvan
+      tags: ["kr_pos","ingestion"]

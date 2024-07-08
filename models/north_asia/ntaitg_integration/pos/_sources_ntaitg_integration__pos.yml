@@ -13,6 +13,8 @@ sources:
         tags: ["","ingestion"]     
       - name: sdl_kr_pos_emart_evydy_line
         tags: ["","ingestion"]
+      - name: sdl_kr_pos_emart_line
+      - name: sdl_kr_pos_emart_header
       - name: sdl_hk_pos_scorecard_mannings
       - name: sdl_tw_pos_watson_store
         tags: ["tw_pos_watson","ingestion"]
