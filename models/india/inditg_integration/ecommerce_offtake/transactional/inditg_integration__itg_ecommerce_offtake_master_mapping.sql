@@ -14,7 +14,7 @@ final as
     map.ean from ( select row_number() over(partition by account_name,account_sku_code,ean order by account_sku_code) as rownum,
     load_date,
     source_file_name,
-    account_name,
+    trim(account_name) as account_name,
     account_sku_code,
     sku_name_in_file,
     brand_name,
