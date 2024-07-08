@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('jpndcledw_integration', 'kr_new_stage_point') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kr_new_stage_point
 ),
 
 final as

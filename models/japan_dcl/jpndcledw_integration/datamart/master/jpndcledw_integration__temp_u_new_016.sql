@@ -2,7 +2,7 @@ with temp_kesai_016 as(
     select * from {{ ref('jpndcledw_integration__temp_kesai_016') }} 
 ),
 cld_m as(
-    select * from {{ source('jpndcledw_integration', 'cld_m') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
 ),
 transformed as(
 SELECT kokyano,

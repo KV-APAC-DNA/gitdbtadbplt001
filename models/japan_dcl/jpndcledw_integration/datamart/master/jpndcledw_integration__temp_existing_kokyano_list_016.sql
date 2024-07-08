@@ -2,7 +2,7 @@ with kesai_h_data_mart_mv as(
     select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
 ),
 cim01kokya as(
-    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
 ),
 kesai_m_data_mart_mv as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}

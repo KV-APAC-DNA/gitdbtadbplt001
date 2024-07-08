@@ -4,7 +4,7 @@ as (
     ),
 cld_m
 as (
-    select * from {{ source('jpndcledw_integration', 'cld_m') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
     ),
 transformed
 as (

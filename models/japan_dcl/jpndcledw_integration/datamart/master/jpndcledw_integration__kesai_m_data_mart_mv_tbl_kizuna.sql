@@ -5,7 +5,7 @@
 }}
 
 with kesai_m_data_mart_sub_old as(
-    select * from {{ source('jpndcledw_integration', 'kesai_m_data_mart_sub_old') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_m_data_mart_sub_old
 ),
 kesai_m_data_mart_sub_kizuna as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_kizuna') }}
@@ -14,7 +14,7 @@ kesai_h_data_mart_sub_kizuna as(
     select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
 ),
 kesai_m_data_mart_sub_old_chsi as(
-    select * from {{ source('jpndcledw_integration', 'kesai_m_data_mart_sub_old_chsi') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_m_data_mart_sub_old_chsi
 ),
 
 union1 as(

@@ -1,5 +1,5 @@
 with KR_THIS_STAGE_POINT_RESCUE as(
-    select * from {{ source('jpndcledw_integration', 'kr_this_stage_point_rescue') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_RESCUE
 ),
 C_TBMEMBUNITREL as(
     select * from {{ ref('jpndclitg_integration__c_tbmembunitrel') }}

@@ -5,7 +5,7 @@ c_tbecinquire as(
     select * from {{ ref('jpndclitg_integration__c_tbecinquire') }} 
 ),
 tt01_henpin_riyu as(
-    select * from {{ source('jpndcledw_integration', 'tt01_henpin_riyu') }} 
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt01_henpin_riyu
 ),
 inquirekesai as (
     select k.c_dikesaiid as c_dikesaiid_before,

@@ -17,7 +17,7 @@ tbecorder as(
     select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 kesai_h_data_mart_sub_n_rirek as(
-    select * from {{ source('jpndcledw_integration', 'kesai_h_data_mart_sub_n_rirek') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_h_data_mart_sub_n_rirek
 ),
 c_tbecprivilegekesaihistory as(
     select * from {{ ref('jpndclitg_integration__c_tbecprivilegekesaihistory') }}

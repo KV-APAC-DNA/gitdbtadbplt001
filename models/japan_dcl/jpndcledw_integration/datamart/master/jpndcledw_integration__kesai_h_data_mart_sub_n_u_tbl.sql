@@ -17,13 +17,13 @@ tbecorder as(
     select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 KEIROKBN as(
-    select * from {{ source('jpndcledw_integration', 'keirokbn') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KEIROKBN
 ),
 kesai_h_data_mart_sub_n_rirek as(
-    select * from {{ source('jpndcledw_integration', 'kesai_h_data_mart_sub_n_rirek') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_h_data_mart_sub_n_rirek
 ),
 hanyo_attr as(
-    select * from {{ source('jpndcledw_integration', 'hanyo_attr') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.hanyo_attr
 ),
 kesaiid_dummy as(
     select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}

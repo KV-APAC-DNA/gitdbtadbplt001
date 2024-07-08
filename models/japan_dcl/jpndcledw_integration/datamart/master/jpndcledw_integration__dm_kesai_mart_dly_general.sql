@@ -12,7 +12,7 @@ kesai_m_data_mart_mv_kizuna as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
 ),
 cim01kokya as(
-    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
 ),
 tbpromotion as(
     select * from {{ ref('jpndclitg_integration__tbpromotion') }}
@@ -21,25 +21,25 @@ c_tbecclient as(
     select * from {{ ref('jpndclitg_integration__c_tbecclient') }}
 ),
 cld_m as(
-    select * from {{ source('jpndcledw_integration', 'cld_m') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
 ),
 TEIKIKEIYAKU_DATA_MART_UNI as(
-    select * from {{ source('jpndcledw_integration', 'teikikeiyaku_data_mart_uni') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_UNI
 ),
 SYOUHINCD_HENKAN_QV as(
-    select * from {{ source('jpndcledw_integration', 'syouhincd_henkan_qv') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.SYOUHINCD_HENKAN_QV
 ),
 TM14SHKOS_QV as(
-    select * from {{ source('jpndcledw_integration', 'tm14shkos_qv') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM14SHKOS_QV
 ),
 CIM08SHKOS_BUNKAI_QV as(
-    select * from {{ source('jpndcledw_integration', 'cim08shkos_bunkai_qv') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM08SHKOS_BUNKAI_QV
 ),
 TM13ITEM_QV as(
-    select * from {{ source('jpndcledw_integration', 'tm13item_qv') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM13ITEM_QV
 ),
 kr_frequency_1yn_900_kizuna as(
-    select * from {{ source('jpndcledw_integration', 'kr_frequency_1yn_900_kizuna') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kr_frequency_1yn_900_kizuna
 ),
 prev_ship AS (
     SELECT kokyano,

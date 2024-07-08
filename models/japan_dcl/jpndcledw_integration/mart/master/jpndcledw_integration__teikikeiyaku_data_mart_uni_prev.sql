@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ source('jpndcledw_integration', 'teikikeiyaku_data_mart_uni') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.teikikeiyaku_data_mart_uni
 ),
 
 final as

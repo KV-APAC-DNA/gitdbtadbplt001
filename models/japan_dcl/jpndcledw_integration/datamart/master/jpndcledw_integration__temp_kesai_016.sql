@@ -3,16 +3,16 @@ with kesai_h_data_mart_mv as(
    -- TO_DATE(CAST(date_column AS STRING), 'YYYYMMDD') 
 ),
 cim01kokya as(
-    select * from {{ source('jpndcledw_integration', 'cim01kokya') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
 ),
 kokyano_list_016_manual as(
-    select * from {{ source('jpndcledw_integration', 'kokyano_list_016_manual') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kokyano_list_016_manual
 ),
 kesai_m_data_mart_mv as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }} 
 ),
 cld_m as(
-    select * from {{ source('jpndcledw_integration', 'cld_m') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
 ),
 kokyano_list AS (
     SELECT kokyano

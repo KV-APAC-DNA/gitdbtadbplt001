@@ -5,19 +5,19 @@ AS (
     ),
 item_sap_v
 AS (
-    select * from {{ source('jpndcledw_integration', 'item_sap_v') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_sap_v
     ),
 item_bunrval_v
 AS (
-    select * from {{ source('jpndcledw_integration', 'item_bunrval_v') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_bunrval_v
     ),
 zaiko_shohin_attr
 AS (
-    select * from {{ source('jpndcledw_integration', 'zaiko_shohin_attr') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.zaiko_shohin_attr
     ),
 cim03item_zaiko_ikou_kizuna
 AS (
-      select * from {{ source('jpndcledw_integration', 'cim03item_zaiko_ikou_kizuna') }}
+      select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_bunrval_v
     ),
 c_tbecprivilegemst
 AS (
