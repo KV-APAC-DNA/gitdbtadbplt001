@@ -8,7 +8,7 @@
 
 with source as
 (
-    select * from dev_dna_load.snapindsdl_raw.sdl_csl_salesinvoiceorders
+    select * from {{ source('indsdl_raw', 'sdl_csl_salesinvoiceorders') }}
 ),
 final as
 (
