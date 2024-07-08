@@ -305,6 +305,7 @@ sources:
       - name: edw_in_invoice_fact_temp
       - name: edw_msl_spike_mi_msku_list 
       - name: edw_ecommerce_offtake
+      - name: edw_ka_sales_fact_temp
   - name: indwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: indwks_integration

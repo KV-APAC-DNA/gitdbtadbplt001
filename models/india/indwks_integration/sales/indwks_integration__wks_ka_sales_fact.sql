@@ -1,10 +1,15 @@
+{{
+    config(
+        pre_hook = "{{build_edw_ka_sales_fact_temp()}}"
+    )
+}}
 with itg_keyaccountsales as
 (
     select * from {{ ref('inditg_integration__itg_keyaccountsales') }}
 ),
 edw_ka_sales_fact as 
 (
-    select * from indedw_integration.edw_ka_sales_fact
+    select * from {{ source('indedw_integration', 'edw_ka_sales_fact_temp') }}
 ),
 final as
 (
