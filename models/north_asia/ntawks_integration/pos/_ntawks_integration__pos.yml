@@ -85,22 +85,18 @@ models:
     config: 
       alias: wks_itg_pos_cust_prod_cd_ean_map
       tags: ["na_mds_sdl_itg_load","ingestion"]
-
   - name: ntawks_integration__wks_itg_pos_promotional_price_map
     config: 
       alias: wks_itg_pos_promotional_price_map
       tags: ["na_mds_sdl_itg_load","ingestion"]
-
   - name: ntawks_integration__wks_itg_pos_str_cd_sold_to_map
     config: 
       alias: wks_itg_pos_str_cd_sold_to_map
       tags: ["na_mds_sdl_itg_load","ingestion"]
-
   - name: ntawks_integration__wks_edw_pos_inventory_fact
     config: 
       alias: wks_edw_pos_inventory_fact
       tags: ["tw_pos","transformation"]
-
   - name: ntawks_integration__wks_itg_pos_7eleven
     config:
       alias: wks_itg_pos_7eleven
@@ -189,3 +185,23 @@ models:
     config:
       alias: wks_pos_prc_condition_map
       tags: ["kr_pos_edw_load","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart_evydy
+    config:
+      alias: wks_kr_pos_emart_evydy
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_itg_pos_emart_evydy
+    config:
+      alias: wks_itg_pos_emart_evydy
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart
+    config:
+      alias: wks_kr_pos_emart
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_kr_pos_emart_ecvan
+    config:
+      alias: wks_kr_pos_emart_ecvan
+      tags: ["kr_pos","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_pos_emart_ecvan
+    config:
+      alias: wks_sdl_kr_pos_emart_ecvan
+      tags: ["kr_pos","ingestion"]

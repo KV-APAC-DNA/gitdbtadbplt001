@@ -1,5 +1,5 @@
 with WKS_HONG_KONG_REGIONAL_SELLOUT as (
-    select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_HONG_KONG_REGIONAL_SELLOUT
+    select * from {{ ref('ntawks_integration__wks_hong_kong_regional_sellout') }}
 ),
 transformed as (
 SELECT *,

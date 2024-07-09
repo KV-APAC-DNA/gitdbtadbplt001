@@ -1,10 +1,10 @@
 with edw_vw_pop6_store as 
 (
-     select * from {{ ref('ntaedw_integration__edw_vw_pop6_store') }}
+     select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 edw_vw_store_master_rex_pop6 as 
 (
-    select * from {{ ref('ntaedw_integration__edw_vw_store_master_rex_pop6') }}
+    select * from {{ ref('aspedw_integration__edw_vw_store_master_rex_pop6') }}
 ),
 edw_customer_base_dim as 
 (

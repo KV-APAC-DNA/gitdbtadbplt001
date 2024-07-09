@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: sgpedw_integration__v_rpt_sg_pop6_perfect_store
+    config: 
+        alias: v_rpt_sg_pop6_perfect_store
+        tags: ['pop6_views', 'transformation']

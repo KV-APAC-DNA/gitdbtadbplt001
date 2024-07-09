@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_fin_sim_plandata
+      tags: ["in_finance_simulator_plandata_ingetion","transformation"]
+    - name: sdl_fin_sim_miscdata
+      tags: ["in_finance_simulator_miscdata_ingetion","transformation"]
