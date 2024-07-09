@@ -4,4 +4,4 @@ models:
   - name: inditg_integration__itg_rpurchasedetail
     config: 
       alias: itg_rpurchasedetail
-      tags: ["m_wrp_in_sdlitg_tblf","ingestion"]
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
