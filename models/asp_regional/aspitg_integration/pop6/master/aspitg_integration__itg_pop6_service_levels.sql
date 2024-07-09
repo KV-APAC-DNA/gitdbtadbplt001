@@ -23,7 +23,7 @@ sdl_pop6_hk_service_levels as
 
 sdl_pop6_jp_service_levels as
 (
-	select * {{ ref('aspwks_integration__wks_pop6_jp_service_levels') }}
+	select * from {{ ref('aspwks_integration__wks_pop6_jp_service_levels') }}
 ),
 
 sdl_pop6_sg_service_levels as

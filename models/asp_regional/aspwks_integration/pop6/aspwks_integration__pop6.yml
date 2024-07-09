@@ -433,3 +433,7 @@ models:
     config:
       alias: wks_pop6_tw_product_group_lists
       tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_product_groups_lists
+    config:
+      alias: wks_pop6_hk_product_groups_lists
+      tags: ["pop6_master_load", "ingestion"]

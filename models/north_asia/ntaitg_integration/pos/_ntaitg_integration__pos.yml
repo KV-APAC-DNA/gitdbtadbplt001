@@ -56,7 +56,7 @@ models:
   - name: ntaitg_integration__itg_pos
     config:
       alias: itg_pos
-      tags: ["tw_pos","transformation"]
+      tags: ["tw_pos","kr_pos","hk_pos","transformation"]
   - name: ntaitg_integration__itg_pos_invnt
     config:
       alias: itg_pos_invnt
