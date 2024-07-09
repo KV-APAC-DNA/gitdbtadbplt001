@@ -445,3 +445,11 @@ models:
     config:
       alias: wks_pop6_hk_service_levels
       tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_groups_lists
+    config:
+      alias: wks_pop6_tw_product_groups_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_service_levels
+    config:
+      alias: wks_pop6_sg_service_levels
+      tags: ["pop6_master_load", "ingestion"]
