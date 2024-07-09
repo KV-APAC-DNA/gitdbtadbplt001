@@ -555,8 +555,16 @@ models:
     japan:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
+      jpnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNEDW_INTEGRATION
+      jpnwks_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNWKS_INTEGRATION
