@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_hcp_targets
+      tags: ["in_hcp360_mds_data_refresh","transformation"]
