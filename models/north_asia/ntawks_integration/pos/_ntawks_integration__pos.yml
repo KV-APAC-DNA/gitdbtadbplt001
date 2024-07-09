@@ -196,7 +196,7 @@ models:
   - name: ntawks_integration__wks_kr_pos_emart
     config:
       alias: wks_kr_pos_emart
-      tags: ["kr_pos","ingestion"]
+      tags: ["kr_pos_off","ingestion"]
   - name: ntawks_integration__wks_kr_pos_emart_ecvan
     config:
       alias: wks_kr_pos_emart_ecvan
