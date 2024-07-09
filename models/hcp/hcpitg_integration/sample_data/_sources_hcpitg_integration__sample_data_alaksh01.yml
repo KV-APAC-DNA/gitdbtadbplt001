@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_hcp360_in_ventasys_sampledata
+      tags: ["in_ventasys_sampledata_ingestion","ingestion"]
