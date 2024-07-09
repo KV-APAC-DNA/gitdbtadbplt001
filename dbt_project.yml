@@ -552,3 +552,11 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+    japan:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      jpnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNITG_INTEGRATION
