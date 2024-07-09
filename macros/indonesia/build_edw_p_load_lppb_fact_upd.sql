@@ -435,6 +435,148 @@
             {{ log("Execute edw_all_distributor_lppb_fact table load") }}
             {% do run_query(delete_from_edw_query) %}
         {% endfor %}
+
+        {% set get_stock_data %}
+        select distinct dstrbtr_grp_cd,jj_mnth_id from {{ source('idnwks_integration', 'wks_itg_all_distributor_stock') }}
+        order by dstrbtr_grp_cd,jj_mnth_id;
+        {% endset %}
+        {{ log("Try to execute the query to fetch the distributor group & month ") }}
+        {{ log("===============================================================================================") }}
+        {% set get_stock_data_result = run_query(get_stock_data) %}
+        {% if execute %}
+                {% set results_list = get_stock_data_result.rows %}
+            {% else %}
+                {% set results_list = [] %}
+            {% endif %}
+        {{ log("Try to execute the query to fetch the run loop ") }}
+        {{ log("===============================================================================================") }}
+        {% for i in results_list %}
+            {% set insert_stock_data %}
+                create or replace temporary table wks_lppb_fact_dist_grp_stock 
+                      as 
+                      select distinct dstrbtr_grp_cd,jj_mnth_id from {{ source('idnwks_integration', 'wks_itg_all_distributor_stock') }}
+                      where upper(trim(dstrbtr_grp_cd))=upper(trim('{{ i[0] }}'))
+                      and jj_mnth_id='{{ i[1] }}';
+                
+                delete
+                from {% if target.name=='prod' %}
+                    idnedw_integration.edw_all_distributor_lppb_fact
+                {% else %}
+                    {{schema}}.idnedw_integration__edw_all_distributor_lppb_fact
+                {% endif %}
+                where (upper(trim(jj_sap_dstrbtr_id)),jj_mnth_id) in (select distinct upper(trim(dim.jj_sap_dstrbtr_id)),stk.jj_mnth_id from wks_lppb_fact_dist_grp_stock stk,{{ source('idnwks_integration', 'wks_itg_all_distributor_stock_master') }} dim
+                where upper(trim(stk.dstrbtr_grp_cd)) = upper(trim(dim.dstrbtr_grp_cd)) 
+                and stk.jj_mnth_id = dim.jj_mnth_id)
+                and upper(trim(identifier))='INVENTORY';
+
+                insert into {% if target.name=='prod' %}
+                    idnedw_integration.edw_all_distributor_lppb_fact
+                {% else %}
+                    {{schema}}.idnedw_integration__edw_all_distributor_lppb_fact
+                {% endif %}
+                (
+                IDENTIFIER,
+                REC_KEY,
+                CUST_PROD_CD,
+                JJ_MNTH_ID,
+                JJ_SAP_DSTRBTR_ID,
+                DSTRBTR_GRP_CD,
+                JJ_SAP_PROD_ID,
+                SELLIN_QTY,
+                SELLOUT_QTY,
+                STRT_INV_QTY,
+                END_INV_QTY,
+                SELLIN_VAL,
+                GROSS_SELLIN_VAL,
+                SELLOUT_VAL,
+                GROSS_SELLOUT_VAL,
+                STRT_INV_VAL,
+                END_INV_VAL,
+                GROSS_STRT_INV_VAL,
+                GROSS_END_INV_VAL,
+                STOCK_ON_HAND_QTY,
+                STOCK_ON_HAND_VAL,
+                SALEABLE_STOCK_QTY,
+                SALEABLE_STOCK_VALUE,
+                NON_SALEABLE_STOCK_QTY,
+                NON_SALEABLE_STOCK_VALUE,
+                CRTD_DTTM,
+                UPTD_DTTM
+                )
+                SELECT IDENTIFIER,
+                    JJ_MNTH_ID||TRIM(UPPER(JJ_SAP_DSTRBTR_ID)) ||TRIM(UPPER(JJ_SAP_PROD_ID)) AS REC_KEY,
+                    TRIM(UPPER(JJ_SAP_DSTRBTR_ID)) ||TRIM(UPPER(JJ_SAP_PROD_ID)) AS CUST_PROD_CD,
+                    JJ_MNTH_ID,
+                    TRIM(UPPER(JJ_SAP_DSTRBTR_ID)) AS JJ_SAP_DSTRBTR_ID,
+                    TRIM(UPPER(DSTRBTR_GRP_CD)) AS DSTRBTR_GRP_CD,
+                    TRIM(UPPER(JJ_SAP_PROD_ID)) AS JJ_SAP_PROD_ID,
+                    SUM(SELLIN_QTY) AS SELLIN_QTY,
+                    SUM(SELLOUT_QTY) AS SELLOUT_QTY,
+                    SUM(STRT_INV_QTY) AS STRT_INV_QTY,
+                    SUM(STRT_INV_QTY + SELLIN_QTY - SELLOUT_QTY) AS END_INV_QTY,
+                    SUM(SELLIN_VAL) AS SELLIN_VAL,
+                    SUM(GROSS_SELLIN_VAL) AS GROSS_SELLIN_VAL,
+                    SUM(SELLOUT_VAL) AS SELLOUT_VAL,
+                    SUM(GROSS_SELLOUT_VAL) AS GROSS_SELLOUT_VAL,
+                    SUM(STRT_INV_VAL) AS STRT_INV_VAL,
+                    SUM(STRT_INV_VAL + SELLIN_VAL - SELLOUT_VAL) AS END_INV_VAL,
+                    SUM(GROSS_STRT_INV_VAL) AS GROSS_STRT_INV_VAL,
+                    SUM(GROSS_STRT_INV_VAL + GROSS_SELLIN_VAL - GROSS_SELLOUT_VAL) AS GROSS_END_INV_VAL,
+                    SUM(STOCK_ON_HAND_QTY) AS STOCK_ON_HAND_QTY,
+                    SUM(STOCK_ON_HAND_VAL) AS STOCK_ON_HAND_VAL,
+                    SUM(SALEABLE_STOCK_QTY) AS SALEABLE_STOCK_QTY,
+                    SUM(SALEABLE_STOCK_VALUE) AS SALEABLE_STOCK_VALUE,
+                    SUM(NON_SALEABLE_STOCK_QTY) AS NON_SALEABLE_STOCK_QTY,
+                    SUM(NON_SALEABLE_STOCK_VALUE) AS NON_SALEABLE_STOCK_VALUE,
+                    MAX(convert_timezone('UTC',current_timestamp())::timestamp_ntz),
+                    MAX(CAST(NULL AS TIMESTAMP))
+                FROM (SELECT 'INVENTORY' AS IDENTIFIER,
+                            CAST(M.JJ_MNTH_ID AS VARCHAR) AS JJ_MNTH_ID,
+                            T1.JJ_SAP_DSTRBTR_ID,
+                            DIM.DSTRBTR_GRP_CD,
+                            T1.JJ_SAP_PROD_ID,
+                            SUM(0) AS SELLIN_QTY,
+                            SUM(0) AS SELLOUT_QTY,
+                            SUM(0) AS STRT_INV_QTY,
+                            SUM(0) AS END_INV_QTY,
+                            SUM(0) AS SELLIN_VAL,
+                            SUM(0) AS GROSS_SELLIN_VAL,
+                            SUM(0) AS SELLOUT_VAL,
+                            SUM(0) AS GROSS_SELLOUT_VAL,
+                            SUM(0) AS STRT_INV_VAL,
+                            SUM(0) AS END_INV_VAL,
+                            SUM(0) AS GROSS_STRT_INV_VAL,
+                            SUM(0) AS GROSS_END_INV_VAL,
+                            SUM(T1.TOT_STOCK) AS STOCK_ON_HAND_QTY,
+                            SUM(T1.STOCK_VAL) AS STOCK_ON_HAND_VAL,
+                            SUM(T1.SALEABLE_STOCK_QTY) AS SALEABLE_STOCK_QTY,
+                            SUM(T1.SALEABLE_STOCK_VALUE) AS SALEABLE_STOCK_VALUE,
+                            SUM(T1.NON_SALEABLE_STOCK_QTY) AS NON_SALEABLE_STOCK_QTY,
+                            SUM(T1.NON_SALEABLE_STOCK_VALUE) AS NON_SALEABLE_STOCK_VALUE
+                    FROM {{ source('idnwks_integration', 'wks_itg_all_distributor_stock') }} T1,
+                        {{ ref('idnwks_integration__wks_itg_all_distributor_stock_master') }} DIM,
+                        wks_lppb_fact_dist_grp_stock M
+                    WHERE (UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)),T1.JJ_MNTH_ID,T1.JJ_WK) IN (SELECT UPPER(TRIM(JJ_SAP_DSTRBTR_ID)),JJ_MNTH_ID,MAX(JJ_WK) 
+                    FROM {{ source('idnwks_integration', 'wks_itg_all_distributor_stock') }} WHERE JJ_MNTH_ID >= '201501' GROUP BY UPPER(TRIM(JJ_SAP_DSTRBTR_ID)),JJ_MNTH_ID)
+                    AND   T1.JJ_MNTH_ID = M.JJ_MNTH_ID
+                    AND   M.JJ_MNTH_ID = DIM.JJ_MNTH_ID
+                    AND   T1.JJ_MNTH_ID >= '201501'
+                    AND   UPPER(TRIM(T1.JJ_SAP_DSTRBTR_ID)) = UPPER(TRIM(DIM.JJ_SAP_DSTRBTR_ID))
+                    AND   UPPER(TRIM(DIM.DSTRBTR_GRP_CD)) = UPPER(TRIM(M.DSTRBTR_GRP_CD))
+                    GROUP BY M.JJ_MNTH_ID, T1.JJ_SAP_DSTRBTR_ID,DIM.DSTRBTR_GRP_CD,T1.JJ_SAP_PROD_ID)
+                GROUP BY IDENTIFIER,
+                        JJ_MNTH_ID||JJ_SAP_DSTRBTR_ID||JJ_SAP_PROD_ID,
+                        JJ_SAP_DSTRBTR_ID||JJ_SAP_PROD_ID,
+                        JJ_MNTH_ID,
+                        JJ_SAP_DSTRBTR_ID,
+                        DSTRBTR_GRP_CD,
+                        JJ_SAP_PROD_ID;
+                
+            {% endset %}
+            {{ log("Execute edw_all_distributor_lppb_fact stock data load") }}
+            {% do run_query(insert_stock_data) %}
+        {% endfor %}
+        
         {% set delete_from_query %}
         delete from {% if target.name=='prod' %}
                     idnedw_integration.edw_all_distributor_lppb_fact
