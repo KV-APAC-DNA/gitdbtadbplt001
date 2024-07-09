@@ -1,0 +1,25 @@
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: jp_pos_daily_aeon
+        tags: ["","ingestion"]
+      - name: jp_pos_daily_csms
+        tags: ["","ingestion"]
+
+      - name: jp_pos_daily_wlca
+        tags: ["", "ingestion"]
+      - name: jp_pos_daily_others
+        tags: ["", "ingestion"]
+      - name: jp_pos_daily_dnki
+        tags: ["", "ingestion"]
+      - name: jp_pos_daily_tsur
+        tags: ["", "ingestion"]
+
+      - name: jp_pos_daily_sugi
+        tags: ["", "ingestion"]

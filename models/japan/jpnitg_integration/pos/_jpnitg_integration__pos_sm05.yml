@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__jp_pos_daily
+    config:
+        alias: jp_pos_daily
+        tags: ["pop6_master_load","ingestion"]
