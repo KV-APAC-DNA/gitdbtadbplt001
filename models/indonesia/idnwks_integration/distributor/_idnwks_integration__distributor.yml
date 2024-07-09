@@ -18,7 +18,6 @@ models:
     config:
       alias: wks_itg_all_distributor_stock_master
       tags: ["id_noo_analysis","transformation"]
-  
   # - name: idnwks_integration__wks_dnr_raw_sellout_sales_fact
   #   config:
   #     alias: wks_dnr_raw_sellout_sales_fact

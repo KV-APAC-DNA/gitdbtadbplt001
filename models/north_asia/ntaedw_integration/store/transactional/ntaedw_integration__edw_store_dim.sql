@@ -1,7 +1,6 @@
 with edw_vw_store_dim as (
-from 
-	select * from ref{{('ntaedw_integration__edw_vw_store_dim')}}
-)
+	select * from {{ ref('ntaedw_integration__edw_vw_store_dim')}}
+),
 final as (
     select
         ctry_cd::varchar(5) as ctry_cd,

@@ -3,69 +3,137 @@ version: 2
 models:
   - name: ntaitg_integration__itg_tw_pos_watson_store
     config:
-        alias: itg_tw_pos_watson_store
-        tags: ["tw_pos_watson","ingestion"]
+      alias: itg_tw_pos_watson_store
+      tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__sdl_raw_tw_pos_watson_store
     config:
-        alias: sdl_raw_tw_pos_watson_store
-        tags: ["tw_pos_watson","ingestion"]
+      alias: sdl_raw_tw_pos_watson_store
+      tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__itg_tw_strategic_cust_hier
     config:
-        alias: itg_tw_strategic_cust_hier
-        tags: ["tw_strategic_customer_hierarchy","ingestion"]
-
+      alias: itg_tw_strategic_cust_hier
+      tags: ["tw_strategic_customer_hierarchy","ingestion"]
   - name: ntaitg_integration__sdl_raw_tw_pos_7eleven
     config:
       alias: sdl_raw_tw_pos_7eleven
-      tags: ["tw_sfmc","transformation"]
+      tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__sdl_raw_tw_pos_poya
     config:
       alias: sdl_raw_tw_pos_poya
-      tags: ["tw_sfmc","transformation"]
-
+      tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__itg_mds_hk_pos_product_mapping
-    config: 
+    config:
       alias: itg_mds_hk_pos_product_mapping
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__itg_mds_hk_pos_promo_calendar
-    config: 
+    config:
       alias: itg_mds_hk_pos_promo_calendar
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__itg_mds_hk_ref_pos_accounts
-    config: 
+    config:
       alias: itg_mds_hk_ref_pos_accounts
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__itg_pos_cust_prod_cd_ean_map
-    config: 
+    config:
       alias: itg_pos_cust_prod_cd_ean_map
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__itg_pos_prom_prc_map
-    config: 
+    config:
       alias: itg_pos_prom_prc_map
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__itg_pos_str_cd_sold_to_map
-    config: 
+    config:
       alias: itg_pos_str_cd_sold_to_map
       tags: ["na_mds_sdl_itg_load","transformation"]
-
   - name: ntaitg_integration__sdl_raw_tw_pos_carrefour
-    config: 
+    config:
       alias: sdl_raw_tw_pos_carrefour
       tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__sdl_raw_tw_pos_ec
-    config: 
+    config:
       alias: sdl_raw_tw_pos_ec
       tags: ["tw_pos","ingestion"]
   - name: ntaitg_integration__itg_pos
-    config: 
+    config:
       alias: itg_pos
       tags: ["tw_pos","transformation"]
   - name: ntaitg_integration__itg_pos_invnt
-    config: 
-      alias: tg_pos_invnt
+    config:
+      alias: itg_pos_invnt
       tags: ["tw_pos","transformation"]
+  - name: ntaitg_integration__itg_pos_store_product
+    config:
+      alias: itg_pos_store_product
+      tags: ["uplus_ucost01_invrpt","inactive"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_costco_vmimst
+    config:
+      alias: sdl_raw_kr_pos_costco_vmimst
+      tags: ["uplus_ucost01_invrpt","inactive"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_eland
+    config:
+      alias: sdl_raw_kr_pos_eland
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_gs_super
+    config:
+      alias: sdl_raw_kr_pos_gs_super
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_homeplus
+    config:
+      alias: sdl_raw_kr_pos_homeplus
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_homeplus_online
+    config:
+      alias: sdl_raw_kr_pos_homeplus_online
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_lalavla
+    config:
+      alias: sdl_raw_kr_pos_lalavla
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_lohbs
+    config:
+      alias: sdl_raw_kr_pos_lohbs
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_lotte_mart
+    config:
+      alias: sdl_raw_kr_pos_lotte_mart
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_lotte_super
+    config:
+      alias: sdl_raw_kr_pos_lotte_super
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_olive_young
+    config:
+      alias: sdl_raw_kr_pos_olive_young
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pos_prc_condition_map
+    config:
+      alias: sdl_raw_pos_prc_condition_map
+      tags: ["j_kr_pos_prc_condition_map_wrapper","kr_master_mds_sdl_itg_load","transformation"]
+  - name: ntaitg_integration__itg_pos_prc_condition_map
+    config:
+      alias: itg_pos_prc_condition_map
+      tags: ["j_kr_pos_prc_condition_map_wrapper","kr_master_mds_sdl_itg_load","transformation"]
+  - name: ntaitg_integration__itg_pos_invoice_prc_lookup
+    config:
+      alias: itg_pos_invoice_prc_lookup
+      tags: ["kr_pos_edw_load","transformation"]
+  - name: ntaitg_integration__sdl_raw_hk_pos_scorecard_mannings
+    config:
+      alias: sdl_raw_hk_pos_scorecard_mannings
+      tags: ["hk_pos","ingestion"]
+  - name: ntaitg_integration__sdl_kr_raw_pos_emart_evydy
+    config:
+      alias: sdl_kr_raw_pos_emart_evydy
+      tags: ["kr_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_cosmed
+    config:
+      alias: sdl_raw_tw_pos_cosmed
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__sdl_raw_tw_pos_px_civila
+    config:
+      alias: sdl_raw_tw_pos_px_civila
+      tags: ["tw_pos","ingestion"]
+  - name: ntaitg_integration__vw_stg_sdl_pos_prc_condition_map
+    config:
+      alias: vw_stg_sdl_pos_prc_condition_map
+      tags: ["j_kr_pos_prc_condition_map_wrapper","ingestion"]

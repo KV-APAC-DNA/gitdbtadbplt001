@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: sdl_hk_wingkeung_sales_rep_so_tgt_fact
+        tags: ["hk_ims_wingkeung_sales_rep_sellout_target","ingestion"]     
+
+      - name: sdl_hk_wingkeung_direct_sales_rep_route_plan
+        tags: ["hk_ims_wingkeung_sales_rep_route_plan","ingestion"]          
+
+      - name: sdl_hk_wingkeung_indirect_sales_rep_route_plan
+        tags: ["hk_ims_wingkeung_sales_rep_route_plan","ingestion"]          

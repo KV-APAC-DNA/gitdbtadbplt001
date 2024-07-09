@@ -12,10 +12,10 @@ itg_ims_dstr_cust_attr as (
 select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from {{ source('aspitg_integration', 'itg_mds_ap_customer360_config') }}
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 edw_vw_pop6_store as (
-select * from {{ source('ntaedw_integration', 'edw_vw_pop6_store') }}
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 itg_query_parameters as (
 select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}

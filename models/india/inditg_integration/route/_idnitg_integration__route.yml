@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_rcustomerroute
+    config:
+      alias: itg_in_rcustomerroute
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__sdl_raw_in_retailer_route
+    config:
+      alias: sdl_raw_in_retailer_route
+      tags: ["in_sdlitg_gtsales","ingestion"]

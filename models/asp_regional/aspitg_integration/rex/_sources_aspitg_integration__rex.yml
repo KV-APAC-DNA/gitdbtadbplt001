@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: prodtr_producttranslation
+      - name: mrchr_responses
+      - name: mrchr_merchandisingresponse
+      - name: prod_product
+      - name: prodbu_productbusinessunit
+      - name: slsp_salesperson
+      - name: vst_visit
+      - name: cust_customer
+      - name: ms_mastersurvey
+      - name: slsc_mastertasks
+      - name: slsc_salescampaign
+      - name: slsc_targetgroups
+      - name: slscyc_salescycle
+      - name: sr_response_values
+      - name: sr_responses
+      - name: sr_surveyresponse
+      - name: tgtg_items
+      - name: tgtg_targetgroup
+      - name: tsk_task

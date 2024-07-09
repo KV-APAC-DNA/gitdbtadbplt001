@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_kr_gt_food_ws
+    config:
+      alias: itg_kr_gt_food_ws
+      tags: ["gt_sellout_food_ws_cust_dim","ingestion"]
