@@ -5,11 +5,13 @@ with id_edw_rpt_retail_excellence_summary_base as (
 itg_query_parameters as (
     select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
 ),
+
+
 --Final CTE
 id_edw_rpt_retail_excellence_summary as (
     SELECT FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        data_src,
        FLAG_AGG_DIM_KEY,
@@ -89,7 +91,7 @@ SYSDATE() as crt_dttm		--// SYSDATE
                   -- FROM ID_EDW.EDW_RPT_ID_RE_SUMMARY_BASE)
 GROUP BY FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        FLAG_AGG_DIM_KEY,
        data_src,
@@ -128,7 +130,7 @@ final as(
     select
     fisc_yr::VARCHAR(11) as fisc_yr
     ,fisc_per::numeric(18,0) as fisc_per        
-    ,cluster::VARCHAR(100) as cluster
+    ,"cluster"::VARCHAR(100) as "cluster"
     ,market::VARCHAR(50) as market  
     ,data_src::VARCHAR(14) as   data_src    
     ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    
