@@ -11,7 +11,7 @@ sources:
     tables:
     - name: sdl_acct_nielsencode_mapping
       tags: ["j_pac_iri_scan_sales_etl_framework","ingestion"]
-    - name: sdl_mds_pacific_cust_attrb
+    - name: sdl_mds_pacific_cust_attrb_temp
       tags: ["anz_mds_sdl_to_edw_load","ingestion"]
       tests:
           - test_duplicate:
