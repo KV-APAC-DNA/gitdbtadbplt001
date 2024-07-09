@@ -35,37 +35,34 @@ v_rpt_my_perfect_store as (
     select * from {{ ref('mysedw_integration__v_rpt_my_perfect_store') }}
 ),
 edw_sku_recom as (
-    select * from indedw_integration.edw_sku_recom
+    select * from {{ source('indedw_integration', 'edw_sku_recom') }}
 ),
 itg_udcdetails as (
-    select * from inditg_integration.itg_udcdetails
+    select * from {{ ref('inditg_integration__itg_udcdetails') }}
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
-),
-edw_sku_recom as (
-    select * from indedw_integration.edw_sku_recom
 ),
 edw_vw_ps_weights as (
     select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 itg_in_perfectstore_msl as (
-    select * from inditg_integration.itg_in_perfectstore_msl
+    select * from {{ ref('inditg_integration__itg_in_perfectstore_msl') }}
 ),
 edw_product_key_attributes as (
     select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_in_perfectstore_sos as (
-    select * from inditg_integration.itg_in_perfectstore_sos
+    select * from {{ ref('inditg_integration__itg_in_perfectstore_sos') }}
 ),
 edw_vw_ps_targets as (
     select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 itg_in_perfectstore_promo as (
-    select * from inditg_integration.itg_in_perfectstore_promo
+    select * from {{ ref('inditg_integration__itg_in_perfectstore_promo') }}
 ),
 itg_in_perfectstore_paid_display as (
-    select * from inditg_integration.itg_in_perfectstore_paid_display
+    select * from {{ ref('inditg_integration__itg_in_perfectstore_paid_display') }}
 ),
 rpt_in_perfect_store as (
     select * from {{ ref('indedw_integration__rpt_in_perfect_store') }}

@@ -16,12 +16,12 @@ AS (
 edw_sku_recom_spike_msl
 AS (
     SELECT *
-    FROM indedw_integration.edw_sku_recom_spike_msl
+    FROM {{ ref('indedw_integration__edw_sku_recom_spike_msl') }}
     ),
 itg_udcdetails
 AS (
     SELECT *
-    FROM inditg_integration.itg_udcdetails
+    FROM {{ ref('inditg_integration__itg_udcdetails') }}
     ),
 edw_calendar_dim
 AS (
@@ -31,22 +31,22 @@ AS (
 itg_in_perfectstore_msl
 AS (
     SELECT *
-    FROM inditg_integration.itg_in_perfectstore_msl
+    FROM {{ ref('inditg_integration__itg_in_perfectstore_msl') }}
     ),
 itg_in_perfectstore_sos
 AS (
     SELECT *
-    FROM inditg_integration.itg_in_perfectstore_sos
+    FROM {{ ref('inditg_integration__itg_in_perfectstore_sos') }}
     ),
 itg_in_perfectstore_promo
 AS (
     SELECT *
-    FROM inditg_integration.itg_in_perfectstore_promo
+    FROM {{ ref('inditg_integration__itg_in_perfectstore_promo') }}
     ),
 itg_in_perfectstore_paid_display
 AS (
     SELECT *
-    FROM inditg_integration.itg_in_perfectstore_paid_display
+    FROM {{ ref('inditg_integration__itg_in_perfectstore_paid_display') }}
     ),
 ct1
 AS (

@@ -26,7 +26,7 @@ itg_mds_hk_ps_weights as(
 	select * from {{ ref('ntaitg_integration__itg_mds_hk_ps_weights') }} 
 ),
 itg_mds_in_ps_weights  as(
-	select * from inditg_integration.itg_mds_in_ps_weights
+	select * from {{ ref('inditg_integration__itg_mds_in_ps_weights') }}
 ),
 itg_mds_jp_ps_weights  as(
 	select * from jpnitg_integration.itg_mds_jp_ps_weights
