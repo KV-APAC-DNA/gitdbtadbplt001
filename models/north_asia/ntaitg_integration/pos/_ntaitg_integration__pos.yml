@@ -137,3 +137,19 @@ models:
     config:
       alias: vw_stg_sdl_pos_prc_condition_map
       tags: ["j_kr_pos_prc_condition_map_wrapper","ingestion"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_emart_line
+    config:
+      alias: sdl_raw_kr_pos_emart_line
+      tags: ["kr_pos","transformation"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_emart_header
+    config:
+      alias: sdl_raw_kr_pos_emart_header
+      tags: ["kr_pos","transformation"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_emart_evydy_line
+    config:
+      alias: sdl_raw_kr_pos_emart_evydy_line
+      tags: ["kr_pos","transformation"]
+  - name: ntaitg_integration__sdl_raw_kr_pos_emart_evydy_header
+    config:
+      alias: sdl_raw_kr_pos_emart_evydy_header
+      tags: ["kr_pos","transformation"]
