@@ -4,13 +4,17 @@ models:
   - name: ntaedw_integration__v_intrm_invc_trans
     config: 
         alias: v_intrm_invc_trans
-        tags: ["korea_views","transformation"]
+        tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_invc_to_nts
     config: 
         alias: v_rpt_invc_to_nts
-        tags: ["korea_views","transformation"]
+        tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_invc
     config: 
         alias: v_rpt_invc
-        tags: ["korea_views","transformation"]
+        tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_intrm_invc_sls_cust_hier
+    config: 
+        alias: v_intrm_invc_sls_cust_hier
+        tags: ["north_asia_views","transformation"]
   

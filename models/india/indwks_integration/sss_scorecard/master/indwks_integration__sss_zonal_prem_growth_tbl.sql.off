@@ -1,0 +1,58 @@
+with 
+sss_zonal_prem_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_prem_tbl') }}
+),
+trans as 
+(
+    SELECT prem_cur_yr.zone_name,
+       prem_cur_yr.mth_mm,
+       prem_cur_yr.fisc_yr as cur_yr,
+       prem_prev_yr.fisc_yr as prev_yr,
+       prem_cur_yr.month as cur_mnth ,
+       prem_prev_yr.month as prev_mnth,
+       prem_cur_yr.achievement_nr as cur_achvmnt_nr_premium,
+       prem_prev_yr.achievement_nr as prev_achvmnt_nr_premium,
+       ((prem_cur_yr.achievement_nr - prem_prev_yr.achievement_nr)/prem_prev_yr.achievement_nr)*100 AS premium_growth_percent 
+FROM (SELECT prem_cur.zone_name,
+             prem_cur.mth_mm,
+             prem_cur.fisc_yr,
+             prem_cur.month,
+             prem_cur.achievement_nr
+      FROM sss_zonal_prem_tbl prem_cur,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE prem_cur.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      ) prem_cur_yr,
+      (SELECT prem_prev.zone_name,
+              prem_prev.mth_mm,
+              prem_prev.fisc_yr,
+              prem_prev.month,
+              prem_prev.achievement_nr
+      FROM sss_zonal_prem_tbl prem_prev,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_mnth,
+                   EXTRACT(YEAR FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE prem_prev.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      AND   prem_prev.mth_mm < CASE WHEN start_mnth < 10 THEN end_year||0||end_mnth ELSE end_year||end_mnth END
+      ) prem_prev_yr
+WHERE prem_cur_yr.zone_name = prem_prev_yr.zone_name
+AND   prem_cur_yr.month = prem_prev_yr.month
+AND   prem_cur_yr.fisc_yr <> prem_prev_yr.fisc_yr
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	cur_yr::number(18,0) as cur_yr,
+	prev_yr::number(18,0) as prev_yr,
+	cur_mnth::varchar(3) as cur_mnth,
+	prev_mnth::varchar(3) as prev_mnth,
+	cur_achvmnt_nr_premium::number(38,6) as cur_achvmnt_nr_premium,
+	prev_achvmnt_nr_premium::number(38,6) as prev_achvmnt_nr_premium,
+	premium_growth_percent::number(38,4) as premium_growth_percent
+    from trans
+)
+select * from final

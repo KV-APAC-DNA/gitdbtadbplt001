@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_ecommerce_offtake_amazon
+    config:
+      alias: itg_ecommerce_offtake_amazon
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_bigbasket
+    config:
+      alias: itg_ecommerce_offtake_bigbasket
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_grofers
+    config:
+      alias: itg_ecommerce_offtake_grofers
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_firstcry
+    config:
+      alias: itg_ecommerce_offtake_firstcry
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_nykaa
+    config:
+      alias: itg_ecommerce_offtake_nykaa
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_paytm
+    config:
+      alias: itg_ecommerce_offtake_paytm
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_flipkart
+    config:
+      alias: itg_ecommerce_offtake_flipkart
+      tags: ["j_india_generic_query_execution","ingestion"]
+  - name: inditg_integration__itg_ecommerce_offtake_master_mapping
+    config:
+      alias: itg_ecommerce_offtake_master_mapping
+      tags: ["j_india_generic_query_execution","ingestion"]

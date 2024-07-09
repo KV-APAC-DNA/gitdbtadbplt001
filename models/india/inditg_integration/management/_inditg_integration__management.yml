@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_rtbl_idtmanagementupload
+    config:
+      alias: itg_rtbl_idtmanagementupload
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
