@@ -16,7 +16,7 @@ models:
   - name: inditg_integration__sdl_dailysales_del_raw
     config:
       alias: sdl_dailysales_del_raw
-      tags: ["m_wrp_in_sdlitg_gtsales","transformation"]
+      tags: ["in_sdlitg_gtsales","transformation"]
 
   - name: inditg_integration__itg_dailysales_del
     config:
