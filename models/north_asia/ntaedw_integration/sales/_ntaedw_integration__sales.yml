@@ -12,7 +12,7 @@ models:
   - name: ntaedw_integration__v_rpt_dly_plan_ims_enrich
     config: 
       alias: v_rpt_dly_plan_ims_enrich
-      tags: ["taiwan_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_kr_sales_tgt
     config: 
       alias: edw_kr_sales_tgt
@@ -24,11 +24,11 @@ models:
   - name: ntaedw_integration__v_rpt_onpack
     config: 
       alias: v_rpt_onpack
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_rpt_kr_trade_promotion
     config: 
       alias: v_rpt_kr_trade_promotion
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__edw_catg_sls_target
     config: 
       alias: edw_catg_sls_target
@@ -40,8 +40,24 @@ models:
   - name: ntaedw_integration__v_intrm_copa_tgt
     config: 
       alias: v_intrm_copa_tgt
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_sls_pln_actl_gts
     config:
       alias: v_intrm_sls_pln_actl_gts
-      tags: ["","transformation"]
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_intrm_copa_trd_prc_tp_spend
+    config: 
+      alias: v_intrm_copa_trd_prc_tp_spend
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl_nts
+    config: 
+      alias: v_intrm_sls_pln_actl_nts
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_intrm_sls_pln_actl_tp
+    config: 
+      alias: v_intrm_sls_pln_actl_tp
+      tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_rpt_tp_spnd
+    config: 
+      alias: v_rpt_tp_spnd
+      tags: ["north_asia_views","transformation"]

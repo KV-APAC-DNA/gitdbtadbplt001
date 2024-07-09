@@ -29,3 +29,7 @@ models:
     config:
       alias: wks_itg_sales_cust_prod_master
       tags: ["mds_sdl_itg_load","transformation"]
+  - name: ntawks_integration__wks_edw_ims_sls
+    config:
+      alias: wks_edw_ims_sls
+      tags: ["na_trxn_ims","transformation"]

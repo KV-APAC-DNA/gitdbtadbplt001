@@ -14,10 +14,13 @@ final as
     select
         'KR'::varchar(2) as cntry_cd,
         name::varchar(100) as sub_customer_name,
-        code::varchar(50) as sub_customer_code,
-        customer_code::varchar(50) as customer_code,
+        -- code::varchar(50) as sub_customer_code,
+        outlet_code::varchar(50) as sub_customer_code,
+        -- customer_code::varchar(50) as customer_code,1
+        sap_customer_code::varchar(50) as customer_code,
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as created_dt
     from source
-    where upper(trim(retailer_code)) = 'DEPT & DAISO'
+    -- where upper(trim(retailer_code)) = 'DEPT & DAISO'
+    where upper(trim(replace(retailer, '{}', ''))) = 'DEPT & DAISO'
 )
 select * from final

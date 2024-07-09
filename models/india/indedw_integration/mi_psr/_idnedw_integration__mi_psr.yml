@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_mi_psr_perf_tracker
+    config:
+      alias: edw_rpt_mi_psr_perf_tracker
+      tags: ["in_mi_psr_datamart","transformation"]
