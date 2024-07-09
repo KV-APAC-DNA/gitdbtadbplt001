@@ -1,6 +1,6 @@
 --Import CTE
-with v_edw_rpt_id_re as (
-    select * from {{ source('idnedw_integration', 'v_edw_rpt_id_re') }}
+with edw_rpt_id_re as (
+    select * from {{ ref('idnedw_integration__edw_rpt_id_re') }}
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
@@ -10,7 +10,7 @@ itg_query_parameters as (
 id_edw_rpt_retail_excellence_details as (
 SELECT FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -140,11 +140,11 @@ SELECT FISC_YR,
        -- This column is not populated by details script in JnJ. Hence, added NULL in snowflake script to compensate
         NULL AS SOLDTO_CODE,
 SYSDATE() as crt_dttm		--// SYSDATE
-FROM v_edw_rpt_id_re		--// FROM ID_EDW.EDW_RPT_ID_RE
+FROM edw_rpt_id_re		--// FROM ID_EDW.EDW_RPT_ID_RE
 WHERE market = 'Indonesia' and upper(RETAIL_ENVIRONMENT) not in (select distinct parameter_value from itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='ID')		--// WHERE market = 'Indonesia' and upper(RETAIL_ENVIRONMENT) not in (select distinct parameter_value from rg_itg.itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='ID')
 AND   FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(TO_CHAR(MAX(fisc_per)),'YYYYMM'),-1),1,7),'-','')::INTEGER
-                   FROM v_edw_rpt_id_re)		--//                    FROM ID_EDW.EDW_RPT_ID_RE)
-AND   FISC_PER <= (SELECT MAX(fisc_per) FROM v_edw_rpt_id_re)
+                   FROM edw_rpt_id_re)		--//                    FROM ID_EDW.EDW_RPT_ID_RE)
+AND   FISC_PER <= (SELECT MAX(fisc_per) FROM edw_rpt_id_re)
 ),
 
 --Final CTE
@@ -152,7 +152,7 @@ final as (
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
