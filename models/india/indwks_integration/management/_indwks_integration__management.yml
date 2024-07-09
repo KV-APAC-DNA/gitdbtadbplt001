@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_mngmnt_hit_achnr
+    config:
+      alias: wks_mngmnt_hit_achnr
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+
+  - name: indwks_integration__wks_mngmnt_rpt_tdp
+    config:
+      alias: wks_mngmnt_rpt_tdp
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+
+  - name: indwks_integration__wks_mngmnt_sales_achnr
+    config:
+      alias: wks_mngmnt_sales_achnr
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+
+  - name: indwks_integration__wks_mngmnt_sales_hit_nr
+    config:
+      alias: wks_mngmnt_sales_hit_nr
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+
+  - name: indwks_integration__wks_issue_rev_itg_in_rsalesman
+    config:
+      alias: wks_issue_rev_itg_in_rsalesman
+      tags: ["in_os_mgm_rpt_datamart","transformation"]
+
+  - name: indwks_integration__wks_issue_rev_sku_recom_sm_gtm
+    config:
+      alias: wks_issue_rev_sku_recom_sm_gtm
+      tags: ["in_os_mgm_rpt_datamart","transformation"]

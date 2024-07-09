@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_product_dim
+    config:
+      alias: edw_product_dim
+      tags: ["in_xdm_master","transformation"]
+  - name: indedw_integration__v_product_dim
+    config:
+      alias: v_product_dim
+      tags: ["india_views","transformation"]

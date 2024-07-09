@@ -2,9 +2,15 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "{% if is_incremental() %}
+        pre_hook= ["
+        delete from {{this}} where(DistCode,SalInvNo) in (select DistCode,SalInvNo from {{ ref('inditg_integration__itg_dailysales_del') }});
+        "
+        ,"
+        delete from {{this}} where modifieddate >= (Select min(s.modifieddate) from {{ source('indsdl_raw', 'sdl_csl_dailysales') }} s where DATEDIFF(day, s.createddate, s.modifieddate) <= 6 );
+        "
+        ,"
         delete from {{this}} where (distcode, salinvno) in (select distcode, salinvno from {{ source('indsdl_raw', 'sdl_csl_dailysales') }} as s where datediff(day, s.createddate, s.modifieddate) > 6);
-        {% endif %}"
+        "]
     )
 }}
 with source as

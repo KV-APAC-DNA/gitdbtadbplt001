@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_pilot_nup_target
+      tags: ["one_time_load","ingestion"]
+    - name: itg_mds_msku_internal_product_mapping_ka
+      tags: ["one_time_load","ingestion"]
+
+
+  - name: indedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_mth_cls_stock_fact
+      tags: ["one_time_load","ingestion"]
+    - name: edw_user_dim
+      tags: ["one_time_load","ingestion"]
