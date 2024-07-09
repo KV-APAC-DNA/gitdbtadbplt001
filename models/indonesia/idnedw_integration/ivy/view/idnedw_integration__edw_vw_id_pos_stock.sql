@@ -593,8 +593,8 @@ temp_product_dim as
          NULL AS "share",
          p."values" AS store_stock_qty,
          q."values" AS store_stock_value,
-         s."values" AS branch_stock_qty,
-         r."values" AS branch_stock_value,
+         r."values" AS branch_stock_qty,
+         s."values" AS branch_stock_value,
          NULL AS stock_uom,
          NULL AS stock_days,
          current_timestamp()::timestamp_ntz AS crtd_dttm
@@ -730,8 +730,8 @@ alfa as
         NULL AS "share",
         e."values" AS store_stock_qty,
         f."values" AS store_stock_value,
-        h."values" AS branch_stock_qty,
-        g."values" AS branch_stock_value,
+        g."values" AS branch_stock_qty,
+        h."values" AS branch_stock_value,
         NULL AS stock_uom,
         NULL AS stock_days,
         current_timestamp()::timestamp_ntz AS crtd_dttm

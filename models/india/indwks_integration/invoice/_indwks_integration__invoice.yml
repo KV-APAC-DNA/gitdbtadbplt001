@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_in_invoice_fact
+    config:
+      alias: wks_in_invoice_fact
+      tags: ["m_wrp_in_edw_invc","transformation"]
+  - name: indwks_integration__wks_cg_clstk_ds
+    config:
+      alias: wks_cg_clstk_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: indwks_integration__wks_cg_retail_curr_prev
+    config:
+      alias: wks_cg_retail_curr_prev
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: indwks_integration__wks_cg_retail_ds
+    config:
+      alias: wks_cg_retail_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: indwks_integration__wks_csl_scheme_header
+    config:
+      alias: wks_csl_scheme_header
+      tags: ["m_wrp_in_sdlitg_master","transformation"]
+  - name: indwks_integration__wks_ittarget
+    config:
+      alias: wks_ittarget
+      tags: ["m_wrp_in_sdlitg_master","transformation"]

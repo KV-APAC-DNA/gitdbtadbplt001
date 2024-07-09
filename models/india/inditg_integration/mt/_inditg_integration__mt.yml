@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_pf_clstk_mth_ds
+    config:
+      alias: itg_pf_clstk_mth_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__itg_cg_clstk_ds
+    config:
+      alias: itg_cg_clstk_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__itg_pf_retail_mth_ds
+    config:
+      alias: itg_pf_retail_mth_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__itg_cg_retail_ds
+    config:
+      alias: itg_cg_retail_ds
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__tblpf_prisalesm_wrk
+    config:
+      alias: tblpf_prisalesm_wrk
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__tblpf_prisalesm
+    config:
+      alias: tblpf_prisalesm
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__itg_tblpf_secsalesm_wrk
+    config:
+      alias: itg_tblpf_secsalesm_wrk
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+  - name: inditg_integration__itg_tblpf_secsalesm
+    config:
+      alias: itg_tblpf_secsalesm
+      tags: ["m_wrp_in_sdlitg_tblf","transformation"]

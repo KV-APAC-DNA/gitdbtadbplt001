@@ -4,15 +4,15 @@ models:
   - name: ntawks_integration__wks_kr_pos_emart_ssg
     config:
       alias: wks_kr_pos_emart_ssg
-      tags: [""]
+      tags: ["kr_ssg_ecvan","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_naver_sellout
     config:
       alias: wks_kr_ecommerce_naver_sellout
-      tags: [""]
+      tags: ["j_kr_ecommerce_sellout_Naver_ingestion","ingestion"]
   - name: ntawks_integration__wks_kr_ecom_coupang
     config:
       alias: wks_kr_ecom_coupang
-      tags: [""]
+      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_ebay_sellout
     config:
       alias: wks_kr_ecommerce_ebay_sellout
@@ -20,20 +20,20 @@ models:
   - name: ntawks_integration__wks_kr_ecommerce_trexi_sellout
     config:
       alias: wks_kr_ecommerce_trexi_sellout
-      tags: [""]
+      tags: ["j_kr_ecommerce_trexi_etl_framework","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_unitoa_sellout
     config:
       alias: wks_kr_ecommerce_unitoa_sellout
-      tags: [""]
+      tags: ["j_kr_ecommerce_sellout_unitoa_ingestion","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_tca_sellout
     config:
       alias: wks_kr_ecommerce_tca_sellout
-      tags: [""]
+      tags: ["j_kr_ecommerce_sellout_tca_ingestion","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay
     config:
       alias: wks_kr_ecommerce_offtake_sales_ebay
-      tags: [""]
+      tags: ["j_kr_generic_query_execution","ingestion"]
   - name: ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction
     config:
       alias: wks_kr_ecommerce_offtake_coupang_transaction
-      tags: [""]
+      tags: ["j_kr_generic_query_execution","ingestion"]

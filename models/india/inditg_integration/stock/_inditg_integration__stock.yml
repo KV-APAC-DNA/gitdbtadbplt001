@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_day_cls_stock_fact
+    config:
+      alias: itg_day_cls_stock_fact
+      tags: ["in_daily_closing_stock_dm","transformation"]

@@ -2,7 +2,7 @@ with itg_mds_ph_pos_customers as (
 select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers') }}
 ),
 final as (
-    SELECT distinct 
+    SELECT 
       'PH' AS cntry_cd, 
       'Philippines' AS cntry_nm, 
       (

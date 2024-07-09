@@ -28,3 +28,5 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+      - name: sdl_product_uom_master
+        tags: ["m_wrp_in_sdlitg_invc","transformation"]

@@ -117,3 +117,12 @@ sources:
                 config:
                   store_failures: true
                   schema: thawks_integration    
+  - name: thaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: thaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_th_lookup_question

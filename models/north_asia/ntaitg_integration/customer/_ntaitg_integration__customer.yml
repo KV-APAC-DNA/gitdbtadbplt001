@@ -37,7 +37,3 @@ models:
     config:
       alias: itg_tw_ims_dstr_customer_mapping
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
-  - name: ntaitg_integration__itg_gt_msl_items
-    config:
-      alias: itg_gt_msl_items
-      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]

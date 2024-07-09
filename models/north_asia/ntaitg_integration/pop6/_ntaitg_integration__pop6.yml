@@ -1,171 +1,151 @@
 version: 2
 
 models:
-  - name: ntaitg_integration__itg_pop6_pop_lists
+  - name: ntaitg_integration__sdl_raw_pop6_kr_service_levels
     config:
-      alias: itg_pop6_pop_lists
-      tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_product_lists_products
+      alias: sdl_raw_pop6_kr_service_levels
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_planned_visits
     config:
-      alias: itg_pop6_product_lists_products
-      tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_displays
+      alias: sdl_raw_pop6_kr_planned_visits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_executed_visits
     config:
-      alias: itg_pop6_displays
-      tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_product_attribute_audits
+      alias: sdl_raw_pop6_kr_executed_visits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_sku_audits
     config:
-      alias: itg_pop6_product_attribute_audits
-      tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_product_attribute_audits_temp
+      alias: sdl_raw_pop6_kr_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_product_attribute_audits
     config:
-      alias: itg_pop6_product_attribute_audits_temp
-      tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_rir_data
+      alias: sdl_raw_pop6_kr_product_attribute_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_general_audits
+    config:
+      alias: sdl_raw_pop6_kr_general_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_display_plans
+    config:
+      alias: sdl_raw_pop6_kr_display_plans
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_displays
+    config:
+      alias: sdl_raw_pop6_kr_displays
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_promotion_plans
+    config:
+      alias: sdl_raw_pop6_kr_promotion_plans
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_promotions
+    config:
+      alias: sdl_raw_pop6_kr_promotions
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_tasks
+    config:
+      alias: sdl_raw_pop6_kr_tasks
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_kr_exclusion
+    config:
+      alias: sdl_raw_pop6_kr_exclusion
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__itg_photo_mgmnt_url
+    config:
+      alias: itg_photo_mgmnt_url
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_service_levels
     config: 
-        alias: itg_pop6_rir_data
-        tags: ['pop6_th_transaction', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_service_levels
+      alias: sdl_raw_pop6_hk_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_planned_visits
     config: 
-        alias: itg_pop6_service_levels
-        tags: ['pop6_na_transaction', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_product_groups_lists
+      alias: sdl_raw_pop6_hk_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_executed_visits
     config: 
-        alias: itg_pop6_product_groups_lists
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_planned_visits
+      alias: sdl_raw_pop6_hk_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_sku_audits
     config: 
-        alias: itg_pop6_planned_visits
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_promotion_plans
+      alias: sdl_raw_pop6_hk_sku_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_product_attribute_audits
     config: 
-        alias: itg_pop6_promotion_plans
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_promotions
+      alias: sdl_raw_pop6_hk_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_general_audits
     config: 
-        alias: itg_pop6_promotions
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_tasks
+      alias: sdl_raw_pop6_hk_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_display_plans
     config: 
-        alias: itg_pop6_tasks
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_exclusion
+      alias: sdl_raw_pop6_hk_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_displays
     config: 
-        alias: itg_pop6_exclusion
-        tags: ['pop6_na_master', 'ingestion']
-  - name: ntaitg_integration__itg_pop6_pops
+      alias: sdl_raw_pop6_hk_displays
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_promotion_plans
+    config: 
+      alias: sdl_raw_pop6_hk_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_promotions
+    config: 
+      alias: sdl_raw_pop6_hk_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_tasks
+    config: 
+      alias: sdl_raw_pop6_hk_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_hk_exclusion
+    config: 
+      alias: sdl_raw_pop6_hk_exclusion
+      tags: ["pop6_master_load", "ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_display_plans
     config:
-      alias: itg_pop6_pops
-      tags: ["pop6_na_master","ingestion"]
-  - name: ntaitg_integration__itg_pop6_product_lists_pops
+      alias: sdl_raw_pop6_tw_display_plans
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_displays
     config:
-      alias: itg_pop6_product_lists_pops
-      tags: ["pop6_na_master","ingestion"]
-  - name: ntaitg_integration__itg_pop6_products
+      alias: sdl_raw_pop6_tw_displays
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_exclusion
     config:
-      alias: itg_pop6_products
-      tags: ["pop6_na_master","ingestion"]
-  - name: ntaitg_integration__itg_pop6_sku_audits
+      alias: sdl_raw_pop6_tw_exclusion
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_executed_visits
     config:
-      alias: itg_pop6_sku_audits
-      tags: ["pop6_na_transaction","ingestion"]
-  - name: ntaitg_integration__itg_pop6_display_plans
+      alias: sdl_raw_pop6_tw_executed_visits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_general_audits
     config:
-      alias: itg_pop6_display_plans
-      tags: ["pop6_na_transaction","ingestion"]
-  - name: ntaitg_integration__itg_pop6_executed_visits
+      alias: sdl_raw_pop6_tw_general_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_planned_visits
     config:
-        alias: itg_pop6_executed_visits
-        tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_general_audits
+      alias: sdl_raw_pop6_tw_planned_visits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_product_attribute_audits
     config:
-        alias: itg_pop6_general_audits
-        tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_product_lists_allocation
+      alias: sdl_raw_pop6_tw_product_attribute_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_promotion_plans
     config:
-        alias: itg_pop6_product_lists_allocation
-        tags: ["",""]
-  - name: ntaitg_integration__itg_pop6_users
+      alias: sdl_raw_pop6_tw_promotion_plans
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_promotions
     config:
-        alias: itg_pop6_users
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_promotion_plans
+      alias: sdl_raw_pop6_tw_promotions
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_service_levels
     config:
-        alias: sdl_raw_pop6_jp_promotion_plans
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_promotions
+      alias: sdl_raw_pop6_tw_service_levels
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_sku_audits
     config:
-        alias: sdl_raw_pop6_jp_promotions
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_tasks
+      alias: sdl_raw_pop6_tw_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: ntaitg_integration__sdl_raw_pop6_tw_tasks
     config:
-        alias: sdl_raw_pop6_jp_tasks
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_jp_exclusion
-    config:
-        alias: sdl_raw_pop6_jp_exclusion
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_service_levels
-    config:
-        alias: sdl_raw_pop6_kr_service_levels
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_planned_visits
-    config:
-        alias: sdl_raw_pop6_kr_planned_visits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_executed_visits
-    config:
-        alias: sdl_raw_pop6_kr_executed_visits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_sku_audits
-    config:
-        alias: sdl_raw_pop6_kr_sku_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_product_attribute_audits
-    config:
-        alias: sdl_raw_pop6_kr_product_attribute_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_general_audits
-    config:
-        alias: sdl_raw_pop6_kr_general_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_display_plans
-    config:
-        alias: sdl_raw_pop6_kr_display_plans
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_displays
-    config:
-        alias: sdl_raw_pop6_kr_displays
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_promotion_plans
-    config:
-        alias: sdl_raw_pop6_kr_promotion_plans
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_promotions
-    config:
-        alias: sdl_raw_pop6_kr_promotions
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_tasks
-    config:
-        alias: sdl_raw_pop6_kr_tasks
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_kr_exclusion
-    config:
-        alias: sdl_raw_pop6_kr_exclusion
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_tasks
-    config:
-        alias: sdl_raw_pop6_sg_tasks
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_sku_audits
-    config:
-        alias: sdl_raw_pop6_sg_sku_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_product_attribute_audits
-    config:
-        alias: sdl_raw_pop6_sg_product_attribute_audits
-        tags: ["",""]
-  - name: ntaitg_interation__sdl_raw_pop6_sg_general_audits
-    config:
-        alias: sdl_raw_pop6_sg_general_audits
-        tags: ["",""]
+      alias: sdl_raw_pop6_tw_tasks
+      tags: ["pop6_master_load","ingestion"]
