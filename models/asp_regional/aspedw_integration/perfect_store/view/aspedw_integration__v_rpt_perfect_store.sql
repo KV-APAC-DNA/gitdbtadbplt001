@@ -35,7 +35,7 @@ v_rpt_my_perfect_store as (
     select * from {{ ref('mysedw_integration__v_rpt_my_perfect_store') }}
 ),
 edw_sku_recom as (
-    select * from indedw_integration.edw_sku_recom
+    select * from {{ source('indedw_integration', 'edw_sku_recom') }}
 ),
 itg_udcdetails as (
     select * from {{ ref('inditg_integration__itg_udcdetails') }}
