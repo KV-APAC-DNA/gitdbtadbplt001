@@ -83,6 +83,15 @@ models:
         rex:
           view:
             +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
+        pop6:
+          view:
+            +materialized: view
+        datamart:
+          view:
+            +materialized: view
       aspwks_integration:
         +materialized: table
         +schema: ASPWKS_INTEGRATION
@@ -116,6 +125,9 @@ models:
           datamart:
             view:
               +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       sgpitg_integration:
         +materialized: table
         +transient: false
@@ -168,6 +180,9 @@ models:
         sellout:
             view:
               +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
@@ -214,6 +229,9 @@ models:
           view:
             +materialized: view
         sellthrgh:
+          view:
+            +materialized: view
+        perfect_store:
           view:
             +materialized: view
       vnmwks_integration:
@@ -273,6 +291,9 @@ models:
         sellout:
           view:
             +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       thawks_integration:
         +materialized: table
         +schema: THAWKS_INTEGRATION
@@ -309,6 +330,9 @@ models:
           view:
             +materialized: view
         sellout:
+          view:
+            +materialized: view
+        perfect_store:
           view:
             +materialized: view
       pcfitg_integration:
@@ -363,6 +387,12 @@ models:
           view:
             +materialized: view
         siso:
+          view:
+            +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
+        survey:
           view:
             +materialized: view
       phlitg_integration:
@@ -432,6 +462,9 @@ models:
         coupang:
           view:
             +materialized: view
+        customer:
+          view:
+            +materialized: view
         dads:
           view:
             +materialized: view
@@ -451,6 +484,9 @@ models:
           view:
             +materialized: view
         invoice:
+          view:
+            +materialized: view
+        perfect_store:
           view:
             +materialized: view
         pop6:
@@ -516,3 +552,11 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+    japan:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      jpnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNITG_INTEGRATION

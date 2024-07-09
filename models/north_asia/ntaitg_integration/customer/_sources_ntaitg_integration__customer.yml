@@ -287,7 +287,7 @@ sources:
                 - test_duplicate:
                     select_columns: ["distributor_code","distributor_cusotmer_code"]
                     group_by_columns: ["distributor_code","distributor_cusotmer_code"]
-                    name: TRATBL___duplicate_test
+                    name: TRATBL_sdl_tw_ims_dstr_std_customer_107482_customer__duplicate_test
                     config:
                       store_failures: true
                       schema: ntawks_integration

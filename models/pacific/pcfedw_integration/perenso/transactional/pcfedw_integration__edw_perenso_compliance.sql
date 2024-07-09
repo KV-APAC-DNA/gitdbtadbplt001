@@ -150,10 +150,3 @@ from transformed
 )
 
 select * from final
-
-
-
---commit;
-
-
-
