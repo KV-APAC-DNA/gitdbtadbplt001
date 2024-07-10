@@ -67,7 +67,7 @@ FROM
                 v_slsc_tgtg_items_customer.salescampaignstartdt, 
                 v_slsc_tgtg_items_customer.salescampaignenddt, 
                 v_slsc_tgtg_items_customer.targetgroupid, 
-                V_SLSC_TGTG_ITEMS_CUSTOMER.target, 
+                V_SLSC_TGTG_ITEMS_CUSTOMER."target", 
                 v_slsc_tgtg_items_customer.customerid 
               FROM 
                 v_slsc_tgtg_items_customer
