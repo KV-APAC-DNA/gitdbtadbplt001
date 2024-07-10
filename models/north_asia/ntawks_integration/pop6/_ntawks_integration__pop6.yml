@@ -4,11 +4,11 @@ models:
   - name: ntawks_integration__wks_pop6_display_plans
     config:
       alias: wks_pop6_display_plans
-      tags: ["pop6_na_transaction","ingestion"]
+      tags: ["pop6_master_load","ingestion"]
   - name: ntawks_integration__wks_pop6_sku_audits
     config:
       alias: wks_pop6_sku_audits
-      tags: ["pop6_na_transaction","ingestion"]
+      tags: ["pop6_master_load","ingestion"]
   - name: ntawks_integration__wks_photo_mgmnt_url_cnt
     config:
       alias: wks_photo_mgmnt_url_cnt

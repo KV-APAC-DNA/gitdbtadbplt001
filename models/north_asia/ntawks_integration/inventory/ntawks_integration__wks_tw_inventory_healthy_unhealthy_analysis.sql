@@ -23,7 +23,7 @@ edw_subchnl_retail_env_mapping as(
     select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 edw_customer_dim as(
-    select * from indedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 wks_taiwan_siso_propagate_final as(
     select * from {{ ref('ntawks_integration__wks_taiwan_siso_propagate_final') }}

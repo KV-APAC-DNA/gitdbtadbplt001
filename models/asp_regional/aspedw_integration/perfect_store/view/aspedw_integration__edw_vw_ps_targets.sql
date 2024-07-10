@@ -18,7 +18,7 @@ itg_mds_kr_ps_targets as (
     select * from {{ ref('ntaitg_integration__itg_mds_kr_ps_targets') }}
 ),
 itg_mds_in_ps_targets as (
-    select * from inditg_integration.itg_mds_in_ps_targets
+    select * from {{ ref('inditg_integration__itg_mds_in_ps_targets') }}
 ),
 itg_id_ps_targets as (
     select * from  {{ ref('idnitg_integration__itg_id_ps_targets') }}
