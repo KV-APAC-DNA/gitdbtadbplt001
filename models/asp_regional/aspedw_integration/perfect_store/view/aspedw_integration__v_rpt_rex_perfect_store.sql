@@ -32,7 +32,7 @@ sdl_rex_pop6_usr_map as
 ),
 kpi2data_mapping as
 (
-    select * from {{ source('aspitg_integration', 'kpi2data_mapping') }}
+    select * from {{ source('aspsdl_raw', 'kpi2data_mapping') }}
 ),
 v_ms_mastersurvey as
 (
