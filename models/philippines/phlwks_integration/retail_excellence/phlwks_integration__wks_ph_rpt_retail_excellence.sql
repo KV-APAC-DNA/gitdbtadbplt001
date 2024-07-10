@@ -24,13 +24,13 @@ wks_philippines_base_retail_excellence as (
     select * from {{ ref('phlwks_integration__wks_philippines_base_retail_excellence')}}
 ),
 itg_mds_ph_gt_customer as (
-    select * from ref{{ ('phlitg_integration__itg_mds_ph_gt_customer')}}
+    select * from {{ ref('phlitg_integration__itg_mds_ph_gt_customer')}}
 ),
 itg_mds_ph_ref_parent_customer as (
-    select * from ref{{ ('phlitg_integration__itg_mds_ph_ref_parent_customer')}}
+    select * from {{ ref('phlitg_integration__itg_mds_ph_ref_parent_customer')}}
 ),
 itg_mds_ph_pos_customers as (
-    select * from ref{{ ('phlitg_integration__itg_mds_ph_pos_customers')}}
+    select * from {{ ref('phlitg_integration__itg_mds_ph_pos_customers')}}
 ),
 
 --final cte
@@ -170,14 +170,14 @@ ph_rpt_retail_excellence_mdp as
 
     ----------------customer hierarchy------------------------------
             LEFT JOIN (select * from customer_hierarchy) CUSTOMER 
-            ON LTRIM (COALESCE(TARGET.CUSTOMER_L0, ACTUAL.SOLD_TO_CODE),'0') = LTRIM (CUSTOMER.SAP_CUST_ID (+),'0')
+            ON LTRIM (COALESCE(TARGET.CUSTOMER_L0, ACTUAL.SOLD_TO_CODE),'0') = LTRIM (CUSTOMER.SAP_CUST_ID,'0')
             AND CUSTOMER.RANK = 1
 
     ----------------product hierarchy------------------------------
         LEFT JOIN (select * from product_heirarchy) PRODUCT 
         ON LTRIM (COALESCE(ACTUAL.MAPPED_SKU_CD, TARGET.MAPPED_SKU_CD),'0') = LTRIM (PRODUCT.SAP_MATL_NUM,'0') 
         AND PRODUCT.RANK = 1 ) MDP,	
-        (SELECT DISTINCT CLUSTER
+        (SELECT DISTINCT "cluster"
         FROM EDW_COMPANY_DIM		--//       FROM RG_EDW.EDW_COMPANY_DIM
         WHERE CTRY_GROUP = 'Philippines') COM
     WHERE FISC_PER <= (SELECT MAX(MNTH_ID)
@@ -309,7 +309,7 @@ ph_rpt_retail_excellence_non_mdp as
                                 AND   UPPER(LTRIM(A.STORE_CODE,'0')) = UPPER(LTRIM(T.STORE_CODE,'0'))		--//                               AND   UPPER(ltrim(A.STORE_CODE,'0')) = UPPER(ltrim(T.STORE_CODE,'0'))
                                 AND   UPPER(LTRIM(A.MASTER_CODE,'0')) = UPPER(LTRIM(T.MASTER_CODE,'0'))		--// 							  AND   UPPER(ltrim(A.MASTER_CODE,'0')) = UPPER(ltrim(T.MASTER_CODE,'0'))
                                 AND   UPPER(LTRIM(A.SOLD_TO_CODE,'0')) = UPPER(LTRIM(T.CUSTOMER_L0,'0')))) ACTUAL		--//                               AND   UPPER(ltrim(A.SOLD_TO_CODE,'0')) = UPPER(ltrim(T.CUSTOMER_L0,'0')))) ACTUAL
-        LEFT JOIN (SELECT DISTINCT GT."Customer_L0",		--//        LEFT JOIN (SELECT DISTINCT GT."Customer_L0",
+        LEFT JOIN (SELECT DISTINCT GT.Customer_L0,		--//        LEFT JOIN (SELECT DISTINCT GT."Customer_L0",
                         GT.TRADE_TYPE,		--// 					  GT.trade_type,
                         GT.SALES_GROUP,		--// 					  GT.sales_group,
                         GT.ACCOUNT_GROUP,		--// 					  GT.account_group,
@@ -331,7 +331,7 @@ ph_rpt_retail_excellence_non_mdp as
                         GT.STORE_POSTCODE,		--// 					  GT.store_postcode,
                         GT.STORE_LAT,		--// 					  GT.store_lat,
                         GT.STORE_LONG		--// 					  GT.store_long
-                FROM ( select * from ((SELECT DISTINCT ltrim(cust_id,'0') AS "Customer_L0",
+                FROM ( select * from ((SELECT DISTINCT ltrim(cust_id,'0') AS Customer_L0,
                                             rpt_grp_6_desc AS account_group,
                                             channel_desc AS channel,
                                             ltrim(dstrbtr_grp_cd,'0') AS distributor_code,
@@ -367,7 +367,7 @@ ph_rpt_retail_excellence_non_mdp as
                                     FROM ITG_MDS_PH_REF_PARENT_CUSTOMER WHERE UPPER(TRADE_TYPE) = 'GENERAL TRADE' AND UPPER(ACTIVE) = 'Y') B 
                                     ON UPPER(LTRIM(A.PARENT_CUSTOMER,'0')) = UPPER(LTRIM(B.PARENT_CUST_CD,'0'))) where C.RNO = 1) GT		--// 							   FROM OS_ITG.ITG_MDS_PH_REF_PARENT_CUSTOMER WHERE UPPER(trade_type) = 'GENERAL TRADE' AND UPPER(active) = 'Y') b ON upper(ltrim(a.parent_customer,'0')) = upper(ltrim(b.parent_cust_cd,'0'))) where c.rno = 1) GT
                 UNION ALL
-                    SELECT DISTINCT MT."Customer_L0",		--// 				SELECT DISTINCT MT."Customer_L0",
+                    SELECT DISTINCT MT.Customer_L0,		--// 				SELECT DISTINCT MT."Customer_L0",
                             MT.TRADE_TYPE,		--// 						MT.trade_type,
                             MT.SALES_GROUP,		--// 						MT.sales_group,
                             MT.ACCOUNT_GROUP,		--// 						MT.account_group,
@@ -389,7 +389,7 @@ ph_rpt_retail_excellence_non_mdp as
                             MT.STORE_POSTCODE,		--// 						MT.store_postcode,
                             MT.STORE_LAT,		--// 						MT.store_lat,
                             MT.STORE_LONG		--// 						MT.store_long
-                    FROM ( select * from ((SELECT DISTINCT ltrim(cust_id,'0') AS "Customer_L0",
+                    FROM ( select * from ((SELECT DISTINCT ltrim(cust_id,'0') AS Customer_L0,
                                                 rpt_grp_6_desc AS account_group,
                                                 channel_desc AS channel,
                                                 upper(ltrim(parent_cust_cd,'0')) AS parent_customer
@@ -405,7 +405,7 @@ ph_rpt_retail_excellence_non_mdp as
                                 JOIN (SELECT DISTINCT region_nm AS region,
                                             prov_nm AS "Area/Zone/Province",
                                             mncplty_nm AS city,
-                                            NULL::"unknown" AS Sell_Out_Parent_Customer_L2,
+                                            NULL::VARCHAR AS Sell_Out_Parent_Customer_L2,
                                             jj_sold_to AS Sell_Out_Parent_Customer_L1,
                                             UPPER(store_mtrx) AS sell_out_channel,
                                             UPPER(chnl_sub_grp_cd) AS retail_environment,
@@ -438,14 +438,14 @@ ph_rpt_retail_excellence_non_mdp as
 
 ----------------customer hierarchy------------------------------
         LEFT JOIN (select * from customer_hierarchy) CUSTOMER 
-        ON LTRIM ( ACTUAL.SOLD_TO_CODE,'0') = LTRIM (CUSTOMER.SAP_CUST_ID (+),'0')
+        ON LTRIM ( ACTUAL.SOLD_TO_CODE,'0') = LTRIM (CUSTOMER.SAP_CUST_ID,'0')
         AND CUSTOMER.RANK = 1
  
 ----------------product hierarchy------------------------------
         LEFT JOIN (select * from product_heirarchy) PRODUCT 
         ON LTRIM (ACTUAL.MAPPED_SKU_CD,'0') = LTRIM (PRODUCT.SAP_MATL_NUM,'0') 
         AND PRODUCT.RANK = 1 ) NON_MDP, 
-        (SELECT DISTINCT CLUSTER
+        (SELECT DISTINCT "cluster"
         FROM EDW_COMPANY_DIM		--//       FROM RG_EDW.EDW_COMPANY_DIM
         WHERE CTRY_GROUP = 'Philippines') COM
 ),
@@ -570,7 +570,7 @@ final as
     p12m_sales_flag :: varchar(1) as p12m_sales_flag,
     mdp_flag :: varchar(1) as mdp_flag,
     target_complaince :: numeric(18,0) as target_complaince,
-    cluster :: varchar(100) as cluster,
+    "cluster" :: varchar(100) as "cluster",
     crtd_dttm :: timestamp without time zone as crtd_dttm
     from ph_rpt_retail_excellence
 )

@@ -1,6 +1,6 @@
 --import cte
 
-wks_ph_rpt_retail_excellence_sop as 
+with wks_ph_rpt_retail_excellence_sop as 
 (
     select * from {{ ref('phlwks_integration__wks_ph_rpt_retail_excellence_sop' )}}
 ),
@@ -11,7 +11,7 @@ edw_ph_rpt_retail_excellence as
 (
     SELECT FISC_YR,
         FISC_PER,
-        "CLUSTER",
+        "cluster",
         MARKET,
         DATA_SRC,
         UPPER(CHANNEL_NAME) AS CHANNEL_NAME,
@@ -188,7 +188,7 @@ final as
 (
     select fisc_yr :: numeric(18,0) as fisc_yr,
     fisc_per :: varchar(22) as fisc_per,
-    cluster :: varchar(100) as cluster,
+    "cluster" :: varchar(100) as "cluster",
     market :: varchar(30) as market,
     data_src :: varchar(14) as data_src,
     channel_name :: varchar(382) as channel_name,

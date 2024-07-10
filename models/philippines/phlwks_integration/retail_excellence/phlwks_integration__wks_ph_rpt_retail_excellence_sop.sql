@@ -14,7 +14,7 @@ wks_ph_rpt_retail_excellence_sop as
 (
     SELECT FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        DATA_SRC,
        CHANNEL_NAME,
@@ -191,7 +191,7 @@ wks_ph_rpt_retail_excellence_sop as
     FROM 
         (SELECT MAIN.FISC_YR,		--// FROM (SELECT MAIN.FISC_YR,
              MAIN.FISC_PER,		--//              MAIN.FISC_PER,
-             MAIN.CLUSTER,		--//              MAIN.CLUSTER,
+             MAIN."cluster",		--//              MAIN.CLUSTER,
              MAIN.MARKET AS MARKET,		--//              MAIN.MARKET AS MARKET,
              MAIN.DATA_SRC,		--//              MAIN.DATA_SRC,
              COALESCE(MAIN.CHANNEL_NAME,'Not defined') AS CHANNEL_NAME,		--//              COALESCE(MAIN.CHANNEL_NAME,'Not defined') AS CHANNEL_NAME,
@@ -353,7 +353,7 @@ final as
 (
     select fisc_yr :: numeric(18,0) as fisc_yr,
     fisc_per :: varchar(22) as fisc_per,
-    cluster :: varchar(100) as cluster,
+    "cluster" :: varchar(100) as "cluster",
     market :: varchar(30) as market,
     data_src :: varchar(14) as data_src,
     channel_name :: varchar(255) as channel_name,
