@@ -4,10 +4,10 @@ models:
   - name: indedw_integration__edw_rpt_schemeutilize_cube
     config:
       alias: edw_rpt_schemeutilize_cube
-      tags: ["m_wrp_in_edw_scheme","transformation"]
+      tags: ["in_edw_scheme","transformation"]
 
   - name: indedw_integration__v_rpt_schemeutilize_cube
     config:
       materialized: view
       alias: v_rpt_schemeutilize_cube
-      tags: ["m_wrp_in_edw_scheme","transformation"]
+      tags: ["in_edw_scheme","transformation"]
