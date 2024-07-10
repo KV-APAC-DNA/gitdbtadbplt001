@@ -28,3 +28,4 @@ sources:
       - name: tgtg_items
       - name: tgtg_targetgroup
       - name: tsk_task
+      - name: kpi2data_mapping
