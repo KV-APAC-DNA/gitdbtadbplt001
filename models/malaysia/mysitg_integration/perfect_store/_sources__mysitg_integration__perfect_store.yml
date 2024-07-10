@@ -53,7 +53,7 @@ sources:
         tags: ["my_perfect_store","ingestion"]
         tests:
           - test_null:
-              select_columns: ["filename","date","region","outlet","outlet_no","category","brand","product_barcode","sku_description","answer"]
+              select_columns: ["file_name","date","region","outlet","outlet_no","category","brand","product_barcode","sku_description","answer"]
               not_null_columns: ["date","outlet_no","product_barcode","answer"]
               name: TRATBL_sdl_my_perfectstore_oos__null_test
               config:
@@ -63,7 +63,7 @@ sources:
         tags: ["my_perfect_store","ingestion"]
         tests:
           - test_null:
-              select_columns: ["filename","date","brand","region","category","outlet_no"]
+              select_columns: ["file_name","date","brand","region","category","outlet_no"]
               not_null_columns: ["date","brand","outlet_no"]
               name: TRATBL_sdl_my_perfectstore_promocomp__null_test
               config:
