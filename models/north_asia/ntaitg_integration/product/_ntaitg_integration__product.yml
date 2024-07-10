@@ -60,4 +60,4 @@ models:
   - name: ntaitg_integration__itg_gt_msl_items
     config:
       alias: itg_gt_msl_items
-      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
