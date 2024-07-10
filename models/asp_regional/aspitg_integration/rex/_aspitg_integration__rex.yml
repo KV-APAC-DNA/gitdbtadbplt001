@@ -4,15 +4,15 @@ models:
   - name: aspitg_integration__v_prodbu_productbusinessunit
     config:
       alias: v_prodbu_productbusinessunit
-      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
+      tags: ["north_asia_views","transformation"] 
   - name: aspitg_integration__v_slsp_salesperson
     config:
       alias: v_slsp_salesperson
-      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"] 
+      tags: ["north_asia_views","transformation"] 
   - name: aspitg_integration__v_prodtr_producttranslation
     config:
       alias: v_prodtr_producttranslation
-      tags: ["m_edw_mysales_js_ex_product_attr_dim","transformation"]  
+      tags: ["north_asia_views","transformation"]  
   - name: aspitg_integration__v_mrchr_responses
     config:
       alias: v_mrchr_responses

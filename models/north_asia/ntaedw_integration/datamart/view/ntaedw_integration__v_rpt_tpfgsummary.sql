@@ -50,6 +50,9 @@ itg_kr_tp_tracker_target as
 (
     select * from {{ ref('ntaitg_integration__itg_kr_tp_tracker_target') }}
 ),
+edw_customer_base_dim as (
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}    
+)
 prod_hier as 
 (
     SELECT derived_table1.prod_hier_l4,
