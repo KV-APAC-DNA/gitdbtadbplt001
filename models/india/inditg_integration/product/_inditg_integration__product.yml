@@ -13,4 +13,4 @@ models:
   - name: inditg_integration__itg_product_uom_master
     config: 
       alias: itg_product_uom_master
-      tags: ["in_sdlitg_invc","ingestion"]
+      tags: ["in_sdlitg_daily","transformation"]

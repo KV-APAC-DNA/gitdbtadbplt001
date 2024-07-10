@@ -9,18 +9,18 @@ models:
   - name: inditg_integration__itg_keyaccountsales
     config:
       alias: itg_keyaccountsales
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_keyaccountsales_wrk
     config:
       alias: itg_keyaccountsales_wrk
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_winculum_salesreturn
     config:
       alias: itg_winculum_salesreturn
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__sdl_raw_winculum_salesreturn
     config:
       alias: sdl_raw_winculum_salesreturn
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]

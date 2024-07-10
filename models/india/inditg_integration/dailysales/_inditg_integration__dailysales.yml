@@ -35,8 +35,8 @@ models:
   - name: inditg_integration__itg_winculum_dailysales
     config:
       alias: itg_winculum_dailysales
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__sdl_raw_winculum_dailysales
     config:
       alias: sdl_raw_winculum_dailysales
-      tags: ["in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]

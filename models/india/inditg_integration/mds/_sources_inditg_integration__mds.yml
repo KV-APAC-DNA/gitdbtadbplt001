@@ -266,7 +266,7 @@ sources:
       - name: sdl_csl_tbl_schemewise_apno
         tags: ["m_wrp_in_sdlitg_master","transformation"]
       - name: sdl_winculum_salesreturn
-        tags: ["in_sdlitg_kasales","transformation"]
+        tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
