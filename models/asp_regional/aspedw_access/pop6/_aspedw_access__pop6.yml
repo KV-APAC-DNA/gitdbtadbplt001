@@ -9,3 +9,7 @@ models:
     config:
       alias: edw_vw_pop6_analysis_hist_data
       tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data
+    config:
+      alias: edw_vw_pop6_analysis_active_data
+      tags: ["pop6_views","transformation"]
