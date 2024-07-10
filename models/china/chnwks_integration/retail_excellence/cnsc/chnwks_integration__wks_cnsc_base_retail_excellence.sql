@@ -142,7 +142,9 @@ FROM (SELECT COUNTRY_CODE,
              sellout_value_list_price as SALES_VALUE_LIST_PRICE
       FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE 
        WHERE COUNTRY_NAME='China Selfcare'
-       AND MNTH_ID >= (select last_37mnths from edw_vw_cal_Retail_excellence_Dim)
+       --AND MNTH_ID >= (select last_37mnths from edw_vw_cal_Retail_excellence_Dim)
+       --CHANGED MONTH LOGIC 37 -> 28
+       AND MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)
 	  and mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)
 	   )SELLOUT
       LEFT JOIN (SELECT DISTINCT xjp_code, brand_en FROM itg_mds_cn_otc_product_mapping)localbrand ON localbrand.xjp_code=SELLOUT.msl_product_CODE 

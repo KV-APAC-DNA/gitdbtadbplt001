@@ -191,7 +191,10 @@ WKS_CNSC_REGIONAL_SELLOUT_ACT_L12M L12M
                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD
               AND BASE_DIM.month = L12M.MONTH
               AND BASE_DIM.sellout_dim_key = L12M.sellout_dim_key
-WHERE BASE_DIM.month >= (select last_19mnths from edw_vw_cal_Retail_excellence_Dim)
+WHERE 
+--BASE_DIM.month >= (select last_19mnths from edw_vw_cal_Retail_excellence_Dim)
+--CHANGED MONTH LOGIC 19 -> 17
+BASE_DIM.month >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)
   and BASE_DIM.month <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)),
 
 final as (

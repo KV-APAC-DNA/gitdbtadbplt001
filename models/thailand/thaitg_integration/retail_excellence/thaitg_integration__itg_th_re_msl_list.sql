@@ -72,7 +72,8 @@ FROM (SELECT BASE.START_DATE,		--// FROM (SELECT base.start_date,
                                 cal_mo_1,
                                 (SUBSTRING(FISC_PER,1,4) ||SUBSTRING(FISC_PER,6,7))::NUMERIC AS JJ_MNTH_ID
                          FROM EDW_CALENDAR_DIM		--//                          FROM rg_edw.edw_calendar_dim
-                         WHERE jj_mnth_id >= (SELECT last_18mnths
+                         --CHANGED MONTH LOGIC 18 -> 16
+                         WHERE jj_mnth_id >= (SELECT last_16mnths
                                               FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		--//                                               FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC
                          AND   jj_mnth_id <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC) cal		--//                          AND   jj_mnth_id <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC) cal
                      ON start_date <= CAL.JJ_MNTH_ID		--//                      ON start_date <= cal.JJ_MNTH_ID

@@ -24,7 +24,9 @@ FROM (SELECT DISTINCT cntry_cd,
            (SELECT DISTINCT "year",
                    mnth_id AS MONTH
             FROM edw_vw_os_time_dim
-            WHERE MNTH_ID >= (select last_37mnths from edw_vw_cal_Retail_excellence_Dim)
+            WHERE MNTH_ID >= 
+            --CHANGED MONTH LOGIC 37 -> 28
+            (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)
             ---mnth_id > TO_CHAR(add_months(SYSDATE,-36),'YYYYMM')
             AND mnth_id <= (SELECT TO_CHAR(DATEADD(DAY, 90, SYSDATE()), 'yyyymm'))
             ) b) all_months
