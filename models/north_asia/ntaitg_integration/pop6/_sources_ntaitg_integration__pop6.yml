@@ -602,9 +602,9 @@ sources:
     tables:
       - name: itg_photo_mgmnt_url_temp
 
-  - name: ntaedw_integration
+  - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
+    schema: aspedw_integration
     quoting:
       database: false
       schema: false
