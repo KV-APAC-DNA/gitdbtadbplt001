@@ -54,9 +54,32 @@
         
                                 
     {% endset %}
-
     {% do run_query(query) %}
+
+    {% set delete_query %}
+        DELETE FROM 
+        {% if target.name=='prod' %}
+                    idnwks_integration.wks_mds_id_lav_inventory_intransit
+                {% else %}
+                    {{schema}}.idnwks_integration__wks_mds_id_lav_inventory_intransit
+                {% endif %}
+    {% endset %}
+    {% do run_query(delete_query) %}
+
+    {% set insert_query %}
+        INSERT INTO 
+        {% if target.name=='prod' %}
+                    idnwks_integration.wks_mds_id_lav_inventory_intransit
+                {% else %}
+                    {{schema}}.idnwks_integration__wks_mds_id_lav_inventory_intransit
+                {% endif %}
+            SELECT * FROM {{ source('idnitg_integration','itg_mds_id_lav_inventory_intransit') }}
+                WHERE NVL(LEFT (TO_CHAR(CREATED_ON1, 'YYYYMMDD'), 6),'99991231') || month NOT IN 
+                (SELECT DISTINCT NVL(
+                        LEFT ( TO_CHAR(CAST("created on1" AS DATE), 'YYYYMMDD'),6),'99991231') || month
+                FROM {{ source('idnsdl_raw', 'sdl_mds_id_lav_inventory_intransit') }}
+                )
+    {% endset %}
+    {% do run_query(insert_query) %}
+
 {% endmacro %}
-
-
-

@@ -980,5 +980,5 @@ transformed_noo as (
 
 --Final select
 select * from updt2
-union all
+union 
 select * from transformed_noo

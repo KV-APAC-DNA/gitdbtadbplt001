@@ -24,7 +24,7 @@ final as
         TO_TIMESTAMP_NTZ(TO_DATE(TO_CHAR(BATCH_EXPIRY_DATE), 'MM/DD/YY HH12:MI:SS AM')) as batch_expiry_date,
         uom::varchar(15) as uom,
         qty::number(10,0) as qty,
-        cdl_dttm::varchar(50) as create_dt,
+        trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD'))))::varchar(50) as create_dt,
         run_id::number(14,0) as run_id  
     from source
 )

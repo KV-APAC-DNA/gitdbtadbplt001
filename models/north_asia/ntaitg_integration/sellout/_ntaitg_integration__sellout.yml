@@ -68,4 +68,4 @@ models:
   - name: ntaitg_integration__itg_kr_gt_nacf_cust_dim
     config: 
       alias: itg_kr_gt_nacf_cust_dim
-      tags: ["gt_sellout","ingestion"]
+      tags: ["gt_sellout","inactive"]
