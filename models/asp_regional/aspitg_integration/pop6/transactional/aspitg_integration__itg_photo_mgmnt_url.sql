@@ -2,7 +2,7 @@ with wks_photo_mgmnt_url_wrk1 as (
     select * from {{ ref('aspwks_integration__wks_photo_mgmnt_url_wrk1') }}
 ),
 edw_rpt_sfa_pm as (
-    select * from {{ source('ntaedw_integration', 'edw_rpt_sfa_pm') }} -- using it as a source because a loop is created
+    select * from {{ source('aspedw_integration', 'edw_rpt_sfa_pm') }} -- using it as a source because a loop is created
 ),
 wks_photo_mgmnt_url_wrk2 as (
     select * from {{ ref('aspwks_integration__wks_photo_mgmnt_url_wrk2') }}
