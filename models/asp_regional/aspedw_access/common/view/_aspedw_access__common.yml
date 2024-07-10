@@ -167,7 +167,3 @@ models:
     config:
       alias: edw_invoice_fact
       tags: ["J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
-  - name: aspedw_access__edw_vw_pop6_analysis_active_data
-    config:
-      alias: edw_vw_pop6_analysis_active_data
-      tags: ["north_asia_views","transformation"]
