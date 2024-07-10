@@ -73,11 +73,3 @@ models:
     config:
       alias: edw_vw_store_master_rex_pop6
       tags: ["pop6_views","transformation"]
-  - name: aspedw_integration__edw_pop6_ops_view
-    config:
-      alias: edw_pop6_ops_view
-      tags: ["pop6_views","transformation"]
-  - name: aspedw_integration__edw_vw_pop6_analysis_hist_data
-    config:
-      alias: edw_vw_pop6_analysis_hist_data
-      tags: ["pop6_views","transformation"]
