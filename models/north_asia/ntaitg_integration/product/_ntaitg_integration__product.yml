@@ -48,11 +48,11 @@ models:
   - name: ntaitg_integration__itg_kr_gt_daiso_price
     config:
         alias: itg_kr_gt_daiso_price
-        tags: ["gt_sellout_daiso","gt_sellout_daiso_price_master","ingestion"]
+        tags: ["kr_gt_sellout","gt_sellout_daiso_price_master","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_gt_daiso_price
     config:
         alias: sdl_raw_kr_gt_daiso_price
-        tags: ["gt_sellout_daiso","ingestion"]
+        tags: ["kr_gt_sellout","ingestion"]
   - name: ntaitg_integration__itg_tw_ims_dstr_prod_price_map
     config:
       alias: itg_tw_ims_dstr_prod_price_map
