@@ -63,6 +63,7 @@ FROM (SELECT DISTINCT base.start_date,
                                        --cal_mo_1,
                                        SUBSTRING(FISC_PER,1,4) ||SUBSTRING(FISC_PER,6,7) AS JJ_MNTH_ID
                                 FROM edw_calendar_dim
+
                                 --CHANGED MONTH LOGIC 19 -> 17
                                 WHERE JJ_MNTH_ID >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)
 						          and JJ_MNTH_ID <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)  
