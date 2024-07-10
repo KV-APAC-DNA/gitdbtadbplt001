@@ -52,7 +52,7 @@ itg_kr_tp_tracker_target as
 ),
 edw_customer_base_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}    
-)
+),
 prod_hier as 
 (
     SELECT derived_table1.prod_hier_l4,
