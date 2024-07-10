@@ -45,7 +45,7 @@ as (
 edw_customer_dim
 as (
     select *
-    from indedw_integration.edw_customer_dim 
+    from {{ ref('indedw_integration__edw_customer_dim') }} 
 
     ),
 v_rpt_dly_plan_ims_enrich

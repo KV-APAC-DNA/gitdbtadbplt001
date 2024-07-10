@@ -552,6 +552,7 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+
 # ADDED CHINA AS PART OF RETAIL EXCELLENCE
     china:
       config:
@@ -567,3 +568,13 @@ models:
       chnwks_integration:
         +materialized: table
         +schema: CHNWKS_INTEGRATION        
+
+    japan:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      jpnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNITG_INTEGRATION
+
