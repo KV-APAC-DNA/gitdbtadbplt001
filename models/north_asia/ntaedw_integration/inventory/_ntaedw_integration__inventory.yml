@@ -24,4 +24,4 @@ models:
   - name: ntaedw_integration__v_rpt_ims_inventory_analysis
     config: 
       alias: v_rpt_ims_inventory_analysis
-      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+      tags: ["north_asia_views","transformation"]
