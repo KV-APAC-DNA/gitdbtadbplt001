@@ -9,3 +9,23 @@ models:
     config:
       alias: v_rpt_cust_mast_inv_tde
       tags: ["in_xdm_master","transformation"]
+  - name: indedw_integration__v_customer_dim
+    config:
+      alias: v_customer_dim
+      tags: ["in_edw_dim","transformation"]
+  # - name: indedw_integration__v_sku_recom
+  #   config:
+  #     alias: v_sku_recom
+  #     tags: ["j_in_sku_recom_etl_framework","transformation"]
+  - name: indedw_integration__v_ecomm_sales_inv_acc_ch_grp
+    config:
+      alias: v_ecomm_sales_inv_acc_ch_grp
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+  - name: indedw_integration__v_ecomm_sales_inv
+    config:
+      alias: v_ecomm_sales_inv
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+  - name: indedw_integration__v_customer_weekly_sales
+    config:
+      alias: v_customer_weekly_sales
+      tags: ["india_views","transformation"]

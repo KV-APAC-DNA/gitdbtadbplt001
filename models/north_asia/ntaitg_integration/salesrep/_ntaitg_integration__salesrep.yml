@@ -5,12 +5,10 @@ models:
     config:
       alias: itg_sales_rep_so_target_fact
       tags: ["hk_ims_wingkeung_sales_rep_sellout_target","transformation"]
-  
   - name: ntaitg_integration__itg_direct_sales_rep_route_plan
     config:
       alias: itg_direct_sales_rep_route_plan
       tags: ["hk_ims_wingkeung_sales_rep_route_plan","transformation"]
-    
   - name: ntaitg_integration__itg_indirect_sales_rep_route_plan
     config:
       alias: itg_indirect_sales_rep_route_plan

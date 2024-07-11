@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_fin_sim_plandata
+    config:
+      alias: itg_fin_sim_plandata
+      tags: ["in_finance_simulator_load","transformation"]
+  - name: inditg_integration__sdl_fin_sim_plandata_raw
+    config:
+      alias: sdl_fin_sim_plandata_raw
+      tags: ["in_finance_simulator_load","transformation"]
+  - name: inditg_integration__itg_fin_sim_miscdata
+    config:
+      alias: itg_fin_sim_miscdata
+      tags: ["in_finance_simulator_load","transformation"]
+  - name: inditg_integration__sdl_fin_sim_miscdata_raw
+    config:
+      alias: sdl_fin_sim_miscdata_raw
+      tags: ["in_finance_simulator_load","transformation"]

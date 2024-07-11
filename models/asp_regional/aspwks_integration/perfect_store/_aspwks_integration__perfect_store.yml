@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_wt_mnth_cname
+    config:
+      alias: wks_edw_perfect_store_kpi_wt_mnth_cname
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_data_reformat
+    config:
+      alias: wks_edw_perfect_store_data_reformat
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_hash
+    config:
+      alias: wks_edw_perfect_store_hash
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_perfect_store_sos_soa_mnth
+    config:
+      alias: wks_perfect_store_sos_soa_mnth
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_agg_wt_mnth_cname
+    config:
+      alias: wks_edw_perfect_store_kpi_agg_wt_mnth_cname
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_rebased_wt_mnth_cname
+    config:
+      alias: wks_edw_perfect_store_kpi_rebased_wt_mnth_cname
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_perfect_store_sos_soa_custid_ind
+    config:
+      alias: wks_perfect_store_sos_soa_custid_ind
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_wt_mnth
+    config:
+      alias: wks_edw_perfect_store_kpi_wt_mnth
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_agg_wt_mnth
+    config:
+      alias: wks_edw_perfect_store_kpi_agg_wt_mnth
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__prod_hier_data_new
+    config:
+      alias: prod_hier_data_new
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_edw_perfect_store_kpi_rebased_wt_mnth
+    config:
+      alias: wks_edw_perfect_store_kpi_rebased_wt_mnth
+      tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_sotp_propagation_hash
+    config:
+      alias: wks_sotp_propagation_hash
+      tags: ["pop6_edw_load","transformation"]
