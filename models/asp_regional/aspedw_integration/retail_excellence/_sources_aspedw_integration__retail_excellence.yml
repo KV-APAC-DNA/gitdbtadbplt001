@@ -141,3 +141,15 @@ sources:
       identifier: false
     tables:
       - name: v_rpt_pop6_perfectstore
+
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: mds_reds_market_msl_target
+      - name : itg_re_msl_input_definition
+      

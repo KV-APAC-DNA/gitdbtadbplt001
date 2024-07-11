@@ -3,10 +3,15 @@
 with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
     select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
 ),
+ retail_excellence_msl_target_final as 
+ (
+    select * from {{ ref('nawks_integration_wks_retail_excellence_msl_target_final') }}
+ )
+
 edw_kr_rpt_retail_excellence  as 
 (
 SELECT FISC_YR,
-       FISC_PER,
+       GCPH_final.FISC_PER,
        CLUSTER,
        MARKET,
        DATA_SRC,
@@ -121,7 +126,7 @@ SELECT FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       TARGET_COMPLAINCE,
+       case when mdp_flag='Y' then GCPH_final.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
@@ -177,7 +182,9 @@ SELECT FISC_YR,
        COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
 SYSDATE() as crtd_dttm		--// SYSDATE
-FROM WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH		--// FROM NA_WKS.
+FROM WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH		
+left join retail_excellence_msl_target_final  GCPH_final on (gcph.fisc_per=gcph_final.fisc_per and gcph.global_product_brand=gcph_final.global_product_brand)
+
 
 ),
 final as
