@@ -178,7 +178,7 @@ FROM (
                 COUNT(DISTINCT (pagepath)) AS unique_pageViews,
                 SUM(nvl (downloads_cm31, 0)) AS total_downloads,
                 COUNT(pagepath) AS pages,
-                COUNT(DISTINCT COALESCE(fullvisitorid + '-' + visitid,0)) AS page_sessions,
+                COUNT(DISTINCT COALESCE(fullvisitorid || '-' || visitid,null)) AS page_sessions,
                 ROUND(
                     pages::numeric(15, 4) / page_sessions::numeric(15, 4),
                     2
@@ -269,7 +269,7 @@ FROM (
                             WHEN hitNumber = MIN(hitNumber) OVER (PARTITION BY fullVisitorId, hit_visitStartTime) THEN timeonsite
                             ELSE 0
                         END AS time_on_site,
-                        COALESCE(fullvisitorid + '-' + visitid,0) AS session_id
+                        COALESCE(fullvisitorid || '-' || visitid,null) AS session_id
                     FROM edw_ga360_aspac_sessions
                     WHERE country = 'IN'
                         and hostname IN  ('www.orsl.in','professional.johnsonsbaby.in') 

@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl1
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl1
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl2
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl2
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl3
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl3
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl4
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl4
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl4_target
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl4_target
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl5
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl5
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl6
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl6
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl7
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl7
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl7_sales
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl7_sales
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt_tbl8
+    config:
+        alias: edw_hcp360_kpi_rpt_tbl8
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpedw_integration__edw_hcp360_kpi_rpt
+    config:
+        alias: edw_hcp360_kpi_rpt
+        tags: ["in_hcp360_data_mart","transformation"]
