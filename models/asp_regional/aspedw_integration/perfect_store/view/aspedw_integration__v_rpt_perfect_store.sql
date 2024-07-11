@@ -607,7 +607,7 @@ idn as (
     v_rpt_id_regional_perfect_store.response_score::CHARACTER VARYING AS response_score,
     v_rpt_id_regional_perfect_store.acc_rej_reason::CHARACTER VARYING AS acc_rej_reason,
     v_rpt_id_regional_perfect_store.actual::CHARACTER VARYING AS actual,
-    v_rpt_id_regional_perfect_store.target::CHARACTER VARYING AS "target",
+    v_rpt_id_regional_perfect_store."target"::CHARACTER VARYING AS "target",
     v_rpt_id_regional_perfect_store.priority_store_flag,
     NULL AS photo_url,
     NULL AS website_url,
