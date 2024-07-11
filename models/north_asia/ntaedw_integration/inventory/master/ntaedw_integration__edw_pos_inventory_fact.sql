@@ -47,7 +47,7 @@ final as(
        src_sys_cd::varchar(30) as src_sys_cd,
        ctry_cd::varchar(10) as ctry_cd,
        current_timestamp()::timestamp_ntz(9) as crt_dttm,
-       current_timestamp()::timestamp_ntz(9) as upd_dttm
+       current_timestamp()::timestamp_ntz(9) as updt_dttm
     FROM source
 )
 select * from final
