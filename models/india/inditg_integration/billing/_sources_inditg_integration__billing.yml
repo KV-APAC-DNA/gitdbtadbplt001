@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
       - name: sdl_sap_billing_conditions
-        tags: ["m_wrp_in_sdlitg_invc","transformation"]
+        tags: ["in_sdlitg_daily","transformation"]

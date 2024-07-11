@@ -12,4 +12,4 @@ models:
   - name: indwks_integration__wks_rpurchasedetail
     config: 
       alias: wks_rpurchasedetail
-      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_tblf","transformation"]
