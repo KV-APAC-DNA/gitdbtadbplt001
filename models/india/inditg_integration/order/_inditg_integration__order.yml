@@ -4,4 +4,4 @@ models:
   - name: inditg_integration__itg_orderbooking
     config:
       alias: itg_orderbooking
-      tags: ["m_wrp_in_sdlitg_order","transformation"]
+      tags: ["in_sdlitg_order","transformation"]

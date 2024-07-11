@@ -4,23 +4,23 @@ models:
   - name: inditg_integration__itg_salesinvoiceorders
     config:
       alias: itg_salesinvoiceorders
-      tags: ["m_wrp_in_sdlitg_order","transformation"]
+      tags: ["in_sdlitg_order","transformation"]
 
   - name: inditg_integration__itg_keyaccountsales
     config:
       alias: itg_keyaccountsales
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_keyaccountsales_wrk
     config:
       alias: itg_keyaccountsales_wrk
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_winculum_salesreturn
     config:
       alias: itg_winculum_salesreturn
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__sdl_raw_winculum_salesreturn
     config:
       alias: sdl_raw_winculum_salesreturn
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
