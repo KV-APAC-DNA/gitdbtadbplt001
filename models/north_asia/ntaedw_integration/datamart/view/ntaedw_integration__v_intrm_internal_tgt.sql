@@ -7,6 +7,9 @@ edw_customer_attr_flat_dim as (
 edw_customer_base_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
+edw_company_dim as(
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
+),
 final as
 (    
     SELECT 

@@ -10,31 +10,31 @@ sources:
       identifier: false
     tables:
     - name: sdl_pos_historical_btl
-      tags: ["j_india_key_account_offtake_historical_btl_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_re_mapping
-      tags: ["j_india_key_account_offtake_re_mapping_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_category_mapping
-      tags: ["j_india_key_account_offtake_category_mapping_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
 
     - name: sdl_pos_tesco
-      tags: ["j_india_key_account_offtake_tesco_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_dmart
-      tags: ["j_india_key_account_offtake_dmart_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_frl
-      tags: ["j_india_key_account_offtake_frl_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_dabur
-      tags: ["j_india_key_account_offtake_dabur_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_spencer
-      tags: ["j_india_key_account_offtake_spencer_data_transformation","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_hg
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_max
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_vmm
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_ril
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_abrl
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
     - name: sdl_pos_apollo
-      tags: ["j_india_key_account_offtake_hg_data_ingestion","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]

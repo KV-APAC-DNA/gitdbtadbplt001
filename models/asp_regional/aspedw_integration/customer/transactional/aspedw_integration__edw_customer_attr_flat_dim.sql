@@ -379,7 +379,7 @@ final as
     select 
         aw_remote_key::varchar(100) as aw_remote_key,
         cust_nm::varchar(100) as cust_nm,
-        street_num::varchar(100) as street_num,
+        street_num::varchar(256) as street_num,
         street_nm::varchar(500) as street_nm,
         city::varchar(100) as city,
         post_cd::varchar(100) as post_cd,

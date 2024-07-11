@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ ref('aspedw_integration__edw_vw_pop6_analysis_active_data') }}
+    select * from {{ ref('aspedw_integration__edw_vw_pop6_analysis_hist_data') }}
 ),
 final as (
     select
@@ -117,9 +117,7 @@ final as (
         "y/n_flag" as "y/n_flag",
         mkt_share as "mkt_share",
         planned_visit_date as "planned_visit_date",
-        visited_flag as "visited_flag",
-        facing as "facing",
-        is_eyelevel as "is_eyelevel"
+        visited_flag as "visited_flag"
     from source
 )
 select * from final

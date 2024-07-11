@@ -109,10 +109,6 @@ models:
     config:
       alias: edw_rpt_hk_pos
       tags: ["north_asia_views","transformation"]
-  - name: ntaedw_access__edw_vw_pop6_analysis_active_data
-    config:
-      alias: edw_vw_pop6_analysis_active_data
-      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_ims
     config:
       alias: v_rpt_ims

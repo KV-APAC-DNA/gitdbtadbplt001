@@ -31,7 +31,7 @@ c as
         v_bi_slscyc_slsc_vst.scheduledtime,
         v_bi_slscyc_slsc_vst.status,
         v_bi_slscyc_slsc_vst.salespersonid
-    FROM rex_bi.v_bi_slscyc_slsc_vst
+    FROM v_bi_slscyc_slsc_vst
 ),
 p as 
 (
@@ -56,7 +56,7 @@ p as
         v_bi_mrch_resp_prod.eannumber,
         v_bi_mrch_resp_prod.productname,
         v_bi_mrch_resp_prod.startdate
-    FROM rex_bi.v_bi_mrch_resp_prod
+    FROM v_bi_mrch_resp_prod
 ),
 h as 
 (

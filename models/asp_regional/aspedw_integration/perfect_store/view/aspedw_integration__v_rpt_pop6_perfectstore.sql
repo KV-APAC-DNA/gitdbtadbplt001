@@ -25,7 +25,7 @@ edw_product_attr_dim as
 ),
 pop6_kpi2data_mapping as 
 (
-    select * from {{ source('ntaedw_integration','pop6_kpi2data_mapping') }}
+    select * from {{ source('aspedw_integration','pop6_kpi2data_mapping') }}
 ),
 edw_vw_pop6_visits_prod_attribute_audits as 
 (
