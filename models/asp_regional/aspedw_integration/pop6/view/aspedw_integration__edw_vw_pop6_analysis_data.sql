@@ -7,7 +7,7 @@ with edw_vw_ps_targets as (
 select * from {{ ref('aspedw_integration__edw_vw_ps_targets') }}
 ),
 pop6_kpi2data_mapping as (
-select * from {{ source('ntaedw_integration','pop6_kpi2data_mapping') }}
+select * from {{ source('aspedw_integration','pop6_kpi2data_mapping') }}
 ),
 edw_vw_pop6_visits_sku_audits as (
 select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_sku_audits') }}

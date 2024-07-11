@@ -4,7 +4,7 @@ models:
   - name: ntawks_integration__wks_itg_tw_ims_dstr_prod_map
     config: 
       alias: wks_itg_tw_ims_dstr_prod_map
-      tags: ["tw_ims_distributor_prod_map","ingestion"]
+      tags: ["tw_ims_distributor_prod_map","transformation"]
   - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout
     config:
       alias: wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout

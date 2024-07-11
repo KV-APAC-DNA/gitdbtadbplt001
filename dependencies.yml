@@ -12,4 +12,4 @@ packages:
   - package: Montreal-Analytics/snowflake_utils
     version: 0.6.1
   - package: brooklyn-data/dbt_artifacts
-    version: 2.6.2
+    version: 2.6.3

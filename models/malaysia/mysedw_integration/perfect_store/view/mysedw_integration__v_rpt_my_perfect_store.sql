@@ -50,13 +50,25 @@ itg_my_material_dim as
 (
     select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
 ),
-itg_my_dstrbtrr_dim as 
+itg_my_dstrbtrr_dim as
 (
     select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
 ),
+itg_mds_my_ps_msl as(
+    select * from {{ ref('mysitg_integration__itg_mds_my_ps_msl') }}
+),
+itg_my_dstrbtr_cust_dim as(
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }}
+),
+itg_my_dstrbtrr_dim as(
+    select * from {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }}
+),
+itg_my_material_dim as(
+    select * from {{ ref('mysitg_integration__itg_my_material_dim') }}
+),
 merchandising_response_gt_msl as
 (
-    SELECT 
+    SELECT
         'Merchandising_Response' AS dataset,
         (
             (
@@ -138,9 +150,9 @@ merchandising_response_gt_msl as
         null AS value,
         null AS mkt_share,
         null AS rej_reason
-    FROM 
+    FROM
         (
-            SELECT 
+            SELECT
                 derived_table2.l1_month,
                 derived_table2.retail_environment,
                 derived_table2.distributor_code,
@@ -159,9 +171,9 @@ merchandising_response_gt_msl as
                 derived_table2.putup_desc,
                 "max"(derived_table2.msl_flag) AS msl_flag,
                 "max"(derived_table2.msl_hit) AS msl_hit
-            FROM 
+            FROM
                 (
-                    SELECT 
+                    SELECT
                         rtrim(month.l1_month) as l1_month,
                         a.retail_environment,
                         rtrim(a.distributor_code) as distributor_code,
@@ -183,9 +195,9 @@ merchandising_response_gt_msl as
                             WHEN (sum(a.msl_hit) > ((0)::numeric)::numeric(18, 0)) THEN 1
                             ELSE 0
                         END AS msl_hit
-                    FROM 
+                    FROM
                         (
-                            SELECT 
+                            SELECT
                                 msl.mnth_id,
                                 msl.retail_environment,
                                 msl.distributor_code,
@@ -209,7 +221,7 @@ merchandising_response_gt_msl as
                                 END AS msl_hit
                             FROM (
                                     (
-                                        SELECT 
+                                        SELECT
                                             derived_table1.cal_mnth_id AS mnth_id,
                                             "max"((a.region)::text) AS state,
                                             a.outlet_type1 AS retail_environment,
@@ -227,11 +239,11 @@ merchandising_response_gt_msl as
                                             "max"((d.putup_desc)::text) AS prod_hier_l6,
                                             a.lvl2 AS distributor_name,
                                             a.cdm AS slsmn_nm
-                                        FROM 
+                                        FROM
                                             (
                                                 (
                                                     (
-                                                        SELECT 
+                                                        SELECT
                                                             a.channel_nm,
                                                             a.ean,
                                                             a.prod_nm,
@@ -265,24 +277,24 @@ merchandising_response_gt_msl as
                                                             dist.cdl_dttm,
                                                             dist.crtd_dttm,
                                                             dist.updt_dttm
-                                                        FROM 
+                                                        FROM
                                                             (
                                                                 (
-                                                                    {{ ref('mysitg_integration__itg_mds_my_ps_msl') }} a
-                                                                    JOIN {{ ref('mysitg_integration__itg_my_dstrbtr_cust_dim') }} c ON (
+                                                                    itg_mds_my_ps_msl a
+                                                                    JOIN itg_my_dstrbtr_cust_dim c ON (
                                                                         (
                                                                             rtrim(upper((c.outlet_type1)::text)) = rtrim(upper((a.channel_nm)::text))
                                                                         )
                                                                     )
                                                                 )
-                                                                JOIN {{ ref('mysitg_integration__itg_my_dstrbtrr_dim') }} dist ON (((c.cust_id)::text = (dist.cust_id)::text))
+                                                                JOIN itg_my_dstrbtrr_dim dist ON (((c.cust_id)::text = (dist.cust_id)::text))
                                                             )
-                                                        WHERE 
+                                                        WHERE
                                                             (
                                                                 (dist.lvl5)::text = ('Active'::character varying)::text
                                                             )
                                                     ) a
-                                                    LEFT JOIN {{ ref('mysitg_integration__itg_my_material_dim') }} d ON (
+                                                    LEFT JOIN itg_my_material_dim d ON (
                                                         (
                                                             ltrim((a.ean)::text, ('0'::character varying)::text) = ltrim(
                                                                 (d.item_bar_cd)::text,
@@ -291,7 +303,7 @@ merchandising_response_gt_msl as
                                                         )
                                                     )
                                                 )
-                                                JOIN 
+                                                JOIN
                                                 (
                                                     SELECT DISTINCT edw_vw_os_time_dim.cal_mnth_id
                                                     FROM edw_vw_os_time_dim
@@ -334,7 +346,7 @@ merchandising_response_gt_msl as
                                                                 )
                                                             )
                                                         )
-                                                ) derived_table1 ON 
+                                                ) derived_table1 ON
                                                 (
                                                     (
                                                         (
@@ -366,9 +378,9 @@ merchandising_response_gt_msl as
                                             a.lvl2,
                                             a.cdm
                                     ) msl
-                                    LEFT JOIN 
+                                    LEFT JOIN
                                     (
-                                        SELECT 
+                                        SELECT
                                             rtrim(edw_my_sellout_analysis.mnth_id) as mnth_id,
                                             rtrim(edw_my_sellout_analysis.dstrbtr_grp_cd) as dstrbtr_grp_cd,
                                             rtrim(edw_my_sellout_analysis.dstrbtr_lvl5) as dstrbtr_lvl5,
@@ -461,7 +473,7 @@ merchandising_response_gt_msl as
                             )
                             AND (a.mnth_id <= month.l1_month)
                         )
-                    GROUP BY 
+                    GROUP BY
                         rtrim(month.l1_month),
                         (a.retail_environment),
                         rtrim(a.distributor_code),
@@ -518,7 +530,7 @@ merchandising_response_gt_msl as
                     )
                 )
         ) wt
-    WHERE 
+    WHERE
         (
             (
                 (
@@ -547,7 +559,7 @@ merchandising_response_gt_msl as
                 )
             )
         )
-    GROUP BY 
+    GROUP BY
         emsa.store_code,
         CASE
             WHEN (
@@ -807,8 +819,8 @@ survey_response_promo as
         )
 ),
 merchandising_response_mt_msl as
-(   
-    SELECT 
+(
+    SELECT
         'Merchandising_Response' AS dataset,
         osa.outlet_no AS customerid,
         '' AS salespersonid,
@@ -871,7 +883,7 @@ merchandising_response_mt_msl as
         null AS value,
         null AS mkt_share,
         null AS rej_reason
-    FROM 
+    FROM
     (
         (
             (
@@ -916,7 +928,7 @@ merchandising_response_mt_msl as
                                     rtrim(osa.region) as region,
                                     rtrim(osa.chain) as chain,
                                     rtrim(osa.channel) as channel
-                                FROM 
+                                FROM
                                     (
                                         (
                                             SELECT DISTINCT itg_mds_my_ps_msl.channel_nm,
@@ -926,7 +938,7 @@ merchandising_response_mt_msl as
                                                 itg_mds_my_ps_msl.valid_from,
                                                 itg_mds_my_ps_msl.valid_to
                                             FROM itg_mds_my_ps_msl
-                                            WHERE 
+                                            WHERE
                                                 (
                                                     COALESCE(
                                                         rtrim(upper((itg_mds_my_ps_msl.channel_nm)::text)),
@@ -940,7 +952,7 @@ merchandising_response_mt_msl as
                                                     )
                                                 )
                                         ) msl
-                                        LEFT JOIN edw_vw_my_ps_osa osa ON 
+                                        LEFT JOIN edw_vw_my_ps_osa osa ON
                                         (
                                             (
                                                 (
@@ -957,7 +969,7 @@ merchandising_response_mt_msl as
                                             )
                                         )
                                     )
-                                GROUP BY 
+                                GROUP BY
                                     msl.channel_nm,
                                     rtrim(msl.prod_nm),
                                     rtrim(osa.outlet_no),
@@ -966,7 +978,7 @@ merchandising_response_mt_msl as
                                     rtrim(osa.chain),
                                     rtrim(osa.channel)
                             ) msl
-                            LEFT JOIN edw_vw_my_ps_osa osa ON 
+                            LEFT JOIN edw_vw_my_ps_osa osa ON
                             (
                                 (
                                     (
@@ -988,7 +1000,7 @@ merchandising_response_mt_msl as
                             )
                         )
                 ) osa
-                LEFT JOIN 
+                LEFT JOIN
                 (
                     SELECT edw_vw_my_ps_sku_mst.sku_no,
                         edw_vw_my_ps_sku_mst.description,
@@ -1057,7 +1069,7 @@ merchandising_response_mt_msl as
             ) - (2)::double precision
         )
     )
-    GROUP BY 
+    GROUP BY
         osa.outlet_no,
         osa.mnth_id,
         otlt.name,

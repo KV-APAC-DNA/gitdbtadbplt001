@@ -31,7 +31,7 @@ final as
         run_id::number(14,0) as run_id ,
         file_name::varchar(255) as file_name ,
         yearmo::varchar(255) as yearmo,
-        convert_timezone('Asia/Singapore',current_timestamp()::timestamp_ntz(9)) as crtd_dttm
+        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) as crtd_dttm
         from source
 )
 select * from final

@@ -116,7 +116,7 @@ models:
   - name: ntaitg_integration__itg_pos_invoice_prc_lookup
     config:
       alias: itg_pos_invoice_prc_lookup
-      tags: ["kr_pos_edw_load","transformation"]
+      tags: ["pos_edw_load","transformation"]
   - name: ntaitg_integration__sdl_raw_hk_pos_scorecard_mannings
     config:
       alias: sdl_raw_hk_pos_scorecard_mannings
