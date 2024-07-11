@@ -184,8 +184,6 @@ SELECT FISC_YR,
 SYSDATE() as crtd_dttm		--// SYSDATE
 FROM WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH		
 left join retail_excellence_msl_target_final  GCPH_final on (gcph.fisc_per=gcph_final.fisc_per and gcph.global_product_brand=gcph_final.global_product_brand)
-
-
 ),
 final as
 (
