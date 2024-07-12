@@ -1,7 +1,7 @@
 --overwriding default sql header as we dont want to change timezone to singapore
 --import cte
 with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ source('aspitg_integration','itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
     select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
@@ -10,13 +10,13 @@ itg_mds_sg_customer_hierarchy as (
     select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_korea_base_retail_excellence as (
     select * from {{ ref('natwks_integration__wks_korea_base_retail_excellence') }}
 ),
  edw_customer_attr_flat_dim as (
-    select * from {{ source('aspedw_integration','edw_customer_attr_flat_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
  ),
  msl_data as
  (
@@ -105,7 +105,7 @@ FROM  msl_data as MSL
 inner join  (select * from wks_korea_base_retail_excellence_1) FINAL		--//                   AND ATTR.COUNTRY = REG_SO.CNTRY_CD) FINAL
 				  ON  UPPER (MSL.RETAIL_ENVIRONMENT) = UPPER (FINAL.RETAIL_ENVIRONMENT)		--// 				  ON  UPPER (MSL.retail_environment) = UPPER (FINAL.retail_environment)
 				  AND UPPER (LTRIM(MSL.SKU_UNIQUE_IDENTIFIER,'0')) = UPPER (LTRIM(FINAL.EAN,'0'))		--// 				  AND UPPER (LTRIM(MSL.sku_unique_identifier,'0')) = UPPER (LTRIM(FINAL.EAN,'0'))
-WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths		--// WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths
+WHERE MSL.JJ_MNTH_ID >= (SELECT last_16mnths		--// WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths
                          FROM edw_vw_cal_retail_excellence_dim)		--//                          FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
 AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)		
 ),

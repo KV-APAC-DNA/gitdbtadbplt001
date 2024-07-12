@@ -6,10 +6,7 @@ rpt_retail_excellence_gcph as
  (
     select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
  ),
- mds_reds_market_msl_target_final as 
-  (
-    select * from {{ ref('natwks_integration_wks_mds_reds_market_msl_target_final') }}
-  ),
+ 
  final as 
  (
    select b.fisc_per,
