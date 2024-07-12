@@ -23,3 +23,13 @@ sources:
 
       - name: jp_pos_daily_sugi
         tags: ["", "ingestion"]
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: sm05_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: jpnedw_integration__dw_pos_daily_temp
