@@ -1,6 +1,6 @@
 with source as
 (
-    select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_uni_prev') }}
+    select * from {{ ref('jpndcledw_integration__dm_user_attr_sfcc_v_prev') }}
 ),
 
 final as
