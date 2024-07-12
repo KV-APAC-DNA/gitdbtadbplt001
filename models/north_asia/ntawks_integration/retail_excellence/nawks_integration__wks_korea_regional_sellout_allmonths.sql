@@ -25,17 +25,17 @@ FROM (SELECT DISTINCT cntry_cd,
                    dim_key,
                    data_source
             FROM WKS_KOREA_BASE_RETAIL_EXCELLENCE		--//             FROM NA_WKS.WKS_KOREA_BASE_RETAIL_EXCELLENCE
-			WHERE MNTH_ID >= (SELECT last_26mnths
+			WHERE MNTH_ID >= (SELECT last_27mnths
                               FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		--//                               FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC
             AND   MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC) a,		            
            (SELECT DISTINCT "year",
                    mnth_id AS MONTH
             FROM EDW_VW_OS_TIME_DIM		--//             FROM os_edw.edw_vw_os_time_dim
-			WHERE MNTH_ID >= (SELECT last_26mnths
+			WHERE MNTH_ID >= (SELECT last_27mnths
                  FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		
 AND   MNTH_ID <= (select TO_CHAR((DATEADD(DAY, 90, sysdate()::DATE )), 'YYYYMM') )) b) all_months 
   LEFT JOIN (SELECT * FROM WKS_KOREA_BASE_RETAIL_EXCELLENCE		
-				WHERE   MNTH_ID >= (SELECT last_26mnths
+				WHERE   MNTH_ID >= (SELECT last_27mnths
                               FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		
             AND   MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC) base		
          ON ALL_MONTHS.CNTRY_CD = BASE.CNTRY_CD		

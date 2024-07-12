@@ -130,7 +130,7 @@ FROM WKS_KOREA_REGIONAL_SELLOUT_BASEDIM BASE_DIM		--// FROM NA_WKS.WKS_KOREA_REG
                           so_avg_qty,
 						  SALES_VALUE_LIST_PRICE
                    FROM WKS_KOREA_BASE_RETAIL_EXCELLENCE		--//                    FROM NA_WKS.WKS_KOREA_BASE_RETAIL_EXCELLENCE
-				   WHERE   MNTH_ID >= (SELECT last_26mnths
+				   WHERE   MNTH_ID >= (SELECT last_27mnths
                               FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		--//                               FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC
 					AND   MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC) CM		--// 					AND   MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)::NUMERIC) CM
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
@@ -165,7 +165,7 @@ WKS_KOREA_REGIONAL_SELLOUT_ACT_L12M L12M
               AND BASE_DIM.MONTH = L12M.MONTH		--//               AND BASE_DIM.month = L12M.MONTH
               AND BASE_DIM.DIM_KEY = L12M.DIM_KEY		--//               AND BASE_DIM.dim_key = L12M.dim_key
 			  AND BASE_DIM.DATA_SOURCE = L12M.DATA_SOURCE		--// 			  AND BASE_DIM.data_source = L12M.data_source
-WHERE BASE_DIM.MONTH >= (SELECT last_18mnths		
+WHERE BASE_DIM.MONTH >= (SELECT last_16mnths		
                         FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		
 AND   BASE_DIM.MONTH <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC		
 	
