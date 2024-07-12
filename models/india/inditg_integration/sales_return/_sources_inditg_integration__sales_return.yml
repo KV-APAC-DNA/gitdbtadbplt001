@@ -14,3 +14,5 @@ sources:
 
     - name: sdl_salesreturn_del
       tags: ["in_sdlitg_gtsales","ingestion"]
+    - name: sdl_rpurchasedetail
+      tags: ["in_sdlitg_tblf","transformation"]

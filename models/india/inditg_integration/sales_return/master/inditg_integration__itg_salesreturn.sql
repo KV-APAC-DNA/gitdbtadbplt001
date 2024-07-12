@@ -2,9 +2,15 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",    
-        pre_hook= "{% if is_incremental() %}
-        delete from {{this}} where (distcode, srnrefno) in (select distcode, srnrefno from {{ source('indsdl_raw', 'sdl_csl_salesreturn') }} as s where datediff(day, s.createddate, s.modifieddate) > 6);
-        {% endif %}"
+        pre_hook= ["delete from {{this}}
+                    where(DistCode,srnrefno) in (select DistCode,srnrefno from {{ ref('inditg_integration__itg_salesreturn_del') }});",
+                   "delete from {{this}} 
+                    where modifieddate >= (Select min(s.modifieddate) from {{ source('indsdl_raw', 'sdl_csl_salesreturn') }} s 
+                    where DATEDIFF(day, s.createddate, s.modifieddate) <= 6 );"
+                   "delete from {{this}} where (distcode, srnrefno) in 
+                   (select distcode, srnrefno from {{ source('indsdl_raw', 'sdl_csl_salesreturn') }} as s 
+                   where datediff(day, s.createddate, s.modifieddate) > 6);"
+                ]
     )
 }}
 with source as
@@ -62,9 +68,9 @@ final as
     salesroutecode::varchar(200) as salesroutecode,
     nrvalue::number(18,6) as nrvalue,
     prdselrateaftertax::number(18,6) as prdselrateaftertax,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    current_timestamp()::timestamp_ntz(9) as modifieddate
+    modifieddate::timestamp_ntz(9) as modifieddate
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

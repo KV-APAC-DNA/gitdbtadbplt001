@@ -35,6 +35,7 @@ final as (
         filename::varchar(100) as filename,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
+    where (source.curr_dt)::date = current_timestamp()::date
 )
 
 select * from final

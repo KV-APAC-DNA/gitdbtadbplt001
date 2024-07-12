@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_skurecom_gt_sss
+    config:
+      alias: edw_rpt_skurecom_gt_sss
+      tags: ["in_skurecom_gt_sss_2024_datamart","transformation"]
+  # - name: indedw_integration__edw_rpt_sss_zonal
+  #   config:
+  #     alias: edw_rpt_sss_zonal
+  #     tags: ["in_sss_zonal_datamart","transformation"]
+  - name: indedw_integration__edw_sss_kpi_data
+    config:
+      alias: edw_sss_kpi_data
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indedw_integration__edw_sss_kpi_data_final
+    config:
+      alias: edw_sss_kpi_data_final
+      tags: ["in_sss_scorecard_data_mart","transformation"]
+  - name: indedw_integration__edw_rpt_mi_msl_dashboard
+    config:
+      alias: edw_rpt_mi_msl_dashboard
+      tags: ["in_mi_msl_perf_datamart","transformation"]
+  - name: indedw_integration__edw_rpt_mt_sellin_vs_sellout_tbl
+    config:
+      alias: edw_rpt_mt_sellin_vs_sellout_tbl
+      tags: ["in_mt_sellin_vs_sellout_datamart","transformation"]
+  - name: indedw_integration__edw_rpt_sss_scorecard
+    config:
+      alias: edw_rpt_sss_scorecard
+      tags: ["in_sss_scorecard_data_mart","transformation"]

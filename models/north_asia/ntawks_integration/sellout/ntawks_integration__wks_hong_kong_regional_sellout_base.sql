@@ -1,23 +1,23 @@
 with edw_pos_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_POS_FACT
+select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
 edw_vw_os_time_dim as (
-select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_ims_fact as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_IMS_FACT
+select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_ims_dstr_cust_attr as (
-select * from DEV_DNA_CORE.SNAPNTAITG_INTEGRATION.ITG_IMS_DSTR_CUST_ATTR
+select * from {{ ref('ntaitg_integration__itg_ims_dstr_cust_attr') }}
 ),
 itg_mds_ap_customer360_config as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
-ITG_QUERY_PARAMETERS as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+itg_query_parameters as (
+select * from {{ source('aspitg_integration','itg_query_parameters') }}
 ),
-EDW_VW_POP6_STORE as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_VW_POP6_STORE
+edw_vw_pop6_store as (
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 transformed as (
 SELECT

@@ -18,7 +18,7 @@ sources:
             select_columns: ["year_code", "sales_office_code_code", "sales_group_code_code", "product_h2_code", "product_h4_code"]
             column: "(upper(trim(sales_office_code_code)),upper(trim(sales_group_code_code)))"
             lookup_column: "upper(trim(sls_ofc)), upper(trim(sls_grp_cd))"
-            lookup_table: "aspedw_integration.edw_customer_attr_flat_dim"                                                                      #update the reference
+            lookup_table: "{{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}"
             lookup_filter: "county = 'KR' and (trim(sls_ofc) <> '' and sls_ofc is not null) and (trim(sls_grp_cd) <> '' and sls_grp_cd is not null)"
             failure_reason: "'MISSING SLS_OFC_CD,SLS_GRP_CD IN MASTER TABLE'"
             name: TRATBL_sdl_mds_kr_target__lookup_test_salesofficecode
@@ -29,7 +29,7 @@ sources:
             select_columns: ["year_code", "sales_office_code_code", "sales_group_code_code", "product_h2_code", "product_h4_code"]
             column: "(upper(trim(product_h2_code)),upper(trim(product_h4_code)))"
             lookup_column: "upper(trim(prod_hier_l2)), upper(trim(prod_hier_l4))"
-            lookup_table: "aspedw_integration.edw_product_attr_dim"                                                                      #update the reference
+            lookup_table: "{{ ref('aspedw_integration__edw_product_attr_dim') }}"
             lookup_filter: "cntry = 'KR' and (trim(prod_hier_l2) <> '' and prod_hier_l2 is not null) and (trim(prod_hier_l4) <> '' and prod_hier_l4 is not null)"
             failure_reason: "'MISSING PRODUCT_HIER2,PRODUCT_HIER4 IN MASTER TABLE'"
             name: TRATBL_sdl_mds_kr_target__lookup_test_producth2code
@@ -111,3 +111,4 @@ sources:
     tables:
     - name: itg_sales_store_master_temp
     - name: itg_sales_cust_prod_master_temp
+    - name: itg_sls_grp_to_customer_mapping

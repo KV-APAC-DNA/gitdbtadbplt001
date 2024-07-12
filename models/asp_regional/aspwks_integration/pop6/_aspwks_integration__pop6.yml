@@ -1,0 +1,472 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_pop6_hk_product_lists_allocation
+    config:
+      alias: wks_pop6_hk_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_product_lists_pops
+    config:
+      alias: wks_pop6_hk_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_product_lists_products
+    config:
+      alias: wks_pop6_hk_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_products
+    config:
+      alias: wks_pop6_hk_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_promotion_plans
+    config:
+      alias: wks_pop6_hk_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_promotions
+    config:
+      alias: wks_pop6_hk_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_tasks
+    config:
+      alias: wks_pop6_hk_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_users
+    config:
+      alias: wks_pop6_hk_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_product_lists_allocation
+    config:
+      alias: wks_pop6_jp_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_product_lists_pops
+    config:
+      alias: wks_pop6_jp_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_product_lists_products
+    config:
+      alias: wks_pop6_jp_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_promotion_plans
+    config:
+      alias: wks_pop6_jp_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_promotions
+    config:
+      alias: wks_pop6_jp_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_service_levels
+    config:
+      alias: wks_pop6_jp_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_tasks
+    config:
+      alias: wks_pop6_jp_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_users
+    config:
+      alias: wks_pop6_jp_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_lists_allocation
+    config:
+      alias: wks_pop6_kr_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_lists_pops
+    config:
+      alias: wks_pop6_kr_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_lists_products
+    config:
+      alias: wks_pop6_kr_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_products
+    config:
+      alias: wks_pop6_kr_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_promotion_plans
+    config:
+      alias: wks_pop6_kr_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_promotions
+    config:
+      alias: wks_pop6_kr_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_tasks
+    config:
+      alias: wks_pop6_kr_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_users
+    config:
+      alias: wks_pop6_kr_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_product_lists_allocation
+    config:
+      alias: wks_pop6_sg_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_product_lists_pops
+    config:
+      alias: wks_pop6_sg_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_product_lists_products
+    config:
+      alias: wks_pop6_sg_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_promotion_plans
+    config:
+      alias: wks_pop6_sg_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_promotions
+    config:
+      alias: wks_pop6_sg_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_tasks
+    config:
+      alias: wks_pop6_sg_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_users
+    config:
+      alias: wks_pop6_sg_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_product_lists_allocation
+    config:
+      alias: wks_pop6_th_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_product_lists_pops
+    config:
+      alias: wks_pop6_th_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_product_lists_products
+    config:
+      alias: wks_pop6_th_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_promotion_plans
+    config:
+      alias: wks_pop6_th_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_promotions
+    config:
+      alias: wks_pop6_th_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_service_levels
+    config:
+      alias: wks_pop6_th_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_tasks
+    config:
+      alias: wks_pop6_th_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_users
+    config:
+      alias: wks_pop6_th_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_lists_allocation
+    config:
+      alias: wks_pop6_tw_product_lists_allocation
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_lists_pops
+    config:
+      alias: wks_pop6_tw_product_lists_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_lists_products
+    config:
+      alias: wks_pop6_tw_product_lists_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_products
+    config:
+      alias: wks_pop6_tw_products
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_promotion_plans
+    config:
+      alias: wks_pop6_tw_promotion_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_promotions
+    config:
+      alias: wks_pop6_tw_promotions
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_service_levels
+    config:
+      alias: wks_pop6_tw_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_tasks
+    config:
+      alias: wks_pop6_tw_tasks
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_service_levels
+    config:
+      alias: wks_pop6_kr_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_users
+    config:
+      alias: wks_pop6_tw_users
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_display
+    config:
+      alias: wks_pop6_hk_display
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_display
+    config:
+      alias: wks_pop6_jp_display
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_display
+    config:
+      alias: wks_pop6_kr_display
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_display
+    config:
+      alias: wks_pop6_sg_display
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_display
+    config:
+      alias: wks_pop6_tw_display
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_display
+    config:
+      alias: wks_pop6_th_display
+      tags: ["pop6_master_load", "ingestion"]
+
+  - name: aspwks_integration__wks_pop6_hk_display_plans
+    config:
+      alias: wks_pop6_hk_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_display_plans
+    config:
+      alias: wks_pop6_jp_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_display_plans
+    config:
+      alias: wks_pop6_kr_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_display_plans
+    config:
+      alias: wks_pop6_sg_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_display_plans
+    config:
+      alias: wks_pop6_th_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_display_plans
+    config:
+      alias: wks_pop6_tw_display_plans
+      tags: ["pop6_master_load", "ingestion"]
+
+  - name: aspwks_integration__wks_pop6_hk_exclusion
+    config:
+      alias: wks_pop6_hk_exclusion
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_exclusion
+    config:
+      alias: wks_pop6_jp_exclusion
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_exclusion
+    config:
+      alias: wks_pop6_kr_exclusion
+      tags: ["pop6_master_load", "ingestion"]
+  # - name: aspwks_integration__wks_pop6_sg_exclusion
+  #   config:
+  #     alias: wks_pop6_sg_exclusion
+  #     tags: ["pop6_master_load", "ingestion"]
+  # - name: aspwks_integration__wks_pop6_th_exclusion
+  #   config:
+  #     alias: wks_pop6_th_exclusion
+  #     tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_exclusion
+    config:
+      alias: wks_pop6_tw_exclusion
+      tags: ["pop6_master_load", "ingestion"]
+
+  - name: aspwks_integration__wks_pop6_hk_executed_visits
+    config:
+      alias: wks_pop6_hk_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_executed_visits
+    config:
+      alias: wks_pop6_jp_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_executed_visits
+    config:
+      alias: wks_pop6_kr_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_executed_visits
+    config:
+      alias: wks_pop6_sg_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_executed_visits
+    config:
+      alias: wks_pop6_th_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_executed_visits
+    config:
+      alias: wks_pop6_tw_executed_visits
+      tags: ["pop6_master_load", "ingestion"]
+
+  - name: aspwks_integration__wks_pop6_hk_general_audits
+    config:
+      alias: wks_pop6_hk_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_general_audits
+    config:
+      alias: wks_pop6_jp_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_general_audits
+    config:
+      alias: wks_pop6_kr_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_general_audits
+    config:
+      alias: wks_pop6_sg_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_general_audits
+    config:
+      alias: wks_pop6_th_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_general_audits
+    config:
+      alias: wks_pop6_tw_general_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_planned_visits
+    config:
+      alias: wks_pop6_hk_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_planned_visits
+    config:
+      alias: wks_pop6_jp_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_planned_visits
+    config:
+      alias: wks_pop6_kr_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_planned_visits
+    config:
+      alias: wks_pop6_sg_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_planned_visits
+    config:
+      alias: wks_pop6_th_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_planned_visits
+    config:
+      alias: wks_pop6_tw_planned_visits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_pop_lists
+    config:
+      alias: wks_pop6_hk_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_pop_lists
+    config:
+      alias: wks_pop6_jp_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_pop_lists
+    config:
+      alias: wks_pop6_kr_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_pop_lists
+    config:
+      alias: wks_pop6_sg_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_pop_lists
+    config:
+      alias: wks_pop6_th_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_pop_lists
+    config:
+      alias: wks_pop6_tw_pop_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_pops
+    config:
+      alias: wks_pop6_hk_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_pops
+    config:
+      alias: wks_pop6_jp_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_pops
+    config:
+      alias: wks_pop6_kr_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_pops
+    config:
+      alias: wks_pop6_sg_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_pops
+    config:
+      alias: wks_pop6_th_pops
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_pops
+    config:
+      alias: wks_pop6_tw_pops
+      tags: ["pop6_master_load", "ingestion"]
+
+  - name: aspwks_integration__wks_pop6_hk_product_attribute_audits
+    config:
+      alias: wks_pop6_hk_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_product_attribute_audits
+    config:
+      alias: wks_pop6_jp_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_attribute_audits
+    config:
+      alias: wks_pop6_kr_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_product_attribute_audits
+    config:
+      alias: wks_pop6_sg_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_th_product_attribute_audits
+    config:
+      alias: wks_pop6_th_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_attribute_audits
+    config:
+      alias: wks_pop6_tw_product_attribute_audits
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_product_group_lists
+    config:
+      alias: wks_pop6_hk_product_group_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_group_lists
+    config:
+      alias: wks_pop6_kr_product_group_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_group_lists
+    config:
+      alias: wks_pop6_tw_product_group_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_product_groups_lists
+    config:
+      alias: wks_pop6_hk_product_groups_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_product_groups_lists
+    config:
+      alias: wks_pop6_kr_product_groups_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_service_levels
+    config:
+      alias: wks_pop6_hk_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_product_groups_lists
+    config:
+      alias: wks_pop6_tw_product_groups_lists
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_service_levels
+    config:
+      alias: wks_pop6_sg_service_levels
+      tags: ["pop6_master_load", "ingestion"]
+  - name: aspwks_integration__wks_pop6_display_plans
+    config:
+      alias: wks_pop6_display_plans
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_sku_audits
+    config:
+      alias: wks_pop6_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_photo_mgmnt_url_cnt
+    config:
+      alias: wks_photo_mgmnt_url_cnt
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspwks_integration__wks_photo_mgmnt_url_wrk1
+    config:
+      alias: wks_photo_mgmnt_url_wrk1
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspwks_integration__wks_photo_mgmnt_url_wrk2
+    config:
+      alias: wks_photo_mgmnt_url_wrk2
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
