@@ -202,7 +202,7 @@ final as
 (
     select 
     fisc_yr	:: numeric(18,0) as fisc_yr,
-    fisc_per :: varchar(22) as fisc_per,
+    fisc_per :: numeric(18,0) as fisc_per,
     customer_l0 :: varchar(50) as customer_l0,
     trade_type :: varchar(255) as trade_type,
     sales_group :: varchar(255) as sales_group,

@@ -15,7 +15,16 @@ wks_philippines_regional_sellout_mapped_sku_cd as
 		  WHERE COUNTRY_CODE = 'PH'
 		  AND   DATA_SOURCE IN ('SELL-OUT','POS'))
 	WHERE RNO = 1
+),
+
+final as 
+(
+    select master_code :: varchar(150) as master_code,
+    mapped_sku_cd :: varchar(40) as mapped_sku_cd,
+    msl_product_desc :: varchar(500) as msl_product_desc,
+    rno :: numeric(18,0) as rno
+    from wks_philippines_regional_sellout_mapped_sku_cd
 )
 
 --final select
-select * from wks_philippines_regional_sellout_mapped_sku_cd
+select * from final 
