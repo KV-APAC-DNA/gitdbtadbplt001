@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: aspedw_integration__rpt_sfa_pm_ranked
+    config:
+      alias: rpt_sfa_pm_ranked
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_country
+    config:
+      alias: rpt_sfa_pm_selector_country
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_salescycle
+    config:
+      alias: rpt_sfa_pm_selector_salescycle
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_salescampaign
+    config:
+      alias: rpt_sfa_pm_selector_salescampaign
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_mastertask
+    config:
+      alias: rpt_sfa_pm_selector_mastertask
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_customername
+    config:
+      alias: rpt_sfa_pm_selector_customername
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__rpt_sfa_pm_selector_channel
+    config:
+      alias: rpt_sfa_pm_selector_channel
+      tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspedw_integration__v_bi_mrch_resp_prod
+    config:
+      alias: v_bi_mrch_resp_prod
+      tags: ["north_asia_views","transformation"]
+  - name: aspedw_integration__v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier
+    config:
+      alias: v_bi_slscyc_vst_tgtg_cust_mrch_prod_hier
+      tags: ["north_asia_views","transformation"]  
+  - name: aspedw_integration__v_slsc_tgtg_items_customer
+    config:
+      alias: v_slsc_tgtg_items_customer
+      tags: ["north_asia_views","transformation"]
+  - name: aspedw_integration__v_bi_survey_response_values
+    config:
+      alias: v_bi_survey_response_values
+      tags: ["north_asia_views", "transformation"]
+  - name: aspedw_integration__v_bi_slscyc_slsc_vst
+    config:
+      alias: v_bi_slscyc_slsc_vst
+      tags: ["north_asia_views", "transformation"]

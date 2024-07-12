@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from dev_dna_load.indsdl_raw.sdl_csl_udcmaster
+    select * from {{source('indsdl_raw', 'sdl_csl_udcmaster')}}
 ),
 final as 
 (

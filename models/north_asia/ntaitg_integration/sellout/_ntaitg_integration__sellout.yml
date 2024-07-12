@@ -3,65 +3,69 @@ version: 2
 models:
   - name: ntaitg_integration__itg_ims
     config: 
-        alias: itg_ims
-        tags: ["tw_ims_distributor_standard_sell_out","transformation"]
+      alias: itg_ims
+      tags: ["tw_ims_distributor_standard_sell_out","transformation"]
   - name: ntaitg_integration__sdl_raw_kr_bo_young_jong_hap_logistics_gt_sellout
     config: 
-        alias: sdl_raw_kr_bo_young_jong_hap_logistics_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_bo_young_jong_hap_logistics_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__itg_kr_gt_sellout
     config: 
-        alias: itg_kr_gt_sellout
-        tags: []
+      alias: itg_kr_gt_sellout
+      tags: ["gt_sellout","transformation"]
   - name: ntaitg_integration__sdl_raw_kr_da_in_sang_sa_gt_sellout
     config: 
-        alias: sdl_raw_kr_da_in_sang_sa_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_da_in_sang_sa_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_du_bae_ro_yu_tong_gt_sellout
     config: 
-        alias: sdl_raw_kr_du_bae_ro_yu_tong_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_du_bae_ro_yu_tong_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_hyundai_gt_sellout
     config: 
-        alias: sdl_raw_kr_hyundai_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_hyundai_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
     config: 
-        alias: sdl_raw_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_ju_hj_life_gt_sellout
     config: 
-        alias: sdl_raw_kr_ju_hj_life_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_ju_hj_life_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_jungseok_gt_sellout
     config: 
-        alias: sdl_raw_kr_jungseok_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_jungseok_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_lotte_ak_gt_sellout
     config: 
-        alias: sdl_raw_kr_lotte_ak_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_lotte_ak_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_lotte_logistics_yang_ju_gt_sellout
     config: 
-        alias: sdl_raw_kr_lotte_logistics_yang_ju_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_lotte_logistics_yang_ju_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_nacf_gt_sellout
     config: 
-        alias: sdl_raw_kr_nacf_gt_sellout
-        tags: []
+      alias: sdl_raw_kr_nacf_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_dongbu_lsd_gt_sellout
     config: 
-        alias: sdl_raw_kr_dongbu_lsd_gt_sellout
-        tags: ["","transformation"]
+      alias: sdl_raw_kr_dongbu_lsd_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_nu_ri_zon_gt_sellout
     config: 
-        alias: sdl_raw_kr_nu_ri_zon_gt_sellout
-        tags: ["","transformation"]
+      alias: sdl_raw_kr_nu_ri_zon_gt_sellout
+      tags: ["gt_sellout","ingestion"]
   - name: ntaitg_integration__sdl_raw_hk_ims_wingkeung_sel_out
     config: 
-        alias: sdl_raw_hk_ims_wingkeung_sel_out
-        tags: ["",""]
+      alias: sdl_raw_hk_ims_wingkeung_sel_out
+      tags: ["na_trxn_ims","transformation"]
   - name: ntaitg_integration__sdl_raw_hk_ims_viva_sel_out
     config: 
-        alias: sdl_raw_hk_ims_viva_sel_out
-        tags: ["",""]
+      alias: sdl_raw_hk_ims_viva_sel_out
+      tags: ["na_trxn_ims","transformation"]
+  - name: ntaitg_integration__itg_kr_gt_nacf_cust_dim
+    config: 
+      alias: itg_kr_gt_nacf_cust_dim
+      tags: ["gt_sellout","inactive"]

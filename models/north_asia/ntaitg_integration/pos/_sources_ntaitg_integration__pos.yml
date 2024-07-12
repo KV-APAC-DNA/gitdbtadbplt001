@@ -9,6 +9,12 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_kr_pos_emart_evydy_header
+        tags: ["","ingestion"]     
+      - name: sdl_kr_pos_emart_evydy_line
+        tags: ["","ingestion"]
+      - name: sdl_kr_pos_emart_line
+      - name: sdl_kr_pos_emart_header
       - name: sdl_hk_pos_scorecard_mannings
       - name: sdl_tw_pos_watson_store
         tags: ["tw_pos_watson","ingestion"]
@@ -258,8 +264,6 @@ sources:
             config:
               store_failures: true
               schema: ntawks_integration
-      - name: sdl_kr_pos_emart
-        tags: ["kr_pos","ingestion"] 
       - name: sdl_pos_prc_condition_map
         tags: ["kr_pos","ingestion"]  
       # - name: sdl_kr_pos_costco_invrpt_header

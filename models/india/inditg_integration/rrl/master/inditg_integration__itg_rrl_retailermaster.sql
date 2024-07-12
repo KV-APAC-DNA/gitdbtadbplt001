@@ -99,7 +99,7 @@ final as
 	retailerclassid::number(18,0) as retailerclassid,
 	actv_flg::varchar(1) as actv_flg,
 	filename::varchar(100) as filename,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm,
+	crt_dttm::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
 
     from transformed

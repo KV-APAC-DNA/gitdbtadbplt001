@@ -16,11 +16,11 @@ models:
   - name: ntaitg_integration__itg_kr_coupang_daily_brand_reviews
     config: 
       alias: itg_kr_coupang_daily_brand_reviews
-      tags: []
+      tags: ["j_kr_ecommerce_sellout_Naver_ingestion","transformation"]
   - name: ntaitg_integration__sdl_raw_kr_coupang_daily_brand_reviews
     config: 
       alias: sdl_raw_kr_coupang_daily_brand_reviews
-      tags: []
+      tags: ["kr_coupang_premium_dailybrandreviews","ingestion"]
   - name: ntaitg_integration__itg_mds_hk_product_hierarchy
     config:
         alias: itg_mds_hk_product_hierarchy
@@ -36,7 +36,7 @@ models:
   - name: ntaitg_integration__itg_kr_gt_dpt_daiso
     config:
         alias: itg_kr_gt_dpt_daiso
-        tags: ["gt_sellout_dept_daiso_cust_dim","ingestion"]
+        tags: ["gt_sellout_dept_daiso_cust_dim","inactive"]
   - name: ntaitg_integration__itg_mds_kr_brand_campaign_promotion
     config:
         alias: itg_mds_kr_brand_campaign_promotion
@@ -48,16 +48,16 @@ models:
   - name: ntaitg_integration__itg_kr_gt_daiso_price
     config:
         alias: itg_kr_gt_daiso_price
-        tags: ["gt_sellout_daiso","gt_sellout_daiso_price_master","ingestion"]
+        tags: ["kr_gt_sellout","gt_sellout_daiso_price_master","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_gt_daiso_price
     config:
         alias: sdl_raw_kr_gt_daiso_price
-        tags: ["gt_sellout_daiso","ingestion"]
+        tags: ["kr_gt_sellout","ingestion"]
   - name: ntaitg_integration__itg_tw_ims_dstr_prod_price_map
     config:
       alias: itg_tw_ims_dstr_prod_price_map
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
-  - name: ntaitg_integration___itg_gt_msl_items
+  - name: ntaitg_integration__itg_gt_msl_items
     config:
       alias: itg_gt_msl_items
-      tags: ["na_ims_inv_mds_sdl_itg_load","transformation"]  
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]

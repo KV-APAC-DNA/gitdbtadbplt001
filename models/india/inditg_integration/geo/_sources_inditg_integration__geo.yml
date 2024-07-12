@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: indwks_integration
           - test_duplicate:
-              group_by_columns: ["cmpcode","distrcode"]
+              group_by_columns: ["cmpcode","distrcode","customercode"]
               select_columns: ["filename", "cmpcode","distrcode","customercode"]
               name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
               config:
