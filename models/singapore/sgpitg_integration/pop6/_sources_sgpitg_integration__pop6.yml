@@ -8,6 +8,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_pop6_sg_pops
+      - name: sdl_pop6_sg_products
       - name: sdl_pop6_sg_product_attribute_audits
         tags: ["pop6_master_load","ingestion"]
         tests:
