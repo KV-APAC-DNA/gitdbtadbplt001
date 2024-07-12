@@ -4,4 +4,4 @@ models:
   - name: inditg_integration__itg_schemeutilization
     config:
       alias: itg_schemeutilization
-      tags: ["m_wrp_in_sdlitg_scheme","transformation"]
+      tags: ["in_sdlitg_scheme","transformation"]

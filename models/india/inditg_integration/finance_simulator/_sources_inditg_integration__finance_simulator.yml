@@ -10,6 +10,6 @@ sources:
       identifier: false
     tables:
     - name: sdl_fin_sim_plandata
-      tags: ["in_finance_simulator_plandata_ingetion","transformation"]
+      tags: ["in_finance_simulator_load","transformation"]
     - name: sdl_fin_sim_miscdata
-      tags: ["in_finance_simulator_miscdata_ingetion","transformation"]
+      tags: ["in_finance_simulator_load","transformation"]
