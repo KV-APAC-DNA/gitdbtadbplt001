@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__dm_user_attr
+    config:
+      alias: dm_user_attr
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__ua02_behavior01
+    config:
+      alias: ua02_behavior01
+      tags: ["m_dcl_edw_job3", "transformation"] 
+      
+  - name: jpndcledw_integration__ua02_behavior02
+    config:
+      alias: ua02_behavior02
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__ua02_directmail
+    config:
+      alias: ua02_directmail
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk09_ua02_behavior01_trade
+    config:
+      alias: wk09_ua02_behavior01_trade
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk10_ua02_directmail_biken_flg
+    config:
+      alias: wk10_ua02_directmail_biken_flg
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk11_ua02_directmail_register_card_flg
+    config:
+      alias: wk11_ua02_directmail_register_card_flg
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk12_ua02_directmail_other_adv_flg
+    config:
+      alias: wk12_ua02_directmail_other_adv_flg
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk13_ua02_directmail_main_store
+    config:
+      alias: wk13_ua02_directmail_main_store
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk14_ua02_directmail_familysale_class
+    config:
+      alias: wk14_ua02_directmail_familysale_class
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk15_ua02_directmail_stage
+    config:
+      alias: wk15_ua02_directmail_stage
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk17_ua02_behavior01_I_Order_dt_inc_sample
+    config:
+      alias: wk17_ua02_behavior01_I_Order_dt_inc_sample
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk18_ua02_behavior01_l_order_dt_channel
+    config:
+      alias: wk18_ua02_behavior01_l_order_dt_channel
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk19_ua02_behavior02_expired_point
+    config:
+      alias: wk19_ua02_behavior02_expired_point
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk20_ua02_behavior02_outcall_flg
+    config:
+      alias: wk20_ua02_behavior02_outcall_flg
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk21_ua02_behavior02_subscription_flg
+    config:
+      alias: wk21_ua02_behavior02_subscription_flg
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk22_ua02_behavior02_ml_prediction_result
+    config:
+      alias: wk22_ua02_behavior02_ml_prediction_result
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk23_ua02_behavior01_order_amt_term_start
+    config:
+      alias: wk23_ua02_behavior01_order_amt_term_start
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk24_ua02_behavior01_order_cnt_this_year
+    config:
+      alias: wk24_ua02_behavior01_order_cnt_this_year
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk25_ua02_behavior01_order_sku_cnt
+    config:
+      alias: wk25_ua02_behavior01_order_sku_cnt
+      tags: ["m_dcl_edw_job3", "transformation"]
+      
+  - name: jpndcledw_integration__wk26_ua02_behavior01_order_cnt_channel_exc_sub
+    config:
+      alias: wk26_ua02_behavior01_order_cnt_channel_exc_sub
+      tags: ["m_dcl_edw_job3", "transformation"]
+
+  - name: jpndcledw_integration__wk_rankdm_hanro_bk
+    config:
+      alias: wk_rankdm_hanro_bk
+      tags: ["m_dcl_edw_job3","transformation"]
+
+  - name: jpndcledw_integration__wk_store_konyu
+    config:
+      alias: wk_store_konyu
+      tags: ["m_dcl_edw_job3","transformation"]
+
+  - name: jpndcledw_integration__container_collection_exclude_no
+    config:
+      alias: container_collection_exclude_no
+      tags: ["m_dcl_edw_job3","transformation"]
+  - name: jpndcledw_integration__acgel_predictionresult
+    config:
+        alias: acgel_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
+  - name: jpndcledw_integration__ec_predictionresult
+    config:
+        alias: acgel_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
+  - name: jpndcledw_integration__cluster_predictionresult
+    config:
+        alias: cluster_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
