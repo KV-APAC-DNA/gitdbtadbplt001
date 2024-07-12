@@ -607,7 +607,7 @@ standard_new_date_acgel::date as standard_new_date_acgel,
 premium_new_date_acgel::date as premium_new_date_acgel,
 tradeup_date_acgel::date as tradeup_date_acgel,
 tradedown_date_acgel::date as tradedown_date_acgel,
-trade_flag_acgel::varchar(60) astrade_flag_acgel
+trade_flag_acgel::varchar(60) as trade_flag_acgel
 from transformed
 )
 select * from final

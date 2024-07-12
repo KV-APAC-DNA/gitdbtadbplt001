@@ -20,7 +20,7 @@ where ck.testusrflg = '通常ユーザ'
 ) ,
 final as (
 select 
-customer_no::varchar(60) as customer_no,
+customer_no::varchar(68) as customer_no,
 BIKEN_FLG::NUMBER(18,0) as BIKEN_FLG ,
 from transformed
 )
