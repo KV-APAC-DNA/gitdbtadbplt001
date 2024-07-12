@@ -6,7 +6,7 @@ with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
  retail_excellence_msl_target_final as 
  (
     select * from {{ ref('nawks_integration_wks_retail_excellence_msl_target_final') }}
- )
+ ),
 
 edw_kr_rpt_retail_excellence  as 
 (
@@ -85,7 +85,7 @@ SELECT FISC_YR,
        PKA_VARIANT_DESC,
        PKA_SUB_VARIANT_DESC,
        GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       gcph.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,
@@ -182,8 +182,8 @@ SELECT FISC_YR,
        COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
 SYSDATE() as crtd_dttm		--// SYSDATE
-FROM WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH		
-left join retail_excellence_msl_target_final  GCPH_final on (gcph.fisc_per=gcph_final.fisc_per and gcph.global_product_brand=gcph_final.global_product_brand)
+FROM WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH	 GCPH	
+left join retail_excellence_msl_target_final  GCPH_final on (gcph.fisc_per=gcph_final.fisc_per and upper(gcph.global_product_brand)=upper(gcph_final.global_product_brand))
 ),
 final as
 (
