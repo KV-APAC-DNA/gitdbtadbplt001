@@ -151,5 +151,5 @@ sources:
       identifier: false
     tables:
       - name: mds_reds_market_msl_target
-      - name : itg_re_msl_input_definition
+    
       

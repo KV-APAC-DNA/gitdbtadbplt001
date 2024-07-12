@@ -1,6 +1,6 @@
 with  mds_reds_market_msl_target_final as
 (
-    select * from {{ ref('natwks_integration_wks_mds_reds_market_msl_target_final') }}
+    select * from {{ ref('aspwks_integration_wks_mds_reds_market_msl_target_final') }}
 ),
 rpt_retail_excellence_gcph as 
  (
