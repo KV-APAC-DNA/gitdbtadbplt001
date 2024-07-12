@@ -2632,6 +2632,8 @@ vnm as (
 FROM v_rpt_vn_perfect_store
 ),
 final as (
+    select * from sgp
+    union all
     select * from rex
     union all
     select * from pop6
@@ -2643,8 +2645,6 @@ final as (
     select * from idn
     union all
     select * from jpn
-    union all
-    select * from sgp
     union all
     select * from tha_1
     union all
