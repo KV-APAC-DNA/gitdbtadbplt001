@@ -1,6 +1,14 @@
+{{
+    config
+    (
+        materialized = 'incremental',
+        incremental_logic = 'append'
+    )
+}}
+
 with report_006_a
 as (
-    select * from {{ ref('jpndcledw_integration__report_006_a') }}
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.REPORT_006_A
     ),
 cld_m
 as (
@@ -13,15 +21,15 @@ as (
         channel_id as channel_id,
         yymm as yymm,
         "ユニーク契約者数" as total,
-        cast(date_part(dow, convert_timezone('UTC', 'Asia/Tokyo', current_timestamp) - interval '7 day') as int) as day_of_week,
-        cast(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp) as date) - interval '7 day' as report_exec_date
+        cast(date_part(dow, convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()) - interval '7 day') as int) as day_of_week,
+        cast(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()) as date) - interval '7 day' as report_exec_date
     from report_006_a
     where yymm = 
         (
             select 
                 year_445 || lpad(month_445, 2, 0)
             from cld_m
-            where to_date(ymd_dt) = to_date(dateadd(day, - 7, convert_timezone('UTC', 'Asia/Tokyo', current_timestamp())))
+            where to_date(ymd_dt) = to_date(dateadd(day, - 7, convert_timezone('UTC', 'Asia/Tokyo', '2024-06-24')))
         )
     ),
 

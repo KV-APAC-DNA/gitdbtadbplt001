@@ -1,66 +1,31 @@
 WITH tbecitem
 AS (
     SELECT *
-    FROM {{ ref('jpndclitg_integration__tbecitem') }}
+    FROM dev_dna_core.snapjpdclitg_integration.tbecitem
     ),
 item_sap_v
 AS (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_sap_v
+    select * from dev_dna_core.snapjpdcledw_integration.item_sap_v
     ),
 item_bunrval_v
 AS (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_bunrval_v
+    select * from dev_dna_core.snapjpdcledw_integration.item_bunrval_v
     ),
 zaiko_shohin_attr
 AS (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.zaiko_shohin_attr
+    select * from dev_dna_core.snapjpdcledw_integration.zaiko_shohin_attr
     ),
 cim03item_zaiko_ikou_kizuna
 AS (
-      select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_bunrval_v
+      select * from dev_dna_core.snapjpdcledw_integration.cim03item_zaiko_ikou_kizuna
     ),
 c_tbecprivilegemst
 AS (
     SELECT *
-    FROM {{ ref('jpndclitg_integration__c_tbecprivilegekesaihistory') }}
+    FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegemst
     ),
+
 ct1
-AS (
-    SELECT cast(ct.c_diprivilegeid AS VARCHAR) AS itemcode,
-        ct.c_dsprivilegename AS itemname,
-        cast(ct.c_diprivilegeid AS INT) AS diid,
-        ct.c_dsprivilegename AS itemnamer,
-        ' ' AS jancode,
-        NULL AS itemcode_sap,
-        '82' AS itemkbn,
-        '特典' AS itemkbnname,
-        0 AS tanka,
-        '98503' AS bunruicode2,
-        '98503' AS bunruicode3,
-        NULL AS bunruicode3_nm,
-        NULL AS bunruicode4,
-        '73' AS bunruicode5,
-        20170331 AS insertdate,
-        NULL AS dsoption001,
-        NULL AS dsoption002,
-        NULL AS haiban_hin_cd,
-        '非分解' AS hin_katashiki,
-        'manual' AS syutoku_kbn,
-        NULL AS bar_cd2,
-        NULL AS bumon7_add_attr1,
-        NULL AS bumon7_add_attr2,
-        NULL AS bumon7_add_attr3,
-        NULL AS bumon7_add_attr4,
-        NULL AS bumon7_add_attr5,
-        NULL AS bumon7_add_attr6,
-        NULL AS bumon7_add_attr7,
-        NULL AS bumon7_add_attr8,
-        NULL AS bumon7_add_attr9,
-        NULL AS bumon7_add_attr10,
-        3 AS marker
-    FROM c_tbecprivilegemst ct
-    ),
-ct2
 AS (
     SELECT t.dsitemid AS itemcode,
         nvl(t.dsitemname, ' ') AS itemname,
@@ -81,7 +46,7 @@ AS (
         t.dsoption002 AS dsoption002,
         NULL AS haiban_hin_cd,
         NULL AS hin_katashiki,
-        'zaiko' AS syutoku_kbn,
+        'ZAIKO' AS syutoku_kbn,
         nvl(isv.bar_cd2, ' ') AS bar_cd2,
         zsa.bumon7_add_attr1 AS bumon7_add_attr1,
         zsa.bumon7_add_attr2 AS bumon7_add_attr2,
@@ -105,11 +70,11 @@ AS (
     LEFT JOIN zaiko_shohin_attr zsa ON t.dsitemid = zsa.shohin_code
     WHERE t.dsoption001 = '在庫商品'
     ),
-ct3
+ct2
 AS (
     SELECT czk.itemcode AS itemcode,
         czk.itemname AS itemname,
-        cast(czk.itemcode AS INT) AS diid,
+        cast(czk.itemcode AS INTEGER) AS diid,
         czk.itemnamer AS itemnamer,
         czk.jancode AS jancode,
         NULL AS itemcode_sap,
@@ -146,6 +111,43 @@ AS (
             FROM item_sap_v isv2
             WHERE czk.itemcode = isv2.itemcode
             )
+    ),
+
+ct3
+AS (
+    SELECT cast(ct.c_diprivilegeid AS VARCHAR) AS itemcode,
+        ct.c_dsprivilegename AS itemname,
+        cast(ct.c_diprivilegeid AS INT) AS diid,
+        ct.c_dsprivilegename AS itemnamer,
+        ' ' AS jancode,
+        NULL AS itemcode_sap,
+        '82' AS itemkbn,
+        '特典' AS itemkbnname,
+        0 AS tanka,
+        '98503' AS bunruicode2,
+        '98503' AS bunruicode3,
+        NULL AS bunruicode3_nm,
+        NULL AS bunruicode4,
+        '73' AS bunruicode5,
+        20170331 AS insertdate,
+        NULL AS dsoption001,
+        NULL AS dsoption002,
+        NULL AS haiban_hin_cd,
+        '非分解' AS hin_katashiki,
+        'MANUAL' AS syutoku_kbn,
+        NULL AS bar_cd2,
+        NULL AS bumon7_add_attr1,
+        NULL AS bumon7_add_attr2,
+        NULL AS bumon7_add_attr3,
+        NULL AS bumon7_add_attr4,
+        NULL AS bumon7_add_attr5,
+        NULL AS bumon7_add_attr6,
+        NULL AS bumon7_add_attr7,
+        NULL AS bumon7_add_attr8,
+        NULL AS bumon7_add_attr9,
+        NULL AS bumon7_add_attr10,
+        3 AS marker
+    FROM c_tbecprivilegemst ct
     ),
 ct4
 AS (
@@ -241,7 +243,8 @@ AS (
     
     SELECT *
     FROM ct5
-    ),
+    )
+    ,
 final
 AS (
     SELECT itemcode::VARCHAR(30) AS z_itemcode,
@@ -250,7 +253,7 @@ AS (
         itemnamer::VARCHAR(200) AS itemnamer,
         jancode::VARCHAR(60) AS jancode,
         itemcode_sap::VARCHAR(40) AS itemcode_sap,
-        itemkbn::VARCHAR(6) AS itemkbn,
+        diitemdivflg::VARCHAR(6) AS itemkbn,
         itemkbnname::VARCHAR(100) AS itemkbnname,
         tanka::number(22, 0) AS tanka,
         bunruicode2::VARCHAR(7) AS bunruicode2,

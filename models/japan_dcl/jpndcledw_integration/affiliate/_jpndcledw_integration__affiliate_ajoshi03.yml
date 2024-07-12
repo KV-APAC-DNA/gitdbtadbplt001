@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__affiliate_cancel_delivery
+    config:
+      alias: affiliate_cancel_delivery
+      tags: ["m_dcl_edw_job1","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_sameday_order
+    config:
+      alias: affiliate_cancel_delivery
+      tags: ["m_dcl_edw_job1","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_wk1
+    config:
+      alias: affiliate_cancel_delivery
+      tags: ["m_dcl_edw_job1","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_wk2
+    config:
+      alias: affiliate_cancel_delivery
+      tags: ["m_dcl_edw_job1","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_wk3
+    config:
+      alias: affiliate_cancel_delivery
+      tags: ["m_dcl_edw_job1","transformation"]
