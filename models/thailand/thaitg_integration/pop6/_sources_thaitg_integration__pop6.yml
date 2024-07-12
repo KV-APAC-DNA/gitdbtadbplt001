@@ -10,9 +10,41 @@ sources:
       identifier: false
     tables:
       - name: sdl_pop6_th_product_lists_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id","product_list"]
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_th_product_lists_pops__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id","product_list"]
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_th_product_lists_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_th_pops__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_th_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_displays
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
@@ -29,7 +61,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_pop6_th_executed_visits
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","popdb_id"]
@@ -47,7 +79,7 @@ sources:
                 schema: thawks_integration
 
       - name: sdl_pop6_th_general_audits
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
@@ -65,7 +97,7 @@ sources:
                 schema: thawks_integration
       - name: sdl_pop6_th_planned_visits
       - name: sdl_pop6_th_product_attribute_audits
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
@@ -82,7 +114,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_pop6_th_promotion_plans
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["promotion_plan_id"]
@@ -99,7 +131,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_pop6_th_promotions
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["promotion_plan_id","visit_id"]
@@ -116,7 +148,7 @@ sources:
                 store_failures: true
                 schema: thawks_integration
       - name: sdl_pop6_th_rir_data
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","sku_id"]
@@ -134,7 +166,7 @@ sources:
                 schema: thawks_integration
       - name: sdl_pop6_th_service_levels
       - name: sdl_pop6_th_sku_audits
-        tags: ["pop6_th_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","dependent_on_field_id","section_id","sku_id"]
@@ -152,7 +184,104 @@ sources:
                 schema: thawks_integration
       - name: sdl_pop6_th_display_plans
       - name: sdl_pop6_th_pop_lists
+        # tags: ["pop6_master_load","ingestion"]
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["popdb_id","pop_list"]
+        #       select_columns: ["popdb_id","pop_list"]
+        #       name: TRATBL_sdl_pop6_th_pop_lists__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: thawks_integration
+        #   - test_duplicate:
+        #       group_by_columns: ["popdb_id","pop_list"]
+        #       select_columns: ["popdb_id","pop_list"]
+        #       name: TRATBL_sdl_pop6_th_pop_lists__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: thawks_integration
       - name: sdl_pop6_th_product_lists_allocation
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_th_product_lists_allocation__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_th_product_lists_allocation__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_product_lists_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id","product_list"]
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_th_product_lists_products__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id","product_list"]
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_th_product_lists_products__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_tasks
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              select_columns: ["visit_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_th_tasks__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","field_id","dependent_on_field_id"]
+              select_columns: ["visit_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_th_tasks__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
       - name: sdl_pop6_th_users
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_th_users__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_th_users__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+      - name: sdl_pop6_th_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_th_products__null_test
+              config:
+                store_failures: true
+                schema: thawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_th_products__duplicate_test
+              config:
+                store_failures: true
+                schema: thawks_integration
