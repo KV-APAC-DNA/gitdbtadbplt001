@@ -1,8 +1,0 @@
-version: 2
-
-models:
-
-  - name: jpndclitg_integration__contact_hist
-    config: 
-      alias: contact_hist
-      tags: ["m_dcl_itg_job3","ingestion"]
