@@ -52,7 +52,7 @@ models:
   - name: aspitg_integration__itg_pop6_exclusion
     config:
         alias: itg_pop6_exclusion
-        tags: [pop6_na_master, transformation]
+        tags: [pop6_master_load, transformation]
   - name: aspitg_integration__itg_pop6_pops
     config:
       alias: itg_pop6_pops
