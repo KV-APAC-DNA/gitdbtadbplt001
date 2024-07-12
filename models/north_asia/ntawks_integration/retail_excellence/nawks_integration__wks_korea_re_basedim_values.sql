@@ -3,7 +3,7 @@ with wks_korea_base_retail_excellence as (
     select * from {{ ref('natwks_integration__wks_korea_base_retail_excellence') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 --final cte
 korea_re_basedim_values  as (
