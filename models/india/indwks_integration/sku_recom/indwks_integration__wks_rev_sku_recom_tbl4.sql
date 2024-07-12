@@ -1,6 +1,6 @@
 {{
     config(
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
     )
 }}
 with wks_rev_sku_recom_tbl3 as
