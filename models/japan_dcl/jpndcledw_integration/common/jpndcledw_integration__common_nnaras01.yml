@@ -120,3 +120,15 @@ models:
     config:
       alias: container_collection_exclude_no
       tags: ["m_dcl_edw_job3","transformation"]
+  - name: jpndcledw_integration__acgel_predictionresult
+    config:
+        alias: acgel_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
+  - name: jpndcledw_integration__ec_predictionresult
+    config:
+        alias: acgel_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
+  - name: jpndcledw_integration__cluster_predictionresult
+    config:
+        alias: cluster_predictionresult
+        tags: ["dcl_ml_prediction_load","transformation"]
