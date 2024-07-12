@@ -352,7 +352,7 @@ wks_ph_rpt_retail_excellence_sop as
 final as 
 (
     select fisc_yr :: numeric(18,0) as fisc_yr,
-    fisc_per :: varchar(22) as fisc_per,
+    fisc_per :: numeric(18,0) as fisc_per,
     "cluster" :: varchar(100) as "cluster",
     market :: varchar(30) as market,
     data_src :: varchar(14) as data_src,

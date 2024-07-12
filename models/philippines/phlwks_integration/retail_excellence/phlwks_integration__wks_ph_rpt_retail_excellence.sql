@@ -460,7 +460,7 @@ ph_rpt_retail_excellence as
 final as 
 (
     select fisc_yr :: numeric(18,0) as fisc_yr,
-    fisc_per :: varchar(22) as fisc_per,
+    fisc_per :: numeric(18,0) as fisc_per,
     market :: varchar(30) as market,
     data_src :: varchar(14) as data_src,
     channel_name :: varchar(255) as channel_name,
