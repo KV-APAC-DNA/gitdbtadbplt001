@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: jpndclitg_integration__rakutenorderdetail
+    config:
+      alias: rakutenorderdetail
+      tags: ["dcl_rakuten_load","transformation"]
+

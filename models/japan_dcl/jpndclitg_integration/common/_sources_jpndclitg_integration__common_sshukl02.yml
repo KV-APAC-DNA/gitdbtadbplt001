@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: rakutenorderdetail
+        tags: ["dcl_rakuten_load","transformation"]
