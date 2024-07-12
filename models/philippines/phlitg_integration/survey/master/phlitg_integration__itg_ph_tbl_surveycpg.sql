@@ -24,7 +24,7 @@ select
 from source
     {% if is_incremental() %}
     -- -- this filter will only be applied on an incremental run
-     where source.filename > (select distinct filename from {{ this }})
+     where source.crt_dttm > (select max(crt_dttm) from {{ this }})
     {% endif %}
 )
 select * from final
