@@ -26,7 +26,7 @@ edw_vw_pop6_products as (
     select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from {{ source('snapntaedw_integration','v_rpt_pop6_perfectstore') }}
+    select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
 ),
 
 edw_list_price as (
