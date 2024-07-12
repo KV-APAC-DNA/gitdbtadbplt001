@@ -4,6 +4,7 @@ with mds_reds_market_msl_target as (
  edw_vw_os_time_dim as(
    select * from  {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
  ),
+
  wks_mds_reds_market_msl_target_ph as 
  (
     SELECT MSL_TARGET.START_MONTH_NAME,
