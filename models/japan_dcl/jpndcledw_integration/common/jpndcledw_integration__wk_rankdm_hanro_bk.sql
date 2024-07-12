@@ -1,6 +1,7 @@
 with WK_RANKDM_HANRO as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK_RANKDM_HANRO
 ),
+------add reference from sourav's model 
 final as (
 SELECT 
 diusrid::number(10,0) as diusrid,

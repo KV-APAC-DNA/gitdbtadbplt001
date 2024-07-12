@@ -1,9 +1,9 @@
 
 with tbusrpram as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ) ,
 tbEcOrder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 tbEcSalesRouteMst as (
 select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECSALESROUTEMST
@@ -12,13 +12,13 @@ c_tbEcInquire as (
 select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
 ),
 C_TBECUSRCOMMENT as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECUSRCOMMENT
+select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 C_TBDMSNDHIST as (
 select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBDMSNDHIST
 ),
 c_tbeckesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 conditions AS (
   SELECT 

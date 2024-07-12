@@ -3,25 +3,25 @@ wk16_ua02_directmail_main_channel_bddm as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK16_UA02_DIRECTMAIL_MAIN_CHANNEL_BDDM
 ),
 wk15_ua02_directmail_stage as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk15_ua02_directmail_stage
+select * from {{ ref('jpndcledw_integration__wk15_ua02_directmail_stage') }}
 ),
 wk12_ua02_directmail_other_adv_flg as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk12_ua02_directmail_other_adv_flg
+select * from {{ ref('jpndcledw_integration__wk12_ua02_directmail_other_adv_flg') }}
 ),
 wk11_ua02_directmail_register_card_flg as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk11_ua02_directmail_register_card_flg
+select * from {{ ref('jpndcledw_integration__wk11_ua02_directmail_register_card_flg') }}
 ),
 ua01_base_cim01kokya_v as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ua01_base_cim01kokya_v
 ),
 wk14_ua02_directmail_familysale_class as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk14_ua02_directmail_familysale_class
+select * from {{ ref('jpndcledw_integration__wk14_ua02_directmail_familysale_class') }}
 ),
 wk13_ua02_directmail_main_store as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk13_ua02_directmail_main_store
+select * from {{ ref('jpndcledw_integration__wk13_ua02_directmail_main_store') }}
 ),
 wk10_ua02_directmail_biken_flg as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk10_ua02_directmail_biken_flg
+select * from {{ ref('jpndcledw_integration__wk10_ua02_directmail_biken_flg') }}
 ),
 transformed as (
 SELECT 

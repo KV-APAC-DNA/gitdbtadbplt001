@@ -1,8 +1,8 @@
 with tbecorder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 TBUSRPRAM as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 transformed as (
   SELECT WK.diEcUsrID,

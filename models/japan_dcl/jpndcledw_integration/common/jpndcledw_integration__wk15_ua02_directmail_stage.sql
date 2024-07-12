@@ -5,7 +5,7 @@ cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 kr_new_stage_point as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_NEW_STAGE_POINT
+select * from {{ ref('jpndcledw_integration__kr_new_stage_point_prev') }}
 ),
 max_yyyy_dly AS (
 SELECT 

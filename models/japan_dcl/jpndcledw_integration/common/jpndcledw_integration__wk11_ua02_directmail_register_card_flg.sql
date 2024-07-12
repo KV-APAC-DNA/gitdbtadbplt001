@@ -2,16 +2,16 @@ with cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 c_tbecusercard as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECUSERCARD
+select * from {{ ref('jpndclitg_integration__c_tbecusercard') }}
 ),
 TBECORDER as (
-select *from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
 ),
 C_TBECKESAI as (
 select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
 ),
 C_TBECUSRCOMMENT as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECUSRCOMMENT
+select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 transformed as (
 select 

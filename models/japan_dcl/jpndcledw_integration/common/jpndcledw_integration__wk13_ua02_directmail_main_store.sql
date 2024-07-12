@@ -2,10 +2,10 @@ with cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 c_tbecclient as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECCLIENT
+select * from {{ ref('jpndclitg_integration__c_tbecclient') }}
 ),
 tbecorder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 transformed as (
 select 

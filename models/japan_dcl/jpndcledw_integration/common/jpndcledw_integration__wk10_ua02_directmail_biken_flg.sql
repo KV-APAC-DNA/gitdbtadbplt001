@@ -2,7 +2,7 @@ with cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 c_tbecusrcomment as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECUSRCOMMENT
+select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 transformed as (
 select 

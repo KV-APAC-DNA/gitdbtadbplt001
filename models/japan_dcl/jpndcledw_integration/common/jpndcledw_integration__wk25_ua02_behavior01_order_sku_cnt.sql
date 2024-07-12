@@ -1,5 +1,5 @@
 with dm_kesai_mart_dly_general as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.dm_kesai_mart_dly_general
+select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ) ,
 item_zaiko_v as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_ZAIKO_V

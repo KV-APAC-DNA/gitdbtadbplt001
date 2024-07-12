@@ -1,5 +1,5 @@
 with dm_kesai_mart_dly_general as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.DM_KESAI_MART_DLY_GENERAL
+select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
 this_yr_call AS (
   SELECT 

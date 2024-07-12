@@ -2,7 +2,7 @@ with cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 teikikeiyaku_data_mart_uni as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_UNI
+select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_uni_prev') }}
 ),
 b AS (
 SELECT 

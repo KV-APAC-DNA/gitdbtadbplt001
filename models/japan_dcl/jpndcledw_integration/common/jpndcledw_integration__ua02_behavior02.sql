@@ -1,16 +1,16 @@
 with wk22_ua02_behavior02_ml_prediction_result as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK22_UA02_BEHAVIOR02_ML_PREDICTION_RESULT),
+select * from {{ ref('jpndcledw_integration__wk22_ua02_behavior02_ml_prediction_result') }}),
 wk21_ua02_behavior02_subscription_flg as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK21_UA02_BEHAVIOR02_SUBSCRIPTION_FLG
+select * from {{ ref('jpndcledw_integration__wk21_ua02_behavior02_subscription_flg') }}
 ),
 ua01_base_cim01kokya_v as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA01_BASE_CIM01KOKYA_V
 ),
 wk20_ua02_behavior02_outcall_flg as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK20_UA02_BEHAVIOR02_OUTCALL_FLG
+select * from {{ ref('jpndcledw_integration__wk20_ua02_behavior02_outcall_flg') }}
 ),
 wk19_ua02_behavior02_expired_point as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK19_UA02_BEHAVIOR02_EXPIRED_POINT
+select * from {{ ref('jpndcledw_integration__wk19_ua02_behavior02_expired_point') }}
 ),
 transformed as (
 SELECT 

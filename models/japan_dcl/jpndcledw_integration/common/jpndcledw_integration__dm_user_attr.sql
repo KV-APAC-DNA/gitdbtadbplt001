@@ -1,14 +1,14 @@
 with ua02_behavior02 as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA02_BEHAVIOR02
+select * from {{ ref('jpndcledw_integration__ua02_behavior02') }}
 ),
 ua01_base_cim01kokya_v as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA01_BASE_CIM01KOKYA_V
 ),
 ua02_directmail as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA02_DIRECTMAIL
+select * from {{ ref('jpndcledw_integration__ua02_directmail') }}
 ),
 ua02_behavior01 as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA02_BEHAVIOR01
+select * from {{ ref('jpndcledw_integration__ua02_behavior01') }}
 ),
 transformed as (
 SELECT

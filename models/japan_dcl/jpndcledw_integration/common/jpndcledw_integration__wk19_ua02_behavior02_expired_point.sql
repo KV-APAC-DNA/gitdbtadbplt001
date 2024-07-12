@@ -2,10 +2,10 @@ with cim01kokya as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
 ),
 tbecpointhistory as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECPOINTHISTORY
+select * from {{ ref('jpndclitg_integration__tbecpointhistory') }}
 ),
 tbusrpram as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 this_month AS (
   SELECT 

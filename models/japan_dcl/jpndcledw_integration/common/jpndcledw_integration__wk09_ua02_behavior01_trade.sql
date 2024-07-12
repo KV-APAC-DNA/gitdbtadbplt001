@@ -2,13 +2,13 @@ with dm_kesai_mart_dly_general as (
   select 
     * 
   from 
-    DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.DM_KESAI_MART_DLY_GENERAL
+    {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ), 
 edw_mds_jp_dcl_product_master as (
   select 
     * 
   from 
-    DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.EDW_MDS_JP_DCL_PRODUCT_MASTER
+    {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
 ), 
 AID_MAIN AS (
     WITH AID AS (
