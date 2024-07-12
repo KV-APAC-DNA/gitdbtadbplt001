@@ -11,6 +11,7 @@ cnpc_regional_sellout_mapped_sku_cd as (
 cnpc_regional_sellout_ean as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_ean') }}
 ),
+
 cnpc_base_retail_excellence
 as
 (
@@ -72,25 +73,31 @@ global_product_subcategory,
 global_put_up_description,
 pka_product_key,
 pka_product_key_desc,
-sum(sellout_sales_quantity)::DECIMAL(38,6) as sls_qty,
-sum(sellout_sales_value)::NUMERIC(38,6) as sls_value,
-TRUNC(AVG(SELLOUT_SALES_QUANTITY) :: DECIMAL(38,6)) AS SO_AVG_QTY,
-sum(sales_value_list_price)::NUMERIC(38,6) as sales_value_list_price,
-SYSDATE()	as crt_dttm	--// SYSDATE
+sum(sellout_sales_quantity) as sls_qty,
+sum(sellout_sales_value) as sls_value,
+cast(avg(sellout_sales_quantity) as numeric(38,6)) as avg_qty,
+sum(sales_value_list_price)as sales_value_list_price,
+sysdate as created_date
 from (select country_code,
 country_name,
 --sd.soldto_code as soldto_code,
 soldto_code,
-main.distributor_name||'#'||ltrim(main.distributor_code,'0') as distributor_name,
-main.distributor_code,
+distributor_name||'#'||ltrim(distributor_code,'0') as distributor_name,
+distributor_code,
 store_code,
 --main.ean,
+//changes below to map mother code
 case when main.mother_code != 'na' and main.mother_code is not null then main.mother_code else main.ean   
 end as product_code,
 store_type,
 main.store_name||'#'||ltrim(main.store_code,'0') as store_name,
-case when main.mother_code = 'na' or main.mother_code is null then main.ean else ED.EAN end as ean,
+--
+-----add latest ean by mother_code as well---
+case when main.mother_code = 'na' or main.mother_code is null then main.ean else ed.ean end as ean,
+--case when ean != 'na' and ean is not null then pd.sku_code else sku_code end as mapped_sku_code,
 pd.sku_code as mapped_sku_code,
+--case when main.mother_code = 'na' then pd.msl_product_desc else ed.msl_product_desc as msl_product_desc
+--case when ean != 'na' and ean is not null then pd.msl_product_desc else msl_product_desc end as msl_product_desc,
 pd.msl_product_desc as msl_product_desc,
 data_source,
 year,
@@ -133,15 +140,19 @@ soldto_code,
 --sd.soldto_code as soldto_code,
 max(distributor_name) over (partition by distributor_code order by cal_date desc rows between unbounded preceding and unbounded following) as distributor_name,
 distributor_code,
-msl_product_code as mother_code,
+--ltrim(msl_product_code,'0') as ean,
+ msl_product_code as mother_code,
 store_code,
 upper(store_type) as store_type,
 max(store_name) over (partition by store_code order by cal_date desc rows between unbounded preceding and unbounded following) as store_name,
 ean,
+--sku_code,
 msl_product_desc,
+--pd.sku_code as mapped_sku_code,
 data_source,
 year as year,
 mnth_id as mnth_id,
+--customer_product_desc,
 sap_parent_customer_key,
 sap_parent_customer_description,
 sap_customer_channel_key,
@@ -180,12 +191,12 @@ and   data_source in ('sell-out','pos')
 and mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
 						   and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)::numeric  
 )main
-left join cnpc_regional_sellout_ean ED
-on --upper(main.pka_product_key_desc)=pd.pka_product_key_description
-upper(main.mother_code) = ED.MOTHER_CODE
-left join cnpc_regional_sellout_mapped_sku_cd PD
-on case when main.mother_code = 'na' then upper(main.ean) else ED.EAN end = PD.ean
+left join cnpc_regional_sellout_ean ed
+on upper(main.mother_code) = ed.mother_code
+left join cnpc_regional_sellout_mapped_sku_cd pd
+on case when main.mother_code = 'na' then upper(main.ean) else ed.ean end = pd.ean
 )
+
 group by country_code,
 country_name,
 data_source,
