@@ -9,7 +9,7 @@ with mds_reds_market_msl_target as (
     SELECT MSL_TARGET.START_MONTH_NAME, OS_TIME.MNTH_ID as start_month_id,msl_target.end_month_name,os_time1.mnth_id as end_month_id,msl_target.mdp_target,msl_target.brand_code  from		
  (
     select upper(start_month_name) as start_month_name ,upper(end_month_name) as end_month_name,start_year_code,
-            end_year_code,mdp_target,brand_code from mds_reds_market_msl_target where market='Korea' 
+            end_year_code,mdp_target,brand_code from mds_reds_market_msl_target 
             group by 1,2,3,4,5,6 )msl_target
         inner  join
              (select distinct mnth_id,mnth_long as start_month_long ,"year"as start_year from edw_vw_os_time_dim ) os_time on (start_month_name=start_month_long  and start_year=start_year_code)		
