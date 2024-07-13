@@ -1,5 +1,5 @@
-with kesai_h_data_mart_mv_tbl_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_tbl_kizuna') }}
+with kesai_h_data_mart_mv_tbl as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_tbl') }}
 ),
 final as(
     SELECT kesai_h_data_mart_mv_tbl.saleno_key
@@ -79,6 +79,6 @@ final as(
                 ELSE '1'::CHARACTER VARYING
                 END
             )::CHARACTER VARYING(1) AS port_uniq_flg
-    FROM kesai_h_data_mart_mv_tbl_kizuna kesai_h_data_mart_mv_tbl
+    FROM kesai_h_data_mart_mv_tbl kesai_h_data_mart_mv_tbl
 )
 select * from final

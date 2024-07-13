@@ -17,8 +17,8 @@ tbechenpinriyu as(
 conv_mst_smkeiroid as(
     select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.conv_mst_smkeiroid
 ),
-kesai_h_data_mart_sub_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
+kesai_h_data_mart_sub as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub') }}
 ),
 c_tbecinquirekesai as(
     select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
@@ -208,7 +208,7 @@ SELECT
 		ELSE new_1.shukadate
 		END AS shukadate_e,
 	'0' AS kakokbn
-FROM kesai_h_data_mart_sub_kizuna new_1
+FROM kesai_h_data_mart_sub new_1
 LEFT JOIN c_tbecinquirekesai iq_kesai ON SUBSTRING(new_1.saleno, 2, 10) = iq_kesai.C_DIINQUIREKESAIID
 LEFT JOIN c_tbecinquire iq ON iq.diinquireid = iq_kesai.diinquireid
 

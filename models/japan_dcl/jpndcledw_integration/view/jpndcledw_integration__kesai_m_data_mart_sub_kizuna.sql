@@ -1,5 +1,5 @@
-with kesai_m_data_mart_sub_tbl_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna') }}
+with kesai_m_data_mart_sub_tbl as(
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_tbl') }}
 ),
 final as(
     SELECT kesai_m_data_mart_sub_tbl.saleno
@@ -40,6 +40,6 @@ final as(
         ,kesai_m_data_mart_sub_tbl.disetmeisaiid
         ,kesai_m_data_mart_sub_tbl.c_dssetitemkbn
         ,kesai_m_data_mart_sub_tbl.maker
-    FROM kesai_m_data_mart_sub_tbl_kizuna kesai_m_data_mart_sub_tbl
+    FROM kesai_m_data_mart_sub_tbl kesai_m_data_mart_sub_tbl
 )
 select * from final

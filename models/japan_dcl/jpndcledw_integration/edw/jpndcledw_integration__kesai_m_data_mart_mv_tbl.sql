@@ -10,8 +10,8 @@ with kesai_m_data_mart_sub_old as(
 kesai_m_data_mart_sub_kizuna as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_kizuna') }}
 ),
-kesai_h_data_mart_sub_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
+kesai_h_data_mart_sub as(
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub') }}
 ),
 kesai_m_data_mart_sub_old_chsi as(
     select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_m_data_mart_sub_old_chsi
@@ -429,7 +429,7 @@ INNER JOIN (
 	--DnA側でデータマートを作成するため廃止
 	--   ,      MAX(JOIN_REC_UPDDATE) JOIN_REC_UPDDATE
 	--END-ADD 20200108 D.YAMASHITA ***変更19855(JJ連携処理の追加におけるDWHデータの差分抽出実現化)****
-	FROM KESAI_H_DATA_MART_SUB_kizuna
+	FROM kesai_h_data_mart_sub
 	GROUP BY SALENO
 	) NEWH ON trim(SUB_NEW.SALENO) = trim(NEWH.SALENO)
 -- delete by Kizuna Project 2022/11/25 start --
