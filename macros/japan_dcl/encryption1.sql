@@ -1,6 +1,6 @@
 {% macro encryption_1(model, col) %}
     {% if col!=None %}
-        var= CASE WHEN LENGTH(col)::string = 10 THEN 
+        var encrypt= CASE WHEN LENGTH(col)::string = 10 THEN 
                     SUBSTR(col, 7, 1) || SUBSTR(col, 5, 1) || SUBSTR(col, 8, 1) || SUBSTR(col, 6, 1) || SUBSTR(col, 2, 1) || SUBSTR(col, 4, 1) || SUBSTR(col, 1, 1) || SUBSTR(col, 3, 1) || SUBSTR(col, 9, 1) || SUBSTR(col, 10, 1)
                 WHEN LENGTH(col) = 9 THEN
                 SUBSTR(col, 6, 1) || SUBSTR(col, 4, 1) || SUBSTR(col, 7, 1) || SUBSTR(col, 5, 1) || SUBSTR(col, 1, 1) || SUBSTR(col, 3, 1) || '0' || SUBSTR(col, 2, 1) || SUBSTR(col, 8, 1) || SUBSTR(col, 9, 1)
@@ -22,6 +22,7 @@
                     col='0' || '0' || '0' || '0' || '0' || '0' || '0' || '0' || '0' || SUBSTR(col, 1, 1)
                 ELSE
                     ''
-            END
+            END;
+        return encrypt
     {% endif %}
 {% endmacro %}
