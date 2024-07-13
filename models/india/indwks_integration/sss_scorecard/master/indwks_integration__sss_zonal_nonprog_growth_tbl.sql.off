@@ -1,0 +1,58 @@
+with 
+sss_zonal_nonprog_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_nonprog_tbl') }}
+),
+trans as
+(
+    SELECT nonprog_cur_yr.zone_name,
+       nonprog_cur_yr.mth_mm,
+       nonprog_cur_yr.fisc_yr as cur_yr,
+       nonprog_prev_yr.fisc_yr as prev_yr,
+       nonprog_cur_yr.month as cur_mnth ,
+       nonprog_prev_yr.month as prev_mnth,
+       nonprog_cur_yr.achievement_nr as cur_achvmnt_nr_nonprog,
+       nonprog_prev_yr.achievement_nr as prev_achvmnt_nr_nonprog,
+       ((nonprog_cur_yr.achievement_nr - nonprog_prev_yr.achievement_nr)/nonprog_prev_yr.achievement_nr)*100 AS nonprog_growth_percent 
+FROM (SELECT nonprog_cur.zone_name,
+             nonprog_cur.mth_mm,
+             nonprog_cur.fisc_yr,
+             nonprog_cur.month,
+             nonprog_cur.achievement_nr
+      FROM sss_zonal_nonprog_tbl nonprog_cur,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE nonprog_cur.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      ) nonprog_cur_yr,
+      (SELECT nonprog_prev.zone_name,
+              nonprog_prev.mth_mm,
+              nonprog_prev.fisc_yr,
+              nonprog_prev.month,
+              nonprog_prev.achievement_nr
+      FROM sss_zonal_nonprog_tbl nonprog_prev,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_mnth,
+                   EXTRACT(YEAR FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE nonprog_prev.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      AND   nonprog_prev.mth_mm < CASE WHEN start_mnth < 10 THEN end_year||0||end_mnth ELSE end_year||end_mnth END
+      ) nonprog_prev_yr
+WHERE nonprog_cur_yr.zone_name = nonprog_prev_yr.zone_name
+AND   nonprog_cur_yr.month = nonprog_prev_yr.month
+AND   nonprog_cur_yr.fisc_yr <> nonprog_prev_yr.fisc_yr
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	cur_yr::number(18,0) as cur_yr,
+	prev_yr::number(18,0) as prev_yr,
+	cur_mnth::varchar(3) as cur_mnth,
+	prev_mnth::varchar(3) as prev_mnth,
+	cur_achvmnt_nr_nonprog::number(38,6) as cur_achvmnt_nr_nonprog,
+	prev_achvmnt_nr_nonprog::number(38,6) as prev_achvmnt_nr_nonprog,
+	nonprog_growth_percent::number(38,4) as nonprog_growth_percent
+    from trans
+)
+select * from final

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_schemeutilization
+    config:
+      alias: itg_schemeutilization
+      tags: ["in_sdlitg_scheme","transformation"]

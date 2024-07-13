@@ -1,0 +1,25 @@
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ecommerce_offtake_amazon
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_bigbasket
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_firstcry
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_grofers
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_nykaa
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_paytm
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_master_mapping
+      tags: ["j_india_generic_query_execution","transformation"]
+    - name: sdl_ecommerce_offtake_flipkart
+      tags: ["j_india_generic_query_execution","transformation"]

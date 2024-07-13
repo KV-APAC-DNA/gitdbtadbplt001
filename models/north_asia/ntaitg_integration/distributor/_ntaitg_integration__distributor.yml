@@ -7,9 +7,9 @@ models:
       tags: ["tw_ims_distributor_prod_map","transformation"]
   - name: ntaitg_integration__sdl_raw_tw_ims_dstr_std_sel_out
     config: 
-        alias: sdl_raw_tw_ims_dstr_std_sel_out
-        tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+      alias: sdl_raw_tw_ims_dstr_std_sel_out
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
   - name: ntaitg_integration__sdl_tw_ims_dstr_std_sel_out
     config: 
-        alias: sdl_tw_ims_dstr_std_sel_out
-        tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
+      alias: sdl_tw_ims_dstr_std_sel_out
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]

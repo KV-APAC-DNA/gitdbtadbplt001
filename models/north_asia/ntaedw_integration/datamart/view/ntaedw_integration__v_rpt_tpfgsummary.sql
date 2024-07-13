@@ -20,7 +20,7 @@ edw_gch_producthierarchy as
 ),
 edw_product_attr_dim as
 (
-    select * from aspedw_integration.edw_product_attr_dim
+    select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
 edw_product_key_attributes as
 (
@@ -49,6 +49,9 @@ v_intrm_reg_crncy_exch_fiscper as
 itg_kr_tp_tracker_target as
 (
     select * from {{ ref('ntaitg_integration__itg_kr_tp_tracker_target') }}
+),
+edw_customer_base_dim as (
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}    
 ),
 prod_hier as 
 (

@@ -71,9 +71,9 @@ final as
 	salfreeqtyvalue::number(38,6) as salfreeqtyvalue,
 	nrvalue::number(18,6) as nrvalue,
 	vcpschemeamount::number(18,6) as vcpschemeamount,
-    current_timestamp()::timestamp_ntz(9) as modifieddate,
+    modifieddate::timestamp_ntz(9) as modifieddate,
 	run_id::number(14,0) as run_id,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm, 
+	crt_dttm::timestamp_ntz(9) as crt_dttm,
 	file_name::varchar(50) as file_name
     
     from source

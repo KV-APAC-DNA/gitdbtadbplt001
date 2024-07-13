@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_mds_in_ps_targets
+    config:
+      alias: itg_mds_in_ps_targets
+      tags: ["in_perfect_store_mds_itg_refresh","transformation"]

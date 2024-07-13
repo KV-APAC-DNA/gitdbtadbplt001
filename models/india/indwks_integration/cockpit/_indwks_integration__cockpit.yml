@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_cockpit_targets
+    config:
+      alias: wks_cockpit_targets
+      tags: ["j_ap_idc_etl_framework","transformation"]
+
+  - name: indwks_integration__wks_cockpit_billing_stock_values
+    config:
+      alias: wks_cockpit_billing_stock_values
+      tags: ["j_ap_idc_etl_framework","transformation"]

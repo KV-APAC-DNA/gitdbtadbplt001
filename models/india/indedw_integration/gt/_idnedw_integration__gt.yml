@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_gt_target_dim
+    config:
+      alias: edw_gt_target_dim
+      tags: ["in_edw_dim","transformation"]
+  - name: indedw_integration__edw_it_target_dim
+    config:
+      alias: edw_it_target_dim
+      tags: ["in_edw_dim","transformation"]
+  - name: indedw_integration__edw_key_account_dim
+    config:
+      alias: edw_key_account_dim
+      tags: ["in_edw_dim","transformation"]
+  - name: indedw_integration__edw_route_dim
+    config:
+      alias: edw_route_dim
+      tags: ["in_edw_dim","transformation"]
+  - name: indedw_integration__edw_salesman_dim
+    config:
+      alias: edw_salesman_dim
+      tags: ["in_edw_dim","transformation"]
+  - name: indedw_integration__edw_scheme_dim
+    config:
+      alias: edw_scheme_dim
+      tags: ["in_edw_dim","transformation"]

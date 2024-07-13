@@ -23,7 +23,10 @@ SELECT iisc.iri_market,
     vcd.sales_grp_cd,
     vcd.sales_grp_desc,
     iisc.scan_sales,
-    iisc.scan_units
+    iisc.scan_units,
+    iisc.numeric_distribution,
+    iisc.weighted_distribution,
+    iisc.store_count_where_scanned
 FROM (
         itg_iri_scan_sales iisc
         LEFT JOIN (

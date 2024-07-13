@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_rev_edw_dailysales_fact
+    config: 
+      alias: wks_rev_edw_dailysales_fact
+      tags: ["in_skurecom_mslspike_datamart","transformation"]
+
+  - name: indwks_integration__wks_rev_edw_dailysales_fact_br
+    config: 
+      alias: wks_rev_edw_dailysales_fact_br
+      tags: ["in_skurecom_mslspike_datamart","transformation"]

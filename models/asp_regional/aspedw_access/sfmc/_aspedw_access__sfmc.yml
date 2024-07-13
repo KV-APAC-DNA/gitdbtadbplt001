@@ -21,3 +21,19 @@ models:
     config: 
       alias: itg_sfmc_sent_data
       tags: ["th_sfmc_files","ingestion"]
+  - name: aspedw_access__edw_vw_jb_tw_invoice_record_detail
+    config:
+      alias: edw_vw_jb_tw_invoice_record_detail
+      tags: ["regional_views","transformation"]
+  - name: aspedw_access__edw_vw_jb_tw_invoice_record_master
+    config:
+      alias: edw_vw_jb_tw_invoice_record_master
+      tags: ["regional_views","transformation"]
+  - name: aspedw_access__edw_vw_regaine_tw_invoice_record_detail
+    config:
+      alias: edw_vw_regaine_tw_invoice_record_detail
+      tags: ["regional_views","transformation"]
+  - name: aspedw_access__edw_vw_regaine_tw_invoice_record_master
+    config: 
+      alias: edw_vw_regaine_tw_invoice_record_master
+      tags: ["regional_views","transformation"]

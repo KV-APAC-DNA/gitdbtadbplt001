@@ -16,3 +16,5 @@ sources:
 
     - name: sdl_dailysales_del
       tags: ["in_sdlitg_gtsales","ingestion"]
+    - name: sdl_winculum_dailysales
+      tags: ["in_sdlitg_daily","transformation"]

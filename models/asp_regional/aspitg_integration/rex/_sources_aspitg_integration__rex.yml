@@ -17,3 +17,15 @@ sources:
       - name: slsp_salesperson
       - name: vst_visit
       - name: cust_customer
+      - name: ms_mastersurvey
+      - name: slsc_mastertasks
+      - name: slsc_salescampaign
+      - name: slsc_targetgroups
+      - name: slscyc_salescycle
+      - name: sr_response_values
+      - name: sr_responses
+      - name: sr_surveyresponse
+      - name: tgtg_items
+      - name: tgtg_targetgroup
+      - name: tsk_task
+      - name: kpi2data_mapping

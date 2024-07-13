@@ -83,6 +83,3 @@
     {% do run_query(insert_query) %}
 
 {% endmacro %}
-
-
-

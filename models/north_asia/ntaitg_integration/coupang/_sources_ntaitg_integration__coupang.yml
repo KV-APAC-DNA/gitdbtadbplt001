@@ -148,7 +148,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_mds_kr_sales_store_master
-      tags: ["mds_sdl_itg_load", "gt_sellout_daiso", "ingestion"]
+      tags: ["mds_sdl_itg_load", "kr_gt_sellout", "ingestion"]
       tests:
         - test_duplicate:
             select_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]

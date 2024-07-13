@@ -1,0 +1,58 @@
+with 
+sss_zonal_sign_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_sign_tbl') }}
+),
+trans as 
+(
+    SELECT sign_cur_yr.zone_name,
+       sign_cur_yr.mth_mm,
+       sign_cur_yr.fisc_yr as cur_yr,
+       sign_prev_yr.fisc_yr as prev_yr,
+       sign_cur_yr.month as cur_mnth ,
+       sign_prev_yr.month as prev_mnth,
+       sign_cur_yr.achievement_nr as cur_achvmnt_nr_signature,
+       sign_prev_yr.achievement_nr as prev_achvmnt_nr_signature,
+       ((sign_cur_yr.achievement_nr - sign_prev_yr.achievement_nr)/sign_prev_yr.achievement_nr)*100 AS signature_growth_percent 
+FROM (SELECT sign_cur.zone_name,
+             sign_cur.mth_mm,
+             sign_cur.fisc_yr,
+             sign_cur.month,
+             sign_cur.achievement_nr
+      FROM sss_zonal_sign_tbl sign_cur,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE sign_cur.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      ) sign_cur_yr,
+      (SELECT sign_prev.zone_name,
+              sign_prev.mth_mm,
+              sign_prev.fisc_yr,
+              sign_prev.month,
+              sign_prev.achievement_nr
+      FROM sss_zonal_sign_tbl sign_prev,
+           (SELECT EXTRACT(YEAR FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_year,
+                   EXTRACT(MONTH FROM (CURRENT_DATE-INTERVAL '12 months')) AS end_mnth,
+                   EXTRACT(YEAR FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS strt_year,
+                   EXTRACT(MONTH FROM ((CURRENT_DATE-INTERVAL '12 months')-INTERVAL '12 months')) AS start_mnth) AS inn
+      WHERE sign_prev.mth_mm >= CASE WHEN start_mnth < 10 THEN strt_year||0||start_mnth ELSE strt_year||start_mnth END
+      AND   sign_prev.mth_mm < CASE WHEN start_mnth < 10 THEN end_year||0||end_mnth ELSE end_year||end_mnth END
+      ) sign_prev_yr
+WHERE sign_cur_yr.zone_name = sign_prev_yr.zone_name
+AND   sign_cur_yr.month = sign_prev_yr.month
+AND   sign_cur_yr.fisc_yr <> sign_prev_yr.fisc_yr
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	cur_yr::number(18,0) as cur_yr,
+	prev_yr::number(18,0) as prev_yr,
+	cur_mnth::varchar(3) as cur_mnth,
+	prev_mnth::varchar(3) as prev_mnth,
+	cur_achvmnt_nr_signature::number(38,6) as cur_achvmnt_nr_signature,
+	prev_achvmnt_nr_signature::number(38,6) as prev_achvmnt_nr_signature,
+	signature_growth_percent::number(38,4) as signature_growth_percent
+    from trans
+)
+select * from final

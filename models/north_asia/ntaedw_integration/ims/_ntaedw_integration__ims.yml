@@ -8,4 +8,4 @@ models:
   - name: ntaedw_integration__v_rpt_ims
     config: 
         alias: v_rpt_ims
-        tags: ["","transformation"]
+        tags: ["north_asia_views","transformation"]

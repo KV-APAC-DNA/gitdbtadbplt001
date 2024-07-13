@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: vnmedw_integration__v_rpt_vn_perfect_store
+    config: 
+        alias: v_rpt_vn_perfect_store
+        tags: ["pop6_views","transformation"]

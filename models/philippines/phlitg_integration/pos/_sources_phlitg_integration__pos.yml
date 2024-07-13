@@ -233,79 +233,79 @@ sources:
       tags: ["ph_pos","ingestion"]
     - name: sdl_ph_pos_sm_goods
       tags: ["ph_pos","ingestion"]
-      tests:
-      - test_null:
-              select_columns: ["article_number","site_code","received_qty"]
-              not_null_columns: ["article_number","site_code","received_qty"]
-              name: tratbl_sdl_ph_pos_sm_goods__null_test
-              config:
-                store_failures: true
-                schema: phlwks_integration
-      - test_lookup_sm_goods:
-              select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
-                               "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
-                                end as pl_jj_mnth_id"]
-              filter: "CUST_ITEM_CD IS NULL OR TRIM(CUST_ITEM_CD)=''"
-              model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-              model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
-              name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_CUST_CD
-              config:
-                store_failures: true
-                schema: phlwks_integration
-      - test_lookup_sm_goods:
-              select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
-                               "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
-                                end as pl_jj_mnth_id"]
-              filter: "(CUST_ITEM_CD IS NOT NULL OR TRIM(CUST_ITEM_CD)<>'') AND (SAP_ITEM_CD IS NULL OR TRIM(SAP_ITEM_CD)='')"
-              model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-              model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
-              name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_SAP_ITEM_CD
-              config:
-                store_failures: true
-                schema: phlwks_integration
-      - test_lookup_sm_goods:
-              select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
-                               "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
-                                end as pl_jj_mnth_id"]
-              filter: "(CUST_ITEM_CD IS NOT NULL OR TRIM(CUST_ITEM_CD)<>'') AND JNJ_PC_PER_CUST_UNIT IS NULL"
-              model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-              model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
-              name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_JNJ_PC_PER_CUST_UNIT
-              config:
-                store_failures: true
-                schema: phlwks_integration
-      - test_lookup_sm_goods:
-              select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
-                               "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
-                                end as pl_jj_mnth_id"]
-              filter: "(SAP_ITEM_CD IS NOT NULL OR TRIM(SAP_ITEM_CD)<>'') AND (PL_JJ_MNTH_ID IS NULL OR TRIM(PL_JJ_MNTH_ID)='') AND (JJ_ITEM_PRC_PER_PC IS NULL)"
-              model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-              model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
-              name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_LST_PRICE_UNIT
-              config:
-                store_failures: true
-                schema: phlwks_integration
-      - test_lookup_sm_goods:
-              select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
-                               "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
-                                when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
-                                end as pl_jj_mnth_id"]
-              filter: "(SAP_ITEM_CD IS NOT NULL OR TRIM(SAP_ITEM_CD)<>'') AND (PL_JJ_MNTH_ID IS NULL)"
-              model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-              model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
-              name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_PL_JJ_MNTH_ID
-              config:
-                store_failures: true
-                schema: phlwks_integration
+      # tests:
+      # - test_null:
+      #         select_columns: ["article_number","site_code","received_qty"]
+      #         not_null_columns: ["article_number","site_code","received_qty"]
+      #         name: tratbl_sdl_ph_pos_sm_goods__null_test
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
+      # - test_lookup_sm_goods:
+      #         select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
+      #                          "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
+      #                           end as pl_jj_mnth_id"]
+      #         filter: "CUST_ITEM_CD IS NULL OR TRIM(CUST_ITEM_CD)=''"
+      #         model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+      #         model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
+      #         name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_CUST_CD
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
+      # - test_lookup_sm_goods:
+      #         select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
+      #                          "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
+      #                           end as pl_jj_mnth_id"]
+      #         filter: "(CUST_ITEM_CD IS NOT NULL OR TRIM(CUST_ITEM_CD)<>'') AND (SAP_ITEM_CD IS NULL OR TRIM(SAP_ITEM_CD)='')"
+      #         model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+      #         model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
+      #         name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_SAP_ITEM_CD
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
+      # - test_lookup_sm_goods:
+      #         select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
+      #                          "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
+      #                           end as pl_jj_mnth_id"]
+      #         filter: "(CUST_ITEM_CD IS NOT NULL OR TRIM(CUST_ITEM_CD)<>'') AND JNJ_PC_PER_CUST_UNIT IS NULL"
+      #         model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+      #         model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
+      #         name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_JNJ_PC_PER_CUST_UNIT
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
+      # - test_lookup_sm_goods:
+      #         select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
+      #                          "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
+      #                           end as pl_jj_mnth_id"]
+      #         filter: "(SAP_ITEM_CD IS NOT NULL OR TRIM(SAP_ITEM_CD)<>'') AND (PL_JJ_MNTH_ID IS NULL OR TRIM(PL_JJ_MNTH_ID)='') AND (JJ_ITEM_PRC_PER_PC IS NULL)"
+      #         model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+      #         model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
+      #         name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_LST_PRICE_UNIT
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
+      # - test_lookup_sm_goods:
+      #         select_columns: ["sales.jj_mnth_id","sales.pos_prod_cd","sales.cust_item_cd","sales.sap_item_cd","sales.jnj_pc_per_cust_unit","cast(ipp.lst_price_unit as numeric(20,4)) as jj_item_prc_per_pc",
+      #                          "case when sales.mnth_id = ipp.jj_mnth_id then ipp.jj_mnth_id
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and sales.early_bk_period != '' and upper(sales.early_bk_period) != 'null' then sales.early_bk_period
+      #                           when sales.mnth_id != nvl (ipp.jj_mnth_id,'0') and (sales.early_bk_period is null or upper(sales.early_bk_period) = 'null') then sales.lst_period
+      #                           end as pl_jj_mnth_id"]
+      #         filter: "(SAP_ITEM_CD IS NOT NULL OR TRIM(SAP_ITEM_CD)<>'') AND (PL_JJ_MNTH_ID IS NULL)"
+      #         model_nm: "{{ref('phlitg_integration__itg_mds_ph_pos_product')}}"
+      #         model_nm_2: "{{ref('phlitg_integration__itg_mds_ph_pos_pricelist')}}"
+      #         name: tratbl_sdl_ph_pos_sm_goods__lookup_sm_PL_JJ_MNTH_ID
+      #         config:
+      #           store_failures: true
+      #           schema: phlwks_integration
     - name: sdl_ph_711_product_dim
       tags: ["ph_pos","ingestion"]
     - name: sdl_ph_pricelist

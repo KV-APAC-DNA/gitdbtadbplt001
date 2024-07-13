@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: sgpitg_interation__sdl_raw_pop6_sg_tasks
+    config:
+        alias: sdl_raw_pop6_sg_tasks
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_interation__sdl_raw_pop6_sg_sku_audits
+    config:
+        alias: sdl_raw_pop6_sg_sku_audits
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_interation__sdl_raw_pop6_sg_product_attribute_audits
+    config:
+        alias: sdl_raw_pop6_sg_product_attribute_audits
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_interation__sdl_raw_pop6_sg_general_audits
+    config:
+        alias: sdl_raw_pop6_sg_general_audits
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_display_plans
+    config:
+        alias: sdl_raw_pop6_sg_display_plans
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_displays
+    config:
+        alias: sdl_raw_pop6_sg_displays
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_executed_visits
+    config:
+        alias: sdl_raw_pop6_sg_executed_visits
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_planned_visits
+    config:
+        alias: sdl_raw_pop6_sg_planned_visits
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_promotion_plans
+    config:
+        alias: sdl_raw_pop6_sg_promotion_plans
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_promotions
+    config:
+        alias: sdl_raw_pop6_sg_promotions
+        tags: ["pop6_master_load","ingestion"]
+  - name: sgpitg_integration__sdl_raw_pop6_sg_service_levels
+    config:
+        alias: sdl_raw_pop6_sg_service_levels
+        tags: ["pop6_master_load","ingestion"]

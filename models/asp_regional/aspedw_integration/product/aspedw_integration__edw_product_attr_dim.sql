@@ -22,7 +22,7 @@
     )
 }}
 with wks_edw_product_attr_dim as (
-    select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }} where chng_flg!='I'
+    select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }}
 ),
 wks_edw_product_attr_dim_1 as (
     select * from {{ ref('aspwks_integration__wks_edw_product_attr_dim_2') }}

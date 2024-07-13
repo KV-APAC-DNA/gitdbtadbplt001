@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_perfectstore_msl
+    config:
+      alias: itg_in_perfectstore_msl
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__itg_in_perfectstore_sos
+    config:
+      alias: itg_in_perfectstore_sos
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__itg_in_perfectstore_promo
+    config:
+      alias: itg_in_perfectstore_promo
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__itg_in_perfectstore_paid_display
+    config:
+      alias: itg_in_perfectstore_paid_display
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__sdl_raw_in_perfectstore_msl
+    config:
+      alias: sdl_raw_in_perfectstore_msl
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__sdl_raw_in_perfectstore_sos
+    config:
+      alias: sdl_raw_in_perfectstore_sos
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__sdl_raw_in_perfectstore_promo
+    config:
+      alias: sdl_raw_in_perfectstore_promo
+      tags: ["in_perfect_store_transaction","ingestion"]
+  - name: inditg_integration__sdl_raw_in_perfectstore_paid_display
+    config:
+      alias: sdl_raw_in_perfectstore_paid_display
+      tags: ["in_perfect_store_transaction","ingestion"]

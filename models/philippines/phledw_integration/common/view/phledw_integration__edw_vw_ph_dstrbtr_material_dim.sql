@@ -161,14 +161,14 @@ final as (
               to_char(
                 add_months(
                   (
-                    (
-                      concat(
-                        (
-                          itg_mds_ph_pos_pricelist.jj_mnth_id
-                        ):: text, 
-                        '01' :: text
-                      )
-                    ):: date
+                    to_date(
+                        concat(
+                            (
+                                itg_mds_ph_pos_pricelist.jj_mnth_id
+                            )::text,
+                            '01'::text
+                        ),'YYYYMMDD'
+                    )
                   ):: timestamp without time zone, 
                   (11):: bigint
                 ), 

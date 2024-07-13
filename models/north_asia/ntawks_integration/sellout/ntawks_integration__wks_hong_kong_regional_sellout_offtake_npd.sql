@@ -1,8 +1,8 @@
-with WKS_HONG_KONG_REGIONAL_SELLOUT_NPD as (
-select * from DEV_DNA_CORE.SNAPOSEWKS_INTEGRATION.WKS_HONG_KONG_REGIONAL_SELLOUT_NPD
+with wks_hong_kong_regional_sellout_npd as (
+select * from {{ ref('ntawks_integration__wks_hong_kong_regional_sellout_npd') }}
 ),
-ITG_MDS_AP_CUSTOMER360_CONFIG as (
-select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+itg_mds_ap_customer360_config as (
+select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 transformed as (
 SELECT *,

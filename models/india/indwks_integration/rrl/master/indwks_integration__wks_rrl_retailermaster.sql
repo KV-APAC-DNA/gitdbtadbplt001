@@ -243,7 +243,7 @@ final as
     retailerchannelcode::varchar(40) as retailerchannelcode,
     retailerclassid::number(18,0) as retailerclassid,
     filename::varchar(100) as filename,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     chng_flg::varchar(2) as chng_flg,
     actv_flg::varchar(1) as actv_flg

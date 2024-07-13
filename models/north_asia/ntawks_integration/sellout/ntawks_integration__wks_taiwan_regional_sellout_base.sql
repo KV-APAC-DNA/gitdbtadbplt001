@@ -15,7 +15,7 @@ itg_mds_ap_customer360_config as (
 select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
 edw_vw_pop6_store as (
-select * from ntaedw_integration.edw_vw_pop6_store
+select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
 itg_query_parameters as (
 select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}

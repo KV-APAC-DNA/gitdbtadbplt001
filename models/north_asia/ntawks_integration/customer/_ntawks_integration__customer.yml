@@ -4,7 +4,7 @@ models:
   - name: ntawks_integration__notify_mising_cust_prod_cd
     config:
       alias: notify_mising_cust_prod_cd
-      tags: ["kr_pos_edw_load","kr_master_mds_sdl_itg_load","transformation"]
+      tags: ["pos_edw_load","kr_master_mds_sdl_itg_load","transformation"]
   - name: ntawks_integration__wks_itg_hk_ims_dstr_cust_attr
     config:
       alias: wks_itg_hk_ims_dstr_cust_attr

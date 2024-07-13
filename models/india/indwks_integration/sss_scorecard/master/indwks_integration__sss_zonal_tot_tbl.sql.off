@@ -1,0 +1,54 @@
+with 
+sss_zonal_base_tbl as 
+(
+    select * from {{ ref('indwks_integration__sss_zonal_base_tbl') }}
+),
+edw_rpt_sales_details as 
+(
+    select * from {{ ref('indedw_integration__edw_rpt_sales_details') }}
+),
+itg_mds_in_sss_zonal_rtr_program_mapping as 
+(
+    select * from {{ ref('inditg_integration__itg_mds_in_sss_zonal_rtr_program_mapping') }}
+),
+trans as 
+(
+    SELECT base.zone_name,
+       base.mth_mm,
+       base.fisc_yr,
+       base.month,
+       sum(sales.achievement_nr) as achievement_nr
+FROM sss_zonal_base_tbl base
+LEFT OUTER JOIN (SELECT sales.zone_name,
+                        sales.mth_mm,
+                        sales.rtruniquecode,
+                        sales.achievement_nr
+                 FROM   edw_rpt_sales_details sales
+                 INNER JOIN itg_mds_in_sss_zonal_rtr_program_mapping prog
+                         ON prog.program_mapping_code = 'TOT'
+                        AND sales.rtruniquecode = prog.rtruniquecode::text
+                        AND sales.customer_code = prog.customer_code::text
+                        AND (CASE WHEN sales.fisc_yr :: numeric > 2022 AND sales.qtr :: numeric > 2 THEN sales.fisc_yr :: numeric ELSE 999 END) =  (CASE WHEN    prog.year_code :: numeric > 2022 AND trim(prog.quarter_code,'Q') :: numeric > 2 THEN prog.year_code :: numeric ELSE 999 END)
+                        AND (CASE WHEN sales.fisc_yr :: numeric > 2022 AND sales.qtr :: numeric > 2 THEN sales.qtr :: numeric ELSE 999 END) =  (CASE WHEN prog.year_code :: numeric > 2022 AND trim(prog.quarter_code,'Q') :: numeric > 2 THEN trim(prog.quarter_code,'Q') ::numeric ELSE 999 END)
+                        AND sales.channel_name = 'Self Service Store'
+                ) sales
+ON    base.zone_name = sales.zone_name
+AND   base.mth_mm = sales.mth_mm
+GROUP BY base.zone_name,
+         base.mth_mm,
+         base.fisc_yr,
+         base.month
+ORDER BY base.mth_mm DESC,
+         base.zone_name
+),
+final as 
+(
+    select 
+    zone_name::varchar(50) as zone_name,
+	mth_mm::number(18,0) as mth_mm,
+	fisc_yr::number(18,0) as fisc_yr,
+	month::varchar(3) as month,
+	achievement_nr::number(38,6) as achievement_nr 
+    from trans
+)
+select * from final

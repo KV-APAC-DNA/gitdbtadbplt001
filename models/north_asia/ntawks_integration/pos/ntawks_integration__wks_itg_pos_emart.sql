@@ -1,6 +1,6 @@
 with sdl_kr_pos_emart as 
 (
-    select * from {{ source('ntasdl_raw','sdl_kr_pos_emart') }}    
+    select * from {{ ref('ntawks_integration__wks_kr_pos_emart') }}  
 ),
 itg_pos_temp as 
 (

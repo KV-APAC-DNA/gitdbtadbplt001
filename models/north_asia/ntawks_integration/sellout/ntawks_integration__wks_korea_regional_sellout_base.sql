@@ -8,7 +8,7 @@ edw_ims_fact as (
 select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 edw_customer_attr_flat_dim as (
-select * from aspedw_integration.edw_customer_attr_flat_dim
+select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 wks_parameter_gt_sellout as (
 select * from {{ ref('ntawks_integration__wks_parameter_gt_sellout') }}

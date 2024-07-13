@@ -1298,7 +1298,15 @@ FROM (SELECT 'Sellout' AS Identifier,
             AND   jj_grs_trd_sls > 0
             AND   (rka_cd IS NULL OR (rka_cd IS NOT NULL AND (rka_cd = ' ' OR rka_cd NOT IN ('RKA008','RKA032'))))
             AND   sellout.sku = product.item_cd
-            AND   sellout.jj_mnth_id between product.npi_strt_period and to_char(dateadd(month,11,to_date(left(product.npi_strt_period,6), 'YYYYMM')),'YYYYMM')
+            AND sellout.jj_mnth_id between left(product.npi_strt_period,6) and 
+            to_char(
+                dateadd(
+                    month,
+                    11,
+                    to_date(left(product.npi_strt_period, 6), 'YYYYMM')
+                ),
+                'YYYYMM'
+            )
             AND   product.npi_strt_period is not null
             AND   product.active='Y') base
         LEFT JOIN (SELECT dstrbtr_grp_cd,

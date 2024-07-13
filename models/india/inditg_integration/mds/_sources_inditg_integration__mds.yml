@@ -179,3 +179,139 @@ sources:
         tags: ["in_mds_refresh","ingestion"]
       - name: sdl_mds_in_sv_winculum_master
         tags: ["in_sdlitg_salescube_master","ingestion"]
+      - name: sdl_mds_in_key_accounts_mapping
+        tags: ["in_ecom_datamart","transformation"]
+      - name: sdl_csl_scheme_header
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_ittarget
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_mds_in_sss_weights
+        tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["kpi","store_class"]
+              name: TRATBL_sdl_mds_in_sss_weights__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["re","kpi","weight","store_class"]
+              name: TRATBL_sdl_mds_in_sss_weights__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_mds_in_sss_score
+        tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["kpi","min_value","value","store_class"]
+              name: TRATBL_sdl_mds_in_sss_score__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["kpi","min_value","value","store_class","re","brand","max_value"]
+              name: TRATBL_sdl_mds_in_sss_score__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_mds_in_ps_msl
+        tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["sku_name","valid_from","valid_to","re"]
+              name: TRATBL_sdl_mds_in_ps_msl__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["sku_code","sku_name","valid_from","valid_to","re"]
+              name: TRATBL_sdl_mds_in_ps_msl__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_mds_in_ps_promoter_store_map
+        tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["channel","rtruniquecode"]
+              name: TRATBL_sdl_mds_in_ps_promoter_store_map__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+          - test_duplicate__ff:
+              group_by_columns: ["channel","rtruniquecode"]
+              name: TRATBL_sdl_mds_in_ps_promoter_store_map__duplicate_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      - name: sdl_sss_scorecard_data
+        tags: ["in_sss_scorecard_ingestion","ingestion"]
+        tests:
+          - test_null__ff:
+              not_null_columns: ["brand","year","quarter","kpi","jnj_id","program_type"]
+              name: TRATBL_sdl_sss_scorecard_data__null_test
+              config:
+                store_failures: true
+                schema: indwks_integration
+      # - name: sdl_mds_in_sss_zonal_rtr_program_mapping
+      #   tags: ["in_sss_zonal_datamart","transformation"]
+      - name: sdl_csl_rdssmweeklytarget_output
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+
+      - name: sdl_mds_in_ps_targets
+        tags: ["in_perfect_store_mds_itg_refresh","transformation"]
+      - name: sdl_lks_businesscalender
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_csl_tbl_schemewise_apno
+        tags: ["m_wrp_in_sdlitg_master","transformation"]
+      - name: sdl_winculum_salesreturn
+        tags: ["in_sdlitg_daily","transformation"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_customertype
+      - name: itg_territory_classification
+      - name: itg_state
+      - name: itg_town
+      - name: itg_town_classification
+      - name: itg_muser
+      - name: itg_rdssize
+      - name: itg_zone_classification
+      - name: itg_invoicing_calendar_2022
+      - name: itg_program_store_target
+      - name: itg_sku_recom_flag
+      - name: itg_salesmanmaster
+      - name: itg_brand_focus_target
+      - name: itg_business_plan_target
+      - name: itg_mds_in_key_accounts_mapping_offtake_upd
+      - name: itg_mds_in_sv_winculum_master_temp
+
+  - name: indedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+      - name: edw_in_invoice_fact_temp
+      - name: edw_msl_spike_mi_msku_list 
+      - name: edw_ecommerce_offtake
+      - name: edw_ka_sales_fact_temp
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_jnj_calendar

@@ -25,8 +25,23 @@ models:
     config:
       alias: edw_vw_ph_sfmc_subscriber_status_history
       tags: ["ph_sfmc_analysis_refresh","transformation"]
-
   - name: aspedw_integration__edw_sfmc_analysis
     config: 
         alias: edw_sfmc_analysis
         tags: ["tw_sfmc_analysis_refresh","transformation"]
+  - name: aspedw_integration__edw_vw_jb_tw_invoice_record_detail
+    config:
+      alias: edw_vw_jb_tw_invoice_record_detail
+      tags: ["regional_views","transformation"]
+  - name: aspedw_integration__edw_vw_jb_tw_invoice_record_master
+    config:
+      alias: edw_vw_jb_tw_invoice_record_master
+      tags: ["regional_views","transformation"]
+  - name: aspedw_integration__edw_vw_regaine_tw_invoice_record_detail
+    config:
+      alias: edw_vw_regaine_tw_invoice_record_detail
+      tags: ["regional_views","transformation"]
+  - name: aspedw_integration__edw_vw_regaine_tw_invoice_record_master
+    config: 
+      alias: edw_vw_regaine_tw_invoice_record_master
+      tags: ["regional_views","transformation"]

@@ -100,7 +100,7 @@ temp_b as
     'Unknown' as Type_Name,
     '-1' as town_code
     
-  from source
+  from dual
 ),
 final as 
 (

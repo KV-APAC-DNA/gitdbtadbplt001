@@ -8,7 +8,7 @@ transformed as(
     select 
         src.aw_remote_key::varchar(100) as aw_remote_key,
         src.cust_nm::varchar(100) as cust_nm,
-        src.street_num::varchar(100) as street_num,
+        src.street_num::varchar(256) as street_num,
         src.street_nm::varchar(500) as street_nm,
         src.city::varchar(100) as city,
         src.post_cd::varchar(100) as post_cd,

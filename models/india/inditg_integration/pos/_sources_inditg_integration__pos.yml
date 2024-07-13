@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_pos_historical_btl
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_re_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_category_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+
+    - name: sdl_pos_tesco
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_dmart
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_frl
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_dabur
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_spencer
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_hg
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_max
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_vmm
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_ril
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_abrl
+      tags: ["in_key_acct_offtake","transformation"]
+    - name: sdl_pos_apollo
+      tags: ["in_key_acct_offtake","transformation"]

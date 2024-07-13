@@ -22,7 +22,7 @@ final as
 	createddate::timestamp_ntz(9) as createddate,
 	syncid::number(38,0) as syncid,
 	run_id::number(14,0) as run_id,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm, 
+    crt_dttm::timestamp_ntz(9) as crt_dttm, 
 	file_name::varchar(50) as file_name
             
     from source

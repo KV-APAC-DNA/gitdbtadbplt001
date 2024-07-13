@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy= "append"
-    )
-}}
 with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_csl_dailysales_undelivered') }}
@@ -70,13 +64,9 @@ final as
     createddate::timestamp_ntz(9) as createddate,
     mrp::number(18,6) as mrp,
 	nrvalue::number(18,6) as nrvalue,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     'N'::varchar(1) as del_ind
     from source
-    {% if is_incremental() %}
-    --this filter will only be applied on an incremental run
-    where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
 )
 select * from final

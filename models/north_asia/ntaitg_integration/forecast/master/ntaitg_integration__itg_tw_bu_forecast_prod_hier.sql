@@ -16,7 +16,7 @@
                      WHEN wks.sls_grp <> wks.target_sls_grp THEN 'Y'
                      ELSE 'N'
                     END AS flag
-                    FROM  ntawks_integration.wks_edw_customer_attr_flat_dim
+                    FROM  {{ ref('aspwks_integration__wks_edw_customer_attr_flat_dim_sap') }}
                       wks)
                     WHERE flag = 'Y') cust
                     Where cust.target_sls_grp =itg.sls_grp;
@@ -40,6 +40,9 @@
 
 with wks_itg_tw_bu_forecast_prod_hier as (
     select * from {{ ref('ntawks_integration__wks_itg_tw_bu_forecast_prod_hier') }}
+),
+wks_edw_customer_attr_flat_dim_sap as(
+    select * from {{ ref('aspwks_integration__wks_edw_customer_attr_flat_dim_sap') }} --used to update data
 ),
 final as (
 select 

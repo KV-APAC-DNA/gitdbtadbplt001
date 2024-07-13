@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_mi_psr_ret_dim
+    config:
+      alias: wks_mi_psr_ret_dim
+      tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_mi_psr_base
+    config:
+      alias: wks_mi_psr_base
+      tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_mi_psr_perf_tracker_l2y_trans_recs
+    config:
+      alias: wks_mi_psr_perf_tracker_l2y_trans_recs
+      tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_mi_psr_perf_tracker
+    config:
+      alias: wks_mi_psr_perf_tracker
+      tags: ["in_mi_psr_datamart","transformation"]

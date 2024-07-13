@@ -10,6 +10,7 @@
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ ref('ntawks_integration__wks_kr_ecommerce_unitoa_sellout') }});
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(customer_name) || ean_number || to_date(transaction_date) from {{ ref('ntawks_integration__wks_kr_ecommerce_tca_sellout') }});
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date || upper(sub_customer_name) in (select distinct 'EMART' || nvl(ean, offline_ean) || to_date(pos_dt, 'YYYYMMDD') || 'SSG.COM' from {{ ref('ntawks_integration__wks_kr_pos_emart_ssg') }});
+        delete from {{this}} where upper(customer_name) || nvl(ean_number, '#') || transaction_date || upper(sub_customer_name) in (select distinct 'EMART' || nvl(ean, '#') || cast(pos_dt as date) || 'ECVAN' from {{ ref('ntawks_integration__wks_sdl_kr_pos_emart_ecvan') }});
         {% endif %}"
     )
 }}
@@ -37,6 +38,9 @@ sdl_kr_ecommerce_unitoa_sellout as (
 ),
 sdl_kr_ecommerce_tca_sellout as (
     select * from {{ ref('ntawks_integration__wks_kr_ecommerce_tca_sellout') }}
+),
+sdl_kr_pos_emart_ecvan as (
+    select * from {{ ref('ntawks_integration__wks_sdl_kr_pos_emart_ecvan') }}
 ),
 emart as (
     select 
@@ -203,6 +207,31 @@ tca_sellout as (
         source_file_name
     from sdl_kr_ecommerce_tca_sellout
 ),
+ecvan as (
+    select 'Emart' as customer_name,
+        master.sold_to as customer_code,
+        'ECVAN' as sub_customer_name,
+        ean as ean_number,
+        null as sap_code,
+        null as sku_type,
+        null as brand_categories,
+        cast(prod_nm as varchar(100)) as product_name,
+        substring(pos_dt, 0, 4) as year,
+        substring(pos_dt, 6, 2) as month,
+        null as week,
+        cast(pos_dt as date) as transaction_date,
+        cast(sellout_qty as numeric) as sellout_qty,
+        cast(replace(sellout_amt, ',', '') as numeric(20, 4)) as sellout_amount,
+        null as sold_to,
+        'KR' as ctry_cd,
+        'KRW' as crncy_cd,
+        crtd_dttm AS crt_dttm,
+        filename AS source_file_name
+    from sdl_kr_pos_emart_ecvan as sales,
+        itg_sales_store_master as master
+    where master.cust_store_cd(+) = sales.str_cd
+        and master.store_nm(+) = sales.str_nm
+),
 transformed as (
     select * from emart
     union all
@@ -217,6 +246,8 @@ transformed as (
     select * from unitoa_sellout
     union all
     select * from tca_sellout
+    union all
+    select * from ecvan
 ),
 final as (
     select

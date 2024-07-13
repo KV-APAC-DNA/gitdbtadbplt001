@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: indwks_integration
           - test_duplicate:
-              group_by_columns: ["cmpcode", "rsrcode"]
+              group_by_columns: ["cmpcode", "rsrcode","distrcode"]
               select_columns: ["filename", "cmpcode", "rsrcode", "distrcode"] 
               name: TRATBL_sdl_in_rrsrdistributor__duplicate_test
               config:

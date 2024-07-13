@@ -591,70 +591,96 @@ WITH itg_mds_ph_pos_pricelist AS (
 		WHERE upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
 			AND trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
 		),
-	seveneleven AS (
-		SELECT cust_cd,
-			ippd.jj_mnth_id AS jj_mnth_id,
-			ippd.pos_prod_cd AS item_cd,
-			ippd.store_cd AS brnch_cd,
-			cast(ippd.tot_qty AS NUMERIC(15, 4)) AS pos_qty,
-			cast(ippd.tot_amt AS NUMERIC(15, 4)) AS pos_gts,
-			NULL AS pos_item_prc,
-			cast(ippd.tot_amt AS NUMERIC(15, 4)) * (12.0 / 112.0) AS pos_tax,
-			cast(ippd.tot_amt AS NUMERIC(15, 4)) * (100.0 / 112.0) AS pos_nts,
-			cast(ippd.cust_conv_factor AS NUMERIC(15, 4)) AS conv_factor,
-			cast(ippd.tot_qty AS NUMERIC(15, 4)) / cast(ippd.cust_conv_factor AS NUMERIC(15, 4)) AS jj_qty_pc,
-			ipp2.lst_price_unit AS jj_item_prc_per_pc,
-			cast(ippd.tot_qty AS NUMERIC(15, 4)) / cast(ippd.cust_conv_factor AS NUMERIC(15, 4)) * ipp2.lst_price_unit AS jj_gts,
-			(cast(ippd.tot_qty AS NUMERIC(15, 4)) / cast(ippd.cust_conv_factor AS NUMERIC(15, 4)) * ipp2.lst_price_unit) * (12.0 / 112.0) AS jj_vat_amt,
-			(cast(ippd.tot_qty AS NUMERIC(15, 4)) / cast(ippd.cust_conv_factor AS NUMERIC(15, 4)) * ipp2.lst_price_unit) * (100.0 / 112.0) AS jj_nts,
-			NULL AS file_nm,
-			NULL AS cdl_dttm,
-			current_timestamp() AS crtd_dttm,
-			NULL AS updt_dttm
-		FROM itg_ph_pricelist ipp2,
-			(
-				SELECT sales.cust_item_cd,
-					'PSC' AS cust_cd,
-					sap_item_cd,
-					cust_conv_factor,
-					sales.mnth_id AS jj_mnth_id,
-					CASE 
-						WHEN sales.mnth_id = ipp.jj_mnth_id
-							THEN ipp.jj_mnth_id
-						WHEN sales.mnth_id != nvl(ipp.jj_mnth_id, '0')
-							AND sales.early_bk_period IS NOT NULL
-							THEN sales.early_bk_period
-						WHEN sales.mnth_id != nvl(ipp.jj_mnth_id, '0')
-							AND sales.early_bk_period IS NULL
-							THEN sales.lst_period
-						END AS pl_jj_mnth_id,
-					sales.item_cd AS pos_prod_cd,
-					sales.store_cd,
-					sales.tot_qty,
-					sales.tot_amt
-				FROM (
-					SELECT *
-					FROM (
-						SELECT DISTINCT yearmonth,
-							item_cd AS cust_item_cd,
-							cust_cd,
-							sap_item_cd,
-							cust_conv_factor,
-							lst_period,
-							early_bk_period
-						FROM itg_ph_711_product_dim
-						) ipppd,
-						sdl_ph_pos_711 spm
-					WHERE upper(trim(ipppd.cust_item_cd(+))) = upper(trim(spm.item_cd))
-						AND ipppd.yearmonth(+) = spm.mnth_id
-					) AS sales,
-					itg_ph_pricelist ipp
-				WHERE ipp.jj_mnth_id(+) = sales.mnth_id
-					AND ipp.item_cd(+) = sales.sap_item_cd
-				) AS ippd
-		WHERE upper(trim(ipp2.item_cd(+))) = upper(ippd.sap_item_cd)
-			AND trim(ipp2.jj_mnth_id(+)) = trim(ippd.pl_jj_mnth_id)
-		),
+	seveneleven as
+    (   
+    SELECT CUST_CD,
+        IPPD.JJ_MNTH_ID AS JJ_MNTH_ID,
+        IPPD.POS_PROD_CD AS ITEM_CD,
+        IPPD.STORE_CD AS BRNCH_CD,
+        CAST(IPPD.TOT_QTY AS NUMERIC(15, 4)) AS POS_QTY,
+        CAST(IPPD.TOT_AMT AS NUMERIC(15, 4)) AS POS_GTS,
+        NULL AS POS_ITEM_PRC,
+        CAST(IPPD.TOT_AMT AS NUMERIC(15, 4)) * (12.0 / 112.0)::float AS POS_TAX,
+        CAST(IPPD.TOT_AMT AS NUMERIC(15, 4)) * (100.0 / 112.0)::float AS POS_NTS,
+        CAST(IPPD.JNJ_PC_PER_CUST_UNIT AS NUMERIC(15, 4)) AS CONV_FACTOR,
+        CAST(IPPD.TOT_QTY AS NUMERIC(15, 4)) / CAST(IPPD.JNJ_PC_PER_CUST_UNIT AS NUMERIC(15, 4)) AS JJ_QTY_PC,
+        IPP2.LST_PRICE_UNIT AS JJ_ITEM_PRC_PER_PC,
+        CAST(IPPD.TOT_QTY AS NUMERIC(15, 4)) / CAST(IPPD.JNJ_PC_PER_CUST_UNIT AS NUMERIC(15, 4)) * IPP2.LST_PRICE_UNIT AS JJ_GTS,
+        (
+            CAST(IPPD.TOT_QTY AS NUMERIC(15, 4)) / CAST(IPPD.JNJ_PC_PER_CUST_UNIT AS NUMERIC(15, 4)) * IPP2.LST_PRICE_UNIT
+        ) * (12.0 / 112.0)::float AS JJ_VAT_AMT,
+        (
+            CAST(IPPD.TOT_QTY AS NUMERIC(15, 4)) / CAST(IPPD.JNJ_PC_PER_CUST_UNIT AS NUMERIC(15, 4)) * IPP2.LST_PRICE_UNIT
+        ) * (100.0 / 112.0)::float AS JJ_NTS,
+        NULL AS FILE_NM,
+        NULL AS CDL_DTTM,
+        convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) AS CRTD_DTTM,
+        NULL AS UPDT_DTTM
+    FROM (
+            SELECT *
+            FROM ITG_MDS_PH_POS_PRICELIST
+            WHERE ACTIVE = 'Y'
+        ) AS IPP2,
+        (
+            SELECT SALES.CUST_ITEM_CD,
+                'PSC' AS CUST_CD,
+                SAP_ITEM_CD,
+                CUST_CONV_FACTOR,
+                JNJ_PC_PER_CUST_UNIT,
+                SALES.MNTH_ID AS JJ_MNTH_ID,
+                CASE
+                    WHEN SALES.MNTH_ID = IPP.JJ_MNTH_ID THEN IPP.JJ_MNTH_ID
+                    WHEN SALES.MNTH_ID != NVL (IPP.JJ_MNTH_ID, '0')
+                    AND SALES.EARLY_BK_PERIOD != ''
+                    and UPPER(SALES.EARLY_BK_PERIOD) != 'NULL' THEN SALES.EARLY_BK_PERIOD
+                    WHEN SALES.MNTH_ID != NVL (IPP.JJ_MNTH_ID, '0')
+                    AND (
+                        SALES.EARLY_BK_PERIOD IS NULL
+                        OR UPPER(SALES.EARLY_BK_PERIOD) = 'NULL'
+                    ) THEN SALES.LST_PERIOD
+                END AS PL_JJ_MNTH_ID,
+                SALES.ITEM_CD AS POS_PROD_CD,
+                SALES.STORE_CD,
+                SALES.TOT_QTY,
+                SALES.TOT_AMT
+            FROM 
+            (
+                SELECT SPM.*,
+                    CUST_ITEM_CD,
+                    CUST_CD,
+                    SAP_ITEM_CD,
+                    CUST_CONV_FACTOR,
+                    JNJ_PC_PER_CUST_UNIT,
+                    LST_PERIOD,
+                    EARLY_BK_PERIOD
+                FROM (
+                        SELECT DISTINCT MNTH_ID,
+                            ITEM_CD AS CUST_ITEM_CD,
+                            CUST_CD,
+                            SAP_ITEM_CD,
+                            CUST_CONV_FACTOR,
+                            JNJ_PC_PER_CUST_UNIT,
+                            LST_PERIOD,
+                            EARLY_BK_PERIOD
+                        FROM ITG_MDS_PH_POS_PRODUCT
+                        WHERE ACTIVE = 'Y'
+                            AND UPPER(CUST_CD) = 'PSC'
+                    ) IPPPD,
+                    SDL_PH_POS_711 SPM
+                WHERE UPPER(TRIM(IPPPD.CUST_ITEM_CD(+))) = UPPER(TRIM(SPM.ITEM_CD))
+                    AND IPPPD.MNTH_ID(+) = SPM.MNTH_ID
+            ) as SALES,
+                (
+                    SELECT *
+                    FROM ITG_MDS_PH_POS_PRICELIST
+                    WHERE ACTIVE = 'Y'
+                ) AS IPP
+            WHERE IPP.JJ_MNTH_ID(+) = SALES.MNTH_ID
+                AND IPP.ITEM_CD(+) = SALES.SAP_ITEM_CD
+        ) AS IPPD
+    WHERE UPPER(TRIM(IPP2.ITEM_CD(+))) = UPPER(IPPD.SAP_ITEM_CD)
+        AND TRIM(IPP2.JJ_MNTH_ID(+)) = TRIM(IPPD.PL_JJ_MNTH_ID)
+),
 	dyna AS (
 	SELECT CUST_CD,
 		IPPD.JJ_MNTH_ID AS JJ_MNTH_ID,

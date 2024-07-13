@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_pop6_rir_data
+    config:
+        alias: itg_pop6_rir_data
+        tags: ["pop6_master_load", "ingestion"]
+  - name: aspitg_integration__itg_pop6_pop_lists
+    config:
+      alias: itg_pop6_pop_lists
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_lists_products
+    config:
+      alias: itg_pop6_product_lists_products
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_displays
+    config:
+      alias: itg_pop6_displays
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_attribute_audits
+    config:
+      alias: itg_pop6_product_attribute_audits
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_attribute_audits_temp
+    config:
+      alias: itg_pop6_product_attribute_audits_temp
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_service_levels
+    config:
+        alias: itg_pop6_service_levels
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_groups_lists
+    config:
+        alias: itg_pop6_product_groups_lists
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_planned_visits
+    config:
+        alias: itg_pop6_planned_visits
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_promotion_plans
+    config:
+        alias: itg_pop6_promotion_plans
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_promotions
+    config:
+        alias: itg_pop6_promotions
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_tasks
+    config:
+        alias: itg_pop6_tasks
+        tags: ["pop6_master_load", transformation]
+  - name: aspitg_integration__itg_pop6_exclusion
+    config:
+        alias: itg_pop6_exclusion
+        tags: [pop6_master_load, transformation]
+  - name: aspitg_integration__itg_pop6_pops
+    config:
+      alias: itg_pop6_pops
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_lists_pops
+    config:
+      alias: itg_pop6_product_lists_pops
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_products
+    config:
+      alias: itg_pop6_products
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_sku_audits
+    config:
+      alias: itg_pop6_sku_audits
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_display_plans
+    config:
+      alias: itg_pop6_display_plans
+      tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_executed_visits
+    config:
+        alias: itg_pop6_executed_visits
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_general_audits
+    config:
+        alias: itg_pop6_general_audits
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_product_lists_allocation
+    config:
+        alias: itg_pop6_product_lists_allocation
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_pop6_users
+    config:
+        alias: itg_pop6_users
+        tags: ["pop6_master_load", "transformation"]
+  - name: aspitg_integration__itg_photo_mgmnt_url
+    config:
+      alias: itg_photo_mgmnt_url
+      tags: ["pop6_photo_management_pre_conversion","transformation"]

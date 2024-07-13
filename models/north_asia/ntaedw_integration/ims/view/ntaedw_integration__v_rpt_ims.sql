@@ -1,6 +1,6 @@
 with 
-V_RPT_IMS_INVENTORY_ANALYSIS as (
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.V_RPT_IMS_INVENTORY_ANALYSIS
+v_rpt_ims_inventory_analysis as (
+select * from {{ ref('ntaedw_integration__v_rpt_ims_inventory_analysis') }}
 ),
 final as (
 SELECT 

@@ -24,7 +24,7 @@ v_edw_customer_sales_dim as
 ),
 itg_mds_hk_le_targets as
 (
-    select * from ntaitg_integration.itg_mds_hk_le_targets
+    select * from {{ source('ntaitg_integration', 'itg_mds_hk_le_targets') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as
 (
