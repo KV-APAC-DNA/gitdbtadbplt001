@@ -16,7 +16,7 @@ models:
   - name: inditg_integration__sdl_dailysales_del_raw
     config:
       alias: sdl_dailysales_del_raw
-      tags: ["m_wrp_in_sdlitg_gtsales","transformation"]
+      tags: ["in_sdlitg_gtsales","transformation"]
 
   - name: inditg_integration__itg_dailysales_del
     config:
@@ -35,8 +35,8 @@ models:
   - name: inditg_integration__itg_winculum_dailysales
     config:
       alias: itg_winculum_dailysales
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__sdl_raw_winculum_dailysales
     config:
       alias: sdl_raw_winculum_dailysales
-      tags: ["m_wrp_in_sdlitg_kasales","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]

@@ -19,6 +19,10 @@ itg_mds_in_sss_weights as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_sss_weights') }}
 ),
+itg_query_parameters as 
+(
+    select * from {{ source('inditg_integration','itg_query_parameters') }}
+),
 temp_a as 
 (
 select 

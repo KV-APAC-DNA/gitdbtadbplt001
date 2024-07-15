@@ -314,7 +314,7 @@ from (select veotd.mnth_id as jj_mnth_id,
              -- veotd.mnth_wk_no as jj_mnth_wk_no,
              eocd1.dstrbtr_grp_cd,
              ltrim(veossf1.cust_id,'0') as cust_id,
-             item_cd,
+             coalesce(item_cd,'') as item_cd,
              sum(sls_qty) as sls_qty,
              sum(ret_qty) as ret_qty,
              sum(sls_less_rtn_qty) as sls_less_rtn_qty,
@@ -386,7 +386,7 @@ from (select veotd.mnth_id as jj_mnth_id,
                -- veotd.mnth_wk_no,
                eocd1.dstrbtr_grp_cd,
                veossf1.cust_id,
-               item_cd) veossf,
+               coalesce(item_cd,'')) veossf,
      (select *
       from edw_mv_ph_customer_dim
       where cust_id in (select distinct cust_id

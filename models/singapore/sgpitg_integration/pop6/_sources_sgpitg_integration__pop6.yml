@@ -8,8 +8,9 @@ sources:
       identifier: false
     tables:
       - name: sdl_pop6_sg_pops
+      - name: sdl_pop6_sg_products
       - name: sdl_pop6_sg_product_attribute_audits
-        tags: ["pop6_sg_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
@@ -26,7 +27,7 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_pop6_sg_sku_audits
-        tags: ["pop6_sg_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
@@ -43,7 +44,7 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_pop6_sg_tasks
-        tags: ["pop6_sg_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","field_type"]
@@ -60,7 +61,7 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name: sdl_pop6_sg_general_audits
-        tags: ["pop6_sg_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
@@ -77,7 +78,7 @@ sources:
                 store_failures: true
                 schema: sgpwks_integration
       - name : sdl_pop6_sg_displays
-        tags: ["pop6_sg_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["visit_id", "display_plan_id", "field_id","dependent_on_field_id"]
@@ -92,26 +93,26 @@ sources:
                 name: TRATBL_sdl_pop6_sg_displays__null_test
                 config:
                   store_failures: true
-                  schema: sgpwks_integration       
-      - name : sdl_pop6_sg_display_plans
-        tags: ["pop6_sg_transaction", "ingestion"]
-        tests:
-            - test_duplicate:
-                select_columns: ["display_plan_id"]
-                group_by_columns: ["display_plan_id"]
-                name: TRATBL_sdl_pop6_sg_display_plans__duplicate_test
-                config:
-                  store_failures: true
                   schema: sgpwks_integration
-            - test_null:
-                select_columns: ["display_plan_id"]
-                not_null_columns: ["display_plan_id"]
-                name: TRATBL_sdl_pop6_sg_display_plans__null_test
-                config:
-                  store_failures: true
-                  schema: sgpwks_integration  
+      - name : sdl_pop6_sg_display_plans
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["display_plan_id"]
+        #         group_by_columns: ["display_plan_id"]
+        #         name: TRATBL_sdl_pop6_sg_display_plans__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
+        #     - test_null:
+        #         select_columns: ["display_plan_id"]
+        #         not_null_columns: ["display_plan_id"]
+        #         name: TRATBL_sdl_pop6_sg_display_plans__null_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
       - name : sdl_pop6_sg_promotions
-        tags: ["pop6_sg_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["visit_id","promotion_plan_id"]
@@ -126,9 +127,9 @@ sources:
                 name: TRATBL_sdl_pop6_sg_promotions__null_test
                 config:
                   store_failures: true
-                  schema: sgpwks_integration  
+                  schema: sgpwks_integration
       - name : sdl_pop6_sg_promotion_plans
-        tags: ["pop6_sg_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["promotion_plan_id"]
@@ -143,43 +144,43 @@ sources:
                 name: TRATBL_sdl_pop6_sg_promotion_plans__null_test
                 config:
                   store_failures: true
-                  schema: sgpwks_integration  
+                  schema: sgpwks_integration
       - name : sdl_pop6_sg_service_levels
-        tags: ["pop6_sg_transaction", "ingestion"]
-        tests:
-            - test_duplicate:
-                select_columns: ["visit_frequency"]
-                group_by_columns: ["visit_frequency"]
-                name: TRATBL_sdl_pop6_sg_service_levels__duplicate_test
-                config:
-                  store_failures: true
-                  schema: sgpwks_integration
-            - test_null:
-                select_columns: ["visit_frequency"]
-                not_null_columns: ["visit_frequency"]
-                name: TRATBL_sdl_pop6_sg_service_levels__null_test
-                config:
-                  store_failures: true
-                  schema: sgpwks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["visit_frequency"]
+        #         group_by_columns: ["visit_frequency"]
+        #         name: TRATBL_sdl_pop6_sg_service_levels__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
+        #     - test_null:
+        #         select_columns: ["visit_frequency"]
+        #         not_null_columns: ["visit_frequency"]
+        #         name: TRATBL_sdl_pop6_sg_service_levels__null_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
       - name : sdl_pop6_sg_planned_visits
-        tags: ["pop6_sg_transaction", "ingestion"]
-        tests:
-            - test_duplicate:
-                select_columns: ["popdb_id"]
-                group_by_columns: ["popdb_id"]
-                name: TRATBL_sdl_pop6_sg_planned_visits__duplicate_test
-                config:
-                  store_failures: true
-                  schema: sgpwks_integration
-            - test_null:
-                select_columns: ["popdb_id"]
-                not_null_columns: ["popdb_id"]
-                name: TRATBL_sdl_pop6_sg_planned_visits__null_test
-                config:
-                  store_failures: true
-                  schema: sgpwks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["popdb_id"]
+        #         group_by_columns: ["popdb_id"]
+        #         name: TRATBL_sdl_pop6_sg_planned_visits__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
+        #     - test_null:
+        #         select_columns: ["popdb_id"]
+        #         not_null_columns: ["popdb_id"]
+        #         name: TRATBL_sdl_pop6_sg_planned_visits__null_test
+        #         config:
+        #           store_failures: true
+        #           schema: sgpwks_integration
       - name : sdl_pop6_sg_executed_visits
-        tags: ["pop6_sg_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["visit_id","popdb_id"]

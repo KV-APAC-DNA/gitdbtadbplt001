@@ -3,7 +3,7 @@
     {% if target.name=='prod' %}
                 ntaitg_integration.itg_photo_mgmnt_url_temp
             {% else %}
-                {{schema}}.ntaitg_integration__itg_photo_mgmnt_url_temp
+                {{schema}}.aspitg_integration__itg_photo_mgmnt_url_temp
     {% endif %}
     {% endset %}
     {% set query %}
@@ -11,7 +11,7 @@
         {% if target.name=='prod' %}
                     ntaitg_integration.itg_photo_mgmnt_url
                 {% else %}
-                    {{schema}}.ntaitg_integration__itg_photo_mgmnt_url
+                    {{schema}}.aspitg_integration__itg_photo_mgmnt_url
                 {% endif %}
     (           original_photo_key varchar(1031),
                 original_response varchar(65535),
@@ -26,7 +26,7 @@
         {% if target.name=='prod' %}
             ntaitg_integration.itg_photo_mgmnt_url
         {% else %}
-            {{schema}}.ntaitg_integration__itg_photo_mgmnt_url
+            {{schema}}.aspitg_integration__itg_photo_mgmnt_url
         {% endif %};
     {% endset %}
     {% do run_query(query) %}
