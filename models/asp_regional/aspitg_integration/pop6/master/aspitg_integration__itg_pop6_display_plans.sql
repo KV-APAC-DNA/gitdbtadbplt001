@@ -42,7 +42,7 @@ SELECT
 	product_attribute_value,
 	comments,
 	file_name,
-	null as run_id,
+	run_id as run_id,
 	crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) as updt_dttm
 FROM sdl_pop6_kr_display_plans
@@ -69,7 +69,7 @@ SELECT
 	product_attribute_value,
 	comments,
 	file_name,
-	null as run_id,
+	run_id as run_id,
 	crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9)
 FROM sdl_pop6_tw_display_plans
@@ -96,7 +96,7 @@ SELECT
 	product_attribute_value,
 	comments,
 	file_name,
-	null as run_id,
+	run_id as run_id,
 	crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9)
 FROM sdl_pop6_hk_display_plans
@@ -123,7 +123,7 @@ SELECT
 	product_attribute_value,
 	comments,
 	file_name,
-	null as run_id,
+	run_id as run_id,
 	crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9)
 FROM sdl_pop6_jp_display_plans
@@ -150,7 +150,7 @@ SELECT
 	product_attribute_value,
 	comments,
 	file_name,
-	null as run_id,
+	run_id as run_id,
 	crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9)
 FROM sdl_pop6_sg_display_plans
@@ -177,7 +177,7 @@ SELECT 'TH',
        product_attribute_value,
        comments,
        file_name,
-       	null as run_id,
+       	run_id as run_id,
        	--run_id,
        crtd_dttm,
     convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9)
