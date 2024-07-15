@@ -151,3 +151,9 @@ sources:
     schema: jpnsdl_raw
     tables:
       - name: sdl_mds_jp_c360_eng_translation                  
+
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    tables:
+      - name: sdl_mds_mds_reds_market_msl   
