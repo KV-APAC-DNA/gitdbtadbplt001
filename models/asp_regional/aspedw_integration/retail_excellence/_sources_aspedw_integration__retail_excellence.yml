@@ -94,16 +94,6 @@ sources:
     tables:
       - name: v_edw_rpt_retail_excellence_cnpc
       - name: v_edw_rpt_retail_excellence_cnsc
-      
-  - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: jpnedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: v_edw_rpt_retail_excellence
 
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
