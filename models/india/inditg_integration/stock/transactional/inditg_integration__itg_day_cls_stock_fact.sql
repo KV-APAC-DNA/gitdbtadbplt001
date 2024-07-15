@@ -3,9 +3,10 @@
     (
                     materialized = "incremental", 
                     incremental_strategy = "append", 
-                    pre_hook ="{% if is_incremental() %} delete from {{this}} WHERE to_date(createddate) = 
+                    pre_hook ="{% if is_incremental() %} 
+                                delete from {{this}} WHERE to_date(createddate) = 
                                 (SELECT DISTINCT (to_date(createddate)) as createddate
-                                FROM DEV_DNA_LOAD.SNAPINDSDL_RAW.SDL_CSL_PRODUCTWISESTOCK
+                                FROM {{ source('indsdl_raw', 'sdl_csl_productwisestock') }}
                                 WHERE to_date(createddate) > (SELECT to_date(MAX(createddate))
                                 FROM {{this}}) ORDER BY createddate ASC);
                                 {% endif %}"
@@ -14,15 +15,15 @@
 
 with wks_day_cls_stock_fact as 
 (
-    select * from dev_dna_core.snapindwks_integration.wks_day_cls_stock_fact
+    select * from {{ ref('indwks_integration__wks_day_cls_stock_fact') }}
 ),
   edw_customer_dim as 
 (
-    select * from dev_dna_core.snapindedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
   itg_xdm_batchmaster as 
 (
-    select * from dev_dna_core.snapinditg_integration.itg_xdm_batchmaster
+    select * from {{ ref('inditg_integration__itg_xdm_batchmaster') }}
 ),
 cte as 
 (
