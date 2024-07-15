@@ -87,13 +87,13 @@ distributor_code,
 store_code,
 --main.ean,
 //changes below to map mother code
-case when main.mother_code != 'na' and main.mother_code is not null then main.mother_code else main.ean   
+case when main.mother_code != 'NA' and main.mother_code is not null then main.mother_code else main.ean   
 end as product_code,
 store_type,
 main.store_name||'#'||ltrim(main.store_code,'0') as store_name,
 --
 -----add latest ean by mother_code as well---
-case when main.mother_code = 'na' or main.mother_code is null then main.ean else ed.ean end as ean,
+case when main.mother_code = 'NA' or main.mother_code is null then main.ean else ed.ean end as ean,
 --case when ean != 'na' and ean is not null then pd.sku_code else sku_code end as mapped_sku_code,
 pd.sku_code as mapped_sku_code,
 --case when main.mother_code = 'na' then pd.msl_product_desc else ed.msl_product_desc as msl_product_desc
@@ -186,15 +186,15 @@ sellout_sales_quantity,
 sellout_sales_value,
 sellout_value_list_price as sales_value_list_price
 from edw_rpt_regional_sellout_offtake
-where country_name = 'china personal care'
-and   data_source in ('sell-out','pos')
+where country_name = 'China Personal Care'
+and   data_source in ('SELL-OUT','POS')
 and mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
 						   and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)::numeric  
 )main
 left join cnpc_regional_sellout_ean ed
 on upper(main.mother_code) = ed.mother_code
 left join cnpc_regional_sellout_mapped_sku_cd pd
-on case when main.mother_code = 'na' then upper(main.ean) else ed.ean end = pd.ean
+on case when main.mother_code = 'NA' then upper(main.ean) else ed.ean end = pd.ean
 )
 
 group by country_code,
