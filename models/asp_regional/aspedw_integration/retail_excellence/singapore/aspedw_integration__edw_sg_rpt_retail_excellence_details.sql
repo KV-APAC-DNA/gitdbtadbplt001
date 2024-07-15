@@ -1,7 +1,6 @@
 --Import CTE
 with v_edw_sg_rpt_retail_excellence as (
     select * from {{ ref('sgpedw_integration__edw_sg_rpt_retail_excellence') }}
-
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
