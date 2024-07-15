@@ -138,9 +138,9 @@ sources:
     - name: sdl_mds_hk_product_hierarchy
       tags: ["kr_master_mds_sdl_itg_load","ingestion"]
     - name: sdl_kr_gt_daiso_price
-      tags: ["gt_sellout_daiso","ingestion"]
+      tags: ["kr_gt_sellout","ingestion"]
     - name: sdl_mds_kr_retailer_price_master
-      tags: ["gt_sellout_daiso_price_master", "gt_sellout_daiso", "ingestion"]
+      tags: ["gt_sellout_daiso_price_master", "kr_gt_sellout", "ingestion"]
       tests:
         - test_duplicate:
             select_columns: ["ean"]
@@ -179,7 +179,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_nu_ri_zon_gt_sellout
-      tags: ["gt_sellout_nu_ri_zon", "ingestion"]
+      tags: ["kr_gt_sellout", "ingestion"]
       tests:
         - test_null:
             select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]

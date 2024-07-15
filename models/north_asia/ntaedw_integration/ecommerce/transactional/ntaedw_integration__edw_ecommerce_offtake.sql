@@ -10,6 +10,7 @@
         delete from {{this}} where (to_date(transaction_date) || ean) in (select distinct (transaction_date || nvl(ean_number,'#N/A')) from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'TREXI' and upper(ctry_cd) = 'KR' ) and upper(retailer_code) = 'TREXI';
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction') }});
         delete from {{this}} where source_file_name = (select distinct source_file_name from {{ ref('ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay') }});
+        delete from {{this}} where to_date(nvl(transaction_date, '9999-12-31')) || ean in (select distinct nvl(transaction_date, '9999-12-31') || ean_number from {{ ref('ntaitg_integration__itg_kr_ecommerce_sellout') }} where upper(customer_name) = 'EMART' and upper(sub_customer_name) = 'ECVAN' and upper(ctry_cd) = 'KR') and upper(retailer_code) = 'ECVAN';
         {% endif %}"
     )
 }}
@@ -212,6 +213,29 @@ sales_copang as (
     left join itg_kr_ecommerce_offtake_product_master prod_dim on rtrim(itg_sales_copang.sku_code) = rtrim(prod_dim.retailer_sku_code)
     where itg_sales_copang.load_date = (select max(load_date) from sdl_kr_ecommerce_offtake_coupang_transaction)
 ),
+ecvan as (
+    select crt_dttm as load_date,
+        source_file_name as source_file_name,
+        '#N/A' as retailer_sku_code,
+        null as no_of_units_sold,
+        case when ean_number is null then '#N/A' else ean_number end as ean,
+        null as order_date,
+        sellout_amount as sales_value,
+        sellout_qty as quantity,
+        'ECVAN' as retailer_code,
+        'ECVAN' as retailer_name,
+        nvl(transaction_date, '9999-12-31') as transaction_date,
+        '#N/A' as order_number,
+        null as product_code,
+        product_name as product_title,
+        crncy_cd as transaction_currency,
+        'KOREA' as country,
+        sub_customer_name as sub_customer_name
+    from itg_kr_ecommerce_sellout
+    where upper(customer_name) = 'EMART'
+        and upper(sub_customer_name) = 'ECVAN'
+        and upper(ctry_cd) = 'KR'
+),
 transformed as (
     select * from emart
     union all
@@ -226,6 +250,8 @@ transformed as (
     select * from sales_ebay
     union all
     select * from sales_copang
+    union all
+    select * from ecvan
 ),
 final as (
     select
