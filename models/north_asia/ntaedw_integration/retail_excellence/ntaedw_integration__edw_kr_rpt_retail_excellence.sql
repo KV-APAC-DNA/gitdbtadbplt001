@@ -1,11 +1,11 @@
 --Import CTE
 
 with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
-    select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
+    select * from {{ ref('ntawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
 ),
  retail_excellence_msl_target_final as 
  (
-    select * from {{ ref('nawks_integration_wks_retail_excellence_msl_target_final') }}
+    select * from {{ ref('ntawks_integration__wks_retail_excellence_msl_target_final') }}
  ),
 
 edw_kr_rpt_retail_excellence  as 

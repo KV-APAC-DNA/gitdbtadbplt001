@@ -1,7 +1,7 @@
 --Import CTE
 
 with wks_kr_rpt_retail_excellence as (
-    select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence') }}
+    select * from {{ ref('ntawks_integration__wks_kr_rpt_retail_excellence') }}
 ),
 
 edw_list_price as(

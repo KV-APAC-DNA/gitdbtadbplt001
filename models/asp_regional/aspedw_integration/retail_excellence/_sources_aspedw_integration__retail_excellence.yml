@@ -11,7 +11,7 @@ sources:
     tables:
       - name: v_edw_kr_rpt_retail_excellence
       - name: edw_vw_pop6_products  
-
+      - name: v_rpt_pop6_perfectstore
 
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -160,15 +160,5 @@ sources:
       - name: sdl_mds_jp_c360_eng_translation                  
 
 
-  - name: ntaedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: v_rpt_pop6_perfectstore
 
-  
       
