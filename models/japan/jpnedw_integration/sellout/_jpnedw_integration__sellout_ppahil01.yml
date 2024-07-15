@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: jpnedw_integration__dw_so_sell_out_dly_backup
+    config:
+      alias: dw_so_sell_out_dly_backup
+      tags: ['sell_out_dly','tranformation']
+
+  - name: jpnedw_integration__dw_so_sell_out_dly_all_backup
+    config:
+      alias: dw_so_sell_out_dly_all_backup
+      tags: ['sell_out_dly_all','tranformation']
+
+  - name: jpnedw_integration__dm_so_store_list_backup
+    config:
+      alias: dm_so_store_list_backup
+      tags: ['store_list','tranformation']
+
+  - name: jpnedw_integration__mt_constant_seq_backup
+    config:
+      alias: mt_constant_seq
+      tags: ['constant_seq','tranformation']

@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_jp_intage_skinhealth_category
+        tags: ['intage_skinhealth_category','ingestion']
+        tests:
+        - test_null:
+            select_columns: ["jan_code"]
+            not_null_columns: ["jan_code"] 
+            name: sdl_mds_jp_intage_skinhealth_category__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["jan_code"]
+                group_by_columns: ["jan_code"] 
+                name: sdl_mds_jp_intage_skinhealth_category__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration

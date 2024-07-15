@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_so_planet_revise_backup
+    config:
+      alias: wk_so_planet_revise_backup
+      tags: ['planet_revise','transformation']
