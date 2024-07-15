@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__v_invoice_tde
+    config:
+      alias: v_invoice_tde
+      tags: ["view","transformation"]

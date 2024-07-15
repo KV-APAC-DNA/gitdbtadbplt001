@@ -1,6 +1,6 @@
 --Import CTE
 with cnsc_edw_rpt_retail_excellence as (
-    select * from {{ source('chnedw_integration', 'v_edw_rpt_retail_excellence_cnsc') }}
+    select * from {{ ref('chnedw_integration__edw_rpt_retail_excellence_cnsc') }}
 ),
 
 itg_query_parameters as (

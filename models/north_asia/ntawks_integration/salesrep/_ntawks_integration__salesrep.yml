@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ntawks_integration__wks_sales_rep_so_target_fact
+    config:
+      alias: wks_sales_rep_so_target_fact
+      tags: ["hk_ims_wingkeung_sales_rep_sellout_target","ingestion"]
+  - name: ntawks_integration__wks_direct_sales_rep_route_plan
+    config:
+      alias: wks_direct_sales_rep_route_plan
+      tags: ["hk_ims_wingkeung_sales_rep_route_plan","ingestion"]
+  - name: ntawks_integration__wks_indirect_sales_rep_route_plan
+    config:
+      alias: wks_indirect_sales_rep_route_plan
+      tags: ["hk_ims_wingkeung_sales_rep_route_plan","ingestion"]

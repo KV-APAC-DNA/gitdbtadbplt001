@@ -1,13 +1,13 @@
 --Import CTE
 with ph_edw_rpt_retail_excellence as (
-    select * from {{ source('phledw_integration', 'v_edw_ph_rpt_retail_excellence') }}
+    select * from {{ ref('phledw_integration__edw_ph_rpt_retail_excellence') }}
 ),
 
 --Logical CTE
 ph_edw_rpt_retail_excellence_details as (
 SELECT FISC_YR,
        FISC_PER,		--// INTEGER
-       "CLUSTER",
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -147,7 +147,7 @@ final as (
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,

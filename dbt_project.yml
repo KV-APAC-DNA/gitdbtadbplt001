@@ -47,7 +47,7 @@ models:
       schema: CORE_ACCESS
     integration:
       materialized: table
-      schema: CORE_INTEGRATION 
+      schema: CORE_INTEGRATION
       arsadpprd001_raw:
         materialized: view
     asp_regional:
@@ -64,6 +64,9 @@ models:
         sap_and_sellin:
           staging:
             +materialized: view
+        rex:
+          view:
+            +materialized: view
       aspedw_integration:
         +materialized: table
         +transient: false
@@ -72,6 +75,21 @@ models:
           view:
             +materialized: view
         sfmc:
+          view:
+            +materialized: view
+        calendar:
+          view:
+            +materialized: view
+        rex:
+          view:
+            +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
+        pop6:
+          view:
+            +materialized: view
+        datamart:
           view:
             +materialized: view
       aspwks_integration:
@@ -107,6 +125,9 @@ models:
           datamart:
             view:
               +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       sgpitg_integration:
         +materialized: table
         +transient: false
@@ -159,6 +180,9 @@ models:
         sellout:
             view:
               +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       myswks_integration:
         +materialized: table
         +schema: MYSWKS_INTEGRATION
@@ -205,6 +229,9 @@ models:
           view:
             +materialized: view
         sellthrgh:
+          view:
+            +materialized: view
+        perfect_store:
           view:
             +materialized: view
       vnmwks_integration:
@@ -264,6 +291,9 @@ models:
         sellout:
           view:
             +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
       thawks_integration:
         +materialized: table
         +schema: THAWKS_INTEGRATION
@@ -300,6 +330,9 @@ models:
           view:
             +materialized: view
         sellout:
+          view:
+            +materialized: view
+        perfect_store:
           view:
             +materialized: view
       pcfitg_integration:
@@ -356,6 +389,12 @@ models:
         siso:
           view:
             +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
+        survey:
+          view:
+            +materialized: view
       phlitg_integration:
         +materialized: table
         +transient: false
@@ -396,21 +435,145 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
-    china:
+
+    north_asia:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      chnitg_integration:
+      ntaitg_integration:
         +materialized: table
         +transient: false
+        +schema: NTAITG_INTEGRATION
+        pos:
+          staging:
+            +materialized: view
+      ntaedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: NTAEDW_INTEGRATION
+        calendar:
+          view:
+            +materialized: view
+        common:
+          view:
+            +materialized: view
+        copa:
+          view:
+            +materialized: view
+        coupang:
+          view:
+            +materialized: view
+        customer:
+          view:
+            +materialized: view
+        dads:
+          view:
+            +materialized: view
+        datamart:
+          view:
+            +materialized: view
+        ecommerce:
+          view:
+            +materialized: view
+        forecast:
+          view:
+            +materialized: view
+        ims:
+          view:
+            +materialized: view
+        inventory:
+          view:
+            +materialized: view
+        invoice:
+          view:
+            +materialized: view
+        perfect_store:
+          view:
+            +materialized: view
+        pop6:
+          view:
+            +materialized: view
+        pos:
+          view:
+            +materialized: view
+        product:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        salesrep:
+          view:
+            +materialized: view
+        sellout:
+          view:
+            +materialized: view
+        sfmc:
+          view:
+            +materialized: view
+        store:
+          view:
+            +materialized: view
+      ntawks_integration:
+        +materialized: table
+        +schema: NTAWKS_INTEGRATION
+      ntaedw_access:
+        +materialized: view
+        +schema: NTAEDW_ACCESS
+    india:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      indedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDEDW_INTEGRATION
+        customer:
+          view:
+            +materialized: view
+        retail:
+          view:
+            +materialized: view
+        retailer:
+          view:
+            +materialized: view
+        sales:
+          view:
+            +materialized: view
+        udc:
+          view:
+            +materialized: view
+      inditg_integration:
+        +materialized: table
+        +transient: false
+        +schema: INDITG_INTEGRATION
+      indwks_integration:
+        +materialized: table
+        +schema: INDWKS_INTEGRATION
+      indedw_access:
+        +materialized: view
+        +schema: INDEDW_ACCESS
+
+# ADDED CHINA AS PART OF RETAIL EXCELLENCE
+    china:
+      config:
+        +enabled: true
+      chnitg_integration:
+        +materialized: table
         +schema: CHNITG_INTEGRATION
+        +transient: false
       chnedw_integration:
         +materialized: table
         +transient: false
         +schema: CHNEDW_INTEGRATION
       chnwks_integration:
         +materialized: table
-        +schema: CHNWKS_INTEGRATION
-      chnedw_access:
-        +materialized: view
-        +schema: CHNEDW_ACCESS    
+        +schema: CHNWKS_INTEGRATION        
+    japan:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      jpnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNITG_INTEGRATION

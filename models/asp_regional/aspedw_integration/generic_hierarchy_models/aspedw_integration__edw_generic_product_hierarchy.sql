@@ -1,9 +1,9 @@
 with EDW_MATERIAL_DIM as (
-    select * from {{ source('aspedw_integration','edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 
 EDW_GCH_PRODUCTHIERARCHY as (
-   select * from {{ source('aspedw_integration','edw_gch_producthierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 
 TRANSFORMED as (select distinct

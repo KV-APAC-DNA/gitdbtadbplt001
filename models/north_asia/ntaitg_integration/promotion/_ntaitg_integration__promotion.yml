@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: ntaitg_integration__itg_mds_kr_cost_of_goods
+    config:
+      alias: itg_mds_kr_cost_of_goods
+      tags: ["j_kr_tp_tracker_data_ingestion","ingestion"]
+  - name: ntaitg_integration__itg_kr_tp_tracker_target
+    config:
+      alias: itg_kr_tp_tracker_target
+      tags: ["j_kr_tp_tracker_data_ingestion","ingestion"]
+  - name: ntaitg_integration__itg_trd_promo_actl
+    config:
+      alias: itg_trd_promo_actl
+      tags: ["j_kr_tp_actual_wrapper","transformation"]
+  - name: ntaitg_integration__itg_trd_promo_pln
+    config:
+      alias: itg_trd_promo_pln
+      tags: ["j_kr_tp_plan_wrapper","transformation"]
+  - name: ntaitg_integration__itg_kr_trade_promotion
+    config:
+      alias: itg_kr_trade_promotion
+      tags: ["j_kr_trade_promotion_data_load","transformation"]

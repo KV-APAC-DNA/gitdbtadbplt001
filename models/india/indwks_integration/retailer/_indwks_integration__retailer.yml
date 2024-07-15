@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_retailermaster_upd
+    config: 
+      alias: wks_retailermaster_upd
+      tags: ["in_edw_retailer_dim","transformation"]
+  - name: indwks_integration__wks_rev_edw_retailer_dim
+    config: 
+      alias: wks_rev_edw_retailer_dim
+      tags: ["in_skurecom_mslspike_datamart","transformation"]
+  - name: indwks_integration__wks_rpurchasedetail
+    config: 
+      alias: wks_rpurchasedetail
+      tags: ["in_sdlitg_tblf","transformation"]

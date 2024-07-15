@@ -63,11 +63,11 @@ models:
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
   - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxstock
     config:
-      alias: s_tw_ims_dstr_std_stock_134478_pxstock
+      alias: wks_tw_ims_dstr_std_stock_134478_pxstock
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
-  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxStore
+  - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_pxstore
     config:
-      alias: s_tw_ims_dstr_std_stock_134478_pxStore
+      alias: wks_tw_ims_dstr_std_stock_134478_pxstore
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
   - name: ntawks_integration__wks_tw_ims_dstr_std_stock_134478_stock
     config:
@@ -85,3 +85,103 @@ models:
     config:
       alias: wks_tw_ims_dstr_std_stock_136454_stock
       tags: ["tw_ims_distributor_standard_stock","ingestion"]
+  - name: ntawks_integration__wks_taiwan_siso_propagate_final
+    config:
+      alias: wks_taiwan_siso_propagate_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_edw_ims_invnt_std
+    config:
+      alias: wks_edw_ims_invnt_std
+      tags: ["tw_ims_distributor_standard_stock","transformation"]
+  - name: ntawks_integration__wks_itg_ims_invnt
+    config:
+      alias: wks_itg_ims_invnt
+      tags: ["na_trxn_ims_inv","transformation"]
+  - name: ntawks_integration__wks_itg_ims_invnt_std
+    config:
+      alias: wks_itg_ims_invnt_std
+      tags: ["tw_ims_distributor_standard_stock","transformation"]
+  - name: ntawks_integration__wks_edw_ims_invnt
+    config:
+      alias: wks_edw_ims_invnt
+      tags: ["na_trxn_ims_inv","transformation"]
+  - name: ntawks_integration__taiwan_propagate_from_to
+    config:
+      alias: taiwan_propagate_from_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__taiwan_propagate_to
+    config:
+      alias: taiwan_propagate_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_allmonths_base
+    config:
+      alias: wks_taiwan_allmonths_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_base_detail
+    config:
+      alias: wks_taiwan_base_detail
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_lastnmonths
+    config:
+      alias: wks_taiwan_lastnmonths
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_siso_propagate_to_details
+    config:
+      alias: wks_taiwan_siso_propagate_to_details
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_taiwan_siso_propagate_to_existing_dtls
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_tw_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_tw_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_base
+    config:
+      alias: wks_hk_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_base
+    config:
+      alias: wks_taiwan_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_sellout_for_inv_analysis
+    config:
+      alias: wks_hk_sellout_for_inv_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_taiwan_sellout_for_inv_analysis
+    config:
+      alias: wks_taiwan_sellout_for_inv_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_allmonths_base
+    config:
+      alias: wks_hk_allmonths_base
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_base_detail
+    config:
+      alias: wks_hk_base_detail
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__hk_propagate_to
+    config:
+      alias: hk_propagate_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__hk_propagate_from_to
+    config:
+      alias: hk_propagate_from_to
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_siso_propagate_to_details
+    config:
+      alias: wks_hk_siso_propagate_to_details
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_siso_propagate_to_existing_dtls
+    config:
+      alias: wks_hk_siso_propagate_to_existing_dtls
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_siso_propagate_final
+    config:
+      alias: wks_hk_siso_propagate_final
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis
+    config:
+      alias: wks_hk_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]

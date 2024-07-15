@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_retailervalueclass
+    config: 
+      alias: itg_retailervalueclass
+      tags: ["in_rt_sales","ingestion"]
+  - name: inditg_integration__itg_townmaster
+    config: 
+      alias: itg_townmaster
+      tags: ["in_rt_sales","ingestion"]
+  - name: inditg_integration__itg_rrl_usermaster
+    config: 
+      alias: itg_rrl_usermaster
+      tags: ["in_rt_sales","ingestion"]
+  - name: inditg_integration__itg_routemaster
+    config: 
+      alias: itg_routemaster
+      tags: ["in_rt_sales","ingestion"]
+  - name: inditg_integration__itg_retailercategory
+    config: 
+      alias: itg_retailercategory
+      tags: ["in_rt_sales","ingestion"]
+
+  - name: inditg_integration__itg_retailerroute
+    config:
+      alias: itg_retailerroute
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_retailermaster
+    config:
+      alias: itg_retailermaster
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_customer_retailer
+    config:
+      alias: itg_customer_retailer
+      tags: ["in_sdlitg_salescube_master","ingestion"]

@@ -5,9 +5,7 @@ models:
     config:
       alias: edw_vw_store_dim
       tags: ["edw_ims_fact_load","transformation"]
-  
   - name: ntaedw_integration__edw_store_dim
     config:
       alias: edw_store_dim
-      tags: ["edw_ims_fact_load","transformation"] 
-  
+      tags: ["edw_ims_fact_load","transformation"]
