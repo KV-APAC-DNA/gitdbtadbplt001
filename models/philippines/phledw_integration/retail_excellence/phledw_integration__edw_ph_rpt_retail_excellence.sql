@@ -14,7 +14,7 @@ wks_ph_re_target_compliance as
 edw_ph_rpt_retail_excellence as 
 (
     SELECT FISC_YR,
-        FISC_PER,
+        SOP.FISC_PER,
         "cluster",
         MARKET,
         DATA_SRC,
@@ -88,7 +88,7 @@ edw_ph_rpt_retail_excellence as
         PKA_VARIANT_DESC,
         PKA_SUB_VARIANT_DESC,
         GLOBAL_PRODUCT_FRANCHISE,
-        GLOBAL_PRODUCT_BRAND,
+        SOP.GLOBAL_PRODUCT_BRAND,
         GLOBAL_PRODUCT_SUB_BRAND,
         GLOBAL_PRODUCT_VARIANT,
         GLOBAL_PRODUCT_SEGMENT,
