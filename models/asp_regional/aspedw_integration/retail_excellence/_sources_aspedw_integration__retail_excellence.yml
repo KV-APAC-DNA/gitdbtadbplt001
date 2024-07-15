@@ -120,7 +120,6 @@ sources:
       identifier: false
     tables:
       - name: itg_re_msl_input_definition
-      - name: mds_reds_market_msl_target
 
   - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -157,3 +156,4 @@ sources:
     schema: aspsdl_raw
     tables:
       - name: sdl_mds_mds_reds_market_msl   
+      - name : sdl_mds_mds_reds_market_msl_target
