@@ -1,8 +1,8 @@
 with itg_kr_re_msl_list as (
-    select * from {{ ref('natwks_integration__wks_itg_kr_re_msl_list') }}
+    select * from {{ ref('ntawks_integration__wks_itg_kr_re_msl_list') }}
 ),
 wks_korea_regional_sellout_actuals as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_actuals') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_actuals') }}
 ),
 
 customer_heirarchy as (

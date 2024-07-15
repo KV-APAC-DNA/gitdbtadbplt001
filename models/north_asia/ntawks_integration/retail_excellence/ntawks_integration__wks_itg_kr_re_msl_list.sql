@@ -4,7 +4,7 @@ with itg_re_msl_input_definition as (
     select * from {{ source('aspitg_integration','itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
-    select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
     select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
@@ -13,14 +13,14 @@ edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_korea_base_retail_excellence as (
-    select * from {{ ref('natwks_integration__wks_korea_base_retail_excellence') }}
+    select * from {{ ref('ntawks_integration__wks_korea_base_retail_excellence') }}
 ),
  edw_customer_attr_flat_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
  ),
  msl_data as
  (
-       select * from {{ ref('natwks_integration_wks_msl_list') }}
+ select * from {{ ref('ntawks_integration__wks_msl_list') }}
  
  ),
  MSL1 as 

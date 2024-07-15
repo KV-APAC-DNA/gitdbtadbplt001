@@ -4,7 +4,7 @@ with  mds_reds_market_msl_target_final as
 ),
 rpt_retail_excellence_gcph as 
  (
-    select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
+    select * from {{ ref('ntawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
  ),
  
  final as 
@@ -26,7 +26,7 @@ rpt_retail_excellence_gcph as
                 ) a
         group by 1,2)b 
     inner join 
-    (select * from mds_reds_market_msl_target_final
+    (select * from mds_reds_market_msl_target_final where market='Korea'
      ) mds 
         on ( fisc_per >= mds.start_month_id and fisc_per <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
     group by 1,2,3 

@@ -1,15 +1,15 @@
 with wks_korea_regional_sellout_act_lm as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_lm') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_lm') }}
 ),
 wks_korea_regional_sellout_act_l3m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l3m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l3m') }}
 ),
 wks_korea_regional_sellout_act_l6m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l6m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l6m') }}
 ),
 
 wks_korea_regional_sellout_act_l12m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l12m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l12m') }}
 ),
 
 --final cte
