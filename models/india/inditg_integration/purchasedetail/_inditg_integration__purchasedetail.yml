@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_rpurchasedetail
+    config: 
+      alias: itg_rpurchasedetail
+      tags: ["in_sdlitg_tblf","transformation"]

@@ -5,7 +5,7 @@ edw_ims_fact as(
 	select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 itg_gt_msl_items as(
-	select * from {{ source('ntaitg_integration', 'itg_gt_msl_items') }}
+	select * from {{ ref('ntaitg_integration__itg_gt_msl_items') }}
 ),
 t2 as(
 	SELECT v_intrm_calendar_ims.cal_day

@@ -1,6 +1,6 @@
 --import cte
 with edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_singapore_regional_sellout_act_lm as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_act_lm') }}
@@ -27,139 +27,135 @@ wks_singapore_regional_sellout_basedim as (
 wks_singapore_re_basedim_values as (
     select * from {{ ref('sgpwks_integration__wks_singapore_re_basedim_values') }}
 ),
-
-
-
 --final cte
 singapore_regional_sellout_actuals  as (
-select re_base_dim.cntry_cd,		
-       re_base_dim.cntry_nm,		
-       substring(base_dim.month,1,4) as year,		
-       base_dim.month as mnth_id,		
-       re_base_dim.distributor_code,		
-       re_base_dim.soldto_code,	
-       re_base_dim.distributor_name,		
-       re_base_dim.store_code,		
-       re_base_dim.store_name,		
-       re_base_dim.store_type,		
-       re_base_dim.master_code,		
-       re_base_dim.customer_product_desc as master_code_desc,		
-       re_base_dim.sap_parent_customer_key,		
-       re_base_dim.sap_parent_customer_description,		
-       re_base_dim.sap_customer_channel_key,		
-       re_base_dim.sap_customer_channel_description,		
-       re_base_dim.sap_customer_sub_channel_key,		
-       re_base_dim.sap_sub_channel_description,		
-       re_base_dim.sap_go_to_mdl_key,		
-       re_base_dim.sap_go_to_mdl_description,		
-       re_base_dim.sap_banner_key,		
-       re_base_dim.sap_banner_description,		
-       re_base_dim.sap_banner_format_key,		
-       re_base_dim.sap_banner_format_description,		
-       re_base_dim.retail_environment,		
-       re_base_dim.region,		
-       re_base_dim.zone_or_area,		
-       re_base_dim.customer_segment_key,		
-       re_base_dim.customer_segment_description,		
-       re_base_dim.global_product_franchise,		
-       re_base_dim.global_product_brand,		
-       re_base_dim.global_product_sub_brand,		
-       re_base_dim.global_product_variant,		
-       re_base_dim.global_product_segment,		
-       re_base_dim.global_product_subsegment,		
-       re_base_dim.global_product_category,		
-       re_base_dim.global_product_subcategory,		
-       re_base_dim.global_put_up_description,		
-	   re_base_dim.mapped_sku_cd,		
-       --ean,
-       --sku_code,sku_description,
-       re_base_dim.pka_product_key,		
-       re_base_dim.pka_product_key_description,		
-       cm.so_sls_qty as cm_sales_qty,		
-       cm.so_sls_value as cm_sales,		
-       cm.so_avg_qty as cm_avg_sales_qty,		
-       cm.sales_value_list_price as cm_sales_value_list_price,		
-       lm_sales as lm_sales,
-       lm_sales_qty as lm_sales_qty,
-       lm_avg_sales_qty as lm_avg_sales_qty,
-       lm_sales_lp as lm_sales_lp,
-       l3m_sales as p3m_sales,
-       l3m_sales_qty as p3m_qty,
-       l3m_avg_sales_qty as p3m_avg_qty,
-       l3m_sales_lp as p3m_sales_lp,
-       f3m_sales as f3m_sales,
-       f3m_sales_qty as f3m_qty,
-       f3m_avg_sales_qty as f3m_avg_qty,
-       l6m_sales as p6m_sales,
-       l6m_sales_qty as p6m_qty,
-       l6m_avg_sales_qty as p6m_avg_qty,
-       l6m_sales_lp as p6m_sales_lp,
-       l12m_sales as p12m_sales,
-       l12m_sales_qty as p12m_qty,
-       l12m_avg_sales_qty as p12m_avg_qty,
-       l12m_sales_lp as p12m_sales_lp,
-       case
-         when lm_sales > 0 then 'y'
-         else 'n'
-       end as lm_sales_flag,
-       case
-         when p3m_sales > 0 then 'y'
-         else 'n'
-       end as p3m_sales_flag,
-       case
-         when p6m_sales > 0 then 'y'
-         else 'n'
-       end as p6m_sales_flag,
-       case
-         when p12m_sales > 0 then 'y'
-         else 'n'
-       end as p12m_sales_flag,
-sysdate() as crt_dttm		
-from wks_singapore_regional_sellout_basedim base_dim		
-  left join wks_singapore_re_basedim_values re_base_dim		
-         on re_base_dim.cntry_cd = base_dim.cntry_cd		
-        and re_base_dim.sellout_dim_key = base_dim.sellout_dim_key		
-  left outer join (select distinct cntry_cd,
+SELECT RE_BASE_DIM.CNTRY_CD,		--// SELECT RE_BASE_DIM.CNTRY_CD,
+       RE_BASE_DIM.CNTRY_NM,		--//        RE_BASE_DIM.CNTRY_NM,
+       SUBSTRING(BASE_DIM.MONTH,1,4) AS YEAR,		--//        SUBSTRING(BASE_DIM.MONTH,1,4) AS YEAR,
+       BASE_DIM.MONTH AS MNTH_ID,		--//        BASE_DIM.MONTH AS MNTH_ID,
+       RE_BASE_DIM.DISTRIBUTOR_CODE,		--//        RE_BASE_DIM.DISTRIBUTOR_CODE,
+       RE_BASE_DIM.SOLDTO_CODE,		--//        RE_BASE_DIM.SOLDTO_CODE,
+       RE_BASE_DIM.DISTRIBUTOR_NAME,		--//        RE_BASE_DIM.DISTRIBUTOR_NAME,
+       RE_BASE_DIM.STORE_CODE,		--//        RE_BASE_DIM.STORE_CODE,
+       RE_BASE_DIM.STORE_NAME,		--//        RE_BASE_DIM.STORE_NAME,
+       RE_BASE_DIM.STORE_TYPE,		--//        RE_BASE_DIM.STORE_TYPE,
+       RE_BASE_DIM.MASTER_CODE,		--//        RE_BASE_DIM.MASTER_CODE,
+       RE_BASE_DIM.CUSTOMER_PRODUCT_DESC AS MASTER_CODE_DESC,		--//        RE_BASE_DIM.CUSTOMER_PRODUCT_DESC AS MASTER_CODE_DESC,
+       RE_BASE_DIM.SAP_PARENT_CUSTOMER_KEY,		--//        RE_BASE_DIM.SAP_PARENT_CUSTOMER_KEY,
+       RE_BASE_DIM.SAP_PARENT_CUSTOMER_DESCRIPTION,		--//        RE_BASE_DIM.SAP_PARENT_CUSTOMER_DESCRIPTION,
+       RE_BASE_DIM.SAP_CUSTOMER_CHANNEL_KEY,		--//        RE_BASE_DIM.SAP_CUSTOMER_CHANNEL_KEY,
+       RE_BASE_DIM.SAP_CUSTOMER_CHANNEL_DESCRIPTION,		--//        RE_BASE_DIM.SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+       RE_BASE_DIM.SAP_CUSTOMER_SUB_CHANNEL_KEY,		--//        RE_BASE_DIM.SAP_CUSTOMER_SUB_CHANNEL_KEY,
+       RE_BASE_DIM.SAP_SUB_CHANNEL_DESCRIPTION,		--//        RE_BASE_DIM.SAP_SUB_CHANNEL_DESCRIPTION,
+       RE_BASE_DIM.SAP_GO_TO_MDL_KEY,		--//        RE_BASE_DIM.SAP_GO_TO_MDL_KEY,
+       RE_BASE_DIM.SAP_GO_TO_MDL_DESCRIPTION,		--//        RE_BASE_DIM.SAP_GO_TO_MDL_DESCRIPTION,
+       RE_BASE_DIM.SAP_BANNER_KEY,		--//        RE_BASE_DIM.SAP_BANNER_KEY,
+       RE_BASE_DIM.SAP_BANNER_DESCRIPTION,		--//        RE_BASE_DIM.SAP_BANNER_DESCRIPTION,
+       RE_BASE_DIM.SAP_BANNER_FORMAT_KEY,		--//        RE_BASE_DIM.SAP_BANNER_FORMAT_KEY,
+       RE_BASE_DIM.SAP_BANNER_FORMAT_DESCRIPTION,		--//        RE_BASE_DIM.SAP_BANNER_FORMAT_DESCRIPTION,
+       RE_BASE_DIM.RETAIL_ENVIRONMENT,		--//        RE_BASE_DIM.RETAIL_ENVIRONMENT,
+       RE_BASE_DIM.REGION,		--//        RE_BASE_DIM.REGION,
+       RE_BASE_DIM.ZONE_OR_AREA,		--//        RE_BASE_DIM.ZONE_OR_AREA,
+       RE_BASE_DIM.CUSTOMER_SEGMENT_KEY,		--//        RE_BASE_DIM.CUSTOMER_SEGMENT_KEY,
+       RE_BASE_DIM.CUSTOMER_SEGMENT_DESCRIPTION,		--//        RE_BASE_DIM.CUSTOMER_SEGMENT_DESCRIPTION,
+       RE_BASE_DIM.GLOBAL_PRODUCT_FRANCHISE,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_FRANCHISE,
+       RE_BASE_DIM.GLOBAL_PRODUCT_BRAND,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_BRAND,
+       RE_BASE_DIM.GLOBAL_PRODUCT_SUB_BRAND,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_SUB_BRAND,
+       RE_BASE_DIM.GLOBAL_PRODUCT_VARIANT,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_VARIANT,
+       RE_BASE_DIM.GLOBAL_PRODUCT_SEGMENT,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_SEGMENT,
+       RE_BASE_DIM.GLOBAL_PRODUCT_SUBSEGMENT,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_SUBSEGMENT,
+       RE_BASE_DIM.GLOBAL_PRODUCT_CATEGORY,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_CATEGORY,
+       RE_BASE_DIM.GLOBAL_PRODUCT_SUBCATEGORY,		--//        RE_BASE_DIM.GLOBAL_PRODUCT_SUBCATEGORY,
+       RE_BASE_DIM.GLOBAL_PUT_UP_DESCRIPTION,		--//        RE_BASE_DIM.GLOBAL_PUT_UP_DESCRIPTION,
+	   RE_BASE_DIM.MAPPED_SKU_CD,		--// 	   RE_BASE_DIM.MAPPED_SKU_CD,
+       --EAN,
+       --SKU_CODE,SKU_DESCRIPTION,
+       RE_BASE_DIM.PKA_PRODUCT_KEY,		--//        RE_BASE_DIM.PKA_PRODUCT_KEY,
+       RE_BASE_DIM.PKA_PRODUCT_KEY_DESCRIPTION,		--//        RE_BASE_DIM.PKA_PRODUCT_KEY_DESCRIPTION,
+       CM.SO_SLS_QTY AS CM_SALES_QTY,		--//        CM.so_sls_qty AS CM_SALES_QTY,
+       CM.SO_SLS_VALUE AS CM_SALES,		--//        CM.so_sls_value AS CM_SALES,
+       CM.SO_AVG_QTY AS CM_AVG_SALES_QTY,		--//        CM.so_avg_qty AS CM_AVG_SALES_QTY,
+       CM.SALES_VALUE_LIST_PRICE AS CM_SALES_VALUE_LIST_PRICE,		--//        CM.SALES_VALUE_LIST_PRICE AS CM_SALES_VALUE_LIST_PRICE,
+       LM_SALES AS LM_SALES,
+       LM_SALES_QTY AS LM_SALES_QTY,
+       LM_AVG_SALES_QTY AS LM_AVG_SALES_QTY,
+       LM_SALES_LP AS LM_SALES_LP,
+       L3M_SALES AS P3M_SALES,
+       L3M_SALES_QTY AS P3M_QTY,
+       L3M_AVG_SALES_QTY AS P3M_AVG_QTY,
+       L3M_SALES_LP AS P3M_SALES_LP,
+       F3M_SALES AS F3M_SALES,
+       F3M_SALES_QTY AS F3M_QTY,
+       F3M_AVG_SALES_QTY AS F3M_AVG_QTY,
+       L6M_SALES AS P6M_SALES,
+       L6M_SALES_QTY AS P6M_QTY,
+       L6M_AVG_SALES_QTY AS P6M_AVG_QTY,
+       L6M_SALES_LP AS P6M_SALES_LP,
+       L12M_SALES AS P12M_SALES,
+       L12M_SALES_QTY AS P12M_QTY,
+       L12M_AVG_SALES_QTY AS P12M_AVG_QTY,
+       L12M_SALES_LP AS P12M_SALES_LP,
+       CASE
+         WHEN LM_SALES > 0 THEN 'Y'
+         ELSE 'N'
+       END AS LM_SALES_FLAG,
+       CASE
+         WHEN P3M_SALES > 0 THEN 'Y'
+         ELSE 'N'
+       END AS P3M_SALES_FLAG,
+       CASE
+         WHEN P6M_SALES > 0 THEN 'Y'
+         ELSE 'N'
+       END AS P6M_SALES_FLAG,
+       CASE
+         WHEN P12M_SALES > 0 THEN 'Y'
+         ELSE 'N'
+       END AS P12M_SALES_FLAG,
+SYSDATE()	as crt_dttm	--// SYSDATE
+FROM WKS_SINGAPORE_REGIONAL_SELLOUT_BASEDIM BASE_DIM
+  LEFT JOIN WKS_SINGAPORE_RE_BASEDIM_VALUES RE_BASE_DIM
+         ON RE_BASE_DIM.CNTRY_CD = BASE_DIM.CNTRY_CD		--//          ON RE_BASE_DIM.cntry_cd = BASE_DIM.cntry_cd
+        AND RE_BASE_DIM.SELLOUT_DIM_KEY = BASE_DIM.SELLOUT_DIM_KEY		--//         AND RE_BASE_DIM.sellout_dim_key = BASE_DIM.sellout_dim_key
+  LEFT OUTER JOIN (SELECT DISTINCT CNTRY_CD,
                           sellout_dim_key,
                           mnth_id,
                           so_sls_qty,
                           so_sls_value,
                           so_avg_qty,
                           sales_value_list_price
-                   from wks_singapore_base_retail_excellence where mnth_id >= (select last_36mnths		
-                        from edw_vw_cal_retail_excellence_dim)::numeric		
-      and   mnth_id <= (select prev_mnth from edw_vw_cal_retail_excellence_dim)::numeric) cm		
-               on base_dim.cntry_cd = cm.cntry_cd		
-              and base_dim.month = cm.mnth_id		
-              and base_dim.sellout_dim_key = cm.sellout_dim_key		
-  left outer join
---last month
-wks_singapore_regional_sellout_act_lm lm
-               on base_dim.cntry_cd = lm.cntry_cd		         
-              and base_dim.month = lm.month		        
-              and base_dim.sellout_dim_key = lm.sellout_dim_key		
-  left outer join
---l3m
-wks_singapore_regional_sellout_act_l3m l3m
-               on base_dim.cntry_cd = l3m.cntry_cd		
-              and base_dim.month = l3m.month		
-              and base_dim.sellout_dim_key = l3m.sellout_dim_key		
-  left outer join
---l6m
-wks_singapore_regional_sellout_act_l6m l6m
-               on base_dim.cntry_cd = l6m.cntry_cd		
-              and base_dim.month = l6m.month		
-              and base_dim.sellout_dim_key = l6m.sellout_dim_key		
-  left outer join
---l12m
-wks_singapore_regional_sellout_act_l12m l12m
-               on base_dim.cntry_cd = l12m.cntry_cd		
-              and base_dim.month = l12m.month		
-              and base_dim.sellout_dim_key = l12m.sellout_dim_key		
-where base_dim.month >= (select last_18mnths		
-                        from edw_vw_cal_retail_excellence_dim)::numeric		
-and   base_dim.month <= (select prev_mnth from edw_vw_cal_retail_excellence_dim)::numeric		
-
+                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_36mnths
+                        FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
+      AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC) CM
+               ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
+              AND BASE_DIM.MONTH = CM.MNTH_ID		--//               AND BASE_DIM.Month = CM.mnth_id
+              AND BASE_DIM.SELLOUT_DIM_KEY = CM.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = CM.sellout_dim_key
+  LEFT OUTER JOIN
+--Last Month
+WKS_SINGAPORE_REGIONAL_SELLOUT_ACT_LM LM
+               ON BASE_DIM.CNTRY_CD = LM.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = LM.CNTRY_CD
+              AND BASE_DIM.MONTH = LM.MONTH		--//               AND BASE_DIM.month = LM.MONTH
+              AND BASE_DIM.SELLOUT_DIM_KEY = LM.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = LM.sellout_dim_key
+  LEFT OUTER JOIN
+--L3M
+WKS_SINGAPORE_REGIONAL_SELLOUT_ACT_L3M L3M
+               ON BASE_DIM.CNTRY_CD = L3M.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = L3M.CNTRY_CD
+              AND BASE_DIM.MONTH = L3M.MONTH		--//               AND BASE_DIM.month = L3M.MONTH
+              AND BASE_DIM.SELLOUT_DIM_KEY = L3M.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = L3M.sellout_dim_key
+  LEFT OUTER JOIN
+--L6M
+WKS_SINGAPORE_REGIONAL_SELLOUT_ACT_L6M L6M
+               ON BASE_DIM.CNTRY_CD = L6M.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = L6M.CNTRY_CD
+              AND BASE_DIM.MONTH = L6M.MONTH		--//               AND BASE_DIM.month = L6M.MONTH
+              AND BASE_DIM.SELLOUT_DIM_KEY = L6M.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = L6M.sellout_dim_key
+  LEFT OUTER JOIN
+--L12M
+WKS_SINGAPORE_REGIONAL_SELLOUT_ACT_L12M L12M
+               ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD
+              AND BASE_DIM.MONTH = L12M.MONTH		--//               AND BASE_DIM.month = L12M.MONTH
+              AND BASE_DIM.SELLOUT_DIM_KEY = L12M.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = L12M.sellout_dim_key
+WHERE BASE_DIM.MONTH >= (SELECT last_18mnths		--// WHERE BASE_DIM.month >= (SELECT last_18mnths
+                        FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
+AND   BASE_DIM.MONTH <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC		
 ),
 final as(
 select 		

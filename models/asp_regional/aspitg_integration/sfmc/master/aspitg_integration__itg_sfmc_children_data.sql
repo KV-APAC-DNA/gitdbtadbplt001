@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
-                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH';
+                    delete from {{this}} where cntry_cd = 'TH';
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd = 'PH'
                     {% elif var('crm_job_to_execute') == 'tw_crm_files' %}

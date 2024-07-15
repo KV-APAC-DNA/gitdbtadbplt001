@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_salesreturn
+    config:
+      alias: itg_salesreturn
+      tags: ["in_sdlitg_gtsales","ingestion"]
+  - name: inditg_integration__sdl_csl_salesreturn_raw
+    config:
+      alias: sdl_csl_salesreturn_raw
+      tags: ["in_sdlitg_gtsales","ingestion"]
+
+  - name: inditg_integration__itg_salesreturn_del
+    config:
+      alias: itg_salesreturn_del
+      tags: ["in_sdlitg_gtsales","ingestion"]
+
+  - name: inditg_integration__itg_salesreturn_dbrestore
+    config:
+        alias: itg_salesreturn_dbrestore
+        tags: ["in_sdlitg_gtsales","ingestion"]
+        
+  - name: inditg_integration__itg_salesreturn_del_hist_del
+    config:
+        alias: itg_salesreturn_del_hist_del
+        tags: ["in_sdlitg_gtsales","ingestion"]
+  - name: idnitg_integration__sdl_salesreturn_del_raw
+    config:
+      alias: sdl_salesreturn_del_raw
+      tags: ["in_sdlitg_gtsales","transformation"]

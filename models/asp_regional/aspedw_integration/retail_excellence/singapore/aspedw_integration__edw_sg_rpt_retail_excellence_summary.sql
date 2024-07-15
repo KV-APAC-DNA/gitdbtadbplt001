@@ -11,7 +11,7 @@ itg_query_parameters as (
 edw_sg_rpt_retail_excellence_summary as (
 SELECT FISC_YR,
        FISC_PER,
-       CLUSTER,
+       cluster,
        MARKET,
        data_src,
        FLAG_AGG_DIM_KEY,
@@ -93,7 +93,7 @@ AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DIS
                                  AND   country_code = 'SG')
 GROUP BY FISC_YR,
        FISC_PER,
-       CLUSTER,
+       cluster,
        MARKET,
        FLAG_AGG_DIM_KEY,
        data_src,

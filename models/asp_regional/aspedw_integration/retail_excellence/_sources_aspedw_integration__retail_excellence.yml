@@ -10,7 +10,10 @@ sources:
       identifier: false
     tables:
       - name: v_edw_kr_rpt_retail_excellence
-      - name: edw_vw_pop6_products
+      - name: edw_vw_pop6_products  
+      - name: v_rpt_pop6_perfectstore
+
+
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: idnedw_integration
@@ -20,6 +23,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_id_re
+      
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: pcfedw_integration
@@ -38,6 +42,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
+      
   - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysedw_integration
@@ -47,6 +52,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_my_re
+      
   - name: phledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: phledw_integration
@@ -56,6 +62,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_ph_rpt_retail_excellence
+      
   - name: sgpedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: sgpedw_integration
@@ -66,7 +73,6 @@ sources:
     tables:
       - name: v_edw_sg_rpt_retail_excellence
       - name: edw_vw_os_time_dim
-        
 
   - name: thaedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -77,6 +83,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence_th
+      
   - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnedw_integration
@@ -87,16 +94,7 @@ sources:
     tables:
       - name: v_edw_rpt_retail_excellence_cnpc
       - name: v_edw_rpt_retail_excellence_cnsc
-  - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: jpnedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: v_edw_rpt_retail_excellence
-      
+
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -106,11 +104,13 @@ sources:
       identifier: false
     tables:
       - name: edw_rpt_regional_sellout_offtake
+
       - name: edw_vw_cal_retail_excellence_dim
       - name: edw_calendar_dim
       - name: edw_company_dim
+      - name: edw_list_price
+      - name : edw_customer_attr_flat_dim
       
-
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
@@ -124,9 +124,36 @@ sources:
   - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: sgpitg_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
     tables:
       - name: itg_mds_sg_customer_hierarchy
+
+  - name: chnitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: chnitg_integration
+    tables:
+      - name: itg_mds_cn_otc_product_mapping
+      - name: itg_cs_re_store  
+      
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapjpnedw_integration
+    tables:
+      - name: edi_store_m
+      - name: edi_chn_m
+      - name: mt_sgmt        
+      - name: mt_prf       
+      - name: jp_inv_coverage_area_region_mapping    
+      - name: v_edw_rpt_retail_excellence    
+
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    tables:
+      - name: sdl_mds_jp_c360_eng_translation                  
+
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    tables:
+      - name: sdl_mds_mds_reds_market_msl   
+      - name : sdl_mds_mds_reds_market_msl_target

@@ -3,7 +3,9 @@
         materialized="incremental",
         incremental_strategy = "append",
         unique_key=["src_sys_cd"],
-        pre_hook="delete from {{this}} where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_inventory_fact') }}) and {{this}}.hist_flg = 'N';"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where src_sys_cd in (select distinct src_sys_cd from {{ ref('ntawks_integration__wks_edw_pos_inventory_fact') }}) and {{this}}.hist_flg = 'N';
+        {% endif %}"
     )
 }}
 
@@ -45,7 +47,7 @@ final as(
        src_sys_cd::varchar(30) as src_sys_cd,
        ctry_cd::varchar(10) as ctry_cd,
        current_timestamp()::timestamp_ntz(9) as crt_dttm,
-       current_timestamp()::timestamp_ntz(9) as upd_dttm
+       current_timestamp()::timestamp_ntz(9) as updt_dttm
     FROM source
 )
 select * from final

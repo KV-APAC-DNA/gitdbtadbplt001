@@ -5,7 +5,6 @@ models:
     config:
       alias: wks_tw_sales_incentive_nts
       tags: ["twsi_datamart_load","transformation"]
-  
   - name: ntawks_integration__wks_tw_sales_incentive_offtake
     config: 
       alias: wks_tw_sales_incentive_offtake
@@ -14,5 +13,23 @@ models:
     config: 
       alias: wks_edw_ims_sls_std
       tags: ["tw_ims_distributor_standard_sell_out","transformation"]
-
-  
+  - name: ntawks_integration__wks_edw_catg_sls_target
+    config:
+      alias: wks_edw_catg_sls_target
+      tags: ["j_kr_sales_target_am_sales_group_wrapper","transformation"]
+  - name: ntawks_integration__wks_itg_kr_sales_target_am_brand
+    config:
+      alias: wks_itg_kr_sales_target_am_brand
+      tags: ["j_kr_sales_target_am_brand_wrapper","transformation"]
+  - name: ntawks_integration__wks_itg_sales_store_master
+    config:
+      alias: wks_itg_sales_store_master
+      tags: ["mds_sdl_itg_load","transformation"]
+  - name: ntawks_integration__wks_itg_sales_cust_prod_master
+    config:
+      alias: wks_itg_sales_cust_prod_master
+      tags: ["mds_sdl_itg_load","transformation"]
+  - name: ntawks_integration__wks_edw_ims_sls
+    config:
+      alias: wks_edw_ims_sls
+      tags: ["na_trxn_ims","transformation"]
