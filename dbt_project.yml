@@ -435,6 +435,7 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
+
     north_asia:
       config:
         +enabled: true
@@ -568,7 +569,6 @@ models:
       chnwks_integration:
         +materialized: table
         +schema: CHNWKS_INTEGRATION        
-
     japan:
       config:
         +enabled: true
@@ -577,4 +577,3 @@ models:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
-
