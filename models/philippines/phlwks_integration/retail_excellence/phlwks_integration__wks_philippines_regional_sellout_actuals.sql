@@ -2,11 +2,8 @@
 with wks_philippines_base_retail_excellence as (
     select * from {{ ref('phlwks_integration__wks_philippines_base_retail_excellence')}}
 ),
-/*edw_vw_cal_retail_excellence_dim as (
-    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
-),*/
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ ref('phledw_integration__v_edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 wks_philippines_regional_sellout_basedim as (
     select * from {{ ref('phlwks_integration__wks_philippines_regional_sellout_basedim')}}

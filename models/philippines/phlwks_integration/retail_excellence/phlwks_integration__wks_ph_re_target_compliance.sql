@@ -1,6 +1,6 @@
 with  wks_mds_reds_market_msl_target_ph as
 (
-    select * from {{ ref('phlwks_integration__wks_mds_reds_market_msl_target_ph') }}
+    select * from {{ ref('aspwks_integration_wks_mds_reds_market_msl_target_final') }}
 ),
 
 ph_rpt_retail_excellence_sop as 
@@ -27,7 +27,7 @@ ph_rpt_retail_excellence_sop as
                 ) a
         group by 1,2)b 
     inner join 
-    (select * from wks_mds_reds_market_msl_target_ph
+    (select * from wks_mds_reds_market_msl_target_ph where UPPER(market) = 'PHILIPPINES'
      ) mds 
         on ( fisc_per >= mds.start_month_id and fisc_per <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
     group by 1,2,3 
