@@ -1,6 +1,7 @@
 --Import CTE
 with v_edw_sg_rpt_retail_excellence as (
     select * from {{ ref('sgpedw_integration__edw_sg_rpt_retail_excellence') }}
+
 ),
 --Logical CTE
 
@@ -193,3 +194,6 @@ from   final
 )
 --Final select
 select * from sg_rpt_retail_excellence_summary_base 
+)
+
+
