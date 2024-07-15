@@ -4,13 +4,17 @@ with wks_ph_rpt_retail_excellence_sop as
 (
     select * from {{ ref('phlwks_integration__wks_ph_rpt_retail_excellence_sop' )}}
 ),
+wks_ph_re_target_compliance as 
+(
+    select * from {{ ref('phlwks_integration__wks_ph_re_target_compliance' )}}
+),
 
 --final cte
 
 edw_ph_rpt_retail_excellence as 
 (
     SELECT FISC_YR,
-        FISC_PER,
+        SOP.FISC_PER,
         "cluster",
         MARKET,
         DATA_SRC,
@@ -84,7 +88,7 @@ edw_ph_rpt_retail_excellence as
         PKA_VARIANT_DESC,
         PKA_SUB_VARIANT_DESC,
         GLOBAL_PRODUCT_FRANCHISE,
-        GLOBAL_PRODUCT_BRAND,
+        SOP.GLOBAL_PRODUCT_BRAND,
         GLOBAL_PRODUCT_SUB_BRAND,
         GLOBAL_PRODUCT_VARIANT,
         GLOBAL_PRODUCT_SEGMENT,
@@ -125,7 +129,11 @@ edw_ph_rpt_retail_excellence as
         P6M_SALES_FLAG,
         P12M_SALES_FLAG,
         MDP_FLAG,
-        TARGET_COMPLAINCE,
+        --TARGET_COMPLAINCE,
+        CASE 
+            WHEN (MDP_FLAG = 'Y' AND UPPER(SOP.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLAINCE
+            ELSE 100
+            END AS TARGET_COMPLAINCE,
         LIST_PRICE,
         TOTAL_SALES_LM,
         TOTAL_SALES_P3M,
@@ -181,7 +189,8 @@ edw_ph_rpt_retail_excellence as
         COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
         COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
         SYSDATE() AS CRTD_DTTM
-    FROM WKS_PH_RPT_RETAIL_EXCELLENCE_SOP
+    FROM WKS_PH_RPT_RETAIL_EXCELLENCE_SOP SOP
+    LEFT JOIN wks_ph_re_target_compliance TRGT_CMP on (SOP.fisc_per=TRGT_CMP.fisc_per and UPPER(SOP.global_product_brand)=UPPER(TRGT_CMP.global_product_brand))
 ),
 
 final as 

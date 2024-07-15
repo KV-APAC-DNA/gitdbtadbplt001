@@ -5,11 +5,8 @@ with itg_re_msl_input_definition as (
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim')}}
 ),
-/*edw_vw_cal_retail_excellence_dim as (
-    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
-),*/
 edw_vw_cal_retail_excellence_dim as (
-    select * from {{ ref('phledw_integration__v_edw_vw_cal_retail_excellence_dim') }}
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_ph_lav_customer as (
     select * from {{ ref('phlitg_integration__itg_mds_ph_lav_customer')}}
