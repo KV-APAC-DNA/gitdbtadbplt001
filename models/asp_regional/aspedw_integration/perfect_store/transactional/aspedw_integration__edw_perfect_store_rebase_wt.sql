@@ -68,7 +68,7 @@ union_1 as
         prod_hier_l8,
         prod_hier_l9,
         ques_type,
-        y_n_flag as "y/n_flag",
+        "y/n_flag"as "y/n_flag",
         priority_store_flag,
         add_info,
         response,
