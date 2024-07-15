@@ -88,15 +88,15 @@ sources:
     tables:
       - name: v_edw_rpt_retail_excellence_cnpc
       - name: v_edw_rpt_retail_excellence_cnsc
-  - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: jpnedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: v_edw_rpt_retail_excellence
+  # - name: jpnedw_integration
+  #   database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+  #   schema: jpnedw_integration
+  #   quoting:
+  #     database: false
+  #     schema: false
+  #     identifier: false
+  #   tables:
+  #     - name: v_edw_rpt_retail_excellence
 
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -139,7 +139,25 @@ sources:
     schema: chnitg_integration
     tables:
       - name: itg_mds_cn_otc_product_mapping
-      - name: itg_cs_re_store      
+      - name: itg_cs_re_store     
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapjpnedw_integration
+    tables:
+      - name: edi_store_m
+      - name: edi_chn_m
+      - name: mt_sgmt        
+      - name: mt_prf       
+      - name: jp_inv_coverage_area_region_mapping    
+      - name: v_edw_rpt_retail_excellence    
+
+
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    tables:
+      - name: sdl_mds_jp_c360_eng_translation                  
 
 
   - name: ntaedw_integration

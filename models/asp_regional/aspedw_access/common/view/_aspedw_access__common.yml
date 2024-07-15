@@ -164,6 +164,10 @@ models:
       alias: edw_inventory_fact
       tags: ["j_sap_bw_trxn_inventory_wrapper","transformation"]
   - name: aspedw_access__edw_invoice_fact
-    config:
-      alias: edw_invoice_fact
+    config: 
+      alias: edw_invoice_fact  
       tags: ["J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
+  - name: aspedw_access__v_edw_otif_consumer_attr
+    config: 
+      alias: edw_otif_consumer_attr  
+      tags: ["otif_etl_framework","transformation"]
