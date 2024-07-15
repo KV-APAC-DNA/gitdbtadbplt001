@@ -112,8 +112,10 @@ sources:
       - name: edw_calendar_dim
       - name: edw_company_dim
       - name: edw_list_price
+      - name : edw_customer_attr_flat_dim
+      
 
- 
+
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
@@ -123,6 +125,8 @@ sources:
       identifier: false
     tables:
       - name: itg_re_msl_input_definition
+      - name: mds_reds_market_msl_target
+
 
   - name: sgpitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -155,5 +159,16 @@ sources:
     tables:
       - name: sdl_mds_jp_c360_eng_translation                  
 
- 
 
+  - name: ntaedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: v_rpt_pop6_perfectstore
+
+  
+      
