@@ -1,3 +1,9 @@
+{{
+    config
+    (
+        pre_hook = "{{build_itg_day_cls_stock_fact_temp()}}"
+    )
+}}
 with sdl_csl_productwisestock as
 (
     select * from {{ source('indsdl_raw', 'sdl_csl_productwisestock') }}
@@ -78,7 +84,7 @@ WHERE prod.distcode = cust.customer_code
     FROM sdl_csl_productwisestock
     WHERE to_date(createddate) > (
         SELECT to_date(MAX(createddate))
-        FROM itg_DAY_CLS_STOCK_FACT
+        FROM itg_day_cls_stock_fact
         )
     ORDER BY createddate ASC
     )

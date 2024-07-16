@@ -8,4 +8,4 @@ sources:
       identifier: false
     tables:
     - name: sdl_india_mds_log
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
