@@ -289,7 +289,7 @@ SELECT TARGET.FISC_YR :: numeric(18,0)  AS FISC_YR,
 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL ( + )) = UPPER(CDDES_SUBCHNL.CODE_DESC)		--// 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL (+)) = UPPER(CDDES_SUBCHNL.CODE_DESC) // 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL ( || )) = UPPER(CDDES_SUBCHNL.CODE_DESC)
 			  AND   CODES_SEGMENT.CODE_TYPE ( + ) = 'Customer Segmentation Key'		--// 			  AND   CODES_SEGMENT.code_type (+) = 'Customer Segmentation Key' // 			  AND   CODES_SEGMENT.code_type ( || ) = 'Customer Segmentation Key'
 			  AND   CODES_SEGMENT.CODE ( + ) = ECSD.SEGMT_KEY)		--// 			  AND   CODES_SEGMENT.CODE (+) = ECSD.segmt_key) // 			  AND   CODES_SEGMENT.CODE ( || ) = ECSD.segmt_key)
-		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID ,'0')		--// 		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')
+		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')		--// 		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')
 
       ----------------product hierarchy------------------------------
         LEFT JOIN (SELECT * FROM product_heirarchy
@@ -542,7 +542,7 @@ FROM (SELECT ACTUAL.YEAR :: numeric(18,0)  AS YEAR,		--// INTEGER // FROM (SELEC
 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL ( + )) = UPPER(CDDES_SUBCHNL.CODE_DESC)		--// 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL (+)) = UPPER(CDDES_SUBCHNL.CODE_DESC) // 			  AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL ( || )) = UPPER(CDDES_SUBCHNL.CODE_DESC)
 			  AND   CODES_SEGMENT.CODE_TYPE ( + ) = 'Customer Segmentation Key'		--// 			  AND   CODES_SEGMENT.code_type (+) = 'Customer Segmentation Key' // 			  AND   CODES_SEGMENT.code_type ( || ) = 'Customer Segmentation Key'
 			  AND   CODES_SEGMENT.CODE ( + ) = ECSD.SEGMT_KEY)		--// 			  AND   CODES_SEGMENT.CODE (+) = ECSD.segmt_key) // 			  AND   CODES_SEGMENT.CODE ( || ) = ECSD.segmt_key)
-		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID,'0')		--// 		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')
+		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')		--// 		WHERE RANK = 1) CUSTOMER ON LTRIM(ACTUAL.SOLD_TO_CODE,'0') = LTRIM(CUSTOMER.SAP_CUST_ID (+),'0')
 
       ----------------product hierarchy------------------------------
         LEFT JOIN (SELECT * FROM product_heirarchy
