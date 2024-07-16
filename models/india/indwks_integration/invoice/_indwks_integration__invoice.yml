@@ -8,15 +8,15 @@ models:
   - name: indwks_integration__wks_cg_clstk_ds
     config:
       alias: wks_cg_clstk_ds
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: indwks_integration__wks_cg_retail_curr_prev
     config:
       alias: wks_cg_retail_curr_prev
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: indwks_integration__wks_cg_retail_ds
     config:
       alias: wks_cg_retail_ds
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: indwks_integration__wks_csl_scheme_header
     config:
       alias: wks_csl_scheme_header

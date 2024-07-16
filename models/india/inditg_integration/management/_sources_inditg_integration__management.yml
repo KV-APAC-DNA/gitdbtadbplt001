@@ -8,4 +8,4 @@ sources:
       identifier: false
     tables:
     - name: sdl_rtbl_idtmanagementupload
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]

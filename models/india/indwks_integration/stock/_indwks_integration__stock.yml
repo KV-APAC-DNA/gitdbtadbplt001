@@ -5,3 +5,8 @@ models:
     config:
       alias: wks_day_cls_stock_fact
       tags: ["in_daily_closing_stock_dm","transformation"]
+
+  - name: indwks_integration__day_cls_stock_fact
+    config:
+      alias: day_cls_stock_fact
+      tags: ["in_daily_closing_stock_dm","transformation"]

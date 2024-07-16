@@ -47,3 +47,7 @@ models:
     config:
       alias: v_rpt_ka_sales
       tags: ["india_views","transformation"]
+  - name: indedw_integration__v_pf_sales_stock
+    config:
+      alias: v_pf_sales_stock
+      tags: ["india_views","transformation"]

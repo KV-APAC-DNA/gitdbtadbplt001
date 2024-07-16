@@ -182,9 +182,9 @@ sources:
       - name: sdl_mds_in_key_accounts_mapping
         tags: ["in_ecom_datamart","transformation"]
       - name: sdl_csl_scheme_header
-        tags: ["m_wrp_in_sdlitg_master","transformation"]
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
       - name: sdl_ittarget
-        tags: ["m_wrp_in_sdlitg_master","transformation"]
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
       - name: sdl_mds_in_sss_weights
         tags: ["in_sss_scorecard_mds_refresh","ingestion"]
         tests:
@@ -257,14 +257,14 @@ sources:
       # - name: sdl_mds_in_sss_zonal_rtr_program_mapping
       #   tags: ["in_sss_zonal_datamart","transformation"]
       - name: sdl_csl_rdssmweeklytarget_output
-        tags: ["m_wrp_in_sdlitg_master","transformation"]
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
 
       - name: sdl_mds_in_ps_targets
         tags: ["in_perfect_store_mds_itg_refresh","transformation"]
       - name: sdl_lks_businesscalender
-        tags: ["m_wrp_in_sdlitg_master","transformation"]
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
       - name: sdl_csl_tbl_schemewise_apno
-        tags: ["m_wrp_in_sdlitg_master","transformation"]
+        tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
       - name: sdl_winculum_salesreturn
         tags: ["in_sdlitg_daily","transformation"]
 

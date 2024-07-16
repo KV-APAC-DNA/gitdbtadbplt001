@@ -15,15 +15,6 @@
 with day_cls_stock_fact as 
 (
     select * from {{ ref('indwks_integration__day_cls_stock_fact') }}
-    ),
-    final as 
-    (
-        SELECT 
-                distcode::varchar(50) as customer_code,
-                        transdate::timestamp_ntz(9) as stock_date,
-                                prdcode::varchar(100) as product_code,
-                                        salclsstock::number(18,0) as salclsstock,
-                                        }}
 ),
 final as 
 (

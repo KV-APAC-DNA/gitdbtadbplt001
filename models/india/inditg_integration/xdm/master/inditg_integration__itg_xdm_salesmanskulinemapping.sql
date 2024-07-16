@@ -1,7 +1,7 @@
 {{
     config
     (
-        materializede="incremental",
+        materialized="incremental",
         incremental_strategy="delete+insert",
         unique_key=["distrcode","salesmancode","motherskucode"]
     )

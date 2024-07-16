@@ -8,9 +8,9 @@ models:
   - name: inditg_integration__itg_businesscalender
     config:
       alias: itg_businesscalender
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
 
   - name: inditg_integration__itg_tbl_schemewise_apno
     config:
       alias: itg_tbl_schemewise_apno
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
