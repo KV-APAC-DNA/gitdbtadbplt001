@@ -435,6 +435,7 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
+
     north_asia:
       config:
         +enabled: true
@@ -568,13 +569,22 @@ models:
       chnwks_integration:
         +materialized: table
         +schema: CHNWKS_INTEGRATION        
-
     japan:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      jpnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNEDW_INTEGRATION
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
-
+      jpnwks_integration:
+        +materialized: table
+        +schema: JPNWKS_INTEGRATION
+      jpnedw_access:
+        +materialized: view
+        +schema: JPNEDW_ACCESS
+      

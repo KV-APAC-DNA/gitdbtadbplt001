@@ -23,7 +23,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_id_re
-      
+
   - name: pcfedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: pcfedw_integration
@@ -42,7 +42,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
-      
+
   - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: mysedw_integration
@@ -52,7 +52,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_my_re
-      
+
   - name: phledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: phledw_integration
@@ -62,7 +62,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_ph_rpt_retail_excellence
-      
+
   - name: sgpedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: sgpedw_integration
@@ -83,7 +83,7 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence_th
-      
+
   - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnedw_integration
@@ -110,7 +110,7 @@ sources:
       - name: edw_company_dim
       - name: edw_list_price
       - name : edw_customer_attr_flat_dim
-      
+
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspitg_integration
@@ -157,3 +157,4 @@ sources:
     tables:
       - name: sdl_mds_mds_reds_market_msl   
       - name : sdl_mds_mds_reds_market_msl_target
+
