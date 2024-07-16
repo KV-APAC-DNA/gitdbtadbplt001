@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_pf_retail_mth_ds_136843_yearend_2021
+      tags: ["m_wrp_in_sdlitg_tblf","ingestion"]
+    - name: itg_pf_retail_mth_ds_132641_jul_yearend_2021
+      tags: ["m_wrp_in_sdlitg_tblf","ingestion"]
+    - name: itg_pf_retail_mth_ds_132641_aug_yearend_2021
+      tags: ["m_wrp_in_sdlitg_tblf","ingestion"]
