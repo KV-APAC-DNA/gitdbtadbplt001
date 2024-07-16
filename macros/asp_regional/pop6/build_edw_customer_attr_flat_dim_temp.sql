@@ -1,17 +1,17 @@
 {% macro build_edw_customer_attr_flat_dim_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                ntaedw_integration.edw_customer_attr_flat_dim_temp
+                aspedw_integration.edw_customer_attr_flat_dim_temp
             {% else %}
-                {{schema}}.ntaedw_integration__edw_customer_attr_flat_dim_temp
+                {{schema}}.aspedw_integration__edw_customer_attr_flat_dim_temp
     {% endif %}
     {% endset %}
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    ntaedw_integration.edw_customer_attr_flat_dim
+                    aspedw_integration.edw_customer_attr_flat_dim
                 {% else %}
-                    {{schema}}.ntaedw_integration__edw_customer_attr_flat_dim
+                    {{schema}}.aspedw_integration__edw_customer_attr_flat_dim
                 {% endif %}
 (       aw_remote_key varchar(100),
         cust_nm varchar(100),
@@ -44,9 +44,9 @@
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            ntaedw_integration.edw_customer_attr_flat_dim
+            aspedw_integration.edw_customer_attr_flat_dim
         {% else %}
-            {{schema}}.ntaedw_integration__edw_customer_attr_flat_dim
+            {{schema}}.aspedw_integration__edw_customer_attr_flat_dim
         {% endif %};
     {% endset %}
 
