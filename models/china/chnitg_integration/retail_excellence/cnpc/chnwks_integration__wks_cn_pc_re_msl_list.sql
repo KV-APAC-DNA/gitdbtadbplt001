@@ -1,48 +1,57 @@
 --import cte
 with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
-    select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim')}}
+),
+edw_vw_cal_retail_excellence_dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_master_mother_code_mapping as (
     select * from {{ source('aspitg_integration', 'itg_mds_master_mother_code_mapping') }}
 ),
+cnpc_regional_sellout_mapped_sku_cd as (
+    select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_mapped_sku_cd') }}
+),
+cnpc_regional_sellout_ean as (
+    select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_ean') }}
+),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
 ),
-wks_singapore_base_retail_excellence as (
+wks_china_personal_care_base_retail_excellence as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_base_retail_excellence') }}
 ),
 
 cn_pc_re_msl_list
 as
 (
-   SELECT distinct final.fisc_yr,
+   SELECT distinct final.fisc_yr as fisc_yr,
        final.JJ_MNTH_ID AS fisc_per,
        final.market AS Market,
        nvl(final.store_type,final.retail_environment) AS Retail_Environment,
 	   final.soldto_code as soldto_code,
        final.Distributor_Code AS Distributor_Code,
-       FINAL.Distributor_Name AS Distributor_Name,
-       final.STORE_Code AS Store_Code,
-       FINAL.STORE_Name AS STORE_NAME,
-       final.store_type AS Store_Type,
-       --final.pka_product_key_description AS sku_description,
+       final.distributor_name as distributor_name,
+       final.store_code as store_code,
+       final.store_name as store_name,
+       final.store_type as store_type,
+       --final.pka_product_key_description as sku_description,
 	   --final.ean_code as product_code,
-	   --replace by ean and use mother code as PRODUCT_CODE
+	   --replace by ean and use mother code as product_code
 	   final.ean as ean,
-	   nvl(final.mother_code,'NA') as product_code,
+	   nvl(final.mother_code,'na') as product_code,
 	   final.msl_product_desc as product_name,
 	   final.mapped_sku_code as mapped_sku_code,
-       final.region AS Region,
-       final.Zone,
-       final.City,
+       final.region as region,
+       final.zone,
+       final.city,
        --final.province,
-       final.Data_Src,
-   --    final.pka_product_key_description AS PRODUCT_CODE,
-       'China Personal Care' AS prod_hier_l1,
-       SYSDATE AS Created_date
+       final.data_src,
+   --    final.pka_product_key_description as product_code,
+       'china personal care' as prod_hier_l1,
+       sysdate() as created_date
 FROM (SELECT distinct base.start_date,
              base.end_date,
              base.market,
@@ -54,8 +63,8 @@ FROM (SELECT distinct base.start_date,
 	         noo.ean,
 			 base.mother_code,
              noo.Data_Src,
-             noo.CNTRY_CD,
-             noo.CNTRY_NM,
+             noo.cntry_cd,
+             noo.cntry_nm,
 			 noo.soldto_code,
              noo.distributor_code,
              noo.distributor_name,
@@ -87,18 +96,18 @@ FROM (SELECT distinct base.start_date,
                             upper(retail_environment) as retail_environment,
 							ltrim(sku_unique_identifier,'0') as ean_code
                             --upper(sku_unique_identifier) as product_key 
-                     FROM rg_itg.Itg_re_msl_input_definition
+                     FROM itg_re_msl_input_definition
                      WHERE market = 'China Personal Care') msl
                     LEFT JOIN 
                        (SELECT DISTINCT fisc_yr, cal_mo_1,
                                         (SUBSTRING(FISC_PER,1,4) ||SUBSTRING(FISC_PER,6,7))::NUMERIC AS JJ_MNTH_ID
-                         FROM rg_edw.edw_calendar_dim
-                         WHERE jj_mnth_id >= (select last_17mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
-						   and jj_mnth_id <= (select last_2mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric  
+                         FROM edw_calendar_dim
+                         WHERE jj_mnth_id >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+						   and jj_mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric  
                         ) cal
-                     ON start_date <= cal.JJ_MNTH_ID
-                    AND END_DATE >= cal.JJ_MNTH_ID
-					LEFT JOIN  rg_itg.itg_mds_master_mother_code_mapping mc on ltrim(msl.ean_code,'0') = ltrim(mc.sku_unique_identifier,'0')
+                     on start_date <= cal.jj_mnth_id
+                    and end_date >= cal.jj_mnth_id
+					LEFT JOIN  itg_mds_master_mother_code_mapping mc on ltrim(msl.ean_code,'0') = ltrim(mc.sku_unique_identifier,'0')
              ) base
         LEFT JOIN (SELECT distinct Data_Src,
                           'CN' as CNTRY_CD,
@@ -117,17 +126,43 @@ FROM (SELECT distinct base.start_date,
 						  --use mother code as per latest changes - June'2024
 						  --Mother_code,
 						  product_code,
-						  MSL_PRODUCT_DESC,
-						  MAPPED_SKU_CODE
-                   FROM CN_WKS.WKS_CNPC_ALL_RETAIL_EXCELLENCE
-                  ) NOO
+						  msl_product_desc,
+						  mapped_sku_code
+                   from wks_china_personal_care_base_retail_excellence
+                  ) noo
                ON upper(noo.store_type) = upper(base.Retail_Environment)
               --AND noo.pka_product_key_description = base.product_key
 			   --AND noo.EAN = base.EAN_code
 			     AND noo.product_code = base.mother_code
-		LEFT JOIN CN_WKS.WKS_CNPC_REGIONAL_SELLOUT_MAPPED_SKU_CD pd on base.EAN_code = pd.ean 
-		LEFT JOIN CN_WKS.WKS_CNPC_REGIONAL_SELLOUT_EAN ed
+		left join cnpc_regional_sellout_mapped_sku_cd pd on base.ean_code = pd.ean 
+		left join cnpc_regional_sellout_ean ed
 ON --upper(main.PKA_PRODUCT_KEY_DESC)=PD.PKA_PRODUCT_KEY_DESCRIPTION
 upper(base.mother_code) = ed.mother_code  
               ) final 
+
+),
+msl_final as 
+(
+select fisc_yr :: numeric(18,0) as fisc_yr,
+        fisc_per :: numeric(18,0) as fisc_per,
+        market :: varchar(50) as market,
+        retail_environment :: varchar(382) as retail_environment,
+        soldto_code :: varchar(255) as soldto_code,
+        distributor_code :: varchar(100) as distributor_code,
+        distributor_name :: varchar(356) as distributor_name,
+        store_code :: varchar(100) as store_code,
+        store_name :: varchar(601) as store_name,
+        store_type :: varchar(382) as store_type,
+        product_code :: varchar(100) as product_code,
+        product_name :: varchar(300) as product_name,
+        mapped_sku_code :: varchar(40) as mapped_sku_code,
+        region :: varchar(150) as region,
+        zone :: varchar(150) as zone,
+        city :: varchar(150) as city,
+        data_src :: varchar(14) as data_src,
+        prod_hier_l1 :: varchar(19) as prod_hier_l1,
+        created_date :: timestamp without time zone as created_date
+        from cn_pc_re_msl_list
 )
+
+select * from msl_final
