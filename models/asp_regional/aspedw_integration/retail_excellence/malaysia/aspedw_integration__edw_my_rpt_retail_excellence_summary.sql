@@ -10,7 +10,7 @@ itg_query_parameters as (
 my_edw_rpt_retail_excellence_summary as (
 SELECT FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        data_src,
        FLAG_AGG_DIM_KEY,
@@ -42,7 +42,7 @@ SELECT FISC_YR,
        CASE WHEN P6M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P6M_SALES_FLAG,
        CASE WHEN P12M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P12M_SALES_FLAG,
        CASE WHEN MDP_FLAG = 1 THEN 'Y' ELSE 'N' END  AS MDP_FLAG,
-       TARGET_COMPLAINCE,
+       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,--TARGET_COMPLAINCE,
 	   SUM(SALES_VALUE)AS SALES_VALUE,
        SUM(SALES_QTY)AS SALES_QTY,
        TRUNC(AVG(SALES_QTY)) AS AVG_SALES_QTY,		--// AVG
@@ -92,7 +92,7 @@ AND   UPPER(RETAIL_ENVIRONMENT)||'-'||UPPER(SELL_OUT_CHANNEL) NOT IN (SELECT DIS
                                  AND   country_code = 'MY')
 GROUP BY FISC_YR,
        FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        FLAG_AGG_DIM_KEY,
        data_src,
@@ -132,7 +132,7 @@ final as(
     select
     fisc_yr::VARCHAR(11) as fisc_yr
     ,fisc_per::numeric(18,0) as fisc_per        
-    ,cluster::VARCHAR(100) as cluster
+    ,"cluster"::VARCHAR(100) as "cluster"
     ,market::VARCHAR(50) as market  
     ,data_src::VARCHAR(14) as   data_src    
     ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    
@@ -164,7 +164,7 @@ final as(
     ,p6m_sales_flag::VARCHAR(1) as  p6m_sales_flag  
     ,p12m_sales_flag::VARCHAR(1) as p12m_sales_flag
     ,mdp_flag::VARCHAR(1) as    mdp_flag    
-    ,target_complaince::numeric(18,0) as target_complaince      
+    ,target_complaince::numeric(38,6) as target_complaince      
     ,sales_value::NUMERIC(38,6) as  sales_value
     ,sales_qty::NUMERIC(38,6) as sales_qty      
     ,avg_sales_qty::NUMERIC(38,6) as avg_sales_qty      
