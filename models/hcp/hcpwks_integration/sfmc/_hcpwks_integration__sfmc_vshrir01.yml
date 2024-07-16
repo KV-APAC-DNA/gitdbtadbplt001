@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__wks_sfmc_hcp_dim
+    config:
+        alias: wks_sfmc_hcp_dim
+        tags: ["in_sfmc_edw_load","transformation"]

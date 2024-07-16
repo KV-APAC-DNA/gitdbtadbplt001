@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_call_fact
+    config:
+      alias: edw_hcp360_call_fact
+      tags: ["in_hcp360_call_fact","transformation"]
