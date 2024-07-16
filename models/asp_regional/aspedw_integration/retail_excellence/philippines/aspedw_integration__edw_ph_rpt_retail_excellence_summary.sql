@@ -127,7 +127,8 @@ ph_edw_rpt_retail_excellence_summary as (
         p3m_sales_flag,
         p6m_sales_flag,
         p12m_sales_flag,
-        mdp_flag
+        mdp_flag,
+        target_complaince
 ),
 
 final as (

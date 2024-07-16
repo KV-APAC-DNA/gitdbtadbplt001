@@ -143,6 +143,7 @@ transformation as
          FLAGS.GLOBAL_PRODUCT_CATEGORY,
          FLAGS.GLOBAL_PRODUCT_SUBCATEGORY,
          (CASE WHEN MDP_FLAG = 'Y' THEN 1 ELSE 0 END),
+         TARGET_COMPLAINCE,
          STORE_CODE,
          PRODUCT_CODE
 )
