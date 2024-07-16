@@ -175,8 +175,8 @@ FROM (SELECT DISTINCT CNTRY_CD,
              PKA_PRODUCT_KEY,
              PKA_PRODUCT_KEY_DESCRIPTION
              FROM WKS_TH_BASE_RETAIL_EXCELLENCE
-             --changed to last_26mnths
-			 where MNTH_ID >= (select last_36mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+             --CHANGED MONTH LOGIC 36 -> 27
+			 where MNTH_ID >= (select last_27mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	           and mnth_id <= (select  prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric) RE_BASE_DIM
          ON RE_BASE_DIM.cntry_cd = BASE_DIM.cntry_cd
         AND RE_BASE_DIM.sellout_dim_key = BASE_DIM.sellout_dim_key
@@ -188,8 +188,8 @@ FROM (SELECT DISTINCT CNTRY_CD,
                           avg_qty,
                           SALES_VALUE_LIST_PRICE
                    FROM WKS_TH_BASE_RETAIL_EXCELLENCE
-                   ----changed to last_26mnths
-				   where MNTH_ID >= (select last_36mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+                   --CHANGED MONTH LOGIC 36 -> 27
+				   where MNTH_ID >= (select last_27mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	           and mnth_id <= (select  prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric) CM
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
               AND BASE_DIM.Month = CM.mnth_id
@@ -218,7 +218,8 @@ WKS_TH_REGIONAL_SELLOUT_ACT_L12M L12M
                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD
               AND BASE_DIM.month = L12M.MONTH
               AND BASE_DIM.sellout_dim_key = L12M.sellout_dim_key
-WHERE  BASE_DIM.month >= (select last_18mnths from edw_vw_cal_Retail_excellence_Dim)
+              --CHANGED MONTH LOGIC 18 -> 16
+WHERE  BASE_DIM.month >= (select last_16mnths from edw_vw_cal_Retail_excellence_Dim)
   and BASE_DIM.month <= (select prev_mnth from edw_vw_cal_Retail_excellence_Dim)
 
 ),

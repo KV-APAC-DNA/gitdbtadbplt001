@@ -1,4 +1,5 @@
 --Import CTE
+
 with edw_rpt_id_re as (
     select * from {{ ref('idnedw_integration__edw_rpt_id_re') }}
 ),

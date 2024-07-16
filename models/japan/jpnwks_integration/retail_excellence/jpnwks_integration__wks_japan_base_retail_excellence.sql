@@ -1,9 +1,8 @@
---import cte
-with edw_rpt_regional_sellout_offtake as (
+with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
- -- final cte
-japan_base_retail_excellence as (
+
+transformation as (
     SELECT  COUNTRY_CODE AS CNTRY_CD,
         MD5(NVL (DISTRIBUTOR_CODE,'DC') ||NVL (DISTRIBUTOR_NAME,'DN') ||NVL (STORE_CODE,'SC') ||NVL (SKU_CODE,'SKU') ||nvl(SOLD_TO_CODE,'STC')||NVL (STORE_NAME,'Store_name')
 ||NVL (CUSTOMER_PRODUCT_DESC,'CPD') ||NVL (SAP_PARENT_CUSTOMER_KEY,'SPCK') ||NVL (SAP_PARENT_CUSTOMER_DESCRIPTION,'SPSCD') 
@@ -59,7 +58,7 @@ japan_base_retail_excellence as (
        CAST(SUM(SELLOUT_SALES_VALUE) AS NUMERIC (38,6))AS SO_SLS_VALUE,
        CAST(AVG(SELLOUT_SALES_QUANTITY) AS DECIMAL(38,6)) AS SO_AVG_QTY,
        SUM(SALES_VALUE_LIST_PRICE)AS SALES_VALUE_LIST_PRICE,
-	   SYSDATE () AS CRT_DTTM
+	   SYSDATE() AS CRT_DTTM
 FROM (SELECT COUNTRY_CODE,
              COUNTRY_NAME,
              DATA_SOURCE,
@@ -150,7 +149,7 @@ FROM (SELECT COUNTRY_CODE,
              SELLOUT_SALES_QUANTITY,
              SELLOUT_SALES_VALUE,
              sellout_value_list_price as SALES_VALUE_LIST_PRICE
-      FROM edw_rpt_regional_sellout_offtake
+      FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE 
        WHERE COUNTRY_NAME='Japan'
        --and MNTH_ID >= (select last_36mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)
 	  --and mnth_id <= (select prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)
@@ -196,58 +195,13 @@ GROUP BY  COUNTRY_CODE,
          SKU_CODE,
          PKA_PRODUCT_KEY,
          PKA_PRODUCT_KEY_DESCRIPTION
-) ,
+),
 
-final as 
-( 
-    select 
-    cntry_cd::varchar(2) AS cntry_cd,
-    sellout_dim_key::varchar(32) as sellout_dim_key,
-    cntry_nm::varchar(5) as cntry_nm,
-    data_source::varchar(14) as data_source,
-    distributor_code::varchar(100) as distributor_code,
-    distributor_name::varchar(356) as distributor_name,
-    store_code::varchar(100) as store_code,
-    store_name::varchar(601) as store_name,
-    sold_to_code::varchar(255) as sold_to_code,
-    sku_code::varchar(150) as sku_code,
-    year::numeric(18,0) AS year,
-    mnth_id::varchar(23) AS mnth_id,
-    customer_product_desc::varchar(300) as customer_product_desc,
-    sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
-    sap_parent_customer_description::varchar(75) as sap_parent_customer_description,
-    sap_customer_channel_key::varchar(12) as sap_customer_channel_key,
-    sap_customer_channel_description::varchar(75) as sap_customer_channel_description,
-    sap_customer_sub_channel_key::varchar(12) as sap_customer_sub_channel_key,
-    sap_go_to_mdl_key::varchar(12) as sap_go_to_mdl_key,
-    sap_go_to_mdl_description::varchar(75) as sap_go_to_mdl_description,
-    sap_banner_key::varchar(12) as sap_banner_key,
-    sap_banner_description::varchar(75) AS sap_banner_description,
-    sap_banner_format_key::varchar(12) AS sap_banner_format_key,
-    sap_banner_format_description::varchar(75) AS sap_banner_format_description,
-    retail_environment::varchar(150) AS retail_environment,
-    region::varchar(150) AS region,
-    zone_or_area::varchar(150) AS zone_or_area,
-    customer_segment_key::varchar(12) AS customer_segment_key,
-    customer_segment_description::varchar(50) AS customer_segment_description,
-    global_product_franchise::varchar(30) AS global_product_franchise,
-    global_product_brand::varchar(30) AS global_product_brand,
-    global_product_sub_brand::varchar(100) AS global_product_sub_brand,
-    global_product_variant::varchar(100) AS global_product_variant,
-    global_product_segment::varchar(50) AS global_product_segment,
-    global_product_subsegment::varchar(100) AS global_product_subsegment,
-    global_product_category::varchar(50) AS global_product_category,
-    global_product_subcategory::varchar(50) AS global_product_subcategory,
-    global_put_up_description::varchar(100) AS global_put_up_description,
-    pka_product_key::varchar(68) AS pka_product_key,
-    pka_product_key_description::varchar(255) AS pka_product_key_description,
-    so_sls_qty::numeric(38,6) AS so_sls_qty,
-    so_sls_value::numeric(38,6) AS so_sls_value,
-    so_avg_qty::numeric(38,6) AS so_avg_qty,
-    sales_value_list_price::numeric(38,12) AS sales_value_list_price,
-    crt_dttm::timestamp without time zone AS crt_dttm
-    from japan_base_retail_excellence
+final as (
+select 
+*
+from transformation
 )
 
---final select
+
 select * from final

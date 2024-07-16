@@ -24,8 +24,8 @@ FROM (SELECT DISTINCT cntry_cd,
                    sellout_dim_key,
                    data_src
             FROM WKS_TH_BASE_RETAIL_EXCELLENCE
-            --changed to last_26mnths
-            WHERE MNTH_ID >= (SELECT last_36mnths
+            --CHANGED MONTH LOGIC 36 -> 27
+            WHERE MNTH_ID >= (SELECT last_27mnths
                               FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
             AND   mnth_id <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC) a,
            (SELECT DISTINCT "year" AS YEAR,
@@ -36,8 +36,8 @@ FROM (SELECT DISTINCT cntry_cd,
                                FROM edw_vw_cal_Retail_excellence_Dim) AND mnth_id <= (SELECT TO_CHAR(DATEADD(DAY, 90, SYSDATE()), 'yyyymm')))) b) all_months
   LEFT JOIN (SELECT *
              FROM WKS_TH_BASE_RETAIL_EXCELLENCE
-             --changed to last_26mnths
-             WHERE MNTH_ID >= (SELECT last_36mnths
+             --CHANGED MONTH LOGIC 36 -> 27
+             WHERE MNTH_ID >= (SELECT last_27mnths
                                FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
              AND   mnth_id <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC) base
          ON all_months.cntry_cd = base.cntry_cd

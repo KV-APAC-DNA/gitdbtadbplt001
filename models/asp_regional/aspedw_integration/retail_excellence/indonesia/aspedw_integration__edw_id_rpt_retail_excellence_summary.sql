@@ -6,7 +6,6 @@ itg_query_parameters as (
     select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
 ),
 
-
 --Final CTE
 id_edw_rpt_retail_excellence_summary as (
     SELECT FISC_YR,
