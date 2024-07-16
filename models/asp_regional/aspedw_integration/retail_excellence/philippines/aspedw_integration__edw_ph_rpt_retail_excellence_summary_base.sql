@@ -4,258 +4,222 @@ with v_edw_ph_rpt_retail_excellence as (
 ),
 
 --Logical CTE
-transformation as (
-    select
-        fisc_yr,
-        "cluster",		
-        market,
-        data_src,
-        distributor_code,
-        distributor_name,
-        sell_out_channel,
-        region,
-        zone_name,
-        city,
-        retail_environment,
-        prod_hier_l1,
-        prod_hier_l2,
-        prod_hier_l3,
-        prod_hier_l4,
-        NULL as prod_hier_l5,
-        NULL as prod_hier_l6,
-        NULL as prod_hier_l7,
-        NULL as prod_hier_l8,
-        NULL as prod_hier_l9,
-        global_product_franchise,
-        global_product_brand,
-        global_product_sub_brand,
-        global_product_segment,
-        global_product_subsegment,
-        global_product_category,
-        global_product_subcategory,
-        store_code,
-        product_code,
-        target_complaince,
-        CAST(fisc_per as numeric(18, 0)) as fisc_per,
-        MD5(
-            COALESCE(sell_out_channel, 'soc')
-            || COALESCE(retail_environment, 're')
-            || COALESCE(region, 'reg')
-            || COALESCE(zone_name, 'zn')
-            || COALESCE(city, 'cty')
-            || COALESCE(prod_hier_l1, 'ph1')
-            || COALESCE(prod_hier_l2, 'ph2')
-            || COALESCE(prod_hier_l3, 'ph3')
-            || COALESCE(prod_hier_l4, 'ph4')
-            || COALESCE(global_product_franchise, 'gpf')
-            || COALESCE(global_product_brand, 'gpb')
-            || COALESCE(global_product_sub_brand, 'gpsb')
-            || COALESCE(global_product_segment, 'gps')
-            || COALESCE(global_product_subsegment, 'gpss')
-            || COALESCE(global_product_category, 'gpc')
-            || COALESCE(global_product_subcategory, 'gpsc')
-        ) as flag_agg_dim_key,
-        SUM(sales_value) as sales_value,
-        SUM(sales_qty) as sales_qty,		--// AVG
-        AVG(sales_qty) as avg_sales_qty,
-        SUM(lm_sales) as lm_sales,
-        SUM(lm_sales_qty) as lm_sales_qty,		--// AVG
-        AVG(lm_sales_qty) as lm_avg_sales_qty,
-        SUM(p3m_sales) as p3m_sales,
-        SUM(p3m_qty) as p3m_qty,		--// AVG
-        AVG(p3m_qty) as p3m_avg_qty,
-        SUM(p6m_sales) as p6m_sales,
-        SUM(p6m_qty) as p6m_qty,		--// AVG
-        (AVG(p6m_qty)) as p6m_avg_qty,
-        SUM(p12m_sales) as p12m_sales,
-        SUM(p12m_qty) as p12m_qty,		--// AVG
-        AVG(p12m_qty) as p12m_avg_qty,
-        SUM(f3m_sales) as f3m_sales,
-        SUM(f3m_qty) as f3m_qty,		--// AVG
-        AVG(f3m_qty) as f3m_avg_qty,
-        MAX(list_price) as list_price,
-        case
-            when SUM(
-                case
-                    when lm_sales_flag = 'Y' then 1
-                    else 0
-                end
-            ) > 0 then 1
-            else 0
-        end as lm_sales_flag,
-        case
-            when SUM(
-                case
-                    when p3m_sales_flag = 'Y' then 1
-                    else 0
-                end
-            ) > 0 then 1
-            else 0
-        end as p3m_sales_flag,
-        case
-            when SUM(
-                case
-                    when p6m_sales_flag = 'Y' then 1
-                    else 0
-                end
-            ) > 0 then 1
-            else 0
-        end as p6m_sales_flag,
-        case
-            when SUM(
-                case
-                    when p12m_sales_flag = 'Y' then 1
-                    else 0
-                end
-            ) > 0 then 1
-            else 0
-        end as p12m_sales_flag,
-        case
-            when mdp_flag = 'Y' then 1
-            else 0
-        end as mdp_flag,
-        MAX(size_of_price_lm) as size_of_price_lm,
-        MAX(size_of_price_p3m) as size_of_price_p3m,
-        MAX(size_of_price_p6m) as size_of_price_p6m,
-        MAX(size_of_price_p12m) as size_of_price_p12m,
-        SUM(sales_value_list_price) as sales_value_list_price,
-        SUM(lm_sales_lp) as lm_sales_lp,
-        SUM(p3m_sales_lp) as p3m_sales_lp,
-        SUM(p6m_sales_lp) as p6m_sales_lp,
-        SUM(p12m_sales_lp) as p12m_sales_lp,
-        MAX(size_of_price_lm_lp) as size_of_price_lm_lp,
-        MAX(size_of_price_p3m_lp) as size_of_price_p3m_lp,
-        MAX(size_of_price_p6m_lp) as size_of_price_p6m_lp,
-        MAX(size_of_price_p12m_lp) as size_of_price_p12m_lp,
-        SYSDATE() as crt_dttm 	
-    from v_edw_ph_rpt_retail_excellence as flags
+transformation as 
+(
+    SELECT FISC_YR,
+       CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,
+       "cluster",
+       MARKET,
+       MD5(nvl (SELL_OUT_CHANNEL,'soc') ||nvl (RETAIL_ENVIRONMENT,'re') ||nvl (REGION,'reg') ||
+	   nvl (ZONE_NAME,'zn') ||nvl (CITY,'cty') ||nvl (PROD_HIER_L1,'ph1') ||nvl (PROD_HIER_L2,'ph2') || 
+	   nvl (PROD_HIER_L3,'ph3') ||nvl (PROD_HIER_L4,'ph4') || nvl (GLOBAL_PRODUCT_FRANCHISE,'gpf') ||
+	   nvl (GLOBAL_PRODUCT_BRAND,'gpb') || nvl (GLOBAL_PRODUCT_SUB_BRAND,'gpsb') ||nvl (GLOBAL_PRODUCT_SEGMENT,'gps') || 
+	   nvl (GLOBAL_PRODUCT_SUBSEGMENT,'gpss') ||nvl (GLOBAL_PRODUCT_CATEGORY,'gpc') || 
+	   nvl (GLOBAL_PRODUCT_SUBCATEGORY,'gpsc')) AS FLAG_AGG_DIM_KEY,
+       DATA_SRC,
+       DISTRIBUTOR_CODE,
+       DISTRIBUTOR_NAME,
+       SELL_OUT_CHANNEL,
+       REGION,
+       ZONE_NAME,
+       CITY,
+       RETAIL_ENVIRONMENT,
+       PROD_HIER_L1,
+       PROD_HIER_L2,
+       PROD_HIER_L3,
+       PROD_HIER_L4,
+       NULL AS PROD_HIER_L5,
+       NULL AS PROD_HIER_L6,
+       NULL AS PROD_HIER_L7,
+       NULL AS PROD_HIER_L8,
+       NULL AS PROD_HIER_L9,
+       GLOBAL_PRODUCT_FRANCHISE,
+       GLOBAL_PRODUCT_BRAND,
+       GLOBAL_PRODUCT_SUB_BRAND,
+       GLOBAL_PRODUCT_SEGMENT,
+       GLOBAL_PRODUCT_SUBSEGMENT,
+       GLOBAL_PRODUCT_CATEGORY,
+       GLOBAL_PRODUCT_SUBCATEGORY,
+       STORE_CODE,
+       PRODUCT_CODE,
+       SUM(SALES_VALUE) AS SALES_VALUE,
+       SUM(SALES_QTY) AS SALES_QTY,
+       AVG(SALES_QTY) AS AVG_SALES_QTY,
+       SUM(LM_SALES) AS LM_SALES,
+       SUM(LM_SALES_QTY) AS LM_SALES_QTY,
+       AVG(LM_SALES_QTY) AS LM_AVG_SALES_QTY,
+       SUM(P3M_SALES) AS P3M_SALES,
+       SUM(P3M_QTY) AS P3M_QTY,
+       AVG(P3M_QTY) AS P3M_AVG_QTY,
+       SUM(P6M_SALES) AS P6M_SALES,
+       SUM(P6M_QTY) AS P6M_QTY,
+       AVG(P6M_QTY) AS P6M_AVG_QTY,
+       SUM(P12M_SALES) AS P12M_SALES,
+       SUM(P12M_QTY) AS P12M_QTY,
+       AVG(P12M_QTY) AS P12M_AVG_QTY,
+       SUM(F3M_SALES) AS F3M_SALES,
+       SUM(F3M_QTY) AS F3M_QTY,
+       AVG(F3M_QTY) AS F3M_AVG_QTY,
+       MAX(LIST_PRICE) AS LIST_PRICE,
+       CASE
+         WHEN SUM(
+           CASE
+             WHEN LM_SALES_FLAG = 'Y' THEN 1
+             ELSE 0
+           END ) > 0 THEN 1
+         ELSE 0
+       END AS LM_SALES_FLAG,
+       CASE
+         WHEN SUM(
+           CASE
+             WHEN P3M_SALES_FLAG = 'Y' THEN 1
+             ELSE 0
+           END ) > 0 THEN 1
+         ELSE 0
+       END AS P3M_SALES_FLAG,
+       CASE
+         WHEN SUM(
+           CASE
+             WHEN P6M_SALES_FLAG = 'Y' THEN 1
+             ELSE 0
+           END ) > 0 THEN 1
+         ELSE 0
+       END AS P6M_SALES_FLAG,
+       CASE
+         WHEN SUM(
+           CASE
+             WHEN P12M_SALES_FLAG = 'Y' THEN 1
+             ELSE 0
+           END ) > 0 THEN 1
+         ELSE 0
+       END AS P12M_SALES_FLAG,
+       CASE
+         WHEN MDP_FLAG = 'Y' THEN 1
+         ELSE 0
+       END AS MDP_FLAG,
+       MAX(size_of_price_lm) AS size_of_price_lm,
+       MAX(size_of_price_p3m) AS size_of_price_p3m,
+       MAX(size_of_price_p6m) AS size_of_price_p6m,
+       MAX(size_of_price_p12m) AS size_of_price_p12m,
+       SUM(SALES_VALUE_LIST_PRICE) AS SALES_VALUE_LIST_PRICE,
+       SUM(LM_SALES_LP) AS LM_SALES_LP,
+       SUM(P3M_SALES_LP) AS P3M_SALES_LP,
+       SUM(P6M_SALES_LP) AS P6M_SALES_LP,
+       SUM(P12M_SALES_LP) AS P12M_SALES_LP,
+       MAX(size_of_price_lm_lp) AS size_of_price_lm_lp,
+       MAX(size_of_price_p3m_lp) AS size_of_price_p3m_lp,
+       MAX(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
+       MAX(size_of_price_p12m_lp) AS size_of_price_p12m_lp,
+       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,
+       SYSDATE() AS CRT_DTTM
+    FROM v_edw_ph_rpt_retail_excellence FLAGS
 
-    group by
-        flags.fisc_yr,		
-        flags.fisc_per,		
-        flags."cluster",	
-        flags.market,		
-        MD5(
-            COALESCE(sell_out_channel, 'soc')
-            || COALESCE(retail_environment, 're')
-            || COALESCE(region, 'reg')
-            || COALESCE(zone_name, 'zn')
-            || COALESCE(city, 'cty')
-            || COALESCE(prod_hier_l1, 'ph1')
-            || COALESCE(prod_hier_l2, 'ph2')
-            || COALESCE(prod_hier_l3, 'ph3')
-            || COALESCE(prod_hier_l4, 'ph4')
-            || COALESCE(global_product_franchise, 'gpf')
-            || COALESCE(global_product_brand, 'gpb')
-            || COALESCE(global_product_sub_brand, 'gpsb')
-            || COALESCE(global_product_segment, 'gps')
-            || COALESCE(global_product_subsegment, 'gpss')
-            || COALESCE(global_product_category, 'gpc')
-            || COALESCE(global_product_subcategory, 'gpsc')
-        ),
-        flags.data_src,		--//          FLAGS.DATA_SRC,
-        flags.distributor_code,		--//          FLAGS.DISTRIBUTOR_CODE,
-        flags.distributor_name,		--//          FLAGS.DISTRIBUTOR_NAME,
-        flags.sell_out_channel,		--//          FLAGS.SELL_OUT_CHANNEL,
-        flags.region,		--//          FLAGS.REGION,
-        flags.zone_name,		--//          FLAGS.ZONE_NAME,
-        flags.city,		--//          FLAGS.CITY,
-        flags.retail_environment,		--//          FLAGS.RETAIL_ENVIRONMENT,
-        flags.prod_hier_l1,		--//          FLAGS.PROD_HIER_L1,
-        flags.prod_hier_l2,		--//          FLAGS.PROD_HIER_L2,
-        flags.prod_hier_l3,		--//          FLAGS.PROD_HIER_L3,
-        flags.prod_hier_l4,		--//          FLAGS.PROD_HIER_L4,
-        --//          FLAGS.GLOBAL_PRODUCT_FRANCHISE,
-        flags.global_product_franchise,
-        flags.global_product_brand,		--//          FLAGS.GLOBAL_PRODUCT_BRAND,
-        --//          FLAGS.GLOBAL_PRODUCT_SUB_BRAND,
-        flags.global_product_sub_brand,
-        --//          FLAGS.GLOBAL_PRODUCT_SEGMENT,
-        flags.global_product_segment,
-        --//          FLAGS.GLOBAL_PRODUCT_SUBSEGMENT,
-        flags.global_product_subsegment,
-        --//          FLAGS.GLOBAL_PRODUCT_CATEGORY,
-        flags.global_product_category,
-        --//          FLAGS.GLOBAL_PRODUCT_SUBCATEGORY,
-        flags.global_product_subcategory,
-        (case when mdp_flag = 'Y' then 1 else 0 end),
-        target_complaince,
-        store_code,
-        product_code
-),
+    GROUP BY FLAGS.FISC_YR,
+         FLAGS.FISC_PER,
+         FLAGS."cluster",
+         FLAGS.MARKET,
+         MD5(nvl (SELL_OUT_CHANNEL,'soc') ||nvl (RETAIL_ENVIRONMENT,'re') ||nvl (REGION,'reg') ||
+		 nvl (ZONE_NAME,'zn') ||nvl (CITY,'cty') ||nvl (PROD_HIER_L1,'ph1') ||nvl (PROD_HIER_L2,'ph2') || 
+		 nvl (PROD_HIER_L3,'ph3') ||nvl (PROD_HIER_L4,'ph4') || nvl (GLOBAL_PRODUCT_FRANCHISE,'gpf') ||
+		 nvl (GLOBAL_PRODUCT_BRAND,'gpb') || nvl (GLOBAL_PRODUCT_SUB_BRAND,'gpsb') ||nvl (GLOBAL_PRODUCT_SEGMENT,'gps') || 
+		 nvl (GLOBAL_PRODUCT_SUBSEGMENT,'gpss') ||nvl (GLOBAL_PRODUCT_CATEGORY,'gpc') || nvl (GLOBAL_PRODUCT_SUBCATEGORY,'gpsc')),
+         FLAGS.DATA_SRC,
+         FLAGS.DISTRIBUTOR_CODE,
+         FLAGS.DISTRIBUTOR_NAME,
+         FLAGS.SELL_OUT_CHANNEL,
+         FLAGS.REGION,
+         FLAGS.ZONE_NAME,
+         FLAGS.CITY,
+         FLAGS.RETAIL_ENVIRONMENT,
+         FLAGS.PROD_HIER_L1,
+         FLAGS.PROD_HIER_L2,
+         FLAGS.PROD_HIER_L3,
+         FLAGS.PROD_HIER_L4,
+         FLAGS.GLOBAL_PRODUCT_FRANCHISE,
+         FLAGS.GLOBAL_PRODUCT_BRAND,
+         FLAGS.GLOBAL_PRODUCT_SUB_BRAND,
+         FLAGS.GLOBAL_PRODUCT_SEGMENT,
+         FLAGS.GLOBAL_PRODUCT_SUBSEGMENT,
+         FLAGS.GLOBAL_PRODUCT_CATEGORY,
+         FLAGS.GLOBAL_PRODUCT_SUBCATEGORY,
+         (CASE WHEN MDP_FLAG = 'Y' THEN 1 ELSE 0 END),
+         STORE_CODE,
+         PRODUCT_CODE
+)
+
 final as (
-select
-fisc_yr::numeric(18,0) AS fisc_yr,
-fisc_per::numeric(18,0) AS fisc_per,
-"cluster"::VARCHAR(100) AS "cluster",
-market::VARCHAR(50) AS market,
-flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
-data_src::VARCHAR(14) AS data_src,
-distributor_code::VARCHAR(150) AS distributor_code,
-distributor_name::VARCHAR(356) AS distributor_name,
-sell_out_channel::VARCHAR(382) AS sell_out_channel,
-region::VARCHAR(255) AS region,
-zone_name::VARCHAR(255) AS zone_name,
-city::VARCHAR(255) AS city,
-retail_environment::VARCHAR(382) AS retail_environment,
-prod_hier_l1::VARCHAR(11) AS prod_hier_l1,
-prod_hier_l2::VARCHAR(1) AS prod_hier_l2,
-prod_hier_l3::VARCHAR(255) AS prod_hier_l3,
-prod_hier_l4::VARCHAR(255) AS prod_hier_l4,
-prod_hier_l5::VARCHAR(1) AS prod_hier_l5,
-prod_hier_l6::VARCHAR(1) AS prod_hier_l6,
-prod_hier_l7::VARCHAR(1) AS prod_hier_l7,
-prod_hier_l8::VARCHAR(1) AS prod_hier_l8,
-prod_hier_l9::VARCHAR(1) AS prod_hier_l9,
-global_product_franchise::VARCHAR(30) AS global_product_franchise,
-global_product_brand::VARCHAR(30) AS global_product_brand,
-global_product_sub_brand::VARCHAR(100) AS global_product_sub_brand,
-global_product_segment::VARCHAR(50) AS global_product_segment,
-global_product_subsegment::VARCHAR(100) AS global_product_subsegment,
-global_product_category::VARCHAR(50) AS global_product_category,
-global_product_subcategory::VARCHAR(50) AS global_product_subcategory,
-store_code::VARCHAR(100) AS store_code,
-product_code::VARCHAR(150) AS product_code,
-sales_value::NUMERIC(38,6) AS sales_value,
-sales_qty::NUMERIC(38,6) AS sales_qty,
-avg_sales_qty::NUMERIC(38,6) AS avg_sales_qty,
-lm_sales::NUMERIC(38,6) AS lm_sales,
-lm_sales_qty::NUMERIC(38,6) AS lm_sales_qty,
-lm_avg_sales_qty::NUMERIC(38,6) AS lm_avg_sales_qty,
-p3m_sales::NUMERIC(38,6) AS p3m_sales,
-p3m_qty::NUMERIC(38,6) AS p3m_qty,
-p3m_avg_qty::NUMERIC(38,6) AS p3m_avg_qty,
-p6m_sales::NUMERIC(38,6) AS p6m_sales,
-p6m_qty::NUMERIC(38,6) AS p6m_qty,
-p6m_avg_qty::NUMERIC(38,6) AS p6m_avg_qty,
-p12m_sales::NUMERIC(38,6) AS p12m_sales,
-p12m_qty::NUMERIC(38,6) AS p12m_qty,
-p12m_avg_qty::NUMERIC(38,6) AS p12m_avg_qty,
-f3m_sales::NUMERIC(38,6) AS f3m_sales,
-f3m_qty::NUMERIC(38,6) AS f3m_qty,
-f3m_avg_qty::NUMERIC(38,6) AS f3m_avg_qty,
-list_price::NUMERIC(20,4) AS list_price,
-lm_sales_flag::numeric(18,0) AS lm_sales_flag,
-p3m_sales_flag::numeric(18,0) AS p3m_sales_flag,
-p6m_sales_flag::numeric(18,0) AS p6m_sales_flag,
-p12m_sales_flag::numeric(18,0) AS p12m_sales_flag,
-mdp_flag::numeric(18,0) AS mdp_flag,
-size_of_price_lm::NUMERIC(38,14) AS size_of_price_lm,
-size_of_price_p3m::NUMERIC(38,14) AS size_of_price_p3m,
-size_of_price_p6m::NUMERIC(38,14) AS size_of_price_p6m,
-size_of_price_p12m::NUMERIC(38,14) AS size_of_price_p12m,
-sales_value_list_price::NUMERIC(38,12) AS sales_value_list_price,
-lm_sales_lp::NUMERIC(38,12) AS lm_sales_lp,
-p3m_sales_lp::NUMERIC(38,12) AS p3m_sales_lp,
-p6m_sales_lp::NUMERIC(38,12) AS p6m_sales_lp,
-p12m_sales_lp::NUMERIC(38,12) AS p12m_sales_lp,
-size_of_price_lm_lp::NUMERIC(38,20) AS size_of_price_lm_lp,
-size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
-size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
-size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-target_complaince::numeric(18,0) AS target_complaince,
-crt_dttm::TIMESTAMP WITHOUT TIME ZONE  AS crt_dttm
-from transformation
+    select
+    fisc_yr::numeric(18,0) AS fisc_yr,
+    fisc_per::numeric(18,0) AS fisc_per,
+    "cluster"::VARCHAR(100) AS "cluster",
+    market::VARCHAR(50) AS market,
+    flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
+    data_src::VARCHAR(14) AS data_src,
+    distributor_code::VARCHAR(150) AS distributor_code,
+    distributor_name::VARCHAR(356) AS distributor_name,
+    sell_out_channel::VARCHAR(382) AS sell_out_channel,
+    region::VARCHAR(255) AS region,
+    zone_name::VARCHAR(255) AS zone_name,
+    city::VARCHAR(255) AS city,
+    retail_environment::VARCHAR(382) AS retail_environment,
+    prod_hier_l1::VARCHAR(11) AS prod_hier_l1,
+    prod_hier_l2::VARCHAR(1) AS prod_hier_l2,
+    prod_hier_l3::VARCHAR(255) AS prod_hier_l3,
+    prod_hier_l4::VARCHAR(255) AS prod_hier_l4,
+    prod_hier_l5::VARCHAR(1) AS prod_hier_l5,
+    prod_hier_l6::VARCHAR(1) AS prod_hier_l6,
+    prod_hier_l7::VARCHAR(1) AS prod_hier_l7,
+    prod_hier_l8::VARCHAR(1) AS prod_hier_l8,
+    prod_hier_l9::VARCHAR(1) AS prod_hier_l9,
+    global_product_franchise::VARCHAR(30) AS global_product_franchise,
+    global_product_brand::VARCHAR(30) AS global_product_brand,
+    global_product_sub_brand::VARCHAR(100) AS global_product_sub_brand,
+    global_product_segment::VARCHAR(50) AS global_product_segment,
+    global_product_subsegment::VARCHAR(100) AS global_product_subsegment,
+    global_product_category::VARCHAR(50) AS global_product_category,
+    global_product_subcategory::VARCHAR(50) AS global_product_subcategory,
+    store_code::VARCHAR(100) AS store_code,
+    product_code::VARCHAR(150) AS product_code,
+    sales_value::NUMERIC(38,6) AS sales_value,
+    sales_qty::NUMERIC(38,6) AS sales_qty,
+    avg_sales_qty::NUMERIC(38,6) AS avg_sales_qty,
+    lm_sales::NUMERIC(38,6) AS lm_sales,
+    lm_sales_qty::NUMERIC(38,6) AS lm_sales_qty,
+    lm_avg_sales_qty::NUMERIC(38,6) AS lm_avg_sales_qty,
+    p3m_sales::NUMERIC(38,6) AS p3m_sales,
+    p3m_qty::NUMERIC(38,6) AS p3m_qty,
+    p3m_avg_qty::NUMERIC(38,6) AS p3m_avg_qty,
+    p6m_sales::NUMERIC(38,6) AS p6m_sales,
+    p6m_qty::NUMERIC(38,6) AS p6m_qty,
+    p6m_avg_qty::NUMERIC(38,6) AS p6m_avg_qty,
+    p12m_sales::NUMERIC(38,6) AS p12m_sales,
+    p12m_qty::NUMERIC(38,6) AS p12m_qty,
+    p12m_avg_qty::NUMERIC(38,6) AS p12m_avg_qty,
+    f3m_sales::NUMERIC(38,6) AS f3m_sales,
+    f3m_qty::NUMERIC(38,6) AS f3m_qty,
+    f3m_avg_qty::NUMERIC(38,6) AS f3m_avg_qty,
+    list_price::NUMERIC(20,4) AS list_price,
+    lm_sales_flag::numeric(18,0) AS lm_sales_flag,
+    p3m_sales_flag::numeric(18,0) AS p3m_sales_flag,
+    p6m_sales_flag::numeric(18,0) AS p6m_sales_flag,
+    p12m_sales_flag::numeric(18,0) AS p12m_sales_flag,
+    mdp_flag::numeric(18,0) AS mdp_flag,
+    size_of_price_lm::NUMERIC(38,14) AS size_of_price_lm,
+    size_of_price_p3m::NUMERIC(38,14) AS size_of_price_p3m,
+    size_of_price_p6m::NUMERIC(38,14) AS size_of_price_p6m,
+    size_of_price_p12m::NUMERIC(38,14) AS size_of_price_p12m,
+    sales_value_list_price::NUMERIC(38,12) AS sales_value_list_price,
+    lm_sales_lp::NUMERIC(38,12) AS lm_sales_lp,
+    p3m_sales_lp::NUMERIC(38,12) AS p3m_sales_lp,
+    p6m_sales_lp::NUMERIC(38,12) AS p6m_sales_lp,
+    p12m_sales_lp::NUMERIC(38,12) AS p12m_sales_lp,
+    size_of_price_lm_lp::NUMERIC(38,20) AS size_of_price_lm_lp,
+    size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
+    size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
+    size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
+    target_complaince::numeric(18,0) AS target_complaince,
+    crt_dttm::TIMESTAMP WITHOUT TIME ZONE  AS crt_dttm
+    from transformation
 )
 
 
