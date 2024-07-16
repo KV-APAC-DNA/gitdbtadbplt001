@@ -13,7 +13,7 @@ product_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_product_hierarchy') }}
 ),
 edw_company_dim as (
-    select * from {{ source('aspedw_integration','edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 itg_my_material_dim as (
     select * from {{ ref('mysitg_integration__itg_my_material_dim') }}

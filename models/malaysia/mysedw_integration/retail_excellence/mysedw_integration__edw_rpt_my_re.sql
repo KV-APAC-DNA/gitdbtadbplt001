@@ -2,6 +2,10 @@
 with wks_my_rpt_re_gcph as (
     select * from {{ ref('myswks_integration__wks_my_rpt_re_gcph') }}
 ),
+retail_excellence_msl_target_final as 
+ (
+    select * from {{ ref('myswks_integration_wks_retail_excellence_msl_target_final') }}
+ ),
 
 --final cte
 edw_rpt_my_re  as (
@@ -133,7 +137,7 @@ SELECT jj_year AS FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       TARGET_COMPLAINCE,
+       case when mdp_flag='Y' and gcph.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
@@ -189,7 +193,8 @@ SELECT jj_year AS FISC_YR,
        COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
        SYSDATE() AS CRT_DTTM 
-FROM WKS_MY_RPT_RE_GCPH MAIN
+FROM WKS_MY_RPT_RE_GCPH gcph	
+left join retail_excellence_msl_target_final  target on (gcph.fisc_per=target.fisc_per and gcph.global_product_brand=target.global_product_brand)
 ),
 final as
 (

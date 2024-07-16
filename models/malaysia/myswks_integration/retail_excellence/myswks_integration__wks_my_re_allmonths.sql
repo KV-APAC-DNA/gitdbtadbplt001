@@ -23,15 +23,15 @@ FROM (SELECT DISTINCT cntry_cd,
              MONTH
       FROM (SELECT DISTINCT cntry_cd,
                    sellout_dim_key
-            FROM WKS_MY_BASE_RE where MNTH_ID >= (select last_27mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+            FROM WKS_MY_BASE_RE where MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	   and mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric) a,
 	    (select distinct "year",
                    mnth_id as month
             from edw_vw_os_time_dim		
-            where mnth_id >= (select last_27mnths
+            where mnth_id >= (select last_28mnths
                  from edw_vw_cal_retail_excellence_dim)		
  and   mnth_id <= (select TO_CHAR((DATEADD(DAY, 90, sysdate()::DATE )), 'YYYYMM') )) b) all_months
-  LEFT JOIN (SELECT * FROM WKS_MY_BASE_RE where MNTH_ID >= (select last_27mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
+  LEFT JOIN (SELECT * FROM WKS_MY_BASE_RE where MNTH_ID >= (select last_28mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
 	   and mnth_id <= (select last_2mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric) base		
          ON ALL_MONTHS.CNTRY_CD = BASE.CNTRY_CD		
         AND ALL_MONTHS.SELLOUT_DIM_KEY = BASE.SELLOUT_DIM_KEY		

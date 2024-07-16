@@ -168,7 +168,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
                     GLOBAL_PUT_UP_DESCRIPTION,
                      PKA_PRODUCT_KEY,
                     PKA_PRODUCT_KEY_DESCRIPTION
-             FROM  WKS_MY_BASE_RE where MNTH_ID >= (select last_27mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
+             FROM  WKS_MY_BASE_RE where MNTH_ID >= (select last_28mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
 	  and mnth_id <= (select last_2mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric) RE_BASE_DIM		
          ON RE_BASE_DIM.CNTRY_CD = BASE_DIM.CNTRY_CD	
         AND RE_BASE_DIM.SELLOUT_DIM_KEY = BASE_DIM.SELLOUT_DIM_KEY		
@@ -179,7 +179,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
                           so_sls_value,
                           so_avg_qty,
                           SALES_VALUE_LIST_PRICE
-                   FROM  WKS_MY_BASE_RE where MNTH_ID >= (select last_27mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
+                   FROM  WKS_MY_BASE_RE where MNTH_ID >= (select last_28mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
 	  and mnth_id <= (select last_2mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric) CM		
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD		
               AND BASE_DIM.MONTH = CM.MNTH_ID		
@@ -209,7 +209,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
               AND BASE_DIM.MONTH = L12M.MONTH		
               AND BASE_DIM.SELLOUT_DIM_KEY = L12M.SELLOUT_DIM_KEY		
 
-WHERE BASE_DIM.MONTH >= (select last_19mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
+WHERE BASE_DIM.MONTH >= (select last_17mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
   AND BASE_DIM.MONTH <= (select last_2mnths from  EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		
 ),
 final as

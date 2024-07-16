@@ -5,6 +5,9 @@ with edw_rpt_regional_sellout_offtake as (
 wks_my_regional_sellout_pos_ean_lookup as (
     select * from {{ ref('myswks_integration__wks_my_regional_sellout_pos_ean_lookup') }}
 ),
+edw_vw_cal_retail_excellence_dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
+),
 
 MY_BASE_RE_RAW  as (
 SELECT country_code,
@@ -60,6 +63,8 @@ SELECT country_code,
       LEFT JOIN (SELECT MNTH_ID,SKU_CODE,EAN FROM wks_my_regional_sellout_pos_ean_lookup) EANLKUP ON BASE.MNTH_ID = EANLKUP.MNTH_ID and		
 																											BASE.SKU_CODE = EANLKUP.SKU_CODE		
 	  WHERE COUNTRY_CODE = 'MY' and data_source in ('SELL-OUT','POS')
+      and base.MNTH_ID >= (select last_28mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+	  and base.mnth_id <= (select last_2mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 	  ),
 	  
 	--final select

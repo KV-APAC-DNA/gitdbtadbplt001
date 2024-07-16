@@ -1,12 +1,12 @@
 --import cte   
 with edw_calendar_dim as (
-    select * from {{ source('aspedw_integration', 'edw_calendar_dim') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
 wks_my_base_re as (
     select * from {{ ref('myswks_integration__wks_my_base_re') }}
@@ -36,7 +36,7 @@ FROM ITG_RE_MSL_INPUT_DEFINITION A
 LEFT JOIN (SELECT DISTINCT FISC_YR,
                   SUBSTRING(FISC_PER,1,4)||SUBSTRING(FISC_PER,6,7) AS JJ_MNTH_ID
              FROM EDW_CALENDAR_DIM		
-			 where jj_mnth_id >= (select last_19mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		
+			 where jj_mnth_id >= (select last_17mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		
 						   and jj_mnth_id <= (select last_2mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)) CAL		
            ON TO_CHAR(TO_DATE (A.START_DATE,'DD/MM/YYYY'),'YYYYMM') <=CAL.JJ_MNTH_ID
            AND TO_CHAR(TO_DATE (A.END_DATE,'DD/MM/YYYY'),'YYYYMM') >= CAL.JJ_MNTH_ID		
