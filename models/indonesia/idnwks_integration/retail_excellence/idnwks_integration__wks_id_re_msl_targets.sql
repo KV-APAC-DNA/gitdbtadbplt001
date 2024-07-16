@@ -1,6 +1,6 @@
 --import cte
 with mds_reds_market_msl_target as (
-    select * from {{ ref('aspedw_integration_wks_mds_reds_market_msl_target_final') }}
+    select * from {{ ref('aspedw_integration__wks_mds_reds_market_msl_target_final') }}
 ),
 
 wks_id_rpt_re as (
