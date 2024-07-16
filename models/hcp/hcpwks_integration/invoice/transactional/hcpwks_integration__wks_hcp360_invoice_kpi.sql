@@ -56,4 +56,4 @@ final as
         invoice_value::number(38,8) as invoice_value
     from transformed 
 )
-select * from final
+select * from final 

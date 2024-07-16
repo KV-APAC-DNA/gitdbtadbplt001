@@ -180,4 +180,4 @@ final as
         sent_activity_date::timestamp_ntz(9) as sent_activity_date
     from transformed 
 )
-select * from final
+select * from final 

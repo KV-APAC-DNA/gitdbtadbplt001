@@ -44,4 +44,4 @@ select
     is_unique::varchar(10) as is_unique,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm
-from final
+from final 

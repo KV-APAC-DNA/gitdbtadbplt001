@@ -30,4 +30,4 @@ final as
         'IN' as country
     FROM itg_hcp360_in_iqvia_speciality
 )
-select * from final
+select * from final 

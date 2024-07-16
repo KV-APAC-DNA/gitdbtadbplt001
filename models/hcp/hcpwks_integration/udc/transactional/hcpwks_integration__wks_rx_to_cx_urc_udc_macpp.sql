@@ -30,4 +30,4 @@ final as
 (   
     select * from transformed
 )
-select * from final
+select * from final 

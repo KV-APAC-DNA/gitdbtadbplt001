@@ -60,4 +60,4 @@ transformed as
     union all
     select * from cte1
 )
-select * from transformed
+select * from transformed 

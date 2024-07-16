@@ -196,4 +196,4 @@ final as
         category::varchar(50) as category
     from transformed
 )
-select * from final
+select * from final 

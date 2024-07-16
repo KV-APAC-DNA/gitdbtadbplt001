@@ -31,4 +31,4 @@ final as
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from wks_sfmc_hcp_dim
 )
-select * from final
+select * from final 

@@ -83,4 +83,4 @@ final as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm
     from transformed 
 )
-select * from final
+select * from final 

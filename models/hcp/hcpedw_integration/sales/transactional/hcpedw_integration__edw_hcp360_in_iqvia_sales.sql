@@ -31,4 +31,4 @@ final as
         data_source::varchar(20) as data_source
     FROM itg_hcp360_in_iqvia_sales
 )
-select * from final
+select * from final 

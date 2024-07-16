@@ -79,4 +79,4 @@ final as
     	mat_noofprescribers::number(38,5) as mat_noofprescribers
     from transformed 
 )
-select * from final
+select * from final 

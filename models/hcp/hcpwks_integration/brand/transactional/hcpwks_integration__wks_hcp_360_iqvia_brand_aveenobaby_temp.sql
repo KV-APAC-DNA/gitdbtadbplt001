@@ -72,4 +72,4 @@ final as
         noofprescribers::number(18,5) as noofprescribers
     from transformed
 )
-select * from final
+select * from final 

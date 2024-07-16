@@ -71,4 +71,4 @@ final as
         is_active::varchar(10) as is_active
     from transformed
 )
-select * from final
+select * from final 
