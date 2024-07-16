@@ -15,17 +15,17 @@ itg_pf_retail_mth_ds as
 (
     select * from {{ ref('inditg_integration__itg_pf_retail_mth_ds') }}
 ),
-inditg_integration__itg_pf_retail_mth_ds_136843_yearend_2021 as
+itg_pf_retail_mth_ds_136843_yearend_2021 as
 (
-    select * from alaksh01_workspace.inditg_integration__itg_pf_retail_mth_ds_136843_yearend_2021
+    select * from {{ source('inditg_integration', 'itg_pf_retail_mth_ds_136843_yearend_2021') }}
 ),
-inditg_integration__itg_pf_retail_mth_ds_132641_jul_yearend_2021 as
+itg_pf_retail_mth_ds_132641_jul_yearend_2021 as
 (
-    select * from alaksh01_workspace.inditg_integration__itg_pf_retail_mth_ds_132641_jul_yearend_2021
+    select * from {{ source('inditg_integration', 'itg_pf_retail_mth_ds_132641_jul_yearend_2021') }}
 ),
 itg_pf_retail_mth_ds_132641_aug_yearend_2021 as
 (
-    select * from snapinditg_integration.itg_pf_retail_mth_ds_132641_aug_yearend_2021
+    select * from {{ source('inditg_integration', 'itg_pf_retail_mth_ds_132641_aug_yearend_2021') }}
 ),
 itg_tblpf_clstkm as
 (
@@ -607,7 +607,7 @@ final as
                                 0 AS offer_stkadj, 
                                 0 AS purchasereturn 
                             FROM 
-                                inditg_integration__itg_pf_retail_mth_ds_136843_yearend_2021 itg_pf_retail_mth_ds 
+                                itg_pf_retail_mth_ds_136843_yearend_2021 itg_pf_retail_mth_ds 
                             GROUP BY 
                                 itg_pf_retail_mth_ds.year, 
                                 itg_pf_retail_mth_ds.customer_code, 
@@ -716,7 +716,7 @@ final as
                             0 AS offer_stkadj, 
                             0 AS purchasereturn 
                             FROM 
-                            INDITG_INTEGRATION__ITG_PF_RETAIL_MTH_DS_132641_JUL_YEAREND_2021 itg_pf_retail_mth_ds 
+                            itg_pf_retail_mth_ds_132641_jul_yearend_2021 itg_pf_retail_mth_ds 
                             GROUP BY 
                             itg_pf_retail_mth_ds.year, 
                             itg_pf_retail_mth_ds.customer_code, 
