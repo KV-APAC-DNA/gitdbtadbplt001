@@ -573,7 +573,6 @@ models:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-<<<<<<< HEAD
       jpnedw_integration:
         +materialized: table
         +transient: false
@@ -588,9 +587,4 @@ models:
       jpnedw_access:
         +materialized: view
         +schema: JPNEDW_ACCESS
-=======
-      jpnitg_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPNITG_INTEGRATION
->>>>>>> 22258c8bdc8ed87d89a83d952355202bc850e982
+      
