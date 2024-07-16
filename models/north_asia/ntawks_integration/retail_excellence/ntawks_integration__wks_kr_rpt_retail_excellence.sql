@@ -17,10 +17,10 @@ product_key_attribute as (
     select * from {{ ref('aspedw_integration__edw_generic_product_key_attributes') }}
 ),
 edw_company_dim as (
-    select * from {{ source('aspedw_integration','edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
-    select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_pop6_products as (
     select * from {{ source('ntaedw_integration','edw_vw_pop6_products') }}

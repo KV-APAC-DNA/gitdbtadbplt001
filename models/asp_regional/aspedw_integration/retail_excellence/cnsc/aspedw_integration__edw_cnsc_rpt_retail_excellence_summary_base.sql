@@ -44,22 +44,22 @@ Select FISC_YR,
        product_code,
        SUM(SALES_VALUE)AS SALES_VALUE,
        SUM(SALES_QTY)AS SALES_QTY,
-       TRUNC(AVG(SALES_QTY)) AS AVG_SALES_QTY,		--// AVG
+       (AVG(SALES_QTY)) AS AVG_SALES_QTY,		--// AVG
        SUM(LM_SALES)AS LM_SALES,
        SUM(LM_SALES_QTY)AS LM_SALES_QTY,
-       TRUNC(AVG(LM_SALES_QTY))AS LM_AVG_SALES_QTY,		--// AVG
+       (AVG(LM_SALES_QTY))AS LM_AVG_SALES_QTY,		--// AVG
        SUM(P3M_SALES)AS P3M_SALES,
        SUM(P3M_QTY)AS P3M_QTY,
-       TRUNC(AVG(P3M_QTY))AS P3M_AVG_QTY ,		--// AVG
+       (AVG(P3M_QTY))AS P3M_AVG_QTY ,		--// AVG
        SUM(P6M_SALES)AS P6M_SALES,
        SUM(P6M_QTY)AS P6M_QTY,
-       TRUNC(AVG(P6M_QTY))AS P6M_AVG_QTY,		--// AVG
+       (AVG(P6M_QTY))AS P6M_AVG_QTY,		--// AVG
        SUM(P12M_SALES)AS P12M_SALES,
        SUM(P12M_QTY)AS P12M_QTY,
-       TRUNC(AVG(P12M_QTY))AS P12M_AVG_QTY,		--// AVG
+       (AVG(P12M_QTY))AS P12M_AVG_QTY,		--// AVG
        SUM(F3M_SALES)AS F3M_SALES,
        SUM(F3M_QTY)AS F3M_QTY,
-       TRUNC(AVG(F3M_QTY))AS F3M_AVG_QTY,		--// AVG
+       (AVG(F3M_QTY))AS F3M_AVG_QTY,		--// AVG
 	    MAX(LIST_PRICE) AS LIST_PRICE,
        case when SUM (case when LM_SALES_FLAG = 'Y' then 1 else 0 end ) >0 then 1 else 0 end as LM_SALES_FLAG,
        case when SUM(case when P3M_SALES_FLAG = 'Y' then 1 else 0 end) >0 then 1 else 0 end as  P3M_SALES_FLAG,

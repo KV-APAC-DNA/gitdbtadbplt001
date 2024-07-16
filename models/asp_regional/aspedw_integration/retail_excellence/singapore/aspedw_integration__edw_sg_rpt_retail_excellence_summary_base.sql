@@ -192,4 +192,6 @@ target_complaince::numeric(18,0) AS target_complaince
 from   final  
 )
 --Final select
+
 select * from sg_rpt_retail_excellence_summary_base 
+
