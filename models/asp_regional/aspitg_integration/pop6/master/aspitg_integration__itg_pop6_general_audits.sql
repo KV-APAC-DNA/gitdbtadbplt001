@@ -29,9 +29,9 @@ sdl_pop6_th_general_audits as
 (
     select * from {{ref('aspwks_integration__wks_pop6_th_general_audits')}}
 ),
-transformed as 
-(    
-    SELECT 
+transformed as
+(
+    SELECT
         'KR' as cntry_cd,
         substring(file_name, 1, 8) as src_file_date,
         visit_id as visit_id,
@@ -52,8 +52,11 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm
     FROM sdl_pop6_kr_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='KR')
+    {% endif %}
     union
-    SELECT 
+    SELECT
         'TW' as cntry_cd,
         substring(file_name, 1, 8) as src_file_date,
         visit_id as visit_id,
@@ -74,6 +77,9 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm
     FROM sdl_pop6_tw_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='TW')
+    {% endif %}
     union
     SELECT
         'HK' as cntry_cd,
@@ -96,8 +102,11 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm
     FROM sdl_pop6_hk_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='HK')
+    {% endif %}
     union
-    SELECT 
+    SELECT
         'JP' as cntry_cd,
         substring(file_name, 1, 8) as src_file_date,
         visit_id as visit_id,
@@ -118,8 +127,11 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm
     FROM sdl_pop6_jp_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='JP')
+    {% endif %}
     union
-    SELECT 
+    SELECT
         'SG' as cntry_cd,
         substring(file_name, 1, 8) as src_file_date,
         visit_id as visit_id,
@@ -140,8 +152,11 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm
     FROM sdl_pop6_sg_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='SG')
+    {% endif %}
     union
-    SELECT 
+    SELECT
         'TH' as cntry_cd,
         substring(file_name, 1, 8) as src_file_date,
         visit_id as visit_id,
@@ -162,10 +177,13 @@ transformed as
         crtd_dttm as crtd_dttm,
         current_timestamp as updt_dttm,
     FROM sdl_pop6_th_general_audits
+    {% if is_incremental() %}
+        where file_name not in (select distinct file_name from {{this}} where cntry_cd='TH')
+    {% endif %}
 ),
-final as 
+final as
 (
-    select 
+    select
         cntry_cd::varchar(10) as cntry_cd,
         src_file_date::varchar(10) as src_file_date,
         visit_id::varchar(255) as visit_id,
@@ -188,7 +206,7 @@ final as
     from transformed
  {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where file_name not in (select distinct file_name from {{ this }}) 
+    where file_name not in (select distinct file_name from {{ this }})
  {% endif %}
 )
 select * from final

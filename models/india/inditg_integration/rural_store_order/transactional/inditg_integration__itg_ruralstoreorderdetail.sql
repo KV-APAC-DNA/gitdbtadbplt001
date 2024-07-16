@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append"
+    )
+}}
 with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_ruralstoreorderdetail') }}
@@ -24,6 +30,11 @@ final as
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
+    {% if is_incremental() %}
+    --this filter will only be applied on an incremental run
+    where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    and source.filename not in (select distinct filename from {{ this }})
+    {% endif %}
 )
 
 select * from final
