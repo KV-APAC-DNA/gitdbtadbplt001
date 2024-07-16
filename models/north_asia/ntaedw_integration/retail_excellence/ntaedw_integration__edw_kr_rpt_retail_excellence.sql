@@ -1,11 +1,11 @@
 --Import CTE
 
 with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
-    select * from {{ ref('nawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
+    select * from {{ ref('ntawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
 ),
  retail_excellence_msl_target_final as 
  (
-    select * from {{ ref('nawks_integration_wks_retail_excellence_msl_target_final') }}
+    select * from {{ ref('ntawks_integration__wks_retail_excellence_msl_target_final') }}
  ),
 
 edw_kr_rpt_retail_excellence  as 
@@ -126,7 +126,7 @@ SELECT FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       case when mdp_flag='Y' then GCPH_final.TARGET_COMPLIANCE else 100  end as TARGET_COMPLAINCE,
+       case when (mdp_flag='Y' and GCPH_final.global_product_brand  is not null ) then GCPH_final.TARGET_COMPLIANCE else 100  end as TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,

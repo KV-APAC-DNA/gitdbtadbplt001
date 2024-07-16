@@ -1,14 +1,13 @@
 --Import CTE
 with v_edw_ph_rpt_retail_excellence as (
-    select *
-    from {{ source('phledw_integration', 'v_edw_ph_rpt_retail_excellence') }}
+    select * from {{ ref('phledw_integration__edw_ph_rpt_retail_excellence') }}
 ),
 
 --Logical CTE
 transformation as (
     select
         fisc_yr,
-        "CLUSTER",		
+        "cluster",		
         market,
         data_src,
         distributor_code,
@@ -134,7 +133,7 @@ transformation as (
     group by
         flags.fisc_yr,		
         flags.fisc_per,		
-        flags."CLUSTER",	
+        flags."cluster",	
         flags.market,		
         MD5(
             COALESCE(sell_out_channel, 'soc')
@@ -188,7 +187,7 @@ final as (
 select
 fisc_yr::numeric(18,0) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) AS cluster,
+"cluster"::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
 data_src::VARCHAR(14) AS data_src,

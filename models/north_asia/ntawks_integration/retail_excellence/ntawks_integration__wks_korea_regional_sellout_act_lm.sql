@@ -1,5 +1,5 @@
 with wks_korea_regional_sellout_allmonths as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_allmonths') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_allmonths') }}
 ),
 
 --final cte

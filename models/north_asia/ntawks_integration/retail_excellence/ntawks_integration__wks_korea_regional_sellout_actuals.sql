@@ -3,29 +3,29 @@ with edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }} 
 ),
 wks_korea_regional_sellout_act_lm as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_lm') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_lm') }}
 ),
 wks_korea_regional_sellout_act_l3m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l3m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l3m') }}
 ),
 
 wks_korea_regional_sellout_act_l6m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l6m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l6m') }}
 ),
 
 wks_korea_regional_sellout_act_l12m as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_act_l12m') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_act_l12m') }}
 ),
 
 wks_korea_base_retail_excellence as (
-    select * from {{ ref('natwks_integration__wks_korea_base_retail_excellence') }}
+    select * from {{ ref('ntawks_integration__wks_korea_base_retail_excellence') }}
 ),
 wks_korea_regional_sellout_basedim as (
-    select * from {{ ref('nawks_integration__wks_korea_regional_sellout_basedim') }}
+    select * from {{ ref('ntawks_integration__wks_korea_regional_sellout_basedim') }}
 ),
 
 wks_korea_re_basedim_values as (
-    select * from {{ ref('nawks_integration__wks_korea_re_basedim_values') }}
+    select * from {{ ref('ntawks_integration__wks_korea_re_basedim_values') }}
 ),
 --final cte
 korea_regional_sellout_actuals  as (

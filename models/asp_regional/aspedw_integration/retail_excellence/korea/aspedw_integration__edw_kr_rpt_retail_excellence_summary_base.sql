@@ -1,6 +1,6 @@
 --Import CTE
 with v_edw_kr_rpt_retail_excellence as (
-    select * from {{ source('ntaedw_integration', 'v_edw_kr_rpt_retail_excellence') }}
+    select * from {{ ref('ntaedw_integration__edw_kr_rpt_retail_excellence') }}
 ),
 --Logical CTE
 

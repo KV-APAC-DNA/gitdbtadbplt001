@@ -10,6 +10,7 @@ to_char(add_months((current_timestamp::varchar)::timestamp without time zone, (-
 ('YYYYMM'::character varying)::text) AS last_17mnths,  to_char(add_months((current_timestamp::varchar)::timestamp without time zone, (- (26)::bigint)),		--//  
 ('YYYYMM'::character varying)::text) AS last_27mnths,  to_char(add_months((current_timestamp::varchar)::timestamp without time zone, (- (27)::bigint)),		--//  
 ('YYYYMM'::character varying)::text) AS last_28mnths
+
  )
  select * from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM_trans
  
