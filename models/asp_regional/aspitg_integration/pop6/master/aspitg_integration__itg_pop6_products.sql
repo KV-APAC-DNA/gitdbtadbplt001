@@ -158,7 +158,7 @@ wks as (
         NULL AS effective_to,
         'Y' AS active,
         prod.file_name,
-        null as run_id,
+        run_id as run_id,
         prod.crtd_dttm,
         convert_timezone('Asia/Singapore', current_timestamp())::timestamp_ntz(9) AS updt_dttm
     FROM (
@@ -201,7 +201,7 @@ wks as (
         NULL AS effective_to,
         'Y' AS active,
         prod.file_name,
-        null as run_id,
+        run_id as run_id,
         prod.crtd_dttm,
         convert_timezone('Asia/Singapore', current_timestamp())::timestamp_ntz(9) AS updt_dttm
     FROM (
@@ -288,7 +288,7 @@ wks as (
         NULL AS effective_to,
         'Y' AS active,
         prod.file_name,
-        null as run_id,
+        run_id as run_id,
         prod.crtd_dttm,
         convert_timezone('Asia/Singapore', current_timestamp())::timestamp_ntz(9) AS updt_dttm
     FROM (
