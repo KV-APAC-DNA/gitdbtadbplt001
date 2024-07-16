@@ -11,7 +11,7 @@ with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
 edw_kr_rpt_retail_excellence  as 
 (
 SELECT FISC_YR,
-       GCPH_final.FISC_PER,
+       GCPH.FISC_PER,
        CLUSTER,
        MARKET,
        DATA_SRC,
@@ -126,7 +126,7 @@ SELECT FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       case when mdp_flag='Y' then GCPH_final.TARGET_COMPLIANCE else 100  end as TARGET_COMPLAINCE,
+       case when (mdp_flag='Y' and GCPH_final.global_product_brand  is not null ) then GCPH_final.TARGET_COMPLIANCE else 100  end as TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
