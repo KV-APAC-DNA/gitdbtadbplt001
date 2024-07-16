@@ -71,7 +71,7 @@ SELECT T1.JJ_YEAR,
        T1.SLSMN_ID,
        T1.SLSMN_NM,
        T1.SALESMAN_KEY,
-	   T1.SFA_ID,
+	   T1. SFA_ID,
        T1.SLS_QTY,
        T1.HNA,
        T1.NIV,
@@ -210,7 +210,7 @@ FROM itg_target_dist_brand_channel h
              FROM EDW_TIME_DIM) AS ETD
          ON h.year = ETD.jj_year
         AND UPPER (TRIM (h.jj_mnth_long)) = UPPER (TRIM (ETD.JJ_MNTH_LONG))
-  LEFT JOIN edw_distributor_dim d ON TRIM (UPPER (h.jj_sap_dstrbtr_id)) = TRIM (UPPER (d.jj_sap_dstrbtr_id))
+  LEFT JOIN edw_distributor_dim d ON TRIM (UPPER(h.jj_sap_dstrbtr_id)) = TRIM (UPPER(d.jj_sap_dstrbtr_id))
   and concat(h.year,decode(upper(trim(h.jj_mnth_long)),'JANUARY','01','FEBRUARY','02','MARCH','03','APRIL','04','MAY','05','JUNE','06','JULY','07','AUGUST','08',
 'SEPTEMBER','09','OCTOBER','10','NOVEMBER','11','DECEMBER','12','00')) between d.effective_from and d.effective_to
   LEFT JOIN (SELECT DISTINCT brand, franchise,effective_from,effective_to FROM edw_product_dim) EPD

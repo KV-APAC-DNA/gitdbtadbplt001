@@ -34,12 +34,13 @@ final as
     rsd_code::varchar(50) as rsd_code,
     route_code::varchar(50) as route_code,
     filename::varchar(100) as filename,
-    current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
-    from source
+    from source    
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run
     where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    and source.filename not in (select distinct filename from {{ this }}) 
     {% endif %}
 )
 select * from final

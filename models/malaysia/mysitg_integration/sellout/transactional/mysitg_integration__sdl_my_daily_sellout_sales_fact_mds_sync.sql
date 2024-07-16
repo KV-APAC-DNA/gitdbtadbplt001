@@ -1,8 +1,8 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy = "delete+insert",
-        unique_key=["filename"]
+        incremental_strategy = "append",
+        pre_hook="delete from {{this}} where filename in (select distinct filename from {{ ref('mysitg_integration__sdl_my_daily_sellout_sales_fact') }});"
     )}}
 with source as (
      select * from {{ ref('mysitg_integration__sdl_my_daily_sellout_sales_fact') }}
@@ -34,9 +34,5 @@ final as(
         filename::varchar(255) as filename,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    where source.curr_dt > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
 )
 select * from final

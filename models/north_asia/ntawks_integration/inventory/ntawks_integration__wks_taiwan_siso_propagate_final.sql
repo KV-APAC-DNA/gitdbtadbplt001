@@ -1,18 +1,18 @@
 with wks_taiwan_base_detail as
 (
-    select * from snapntawks_integration.wks_taiwan_base_detail
+    select * from {{ ref('ntawks_integration__wks_taiwan_base_detail') }}
 ),
 taiwan_propagate_from_to as
 (
-    select * from snapntawks_integration.taiwan_propagate_from_to
+    select * from {{ ref('ntawks_integration__taiwan_propagate_from_to') }}
 ),
 wks_taiwan_siso_propagate_to_details as
 (
-    select * from snapntawks_integration.wks_taiwan_siso_propagate_to_details
+    select * from {{ ref('ntawks_integration__wks_taiwan_siso_propagate_to_details') }}
 ),
 wks_taiwan_siso_propagate_to_existing_dtls as
 (
-    select * from snapntawks_integration.wks_taiwan_siso_propagate_to_existing_dtls
+    select * from {{ ref('ntawks_integration__wks_taiwan_siso_propagate_to_existing_dtls') }}
 ),
 union_1 as
 (

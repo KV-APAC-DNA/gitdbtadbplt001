@@ -10,3 +10,7 @@ models:
     config: 
       alias: itg_mds_in_vent_prod_msku_mapping
       tags: ["in_mds_refresh","transformation"]
+  - name: inditg_integration__itg_product_uom_master
+    config: 
+      alias: itg_product_uom_master
+      tags: ["in_sdlitg_daily","transformation"]

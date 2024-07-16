@@ -4,67 +4,67 @@ models:
   - name: ntaedw_access__v_rpt_invc
     config:
       alias: v_rpt_invc
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_nts_vs_tgt
     config:
       alias: v_rpt_nts_vs_tgt
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_pos_offtake_daily_korea
     config:
       alias: v_rpt_pos_offtake_daily_korea
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_pos_offtake_wkly_korea
     config:
       alias: v_rpt_pos_offtake_wkly_korea
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_copa
     config:
       alias: v_rpt_copa
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__vw_kr_gt_sellout
     config:
       alias: vw_kr_gt_sellout
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_kr_ecommerce_sellout
     config:
       alias: v_kr_ecommerce_sellout
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__edw_kr_dads_analysis
     config:
       alias: edw_kr_dads_analysis
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_invc_to_nts
     config:
       alias: v_rpt_invc_to_nts
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_onpack
     config:
       alias: v_rpt_onpack
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_tpfgsummary
     config:
       alias: v_rpt_tpfgsummary
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_kr_trade_promotion
     config:
       alias: v_rpt_kr_trade_promotion
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_kr_coupang_ppm
     config:
       alias: v_rpt_kr_coupang_ppm
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__vw_edw_coupang_premium
     config:
       alias: vw_edw_coupang_premium
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__edw_vw_kr_tp_tracker
     config:
       alias: edw_vw_kr_tp_tracker
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__edw_sfmc_naver_dm
     config:
       alias: edw_sfmc_naver_dm
-      tags: ["korea_views","transformation"]
+      tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__vw_tw_forecast
     config:
       alias: vw_tw_forecast
@@ -108,10 +108,6 @@ models:
   - name: ntaedw_access__edw_rpt_hk_pos
     config:
       alias: edw_rpt_hk_pos
-      tags: ["north_asia_views","transformation"]
-  - name: ntaedw_access__edw_vw_pop6_analysis_active_data
-    config:
-      alias: edw_vw_pop6_analysis_active_data
       tags: ["north_asia_views","transformation"]
   - name: ntaedw_access__v_rpt_ims
     config:
