@@ -236,7 +236,7 @@ SELECT pops.cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        pops.file_name,
-       null as run_id,
+       run_id as run_id,
        pops.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm,
        business_units_id,
@@ -271,7 +271,7 @@ SELECT pops.cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        pops.file_name,
-       null as run_id,
+       run_id as run_id,
        pops.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm,
        business_units_id,
@@ -317,7 +317,7 @@ FROM (SELECT itg.*
            itg_pop6_pops_temp itg
       WHERE sdl.hashkey = itg.hashkey
       AND   sdl.popdb_id = itg.popdb_id
-	  AND	itg.active = 'N') pops		  
+	  AND	itg.active = 'N') pops
 UNION ALL
 SELECT cntry_cd,
        SUBSTRING(pops.file_name,1,8) AS src_file_date,
@@ -341,7 +341,7 @@ SELECT cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        pops.file_name,
-      null as run_id,
+      run_id as run_id,
        pops.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm,
        business_units_id,
@@ -360,7 +360,7 @@ SELECT *
 FROM itg_pop6_pops_temp
 WHERE popdb_id NOT IN (SELECT popdb_id FROM wks)),
 final as (
-SELECT 
+SELECT
 cntry_cd::varchar(10) as cntry_cd,
 src_file_date::varchar(32) as src_file_date,
 status::number(18,0) as status,

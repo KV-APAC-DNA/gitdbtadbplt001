@@ -170,25 +170,32 @@ AS (
                                 )
                             )
                     ) LEFT JOIN (
-                    SELECT DISTINCT edw_vw_ps_weights.kpi,
+                    -- SELECT DISTINCT edw_vw_ps_weights.kpi,
+                    --     edw_vw_ps_weights.weight,
+                    --     CASE 
+                    --         WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'GT BigMinimart'::CHARACTER VARYING
+                    --         ELSE edw_vw_ps_weights.retail_environment
+                    --         END AS retail_environment,
+                    --     CASE 
+                    --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'General Trade'::CHARACTER VARYING
+                    --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'Modern Trade'::CHARACTER VARYING
+                    --         ELSE edw_vw_ps_weights.channel
+                    --         END AS channel
+                    -- FROM edw_vw_ps_weights
+                    -- WHERE (
+                    --         (upper((edw_vw_ps_weights.kpi)::TEXT) = ('MSL COMPLIANCE'::CHARACTER VARYING)::TEXT)
+                    --         AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
+                    --         )
+                    SELECT DISTINCT edw_vw_ps_weights.retail_environment,
+                        edw_vw_ps_weights.kpi,
                         edw_vw_ps_weights.weight,
-                        CASE 
-                            WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
-                                THEN 'GT BigMinimart'::CHARACTER VARYING
-                            ELSE edw_vw_ps_weights.retail_environment
-                            END AS retail_environment,
-                        CASE 
-                            WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
-                                THEN 'General Trade'::CHARACTER VARYING
-                            WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
-                                THEN 'Modern Trade'::CHARACTER VARYING
-                            ELSE edw_vw_ps_weights.channel
-                            END AS channel
+                        edw_vw_ps_weights.channel
                     FROM edw_vw_ps_weights
-                    WHERE (
-                            (upper((edw_vw_ps_weights.kpi)::TEXT) = ('MSL COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                            AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
-                            )
+                    WHERE upper(edw_vw_ps_weights.kpi::text) = 'MSL COMPLIANCE'::character varying::text
+                        AND upper(edw_vw_ps_weights.market::text) = 'THAILAND'::character varying::text
                     ) AS kpi_wt ON (
                         (
                             (upper((pop.retail_environment_ps)::TEXT) = upper((kpi_wt.retail_environment)::TEXT))
@@ -342,25 +349,32 @@ AS (
                             WHERE (upper((edw_vw_pop6_visits_sku_audits.cntry_cd)::TEXT) = ('TH'::CHARACTER VARYING)::TEXT)
                             ) AS vst LEFT JOIN edw_vw_pop6_store AS pop ON (((vst.popdb_id)::TEXT = (pop.popdb_id)::TEXT))
                         ) LEFT JOIN (
-                        SELECT DISTINCT edw_vw_ps_weights.kpi,
+                        -- SELECT DISTINCT edw_vw_ps_weights.kpi,
+                        --     edw_vw_ps_weights.weight,
+                        --     CASE 
+                        --         WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
+                        --             THEN 'GT BigMinimart'::CHARACTER VARYING
+                        --         ELSE edw_vw_ps_weights.retail_environment
+                        --         END AS retail_environment,
+                        --     CASE 
+                        --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
+                        --             THEN 'General Trade'::CHARACTER VARYING
+                        --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
+                        --             THEN 'Modern Trade'::CHARACTER VARYING
+                        --         ELSE edw_vw_ps_weights.channel
+                        --         END AS channel
+                        -- FROM edw_vw_ps_weights
+                        -- WHERE (
+                        --         (upper((edw_vw_ps_weights.kpi)::TEXT) = ('OSA COMPLIANCE'::CHARACTER VARYING)::TEXT)
+                        --         AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
+                        --         )
+                        SELECT DISTINCT edw_vw_ps_weights.retail_environment,
+                            edw_vw_ps_weights.kpi,
                             edw_vw_ps_weights.weight,
-                            CASE 
-                                WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
-                                    THEN 'GT BigMinimart'::CHARACTER VARYING
-                                ELSE edw_vw_ps_weights.retail_environment
-                                END AS retail_environment,
-                            CASE 
-                                WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
-                                    THEN 'General Trade'::CHARACTER VARYING
-                                WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
-                                    THEN 'Modern Trade'::CHARACTER VARYING
-                                ELSE edw_vw_ps_weights.channel
-                                END AS channel
+                            edw_vw_ps_weights.channel
                         FROM edw_vw_ps_weights
-                        WHERE (
-                                (upper((edw_vw_ps_weights.kpi)::TEXT) = ('OSA COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                                AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
-                                )
+                        WHERE upper(edw_vw_ps_weights.kpi::text) = 'OSA COMPLIANCE'::character varying::text
+                            AND upper(edw_vw_ps_weights.market::text) = 'THAILAND'::character varying::text
                         ) AS kpi_wt ON (
                             (
                                 (upper((pop.retail_environment_ps)::TEXT) = upper((kpi_wt.retail_environment)::TEXT))
@@ -641,28 +655,38 @@ AS (
                         )
                     )
             ) LEFT JOIN (
-            SELECT DISTINCT edw_vw_ps_weights.kpi,
+            -- SELECT DISTINCT edw_vw_ps_weights.kpi,
+            --     edw_vw_ps_weights.weight,
+            --     CASE 
+            --         WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
+            --             THEN 'GT BigMinimart'::CHARACTER VARYING
+            --         ELSE edw_vw_ps_weights.retail_environment
+            --         END AS retail_environment,
+            --     CASE 
+            --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
+            --             THEN 'General Trade'::CHARACTER VARYING
+            --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
+            --             THEN 'Modern Trade'::CHARACTER VARYING
+            --         ELSE edw_vw_ps_weights.channel
+            --         END AS channel
+            -- FROM edw_vw_ps_weights
+            -- WHERE (
+            --         (
+            --             (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PROMO COMPLIANCE'::CHARACTER VARYING)::TEXT)
+            --             OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('DISPLAY COMPLIANCE'::CHARACTER VARYING)::TEXT)
+            --             )
+            --         AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
+            --         )
+            SELECT DISTINCT edw_vw_ps_weights.retail_environment,
+                edw_vw_ps_weights.kpi,
                 edw_vw_ps_weights.weight,
-                CASE 
-                    WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
-                        THEN 'GT BigMinimart'::CHARACTER VARYING
-                    ELSE edw_vw_ps_weights.retail_environment
-                    END AS retail_environment,
-                CASE 
-                    WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
-                        THEN 'General Trade'::CHARACTER VARYING
-                    WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
-                        THEN 'Modern Trade'::CHARACTER VARYING
-                    ELSE edw_vw_ps_weights.channel
-                    END AS channel
+                edw_vw_ps_weights.channel
             FROM edw_vw_ps_weights
             WHERE (
-                    (
-                        (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PROMO COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                        OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('DISPLAY COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                        )
-                    AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
-                    )
+                    upper(edw_vw_ps_weights.kpi::text) = 'PROMO COMPLIANCE'::character varying::text
+                    OR upper(edw_vw_ps_weights.kpi::text) = 'DISPLAY COMPLIANCE'::character varying::text
+                )
+                AND upper(edw_vw_ps_weights.market::text) = 'THAILAND'::character varying::text
             ) AS kpi_wt ON (
                 (
                     (
@@ -897,31 +921,42 @@ AS (
                         )
                     )
             ) LEFT JOIN (
-            SELECT DISTINCT edw_vw_ps_weights.kpi,
+            -- SELECT DISTINCT edw_vw_ps_weights.kpi,
+            --     edw_vw_ps_weights.weight,
+            --     CASE 
+            --         WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
+            --             THEN 'GT BigMinimart'::CHARACTER VARYING
+            --         ELSE edw_vw_ps_weights.retail_environment
+            --         END AS retail_environment,
+            --     CASE 
+            --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
+            --             THEN 'General Trade'::CHARACTER VARYING
+            --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
+            --             THEN 'Modern Trade'::CHARACTER VARYING
+            --         ELSE edw_vw_ps_weights.channel
+            --         END AS channel
+            -- FROM edw_vw_ps_weights
+            -- WHERE (
+            --         (
+            --             (
+            --                 (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PROMO COMPLIANCE'::CHARACTER VARYING)::TEXT)
+            --                 OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('DISPLAY COMPLIANCE'::CHARACTER VARYING)::TEXT)
+            --                 )
+            --             OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PLANOGRAM COMPLIANCE'::CHARACTER VARYING)::TEXT)
+            --             )
+            --         AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
+            --         )
+            SELECT DISTINCT edw_vw_ps_weights.retail_environment,
+                edw_vw_ps_weights.kpi,
                 edw_vw_ps_weights.weight,
-                CASE 
-                    WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
-                        THEN 'GT BigMinimart'::CHARACTER VARYING
-                    ELSE edw_vw_ps_weights.retail_environment
-                    END AS retail_environment,
-                CASE 
-                    WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
-                        THEN 'General Trade'::CHARACTER VARYING
-                    WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
-                        THEN 'Modern Trade'::CHARACTER VARYING
-                    ELSE edw_vw_ps_weights.channel
-                    END AS channel
+                edw_vw_ps_weights.channel
             FROM edw_vw_ps_weights
             WHERE (
-                    (
-                        (
-                            (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PROMO COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                            OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('DISPLAY COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                            )
-                        OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('PLANOGRAM COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                        )
-                    AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
-                    )
+                    upper(edw_vw_ps_weights.kpi::text) = 'PROMO COMPLIANCE'::character varying::text
+                    OR upper(edw_vw_ps_weights.kpi::text) = 'DISPLAY COMPLIANCE'::character varying::text
+                    OR upper(edw_vw_ps_weights.kpi::text) = 'PLANOGRAM COMPLIANCE'::character varying::text
+                )
+                AND upper(edw_vw_ps_weights.market::text) = 'THAILAND'::character varying::text
             ) AS kpi_wt ON (
                 (
                     (
@@ -1000,7 +1035,9 @@ AS (
         NULL AS prod_hier_l9,
         kpi_wt.weight AS kpi_chnl_wt,
         CASE 
-            WHEN ((pop.channel)::TEXT LIKE ('General%'::CHARACTER VARYING)::TEXT)
+            WHEN 
+            -- ((pop.channel)::TEXT LIKE ('General%'::CHARACTER VARYING)::TEXT)
+            pop.channel::text = 'GT%'::character varying::text
                 THEN mkt_share_gt."target"
             ELSE mkt_share_mt."target"
             END AS mkt_share,
@@ -1141,28 +1178,38 @@ AS (
                                 END
                             )
                     ) LEFT JOIN (
-                    SELECT DISTINCT edw_vw_ps_weights.kpi,
+                    -- SELECT DISTINCT edw_vw_ps_weights.kpi,
+                    --     edw_vw_ps_weights.weight,
+                    --     CASE 
+                    --         WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'GT BigMinimart'::CHARACTER VARYING
+                    --         ELSE edw_vw_ps_weights.retail_environment
+                    --         END AS retail_environment,
+                    --     CASE 
+                    --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'General Trade'::CHARACTER VARYING
+                    --         WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
+                    --             THEN 'Modern Trade'::CHARACTER VARYING
+                    --         ELSE edw_vw_ps_weights.channel
+                    --         END AS channel
+                    -- FROM edw_vw_ps_weights
+                    -- WHERE (
+                    --         (
+                    --             (upper((edw_vw_ps_weights.kpi)::TEXT) = ('SOS COMPLIANCE'::CHARACTER VARYING)::TEXT)
+                    --             OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('SOA COMPLIANCE'::CHARACTER VARYING)::TEXT)
+                    --             )
+                    --         AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
+                    --         )
+                    SELECT DISTINCT edw_vw_ps_weights.retail_environment,
+                        edw_vw_ps_weights.kpi,
                         edw_vw_ps_weights.weight,
-                        CASE 
-                            WHEN ((edw_vw_ps_weights.retail_environment)::TEXT = ('GT Big MM'::CHARACTER VARYING)::TEXT)
-                                THEN 'GT BigMinimart'::CHARACTER VARYING
-                            ELSE edw_vw_ps_weights.retail_environment
-                            END AS retail_environment,
-                        CASE 
-                            WHEN ((edw_vw_ps_weights.channel)::TEXT = ('GT'::CHARACTER VARYING)::TEXT)
-                                THEN 'General Trade'::CHARACTER VARYING
-                            WHEN ((edw_vw_ps_weights.channel)::TEXT = ('MT'::CHARACTER VARYING)::TEXT)
-                                THEN 'Modern Trade'::CHARACTER VARYING
-                            ELSE edw_vw_ps_weights.channel
-                            END AS channel
+                        edw_vw_ps_weights.channel
                     FROM edw_vw_ps_weights
                     WHERE (
-                            (
-                                (upper((edw_vw_ps_weights.kpi)::TEXT) = ('SOS COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                                OR (upper((edw_vw_ps_weights.kpi)::TEXT) = ('SOA COMPLIANCE'::CHARACTER VARYING)::TEXT)
-                                )
-                            AND (upper((edw_vw_ps_weights.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
-                            )
+                            upper(edw_vw_ps_weights.kpi::text) = 'SOS COMPLIANCE'::character varying::text
+                            OR upper(edw_vw_ps_weights.kpi::text) = 'SOA COMPLIANCE'::character varying::text
+                        )
+                        AND upper(edw_vw_ps_weights.market::text) = 'THAILAND'::character varying::text
                     ) AS kpi_wt ON (
                         (
                             (
@@ -1187,7 +1234,8 @@ AS (
                                 )
                             AND (upper((edw_vw_ps_targets.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
                             )
-                        AND ((edw_vw_ps_targets.channel)::TEXT = ('General Trade'::CHARACTER VARYING)::TEXT)
+                        -- AND ((edw_vw_ps_targets.channel)::TEXT = ('General Trade'::CHARACTER VARYING)::TEXT)
+                            AND edw_vw_ps_targets.channel::text = 'GT'::character varying::text
                         )
                 ) AS mkt_share_gt ON (
                     (
@@ -1217,7 +1265,8 @@ AS (
                             )
                         AND (upper((edw_vw_ps_targets.market)::TEXT) = ('THAILAND'::CHARACTER VARYING)::TEXT)
                         )
-                    AND ((edw_vw_ps_targets.channel)::TEXT = ('Modern Trade'::CHARACTER VARYING)::TEXT)
+                    -- AND ((edw_vw_ps_targets.channel)::TEXT = ('Modern Trade'::CHARACTER VARYING)::TEXT)
+                    AND edw_vw_ps_targets.channel::text = 'MT'::character varying::text
                     )
             ) AS mkt_share_mt ON (
                 (

@@ -87,7 +87,7 @@ SELECT poplist.cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        poplist.file_name,
-       null as run_id,
+       run_id as run_id,
        poplist.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm
 FROM (SELECT sdl.*
@@ -110,7 +110,7 @@ SELECT poplist.cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        poplist.file_name,
-       null as run_id,
+       run_id as run_id,
        poplist.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm
 FROM (SELECT sdl.*,itg.effective_from
@@ -119,7 +119,7 @@ FROM (SELECT sdl.*,itg.effective_from
       WHERE sdl.hashkey = itg.hashkey
       AND   sdl.product_list = itg.product_list
 	  AND	sdl.popdb_id = itg.popdb_id
-	  AND	itg.active = 'Y') poplist	
+	  AND	itg.active = 'Y') poplist
 UNION ALL
 SELECT poplist.cntry_cd,
        poplist.src_file_date,
@@ -142,8 +142,8 @@ FROM (SELECT itg.*
       WHERE sdl.hashkey = itg.hashkey
       AND   sdl.product_list = itg.product_list
 	  AND	sdl.popdb_id = itg.popdb_id
-	  AND	itg.active = 'N') poplist	  
-	  
+	  AND	itg.active = 'N') poplist
+
 UNION ALL
 SELECT poplist.cntry_cd,
        SUBSTRING(poplist.file_name,1,8) AS src_file_date,
@@ -157,7 +157,7 @@ SELECT poplist.cntry_cd,
        NULL AS effective_to,
        'Y' AS active,
        poplist.file_name,
-       null as run_id,
+       run_id as run_id,
        poplist.crtd_dttm,
        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) AS updt_dttm
 FROM (SELECT *

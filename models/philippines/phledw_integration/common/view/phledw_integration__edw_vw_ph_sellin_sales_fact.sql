@@ -111,7 +111,7 @@ t2 as (
 				ELSE (0)::NUMERIC
 				END) AS nts_val
 	from edw_copa_trans_fact t1
-	where ((t1.sls_org)::text = '2300'::text)
+	where ((t1.sls_org)::text = '2300'::text) and ctry_key = 'PH'
 	group by t1.co_cd,
 		t1.ctry_key,
 		t1.caln_day,
