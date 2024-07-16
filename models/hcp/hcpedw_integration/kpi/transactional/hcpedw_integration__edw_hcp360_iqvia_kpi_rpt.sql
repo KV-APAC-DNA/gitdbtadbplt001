@@ -1,4 +1,16 @@
 with 
+wks_tp_salescube_mat2 as 
+(
+    select * from snapindwks_integration.wks_tp_salescube_mat2
+),
+wks_tp_salescube_ytd2 as 
+(
+    select * from snapindwks_integration.wks_tp_salescube_ytd2
+),
+wks_tp_salescube_base as 
+(
+    select * from snapindwks_integration.wks_tp_salescube_base
+),
 edw_hcp360_kpi_rpt as 
 (
     select * from snapindedw_integration.edw_hcp360_kpi_rpt
@@ -22,7 +34,7 @@ edw_hcp360_sfmc_hcp_dim as
 itg_hcp360_sfmc_hcp_details as 
 (
     select * from snapinditg_integration.itg_hcp360_sfmc_hcp_details
-),
+), 
 temp_ventasys as 
 (
 WITH BASE
@@ -591,10 +603,9 @@ AS
 left join (select email_name,hcp_id from EDW_HCP360_KPI_RPT where source_system = 'Ventasys' group by 1,2) vent_hcp
 on sfmc.email_name = vent_hcp.email_name
 WHERE SOURCE_SYSTEM = 'SFMC'
-AND  sfmc.HCP_ID IS NOT NULL 
-AND (HCP_MASTER_ID  NOT IN (SELECT MASTER_ID FROM edw_hcp360_iqvia_kpi_rpt)
-    or HCP_MASTER_ID is null)
--- AND ACTIVITY_DATE IS NOT NULL
+-- AND  sfmc.HCP_ID IS NOT NULL 
+-- AND (HCP_MASTER_ID  NOT IN (SELECT MASTER_ID FROM {{this}})
+--     or HCP_MASTER_ID is null)
  
 ),NOOFEMAILSENT
 AS
@@ -693,7 +704,7 @@ GROUP BY 1,
          2,
          3,
          4),
--- Added as part of IQVIA Dashboard story
+
 PD_SFMC
 AS
 (SELECT DIM.HCP_ID,
@@ -703,7 +714,7 @@ AS
         CONSENT_DATE
  FROM EDW_HCP360_SFMC_HCP_DIM DIM
  INNER JOIN (SELECT EMAIL, OPT_IN_FOR_COMMUNICATION, CREATED_DATE AS CONSENT_DATE, ROW_NUMBER() OVER(PARTITION BY EMAIL ORDER BY UPDATED_DATE) AS RNK
-             FROM   HCP_ITG.ITG_HCP360_SFMC_HCP_DETAILS) PD
+             FROM   ITG_HCP360_SFMC_HCP_DETAILS) PD
          ON DIM.EMAIL = PD.EMAIL
         AND PD.RNK =1
  WHERE DIM.HCP_ID IS NOT NULL)
@@ -716,7 +727,7 @@ AS
        B.MONTH,
        B.HCP_ID,
        B.HCP_CREATED_DATE ,
-       NULL,
+       NULL as territory_id,
        B.REGION ,
        B.ZONE,
        B.TERRITORY,
@@ -752,37 +763,37 @@ AS
 	   B.ventasys_hcp_id
 FROM BASE1 B
   LEFT JOIN NOOFEMAILSENT S
-         ON --B.BRAND = S.BRAND AND 
+         ON 
             B.HCP_ID = S.HCP_ID
         AND B.YEAR = S.YEAR
         AND B.MONTH = S.MONTH
   LEFT JOIN NOOFEMAILDELIVERED D
-         ON --B.BRAND = D.BRAND AND
+         ON 
             B.HCP_ID = D.HCP_ID
         AND B.YEAR = D.YEAR
         AND B.MONTH = D.MONTH
   LEFT JOIN NOOFEMAILOPENED O
-         ON --B.BRAND = O.BRAND AND
+         ON 
             B.HCP_ID = O.HCP_ID
         AND B.YEAR = O.YEAR
         AND B.MONTH = O.MONTH
   LEFT JOIN NOOFEMAILCLICKED C
-         ON --B.BRAND = C.BRAND AND 
+         ON 
             B.HCP_ID = C.HCP_ID
         AND B.YEAR = C.YEAR
         AND B.MONTH = C.MONTH
   LEFT JOIN NOOFEMAILCLICKUNIQ UC
-         ON --B.BRAND = UC.BRAND AND 
+         ON  
          B.HCP_ID = UC.HCP_ID
         AND B.YEAR = UC.YEAR
         AND B.MONTH = UC.MONTH
   LEFT JOIN NOOFEMAILUNSUBS U
-         ON --B.BRAND = U.BRAND AND 
+         ON 
          B.HCP_ID = U.HCP_ID
         AND B.YEAR = U.YEAR
         AND B.MONTH = U.MONTH
   LEFT JOIN NOOFEMAILFORWARD F
-         ON --B.BRAND = F.BRAND AND
+         ON 
          B.HCP_ID = F.HCP_ID
         AND B.YEAR = F.YEAR
         AND B.MONTH = F.MONTH
@@ -873,17 +884,467 @@ LEFT JOIN  wks_tp_salescube_mat2 mat
        AND base.sales_area = mat.sales_area
 GROUP BY 1,2,3,4,5,6,7,8,9
 ),
+trans_ventasys as 
+(
+    select 
+        brand,
+        null as ventasys_id,
+        null as ventasys_name,
+        null as ventasys_mobile,
+        null as ventasys_email,
+        null as veeva_id,
+        null as veeva_name,
+        null as veeva_mobile,
+        null as veeva_email,
+        null as sfmc_id,
+        null as sfmc_name,
+        null as sfmc_mobile,
+        null as sfmc_email,
+        null as master_hcp_key,
+        source_system,
+        hcp_id,
+        null as customer_name,
+        null as cell_phone,
+        null as email,
+        null as account_source_id,
+        null as ventasys_team_name,
+        null as ventasys_custid,
+        null as subscriber_key,
+        data_source,
+        country_code,
+        region,
+        zone,
+        territory as area,
+        classification,
+        speciality,
+        core_noncore,
+        year,
+        month,
+        hcp_created_date,
+        territory_id,
+        region_hq,
+        is_active,
+        field_rep_active as is_active_msr,
+        first_prescription_date,
+        prescriber_type,
+        total_prescriptions,
+        prescription_units,
+        uniqprod as unique_product_type,
+        planned_visits,
+        actual_visits,
+        phones as phone_connects,
+        noofvideo as video_connects,
+        nooff2f as f2f_connects,
+        avgproddetail as avg_prod_detailed,
+        lables as lbl_given,
+        samples_given,
+        emailsent as EMAILS_SENT,
+        emailsdelivered as EMAILS_DELIVERED,
+        emailsopened as EMAILS_OPENED,
+        emailsclicked as EMAILS_CLICKED,
+        emailsuniqclick as EMAILS_UNIQUE_CLICKED,
+        emailsunsubscribed as EMAILS_UNSUSBSCRIBED,
+        emailsforwarded as EMAILS_FORWARDED,
+        average_call_duration,
+        event_reg as events_registered,
+        event_atend as events_attended,
+        speaker as events_as_speaker,
+        avg_key_msg as avg_key_msgs_delivered,
+        hcp_master_id as master_id,
+        null as activity_date,
+        null as prescription_id,
+        null as all_visitor,
+        null as total_session_duration,
+        null as sessions,
+        null as total_bounces,
+        null as sales_value,
+        null as iqvia_brand,
+        null as brand_category,
+        null as report_brand_reference,
+        null as iqvia_product_description,
+        null as totalprescriptions_iqvia,
+        null as totalprescriptions_by_brand,
+        null as totalprescriptions_jnj_brand,
+        null as num_buying_retailer,
+        null as num_buying_retailer_ytd,
+        null as num_buying_retailer_mat,
+        consent_flag,
+        projected_doctors,
+        consent_date,
+        null as ventasys_hcp_id
+    from temp_ventasys
+),
+trans_sfmc as 
+(
+    select 
+        brand,
+        null as ventasys_id,
+        null as ventasys_name,
+        null as ventasys_mobile,
+        null as ventasys_email,
+        null as veeva_id,
+        null as veeva_name,
+        null as veeva_mobile,
+        null as veeva_email,
+        null as sfmc_id,
+        null as sfmc_name,
+        null as sfmc_mobile,
+        null as sfmc_email,
+        null as master_hcp_key,
+        source_system,
+        hcp_id,
+        null as customer_name,
+        null as cell_phone,
+        null as email,
+        null as account_source_id,
+        null as ventasys_team_name,
+        null as ventasys_custid,
+        null as subscriber_key,
+        data_source,
+        country_code,
+        region,
+        zone,
+        territory as area,
+        classification,
+        speciality,
+        core_noncore,
+        year,
+        month,
+        hcp_created_date,
+        territory_id,
+        region_hq,
+        is_active,
+        is_active_msr,
+        first_prescription_date,
+        prescriber_type,
+        total_prescriptions,
+        prescription_units,
+        unique_product_type,
+        planned_visits,
+        actual_visits,
+        phone_connects,
+        video_connects,
+        f2f_connects,
+        avg_prod_detailed,
+        lbl_given,
+        samples_given,
+        emailsent as emails_sent,
+        emailsdelivered as emails_delivered,
+        emailsopened as emails_opened,
+        emailsclicked as emails_clicked,
+        emailsuniqclick as emails_unique_clicked,
+        emailsunsubscribed as emails_unsusbscribed,
+        emailsforwarded as emails_forwarded,
+        average_call_duration,
+        null as events_registered,
+        null as events_attended,
+        null as events_as_speaker,
+        null as avg_key_msgs_delivered,
+        null as master_id,
+        null as activity_date,
+        null as prescription_id,
+        null as all_visitor,
+        null as total_session_duration,
+        null as sessions,
+        null as total_bounces,
+        null as sales_value,
+        null as iqvia_brand,
+        null as brand_category,
+        null as report_brand_reference,
+        null as iqvia_product_description,
+        null as totalprescriptions_iqvia,
+        null as totalprescriptions_by_brand,
+        null as totalprescriptions_jnj_brand,
+        null as num_buying_retailer,
+        null as num_buying_retailer_ytd,
+        null as num_buying_retailer_mat,
+        consent_flag,
+        null as projected_doctors,
+        consent_date,
+        ventasys_hcp_id
+from temp_sfmc
+),
+trans_ga360 as 
+(
+    select 
+    brand,
+    null as ventasys_id,
+    null as ventasys_name,
+    null as ventasys_mobile,
+    null as ventasys_email,
+    null as veeva_id,
+    null as veeva_name,
+    null as veeva_mobile,
+    null as veeva_email,
+    null as sfmc_id,
+    null as sfmc_name,
+    null as sfmc_mobile,
+    null as sfmc_email,
+    null as master_hcp_key,
+    source_system,
+    null as hcp_id,
+    null as customer_name,
+    null as cell_phone,
+    null as email,
+    null as account_source_id,
+    null as ventasys_team_name,
+    null as ventasys_custid,
+    null as subscriber_key,
+    data_source,
+    country_code,
+    region,
+    null as zone,
+    null as area,
+    null as classification,
+    null as speciality,
+    null as core_noncore,
+    year,
+    month,
+    null as hcp_created_date,
+    null as territory_id,
+    null as region_hq,
+    null as is_active,
+    null as is_active_msr,
+    null as first_prescription_date,
+    null as prescriber_type,
+    null as total_prescriptions,
+    null as prescription_units,
+    null as unique_product_type,
+    null as planned_visits,
+    null as actual_visits,
+    null as phone_connects,
+    null as video_connects,
+    null as f2f_connects,
+    null as avg_prod_detailed,
+    null as lbl_given,
+    null as samples_given,
+    null as emails_sent,
+    null as emails_delivered,
+    null as emails_opened,
+    null as emails_clicked,
+    null as emails_unique_clicked,
+    null as emails_unsusbscribed,
+    null as emails_forwarded,
+    null as average_call_duration,
+    null as events_registered,
+    null as events_attended,
+    null as events_as_speaker ,
+    null as avg_key_msgs_delivered,
+    null as master_id,
+    null as activity_date,
+    null as prescription_id,
+    all_visitor,
+    total_session_duration,
+    sessions,
+    total_bounces,
+    null as sales_value,
+    null as iqvia_brand,
+    null as brand_category,
+    null as report_brand_reference,
+    null as iqvia_product_description,
+    null as totalprescriptions_iqvia,
+    null as totalprescriptions_by_brand,
+    null as totalprescriptions_jnj_brand,
+    null as num_buying_retailer,
+    null as num_buying_retailer_ytd,
+    null as num_buying_retailer_mat,
+    null as consent_flag,
+    null as projected_doctors,
+    null as consent_date,
+    null as ventasys_hcp_id
+    from temp_ga360
+),
+trans_iqvia as (
+    select 
+        brand,
+        null as ventasys_id,
+        null as ventasys_name,
+        null as ventasys_mobile,
+        null as ventasys_email,
+        null as veeva_id,
+        null as veeva_name,
+        null as veeva_mobile,
+        null as veeva_email,
+        null as sfmc_id,
+        null as sfmc_name,
+        null as sfmc_mobile,
+        null as sfmc_email,
+        null as master_hcp_key,
+        source_system,
+        null as hcp_id,
+        null as customer_name,
+        null as cell_phone,
+        null as email,
+        null as account_source_id,
+        null as ventasys_team_name,
+        null as ventasys_custid,
+        null as subscriber_key,
+        data_source,
+        country_code,
+        region,
+        null as zone,
+        null as area,
+        null as classification,
+        null as speciality,
+        null as core_noncore,
+        year,
+        month,
+        null as hcp_created_date,
+        null as territory_id,
+        null as region_hq,
+        null as is_active,
+        null as is_active_msr,
+        null as first_prescription_date,
+        null as prescriber_type,
+        null as total_prescriptions,
+        null as prescription_units,
+        null as unique_product_type,
+        null as planned_visits,
+        null as actual_visits,
+        null as phone_connects,
+        null as video_connects,
+        null as f2f_connects,
+        null as avg_prod_detailed,
+        null as lbl_given,
+        null as samples_given,
+        null as emails_sent,
+        null as emails_delivered,
+        null as emails_opened,
+        null as emails_clicked,
+        null as emails_unique_clicked,
+        null as emails_unsusbscribed,
+        null as emails_forwarded,
+        null as average_call_duration,
+        null as events_registered,
+        null as events_attended,
+        null as events_as_speaker ,
+        null as avg_key_msgs_delivered,
+        null as master_id,
+        null as activity_date,
+        null as prescription_id,
+        null as all_visitor,
+        null as total_session_duration,
+        null as sessions,
+        null as total_bounces,
+        null as sales_value,
+        iqvia_brand,
+        brand_category,
+        report_brand_reference,
+        iqvia_product_description,
+        totalprescriptions_iqvia,
+        totalprescriptions_by_brand,
+        totalprescriptions_jnj_brand,
+        null as num_buying_retailer,
+        null as num_buying_retailer_ytd,
+        null as num_buying_retailer_mat,
+        null as consent_flag,
+        null as projected_doctors,
+        null as consent_date,
+        null as ventasys_hcp_id
+    from temp_iqvia
+),
+trans_final as 
+(
+    select 
+
+        brand,
+        null as ventasys_id,
+        null as ventasys_name,
+        null as ventasys_mobile,
+        null as ventasys_email,
+        null as veeva_id,
+        null as veeva_name,
+        null as veeva_mobile,
+        null as veeva_email,
+        null as sfmc_id,
+        null as sfmc_name,
+        null as sfmc_mobile,
+        null as sfmc_email,
+        null as master_hcp_key,
+        source_system,
+        null as hcp_id,
+        null as customer_name,
+        null as cell_phone,
+        null as email,
+        null as account_source_id,
+        null as ventasys_team_name,
+        null as ventasys_custid,
+        null as subscriber_key,
+        data_source,
+        country_code,
+        region,
+        zone,
+        area,
+        null as classification,
+        null as speciality,
+        null as core_noncore,
+        year,
+        month,
+        null as hcp_created_date,
+        null as territory_id,
+        null as region_hq,
+        null as is_active,
+        null as is_active_msr,
+        null as first_prescription_date,
+        null as prescriber_type,
+        null as total_prescriptions,
+        null as prescription_units,
+        null as unique_product_type,
+        null as planned_visits,
+        null as actual_visits,
+        null as phone_connects,
+        null as video_connects,
+        null as f2f_connects,
+        null as avg_prod_detailed,
+        null as lbl_given,
+        null as samples_given,
+        null as emails_sent,
+        null as emails_delivered,
+        null as emails_opened,
+        null as emails_clicked,
+        null as emails_unique_clicked,
+        null as emails_unsusbscribed,
+        null as emails_forwarded,
+        null as average_call_duration,
+        null as events_registered,
+        null as events_attended,
+        null as events_as_speaker ,
+        null as avg_key_msgs_delivered,
+        null as master_id,
+        null as activity_date,
+        null as prescription_id,
+        null as all_visitor,
+        null as total_session_duration,
+        null as sessions,
+        null as total_bounces,
+        sales_value,
+        null as iqvia_brand,
+        null as brand_category,
+        null as report_brand_reference,
+        null as iqvia_product_description,
+        null as totalprescriptions_iqvia,
+        null as totalprescriptions_by_brand,
+        null as totalprescriptions_jnj_brand,
+        num_buying_retailer,
+        num_buying_retailer_ytd,
+        num_buying_retailer_mat,
+        null as consent_flag,
+        null as projected_doctors,
+        null as consent_date,
+        null as ventasys_hcp_id
+    from temp_final
+),
 trans as 
 (
-    select * from temp_ventasys
+    select * from trans_ventasys
     union all
-    select * from temp_sfmc
+    select * from trans_sfmc
     union all
-    select * from temp_ga360
+    select * from trans_ga360
     union all
-    select * from temp_iqvia
+    select * from trans_iqvia
     union all
-    select * from temp_final
+    select * from trans_final
     
 ),
 final as 
