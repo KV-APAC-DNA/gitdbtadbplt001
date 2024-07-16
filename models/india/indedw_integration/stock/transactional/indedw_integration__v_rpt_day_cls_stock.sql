@@ -10,7 +10,7 @@ with edw_retailer_calendar_dim as
 ),
 edw_day_cls_stock_fact as
 (
-    select * from snapindedw_integration.edw_day_cls_stock_fact
+    select * from {{ ref('indedw_integration__edw_day_cls_stock_fact') }}
 ),
 edw_customer_dim as
 (
