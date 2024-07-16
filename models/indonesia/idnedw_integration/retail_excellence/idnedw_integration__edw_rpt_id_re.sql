@@ -3,10 +3,14 @@ with wks_id_rpt_re_gcph as (
     select * from {{ ref('idnwks_integration__wks_id_rpt_re_gcph') }}
 ),
 
+wks_id_re_msl_targets as (
+    select * from {{ ref('idnwks_integration__wks_id_re_msl_targets') }}
+),
+
 --final cte
 edw_rpt_id_re as (
     SELECT jj_yr AS FISC_YR,
-       jj_mnth_id AS FISC_PER,
+       main.jj_mnth_id AS FISC_PER,
        "cluster",
        MARKET,
        data_src,
@@ -90,8 +94,8 @@ edw_rpt_id_re as (
        PKA_VARIANT_DESC,
        --null as PKA_SUB_VARIANT_CD, 
        PKA_SUB_VARIANT_DESC,
-       GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       main.GLOBAL_PRODUCT_FRANCHISE,
+       main.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,
@@ -133,7 +137,7 @@ edw_rpt_id_re as (
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       TARGET_COMPLAINCE,
+       COALESCE (tgt.TARGET_COMPLAINCE, 100) as target_complaince,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
@@ -190,6 +194,7 @@ edw_rpt_id_re as (
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
        SYSDATE() AS CRT_DTTM
 FROM wks_id_rpt_re_gcph MAIN
+left join wks_id_re_msl_targets tgt on main.jj_mnth_id = tgt.jj_mnth_id and upper(main.global_product_brand) = upper(tgt.global_product_brand)
 ),
 
 final as (
@@ -309,7 +314,7 @@ final as (
     p6m_sales_flag::varchar(1) as p6m_sales_flag,
     p12m_sales_flag::varchar(1) as p12m_sales_flag,
     mdp_flag::varchar(1) as mdp_flag,
-    target_complaince::integer as target_complaince,
+    target_complaince::numeric(38,6) as target_complaince,
     list_price::numeric(38,6) as list_price,
     total_sales_lm::numeric(38,6) as total_sales_lm,
     total_sales_p3m::numeric(38,6) as total_sales_p3m,
