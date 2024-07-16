@@ -1,6 +1,6 @@
 with  wks_mds_reds_market_msl_target_ph as
 (
-    select * from {{ ref('aspwks_integration_wks_mds_reds_market_msl_target_final') }}
+    select * from {{ ref('aspedw_integration__wks_mds_reds_market_msl_target_final') }}
 ),
 
 ph_rpt_retail_excellence_sop as 
