@@ -11,19 +11,19 @@
 with 
 vw_edw_hcp360_hcpmaster_dim as 
 (
-    select * from snapindedw_integration.vw_edw_hcp360_hcpmaster_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_hcpmaster_dim') }}
 ),
 edw_hcp360_sfmc_hcp_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_sfmc_hcp_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_sfmc_hcp_dim') }}
 ),
 edw_hcp360_email_activity_fact as 
 (
-    select * from snapindedw_integration.edw_hcp360_email_activity_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_email_activity_fact') }}
 ),
 itg_mds_hcp360_hcp_targets_transpose as 
 (
-    select * from snapinditg_integration.itg_mds_hcp360_hcp_targets_transpose
+    select * from {{ ref('hcpitg_integration__itg_mds_hcp360_hcp_targets_transpose') }}
 ),
 
 tempa as 

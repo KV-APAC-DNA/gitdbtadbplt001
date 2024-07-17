@@ -11,39 +11,39 @@
 with
 vw_edw_hcp360_ventasys_hcp_dim as 
 (
-    select * from snapindedw_integration.vw_edw_hcp360_ventasys_hcp_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_ventasys_hcp_dim') }}
 ),
 edw_hcp360_in_ventasys_brand_map as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_brand_map
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_brand_map') }}
 ),
 edw_hcp360_in_ventasys_territory_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_territory_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_territory_dim') }}
 ),
 vw_edw_hcp360_hcpmaster_dim as 
 (
-    select * from snapindedw_integration.vw_edw_hcp360_hcpmaster_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_hcpmaster_dim') }}
 ),
 edw_hcp360_in_ventasys_employee_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_employee_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_employee_dim') }}
 ),
 wks_edw_hcp360_ventasys_call_rx as 
 (
-    select * from snapindwks_integration.wks_edw_hcp360_ventasys_call_rx
+    select * from {{ ref('hcpwks_integration__wks_edw_hcp360_ventasys_call_rx') }}
 ),
 edw_hcp360_call_fact as 
 (
-    select * from snapindedw_integration.edw_hcp360_call_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_call_fact') }}
 ),
 edw_hcp360_ventasys_hcp_dim_snapshot as 
 (
-    select * from snapindedw_integration.edw_hcp360_ventasys_hcp_dim_snapshot
+    select * from {{ ref('hcpedw_integration__edw_hcp360_ventasys_hcp_dim_snapshot') }}
 ),
 wks_edw_hcp360_ventasys_hcp_status as 
 (
-    select * from snapindwks_integration.wks_edw_hcp360_ventasys_hcp_status
+    select * from {{ ref('hcpwks_integration__wks_edw_hcp360_ventasys_hcp_status') }}
 ),
 tempa as 
 (

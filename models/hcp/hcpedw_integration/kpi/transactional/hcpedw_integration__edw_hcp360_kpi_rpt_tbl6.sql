@@ -12,7 +12,7 @@
 with 
 edw_ga360_aspac_sessions as 
 (
-    select * from snapindedw_integration.edw_ga360_aspac_sessions
+    select * from {{ ref('hcpedw_integration__edw_ga360_aspac_sessions') }}
 ),
 trans as 
 (

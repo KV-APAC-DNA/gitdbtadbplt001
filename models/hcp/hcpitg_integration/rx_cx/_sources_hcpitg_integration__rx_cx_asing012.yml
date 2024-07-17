@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: snapindwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: snapindwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_hcp360_projected_hcp_speciality_detail
+      

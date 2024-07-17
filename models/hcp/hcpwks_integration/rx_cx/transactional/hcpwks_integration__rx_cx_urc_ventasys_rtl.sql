@@ -5,8 +5,8 @@ rx_cx_rxrtl_qtly_agg as
 ),
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
+), 
 final as 
 (
     SELECT  

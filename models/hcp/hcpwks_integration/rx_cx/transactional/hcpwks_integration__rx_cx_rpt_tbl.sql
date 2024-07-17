@@ -9,7 +9,7 @@ salesman_details as
 ),
 itg_salesperson_mothersku_tmp as 
 (
-    select * from snapinditg_integration.itg_salesperson_mothersku_tmp
+    select * from {{ source('inditg_integration', 'itg_salesperson_mothersku_tmp') }}
 ),
 final as 
 (

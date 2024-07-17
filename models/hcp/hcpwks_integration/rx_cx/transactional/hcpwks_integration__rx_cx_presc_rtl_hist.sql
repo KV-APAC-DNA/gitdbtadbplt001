@@ -5,8 +5,8 @@ rx_cx_hcp_presc as
 ),
 itg_hcp360_in_ventasys_hcprtl as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_hcprtl
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcprtl') }}
+), 
 final as 
 (
     SELECT tbl.fisc_yr,

@@ -1,71 +1,71 @@
 with 
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
 ),
 itg_hcp360_in_ventasys_hcprtl as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_hcprtl
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcprtl') }}
 ),
 itg_hcp360_in_ventasys_rxrtl as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rxrtl
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rxrtl') }}
 ),
 edw_hcp360_in_ventasys_hcp_dim_latest as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_hcp_dim_latest
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim_latest') }}
 ),
 edw_hcp360_in_ventasys_employee_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_employee_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_employee_dim') }}
 ),
 edw_rpt_pob_cx_final as 
 (
-    select * from snapindedw_integration.edw_rpt_pob_cx_final
+    select * from {{ ref('hcpedw_integration__edw_rpt_pob_cx_final') }}
 ),
 edw_product_dim as 
 (
-    select * from snapindedw_integration.edw_product_dim
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 edw_retailer_calendar_dim as 
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_ventasys_jnj_prod_mapping as 
 (
-    select * from snapinditg_integration.itg_ventasys_jnj_prod_mapping
+    select * from {{ source('inditg_integration', 'itg_ventasys_jnj_prod_mapping') }}
 ),
 edw_rpt_sales_details as 
 (
-    select * from snapindedw_integration.edw_rpt_sales_details
+    select * from {{ ref('indedw_integration__edw_rpt_sales_details') }}
 ),
 edw_retailer_calendar_dim as 
 (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_retailer_dim as 
 (
-    select * from snapindedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 edw_customer_dim as 
 (
-    select * from snapindedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 itg_in_rcustomerroute as 
 (
-    select * from snapinditg_integration.itg_in_rcustomerroute
+    select * from {{ ref('inditg_integration__itg_in_rcustomerroute') }}
 ),
 itg_in_rroute as 
 (
-    select * from snapinditg_integration.itg_in_rroute
+    select * from {{ ref('inditg_integration__itg_in_rroute') }}
 ),
 itg_in_rsalesmanroute as 
 (
-    select * from snapinditg_integration.itg_in_rsalesmanroute
+    select * from {{ ref('inditg_integration__itg_in_rsalesmanroute') }}
 ),
 itg_in_rsalesman as 
 (
-    select * from snapinditg_integration.itg_in_rsalesman
+    select * from {{ ref('inditg_integration__itg_in_rsalesman') }}
 ),
 wks_rx_to_cx_to_pob_base_rtl as 
 (

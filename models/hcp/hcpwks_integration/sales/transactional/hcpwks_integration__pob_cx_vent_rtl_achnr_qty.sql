@@ -4,8 +4,8 @@ with pob_cx_sales_achnr_qty as
 ),
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
-), --hcp ref
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
+), 
 final as 
 (
     SELECT urc,

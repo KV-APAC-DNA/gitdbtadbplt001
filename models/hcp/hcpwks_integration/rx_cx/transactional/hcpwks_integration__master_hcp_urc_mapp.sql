@@ -5,12 +5,12 @@ hcp_master_data as
 ),
 itg_hcp360_in_ventasys_hcprtl as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_hcprtl
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcprtl') }}
+), 
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
+), 
 final as 
 (
     SELECT inn.*

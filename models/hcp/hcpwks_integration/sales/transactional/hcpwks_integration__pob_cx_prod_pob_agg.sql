@@ -5,8 +5,8 @@ itg_query_parameters as
 ),
 itg_hcp360_in_ventasys_pob_data as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_pob_data
-), --hcp ref
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_pob_data') }}
+), 
 edw_retailer_calendar_dim as 
 (
     select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}

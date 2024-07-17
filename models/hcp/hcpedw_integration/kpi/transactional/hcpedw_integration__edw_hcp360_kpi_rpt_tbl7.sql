@@ -11,19 +11,19 @@
 with 
 wks_edw_hcp360_sales_data as 
 (
-    select * from snapindwks_integration.wks_edw_hcp360_sales_data
+    select * from {{ ref('hcpwks_integration__wks_edw_hcp360_sales_data') }}
 ),
 itg_mds_in_hcp_sales_rep_mapping as 
 (
-    select * from snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping
+    select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping') }}
 ),
 itg_mds_in_hcp_sales_hierarchy_mapping as 
 (
-    select * from snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping
+    select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
 ),
 wks_edw_hcp360_sales_cube_details as 
 (
-    select * from snapindwks_integration.wks_edw_hcp360_sales_cube_details
+    select * from {{ ref('hcpwks_integration__wks_edw_hcp360_sales_cube_details') }}
 ),
 trans_a as 
 (

@@ -1,12 +1,12 @@
 with 
 edw_hcp360_in_ventasys_employee_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_employee_dim
-), --hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_employee_dim') }}
+), 
 edw_hcp360_in_ventasys_hcp_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_hcp_dim
-), --hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim') }}
+), 
 final as 
 (
     SELECT 

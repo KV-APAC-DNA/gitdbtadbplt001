@@ -11,31 +11,31 @@
 with 
 edw_hcp360_veeva_fact_event_attendee as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_fact_event_attendee
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_event_attendee') }}
 ),
 edw_hcp360_veeva_dim_medical_event as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_medical_event
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_medical_event') }}
 ),
 edw_hcp360_veeva_dim_hcp as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 vw_edw_hcp360_hcpmaster_dim as 
 (
-    select * from snapindedw_integration.vw_edw_hcp360_hcpmaster_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_hcpmaster_dim') }}
 ),
 edw_hcp360_veeva_dim_organization_hcp as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_organization_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization_hcp') }}
 ),
 itg_hcp360_veeva_object_territory_association as 
 (
-    select * from snapinditg_integration.itg_hcp360_veeva_object_territory_association
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_object_territory_association') }}
 ),
 edw_hcp360_veeva_fact_survey_response as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_fact_survey_response
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_survey_response') }}
 ),
 
 tempa as 

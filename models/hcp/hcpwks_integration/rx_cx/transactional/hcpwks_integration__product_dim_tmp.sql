@@ -5,8 +5,8 @@ edw_product_dim as
 ),
 itg_ventasys_jnj_prod_mapping as 
 (
-    select * from snapinditg_integration.itg_ventasys_jnj_prod_mapping
-), --used as source
+    select * from {{ source('inditg_integration', 'itg_ventasys_jnj_prod_mapping') }}
+), 
 final as 
 (
     SELECT prod_vent,

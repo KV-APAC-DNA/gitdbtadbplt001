@@ -9,8 +9,8 @@ itg_query_parameters as
 ),
 itg_hcp360_in_ventasys_rxrtl as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rxrtl
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rxrtl') }}
+), 
 rx_cx_presc_rtl_hist as 
 (
     select * from {{ ref('hcpwks_integration__rx_cx_presc_rtl_hist') }}

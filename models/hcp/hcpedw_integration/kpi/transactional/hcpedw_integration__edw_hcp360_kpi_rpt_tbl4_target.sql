@@ -11,7 +11,7 @@
 with 
 itg_mds_hcp360_hcp_targets_transpose as 
 (
-    select * from snapinditg_integration.itg_mds_hcp360_hcp_targets_transpose
+    select * from {{ ref('hcpitg_integration__itg_mds_hcp360_hcp_targets_transpose') }}
 ),
 
 

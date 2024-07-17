@@ -1,8 +1,8 @@
 with 
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
-), --ref hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
+), 
 pob_cx_prod_pob_agg as 
 (
     select * from {{ ref('hcpwks_integration__pob_cx_prod_pob_agg') }}

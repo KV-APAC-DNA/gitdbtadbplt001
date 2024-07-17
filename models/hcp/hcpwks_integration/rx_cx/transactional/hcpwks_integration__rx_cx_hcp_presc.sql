@@ -9,8 +9,8 @@ itg_query_parameters as
 ),
 edw_hcp360_in_ventasys_prescription_fact as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_prescription_fact
-), --hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_prescription_fact') }}
+), 
 final as 
 (
     SELECT fisc_yr,

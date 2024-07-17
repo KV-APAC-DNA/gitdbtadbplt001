@@ -5,15 +5,15 @@ wks_rx_to_cx_to_pob_base_rtl as
 ),
 itg_in_mds_channel_mapping as 
 (
-    select * from snapinditg_integration.itg_in_mds_channel_mapping
+    select * from {{ ref('inditg_integration__itg_in_mds_channel_mapping') }}
 ),
 edw_customer_dim as 
 (
-    select * from snapindedw_integration.edw_customer_dim
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 edw_retailer_dim as 
 (
-    select * from snapindedw_integration.edw_retailer_dim
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 final as 
 (

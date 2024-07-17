@@ -1,39 +1,39 @@
 with 
 wks_tp_salescube_mat2 as 
 (
-    select * from snapindwks_integration.wks_tp_salescube_mat2
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_mat2') }}
 ),
 wks_tp_salescube_ytd2 as 
 (
-    select * from snapindwks_integration.wks_tp_salescube_ytd2
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_ytd2') }}
 ),
 wks_tp_salescube_base as 
 (
-    select * from snapindwks_integration.wks_tp_salescube_base
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_base') }}
 ),
 edw_hcp360_kpi_rpt as 
 (
-    select * from snapindedw_integration.edw_hcp360_kpi_rpt
+    select * from {{ ref('hcpedw_integration__edw_hcp360_kpi_rpt') }}
 ),
 edw_hcp360_in_ventasys_samples_fact as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_samples_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_samples_fact') }}
 ),
 edw_hcp360_in_ventasys_hcp_dim_latest as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_hcp_dim_latest
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim_latest') }}
 ),
 wks_hcp360_projected_hcp_speciality_detail as 
 (
-    select * from snapindwks_integration.wks_hcp360_projected_hcp_speciality_detail
+    select * from {{ source('snapindwks_integration', 'wks_hcp360_projected_hcp_speciality_detail') }}
 ),
 edw_hcp360_sfmc_hcp_dim as 
 (
-    select * from snapindedw_integration.edw_hcp360_sfmc_hcp_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_sfmc_hcp_dim') }}
 ),
 itg_hcp360_sfmc_hcp_details as 
 (
-    select * from snapinditg_integration.itg_hcp360_sfmc_hcp_details
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_hcp_details') }}
 ), 
 temp_ventasys as 
 (
@@ -586,27 +586,28 @@ temp_sfmc as
 (
 WITH BASE1
 AS
-(SELECT DISTINCT BRAND,
+(SELECT DISTINCT sfmc.BRAND,
        TO_CHAR(ACTIVITY_DATE,'YYYY') AS YEAR,
        TO_CHAR(ACTIVITY_DATE,'MON') AS MONTH,
        sfmc.HCP_ID as HCP_ID,
-       HCP_CREATED_DATE,
-       REGION,
-       ZONE,
-       TERRITORY,
-       REGION_HQ,
-       SPECIALITY,
-       CORE_NONCORE,
-       CLASSIFICATION ,
+       sfmc.HCP_CREATED_DATE,
+       sfmc.REGION,
+       sfmc.ZONE,
+       sfmc.TERRITORY,
+       sfmc.REGION_HQ,
+       sfmc.SPECIALITY,
+       sfmc.CORE_NONCORE,
+       sfmc.CLASSIFICATION ,
 		vent_hcp.hcp_id as ventasys_hcp_id
        FROM EDW_HCP360_KPI_RPT sfmc
 left join (select email_name,hcp_id from EDW_HCP360_KPI_RPT where source_system = 'Ventasys' group by 1,2) vent_hcp
 on sfmc.email_name = vent_hcp.email_name
-WHERE SOURCE_SYSTEM = 'SFMC'
--- AND  sfmc.HCP_ID IS NOT NULL 
--- AND (HCP_MASTER_ID  NOT IN (SELECT MASTER_ID FROM {{this}})
---     or HCP_MASTER_ID is null)
- 
+LEFT JOIN temp_ventasys AS rpt
+ON sfmc.HCP_MASTER_ID = rpt.hcp_MASTER_ID
+WHERE rpt.hcp_MASTER_ID IS NULL
+OR sfmc.HCP_MASTER_ID IS NULL
+and sfmc.SOURCE_SYSTEM = 'SFMC'
+
 ),NOOFEMAILSENT
 AS
 (SELECT BRAND,

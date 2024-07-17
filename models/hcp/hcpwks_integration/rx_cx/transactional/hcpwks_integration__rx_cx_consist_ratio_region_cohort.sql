@@ -10,8 +10,8 @@ itg_query_parameters as
 ),
 itg_hcp360_in_ventasys_rtlmaster as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_ventasys_rtlmaster
-), --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_rtlmaster') }}
+), 
 
 edw_retailer_dim as 
 (

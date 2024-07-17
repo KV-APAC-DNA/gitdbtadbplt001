@@ -1156,7 +1156,7 @@ trans as
 (
     select * from edw_hcp360_kpi_rpt_tbl1 
     union all
-    select * from edw_hcp360_kpi_rpt_tbl2
+    select * from edw_hcp360_kpi_rpt_tbl2 
     union all
     select * from edw_hcp360_kpi_rpt_tbl3
     union all

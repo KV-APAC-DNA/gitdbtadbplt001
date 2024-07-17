@@ -1,55 +1,65 @@
+{{
+    config
+    (
+        materialized="incremental",
+        incremental_strategy= "append",
+        pre_hook = " {% if is_incremental() %}
+        delete from {{this}} where source_system = 'VEEVA';
+        {% endif %}"
+    )
+}}
 with 
 edw_hcp360_veeva_dim_employee as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_employee
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_employee') }}
 ),
 edw_hcp360_veeva_fact_call_detail as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_fact_call_detail
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_call_detail') }}
 ),
 edw_hcp360_veeva_dim_product_indication as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_product_indication
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_product_indication') }}
 ),
 edw_hcp360_veeva_fact_call_key_message as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_fact_call_key_message
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_call_key_message') }}
 ),
 edw_hcp360_veeva_dim_key_message as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_key_message
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_key_message') }}
 ),
 edw_hcp360_veeva_dim_organization as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_organization
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization') }}
 ),
 edw_hcp360_veeva_dim_hcp as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 vw_edw_hcp360_hcpmaster_dim as 
 (
-    select * from snapindedw_integration.vw_edw_hcp360_hcpmaster_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_hcpmaster_dim') }}
 ),
 edw_hcp360_veeva_dim_organization_hcp as 
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_organization_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization_hcp') }}
 ),
-EDW_HCP360_VEEVA_DIM_ORGANIZATION_HCP as 
+edw_hcp360_veeva_dim_organization_hcp as 
 (
-    select * from snapindedw_integration.EDW_HCP360_VEEVA_DIM_ORGANIZATION_HCP
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization_hcp') }}
 ),
 itg_hcp360_veeva_territory as 
 (
-    select * from snapinditg_integration.itg_hcp360_veeva_territory
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_territory') }}
 ),
 itg_hcp360_veeva_object_territory_association as 
 (
-    select * from snapinditg_integration.itg_hcp360_veeva_object_territory_association
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_object_territory_association') }}
 ),
 edw_vw_hcp360_date_dim as 
 (
-    select * from snapindedw_integration.edw_vw_hcp360_date_dim
+    select * from {{ ref('hcpedw_integration__edw_vw_hcp360_date_dim') }}
 ),
 tempa as 
 (

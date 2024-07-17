@@ -12,39 +12,39 @@
 with 
 edw_hcp360_in_iqvia_sales as 
 (
-    select * from snapindedw_integration.edw_hcp360_in_iqvia_sales
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_iqvia_sales') }}
 ),
 itg_hcp360_in_iqvia_brand as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_iqvia_brand
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_brand') }}
 ),
 itg_hcp360_in_iqvia_speciality as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_iqvia_speciality
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_speciality') }}
 ),
 itg_hcp360_in_iqvia_indication as 
 (
-    select * from snapinditg_integration.itg_hcp360_in_iqvia_indication
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_indication') }}
 ),
 itg_mds_hcp360_product_mapping as 
 (
-    select * from snapinditg_integration.itg_mds_hcp360_product_mapping
+    select * from {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }}
 ),
 wks_hcp_360_iqvia_brand_orsl_mat_temp as 
 (
-    select * from snapindwks_integration.wks_hcp_360_iqvia_brand_orsl_mat_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_orsl_mat_temp') }}
 ),
 wks_hcp_360_iqvia_brand_derma_mat_temp as 
 (
-    select * from snapindwks_integration.wks_hcp_360_iqvia_brand_derma_mat_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_derma_mat_temp') }}
 ),
 wks_hcp_360_iqvia_brand_aveenobaby_mat_temp as 
 (
-    select * from snapindwks_integration.wks_hcp_360_iqvia_brand_aveenobaby_mat_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_aveenobaby_mat_temp') }}
 ),
 wks_hcp_360_iqvia_brand_jbaby_mat_temp as 
 (
-    select * from snapindwks_integration.wks_hcp_360_iqvia_brand_jbaby_mat_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_jbaby_mat_temp') }}
 ),
 
 temp1 as 

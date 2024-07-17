@@ -11,11 +11,11 @@
 with 
 itg_mds_in_hcp_sales_rep_mapping as 
 (
-    select * from snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping
+    select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping') }}
 ),
 wks_hcp360_invoice_kpi as 
 (
-    select * from snapindwks_integration.wks_hcp360_invoice_kpi
+    select * from {{ ref('hcpwks_integration__wks_hcp360_invoice_kpi') }}
 ),
 tempa as 
 (

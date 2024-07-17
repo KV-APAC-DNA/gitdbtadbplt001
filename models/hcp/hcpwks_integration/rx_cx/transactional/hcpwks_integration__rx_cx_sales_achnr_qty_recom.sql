@@ -21,7 +21,7 @@ itg_query_parameters as
 ),
 itg_ventasys_jnj_prod_mapping as 
 (
-    select * from snapinditg_integration.itg_ventasys_jnj_prod_mapping
+    select * from {{ source('inditg_integration', 'itg_ventasys_jnj_prod_mapping') }}
 ),
 final as 
 (
