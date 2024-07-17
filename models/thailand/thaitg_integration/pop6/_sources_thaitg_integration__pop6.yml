@@ -14,6 +14,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id","product_list"]
+              condition: "and"
               select_columns: ["popdb_id","product_list"]
               name: TRATBL_sdl_pop6_th_product_lists_pops__null_test
               config:
@@ -23,6 +24,7 @@ sources:
               group_by_columns: ["popdb_id","product_list"]
               select_columns: ["popdb_id","product_list"]
               name: TRATBL_sdl_pop6_th_product_lists_pops__duplicate_test
+              need_counts: "no"
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -31,6 +33,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id"]
+              condition: "and"
               select_columns: ["popdb_id"]
               name: TRATBL_sdl_pop6_th_pops__null_test
               config:
@@ -40,6 +43,7 @@ sources:
               group_by_columns: ["popdb_id"]
               select_columns: ["popdb_id"]
               name: TRATBL_sdl_pop6_th_pops__duplicate_test
+              need_counts: "no"
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -205,6 +209,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              condition: "and"
               select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
               name: TRATBL_sdl_pop6_th_product_lists_allocation__null_test
               config:
@@ -213,6 +218,7 @@ sources:
           - test_duplicate:
               group_by_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
               select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              need_counts: "no"
               name: TRATBL_sdl_pop6_th_product_lists_allocation__duplicate_test
               config:
                 store_failures: true
@@ -222,6 +228,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["productdb_id","product_list"]
+              condition: "and"
               select_columns: ["productdb_id","product_list"]
               name: TRATBL_sdl_pop6_th_product_lists_products__null_test
               config:
@@ -231,6 +238,7 @@ sources:
               group_by_columns: ["productdb_id","product_list"]
               select_columns: ["productdb_id","product_list"]
               name: TRATBL_sdl_pop6_th_product_lists_products__duplicate_test
+              need_counts: "no"
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -239,6 +247,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_th_tasks__null_test
               config:
@@ -247,6 +256,7 @@ sources:
           - test_duplicate:
               group_by_columns: ["visit_id","field_id","dependent_on_field_id"]
               select_columns: ["visit_id","field_id","dependent_on_field_id"]
+              need_counts: "no"
               name: TRATBL_sdl_pop6_th_tasks__duplicate_test
               config:
                 store_failures: true
@@ -256,6 +266,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["userdb_id"]
+              condition: "and"
               select_columns: ["userdb_id"]
               name: TRATBL_sdl_pop6_th_users__null_test
               config:
@@ -265,6 +276,7 @@ sources:
               group_by_columns: ["userdb_id"]
               select_columns: ["userdb_id"]
               name: TRATBL_sdl_pop6_th_users__duplicate_test
+              need_counts: "no"
               config:
                 store_failures: true
                 schema: thawks_integration
@@ -273,6 +285,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["productdb_id"]
+              condition: "and"
               select_columns: ["productdb_id"]
               name: TRATBL_sdl_pop6_th_products__null_test
               config:
@@ -282,6 +295,7 @@ sources:
               group_by_columns: ["productdb_id"]
               select_columns: ["productdb_id"]
               name: TRATBL_sdl_pop6_th_products__duplicate_test
+              need_counts: "no"
               config:
                 store_failures: true
                 schema: thawks_integration
