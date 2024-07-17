@@ -4,26 +4,26 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        DELETE FROM {{this}} WHERE (HCP_KEY) IN (SELECT HCP_KEY FROM DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_VEEVA_ACCOUNT_HCP as ITG_HCP WHERE ITG_HCP.HCP_KEY = {{ this }}.HCP_KEY);
+        DELETE FROM {{this}} WHERE (HCP_KEY) IN (SELECT HCP_KEY FROM {{ source('snapinditg_integration', 'itg_hcp360_veeva_account_hcp') }} as ITG_HCP WHERE ITG_HCP.HCP_KEY = {{ this }}.HCP_KEY);
         DELETE FROM {{this}} WHERE HCP_KEY = 'Not Applicable';
         {% endif %}"
     )
 }}
 with itg_hcp360_veeva_account_hcp as
 (
-    select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_VEEVA_ACCOUNT_HCP
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_account_hcp') }}
 ),
 itg_hcp360_veeva_recordtype as
 (
-    select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_VEEVA_RECORDTYPE
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_recordtype') }}
 ),
 itg_hcp360_veeva_account_hco as
 (
-    select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_VEEVA_ACCOUNT_HCO
+    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_account_hco') }}
 ),
 EDW_HCP360_HCP_MASTER_KEY_BY_BRAND as
 (
-    select * from  DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_HCP360_HCP_MASTER_KEY_BY_BRAND
+    select * from {{ ref('hcpedw_integration__edw_hcp360_hcp_master_key_by_brand') }}   
 ),
 final as(
     SELECT DISTINCT

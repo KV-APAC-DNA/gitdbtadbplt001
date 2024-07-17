@@ -1,5 +1,5 @@
 with edw_hcp360_kpi_rpt as (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_HCP360_KPI_RPT
+    select * from {{ ref('hcpedw_integration__edw_hcp360_kpi_rpt') }}
 ),
 final as
 (

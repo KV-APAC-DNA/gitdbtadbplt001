@@ -1,6 +1,6 @@
 with edw_hcp360_kpi_rpt as
 (
-    select * from DEV_DNA_CORE.SNAPINDEDW_INTEGRATION.EDW_HCP360_KPI_RPT
+    select * from {{ ref('hcpedw_integration__edw_hcp360_kpi_rpt') }}
 ),
 trans1 as
 (
@@ -47,5 +47,4 @@ final as
 	sales_value::number(18,5) as sales_value
     from trans1
 )
-
 select * from final

@@ -24,8 +24,8 @@ final as (
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
         '/source_type'::varchar(20) as data_source,
-        NULL as pack_volume,
-        'IN' as country
+        NULL::VARCHAR(20) as pack_volume,
+        'IN'::VARCHAR(50) as country
     from source1
 )
 select * from final

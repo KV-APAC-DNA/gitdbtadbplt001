@@ -1,11 +1,10 @@
 with itg_ga360_aspac_sessions as 
 (
-    select * from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_GA360_ASPAC_SESSIONS
-    --select * from {{ ref('hcpitg_integration__itg_ga360_aspac_sessions') }}
+    select * from {{ ref('hcpitg_integration__itg_ga360_aspac_sessions') }}
 ),
 edw_calendar_dim as
 (
-   select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
+   select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 trans as
 (

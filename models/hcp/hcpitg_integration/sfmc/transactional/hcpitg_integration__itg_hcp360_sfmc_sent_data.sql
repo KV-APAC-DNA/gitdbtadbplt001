@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        DELETE FROM {{this}} as ITG_HCP360_SFMC_SENT_DATA USING DEV_DNA_LOAD.SNAPINDSDL_RAW.SDL_HCP360_IN_SFMC_SENT_DATA as SDL_HCP360_IN_SFMC_SENT_DATA
+        DELETE FROM {{this}} as ITG_HCP360_SFMC_SENT_DATA USING {{ source('snapindsdl_raw', 'sdl_hcp360_in_sfmc_sent_data') }} as SDL_HCP360_IN_SFMC_SENT_DATA
         WHERE SDL_HCP360_IN_SFMC_SENT_DATA.JOB_ID = ITG_HCP360_SFMC_SENT_DATA.JOB_ID
         AND SDL_HCP360_IN_SFMC_SENT_DATA.BATCH_ID = ITG_HCP360_SFMC_SENT_DATA.BATCH_ID
         AND SDL_HCP360_IN_SFMC_SENT_DATA.SUBSCRIBER_ID = ITG_HCP360_SFMC_SENT_DATA.SUBSCRIBER_ID
@@ -15,9 +15,7 @@
     )
 }}
 WITH sdl_hcp360_in_sfmc_sent_data AS (
-    --select * from {{ source('snapindsdl_raw', 'sdl_hcp360_in_sfmc_sent_data') }}
-    select * from DEV_DNA_LOAD.SNAPINDSDL_RAW.SDL_HCP360_IN_SFMC_SENT_DATA
-
+    select * from {{ source('snapindsdl_raw', 'sdl_hcp360_in_sfmc_sent_data') }}
 ),
 final as 
 (
