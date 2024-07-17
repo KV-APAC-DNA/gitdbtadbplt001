@@ -14,6 +14,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
               name: TRATBL_sdl_pop6_sg_product_attribute_audits__null_test
               config:
@@ -31,6 +32,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              condition: "and"
               select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
               name: TRATBL_sdl_pop6_sg_sku_audits__null_test
               config:
@@ -48,6 +50,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","field_type"]
+              condition: "and"
               select_columns: ["visit_id","field_id","field_type"]
               name: TRATBL_sdl_pop6_sg_tasks__null_test
               config:
@@ -65,6 +68,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
               name: TRATBL_sdl_pop6_sg_general_audits__null_test
               config:
@@ -90,6 +94,7 @@ sources:
             - test_null:
                 select_columns: ["visit_id", "display_plan_id", "field_id","dependent_on_field_id"]
                 not_null_columns: ["visit_id", "display_plan_id", "field_id","dependent_on_field_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_sg_displays__null_test
                 config:
                   store_failures: true
@@ -123,6 +128,7 @@ sources:
                   schema: sgpwks_integration
             - test_null:
                 select_columns: ["visit_id","promotion_plan_id"]
+                condition: "and"
                 not_null_columns: ["visit_id","promotion_plan_id"]
                 name: TRATBL_sdl_pop6_sg_promotions__null_test
                 config:
@@ -141,6 +147,7 @@ sources:
             - test_null:
                 select_columns: ["promotion_plan_id"]
                 not_null_columns: ["promotion_plan_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_sg_promotion_plans__null_test
                 config:
                   store_failures: true
@@ -192,6 +199,7 @@ sources:
             - test_null:
                 select_columns:  ["visit_id","popdb_id"]
                 not_null_columns:  ["visit_id","popdb_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_sg_executed_visits__null_test
                 config:
                   store_failures: true
