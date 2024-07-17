@@ -7,7 +7,7 @@ edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
-    select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
