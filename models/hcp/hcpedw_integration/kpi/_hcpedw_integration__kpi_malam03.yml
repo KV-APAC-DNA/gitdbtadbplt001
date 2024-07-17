@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_dwnld_kpi_rpt
+    config:
+      alias: edw_hcp360_dwnld_kpi_rpt
+      tags: ["in_hcp360_data_mart","transformation"]

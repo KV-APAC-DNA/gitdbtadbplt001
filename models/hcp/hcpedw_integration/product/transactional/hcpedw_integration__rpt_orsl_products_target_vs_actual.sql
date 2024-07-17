@@ -1,24 +1,24 @@
 with v_rpt_sales_details as(
-	select * from snapindedw_integration.v_rpt_sales_details
+	select * from {{ ref('hcpedw_integration_v_rpt_sales_details') }}
 ),
 itg_query_parameters as(
 	select * from {{ source('inditg_integration', 'itg_query_parameters') }}
 ),
 itg_mds_in_hcp_sales_hierarchy_mapping as(
-	select * from snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping
+	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
 ),
 itg_mds_in_orsl_products_target as(
-	select * from snapinditg_integration.itg_mds_in_orsl_products_target
+	select * from {{ ref('hcpitg_integration__itg_mds_in_orsl_products_target') }}
 ),
 itg_mds_in_hcp_sales_rep_mapping as(
-	select * from snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping
+	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping') }}
 ),
 v_invoice_tde as(
-	select * from snapindedw_integration.v_invoice_tde
+	select * from {{ ref('hcpedw_integration__v_invoice_tde') }}
 ),    
 itg_mds_in_hcp_sales_hierarchy_mapping as(
-	select * from snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping
-),    --{{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
+	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}
+),    
 sales_data as
 (
 	select

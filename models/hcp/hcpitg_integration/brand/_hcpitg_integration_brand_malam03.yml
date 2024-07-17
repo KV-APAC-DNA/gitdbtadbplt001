@@ -4,4 +4,4 @@ models:
   - name: hcpitg_integration__itg_hcp360_in_iqvia_brand
     config: 
       alias: itg_hcp360_in_iqvia_brand
-      tags: ["IN_IQVIA_Brand_Ingestion","ingestion"]
+      tags: ["in_iqvia_brand_ingestion","ingestion"]

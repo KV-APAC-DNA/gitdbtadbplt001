@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__wks_hcp_360_iqvia_brand_orsl_temp
+    config:
+      alias: wks_hcp_360_iqvia_brand_orsl_temp
+      tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpwks_integration__wks_hcp_360_iqvia_brand_derma_temp
+    config:
+      alias: wks_hcp_360_iqvia_brand_derma_temp
+      tags: ["in_hcp360_data_mart","transformation"]

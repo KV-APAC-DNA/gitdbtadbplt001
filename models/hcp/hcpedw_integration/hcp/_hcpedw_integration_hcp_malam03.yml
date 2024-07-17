@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__vw_edw_hcp360_hcpmaster_dim_golden_record
+    config:
+      alias: vw_edw_hcp360_hcpmaster_dim_golden_record
+      tags: ["in_hcp360_data_mart","transformation"]
+models:
+  - name: hcpedw_integration__vw_edw_hcp360_hcpmaster_dim_nongolden_record
+    config:
+      alias: vw_edw_hcp360_hcpmaster_dim_nongolden_record
+      tags: ["in_hcp360_data_mart","transformation"]
+models:
+  - name: hcpedw_integration__vw_edw_hcp360_hcpmaster_dim_reject_record
+    config:
+      alias: vw_edw_hcp360_hcpmaster_dim_reject_record
+      tags: ["in_hcp360_data_mart","transformation"]
+models:
+  - name: hcpedw_integration__vw_edw_hcp360_hcpmaster_dim_reject_record
+    config:
+      alias: vw_edw_hcp360_hcpmaster_dim_reject_record
+      tags: ["in_hcp360_data_mart","transformation"]
+models:
+  - name: hcpedw_integration__vw_edw_hcp360_hcpmaster_dim
+    config:
+      alias: vw_edw_hcp360_hcpmaster_dim
+      tags: ["in_hcp360_data_mart","transformation"]
