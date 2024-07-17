@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpedw_integration__edw_hcp360_in_ventasys_employee_dim
-    config:
-      alias: edw_hcp360_in_ventasys_employee_dim
-      tags: ["in_ventasys_edw_load","transformation"]
