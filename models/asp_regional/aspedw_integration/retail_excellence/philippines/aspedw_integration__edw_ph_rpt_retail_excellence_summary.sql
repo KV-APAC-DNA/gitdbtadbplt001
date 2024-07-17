@@ -42,7 +42,8 @@ ph_edw_rpt_retail_excellence_summary as (
         case when p6m_sales_flag = 1 then 'Y' else 'N' end as p6m_sales_flag,
         case when p12m_sales_flag = 1 then 'Y' else 'N' end as p12m_sales_flag,
         case when mdp_flag = 1 then 'Y' else 'N' end as mdp_flag,
-        MAX(target_complaince) OVER (PARTITION BY fisc_per, global_product_brand) AS target_complaince,
+        --MAX(target_complaince) OVER (PARTITION BY fisc_per, global_product_brand, mdp_flag) AS target_complaince,
+        target_complaince,
         SUM(sales_value) as sales_value,
         SUM(sales_qty) as sales_qty,
         AVG(sales_qty) as avg_sales_qty,		--// AVG
