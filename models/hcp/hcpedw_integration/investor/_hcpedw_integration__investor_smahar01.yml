@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_investor_dashboard
+    config:
+      alias: edw_hcp360_investor_dashboard
+      tags: ["in_hcp360_investor_dashboard","transformation"]

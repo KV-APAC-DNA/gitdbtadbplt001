@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim_latest
+    config:
+      alias: edw_hcp360_in_ventasys_hcp_dim_latest
+      tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim
+    config:
+      alias: edw_hcp360_in_ventasys_hcp_dim
+      tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_organization_hcp
+    config:
+      alias: edw_hcp360_veeva_dim_organization_hcp
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_ventasys_hcp_dim_snapshot
+    config:
+      alias: edw_hcp360_ventasys_hcp_dim_snapshot
+      tags: ["in_veeva_edw_load","transformation"]

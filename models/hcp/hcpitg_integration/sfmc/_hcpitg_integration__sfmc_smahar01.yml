@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: hcpitg_integration__itg_hcp360_sfmc_sent_data
+    config:
+      alias: itg_hcp360_sfmc_sent_data
+      tags: ["in_sfmc_sent_data","transformation"]
+  - name: hcpitg_integration__itg_hcp360_sfmc_forward_data
+    config:
+      alias: itg_hcp360_sfmc_forward_data
+      tags: ["in_sfmc_forward_data","transformation"]

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_in_iqvia_speciality
+    config:
+      alias: edw_hcp360_in_iqvia_speciality
+      tags: ["in_hcp_mastering","transformation"]
