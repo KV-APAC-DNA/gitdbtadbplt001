@@ -989,15 +989,6 @@ sources:
       - name: itg_pop6_product_lists_pops_temp
       - name: itg_pop6_pops_temp
       - name: kpi2data_mapping
-
-  - name: ntaitg_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaitg_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
       - name: itg_photo_mgmnt_url_temp
 
   - name: aspedw_integration
