@@ -1,7 +1,7 @@
 {% macro build_itg_photo_mgmnt_url_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                ntaitg_integration.itg_photo_mgmnt_url_temp
+                aspitg_integration.itg_photo_mgmnt_url_temp
             {% else %}
                 {{schema}}.aspitg_integration__itg_photo_mgmnt_url_temp
     {% endif %}
@@ -9,7 +9,7 @@
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    ntaitg_integration.itg_photo_mgmnt_url
+                    aspitg_integration.itg_photo_mgmnt_url
                 {% else %}
                     {{schema}}.aspitg_integration__itg_photo_mgmnt_url
                 {% endif %}
@@ -24,7 +24,7 @@
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            ntaitg_integration.itg_photo_mgmnt_url
+            aspitg_integration.itg_photo_mgmnt_url
         {% else %}
             {{schema}}.aspitg_integration__itg_photo_mgmnt_url
         {% endif %};
