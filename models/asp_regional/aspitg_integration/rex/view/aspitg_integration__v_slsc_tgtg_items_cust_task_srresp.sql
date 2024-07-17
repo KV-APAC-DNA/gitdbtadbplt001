@@ -24,11 +24,11 @@ final as (SELECT
   slsc_customer.salescampaignstartdt, 
   slsc_customer.salescampaignenddt, 
   slsc_customer.targetgroupid, 
-  SLSC_CUSTOMER.target, 
+  SLSC_CUSTOMER."target", 
   slsc_customer.customerid, 
   mst_task.mastertaskid, 
   mst_task.text, 
-  mst_task.type, 
+  mst_task."type", 
   mst_task.validfrom, 
   mst_task.validto, 
   mst_task.mastertaskstartdt, 
@@ -67,7 +67,7 @@ FROM
                 v_slsc_tgtg_items_customer.salescampaignstartdt, 
                 v_slsc_tgtg_items_customer.salescampaignenddt, 
                 v_slsc_tgtg_items_customer.targetgroupid, 
-                V_SLSC_TGTG_ITEMS_CUSTOMER.target, 
+                V_SLSC_TGTG_ITEMS_CUSTOMER."target", 
                 v_slsc_tgtg_items_customer.customerid 
               FROM 
                 v_slsc_tgtg_items_customer
@@ -77,7 +77,7 @@ FROM
                 DISTINCT v_slsc_mastertasks.mastertaskid, 
                 v_slsc_mastertasks.salescampaignid, 
                 v_slsc_mastertasks.text, 
-                v_slsc_mastertasks.type, 
+                v_slsc_mastertasks."type", 
                 v_slsc_mastertasks.validfrom, 
                 v_slsc_mastertasks.validto, 
                 v_slsc_mastertasks.startdate AS mastertaskstartdt, 

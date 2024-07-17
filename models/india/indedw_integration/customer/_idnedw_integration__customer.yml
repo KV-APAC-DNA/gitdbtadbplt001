@@ -12,7 +12,7 @@ models:
   - name: indedw_integration__v_customer_dim
     config:
       alias: v_customer_dim
-      tags: ["m_wrp_in_edw_dim","transformation"]
+      tags: ["in_edw_dim","transformation"]
   # - name: indedw_integration__v_sku_recom
   #   config:
   #     alias: v_sku_recom

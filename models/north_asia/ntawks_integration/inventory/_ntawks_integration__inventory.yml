@@ -96,7 +96,7 @@ models:
   - name: ntawks_integration__wks_itg_ims_invnt
     config:
       alias: wks_itg_ims_invnt
-      tags: ["na_trxn_ims_inv","ingestion"]
+      tags: ["na_trxn_ims_inv","transformation"]
   - name: ntawks_integration__wks_itg_ims_invnt_std
     config:
       alias: wks_itg_ims_invnt_std

@@ -9,7 +9,7 @@ AS (
         name::VARCHAR(255) AS retail_env,
         weight::NUMBER(20,4) AS weight,
         channel::VARCHAR(50) AS channel,
-        convert_timezone('Asia/Singapore',current_timestamp()::timestamp_ntz(9)) as crtd_dttm
+        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) as crtd_dttm
     FROM sources
     )
 SELECT *

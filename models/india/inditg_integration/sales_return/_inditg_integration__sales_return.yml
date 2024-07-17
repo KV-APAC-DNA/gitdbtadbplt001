@@ -27,4 +27,4 @@ models:
   - name: idnitg_integration__sdl_salesreturn_del_raw
     config:
       alias: sdl_salesreturn_del_raw
-      tags: ["m_wrp_in_sdlitg_gtsales","transformation"]
+      tags: ["in_sdlitg_gtsales","transformation"]

@@ -9,58 +9,440 @@ sources:
     tables:
       - name: sdl_rex_pop6_usr_map
       - name: sdl_pop6_hk_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_hk_products__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_hk_products__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
       - name: sdl_pop6_hk_product_lists_pops
       - name: sdl_pop6_hk_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_hk_pops__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_hk_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
       - name: sdl_pop6_hk_pop_lists
       - name: sdl_pop6_hk_product_groups_lists
       - name: sdl_pop6_hk_product_lists_allocation
       - name: sdl_pop6_hk_product_lists_products
       - name: sdl_pop6_hk_users
-      - name: sdl_pop6_kr_products
-      - name: sdl_pop6_kr_product_lists_pops
-      - name: sdl_pop6_kr_pops
-      - name: sdl_pop6_kr_pop_lists
-      - name: sdl_pop6_kr_product_groups_lists
-      - name: sdl_pop6_kr_product_lists_allocation
-      - name: sdl_pop6_kr_product_lists_products
-      - name: sdl_pop6_kr_users
-      - name: sdl_pop6_tw_products
-      - name: sdl_pop6_tw_product_lists_pops
-      - name: sdl_pop6_tw_pops
-      - name: sdl_pop6_tw_displays
-      - name: sdl_pop6_tw_executed_visits
-      - name: sdl_pop6_tw_general_audits
-      - name: sdl_pop6_tw_planned_visits
-      - name: sdl_pop6_tw_pop_lists
-      - name: sdl_pop6_tw_product_groups_lists
-      - name: sdl_pop6_tw_product_lists_allocation
-      - name: sdl_pop6_tw_product_lists_products
-      - name: sdl_pop6_tw_promotions
-      - name: sdl_pop6_tw_tasks
-      - name: sdl_pop6_tw_users
-      - name: sdl_pop6_kr_display_plans
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
-              not_null_columns: ["display_plan_id"]
-              select_columns: ["display_plan_id"] 
-              name: TRATBL_sdl_pop6_kr_display_plans__null_test
+              not_null_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_hk_users__null_test
               config:
                 store_failures: true
                 schema: ntawks_integration
           - test_duplicate:
-              group_by_columns: ["display_plan_id"]
-              select_columns: ["display_plan_id"] 
-              name: TRATBL_sdl_pop6_kr_display_plans__duplicate_test
+              group_by_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_hk_users__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
-      - name: sdl_pop6_kr_displays
-        tags: ["pop6_kr_transaction","ingestion"]
+      - name: sdl_pop6_kr_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_kr_products__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_kr_products__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_product_lists_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id","product_list"]
+              condition: "and"
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_kr_product_lists_pops__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id","product_list"]
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_kr_product_lists_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_kr_pops__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_kr_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_pop_lists
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id","pop_list"]
+              condition: "and"
+              select_columns: ["popdb_id","pop_list"]
+              name: TRATBL_sdl_pop6_kr_pop_lists__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id","pop_list"]
+              select_columns: ["popdb_id","pop_list"]
+              name: TRATBL_sdl_pop6_kr_pop_lists__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_product_groups_lists
+        tags: ["pop6_master_load","ingestion"]
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["productdb_id"]
+        #       select_columns: ["productdb_id"]
+        #       name: TRATBL_sdl_pop6_kr_product_groups_lists__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+        #   - test_duplicate:
+        #       group_by_columns: ["popdb_id","pop_list"]
+        #       select_columns: ["popdb_id","pop_list"]
+        #       name: TRATBL_sdl_pop6_kr_product_groups_lists__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+      - name: sdl_pop6_kr_product_lists_allocation
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              condition: "and"
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_kr_product_lists_allocation__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_kr_product_lists_allocation__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_product_lists_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id","product_list"]
+              condition: "and"
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_kr_product_lists_products__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id","product_list"]
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_kr_product_lists_products__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_users
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_kr_users__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_kr_users__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_tw_products__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id"]
+              select_columns: ["productdb_id"]
+              name: TRATBL_sdl_pop6_tw_products__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_product_lists_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id","product_list"]
+              condition: "and"
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_tw_product_lists_pops__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id","product_list"]
+              select_columns: ["popdb_id","product_list"]
+              name: TRATBL_sdl_pop6_tw_product_lists_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_pops
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_tw_pops__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id"]
+              select_columns: ["popdb_id"]
+              name: TRATBL_sdl_pop6_tw_pops__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_displays
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
-              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"] 
+              condition: "and"
+              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_tw_displays__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_tw_displays__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_executed_visits
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","popdb_id"]
+              condition: "and"
+              select_columns: ["visit_id","popdb_id"]
+              name: TRATBL_sdl_pop6_tw_executed_visits__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","popdb_id"]
+              select_columns: ["visit_id","popdb_id"]
+              name: TRATBL_sdl_pop6_tw_executed_visits__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_general_audits
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
+              select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              name: TRATBL_sdl_pop6_tw_general_audits__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              name: TRATBL_sdl_pop6_tw_general_audits__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_planned_visits
+      - name: sdl_pop6_tw_pop_lists
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["popdb_id","pop_list"]
+              condition: "and"
+              select_columns: ["popdb_id","pop_list"]
+              name: TRATBL_sdl_pop6_tw_pop_lists__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["popdb_id","pop_list"]
+              select_columns: ["popdb_id","pop_list"]
+              name: TRATBL_sdl_pop6_tw_pop_lists__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_product_groups_lists
+      - name: sdl_pop6_tw_product_lists_allocation
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              condition: "and"
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_tw_product_lists_allocation__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              name: TRATBL_sdl_pop6_tw_product_lists_allocation__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_product_lists_products
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["productdb_id","product_list"]
+              condition: "and"
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_tw_product_lists_products__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["productdb_id","product_list"]
+              select_columns: ["productdb_id","product_list"]
+              name: TRATBL_sdl_pop6_tw_product_lists_products__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_promotions
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","promotion_plan_id"]
+              condition: "and"
+              select_columns: ["visit_id","promotion_plan_id"]
+              name: TRATBL_sdl_pop6_tw_promotions__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","promotion_plan_id"]
+              select_columns: ["visit_id","promotion_plan_id"]
+              name: TRATBL_sdl_pop6_tw_promotions__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_tasks
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              condition: "and"
+              select_columns: ["visit_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_tw_tasks__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["visit_id","field_id","dependent_on_field_id"]
+              select_columns: ["visit_id","field_id","dependent_on_field_id"]
+              name: TRATBL_sdl_pop6_tw_tasks__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_tw_users
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_tw_users__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_duplicate:
+              group_by_columns: ["userdb_id"]
+              select_columns: ["userdb_id"]
+              name: TRATBL_sdl_pop6_tw_users__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+      - name: sdl_pop6_kr_display_plans
+        tags: ["pop6_master_load","ingestion"]
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["display_plan_id"]
+        #       select_columns: ["display_plan_id"]
+        #       name: TRATBL_sdl_pop6_kr_display_plans__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+        #   - test_duplicate:
+        #       group_by_columns: ["display_plan_id"]
+        #       select_columns: ["display_plan_id"]
+        #       name: TRATBL_sdl_pop6_kr_display_plans__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+      - name: sdl_pop6_kr_displays
+        tags: ["pop6_master_load","ingestion"]
+        tests:
+          - test_null:
+              not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              condition: "and"
+              select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_kr_displays__null_test
               config:
                 store_failures: true
@@ -73,9 +455,9 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_exclusion
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
-          - test_lookup:   
+          - test_lookup:
               select_columns: ["exclude_kpi","visit_date","pop_code","country","merchandiser_userid","audit_form_name","section_name","operation_type"]
               column: "country,visit_date,pop_code,merchandiser_userid"
               lookup_column: "cntry_cd,visit_date,pop_code,username"
@@ -96,11 +478,12 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_executed_visits
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","popdb_id"]
-              select_columns: ["visit_id","popdb_id"] 
+              condition: "and"
+              select_columns: ["visit_id","popdb_id"]
               name: TRATBL_sdl_pop6_kr_executed_visits__null_test
               config:
                 store_failures: true
@@ -113,10 +496,11 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_general_audits
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
               name: TRATBL_sdl_pop6_kr_general_audits__null_test
               config:
@@ -130,27 +514,28 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_planned_visits
-        tags: ["pop6_kr_transaction","ingestion"]
-        tests:
-          - test_null:
-              not_null_columns: ["popdb_id"]
-              select_columns: ["popdb_id"] 
-              name: TRATBL_sdl_pop6_kr_planned_visits__null_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
-          - test_duplicate:
-              group_by_columns: ["popdb_id"]
-              select_columns: ["popdb_id"]
-              name: TRATBL_sdl_pop6_kr_planned_visits__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        tags: ["pop6_master_load","ingestion"]
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["popdb_id"]
+        #       select_columns: ["popdb_id"]
+        #       name: TRATBL_sdl_pop6_kr_planned_visits__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+        #   - test_duplicate:
+        #       group_by_columns: ["popdb_id"]
+        #       select_columns: ["popdb_id"]
+        #       name: TRATBL_sdl_pop6_kr_planned_visits__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
       - name: sdl_pop6_kr_product_attribute_audits
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
               name: TRATBL_sdl_pop6_kr_product_attribute_audits__null_test
               config:
@@ -164,27 +549,28 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_promotion_plans
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["promotion_plan_id"]
-              select_columns: ["promotion_plan_id"] 
+              select_columns: ["promotion_plan_id"]
               name: TRATBL_sdl_pop6_kr_promotion_plans__null_test
               config:
                 store_failures: true
                 schema: ntawks_integration
           - test_duplicate:
               group_by_columns: ["promotion_plan_id"]
-              select_columns: ["promotion_plan_id"] 
+              select_columns: ["promotion_plan_id"]
               name: TRATBL_sdl_pop6_kr_promotion_plans__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_promotions
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","promotion_plan_id"]
+              condition: "and"
               select_columns: ["visit_id","promotion_plan_id"]
               name: TRATBL_sdl_pop6_kr_promotions__null_test
               config:
@@ -198,27 +584,28 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_service_levels
-        tags: ["pop6_kr_transaction","ingestion"]
-        tests:
-          - test_null:
-              not_null_columns: ["visit_frequency"]
-              select_columns: ["visit_frequency"] 
-              name: TRATBL_sdl_pop6_kr_service_levels__null_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
-          - test_duplicate:
-              group_by_columns: ["visit_frequency"]
-              select_columns: ["visit_frequency"] 
-              name: TRATBL_sdl_pop6_kr_service_levels__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        tags: ["pop6_master_load","ingestion"]
+        # tests:
+        #   - test_null:
+        #       not_null_columns: ["visit_frequency"]
+        #       select_columns: ["visit_frequency"]
+        #       name: TRATBL_sdl_pop6_kr_service_levels__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
+        #   - test_duplicate:
+        #       group_by_columns: ["visit_frequency"]
+        #       select_columns: ["visit_frequency"]
+        #       name: TRATBL_sdl_pop6_kr_service_levels__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
       - name: sdl_pop6_kr_sku_audits
-        tags: ["pop6_kr_transaction","ingestion"]
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              condition: "and"
               select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
               name: TRATBL_sdl_pop6_kr_sku_audits__null_test
               config:
@@ -226,15 +613,17 @@ sources:
                 schema: ntawks_integration
           - test_duplicate:
               group_by_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
-              select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"] 
+              select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
               name: TRATBL_sdl_pop6_kr_sku_audits__duplicate_test
               config:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_kr_tasks
+        tags: ["pop6_master_load","ingestion"]
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_kr_tasks__null_test
               config:
@@ -248,43 +637,43 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
       - name: sdl_pop6_hk_service_levels
-        tags: ["pop6_hk_transaction", "ingestion"]
-        tests:
-        - test_duplicate:
-            select_columns: ["visit_frequency"]
-            group_by_columns: ["visit_frequency"]
-            name: TRATBL_sdl_pop6_hk_service_levels__duplicate_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
-        - test_null:
-            select_columns: ["visit_frequency"]
-            not_null_columns: ["visit_frequency"]
-            name: TRATBL_sdl_pop6_hk_service_levels__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        # - test_duplicate:
+        #     select_columns: ["visit_frequency"]
+        #     group_by_columns: ["visit_frequency"]
+        #     name: TRATBL_sdl_pop6_hk_service_levels__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["visit_frequency"]
+        #     not_null_columns: ["visit_frequency"]
+        #     name: TRATBL_sdl_pop6_hk_service_levels__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
 
       - name: sdl_pop6_hk_planned_visits
-        tags: ["pop6_hk_transaction", "ingestion"]
-        tests:
-        - test_duplicate:
-            select_columns: ["popdb_id"]
-            group_by_columns: ["popdb_id"]
-            name: TRATBL_sdl_pop6_hk_planned_visits__duplicate_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
-        - test_null:
-            select_columns: ["popdb_id"]
-            not_null_columns: ["popdb_id"]
-            name: TRATBL_sdl_pop6_hk_planned_visits__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        # - test_duplicate:
+        #     select_columns: ["popdb_id"]
+        #     group_by_columns: ["popdb_id"]
+        #     name: TRATBL_sdl_pop6_hk_planned_visits__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["popdb_id"]
+        #     not_null_columns: ["popdb_id"]
+        #     name: TRATBL_sdl_pop6_hk_planned_visits__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
 
       - name: sdl_pop6_hk_executed_visits
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id","popdb_id"]
@@ -296,13 +685,14 @@ sources:
         - test_null:
             select_columns: ["visit_id","popdb_id"]
             not_null_columns: ["visit_id","popdb_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_executed_visits__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_sku_audits
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "section_id", "field_id", "dependent_on_field_id", "sku_id"]
@@ -314,13 +704,14 @@ sources:
         - test_null:
             select_columns: ["visit_id", "section_id", "field_id", "dependent_on_field_id", "sku_id"]
             not_null_columns: ["visit_id", "section_id", "field_id", "dependent_on_field_id", "sku_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_sku_audits__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_product_attribute_audits
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "audit_form_id", "section_id", "field_id", "dependent_on_field_id", "product_attribute_id", "product_attribute_value_id"]
@@ -332,13 +723,14 @@ sources:
         - test_null:
             select_columns: ["visit_id", "audit_form_id", "section_id", "field_id", "dependent_on_field_id", "product_attribute_id", "product_attribute_value_id"]
             not_null_columns: ["visit_id", "audit_form_id", "section_id", "field_id", "dependent_on_field_id", "product_attribute_id", "product_attribute_value_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_product_attribute_audits__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_general_audits
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "audit_form_id", "section_id", "subsection_id", "field_id"]
@@ -350,31 +742,32 @@ sources:
         - test_null:
             select_columns: ["visit_id", "audit_form_id", "section_id", "subsection_id", "field_id"]
             not_null_columns: ["visit_id", "audit_form_id", "section_id", "subsection_id", "field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_general_audits__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_display_plans
-        tags: ["pop6_hk_transaction", "ingestion"]
-        tests:
-        - test_duplicate:
-            select_columns: ["display_plan_id"]
-            group_by_columns: ["display_plan_id"]
-            name: TRATBL_sdl_pop6_hk_display_plans__duplicate_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
-        - test_null:
-            select_columns: ["display_plan_id"]
-            not_null_columns: ["display_plan_id"]
-            name: TRATBL_sdl_pop6_hk_display_plans__null_test
-            config:
-              store_failures: true
-              schema: ntawks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        # - test_duplicate:
+        #     select_columns: ["display_plan_id"]
+        #     group_by_columns: ["display_plan_id"]
+        #     name: TRATBL_sdl_pop6_hk_display_plans__duplicate_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
+        # - test_null:
+        #     select_columns: ["display_plan_id"]
+        #     not_null_columns: ["display_plan_id"]
+        #     name: TRATBL_sdl_pop6_hk_display_plans__null_test
+        #     config:
+        #       store_failures: true
+        #       schema: ntawks_integration
 
       - name: sdl_pop6_hk_displays
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "display_plan_id", "field_id", "dependent_on_field_id"]
@@ -386,13 +779,14 @@ sources:
         - test_null:
             select_columns: ["visit_id", "display_plan_id", "field_id", "dependent_on_field_id"]
             not_null_columns: ["visit_id", "display_plan_id", "field_id", "dependent_on_field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_displays__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_promotion_plans
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["promotion_plan_id"]
@@ -410,7 +804,7 @@ sources:
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_promotions
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "promotion_plan_id"]
@@ -422,13 +816,14 @@ sources:
         - test_null:
             select_columns: ["visit_id", "promotion_plan_id"]
             not_null_columns: ["visit_id", "promotion_plan_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_promotions__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_tasks
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_duplicate:
             select_columns: ["visit_id", "field_id", "dependent_on_field_id"]
@@ -440,20 +835,21 @@ sources:
         - test_null:
             select_columns: ["visit_id", "field_id", "dependent_on_field_id"]
             not_null_columns: ["visit_id", "field_id", "dependent_on_field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_tasks__null_test
             config:
               store_failures: true
               schema: ntawks_integration
 
       - name: sdl_pop6_hk_exclusion
-        tags: ["pop6_hk_transaction", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
         - test_lookup:
             select_columns: ["exclude_kpi", "visit_date", "pop_code", "country", "merchandiser_userid", "audit_form_name", "section_name", "operation_type"]
             column: ["country", "visit_date", "pop_code", "merchandiser_userid"]
             filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
             lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
+            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_1
             config:
               store_failures: true
@@ -463,30 +859,30 @@ sources:
             column: ["country", "visit_date", "pop_code", "merchandiser_userid", "audit_form_name", "section_name"]
             filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
             lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"             
+            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_2
             config:
               store_failures: true
               schema: ntawks_integration
       - name : sdl_pop6_tw_service_levels
-        tags: ["", "ingestion"]
-        tests:
-            - test_duplicate:
-                select_columns: ["visit_frequency"]
-                group_by_columns: ["visit_frequency"]
-                name: TRATBL_sdl_pop6_tw_service_levels__duplicate_test
-                config:
-                  store_failures: true
-                  schema: ntawks_integration
-            - test_null:
-                select_columns: ["visit_frequency"]
-                not_null_columns: ["visit_frequency"]
-                name: TRATBL_sdl_pop6_tw_service_levels__null_test
-                config:
-                  store_failures: true
-                  schema: ntawks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["visit_frequency"]
+        #         group_by_columns: ["visit_frequency"]
+        #         name: TRATBL_sdl_pop6_tw_service_levels__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: ntawks_integration
+        #     - test_null:
+        #         select_columns: ["visit_frequency"]
+        #         not_null_columns: ["visit_frequency"]
+        #         name: TRATBL_sdl_pop6_tw_service_levels__null_test
+        #         config:
+        #           store_failures: true
+        #           schema: ntawks_integration
       - name : sdl_pop6_tw_sku_audits
-        tags: ["", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["visit_id", "section_id", "field_id","dependent_on_field_id","sku_id"]
@@ -498,12 +894,13 @@ sources:
             - test_null:
                 select_columns:  ["visit_id", "section_id", "field_id","dependent_on_field_id","sku_id"]
                 not_null_columns:  ["visit_id", "section_id", "field_id","dependent_on_field_id","sku_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_tw_sku_audits__null_test
                 config:
                   store_failures: true
                   schema: ntawks_integration
       - name : sdl_pop6_tw_product_attribute_audits
-        tags: ["", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns:  ["visit_id","audit_form_id", "section_id", "field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
@@ -515,29 +912,30 @@ sources:
             - test_null:
                 select_columns: ["visit_id","audit_form_id", "section_id", "field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
                 not_null_columns: ["visit_id","audit_form_id", "section_id", "field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_tw_product_attribute_audits__null_test
                 config:
                   store_failures: true
                   schema: ntawks_integration
       - name : sdl_pop6_tw_display_plans
-        tags: ["", "ingestion"]
-        tests:
-            - test_duplicate:
-                select_columns: ["display_plan_id"]
-                group_by_columns: ["display_plan_id"]
-                name: TRATBL_sdl_pop6_tw_display_plans__duplicate_test
-                config:
-                  store_failures: true
-                  schema: ntawks_integration
-            - test_null:
-                select_columns: ["display_plan_id"]
-                not_null_columns: ["display_plan_id"]
-                name: TRATBL_sdl_pop6_tw_display_plans__null_test
-                config:
-                  store_failures: true
-                  schema: ntawks_integration
+        tags: ["pop6_master_load", "ingestion"]
+        # tests:
+        #     - test_duplicate:
+        #         select_columns: ["display_plan_id"]
+        #         group_by_columns: ["display_plan_id"]
+        #         name: TRATBL_sdl_pop6_tw_display_plans__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: ntawks_integration
+        #     - test_null:
+        #         select_columns: ["display_plan_id"]
+        #         not_null_columns: ["display_plan_id"]
+        #         name: TRATBL_sdl_pop6_tw_display_plans__null_test
+        #         config:
+        #           store_failures: true
+        #           schema: ntawks_integration
       - name : sdl_pop6_tw_promotion_plans
-        tags: ["", "ingestion"]
+        tags: ["pop6_master_load", "ingestion"]
         tests:
             - test_duplicate:
                 select_columns: ["promotion_plan_id"]
@@ -554,7 +952,7 @@ sources:
                   store_failures: true
                   schema: ntawks_integration
       - name : sdl_pop6_tw_exclusion
-        tags: ["", "ingestion"] 
+        tags: ["pop6_master_load", "ingestion"]
         tests:
           - test_lookup:
               select_columns: ["country","visit_date","pop_code","merchandiser_userid","exclude_kpi","audit_form_name","section_name","operation_type"]
@@ -602,9 +1000,9 @@ sources:
     tables:
       - name: itg_photo_mgmnt_url_temp
 
-  - name: ntaedw_integration
+  - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaedw_integration
+    schema: aspedw_integration
     quoting:
       database: false
       schema: false
