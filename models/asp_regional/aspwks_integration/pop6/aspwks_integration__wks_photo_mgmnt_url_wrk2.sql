@@ -2,7 +2,7 @@ with sdl_photo_mgmnt_url_cnt as (
     select * from {{ ref('aspwks_integration__wks_photo_mgmnt_url_cnt') }}
 ),
 itg_photo_mgmnt_url as (
-    select * from {{ source('ntaitg_integration', 'itg_photo_mgmnt_url_temp')}}
+    select * from {{ source('aspitg_integration', 'itg_photo_mgmnt_url_temp')}}
 ),
 final as (
     select sdl.photo_key,
