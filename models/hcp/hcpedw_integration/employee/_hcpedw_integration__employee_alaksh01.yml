@@ -5,3 +5,11 @@ models:
     config:
       alias: edw_hcp360_in_ventasys_employee_dim
       tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_wrk_dim_employee
+    config:
+      alias: edw_hcp360_veeva_wrk_dim_employee
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_employee
+    config:
+      alias: edw_hcp360_veeva_dim_employee
+      tags: ["in_veeva_edw_load","transformation"]

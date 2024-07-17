@@ -5,3 +5,11 @@ models:
     config:
       alias: edw_hcp360_in_ventasys_call_fact
       tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_fact_call_detail
+    config:
+      alias: edw_hcp360_veeva_fact_call_detail
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_wrk_fact_call_only
+    config:
+      alias: edw_hcp360_veeva_wrk_fact_call_only
+      tags: ["in_veeva_edw_load","transformation"]

@@ -5,3 +5,11 @@ models:
     config:
       alias: wks_hcp360_master_key_brand_temp
       tags: ["in_hcp_mastering","transformation"]
+  - name: hcpwks_integration__wks_hcp_360_iqvia_brand_derma_mat_temp
+    config:
+      alias: wks_hcp_360_iqvia_brand_derma_mat_temp
+      tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpwks_integration__wks_hcp_360_iqvia_brand_aveenobaby_mat_temp
+    config:
+      alias: wks_hcp_360_iqvia_brand_aveenobaby_mat_temp
+      tags: ["in_hcp360_data_mart","transformation"]
