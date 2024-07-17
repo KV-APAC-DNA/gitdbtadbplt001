@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: hcpitg_integration__itg_hcp360_sfmc_bounce_data
+    config:
+      alias: itg_hcp360_sfmc_bounce_data
+      tags: ["in_sfmc_edw_load","ingestion"]
+
+  - name: hcpitg_integration__itg_hcp360_sfmc_click_data
+    config:
+      alias: itg_hcp360_sfmc_click_data
+      tags: ["in_sfmc_edw_load","ingestion"]
+
+  - name: hcpitg_integration__itg_hcp360_sfmc_open_data
+    config:
+      alias: itg_hcp360_sfmc_open_data
+      tags: ["in_sfmc_edw_load","ingestion"]
+
+  - name: hcpitg_integration__itg_hcp360_sfmc_unsubscribe_data
+    config:
+      alias: itg_hcp360_sfmc_unsubscribe_data
+      tags: ["in_sfmc_edw_load","ingestion"]
+ 
