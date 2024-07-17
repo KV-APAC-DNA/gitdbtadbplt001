@@ -15,3 +15,4 @@ models:
     config:
       alias: wks_hcp_360_iqvia_brand_orsl_mat_temp
       tags: ["in_hcp360_data_mart","transformation"]
+ 

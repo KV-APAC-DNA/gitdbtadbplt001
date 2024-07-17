@@ -10,3 +10,4 @@ models:
     config:
         alias: wks_rx_to_cx_urc_vrtl_udc_mapp
         tags: ["in_rx_to_cx_extracts_data_mart","transformation"]
+ 

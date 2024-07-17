@@ -1,6 +1,6 @@
 with wks_sfmc_hcp_dim as 
 (
-    select * from dev_dna_core.snapindwks_integration.wks_sfmc_hcp_dim
+    select * from {{ ref('hcpwks_integration__wks_sfmc_hcp_dim') }}
 ),
 final as 
 (
@@ -31,4 +31,4 @@ final as
         current_timestamp()::timestamp_ntz(9) as updt_dttm
     from wks_sfmc_hcp_dim
 )
-select * from final 
+select * from final

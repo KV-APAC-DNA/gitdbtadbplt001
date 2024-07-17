@@ -31,4 +31,4 @@ transformed as
         'IN' as country
     FROM sdl_hcp360_in_iqvia_speciality
 )
-select * from transformed 
+select * from transformed

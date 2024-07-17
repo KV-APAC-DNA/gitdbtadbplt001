@@ -1,10 +1,10 @@
 with edw_retailer_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_RETAILER_DIM
+    select * from {{ ref('indedw_integration__edw_retailer_dim') }}
 ),
 v_retailer_udc_map as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.V_RETAILER_UDC_MAP
+    select * from {{ ref('indedw_integration__v_retailer_udc_map') }}
 ),
 transformed as
 (
@@ -30,4 +30,4 @@ final as
 (   
     select * from transformed
 )
-select * from final 
+select * from final

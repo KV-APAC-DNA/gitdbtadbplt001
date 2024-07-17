@@ -1,10 +1,10 @@
 with itg_hcp360_in_iqvia_brand as 
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_in_iqvia_brand
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_brand') }}
 ),
 itg_mds_hcp360_product_mapping as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_mds_hcp360_product_mapping
+    select * from {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }}
 ),
 iqvia as
 (
@@ -72,4 +72,4 @@ final as
         noofprescribers::number(18,5) as noofprescribers
     from transformed
 )
-select * from final 
+select * from final

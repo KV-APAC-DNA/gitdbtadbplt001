@@ -11,7 +11,7 @@
 
 with itg_hcp360_in_iqvia_speciality as
 (
-    select * from dev_dna_core.hcpitg_integration.itg_hcp360_in_iqvia_speciality
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_speciality') }}
 ),
 final as
 (
@@ -30,4 +30,4 @@ final as
         'IN' as country
     FROM itg_hcp360_in_iqvia_speciality
 )
-select * from final 
+select * from final

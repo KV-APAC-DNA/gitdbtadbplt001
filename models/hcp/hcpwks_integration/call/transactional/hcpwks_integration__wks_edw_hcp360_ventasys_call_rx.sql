@@ -1,30 +1,30 @@
 with edw_hcp360_call_fact as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_call_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_call_fact') }}
 ),
 edw_hcp360_ventasys_hcp_dim_snapshot as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_ventasys_hcp_dim_snapshot
+    select * from {{ ref('hcpedw_integration__edw_hcp360_ventasys_hcp_dim_snapshot') }}
 ),
 edw_hcp360_in_ventasys_brand_map as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_brand_map
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_brand_map') }}
 ),
 edw_hcp360_in_ventasys_territory_dim as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_territory_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_territory_dim') }}
 ),
 edw_hcp360_in_ventasys_employee_dim as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_employee_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_employee_dim') }}
 ),
 edw_hcp360_in_ventasys_prescription_fact as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_prescription_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_prescription_fact') }}
 ),
 edw_hcp360_in_ventasys_samples_fact as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_samples_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_samples_fact') }}
 ),
 cte as
 (
@@ -196,4 +196,4 @@ final as
         category::varchar(50) as category
     from transformed
 )
-select * from final 
+select * from final

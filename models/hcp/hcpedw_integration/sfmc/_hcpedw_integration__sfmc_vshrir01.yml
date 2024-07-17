@@ -10,3 +10,4 @@ models:
     config:
       alias: edw_hcp360_email_activity_fact
       tags: ["in_sfmc_edw_load","transformation"]
+ 

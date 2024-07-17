@@ -46,4 +46,4 @@ select
 	email_subject::varchar(200) as email_subject,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
 	updt_dttm::timestamp_ntz(9) as updt_dttm
-from final 
+from final

@@ -1,6 +1,6 @@
 with wks_hcp_360_iqvia_brand_orsl_temp as
 (
-    select * from dev_dna_core.snapindwks_integration.wks_hcp_360_iqvia_brand_orsl_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_orsl_temp') }}
 ),
 transformed as
 (
@@ -79,4 +79,4 @@ final as
     	mat_noofprescribers::number(38,5) as mat_noofprescribers
     from transformed 
 )
-select * from final 
+select * from final

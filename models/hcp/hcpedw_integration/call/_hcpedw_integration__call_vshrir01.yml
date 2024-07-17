@@ -5,3 +5,4 @@ models:
     config:
       alias: edw_hcp360_call_fact
       tags: ["in_hcp360_call_fact","transformation"]
+ 

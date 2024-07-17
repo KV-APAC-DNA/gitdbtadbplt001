@@ -1,30 +1,30 @@
 with edw_hcp360_veeva_dim_employee as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_veeva_dim_employee
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_employee') }}
 ),
 edw_hcp360_veeva_fact_call_detail as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_veeva_fact_call_detail
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_call_detail') }}
 ),
 edw_hcp360_veeva_dim_product_indication as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_veeva_dim_product_indication
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_product_indication') }}
 ),
 edw_hcp360_veeva_dim_hcp as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_veeva_dim_organization as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_veeva_dim_organization
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization') }}
 ),
 itg_hcp360_veeva_territory as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_veeva_territory
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_veeva_territory') }}
 ),
 edw_hcp360_in_ventasys_call_fact as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_in_ventasys_call_fact
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_call_fact') }}
 ),
 cte as
 (
@@ -122,4 +122,4 @@ final as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm
     from transformed 
 )
-select * from final 
+select * from final

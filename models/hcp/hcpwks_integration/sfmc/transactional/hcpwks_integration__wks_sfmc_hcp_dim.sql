@@ -1,10 +1,10 @@
 with itg_hcp360_sfmc_hcp_details as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_sfmc_hcp_details
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_hcp_details') }}
 ),
 edw_hcp360_hcp_master_key_by_brand as
 (
-    select * from dev_dna_core.snapindedw_integration.edw_hcp360_hcp_master_key_by_brand
+    select * from {{ ref('hcpedw_integration__edw_hcp360_hcp_master_key_by_brand') }}
 ),
 mas_key1 as
 (
@@ -83,4 +83,4 @@ final as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm
     from transformed 
 )
-select * from final 
+select * from final

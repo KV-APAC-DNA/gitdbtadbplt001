@@ -1,28 +1,28 @@
 with itg_hcp360_sfmc_sent_data as
 (
-    select * from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_HCP360_SFMC_SENT_DATA --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_sent_data') }}
 ),
 itg_hcp360_sfmc_bounce_data as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_sfmc_bounce_data
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_bounce_data') }}
 ),
 itg_hcp360_sfmc_open_data as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_sfmc_open_data
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_open_data') }}
 ),
 itg_hcp360_sfmc_click_data as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_sfmc_click_data
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_click_data') }}
 ),
 itg_hcp360_sfmc_unsubscribe_data as
 (
-    select * from dev_dna_core.snapinditg_integration.itg_hcp360_sfmc_unsubscribe_data
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_unsubscribe_data') }}
 ),
 itg_hcp360_sfmc_forward_data as
 (
-    select * from DEV_DNA_CORE.HCPITG_INTEGRATION.ITG_HCP360_SFMC_FORWARD_DATA --hcp
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_forward_data') }}
 ),
-cte as 
+cte as
 (
 SELECT 'SENT' AS ACTIVITY_TYPE,
     'INDIA' AS COUNTRY,
@@ -180,4 +180,4 @@ final as
         sent_activity_date::timestamp_ntz(9) as sent_activity_date
     from transformed 
 )
-select * from final 
+select * from final

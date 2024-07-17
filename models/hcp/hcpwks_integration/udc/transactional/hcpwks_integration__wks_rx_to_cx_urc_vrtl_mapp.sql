@@ -1,10 +1,10 @@
 with itg_hcp360_in_ventasys_rtlmaster as
 (
-    select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_IN_VENTASYS_RTLMASTER
+    select * from {{ ref('hcpitg__integration_itg_hcp360_in_ventasys_rtlmaster') }}
 ),
 itg_hcp360_in_ventasys_hcprtl as
 (
-    select * from DEV_DNA_CORE.SNAPINDITG_INTEGRATION.ITG_HCP360_IN_VENTASYS_HCPRTL
+    select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcprtl') }}
 ),
 transformed as
 (
@@ -38,4 +38,4 @@ final as
 (   
     select * from transformed
 )
-select * from final 
+select * from final

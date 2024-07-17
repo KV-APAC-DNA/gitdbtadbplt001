@@ -1,10 +1,10 @@
 with edw_hcp360_ventasys_hcp_dim_snapshot as
 (
-  select * from dev_dna_core.snapindedw_integration.edw_hcp360_ventasys_hcp_dim_snapshot
+  select * from {{ ref('hcpedw_integration__edw_hcp360_ventasys_hcp_dim_snapshot') }}
 ),
 edw_vw_hcp360_date_dim as 
 (
-  select * from dev_dna_core.snapindedw_integration.edw_vw_hcp360_date_dim
+  select * from {{ ref('hcpedw_integration__edw_vw_hcp360_date_dim') }}
 ),
 transformed as
 (
@@ -71,4 +71,4 @@ final as
         is_active::varchar(10) as is_active
     from transformed
 )
-select * from final 
+select * from final
