@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpwks_integration__wks_hcp360_master_key_brand_temp
-    config:
-      alias: wks_hcp360_master_key_brand_temp
-      tags: ["in_hcp_mastering","transformation"]
