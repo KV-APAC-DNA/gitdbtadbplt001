@@ -4,7 +4,7 @@ with v_edw_ph_rpt_retail_excellence as (
 ),
 
 --Logical CTE
-transformation as 
+final as 
 (
     SELECT FISC_YR,
        CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,
@@ -146,9 +146,9 @@ transformation as
          TARGET_COMPLAINCE,
          STORE_CODE,
          PRODUCT_CODE
-)
+),
 
-final as (
+ph_rpt_retail_excellence_summary_base as (
     select
     fisc_yr::numeric(18,0) AS fisc_yr,
     fisc_per::numeric(18,0) AS fisc_per,
@@ -218,11 +218,11 @@ final as (
     size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
     size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
     size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-    target_complaince::numeric(18,0) AS target_complaince,
+    target_complaince::numeric(38,6) AS target_complaince,
     crt_dttm::TIMESTAMP WITHOUT TIME ZONE  AS crt_dttm
-    from transformation
+    from final
 )
 
 
 --Final select
-select * from final
+select * from ph_rpt_retail_excellence_summary_base
