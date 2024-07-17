@@ -6,11 +6,11 @@ SELECT
   'KR' :: character varying AS ctry_cd, 
   'SOUTH KOREA' :: character varying AS ctry_nm, 
   'brand_trend' :: character varying AS data_source, 
-  (
+  to_date(
     (
       (derived_table1.reference_date):: text || ('01' :: character varying):: text
     )
-  ):: date AS reference_date, 
+  ,'YYYYMMDD') AS reference_date, 
   derived_table1.data_granularity, 
   derived_table1.category_depth1, 
   derived_table1.all_brand, 
