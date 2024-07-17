@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__wks_tp_salescube_ytd2
+    config:
+      alias: wks_tp_salescube_ytd2
+      tags: ["in_hcp360_iqvia_kpi_datamart","transformation"]
+  - name: hcpwks_integration__wks_tp_salescube_mat1
+    config:
+      alias: wks_tp_salescube_mat1
+      tags: ["in_hcp360_iqvia_kpi_datamart","transformation"]
+  - name: hcpwks_integration__wks_tp_salescube_mat2
+    config:
+      alias: wks_tp_salescube_mat2
+      tags: ["in_hcp360_iqvia_kpi_datamart","transformation"]
