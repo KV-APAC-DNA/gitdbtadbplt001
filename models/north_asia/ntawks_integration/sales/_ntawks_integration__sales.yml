@@ -8,7 +8,7 @@ models:
   - name: ntawks_integration__wks_tw_sales_incentive_offtake
     config: 
       alias: wks_tw_sales_incentive_offtake
-      tags: ["twsi_datamart_load","ingestion"]
+      tags: ["twsi_datamart_load","transformation"]
   - name: ntawks_integration__wks_edw_ims_sls_std
     config: 
       alias: wks_edw_ims_sls_std
