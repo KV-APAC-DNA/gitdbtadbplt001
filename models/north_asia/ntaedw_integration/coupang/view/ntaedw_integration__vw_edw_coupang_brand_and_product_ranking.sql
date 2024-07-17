@@ -34,7 +34,7 @@ FROM
   (
     SELECT 
       'brand_ranking' :: character varying AS data_source, 
-      br.yearmo AS reference_date, 
+      to_date(br.yearmo,'YYYYMMDD') AS reference_date, 
       br.data_granularity, 
       br.category_depth1, 
       br.category_depth2, 
@@ -56,7 +56,7 @@ FROM
     UNION ALL 
     SELECT 
       'product_ranking' :: character varying AS data_source, 
-      pr.product_ranking_date AS reference_date, 
+      to_date(pr.product_ranking_date,'YYYYMMDD') AS reference_date, 
       pr.data_granularity, 
       pr.category_depth1, 
       pr.category_depth2, 
