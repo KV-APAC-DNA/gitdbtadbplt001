@@ -1,7 +1,7 @@
 with 
 source as
 (
-    select * from {{ source('ntasdl_raw', 'sdl_pop6_tw_planned_visits') }}
+    select * from {{ source('sgpsdl_raw', 'sdl_pop6_sg_sku_audits') }}
 ),
 final as
 (

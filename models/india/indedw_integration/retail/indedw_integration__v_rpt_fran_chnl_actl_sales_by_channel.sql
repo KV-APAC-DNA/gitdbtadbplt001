@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with edw_dailysales_fact as
 (
     select * from {{ ref('indedw_integration__edw_dailysales_fact') }}

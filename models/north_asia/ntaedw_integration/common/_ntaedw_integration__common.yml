@@ -1,10 +1,6 @@
 version: 2
 
 models:
-  - name: ntaedw_integration__v_dly_ims_txn_msl
-    config:
-      alias: v_dly_ims_txn_msl
-      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_crncy_exch
     config:
       alias: v_intrm_crncy_exch

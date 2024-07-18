@@ -1,3 +1,8 @@
+{{
+    config(
+        pre_hook="{{ build_itg_ims_invnt_temp() }}"
+    )
+}}
 with sdl_hk_ims_wingkeung_inv as (
     select * from {{ source('ntasdl_raw', 'sdl_hk_ims_wingkeung_inv') }}
 ),

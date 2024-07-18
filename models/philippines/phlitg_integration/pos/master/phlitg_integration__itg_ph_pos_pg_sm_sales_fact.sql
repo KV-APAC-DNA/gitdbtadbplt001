@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook = "delete from {{this}} where file_nm in (select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_sm_goods') }}
+        pre_hook = "delete from {{this}} where file_nm in (select distinct file_name from {{ ref('phlwks_integration__wks_sdl_ph_pos_sm_goods') }}
         union 
         select distinct file_name from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }} );"
     )
@@ -17,7 +17,7 @@ sdl_ph_pos_puregold as (
     select * from {{ source('phlsdl_raw', 'sdl_ph_pos_puregold') }}
 ),
 sdl_ph_pos_sm_goods as (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_pos_sm_goods') }}
+    select * from {{ ref('phlwks_integration__wks_sdl_ph_pos_sm_goods') }}
 ),
 puregold as (
 select upper(substring(ippd.file_nm,1,2)) as cust_cd,

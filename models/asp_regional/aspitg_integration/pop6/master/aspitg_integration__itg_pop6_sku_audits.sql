@@ -11,6 +11,9 @@
 )}}
 with itg_pop6_sku_audits_temp as (
     select * from {{ ref('aspwks_integration__wks_pop6_sku_audits') }}
+        {% if is_incremental() %}
+        where (file_name,cntry_cd) not in (select distinct file_name ,cntry_cd from {{this}})
+    {% endif %}
 ),
 final as (
 select

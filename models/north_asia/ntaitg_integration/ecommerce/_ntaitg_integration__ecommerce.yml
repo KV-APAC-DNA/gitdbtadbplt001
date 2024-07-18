@@ -8,15 +8,15 @@ models:
   - name: ntaitg_integration__sdl_raw_kr_ecommerce_trexi_sellout
     config:
       alias: sdl_raw_kr_ecommerce_trexi_sellout
-      tags: ["j_kr_ecommerce_trexi_etl_framework","ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_ecom_coupang
     config:
       alias: sdl_raw_kr_ecom_coupang
-      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing","ingestion"]
   - name: ntaitg_integration__sdl_kr_ecommerce_ebay_sellout_raw
     config:
       alias: sdl_kr_ecommerce_ebay_sellout_raw
-      tags: ["j_kr_ecommerce_ebay_etl_framework","ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing","ingestion"]
   - name: ntaitg_integration__sdl_raw_kr_pos_emart_ssg
     config:
       alias: sdl_raw_kr_pos_emart_ssg
