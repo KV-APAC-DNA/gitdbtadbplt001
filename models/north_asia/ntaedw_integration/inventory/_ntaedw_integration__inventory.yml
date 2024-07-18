@@ -8,7 +8,7 @@ models:
   - name: ntaedw_integration__edw_ims_inventory_fact
     config: 
       alias: edw_ims_inventory_fact
-      tags: ["edw_ims_inventory_fact_load","transformation"]
+      tags: ["edw_ims_inventory_fact_load","tw_ims_distributor_standard_stock","transformation"]
   - name: ntaedw_integration__v_rpt_onpack_inventory
     config: 
       alias: v_rpt_onpack_inventory
