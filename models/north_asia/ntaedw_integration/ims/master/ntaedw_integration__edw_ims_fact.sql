@@ -10,7 +10,7 @@
             {% if is_incremental() %}
             delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and upper(dstr_cd) in ('NH','OTC');
             {% endif %}
-            {% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout_tran' %}
+            {% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout' %}
             {% if is_incremental() %}
             delete from {{this}} where  ctry_cd = 'KR' and (dstr_nm = 'UNITOA' or dstr_nm = 'TCAKOREA');
             {% endif %}
@@ -155,7 +155,7 @@ where upper(dstr_nm) in
 and upper(dstr_cd) in ('NH','OTC')
 )
 select * from korea
-{% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout_tran' %}
+{% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout' %}
 ,
 Korea_unitoa as (
 select
