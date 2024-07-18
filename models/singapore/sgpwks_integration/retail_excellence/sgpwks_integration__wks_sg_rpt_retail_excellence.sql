@@ -1,5 +1,5 @@
 with itg_sg_re_msl_list as (
-    select * from {{ ref('sgpwks_integration__wks_itg_sg_re_msl_list') }}
+    select * from {{ ref('sgpitg_integration__wks_itg_sg_re_msl_list') }}
 ),
 wks_singapore_regional_sellout_actuals as (
     select * from {{ ref('sgpwks_integration__wks_singapore_regional_sellout_actuals') }}

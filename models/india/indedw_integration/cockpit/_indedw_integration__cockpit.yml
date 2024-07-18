@@ -13,7 +13,6 @@ models:
 
   - name: indedw_integration__v_rpt_fran_chnl_actl
     config:
-      materialized: view
       alias: v_rpt_fran_chnl_actl
       tags: ["j_ap_idc_etl_framework","transformation"]
 
