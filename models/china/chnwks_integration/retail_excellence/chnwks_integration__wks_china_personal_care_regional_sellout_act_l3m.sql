@@ -1,7 +1,7 @@
 --import cte
 
 with wks_china_personal_care_regional_sellout_allmonths as (
-    select * from {{ ref('chnwks_integration_wks_china_personal_care_regional_sellout_allmonths')}}
+    select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_allmonths')}}
 ),
 wks_china_personal_care_regional_sellout_act_l3m 
 as 

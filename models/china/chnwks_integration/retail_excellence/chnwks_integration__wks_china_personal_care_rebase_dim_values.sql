@@ -77,7 +77,7 @@ as
                     city::varchar(150) as city,
                     zone::varchar(150) as zone,
                     mapped_sku_code::varchar(40) as mapped_sku_code ,
-					msl_product_desc::varchar(300) as msl_product_code,
+					msl_product_desc::varchar(300) as msl_product_desc,
              sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
              sap_parent_customer_description::varchar(75) as sap_parent_customer_description,
              sap_customer_channel_key::varchar(12) as sap_customer_channel_key,

@@ -13,3 +13,13 @@ sources:
      
       - name: itg_mds_master_mother_code_mapping
 
+  - name: chnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: chnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+     
+      - name: edw_perfect_store_product_master
