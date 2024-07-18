@@ -1,3 +1,6 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
 with v_dly_planned_ims as (
     select * from {{ ref('ntaedw_integration__v_dly_planned_ims') }}
 ),
