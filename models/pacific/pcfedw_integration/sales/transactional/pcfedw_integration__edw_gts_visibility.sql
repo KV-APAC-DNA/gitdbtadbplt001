@@ -342,11 +342,11 @@ from (select eif.co_cd,
 
             ) eif,
 
-           (select distinct dly_sls_cust_attrb_lkp.cmp_id
+           (select distinct dly_sls_cust_attrb_lkp.cmp_id_code
 
             from dly_sls_cust_attrb_lkp) lkp
 
-      where eif.co_cd = lkp.cmp_id
+      where eif.co_cd = lkp.cmp_id_code
 
       group by eif.co_cd,
 

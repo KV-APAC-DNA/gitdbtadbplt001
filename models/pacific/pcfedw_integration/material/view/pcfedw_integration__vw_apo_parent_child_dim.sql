@@ -25,7 +25,7 @@ final as
     FROM 
         (
             SELECT DISTINCT a.sls_org AS sales_org,
-                c.cmp_id,
+                c.cmp_id_code as cmp_id,
                 a.matl_num AS matl_id,
                 a.mstr_cd AS master_code,
                 CASE
@@ -89,8 +89,8 @@ final as
                     FROM edw_material_dim
                 ) b,
                 (
-                    SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org,
-                        dly_sls_cust_attrb_lkp.cmp_id
+                    SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org_code,
+                        dly_sls_cust_attrb_lkp.cmp_id_code
                     FROM dly_sls_cust_attrb_lkp
                 ) c
             WHERE (
@@ -108,10 +108,10 @@ final as
                         )
                         AND (a.mstr_cd IS NOT NULL)
                     )
-                    AND ((a.sls_org)::text = (c.sls_org)::text)
+                    AND ((a.sls_org)::text = (c.sls_org_code)::text)
                 )
             ORDER BY a.sls_org,
-                c.cmp_id,
+                c.cmp_id_code,
                 a.matl_num
         ) t1,
         (
@@ -196,15 +196,15 @@ final as
                                     FROM edw_material_dim
                                 ) b,
                                 (
-                                    SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org,
-                                        dly_sls_cust_attrb_lkp.cmp_id
+                                    SELECT DISTINCT dly_sls_cust_attrb_lkp.sls_org_code,
+                                        dly_sls_cust_attrb_lkp.cmp_id_code
                                     FROM dly_sls_cust_attrb_lkp
                                 ) c
                             WHERE (
                                     (
                                         (
                                             ((a.matl_num)::text = (b.matl_num)::text)
-                                            AND ((a.sls_org)::text = (c.sls_org)::text)
+                                            AND ((a.sls_org)::text = (c.sls_org_code)::text)
                                         )
                                         AND (
                                             (a.mstr_cd)::text <> (''::character varying)::text

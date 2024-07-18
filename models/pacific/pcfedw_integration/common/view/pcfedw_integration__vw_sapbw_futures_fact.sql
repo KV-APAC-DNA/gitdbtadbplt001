@@ -102,10 +102,10 @@ a as(
 		,eif.curr_key
 	FROM eif
 		,(
-			SELECT DISTINCT dly_sls_cust_attrb_lkp.cmp_id
+			SELECT DISTINCT dly_sls_cust_attrb_lkp.cmp_id_code
 			FROM dly_sls_cust_attrb_lkp
 			) lkp
-	WHERE ((eif.co_cd)::TEXT = (lkp.cmp_id)::TEXT)
+	WHERE ((eif.co_cd)::TEXT = (lkp.cmp_id_code)::TEXT)
 	GROUP BY eif.sls_doc
 		,eif.rqst_delv_dt
 		,eif.cust_num
