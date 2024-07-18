@@ -31,6 +31,9 @@ itg_query_parameters as (
 edw_tw_bp_target as (
     select * from {{ ref('ntaedw_integration__edw_tw_bp_target') }}
 ),
+edw_material_dim as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
 bu_forecast as 
 (
     SELECT 

@@ -9,7 +9,7 @@ SELECT
   'KR' :: character varying AS ctry_cd, 
   'SOUTH KOREA' :: character varying AS ctry_nm, 
   derived_table1.data_source, 
-  (derived_table1.reference_date):: date AS reference_date, 
+  to_date(derived_table1.reference_date,'YYYYMMDD'):: date AS reference_date, 
   derived_table1.data_granularity, 
   derived_table1.category_depth1, 
   derived_table1.category_depth2, 
