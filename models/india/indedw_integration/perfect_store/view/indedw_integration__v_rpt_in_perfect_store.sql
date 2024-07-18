@@ -1,52 +1,42 @@
 WITH edw_product_key_attributes
 AS (
-    SELECT *
-    FROM {{ ref('aspedw_integration__edw_product_key_attributes') }}
+    SELECT * FROM {{ ref('aspedw_integration__edw_product_key_attributes') }}
     ),
 edw_vw_ps_weights
 AS (
-    SELECT *
-    FROM {{ ref('aspedw_integration__edw_vw_ps_weights') }}
+    SELECT * FROM {{ ref('aspedw_integration__edw_vw_ps_weights') }}
     ),
 edw_vw_ps_targets
 AS (
-    SELECT *
-    FROM {{ ref('aspedw_integration__edw_vw_ps_targets') }}
+    SELECT * FROM {{ ref('aspedw_integration__edw_vw_ps_targets') }}
     ),
 edw_sku_recom_spike_msl
 AS (
-    SELECT *
-    FROM {{ ref('indedw_integration__edw_sku_recom_spike_msl') }}
+    SELECT * FROM {{ ref('indedw_integration__edw_sku_recom_spike_msl') }}
     ),
 itg_udcdetails
 AS (
-    SELECT *
-    FROM {{ ref('inditg_integration__itg_udcdetails') }}
+    SELECT * FROM {{ ref('inditg_integration__itg_udcdetails') }}
     ),
 edw_calendar_dim
 AS (
-    SELECT *
-    FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
+    SELECT * FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
     ),
 itg_in_perfectstore_msl
 AS (
-    SELECT *
-    FROM {{ ref('inditg_integration__itg_in_perfectstore_msl') }}
+    SELECT * FROM {{ ref('inditg_integration__itg_in_perfectstore_msl') }}
     ),
 itg_in_perfectstore_sos
 AS (
-    SELECT *
-    FROM {{ ref('inditg_integration__itg_in_perfectstore_sos') }}
+    SELECT * FROM {{ ref('inditg_integration__itg_in_perfectstore_sos') }}
     ),
 itg_in_perfectstore_promo
 AS (
-    SELECT *
-    FROM {{ ref('inditg_integration__itg_in_perfectstore_promo') }}
+    SELECT * FROM {{ ref('inditg_integration__itg_in_perfectstore_promo') }}
     ),
 itg_in_perfectstore_paid_display
 AS (
-    SELECT *
-    FROM {{ ref('inditg_integration__itg_in_perfectstore_paid_display') }}
+    SELECT * FROM {{ ref('inditg_integration__itg_in_perfectstore_paid_display') }}
     ),
 ct1
 AS (
@@ -855,17 +845,17 @@ AS (
         NULL AS ms_flag,
         NULL AS hit_ms_flag,
         NULL AS "y/n_flag",
+        CASE 
+            WHEN upper(sos.priority_store::TEXT) = 'YES'::CHARACTER VARYING::TEXT
+                THEN 'Y'::CHARACTER VARYING
+            ELSE 'N'::CHARACTER VARYING
+            END AS priority_store_flag,
         NULL AS questiontext,
         'DENOMINATOR' AS ques_desc,
         sos.total_facings AS value,
         trgt.value AS mkt_share,
         NULL AS rej_reason,
-        NULL AS photo_url,
-        CASE 
-            WHEN upper(sos.priority_store::TEXT) = 'YES'::CHARACTER VARYING::TEXT
-                THEN 'Y'::CHARACTER VARYING
-            ELSE 'N'::CHARACTER VARYING
-            END AS priority_store_flag
+        NULL AS photo_url
     FROM (
         SELECT edw_vw_ps_weights.market,
             edw_vw_ps_weights.kpi,
@@ -1091,7 +1081,7 @@ AS (
             ) AS wt
     WHERE trim(upper(wt.retail_environment::TEXT)) = trim(upper(dsp.format::TEXT))
         AND date_part(YEAR, to_date(to_date(dsp.visit_datetime)::CHARACTER VARYING::TEXT, 'YYYY-MM-DD'::CHARACTER VARYING::TEXT)::TIMESTAMP WITHOUT TIME ZONE) >= (date_part(YEAR, convert_timezone('UTC', current_timestamp())::TIMESTAMP_NTZ(9)) - 2::DOUBLE PRECISION)
-    ),
+    ) ,
 final
 AS (
     SELECT *
@@ -1116,6 +1106,7 @@ AS (
         UNION ALL
         SELECT *
         FROM ct6
+    
     )
 SELECT *
 FROM final
