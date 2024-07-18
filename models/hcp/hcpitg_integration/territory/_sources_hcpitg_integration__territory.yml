@@ -80,3 +80,40 @@ sources:
 
     - name: itg_hcp360_veeva_lookup_retention_period
       tags: ["hcp_lookup","ingestion"]
+
+  - name: hcpedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_hcp360_veeva_dim_country
+      tags: ["hcp_lookup","ingestion"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_ventasys_jnj_prod_mapping
+      tags: ["in_lookup","ingestion"]
+    - name: itg_salesperson_mothersku_tmp
+      tags: ["in_lookup","ingestion"]
+    - name: itg_mds_in_vent_prod_msku_mapping
+      tags: ["in_lookup","ingestion"]
+  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_orsl_products_target
+      tags: ["in_source","ingestion"]

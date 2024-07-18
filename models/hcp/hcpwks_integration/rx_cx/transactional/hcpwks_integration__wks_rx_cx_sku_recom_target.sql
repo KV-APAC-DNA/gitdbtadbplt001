@@ -2,10 +2,10 @@ with edw_rpt_rx_to_cx as(
     select * from {{ ref('hcpedw_integration__edw_rpt_rx_to_cx') }}
 ),
 itg_mds_in_vent_prod_msku_mapping as(
-    select * from {{ ref('hcpitg_integration_itg_mds_in_vent_prod_msku_mapping') }}
+    select * from {{ source('inditg_integration', 'itg_mds_in_vent_prod_msku_mapping') }}
 ),
 EDW_RETAILER_CALENDAR_DIM as(
-    select * from {{ ref('hcpedw_integration_edw_retailer_calendar_dim') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 itg_query_parameters as(
     select * from {{ source('inditg_integration', 'itg_query_parameters') }}

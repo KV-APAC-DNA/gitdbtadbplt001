@@ -1,5 +1,10 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
 with edw_hcp360_hcp_master_key_by_brand_reject as(
-    select * from snapindedw_integration.edw_hcp360_hcp_master_key_by_brand_reject
+    select * from {{ ref('hcpedw_integration__edw_hcp360_hcp_master_key_by_brand_reject') }}
 ),
 final as(
     SELECT edw_hcp360_hcp_master_key_by_brand_reject.brand,

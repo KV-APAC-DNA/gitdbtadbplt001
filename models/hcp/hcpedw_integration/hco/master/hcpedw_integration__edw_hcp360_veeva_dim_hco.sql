@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        DELETE FROM {{this}} WHERE HCO_KEY IN (SELECT HCO_KEY FROM {{ source('snapinditg_integration','itg_hcp360_veeva_account_hco') }} as ITG_HCO
+        DELETE FROM {{this}} WHERE HCO_KEY IN (SELECT HCO_KEY FROM {{ source('hcpitg_integration','itg_hcp360_veeva_account_hco') }} as ITG_HCO
         WHERE ITG_HCO.HCO_KEY = {{ this }}.HCO_KEY);
         DELETE FROM {{this}} WHERE HCO_KEY = 'Not Applicable';
         {% endif %}"
@@ -12,15 +12,15 @@
 }}
 with itg_hcp360_veeva_account_hco as
 (
-    select * from {{ source('snapinditg_integration','itg_hcp360_veeva_account_hco') }}
+    select * from {{ source('hcpitg_integration','itg_hcp360_veeva_account_hco') }}
 ),
 itg_hcp360_veeva_recordtype as
 (
-    select * from {{ source('snapinditg_integration','itg_hcp360_veeva_recordtype') }}
+    select * from {{ source('hcpitg_integration','itg_hcp360_veeva_recordtype') }}
 ),
 itg_hcp360_veeva_address as
 (
-    select * from {{ source('snapinditg_integration','itg_hcp360_veeva_address') }}
+    select * from {{ source('hcpitg_integration','itg_hcp360_veeva_address') }}
 ),
 final as(
     SELECT DISTINCT 

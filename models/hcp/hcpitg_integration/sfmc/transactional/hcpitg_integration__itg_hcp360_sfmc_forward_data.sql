@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} as itg_hcp360_sfmc_forward_data using {{ source('snapindsdl_raw','sdl_hcp360_in_sfmc_forward_data') }} as sdl_hcp360_in_sfmc_forward_data where sdl_hcp360_in_sfmc_forward_data.job_id = itg_hcp360_sfmc_forward_data.job_id
+        delete from {{this}} as itg_hcp360_sfmc_forward_data using {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }} as sdl_hcp360_in_sfmc_forward_data where sdl_hcp360_in_sfmc_forward_data.job_id = itg_hcp360_sfmc_forward_data.job_id
         and sdl_hcp360_in_sfmc_forward_data.batch_id = itg_hcp360_sfmc_forward_data.batch_id
         and sdl_hcp360_in_sfmc_forward_data.subscriber_id = itg_hcp360_sfmc_forward_data.subscriber_id
         and sdl_hcp360_in_sfmc_forward_data.subscriber_key = itg_hcp360_sfmc_forward_data.subscriber_key
@@ -14,7 +14,7 @@
     )
 }}
 with sdl_hcp360_in_sfmc_forward_data as (
-    select * from {{ source('snapindsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
+    select * from {{ source('hcpsdl_raw','sdl_hcp360_in_sfmc_forward_data') }}
 ),
 final as 
 (

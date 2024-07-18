@@ -1,6 +1,6 @@
 with vw_edw_hcp360_ventasys_hcp_dim as
 (
-    select * from snapindedw_integration.vw_edw_hcp360_ventasys_hcp_dim
+    select * from {{ ref('hcpedw_integration__vw_edw_hcp360_ventasys_hcp_dim') }}
 ),
 final as
 (
@@ -12,7 +12,7 @@ final as
     qualification::varchar(50) as qualification,
     speciality::varchar(20) as speciality,
     core_noncore::varchar(20) as core_noncore,
-    classification::varchar(20) as classification,
+    classification::varchar(50) as classification,
     is_fbm_adopted::varchar(20) as is_fbm_adopted,
     planned_visits_per_month::varchar(10) as planned_visits_per_month,
     cell_phone::varchar(50) as cell_phone,

@@ -1,14 +1,19 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
 with edw_hcp360_hcp_master_key_by_brand as(
-    select * from snapindedw_integration.edw_hcp360_hcp_master_key_by_brand
+    select * from {{ ref('hcpedw_integration__edw_hcp360_hcp_master_key_by_brand') }}
 ),
 edw_hcp360_in_ventasys_hcp_dim as(
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_hcp_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim') }}
 ),
 edw_hcp360_veeva_dim_hcp as(
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_sfmc_hcp_dim as(
-    select * from snapindedw_integration.edw_hcp360_sfmc_hcp_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_sfmc_hcp_dim') }}
 ),
 final as(
     SELECT derived_table1.brand,

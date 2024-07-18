@@ -1,5 +1,5 @@
 with v_rpt_sales_details as(
-	select * from {{ ref('hcpedw_integration_v_rpt_sales_details') }}
+	select * from {{ ref('indedw_integration__v_rpt_sales_details') }}
 ),
 itg_query_parameters as(
 	select * from {{ source('inditg_integration', 'itg_query_parameters') }}
@@ -14,7 +14,7 @@ itg_mds_in_hcp_sales_rep_mapping as(
 	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping') }}
 ),
 v_invoice_tde as(
-	select * from {{ ref('hcpedw_integration__v_invoice_tde') }}
+	select * from {{ ref('indedw_integration__v_invoice_tde') }}
 ),    
 itg_mds_in_hcp_sales_hierarchy_mapping as(
 	select * from {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }}

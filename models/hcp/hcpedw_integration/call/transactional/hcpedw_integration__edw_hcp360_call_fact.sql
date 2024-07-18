@@ -106,7 +106,7 @@ final as
         hcp_master_id::varchar(32) as hcp_master_id,
         hcp_id::varchar(20) as hcp_id,
         employee_id::varchar(20) as employee_id,
-        product_indication_name::varchar(50) as product_indication_name,
+        product_indication_name::varchar(100) as product_indication_name,
         brand::varchar(50) as brand,
         data_source_name::varchar(20) as data_source_name,
         call_date::date as call_date,

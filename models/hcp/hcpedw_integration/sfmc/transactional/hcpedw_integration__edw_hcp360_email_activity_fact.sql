@@ -1,17 +1,17 @@
 with itg_hcp360_sfmc_open_data as(
-    select * from {{ ref('hcpitg_integration_itg_hcp360_sfmc_open_data') }}
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_open_data') }}
 ),
 itg_hcp360_sfmc_bounce_data as(
-    select * from {{ ref('hcpitg_integration_itg_hcp360_sfmc_bounce_data') }}
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_bounce_data') }}
 ),
 itg_hcp360_sfmc_click_data as(
-    select * from {{ ref('hcpitg_integration_itg_hcp360_sfmc_click_data') }}
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_click_data') }}
 ),
 itg_hcp360_sfmc_sent_data as(
-    select * from {{ ref('hcpitg_integration_itg_hcp360_sfmc_sent_data') }}
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_sent_data') }}
 ),
 itg_hcp360_sfmc_forward_data as(
-    select * from {{ ref('hcpitg_integration_itg_hcp360_sfmc_forward_data') }}
+    select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_forward_data') }}
 ),
 itg_hcp360_sfmc_unsubscribe_data as(
     select * from {{ ref('hcpitg_integration__itg_hcp360_sfmc_unsubscribe_data') }}

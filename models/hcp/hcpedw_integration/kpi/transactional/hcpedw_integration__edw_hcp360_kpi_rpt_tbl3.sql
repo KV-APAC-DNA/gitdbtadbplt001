@@ -31,7 +31,7 @@ edw_hcp360_veeva_dim_organization_hcp as
 ),
 itg_hcp360_veeva_object_territory_association as 
 (
-    select * from {{ source('snapinditg_integration', 'itg_hcp360_veeva_object_territory_association') }}
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_veeva_object_territory_association') }}
 ),
 edw_hcp360_veeva_fact_survey_response as 
 (

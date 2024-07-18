@@ -183,7 +183,7 @@ final as
         call_source_id::varchar(20) as call_source_id,
         employee_id::varchar(20) as employee_id,
         prescription_id::varchar(50) as prescription_id,
-        product_indication_name::varchar(50) as product_indication_name,
+        product_indication_name::varchar(100) as product_indication_name,
         call_duration::varchar(255) as call_duration,
         no_of_prescription_units::number(38,2) as no_of_prescription_units,
         planned_visits_per_month::varchar(10) as planned_visits_per_month,

@@ -1,6 +1,6 @@
 with wks_hcp_360_iqvia_brand_jbaby_temp as 
 (
-    select * from snapindwks_integration.wks_hcp_360_iqvia_brand_jbaby_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_jbaby_temp') }}
 ),
 trans as 
 (

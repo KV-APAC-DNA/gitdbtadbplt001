@@ -1,10 +1,10 @@
 with wks_tp_salescube_base as
 (
-    select * from snapindwks_integration.wks_tp_salescube_base
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_base') }}
 ),
 wks_tp_salescube_ytd1 as
 (
-    select * from snapindwks_integration.wks_tp_salescube_ytd1
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_ytd1') }}
 ),
 final as
 (
@@ -13,7 +13,7 @@ final as
         ,YTD.REGION
         ,YTD.ZONE
         ,YTD.SALES_AREA
-        ,COUNT(DISTINCT base.num_buying_retailer) AS "ret_cnt_ytd"
+        ,COUNT(DISTINCT base.num_buying_retailer) AS ret_cnt_ytd
     FROM (SELECT BRAND
                 ,YEAR_MONTH
                 ,REGION

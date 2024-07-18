@@ -13,3 +13,7 @@ models:
     config:
       alias: edw_hcp360_in_ventasys_brand_map
       tags: ["in_hcp_mastering","transformation"]
+  - name: hcpedw_integration__edw_hcp360_in_iqvia_brand
+    config:
+      alias: edw_hcp360_in_iqvia_brand
+      tags: ["in_iqvia_edw_load","transformation"]

@@ -1,6 +1,6 @@
 with wks_tp_salescube_base as
 (
-    select * from snapindwks_integration.wks_tp_salescube_base
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_base') }}
 ),
 wks_tp_salescube_mat1 as
 (
@@ -13,7 +13,7 @@ final as
         ,mat.REGION
         ,mat.ZONE
         ,mat.SALES_AREA
-        ,COUNT(DISTINCT base.num_buying_retailer) AS "ret_cnt_mat"
+        ,COUNT(DISTINCT base.num_buying_retailer) AS ret_cnt_mat
     FROM (SELECT BRAND
                 ,YEAR_MONTH
                 ,REGION

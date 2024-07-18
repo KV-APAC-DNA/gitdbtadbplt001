@@ -8,11 +8,11 @@ itg_hcp360_veeva_question_response as
 ),
 edw_hcp360_veeva_dim_hcp as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_veeva_dim_hco as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hco
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hco') }}
 ),
 edw_hcp360_veeva_dim_employee as
 (
@@ -28,7 +28,7 @@ edw_hcp360_veeva_dim_survey_question as
 ),
 edw_hcp360_veeva_dim_country as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_country
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_veeva_dim_country') }}
 ),
 edw_vw_hcp360_date_dim as
 (

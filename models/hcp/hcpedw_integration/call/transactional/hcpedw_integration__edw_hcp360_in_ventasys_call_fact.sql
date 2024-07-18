@@ -137,7 +137,7 @@ select team_brand_name::varchar(20) as team_brand_name,
     call_date::date as call_date,
     call_type::varchar(20) as call_type,
     contact_type::varchar(50) as contact_type,
-    product::varchar(50) as product,
+    product::varchar(100) as product,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm
  from final

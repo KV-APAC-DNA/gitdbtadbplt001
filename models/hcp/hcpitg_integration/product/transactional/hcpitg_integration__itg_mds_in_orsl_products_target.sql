@@ -1,6 +1,6 @@
 with sdl_mds_in_orsl_products_target as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_mds_in_orsl_products_target') }}
+    select * from {{ source('indsdl_raw', 'sdl_mds_in_orsl_products_target') }}
 ),
 final as(
 select 

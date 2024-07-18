@@ -1,6 +1,6 @@
 with edw_hcp360_in_ventasys_hcp_dim as
 (
-    select * from {{ source('snapindedw_integration', 'edw_hcp360_in_ventasys_hcp_dim') }}
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_in_ventasys_hcp_dim') }}
 ),
 itg_hcp360_in_ventasys_hcp_master as
 (

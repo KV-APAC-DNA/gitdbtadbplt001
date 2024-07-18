@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: hcpedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_hcp360_in_ventasys_hcp_dim
+      tags: ["in_ventasys_edw_load","ingestion"]

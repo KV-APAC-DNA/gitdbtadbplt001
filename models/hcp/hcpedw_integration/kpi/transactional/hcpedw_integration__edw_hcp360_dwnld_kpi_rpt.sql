@@ -16,9 +16,6 @@ edw_hcp360_in_ventasys_samples_fact as (
 edw_hcp360_kpi_rpt as(
     select * from {{ ref('hcpedw_integration__edw_hcp360_kpi_rpt') }}
 ),
-edw_hcp360_dwnld_kpi_rpt as(
-    select * from {{ ref('hcpedw_integration__edw_hcp360_dwnld_kpi_rpt') }}
-),
 union_1 as (
     select BRAND,
         VENTASYS_ID,
@@ -965,7 +962,7 @@ BASE1 AS (
                 KPI.CORE_NONCORE,
                 KPI.CLASSIFICATION
          FROM EDW_HCP360_KPI_RPT kpi
-    LEFT JOIN edw_hcp360_dwnld_kpi_rpt download
+    LEFT JOIN {{this}} download
          ON kpi.HCP_MASTER_ID = download.MASTER_ID
     WHERE kpi.SOURCE_SYSTEM = 'SFMC'
                 AND kpi.HCP_ID IS NOT NULL

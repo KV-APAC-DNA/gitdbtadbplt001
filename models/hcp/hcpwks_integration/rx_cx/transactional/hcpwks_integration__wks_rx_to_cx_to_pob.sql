@@ -87,6 +87,10 @@ wks_rx_to_cx_to_pob_rxrtl as
 (
     select * from {{ ref('hcpwks_integration__wks_rx_to_cx_to_pob_rxrtl') }}
 ),
+itg_query_parameters as
+(
+    select * from {{ source('inditg_integration', 'itg_query_parameters') }}
+),
 final as
 (
     SELECT cal."year",

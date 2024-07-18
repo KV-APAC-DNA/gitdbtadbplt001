@@ -1,6 +1,6 @@
 with wks_rx_to_cx_urc_vrtl_udc_mapp as 
 (
-    select * from DEV_DNA_CORE.VSHRIR01_WORKSPACE.HCPWKS_INTEGRATION__WKS_RX_TO_CX_URC_VRTL_UDC_MAPP
+    select * from {{ ref('hcpwks_integration__wks_rx_to_cx_urc_vrtl_udc_mapp') }}
 ),
 final as 
 (

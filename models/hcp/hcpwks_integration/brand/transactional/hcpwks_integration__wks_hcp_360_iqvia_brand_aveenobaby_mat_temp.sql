@@ -1,7 +1,6 @@
 with wks_hcp_360_iqvia_brand_aveenobaby_temp as
 (
-    select * from DEV_DNA_CORE.VSHRIR01_WORKSPACE.HCPWKS_INTEGRATION__WKS_HCP_360_IQVIA_BRAND_AVEENOBABY_TEMP
-    --snapindwks_integration.wks_hcp_360_iqvia_brand_aveenobaby_temp
+    select * from {{ ref('hcpwks_integration__wks_hcp_360_iqvia_brand_aveenobaby_temp') }}
 ),
 final as
 (

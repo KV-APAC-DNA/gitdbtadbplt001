@@ -8,7 +8,7 @@ itg_hcp360_veeva_medical_event as
 ),
 edw_hcp360_veeva_dim_hcp as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_veeva_dim_product_indication as
 (

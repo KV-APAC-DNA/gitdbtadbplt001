@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpwks_integration__wks_hcp360_in_ventasys_hcp_compare_temp
-    config:
-      alias: wks_hcp360_in_ventasys_hcp_compare_temp
-      tags: ["in_ventasys_edw_load","ingestion"]

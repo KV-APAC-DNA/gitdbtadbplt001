@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpwks_integration__wks_rx_cx_sku_recom_target
-    config:
-        alias: wks_rx_cx_sku_recom_target
-        tags: ["in_rx_to_cx_extracts_data_mart","transformation"]

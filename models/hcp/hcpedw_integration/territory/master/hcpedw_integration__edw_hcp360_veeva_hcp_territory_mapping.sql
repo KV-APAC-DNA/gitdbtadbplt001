@@ -12,7 +12,7 @@ itg_hcp360_veeva_territory as
 ),
 final as
 (
-    SELECT TL_ID as TERRITORY_LOADER_ID,
+    SELECT TL.TL_ID as TERRITORY_LOADER_ID,
     T.TERRITORY_SOURCE_ID,
     TL.TL_ACCOUNT_SOURCE_ID,
     TL.CREATED_BY_ID,
@@ -38,14 +38,14 @@ final as
     FROM itg_hcp360_veeva_account_territory_loader TL,
     wks_hcp360_in_veeva_territory_loader WTL,
     itg_hcp360_veeva_territory T
-    WHERE TL_ID = TERRITORY_LOADER_ID 
+    WHERE TL.TL_ID = TERRITORY_LOADER_ID 
     AND  trim(T.TERRITORY_NAME) = trim(WTL.LEVEL_1)
 
 
     UNION 
 
 
-    SELECT TL_ID as TERRITORY_LOADER_ID,
+    SELECT TL.TL_ID as TERRITORY_LOADER_ID,
     T.TERRITORY_SOURCE_ID,
     TL.TL_ACCOUNT_SOURCE_ID,
     TL.CREATED_BY_ID,
@@ -71,7 +71,7 @@ final as
     FROM itg_hcp360_veeva_account_territory_loader TL,
     wks_hcp360_in_veeva_territory_loader WTL,
     itg_hcp360_veeva_territory T
-    WHERE TL_ID = TERRITORY_LOADER_ID
+    WHERE TL.TL_ID = TERRITORY_LOADER_ID
     AND   trim(T.TERRITORY_NAME) =  trim(LEVEL_2)
     AND  LEVEL_2 IS NOT NULL
 )

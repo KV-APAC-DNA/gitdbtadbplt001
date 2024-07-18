@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpitg_integration__itg_hcp360_sfmc_hcp_details
-    config:
-      alias: itg_hcp360_sfmc_hcp_details
-      tags: ["in_sfmc_hcp_detail","transformation"]

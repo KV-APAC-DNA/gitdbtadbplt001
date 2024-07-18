@@ -1,10 +1,10 @@
 with wks_rx_to_cx_urc_vrtl_mapp as
 (
-    select * from DEV_DNA_CORE.VSHRIR01_WORKSPACE.HCPWKS_INTEGRATION__WKS_RX_TO_CX_URC_VRTL_MAPP
+    select * from {{ ref('hcpwks_integration__wks_rx_to_cx_urc_vrtl_mapp') }}
 ),
 wks_rx_to_cx_urc_udc_macpp as
 (
-    select * from DEV_DNA_CORE.VSHRIR01_WORKSPACE.HCPWKS_INTEGRATION__WKS_RX_TO_CX_URC_UDC_MACPP
+    select * from {{ ref('hcpwks_integration__wks_rx_to_cx_urc_udc_macpp') }}
 ),
 transformed as
 (

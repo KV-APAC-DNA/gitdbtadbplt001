@@ -12,7 +12,7 @@ itg_hcp360_veeva_recordtype as
 ),
 edw_hcp360_veeva_dim_country as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_country
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_veeva_dim_country') }}
 ),
 edw_hcp360_veeva_dim_employee as
 (
@@ -32,11 +32,11 @@ edw_hcp360_veeva_dim_product_indication as
 ),
 edw_hcp360_veeva_dim_hcp as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_veeva_dim_hco as
 (
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hco
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hco') }}
 ),
 itg_hcp360_veeva_lookup_retention_period as
 (
@@ -101,13 +101,13 @@ final as
     ,c1.organization_key
     , c1.cal_date_id
     , case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.CALL_DATE_TIME) 
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.CALL_DATE_TIME) 
         end CALL_DATE_TIME
     , case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.LAST_MODIFIED_DATE) 
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.LAST_MODIFIED_DATE) 
         end LAST_MODIFIED_DATE  
     ,case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.MOBILE_LAST_MODIFIED_DATE_TIME) 
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.MOBILE_LAST_MODIFIED_DATE_TIME) 
         end MOBILE_LAST_MODIFIED_DATE_TIME
     , C1. CALL_DATE_TIME utc_call_date_time
     ,C1.LAST_MODIFIED_DATE utc_call_entry_time
@@ -208,13 +208,13 @@ final as
     ,c1.organization_key
     , c1.cal_date_id
     , case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.CALL_DATE_TIME)
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.CALL_DATE_TIME)
         end CALL_DATE_TIME
     , case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.LAST_MODIFIED_DATE) 
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.LAST_MODIFIED_DATE) 
         end LAST_MODIFIED_DATE  
     ,case 
-        when c1.country_code = 'IN' then convert_timezone('Asia/Kolkata',C1.MOBILE_LAST_MODIFIED_DATE_TIME) 
+        when c1.country_code = 'IN' then convert_timezone('UTC','Asia/Kolkata',C1.MOBILE_LAST_MODIFIED_DATE_TIME) 
         end MOBILE_LAST_MODIFIED_DATE_TIME
         , C1. CALL_DATE_TIME utc_call_date_time
         ,C1.LAST_MODIFIED_DATE utc_call_entry_time

@@ -5,8 +5,8 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} WHERE (team_name,v_custid_rtl) IN (SELECT sdl.team_name,sdl.v_custid_rtl
-                                   FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster sdl') }} sdl 
-                                   INNER JOIN itg_hcp360_in_ventasys_rtlmaster  itg
+                                   FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }} sdl 
+                                   INNER JOIN {{this}}  itg
                                    ON sdl.team_name = itg.team_name
                                    AND sdl.v_custid_rtl = itg.v_custid_rtl
                                    )

@@ -1,26 +1,31 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
 with edw_hcp360_in_ventasys_hcp_dim as(
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_hcp_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_hcp_dim') }}
 ),
 edw_hcp360_in_ventasys_territory_dim as(
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_territory_dim
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_territory_dim') }}
 ),
 edw_hcp360_in_ventasys_brand_map as(
-    select * from snapindedw_integration.edw_hcp360_in_ventasys_brand_map
+    select * from {{ ref('hcpedw_integration__edw_hcp360_in_ventasys_brand_map') }}
 ),
 edw_hcp360_hcp_master_key_by_brand as(
-    select * from snapindedw_integration.edw_hcp360_hcp_master_key_by_brand
+    select * from {{ ref('hcpedw_integration__edw_hcp360_hcp_master_key_by_brand') }}
 ),
 edw_hcp360_veeva_fact_call_detail as(
-    select * from snapindedw_integration.edw_hcp360_veeva_fact_call_detail
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_call_detail') }}
 ),
 itg_hcp360_veeva_territory_fields as(
-    select * from snapinditg_integration.itg_hcp360_veeva_territory_fields
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_veeva_territory_fields') }}
 ),
 edw_hcp360_veeva_dim_hcp as(
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_hcp
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_hcp') }}
 ),
 edw_hcp360_veeva_dim_organization as(
-    select * from snapindedw_integration.edw_hcp360_veeva_dim_organization
+    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_organization') }}
 ),
 final as(
     SELECT DISTINCT COALESCE(hcp.brand, vhcp.brand) AS brand,

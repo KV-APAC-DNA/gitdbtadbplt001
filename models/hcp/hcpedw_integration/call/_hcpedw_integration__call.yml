@@ -13,3 +13,8 @@ models:
     config:
       alias: edw_hcp360_veeva_wrk_fact_call_only
       tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_call_fact
+    config:
+      alias: edw_hcp360_call_fact
+      tags: ["in_hcp360_call_fact","transformation"]
+ 

@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpedw_integration__edw_hcp360_veeva_dim_product_indication
-    config:
-      alias: edw_hcp360_veeva_dim_product_indication
-      tags: ["in_veeva_edw_load","transformation"]

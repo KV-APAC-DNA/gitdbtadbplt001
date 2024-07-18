@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcpedw_integration__edw_hcp360_in_iqvia_indication
-    config:
-      alias: edw_hcp360_in_iqvia_indication
-      tags: ["in_iqvia_edw_load","transformation"]

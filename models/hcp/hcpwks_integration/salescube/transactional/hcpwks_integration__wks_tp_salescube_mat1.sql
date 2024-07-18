@@ -1,6 +1,6 @@
 with wks_tp_salescube_base as
 (
-    select * from snapindwks_integration.wks_tp_salescube_base
+    select * from {{ ref('hcpwks_integration__wks_tp_salescube_base') }}
 ),
 final as
 (

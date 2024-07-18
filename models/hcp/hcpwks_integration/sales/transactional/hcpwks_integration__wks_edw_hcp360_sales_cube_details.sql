@@ -1,5 +1,5 @@
 with edw_rpt_sales_details as(
-    select * from {{ ref('hcpedw_integration__edw_rpt_sales_details') }}
+    select * from {{ ref('indedw_integration__edw_rpt_sales_details') }}
 ),
 final as(
     select brand_name,
