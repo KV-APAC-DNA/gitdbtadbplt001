@@ -23,11 +23,11 @@ edw_hcp360_veeva_dim_product_indication as
 ),
 edw_hcp360_veeva_fact_call_key_message as 
 (
-    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_fact_call_key_message') }}
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_veeva_fact_call_key_message') }}
 ),
 edw_hcp360_veeva_dim_key_message as 
 (
-    select * from {{ ref('hcpedw_integration__edw_hcp360_veeva_dim_key_message') }}
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_veeva_dim_key_message') }}
 ),
 edw_hcp360_veeva_dim_organization as 
 (

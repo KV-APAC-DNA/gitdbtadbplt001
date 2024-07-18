@@ -91,6 +91,10 @@ sources:
     tables:
     - name: edw_hcp360_veeva_dim_country
       tags: ["hcp_lookup","ingestion"]
+    - name: edw_hcp360_veeva_dim_key_message
+      tags: ["hcp_lookup","ingestion"]
+    - name: edw_hcp360_veeva_fact_call_key_message
+      tags: ["hcp_lookup","ingestion"]
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
