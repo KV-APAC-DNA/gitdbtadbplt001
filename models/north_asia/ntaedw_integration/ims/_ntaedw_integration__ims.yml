@@ -8,7 +8,7 @@ models:
   - name: ntaedw_integration__edw_ims_fact
     config: 
         alias: edw_ims_fact
-        tags: ["tw_ims_distributor_standard_sell_out","kr_ecommerce_sellout ","na_trxn_ims","kr_gt_sellout","transformation"]
+        tags: ["tw_ims_distributor_standard_sell_out","kr_ecommerce_sellout","na_trxn_ims","kr_gt_sellout","transformation"]
   - name: ntaedw_integration__v_rpt_ims
     config: 
         alias: v_rpt_ims
