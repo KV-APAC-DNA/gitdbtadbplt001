@@ -73,12 +73,12 @@ models:
   - name: inditg_integration__itg_rdssmweeklytarget_output
     config:
       alias: itg_rdssmweeklytarget_output
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
   - name: inditg_integration__itg_scheme_header
     config:
       alias: itg_scheme_header
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
   - name: inditg_integration__itg_ittarget
     config:
       alias: itg_ittarget
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]

@@ -78,7 +78,7 @@ final as (
         response_score::varchar(65535) as response_score,
         acc_rej_reason::varchar(65535) as acc_rej_reason,
         actual::varchar(40) as actual,
-        target::varchar(40) as target,
+        "target"::varchar(40) as target,
         priority_store_flag::varchar(256) as priority_store_flag,
         photo_url::varchar(500) as photo_url,
         website_url::varchar(1) as website_url,

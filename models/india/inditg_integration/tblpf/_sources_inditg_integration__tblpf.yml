@@ -8,6 +8,6 @@ sources:
       identifier: false
     tables:
     - name: sdl_rstockdiscrepancy_withproduct
-      tags: ["m_wrp_in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
 
 

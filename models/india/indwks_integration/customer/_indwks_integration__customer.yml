@@ -12,9 +12,9 @@ models:
   - name: indwks_integration__wks_lks_businesscalender
     config:
       alias: wks_lks_businesscalender
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
 
   - name: indwks_integration__wks_csl_tbl_schemewise_apno
     config:
       alias: wks_csl_tbl_schemewise_apno
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]

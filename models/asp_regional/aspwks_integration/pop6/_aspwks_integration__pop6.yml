@@ -457,7 +457,7 @@ models:
   - name: aspwks_integration__wks_pop6_sku_audits
     config:
       alias: wks_pop6_sku_audits
-      tags: ["pop6_master_load","ingestion"]
+      tags: ["pop6_master_load","transformation"]
   - name: aspwks_integration__wks_photo_mgmnt_url_cnt
     config:
       alias: wks_photo_mgmnt_url_cnt
@@ -470,3 +470,39 @@ models:
     config:
       alias: wks_photo_mgmnt_url_wrk2
       tags: ["pop6_photo_management_pre_conversion","transformation"]
+  - name: aspwks_integration__wks_pop6_th_products
+    config:
+      alias: wks_pop6_th_products
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_products
+    config:
+      alias: wks_pop6_sg_products
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_products
+    config:
+      alias: wks_pop6_jp_products
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_hk_sku_audits
+    config:
+      alias: wks_pop6_hk_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_tw_sku_audits
+    config:
+      alias: wks_pop6_tw_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_kr_sku_audits
+    config:
+      alias: wks_pop6_kr_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_sg_sku_audits
+    config:
+      alias: wks_pop6_sg_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_th_sku_audits
+    config:
+      alias: wks_pop6_th_sku_audits
+      tags: ["pop6_master_load","ingestion"]
+  - name: aspwks_integration__wks_pop6_jp_sku_audits
+    config:
+      alias: wks_pop6_jp_sku_audits
+      tags: ["pop6_master_load","ingestion"]

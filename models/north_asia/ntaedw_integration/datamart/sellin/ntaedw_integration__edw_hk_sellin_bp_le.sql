@@ -1042,7 +1042,7 @@ final as
         subsource_type::varchar(6) subsource_type,
         fisc_yr_per::varchar(22) fisc_yr_per,
         mega_brnd_desc::varchar(100) mega_brnd_desc,
-        brnd_desc::varchar(30) brnd_desc,
+        brnd_desc::varchar(100) brnd_desc,
         "go to model"::varchar(50) "go to model",
         "banner format"::varchar(50) "banner format",
         "sub channel"::varchar(50) "sub channel",

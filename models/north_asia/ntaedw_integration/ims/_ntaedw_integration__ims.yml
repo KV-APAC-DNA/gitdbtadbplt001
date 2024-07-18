@@ -1,10 +1,14 @@
 version: 2
 
 models:
+  - name: ntaedw_integration__v_dly_ims_txn_msl
+    config:
+      alias: v_dly_ims_txn_msl
+      tags: ["tw_ims_distributor_standard_sell_out","kr_edw_ims_fact","na_trxn_ims","transformation"]
   - name: ntaedw_integration__edw_ims_fact
     config: 
         alias: edw_ims_fact
-        tags: ["tw_ims_distributor_standard_sell_out","transformation"]
+        tags: ["tw_ims_distributor_standard_sell_out","kr_edw_ims_fact","na_trxn_ims","transformation"]
   - name: ntaedw_integration__v_rpt_ims
     config: 
         alias: v_rpt_ims

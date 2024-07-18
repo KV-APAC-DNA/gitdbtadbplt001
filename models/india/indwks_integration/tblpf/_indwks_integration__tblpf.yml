@@ -4,4 +4,4 @@ models:
   - name: indwks_integration__wks_tblpf_clstkm
     config: 
       alias: wks_tblpf_clstkm
-      tags: ["m_wrp_in_sdlitg_salescube_master","transformation"]
+      tags: ["in_sdlitg_salescube_master","transformation"]
