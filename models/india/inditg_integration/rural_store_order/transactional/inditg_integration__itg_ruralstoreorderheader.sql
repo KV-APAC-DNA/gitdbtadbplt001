@@ -40,7 +40,7 @@ final as
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run
     where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    and source.filename not in (select distinct filename from {{ this }}) 
+    and source.filename not in (select distinct filename from {{ this }} where filename is not null)
     {% endif %}
 )
 select * from final
