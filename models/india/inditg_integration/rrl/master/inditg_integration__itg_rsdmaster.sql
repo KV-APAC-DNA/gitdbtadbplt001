@@ -60,7 +60,12 @@ with source as
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     row_number() over (partition by upper(sdl_rsdm.rsdcode),upper(sdl_rsdm.rsrcode),upper(sdl_rsdm.distributorcode) order by sdl_rsdm.crt_dttm desc) rnum
-      from source sdl_rsdm)
+    from source sdl_rsdm
+    {% if is_incremental() %}
+    --this filter will only be applied on an incremental run
+    where sdl_rsdm.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    {% endif %}
+    )
 WHERE rnum = '1'
 ),
 final as
@@ -109,12 +114,7 @@ final as
     filename::varchar(100) as filename,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
-
     from trans
-    {% if is_incremental() %}
-    --this filter will only be applied on an incremental run
-    where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
 )
 
 select * from final

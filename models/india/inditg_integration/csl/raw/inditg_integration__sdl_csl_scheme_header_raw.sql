@@ -11,6 +11,7 @@ with source as (
 final as
  (
     select
+    schid::number(18,0) as schid,
     schcode::varchar(20) as schcode,
 	schdsc::varchar(100) as schdsc,
 	claimable::number(38,0) as claimable,

@@ -13,7 +13,15 @@ source as
 final as
 (
     select
-        *,
+        distributor_code,
+        distributor_cusotmer_code,
+        distributor_customer_name,
+        distributor_address,
+        distributor_telephone,
+        distributor_contact,
+        distributor_sales_area,
+        crt_dttm,
+        updt_dttm as upd_dttm,
         null as filename,
         null as run_id
     from source
