@@ -209,21 +209,21 @@ sources:
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
       tests:
         - test_duplicate:
-            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_month", "code"]
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
             group_by_columns: ["wk_code", "sap_code", "strt_yr_mnth"]
             name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__duplicate_test_1
             config:
               store_failures: true
               schema: ntawks_integration
         - test_null:
-            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_month", "code"]
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
             not_null_columns: ["code"]
             name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__null_test
             config:
               store_failures: true
               schema: ntawks_integration        
         - test_duplicate:
-            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_month", "code"]
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
             group_by_columns: ["code"]
             name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__duplicate_test_2
             config:
