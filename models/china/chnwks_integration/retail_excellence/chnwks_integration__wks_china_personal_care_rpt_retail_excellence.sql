@@ -36,7 +36,7 @@ from (select cast(target.fisc_yr as integer) as fisc_yr,
 			 coalesce(actual.soldto_code,target.soldto_code,'NA') as soldto_code,
              coalesce(actual.distributor_code,target.distributor_code,'NA') as distributor_code,
              coalesce(actual.distributor_name,target.distributor_name,'NA') as distributor_name,
-             'not defined' as sell_out_channel,-----------------------------check
+             'Not defined' as sell_out_channel,-----------------------------check
              coalesce(actual.store_type,target.store_type,'NA') as sell_out_re,-----------------------check
              coalesce(actual.store_type,target.store_type,'NA') as store_type,
              coalesce(actual.store_code,target.store_code,'NA') as store_code,
@@ -138,7 +138,7 @@ from (select cast(target.fisc_yr as integer) as fisc_yr,
              coalesce(actual.p3m_sales_flag,'N') as p3m_sales_flag,
              coalesce(actual.p6m_sales_flag,'N') as p6m_sales_flag,
              coalesce(actual.p12m_sales_flag,'N') as p12m_sales_flag,
-             'y' as mdp_flag,
+             'Y' as mdp_flag,
              100 as target_compliance
              from itg_cnpc_re_msl_list target
         left join wks_china_personal_care_actuals actual
@@ -189,7 +189,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
 			 actual.soldto_code as soldto_code,
              actual.distributor_code as distributor_code,
              actual.distributor_name as distributor_name,
-             'not defined' as sell_out_channel,
+             'Not Defined' as sell_out_channel,
              coalesce(upper(actual.store_type),'NA') as sell_out_re,
              coalesce(actual.store_type,'NA') as store_type,
              coalesce(actual.store_code,'NA') as store_code,
@@ -204,7 +204,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
              --actual.pka_product_key_desc as product_code,
              ---actual.sku_code as sku_code,
              --actual.pka_product_key_desc as product_name,
-             'china personal care' as prod_hier_l1,
+             'China Personal Care' as prod_hier_l1,
              coalesce(upper(epspm.brand::text)::character varying,'NA') as prod_hier_l4,
              coalesce(upper(epspm.layer2::text)::character varying,'NA') as prod_hier_l5,
              coalesce(epspm.layer3,'NA') as prod_hier_l6,
@@ -292,7 +292,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
              coalesce(actual.p3m_sales_flag,'N') as p3m_sales_flag,
              coalesce(actual.p6m_sales_flag,'N') as p6m_sales_flag,
              coalesce(actual.p12m_sales_flag,'N') as p12m_sales_flag,
-             'n' as mdp_flag,
+             'N' as mdp_flag,
              100 as target_compliance
       from (select *
             from wks_china_personal_care_actuals a
@@ -332,7 +332,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
      (select distinct "cluster",
              ctry_group
       from edw_company_dim
-      where ctry_group = 'china personal care') com
+      where ctry_group = 'China Personal Care') com
 	  where not(sales_value = 0 and sales_qty = 0 and  avg_sales_qty=0 and lm_sales=0 and lm_sales_qty= 0 and lm_avg_sales_qty=0 and
 p3m_sales=0 and p3m_qty=0 and p3m_avg_qty=0 and f3m_sales=0 and f3m_qty=0 and f3m_avg_qty=0 and
 p6m_sales=0 and p6m_qty=0 and p6m_avg_qty=0 and p12m_sales=0 and p12m_qty=0 and p12m_avg_qty=0 and p12m_sales_lp=0 and p6m_sales_lp=0 and 
