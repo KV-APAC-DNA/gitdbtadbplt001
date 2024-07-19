@@ -121,7 +121,7 @@ from wks_china_personal_care_regional_sellout_basedim base_dim
                           so_sls_value,
                           so_avg_qty,
                           sales_value_list_price
-                   from wks_china_personal_care_base_retail_excellence where mnth_id >= (select last_17mnths from edw_vw_cal_retail_excellence_dim)
+                   from wks_china_personal_care_base_retail_excellence where mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)
 and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)) cm
                on base_dim.cntry_cd = cm.cntry_cd
               and base_dim.month = cm.mnth_id
@@ -150,6 +150,9 @@ wks_china_personal_care_regional_sellout_act_l12m l12m
                on base_dim.cntry_cd = l12m.cntry_cd
               and base_dim.month = l12m.month
               and base_dim.sellout_dim_key = l12m.sellout_dim_key
+WHERE BASE_DIM.MONTH >= (SELECT last_17mnths
+                        FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC 
+    AND   BASE_DIM.MONTH <= (SELECT last_2mnths FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::NUMERIC             
 ),
 
 wks_china_personal_care_actuals_final

@@ -1,6 +1,7 @@
 --import cte
 with itg_re_msl_input_definition as (
-    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
+ select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
+ 
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim')}}
@@ -41,7 +42,7 @@ as
 	   --final.ean_code as product_code,
 	   --replace by ean and use mother code as product_code
 	   final.ean as ean,
-	   nvl(final.mother_code,'na') as product_code,
+	   nvl(final.mother_code,'NA') as product_code,
 	   final.msl_product_desc as product_name,
 	   final.mapped_sku_code as mapped_sku_code,
        final.region as region,
@@ -50,7 +51,7 @@ as
        --final.province,
        final.data_src,
    --    final.pka_product_key_description as product_code,
-       'china personal care' as prod_hier_l1,
+       'China Personal Care' as prod_hier_l1,
        sysdate() as created_date
 FROM (SELECT distinct base.start_date,
              base.end_date,

@@ -53,7 +53,7 @@ wks_china_personal_care_re_basedim_values as
              ---sku_description,
              pka_product_key,
              pka_product_key_desc
-             from wks_china_personal_care_base_retail_excellence where mnth_id >= (select last_17mnths from edw_vw_cal_retail_excellence_dim)
+             from wks_china_personal_care_base_retail_excellence where mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)
 and mnth_id <= (select  last_2mnths from edw_vw_cal_retail_excellence_dim)
 ),
 --final cte
