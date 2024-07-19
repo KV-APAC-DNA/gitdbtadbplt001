@@ -4,19 +4,19 @@ models:
   - name: inditg_integration__itg_rmrpstockprocess_opstk
     config:
       alias: itg_rmrpstockprocess_opstk
-      tags: ["in_sdlitg_daily","ingestion"]
+      tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_rmrpstockprocess_opstk_hist
     config:
         alias: itg_rmrpstockprocess_opstk_hist
-        tags: ["in_sdlitg_daily","ingestion"]
+        tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_rmrpstockprocess_clstk
     config:
         alias: itg_rmrpstockprocess_clstk
-        tags: ["in_sdlitg_daily","ingestion"]
+        tags: ["in_sdlitg_daily","transformation"]
 
   - name: inditg_integration__itg_rmrpstockprocess_clstk_hist
     config:
         alias: itg_rmrpstockprocess_clstk_hist
-        tags: ["in_sdlitg_daily","ingestion"]
+        tags: ["in_sdlitg_daily","transformation"]
