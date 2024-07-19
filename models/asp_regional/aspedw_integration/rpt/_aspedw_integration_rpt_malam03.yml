@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspedw_integration__rpt_regional_scorecard
+    config:
+      alias: rpt_regional_scorecard
+      tags: ["cd_scorecard_table_refresh","transformation"]
