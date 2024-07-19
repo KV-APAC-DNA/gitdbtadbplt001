@@ -20,4 +20,5 @@ From (select * from
          and base.month_id = base_dist.month_id
 Group by base_dist.market, base_dist."cluster", base_dist.cust_seg, base_dist.retail_env, base_dist.mega_brand, base_dist.kpi, base_dist.month_id, base_dist.ytd_week_passed
 )
+
 select * from final 
