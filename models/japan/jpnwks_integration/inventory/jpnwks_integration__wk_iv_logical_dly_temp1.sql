@@ -59,3 +59,4 @@ GROUP BY SPF.SHP_DATE,
 	SPF.ITEM_CD
 )
 select * from union1
+

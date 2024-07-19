@@ -1,6 +1,5 @@
-
 with wk_iv_edi as(
-    select * from dev_dna_core.snapjpnwks_integration.wk_iv_edi
+    select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
 ),
 mt_iv_priority as(
     select * from {{ source('jpnedw_integration', 'mt_iv_priority') }}
