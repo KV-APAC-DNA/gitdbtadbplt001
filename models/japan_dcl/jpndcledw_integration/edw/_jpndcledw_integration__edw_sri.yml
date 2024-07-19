@@ -1,0 +1,117 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__tw07_01kokyahanro_w
+    config:
+      alias: tw07_01kokyahanro_w
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw07_01kokyahanro
+    config:
+      alias: tw07_01kokyahanro
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw06_01konyujisseki
+    config:
+      alias: tw06_01konyujisseki
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw06_02konyusihyokbn
+    config:
+      alias: tw06_02konyusihyokbn
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw06_03kokyasegment
+    config:
+      alias: tw06_03kokyasegment
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw06_kokyastatus
+    config:
+      alias: tw06_kokyastatus
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw07_02kokyatenpo
+    config:
+      alias: tw07_02kokyatenpo
+      tags: ["m_dcl_edw_job2","transformation"]      
+      
+  - name: jpndcledw_integration__tw07_mainhanro
+    config:
+      alias: tw07_mainhanro
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_01konyujisseki
+    config:
+      alias: tw08_01konyujisseki
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_01konyujissekiw1
+    config:
+      alias: tw08_01konyujissekiw1
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_01konyujissekiw2
+    config:
+      alias: tw08_01konyujissekiw2
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_01konyujissekiw3
+    config:
+      alias: tw08_01konyujissekiw3
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_02konyusihyokbn
+    config:
+      alias: tw08_02konyusihyokbn
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_03kokyasegment
+    config:
+      alias: tw08_03kokyasegment
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_juchkokyasts
+    config:
+      alias: tw08_juchkokyasts
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_kokyastatusw01
+    config:
+      alias: tw08_kokyastatusw01
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_kokyastatusw02
+    config:
+      alias: tw08_kokyastatusw02
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw08_kokyastatusw03
+    config:
+      alias: tw08_kokyastatusw03
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw11_kokoyajuchdate1
+    config:
+      alias: tw11_kokoyajuchdate1
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw11_kokoyajuchdate2
+    config:
+      alias: tw11_kokoyajuchdate2
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tw11_kokyakbncode
+    config:
+      alias: tw11_kokyakbncode
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tm22kokyasts
+    config:
+      alias: tm22kokyasts
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tt06juchkokyasts
+    config:
+      alias: tt06juchkokyasts
+      tags: ["m_dcl_edw_job2","transformation"]
