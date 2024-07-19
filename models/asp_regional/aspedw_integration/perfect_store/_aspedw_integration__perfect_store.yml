@@ -12,7 +12,7 @@ models:
   - name: aspedw_integration__edw_perfect_store_rebase_wt
     config:
       alias: edw_perfect_store_rebase_wt
-      tags: ["pop6_edw_load","transformation"]
+      tags: ["pop6_edw_load","inactive"]
   - name: aspedw_integration__edw_perfect_store_rebase_wt_temp
     config:
       alias: edw_perfect_store_rebase_wt_temp
