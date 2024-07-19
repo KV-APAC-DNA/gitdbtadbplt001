@@ -13,9 +13,6 @@ edw_sg_rpt_retail_excellence_details as (
 edw_kr_rpt_retail_excellence_details as (
     select * from {{ ref('aspedw_integration__edw_kr_rpt_retail_excellence_details') }}
 ),
-edw_sg_rpt_retail_excellence_details as (
-    select * from {{ ref('aspedw_integration__edw_sg_rpt_retail_excellence_details') }}
-),
 edw_rpt_retail_excellence_details as (
 
 SELECT * FROM edw_id_rpt_retail_excellence_details UNION all
