@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_hcp360_in_ventasys_hcprtl
-      tags: ["in_ventasys_hcprtl_ingestion","ingestion"]
+      tags: ["in_ventasys_load","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["team_name","v_custid_dr","v_custid_rtl"]
@@ -27,7 +27,7 @@ sources:
               store_failures: true
               schema: hcpwks_integration
     - name: sdl_hcp360_in_ventasys_rxrtl
-      tags: ["in_ventasys_hcprtl_ingestion","ingestion"]
+      tags: ["in_ventasys_load","ingestion"]
       tests:
         - test_null:
             not_null_columns: ["team_name","v_rxid","v_empid","v_custid_dr","v_custid_rtl"]
@@ -44,7 +44,7 @@ sources:
               store_failures: true
               schema: hcpwks_integration      
     - name: sdl_hcp360_in_ventasys_rtlmaster
-      tags: ["in_ventasys_rtlmaster_ingestion","ingestion"] 
+      tags: ["in_ventasys_load","ingestion"] 
       tests:
         - test_null:
             not_null_columns: ["team_name","v_custid_rtl"]

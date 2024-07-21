@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
     - name: edw_hcp360_in_ventasys_hcp_dim
-      tags: ["in_ventasys_edw_load","ingestion"]
+      tags: ["in_ventasys_edw_load","transformation"]

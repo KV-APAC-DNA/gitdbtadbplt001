@@ -4,32 +4,32 @@ models:
   - name: hcpitg_integration__itg_hcp360_sfmc_hcp_details
     config:
       alias: itg_hcp360_sfmc_hcp_details
-      tags: ["in_sfmc_hcp_detail","transformation"]
+      tags: ["in_sfmc_load","ingestion"]
   - name: hcpitg_integration__itg_hcp360_sfmc_sent_data
     config:
       alias: itg_hcp360_sfmc_sent_data
-      tags: ["in_sfmc_sent_data","transformation"]
+      tags: ["in_sfmc_load","ingestion"]
   - name: hcpitg_integration__itg_hcp360_sfmc_forward_data
     config:
       alias: itg_hcp360_sfmc_forward_data
-      tags: ["in_sfmc_forward_data","transformation"]
+      tags: ["in_sfmc_load","ingestion"]
   - name: hcpitg_integration__itg_hcp360_sfmc_bounce_data
     config:
       alias: itg_hcp360_sfmc_bounce_data
-      tags: ["in_sfmc_edw_load","ingestion"]
+      tags: ["in_sfmc_load","ingestion"]
 
   - name: hcpitg_integration__itg_hcp360_sfmc_click_data
     config:
       alias: itg_hcp360_sfmc_click_data
-      tags: ["in_sfmc_edw_load","ingestion"]
+      tags: ["in_sfmc_load","ingestion"]
 
   - name: hcpitg_integration__itg_hcp360_sfmc_open_data
     config:
       alias: itg_hcp360_sfmc_open_data
-      tags: ["in_sfmc_edw_load","ingestion"]
+      tags: ["in_sfmc_load","ingestion"]
 
   - name: hcpitg_integration__itg_hcp360_sfmc_unsubscribe_data
     config:
       alias: itg_hcp360_sfmc_unsubscribe_data
-      tags: ["in_sfmc_edw_load","ingestion"]
+      tags: ["in_sfmc_load","ingestion"]
  

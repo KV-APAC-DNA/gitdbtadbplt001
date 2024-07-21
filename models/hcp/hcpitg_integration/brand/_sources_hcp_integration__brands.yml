@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_hcp360_in_iqvia_brand
-      tags: ["in_iqvia_brand_ingestion","ingestion"]
+      tags: ["in_iqvia_load","ingestion"]
       tests:
           - test_format:
               select_columns: ["pack_description"]

@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
     - name: sdl_hcp360_in_ventasys_employee_master
-      tags: ["in_ventasys_employeemaster_ingestion","ingestion"]
+      tags: ["in_ventasys_load","ingestion"]

@@ -4,17 +4,17 @@ models:
   - name: hcpitg_integration_itg_mds_in_hcp_sales_hierarchy_mapping
     config: 
       alias: itg_mds_in_hcp_sales_hierarchy_mapping
-      tags: ["in_hcp360_mds_data_refresh","transformation"]
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
   - name: hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping
     config: 
       alias: itg_mds_in_hcp_sales_rep_mapping
-      tags: ["in_hcp360_mds_data_refresh","transformation"]
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]
   - name: hcpitg_integration__itg_hcp360_in_iqvia_sales
     config: 
       alias: itg_hcp360_in_iqvia_sales
-      tags: ["in_iqvia_sales_ingestion","ingestion"]
+      tags: ["in_iqvia_load","ingestion"]
 
   - name: hcpitg_integration__itg_hcp360_in_iqvia_speciality
     config: 
       alias: itg_hcp360_in_iqvia_speciality
-      tags: ["in_iqvia_edw_load","ingestion"]
+      tags: ["in_iqvia_load","ingestion"]

@@ -4,8 +4,8 @@ models:
   - name: hcpitg_integration__sdl_hcp360_in_ventasys_detailingdata_raw
     config:
       alias: sdl_hcp360_in_ventasys_detailingdata_raw
-      tags: ["in_ventasys_detaildata_ingestion","transformation"]
+      tags: ["in_ventasys_load","ingestion"]
   - name: hcpitg_integration__itg_hcp360_in_ventasys_detailingdata
     config:
       alias: itg_hcp360_in_ventasys_detailingdata
-      tags: ["in_ventasys_detaildata_ingestion","transformation"]
+      tags: ["in_ventasys_load","ingestion"]
