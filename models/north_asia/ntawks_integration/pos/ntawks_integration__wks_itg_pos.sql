@@ -108,10 +108,11 @@ final as
             ctry_cd,
             crt_dttm
         from itg_pos_temp
-    ) TGT ON SRC.pos_date = TGT.pos_dt
-        AND SRC.barcode = TGT.ean_num
-        AND SRC.store_code = TGT.str_cd
-        AND SRC.src_sys_cd = TGT.src_sys_cd
+    ) TGT ON
+            rtrim(SRC.pos_date) = rtrim(TGT.pos_dt)
+        AND rtrim(SRC.barcode) = rtrim(TGT.ean_num)
+        AND rtrim(SRC.store_code) = rtrim(TGT.str_cd)
+        AND rtrim(SRC.src_sys_cd) = rtrim(TGT.src_sys_cd)
         AND 'KR' = TGT.ctry_cd
     where SRC.rnk = 1
 )
