@@ -100,7 +100,7 @@ FROM (SELECT country_code AS CNTRY_CD,
              SELLOUT_SALES_VALUE AS SO_SLS_VALUE
        
 	  from (select * from edw_rpt_regional_sellout_offtake where country_code='ID' and data_source='SELL-OUT' 
-	  and MNTH_ID >= (select last_26mnths from v_edw_vw_cal_Retail_excellence_dim)::numeric
+	  and MNTH_ID >= (select last_27mnths from v_edw_vw_cal_Retail_excellence_dim)::numeric
 	  and mnth_id <= (select prev_mnth from v_edw_vw_cal_Retail_excellence_dim)::numeric
 	  
 	  ) main 

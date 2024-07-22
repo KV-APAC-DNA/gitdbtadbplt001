@@ -2549,7 +2549,7 @@ etbfs as
     SELECT
         'TWD'::character varying AS crncy_cd,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),
@@ -2560,7 +2560,7 @@ etbfs as
         edw_tw_bu_forecast_sku.strategy_customer_hierachy_name,
         edw_tw_bu_forecast_sku.sap_code,
         dense_rank() OVER(
-            PARTITION BY to_date(
+            PARTITION BY try_to_date(
                 (
                     (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                 ),
@@ -2578,13 +2578,13 @@ etbfs as
         0 AS rf_qty_so_l2m
     FROM edw_tw_bu_forecast_sku
     WHERE
-        to_date
+        try_to_date
             (
                 edw_tw_bu_forecast_sku.forecast_on_year || edw_tw_bu_forecast_sku.forecast_on_month,
                 'YYYYMM'
             ) = (
                 SELECT MAX(
-                    to_date(
+                    try_to_date(
                         edw_tw_bu_forecast_sku.forecast_on_year || edw_tw_bu_forecast_sku.forecast_on_month,
                         'YYYYMM'
                     )
@@ -2593,7 +2593,7 @@ etbfs as
             )
     GROUP BY 1,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),
@@ -2608,7 +2608,7 @@ etbfs as
     UNION ALL
     SELECT 'TWD'::character varying AS crncy_cd,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),
@@ -2619,7 +2619,7 @@ etbfs as
         edw_tw_bu_forecast_sku.strategy_customer_hierachy_name,
         edw_tw_bu_forecast_sku.sap_code,
         dense_rank() OVER(
-            PARTITION BY to_date(
+            PARTITION BY try_to_date(
                 (
                     (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                 ),
@@ -2640,17 +2640,17 @@ etbfs as
         dateadd(
             month,
             -2,
-            to_date(
+            try_to_date(
                 edw_tw_bu_forecast_sku.forecast_for_year || edw_tw_bu_forecast_sku.forecast_for_mnth,
                 'YYYYMON'
             )
-        ) = to_date(
+        ) = try_to_date(
             edw_tw_bu_forecast_sku.forecast_on_year || edw_tw_bu_forecast_sku.forecast_on_month,
             'YYYYMM'
         )
     GROUP BY 1,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),
@@ -2666,7 +2666,7 @@ etbfs as
     SELECT
         'TWD'::character varying AS crncy_cd,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),
@@ -2677,7 +2677,7 @@ etbfs as
         edw_tw_bu_forecast_sku.strategy_customer_hierachy_name,
         edw_tw_bu_forecast_sku.sap_code,
         dense_rank() OVER(
-            PARTITION BY to_date(
+            PARTITION BY try_to_date(
                 (
                     (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                 ),
@@ -2701,7 +2701,7 @@ etbfs as
                     month,
                     (- (2)::bigint),
                     (
-                        to_date(
+                        try_to_date(
                             (
                                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
                             ),
@@ -2710,7 +2710,7 @@ etbfs as
                     )::timestamp without time zone
                 ) > (
                     SELECT "max"(
-                            to_date(
+                            try_to_date(
                                 (
                                     (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                                 ),
@@ -2721,14 +2721,14 @@ etbfs as
                 )
             )
             AND (
-                to_date(
+                try_to_date(
                     (
                         (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                     ),
                     ('YYYYMM'::character varying)::text
                 ) = (
                     SELECT "max"(
-                            to_date(
+                            try_to_date(
                                 (
                                     (edw_tw_bu_forecast_sku.forecast_on_year)::text || (edw_tw_bu_forecast_sku.forecast_on_month)::text
                                 ),
@@ -2741,7 +2741,7 @@ etbfs as
         )
     GROUP BY 1,
         edw_tw_bu_forecast_sku.bu_version,
-        to_date(
+        try_to_date(
             (
                 (edw_tw_bu_forecast_sku.forecast_for_year)::text || (edw_tw_bu_forecast_sku.forecast_for_mnth)::text
             ),

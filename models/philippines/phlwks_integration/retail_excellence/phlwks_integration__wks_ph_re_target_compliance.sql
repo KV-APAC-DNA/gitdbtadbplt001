@@ -1,6 +1,6 @@
 with  wks_mds_reds_market_msl_target_ph as
 (
-    select * from {{ ref('aspwks_integration_wks_mds_reds_market_msl_target_final') }}
+    select * from {{ ref('aspedw_integration__wks_mds_reds_market_msl_target_final') }}
 ),
 
 ph_rpt_retail_excellence_sop as 
@@ -12,7 +12,7 @@ ph_rpt_retail_excellence_sop as
  (
    select b.fisc_per,
    b.global_product_brand,
-   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,3) as target_compliance 
+   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as target_compliance 
    from 
         (select fisc_per,
         global_product_brand,

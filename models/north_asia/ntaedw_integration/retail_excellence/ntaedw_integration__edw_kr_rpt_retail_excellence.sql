@@ -11,7 +11,7 @@ with WKS_KR_RPT_RETAIL_EXCELLENCE_GCPH as (
 edw_kr_rpt_retail_excellence  as 
 (
 SELECT FISC_YR,
-       GCPH_final.FISC_PER,
+       GCPH.FISC_PER,
        CLUSTER,
        MARKET,
        DATA_SRC,

@@ -34,4 +34,8 @@ models:
     config:
       alias: wks_ph_pos_robinsons
       tags: ["ph_pos", "ingestion"]
+  - name: phlwks_integration__wks_sdl_ph_pos_sm_goods
+    config:
+      alias: wks_sdl_ph_pos_sm_goods
+      tags: ["ph_pos", "ingestion"]
   

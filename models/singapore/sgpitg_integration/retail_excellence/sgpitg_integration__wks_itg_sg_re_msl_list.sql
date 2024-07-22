@@ -1,7 +1,7 @@
 --overwriding default sql header as we dont want to change timezone to singapore
 --import cte
 with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
@@ -96,7 +96,7 @@ FROM (SELECT DISTINCT CAL.FISC_YR AS YEAR,		--// FROM (SELECT DISTINCT CAL.FISC_
                       CUST.CUSTOMER_NAME) STORE_DET		--//                       CUST.CUSTOMER_NAME) STORE_DET
          ON UPPER (LTRIM (MSL.CUSTOMER,'0')) = UPPER (LTRIM (STORE_DET.CUSTOMER_GROUP_CODE,'0'))		--//          ON UPPER (LTRIM (MSL.CUSTOMER,'0')) = UPPER (LTRIM (STORE_DET.CUSTOMER_GROUP_CODE,'0'))
         AND MSL.SKU_UNIQUE_IDENTIFIER = STORE_DET.MASTER_CODE		--//         AND MSL.SKU_UNIQUE_IDENTIFIER = STORE_DET.MASTER_CODE
-WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths		--// WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths
+WHERE MSL.JJ_MNTH_ID >= (SELECT last_16mnths		--// WHERE MSL.JJ_MNTH_ID >= (SELECT last_18mnths
                          FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		--//                          FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
 AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)		--// AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM rg_edw.edw_vw_cal_Retail_excellence_Dim)
 AND   STORE_CODE IS NOT NULL

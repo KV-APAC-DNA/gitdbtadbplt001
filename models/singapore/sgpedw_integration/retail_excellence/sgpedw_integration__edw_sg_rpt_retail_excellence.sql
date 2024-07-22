@@ -3,11 +3,15 @@
 with wks_sg_rpt_retail_excellence_sop as (
     select * from {{ ref('sgpwks_integration__wks_sg_rpt_retail_excellence_sop') }}
 ),
+ retail_excellence_msl_target_final as 
+ (
+    select * from {{ ref('sgpwks_integration__wks_retail_excellence_msl_target_final') }}
+ ),
 
 edw_sg_rpt_retail_excellence  as 
 (
 SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
-       CAST(FISC_PER AS INTEGER) AS FISC_PER,
+       CAST(sop.FISC_PER AS INTEGER) AS FISC_PER,
        "cluster",
 	   MARKET, 
 	   DATA_SRC,	 
@@ -80,7 +84,7 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
 	   PKA_VARIANT_DESC, 
 	   PKA_SUB_VARIANT_DESC,	   
        GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       sop.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,
@@ -121,7 +125,7 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-	   TARGET_COMPLAINCE,
+	   case when (mdp_flag='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLIANCE else 100  end as TARGET_COMPLAINCE,
 	   LIST_PRICE,
 	   TOTAL_SALES_LM,TOTAL_SALES_P3M,TOTAL_SALES_P6M,TOTAL_SALES_P12M,
 	   TOTAL_SALES_BY_STORE_LM,TOTAL_SALES_BY_STORE_P3M,TOTAL_SALES_BY_STORE_P6M,TOTAL_SALES_BY_STORE_P12M,
@@ -160,7 +164,8 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
 	   COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
 	   COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
 	   SYSDATE() AS CRT_DTTM
-	   FROM wks_sg_rpt_retail_excellence_sop
+	   FROM wks_sg_rpt_retail_excellence_sop sop
+    left join retail_excellence_msl_target_final  msl_final on (sop.fisc_per=msl_final.fisc_per and upper(sop.global_product_brand)=upper(msl_final.global_product_brand))   
 ),
 final as
 (

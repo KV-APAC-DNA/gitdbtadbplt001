@@ -1,4 +1,4 @@
- with 
+ with
 -- itg_mds_cn_ps_targets as (
 --     select * from ntaitg_integration.itg_mds_cn_ps_targets -- China out of scope
 -- ),
@@ -39,8 +39,8 @@ itg_mds_my_ps_targets as (
     select * from {{ ref('mysitg_integration__itg_mds_my_ps_targets') }}
 ),
 -- china as
--- (       
---         SELECT 
+-- (
+--         SELECT
 --                 'China' AS market
 --                 ,itg_mds_cn_ps_targets.kpi
 --                 ,itg_mds_cn_ps_targets.channel
@@ -51,7 +51,7 @@ itg_mds_my_ps_targets as (
 --         FROM itg_mds_cn_ps_targets
 -- ),
 pacific as
-(       
+(
         SELECT itg_mds_pacific_ps_targets.market
                 ,itg_mds_pacific_ps_targets.kpi
                 ,itg_mds_pacific_ps_targets.channel
@@ -62,7 +62,7 @@ pacific as
         FROM itg_mds_pacific_ps_targets
 ),
 japan as
-(       
+(
         SELECT 'Japan' AS market
                 ,itg_mds_jp_ps_targets.kpi
                 ,itg_mds_jp_ps_targets.channel
@@ -73,7 +73,7 @@ japan as
         FROM itg_mds_jp_ps_targets
 ),
 hongkong as
-(       
+(
         SELECT 'Hong Kong' AS market
                 ,itg_mds_hk_ps_targets.kpi
                 ,itg_mds_hk_ps_targets.channel
@@ -84,7 +84,7 @@ hongkong as
         FROM itg_mds_hk_ps_targets
 ),
 taiwan as
-(       
+(
         SELECT 'Taiwan' AS market
                 ,itg_mds_tw_ps_targets.kpi
                 ,itg_mds_tw_ps_targets.channel
@@ -95,7 +95,7 @@ taiwan as
         FROM itg_mds_tw_ps_targets
 ),
 korea as
-(       
+(
     SELECT 'Korea' AS market
             ,itg_mds_kr_ps_targets.kpi
             ,itg_mds_kr_ps_targets.channel
@@ -106,7 +106,7 @@ korea as
     FROM itg_mds_kr_ps_targets
 ),
 india as
-(       
+(
         SELECT 'India' AS market
                 ,itg_mds_in_ps_targets.kpi
                 ,itg_mds_in_ps_targets.channel
@@ -117,7 +117,7 @@ india as
         FROM itg_mds_in_ps_targets
 ),
 indonesia as
-(       
+(
         SELECT 'Indonesia' AS market
                 ,itg_id_ps_targets.kpi
                 ,itg_id_ps_targets.channel
@@ -128,7 +128,7 @@ indonesia as
         FROM itg_id_ps_targets
 ),
 singapore as
-(       
+(
     SELECT 'Singapore' AS market
             ,itg_mds_sg_ps_targets.kpi
             ,itg_mds_sg_ps_targets.channel
@@ -139,7 +139,7 @@ singapore as
     FROM itg_mds_sg_ps_targets
 ),
 thailand as
-(       
+(
         SELECT 'Thailand' AS market
                 ,itg_mds_th_ps_targets.kpi
                 ,itg_mds_th_ps_targets.channel
@@ -150,7 +150,7 @@ thailand as
         FROM itg_mds_th_ps_targets
 ),
 vietnam as
-(       
+(
         SELECT 'Vietnam' AS market
                 ,itg_mds_vn_ps_targets.kpi
                 ,itg_mds_vn_ps_targets.channel
@@ -180,7 +180,7 @@ malaysia as
                 ,itg_mds_my_ps_targets.target AS value
         FROM itg_mds_my_ps_targets
 ),
-final as 
+final as
 (
         select * from pacific
         union all
@@ -202,8 +202,8 @@ final as
         union all
         select * from vietnam
         union all
-        select * from philippines  
+        select * from philippines
         union all
-        select * from malaysia       
+        select * from malaysia
 )
 select * from final
