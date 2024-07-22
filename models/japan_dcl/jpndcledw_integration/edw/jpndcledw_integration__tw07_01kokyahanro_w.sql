@@ -15,7 +15,7 @@ combined_source as (
         ,t05.chuhanrobunname as chubuncode
         ,t05.daihanrobunname as daibuncode
         ,sum(case when to_date(t05.juchdate::STRING,'yyyymmdd')
-                    between dateadd(day, 0 - cast(tm55.teisu as numeric), current_timestamp())
+                    between try_to_date((to_char(current_timestamp(),'YYYYMMDD') - cast(tm55.teisu as numeric))::STRING)
                         and dateadd(day, -1, current_timestamp())
             then 1 else 0
             end) as halfykazu
@@ -47,9 +47,9 @@ final as (
     select
         kokyano::varchar(15) as kokyano,
         hanrocode::varchar(60) as hanrocode,
-        syobuncode::varchar(60) as syobuncode,
+        syobuncode::varchar(60) as daibuncode,
         chubuncode::varchar(60) as chubuncode,
-        daibuncode::varchar(60) as daibuncode,        
+        daibuncode::varchar(60) as syobuncode,
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         null::varchar(100) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,

@@ -58,9 +58,9 @@ final as (
     select
         kokyano::varchar(15) as kokyano,
         hanrocode::varchar(60) as hanrocode,
-        syobuncode::varchar(60) as syobuncode,
+        syobuncode::varchar(60) as daibuncode,  
         chubuncode::varchar(60) as chubuncode,
-        daibuncode::varchar(60) as daibuncode,        
+        daibuncode::varchar(60) as syobuncode,      
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         null::varchar(100) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
