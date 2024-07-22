@@ -53,7 +53,7 @@ final as
     FROM (
       SELECT *
       FROM itg_fin_sim_miscdata
-      WHERE nature = 'MRP ACT'
+      WHERE trim(nature) = 'MRP ACT'
       ) mrp
     LEFT JOIN itg_MDS_IN_Product_Hierarchy prod_h ON mrp.matl_num = prod_h.code
 )
