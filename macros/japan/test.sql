@@ -245,6 +245,61 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
 
         {% endset %}
     {% do run_query(query2) %}
+
+        {% set get_year_query %}
+        select  year_445 from {% if target.name=='prod' %}
+                jpnwks_integration.inventory_cursor
+        {% else %}
+                {{schema}}.jpnwks_integration__inventory_cursor
+        {% endif %}
+        ORDER BY year_445;
+    {% endset %}
+    {{ log("Try to execute the query to fetch year from inventory_cursor table ") }}
+    {{ log("===============================================================================================") }}
+        {% set get_rows_query_result = run_query(get_year_query) %}
+        {% if execute %}
+                {% set year_445 = get_rows_query_result.columns[0].values()[:]  %}
+            {% else %}
+                {% set year_445 = [] %}
+            {% endif %}
+
+    {{ log(year_445) }}
+     {{ log("===============================================================================================") }}
+
+       {% set get_col_values_query %}
+
+        select  SUBSTRING(BGN_YMD_DT,1,10) as BGN_YMD_DT, SUBSTRING(END_YMD_DT,1,10) as END_YMD_DT, TOUNEN_FLG, YEAR_END_FLG 
+        from {% if target.name=='prod' %}
+                jpnwks_integration.inventory_cursor
+        {% else %}
+                {{schema}}.jpnwks_integration__inventory_cursor
+        {% endif %} where year_445 in {{year_445}};
+
+    {% endset %}
+
+    {{ log("Try to execute the query to fetch values from inventory_cursor table ") }}
+    {{ log("===============================================================================================") }}
+        {% set get_values_query_result = run_query(get_col_values_query) %}
+        {% if execute %}
+                {% set BGN_YMD_DT = get_values_query_result.columns[0].values()%}  
+               {% set END_YMD_DT = get_values_query_result.columns[1].values()%}
+                {% set TOUNEN_FLG = get_values_query_result.columns[2].values()%}
+                {% set YEAR_END_FLG = get_values_query_result.columns[3].values()%}
+            {% else %}
+                {% set BGN_YMD_DT = []%}
+                 {% set END_YMD_DT = []%}
+                {% set TOUNEN_FLG = []%}
+                {% set YEAR_END_FLG = []%}
+            {% endif %}
+
+    {{ log(BGN_YMD_DT) }}
+    {{ log(END_YMD_DT) }}
+    {{ log(TOUNEN_FLG) }}
+    {{ log(YEAR_END_FLG) }}
+     {{ log("===============================================================================================") }}
+
+ 
+
   {% endset %}
     {% do run_query(query) %}
 
