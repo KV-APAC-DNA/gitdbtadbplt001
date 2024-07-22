@@ -28,7 +28,7 @@ models:
   - name: ntaedw_integration__v_rpt_ims_inventory
     config: 
       alias: v_rpt_ims_inventory
-      tags: ["tw_ims_distributor_standard_sell_out","kr_edw_ims_fact","na_trxn_ims","transformation"]
+      tags: ["tw_ims_distributor_standard_sell_out","kr_gt_sellout","kr_ecommerce_sellout","na_trxn_ims","transformation"]
   - name: ntaedw_integration__v_rpt_tw_si_so_pos_sls
     config: 
       alias: v_rpt_tw_si_so_pos_sls
