@@ -16,8 +16,20 @@ itg_query_parameters as
 ),
 final as
 (
-    select ret.rtruniquecode,ret.customer_code,ret.retailer_code,ret.region_name,ret.zone_name,ret.territory_name, ret.Channel_Name, sm.smcode,sm.smname,sm.uniquesalescode, cal.mth_mm AS rt_dim_mth_mm, cal.qtr, cal.fisc_yr, cal.month_nm_shrt
-        ,ret.latest_customer_code
+    select ret.rtruniquecode
+    ,ret.customer_code
+    ,ret.retailer_code
+    ,ret.region_name
+    ,ret.zone_name
+    ,ret.territory_name
+    , ret.Channel_Name
+    , sm.smcode
+    ,sm.smname,sm.uniquesalescode
+    , cal.mth_mm AS rt_dim_mth_mm
+    , cal.qtr
+    , cal.fisc_yr
+    , cal.month_nm_shrt
+    ,ret.latest_customer_code
     from wks_MI_PSR_ret_dim_lat_cust ret
     left join (select sm.*, 
                     row_number() OVER (PARTITION BY sm.distcode,sm.rtrcode ORDER BY sm.smcode DESC) AS rn
