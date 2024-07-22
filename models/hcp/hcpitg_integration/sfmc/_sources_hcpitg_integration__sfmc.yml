@@ -26,7 +26,7 @@ sources:
               store_failures: true
               schema: hcpwks_integration
         - test_duplicate:
-            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique"] 
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_name","email_id","is_unique"]
             group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique"] 
             name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__duplicate_test
             config:
@@ -60,7 +60,7 @@ sources:
               store_failures: true
               schema: hcpwks_integration
         - test_duplicate:
-            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique"] 
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_name","email_id","is_unique"]
             group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id","is_unique"] 
             name: TRATBL_sdl_hcp360_in_sfmc_open_data__duplicate_test
             config:
@@ -77,7 +77,7 @@ sources:
               store_failures: true
               schema: hcpwks_integration
         - test_duplicate:
-            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id"] 
+            select_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_name","email_id"]
             group_by_columns: ["job_id","batch_id","subscriber_id","subscriber_key","event_date","email_id"] 
             name: TRATBL_sdl_hcp360_in_sfmc_unsubscribe_data__duplicate_test
             config:

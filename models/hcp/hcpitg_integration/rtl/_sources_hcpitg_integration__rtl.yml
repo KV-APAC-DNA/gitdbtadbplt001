@@ -31,7 +31,7 @@ sources:
       tests:
         - test_null:
             not_null_columns: ["team_name","v_rxid","v_empid","v_custid_dr","v_custid_rtl"]
-            select_columns: ["team_name","v_rxid","v_empid","v_custid_dr","v_custid_rtl"]
+            select_columns:  ["team_name","v_rxid","v_empid","v_custid_dr","dcr_dt","rx_product","v_custid_rtl"]
             name: TRATBL_sdl_hcp360_in_ventasys_rxrtl__null_test
             config:
                 store_failures: true

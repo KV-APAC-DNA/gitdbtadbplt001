@@ -15,7 +15,7 @@ sources:
         - test_format:
                 select_columns: ["brand_name_code","region_code","zone_code"]
                 failure_reason: "'Column value mismatch'"
-                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM dev_dna_core.snapinditg_integration.itg_mds_in_hcp_sales_rep_mapping t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.zone_code) = upper(t2.zone_code))" 
+                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_rep_mapping') }} t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_hierarchy_mapping') }}.zone_code) = upper(t2.zone_code))" 
                 name: TRATBL_sdl_mds_in_hcp_sales_hierarchy_mapping__test_format
                 config:
                   store_failures: true
@@ -26,7 +26,7 @@ sources:
         - test_format:
                 select_columns: ["brand_name_code","region_code","zone_code"]
                 failure_reason: "'Column value mismatch'"
-                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM dev_dna_core.snapinditg_integration.itg_mds_in_hcp_sales_hierarchy_mapping t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.zone_code) = upper(t2.zone_code))" 
+                where_clause: "NOT EXISTS (SELECT DISTINCT brand_name_code, region_code, zone_code FROM {{ ref('hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping') }} t2 WHERE upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.brand_name_code) = upper(t2.brand_name_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.region_code) = upper(t2.region_code) AND   upper({{ source('hcpsdl_raw', 'sdl_mds_in_hcp_sales_rep_mapping') }}.zone_code) = upper(t2.zone_code))" 
                 name: TRATBL_sdl_mds_in_hcp_sales_rep_mapping__test_format
                 config:
                   store_failures: true
@@ -37,7 +37,7 @@ sources:
         - test_format:
                 select_columns: ["pack"]
                 failure_reason: "'Column value mismatch'"
-                where_clause: "product IN ('ORS-L', 'ORS-L FOS', 'ORS-L PLUS', 'ORS-L REHYDRATE', 'ORS%') AND pack NOT IN (SELECT iqvia FROM dev_dna_core.snapinditg_integration.itg_mds_hcp360_product_mapping WHERE brand = 'ORSL')"
+                where_clause: "product IN ('ORS-L', 'ORS-L FOS', 'ORS-L PLUS', 'ORS-L REHYDRATE', 'ORS%') AND pack NOT IN (SELECT iqvia FROM {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }} WHERE brand = 'ORSL')"
                 name: TRATBL_sdl_hcp360_in_iqvia_sales__test_format
                 config:
                   store_failures: true
@@ -48,7 +48,7 @@ sources:
         - test_format:
                 select_columns: ["product_description"]
                 failure_reason: "'Column value mismatch'"
-                where_clause: "brand IN ('ORS-L', 'ORS-L FOS', 'ORS-L PLUS', 'ORS-L REHYDRATE', 'ORS%') AND product_description NOT IN (SELECT iqvia FROM dev_dna_core.snapinditg_integration.itg_mds_hcp360_product_mapping WHERE brand = 'ORSL')"
+                where_clause: "brand IN ('ORS-L', 'ORS-L FOS', 'ORS-L PLUS', 'ORS-L REHYDRATE', 'ORS%') AND product_description NOT IN (SELECT iqvia FROM {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }} WHERE brand = 'ORSL')"
                 name: TRATBL_sdl_hcp360_in_iqvia_speciality__test_format
                 config:
                   store_failures: true
@@ -59,7 +59,7 @@ sources:
         - test_format:
                 select_columns: ["pack"]
                 failure_reason: "'Column value mismatch'"
-                where_clause: "(product LIKE 'AVEENO%' or product LIKE 'AVEENO%') AND pack NOT IN (SELECT iqvia FROM dev_dna_core.snapinditg_integration.itg_mds_hcp360_product_mapping WHERE brand = 'AVEENO BABY' or brand = 'DERMA')"
+                where_clause: "(product LIKE 'AVEENO%' or product LIKE 'AVEENO%') AND pack NOT IN (SELECT iqvia FROM {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }} WHERE brand = 'AVEENO BABY' or brand = 'DERMA')"
                 name: TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format
                 config:
                   store_failures: true
