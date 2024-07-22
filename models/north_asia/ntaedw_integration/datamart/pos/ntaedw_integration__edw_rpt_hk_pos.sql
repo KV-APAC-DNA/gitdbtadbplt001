@@ -16,7 +16,7 @@ final as
         gcph_needstate::varchar(50) as gcph_needstate,
         category_name::varchar(500) as category_name,
         age_group_name::varchar(500) as age_group_name,
-        gcph_brand::varchar(30) as gcph_brand,
+        gcph_brand::varchar(100) as gcph_brand,
         mega_brnd_desc::varchar(100) as mega_brnd_desc,
         package::varchar(30) as package,
         size::varchar(30) as size,

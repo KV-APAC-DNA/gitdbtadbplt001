@@ -12,7 +12,7 @@ models:
   - name: ntaedw_integration__v_rpt_dly_plan_ims_enrich
     config: 
       alias: v_rpt_dly_plan_ims_enrich
-      tags: ["tw_ims_distributor_standard_sell_out","kr_edw_ims_fact","na_trxn_ims","transformation"]
+      tags: ["tw_ims_distributor_standard_sell_out","kr_gt_sellout","kr_ecommerce_sellout","na_trxn_ims","transformation"]
   - name: ntaedw_integration__edw_kr_sales_tgt
     config: 
       alias: edw_kr_sales_tgt
