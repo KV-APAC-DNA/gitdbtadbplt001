@@ -44,7 +44,7 @@ transformed as (
         sku_id :: varchar(2) as sku_id,
         prodt_alloc_det_proc :: varchar(18) as prodt_alloc_det_proc,
         num_pcs_in,
-        case when src.sls_org in ('320A', '320S', '321A') then map.ean_num
+        case when src.sls_org in ('320A', '320S', '321A') and map.ean_num is not null then map.ean_num
             else src.ean_num
         end :: varchar(18)as ean_num,
         old_matl_num :: varchar(18) as old_matl_num,
@@ -109,7 +109,7 @@ transformed_emsd as (
         filtered.sku_id,
         filtered.prodt_alloc_det_proc,
         filtered.num_pcs_in,
-        case when filtered.sls_org in ('320A', '320S', '321A') then map.ean_num 
+        case when filtered.sls_org in ('320A', '320S', '321A') and map.ean_num is not null then map.ean_num 
             else filtered.ean_num 
         end as ean_num,
         filtered.old_matl_num,
