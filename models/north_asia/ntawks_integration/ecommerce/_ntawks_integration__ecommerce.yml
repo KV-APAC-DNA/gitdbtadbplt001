@@ -32,8 +32,8 @@ models:
   - name: ntawks_integration__wks_kr_ecommerce_offtake_sales_ebay
     config:
       alias: wks_kr_ecommerce_offtake_sales_ebay
-      tags: ["j_kr_generic_query_execution","ingestion"]
+      tags: ["j_kr_generic_query_execution","transformation"]
   - name: ntawks_integration__wks_kr_ecommerce_offtake_coupang_transaction
     config:
       alias: wks_kr_ecommerce_offtake_coupang_transaction
-      tags: ["j_kr_generic_query_execution","ingestion"]
+      tags: ["j_kr_generic_query_execution","transformation"]
