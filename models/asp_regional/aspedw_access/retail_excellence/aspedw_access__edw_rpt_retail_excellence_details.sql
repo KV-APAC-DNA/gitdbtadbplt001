@@ -6,7 +6,7 @@ final as (
     select
       fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
-cluster as "cluster",
+"cluster" as "cluster",
 market as "market",
 channel_name as "channel_name",
 distributor_code as "distributor_code",
