@@ -1,35 +1,50 @@
-with tbperson as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBPERSON
+with item_pick_bunkai_tbl as (
+select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_PICK_BUNKAI_TBL
 ),
 final as (
 SELECT 
-  (tbperson.diid):: character varying(22) AS opecode, 
-  tbperson.dsname AS opename, 
-  (tbperson.c_dstelcompanycd):: character varying(30) AS bumoncode, 
-  tbperson.dslogin AS logincode, 
-  'NEXT' AS ciflg, 
-  to_number(
-    COALESCE(
-      to_char(
-        (
-          to_date(
-            (
-              COALESCE(tbperson.dsren, tbperson.dsprep)
-            ):: text, 
-            'YYYY-MM-DD HH24:MI:SS' :: text
-          )
-        ):: timestamp without time zone, 
-        'YYYYMMDDHH24MISS' :: text
-      ), 
-      '0' :: text
-    ), 
-    '99999999999999' :: text
-  ) AS join_rec_upddate 
-FROM 
-  tbperson 
-WHERE 
+  item_pick_bunkai_tbl.itemcode, 
+  (item_pick_bunkai_tbl.itemname):: character varying(192) AS itemname, 
+  (item_pick_bunkai_tbl.itemcname):: character varying(240) AS itemcname, 
+  (item_pick_bunkai_tbl.tanka):: character varying(21) AS tanka, 
   (
-    (tbperson.dielimflg):: text = (0):: text
-  )
+    item_pick_bunkai_tbl.chubuncode
+  ):: character varying(6000) AS chubuncode, 
+  item_pick_bunkai_tbl.chubunname, 
+  (
+    item_pick_bunkai_tbl.chubuncname
+  ):: character varying(6103) AS chubuncname, 
+  (
+    item_pick_bunkai_tbl.daibuncode
+  ):: character varying(7) AS daibuncode, 
+  item_pick_bunkai_tbl.daibunname, 
+  (
+    item_pick_bunkai_tbl.daibuncname
+  ):: character varying(110) AS daibuncname, 
+  (
+    item_pick_bunkai_tbl.daidaibuncode
+  ):: character varying(6000) AS daidaibuncode, 
+  item_pick_bunkai_tbl.daidaibunname, 
+  (
+    item_pick_bunkai_tbl.daidaibuncname
+  ):: character varying(6103) AS daidaibuncname, 
+  (
+    item_pick_bunkai_tbl.bunkai_itemcode
+  ):: character varying(65535) AS bunkai_itemcode, 
+  (
+    item_pick_bunkai_tbl.bunkai_itemname
+  ):: character varying(65535) AS bunkai_itemname, 
+  (
+    item_pick_bunkai_tbl.bunkai_itemcname
+  ):: character varying(65535) AS bunkai_itemcname, 
+  item_pick_bunkai_tbl.bunkai_tanka, 
+  (
+    item_pick_bunkai_tbl.bunkai_kossu
+  ):: numeric(36, 18) AS bunkai_kossu, 
+  item_pick_bunkai_tbl.bunkai_kosritu, 
+  item_pick_bunkai_tbl.insertdate 
+FROM 
+  item_pick_bunkai_tbl item_pick_bunkai_tbl
+
 )
 select * from final
