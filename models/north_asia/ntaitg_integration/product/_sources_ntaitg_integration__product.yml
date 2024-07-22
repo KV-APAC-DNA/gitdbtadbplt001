@@ -193,7 +193,7 @@ sources:
       tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
       tests:
         - test_duplicate:
-            select_columns: ["dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
+            select_columns: ["code", "dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
             group_by_columns: ["dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
             name: TRATBL_sdl_mds_tw_ims_dstr_prod_price_map__duplicate_test
             config:
