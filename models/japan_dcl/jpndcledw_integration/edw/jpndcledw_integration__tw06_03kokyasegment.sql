@@ -1,8 +1,8 @@
 with tw06_02konyusihyokbn as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_02konyusihyokbn
+    select * from dev_dna_core.jpdcledw_integration.tw06_02konyusihyokbn
 ),
 tm28rfmsegment as (
-    select * from dev_dna_core.snapjpdcledw_integration.tm28rfmsegment
+    select * from dev_dna_core.jpdcledw_integration.tm28rfmsegment
 ),
 
 transformed as (

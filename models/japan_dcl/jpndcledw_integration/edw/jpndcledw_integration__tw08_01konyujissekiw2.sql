@@ -1,5 +1,5 @@
 with tw08_01konyujissekiw1 as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tw08_01konyujissekiw1
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw08_01konyujissekiw1
 ),
 transformed as (
     select

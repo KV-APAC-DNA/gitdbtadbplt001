@@ -1,11 +1,11 @@
 with tt01kokyastsh_mv as (
-    select * from dev_dna_core.snapjpdcledw_integration.tt01kokyastsh_mv
+    select * from dev_dna_core.jpdcledw_integration.tt01kokyastsh_mv
 ),
 tw09kokyakonyu as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw09kokyakonyu
+    select * from dev_dna_core.jpdcledw_integration.tw09kokyakonyu
 ),
 tw05kokyarecalc as(
-    select * from dev_dna_core.snapjpdcledw_integration.tw05kokyarecalc
+    select * from dev_dna_core.jpdcledw_integration.tw05kokyarecalc
 ),
 tt01kokyastsh_mv_filtered as (
     select

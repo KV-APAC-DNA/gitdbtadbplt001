@@ -1,22 +1,22 @@
 with tw06_kokyastatus as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_kokyastatus
+    select * from dev_dna_core.jpdcledw_integration.tw06_kokyastatus
 ),
 tt05kokyakonyu as (
-    select * from dev_dna_core.snapjpdcledw_integration.tt05kokyakonyu
+    select * from dev_dna_core.jpdcledw_integration.tt05kokyakonyu
 ),
 
 tm55_teisuchi as (
-    select * from dev_dna_core.snapjpdcledw_integration.tm55_teisuchi
+    select * from dev_dna_core.jpdcledw_integration.tm55_teisuchi
 ),
 combined_source as (
     select
 	    w06.kokyano
         ,t05.tenpocode
         ,sum(case when to_date(t05.juchdate::string,'YYYYMMDD')
-                    between dateadd(day, 0 - cast(tm55.teisu as numeric), current_timestamp())
+                    between try_to_date((to_char(current_timestamp(),'YYYYMMDD') - cast(tm55.teisu as numeric))::string)
                         and dateadd(day, -1, current_timestamp())
             then 1 else 0
-            end) as halfykazu	
+            end) as halfykazu
         ,max(t05.juchdate) as lastjuchdate
 	from tw06_kokyastatus w06
 	left join tt05kokyakonyu t05 on w06.kokyano=t05.kokyano

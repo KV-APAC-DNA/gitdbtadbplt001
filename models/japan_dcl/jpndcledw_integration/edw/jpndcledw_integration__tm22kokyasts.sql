@@ -7,7 +7,7 @@
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} 
                 where kokyano  in (
-                    select kokyakuno from dev_dna_core.snapjpdcledw_integration.cil02nayol
+                    select kokyakuno from dev_dna_core.jpdcledw_integration.cil02nayol
                 );
 
         {% endif %}"
@@ -15,10 +15,10 @@
 }}
 
 with tw06_kokyastatus as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_kokyastatus
+    select * from dev_dna_core.jpdcledw_integration.tw06_kokyastatus
 ),
 tw07_mainhanro as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw07_mainhanro
+    select * from dev_dna_core.jpdcledw_integration.tw07_mainhanro
 ),
 transformed as (
     select

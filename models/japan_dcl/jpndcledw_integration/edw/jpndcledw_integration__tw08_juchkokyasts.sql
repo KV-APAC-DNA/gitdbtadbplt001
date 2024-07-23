@@ -1,14 +1,14 @@
 with tw08_01konyujisseki as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_01konyujisseki
+    select * from dev_dna_core.jpdcledw_integration.tw08_01konyujisseki
 ),
 tw08_02konyusihyokbn as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_02konyusihyokbn
+    select * from dev_dna_core.jpdcledw_integration.tw08_02konyusihyokbn
 ),
 tw08_03kokyasegment as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_03kokyasegment
+    select * from dev_dna_core.jpdcledw_integration.tw08_03kokyasegment
 ),
 tw11_kokyakbncode as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw11_kokyakbncode
+    select * from dev_dna_core.jpdcledw_integration.tw11_kokyakbncode
 ),
 	
 	

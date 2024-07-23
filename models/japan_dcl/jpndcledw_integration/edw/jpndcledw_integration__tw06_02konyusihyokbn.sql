@@ -1,8 +1,8 @@
 with tw06_01konyujisseki as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tw06_01konyujisseki
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw06_01konyujisseki
 ),
 tm25shihyokubunshikii as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tm25shihyokubunshikii
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tm25shihyokubunshikii
 ),
 tw06_01konyujisseki_date as 
 (

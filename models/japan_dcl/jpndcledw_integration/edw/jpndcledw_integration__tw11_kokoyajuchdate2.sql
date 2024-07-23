@@ -1,6 +1,6 @@
 
 with tw11_kokoyajuchdate1 as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw11_kokoyajuchdate1
+    select * from dev_dna_core.jpdcledw_integration.tw11_kokoyajuchdate1
 ),
 transformed as(
     select

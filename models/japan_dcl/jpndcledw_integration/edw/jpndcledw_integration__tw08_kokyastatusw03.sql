@@ -1,11 +1,11 @@
 with tw06_kokyastatus as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_kokyastatus
+    select * from dev_dna_core.jpdcledw_integration.tw06_kokyastatus
 ),
 tt01kokyastsh_mv as (
-    select * from dev_dna_core.snapjpdcledw_integration.tt01kokyastsh_mv
+    select * from dev_dna_core.jpdcledw_integration.tt01kokyastsh_mv
 ),
 tw08_kokyastatusw02 as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_kokyastatusw02
+    select * from dev_dna_core.jpdcledw_integration.tw08_kokyastatusw02
 ),
 transformed as (
     

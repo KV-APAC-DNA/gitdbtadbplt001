@@ -1,5 +1,5 @@
 with tw08_kokyastatusw01 as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_kokyastatusw01
+    select * from dev_dna_core.jpdcledw_integration.tw08_kokyastatusw01
 ),	
 transformed as(
 select

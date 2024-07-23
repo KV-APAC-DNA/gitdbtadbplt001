@@ -1,17 +1,17 @@
 with tt05kokyakonyu as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt05kokyakonyu
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tt05kokyakonyu
 ),
 tt01kokyastsh_mv as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt01kokyastsh_mv
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tt01kokyastsh_mv
 ),
 tw05kokyarecalc as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tw05kokyarecalc
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw05kokyarecalc
 ),
 ttxx as (
     select
         kokyano
         , min(juchdate) as firstkonyudate
-        , max(juchdate) as lastkonyudate
+        , max(juchdate) as lastkonyudate 
         , min(case when torikeikbn = '01' then juchdate else 99991231 end) as firsttsuhandate
         , min(case when torikeikbn in ('03','04','05') then juchdate else 99991231 end) as firsttenpodate
         , max(zaisekidays) as zaisekidays
@@ -20,9 +20,9 @@ ttxx as (
         , sum(meisainukikingaku) as ruikingaku
         , case
                 when max(zaisekidays) = 0 then 0
-                else ceil(max(zaisekidays) / count(distinct juchdate))
+                else floor(max(zaisekidays) / count(distinct juchdate))
             end as ruiindays
-        ,ceil((datediff(hours,to_date(max(juchdate)::STRING, 'YYYYMMDD'), current_timestamp())::decimal)/24) as konyukeikadays
+        , ceil((datediff(hours,to_date(max(juchdate)::STRING, 'YYYYMMDD'), current_timestamp())::decimal)/24) as konyukeikadays
     from tt05kokyakonyu
     where meisainukikingaku > 0
     group by kokyano
@@ -34,7 +34,7 @@ tt1y as (
         , sum(meisainukikingaku) as nenkingaku
         , case
             when count(distinct juchdate) <= 1 then 0
-            else  ceil(max(zaisekidays) / count(distinct juchdate))
+            else floor(max(zaisekidays) / count(distinct juchdate))
         end as nenindays
     from tt05kokyakonyu 
     where 
@@ -48,7 +48,7 @@ tt01 as (
         kokyano
         , min(juchdate) as firstjuchdate
         , max(juchdate) as lastjuchdate
-        ,ceil(datediff(hour,to_date(max(juchdate)::STRING, 'YYYYMMDD'), current_timestamp())::decimal/24) as juchukeikadays 
+        , ceil(datediff(hour,to_date(max(juchdate)::STRING, 'YYYYMMDD'), current_timestamp())::decimal/24) as juchukeikadays 
     from tt01kokyastsh_mv
     group by kokyano
 ),

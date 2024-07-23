@@ -8,7 +8,7 @@
 }}
 
 with tw08_juchkokyasts as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw08_juchkokyasts
+    select * from dev_dna_core.jpdcledw_integration.tw08_juchkokyasts
 ),
 transformed as (
     select

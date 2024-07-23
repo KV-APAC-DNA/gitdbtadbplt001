@@ -1,8 +1,8 @@
 with tw07_01kokyahanro as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw07_01kokyahanro
+    select * from dev_dna_core.jpdcledw_integration.tw07_01kokyahanro
 ),
 tw07_02kokyatenpo as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw07_02kokyatenpo
+    select * from dev_dna_core.jpdcledw_integration.tw07_02kokyatenpo
 ),
 
 transformed as (

@@ -1,11 +1,11 @@
 with tw06_01konyujisseki as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_01konyujisseki
+    select * from dev_dna_core.jpdcledw_integration.tw06_01konyujisseki
 ),
 tw06_02konyusihyokbn as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_02konyusihyokbn
+    select * from dev_dna_core.jpdcledw_integration.tw06_02konyusihyokbn
 ),
 tw06_03kokyasegment as (
-    select * from dev_dna_core.snapjpdcledw_integration.tw06_03kokyasegment
+    select * from dev_dna_core.jpdcledw_integration.tw06_03kokyasegment
 ),
 transformed as (
     select
