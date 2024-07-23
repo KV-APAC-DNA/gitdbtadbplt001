@@ -4,7 +4,7 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} WHERE nature = 'PRN';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp2')}} WHERE nature = 'PRN';
         {% endif %}"
     )
 }}
