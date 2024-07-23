@@ -4,20 +4,20 @@ with  mds_reds_market_msl_target_final as
 ),
 rpt_retail_excellence_gcph as 
  (
-    select * from {{ ref('myswks_integration__wks_my_rpt_re_gcph') }}
+    select * from {{ ref('thawks_integration__th_wks_rpt_retail_excellence_sop') }}
  ),
  
  final as 
  (
-   select b.jj_mnth_id,
+   select b.fisc_per,
    b.global_product_brand,b.market,
-   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as TARGET_COMPLAINCE 
+   round((total_mdp_target/mds.mdp_target)*100 ):: integer as TARGET_COMPLAINCE 
    from 
-        (select jj_mnth_id,
+        (select fisc_per,
         global_product_brand,market,
         count(1)   as total_mdp_target  
         from 
-            (select  distinct jj_mnth_id,
+            (select  distinct fisc_per,
                 distributor_code,
                  store_code, 
                  global_product_brand,market
@@ -26,9 +26,9 @@ rpt_retail_excellence_gcph as
                 ) a
         group by 1,2,3)b 
     inner join 
-    (select * from mds_reds_market_msl_target_final where upper(market)='MALAYSIA'
+    (select * from mds_reds_market_msl_target_final where upper(market)='THAILAND'
      ) mds 
-        on ( jj_mnth_id >= mds.start_month_id and jj_mnth_id <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
+        on ( fisc_per >= mds.start_month_id and fisc_per <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
     group by 1,2,3,4  
  )
 
