@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy="append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where (visit_id, audit_form_id, section_id, coalesce(field_code,'#'), field_type, product_attribute_value_id) in (select distinct visit_id, audit_form_id, section_id, coalesce(field_code,'#'), field_type, product_attribute_value_id from {{ ref('aspitg_integration__itg_pop6_product_attribute_audits_temp') }}) or response in ('no', 'NO', 'null','NULL');
+        delete from {{this}} where (visit_id, audit_form_id, section_id, coalesce(field_code,'#'), field_type, product_attribute_value_id) in (select distinct visit_id, audit_form_id, section_id, coalesce(field_code,'#'), field_type, product_attribute_value_id from {{ ref('aspitg_integration__itg_pop6_product_attribute_audits_temp') }} where cntry_cd  <> 'TH') or response in ('no', 'NO', 'null','NULL');
+        delete from {{this}} where visit_id in ( select distinct visit_id from  {{ ref('aspitg_integration__itg_pop6_product_attribute_audits_temp') }} where cntry_cd = 'TH');
         {% endif %}"
     )
 }}

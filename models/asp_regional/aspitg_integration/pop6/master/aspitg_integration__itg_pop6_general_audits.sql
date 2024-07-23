@@ -2,7 +2,12 @@
     config
         (
             materialized="incremental",
-            incremental_strategy= "append"
+            incremental_strategy= "append",
+            pre_hook="{% if is_incremental() %}
+                       delete from {{this}}
+                        where visit_id
+                        in (select distinct  visit_id from {{ref('aspwks_integration__wks_pop6_th_general_audits')}});
+                            {% endif %}" 
         )
 }}
 with sdl_pop6_kr_general_audits as
