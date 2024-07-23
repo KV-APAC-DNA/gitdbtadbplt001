@@ -113,7 +113,7 @@ sources:
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapaspitg_integration
+    schema: aspitg_integration
     quoting:
       database: false
       schema: false
@@ -136,14 +136,13 @@ sources:
       
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpnedw_integration
+    schema: jpnedw_integration
     tables:
       - name: edi_store_m
       - name: edi_chn_m
       - name: mt_sgmt        
       - name: mt_prf       
       - name: jp_inv_coverage_area_region_mapping    
-
       - name: edi_cstm_m
       - name: vw_jan_change
 
