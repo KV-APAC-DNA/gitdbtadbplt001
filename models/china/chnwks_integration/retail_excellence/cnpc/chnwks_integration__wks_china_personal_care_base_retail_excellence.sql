@@ -89,7 +89,7 @@ store_code,
 //changes below to map mother code
 --case when main.mother_code != 'NA' and main.mother_code is not null then main.mother_code else main.ean   
 --end as product_code,
-nv(main.mother_code,'NA') as product_code,
+nvl(main.mother_code,'NA') as product_code,
 store_type,
 main.store_name||'#'||ltrim(main.store_code,'0') as store_name,
 --
