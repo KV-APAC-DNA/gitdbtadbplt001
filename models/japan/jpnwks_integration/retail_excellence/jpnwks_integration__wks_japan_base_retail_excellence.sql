@@ -1,7 +1,9 @@
 with EDW_RPT_REGIONAL_SELLOUT_OFFTAKE as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
-
+edw_vw_cal_Retail_excellence_Dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
+ ),
 transformation as (
     SELECT  COUNTRY_CODE AS CNTRY_CD,
         MD5(NVL (DISTRIBUTOR_CODE,'DC') ||NVL (DISTRIBUTOR_NAME,'DN') ||NVL (STORE_CODE,'SC') ||NVL (SKU_CODE,'SKU') ||nvl(SOLD_TO_CODE,'STC')||NVL (STORE_NAME,'Store_name')
@@ -151,8 +153,8 @@ FROM (SELECT COUNTRY_CODE,
              sellout_value_list_price as SALES_VALUE_LIST_PRICE
       FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE 
        WHERE COUNTRY_NAME='Japan'
-       and MNTH_ID >= (select last_27mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)
-	  and mnth_id <= (select prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)
+       and MNTH_ID >= (select last_27mnths from edw_vw_cal_Retail_excellence_Dim)
+	  and mnth_id <= (select prev_mnth from edw_vw_cal_Retail_excellence_Dim)
 	  )MAIN)                 
 GROUP BY  COUNTRY_CODE,
          COUNTRY_NAME,
