@@ -106,14 +106,16 @@ final as
             str_cd,
             src_sys_cd,
             ctry_cd,
-            crt_dttm
+            crt_dttm,
+            vend_prod_cd
         from itg_pos_temp
     ) TGT ON
             rtrim(SRC.pos_date) = rtrim(TGT.pos_dt)
-        AND rtrim(SRC.barcode) = rtrim(TGT.ean_num)
-        AND rtrim(SRC.store_code) = rtrim(TGT.str_cd)
-        AND rtrim(SRC.src_sys_cd) = rtrim(TGT.src_sys_cd)
-        AND 'KR' = TGT.ctry_cd
+        and rtrim(SRC.barcode) = rtrim(TGT.ean_num)
+        and rtrim(SRC.store_code) = rtrim(TGT.str_cd)
+        and rtrim(SRC.src_sys_cd) = rtrim(TGT.src_sys_cd)
+        and nvl(src.product_code,'#') = nvl(tgt.vend_prod_cd,'#')
+        and 'KR' = TGT.ctry_cd
     where SRC.rnk = 1
 )
 select * from final
