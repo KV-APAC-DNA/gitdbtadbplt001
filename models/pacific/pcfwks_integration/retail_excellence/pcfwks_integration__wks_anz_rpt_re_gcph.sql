@@ -4,7 +4,7 @@ with WKS_ANZ_RPT_RE as (
 --final cte
 anz_rpt_re_gcph  as (SELECT jj_year,
        jj_mnth_id,
-       "CLUSTER",
+       CLUSTER,
        MARKET,
        data_src,
        CHANNEL_NAME,
@@ -349,7 +349,7 @@ final as
 select 
 jj_year::VARCHAR(16) AS jj_year,
 jj_mnth_id::VARCHAR(22) AS jj_mnth_id,
-cluster::VARCHAR(100) AS cluster,
+cluster::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 data_src::VARCHAR(8) AS data_src,
 channel_name::VARCHAR(150) AS channel_name,

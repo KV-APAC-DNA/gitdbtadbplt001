@@ -3,12 +3,15 @@
 with wks_anz_rpt_re_gcph as (
     select * from {{ ref('pcfwks_integration__wks_anz_rpt_re_gcph') }}
 ),
-
+wks_anz_re_target_compliance as 
+(
+    select * from {{ ref('pcfwks_integration__wks_anz_re_target_compliance' )}}
+),
 edw_anz_rpt_re  as 
 (
 SELECT jj_year AS FISC_YR,
-       jj_mnth_id AS FISC_PER,
-       "CLUSTER",
+       gcph.jj_mnth_id AS FISC_PER,
+       "cluster",
        MARKET,
        data_src,
        CHANNEL_NAME,
@@ -92,7 +95,7 @@ SELECT jj_year AS FISC_YR,
        --null as PKA_SUB_VARIANT_CD, 
        PKA_SUB_VARIANT_DESC,
        GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       gcph.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,
@@ -134,7 +137,11 @@ SELECT jj_year AS FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       TARGET_COMPLAINCE,
+      -- TARGET_COMPLAINCE,
+       CASE 
+            WHEN (MDP_FLAG = 'Y' AND UPPER(gcph.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLIANCE
+            ELSE 100
+            END AS TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
@@ -190,14 +197,15 @@ SELECT jj_year AS FISC_YR,
        COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
 	   SYSDATE() AS CRT_DTTM
-	   FROM wks_anz_rpt_re_gcph
+	   FROM wks_anz_rpt_re_gcph gcph
+       LEFT JOIN wks_anz_re_target_compliance TRGT_CMP on (gcph.jj_mnth_id=TRGT_CMP.jj_mnth_id and UPPER(gcph.global_product_brand)=UPPER(TRGT_CMP.global_product_brand))
 ),
 final as
 (
 select 
 fisc_yr::VARCHAR(16) AS fisc_yr,
 fisc_per::VARCHAR(22) AS fisc_per,
-cluster::VARCHAR(100) AS cluster,
+"cluster"::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 data_src::VARCHAR(8) AS data_src,
 channel_name::VARCHAR(150) AS channel_name,

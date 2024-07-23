@@ -10,15 +10,15 @@ anz_rpt_re_gcph as
  
  final as 
  (
-   select b.fisc_per,
+   select b.jj_mnth_id,
    b.global_product_brand,
    ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as target_compliance 
    from 
-        (select fisc_per,
+        (select jj_mnth_id,
         global_product_brand,
         count(1)   as total_mdp_target  
         from 
-            (select  distinct fisc_per,
+            (select  distinct jj_mnth_id,
                 distributor_code,
                  store_code, 
                  global_product_brand
@@ -29,7 +29,7 @@ anz_rpt_re_gcph as
     inner join 
     (select * from wks_mds_reds_market_msl_target_anz where UPPER(market) = 'PACIFIC'
      ) mds 
-        on ( fisc_per >= mds.start_month_id and fisc_per <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
+        on ( jj_mnth_id >= mds.start_month_id and jj_mnth_id <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
     group by 1,2,3 
  )
 
