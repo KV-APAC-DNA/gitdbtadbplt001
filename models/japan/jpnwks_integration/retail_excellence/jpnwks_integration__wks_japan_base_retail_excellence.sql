@@ -151,8 +151,8 @@ FROM (SELECT COUNTRY_CODE,
              sellout_value_list_price as SALES_VALUE_LIST_PRICE
       FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE 
        WHERE COUNTRY_NAME='Japan'
-       --and MNTH_ID >= (select last_36mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)
-	  --and mnth_id <= (select prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)
+       and MNTH_ID >= (select last_27mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)
+	  and mnth_id <= (select prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)
 	  )MAIN)                 
 GROUP BY  COUNTRY_CODE,
          COUNTRY_NAME,
