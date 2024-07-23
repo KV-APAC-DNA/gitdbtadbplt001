@@ -144,6 +144,8 @@ sources:
       - name: mt_prf       
       - name: jp_inv_coverage_area_region_mapping    
       - name: v_edw_rpt_retail_excellence    
+      - name: edi_cstm_m
+      - name: vw_jan_change
 
   - name: jpnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
