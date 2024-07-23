@@ -1,5 +1,5 @@
 with mds_reds_market_msl_target as (
-    select * from {{ source('aspsdl_raw', 'sdl_mds_mds_reds_market_msl_target') }}
+    select * from {{ ref('aspitg_integration__itg_mds_reds_market_msl_target') }}
 ),
  edw_vw_os_time_dim as(
    select * from  {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
