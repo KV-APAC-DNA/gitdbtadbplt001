@@ -13,9 +13,9 @@ from (select distinct ean,
 			 msl_product_desc,
              row_number() over (partition by ean order by crtd_dttm desc,mnth_id desc) as rno
       from edw_rpt_regional_sellout_offtake
-      where country_name = 'china personal care'
-      and   data_source in ('sell-out','pos')
-      and   sku_code is not null and ean != 'na')
+      where country_name = 'China Personal Care'
+      and   data_source in ('SELL-OUT','POS')
+      and   sku_code is not null and ean != 'NA')
 where rno = 1)
 
 select * from cnpc_regional_sellout_mapped_sku_cd 
