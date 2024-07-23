@@ -112,31 +112,31 @@ wks_fin_sim_base_temp14 as
 transformed as 
 (
     select * from wks_fin_sim_base_temp1
-    union all
+    union
     select * from wks_fin_sim_base_temp2
-    union all
+    union
     select * from wks_fin_sim_base_temp3
-    union all
+    union
     select * from wks_fin_sim_base_temp4
-    union all
+    union
     select * from wks_fin_sim_base_temp5
-    union all
+    union
     select * from wks_fin_sim_base_temp6
-    union all
+    union
     select * from wks_fin_sim_base_temp7
-    union all
+    union
     select * from wks_fin_sim_base_temp8
-    union all
+    union
     select * from wks_fin_sim_base_temp9
-    union all
+    union
     select * from wks_fin_sim_base_temp10
-    union all
+    union
     select * from wks_fin_sim_base_temp11
-    union all
+    union
     select * from wks_fin_sim_base_temp12
-    union all
+    union
     select * from wks_fin_sim_base_temp13
-    union all
+    union
     select * from wks_fin_sim_base_temp14
 ),
 final as 
