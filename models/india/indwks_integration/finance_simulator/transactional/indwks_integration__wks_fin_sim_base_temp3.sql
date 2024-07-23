@@ -29,8 +29,13 @@ final as
       (prn.fisc_yr || prn.month) AS caln_yr_mo,
       prn.fisc_yr as fisc_yr,
       (prn.fisc_yr || 0 || prn.month) AS fisc_yr_per,
-      TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) as amt_obj_crncy,
-      TRIM(REPLACE(REPLACE(qty, ',', ''), '-', 0)) as qty,
+      TRY_CAST(
+          DECODE(
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+              '','0',
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+          ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+      TRY_CAST(TRIM(REPLACE(REPLACE(qty, ',', ''), '-', '0')) AS NUMERIC(38, 2)) AS qty,
       prn_copa.acct_hier_desc,
       prn_copa.acct_hier_shrt_desc,
       'NA' AS chnl_desc1,

@@ -15,6 +15,10 @@ itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
+wks_fin_sim_base_temp12 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp12') }}
+),
 final as
 (
     SELECT
