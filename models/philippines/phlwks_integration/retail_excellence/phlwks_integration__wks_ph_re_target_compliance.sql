@@ -12,7 +12,8 @@ ph_rpt_retail_excellence_sop as
  (
    select b.fisc_per,
    b.global_product_brand,
-   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as target_compliance 
+   round( (total_mdp_target/mds.mdp_target) * 100):: integer as target_compliance
+   --((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as target_compliance 
    from 
         (select fisc_per,
         global_product_brand,
