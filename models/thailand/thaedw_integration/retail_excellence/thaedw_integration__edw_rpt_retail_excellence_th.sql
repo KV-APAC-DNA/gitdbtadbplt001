@@ -1,6 +1,10 @@
 with TH_WKS_RPT_RETAIL_EXCELLENCE_SOP as (
     select * from {{ ref('thawks_integration__th_wks_rpt_retail_excellence_sop') }}
 ),
+retail_excellence_msl_target_final as 
+ (
+    select * from {{ ref('thawks_integration_wks_retail_excellence_msl_target_final') }}
+ ),
 
 
 transformation as (
@@ -141,7 +145,7 @@ transformation as (
        DM.P6M_SALES_FLAG,
        DM.P12M_SALES_FLAG,
        DM.MDP_FLAG,
-       DM.TARGET_COMPLAINCE,
+       case when mdp_flag='Y' and DM.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,--DM.TARGET_COMPLAINCE,
        DM.LIST_PRICE,
        DM.TOTAL_SALES_LM,
        DM.TOTAL_SALES_P3M,
@@ -197,7 +201,8 @@ transformation as (
        COUNT(DM.P12M_SALES_FLAG) OVER (PARTITION BY DM.CUSTOMER_AGG_DIM_KEY,DM.PRODUCT_AGG_DIM_KEY,DM.P12M_SALES_FLAG,DM.MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(DM.MDP_FLAG) OVER (PARTITION BY DM.CUSTOMER_AGG_DIM_KEY,DM.PRODUCT_AGG_DIM_KEY,DM.MDP_FLAG) AS MDP_FLAG_COUNT,
        SYSDATE() AS CREATED_DATE
-FROM TH_WKS_RPT_RETAIL_EXCELLENCE_SOP DM
+FROM TH_WKS_RPT_RETAIL_EXCELLENCE_SOP DM  	
+left join retail_excellence_msl_target_final  target on (DM.fisc_per=target.fisc_per and DM.global_product_brand=target.global_product_brand)
 ),
 final as (
     select

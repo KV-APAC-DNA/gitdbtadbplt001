@@ -105,7 +105,8 @@ FROM (SELECT DISTINCT base.start_date,
               LEFT JOIN (SELECT DISTINCT jj_mnth_id,
                                 jj_mnth
                          FROM edw_time_dim
-						 where jj_mnth_id >= (select last_18mnths from v_edw_vw_cal_retail_excellence_dim)::numeric
+                         -- chnaging the month from 18 to 16
+						 where jj_mnth_id >= (select last_16mnths from v_edw_vw_cal_retail_excellence_dim)::numeric
 						   and jj_mnth_id <= (select prev_mnth from v_edw_vw_cal_retail_excellence_dim)::numeric  
                           ) cal
                      ON TO_CHAR (TO_DATE (msl.start_date,'DD/MM/YYYY'),'YYYYMM')::NUMERIC<= cal.jj_mnth_id
