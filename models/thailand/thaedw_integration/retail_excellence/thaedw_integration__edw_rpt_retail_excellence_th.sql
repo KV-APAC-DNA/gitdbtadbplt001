@@ -3,7 +3,7 @@ with TH_WKS_RPT_RETAIL_EXCELLENCE_SOP as (
 ),
 retail_excellence_msl_target_final as 
  (
-    select * from {{ ref('thawks_integration_wks_retail_excellence_msl_target_final') }}
+    select * from {{ ref('thawks_integration__wks_retail_excellence_msl_target_final') }}
  ),
 
 
