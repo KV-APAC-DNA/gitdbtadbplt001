@@ -8,14 +8,67 @@
         {% endif %}"
     )
 }}
-with itg_fin_sim_plandata as (
+with wks_fin_sim_base_temp1 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
+),
+wks_fin_sim_base_temp4 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp4') }}
+),
+wks_fin_sim_base_temp5 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp5') }}
+),
+wks_fin_sim_base_temp6 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp6') }}
+),
+wks_fin_sim_base_temp7 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp7') }}
+),
+wks_fin_sim_base_temp8 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp8') }}
+),
+wks_fin_sim_base_temp9 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp9') }}
+),
+wks_fin_sim_base_temp10 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp10') }}
+),
+wks_fin_sim_base_temp11 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp11') }}
+),
+wks_fin_sim_base_temp12 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp12') }}
+),
+wks_fin_sim_base_temp13 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp13') }}
+),
+itg_fin_sim_plandata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_plandata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
-final as
+wks_fin_sim_base_temp14 as
 (
     SELECT
        matl_num,
@@ -55,5 +108,70 @@ final as
         AND PLAN IS NOT NULL
       ) cogs
     LEFT JOIN itg_mds_in_product_hierarchy prod_h ON COGS.matl_num = prod_h.code
+),
+transformed as 
+(
+    select * from wks_fin_sim_base_temp1
+    union
+    select * from wks_fin_sim_base_temp2
+    union
+    select * from wks_fin_sim_base_temp3
+    union
+    select * from wks_fin_sim_base_temp4
+    union
+    select * from wks_fin_sim_base_temp5
+    union
+    select * from wks_fin_sim_base_temp6
+    union
+    select * from wks_fin_sim_base_temp7
+    union
+    select * from wks_fin_sim_base_temp8
+    union
+    select * from wks_fin_sim_base_temp9
+    union
+    select * from wks_fin_sim_base_temp10
+    union
+    select * from wks_fin_sim_base_temp11
+    union
+    select * from wks_fin_sim_base_temp12
+    union
+    select * from wks_fin_sim_base_temp13
+    union
+    select * from wks_fin_sim_base_temp14
+),
+final as 
+(
+    select
+        matl_num::varchar(100) as matl_num,
+        chrt_acct::varchar(4) as chrt_acct,
+        acct_num::varchar(10) as acct_num,
+        dstr_chnl::varchar(2) as dstr_chnl,
+        ctry_key::varchar(3) as ctry_key,
+        caln_yr_mo::number(18,0) as caln_yr_mo,
+        fisc_yr::number(18,0) as fisc_yr,
+        fisc_yr_per::number(18,0) as fisc_yr_per,
+        amt_obj_crncy::number(38,5) as amt_obj_crncy,
+        qty::number(38,5) as qty,
+        acct_hier_desc::varchar(100) as acct_hier_desc,
+        acct_hier_shrt_desc::varchar(100) as acct_hier_shrt_desc,
+        chnl_desc1::varchar(500) as chnl_desc1,
+        chnl_desc2::varchar(500) as chnl_desc2,
+        bw_gl::varchar(200) as bw_gl,
+        nature::varchar(500) as nature,
+        sap_gl::varchar(500) as sap_gl,
+        descp::varchar(500) as descp,
+        bravo_mapping::varchar(500) as bravo_mapping,
+        sku_desc::varchar(500) as sku_desc,
+        brand_combi::varchar(500) as brand_combi,
+        franchise::varchar(500) as franchise,
+        "group":: varchar(500) as "group",
+        mrp::number(38,2) as mrp,
+        cogs_per_unit::number(38,2) as cogs_per_unit,
+        plan::varchar(10) as plan,
+        brand_group_1::varchar(500) as brand_group_1,
+        brand_group_2::varchar(500) as brand_group_2,
+        co_cd::varchar(16777216) as co_cd,
+        brand_combi_var::varchar(200) as brand_combi_var
+    from transformed 
 )
 select * from final
