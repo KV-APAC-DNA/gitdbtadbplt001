@@ -123,7 +123,7 @@ FROM WKS_SINGAPORE_REGIONAL_SELLOUT_BASEDIM BASE_DIM
                           so_sls_value,
                           so_avg_qty,
                           sales_value_list_price
-                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_36mnths
+                   FROM WKS_SINGAPORE_BASE_RETAIL_EXCELLENCE where MNTH_ID >= (SELECT last_27mnths
                         FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
       AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC) CM
                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = CM.CNTRY_CD
@@ -153,7 +153,7 @@ WKS_SINGAPORE_REGIONAL_SELLOUT_ACT_L12M L12M
                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD		--//                ON BASE_DIM.CNTRY_CD = L12M.CNTRY_CD
               AND BASE_DIM.MONTH = L12M.MONTH		--//               AND BASE_DIM.month = L12M.MONTH
               AND BASE_DIM.SELLOUT_DIM_KEY = L12M.SELLOUT_DIM_KEY		--//               AND BASE_DIM.sellout_dim_key = L12M.sellout_dim_key
-WHERE BASE_DIM.MONTH >= (SELECT last_18mnths		--// WHERE BASE_DIM.month >= (SELECT last_18mnths
+WHERE BASE_DIM.MONTH >= (SELECT last_16mnths		--// WHERE BASE_DIM.month >= (SELECT last_18mnths
                         FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC
 AND   BASE_DIM.MONTH <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)::NUMERIC		
 ),

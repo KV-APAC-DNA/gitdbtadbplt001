@@ -2,9 +2,9 @@ with  mds_reds_market_msl_target_final as
 (
     select * from {{ ref('aspedw_integration__wks_mds_reds_market_msl_target_final') }}
 ),
-rpt_retail_excellence_gcph as 
+sg_rpt_retail_excellence as 
  (
-    select * from {{ ref('ntawks_integration__wks_kr_rpt_retail_excellence_gcph') }}
+    select * from {{ ref('sgpwks_integration__wks_sg_rpt_retail_excellence_sop') }}
  ),
  
  final as 
@@ -21,12 +21,12 @@ rpt_retail_excellence_gcph as
                 distributor_code,
                  store_code, 
                  global_product_brand,
-                from rpt_retail_excellence_gcph
+                from sg_rpt_retail_excellence
                 where   mdp_flag = 'Y'
                 ) a
         group by 1,2)b 
     inner join 
-    (select * from mds_reds_market_msl_target_final where market='Korea'
+    (select * from mds_reds_market_msl_target_final where market='Singapore'
      ) mds 
         on ( fisc_per >= mds.start_month_id and fisc_per <= mds.end_month_id and upper(b.global_product_brand)=upper(mds.brand_code))
     group by 1,2,3 

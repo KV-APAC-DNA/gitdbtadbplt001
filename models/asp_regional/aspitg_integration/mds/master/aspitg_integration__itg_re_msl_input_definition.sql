@@ -6,8 +6,8 @@ with source as (
 --Logical CTE
 itg_re_msl_input_definition as  
 (
-    SELECT TO_CHAR(TO_DATE(start_ddmmyyyy,'YYYY-MM-DD'),'DD/MM/YYYY') AS start_date,
-       TO_CHAR(TO_DATE(end_ddmmyyyy,'YYYY-MM-DD'),'DD/MM/YYYY') AS end_date,
+    SELECT TO_CHAR ((start_ddmmyyyy :: DATE),'DD/MM/YYYY') AS start_date,
+       TO_CHAR ((end_ddmmyyyy :: DATE),'DD/MM/YYYY') AS end_date,
        market,
        region,
        zone,

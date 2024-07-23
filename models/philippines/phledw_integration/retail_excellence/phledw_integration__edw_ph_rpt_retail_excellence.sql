@@ -131,7 +131,7 @@ edw_ph_rpt_retail_excellence as
         MDP_FLAG,
         --TARGET_COMPLAINCE,
         CASE 
-            WHEN (MDP_FLAG = 'Y' AND UPPER(SOP.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLAINCE
+            WHEN (MDP_FLAG = 'Y' AND UPPER(SOP.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLIANCE
             ELSE 100
             END AS TARGET_COMPLAINCE,
         LIST_PRICE,
@@ -311,7 +311,7 @@ final as
     p6m_sales_flag :: varchar(1) as p6m_sales_flag,
     p12m_sales_flag :: varchar(1) as p12m_sales_flag,
     mdp_flag :: varchar(1) as mdp_flag,
-    target_complaince :: numeric(18,0) as target_complaince,
+    target_complaince :: numeric(38,6) as target_complaince,
     list_price :: numeric(20,4) as list_price,
     total_sales_lm :: numeric(38,6) as total_sales_lm,
     total_sales_p3m :: numeric(38,6) as total_sales_p3m,

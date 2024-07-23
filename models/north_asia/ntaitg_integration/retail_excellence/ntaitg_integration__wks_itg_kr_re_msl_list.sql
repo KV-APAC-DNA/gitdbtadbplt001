@@ -1,13 +1,13 @@
 --overwriding default sql header as we dont want to change timezone to singapore
 --import cte
 with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration','itg_re_msl_input_definition') }}
+    select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
 edw_calendar_dim as (
     select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 itg_mds_sg_customer_hierarchy as (
-    select * from {{ source('sgpitg_integration','itg_mds_sg_customer_hierarchy') }}
+    select * from {{ ref('sgpitg_integration__itg_mds_sg_customer_hierarchy') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
