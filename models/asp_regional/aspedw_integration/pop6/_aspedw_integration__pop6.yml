@@ -4,31 +4,31 @@ models:
   - name: aspedw_integration__edw_vw_pop6_tasks
     config: 
       alias: edw_vw_pop6_tasks
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_visits_general_audits
     config: 
       alias: edw_vw_pop6_visits_general_audits
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_store
     config: 
       alias: edw_vw_pop6_store
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_salesperson
     config:
       alias: edw_vw_pop6_salesperson
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_visits_display
     config:
       alias: edw_vw_pop6_visits_display
-      tags: ["pop6_views","transformation"] 
+      tags: ["pop6_final_load","transformation"] 
   - name: aspedw_integration__edw_vw_pop6_promotions
     config:
       alias: edw_vw_pop6_promotions
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_planned_visits
     config:
       alias: edw_vw_pop6_planned_visits
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_pop6_pm
     config: 
       alias: edw_pop6_pm
@@ -40,7 +40,7 @@ models:
   - name: aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits
     config:
       alias: edw_vw_pop6_visits_prod_attribute_audits
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_analysis_active_data
     config:
       alias: edw_vw_pop6_analysis_active_data
@@ -48,19 +48,19 @@ models:
   - name: aspedw_integration__edw_vw_pop6_analysis_data
     config:
       alias: edw_vw_pop6_analysis_data
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_products
     config: 
       alias: edw_vw_pop6_products
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_visits_rir_data
     config: 
       alias: edw_vw_pop6_visits_rir_data
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__edw_vw_pop6_visits_sku_audits
     config: 
       alias: edw_vw_pop6_visits_sku_audits
-      tags: ["pop6_views","transformation"]
+      tags: ["pop6_final_load","transformation"]
   - name: aspedw_integration__v_slsc_tgtg_items_cust_task_srresp_customer_pop6
     config: 
       alias: v_slsc_tgtg_items_cust_task_srresp_customer_pop6

@@ -86,6 +86,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id","product_list"]
+              condition: "and"
               select_columns: ["popdb_id","product_list"]
               name: TRATBL_sdl_pop6_kr_product_lists_pops__null_test
               config:
@@ -120,6 +121,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id","pop_list"]
+              condition: "and"
               select_columns: ["popdb_id","pop_list"]
               name: TRATBL_sdl_pop6_kr_pop_lists__null_test
               config:
@@ -154,6 +156,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              condition: "and"
               select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
               name: TRATBL_sdl_pop6_kr_product_lists_allocation__null_test
               config:
@@ -171,6 +174,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["productdb_id","product_list"]
+              condition: "and"
               select_columns: ["productdb_id","product_list"]
               name: TRATBL_sdl_pop6_kr_product_lists_products__null_test
               config:
@@ -222,6 +226,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id","product_list"]
+              condition: "and"
               select_columns: ["popdb_id","product_list"]
               name: TRATBL_sdl_pop6_tw_product_lists_pops__null_test
               config:
@@ -256,6 +261,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_tw_displays__null_test
               config:
@@ -273,6 +279,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","popdb_id"]
+              condition: "and"
               select_columns: ["visit_id","popdb_id"]
               name: TRATBL_sdl_pop6_tw_executed_visits__null_test
               config:
@@ -290,6 +297,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
               name: TRATBL_sdl_pop6_tw_general_audits__null_test
               config:
@@ -308,6 +316,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["popdb_id","pop_list"]
+              condition: "and"
               select_columns: ["popdb_id","pop_list"]
               name: TRATBL_sdl_pop6_tw_pop_lists__null_test
               config:
@@ -326,6 +335,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
+              condition: "and"
               select_columns: ["product_list","pop_attribute_id","pop_attribute_value_id"]
               name: TRATBL_sdl_pop6_tw_product_lists_allocation__null_test
               config:
@@ -343,6 +353,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["productdb_id","product_list"]
+              condition: "and"
               select_columns: ["productdb_id","product_list"]
               name: TRATBL_sdl_pop6_tw_product_lists_products__null_test
               config:
@@ -360,6 +371,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","promotion_plan_id"]
+              condition: "and"
               select_columns: ["visit_id","promotion_plan_id"]
               name: TRATBL_sdl_pop6_tw_promotions__null_test
               config:
@@ -377,6 +389,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_tw_tasks__null_test
               config:
@@ -428,6 +441,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","display_plan_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_kr_displays__null_test
               config:
@@ -468,6 +482,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","popdb_id"]
+              condition: "and"
               select_columns: ["visit_id","popdb_id"]
               name: TRATBL_sdl_pop6_kr_executed_visits__null_test
               config:
@@ -485,6 +500,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","subsection_id","field_id"]
               name: TRATBL_sdl_pop6_kr_general_audits__null_test
               config:
@@ -519,6 +535,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+              condition: "and"
               select_columns: ["visit_id","audit_form_id","section_id","field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
               name: TRATBL_sdl_pop6_kr_product_attribute_audits__null_test
               config:
@@ -553,6 +570,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","promotion_plan_id"]
+              condition: "and"
               select_columns: ["visit_id","promotion_plan_id"]
               name: TRATBL_sdl_pop6_kr_promotions__null_test
               config:
@@ -587,6 +605,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
+              condition: "and"
               select_columns: ["visit_id","section_id","field_id","dependent_on_field_id","sku_id"]
               name: TRATBL_sdl_pop6_kr_sku_audits__null_test
               config:
@@ -604,6 +623,7 @@ sources:
         tests:
           - test_null:
               not_null_columns: ["visit_id","field_id","dependent_on_field_id"]
+              condition: "and"
               select_columns: ["visit_id","field_id","dependent_on_field_id"]
               name: TRATBL_sdl_pop6_kr_tasks__null_test
               config:
@@ -665,6 +685,7 @@ sources:
         - test_null:
             select_columns: ["visit_id","popdb_id"]
             not_null_columns: ["visit_id","popdb_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_executed_visits__null_test
             config:
               store_failures: true
@@ -683,6 +704,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "section_id", "field_id", "dependent_on_field_id", "sku_id"]
             not_null_columns: ["visit_id", "section_id", "field_id", "dependent_on_field_id", "sku_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_sku_audits__null_test
             config:
               store_failures: true
@@ -701,6 +723,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "audit_form_id", "section_id", "field_id", "dependent_on_field_id", "product_attribute_id", "product_attribute_value_id"]
             not_null_columns: ["visit_id", "audit_form_id", "section_id", "field_id", "dependent_on_field_id", "product_attribute_id", "product_attribute_value_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_product_attribute_audits__null_test
             config:
               store_failures: true
@@ -719,6 +742,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "audit_form_id", "section_id", "subsection_id", "field_id"]
             not_null_columns: ["visit_id", "audit_form_id", "section_id", "subsection_id", "field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_general_audits__null_test
             config:
               store_failures: true
@@ -755,6 +779,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "display_plan_id", "field_id", "dependent_on_field_id"]
             not_null_columns: ["visit_id", "display_plan_id", "field_id", "dependent_on_field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_displays__null_test
             config:
               store_failures: true
@@ -791,6 +816,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "promotion_plan_id"]
             not_null_columns: ["visit_id", "promotion_plan_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_promotions__null_test
             config:
               store_failures: true
@@ -809,6 +835,7 @@ sources:
         - test_null:
             select_columns: ["visit_id", "field_id", "dependent_on_field_id"]
             not_null_columns: ["visit_id", "field_id", "dependent_on_field_id"]
+            condition: "and"
             name: TRATBL_sdl_pop6_hk_tasks__null_test
             config:
               store_failures: true
@@ -819,20 +846,20 @@ sources:
         tests:
         - test_lookup:
             select_columns: ["exclude_kpi", "visit_date", "pop_code", "country", "merchandiser_userid", "audit_form_name", "section_name", "operation_type"]
-            column: ["country", "visit_date", "pop_code", "merchandiser_userid"]
-            filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
-            lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
+            column: "country,visit_date,pop_code,merchandiser_userid"
+            lookup_column: "cntry_cd,visit_date,pop_code,username"
+            lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}"
+            filter: "audit_form_name is null and section_name is null and operation_type = 'I'"
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_1
             config:
               store_failures: true
               schema: ntawks_integration
         - test_lookup:
             select_columns: ["exclude_kpi", "visit_date", "pop_code", "country", "merchandiser_userid", "audit_form_name", "section_name", "operation_type"]
-            column: ["country", "visit_date", "pop_code", "merchandiser_userid", "audit_form_name", "section_name"]
-            filter: "audit_form_name IS NULL AND section_name IS NULL AND operation_type = 'I'"
-            lookup_column: ["cntry_cd", "visit_date", "pop_code", "username", "audit_form", "section"]
-            lookup_table: "{{ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits')}}"
+            column: "country,visit_date,pop_code,merchandiser_userid,audit_form_name,section_name"
+            lookup_column: "cntry_cd,visit_date,pop_code,username,audit_form,section"
+            lookup_table: "{{ ref('aspedw_integration__edw_vw_pop6_visits_prod_attribute_audits') }}"
+            filter: "audit_form_name is not null and section_name is not null and operation_type = 'I'"
             name: TRATBL_sdl_pop6_hk_exclusion__lookup_test_2
             config:
               store_failures: true
@@ -867,6 +894,7 @@ sources:
             - test_null:
                 select_columns:  ["visit_id", "section_id", "field_id","dependent_on_field_id","sku_id"]
                 not_null_columns:  ["visit_id", "section_id", "field_id","dependent_on_field_id","sku_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_tw_sku_audits__null_test
                 config:
                   store_failures: true
@@ -884,6 +912,7 @@ sources:
             - test_null:
                 select_columns: ["visit_id","audit_form_id", "section_id", "field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
                 not_null_columns: ["visit_id","audit_form_id", "section_id", "field_id","dependent_on_field_id","product_attribute_id","product_attribute_value_id"]
+                condition: "and"
                 name: TRATBL_sdl_pop6_tw_product_attribute_audits__null_test
                 config:
                   store_failures: true
@@ -960,15 +989,6 @@ sources:
       - name: itg_pop6_product_lists_pops_temp
       - name: itg_pop6_pops_temp
       - name: kpi2data_mapping
-
-  - name: ntaitg_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: ntaitg_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
       - name: itg_photo_mgmnt_url_temp
 
   - name: aspedw_integration

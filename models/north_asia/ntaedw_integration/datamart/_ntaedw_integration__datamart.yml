@@ -28,7 +28,7 @@ models:
   - name: ntaedw_integration__v_rpt_ims_inventory
     config: 
       alias: v_rpt_ims_inventory
-      tags: ["north_asia_views","transformation"]
+      tags: ["tw_ims_distributor_standard_sell_out","kr_gt_sellout","kr_ecommerce_sellout","na_trxn_ims","transformation"]
   - name: ntaedw_integration__v_rpt_tw_si_so_pos_sls
     config: 
       alias: v_rpt_tw_si_so_pos_sls
@@ -68,4 +68,4 @@ models:
   - name: ntaedw_integration__edw_rpt_hk_pos
     config:
       alias: edw_rpt_hk_pos
-      tags: ["hk_pos_mannings","transformation"]
+      tags: ["hk_pos","transformation"]

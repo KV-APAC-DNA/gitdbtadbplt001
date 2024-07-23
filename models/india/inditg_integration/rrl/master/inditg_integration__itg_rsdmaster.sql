@@ -16,7 +16,7 @@ with source as
     (
     select
     sdl_rsdm.rsdcode::varchar(50) as rsdcode,
-    sdl_rsdm.rsdname::varchar(50) as rsdname,
+    sdl_rsdm.rsdname::varchar(100) as rsdname,
     sdl_rsdm.rsdfirm::varchar(50) as rsdfirm,
     sdl_rsdm.rsrcode::varchar(50) as rsrcode,
     sdl_rsdm.villagecode::varchar(50) as villagecode,
@@ -60,13 +60,18 @@ with source as
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     row_number() over (partition by upper(sdl_rsdm.rsdcode),upper(sdl_rsdm.rsrcode),upper(sdl_rsdm.distributorcode) order by sdl_rsdm.crt_dttm desc) rnum
-      from source sdl_rsdm)
+    from source sdl_rsdm
+    {% if is_incremental() %}
+    --this filter will only be applied on an incremental run
+    where sdl_rsdm.crt_dttm > (select max(crt_dttm) from {{ this }}) 
+    {% endif %}
+    )
 WHERE rnum = '1'
 ),
 final as
 (select 
     rsdcode::varchar(50) as rsdcode,
-    rsdname::varchar(50) as rsdname,
+    rsdname::varchar(100) as rsdname,
     rsdfirm::varchar(50) as rsdfirm,
     rsrcode::varchar(50) as rsrcode,
     villagecode::varchar(50) as villagecode,
@@ -109,12 +114,7 @@ final as
     filename::varchar(100) as filename,
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
-
     from trans
-    {% if is_incremental() %}
-    --this filter will only be applied on an incremental run
-    where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
-    {% endif %}
 )
 
 select * from final
