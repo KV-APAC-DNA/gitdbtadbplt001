@@ -4,6 +4,9 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp1') }} where nature = 'PRN' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp2') }} where nature = 'PRN' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp3') }} where nature = 'PRN' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'PRN' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'PRN' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp6') }} where nature = 'PRN' AND PLAN IS NOT NULL;
