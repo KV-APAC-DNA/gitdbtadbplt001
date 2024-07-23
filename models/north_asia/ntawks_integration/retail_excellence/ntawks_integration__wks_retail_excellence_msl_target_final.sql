@@ -11,7 +11,7 @@ rpt_retail_excellence_gcph as
  (
    select b.fisc_per,
    b.global_product_brand,
-   round((total_mdp_target/mds.mdp_target)*100):: integer as TARGET_COMPLIANCE
+   round((total_mdp_target/mds.mdp_target)*100):: integer as TARGET_COMPLAINCE
  from 
         (select fisc_per,
         global_product_brand,
