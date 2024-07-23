@@ -1,12 +1,14 @@
 with WKS_RPT_RETAIL_EXCELLENCE_SOP as (
     select * from {{ ref('jpnwks_integration__wks_rpt_retail_excellence_sop') }}
 ),
-
+retail_excellence_msl_target_final as (
+    select * from {{ ref('jpnwks_integration__wks_retail_excellence_msl_target_final') }}
+),
 transformation as (
-    SELECT FISC_YR,
-       CAST(FISC_PER AS INTEGER) AS FISC_PER,
+    SELECT DM.FISC_YR,
+       CAST(DM.FISC_PER AS INTEGER) AS FISC_PER,
        "CLUSTER",
-       MARKET,
+       DM.MARKET,
        DATA_SRC,
        CHANNEL_NAME,
        SOLD_TO_CODE AS SOLDTO_CODE,
@@ -79,7 +81,7 @@ transformation as (
        PKA_VARIANT_DESC,
        PKA_SUB_VARIANT_DESC,
        GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       DM.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,

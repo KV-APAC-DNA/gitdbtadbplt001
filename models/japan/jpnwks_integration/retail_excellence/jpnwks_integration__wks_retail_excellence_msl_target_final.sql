@@ -21,7 +21,7 @@ rpt_retail_excellence_sop as
                 distributor_code,
                  store_code, 
                  global_product_brand,market
-                from rpt_retail_excellence_gcph
+                from rpt_retail_excellence_sop
                 where   mdp_flag = 'Y'
                 ) a
         group by 1,2,3)b 
