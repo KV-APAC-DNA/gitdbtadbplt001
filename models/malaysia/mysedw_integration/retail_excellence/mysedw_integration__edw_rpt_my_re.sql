@@ -4,7 +4,7 @@ with wks_my_rpt_re_gcph as (
 ),
 retail_excellence_msl_target_final as 
  (
-    select * from {{ ref('myswks_integration_wks_retail_excellence_msl_target_final') }}
+    select * from {{ ref('myswks_integration__wks_retail_excellence_msl_target_final') }}
  ),
 
 --final cte
