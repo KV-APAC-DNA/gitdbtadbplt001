@@ -4,7 +4,14 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp6') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp7') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp8') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp9') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp10') }} where nature = 'Volume' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp11') }} where nature = 'Volume' AND PLAN IS NOT NULL;
         {% endif %}"
     )
 }}
@@ -14,6 +21,10 @@ with itg_fin_sim_plandata as (
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
+),
+wks_fin_sim_base_temp11 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp11') }}
 ),
 final as
 (
