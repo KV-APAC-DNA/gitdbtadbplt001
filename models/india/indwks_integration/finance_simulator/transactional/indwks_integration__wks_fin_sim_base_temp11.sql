@@ -24,6 +24,18 @@ itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
+),
 wks_fin_sim_base_temp4 as
 (
     select * from {{ ref('indwks_integration__wks_fin_sim_base_temp4') }}
