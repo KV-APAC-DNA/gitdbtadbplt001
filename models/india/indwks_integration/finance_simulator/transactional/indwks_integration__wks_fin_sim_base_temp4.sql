@@ -29,9 +29,18 @@ final as
       (fg.fisc_yr || fg.month)::INTEGER AS caln_yr_mo,
       fg.fisc_yr::INTEGER as fisc_yr,
       (fg.fisc_yr || 0 || fg.month)::INTEGER AS fisc_yr_per,
-      (REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) as amt_obj_crncy,
-      --CAST(NULL AS NUMERIC(38,2)),
-        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', '')) as qty,
+       TRY_CAST(
+           DECODE(
+               TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+               '','0',
+               TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+           ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+       TRY_CAST(
+           DECODE(
+               TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', '')),
+               '','0',
+               TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', ''))
+           ) AS NUMERIC(38, 2)) AS qty,
       fg_copa.acct_hier_desc,
       fg_copa.acct_hier_shrt_desc,
       'NA' AS chnl_desc1,
