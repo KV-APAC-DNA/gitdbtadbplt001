@@ -26,10 +26,13 @@ final as
       (cgspu.fisc_yr || cgspu.month)::INTEGER AS caln_yr_mo,
       cgspu.fisc_yr::INTEGER as fisc_yr,
       (cgspu.fisc_yr || 0 || cgspu.month)::INTEGER AS fisc_yr_per,
-      --cogs AS amt_obj_crncy,
-      DECODE(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')), '', 0, CAST(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) AS NUMERIC(38, 2))) as amt_obj_crncy,
-      --volume AS qty,
-      CAST(NULL AS NUMERIC(38, 2)) as qty,
+      TRY_CAST(
+          DECODE(
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+              '','0',
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+          ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+      CAST(NULL AS NUMERIC(38, 2)) AS qty,
       'NA' AS acct_hier_desc,
       'NA' AS acct_hier_shrt_desc,
       'NA' AS chnl_desc1,
@@ -43,8 +46,13 @@ final as
       cgspu.brand_combi,
       prod_h.franchise_code AS franchise,
       prod_h.group_code AS "group",
-      CAST(NULL AS NUMERIC(38, 2)) as mrp,
-      DECODE(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')), '', 0, CAST(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) AS NUMERIC(38, 2))) as cogs_per_unit,
+      CAST(NULL AS NUMERIC(38, 2)) AS mrp,
+      TRY_CAST(
+          DECODE(
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+              '','0',
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+          ) AS NUMERIC(38, 2)) AS cogs_per_unit,
       NULL AS PLAN,
       prod_h.brand_group_1_code AS brand_group_1,
       prod_h.brand_group_2_code AS brand_group_2,

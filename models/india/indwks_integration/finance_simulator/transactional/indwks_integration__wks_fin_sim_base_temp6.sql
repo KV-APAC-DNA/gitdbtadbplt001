@@ -26,8 +26,13 @@ final as
       (nrgt.fisc_yr || nrgt.month)::INTEGER AS caln_yr_mo,
       nrgt.fisc_yr::INTEGER as fisc_yr,
       (nrgt.fisc_yr || 0 || nrgt.month)::INTEGER AS fisc_yr_per,
-      DECODE(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')), '', 0, CAST(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) AS NUMERIC(38, 2))) as amt_obj_crncy,
-      CAST(NULL AS NUMERIC(38, 2)) as qty,
+      TRY_CAST(
+          DECODE(
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+              '','0',
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+          ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+      CAST(NULL AS NUMERIC(38, 2)) AS qty,
       'NA' AS acct_hier_desc,
       'NA' AS acct_hier_shrt_desc,
       'NA' AS chnl_desc1,
