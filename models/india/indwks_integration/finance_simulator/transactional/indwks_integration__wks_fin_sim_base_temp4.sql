@@ -4,18 +4,30 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'FREE GOODS';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp1')}} where nature = 'FREE GOODS';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp2')}} where nature = 'FREE GOODS';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp3')}} where nature = 'FREE GOODS';
         {% endif %}"
     )
 }}
-with itg_fin_sim_miscdata as (
+with itg_fin_sim_miscdata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_miscdata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
-wks_fin_sim_base_temp3 as (
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as 
+(
     select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
 ),
 final as
@@ -29,9 +41,18 @@ final as
       (fg.fisc_yr || fg.month)::INTEGER AS caln_yr_mo,
       fg.fisc_yr::INTEGER as fisc_yr,
       (fg.fisc_yr || 0 || fg.month)::INTEGER AS fisc_yr_per,
-      (REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) as amt_obj_crncy,
-      --CAST(NULL AS NUMERIC(38,2)),
-        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', '')) as qty,
+       TRY_CAST(
+           DECODE(
+               TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+               '','0',
+               TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+           ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+       TRY_CAST(
+           DECODE(
+               TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', '')),
+               '','0',
+               TRIM(REPLACE(REPLACE(REPLACE(REPLACE(qty, ',', ''), '-', ''), '(', '-'), ')', ''))
+           ) AS NUMERIC(38, 2)) AS qty,
       fg_copa.acct_hier_desc,
       fg_copa.acct_hier_shrt_desc,
       'NA' AS chnl_desc1,
@@ -64,7 +85,11 @@ final as
         acct_num,
         acct_hier_desc,
         acct_hier_shrt_desc
-      FROM wks_fin_sim_base_temp3
+      FROM (select * from wks_fin_sim_base_temp3 
+            union all
+            select * from wks_fin_sim_base_temp2 
+            union all
+            select * from wks_fin_sim_base_temp1)
       WHERE bw_gl = 'CCOA/700508'
         AND acct_hier_shrt_desc = 'FG'
       GROUP BY 1,
