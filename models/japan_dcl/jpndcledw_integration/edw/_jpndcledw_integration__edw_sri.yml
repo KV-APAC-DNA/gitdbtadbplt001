@@ -115,3 +115,18 @@ models:
     config:
       alias: tt06juchkokyasts
       tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tboutcallresult
+    config:
+      alias: tboutcallresult
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tboutcallresult_wk
+    config:
+      alias: tboutcallresult_wk
+      tags: ["m_dcl_edw_job2","transformation"]
+
+  - name: jpndcledw_integration__tboutcalltel
+    config:
+      alias: tboutcalltel
+      tags: ["m_dcl_edw_job2","transformation"]
