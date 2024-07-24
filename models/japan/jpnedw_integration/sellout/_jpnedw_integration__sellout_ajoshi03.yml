@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: jpnedw_integration__dw_so_sell_out_dly_all
+    config:
+        alias: dw_so_sell_out_dly_all
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnedw_integration__dw_so_sell_out_dly
+    config:
+        alias: dw_so_sell_out_dly
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+        
+  
