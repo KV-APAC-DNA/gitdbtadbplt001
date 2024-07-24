@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append"
+    )
+}}
+
 with source as(
     select * from dev_dna_core.snapjpnitg_integration.da_so_planet_accum 
 ),
@@ -49,6 +56,10 @@ result as(
 	    sales_chan_type::varchar(256) as sales_chan_type,
 	    jcp_create_date::timestamp_ntz(9) as jcp_create_date
     from source
+    {% if is_incremental() %}
+    
+    where source.jcp_create_date > (select max(jcp_create_date) from {{ this }})
+    {% endif %}
 )
 
 select * from result

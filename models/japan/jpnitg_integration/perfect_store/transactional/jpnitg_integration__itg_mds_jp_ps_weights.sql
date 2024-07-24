@@ -20,7 +20,7 @@ result as(
 	        kpi::varchar(255) as kpi,
 	        weight::number(20,4) as weight,
 	        current_timestamp::timestamp_ntz(9) as crted_dttm,
-	        name::varchar(100) as retail_en
+	        name::varchar(100) as retail_env
     from source
 )
 

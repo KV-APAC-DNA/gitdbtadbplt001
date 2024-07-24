@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy= "append"
+    )
+}}
+
 with source as(
     select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err_cd 
 ),
@@ -8,6 +15,7 @@ result as(
 	    error_cd::varchar(20) as error_cd,
 	    export_flag::varchar(1) as export_flag
     from source
+
 )
 
 select * from result

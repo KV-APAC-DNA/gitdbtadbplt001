@@ -1,5 +1,5 @@
 with source as(
-    select * from {{ source('jpnsdl_raw', 'edi_sell_out_planet') }} 
+    select * from {{ source('ntjpnsdl_raw', 'edi_sell_out_planet') }} 
 ),
 
 result as(

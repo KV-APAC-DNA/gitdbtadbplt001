@@ -3,12 +3,32 @@ version: 2
 sources:
   - name: jpnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: jpnsdl_raw
+    schema: snapjpnsdl_raw
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
+      - name: sdl_mds_jp_mt_chn_mjp_emp_chg
+        tags: ['mt_chn_mjp_emp_chg','ingestion']
+        tests:
+          - test_null:
+              select_columns: ["cd_code","franchisecode","emp_cd"]
+              not_null_columns: ["cd_code","franchisecode","emp_cd"]
+              name: sdl_mds_jp_mt_chn_mjp_emp_chg__null_test
+              config:
+                store_failures: true
+                schema: jpnwks_integration
+          - test_duplicate:
+                select_columns: ["cd_code","franchisecode","emp_cd"]
+                group_by_columns: ["cd_code","franchisecode","emp_cd"]
+                name: sdl_mds_jp_mt_chn_mjp_emp_chg__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+
+      
+
       - name: sdl_mds_jp_mt_account_key
         tags: ['mt_account_key','ingestion']
         tests:
@@ -44,25 +64,7 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
-
-      - name: sdl_mds_jp_mt_chn_mjp_emp_chg
-        tags: ['mt_chn_mjp_emp_chg','ingestion']
-        tests:
-          - test_null:
-              select_columns: ["cd_code","franchisecode","emp_cd"]
-              not_null_columns: ["cd_code","franchisecode","emp_cd"]
-              name: sdl_mds_jp_mt_chn_mjp_emp_chg__null_test
-              config:
-                store_failures: true
-                schema: jpnwks_integration
-          - test_duplicate:
-                select_columns: ["cd_code","franchisecode","emp_cd"]
-                group_by_columns: ["cd_code","franchisecode","emp_cd"]
-                name: sdl_mds_jp_mt_chn_mjp_emp_chg__duplicate_test
-                config:
-                  store_failures: true
-                  schema: jpnwks_integration
-
+        
       - name: sdl_mds_jp_mt_emp
         tags: ['mt_emp','ingestion']
         tests:
@@ -80,7 +82,7 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
-      
+
       - name: sdl_mds_jp_mt_frnch_cdd
         tags: ['mt_frnch_cdd','ingestion']
         tests:
@@ -134,5 +136,3 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
-      
-      

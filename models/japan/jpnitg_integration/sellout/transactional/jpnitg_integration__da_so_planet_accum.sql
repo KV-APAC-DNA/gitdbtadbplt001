@@ -5,14 +5,14 @@
     )
 }}
 
-with source as(
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err
-),
+with source as (
+    select * from DEV_DNA_CORE.JPNWKS_INTEGRATION.WK_SO_PLANET_TODAY
+)
+,
 
-result as(
+result as (
     select
-        jcp_rec_seq::number(10,0) as jcp_rec_seq,
-	    id::number(10,0) as id,
+        id::number(10,0) as id,
 	    rcv_dt::varchar(256) as rcv_dt,
 	    test_flag::varchar(256) as test_flag,
 	    bgn_sndr_cd::varchar(256) as bgn_sndr_cd,
@@ -55,17 +55,9 @@ result as(
 	    unt_prc::varchar(256) as unt_prc,
 	    net_prc::varchar(256) as net_prc,
 	    sales_chan_type::varchar(256) as sales_chan_type,
-	    jcp_create_date::timestamp_ntz(9) as jcp_create_date,
-	    jcp_rcv_dt_dupli::varchar(256) as jcp_rcv_dt_dupli,
-	    jcp_test_flag_dupli::varchar(256) as jcp_test_flag_dupli,
-	    jcp_qty_dupli::varchar(256) as jcp_qty_dupli,
-	    jcp_price_dupli::varchar(256) as jcp_price_dupli,
-	    jcp_unt_prc_dupli::varchar(256) as jcp_unt_prc_dupli,
-	    jcp_net_prc_dupli::varchar(256) as jcp_net_prc_dupli,
-	    export_flag::varchar(256) as export_flag
+	    jcp_create_date::timestamp_ntz(9) as jcp_create_date
     from source
     {% if is_incremental() %}
-    
     where source.jcp_create_date > (select max(jcp_create_date) from {{ this }})
     {% endif %}
 )

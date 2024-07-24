@@ -14,7 +14,7 @@ final as(
         reference_table::varchar(255) as reference_table,
         reference_column::varchar(255) as reference_column,
         reference_field::varchar(255) as reference_field,
-        field_condition::varchar(255) as field_condition,
+        field_condition::varchar(255) as feild_condition,
         delete_flag::varchar(1) as delete_flag,
         current_timestamp()::timestamp_ntz(9) as update_dt,
         NULL::varchar(30) as update_user
