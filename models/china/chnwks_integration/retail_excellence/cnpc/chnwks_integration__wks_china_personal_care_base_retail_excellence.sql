@@ -2,8 +2,8 @@
 with edw_rpt_regional_sellout_offtake as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
-edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+edw_vw_cal_Retail_excellence_Dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 cnpc_regional_sellout_mapped_sku_cd as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_mapped_sku_cd') }}
@@ -87,8 +87,9 @@ distributor_code,
 store_code,
 --main.ean,
 //changes below to map mother code
-case when main.mother_code != 'NA' and main.mother_code is not null then main.mother_code else main.ean   
-end as product_code,
+--case when main.mother_code != 'NA' and main.mother_code is not null then main.mother_code else main.ean   
+--end as product_code,
+nvl(main.mother_code,'NA') as product_code,
 store_type,
 main.store_name||'#'||ltrim(main.store_code,'0') as store_name,
 --

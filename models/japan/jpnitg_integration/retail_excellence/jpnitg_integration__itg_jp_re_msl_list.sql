@@ -118,9 +118,32 @@ AND  STORE_CODE IS NOT NULL
 ),
 
 final as (
-    select 
-    *
-    from transformation
+select 
+year::integer AS year,
+mnth_id::varchar(22) AS mnth_id,
+sell_out_parent_customer_l1::varchar(256) AS sell_out_parent_customer_l1,
+sell_out_child_customer_l2::varchar(256) AS sell_out_child_customer_l2,
+parent_name1::varchar(256) AS parent_name1,
+child_name2::varchar(256) AS child_name2,
+segment::varchar(256) AS segment,
+sell_out_re::varchar(200) AS sell_out_re,
+distributor_code::varchar(100) AS distributor_code,
+distributor_name::varchar(457) AS distributor_name,
+sold_to_code::varchar(255) AS sold_to_code,
+store_code::varchar(100) AS store_code,
+store_name::varchar(702) AS store_name,
+region_code::varchar(256) AS region_code,
+region_name::varchar(16) AS region_name,
+region_name_eng::varchar(100) AS region_name_eng,
+zone_name::varchar(50) AS zone_name,
+zone_name_eng::varchar(100) AS zone_name_eng,
+store_address::varchar(256) AS store_address,
+post_code::varchar(256) AS post_code,
+retail_environment::varchar(50) AS retail_environment,
+channel::varchar(50) AS channel,
+sku_cd::varchar(100) AS sku_cd,
+crt_dttm::timestamp AS crt_dttm
+from transformation
 )
 
 select * from final

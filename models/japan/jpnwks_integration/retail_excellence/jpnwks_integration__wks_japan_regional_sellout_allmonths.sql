@@ -39,9 +39,15 @@ FROM (SELECT DISTINCT CNTRY_CD,
 ),
 
 final as (
-    select 
-    *
-    from transformation
+select 
+cntry_cd::varchar(2) AS cntry_cd,
+sellout_dim_key::varchar(32) AS sellout_dim_key,
+month::varchar(23) AS month,
+so_sls_qty::numeric(38,6) AS so_sls_qty,
+so_sls_value::numeric(38,6) AS so_sls_value,
+so_avg_qty::numeric(38,6) AS so_avg_qty,
+sales_value_list_price::numeric(38,12) AS sales_value_list_price
+from transformation
 )
 
 select * from final
