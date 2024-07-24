@@ -188,7 +188,7 @@ size_of_price_lm_lp	::	numeric(38,20)	as	size_of_price_lm_lp	,
 size_of_price_p3m_lp	::	numeric(38,20)	as	size_of_price_p3m_lp	,
 size_of_price_p6m_lp	::	numeric(38,20)	as	size_of_price_p6m_lp	,
 size_of_price_p12m_lp	::	numeric(38,20)	as	size_of_price_p12m_lp	,
-target_complaince	::	numeric(18,0)	as	target_complaince	,
+target_complaince	::	numeric(38,0)	as	target_complaince	,
 crt_dttm :: timestamp without time zone as crt_Dttm
 from cnpc_edw_rpt_retail_excellence_summary_base
 )

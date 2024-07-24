@@ -176,7 +176,7 @@ final as
     p6m_sales_flag	::	varchar(1)	as	p6m_sales_flag	,
     p12m_sales_flag	::	varchar(1)	as	p12m_sales_flag	,
     mdp_flag	::	varchar(1)	as	mdp_flag	,
-    target_complaince	::	numeric(18,0)	as	target_complaince	,
+    target_complaince	::	numeric(38,0)	as	target_complaince	,
     sales_value	::	numeric(38,6)	as	sales_value	,
     sales_qty	::	numeric(38,6)	as	sales_qty	,
     avg_sales_qty	::	numeric(38,6)	as	avg_sales_qty	,
