@@ -47,9 +47,9 @@ user_attributes as (
         '' as c_dscardcompanyname3,
         '' as c_dscardcompanyname4,
         '' as c_dscardcompanyname5,
-        Usr_attr.dsdat10, dsdat10,
-        Usr_attr.dsdat11, dsdat11,
-        Usr_attr.dsdat12, dsdat12,
+        Usr_attr.dsdat10 as dsdat10,
+        Usr_attr.dsdat11 as dsdat11,
+        Usr_attr.dsdat12 as dsdat12,
         CASE Usr_attr.dsdat4
             WHEN '固定' THEN dsTel
             WHEN '携帯' THEN dsdat2
@@ -165,3 +165,4 @@ final as (
     from transformed
 )
 select * from final
+    
