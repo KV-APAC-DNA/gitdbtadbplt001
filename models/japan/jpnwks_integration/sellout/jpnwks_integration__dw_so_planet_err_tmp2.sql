@@ -10,13 +10,13 @@
                         JCP_REC_SEQ IN 
                         (
                             SELECT jcp_rec_seq
-                            FROM DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2
+                            FROM {{ ref('jpnwks_integration__consistency_error_2') }} 
                             WHERE exec_flag IN ('DELETE')
                         )
                         OR JCP_REC_SEQ IN 
                         (
                             SELECT jcp_rec_seq
-                            FROM DEV_DNA_CORE.JPNWKS_INTEGRATION.WK_SO_PLANET_CLEANSED
+                            FROM {{ ref('jpnwks_integration__wk_so_planet_cleansed') }} 
                         )
                     );
                     "

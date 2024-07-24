@@ -5,9 +5,9 @@
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MAX_DATE = (
                             SELECT MAX(YMD_DT)
-                            FROM dev_dna_core.jpnedw_integration.mt_cld
+                            FROM {{ ref('jpnedw_integration__mt_cld') }}
                             WHERE year_445 = (SELECT TO_NUMBER(RIGHT(IDENTIFY_VALUE,4),'9999') 
-                    FROM dev_dna_core.jpnedw_integration.mt_constant
+                    FROM {{ ref('jpnedw_integration__mt_constant') }} 
                     WHERE IDENTIFY_CD='JCP_PAN_FLG')
                             )
                     WHERE Identify_cd = 'SI';
@@ -15,9 +15,9 @@
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MIN_DATE = (
                             SELECT MIN(YMD_DT)
-                            FROM dev_dna_core.jpnedw_integration.mt_cld
+                            FROM {{ ref('jpnedw_integration__mt_cld') }}
                             WHERE year_445 = (SELECT TO_NUMBER(RIGHT(IDENTIFY_VALUE,4),'9999') 
-                    FROM dev_dna_core.jpnedw_integration.mt_constant
+                    FROM {{ ref('jpnedw_integration__mt_constant') }}
                     WHERE IDENTIFY_CD='JCP_PAN_FLG')
                             )
                     WHERE Identify_cd = 'SI';

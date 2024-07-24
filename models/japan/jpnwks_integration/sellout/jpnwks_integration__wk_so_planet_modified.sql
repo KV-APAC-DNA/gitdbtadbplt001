@@ -4,13 +4,13 @@
         post_hook = "
                     UPDATE {{this}}
 					SET RTL_CD = mds.str_cd
-					FROM DEV_DNA_CORE.JPNITG_INTEGRATION.ITG_MDS_JP_MT_SO_RTLR_CHG mds
+					FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_rtlr_chg') }} mds
 					INNER JOIN {{this}} tb2 ON mds.rtlr_cd = tb2.rtl_cd
 						AND mds.bgn_sndr_cd = tb2.bgn_sndr_cd
 						AND mds.rtlr_name = tb2.rtl_name
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR_CD_2 cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2 YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }}cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
 					WHERE cds.error_cd = 'E004'
 						AND CE.export_flag = 0
 						AND cds.export_flag = 0
@@ -19,12 +19,12 @@
 
 					UPDATE {{this}}
 					SET RTL_CD = chg.str_cd
-					FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.EDI_RTLR_CD_CHNG chg
+					FROM {{ ref('jpnedw_integration__edi_rtlr_cd_chng') }} chg
 					INNER JOIN {{this}} tb2 ON chg.rtlr_cd = tb2.rtl_cd
 						AND chg.bgn_sndr_cd = tb2.bgn_sndr_cd
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR_CD_2 cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2 YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
 					WHERE cds.error_cd = 'E004'
 						AND CE.export_flag = 0
 						AND cds.export_flag = 0
@@ -33,12 +33,12 @@
 
 					UPDATE {{this}}
 					SET WS_CD = sv.int_partner_number
-					FROM DEV_DNA_CORE.JPNITG_INTEGRATION.ITG_MDS_JP_MT_SO_WS_CHG sv
+					FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_ws_chg') }} sv
 					INNER JOIN {{this}} tb2 ON sv.ws_cd = tb2.ws_cd
 						AND sv.bgn_sndr_cd = tb2.bgn_sndr_cd
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR_CD_2 cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2 YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
 					WHERE cds.error_cd = 'E017'
 						AND CE.export_flag = 0
 						AND cds.export_flag = 0
@@ -47,12 +47,12 @@
 
 					UPDATE {{this}}
 					SET PRICE_TYPE = 'K'
-					FROM DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR PR
+					FROM {{ ref('jpnitg_integration__dw_so_planet_err') }} PR
 					INNER JOIN {{this}} tb2 ON tb2.jcp_rec_seq = PR.jcp_rec_seq
 						AND PR.bgn_sndr_cd = tb2.bgn_sndr_cd
 						AND PR.RTL_CD = tb2.RTL_CD
-					INNER JOIN DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2 ERR ON tb2.jcp_rec_seq = ERR.jcp_rec_seq
-					INNER JOIN DEV_DNA_CORE.JPNITG_INTEGRATION.DW_SO_PLANET_ERR_CD_2 cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} ERR ON tb2.jcp_rec_seq = ERR.jcp_rec_seq
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} cds ON tb2.jcp_rec_seq = cds.jcp_rec_seq
 					WHERE cds.error_cd = 'E020'
 						AND PR.export_flag = 0
 						AND cds.export_flag = 0

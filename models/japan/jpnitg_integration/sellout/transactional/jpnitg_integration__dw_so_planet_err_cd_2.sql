@@ -10,12 +10,12 @@
                     WHERE EXPORT_FLAG = '0'
                         AND JCP_REC_SEQ IN (
                             SELECT jcp_rec_seq
-                            FROM dev_dna_core.jpnwks_integration.consistency_error_2
+                            FROM {{ ref('jpnwks_integration__consistency_error_2 ') }} 
                             WHERE exec_flag IN ('MANUAL', 'AUTOCORRECT')
                             )
                         AND JCP_REC_SEQ IN (
                             SELECT jcp_rec_seq
-                            FROM dev_dna_core.jpnwks_integration.wk_so_planet_no_dup
+                            FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup ') }} 
                             ); 
                     {% endif %}
                     ",
@@ -26,12 +26,12 @@
                         AND (
                             JCP_REC_SEQ IN (
                                 SELECT jcp_rec_seq
-                                FROM dev_dna_core.jpnwks_integration.consistency_error_2
+                                FROM {{ ref('jpnwks_integration__consistency_error_2 ') }}
                                 WHERE exec_flag IN ('DELETE')
                                 )
                             OR JCP_REC_SEQ IN (
                                 SELECT jcp_rec_seq
-                                FROM dev_dna_core.jpnwks_integration.wk_so_planet_cleansed
+                                FROM {{ ref('jpnwks_integration__wk_so_planet_cleansed') }} 
                                 )
                             );
                     "

@@ -11,13 +11,13 @@
                     AND JCP_REC_SEQ IN 
                     (
                         SELECT jcp_rec_seq
-                        FROM DEV_DNA_CORE.JPNWKS_INTEGRATION.CONSISTENCY_ERROR_2
+                        FROM {{ ref('jpnwks_integration__consistency_error_2') }} 
                         WHERE exec_flag IN ('MANUAL', 'AUTOCORRECT')
                     )
                     AND JCP_REC_SEQ IN 
                     (
                         SELECT jcp_rec_seq
-                        FROM DEV_DNA_CORE.JPNWKS_INTEGRATION.WK_SO_PLANET_NO_DUP
+                        FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} 
                     );
                     "
     )
