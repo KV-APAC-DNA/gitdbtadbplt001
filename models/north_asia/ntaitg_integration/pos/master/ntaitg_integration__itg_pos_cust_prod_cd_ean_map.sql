@@ -16,7 +16,7 @@ final as(
         trim(customer_hierarchy_code)::varchar(100) as cust_hier_cd,
         trim(cust_prod_cd)::varchar(100) as cust_prod_cd,
         trim(barcode)::varchar(100) as barcd,
-        sap_product_code::varchar(100) as sap_prod_cd,
+        trim(sap_product_code)::varchar(100) as sap_prod_cd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm 
     FROM source
