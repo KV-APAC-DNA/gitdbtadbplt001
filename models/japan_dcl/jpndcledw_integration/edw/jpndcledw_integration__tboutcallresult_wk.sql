@@ -1,5 +1,34 @@
-with ocl_in_userlist_v as (
-    select * from dev_dna_core.jpdcledw_integration.OCL_in_userlist_v
+with 
+dmkokya as (
+    select * from dev_dna_core.jpdcledw_integration.dm_mykokya
+),
+ocl_in_userlist_v as (
+    -- select * from dev_dna_core.jpdcledw_integration.OCL_in_userlist_v
+    
+    SELECT 
+        dm_mykokya.file_id, 
+        dm_mykokya.filename, 
+        (dm_mykokya.kokyano)::bigint AS diusrid 
+    FROM 
+        dm_mykokya 
+    WHERE 
+        (
+            lower(dm_mykokya.purpose_type) = 'outcall'
+            AND dm_mykokya.file_id IN 
+            (
+                SELECT 
+                    DISTINCT dm_mykokya.file_id 
+                FROM 
+                    dm_mykokya, 
+                    (SELECT 
+                        max(try_to_timestamp(upload_dt||' '||upload_time,'MM-DD-YYYY HH:MI:SS')) AS max_time 
+                    FROM dm_mykokya) a 
+                WHERE (
+                        a.max_time = try_to_timestamp(upload_dt||' '||upload_time,'MM-DD-YYYY HH:MI:SS')
+                        AND lower(dm_mykokya.purpose_type) = 'outcall')
+            )
+        )
+        
 ),
 c_tbmembunitrel as (
     select * from dev_dna_core.jpdclitg_integration.c_tbmembunitrel
