@@ -122,7 +122,8 @@ transformation as (
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       case when mdp_flag='Y' and DM.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,
+       --case when mdp_flag='Y' and DM.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,
+       case when (DM.MDP_FLAG='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 100  end as TARGET_COMPLAINCE,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,
@@ -179,7 +180,7 @@ transformation as (
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
        SYSDATE() AS CRT_DTTM
 FROM WKS_RPT_RETAIL_EXCELLENCE_SOP DM
-left join retail_excellence_msl_target_final  target on (DM.fisc_per=target.fisc_per and DM.global_product_brand=target.global_product_brand)
+left join retail_excellence_msl_target_final  msl_final on (DM.fisc_per=msl_final.fisc_per and upper(DM.global_product_brand)=upper(msl_final.global_product_brand)) 
 ),
 
 final as (
