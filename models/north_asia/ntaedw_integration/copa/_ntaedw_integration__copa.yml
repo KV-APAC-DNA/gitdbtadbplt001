@@ -4,11 +4,11 @@ models:
   - name: ntaedw_integration__v_intrm_copa_trans
     config: 
       alias: v_intrm_copa_trans
-      tags: ["north_asia_views","transformation"]
+      tags: ["north_asia_views","j_sap_bw_txn_copa10_wrapper","transformation"]
   - name: ntaedw_integration__v_rpt_copa
     config:
       alias: v_rpt_copa
-      tags: ["north_asia_views","transformation"]
+      tags: ["north_asia_views","j_sap_bw_txn_copa10_wrapper","transformation"]
   - name: ntaedw_integration__v_rpt_sls_copa_tgt
     config: 
       alias: v_rpt_sls_copa_tgt
