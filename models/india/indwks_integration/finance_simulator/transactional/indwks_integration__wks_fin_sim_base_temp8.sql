@@ -4,16 +4,47 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp1') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp2') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp3') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp6') }} where nature = 'Per unit COGS';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp7') }} where nature = 'Per unit COGS';
         {% endif %}"
     )
 }}
-with itg_fin_sim_miscdata as (
+with itg_fin_sim_miscdata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_miscdata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
+),
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
+),
+wks_fin_sim_base_temp4 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp4') }}
+),
+wks_fin_sim_base_temp5 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp5') }}
+),
+wks_fin_sim_base_temp6 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp6') }}
 ),
 wks_fin_sim_base_temp7 as
 (

@@ -4,18 +4,25 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} WHERE nature = 'PRN';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp1')}} WHERE nature = 'PRN';
+        DELETE FROM {{ref('indwks_integration__wks_fin_sim_base_temp2')}} WHERE nature = 'PRN';
         {% endif %}"
     )
 }}
-with itg_fin_sim_miscdata as (
+with itg_fin_sim_miscdata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_miscdata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
 ),
-wks_fin_sim_base_temp2 as (
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
     select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
 ),
 final as
@@ -68,7 +75,9 @@ final as
         acct_num,
         acct_hier_desc,
         acct_hier_shrt_desc
-      FROM wks_fin_sim_base_temp2
+      FROM (select * from wks_fin_sim_base_temp2 
+            union all
+            select * from wks_fin_sim_base_temp1)
       WHERE bw_gl = 'CCOA/700516'
       GROUP BY 1,
         2,

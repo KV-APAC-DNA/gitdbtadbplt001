@@ -4,7 +4,19 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp1') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp2') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp3') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp6') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp7') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp8') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp9') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp10') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp11') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp12') }} where nature = 'COGS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp13') }} where nature = 'COGS' AND PLAN IS NOT NULL;
         {% endif %}"
     )
 }}
@@ -112,31 +124,31 @@ wks_fin_sim_base_temp14 as
 transformed as 
 (
     select * from wks_fin_sim_base_temp1
-    union
+    union all
     select * from wks_fin_sim_base_temp2
-    union
+    union all
     select * from wks_fin_sim_base_temp3
-    union
+    union all
     select * from wks_fin_sim_base_temp4
-    union
+    union all
     select * from wks_fin_sim_base_temp5
-    union
+    union all
     select * from wks_fin_sim_base_temp6
-    union
+    union all
     select * from wks_fin_sim_base_temp7
-    union
+    union all
     select * from wks_fin_sim_base_temp8
-    union
+    union all
     select * from wks_fin_sim_base_temp9
-    union
+    union all
     select * from wks_fin_sim_base_temp10
-    union
+    union all
     select * from wks_fin_sim_base_temp11
-    union
+    union all
     select * from wks_fin_sim_base_temp12
-    union
+    union all
     select * from wks_fin_sim_base_temp13
-    union
+    union all
     select * from wks_fin_sim_base_temp14
 ),
 final as 
