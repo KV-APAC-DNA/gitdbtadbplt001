@@ -42,7 +42,7 @@ SELECT FISC_YR,
        CASE WHEN P6M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P6M_SALES_FLAG,
        CASE WHEN P12M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P12M_SALES_FLAG,
        CASE WHEN MDP_FLAG = 1 THEN 'Y' ELSE 'N' END  AS MDP_FLAG,
-       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,--TARGET_COMPLAINCE,
+       TARGET_COMPLAINCE,--MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND,mdp_flag) AS TARGET_COMPLAINCE,
 	   SUM(SALES_VALUE)AS SALES_VALUE,
        SUM(SALES_QTY)AS SALES_QTY,
        TRUNC(AVG(SALES_QTY)) AS AVG_SALES_QTY,		--// AVG
@@ -164,7 +164,7 @@ final as(
     ,p6m_sales_flag::VARCHAR(1) as  p6m_sales_flag  
     ,p12m_sales_flag::VARCHAR(1) as p12m_sales_flag
     ,mdp_flag::VARCHAR(1) as    mdp_flag    
-    ,target_complaince::numeric(38,6) as target_complaince      
+    ,target_complaince::integer as target_complaince      
     ,sales_value::NUMERIC(38,6) as  sales_value
     ,sales_qty::NUMERIC(38,6) as sales_qty      
     ,avg_sales_qty::NUMERIC(38,6) as avg_sales_qty      

@@ -80,7 +80,7 @@ Select FISC_YR,
        max(size_of_price_p3m_lp) As   size_of_price_p3m_lp,
        max(size_of_price_p6m_lp) AS   size_of_price_p6m_lp,
        max(size_of_price_p12m_lp) AS  size_of_price_p12m_lp,
-       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE --TARGET_COMPLAINCE 
+       TARGET_COMPLAINCE --MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND,mdp_flag) AS TARGET_COMPLAINCE  
  FROM my_edw_rpt_retail_excellence FLAGS		--//  FROM OS_EDW.EDW_RPT_MY_RE FLAGS
  GROUP BY FLAGS.FISC_YR,		--//  GROUP BY FLAGS.FISC_YR,
        FLAGS.FISC_PER,		--//        FLAGS.FISC_PER,
@@ -188,7 +188,7 @@ size_of_price_lm_lp::NUMERIC(38,20) AS size_of_price_lm_lp,
 size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
 size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
 size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-target_complaince::numeric(38,6) AS target_complaince
+target_complaince::integer AS target_complaince
 from my_edw_rpt_retail_excellence_summary_base
 )
 --Final select

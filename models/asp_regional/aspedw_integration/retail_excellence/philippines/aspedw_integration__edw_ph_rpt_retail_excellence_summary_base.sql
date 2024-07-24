@@ -110,7 +110,8 @@ final as
        MAX(size_of_price_p3m_lp) AS size_of_price_p3m_lp,
        MAX(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
        MAX(size_of_price_p12m_lp) AS size_of_price_p12m_lp,
-       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,
+       --MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND, MDP_FLAG) AS TARGET_COMPLAINCE,
+       TARGET_COMPLAINCE,
        SYSDATE() AS CRT_DTTM
     FROM v_edw_ph_rpt_retail_excellence FLAGS
 
@@ -218,7 +219,7 @@ ph_rpt_retail_excellence_summary_base as (
     size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
     size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
     size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-    target_complaince::numeric(38,6) AS target_complaince,
+    target_complaince::numeric(38,0) AS target_complaince,
     crt_dttm::TIMESTAMP WITHOUT TIME ZONE  AS crt_dttm
     from final
 )

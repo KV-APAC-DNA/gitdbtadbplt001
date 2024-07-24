@@ -10,8 +10,8 @@ from (select distinct ltrim(msl_product_code,'0') as mother_code,
              ean,
              row_number() over (partition by ltrim(msl_product_code,'0') order by mnth_id desc) as rno
       from edw_rpt_regional_sellout_offtake
-      where country_name = 'china personal care'
-      and   data_source in ('sell-out','pos')
+      where country_name = 'China Personal Care'
+      and   data_source in ('SELL-OUT','POS')
 	  and ean is not null)
 where rno = 1
 )
