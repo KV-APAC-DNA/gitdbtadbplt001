@@ -7,7 +7,7 @@
 }}
 
 with wk_iv_edi as(
-    select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_IV_EDI
+    select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
 ),
 final as(
     select 
@@ -26,5 +26,9 @@ final as(
         current_timestamp()::timestamp_ntz(9) as exec_dt,
         '1'::varchar(1) as valid_flg
     from wk_iv_edi
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where wk_iv_edi.update_dt > (select max(exec_dt) from {{ this }})
+    {% endif %}
 )
 select * from final

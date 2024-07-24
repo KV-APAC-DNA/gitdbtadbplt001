@@ -23,5 +23,9 @@ final as(
         current_timestamp()::timestamp_ntz(9) as create_dt,
         current_timestamp()::timestamp_ntz(9) as update_dt
     from wk_iv_month_end_stg
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where wk_iv_month_end_stg.proc_dt > (select max(update_dt) from {{ this }})
+    {% endif %}
 )
 select * from final

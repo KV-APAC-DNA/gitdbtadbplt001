@@ -4,4 +4,9 @@ models:
   - name: jpnitg_integration__jp_pos_daily
     config:
         alias: jp_pos_daily
-        tags: ["pop6_master_load","ingestion"]
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnitg_integration__jp_pos_daily_error
+    config:
+        alias: jp_pos_daily_error
+        tags: ["pos_data_ingestion","ingestion"]

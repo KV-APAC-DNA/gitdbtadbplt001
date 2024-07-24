@@ -1,9 +1,45 @@
+with dw_pos_daily as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_POS_DAILY
+),
+itg_mds_jp_pos_account_mapping as(
+    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.ITG_MDS_JP_POS_ACCOUNT_MAPPING
+),
+itg_mds_jp_pos_product_mapping as(
+    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.itg_mds_jp_pos_product_mapping
+),
+itg_mds_jp_pos_store_mapping as(
+    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.itg_mds_jp_pos_store_mapping
+),
+edi_store_m as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_store_m
+),
+edi_chn_m as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_chn_m
+),
+edi_chn_m1 as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_chn_m1
+),
+mt_prf as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.mt_prf
+),
+mt_cld as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.mt_cld
+),
+vw_jan_change as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.vw_jan_change
+),
+edi_item_m as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_item_m
+),
+vw_m_item_frnch_cdd as(
+    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.vw_m_item_frnch_cdd
+),
 pos_data_add_date as(
 		SELECT pos_data.account_key
 			,pos_data.accounting_date
 			,pos_data.mdsproductname
 			,mt.year_445
-			,mt."day"
+			,mt.day
 			,mt.half_445
 			,mt.quarter_445
 			,mt.ymonth_445
@@ -90,10 +126,10 @@ pos_data_add_date as(
 											(
 												(
 													(
-														jp_edw.dw_pos_daily pos JOIN (
+														dw_pos_daily pos JOIN (
 															SELECT DISTINCT itg_mds_jp_pos_account_mapping.name
 																,itg_mds_jp_pos_account_mapping.code
-															FROM jp_itg.itg_mds_jp_pos_account_mapping
+															FROM itg_mds_jp_pos_account_mapping
 															) mdsacct ON (((pos.account_key)::TEXT = (mdsacct.code)::TEXT))
 														) JOIN (
 														SELECT DISTINCT itg_mds_jp_pos_product_mapping.name
@@ -112,7 +148,7 @@ pos_data_add_date as(
 															,itg_mds_jp_pos_product_mapping.other_4
 															,itg_mds_jp_pos_product_mapping.other_5
 															,itg_mds_jp_pos_product_mapping.code
-														FROM jp_itg.itg_mds_jp_pos_product_mapping
+														FROM itg_mds_jp_pos_product_mapping
 														) mdsprt ON (((pos.jan_code)::TEXT = (mdsprt.code)::TEXT))
 													) LEFT JOIN (
 													SELECT DISTINCT itg_mds_jp_pos_store_mapping.planet_store_code
@@ -121,7 +157,7 @@ pos_data_add_date as(
 														,itg_mds_jp_pos_store_mapping.store_key_1
 														,itg_mds_jp_pos_store_mapping.store_key_2
 														,itg_mds_jp_pos_store_mapping.account_key
-													FROM jp_itg.itg_mds_jp_pos_store_mapping
+													FROM itg_mds_jp_pos_store_mapping
 													) mdsstr ON (
 														(
 															(
@@ -136,20 +172,20 @@ pos_data_add_date as(
 													,edi_store_m.chn_cd
 													,edi_store_m.str_cd
 													,edi_store_m.jis_prfct_c
-												FROM jp_edw.edi_store_m
+												FROM edi_store_m
 												) store ON ((((mdsstr.planet_store_code)::CHARACTER VARYING)::TEXT = (store.str_cd)::TEXT))
 											) LEFT JOIN (
 											SELECT DISTINCT edi_chn_m.chn_offc_cd
 												,edi_chn_m.lgl_nm
 												,edi_chn_m.chn_cd
-											FROM jp_edw.edi_chn_m
+											FROM edi_chn_m
 											) chn ON (((store.chn_cd)::TEXT = (chn.chn_cd)::TEXT))
 										) LEFT JOIN (
 										SELECT DISTINCT edi_chn_m1.lgl_nm
 											,edi_chn_m1.chn_cd
-										FROM jp_edw.edi_chn_m1
+										FROM edi_chn_m1
 										) chn1 ON (((chn.chn_offc_cd)::TEXT = (chn1.chn_cd)::TEXT))
-									) LEFT JOIN jp_edw.mt_prf pr ON (((store.jis_prfct_c)::TEXT = (pr.prf_cd)::TEXT))
+									) LEFT JOIN mt_prf pr ON (((store.jis_prfct_c)::TEXT = (pr.prf_cd)::TEXT))
 								)
 							WHERE (
 									(pos.quantity <> 0)
@@ -158,18 +194,18 @@ pos_data_add_date as(
 							) pos_data LEFT JOIN (
 							SELECT DISTINCT mt_cld.ymd_dt
 								,mt_cld.year_445
-								,mt_cld."day"
+								,mt_cld.day
 								,mt_cld.half_445
 								,mt_cld.quarter_445
 								,mt_cld.ymonth_445
 								,mt_cld.month_445
 								,mt_cld.mweek_445
-							FROM jp_edw.mt_cld
+							FROM mt_cld
 							) mt ON (((pos_data.accounting_date)::TIMESTAMP without TIME zone = mt.ymd_dt))
 						) LEFT JOIN (
 						SELECT DISTINCT vw_jan_change.jan_cd
 							,vw_jan_change.item_cd
-						FROM jp_edw.vw_jan_change
+						FROM vw_jan_change
 						) janchange ON (((pos_data.jan_code)::TEXT = (janchange.jan_cd)::TEXT))
 					) LEFT JOIN (
 					SELECT DISTINCT edi_item_m.item_cd
@@ -180,7 +216,7 @@ pos_data_add_date as(
 								THEN '通常品'::TEXT
 							ELSE NULL::TEXT
 							END AS prom_goods_flg
-					FROM jp_edw.edi_item_m
+					FROM edi_item_m
 					) item ON ((janchange.item_cd = (item.item_cd)::TEXT))
 				) LEFT JOIN (
 				SELECT DISTINCT vw_m_item_frnch_cdd.item_cd
@@ -188,7 +224,7 @@ pos_data_add_date as(
 					,vw_m_item_frnch_cdd.mjr_prod_nm
 					,vw_m_item_frnch_cdd.mjr_prod_nm2
 					,vw_m_item_frnch_cdd.min_prod_nm
-				FROM jp_edw.vw_m_item_frnch_cdd
+				FROM vw_m_item_frnch_cdd
 				) frnch ON ((janchange.item_cd = (frnch.item_cd)::TEXT))
 			)
 ),
@@ -197,7 +233,7 @@ pos_data_add_date_dedup as(
 		,pos_data_add_date.accounting_date
 		,pos_data_add_date.mdsproductname
 		,pos_data_add_date.year_445
-		,pos_data_add_date."day"
+		,pos_data_add_date.day
 		,pos_data_add_date.half_445
 		,pos_data_add_date.quarter_445
 		,pos_data_add_date.ymonth_445
@@ -243,7 +279,7 @@ SELECT pos_data_add_date_dedup.account_key
 	,pos_data_add_date_dedup.accounting_date
 	,pos_data_add_date_dedup.mdsproductname
 	,pos_data_add_date_dedup.year_445
-	,pos_data_add_date_dedup."day"
+	,pos_data_add_date_dedup.day
 	,pos_data_add_date_dedup.half_445
 	,pos_data_add_date_dedup.quarter_445
 	,pos_data_add_date_dedup.ymonth_445

@@ -5,7 +5,7 @@ mt_cld as(
     select * from SNAPJPNEDW_INTEGRATION.mt_cld
 ),
 mt_bravo_sap_map as(
-    select * from SNAPJPNEDW_INTEGRATION.mt_bravo_sap_map
+    select * from JPNEDW_INTEGRATION.mt_bravo_sap_map
 ),
 union1 as(
     SELECT cld.year_445
@@ -43,12 +43,11 @@ union2 as(
             )::CHARACTER VARYING AS quarter_445
         ,'0099999999' AS bravo_account_cd
         ,sum(dm.jcp_amt) AS jcp_amt
-    FROM (
-        (
-            dm_integration_dly dm JOIN mt_cld cld ON ((dm.jcp_date = cld.ymd_dt))
-            ) JOIN mt_bravo_sap_map "map" ON (((dm.jcp_account)::TEXT = ("map".sap_account_cd)::TEXT))
-        )
-    WHERE ((dm.jcp_data_source)::TEXT = 'SI'::TEXT)
+    FROM dm_integration_dly dm 
+         JOIN mt_cld cld ON ((dm.jcp_date = cld.ymd_dt))
+         JOIN mt_bravo_sap_map "map" ON (dm.jcp_account)::TEXT = ("map".sap_account_cd)::TEXT
+        
+    WHERE (dm.jcp_data_source)::TEXT = 'SI'::TEXT
     GROUP BY cld.year_445
         ,cld.month_445
         ,cld.half_445

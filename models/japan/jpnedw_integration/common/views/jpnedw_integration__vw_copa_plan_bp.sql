@@ -345,5 +345,5 @@ transformed as(
     SELECT * from union3
     union all
     select * from union4
-),
+)
 select * from transformed

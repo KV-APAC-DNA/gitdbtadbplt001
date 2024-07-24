@@ -1,11 +1,11 @@
 with WK_IV_EDI as(
-    select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_IV_EDI
+    select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
 ),
 DA_IV_EDI_ACCUM as(
     select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DA_IV_EDI_ACCUM
 ),
 WK_IV_PRIORITY as(
-    select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_IV_PRIORITY
+    select * from {{ ref('jpnwks_integration__wk_iv_priority') }}
 ),
 EDI_CSTM_M as(
     select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_CSTM_M
@@ -46,7 +46,7 @@ inv as(
 		AND EID.JAN_CD = WK.JAN_CD
 		AND PRI.INVT_YYYYMM = WK.INVT_YYYYMM
 	LEFT OUTER JOIN EDI_CSTM_M CSM ON EID.CSTM_CD = CSM.CSTM_CD
-	WHERE NVL(CSM.REBATE_REP_CD, ' ') != '112406'
+	WHERE NVL(CSM.REBATE_REP_CD, '') != '112406'
 		AND EID.VALID_FLG = '1'
 ),
 inv2 as(

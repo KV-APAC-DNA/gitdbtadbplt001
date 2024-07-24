@@ -5,7 +5,7 @@
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
                 DELETE	FROM {{this}} WHERE BGN_SNDR_CD = (SELECT IDENTIFY_VALUE FROM DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT	WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
-        {% endif %}"
+                {% endif %}"
     )
 }}
 
