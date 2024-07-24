@@ -29,7 +29,7 @@
                     and upper(itg_pos.src_sys_cd) = 'EMART' and upper(itg_pos.ctry_cd) = 'KR';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }} WKS_ITG_POS_EMART_EVYDY where wks_itg_pos_emart_evydy.pos_dt = itg_pos.pos_dt and wks_itg_pos_emart_evydy.ean_num = itg_pos.ean_num and wks_itg_pos_emart_evydy.str_cd = itg_pos.str_cd and wks_itg_pos_emart_evydy.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos_emart_evydy.ctry_cd = itg_pos.ctry_cd and wks_itg_pos_emart_evydy.chng_flg = 'U';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }} wks_itg_pos
-                    where rtrim(wks_itg_pos.pos_dt) = rtrim(itg_pos.pos_dt) and rtrim(wks_itg_pos.ean_num) = rtrim(itg_pos.ean_num) and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos.ctry_cd = itg_pos.ctry_cd and wks_itg_pos.chng_flg = 'U' and itg_pos.src_sys_cd not in ('Emart', 'Costco') and rtrim(wks_itg_pos.str_cd) = rtrim(itg_pos.str_cd);
+                    where rtrim(wks_itg_pos.pos_dt) = rtrim(itg_pos.pos_dt) and rtrim(wks_itg_pos.ean_num) = rtrim(itg_pos.ean_num) and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos.ctry_cd = itg_pos.ctry_cd and wks_itg_pos.chng_flg = 'U' and itg_pos.src_sys_cd not in ('Emart', 'Costco') and rtrim(wks_itg_pos.str_cd) = rtrim(itg_pos.str_cd) and rtrim(nvl(wks_itg_pos.vend_prod_cd,'#')) = rtrim(nvl(itg_pos.vend_prod_cd,'#'));
                     delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd) in
                     (
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }} ) where chng_flg = 'U'
