@@ -20,7 +20,6 @@
         {% endif %}"]
     )
 }}
-
 WITH tw09kokyakonyu
 AS (
   SELECT *
@@ -53,11 +52,11 @@ AS (
             ,TO_NUMBER(TO_CHAR(CURRENT_TIMESTAMP(), 'YYYYMMDD')) AS UPDATEDATE
             ,TO_NUMBER(TO_CHAR(CURRENT_TIMESTAMP(), 'HH24MISS')) AS UPDATETIME
             ,'090554' AS UPDATEID
-            ,NULL INSERTED_BY
-            ,NULL UPDATED_BY
             ,NULL BK_JUCHKBN
             ,NULL BK_KOKYANO
             ,NULL BK_HANROCODE
+            ,NULL INSERTED_BY
+            ,NULL UPDATED_BY
         FROM  tw09kokyakonyu W09
 ),
 final
