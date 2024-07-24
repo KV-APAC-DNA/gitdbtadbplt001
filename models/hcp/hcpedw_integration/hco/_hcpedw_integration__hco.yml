@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_hco
+    config:
+      alias: edw_hcp360_veeva_dim_hco
+      tags: ["in_veeva_edw_load","transformation"]

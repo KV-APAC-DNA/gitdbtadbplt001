@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__pob_cx_sales_achnr_qty
+    config:
+        alias: pob_cx_sales_achnr_qty
+        tags: ["in_pob_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__pob_cx_vent_rtl_achnr_qty 
+    config:
+        alias: pob_cx_vent_rtl_achnr_qty
+        tags: ["in_pob_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_pob_cx_final
+    config:
+        alias: wks_pob_cx_final
+        tags: ["in_pob_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__pob_cx_prod_pob_agg
+    config:
+        alias: pob_cx_prod_pob_agg
+        tags: ["in_pob_to_cx_datamart","transformation"]
+  - name: hcpwks_integration__wks_edw_hcp360_sales_data
+    config:
+        alias: wks_edw_hcp360_sales_data
+        tags: ["in_hcp360_data_mart","transformation"]
+  - name: hcpwks_integration__wks_edw_hcp360_sales_cube_details
+    config:
+        alias: wks_edw_hcp360_sales_cube_details
+        tags: ["in_hcp360_data_mart","transformation"]
