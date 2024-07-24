@@ -11,7 +11,7 @@ rpt_retail_excellence_gcph as
  (
    select b.jj_mnth_id,
    b.global_product_brand,b.market,
-   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,6) as TARGET_COMPLAINCE 
+   round((total_mdp_target/mds.mdp_target)*100 ):: integer as TARGET_COMPLAINCE 
    from 
         (select jj_mnth_id,
         global_product_brand,market,

@@ -4,7 +4,7 @@ with wks_my_rpt_re_gcph as (
 ),
 retail_excellence_msl_target_final as 
  (
-    select * from {{ ref('myswks_integration_wks_retail_excellence_msl_target_final') }}
+    select * from {{ ref('myswks_integration__wks_retail_excellence_msl_target_final') }}
  ),
 
 --final cte
@@ -314,7 +314,7 @@ p3m_sales_flag::varchar(1) AS p3m_sales_flag,
 p6m_sales_flag::varchar(1) AS p6m_sales_flag,
 p12m_sales_flag::varchar(1) AS p12m_sales_flag,
 mdp_flag::varchar(1) AS mdp_flag,
-target_complaince::numeric(38,6) AS target_complaince,
+target_complaince::integer AS target_complaince,
 list_price::numeric(20,4) AS list_price,
 total_sales_lm::numeric(38,6) AS total_sales_lm,
 total_sales_p3m::numeric(38,6) AS total_sales_p3m,
