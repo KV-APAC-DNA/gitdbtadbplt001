@@ -4,6 +4,9 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp1') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp2') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp3') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
         DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp6') }} where nature = 'FREE GOODS' AND PLAN IS NOT NULL;
@@ -13,12 +16,25 @@
         {% endif %}"
     )
 }}
-with itg_fin_sim_plandata as (
+with itg_fin_sim_plandata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_plandata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
+),
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
 ),
 wks_fin_sim_base_temp4 as
 (

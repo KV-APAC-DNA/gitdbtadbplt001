@@ -48,4 +48,17 @@
     {% endset %}
 
     {% do run_query(query) %}
+    
+    {% for i in range(1, 14) %}
+        {% set table_name = 'wks_fin_sim_base_temp' ~ i %}
+        {% set sql %}
+            DELETE FROM
+            {% if target.name=='prod' %}
+                    indwks_integration.{{ table_name }}
+                {% else %}
+                    {{schema}}.indwks_integration__{{ table_name }}
+                {% endif %}
+        {% endset %}
+        {% do run_query(sql) %}
+    {% endfor %}
 {% endmacro %}
