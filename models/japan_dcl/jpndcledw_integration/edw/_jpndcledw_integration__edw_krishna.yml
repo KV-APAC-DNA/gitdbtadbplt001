@@ -77,3 +77,15 @@ models:
     config:
       alias: daily_transaction_report1
       tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tw09kokyakonyu
+    config:
+      alias: tw09kokyakonyu
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt05kokyakonyu
+    config:
+      alias: tt05kokyakonyu
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_900_kizuna
+    config:
+      alias: kr_chunk_900_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]

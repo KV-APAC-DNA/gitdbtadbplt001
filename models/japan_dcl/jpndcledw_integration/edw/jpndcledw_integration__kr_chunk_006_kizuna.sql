@@ -1,7 +1,7 @@
 WITH teikikeiyaku_data_mart_uni
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.teikikeiyaku_data_mart_uni
+  FROM dev_dna_core.jpdcledw_integration.teikikeiyaku_data_mart_uni
   ),
 transformed
 AS (

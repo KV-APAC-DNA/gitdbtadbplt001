@@ -1,57 +1,57 @@
 WITH c_tbecinquirekesai
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecinquirekesai
+  FROM dev_dna_core.jpdclitg_integration.c_tbecinquirekesai
   ),
 c_tbecinquire
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecinquire
+  FROM dev_dna_core.jpdclitg_integration.c_tbecinquire
   ),
 c_tbeckesai
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesai
+  FROM dev_dna_core.jpdclitg_integration.c_tbeckesai
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbecorder
+  FROM dev_dna_core.jpdclitg_integration.tbecorder
   ),
 c_tbecusercard
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecusercard
+  FROM dev_dna_core.jpdclitg_integration.c_tbecusercard
   ),
 tt01_henpin_riyu
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt01_henpin_riyu
+  FROM dev_dna_core.jpdcledw_integration.tt01_henpin_riyu
   ),
 tbechenpinriyu
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbechenpinriyu
+  FROM dev_dna_core.jpdclitg_integration.tbechenpinriyu
   ),
 tbpromotion
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbpromotion
+  FROM dev_dna_core.jpdclitg_integration.tbpromotion
   ),
 hanyo_attr
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.hanyo_attr
+  FROM dev_dna_core.jpdcledw_integration.hanyo_attr
   ),
 tt02salem_add1_exp_hen_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add1_exp_hen_mt
+  FROM dev_dna_core.jpdcledw_integration.tt02salem_add1_exp_hen_mt
   ),
 keirokbn
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.keirokbn
+  FROM dev_dna_core.jpdcledw_integration.keirokbn
   ),
 transformed
 AS (

@@ -1,22 +1,22 @@
 WITH kesai_h_data_mart_mv_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.kesai_h_data_mart_mv_kizuna
+  FROM dev_dna_core.jpdcledw_integration.kesai_h_data_mart_mv_kizuna
   ),
 kesai_m_data_mart_mv_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.kesai_m_data_mart_mv_kizuna
+  FROM dev_dna_core.jpdcledw_integration.kesai_m_data_mart_mv_kizuna
   ),
 item_z_h_hen_v
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.item_z_h_hen_v
+  FROM dev_dna_core.jpdcledw_integration.item_z_h_hen_v
   ),
 item_zaiko_v
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.item_zaiko_v
+  FROM dev_dna_core.jpdcledw_integration.item_zaiko_v
   ),
 transformed
 AS (

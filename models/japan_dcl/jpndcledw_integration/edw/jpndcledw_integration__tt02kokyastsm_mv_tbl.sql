@@ -1,12 +1,12 @@
 WITH tt02kokyastsm_ikou
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt02kokyastsm_ikou
+  FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_ikou
   ),
 tt02salem_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt02salem_mv_mt
+  FROM dev_dna_core.jpdcledw_integration.tt02salem_mv_mt
   ),
 transformed
 AS (
@@ -33,7 +33,7 @@ AS (
         --BGN-MOD 20180507 HIGASHI ***変更管理202 顧客ステータス計算の計算方法の見直し(返品の扱い変更)****
   FROM tt02salem_mv_mt TT02
         --FROM CI_DWH_MAIN.TT02SALEM_MV TT02
-        --END-MOD 20180507 HIGASHI ***変更管理202 顧客ステータス計算の計算方法の見直し(返品の扱い変更)****COMMENT ON MATERIALIZED VIEW CI_DWH_MAIN.TT02KOKYASTSM_MV IS 'snapshot table for snapshot CI_DWH_MAIN.TT02KOKYASTSM_MV'CREATE INDEX CI_DWH_MAIN.TT02KOKYASTSM_MV_PK ON CI_DWH_MAIN.TT02KOKYASTSM_MV (SALENO ASC, GYONO ASC) 
+        --END-MOD 20180507 HIGASHI ***変更管理202 顧客ステータス計算の計算方法の見直し(返品の扱い変更)****COMMENT ON MATERIALIZED VIEW CI_DWH_MAIN.TT02KOKYASTSM_MV IS 'shot table for shot CI_DWH_MAIN.TT02KOKYASTSM_MV'CREATE INDEX CI_DWH_MAIN.TT02KOKYASTSM_MV_PK ON CI_DWH_MAIN.TT02KOKYASTSM_MV (SALENO ASC, GYONO ASC) 
   ),
 final
 AS (

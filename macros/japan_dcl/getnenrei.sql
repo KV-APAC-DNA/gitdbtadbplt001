@@ -1,12 +1,13 @@
 {% macro getnenrei(in_yyyymmdd_f, in_yyyymmdd_t) %}
-    {% set in_yyyymmdd_f_cast = in_yyyymmdd_f|as_number %}
-    {% set in_yyyymmdd_t_cast = in_yyyymmdd_t|as_number %}
-    {% set NENREI = floor((in_yyyymmdd_f_cast - in_yyyymmdd_t_cast) / 10000) %}
-    {% if in_yyyymmdd_f_cast == 99999999 or in_yyyymmdd_f_cast is none or in_yyyymmdd_t_cast == 99999999 or in_yyyymmdd_t_cast is none or in_yyyymmdd_f_cast < in_yyyymmdd_t_cast %}
-        999
-    {% elif NENREI > 100 %}
-        999
-    {% else %}
-        {{ NENREI }}
-    {% endif %}
+    (
+    CASE
+        WHEN {{ in_yyyymmdd_f }} = 99999999 THEN 999
+        WHEN {{ in_yyyymmdd_f }} IS NULL THEN 999
+        WHEN {{ in_yyyymmdd_t }} = 99999999 THEN 999
+        WHEN {{ in_yyyymmdd_t }} IS NULL THEN 999
+        WHEN {{ in_yyyymmdd_f }} < {{ in_yyyymmdd_t }} THEN 999
+        WHEN (({{ in_yyyymmdd_f }} - {{ in_yyyymmdd_t }}) / 10000) > 100 THEN 999
+        ELSE (({{ in_yyyymmdd_f }} - {{ in_yyyymmdd_t }}) / 10000)
+    END
+    )
 {% endmacro %}

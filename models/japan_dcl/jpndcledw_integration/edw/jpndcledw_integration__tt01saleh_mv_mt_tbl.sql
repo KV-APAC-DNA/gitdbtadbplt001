@@ -1,17 +1,17 @@
 WITH tt01saleh_sum_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt01saleh_sum_mv_mt
+  FROM dev_dna_core.jpdcledw_integration.tt01saleh_sum_mv_mt
   ),
 hanyo_attr
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.hanyo_attr
+  FROM dev_dna_core.jpdcledw_integration.hanyo_attr
   ),
 cim05opera
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.cim05opera
+  FROM dev_dna_core.jpdcledw_integration.cim05opera
   ),
 transformed
 AS (

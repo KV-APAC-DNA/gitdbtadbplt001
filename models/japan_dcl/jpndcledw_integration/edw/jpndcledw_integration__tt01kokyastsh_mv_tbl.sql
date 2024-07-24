@@ -1,12 +1,12 @@
 WITH tt01kokyastsh_ikou
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt01kokyastsh_ikou
+  FROM dev_dna_core.jpdcledw_integration.tt01kokyastsh_ikou
   ),
 tt01saleh_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt01saleh_mv_mt
+  FROM dev_dna_core.jpdcledw_integration.tt01saleh_mv_mt
   ),
 transformed
 AS (

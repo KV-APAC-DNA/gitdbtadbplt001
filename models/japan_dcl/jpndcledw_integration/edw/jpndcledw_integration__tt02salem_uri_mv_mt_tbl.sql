@@ -1,27 +1,27 @@
 WITH c_tbecordermeisaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecordermeisaihistory
+  FROM dev_dna_core.jpdclitg_integration.c_tbecordermeisaihistory
   ),
 c_tbeckesaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesaihistory
+  FROM dev_dna_core.jpdclitg_integration.c_tbeckesaihistory
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbecorder
+  FROM dev_dna_core.jpdclitg_integration.tbecorder
   ),
 tbecorderhist_qv
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tbecorderhist_qv
+  FROM dev_dna_core.jpdcledw_integration.tbecorderhist_qv
   ),
 c_tbecorderhistory
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecorderhistory
+  FROM dev_dna_core.jpdclitg_integration.c_tbecorderhistory
   ),
 transformed
 AS (
@@ -121,7 +121,7 @@ AS (
     --ADD BGN 20171006 HIROBE 受注明細 出荷対象外対応
     AND
         tbEcOrderMeisai.dicancel = '0'
-    --ADD END 20171006 HIROBE 受注明細 出荷対象外対応COMMENT ON MATERIALIZED VIEW CI_DWH_MAIN.TT02SALEM_URI_MV_MT IS 'snapshot table for snapshot CI_DWH_MAIN.TT02SALEM_URI_MV_MT'
+    --ADD END 20171006 HIROBE 受注明細 出荷対象外対応COMMENT ON MATERIALIZED VIEW CI_DWH_MAIN.TT02SALEM_URI_MV_MT IS 'shot table for shot CI_DWH_MAIN.TT02SALEM_URI_MV_MT'
 ),
 final
 AS (

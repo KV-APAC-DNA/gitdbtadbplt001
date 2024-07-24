@@ -1,47 +1,47 @@
 WITH c_tbeckesaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesaihistory
+  FROM dev_dna_core.jpdclitg_integration.c_tbeckesaihistory
   ),
 c_tbecorderhistory
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecorderhistory
+  FROM dev_dna_core.jpdclitg_integration.c_tbecorderhistory
   ),
 c_tbecusercard
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbecusercard
+  FROM dev_dna_core.jpdclitg_integration.c_tbecusercard
   ),
 tbpromotion
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbpromotion
+  FROM dev_dna_core.jpdclitg_integration.tbpromotion
   ),
 hanyo_attr
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.hanyo_attr
+  FROM dev_dna_core.jpdcledw_integration.hanyo_attr
   ),
 tbecorderhist_qv
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tbecorderhist_qv
+  FROM dev_dna_core.jpdcledw_integration.tbecorderhist_qv
   ),
 c_tbeckesai
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesai
+  FROM dev_dna_core.jpdclitg_integration.c_tbeckesai
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbecorder
+  FROM dev_dna_core.jpdclitg_integration.tbecorder
   ),
 keirokbn
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.keirokbn
+  FROM dev_dna_core.jpdcledw_integration.keirokbn
   ),
 transformed
 AS (

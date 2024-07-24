@@ -1,12 +1,12 @@
 WITH tt02salem_uri_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt02salem_uri_mv_mt
+  FROM dev_dna_core.jpdcledw_integration.tt02salem_uri_mv_mt
   ),
 tt02salem_hen_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.tt02salem_hen_mv_mt
+  FROM dev_dna_core.jpdcledw_integration.tt02salem_hen_mv_mt
   ),
 transformed
 AS (

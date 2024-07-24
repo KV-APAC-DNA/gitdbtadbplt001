@@ -1,12 +1,12 @@
 WITH teikikeiyaku_data_mart_uni
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.teikikeiyaku_data_mart_uni
+  FROM dev_dna_core.jpdcledw_integration.teikikeiyaku_data_mart_uni
   ),
 kr_chunk_005_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.kr_chunk_005_kizuna
+  FROM dev_dna_core.jpdcledw_integration.kr_chunk_005_kizuna
   ),
 transformed
 AS (
