@@ -1,8 +1,8 @@
 with edw_material_sales_dim as(
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_SALES_DIM
+select * from {{ ref('aspedw_integration__edw_material_sales_dim') }} 
 ),
 BW_OHJAPAN_PAN_STG as(
-select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.BW_OHJAPAN_PAN_STG
+select * from {{ ref('jpnitg_integration__bw_ohjapan_pan_stg') }}
 ),
 
 a as(

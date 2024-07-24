@@ -1,5 +1,5 @@
 with edw_copa_plan_fact as(
-    select * from SNAPASPEDW_INTEGRATION.edw_copa_plan_fact
+    select * from {{ ref('aspedw_integration__edw_copa_plan_fact') }}
 ),
 union1 as(
     SELECT (

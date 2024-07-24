@@ -4,28 +4,28 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-                DELETE	FROM {{this}} WHERE BGN_SNDR_CD = (SELECT IDENTIFY_VALUE FROM DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT	WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
+                DELETE	FROM {{this}} WHERE BGN_SNDR_CD = (SELECT IDENTIFY_VALUE FROM {{ source('jpnedw_integration', 'mt_constant') }}	WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
                 {% endif %}"
     )
 }}
 
-with DW_SI_SELL_IN_DLY as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY
+with dw_si_sell_in_dly as(
+	select * from {{ ref('jpnedw_integration__dw_si_sell_in_dly') }}  
 ),
-EDI_ITEM_M as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_ITEM_M
+edi_item_m as (
+	select * from {{ ref('jpnedw_integration__edi_item_m') }}  
 ),
-MT_IN_OUT_CONV as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_IN_OUT_CONV
+mt_in_out_conv as (
+	select * from {{ ref('jpnedw_integration__mt_in_out_conv') }} 
 ),
-EDI_JEDPAR as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_JEDPAR
+edi_jedpar as (
+	select * from {{ ref('jpnedw_integration__edi_jedpar') }} 
 ),
-MT_ACCOUNT_KEY as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_ACCOUNT_KEY
+mt_account_key as (
+	select * from {{ ref('jpnedw_integration__mt_account_key') }} 
 ),
-MT_CONSTANT as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT
+mt_constant as (
+	select * from {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 transformed as(
 SELECT NULL as ID,

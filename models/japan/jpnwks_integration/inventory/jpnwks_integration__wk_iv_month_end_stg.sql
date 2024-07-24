@@ -1,5 +1,5 @@
 with wk_iv_month_end as(
-    select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_IV_MONTH_END
+    select * from {{ ref('jpnwks_integration__wk_iv_month_end') }}
 ),
 transformed as(
     SELECT cstm_cd,

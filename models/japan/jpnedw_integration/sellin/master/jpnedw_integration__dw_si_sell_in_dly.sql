@@ -9,20 +9,20 @@
     )
 }}
 
-with DW_SI_SELL_IN_DLY_MOD as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY_MOD
+with dw_si_sell_in_dly_mod as(
+	select * from {{ source('jpnedw_integration', 'dw_si_sell_in_dly_mod') }}
 ),
 WK_SI_PAN_THIS_YEAR as(
-	select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_SI_PAN_THIS_YEAR
+	select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
 ),
-MT_CLD as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CLD
+mt_cld as(
+	select * from {{ source('jpnedw_integration', 'mt_cld') }}
 ),
 EDI_ITEM_M as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_ITEM_M
+	select * from {{ ref('jpnwks_integration__edi_item_m') }}
 ),
-MT_CONSTANT as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT
+mt_constant as(
+	select * from {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 union1 as(
 	SELECT

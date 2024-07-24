@@ -1,23 +1,23 @@
 with itg_copa_trans as(
-	select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_COPA_TRANS
+	select * from {{ ref('aspitg_integration__itg_copa_trans') }} 
 ),
 edw_customer_sales_dim as(
-	select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+	select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }} 
 ),
 edw_material_sales_dim as(
-	select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_material_sales_dim
+	select * from {{ ref('aspedw_integration__edw_material_sales_dim') }} 
 ),
 edw_account_dim as(
-	select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.edw_account_dim
+	select * from {{ ref('aspedw_integration__edw_account_dim') }} 
 ),
 itg_query_parameters as(
-	select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.itg_query_parameters
+	select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
-MT_CONSTANT as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT
+mt_constant as(
+	select * from {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 bw_ohjapan_pan_stgf as (
-    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.bw_ohjapan_pan_stgf
+    select * from {{ ref('jpnitg_integration__bw_ohjapan_pan_stgf') }} 
 ),
 union1 as(
 	SELECT A.acct_num as ACCOUNT,

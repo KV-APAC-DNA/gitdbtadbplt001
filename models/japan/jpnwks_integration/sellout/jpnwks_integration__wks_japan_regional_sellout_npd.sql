@@ -1,5 +1,5 @@
 with WKS_JAPAN_REGIONAL_SELLOUT as(
-    select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WKS_JAPAN_REGIONAL_SELLOUT
+    select * from {{ ref('jpnwks_integration__wks_japan_regional_sellout') }}
 ),
 transformed as(
     SELECT *,

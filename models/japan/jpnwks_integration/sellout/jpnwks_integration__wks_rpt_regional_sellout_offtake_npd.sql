@@ -1,12 +1,12 @@
 with 
 itg_mds_jp_c360_eng_translation as (
-	select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.ITG_MDS_JP_C360_ENG_TRANSLATION
+	select * from {{ ref('jpnitg_integration__itg_mds_jp_c360_eng_translation') }}
 ),
 itg_mds_ap_customer360_config as (
-	select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+	select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
-WKS_JAPAN_REGIONAL_SELLOUT_NPD as(
-	select * from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WKS_JAPAN_REGIONAL_SELLOUT_NPD
+wks_japan_regional_sellout_npd as(
+	select * from {{ ref('jpnwks_integration__wks_japan_regional_sellout_npd') }}
 ),
 sellout_npd as(
 			SELECT YEAR,

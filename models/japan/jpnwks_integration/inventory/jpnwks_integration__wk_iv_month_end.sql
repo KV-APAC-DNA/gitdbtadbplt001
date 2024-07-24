@@ -1,17 +1,17 @@
-with WK_IV_EDI as(
+with wk_iv_edi as(
     select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
 ),
-DA_IV_EDI_ACCUM as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DA_IV_EDI_ACCUM
+da_iv_edi_accum as(
+    select * from {{ ref('jpnedw_integration__da_iv_edi_accum') }}
 ),
-WK_IV_PRIORITY as(
+wk_iv_priority as(
     select * from {{ ref('jpnwks_integration__wk_iv_priority') }}
 ),
-EDI_CSTM_M as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_CSTM_M
+edi_cstm_m as(
+    select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
-EDI_ITEM_M as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_ITEM_M
+edi_item_m as(
+    select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 wk as(
     SELECT DISTINCT CSTM_CD,

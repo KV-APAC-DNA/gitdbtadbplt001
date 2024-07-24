@@ -1,38 +1,38 @@
 with dw_pos_daily as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_POS_DAILY
+    select * from {{ ref('jpnedw_integration__dw_pos_daily') }}
 ),
 itg_mds_jp_pos_account_mapping as(
-    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.ITG_MDS_JP_POS_ACCOUNT_MAPPING
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_pos_account_mapping') }}
 ),
 itg_mds_jp_pos_product_mapping as(
-    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.itg_mds_jp_pos_product_mapping
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_pos_product_mapping') }}
 ),
 itg_mds_jp_pos_store_mapping as(
-    select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.itg_mds_jp_pos_store_mapping
+    select * from {{ ref('jpnitg_integration__itg_mds_jp_pos_store_mapping') }}
 ),
 edi_store_m as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_store_m
+    select * from {{ ref('jpnedw_integration__edi_store_m') }}
 ),
 edi_chn_m as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_chn_m
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
 edi_chn_m1 as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_chn_m1
+    select * from {{ source('jpnedw_integration', 'edi_chn_m1') }}
 ),
 mt_prf as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.mt_prf
+    select * from {{ source('jpnedw_integration', 'mt_prf') }}
 ),
 mt_cld as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.mt_cld
+    select * from {{ source('jpnedw_integration', 'mt_cld') }}
 ),
 vw_jan_change as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.vw_jan_change
+    select * from {{ ref('jpnedw_integration__vw_jan_change') }}
 ),
 edi_item_m as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.edi_item_m
+    select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 vw_m_item_frnch_cdd as(
-    select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.vw_m_item_frnch_cdd
+    select * from {{ ref('jpnedw_integration__vw_m_item_frnch_cdd') }}
 ),
 pos_data_add_date as(
 		SELECT pos_data.account_key

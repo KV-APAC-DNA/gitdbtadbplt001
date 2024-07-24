@@ -1,29 +1,29 @@
-with DW_SO_SELL_OUT_DLY as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_SO_SELL_OUT_DLY
+with dw_so_sell_out_dly as(
+	select * from {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
 ),
-VW_JAN_CHANGE as(
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.VW_JAN_CHANGE
+vw_jan_change as(
+	select * from {{ ref('jpnedw_integration__vw_jan_change') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-	select * from DEV_DNA_CORE.SNENAV01_WORKSPACE.EDW_VW_OS_TIME_DIM
+edw_vw_os_time_dim as(
+	select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
-EDI_CHN_M as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_CHN_M
+edi_chn_m as (
+	select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
-MT_SGMT as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_SGMT
+mt_sgmt as (
+	select * from {{ source('jpnedw_integration', 'mt_sgmt') }}
 ),
-EDI_CSTM_M as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_CSTM_M
+edi_cstm_m as (
+	select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 itg_mds_jp_c360_eng_translation as (
-	select * from DEV_DNA_CORE.SNAPJPNITG_INTEGRATION.ITG_MDS_JP_C360_ENG_TRANSLATION
+	select * from {{ ref('jpnitg_integration__itg_mds_jp_c360_eng_translation') }}
 ),
 itg_mds_ap_customer360_config as (
-	select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_CUSTOMER360_CONFIG
+	select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
-EDI_STORE_M as (
-	select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_STORE_M
+edi_store_m as (
+	select * from {{ ref('jpnedw_integration__edi_store_m') }}
 ),
 base as(
 		SELECT 'JP' AS CNTRY_CD,

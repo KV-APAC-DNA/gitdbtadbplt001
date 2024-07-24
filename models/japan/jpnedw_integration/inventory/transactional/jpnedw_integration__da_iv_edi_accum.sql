@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= " update {{this}} edw set valid_flg = '0' from DEV_DNA_CORE.SNAPJPNWKS_INTEGRATION.WK_IV_EDI wk where edw.cstm_cd = wk.cstm_cd and edw.item_cd = wk.item_cd and edw.invt_dt = wk.invt_dt;"
+        pre_hook= " update {{this}} edw set valid_flg = '0' from {{ ref('jpnwks_integration__wk_iv_edi') }} wk where edw.cstm_cd = wk.cstm_cd and edw.item_cd = wk.item_cd and edw.invt_dt = wk.invt_dt;"
     )
 }}
 

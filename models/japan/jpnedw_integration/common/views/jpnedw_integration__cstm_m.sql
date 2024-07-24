@@ -1,5 +1,5 @@
 with edi_cstm_m as(
-    select * from SNAPJPNEDW_INTEGRATION.edi_cstm_m
+    select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 transformed as(
     SELECT edi_cstm_m.create_dt

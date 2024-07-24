@@ -8,4 +8,26 @@ sources:
       identifier: false
     tables:
       - name: edi_invt_dt
-        tags: ["","ingestion"]
+        tags: ["inventory_workflow","ingestion"]
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: mt_constant_seq
+        tags: ["sellin_workflow","ingestion"]
+
+      - name: mt_sgmt
+      - name: mt_prf
+      - name: mt_cld
+      - name: mt_jan_detail
+      - name: mt_tp_status_mapping
+      - name: edi_chn_m1
+      - name: mt_prf
+      - name: dw_si_sell_in_dly_mod
+      - name: mt_constant
+      - name: jp_inv_coverage_area_region_mapping

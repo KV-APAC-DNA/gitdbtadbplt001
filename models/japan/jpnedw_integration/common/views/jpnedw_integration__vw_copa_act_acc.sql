@@ -1,11 +1,11 @@
 with dm_integration_dly as(
-    select * from SNAPJPNEDW_INTEGRATION.dm_integration_dly
+    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
 mt_cld as(
-    select * from SNAPJPNEDW_INTEGRATION.mt_cld
+    select * from {{ source('jpnedw_integration', 'mt_cld') }}
 ),
 mt_bravo_sap_map as(
-    select * from JPNEDW_INTEGRATION.mt_bravo_sap_map
+    select * from {{ source('jpnedw_integration', 'mt_bravo_sap_map') }}
 ),
 union1 as(
     SELECT cld.year_445

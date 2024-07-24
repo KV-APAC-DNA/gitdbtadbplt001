@@ -1,8 +1,8 @@
 with mt_item_cdd as(
-	select * from snapjpnedw_integration.mt_item_cdd
+	select * from {{ ref('jpnedw_integration__mt_item_cdd') }}
 ),
 mt_frnch_cdd as(
-	select * from snapjpnedw_integration.mt_frnch_cdd
+	select * from {{ ref('jpnedw_integration__mt_frnch_cdd') }}
 ),
 ph_l1 as(
 		SELECT mt_frnch_cdd.ph_cd

@@ -5,85 +5,55 @@
 }}
 
 with dm_integration_dly as (
-  select * from snapjpnedw_integration.dm_integration_dly
+  select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
 edi_chn_m as (
-  select * from snapjpnedw_integration.edi_chn_m
+  select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
 mt_sgmt as (
-  select * from snapjpnedw_integration.mt_sgmt
-),
-edi_chn_m as (
-  select * from snapjpnedw_integration.edi_chn_m
-),
-mt_sgmt as (
-  select * from snapjpnedw_integration.mt_sgmt
+  select * from {{ source('jpnedw_integration', 'mt_sgmt') }}
 ),
 edi_cstm_m as (
-  select * from snapjpnedw_integration.edi_cstm_m
-),
-edi_cstm_m as (
-  select * from snapjpnedw_integration.edi_cstm_m
+  select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 edi_store_m as (
-  select * from snapjpnedw_integration.edi_store_m
+  select * from {{ ref('jpnedw_integration__edi_store_m') }}
 ),
 mt_prf as (
-  select * from snapjpnedw_integration.mt_prf
+  select * from {{ source('jpnedw_integration', 'mt_prf') }}
 ),
 mt_account_key as (
-  select * from snapjpnedw_integration.mt_account_key
+  select * from {{ ref('jpnedw_integration__mt_account_key') }}
 ),
 mt_cld as (
-  select * from snapjpnedw_integration.mt_cld
+  select * from {{ source('jpnedw_integration', 'mt_cld') }}
 ),
 mt_jan_detail as (
-  select * from DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_JAN_DETAIL
+  select * from {{ source('jpnedw_integration', 'mt_jan_detail') }}
 ),
 vw_jan_change as (
-  select * from snapjpnedw_integration.vw_jan_change
+  select * from {{ ref('jpnedw_integration__vw_jan_change') }}
 ),
 edi_item_m as (
-  select * from snapjpnedw_integration.edi_item_m
+  select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 vw_m_item_frnch_cdd as (
-  select * from snapjpnedw_integration.vw_m_item_frnch_cdd
+  select * from {{ ref('jpnedw_integration__vw_m_item_frnch_cdd') }}
 ),
 mt_chn_mjp_emp_chg as (
-  select * from snapjpnedw_integration.mt_chn_mjp_emp_chg
+  select * from {{ ref('jpnedw_integration__mt_chn_mjp_emp_chg') }}
 ),
 mt_emp as (
-  select * from snapjpnedw_integration.mt_emp
-),
-mt_chn_mjp_emp_chg as (
-  select * from snapjpnedw_integration.mt_chn_mjp_emp_chg
-),
-mt_emp as (
-  select * from snapjpnedw_integration.mt_emp
-),
-mt_chn_mjp_emp_chg as (
-  select * from snapjpnedw_integration.mt_chn_mjp_emp_chg
-),
-mt_emp as (
-  select * from snapjpnedw_integration.mt_emp
-),
-mt_cld as (
-  select * from snapjpnedw_integration.mt_cld
+  select * from {{ ref('jpnedw_integration__mt_emp') }}
 ),
 mt_tp_status_mapping as (
-  select * from jpnedw_integration.mt_tp_status_mapping
-),
-mt_chn_mjp_emp_chg as (
-  select * from snapjpnedw_integration.mt_chn_mjp_emp_chg
-),
-mt_emp as (
-  select * from snapjpnedw_integration.mt_emp
+  select * from {{ source('jpnedw_integration', 'mt_tp_status_mapping') }}
 ),
 sdl_mds_jp_product_ca_ratio as (
-  select * from DEV_DNA_LOAD.JPNSDL_RAW.SDL_MDS_JP_PRODUCT_CA_RATIO
+  select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_product_ca_ratio') }}
 ),
 sdl_mds_jp_jan_description as (
-  select * from DEV_DNA_CORE.JPNEDW_ACCESS.SDL_MDS_JP_JAN_DESCRIPTION
+  select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_jan_description') }}
 ),
 transformed as(
 SELECT "mt_account_key".accounting_code as "accounting_code",

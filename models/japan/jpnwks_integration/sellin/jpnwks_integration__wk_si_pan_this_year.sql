@@ -1,5 +1,5 @@
 with bw_ohjapan_pan as(
-    select * from SNAPJPNITG_INTEGRATION.bw_ohjapan_pan
+    select * from {{ ref('jpnitg_integration__bw_ohjapan_pan') }}
 ),
 final as(
     select 
