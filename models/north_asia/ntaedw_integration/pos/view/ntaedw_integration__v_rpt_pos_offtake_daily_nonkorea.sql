@@ -37,9 +37,7 @@ SELECT
   sum(a.invnt_amt) AS invnt_amt, 
   CASE WHEN (
     (a.ctry_cd):: text = ('TW' :: character varying):: text
-  ) THEN sum(a.prom_sls_amt) ELSE (
-    floor(sum(a.sls_amt))
-  ):: numeric(18, 0) END AS sls_amt, 
+  ) THEN sum(a.prom_sls_amt) ELSE trunc((sum(a.prom_sls_amt)), 0):: numeric(18, 0) END AS sls_amt, 
   CASE WHEN (
     (a.str_cd IS NULL) 
     OR (
