@@ -14,7 +14,8 @@ final as(
     select 
         trim(customer)::varchar(100) as cust_nm,
         trim(customer_hierarchy_code)::varchar(100) as cust_hier_cd,
-        trim(cust_prod_cd)::varchar(100) as cust_prod_cd,
+        -- trim(cust_prod_cd)::varchar(100) as cust_prod_cd,
+        rtrim(REGEXP_REPLACE(cust_prod_cd,'[\xC2\xA0]', ''))::varchar(100) as cust_prod_cd,
         rtrim(REGEXP_REPLACE(barcode,'[\xC2\xA0]', ''))::varchar(100) as barcd,
         trim(sap_product_code)::varchar(100) as sap_prod_cd,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
