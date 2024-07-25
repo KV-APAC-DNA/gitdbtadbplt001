@@ -1,5 +1,5 @@
 with item_hanbai_tbl as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_HANBAI_TBL
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.ITEM_HANBAI_TBL
 ),
 final as (SELECT iht.h_itemcode,
     CASE 

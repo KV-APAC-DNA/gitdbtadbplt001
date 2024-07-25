@@ -1,8 +1,8 @@
 with tsuhan_gassan_mv as (
-select * from dev_dna_core.snapjpdcledw_integration.tsuhan_gassan_mv
+select * from dev_dna_core.jpdcledw_integration.tsuhan_gassan_mv
 ),
 oroshi_gassan_mv as (
-select * from dev_dna_core.snapjpdcledw_integration.oroshi_gassan_mv
+select * from dev_dna_core.jpdcledw_integration.oroshi_gassan_mv
 ),
 transformed as (
 select

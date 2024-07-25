@@ -1,11 +1,11 @@
 with tbEcOrderMeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDERMEISAI
 ),
 c_tbEcKesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.c_tbEcKesai
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.c_tbEcKesai
 ),
 tbecorder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.tbecorder
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.tbecorder
 ),
 transformed as (
 SELECT
@@ -13,10 +13,10 @@ SELECT
    NVL(tbEcOrderMeisai.DIMEISAIID,0) as GYONO,
    tbEcOrderMeisai.dsItemID as ITEMCODE,
    tbEcOrderMeisai.diItemNum as SURYO,
-   DECODE(tbEcOrderMeisai.diItemNum,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/ NVL(tbEcOrderMeisai.diItemNum,1)) as TANKA,
+   trunc(DECODE(tbEcOrderMeisai.diItemNum,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/ NVL(tbEcOrderMeisai.diItemNum,1))) as TANKA,
    DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0)) as KINGAKU,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAINUKIKINGAKU,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))- ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAITAX,
+   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAINUKIKINGAKU,
+   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))- ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAITAX,
    DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_didiscountrate,0)) as WARIRITU,
    NVL(tbEcOrderMeisai.diTotalPrc,0) as WARIMAEKOMITANKA,
    DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL((tbEcOrderMeisai.c_diitemtotalprc - tbEcOrderMeisai.diItemTax),0)) as WARIMAENUKIKINGAKU,

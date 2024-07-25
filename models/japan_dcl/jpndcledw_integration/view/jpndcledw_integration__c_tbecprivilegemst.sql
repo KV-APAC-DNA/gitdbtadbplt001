@@ -1,5 +1,5 @@
 with c_tbecprivilegemst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECPRIVILEGEMST
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECPRIVILEGEMST
 ),
 final as (
 SELECT c_tbecprivilegemst.c_diprivilegeid,

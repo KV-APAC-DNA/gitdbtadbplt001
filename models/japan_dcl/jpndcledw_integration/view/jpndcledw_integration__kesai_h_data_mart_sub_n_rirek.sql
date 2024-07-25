@@ -1,5 +1,5 @@
 with tbecorderhist as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERHIST
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDERHIST
 ),
 final as (
 SELECT 

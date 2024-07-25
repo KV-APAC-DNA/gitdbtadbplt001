@@ -1,5 +1,5 @@
 with hanyo_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR),
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR),
 final as (
 SELECT 
   (hanyo_attr.attr1):: character varying(1) AS hin_bunr_taik_id, 

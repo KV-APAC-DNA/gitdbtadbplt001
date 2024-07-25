@@ -1,5 +1,5 @@
 with c_tbtelcompanymst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBTELCOMPANYMST
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBTELCOMPANYMST
 ),
 final as (
 SELECT 

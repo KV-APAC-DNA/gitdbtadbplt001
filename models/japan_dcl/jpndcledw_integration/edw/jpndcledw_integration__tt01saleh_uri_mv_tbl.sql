@@ -1,20 +1,20 @@
 with keirokbn as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KEIROKBN 
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KEIROKBN 
 ),
 hanyo_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR
 ),
 tbecorder as (
-select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.TBECORDER
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDER
 ),
 c_tbecusercard as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECUSERCARD
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECUSERCARD
 ),
 tbpromotion as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBPROMOTION
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBPROMOTION
 ),
 c_tbeckesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECKESAI
 ),
 transformed as (
 SELECT CAST('U' || c_tbEcKesai.c_dikesaiid AS VARCHAR) AS SALENO,
@@ -152,7 +152,11 @@ kesairowid::varchar(1) as kesairowid,
 orderrowid::varchar(1) as orderrowid,
 usercardrowid::varchar(1) as usercardrowid,
 promorowid::varchar(1) as promorowid,
-hanyorowid::varchar(1) as hanyorowid
+hanyorowid::varchar(1) as hanyorowid,
+current_timestamp()::timestamp_ntz(9) as inserted_date,
+'etl_batch'::varchar(100) as inserted_by ,
+current_timestamp::timestamp_ntz(9) as updated_date,
+null::varchar(100) as updated_by
 from transformed
 )
 select * from final

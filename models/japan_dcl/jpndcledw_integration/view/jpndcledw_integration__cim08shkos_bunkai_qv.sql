@@ -1,5 +1,5 @@
 with item_pick_bunkai_tbl as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_PICK_BUNKAI_TBL
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.ITEM_PICK_BUNKAI_TBL
 ),
 final as (
 SELECT 
