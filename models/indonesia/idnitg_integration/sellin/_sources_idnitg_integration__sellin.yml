@@ -18,12 +18,12 @@ sources:
               name: TRATBL_sdl_mds_id_lav_sellin_target__null_test
               config:
                 store_failures: true
-                schema: idnitg_integration
+                schema: idnwks_integration
           - test_duplicate:
               select_columns: ["region_code","region_id","distrbutor_code_id","brand_id","jj_year_month"]
               group_by_columns: ["region_code","region_id","distrbutor_code_id","brand_id","jj_year_month"]
               name: TRATBL_sdl_mds_id_lav_sellin_target__duplicate_test
               config:
                 store_failures: true
-                schema: idnitg_integration
+                schema: idnwks_integration
           
