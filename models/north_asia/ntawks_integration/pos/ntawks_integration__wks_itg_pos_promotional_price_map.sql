@@ -14,7 +14,7 @@ transformed as(
     SELECT 
        rtrim(REGEXP_REPLACE(SRC.customer,'[\xC2\xA0]', '')) as customer,
        rtrim(REGEXP_REPLACE(SRC.barcode,'[\xC2\xA0]', '')) as barcode,
-       rtrim(REGEXP_REPLACE(SRC.cust_prod_cd,'[\xC2\xA0]', '')) as cust_prod_cd
+       rtrim(REGEXP_REPLACE(SRC.cust_prod_cd,'[\xC2\xA0]', '')) as cust_prod_cd,
        SRC.promotional_price,
        SRC.promotion_start_date,
        SRC.promotion_end_date,
