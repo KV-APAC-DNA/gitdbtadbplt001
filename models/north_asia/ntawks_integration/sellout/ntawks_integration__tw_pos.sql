@@ -10,9 +10,6 @@ select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 edw_product_attr_dim as (
 select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-itg_pos_invnt as (
-select * from {{ ref('ntaitg_integration__itg_pos_invnt') }}
-),
 itg_pos_prom_prc_map as (
 select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
