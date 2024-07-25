@@ -14,7 +14,7 @@ wk_so_planet_no_dup as (
 ),
 
 consistency_error_2 as (
-    select * from {{ ref('jpnwks_integration_consistency_error_2') }}
+    select * from {{ ref('jpnwks_integration__consistency_error_2') }}
 ),
 
 wk_so_planet_cleansed as (

@@ -26,7 +26,7 @@ as (
 store_v_price
 as (
     select *
-    from {{ ref('snapjpnwks_integration__store_v_price') }}
+    from {{ ref('jpnwks_integration__store_v_price') }}
     ),
 store_v_qty_mod
 as (

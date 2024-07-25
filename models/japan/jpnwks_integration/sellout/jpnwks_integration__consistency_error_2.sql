@@ -56,7 +56,7 @@ AS (
 mt_trade_conv
 AS (
   SELECT *
-  FROM {{ ref('jpnedw_integration__mt_trade_conv') }}
+  FROM {{ source('jpnedw_integration', 'mt_trade_conv') }}
   ),
 ct01
 AS (

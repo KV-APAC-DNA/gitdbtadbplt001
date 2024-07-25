@@ -6,7 +6,7 @@ AS (
 mt_prf
 AS (
   SELECT *
-  FROM {{ ref('jpnedw_integration__mt_prf') }}
+  FROM {{ source('jpnedw_integration', 'mt_prf') }}
   ),
 edi_chn_m
 AS (
@@ -16,17 +16,17 @@ AS (
 mt_sgmt
 AS (
   SELECT *
-  FROM {{ ref('jpnedw_integration__mt_sgmt') }}
+  FROM {{ source('jpnedw_integration', 'mt_sgmt') }}
   ),
 m_area_master
 AS (
   SELECT *
-  FROM {{ ref('jpnedw_integration__m_area_master') }}
+  FROM {{ source('jpnedw_integration', 'm_area_master') }}
   ),
 m_ldw_store_local
 AS (
   SELECT *
-  FROM {{ ref('jpnedw_integration__m_ldw_store_local') }}
+  FROM {{ source('jpnedw_integration', 'm_ldw_store_local') }}
   ),
 s
 AS (

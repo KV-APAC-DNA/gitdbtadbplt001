@@ -65,8 +65,12 @@ sources:
 
       - name: edi_sell_out_planet
         tags: ['sell_out_planet','transformation']
-      
-      
+
+      - name: tsp_datamart_promo_amt
+        tags: ["tsp_master_job", "tp_integration_job","transformation"]
+
+      - name: sdl_mds_jp_jan_description
+      - name: sdl_mds_jp_product_ca_ratio
 
   - name: jpnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -75,47 +79,15 @@ sources:
       database: false
       schema: false
       identifier: false
-    tables: 
-      - name: dw_so_planet_err
-        tags: ['planet_err','transformation']
-      
-      - name: dw_so_planet_err_cd
-        tags: ['planet_err_cd','transformation']
-      
-      - name: da_so_planet_accum
-        tags: ['da_so_planet_accum','transformation']
-
-
+    tables:
+      - name: dw_so_planet_err_temp
 
   - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
     schema: jpnedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
-    tables: 
-      - name : dw_so_sell_out_dly
-        tags: ['sell_out_dly','transformation']
-
-      - name : dw_so_sell_out_dly_all
-        tags: ['sell_out_dly_all','transformation']
-      
-      - name : dm_so_store_list
-        tags: ['store_list','transformation']
-      
-      - name : mt_constant_seq
-        tags: ['constant_seq','transformation']
-
-  - name: jpnwks_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB')}}"
-    schema: jpnwks_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
     tables:
-      - name: wk_so_planet_revise
-        tags: ['planet_revise','transformation']
-
-
+      - name: mt_trade_conv

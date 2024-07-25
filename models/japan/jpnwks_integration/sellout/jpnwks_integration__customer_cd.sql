@@ -11,8 +11,8 @@ wk_so_planet_no_dup as (
     select * from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
 ),
 
-edi_edi_jedpar as (
-    select * from {{ ref('jpnedw_integration__edi_edi_jedpar') }}
+edi_jedpar as (
+    select * from {{ ref('jpnedw_integration__edi_jedpar') }}
 ),
 
 edi_item_m as (

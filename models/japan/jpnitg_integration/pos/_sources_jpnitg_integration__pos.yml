@@ -62,3 +62,31 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+
+      - name: jp_pos_daily_aeon
+        tags: ["jp_pos","ingestion"]
+      - name: jp_pos_daily_csms
+        tags: ["jp_pos","ingestion"]
+
+      - name: jp_pos_daily_wlca
+        tags: ["jp_pos", "ingestion"]
+      - name: jp_pos_daily_others
+        tags: ["jp_pos", "ingestion"]
+      - name: jp_pos_daily_dnki
+        tags: ["jp_pos", "ingestion"]
+      - name: jp_pos_daily_tsur
+        tags: ["jp_pos", "ingestion"]
+
+      - name: jp_pos_daily_sugi
+        tags: ["jp_pos", "ingestion"]
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: mt_iv_priority
+      - name: dw_pos_daily_temp

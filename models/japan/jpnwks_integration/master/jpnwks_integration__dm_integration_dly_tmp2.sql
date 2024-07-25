@@ -5,7 +5,7 @@
                     SET MAX_DATE = 
                     (
                         SELECT MAX(YMD_DT)
-                        FROM {{ ref('jpnedw_integration__mt_cld') }}
+                        FROM {{ source('jpnedw_integration', 'mt_cld') }}
                         WHERE year_445 = (SELECT YEAR( current_timestamp()::timestamp_ntz(9)))
                     )
                     WHERE Identify_cd = 'SO';
@@ -14,7 +14,7 @@
                     SET MIN_DATE = 
                     (
                         SELECT MAX(YMD_DT)
-                        FROM {{ ref('jpnedw_integration__mt_cld') }}
+                        FROM {{ source('jpnedw_integration', 'mt_cld') }}
                         WHERE to_number(year_445) = 
                         (
                             SELECT YEAR( current_timestamp()::timestamp_ntz(9))) - (SELECT  DELETE_RANGE FROM {{ ref('jpnedw_integration__mt_constant_range') }}  WHERE IDENTIFY_CD='SO')
@@ -70,7 +70,7 @@ AS (
 mt_cld
 AS (
 	SELECT *
-	FROM {{ ref('jpnedw_integration__mt_cld') }}
+	FROM {{ source('jpnedw_integration', 'mt_cld') }}
 	),
 wk_tp_datamart_promo_amt
 AS (
@@ -80,7 +80,7 @@ AS (
 mt_constant 
 as
 (
-    SELECT * FROM {{ ref('jpnedw_integration__mt_constant') }}
+    SELECT * FROM {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 tmp1 AS
 (

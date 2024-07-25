@@ -49,7 +49,7 @@ AS (
 mt_cld
 AS (
 	SELECT *
-	FROM {{ ref('jpnedw_integration__mt_cld') }}
+	FROM {{ source('jpnedw_integration', 'mt_cld') }}
 	),
 wk_tp_datamart_promo_amt
 AS (
@@ -59,7 +59,7 @@ AS (
 mt_constant 
 as
 (
-    SELECT * FROM {{ ref('jpnedw_integration__mt_constant') }}
+    SELECT * FROM {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 tmp2 AS
 (

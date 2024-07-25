@@ -7,7 +7,7 @@ consistency_error_2 as (
 ),
 
 temp_tbl as (
-    select * from {{ ref('jpnwks_integration__temp_tbl') }}
+    select * from {{ source('jpnwks_integration', 'temp_tbl') }}
 ),
 
 dw_so_planet_err_cd_2 as (

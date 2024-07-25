@@ -19,7 +19,7 @@ mt_cld as(
 	select * from {{ source('jpnedw_integration', 'mt_cld') }}
 ),
 EDI_ITEM_M as(
-	select * from {{ ref('jpnwks_integration__edi_item_m') }}
+	select * from {{ source('jpnedw_integration', 'EDI_ITEM_M') }}
 ),
 mt_constant as(
 	select * from {{ source('jpnedw_integration', 'mt_constant') }}

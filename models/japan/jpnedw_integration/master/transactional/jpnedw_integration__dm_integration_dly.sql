@@ -5,9 +5,9 @@
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MAX_DATE = (
                             SELECT MAX(YMD_DT)
-                            FROM {{ ref('jpnedw_integration__mt_cld') }}
+                            FROM {{ source('jpnedw_integration', 'mt_cld') }}
                             WHERE year_445 = (SELECT TO_NUMBER(RIGHT(IDENTIFY_VALUE,4),'9999') 
-                    FROM {{ ref('jpnedw_integration__mt_constant') }} 
+                    FROM {{ source('jpnedw_integration', 'mt_constant') }}
                     WHERE IDENTIFY_CD='JCP_PAN_FLG')
                             )
                     WHERE Identify_cd = 'SI';
@@ -15,9 +15,9 @@
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MIN_DATE = (
                             SELECT MIN(YMD_DT)
-                            FROM {{ ref('jpnedw_integration__mt_cld') }}
+                            FROM {{ source('jpnedw_integration', 'mt_cld') }}
                             WHERE year_445 = (SELECT TO_NUMBER(RIGHT(IDENTIFY_VALUE,4),'9999') 
-                    FROM {{ ref('jpnedw_integration__mt_constant') }}
+                    FROM {{ source('jpnedw_integration', 'mt_constant') }}
                     WHERE IDENTIFY_CD='JCP_PAN_FLG')
                             )
                     WHERE Identify_cd = 'SI';
@@ -64,7 +64,7 @@ AS (
 mt_cld
 AS (
 	SELECT *
-	FROM {{ ref('jpnedw_integration__mt_cld') }}
+	FROM {{ source('jpnedw_integration', 'mt_cld') }}
 	),
 wk_tp_datamart_promo_amt
 AS (
@@ -74,7 +74,7 @@ AS (
 mt_constant 
 as
 (
-    SELECT * FROM {{ ref('jpnedw_integration__mt_constant') }}
+    SELECT * FROM {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 
 tmp3 AS

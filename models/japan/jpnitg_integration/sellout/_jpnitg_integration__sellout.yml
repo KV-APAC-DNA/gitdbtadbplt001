@@ -1,6 +1,16 @@
 version: 2
 
 models:
+  - name: jpnitg_integration__dw_so_planet_err
+    config:
+        alias: dw_so_planet_err
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","transformation"]
+
+  - name: jpnitg_integration__dw_so_planet_err_cd_2
+    config:
+        alias: dw_so_planet_err_cd_2
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","transformation"]
+
   - name: jpnitg_integration__itg_mds_jp_mt_so_item_chg
     config:
       alias: itg_mds_jp_mt_so_item_chg

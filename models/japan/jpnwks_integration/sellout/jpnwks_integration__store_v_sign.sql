@@ -5,7 +5,7 @@ WITH wk_so_planet_no_dup AS
 
 mt_trade_conv AS
 (
-    SELECT * FROM {{ ref('jpnedw_integration__mt_trade_conv') }}
+    SELECT * FROM {{ source('jpnedw_integration', 'mt_trade_conv') }}
 ),
 
 final AS

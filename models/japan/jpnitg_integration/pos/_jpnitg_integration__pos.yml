@@ -15,3 +15,13 @@ models:
     config:
       alias: itg_mds_jp_pos_store_mapping
       tags: ['pos_store_mapping','ingestion']
+
+  - name: jpnitg_integration__jp_pos_daily
+    config:
+        alias: jp_pos_daily
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnitg_integration__jp_pos_daily_error
+    config:
+        alias: jp_pos_daily_error
+        tags: ["pos_data_ingestion","ingestion"]
