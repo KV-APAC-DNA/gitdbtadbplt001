@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: snapindsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapindsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_ga360_aspac_sessions
+      tags: ["in_ga360","transformation"]
