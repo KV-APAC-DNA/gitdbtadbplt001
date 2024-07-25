@@ -11,7 +11,7 @@ rpt_retail_excellence_gcph as
  (
    select b.fisc_per,
    b.global_product_brand,b.market,
-   round((total_mdp_target/mds.mdp_target)*100 ):: integer as TARGET_COMPLAINCE 
+    round((mds.mdp_target/total_mdp_target)*100 ):: integer as TARGET_COMPLAINCE 
    from 
         (select fisc_per,
         global_product_brand,market,
@@ -19,7 +19,8 @@ rpt_retail_excellence_gcph as
         from 
             (select  distinct fisc_per,
                 distributor_code,
-                 store_code, 
+                 store_code,
+                 product_code, 
                  global_product_brand,market
                 from rpt_retail_excellence_gcph
                 where   mdp_flag = 'Y'
