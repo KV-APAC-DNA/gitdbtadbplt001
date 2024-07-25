@@ -36,9 +36,9 @@ SELECT
   a.matl_num AS mat, 
   a.matl_desc, 
   a.ean_num, 
-  (
+  trunc(
     sum(a.net_bill_val)
-  ):: numeric(18, 0) AS tot_invc_val, 
+  ,0) AS tot_invc_val, 
   sum(a.bill_qty_pc) AS tot_invc_qty, 
   a.country, 
   a.edw_cust_nm, 
