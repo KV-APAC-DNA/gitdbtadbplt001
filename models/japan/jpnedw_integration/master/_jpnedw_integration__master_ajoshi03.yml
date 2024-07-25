@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: jpnedw_integration__m_ldw_store
+    config:
+        alias: m_ldw_store
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_frnch_m
+    config:
+        alias: edi_frnch_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_bgn_sndr
+    config:
+        alias: edi_bgn_sndr
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_brand_m
+    config:
+        alias: edi_brand_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_chn_m
+    config:
+        alias: edi_chn_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_cstm_m
+    config:
+        alias: edi_cstm_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_cstm_rlt_m
+    config:
+        alias: edi_cstm_rlt_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_item_cd_chng
+    config:
+        alias: edi_item_cd_chng
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_item_m
+    config:
+        alias: edi_item_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_jedpar
+    config:
+        alias: edi_jedpar
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_rtlr_cd_chng
+    config:
+        alias: edi_rtlr_cd_chng
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__edi_store_m
+    config:
+        alias: edi_store_m
+        tags: ["edi_master_table","transformation"]
+        
+  - name: jpnedw_integration__dm_integration_dly
+    config:
+        alias: dm_integration_dly
+        tags: ["edi_sell_out_planet_ingestion", "sellout_integration_job", "io_integration_job", "sellin_integration_job", "transformation"]
+        
+  - name: jpnedw_integration__mt_constant_range
+    config:
+        alias: mt_constant_range
+        tags: ["sellout_integration_job","transformation"]
+
+        

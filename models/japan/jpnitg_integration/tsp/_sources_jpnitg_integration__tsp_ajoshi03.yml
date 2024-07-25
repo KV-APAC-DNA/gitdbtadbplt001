@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: tsp_datamart_promo_amt
+        tags: ["tsp_master_job", "tp_integration_job","transformation"]

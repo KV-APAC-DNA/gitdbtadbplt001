@@ -1,0 +1,248 @@
+WITH wk_so_planet_no_dup_temp
+AS (
+	SELECT *
+	FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup_temp') }}
+	),
+wk_so_planet_today
+AS (
+	SELECT *
+	FROM {{ ref('jpnwks_integration__wk_so_planet_today') }}
+	),
+dw_so_planet_err
+AS (
+	SELECT *
+	FROM {{ ref('jpnitg_integration__dw_so_planet_err') }}
+	),
+ct1
+AS (
+	SELECT t_today.jcp_rec_seq,
+		t_today.id,
+		t_today.rcv_dt,
+		t_today.test_flag,
+		t_today.bgn_sndr_cd,
+		t_today.ws_cd,
+		t_today.rtl_type,
+		t_today.rtl_cd,
+		t_today.trade_type,
+		t_today.shp_date,
+		t_today.shp_num,
+		t_today.trade_cd,
+		t_today.dep_cd,
+		t_today.chg_cd,
+		t_today.person_in_charge,
+		t_today.person_name,
+		t_today.rtl_name,
+		t_today.rtl_ho_cd,
+		t_today.rtl_address_cd,
+		t_today.data_type,
+		t_today.opt_fld,
+		t_today.item_nm,
+		t_today.item_cd_typ,
+		t_today.item_cd,
+		t_today.qty,
+		t_today.qty_type,
+		t_today.price,
+		t_today.price_type,
+		t_today.bgn_sndr_cd_gln,
+		t_today.rcv_cd_gln,
+		t_today.ws_cd_gln,
+		t_today.shp_ws_cd,
+		t_today.shp_ws_cd_gln,
+		t_today.rep_name_kanji,
+		t_today.rep_info,
+		t_today.trade_cd_gln,
+		t_today.rtl_cd_gln,
+		t_today.rtl_name_kanji,
+		t_today.rtl_ho_cd_gln,
+		t_today.item_cd_gtin,
+		t_today.item_nm_kanji,
+		t_today.unt_prc,
+		t_today.net_prc,
+		t_today.sales_chan_type,
+		t_today.jcp_create_date
+	FROM wk_so_planet_today t_today
+	),
+ct2
+AS (
+	SELECT jcp_rec_seq,
+		id,
+		rcv_dt,
+		test_flag,
+		bgn_sndr_cd,
+		ws_cd,
+		rtl_type,
+		rtl_cd,
+		trade_type,
+		shp_date,
+		shp_num,
+		trade_cd,
+		dep_cd,
+		chg_cd,
+		person_in_charge,
+		person_name,
+		rtl_name,
+		rtl_ho_cd,
+		rtl_address_cd_01 || rtl_address_cd_02,
+		data_type,
+		opt_fld,
+		item_nm,
+		item_cd_typ,
+		item_cd,
+		qty,
+		qty_type,
+		price,
+		price_type,
+		bgn_sndr_cd_gln,
+		rcv_cd_gln,
+		ws_cd_gln,
+		shp_ws_cd,
+		shp_ws_cd_gln,
+		rep_name_kanji,
+		rep_info,
+		trade_cd_gln,
+		rtl_cd_gln,
+		rtl_name_kanji,
+		rtl_ho_cd_gln,
+		item_cd_gtin,
+		item_nm_kanji,
+		unt_prc,
+		net_prc,
+		sales_chan_type,
+		jcp_create_date
+	FROM wk_so_planet_no_dup_temp
+	WHERE jcp_rec_seq IS NOT NULL
+	),
+union1
+AS (
+	SELECT *
+	FROM ct1
+	
+	UNION ALL
+	
+	SELECT *
+	FROM ct2
+	),
+del_cte
+AS (
+	SELECT *
+	FROM union1 
+    minus
+	SELECT *
+	FROM union1
+	WHERE JCP_REC_SEQ IN (
+			SELECT DISTINCT JCP_REC_SEQ
+			FROM dw_so_planet_err
+			WHERE EXPORT_FLAG = '0'
+			)
+	),
+ct3
+AS (
+	SELECT jcp_rec_seq,
+		id,
+		rcv_dt,
+		test_flag,
+		bgn_sndr_cd,
+		ws_cd,
+		rtl_type,
+		rtl_cd,
+		trade_type,
+		shp_date,
+		shp_num,
+		trade_cd,
+		dep_cd,
+		chg_cd,
+		person_in_charge,
+		person_name,
+		rtl_name,
+		rtl_ho_cd,
+		rtl_address_cd_01,
+		data_type,
+		opt_fld,
+		item_nm,
+		item_cd_typ,
+		item_cd,
+		qty,
+		qty_type,
+		price,
+		price_type,
+		bgn_sndr_cd_gln,
+		rcv_cd_gln,
+		ws_cd_gln,
+		shp_ws_cd,
+		shp_ws_cd_gln,
+		rep_name_kanji,
+		rep_info,
+		trade_cd_gln,
+		rtl_cd_gln,
+		rtl_name_kanji,
+		rtl_ho_cd_gln,
+		item_cd_gtin,
+		item_nm_kanji,
+		unt_prc,
+		net_prc,
+		sales_chan_type,
+		jcp_create_date
+	FROM wk_so_planet_no_dup_temp
+	WHERE jcp_rec_seq IS NOT NULL
+	),
+trns
+AS (
+	SELECT *
+	FROM del_cte
+	
+	UNION ALL
+	
+	SELECT *
+	FROM ct3
+	),
+final
+AS (
+	SELECT jcp_rec_seq::number(10, 0) AS jcp_rec_seq,
+		id::number(10, 0) AS id,
+		rcv_dt::VARCHAR(256) AS rcv_dt,
+		test_flag::VARCHAR(256) AS test_flag,
+		bgn_sndr_cd::VARCHAR(256) AS bgn_sndr_cd,
+		ws_cd::VARCHAR(256) AS ws_cd,
+		rtl_type::VARCHAR(256) AS rtl_type,
+		rtl_cd::VARCHAR(256) AS rtl_cd,
+		trade_type::VARCHAR(256) AS trade_type,
+		shp_date::VARCHAR(256) AS shp_date,
+		shp_num::VARCHAR(256) AS shp_num,
+		trade_cd::VARCHAR(256) AS trade_cd,
+		dep_cd::VARCHAR(256) AS dep_cd,
+		chg_cd::VARCHAR(256) AS chg_cd,
+		person_in_charge::VARCHAR(256) AS person_in_charge,
+		person_name::VARCHAR(256) AS person_name,
+		rtl_name::VARCHAR(256) AS rtl_name,
+		rtl_ho_cd::VARCHAR(256) AS rtl_ho_cd,
+		rtl_address_cd::VARCHAR(256) AS rtl_address_cd,
+		data_type::VARCHAR(256) AS data_type,
+		opt_fld::VARCHAR(256) AS opt_fld,
+		item_nm::VARCHAR(256) AS item_nm,
+		item_cd_typ::VARCHAR(256) AS item_cd_typ,
+		item_cd::VARCHAR(256) AS item_cd,
+		qty::VARCHAR(256) AS qty,
+		qty_type::VARCHAR(256) AS qty_type,
+		price::VARCHAR(256) AS price,
+		price_type::VARCHAR(256) AS price_type,
+		bgn_sndr_cd_gln::VARCHAR(256) AS bgn_sndr_cd_gln,
+		rcv_cd_gln::VARCHAR(256) AS rcv_cd_gln,
+		ws_cd_gln::VARCHAR(256) AS ws_cd_gln,
+		shp_ws_cd::VARCHAR(256) AS shp_ws_cd,
+		shp_ws_cd_gln::VARCHAR(256) AS shp_ws_cd_gln,
+		rep_name_kanji::VARCHAR(256) AS rep_name_kanji,
+		rep_info::VARCHAR(256) AS rep_info,
+		trade_cd_gln::VARCHAR(256) AS trade_cd_gln,
+		rtl_cd_gln::VARCHAR(256) AS rtl_cd_gln,
+		rtl_name_kanji::VARCHAR(256) AS rtl_name_kanji,
+		rtl_ho_cd_gln::VARCHAR(256) AS rtl_ho_cd_gln,
+		item_cd_gtin::VARCHAR(256) AS item_cd_gtin,
+		item_nm_kanji::VARCHAR(256) AS item_nm_kanji,
+		unt_prc::VARCHAR(256) AS unt_prc,
+		net_prc::VARCHAR(256) AS net_prc,
+		sales_chan_type::VARCHAR(256) AS sales_chan_type,
+		jcp_create_date::timestamp_ntz(9) AS jcp_create_date
+	FROM trns
+	)
+SELECT *
+FROM final
