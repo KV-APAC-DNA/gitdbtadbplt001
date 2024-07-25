@@ -13,7 +13,7 @@ with source as(
 final as(
     select 
         customer::varchar(20) as cust,
-        barcode::varchar(20) as barcd,
+        rtrim(REGEXP_REPLACE(barcode,'[\xC2\xA0]', ''))::varchar(20) as barcd,
         cust_prod_cd::varchar(20) as cust_prod_cd,
         promotional_price::number(30,4) as prom_prc,
         to_date(promotion_start_date) as prom_strt_dt,

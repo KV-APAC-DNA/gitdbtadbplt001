@@ -12,7 +12,7 @@ itg_pos_prom_prc_map_temp as(
 ),
 transformed as(
     SELECT SRC.customer,
-       TRIM(SRC.barcode) as barcode,
+       rtrim(REGEXP_REPLACE(src.barcode,'[\xC2\xA0]', '')) as barcode,
        TRIM(SRC.cust_prod_cd) as cust_prod_cd,
        SRC.promotional_price,
        SRC.promotion_start_date,
@@ -25,7 +25,8 @@ transformed as(
        END AS CHNG_FLG
 FROM source SRC
   LEFT OUTER JOIN (SELECT distinct cust,cust_prod_cd,barcd, CRT_DTTM FROM itg_pos_prom_prc_map_temp) TGT
-  ON RTRIM(SRC.barcode,'') = RTRIM(TGT.barcd,'')
+  ON 
+  rtrim(REGEXP_REPLACE(SRC.barcode,'[\xC2\xA0]', ''))=rtrim(REGEXP_REPLACE(TGT.barcd,'[\xC2\xA0]', ''))
   AND RTRIM(SRC.cust_prod_cd,'')=RTRIM(TGT.cust_prod_cd,'')
   AND SRC.customer=TGT.cust
 )
