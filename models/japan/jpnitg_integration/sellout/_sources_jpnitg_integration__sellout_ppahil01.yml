@@ -1,0 +1,121 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_jp_mt_so_item_chg
+        tags: ['mt_so_item_chg','j_jp_mds_refresh_etl_framework_sellout','ingestion']
+        tests:
+        - test_null:
+            select_columns: ["code"]
+            not_null_columns: ["code"]
+            name: sdl_mds_jp_mt_so_item_chg__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["code"]
+                group_by_columns: ["code"] 
+                name: sdl_mds_jp_mt_so_item_chg__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+      
+      - name: sdl_mds_jp_mt_so_rtlr_chg
+        tags: ['mt_so_rtlr_chg','j_jp_mds_refresh_etl_framework_sellout','ingestion']
+        tests:
+        - test_null:
+            select_columns: ["rtlr_cd"]
+            not_null_columns: ["rtlr_cd"]
+            name: sdl_mds_jp_mt_so_rtlr_chg__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["rtlr_cd"]
+                group_by_columns: ["rtlr_cd"] 
+                name: sdl_mds_jp_mt_so_rtlr_chg__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+
+      - name: sdl_mds_jp_mt_so_ws_chg
+        tags: ['mt_so_ws_chg','j_jp_mds_refresh_etl_framework_sellout','ingestion']
+        tests:
+        - test_null:
+            select_columns: ["code"]
+            not_null_columns: ["code"]
+            name: sdl_mds_jp_mt_so_ws_chg__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["code"]
+                group_by_columns: ["code"] 
+                name: sdl_mds_jp_mt_so_ws_chg__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+
+      - name: edi_sell_out_planet
+        tags: ['sell_out_planet','transformation']
+      
+      
+
+  - name: jpnitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables: 
+      - name: dw_so_planet_err
+        tags: ['planet_err','transformation']
+      
+      - name: dw_so_planet_err_cd
+        tags: ['planet_err_cd','transformation']
+      
+      - name: da_so_planet_accum
+        tags: ['da_so_planet_accum','transformation']
+
+
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables: 
+      - name : dw_so_sell_out_dly
+        tags: ['sell_out_dly','transformation']
+
+      - name : dw_so_sell_out_dly_all
+        tags: ['sell_out_dly_all','transformation']
+      
+      - name : dm_so_store_list
+        tags: ['store_list','transformation']
+      
+      - name : mt_constant_seq
+        tags: ['constant_seq','transformation']
+
+  - name: jpnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB')}}"
+    schema: jpnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wk_so_planet_revise
+        tags: ['planet_revise','transformation']
+
+

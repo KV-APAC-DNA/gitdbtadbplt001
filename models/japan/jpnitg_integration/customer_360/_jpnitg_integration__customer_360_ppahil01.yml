@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_jp_c360_eng_translation
+    config:
+      alias: itg_mds_jp_c360_eng_translation
+      tags: ['c360_eng_translation','transformation']

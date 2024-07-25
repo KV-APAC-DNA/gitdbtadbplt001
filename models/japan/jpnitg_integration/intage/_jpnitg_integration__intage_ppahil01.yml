@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_intage_skinhealth_category
+    config:
+      alias: skinhealth_category
+      tags: ['intage_skinhealth_category','ingestion']

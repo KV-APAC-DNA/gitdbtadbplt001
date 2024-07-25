@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_jp_pos_account_mapping
+    config:
+      alias: itg_mds_jp_pos_account_mapping
+      tags: ['pos_account_mapping','ingestion']
+
+  - name: jpnitg_integration__itg_mds_jp_pos_product_mapping
+    config:
+      alias: itg_mds_jp_pos_product_mapping
+      tags: ['pos_product_mapping','ingestion']
+
+  - name: jpnitg_integration__itg_mds_jp_pos_store_mapping
+    config:
+      alias: itg_mds_jp_pos_store_mapping
+      tags: ['pos_store_mapping','ingestion']

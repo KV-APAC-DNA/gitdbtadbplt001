@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_jp_ps_weights
+    config:
+      alias: ps_weights
+      tags: ['jp_ps_weights','ingestion']
