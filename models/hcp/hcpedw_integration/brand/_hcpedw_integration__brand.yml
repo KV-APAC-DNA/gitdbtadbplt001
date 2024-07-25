@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_hcp_master_key_by_brand
+    config:
+      alias: edw_hcp360_hcp_master_key_by_brand
+      tags: ["in_hcp_mastering","transformation"]
+  - name: hcpedw_integration__edw_hcp360_hcp_master_key_by_brand_reject
+    config:
+      alias: edw_hcp360_hcp_master_key_by_brand_reject
+      tags: ["in_hcp_mastering","transformation"]
+  - name: hcpedw_integration__edw_hcp360_in_ventasys_brand_map
+    config:
+      alias: edw_hcp360_in_ventasys_brand_map
+      tags: ["in_hcp_mastering","transformation"]
+  - name: hcpedw_integration__edw_hcp360_in_iqvia_brand
+    config:
+      alias: edw_hcp360_in_iqvia_brand
+      tags: ["in_iqvia_edw_load","transformation"]

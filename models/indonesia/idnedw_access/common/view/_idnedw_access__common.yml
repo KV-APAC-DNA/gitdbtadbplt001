@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: idnedw_access__edw_vw_rpt_id_pos_sales_stock
+    config: 
+      alias: edw_vw_rpt_id_pos_sales_stock
+      tags: ["indonesia_views","transformation"]
+
+  - name: idnedw_access__edw_indonesia_lppb_analysis
+    config: 
+      alias: edw_indonesia_lppb_analysis
+      tags: ["indonesia_views","transformation"]   
+  - name: idnedw_access__edw_indonesia_noo_analysis
+    config: 
+      alias: edw_indonesia_noo_analysis
+      tags: ["indonesia_views","transformation"]  
+  - name: idnedw_access__edw_order_sell_in_analysis
+    config: 
+      alias: edw_order_sell_in_analysis
+      tags: ["indonesia_views","transformation"]     
+  - name: idnedw_access__edw_product_dim
+    config: 
+      alias: edw_product_dim
+      tags: ["indonesia_views","transformation"] 
+  - name: idnedw_access__edw_rpt_id_sellin_analysis
+    config: 
+      alias: edw_rpt_id_sellin_analysis
+      tags: ["indonesia_views","transformation"] 
+  - name: idnedw_access__sdl_mds_id_lav_mcs_list
+    config: 
+      alias: sdl_mds_id_lav_mcs_list
+      tags: ["indonesia_views","transformation"]
+  - name: idnedw_access__sdl_mds_id_lav_product_hierarchy
+    config: 
+      alias: sdl_mds_id_lav_product_hierarchy
+      tags: ["indonesia_views","transformation"] 

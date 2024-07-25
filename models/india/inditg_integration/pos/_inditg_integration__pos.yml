@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_pos_historical_btl
+    config:
+      alias: itg_pos_historical_btl
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_historical_btl
+    config:
+      alias: sdl_raw_pos_historical_btl
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__itg_pos_re_mapping
+    config:
+      alias: itg_pos_re_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_re_mapping
+    config:
+      alias: sdl_raw_pos_re_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__itg_pos_category_mapping
+    config:
+      alias: itg_pos_category_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_category_mapping
+    config:
+      alias: sdl_raw_pos_category_mapping
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_tesco
+    config:
+      alias: sdl_raw_pos_tesco
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_dmart
+    config:
+      alias: sdl_raw_pos_dmart
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_frl
+    config:
+      alias: sdl_raw_pos_frl
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_dabur
+    config:
+      alias: sdl_raw_pos_dabur
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__sdl_raw_pos_spencer
+    config:
+      alias: sdl_raw_pos_spencer
+      tags: ["in_key_acct_offtake","transformation"]
+  - name: inditg_integration__itg_pos_offtake_fact
+    config:
+      alias: itg_pos_offtake_fact
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_hg
+    config:
+      alias: sdl_raw_pos_hg
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_max
+    config:
+      alias: sdl_raw_pos_max
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_vmm
+    config:
+      alias: sdl_raw_pos_vmm
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_ril
+    config:
+      alias: sdl_raw_pos_ril
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_abrl
+    config:
+      alias: sdl_raw_pos_abrl
+      tags: ["in_key_acct_offtake","transformation"]
+
+  - name: inditg_integration__sdl_raw_pos_apollo
+    config:
+      alias: sdl_raw_pos_apollo
+      tags: ["in_key_acct_offtake","transformation"]
+  

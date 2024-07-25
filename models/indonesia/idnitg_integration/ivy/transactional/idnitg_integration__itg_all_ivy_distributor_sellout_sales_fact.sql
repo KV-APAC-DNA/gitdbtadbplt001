@@ -298,7 +298,7 @@ final as (
         ,updt_dttm::timestamp_ntz(9) as updt_dttm
         ,run_id::number(14,0) as run_id
     from transformed
-    left join joined lkp on lkp.trans_key || lkp.batch_no || lkp.uom  =   transformed.trans_key || transformed.batch_no || transformed.uom
+    left join joined lkp on coalesce(lkp.trans_key,'') || coalesce(lkp.batch_no,'') || coalesce(lkp.uom,'')  =   coalesce(transformed.trans_key,'') || coalesce(transformed.batch_no,'') || coalesce(transformed.uom,'')
 )
 
 select * from final

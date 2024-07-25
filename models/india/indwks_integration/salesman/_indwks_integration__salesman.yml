@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_mi_psr_salesman_master
+    config:
+      alias: wks_mi_psr_salesman_master
+      tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_rev_itg_in_rsalesman
+    config: 
+      alias: wks_rev_itg_in_rsalesman
+      tags: ["in_skurecom_mslspike_datamart","transformation"]

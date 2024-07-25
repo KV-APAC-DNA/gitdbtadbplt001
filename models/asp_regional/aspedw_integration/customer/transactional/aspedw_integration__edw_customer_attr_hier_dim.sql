@@ -2,13 +2,13 @@ with itg_tw_strategic_cust_hier as(
     select * from {{ ref('ntaitg_integration__itg_tw_strategic_cust_hier') }}
 ),
 edw_customer_attr_flat_dim as(
-    select * from {{ source('aspedw_integration', 'edw_customer_attr_flat_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_attr_flat_dim') }}
 ),
 transformed as(
     select 
         src.aw_remote_key::varchar(100) as aw_remote_key,
         src.cust_nm::varchar(100) as cust_nm,
-        src.street_num::varchar(100) as street_num,
+        src.street_num::varchar(256) as street_num,
         src.street_nm::varchar(500) as street_nm,
         src.city::varchar(100) as city,
         src.post_cd::varchar(100) as post_cd,

@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rt_sales_fact
+    config:
+      alias: edw_rt_sales_fact
+      tags: ["in_rt_sales","transformation"]
+  - name: indedw_integration__edw_mi_sales_details
+    config:
+      alias: edw_mi_sales_details
+      tags: ["in_mi_dashboard_datamart","transformation"]
+  - name: indedw_integration__v_rpt_mi_rt_sales_details
+    config:
+      alias: v_rpt_mi_rt_sales_details
+      tags: ["in_mi_dashboard_datamart","transformation"]
+  - name: indedw_integration__v_rpt_rt_sales
+    config:
+      alias: v_rpt_rt_sales
+      tags: ["in_mi_dashboard_datamart","transformation"]
+  - name: indedw_integration__edw_rpt_mi_rt_sales_details
+    config:
+      alias: edw_rpt_mi_rt_sales_details
+      tags: ["in_mi_dashboard_datamart","transformation"]
+
+  - name: indedw_integration__edw_rpt_sales_details
+    config: 
+      alias: edw_rpt_sales_details
+      tags: ["in_edw_sales_order","transformation"]
+  - name: indedw_integration__v_rpt_sales_details_with_history
+    config: 
+      alias: v_rpt_sales_details_with_history
+      tags: ["in_edw_sales_order","transformation"]
+  - name: indedw_integration__v_rpt_sales_details
+    config: 
+      alias: v_rpt_sales_details
+      tags: ["in_edw_sales_order","transformation"]
+  - name: indedw_integration__v_rpt_ka_sales_internal
+    config:
+      alias: v_rpt_ka_sales_internal
+      tags: ["india_views","transformation"]
+  - name: indedw_integration__edw_ka_sales_fact
+    config:
+      alias: edw_ka_sales_fact
+      tags: ["in_edw_kasales","transformation"]
+
+  - name: indedw_integration__v_rpt_ka_sales
+    config:
+      alias: v_rpt_ka_sales
+      tags: ["india_views","transformation"]
+  - name: indedw_integration__v_pf_sales_stock
+    config:
+      alias: v_pf_sales_stock
+      tags: ["india_views","transformation"]

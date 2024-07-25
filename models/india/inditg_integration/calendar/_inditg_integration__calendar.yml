@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_xdm_businesscalendar
+    config:
+      alias: itg_xdm_businesscalendar
+      tags: ["in_xdm_master","ingestion"]
+  - name: inditg_integration__itg_businesscalender
+    config:
+      alias: itg_businesscalender
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+
+  - name: inditg_integration__itg_tbl_schemewise_apno
+    config:
+      alias: itg_tbl_schemewise_apno
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]

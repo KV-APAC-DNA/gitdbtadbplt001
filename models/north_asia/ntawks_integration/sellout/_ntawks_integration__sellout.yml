@@ -4,23 +4,64 @@ models:
   - name: ntawks_integration__wks_taiwan_regional_sellout
     config:
       alias: wks_taiwan_regional_sellout
-      tags: ["Customer_360_TW","transformation"]
+      tags: ["customer_360_tw","transformation"]
   - name: ntawks_integration__wks_taiwan_regional_sellout_base
     config:
       alias: wks_taiwan_regional_sellout_base
-      tags: ["Customer_360_TW","transformation"]
+      tags: ["customer_360_tw","transformation"]
   - name: ntawks_integration__wks_taiwan_regional_sellout_npd
     config:
       alias: wks_taiwan_regional_sellout_npd
-      tags: ["Customer_360_TW","transformation"]
+      tags: ["customer_360_tw","transformation"]
   - name: ntawks_integration__wks_taiwan_regional_sellout_offtake_npd
     config:
       alias: wks_taiwan_regional_sellout_offtake_npd
-      tags: ["Customer_360_TW","transformation"]
+      tags: ["customer_360_tw","transformation"]
   - name: ntawks_integration__wks_edw_pos_fact
     config:
       alias: wks_edw_pos_fact
-      tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","transformation"]
-   
- 
-  
+      tags: ["pos_edw_load","transformation"]
+  - name: ntawks_integration__wks_parameter_gt_sellout
+    config:
+      alias: wks_parameter_gt_sellout
+      tags: ["gt_sellout_nh","transformation"]
+  - name: ntawks_integration__wks_itg_ims_sls
+    config:
+      alias: wks_itg_ims_sls
+      tags: ["na_trxn_ims","transformation"]
+  - name: ntawks_integration__wks_hong_kong_regional_sellout
+    config:
+      alias: wks_hong_kong_regional_sellout
+      tags: ["cutomer_360_hk","transformation"]
+  - name: ntawks_integration__wks_hong_kong_regional_sellout_base
+    config:
+      alias: wks_hong_kong_regional_sellout_base
+      tags: ["cutomer_360_hk","transformation"]
+  - name: ntawks_integration__wks_hong_kong_regional_sellout_npd
+    config:
+      alias: wks_hong_kong_regional_sellout_npd
+      tags: ["cutomer_360_hk","transformation"]
+  - name: ntawks_integration__wks_hong_kong_regional_sellout_offtake_npd
+    config:
+      alias: wks_hong_kong_regional_sellout_offtake_npd
+      tags: ["cutomer_360_hk","transformation"]
+  - name: ntawks_integration__wks_korea_regional_sellout
+    config:
+      alias: wks_korea_regional_sellout
+      tags: ["cutomer_360_kr","transformation"]
+  - name: ntawks_integration__wks_korea_regional_sellout_base
+    config:
+      alias: wks_korea_regional_sellout_base
+      tags: ["cutomer_360_kr","transformation"]
+  - name: ntawks_integration__wks_korea_regional_sellout_npd
+    config:
+      alias: wks_korea_regional_sellout_npd
+      tags: ["cutomer_360_kr","transformation"]
+  - name: ntawks_integration__wks_korea_regional_sellout_offtake_npd
+    config:
+      alias: wks_korea_regional_sellout_offtake_npd
+      tags: ["cutomer_360_kr","transformation"]
+  - name: ntawks_integration__tw_pos
+    config:
+      alias: tw_pos
+      tags: ["pos_edw_load","transformation"]

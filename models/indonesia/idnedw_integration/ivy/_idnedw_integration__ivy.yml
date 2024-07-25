@@ -17,7 +17,7 @@ models:
   - name: idnedw_integration__edw_distributor_ivy_order
     config:
       alias: edw_distributor_ivy_order
-      tags: ["id_ivy_order","transformation"]
+      tags: ["id_ivy","transformation"]
   - name: idnedw_integration__edw_ivy_indonesia_noo_analysis
     config:
       alias: edw_ivy_indonesia_noo_analysis
@@ -25,25 +25,25 @@ models:
   - name: idnedw_integration__vw_all_distributor_sellout_sales_fact
     config:
       alias: vw_all_distributor_sellout_sales_fact
-      tags: ["id_sellout_sales","transformation"]
+      tags: ["indonesia_views","transformation"]
 
   - name: idnedw_integration__edw_distributor_ivy_inventory
     config:
       alias: edw_distributor_ivy_inventory
-      tags: ["id_ivy_inventory","transformation"]
+      tags: ["id_ivy","transformation"]
 
   - name: idnedw_integration__edw_distributor_ivy_merchandising
     config:
       alias: edw_distributor_ivy_merchandising
-      tags: ["id_ivy_merchandising","transformation"]
+      tags: ["id_ivy","transformation"]
   - name: idnedw_integration__edw_distributor_ivy_user_master
     config:
       alias: edw_distributor_ivy_user_master
-      tags: ["id_ivy_usermaster","transformation"]
+      tags: ["id_ivy","transformation"]
   - name: idnedw_integration__edw_distributor_ivy_outlet_master
     config:
       alias: edw_distributor_ivy_outlet_master
-      tags: ["id_ivy_outletmaster_manual_upload","transformation"]
+      tags: ["id_ivy","transformation"]
 
   - name: idnedw_integration__edw_vw_id_pos_stock
     config:

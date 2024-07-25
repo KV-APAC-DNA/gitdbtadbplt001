@@ -9,8 +9,25 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_kr_otc_inventory
+        tags: ["j_kr_otc_inv_etl_framework","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["mnth_id","matl_num","brand","product_name","distributor_cd"]
+            not_null_columns: ["matl_num","distributor_cd"]
+            name: TRATBL_sdl_kr_otc_inventory__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_duplicate:
+            select_columns: ["mnth_id","matl_num","brand","product_name","distributor_cd"]
+            group_by_columns: ["mnth_id","matl_num","brand","product_name","unit_price","distributor_cd","inv_qty","inv_amt","filename"]
+            name: TRATBL_sdl_kr_otc_inventory__duplicate_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
       - name: sdl_tw_as_watsons_inventory
-        tags: ["j_rg_watsons_inv_ingestion ","ingestion"]
+        tags: ["j_rg_watsons_inv_ingestion","ingestion"]
         tests:
             - test_null:
                 select_columns: ["item_cd","item_desc"]
@@ -455,6 +472,24 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+      - name: sdl_hk_ims_wingkeung_inv
+        tests:
+          - test_null:
+              select_columns: ["date","stk_code","prod_code"]
+              not_null_columns: ["date"]
+              name: TRATBL_sdl_hk_ims_wingkeung_inv__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve_leap:
+              date_column: "date"
+              filter: "(odd_mon.date) = (even_mon.date) and (even_mon.date) = (feb.date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
+              failure_reason: "'Transaction-date having incorrect date-format. Expected: YYYY-MM-DD'"
+              select_columns: ["date","stk_code","prod_code"]
+              name: TRATBL_sdl_hk_ims_wingkeung_inv__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration
 
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -465,8 +500,6 @@ sources:
       identifier: false
     tables:
     - name: itg_ims_invnt_temp
-    - name: itg_gt_msl_items
-      tags: ["","ingestion"]
 
   - name: ntawks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -478,5 +511,3 @@ sources:
     tables:
     - name: tw_ims_distributor_ingestion_metadata
       tags: ["","ingestion"]
-    - name: wks_edw_customer_attr_flat_dim
-

@@ -5,29 +5,29 @@
     from=model)
 %}
 
-    select 
+    select
         '{{failure_reason}}' AS failure_reason,
         {{column_names}}
 
     from (
-        select 
+        select
         {{column_names}}
         from {{model}}
-        where 
+        where
             not ({{column}}) in (
                 select distinct
                     ({{lookup_column}})
                 from  {{lookup_table}}
                 {%- if lookup_filter !=None -%}
                 where {{lookup_filter}}
-                
+
     {% endif %}
     )
-    {%- if filters !=None -%}
-                and    {{filter}}
+    {%- if filters !=None %}
+            and  {{filters}}
     {% endif %}
-    ) 
+    )
     {%- if additional_filter !=None -%}
     where    {{additional_filter}}
-    {% endif %}           
+    {% endif %}
 {% endmacro %}

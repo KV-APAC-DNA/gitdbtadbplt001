@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_tblpf_clstkm
+    config: 
+      alias: wks_tblpf_clstkm
+      tags: ["in_sdlitg_salescube_master","transformation"]

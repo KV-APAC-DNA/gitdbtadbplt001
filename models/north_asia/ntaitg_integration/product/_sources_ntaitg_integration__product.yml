@@ -1,0 +1,232 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_kr_price_tracker
+      tags: ["",""]
+    - name: sdl_mds_kr_product_ean_mapping
+      tags: ["kr_mds_refresh","transformation"]
+
+    - name: sdl_kr_jnj_price_guide
+      tags: ["j_kr_price_master_data_ingestion","ingestion"]
+    - name: sdl_kr_coupang_daily_brand_reviews
+      tags: ["j_kr_ecommerce_sellout_ing", "ingestion"]
+      tests:
+        - test_null:
+              select_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              not_null_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              name: TRATBL_sdl_kr_coupang_daily_brand_reviews__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+        - test_date_format_odd_eve_leap:
+              model_nm: "{{ source('ntasdl_raw', 'sdl_kr_coupang_daily_brand_reviews') }}"
+              date_column: "review_date"
+              filter: "(odd_mon.review_date) = (even_mon.review_date)
+                        and   (even_mon.review_date) = (feb.review_date)
+                        and   (odd_mon.result) = (even_mon.result)
+                        and   (even_mon.result) = (feb.result)"
+              failure_reason: "'review_date HAVING INCORRECT DATE-FORMAT. EXPECTED: YYYYMMDD'"
+              select_columns: ["review_date", "brand", "coupang_sku_id", "coupang_sku_name", "review_score_star"]
+              name: TRATBL_sdl_kr_coupang_daily_brand_reviews__test_date_format_odd_eve_leap
+              config:
+                store_failures: true
+                schema: ntawks_integration 
+    - name: sdl_mds_kr_sub_customer_master
+      tags: ["gt_sellout_food_ws_cust_dim", "gt_sellout_nacf_cust_dim", "gt_sellout_otc", "ingestion"]
+      #Inactivating the DQ dince it has 'RETAILER_CODE' is referred, which is not there in source table - Waiting for KDP team to respond back on this.
+      # tests:
+      #   - test_duplicate:
+      #       select_columns: ["name", "code", "sap_customer_code"]
+      #       group_by_columns: ["name", "code", "sap_customer_code"]
+      #       filter: "upper(trim(retailer_code))='DEPT & DAISO'"
+      #       name: TRATBL_sdl_mds_kr_sub_customer_master__duplicate_test_daiso
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+      #   - test_null:
+      #       select_columns: ["name", "code", "sap_customer_code"]
+      #       not_null_columns: ["code", "sap_customer_code"]
+      #       filter: "upper(trim(retailer_code))='DEPT & DAISO'"
+      #       name: TRATBL_sdl_mds_kr_sub_customer_master__null_test_daiso
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+      #   - test_duplicate:
+      #       select_columns: ["code", "sap_customer_code"]
+      #       group_by_columns: ["code", "sap_customer_code"]
+      #       filter: "trim(upper(retailer_code)) = 'NACF'"
+      #       name: TRATBL_sdl_mds_kr_sub_customer_master__duplicate_test_nacf
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+      #   - test_null:
+      #       select_columns: ["code", "sap_customer_code"]
+      #       not_null_columns: ["code", "sap_customer_code"]
+      #       filter: "trim(upper(retailer_code)) = 'NACF'"
+      #       name: TRATBL_sdl_mds_kr_sub_customer_master__null_test_nacf
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+      #   - test_duplicate:
+      #       select_columns: ["name","retailer_code", "customer_code"]
+      #       group_by_columns: ["name","retailer_code", "customer_code"]
+      #       filter: "upper(trim(retailer_code)) = 'FOOD_WS'"
+      #       name: TRATBL_sdl_mds_kr_sub_customer_master__duplicate_test_foodws
+      #       config:
+      #         store_failures: true
+      #         schema: ntawks_integration
+    - name: sdl_mds_kr_brand_campaign_promotion
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["code","brand_code"]
+          not_null_columns: ["code","brand_code"]
+          name: TRATBL_sdl_mds_kr_brand_campaign_promotion__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["code","brand_code"]
+          group_by_columns: ["code","brand_code"]
+          name: TRATBL_sdl_mds_kr_brand_campaign_promotion__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_naver_product_master
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          not_null_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          name: TRATBL_sdl_mds_kr_naver_product_master__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          group_by_columns: ["code","category_l_code","category_m_code","category_s_code","brands_name"]
+          name: TRATBL_sdl_mds_kr_naver_product_master__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_keyword_classifications
+      tags: ["j_kr_ecomm_offtake_product_master_load","ingestion"]
+      tests:
+      - test_null:
+          select_columns: ["keyword","keyword_group"]
+          not_null_columns: ["keyword","keyword_group"]
+          name: TRATBL_sdl_mds_kr_keyword_classifications__null_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+      - test_duplicate:
+          select_columns: ["keyword","keyword_group"]
+          group_by_columns: ["keyword","keyword_group"]
+          name: TRATBL_sdl_mds_kr_keyword_classifications__duplicate_test
+          config:
+            store_failures: true
+            schema: ntawks_integration
+    - name: sdl_mds_kr_product_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+    - name: sdl_mds_hk_product_hierarchy
+      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+    - name: sdl_kr_gt_daiso_price
+      tags: ["kr_gt_sellout","ingestion"]
+    - name: sdl_mds_kr_retailer_price_master
+      tags: ["gt_sellout_daiso_price_master", "kr_gt_sellout", "ingestion"]
+      tests:
+        - test_duplicate:
+            select_columns: ["ean"]
+            group_by_columns: ["ean"]
+            filter: "upper(retailer_code)='DAISO'"
+            name: TRATBL_sdl_mds_kr_retailer_price_master__duplicate_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_null:
+            select_columns: ["ean", "unit_price"]
+            not_null_columns: ["ean", "unit_price"]
+            filter: "upper(retailer_code)='DAISO'"
+            name: TRATBL_sdl_mds_kr_retailer_price_master__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_kr_nh_gt_sellout
+      tags: ["gt_sellout_nh", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
+            not_null_columns: ["ean"]
+            name: TRATBL_sdl_kr_nh_gt_sellout__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_lookup:
+            select_columns: ["ims_txn_dt", "dstr_nm", "ean", "customer_code"]
+            column: "coalesce(ltrim(customer_code,0),'NULL')"
+            lookup_column: "coalesce(ltrim(cust_num,0),'NULL')"
+            lookup_table: "{{ ref('aspedw_integration__edw_customer_base_dim') }}"                                                                      
+            failure_reason: "'missing customer code compared with master file: customer_code'"
+            name: TRATBL_sdl_kr_nh_gt_sellout__lookup_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_kr_nu_ri_zon_gt_sellout
+      tags: ["kr_gt_sellout", "ingestion"]
+      tests:
+        - test_null:
+            select_columns: ["ims_txn_dt", "dstr_nm", "ean", "cust_cd", "sub_customer_name"]
+            not_null_columns: ["ean"]
+            name: TRATBL_sdl_kr_nu_ri_zon_gt_sellout__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_mds_tw_ims_dstr_prod_price_map
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
+      tests:
+        - test_duplicate:
+            select_columns: ["code", "dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
+            group_by_columns: ["dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
+            name: TRATBL_sdl_mds_tw_ims_dstr_prod_price_map__duplicate_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_null:
+            select_columns: ["code", "dstr_code", "ean_code", "dstr_product_code", "promotion_start_date", "promotion_end_date"]
+            not_null_columns: ["code", "ean_code", "promotion_start_date", "promotion_end_date"]
+            name: TRATBL_sdl_mds_tw_ims_dstr_prod_price_map__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration
+    - name: sdl_mds_hk_wingkeung_gt_msl_items
+      tags: ["na_ims_inv_mds_sdl_itg_load","ingestion"]
+      tests:
+        - test_duplicate:
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
+            group_by_columns: ["wk_code", "sap_code", "strt_yr_mnth"]
+            name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__duplicate_test_1
+            config:
+              store_failures: true
+              schema: ntawks_integration
+        - test_null:
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
+            not_null_columns: ["code"]
+            name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__null_test
+            config:
+              store_failures: true
+              schema: ntawks_integration        
+        - test_duplicate:
+            select_columns: ["wk_code", "sap_code", "strt_yr_mnth", "end_yr_mnth", "code"]
+            group_by_columns: ["code"]
+            name: TRATBL_sdl_mds_hk_wingkeung_gt_msl_items__duplicate_test_2
+            config:
+              store_failures: true
+              schema: ntawks_integration 

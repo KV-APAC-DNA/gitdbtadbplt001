@@ -1,7 +1,7 @@
 with 
 edw_intrm_calendar as 
 (
-    select * from {{ source('ntaedw_integration', 'edw_intrm_calendar') }}
+    select * from {{ ref('ntaedw_integration__edw_intrm_calendar') }}
 ),
 itg_mds_hk_pos_promo_calendar as 
 (
@@ -233,7 +233,7 @@ FROM (
 			) AS cal_mnth_day
 		,to_char((ecd.cal_day)::TIMESTAMP without TIME zone, ('W'::CHARACTER VARYING)::TEXT) AS cal_mnth_wk_num
 		,(ecd.cal_wk)::CHARACTER VARYING AS cal_yr_wk_num
-		,((ecd.cal_day)::TIMESTAMP without TIME zone) AS cal_day
+		,((ecd.cal_day)::date) AS cal_day
 		,"replace" (
 			((ecd.cal_day)::CHARACTER VARYING)::TEXT
 			,('-'::CHARACTER VARYING)::TEXT

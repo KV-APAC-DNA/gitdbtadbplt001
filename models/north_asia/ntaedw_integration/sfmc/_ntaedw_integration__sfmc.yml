@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: ntaedw_integration__edw_sfmc_naver_data
+    config:
+        alias: edw_sfmc_naver_data
+        tags: ["kr_sfmc_analysis_refresh","transformation"]
+  - name: ntaedw_integration__edw_vw_sfmc_naver_data
+    config:
+        alias: edw_vw_sfmc_naver_data
+        tags: ["kr_sfmc_analysis_refresh","transformation"]

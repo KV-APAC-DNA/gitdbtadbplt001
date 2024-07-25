@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_orsl_products_target
+      tags: ["in_orsl_datamart","ingestion"]
+      tests:
+        - test_duplicate:
+            group_by_columns: ["region_code","zone_code","hq_code","product_code","product_name","product_category_code","year_code","month_code"]
+            select_columns: ["region_code","zone_code","hq_code","product_code","product_name","product_category_code","year_code","month_code"]
+            name: TRATBL_sdl_mds_in_orsl_products_target__duplicate_test
+            config:
+              store_failures: true
+              schema: hcpwks_integration

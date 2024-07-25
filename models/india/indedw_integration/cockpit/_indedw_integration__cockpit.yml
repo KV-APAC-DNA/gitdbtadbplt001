@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: indedw_integration__edw_rpt_cockpit_invoice_targets
+    config:
+      alias: edw_rpt_cockpit_invoice_targets
+      tags: ["j_ap_idc_etl_framework","transformation"]
+
+  - name: indedw_integration__edw_rpt_decision_cockpit_details
+    config:
+      alias: edw_rpt_decision_cockpit_details
+      tags: ["j_ap_idc_etl_framework","transformation"]
+
+  - name: indedw_integration__v_rpt_fran_chnl_actl
+    config:
+      alias: v_rpt_fran_chnl_actl
+      tags: ["j_ap_idc_etl_framework","transformation"]
+
+  - name: indedw_integration__v_rpt_gt_target_vs_actuals
+    config:
+      alias: v_rpt_gt_target_vs_actuals
+      tags: ["j_ap_idc_etl_framework","transformation"]
+      

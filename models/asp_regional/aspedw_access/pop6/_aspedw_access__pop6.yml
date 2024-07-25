@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: aspedw_access__edw_pop6_ops_view
+    config:
+      alias: edw_pop6_ops_view
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_hist_data
+    config:
+      alias: edw_vw_pop6_analysis_hist_data
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data
+    config:
+      alias: edw_vw_pop6_analysis_active_data
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_hk
+    config:
+      alias: edw_vw_pop6_analysis_active_data_hk
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_jp
+    config:
+      alias: edw_vw_pop6_analysis_active_data_jp
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_kr
+    config:
+      alias: edw_vw_pop6_analysis_active_data_kr
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_sg
+    config:
+      alias: edw_vw_pop6_analysis_active_data_sg
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_th
+    config:
+      alias: edw_vw_pop6_analysis_active_data_th
+      tags: ["pop6_views","transformation"]
+  - name: aspedw_access__edw_vw_pop6_analysis_active_data_tw
+    config:
+      alias: edw_vw_pop6_analysis_active_data_tw
+      tags: ["pop6_views","transformation"]
+

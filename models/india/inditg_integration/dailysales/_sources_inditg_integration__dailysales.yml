@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_csl_dailysales
+      tags: ["in_sdlitg_gtsales","ingestion"]
+    - name: sdl_csl_dailysales_undelivered
+      tags: ["in_sdlitg_gtsales","ingestion"]
+
+    - name: sdl_dailysales_del
+      tags: ["in_sdlitg_gtsales","ingestion"]
+    - name: sdl_winculum_dailysales
+      tags: ["in_sdlitg_daily","transformation"]

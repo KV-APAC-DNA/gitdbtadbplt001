@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_customer_dim
+    config:
+      alias: wks_customer_dim
+      tags: ["in_xdm_master","transformation"]
+  - name: indwks_integration__wks_mi_psr_ret_dim_lat_cust
+    config:
+      alias: wks_mi_psr_ret_dim_lat_cust
+      tags: ["in_mi_psr_datamart","transformation"]
+  - name: indwks_integration__wks_lks_businesscalender
+    config:
+      alias: wks_lks_businesscalender
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+
+  - name: indwks_integration__wks_csl_tbl_schemewise_apno
+    config:
+      alias: wks_csl_tbl_schemewise_apno
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]

@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_in_mds_product_category_mapping
+    config:
+      alias: itg_in_mds_product_category_mapping
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_ecom_nts_adjustment
+    config:
+      alias: itg_mds_in_ecom_nts_adjustment
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_ps_weights
+    config:
+      alias: itg_mds_in_ps_weights
+      tags: ["in_mds_refresh","ingestion"]
+
+  - name: inditg_integration__itg_mds_in_sv_winculum_master
+    config:
+      alias: itg_mds_in_sv_winculum_master
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_mds_month_end_dates
+    config:
+      alias: itg_mds_month_end_dates
+      tags: ["in_sdlitg_salescube_master","ingestion"]
+
+  - name: inditg_integration__itg_in_mds_channel_mapping
+    config: 
+      alias: itg_in_mds_channel_mapping
+      tags: ["in_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_international_customer_details
+    config: 
+      alias: itg_mds_in_international_customer_details
+      tags: ["in_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_gl_account_master
+    config: 
+      alias: itg_mds_in_gl_account_master
+      tags: ["in_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sap_distribution_channel
+    config: 
+      alias: itg_mds_in_sap_distribution_channel
+      tags: ["in_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_key_accounts_mapping
+    config:
+      alias: itg_mds_in_key_accounts_mapping
+      tags: ["in_ecom_datamart","transformation"]
+  - name: inditg_integration__itg_mds_in_sss_weights
+    config:
+      alias: itg_mds_in_sss_weights
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_score
+    config:
+      alias: itg_mds_in_sss_score
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_ps_msl
+    config:
+      alias: itg_mds_in_sss_ps_msl
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_mds_in_sss_ps_promoter_store_map
+    config:
+      alias: itg_mds_in_sss_ps_promoter_store_map
+      tags: ["in_sss_scorecard_mds_refresh","ingestion"]
+  - name: inditg_integration__itg_sss_scorecard_data
+    config:
+      alias: itg_sss_scorecard_data
+      tags: ["in_sss_scorecard_ingestion","ingestion"]
+  # - name: inditg_integration__itg_mds_in_sss_zonal_rtr_program_mapping
+  #   config:
+  #     alias: itg_mds_in_sss_zonal_rtr_program_mapping
+  #     tags: ["in_sss_zonal_datamart","transformation"]
+  - name: inditg_integration__itg_rdssmweeklytarget_output
+    config:
+      alias: itg_rdssmweeklytarget_output
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__itg_scheme_header
+    config:
+      alias: itg_scheme_header
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__itg_ittarget
+    config:
+      alias: itg_ittarget
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]

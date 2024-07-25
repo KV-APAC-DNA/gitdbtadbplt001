@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook= '{{build_itg_ims_invnt_temp()}}'
+        pre_hook="{{ build_itg_ims_invnt_temp() }}"
     )
 }}
 with sdl_tw_ims_dstr_std_stock as(

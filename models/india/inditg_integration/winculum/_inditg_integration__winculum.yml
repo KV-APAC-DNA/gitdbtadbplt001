@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: inditg_integration__itg_mds_in_sv_winculum_master_wrk
+    config:
+      alias: itg_mds_in_sv_winculum_master_wrk
+      tags: ["in_sdlitg_salescube_master","transformation"]

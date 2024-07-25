@@ -1,11 +1,8 @@
 {{
     config(
-        materialized='incremental',
-        incremental_strategy='append',
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;',
-        pre_hook="{% if is_incremental() %}
-                delete from {{this}} wks where (jj_sap_dstrbtr_id, replace(wks.jj_mnth,'.','')) in (select distinct jj_sap_dstrbtr_id,jj_mnth_id from {{ source('idnwks_integration', 'wks_itg_all_distributor_sellin_sellout_fact') }} where upper(identifier) ='SELLOUT' or upper(identifier)='SELLOUT_NKA_ECOM');
-                {% endif %}"     
+        transient=false,
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
+        pre_hook="{{build_wks_indonesia_noo_analysis_temp()}}"     
     )
 }}
 
@@ -14,6 +11,7 @@ select * from {{ source('idnedw_integration', 'edw_time_dim') }}
 ),
 wks_itg_all_distributor_sellin_sellout_fact as(
 select * from {{ source('idnwks_integration', 'wks_itg_all_distributor_sellin_sellout_fact') }}
+-- loaded from macro 
 ),
 EDW_DISTRIBUTOR_DIM as(
 select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
@@ -35,6 +33,9 @@ select * from {{ ref('idnedw_integration__edw_distributor_customer_dim') }}
 ),
 EDW_DISTRIBUTOR_SALESMAN_DIM as(
 select * from {{ ref('idnedw_integration__edw_distributor_salesman_dim') }}
+),
+wks_indonesia_noo_analysis_temp as(
+    select * from {{ source('idnwks_integration', 'wks_indonesia_noo_analysis_temp') }}
 ),
 union1 as 
 (
@@ -682,4 +683,302 @@ updt2 as(
         left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(updt.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
         left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(updt.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
 )
+
+
+,
+filtered_noo as (
+    select * from wks_indonesia_noo_analysis_temp as noo where (jj_sap_dstrbtr_id, jj_mnth) not in (select distinct jj_sap_dstrbtr_id, jj_mnth from updt2)
+),
+updated_noo as (
+    select 
+        filtered_noo.jj_year as jj_year,
+        filtered_noo.jj_qrtr as jj_qrtr,
+        filtered_noo.jj_mnth as jj_mnth,
+        filtered_noo.jj_wk as jj_wk,
+        filtered_noo.jj_mnth_wk_no as jj_mnth_wk_no,
+        filtered_noo.jj_mnth_no as jj_mnth_no,
+        filtered_noo.bill_doc as bill_doc,
+        filtered_noo.bill_dt as bill_dt,
+        filtered_noo.dstrbtr_grp_cd as dstrbtr_grp_cd,
+        filtered_noo.dstrbtr_grp_nm as dstrbtr_grp_nm,
+        filtered_noo.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+        filtered_noo.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+        filtered_noo.dstrbtr_cd_nm as dstrbtr_cd_nm,
+        filtered_noo.area as area,
+        filtered_noo.region as region,
+        filtered_noo.bdm_nm as bdm_nm,
+        filtered_noo.rbm_nm as rbm_nm,
+        filtered_noo.dstrbtr_status as dstrbtr_status,
+        filtered_noo.cust_id_map as cust_id_map,
+        filtered_noo.cust_nm_map as cust_nm_map,
+        filtered_noo.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+        filtered_noo.cust_grp as cust_grp,
+        filtered_noo.chnl as chnl,
+        filtered_noo.outlet_type as outlet_type,
+        filtered_noo.chnl_grp as chnl_grp,
+        filtered_noo.jjid as jjid,
+        filtered_noo.chnl_grp2 as chnl_grp2,
+        filtered_noo.city as city,
+        filtered_noo.cust_status as cust_status,
+        filtered_noo.jj_sap_prod_id as jj_sap_prod_id,
+        filtered_noo.jj_sap_prod_desc as jj_sap_prod_desc,
+        filtered_noo.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+        filtered_noo.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+        filtered_noo.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+        filtered_noo.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+        filtered_noo.sap_prod_code_name as sap_prod_code_name,
+        filtered_noo.franchise as franchise,
+        filtered_noo.brand as brand,
+        filtered_noo.variant1 as variant1,
+        filtered_noo.variant2 as variant2,
+        filtered_noo.variant as variant,
+        filtered_noo.put_up as put_up,
+        filtered_noo.prod_status as prod_status,
+        filtered_noo.slsmn_id as slsmn_id,
+        filtered_noo.slsmn_nm as slsmn_nm,
+        filtered_noo.sls_qty as sls_qty,
+        filtered_noo.hna as hna,
+        filtered_noo.niv as niv,
+        filtered_noo.trd_dscnt as trd_dscnt,
+        filtered_noo.dstrbtr_niv as dstrbtr_niv,
+        filtered_noo.rtrn_qty as rtrn_qty,
+        filtered_noo.rtrn_val as rtrn_val,
+        filtered_noo.hsku_target_growth as hsku_target_growth,
+        filtered_noo.hsku_target_coverage as hsku_target_coverage,
+        filtered_noo.jj_mnth_long as jj_mnth_long,
+        filtered_noo.trgt_hna as trgt_hna,
+        filtered_noo.trgt_niv as trgt_niv,
+        filtered_noo.npi_flag as npi_flag,
+        filtered_noo.benchmark_sku_code as benchmark_sku_code,
+        filtered_noo.sku_benchmark as sku_benchmark,
+        filtered_noo.hero_sku_flag as hero_sku_flag,
+        filtered_noo.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+        filtered_noo.tiering as tiering,
+        filtered_noo.count_sku_code as count_sku_code,
+        filtered_noo.mcs_status as mcs_status,
+        filtered_noo.local_variant as local_variant,
+        filtered_noo.count_local_variant as count_local_variant,
+        filtered_noo.salesman_key as salesman_key,
+        filtered_noo.sfa_id as sfa_id,
+        nvl(upper(edcd.chnl), filtered_noo.latest_chnl) as latest_chnl,
+        nvl(
+            upper(edcd.outlet_type),
+            filtered_noo.latest_outlet_type
+        ) as latest_outlet_type,
+        nvl(edcd.chnl_grp, filtered_noo.latest_chnl_grp) as latest_chnl_grp,
+        nvl(edcd.cust_grp2, filtered_noo.latest_cust_grp2) as latest_cust_grp2,
+        nvl(edcd.cust_grp, filtered_noo.latest_cust_grp) as latest_cust_grp,
+        nvl(edcd.cust_nm_map, filtered_noo.latest_cust_nm_map) as latest_cust_nm_map,
+        nvl(edd.region, filtered_noo.latest_region) as latest_region,
+        nvl(edd.area, filtered_noo.latest_area) as latest_area,
+        nvl(edd.rbm_nm, filtered_noo.latest_rbm) as latest_rbm,
+        nvl(edd.bdm_nm, filtered_noo.latest_area_pic) as latest_area_pic,
+        nvl(edcd.jjid, filtered_noo.latest_jjid) as latest_jjid,
+        nvl(
+            edp.VARIANT3 || ' ' || NVL(CAST(edp.PUT_UP AS VARCHAR), ''),
+            filtered_noo.latest_put_up
+        ) as latest_put_up,
+        nvl(edp.franchise, filtered_noo.latest_franchise) as latest_franchise,
+        nvl(edp.brand, filtered_noo.latest_brand) as latest_brand,
+        filtered_noo.latest_msl as latest_msl,
+        filtered_noo.latest_count_local_variant as latest_count_local_variant,
+        nvl(edcd.chnl_grp2, filtered_noo.latest_chnl_grp2) as latest_chnl_grp2,
+        nvl(
+            edd.dstrbtr_grp_nm,
+            filtered_noo.latest_distributor_group
+        ) as latest_distributor_group,
+        --filtered_noo.latest_distributor_group as latest_distributor_group,
+        nvl(
+            edd.dstrbtr_grp_cd,
+            filtered_noo.latest_dstrbtr_grp_cd
+        ) as latest_dstrbtr_grp_cd,
+        -- filtered_noo.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+    from filtered_noo
+        left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk_outlet EDCD ON concat(
+            TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)),
+            TRIM(UPPER(filtered_noo.cust_id_map))
+        ) = trim(upper(edcd.key_outlet))
+        left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(filtered_noo.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
+        left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(filtered_noo.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
+),
+transformed_noo as (
+    select updated_noo.jj_year as jj_year,
+        updated_noo.jj_qrtr as jj_qrtr,
+        updated_noo.jj_mnth as jj_mnth,
+        updated_noo.jj_wk as jj_wk,
+        updated_noo.jj_mnth_wk_no as jj_mnth_wk_no,
+        updated_noo.jj_mnth_no as jj_mnth_no,
+        updated_noo.bill_doc as bill_doc,
+        updated_noo.bill_dt as bill_dt,
+        updated_noo.dstrbtr_grp_cd as dstrbtr_grp_cd,
+        updated_noo.dstrbtr_grp_nm as dstrbtr_grp_nm,
+        updated_noo.jj_sap_dstrbtr_id as jj_sap_dstrbtr_id,
+        updated_noo.jj_sap_dstrbtr_nm as jj_sap_dstrbtr_nm,
+        updated_noo.dstrbtr_cd_nm as dstrbtr_cd_nm,
+        updated_noo.area as area,
+        updated_noo.region as region,
+        updated_noo.bdm_nm as bdm_nm,
+        updated_noo.rbm_nm as rbm_nm,
+        updated_noo.dstrbtr_status as dstrbtr_status,
+        updated_noo.cust_id_map as cust_id_map,
+        updated_noo.cust_nm_map as cust_nm_map,
+        updated_noo.dstrbtr_cust_cd_nm as dstrbtr_cust_cd_nm,
+        updated_noo.cust_grp as cust_grp,
+        updated_noo.chnl as chnl,
+        updated_noo.outlet_type as outlet_type,
+        updated_noo.chnl_grp as chnl_grp,
+        updated_noo.jjid as jjid,
+        updated_noo.chnl_grp2 as chnl_grp2,
+        updated_noo.city as city,
+        updated_noo.cust_status as cust_status,
+        updated_noo.jj_sap_prod_id as jj_sap_prod_id,
+        updated_noo.jj_sap_prod_desc as jj_sap_prod_desc,
+        updated_noo.jj_sap_upgrd_prod_id as jj_sap_upgrd_prod_id,
+        updated_noo.jj_sap_upgrd_prod_desc as jj_sap_upgrd_prod_desc,
+        updated_noo.jj_sap_cd_mp_prod_id as jj_sap_cd_mp_prod_id,
+        updated_noo.jj_sap_cd_mp_prod_desc as jj_sap_cd_mp_prod_desc,
+        updated_noo.sap_prod_code_name as sap_prod_code_name,
+        updated_noo.franchise as franchise,
+        updated_noo.brand as brand,
+        updated_noo.variant1 as variant1,
+        updated_noo.variant2 as variant2,
+        updated_noo.variant as variant,
+        updated_noo.put_up as put_up,
+        updated_noo.prod_status as prod_status,
+        updated_noo.slsmn_id as slsmn_id,
+        updated_noo.slsmn_nm as slsmn_nm,
+        updated_noo.sls_qty as sls_qty,
+        updated_noo.hna as hna,
+        updated_noo.niv as niv,
+        updated_noo.trd_dscnt as trd_dscnt,
+        updated_noo.dstrbtr_niv as dstrbtr_niv,
+        updated_noo.rtrn_qty as rtrn_qty,
+        updated_noo.rtrn_val as rtrn_val,
+        updated_noo.hsku_target_growth as hsku_target_growth,
+        updated_noo.hsku_target_coverage as hsku_target_coverage,
+        updated_noo.jj_mnth_long as jj_mnth_long,
+        updated_noo.trgt_hna as trgt_hna,
+        updated_noo.trgt_niv as trgt_niv,
+        updated_noo.npi_flag as npi_flag,
+        updated_noo.benchmark_sku_code as benchmark_sku_code,
+        updated_noo.sku_benchmark as sku_benchmark,
+        updated_noo.hero_sku_flag as hero_sku_flag,
+        updated_noo.trgt_dist_brnd_chnl_flag as trgt_dist_brnd_chnl_flag,
+        updated_noo.tiering as tiering,
+        updated_noo.count_sku_code as count_sku_code,
+        updated_noo.mcs_status as mcs_status,
+        updated_noo.local_variant as local_variant,
+        updated_noo.count_local_variant as count_local_variant,
+        updated_noo.salesman_key as salesman_key,
+        updated_noo.sfa_id as sfa_id,
+        --updated_noo.latest_chnl as latest_chnl,
+        case
+            when updated_noo.chnl is not null
+            and updated_noo.latest_chnl is null then upper(edcd.chnl)
+            else updated_noo.latest_chnl
+        end as latest_chnl,
+        case
+            when updated_noo.outlet_type is not null
+            and updated_noo.latest_outlet_type is null then upper(edcd.outlet_type)
+            else updated_noo.latest_outlet_type
+        end as latest_outlet_type,
+        case
+            when updated_noo.chnl_grp is not null
+            and updated_noo.latest_chnl_grp is null then edcd.chnl_grp
+            else updated_noo.latest_chnl_grp
+        end as latest_chnl_grp,
+        --updated_noo.latest_chnl_grp as latest_chnl_grp,
+        case
+            when updated_noo.tiering is not null
+            and updated_noo.latest_cust_grp2 is null then edcd.cust_grp2
+            else updated_noo.latest_cust_grp2
+        end as latest_cust_grp2,
+        --updated_noo.latest_cust_grp2 as latest_cust_grp2,
+        case
+            when updated_noo.cust_grp is not null
+            and updated_noo.latest_cust_grp is null then edcd.cust_grp
+            else updated_noo.latest_cust_grp
+        end as latest_cust_grp,
+        --updated_noo.latest_cust_grp as latest_cust_grp,
+        case
+            when updated_noo.cust_nm_map is not null
+            and updated_noo.latest_cust_nm_map is null then edcd.cust_nm_map
+            else updated_noo.latest_cust_nm_map
+        end as latest_cust_nm_map,
+        --updated_noo.latest_cust_nm_map as latest_cust_nm_map,
+        case
+            when updated_noo.region is not null
+            and updated_noo.latest_region is null then edd.region
+            else updated_noo.latest_region
+        end as latest_region,
+        -- updated_noo.latest_region as latest_region,
+        case
+            when updated_noo.area is not null
+            and updated_noo.latest_area is null then edd.area
+            else updated_noo.latest_area
+        end as latest_area,
+        --updated_noo.latest_area as latest_area,
+        case
+            when updated_noo.rbm_nm is not null
+            and updated_noo.latest_rbm is null then edd.rbm_nm
+            else updated_noo.latest_rbm
+        end as latest_rbm,
+        --updated_noo.latest_rbm as latest_rbm,
+        case
+            when updated_noo.bdm_nm is not null
+            and updated_noo.latest_area_pic is null then edd.bdm_nm
+            else updated_noo.latest_area_pic
+        end as latest_area_pic,
+        --updated_noo.latest_area_pic as latest_area_pic,
+        case
+            when updated_noo.jjid is not null
+            and updated_noo.latest_jjid is null then upper(edcd.jjid)
+            else updated_noo.latest_jjid
+        end as latest_jjid,
+        --  updated_noo.latest_jjid as latest_jjid,
+        case
+            when updated_noo.put_up is not null
+            and updated_noo.latest_put_up is null then (
+                edp.VARIANT3 || ' ' || NVL(CAST(edp.PUT_UP AS VARCHAR), '')
+            )
+            else updated_noo.latest_put_up
+        end as latest_put_up,
+        -- updated_noo.latest_put_up as latest_put_up,
+        case
+            when updated_noo.franchise is not null
+            and updated_noo.latest_franchise is null then edp.franchise
+            else updated_noo.latest_franchise
+        end as latest_franchise,
+        -- updated_noo.latest_franchise as latest_franchise,
+        case
+            when updated_noo.brand is not null
+            and updated_noo.latest_brand is null then edp.brand
+            else updated_noo.latest_brand
+        end as latest_brand,
+        --updated_noo.latest_brand as latest_brand,
+        updated_noo.latest_msl as latest_msl,
+        updated_noo.latest_count_local_variant as latest_count_local_variant,
+        case
+            when updated_noo.tiering is not null
+            and updated_noo.latest_chnl_grp2 is null then edcd.chnl_grp2
+            else updated_noo.latest_chnl_grp2
+        end as latest_chnl_grp2,
+        --updated_noo.latest_chnl_grp2 as latest_chnl_grp2,
+        updated_noo.latest_distributor_group as latest_distributor_group,
+        updated_noo.latest_dstrbtr_grp_cd as latest_dstrbtr_grp_cd
+    from updated_noo
+        left join EDW_DISTRIBUTOR_CUSTOMER_DIM_rnk EDCD on concat(
+            TRIM(UPPER(updated_noo.JJ_SAP_DSTRBTR_ID)),
+            TRIM(UPPER(updated_noo.cust_id_map))
+        ) = concat(
+            TRIM(UPPER(edcd.JJ_SAP_DSTRBTR_ID)),
+            TRIM(UPPER(edcd.cust_id_map))
+        )
+        left join EDW_DISTRIBUTOR_DIM EDD ON TRIM(UPPER(updated_noo.JJ_SAP_DSTRBTR_ID)) = trim(upper(edd.jj_sap_dstrbtr_id))
+        left join EDW_PRODUCT_DIM_rnk AS EDP on TRIM(UPPER(updated_noo.JJ_SAP_PROD_ID)) = trim(upper(edp.jj_sap_prod_id))
+)
+
+--Final select
 select * from updt2
+union all
+select * from transformed_noo
