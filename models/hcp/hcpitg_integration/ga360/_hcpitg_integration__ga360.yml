@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpitg_integration__itg_ga360_aspac_sessions
+    config:
+      alias: itg_ga360_aspac_sessions
+      tags: ["in_ga360","transformation"]

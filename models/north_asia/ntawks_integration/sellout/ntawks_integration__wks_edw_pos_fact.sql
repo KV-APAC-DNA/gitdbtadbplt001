@@ -18,10 +18,6 @@ edw_product_attr_dim as (
     select *
     from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-ITG_POS_INVNT as (
-    select *
-    from {{ ref('ntaitg_integration__itg_pos_invnt') }}
-),
 itg_pos_prom_prc_map as (
     select *
     from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}

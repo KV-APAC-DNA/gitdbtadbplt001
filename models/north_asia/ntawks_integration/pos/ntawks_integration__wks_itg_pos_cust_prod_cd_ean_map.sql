@@ -5,10 +5,10 @@ src as(
     select distinct customer,cust_prod_cd,barcode from source
 ),
 transformed as(
-    select src.customer as customer,
+    select trim(src.customer) as customer,
        null as customer_hierarchy_code,
-       trim(src.cust_prod_cd,'') as cust_prod_cd,
-       trim(src.barcode,'') as barcode,
+       trim(src.cust_prod_cd) as cust_prod_cd,
+       rtrim(REGEXP_REPLACE(src.barcode,'[\xC2\xA0]', '')) as barcode,
        null as sap_product_code,
        null as upd_dttm
     from src
