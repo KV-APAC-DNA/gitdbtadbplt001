@@ -3,7 +3,7 @@ with edw_rpt_regional_sellout_offtake as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
 --final cte
-anz_base_retail_excellence as 
+anz_sellout_base_retail_excellence as 
 (
 SELECT CNTRY_CD,
        MD5(nvl (SOLDTO_CODE,'stc') ||nvl (DISTRIBUTOR_CODE,'dc') ||nvl (DISTRIBUTOR_NAME,'dn') ||nvl (STORE_CODE,'sc') ||nvl (EAN,'ean') ||nvl (STORE_NAME,'sn') ||nvl (CHANNEL_NAME,'cn') ||nvl (SAP_PARENT_CUSTOMER_KEY,'spck') ||nvl (SAP_PARENT_CUSTOMER_DESCRIPTION,'spscd') ||nvl (SAP_CUSTOMER_CHANNEL_KEY,'scck') ||nvl (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'sccd') ||nvl (SAP_CUSTOMER_SUB_CHANNEL_KEY,'scsck') ||nvl (SAP_SUB_CHANNEL_DESCRIPTION,'sscd') ||nvl (CUSTOMER_SEGMENT_KEY,'csk') ||nvl (CUSTOMER_SEGMENT_DESCRIPTION,'csd') ||nvl (SAP_GO_TO_MDL_KEY,'sgmk') ||nvl (SAP_GO_TO_MDL_DESCRIPTION,'sgmd') ||nvl (SAP_BANNER_KEY,'sbk') ||nvl (SAP_BANNER_DESCRIPTION,'sbd') ||nvl (SAP_BANNER_FORMAT_KEY,'sbfk') ||nvl (SAP_BANNER_FORMAT_DESCRIPTION,'sbfd') ||nvl (RETAIL_ENVIRONMENT,'re') ||nvl (GLOBAL_PRODUCT_FRANCHISE,'gpf') ||nvl (GLOBAL_PRODUCT_BRAND,'gpb') ||nvl (GLOBAL_PRODUCT_SUB_BRAND,'gpsb') ||nvl (GLOBAL_PRODUCT_VARIANT,'gpv') ||nvl (GLOBAL_PRODUCT_SEGMENT,'gps') ||nvl (GLOBAL_PRODUCT_SUBSEGMENT,'gpss') ||nvl (GLOBAL_PRODUCT_CATEGORY,'gpc') ||nvl (GLOBAL_PRODUCT_SUBCATEGORY,'gpsc') ||nvl (GLOBAL_PUT_UP_DESCRIPTION,'gpud') ||nvl (PKA_PRODUCT_KEY,'pk') ||nvl (PKA_PRODUCT_KEY_DESCRIPTION,'pkd')||nvl(store_type,'st')||nvl(Region,'rg')||nvl(zone_or_area,'ar')||nvl(store_grade,'sg')) AS SELLOUT_DIM_KEY,
@@ -204,7 +204,7 @@ so_sls_qty::numeric(38,6) as so_sls_qty,
 so_sls_value::numeric(38,6) as so_sls_value,
 so_avg_qty::numeric(10,2) as so_avg_qty,
 crt_dttm::timestamp without time zone as crt_dttm
-from anz_base_retail_excellence
+from anz_sellout_base_retail_excellence
 )
 --final select
 select * from final

@@ -1,8 +1,8 @@
-with itg_anz_re_msl_list as (
-    select * from {{ ref('pcfitg_integration__itg_anz_re_msl_list') }}
+with itg_anz_sellout_re_msl_list as (
+    select * from {{ ref('pcfitg_integration__itg_anz_sellout_re_msl_list') }}
 ),
-wks_anz_re_actuals as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_actuals') }}
+wks_anz_sellout_re_actuals as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_actuals') }}
 ),
 customer_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_customer_hierarchy') }}
@@ -16,8 +16,8 @@ EDW_SALES_ORG_DIM as(
 product_heirarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_product_hierarchy') }}
 ),
-wks_anz_c360_mapped_sku_cd as(
-    select * from {{ ref('pcfwks_integration__wks_anz_c360_mapped_sku_cd') }}
+wks_anz_sellout_c360_mapped_sku_cd as(
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_c360_mapped_sku_cd') }}
 ),
 EDW_MATERIAL_SALES_DIM as(
     select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
@@ -154,8 +154,8 @@ FROM (SELECT TARGET.jj_year,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
              100 AS TARGET_COMPLAINCE
-      FROM itg_anz_re_msl_list TARGET
-        LEFT JOIN (SELECT * FROM wks_anz_re_actuals) ACTUAL
+      FROM itg_anz_sellout_re_msl_list TARGET
+        LEFT JOIN (SELECT * FROM wks_anz_sellout_re_actuals) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
               AND TARGET.DISTRIBUTOR_NAME = ACTUAL.DISTRIBUTOR_NAME
               AND TARGET.STORE_CODE = ACTUAL.STORE_CODE
@@ -178,7 +178,7 @@ FROM (SELECT TARGET.jj_year,
                CTRY_GROUP
         FROM EDW_COMPANY_DIM
         WHERE CTRY_GROUP in ('Australia','New Zealand')) COM ON UPPER (TRIM (Q.market)) = UPPER (TRIM (com.CTRY_GROUP))
-WHERE jj_mnth_id::NUMERIC<= (SELECT MAX(mnth_id)::NUMERIC FROM wks_anz_re_actuals)
+WHERE jj_mnth_id::NUMERIC<= (SELECT MAX(mnth_id)::NUMERIC FROM wks_anz_sellout_re_actuals)
 ),
 anz_rpt_retail_excellence_non_mdp as
 (SELECT distinct Q.*,
@@ -307,9 +307,9 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              'N' AS MDP_FLAG,
              100 AS TARGET_COMPLAINCE
       FROM (SELECT *
-            FROM wks_anz_re_actuals A
+            FROM wks_anz_sellout_re_actuals A
             WHERE NOT EXISTS (SELECT 1
-                              FROM itg_anz_re_msl_list T
+                              FROM itg_anz_sellout_re_msl_list T
                               WHERE A.MNTH_ID = T.jj_mnth_id
                               AND   A.DISTRIBUTOR_NAME = T.DISTRIBUTOR_NAME
                               and A.CNTRY_NM=T.market 
@@ -317,7 +317,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
                               AND   UPPER(TRIM(A.EAN)) = UPPER(TRIM(T.EAN))
 							  and T.store_grade = A.store_grade 
 							  )) ACTUAL
-left join (select distinct EAN,sku_code,COUNTRY_CODE from wks_anz_c360_mapped_sku_cd) sku on UPPER(LTRIM(actual.EAN,0)) = UPPER(LTRIM(sku.EAN,0)) and  sku.COUNTRY_CODE = actual.CNTRY_CD
+left join (select distinct EAN,sku_code,COUNTRY_CODE from wks_anz_sellout_c360_mapped_sku_cd) sku on UPPER(LTRIM(actual.EAN,0)) = UPPER(LTRIM(sku.EAN,0)) and  sku.COUNTRY_CODE = actual.CNTRY_CD
 LEFT JOIN (SELECT EAN_NUM,MAPPED_SKU_CD,ctry_key FROM (SELECT DISTINCT EAN_NUM, LTRIM(MATL_NUM,'0') AS MAPPED_SKU_CD,ctry_key,
                                 ROW_NUMBER() OVER (PARTITION BY EAN_NUM,ctry_key ORDER BY CRT_DTTM DESC) AS RN
                          FROM EDW_MATERIAL_SALES_DIM A join (select distinct sls_org,ctry_key from EDW_SALES_ORG_DIM 

@@ -1,13 +1,13 @@
 --Import CTE
 
-with wks_anz_rpt_re_gcph as (
-    select * from {{ ref('pcfwks_integration__wks_anz_rpt_re_gcph') }}
+with wks_anz_sellout_rpt_re_gcph as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_rpt_re_gcph') }}
 ),
-wks_anz_re_target_compliance as 
+wks_anz_sellout_re_target_compliance as 
 (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_target_compliance' )}}
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_target_compliance' )}}
 ),
-edw_anz_rpt_re  as 
+edw_anz_sellout_rpt_re  as 
 (
 SELECT jj_year AS FISC_YR,
        gcph.jj_mnth_id AS FISC_PER,
@@ -139,7 +139,7 @@ SELECT jj_year AS FISC_YR,
        MDP_FLAG,
       -- TARGET_COMPLAINCE,
        CASE 
-            WHEN (MDP_FLAG = 'Y' AND UPPER(gcph.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLIANCE
+            WHEN (MDP_FLAG = 'Y' AND UPPER(gcph.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLAINCE
             ELSE 100
             END AS TARGET_COMPLAINCE,
        LIST_PRICE,
@@ -197,8 +197,8 @@ SELECT jj_year AS FISC_YR,
        COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
        COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
 	   SYSDATE() AS CRT_DTTM
-	   FROM wks_anz_rpt_re_gcph gcph
-       LEFT JOIN wks_anz_re_target_compliance TRGT_CMP on (gcph.jj_mnth_id=TRGT_CMP.jj_mnth_id and UPPER(gcph.global_product_brand)=UPPER(TRGT_CMP.global_product_brand))
+	   FROM wks_anz_sellout_rpt_re_gcph gcph
+       LEFT JOIN wks_anz_sellout_re_target_compliance TRGT_CMP on (gcph.jj_mnth_id=TRGT_CMP.jj_mnth_id and UPPER(gcph.global_product_brand)=UPPER(TRGT_CMP.global_product_brand))
 ),
 final as
 (
@@ -374,7 +374,7 @@ p6m_sales_flag_count::BIGINT AS p6m_sales_flag_count,
 p12m_sales_flag_count::BIGINT AS p12m_sales_flag_count,
 mdp_flag_count::BIGINT AS mdp_flag_count,
 crt_dttm::timestamp without time zone AS crt_dttm
-from edw_anz_rpt_re
+from edw_anz_sellout_rpt_re
 )
 --Final select
 select * from final 

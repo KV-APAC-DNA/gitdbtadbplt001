@@ -1,8 +1,8 @@
-with wks_anz_re_allmonths as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_allmonths') }}
+with wks_anz_sellout_re_allmonths as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_allmonths') }}
 ),
 --final cte
-anz_re_act_l12m  as (
+anz_sellout_re_act_l12m  as (
 select so.cntry_cd,
        so.sellout_dim_key,
        month,
@@ -11,7 +11,7 @@ select so.cntry_cd,
        sum(so_sls_value) over (partition by cntry_cd,sellout_dim_key order by month rows between 11 preceding and current row) as l12m_sales,
        avg(so_sls_qty) over (partition by cntry_cd,sellout_dim_key order by month rows between 11 preceding and current row) as l12m_avg_sales_qty,
        sum(sales_value_list_price) over (partition by cntry_cd,sellout_dim_key order by month rows between 11 preceding and current row) as l12m_sales_lp
-from wks_anz_re_allmonths so
+from wks_anz_sellout_re_allmonths so
 order by so.cntry_cd,
          so.sellout_dim_key,
          month
@@ -27,7 +27,7 @@ l12m_sales_qty::NUMERIC(38,6) AS l12m_sales_qty,
 l12m_sales::NUMERIC(38,6) AS l12m_sales,
 l12m_avg_sales_qty::NUMERIC(38,6) AS l12m_avg_sales_qty,
 l12m_sales_lp::NUMERIC(38,12) AS l12m_sales_lp
-    from anz_re_act_l12m
+    from anz_sellout_re_act_l12m
 )
 --final select
 select * from final

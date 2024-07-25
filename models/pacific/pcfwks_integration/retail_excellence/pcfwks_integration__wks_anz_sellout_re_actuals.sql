@@ -2,27 +2,27 @@
 with edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
-wks_anz_re_act_lm as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_act_lm') }}
+wks_anz_sellout_re_act_lm as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_act_lm') }}
 ),
-wks_anz_re_act_l3m as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_act_l3m') }}
-),
-
-wks_anz_re_act_l6m as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_act_l6m') }}
+wks_anz_sellout_re_act_l3m as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_act_l3m') }}
 ),
 
-wks_anz_re_act_l12m as (
-    select * from {{ ref('pcfwks_integration__wks_anz_re_act_l12m') }}
+wks_anz_sellout_re_act_l6m as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_act_l6m') }}
 ),
 
-wks_anz_base_retail_excellence as (
-    select * from {{ ref('pcfwks_integration__wks_anz_base_retail_excellence') }}
+wks_anz_sellout_re_act_l12m as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_re_act_l12m') }}
+),
+
+wks_anz_sellout_base_retail_excellence as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_base_retail_excellence') }}
 ),
 
 --final cte
-anz_re_actuals  as (
+anz_sellout_re_actuals  as (
 select re_base_dim.cntry_cd,
        re_base_dim.cntry_nm,
        re_base_dim.data_src,
@@ -109,25 +109,25 @@ from (select distinct cntry_cd,
       from (select cntry_cd,
                    sellout_dim_key,
                    month
-            from wks_anz_re_act_lm
+            from wks_anz_sellout_re_act_lm
             where lm_sales is not null
             union all
             select cntry_cd,
                    sellout_dim_key,
                    month
-            from wks_anz_re_act_l3m
+            from wks_anz_sellout_re_act_l3m
             where l3m_sales is not null
             union all
             select cntry_cd,
                    sellout_dim_key,
                    month
-            from wks_anz_re_act_l6m
+            from wks_anz_sellout_re_act_l6m
             where l6m_sales is not null
             union all
             select cntry_cd,
                    sellout_dim_key,
                    month
-            from wks_anz_re_act_l12m
+            from wks_anz_sellout_re_act_l12m
             where l12m_sales is not null)) base_dim
   left join (select distinct cntry_cd,
                     cntry_nm,
@@ -168,7 +168,7 @@ from (select distinct cntry_cd,
                     global_put_up_description,
                     pka_product_key,
                     pka_product_key_description
-             from wks_anz_base_retail_excellence where  mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
+             from wks_anz_sellout_base_retail_excellence where  mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
 	  and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)::numeric) re_base_dim
          on re_base_dim.cntry_cd = base_dim.cntry_cd
         and re_base_dim.sellout_dim_key = base_dim.sellout_dim_key
@@ -179,32 +179,32 @@ from (select distinct cntry_cd,
                           so_sls_value,
                           so_avg_qty,
                           sales_value_list_price
-                   from wks_anz_base_retail_excellence where  mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
+                   from wks_anz_sellout_base_retail_excellence where  mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
 	  and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)::numeric) cm
                on base_dim.cntry_cd = cm.cntry_cd
               and base_dim.month = cm.mnth_id
               and base_dim.sellout_dim_key = cm.sellout_dim_key
   left outer join
 --last month
-wks_anz_re_act_lm lm
+wks_anz_sellout_re_act_lm lm
                on base_dim.cntry_cd = lm.cntry_cd
               and base_dim.month = lm.month
               and base_dim.sellout_dim_key = lm.sellout_dim_key
   left outer join
 --l3m
-wks_anz_re_act_l3m l3m
+wks_anz_sellout_re_act_l3m l3m
                on base_dim.cntry_cd = l3m.cntry_cd
               and base_dim.month = l3m.month
               and base_dim.sellout_dim_key = l3m.sellout_dim_key
   left outer join
 --l6m
-wks_anz_re_act_l6m l6m
+wks_anz_sellout_re_act_l6m l6m
                on base_dim.cntry_cd = l6m.cntry_cd
               and base_dim.month = l6m.month
               and base_dim.sellout_dim_key = l6m.sellout_dim_key
   left outer join
 --l12m
-wks_anz_re_act_l12m l12m
+wks_anz_sellout_re_act_l12m l12m
                on base_dim.cntry_cd = l12m.cntry_cd
               and base_dim.month = l12m.month
               and base_dim.sellout_dim_key = l12m.sellout_dim_key
@@ -287,7 +287,7 @@ p3m_sales_flag::VARCHAR(1) AS p3m_sales_flag,
 p6m_sales_flag::VARCHAR(1) AS p6m_sales_flag,
 p12m_sales_flag::VARCHAR(1) AS p12m_sales_flag,
 crt_dttm::timestamp as crt_dttm
-  from anz_re_actuals
+  from anz_sellout_re_actuals
 )
 --final select
 select * from final

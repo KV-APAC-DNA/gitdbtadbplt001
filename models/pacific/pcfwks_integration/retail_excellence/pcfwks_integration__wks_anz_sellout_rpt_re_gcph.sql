@@ -1,8 +1,8 @@
-with WKS_ANZ_RPT_RE as (
-    select * from {{ ref('pcfwks_integration__wks_anz_rpt_re') }}
+with WKS_ANZ_SELLOUT_RPT_RE as (
+    select * from {{ ref('pcfwks_integration__wks_anz_sellout_rpt_re') }}
 ),
 --final cte
-anz_rpt_re_gcph  as (SELECT jj_year,
+anz_sellout_rpt_re_gcph  as (SELECT jj_year,
        jj_mnth_id,
        CLUSTER,
        MARKET,
@@ -342,7 +342,7 @@ FROM (SELECT MAIN.jj_year,
              SUM(MAIN.P3M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_NAME,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P3M_LP,
              SUM(MAIN.P6M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_NAME,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P6M_LP,
              SUM(MAIN.P12M_SALES_LP) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_NAME,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_BY_SKU_P12M_LP
-      FROM WKS_ANZ_RPT_RE MAIN
+      FROM WKS_ANZ_SELLOUT_RPT_RE MAIN
         )),
 final as 
 (
@@ -511,7 +511,7 @@ sku_contribution_p12m_lp::NUMERIC(38,4) AS sku_contribution_p12m_lp,
 size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
 customer_agg_dim_key::VARCHAR(32) AS customer_agg_dim_key,
 product_agg_dim_key::VARCHAR(32) AS product_agg_dim_key
-    from anz_rpt_re_gcph
+    from anz_sellout_rpt_re_gcph
 )
 --final select
 select * from final
