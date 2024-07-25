@@ -159,8 +159,8 @@ SYSDATE()	as created_date	--// SYSDATE
                   FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE		--//                   FROM RG_EDW.EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
                  WHERE COUNTRY_NAME='Thailand'
                   AND   DATA_SOURCE IN ('SELL-OUT','POS')
-                  /*and MNTH_ID >= (select last_36mnths from RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		--//                   /*and MNTH_ID >= (select last_36mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
-	           and mnth_id <= (select  prev_mnth from RG_EDW.EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric*/		--// 	           and mnth_id <= (select  prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric*/
+                  and MNTH_ID >= (select last_27mnths from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		--//                   /*and MNTH_ID >= (select last_36mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
+	           and mnth_id <= (select  prev_mnth from EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)::numeric		--// 	           and mnth_id <= (select  prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric*/
                 ) MAIN
     	   LEFT JOIN WKS_TH_REGIONAL_SELLOUT_MAPPED_SKU_CD PD		--//     	   LEFT JOIN OS_WKS.WKS_TH_REGIONAL_SELLOUT_MAPPED_SKU_CD PD
             ON LTRIM(MAIN.EAN_CODE, '0')= LTRIM(PD.EAN, '0')		--//             ON LTRIM(main.EAN_CODE, '0')= LTRIM(PD.EAN, '0')

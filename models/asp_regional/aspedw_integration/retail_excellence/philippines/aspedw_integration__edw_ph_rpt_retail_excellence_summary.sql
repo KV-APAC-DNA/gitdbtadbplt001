@@ -42,7 +42,8 @@ ph_edw_rpt_retail_excellence_summary as (
         case when p6m_sales_flag = 1 then 'Y' else 'N' end as p6m_sales_flag,
         case when p12m_sales_flag = 1 then 'Y' else 'N' end as p12m_sales_flag,
         case when mdp_flag = 1 then 'Y' else 'N' end as mdp_flag,
-        MAX(target_complaince) OVER (PARTITION BY fisc_per, global_product_brand) AS target_complaince,
+        --MAX(target_complaince) OVER (PARTITION BY fisc_per, global_product_brand, mdp_flag) AS target_complaince,
+        target_complaince,
         SUM(sales_value) as sales_value,
         SUM(sales_qty) as sales_qty,
         AVG(sales_qty) as avg_sales_qty,		--// AVG
@@ -80,8 +81,22 @@ ph_edw_rpt_retail_excellence_summary as (
         SUM(size_of_price_p3m_lp) as size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) as size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) as size_of_price_p12m_lp,
-        SYSDATE()	as crt_dttm	--// SYSDATE
-    --// FROM OS_EDW.EDW_PH_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
+        SYSDATE() as crt_dttm,
+        null as cm_actual_stores,
+        null as cm_universe_stores,
+        null as cm_numeric_distribution,
+        null as lm_actual_stores,
+        null as lm_universe_stores,
+        null as lm_numeric_distribution,
+        null as l3m_actual_stores,
+        null as l3m_universe_stores,
+        null as l3m_numeric_distribution,
+        null as l6m_actual_stores,
+        null as l6m_universe_stores,
+        null as l6m_numeric_distribution,
+        null as l12m_actual_stores,
+        null as l12m_universe_stores,
+        null as l12m_numeric_distribution
     from ph_edw_rpt_retail_excellence_summary_base
     where
         fisc_per
@@ -167,7 +182,7 @@ final as (
     ,p6m_sales_flag::VARCHAR(1) as  p6m_sales_flag  
     ,p12m_sales_flag::VARCHAR(1) as p12m_sales_flag
     ,mdp_flag::VARCHAR(1) as    mdp_flag    
-    ,target_complaince::numeric(18,0) as target_complaince      
+    ,target_complaince::numeric(38,0) as target_complaince      
     ,sales_value::NUMERIC(38,6) as  sales_value
     ,sales_qty::NUMERIC(38,6) as sales_qty      
     ,avg_sales_qty::NUMERIC(38,6) as avg_sales_qty      
@@ -206,6 +221,21 @@ final as (
     ,size_of_price_p6m_lp::NUMERIC(38,14) as size_of_price_p6m_lp      
     ,size_of_price_p12m_lp::NUMERIC(38,14) as size_of_price_p12m_lp    
     ,crt_dttm :: date as crt_dttm
+    ,cm_actual_stores :: numeric(38,6) as cm_actual_stores
+    ,cm_universe_stores :: numeric(38,6) as cm_universe_stores
+    ,cm_numeric_distribution :: numeric(38,6) as cm_numeric_distribution
+    ,lm_actual_stores :: numeric(38,6) as lm_actual_stores
+    ,lm_universe_stores :: numeric(38,6) as lm_universe_stores
+    ,lm_numeric_distribution :: numeric(38,6) as lm_numeric_distribution
+    ,l3m_actual_stores :: numeric(38,6) as l3m_actual_stores
+    ,l3m_universe_stores :: numeric(38,6) as l3m_universe_stores
+    ,l3m_numeric_distribution :: numeric(38,6) as l3m_numeric_distribution
+    ,l6m_actual_stores :: numeric(38,6) as l6m_actual_stores
+    ,l6m_universe_stores :: numeric(38,6) as l6m_universe_stores
+    ,l6m_numeric_distribution :: numeric(38,6) as l6m_numeric_distribution
+    ,l12m_actual_stores :: numeric(38,6) as l12m_actual_stores
+    ,l12m_universe_stores :: numeric(38,6) as l12m_universe_stores
+    ,l12m_numeric_distribution :: numeric(38,6) as l12m_numeric_distribution
     from ph_edw_rpt_retail_excellence_summary
 )
 

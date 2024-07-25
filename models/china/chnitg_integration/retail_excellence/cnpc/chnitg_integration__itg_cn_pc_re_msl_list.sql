@@ -18,9 +18,10 @@ cnpc_regional_sellout_mapped_sku_cd as (
 cnpc_regional_sellout_ean as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_ean') }}
 ),
-edw_vw_cal_retail_excellence_dim as (
-    select * from {{ source('aspedw_integration', 'edw_vw_cal_retail_excellence_dim') }}
+edw_vw_cal_Retail_excellence_Dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
+
 wks_china_personal_care_base_retail_excellence as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_base_retail_excellence') }}
 ),

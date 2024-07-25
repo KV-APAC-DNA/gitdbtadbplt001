@@ -1,6 +1,6 @@
 --Import CTE
 with my_edw_rpt_retail_excellence as (
-    select * from {{ source('mysedw_integration', 'v_edw_rpt_my_re') }}
+    select * from {{ ref('mysedw_integration__edw_rpt_my_re') }}
 ),
 
 itg_query_parameters as (
@@ -11,7 +11,7 @@ itg_query_parameters as (
 my_edw_rpt_retail_excellence_details as (
 SELECT FISC_YR,
        CAST(FISC_PER AS INTEGER) AS FISC_PER,
-       "CLUSTER",
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -154,7 +154,7 @@ final as (
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
@@ -260,7 +260,7 @@ p3m_sales_flag::VARCHAR(1) AS p3m_sales_flag,
 p6m_sales_flag::VARCHAR(1) AS p6m_sales_flag,
 p12m_sales_flag::VARCHAR(1) AS p12m_sales_flag,
 mdp_flag::VARCHAR(1) AS mdp_flag,
-target_complaince::numeric(18,0) AS target_complaince,
+target_complaince::integer AS target_complaince,
 list_price::NUMERIC(20,4) AS list_price,
 size_of_price_lm::NUMERIC(38,14) AS size_of_price_lm,
 size_of_price_p3m::NUMERIC(38,14) AS size_of_price_p3m,

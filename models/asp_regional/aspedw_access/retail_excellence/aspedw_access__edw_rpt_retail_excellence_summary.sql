@@ -6,7 +6,7 @@ final as (
     select
  fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
-cluster as "cluster",
+"cluster" as "cluster",
 market as "market",
 data_src as "data_src",
 flag_agg_dim_key as "flag_agg_dim_key",
@@ -76,7 +76,22 @@ size_of_price_lm_lp as "size_of_price_lm_lp",
 size_of_price_p3m_lp as "size_of_price_p3m_lp",
 size_of_price_p6m_lp as "size_of_price_p6m_lp",
 size_of_price_p12m_lp as "size_of_price_p12m_lp",
-crt_dttm as "crt_dttm"
+crt_dttm as "crt_dttm",
+cm_actual_stores as "cm_actual_stores",
+cm_universe_stores as "cm_universe_stores",
+cm_numeric_distribution as "cm_numeric_distribution",
+lm_actual_stores as "lm_actual_stores",
+lm_universe_stores as "lm_universe_stores",
+lm_numeric_distribution as "lm_numeric_distribution",
+l3m_actual_stores as "l3m_actual_stores",
+l3m_universe_stores as "l3m_universe_stores",
+l3m_numeric_distribution as "l3m_numeric_distribution",
+l6m_actual_stores as "l6m_actual_stores",
+l6m_universe_stores as "l6m_universe_stores",
+l6m_numeric_distribution as "l6m_numeric_distribution",
+l12m_actual_stores as "l12m_actual_stores",
+l12m_universe_stores as "l12m_universe_stores",
+l12m_numeric_distribution as "l12m_numeric_distribution"
     from edw_rpt_retail_excellence_summary
 )
 
