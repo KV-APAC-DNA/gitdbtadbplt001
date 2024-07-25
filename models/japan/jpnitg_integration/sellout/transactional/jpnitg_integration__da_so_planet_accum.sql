@@ -6,7 +6,7 @@
 }}
 
 with source as (
-    select * from DEV_DNA_CORE.JPNWKS_INTEGRATION.WK_SO_PLANET_TODAY
+    select * from {{ ref('jpnwks_integration__wk_so_planet_today') }}
 )
 ,
 

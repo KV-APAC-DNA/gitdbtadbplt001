@@ -1,12 +1,6 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy= "append"
-    )
-}}
 
 with source as(
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err
+    select * from {{ ref('jpnitg_integration__dw_so_planet_err') }}
 ),
 
 result as(
@@ -64,10 +58,7 @@ result as(
 	    jcp_net_prc_dupli::varchar(256) as jcp_net_prc_dupli,
 	    export_flag::varchar(256) as export_flag
     from source
-    {% if is_incremental() %}
-    
-    where source.jcp_create_date > (select max(jcp_create_date) from {{ this }})
-    {% endif %}
+
 )
 
 select * from result

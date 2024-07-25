@@ -1,67 +1,67 @@
-with item_m
+with edi_item_m
 as (
     select *
-    from dev_dna_core.snapjpnedw_integration.edi_item_m
+    from {{ ref('jpnedw_integration__edi_item_m') }}
     ),
-no_dup
+wk_so_planet_no_dup
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.wk_so_planet_no_dup
+    from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
     ),
-cust_cd
+customer_cd
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.customer_cd
+    from {{ ref('jpnwks_integration__customer_cd') }}
     ),
-str_cd
+store_v_str_cd
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.store_v_str_cd
+    from {{ ref('jpnwks_integration__store_v_str_cd') }}
     ),
 item_m_stg
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.item_m_stg
+    from {{ ref('jpnwks_integration__item_m_stg') }}
     ),
-v_price
+store_v_price
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.store_v_price
+    from {{ ref('snapjpnwks_integration__store_v_price') }}
     ),
-qty_mod
+store_v_qty_mod
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.store_v_qty_mod
+    from {{ ref('jpnwks_integration__store_v_qty_mod') }}
     ),
-no_dup_unt
+planet_no_dup_unt_prc
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.planet_no_dup_unt_prc
+    from {{ ref('jpnwks_integration__planet_no_dup_unt_prc') }}
     ),
-no_dup_net
+planet_no_dup_net_prc
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.planet_no_dup_net_prc
+    from {{ ref('jpnwks_integration__planet_no_dup_net_prc') }}
     ),
-err_2
+consistency_error_2
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.consistency_error_2
+    from {{ ref('jpnwks_integration__consistency_error_2') }}
     ),
-err_cd
+dw_so_planet_err_cd
 as (
     select *
-    from dev_dna_core.snapjpnitg_integration.dw_so_planet_err_cd
+    from {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
     ),
-err
+dw_so_planet_err
 as (
     select *
-    from dev_dna_core.snapjpnitg_integration.dw_so_planet_err
+    from {{ ref('jpnitg_integration__dw_so_planet_err') }}
     ),
-modified
+wk_so_planet_modified
 as (
     select *
-    from dev_dna_core.snapjpnwks_integration.wk_so_planet_modified
+    from {{ ref('jpnwks_integration__wk_so_planet_modified') }}
     ),
 insert1
 as (
@@ -137,15 +137,15 @@ as (
                 then (cast(a.qty as integer) * abs(cast(g.unt_prc as integer)))
             else cast(h.net_prc as integer)
             end jcp_net_price
-    from item_m i,
-        no_dup a,
-        cust_cd b,
-        str_cd c,
+    from edi_item_m i,
+        wk_so_planet_no_dup a,
+        customer_cd b,
+        store_v_str_cd c,
         item_m_stg d,
-        v_price e,
-        qty_mod f,
-        no_dup_unt g,
-        no_dup_net h
+        store_v_price e,
+        store_v_qty_mod f,
+        planet_no_dup_unt_prc g,
+        planet_no_dup_net_prc h
     where i.jan_cd_so = a.item_cd
         and a.qty is not null
         and a.jcp_rec_seq = b.jcp_rec_seq
@@ -158,16 +158,16 @@ as (
         and a.jcp_rec_seq = h.jcp_rec_seq
         and a.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err_2
+            from consistency_error_2
             )
         and a.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err_cd
+            from dw_so_planet_err_cd
             where error_cd = 'NRTL'
             )
         and a.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err
+            from dw_so_planet_err
             where export_flag = '0'
             )
     ),
@@ -245,15 +245,15 @@ as (
                 then (cast(a.qty as integer) * abs(cast(g.unt_prc as integer)))
             else cast(h.net_prc as integer)
             end v_jc_netjcp_net_price_prc
-    from item_m i,
-        modified a,
-        cust_cd b,
-        str_cd c,
+    from edi_item_m i,
+        wk_so_planet_modified a,
+        customer_cd b,
+        store_v_str_cd c,
         item_m_stg d,
-        v_price e,
-        qty_mod f,
-        no_dup_unt g,
-        no_dup_net h
+        store_v_price e,
+        store_v_qty_mod f,
+        planet_no_dup_unt_prc g,
+        planet_no_dup_net_prc h
     where i.jan_cd_so = a.item_cd
         and a.qty is not null
         and a.jcp_rec_seq = b.jcp_rec_seq
@@ -266,11 +266,11 @@ as (
         and a.jcp_rec_seq = h.jcp_rec_seq
         and a.jcp_rec_seq in (
             select jcp_rec_seq
-            from err_2
+            from consistency_error_2
             )
         and a.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err_cd
+            from dw_so_planet_err_cd
             where error_cd = 'NRTL'
             )
     ),

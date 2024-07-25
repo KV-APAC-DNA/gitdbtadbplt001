@@ -6,26 +6,32 @@
         pre_hook = "
                     {% if is_incremental() %}
                     delete from {{ this }} 
-                    where jcp_rec_seq in (select distinct jcp_rec_seq from dev_dna_core.jpnitg_integration.dw_so_planet_err where export_flag = '0')
+                    where jcp_rec_seq in (select distinct jcp_rec_seq from {{ ref('jpnitg_integration__dw_so_planet_err') }} where export_flag = '0')
                     {% endif %}
                  "
     )
 }}
 
-with source1 as (
-    select * from {{ source('ntjpnsdl_raw', 'edi_sell_out_planet') }}
+with edi_sell_out_planet as (
+    select * from {{ source('jpnsdl_raw', 'edi_sell_out_planet') }}
 ),
 
-source2 as (
-    select * from dev_dna_core.jpnedw_integration.mt_constant_seq
+mt_constant_seq as (
+    select * from {{ ref('jpnedw_integration__mt_constant_seq') }}
 )
 ,
 
+-- mt_cnst as (
+--     select 
+--         trim(edi_sell_out_planet.id) as id,
+--         trim(mt_constant_seq.max_value - (row_number() over(order by edi_sell_out_planet.id desc)-1)) as sequence_no
+--     from edi_sell_out_planet,mt_constant_seq
+-- )
 mt_cnst as (
     select 
-        trim(source1.id) as id,
-        trim(source2.max_value - (row_number() over(order by source1.id desc)-1)) as sequence_no
-    from source1,source2
+        trim(edi_sell_out_planet.id) as id,
+        trim(mt_constant_seq.max_value + row_number() over(order by edi_sell_out_planet.id desc)) as sequence_no
+    from edi_sell_out_planet,mt_constant_seq
 )
 ,
 final as (

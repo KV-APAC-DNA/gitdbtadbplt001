@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: jpnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
-    schema: snapjpnsdl_raw
+    schema: jpnsdl_raw
     quoting:
       database: false
       schema: false
@@ -62,12 +62,15 @@ sources:
                 config:
                   store_failures: true
                   schema: jpnwks_integration
+
+      - name: edi_sell_out_planet
+        tags: ['sell_out_planet','transformation']
       
       
 
   - name: jpnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpnitg_integration
+    schema: jpnitg_integration
     quoting:
       database: false
       schema: false
@@ -86,7 +89,7 @@ sources:
 
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpnedw_integration
+    schema: jpnedw_integration
     quoting:
       database: false
       schema: false
@@ -106,7 +109,7 @@ sources:
 
   - name: jpnwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB')}}"
-    schema: snapjpnwks_integration
+    schema: jpnwks_integration
     quoting:
       database: false
       schema: false
@@ -115,13 +118,4 @@ sources:
       - name: wk_so_planet_revise
         tags: ['planet_revise','transformation']
 
-  - name: ntjpnsdl_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
-    schema: jpnsdl_raw
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: edi_sell_out_planet
-        tags: ['sell_out_planet','transformation']
+

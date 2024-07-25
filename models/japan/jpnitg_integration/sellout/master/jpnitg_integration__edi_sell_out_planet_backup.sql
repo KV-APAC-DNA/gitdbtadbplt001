@@ -1,11 +1,10 @@
-with source as (
-    select * from  dev_dna_core.snapjpnwks_integration.wk_so_planet_revise
+with source as(
+    select * from {{ source('jpnsdl_raw', 'edi_sell_out_planet') }} 
 ),
 
-result as (
+result as(
     select
-        jcp_rec_seq::number(10,0) as jcp_rec_seq,
-	    id::number(10,0) as id,
+        id::number(10,0) as id,
 	    rcv_dt::varchar(256) as rcv_dt,
 	    test_flag::varchar(256) as test_flag,
 	    bgn_sndr_cd::varchar(256) as bgn_sndr_cd,
@@ -20,7 +19,6 @@ result as (
 	    chg_cd::varchar(256) as chg_cd,
 	    person_in_charge::varchar(256) as person_in_charge,
 	    person_name::varchar(256) as person_name,
-	    column_17::varchar(256) as column_17,
 	    rtl_name::varchar(256) as rtl_name,
 	    rtl_ho_cd::varchar(256) as rtl_ho_cd,
 	    rtl_address_cd::varchar(256) as rtl_address_cd,
@@ -48,8 +46,7 @@ result as (
 	    item_nm_kanji::varchar(256) as item_nm_kanji,
 	    unt_prc::varchar(256) as unt_prc,
 	    net_prc::varchar(256) as net_prc,
-	    sales_chan_type::varchar(256) as sales_chan_type,
-	    jcp_create_date::timestamp_ntz(9) as jcp_create_date
+	    sales_chan_type::varchar(256) as sales_chan_type
     from source
 )
 

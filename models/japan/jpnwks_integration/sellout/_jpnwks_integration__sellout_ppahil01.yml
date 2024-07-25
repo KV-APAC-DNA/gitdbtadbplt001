@@ -4,17 +4,12 @@ models:
   - name: jpnwks_integration__wk_so_planet_revise_backup
     config:
       alias: wk_so_planet_revise_backup
-      tags: ['planet_revise','transformation']
+      tags: ['planet_revise_b','transformation']
 
   - name: jpnwks_integration__wk_so_planet_today
     config:
       alias: wk_so_planet_today
       tags: ['planet_today','transformation']
-
-  - name: jpnwks_integration__wk_so_planet_modified
-    config:
-      alias: wk_so_planet_modified
-      tags: ['planet_modified','transformation']
 
   - name: jpnwks_integration__customer_cd
     config:
@@ -45,3 +40,19 @@ models:
     config:
       alias: store_v_str_cd
       tags: ['str_cd','transformation']
+
+  - name: jpnwks_integration__wk_so_planet_revise
+    config:
+      alias: wk_so_planet_revise
+      tags: ['planet_revise','transformation']
+
+  
+  - name: jpnwks_integration__wk_so_planet_cleansed
+    config:
+      alias: wk_so_planet_cleansed
+      tags: ['planet_cleansed','transformation']
+
+  - name: jpnwks_integration__store_variable
+    config:
+      alias: store_variable
+      tags: ['store_variable','transformation']

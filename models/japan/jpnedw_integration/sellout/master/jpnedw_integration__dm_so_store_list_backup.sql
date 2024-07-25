@@ -1,5 +1,5 @@
 with source as (
-    select * from dev_dna_core.snapjpnedw_integration.dm_so_store_list
+    select * from {{ ref('jpnedw_integration__dm_so_store_list') }}
 ),
 
 result as (

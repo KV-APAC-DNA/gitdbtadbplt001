@@ -1,25 +1,25 @@
-with planet_err as (
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err
+with dw_so_planet_err as (
+    select * from {{ ref('jpnitg_integration__dw_so_planet_err') }}
 ),
 
-err2 as (
-    select * from dev_dna_core.snapjpnwks_integration.consistency_error_2
+consistency_error_2 as (
+    select * from {{ ref('jpnwks_integration__consistency_error_2') }}
 ),
 
 temp_tbl as (
-    select * from dev_dna_core.snapjpnwks_integration.temp_tbl
+    select * from {{ ref('jpnwks_integration__temp_tbl') }}
 ),
 
-err_cd_2 as (
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err_cd_2
+dw_so_planet_err_cd_2 as (
+    select * from {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }}
 ),
 
-err_cd as (
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err_cd
+dw_so_planet_err_cd as (
+    select * from {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
 ),
 
-temp3 as (
-    select * from dev_dna_core.snapjpnwks_integration.temp_table_3
+temp_table_3 as (
+    select * from {{ ref('jpnwks_integration__temp_table_3') }}
 ),
 
 
@@ -118,20 +118,20 @@ from (
         row_number() over (
             partition by su.jcp_rec_seq order by tmp.priority
             ) as rnk
-    from planet_err su
-    inner join err2 r on r.jcp_rec_seq = su.jcp_rec_seq
+    from dw_so_planet_err su
+    inner join consistency_error_2 r on r.jcp_rec_seq = su.jcp_rec_seq
     inner join temp_tbl tmp on r.exec_flag = tmp.exec_flag
     where r.exec_flag = 'MANUAL'
         and su.export_flag = 0
         and su.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err_cd_2
+            from dw_so_planet_err_cd_2
             where exec_flag in ('DELETE')
                 and export_flag = 0
             )
         and su.jcp_rec_seq not in (
             select jcp_rec_seq
-            from err_cd
+            from dw_so_planet_err_cd
             where error_cd = 'NRTL'
             )
     ) uy
@@ -185,10 +185,10 @@ select uy.jcp_rec_seq,
     uy.net_prc,
     uy.sales_chan_type,
     uy.jcp_create_date
-from temp3 uy
+from temp_table_3 uy
 where uy.jcp_rec_seq in (
         select distinct prev_rec_seq
-        from temp3
+        from temp_table_3
         where prev_rec_seq is not null
         )
     or uy.jcp_rec_seq is null

@@ -1,27 +1,27 @@
-with out_dly as (
-    select * from dev_dna_core.jpnedw_integration.dw_so_sell_out_dly
+with dw_so_sell_out_dly as (
+    select * from {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
 ),
-item_m as (
-    select * from dev_dna_core.snapjpnedw_integration.edi_item_m
+edi_item_m as (
+    select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
-store_m as (
-    select * from dev_dna_core.snapjpnedw_integration.edi_store_m
+edi_store_m as (
+    select * from {{ ref('jpnedw_integration__edi_store_m') }}
 ),
 
-chn_m as (
-    select * from dev_dna_core.snapjpnedw_integration.edi_chn_m
+edi_chn_m as (
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
-frnch_m as (
-    select * from dev_dna_core.jpnedw_integration.edi_frnch_m
+edi_frnch_m as (
+    select * from {{ ref('jpnedw_integration__edi_frnch_m') }}
 ),
 
 so as (
         select edi.item_cd as item_cd,
             a.jcp_str_cd as str_cd,
             sum(a.qty) as pc
-        from out_dly a
-        inner join item_m edi on a.item_cd = edi.jan_cd_so
-        where to_date(a.shp_date) >= to_date(dateadd(month, -6, current_timestamp()))
+        from dw_so_sell_out_dly a
+        inner join edi_item_m edi on a.item_cd = edi.jan_cd_so
+        where a.shp_date >= dateadd(month, -6, to_date(current_timestamp()))
         group by edi.item_cd,
             a.jcp_str_cd
         having sum(a.qty) > 0
@@ -34,8 +34,8 @@ ls as (
             al1.cmmn_nm_knj as cmmn_nm_knj,
             al1.adrs_knj1 as adrs_knj1,
             al1.tel_no as tel_no
-        from store_m al1,
-            chn_m al2
+        from edi_store_m al1,
+            edi_chn_m al2
         where al1.chn_cd(+) = al2.chn_cd
             and al2.rank in ('KA', 'P1', 'P2', 'P3', 'P4')
             and al2.sgmt <> 'D'
@@ -43,7 +43,7 @@ ls as (
 
 al11 as (
             select *
-            from frnch_m
+            from edi_frnch_m
             where ph_lvl = '5'
 ),
 li as (
@@ -51,7 +51,7 @@ li as (
             al1.iten_nm_kn as item_nm_kn,
             al11.ph_cd as mjr_prod_cd,
             al11.ph_nm as mjr_prod_nm
-        from item_m al1, al11
+        from edi_item_m al1, al11
         where al11.ph_cd(+) = substring(al1.sub_frnch, 1, 14)
         ),
 

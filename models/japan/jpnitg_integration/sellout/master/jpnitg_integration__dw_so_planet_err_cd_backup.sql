@@ -1,12 +1,7 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy= "append"
-    )
-}}
+
 
 with source as(
-    select * from dev_dna_core.snapjpnitg_integration.dw_so_planet_err_cd 
+    select * from {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
 ),
 
 result as(
