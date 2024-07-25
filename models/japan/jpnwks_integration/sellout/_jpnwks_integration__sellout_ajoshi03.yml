@@ -71,8 +71,3 @@ models:
     config:
         alias: dw_so_planet_err_tmp2
         tags: ["j_so_japan_improvement_etl_framework","transformation"]
-
-  - name: jpnwks_integration__wk_so_planet_no_dup
-    config:
-        alias: wk_so_planet_no_dup
-        tags: ["j_so_japan_improvement_etl_framework","transformation"]
