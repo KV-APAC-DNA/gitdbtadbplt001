@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_pos_daily_aeon
+    config:
+        alias: wk_pos_daily_aeon
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_csms
+    config:
+        alias: wk_pos_daily_csms
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_dnki
+    config:
+        alias: wk_pos_daily_dnki
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_others
+    config:
+        alias: wk_pos_daily_others
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_sugi
+    config:
+        alias: wk_pos_daily_sugi
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_tsur
+    config:
+        alias: wk_pos_daily_tsur
+        tags: ["pos_data_ingestion","ingestion"]
+
+  - name: jpnwks_integration__wk_pos_daily_wlca
+    config:
+        alias: wk_pos_daily_wlca
+        tags: ["pos_data_ingestion","ingestion"]
