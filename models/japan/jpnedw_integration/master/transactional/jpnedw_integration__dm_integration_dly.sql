@@ -28,7 +28,7 @@
                         AND JCP_DATA_SOURCE = IDENTIFY_CD
                         AND JCP_DATE BETWEEN MIN_DATE
                             AND MAX_DATE;
-                    "
+                    ",
         post_hook = "
                     UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }}
                     SET MAX_VALUE=(SELECT MAX(JCP_REC_SEQ) FROM {{this}});
