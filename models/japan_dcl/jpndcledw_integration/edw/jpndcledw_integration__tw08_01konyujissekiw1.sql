@@ -36,6 +36,26 @@ tt01kokyastsh_mv_filtered as (
         kokyano in (select kokyano from tw06_kokyastatus)
         and juchkbn not like '9%'
 ),
+rolling1 as(
+    select
+        nvl(sum(b.keikadays), 0) nenkeikadayskei ,
+        nvl(sum(case when rolling.rn > a.rn then b.meisainukikingaku else 0 end), 0) nenkingaku,
+        nvl(sum(case
+            when b.saleno is not null and b.keikadays <> 0 and rolling.rn > a.rn then 1
+            else 0 end), 0) nenruikaisu,
+        a.kokyano,
+        a.rn
+    from
+    tt01kokyastsh_mv_filtered a
+    left join tt01kokyastsh_mv_filtered rolling
+        on a.kokyano =rolling.kokyano and rolling.rn between a.rn and a.rn+10000
+    left join  
+        tt05kokyakonyu_filtered b
+        on rolling.saleno = b.saleno
+    group by
+        a.kokyano,
+        a.rn
+),
 transformed as (
     select 
   a.saleno
@@ -56,24 +76,13 @@ transformed as (
     rows between unbounded preceding and 1 preceding) ,0)
   as lastkonyudate
  ,a.juchukeikadays
- ,nvl(sum(b.meisainukikingaku)
-    over(partition by rolling2.kokyano) , 0)
-  as nenkingaku
- ,nvl(sum(b.keikadays)
-    over(partition by rolling.kokyano) , 0)
-  as nenkeikadayskei
- ,nvl(
-	sum(case
-	when b.saleno is not null and b.keikadays <> 0 then 1
-	else 0 end)
-    over(partition by rolling2.kokyano) , 0)
-  as nenruikaisu
+ ,rolling1.nenkingaku
+ ,rolling1.nenkeikadayskei
+ ,rolling1.nenruikaisu
 from
     tt01kokyastsh_mv_filtered a
-left join tt01kokyastsh_mv_filtered rolling
-    on a.kokyano =rolling.kokyano and rolling.rn between a.rn and a.rn+10000
-left join tt01kokyastsh_mv_filtered rolling2
-    on a.kokyano =rolling2.kokyano and rolling2.rn between a.rn+1 and a.rn+10000
+left join rolling1
+    on a.kokyano =rolling1.kokyano and a.rn = rolling1.rn
 left join   
     tt05kokyakonyu_filtered b
     on a.saleno = b.saleno
