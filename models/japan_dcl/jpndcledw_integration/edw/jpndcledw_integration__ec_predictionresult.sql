@@ -2,7 +2,7 @@
     config
     (
         materialized="incremental",
-        incremental_strategy= "delete+insert",
+        incremental_strategy= "append",
         unique_key= ["customer_id"]
        
     )
@@ -13,10 +13,13 @@ with acgel_predictionresult as (
 ),
 transformed as (
 SELECT NVL(LPAD(customer_id, 10, '0'), '0000000000') as customer_id,
-    acgelpropensity,
+    ECPropensity,
     'Src_File_Dt'
 FROM SDL_SCHEMA.acgel_predictionresult   
 ),
+join_2 as (
+
+)
 final as (
 select
 customer_id::varchar(60) as customer_id,
