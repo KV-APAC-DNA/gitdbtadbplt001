@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__tboutcallcontactdata
+    config:
+      alias: tboutcallcontactdata
+      tags: ["dcl_mykokya","transformation"]
+  
+  - name: jpndcledw_integration__ocl_exclude_file_id
+    config:
+      alias: ocl_exclude_file_id
+      tags: ["dcl_mykokya","transformation"]
+
+  
+  - name: jpndcledw_integration__kr_special_discount_work
+    config:
+      alias: kr_special_discount_work
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
+
+  - name: jpndcledw_integration__kr_special_discount_select
+    config:
+      alias: kr_special_discount_select
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
+
+  - name: jpndcledw_integration__kr_special_discount_target
+    config:
+      alias: kr_special_discount_target
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
+
+  - name: jpndcledw_integration__kr_054_point_hist
+    config:
+      alias: kr_054_point_hist
+      tags: ["dcl_004_month_end_refresh","transformation"]
+
+ 
+
+ 

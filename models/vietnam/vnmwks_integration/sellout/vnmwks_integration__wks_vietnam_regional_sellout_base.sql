@@ -82,7 +82,11 @@ select 'SELL-OUT' as data_src,
 	   d.region as region,
 	   d.province as zone_or_area,
 	   so_fact.sls_qty as so_sls_qty, 
-	   so_fact.jj_net_sls as so_sls_value
+	   so_fact.jj_net_sls as so_sls_value,
+       'NA' as msl_product_code,
+		prod_dim.product_name as msl_product_desc,
+		cust.shop_type as retail_env,
+		cust.shop_type as channel
       from edw_vw_vn_sellout_sales_fact so_fact
 	join(select dstrb.dstrbtr_id, mapp.sap_sold_to_code, dstrb.territory_dist,dstrb.dstrbtr_type, dstrb.dstrbtr_name, dstrb.region, dstrb.province from itg_vn_distributor_sap_sold_to_mapping mapp, itg_vn_dms_distributor_dim dstrb 
 	where mapp.distributor_id = nvl(dstrb.mapped_spk,dstrb.dstrbtr_id)
@@ -117,7 +121,37 @@ select 'SELL-OUT' as data_src,
 	   cust."region" as region,
 	   cust.province as zone_or_area,
 	   qty_exclude_foc as so_sls_qty, 
-	   case when channel = 'ECOM' then gross_amount_wo_vat else net_amount_wo_vat end as so_sls_value
+	   case when channel = 'ECOM' then gross_amount_wo_vat else net_amount_wo_vat end as so_sls_value,
+       'NA' as msl_product_code,
+	   so_fact.product as msl_product_desc,
+		cust.retail_environment as retail_env,
+		cust.retail_environment as channel
+    union all
+    SELECT 'POS' AS DATA_SRC,
+       'VN' AS 	CNTRY_CD,
+       'Vietnam' AS CNTRY_NM,
+       time_dim.year::INT AS YEAR,
+       time_dim.mnth_id::INT AS MNTH_ID,
+	   TO_DATE(pos.year||lpad(pos.month,2,'00')||'01','YYYYMMDD') AS DAY,
+	   time_dim.cal_year::INT  as univ_year,
+	   time_dim.cal_mnth_no::INT as univ_month,
+	   pos.parameter_value as SOLDTO_CODE,
+       'NA' AS DISTRIBUTOR_CODE,
+       customername AS DISTRIBUTOR_NAME,
+       shopcode AS STORE_CD,
+       shopname AS STORE_NAME,
+	   channelname AS store_type,
+       pos.barcode AS EAN,
+       nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
+	   productname AS Customer_Product_Desc,
+	   stt AS region,
+	   area AS zone_or_area,
+	   pos.quantity::numeric(38,23) as SO_SLS_QTY, 
+	   pos.amount::numeric(38,23) as SO_SLS_VALUE,
+       		'MT' as channel
+		pos.barcode as msl_product_code,
+		productname AS msl_product_desc,
+		channelname as retail_env,
   from (
 		select productid, product, custcode, customer, channel, sellin_sub_channel, province, region, cust_group, invoice_date, qty_exclude_foc, net_amount_wo_vat, gross_amount_wo_vat
 		   from ( select dense_rank()

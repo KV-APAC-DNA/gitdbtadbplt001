@@ -414,10 +414,6 @@ models:
       alias: item_jizen_bunkai_w11
       tags: ["m_dcl_edw_job1","ingestion"]
     
-  - name: jpndcledw_integration__item_jizen_bunkai_w06
-    config:
-      alias: item_jizen_bunkai_w06
-      tags: ["m_dcl_edw_job1","ingestion"]
 
   - name: jpndcledw_integration__item_jizen_bunkai_w082
     config:
@@ -704,5 +700,3 @@ models:
     config:
       alias: wk_nayol
       tags: ["m_dcl_edw_job1","transformation"]
-
- 
