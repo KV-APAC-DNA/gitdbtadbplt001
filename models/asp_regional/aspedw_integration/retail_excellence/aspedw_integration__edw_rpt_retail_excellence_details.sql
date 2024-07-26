@@ -30,7 +30,7 @@ edw_cnsc_rpt_retail_excellence_details as (
 ),
 edw_cnpc_rpt_retail_excellence_details as
 (
-  select * from   {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_summary') }}
+  select * from   {{ ref('aspedw_integration__edw_rpt_retail_excellence_details') }}
 
 ),
 edw_rpt_retail_excellence_details as 
