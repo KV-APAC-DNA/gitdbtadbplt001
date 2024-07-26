@@ -1,9 +1,9 @@
-
+--
 
 with KR_054_ALLHIST
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_ALLHIST
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_ALLHIST
 )
 
 ,
@@ -12,7 +12,7 @@ as
 TBECORDER 
 as
 (
-    select * from dev_dna_core.jpdclitg_integration.TBECORDER
+    select * from dev_dna_core.snapjpdclitg_integration.TBECORDER
 )
 
 ,
@@ -20,7 +20,7 @@ as
 KR_054_ALLADM 
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_ALLADM
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_ALLADM
 )
 
 ,
@@ -28,7 +28,7 @@ as
 KR_054_V_PTRGSTDIVMST
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_V_PTRGSTDIVMST
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_V_PTRGSTDIVMST
 )
 
 ,
@@ -36,7 +36,7 @@ as
 TBUSRPRAM 
 as
 (
-    select * from dev_dna_core.jpdclitg_integration.TBUSRPRAM
+    select * from dev_dna_core.snapjpdclitg_integration.TBUSRPRAM
 )
 
 ,
@@ -44,7 +44,7 @@ as
 KR_054_PFUYO_MEISAI
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_PFUYO_MEISAI
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_PFUYO_MEISAI
 )
 
 ,
@@ -52,15 +52,15 @@ as
 KR_054_PUSE_MEISAI
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_PUSE_MEISAI
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_PUSE_MEISAI
 )
 
 ,
 
-KR_054_PLOST_MEISAI --snap and og are greater than 19th 
+KR_054_PLOST_MEISAI 
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.KR_054_PLOST_MEISAI
+    select * from dev_dna_core.snapjpdcledw_integration.KR_054_PLOST_MEISAI
 )
 
 ,

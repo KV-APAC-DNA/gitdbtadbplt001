@@ -4,33 +4,33 @@ models:
   - name: jpndcledw_integration__tboutcallcontactdata
     config:
       alias: tboutcallcontactdata
-      tags: ["DCL_MyKokya","transformation"]
+      tags: ["dcl_mykokya","transformation"]
   
   - name: jpndcledw_integration__ocl_exclude_file_id
     config:
       alias: ocl_exclude_file_id
-      tags: ["DCL_MyKokya","transformation"]
+      tags: ["dcl_mykokya","transformation"]
 
   
-  - name: jpndcledw_integration__KR_SPECIAL_DISCOUNT_WORK
+  - name: jpndcledw_integration__kr_special_discount_work
     config:
-      alias: KR_SPECIAL_DISCOUNT_WORK
-      tags: ["DCL_Generic_Extraction_2_Filesetup","transformation"]
+      alias: kr_special_discount_work
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
 
-  - name: jpndcledw_integration__KR_SPECIAL_DISCOUNT_SELECT
+  - name: jpndcledw_integration__kr_special_discount_select
     config:
-      alias: KR_SPECIAL_DISCOUNT_SELECT
-      tags: ["DCL_Generic_Extraction_2_Filesetup","transformation"]
+      alias: kr_special_discount_select
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
 
-  - name: jpndcledw_integration__KR_SPECIAL_DISCOUNT_TARGET
+  - name: jpndcledw_integration__kr_special_discount_target
     config:
-      alias: KR_SPECIAL_DISCOUNT_TARGET
-      tags: ["DCL_Generic_Extraction_2_Filesetup","transformation"]
+      alias: kr_special_discount_target
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
 
   - name: jpndcledw_integration__kr_054_point_hist
     config:
       alias: kr_054_point_hist
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
  
 

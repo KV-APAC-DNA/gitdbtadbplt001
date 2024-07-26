@@ -3,12 +3,13 @@ as
 (
     select
      * 
-    from dev_dna_core.snapjpdcledw_integration.kr_special_discount_select
+    from dev_dna_core.jpdcledw_integration.kr_special_discount_select
     )
 
-
-
-
+,
+transformed
+as
+(
 select lpad(diusrid,10,'0') as diusrid
       ,dsname
       ,dsname2
@@ -35,3 +36,13 @@ select lpad(diusrid,10,'0') as diusrid
          ,patternid
 		 ,c_diregularcontractid
  order by diusrid
+)
+,
+
+final
+as
+(
+select *  from transformed
+)
+
+select * from final 

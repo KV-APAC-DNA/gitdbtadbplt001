@@ -1,7 +1,9 @@
+-- returning zero count 
+
 with kr_special_discount_work
 as
 (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_special_discount_work
+    select * from dev_dna_core.jpdcledw_integration.kr_special_discount_work
 )
 
 ,
@@ -9,7 +11,7 @@ as
 kr_special_discount_file
 as
 (
-    select * from dev_dna_core.snapjpdclitg_integration.kr_special_discount_file
+    select * from dev_dna_core.jpdclitg_integration.kr_special_discount_file
 )
 
 ,
@@ -27,7 +29,7 @@ select wrk.*,
             end  as patternid
   from kr_special_discount_work wrk
  inner join kr_special_discount_file sdf
-    on wrk.dsitemid = sdf.dsitemid
+    on trim(wrk.dsitemid) = trim(sdf.dsitemid)
 )
 
 select * from transformed

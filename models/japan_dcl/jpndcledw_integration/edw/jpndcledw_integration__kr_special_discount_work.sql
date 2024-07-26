@@ -1,3 +1,5 @@
+-- not able to load due to permission issue 
+
 with tbusrpram
 as
 (
@@ -25,7 +27,7 @@ as
 c_tbecregularcontract
 as
 (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecregularcontract
+    select * from dev_dna_core.jpdclitg_integration.c_tbecregularcontract
 )
 
 ,
@@ -84,4 +86,4 @@ as
    
 )
 
-select * from transformed
+select COUNT(*) from transformed

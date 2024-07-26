@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized = 'incremental',
+        incremental_strategy = 'append'
+    )
+}}
+
 with source 
 as
 (
@@ -22,9 +29,13 @@ as
     amount_excluded_tax,
     orderdate,
     webid,
-    NULL as status,
-    NULL as SOURCE_FILE_DATE,
+    current_timestamp() as inserted_date,
+    current_timestamp() as updated_date
     from source
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.inserted_date > (select max(inserted_date) from {{ this }})
+    {% endif %}
 )
 
 select * from transformed

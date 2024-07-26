@@ -4,18 +4,18 @@ models:
   - name: jpndclitg_integration__extraction_table
     config:
       alias: extraction_table
-      tags: ["DCL_Generic_Extraction_1_Filesetup","transformation"]
+      tags: ["dcl_generic_extraction_1_filesetup","transformation"]
       # not done yet
 
   - name: jpndclitg_integration__kr_special_discount_file
     config:
       alias: kr_special_discount_file
-      tags: ["DCL_Generic_Extraction_2_Filesetup","transformation"]
+      tags: ["dcl_generic_extraction_2_filesetup","transformation"]
 
   - name: jpndclitg_integration__affiliate_cancel_receive
     config:
       alias: affiliate_cancel_receive
-      tags: ["DCL_Affiliate_Cancel_Load","transformation"]
+      tags: ["dcl_affiliate_cancel_load","transformation"]
 
   
   

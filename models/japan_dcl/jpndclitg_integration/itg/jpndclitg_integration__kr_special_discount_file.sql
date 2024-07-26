@@ -1,3 +1,5 @@
+-- source (sdl) and (itg) tables count missmatching 
+
 with source as
 (
     select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.kr_special_discount_file
