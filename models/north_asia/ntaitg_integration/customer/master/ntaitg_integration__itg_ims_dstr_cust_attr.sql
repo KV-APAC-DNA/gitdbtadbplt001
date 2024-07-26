@@ -6,7 +6,17 @@
         pre_hook="{% if is_incremental() %}
         delete from {{this}} as itg_ims_dstr_cust_attr USING {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_customer') }} t2 WHERE itg_ims_dstr_cust_attr.dstr_cd = t2.distributor_code AND itg_ims_dstr_cust_attr.dstr_cust_cd = t2.distributor_cusotmer_code AND itg_ims_dstr_cust_attr.ctry_cd = 'TW';
         delete from {{this}} as itg_ims_dstr_cust_attr using {{ ref('ntawks_integration__wks_itg_hk_ims_dstr_cust_attr') }} as wks_itg_hk_ims_dstr_cust_attr where wks_itg_hk_ims_dstr_cust_attr.dstr_customer_code = itg_ims_dstr_cust_attr.dstr_cust_cd and wks_itg_hk_ims_dstr_cust_attr.ctry_cd = itg_ims_dstr_cust_attr.ctry_cd and wks_itg_hk_ims_dstr_cust_attr.dstr_code = itg_ims_dstr_cust_attr.dstr_cd and wks_itg_hk_ims_dstr_cust_attr.chng_flg = 'U';
-        {% endif %}"
+        {% endif %}",
+        post_hook="
+                UPDATE {{this}}
+                    SET store_type = t2.store_type,
+                        hq = t2.hq
+                    FROM {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }} t2
+                        JOIN {{this}} t1 ON 
+                        RTRIM(LTRIM (t1.dstr_cust_cd, '0')) = RTRIM(LTRIM (t2.distributors_customer_code, '0'))
+                        AND t1.dstr_cd = t2.distributor_code
+                        AND t1.ctry_cd = 'TW';
+        "
     )
 }}
 with source as (
@@ -75,18 +85,20 @@ tw_final AS
 	t1.distributor_address::varchar(255) as distributor_address,
 	t1.distributor_telephone::varchar(255) as distributor_telephone,
 	t1.distributor_contact::varchar(255) as distributor_contact,
-    case when t1.store_type='TW'
-    THEN t2.store_type 
-    else t1.store_type
-    end::varchar(255) as store_type,
-    case when t1.ctry_cd='TW'
-    THEN t2.hq 
-    else t1.hq
-    end::varchar(255) as hq
+    -- case when t1.store_type='TW'
+    -- THEN t2.store_type 
+    -- else t1.store_type
+    -- end::varchar(255) as store_type,
+    t1.store_type::varchar(255) as store_type,
+    -- case when t1.ctry_cd='TW'
+    -- THEN t2.hq 
+    -- else t1.hq
+    -- end::varchar(255) as hq
+    t1.hq::varchar(255) as hq
     from tw_trans t1
-        left join itg_tw_ims_dstr_customer_mapping t2 
-        ON LTRIM (t1.dstr_cust_cd, '0') = LTRIM (t2.distributors_customer_code, '0')
-        AND t1.dstr_cd = t2.distributor_code
+        -- left join itg_tw_ims_dstr_customer_mapping t2 
+        -- ON LTRIM (t1.dstr_cust_cd, '0') = LTRIM (t2.distributors_customer_code, '0')
+        -- AND t1.dstr_cd = t2.distributor_code
 ),
 hk_final as (
     select dstr_code::varchar(10) as dstr_cd,
