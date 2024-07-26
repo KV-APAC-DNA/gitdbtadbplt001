@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kr_chunk_007_kizuna
+    config:
+      alias: kr_chunk_007_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_006_kizuna
+    config:
+      alias: kr_chunk_006_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_100_kizuna
+    config:
+      alias: kr_chunk_100_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_005_kizuna
+    config:
+      alias: kr_chunk_005_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_003_kizuna
+    config:
+      alias: kr_chunk_003_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_004_kizuna
+    config:
+      alias: kr_chunk_004_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_002_kizuna
+    config:
+      alias: kr_chunk_002_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt01kokyastsh_mv_tbl
+    config:
+      alias: tt01kokyastsh_mv_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt01saleh_hen_mv_mt_tbl
+    config:
+      alias: tt01saleh_hen_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt01saleh_mv_mt_tbl
+    config:
+      alias: tt01saleh_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt01saleh_sum_mv_mt_tbl
+    config:
+      alias: tt01saleh_sum_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt01saleh_uri_mv_mt_tbl
+    config:
+      alias: tt01saleh_uri_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02kokyastsm_mv_tbl
+    config:
+      alias: tt02kokyastsm_mv_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02salem_hen_mv_mt_tbl
+    config:
+      alias: tt02salem_hen_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02salem_hen_sub_mv_mt_tbl
+    config:
+      alias: tt02salem_hen_sub_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02salem_mv_mt_tbl
+    config:
+      alias: tt02salem_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02salem_sum_mv_mt_tbl
+    config:
+      alias: tt02salem_sum_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt02salem_uri_mv_mt_tbl
+    config:
+      alias: tt02salem_uri_mv_mt_tbl
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__daily_transaction_report1
+    config:
+      alias: daily_transaction_report1
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tw09kokyakonyu
+    config:
+      alias: tw09kokyakonyu
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__tt05kokyakonyu
+    config:
+      alias: tt05kokyakonyu
+      tags: ["m_dcl_edw_job2","transformation"]
+  - name: jpndcledw_integration__kr_chunk_900_kizuna
+    config:
+      alias: kr_chunk_900_kizuna
+      tags: ["m_dcl_edw_job2","transformation"]
