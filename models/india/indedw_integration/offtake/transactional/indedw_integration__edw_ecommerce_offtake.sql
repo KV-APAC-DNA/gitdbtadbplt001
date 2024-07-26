@@ -77,7 +77,6 @@ itg_ecommerce_offtake_master_mapping as
 (
     select * from {{ ref('inditg_integration__itg_ecommerce_offtake_master_mapping') }}
 ),
-
 amazon as
 (
     select to_date(('01' || right(itg_amazon.source_file_name,5)),'DDMonYY') as transaction_date,
