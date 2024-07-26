@@ -5,7 +5,7 @@ models:
     config:
       alias: extraction_table
       tags: ["dcl_generic_extraction_1_filesetup","transformation"]
-      # not done yet
+      
 
   - name: jpndclitg_integration__kr_special_discount_file
     config:
