@@ -58,7 +58,7 @@ SELECT substring(derived_table2.year_month,0,5)::date as fisc_yr,
                    a.customer_name,
                    a.retailer_category_name,
                    CASE
-                     WHEN a.channel_name::TEXT = 'Self Service Store'::CHARACTER VARYING::TEXT THEN c.columnname + ' ('::CHARACTER VARYING::TEXT + c.program_name + ')'::CHARACTER VARYING::TEXT
+                     WHEN a.channel_name::TEXT = 'Self Service Store'::CHARACTER VARYING::TEXT THEN c.columnname || ' ('::CHARACTER VARYING::TEXT || c.program_name || ')'::CHARACTER VARYING::TEXT
                      ELSE c.columnname
                    END AS program_name,
                    a.retailer_class,

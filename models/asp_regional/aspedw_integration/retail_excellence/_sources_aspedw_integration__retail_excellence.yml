@@ -166,6 +166,8 @@ sources:
       - name: edw_sku_recom_spike_msl
       - name : edw_retailer_dim
       - name : v_edw_rpt_retail_excellence
+    
+    
       
 
   - name: inditg_integration
@@ -173,3 +175,4 @@ sources:
     schema: inditg_integration
     tables:
       - name: itg_udcdetails
+      - name : itg_in_mds_channel_mapping
