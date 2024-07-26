@@ -10,7 +10,7 @@ edw_vw_cal_retail_excellence_dim as (
     select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
 ),
 itg_mds_master_mother_code_mapping as (
-    select * from {{ source('aspitg_integration', 'itg_mds_master_mother_code_mapping') }}
+     select * from {{ ref('aspitg_integration__itg_mds_master_mother_code_mapping') }}
 ),
 cnpc_regional_sellout_mapped_sku_cd as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_mapped_sku_cd') }}

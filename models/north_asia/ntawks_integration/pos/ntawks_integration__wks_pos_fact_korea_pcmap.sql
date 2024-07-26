@@ -70,8 +70,8 @@ wks_edw_pos_fact_korea src
 left outer join 
 itg_pos_invoice_prc_lookup lkp 
 on src.pos_dt = lkp.pos_dt 
-and ltrim (src.sold_to_party,0) = ltrim (lkp.sold_to_party ,0 )
-and ltrim(src.ean_num,0) = ltrim (lkp.ean_num ,0 )
+and rtrim(ltrim (src.sold_to_party,0)) = rtrim(ltrim (lkp.sold_to_party ,0 ))
+and rtrim(ltrim(src.ean_num,0)) = rtrim(ltrim (lkp.ean_num ,0 ))
 ),
 final as (
 select

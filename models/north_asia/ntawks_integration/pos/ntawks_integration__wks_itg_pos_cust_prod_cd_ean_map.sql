@@ -5,7 +5,8 @@ src as(
     select distinct customer,cust_prod_cd,barcode from source
 ),
 transformed as(
-    select trim(src.customer) as customer,
+    select 
+       rtrim(REGEXP_REPLACE(src.customer,'[\xC2\xA0]', '')) as customer,
        null as customer_hierarchy_code,
        rtrim(REGEXP_REPLACE(src.cust_prod_cd,'[\xC2\xA0]', '')) as cust_prod_cd,
        rtrim(REGEXP_REPLACE(src.barcode,'[\xC2\xA0]', '')) as barcode,
