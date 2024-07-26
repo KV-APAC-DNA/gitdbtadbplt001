@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_old
+    config:
+      alias: kesai_h_data_mart_sub_old
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_old_chsi
+    config:
+      alias: kesai_h_data_mart_sub_old_chsi
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_old
+    config:
+      alias: kesai_m_data_mart_sub_old
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__kr_054_cal_v
+    config:
+      alias: kr_054_cal_v
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__kr_new_stage_point
+    config:
+      alias: kr_new_stage_point
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__kr_this_stage_point_daily
+    config:
+      alias: kr_this_stage_point_daily
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__syouhincd_henkan_qv
+    config:
+      alias: syouhincd_henkan_qv
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__teikikeiyaku_data_mart_uni
+    config:
+      alias: teikikeiyaku_data_mart_uni
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__tm13item_qv
+    config:
+      alias: tm13item_qv
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__tm14shkos_qv
+    config:
+      alias: tm14shkos_qv
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__ua01_base_cim01kokya_v
+    config:
+      alias: ua01_base_cim01kokya_v
+      tags: ["japan_dcl_common_views","transformation"]
+  - name: jpndcledw_integration__zaiko_shohin_attr
+    config:
+      alias: zaiko_shohin_attr
+      tags: ["japan_dcl_common_views","transformation"]
