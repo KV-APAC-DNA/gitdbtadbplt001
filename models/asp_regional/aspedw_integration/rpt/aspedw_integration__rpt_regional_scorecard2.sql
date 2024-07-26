@@ -1,13 +1,3 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where datasource = 'PERFECTSTORE'
-        {% endif %}"
-    )
-}}
 with edw_perfect_store_rebase_wt as(
     select * from snapaspedw_integration.edw_perfect_store_rebase_wt
 ),
@@ -16,18 +6,18 @@ edw_company_dim as(
 ),
 transformed as(
     Select 'PERFECTSTORE' as Datasource
-       ,country
-       ,cd."cluster"
-       ,cast(left(ym,4)||'0'||right(ym,2) as integer) as fiscper
-       ,kpi
-       ,latestdate
-       ,MSL_COMPLAINCE_NUMERATOR          
-      ,MSL_COMPLAINCE_DENOMINATOR  
-      ,MSL_COMPLAINCE_DENOMINATOR_WT      
+      ,Country
+      ,cd."cluster"
+      ,cast(left(ym,4)||'0'||right(ym,2) as integer) as fiscper
+      ,kpi
+      ,latestdate
+      ,MSL_COMPLAINCE_NUMERATOR          
+      ,MSL_COMPLAINCE_DENOMINATOR        
       ,OSA_COMPLAINCE_NUMERATOR          
       ,OSA_COMPLAINCE_DENOMINATOR        
       , PROMO_COMPLAINCE_NUMERATOR       
-      , PROMO_COMPLAINCE_DENOMINATOR     
+      , PROMO_COMPLAINCE_DENOMINATOR   
+      , PROMO_COMPLAINCE_DENOMINATOR_WT  
       , DISPLAY_COMPLAINCE_NUMERATOR     
       , DISPLAY_COMPLAINCE_DENOMINATOR   
       , PLANOGRAM_COMPLAINCE_NUMERATOR   
@@ -37,41 +27,40 @@ transformed as(
       , SOA_COMPLAINCE_NUMERATOR         
       , SOA_COMPLAINCE_DENOMINATOR 
       From
-        ( 
-        select  country, kpi, to_char(scheduleddate,'YYYYMM') as ym
-              , latestdate
-              , sum(MSL_COMPLAINCE_NUMERATOR) as MSL_COMPLAINCE_NUMERATOR
-              , sum(MSL_COMPLAINCE_DENOMINATOR) as MSL_COMPLAINCE_DENOMINATOR 
-              , sum(MSL_COMPLAINCE_DENOMINATOR_WT)  as MSL_COMPLAINCE_DENOMINATOR_WT 
-              , 0 as  OSA_COMPLAINCE_NUMERATOR        
-              , 0 as  OSA_COMPLAINCE_DENOMINATOR      
-              , 0 as PROMO_COMPLAINCE_NUMERATOR         
-              , 0 as PROMO_COMPLAINCE_DENOMINATOR           
-              , 0 as DISPLAY_COMPLAINCE_NUMERATOR         
-              , 0 as DISPLAY_COMPLAINCE_DENOMINATOR               
-              ,0 as PLANOGRAM_COMPLAINCE_NUMERATOR     
-               ,0 as PLANOGRAM_COMPLAINCE_DENOMINATOR
-               ,0 as SOS_COMPLAINCE_NUMERATOR          
-               ,0 as SOS_COMPLAINCE_DENOMINATOR                         
-               ,0 as SOA_COMPLAINCE_NUMERATOR              
-               ,0 as SOA_COMPLAINCE_DENOMINATOR             
-        from (
-              select case when country='China' then 'China Selfcare' else country end as country, kpi, scheduleddate , latestdate 
-                    , round(actual_value * weight_msl,4)  as MSL_COMPLAINCE_NUMERATOR
-                    , ref_value as MSL_COMPLAINCE_DENOMINATOR
-                    , ref_value * round(weight_msl,4) as MSL_COMPLAINCE_DENOMINATOR_WT
-               from  edw_perfect_store_rebase_wt 
-              where  
-                kpi = 'MSL COMPLIANCE' 
-                and priority_store_flag ='Y'
-              )
-        group by country, kpi, to_char(scheduleddate,'YYYYMM') , latestdate
-        ) MSL
-        ,(select distinct ctry_group,"cluster" from edw_company_dim) cd         
-      WHERE MSL.country = cd.ctry_group(+)
+        (     
+          select country, kpi, to_char(scheduleddate,'YYYYMM') as ym ,latestdate 
+                , 0 as  MSL_COMPLAINCE_NUMERATOR
+                , 0 as  MSL_COMPLAINCE_DENOMINATOR
+                , 0 as OSA_COMPLAINCE_NUMERATOR
+                , 0 as OSA_COMPLAINCE_DENOMINATOR
+                , sum(PROMO_COMPLAINCE_NUMERATOR)   as  PROMO_COMPLAINCE_NUMERATOR
+                , sum(PROMO_COMPLAINCE_DENOMINATOR) as PROMO_COMPLAINCE_DENOMINATOR
+                , sum(PROMO_COMPLAINCE_DENOMINATOR_WT) as PROMO_COMPLAINCE_DENOMINATOR_WT  
+                , 0 as DISPLAY_COMPLAINCE_NUMERATOR
+                , 0 as DISPLAY_COMPLAINCE_DENOMINATOR      
+                ,0 as PLANOGRAM_COMPLAINCE_NUMERATOR
+                 ,0 as PLANOGRAM_COMPLAINCE_DENOMINATOR
+                 ,0 as SOS_COMPLAINCE_NUMERATOR
+                 ,0 as SOS_COMPLAINCE_DENOMINATOR  
+                 ,0 as SOA_COMPLAINCE_NUMERATOR
+                 ,0 as SOA_COMPLAINCE_DENOMINATOR    
+          from (  
+                select  case when country='China' then 'China Selfcare' else country end as country, kpi, scheduleddate,latestdate 
+                       , round(actual_value * weight_promo,4) as PROMO_COMPLAINCE_NUMERATOR
+                       , ref_value as PROMO_COMPLAINCE_DENOMINATOR 
+                       , ref_value * round(weight_promo,4) as PROMO_COMPLAINCE_DENOMINATOR_WT 
+                 from  edw_perfect_store_rebase_wt 
+                where  
+                  kpi = 'PROMO COMPLIANCE'
+                  and priority_store_flag ='Y'                  
+               )
+          group by country, kpi, to_char(scheduleddate,'YYYYMM'), latestdate
+         )OSA
+      ,(select distinct ctry_group,"cluster" from edw_company_dim) cd         
+      WHERE OSA.country = cd.ctry_group(+)
 ),
 final as(
-    select 
+select 
 Datasource::VARCHAR(50) as DATASOURCE,
 country::VARCHAR(40) as CTRY_NM,
 "cluster"::VARCHAR(100) as CLUSTER,
@@ -104,13 +93,13 @@ null:: NUMBER(38,15) as GROWTH_CIW,
 kpi::VARCHAR(50) as KPI,
 MSL_COMPLAINCE_NUMERATOR::NUMBER(38,15) as MSL_COMPLAINCE_NUMERATOR,
 MSL_COMPLAINCE_DENOMINATOR::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR,
-MSL_COMPLAINCE_DENOMINATOR_WT::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR_WT,
 OSA_COMPLAINCE_NUMERATOR::NUMBER(38,15) as OSA_COMPLAINCE_NUMERATOR,
 OSA_COMPLAINCE_DENOMINATOR::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR,
 null::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR_WT,
 PROMO_COMPLAINCE_NUMERATOR::NUMBER(38,15) as PROMO_COMPLAINCE_NUMERATOR,
 PROMO_COMPLAINCE_DENOMINATOR::NUMBER(38,15) as PROMO_COMPLAINCE_DENOMINATOR,
-null::NUMBER(38,15) as PROMO_COMPLAINCE_DENOMINATOR_WT,
+PROMO_COMPLAINCE_DENOMINATOR_WT::NUMBER(38,15) as PROMO_COMPLAINCE_DENOMINATOR_WT, 
 DISPLAY_COMPLAINCE_NUMERATOR::NUMBER(38,15) as DISPLAY_COMPLAINCE_NUMERATOR,
 DISPLAY_COMPLAINCE_DENOMINATOR::NUMBER(38,15) as DISPLAY_COMPLAINCE_DENOMINATOR,
 null::NUMBER(38,15) as DISPLAY_COMPLAINCE_DENOMINATOR_WT,
@@ -143,3 +132,5 @@ null::NUMBER(31,2) as DSO_GROSS_ACCOUNT_RECEIVABLE_PREV_YR
 from transformed
 )
 select * from final
+
+
