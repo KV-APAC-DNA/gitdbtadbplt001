@@ -16,11 +16,13 @@ wks_hk_base_retail_excellence as (
 MSL as 
 (
     SELECT DISTINCT CAL.FISC_YR AS YEAR,
+       MARKET,
        CAL.JJ_MNTH_ID,
-       MSL_DEF.SUB_CHANNEL,
-       MSL_DEF.SKU_UNIQUE_IDENTIFIER,
-	   MSL_DEF.RETAIL_ENVIRONMENT
-    FROM itg_re_msl_input_definition MSL_DEF
+       MSL_DEF.CUSTOMER,
+       MSL_DEF.STORE_GRADE,
+       UPPER(MSL_DEF.RETAIL_ENVIRONMENT) AS RETAIL_ENVIRONMENT,
+       LTRIM(MSL_DEF.SKU_UNIQUE_IDENTIFIER,'0') AS sku_unique_identifier
+    FROM ITG_RE_MSL_INPUT_DEFINITION MSL_DEF
     LEFT JOIN (SELECT DISTINCT FISC_YR,
                     SUBSTRING(FISC_PER,1,4)||SUBSTRING(FISC_PER,6,7) AS JJ_MNTH_ID
              FROM edw_calendar_dim) CAL
@@ -68,7 +70,7 @@ itg_hk_re_msl_list as
        LTRIM(MSL.SKU_UNIQUE_IDENTIFIER,'0') AS EAN,
 	   REG_SO.SKU_CODE,	
 	   REG_SO.SKU_DESCRIPTION,
-       SYSDATE() AS CRT_DTTM
+       SYSDATE() AS CRTD_DTTM
     FROM MSL
     LEFT JOIN REG_SO ON  UPPER (MSL.store_grade) = UPPER (REG_SO.store_grade)
 				     AND UPPER (LTRIM(MSL.sku_unique_identifier,'0')) = UPPER (LTRIM(REG_SO.EAN,'0'))

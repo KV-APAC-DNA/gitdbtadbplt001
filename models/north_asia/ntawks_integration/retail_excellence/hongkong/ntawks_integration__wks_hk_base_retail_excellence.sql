@@ -35,6 +35,7 @@ hk_base_retail_excellence as
        UPPER(STORE_NAME) AS STORE_NAME,
 	   LIST_PRICE,
        STORE_TYPE,
+       CHANNEL,
        SAP_PARENT_CUSTOMER_KEY,
        SAP_PARENT_CUSTOMER_DESCRIPTION,
        SAP_CUSTOMER_CHANNEL_KEY,

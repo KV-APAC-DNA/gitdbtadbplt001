@@ -23,7 +23,7 @@ final as
     sku_code :: varchar(40) as sku_code,
     sku_description :: varchar(500) as sku_description,
     rno :: numeric(18,0) as rno
-    from wks_philippines_regional_sellout_mapped_sku_cd
+    from wks_hk_regional_sellout_mapped_sku_cd
 )
 
 --final select
