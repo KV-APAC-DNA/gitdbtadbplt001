@@ -1,3 +1,224 @@
+{{
+    config
+    (
+        post_hook = "
+                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err') }}  (
+                    JCP_REC_SEQ, ID, RCV_DT, TEST_FLAG, BGN_SNDR_CD, WS_CD, RTL_TYPE, RTL_CD, TRADE_TYPE, SHP_DATE, SHP_NUM, TRADE_CD, DEP_CD, CHG_CD, PERSON_IN_CHARGE, PERSON_NAME, RTL_NAME, RTL_HO_CD, RTL_ADDRESS_CD, DATA_TYPE, OPT_FLD, ITEM_NM, ITEM_CD_TYP, ITEM_CD, QTY, QTY_TYPE, PRICE, PRICE_TYPE, BGN_SNDR_CD_GLN, RCV_CD_GLN, WS_CD_GLN, SHP_WS_CD, SHP_WS_CD_GLN, REP_NAME_KANJI, REP_INFO, TRADE_CD_GLN, RTL_CD_GLN, RTL_NAME_KANJI, RTL_HO_CD_GLN, ITEM_CD_GTIN, ITEM_NM_KANJI, UNT_PRC, NET_PRC, SALES_CHAN_TYPE, JCP_CREATE_DATE, jcp_rcv_dt_dupli, jcp_test_flag_dupli, jcp_qty_dupli, jcp_price_dupli, jcp_unt_prc_dupli, jcp_net_prc_dupli, export_flag
+                    )
+                    SELECT 
+                    DISTINCT JCP_REC_SEQ, ID, RCV_DT, TEST_FLAG, BGN_SNDR_CD, WS_CD, RTL_TYPE, RTL_CD, TRADE_TYPE, SHP_DATE, SHP_NUM, TRADE_CD, DEP_CD, CHG_CD, PERSON_IN_CHARGE, PERSON_NAME, RTL_NAME, RTL_HO_CD, RTL_ADDRESS_CD, DATA_TYPE, OPT_FLD, ITEM_NM, ITEM_CD_TYP, ITEM_CD, QTY, QTY_TYPE, PRICE, PRICE_TYPE, BGN_SNDR_CD_GLN, RCV_CD_GLN, WS_CD_GLN, SHP_WS_CD, SHP_WS_CD_GLN, REP_NAME_KANJI, REP_INFO, TRADE_CD_GLN, RTL_CD_GLN, RTL_NAME_KANJI, RTL_HO_CD_GLN, ITEM_CD_GTIN, ITEM_NM_KANJI, UNT_PRC, NET_PRC, SALES_CHAN_TYPE, JCP_CREATE_DATE, NULL, NULL, NULL, NULL, NULL, NULL, '0'
+                    FROM (
+                    SELECT 
+                        SU.JCP_REC_SEQ, dup.ID, dup.RCV_DT, dup.TEST_FLAG, dup.BGN_SNDR_CD, dup.WS_CD, dup.RTL_TYPE, dup.RTL_CD, dup.TRADE_TYPE, dup.SHP_DATE, dup.SHP_NUM, dup.TRADE_CD, dup.DEP_CD, dup.CHG_CD, dup.PERSON_IN_CHARGE, dup.PERSON_NAME, dup.RTL_NAME, dup.RTL_HO_CD, dup.RTL_ADDRESS_CD, dup.DATA_TYPE, dup.OPT_FLD, dup.ITEM_NM, dup.ITEM_CD_TYP, dup.ITEM_CD, dup.QTY, dup.QTY_TYPE, dup.PRICE, dup.PRICE_TYPE, dup.BGN_SNDR_CD_GLN, dup.RCV_CD_GLN, dup.WS_CD_GLN, dup.SHP_WS_CD, dup.SHP_WS_CD_GLN, dup.REP_NAME_KANJI, dup.REP_INFO, dup.TRADE_CD_GLN, dup.RTL_CD_GLN, dup.RTL_NAME_KANJI, dup.RTL_HO_CD_GLN, dup.ITEM_CD_GTIN, dup.ITEM_NM_KANJI, dup.UNT_PRC, dup.NET_PRC, dup.SALES_CHAN_TYPE, dup.JCP_CREATE_DATE,
+                        ROW_NUMBER() OVER (
+                        PARTITION BY SU.JCP_REC_SEQ ORDER BY tmp.priority
+                        ) AS rnk
+                    FROM {{this}} SU
+                    INNER JOIN {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} dup ON SU.jcp_rec_seq = dup.jcp_rec_seq
+                    INNER JOIN {{ source ('jpnwks_integration', 'temp_tbl')}} tmp ON SU.exec_flag = tmp.exec_flag
+                    WHERE dup.jcp_rec_seq NOT IN (
+                        SELECT jcp_rec_seq
+                        FROM {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
+                        WHERE error_cd = 'NRTL'
+                        )
+                    )
+                    WHERE rnk = 1;
+
+
+                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
+                    (JCP_REC_SEQ,ERROR_CD,EXPORT_FLAG)
+                    SELECT A.JCP_REC_SEQ,A.ERROR_CD,A.EXPORT_FLAG
+                    FROM
+                    ((SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_001' THEN 'E001' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_002' THEN 'E002' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_004' THEN 'E004' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_007' THEN 'E007' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_008' THEN 'E008' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_009' THEN 'E009' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_012' THEN 'E012' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_014' THEN 'E014' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_017' THEN 'E017' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_018' THEN 'E018' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN ERROR_CD='ERR_020' THEN 'E020' ELSE '0' END ERROR_CD,
+                    '0' EXPORT_FLAG
+                    FROM {{this}} A))A
+                    WHERE A.ERROR_CD!='0';
+
+
+                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }}
+                    (JCP_REC_SEQ,ERROR_CD,EXEC_FLAG,EXPORT_FLAG,JCP_CREATE_DATE)
+                    SELECT A.JCP_REC_SEQ,A.ERROR_CD,A.EXEC_FLAG,A.EXPORT_FLAG,A.JCP_CREATE_DATE
+                    FROM
+                    (
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_001' THEN 'E001' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_002'  THEN 'E002' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
+
+                    UNION
+
+                    (
+                    SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_004'  THEN 'E004' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+                    UNION
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_007'  THEN 'E007' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_008'  THEN 'E008' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+
+                    UNION
+
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_009'  THEN 'E009' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+
+                    UNION
+                    (
+                    SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_012'  THEN 'E012' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+                    UNION
+                    (SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_014'  THEN 'E014' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+
+                    UNION
+                    (
+                    SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_017'  THEN 'E017' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+                    UNION
+                    (
+                    SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_018'  THEN 'E018' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
+                    )
+
+                    UNION
+
+                    (
+                    SELECT A.JCP_REC_SEQ,
+                    CASE WHEN error_cd='ERR_020'  THEN 'E020' ELSE '0' END ERROR_CD,
+                    A.EXEC_FLAG,
+                    '0' EXPORT_FLAG,
+                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
+                    )A
+                    WHERE A.error_cd != '0';
+                    "
+        
+    )
+}}
+
+
 WITH wk_so_planet_no_dup
 AS (
   SELECT *
@@ -36,7 +257,7 @@ AS (
 itg_mds_jp_mt_so_ws_chg
 AS (
   SELECT *
-  FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_item_chg') }}
+  FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_ws_chg') }}
   ),
 edi_jedpar
 AS (

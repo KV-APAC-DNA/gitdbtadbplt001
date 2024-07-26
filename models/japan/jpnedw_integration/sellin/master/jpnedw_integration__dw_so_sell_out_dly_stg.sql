@@ -4,7 +4,14 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-                DELETE	FROM {{this}} WHERE BGN_SNDR_CD = (SELECT IDENTIFY_VALUE FROM {{ source('jpnedw_integration', 'mt_constant') }}	WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
+                DELETE
+                FROM {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
+                WHERE BGN_SNDR_CD = (
+                        SELECT IDENTIFY_VALUE
+                        FROM {{ ref('jpnedw_integration__mt_constant_range') }}
+                        WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
+                            AND DELETE_FLAG = '0'
+                            );
                 {% endif %}"
     )
 }}

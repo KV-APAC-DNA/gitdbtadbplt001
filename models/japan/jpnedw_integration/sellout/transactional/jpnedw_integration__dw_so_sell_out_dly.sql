@@ -3,16 +3,6 @@
     (
         materialized = 'incremental',
         incremental_strategy = 'append',
-        post_hook = "
-                    DELETE
-                    FROM {{this}}
-                    WHERE BGN_SNDR_CD = (
-                            SELECT IDENTIFY_VALUE
-                            FROM {{ ref('jpnedw_integration__mt_constant_range') }}
-                            WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
-                                AND DELETE_FLAG = '0'
-                                );
-                    "
     )
 }}
 

@@ -1,3 +1,91 @@
+{{
+    config
+    (
+        post_hook = "
+                    UPDATE {{ ref('jpnitg_integration__dw_so_planet_err') }}
+                    SET EXPORT_FLAG = '1'
+                    WHERE EXPORT_FLAG = '0'
+                    AND (
+                        JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{ ref('jpnwks_integration__consistency_error_2') }}
+                        WHERE exec_flag IN ('DELETE')
+                        )
+                        OR JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{this}}
+                        )
+                        );
+
+                    UPDATE {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }}
+                    SET EXPORT_FLAG = '1'
+                    WHERE EXPORT_FLAG = '0'
+                    AND (
+                        JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{ ref('jpnwks_integration__consistency_error_2') }}
+                        WHERE exec_flag IN ('DELETE')
+                        )
+                        OR JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{this}}
+                        )
+                        );
+
+                    UPDATE {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
+                    SET EXPORT_FLAG = '1'
+                    WHERE EXPORT_FLAG = '0'
+                    AND (
+                        JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{ ref('jpnwks_integration__consistency_error_2') }}
+                        WHERE exec_flag IN ('DELETE')
+                        )
+                        OR JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{this}}
+                        )
+                        OR JCP_REC_SEQ IN (
+                        SELECT jcp_rec_seq
+                        FROM {{ ref('jpnitg_integration__dw_so_planet_err_cd') }}
+                        WHERE error_cd = 'NRTL'
+                        )
+                        );
+
+                    DELETE
+                    FROM {{this}}
+                    WHERE JCP_REC_SEQ IN (
+                        SELECT JCP_REC_SEQ
+                        FROM {{ ref('jpnitg_integration__dw_so_planet_err') }}
+                        WHERE EXPORT_FLAG = '0'
+                        );
+
+                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err') }}
+                    SELECT 
+                    wkpn.JCP_REC_SEQ, wkpn.ID, TO_CHAR(wkpn.RCV_DT, 'YYMMDD'), wkpn.TEST_FLAG, wkpn.BGN_SNDR_CD, wkpn.WS_CD, wkpn.RTL_TYPE, wkpn.RTL_CD, wkpn.TRADE_TYPE, TO_CHAR(wkpn.SHP_DATE, 'YYMMDD'), wkpn.SHP_NUM, wkpn.TRADE_CD, wkpn.DEP_CD, wkpn.CHG_CD, wkpn.PERSON_IN_CHARGE, wkpn.PERSON_NAME, wkpn.RTL_NAME, wkpn.RTL_HO_CD, wkpn.RTL_ADDRESS_CD, wkpn.DATA_TYPE, wkpn.OPT_FLD, wkpn.ITEM_NM, wkpn.ITEM_CD_TYP, wkpn.ITEM_CD, wkpn.QTY, wkpn.QTY_TYPE, wkpn.PRICE, wkpn.PRICE_TYPE, wkpn.BGN_SNDR_CD_GLN, wkpn.RCV_CD_GLN, wkpn.WS_CD_GLN, wkpn.SHP_WS_CD, wkpn.SHP_WS_CD_GLN, wkpn.REP_NAME_KANJI, wkpn.REP_INFO, wkpn.TRADE_CD_GLN, wkpn.RTL_CD_GLN, wkpn.RTL_NAME_KANJI, wkpn.RTL_HO_CD_GLN, wkpn.ITEM_CD_GTIN, wkpn.ITEM_NM_KANJI, wkpn.UNT_PRC, wkpn.NET_PRC, wkpn.SALES_CHAN_TYPE, wkpn.JCP_CREATE_DATE, NULL, NULL, NULL, NULL, NULL, NULL, 0
+                    FROM {{this}} wkpn
+                    WHERE TO_CHAR(SHP_DATE, 'YYYYMM') > (
+                        SELECT TO_CHAR(ADD_MONTHS(MAX(RCV_DT), 6), 'YYYYMM')
+                        FROM {{this}}
+                        );
+
+                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err_cd') }} (
+                    SELECT a.JCP_REC_SEQ,
+                    'FUTR',
+                    '0' FROM {{ ref('jpnitg_integration__dw_so_planet_err') }} a WHERE a.EXPORT_FLAG = 0
+                    AND a.JCP_REC_SEQ NOT IN (
+                        SELECT b.JCP_REC_SEQ
+                        FROM {{ ref('jpnitg_integration__dw_so_planet_err_cd') }} b
+                        WHERE EXPORT_FLAG = '0'
+                        )
+                    );
+                    "
+    )
+}}
+
+
+
+
 with edi_item_m
 as (
     select *

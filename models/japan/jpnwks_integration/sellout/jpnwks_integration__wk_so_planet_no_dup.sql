@@ -1,18 +1,10 @@
-WITH wk_so_planet_no_dup_temp
-AS (
-	SELECT *
-	FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup_temp') }}
-	),
-wk_so_planet_today
+
+with wk_so_planet_today
 AS (
 	SELECT *
 	FROM {{ ref('jpnwks_integration__wk_so_planet_today') }}
 	),
-dw_so_planet_err
-AS (
-	SELECT *
-	FROM {{ ref('jpnitg_integration__dw_so_planet_err') }}
-	),
+
 ct1
 AS (
 	SELECT t_today.jcp_rec_seq,
@@ -62,139 +54,7 @@ AS (
 		t_today.jcp_create_date
 	FROM wk_so_planet_today t_today
 	),
-ct2
-AS (
-	SELECT jcp_rec_seq,
-		id,
-		rcv_dt,
-		test_flag,
-		bgn_sndr_cd,
-		ws_cd,
-		rtl_type,
-		rtl_cd,
-		trade_type,
-		shp_date,
-		shp_num,
-		trade_cd,
-		dep_cd,
-		chg_cd,
-		person_in_charge,
-		person_name,
-		rtl_name,
-		rtl_ho_cd,
-		rtl_address_cd_01 || rtl_address_cd_02,
-		data_type,
-		opt_fld,
-		item_nm,
-		item_cd_typ,
-		item_cd,
-		qty,
-		qty_type,
-		price,
-		price_type,
-		bgn_sndr_cd_gln,
-		rcv_cd_gln,
-		ws_cd_gln,
-		shp_ws_cd,
-		shp_ws_cd_gln,
-		rep_name_kanji,
-		rep_info,
-		trade_cd_gln,
-		rtl_cd_gln,
-		rtl_name_kanji,
-		rtl_ho_cd_gln,
-		item_cd_gtin,
-		item_nm_kanji,
-		unt_prc,
-		net_prc,
-		sales_chan_type,
-		jcp_create_date
-	FROM wk_so_planet_no_dup_temp
-	WHERE jcp_rec_seq IS NOT NULL
-	),
-union1
-AS (
-	SELECT *
-	FROM ct1
-	
-	UNION ALL
-	
-	SELECT *
-	FROM ct2
-	),
-del_cte
-AS (
-	SELECT *
-	FROM union1 
-    minus
-	SELECT *
-	FROM union1
-	WHERE JCP_REC_SEQ IN (
-			SELECT DISTINCT JCP_REC_SEQ
-			FROM dw_so_planet_err
-			WHERE EXPORT_FLAG = '0'
-			)
-	),
-ct3
-AS (
-	SELECT jcp_rec_seq,
-		id,
-		rcv_dt,
-		test_flag,
-		bgn_sndr_cd,
-		ws_cd,
-		rtl_type,
-		rtl_cd,
-		trade_type,
-		shp_date,
-		shp_num,
-		trade_cd,
-		dep_cd,
-		chg_cd,
-		person_in_charge,
-		person_name,
-		rtl_name,
-		rtl_ho_cd,
-		rtl_address_cd_01,
-		data_type,
-		opt_fld,
-		item_nm,
-		item_cd_typ,
-		item_cd,
-		qty,
-		qty_type,
-		price,
-		price_type,
-		bgn_sndr_cd_gln,
-		rcv_cd_gln,
-		ws_cd_gln,
-		shp_ws_cd,
-		shp_ws_cd_gln,
-		rep_name_kanji,
-		rep_info,
-		trade_cd_gln,
-		rtl_cd_gln,
-		rtl_name_kanji,
-		rtl_ho_cd_gln,
-		item_cd_gtin,
-		item_nm_kanji,
-		unt_prc,
-		net_prc,
-		sales_chan_type,
-		jcp_create_date
-	FROM wk_so_planet_no_dup_temp
-	WHERE jcp_rec_seq IS NOT NULL
-	),
-trns
-AS (
-	SELECT *
-	FROM del_cte
-	
-	UNION ALL
-	
-	SELECT *
-	FROM ct3
-	),
+
 final
 AS (
 	SELECT jcp_rec_seq::number(10, 0) AS jcp_rec_seq,
@@ -242,7 +102,7 @@ AS (
 		net_prc::VARCHAR(256) AS net_prc,
 		sales_chan_type::VARCHAR(256) AS sales_chan_type,
 		jcp_create_date::timestamp_ntz(9) AS jcp_create_date
-	FROM trns
+	FROM ct1
 	)
 SELECT *
 FROM final

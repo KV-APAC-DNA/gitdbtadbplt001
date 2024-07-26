@@ -1,16 +1,3 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy= "append",
-        pre_hook = "
-                    {% if is_incremental() %}
-                    delete from {{ this }} 
-                    where jcp_rec_seq in (select distinct jcp_rec_seq from {{ ref('jpnitg_integration__dw_so_planet_err') }} where export_flag = '0')
-                    {% endif %}
-                 "
-    )
-}}
 
 with edi_sell_out_planet as (
     select * from {{ source('jpnsdl_raw', 'edi_sell_out_planet') }}
