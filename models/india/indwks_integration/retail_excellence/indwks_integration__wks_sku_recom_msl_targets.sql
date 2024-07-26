@@ -1,6 +1,13 @@
 with edw_sku_recom_spike_msl as (
     select * from {{ source('indedw_integration', 'edw_sku_recom_spike_msl') }}
 ),
+edw_vw_cal_retail_excellence_dim as (
+    select * from  {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
+),
+edw_calendar_dim as 
+(
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
+),
 edw_retailer_dim as
 (
    select * from {{ source('indedw_integration', 'edw_retailer_dim') }}  
@@ -8,9 +15,10 @@ edw_retailer_dim as
 itg_udcdetails as(
   select * from {{ source('inditg_integration', 'itg_udcdetails') }}     
 ),
+
 wrk_edw_sku_recom_spike_msl as 
 (
-SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
+SELECT substring(derived_table2.year_month,0,5)::date as fisc_yr,
              derived_table2.year_month AS fisc_per,
              derived_table2.channel_name as channel_name,
              derived_table2.customer_code as Distributor_Code,
@@ -31,13 +39,13 @@ SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
              derived_table2.mother_sku_cd,
              derived_table2.mothersku_name,
              'India' AS prod_hier_l1,
-              NULL::"unknown" AS prod_hier_l2,
+              NULL AS prod_hier_l2,
               derived_table2.franchise_name AS prod_hier_l3,
               derived_table2.brand_name AS prod_hier_l4,
               derived_table2.variant_name AS prod_hier_l5,
-              NULL::"unknown" AS prod_hier_l6,
-              NULL::"unknown" AS prod_hier_l7,
-              NULL::"unknown" AS prod_hier_l8,
+              NULL AS prod_hier_l6,
+              NULL AS  prod_hier_l7,
+              NULL AS prod_hier_l8,
               derived_table2.mothersku_name AS prod_hier_l9,
               derived_table2.product_category_name,    
               derived_table2.msl_target,
@@ -81,7 +89,7 @@ SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
                    END AS priority_store_flag
             FROM (SELECT edw_sku_recom.mth_mm AS year_month,
                          edw_sku_recom.qtr,
-                         TO_DATE((edw_sku_recom.mth_mm + 15)::CHARACTER VARYING::TEXT,'YYYYMMDD'::CHARACTER VARYING::TEXT) AS DATE,
+                          TO_DATE((EDW_SKU_RECOM.MTH_MM  || 15)::CHARACTER VARYING::TEXT,'YYYYMMDD'::CHARACTER VARYING::TEXT) AS DATE,
                          max(edw_sku_recom.channel_name) as channel_name,
                          max(edw_sku_recom.business_channel) as business_channel,
                          max(edw_sku_recom.retailer_category_name) as retailer_category_name,
@@ -103,8 +111,8 @@ SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
                          MAX(edw_sku_recom.hit_ms_flag) AS msl_hit
                   FROM edw_sku_recom_spike_msl edw_sku_recom
                   WHERE edw_sku_recom.mothersku_name IS NOT NULL
-				  and mth_mm >= (select last_18mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
-						   and mth_mm <= (select prev_mnth from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric  
+				  and mth_mm >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+						   and mth_mm <= (select prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric  
                    -- AND   edw_sku_recom.mth_mm >(select to_char(add_months((SELECT to_date(MAX(mnth_id),'YYYYMM') FROM rg_edw.edw_rpt_regional_sellout_offtake where country_code='IN' and data_source='SELL-OUT'  ),-(select cast(parameter_value as int) from in_itg.itg_query_parameters where parameter_name='RETAIL_EXCELLENCE_TARGETS_NO_OF_MONTHS')),'yyyymm')) 
 --and mth_mm <= (select to_char(sysdate,'YYYYMM'))
                
@@ -138,7 +146,7 @@ SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
                                        u.mastervaluecode AS retailer_code,
                                        u.distcode
                                 FROM itg_udcdetails u
-                                  JOIN rg_edw.edw_calendar_dim t
+                                  JOIN edw_calendar_dim t
                                     ON "right" (u.columnname::TEXT,4) = t.cal_yr::CHARACTER VARYING::TEXT
                                    AND "left" (SPLIT_PART (u.columnname::TEXT,' Q'::CHARACTER VARYING::TEXT,2),1) = t.cal_qtr_1::CHARACTER VARYING::TEXT
                                    WHERE u.mastername::TEXT = 'Retailer Master'::CHARACTER VARYING::TEXT
@@ -172,14 +180,13 @@ SELECT substring(derived_table2.year_month,0,5) as fisc_yr,
                       WHERE rn = 1
                     ) retailer 
           ON a.customer_code = retailer.customer_code AND a.urc = retailer.rtruniquecode
-      							 
-		) derived_table2 
+) derived_table2 
 ),
 final as 
 (
 select  
 	fisc_yr::varchar(11) AS fisc_yr,
-	fisc_per::numeric(180) AS fisc_per,
+	fisc_per::numeric(18,0) AS fisc_per,
 	channel_name::varchar(50) AS channel_name,
 	distributor_code::varchar(100) AS distributor_code,
 	distributor_name::varchar(200) AS distributor_name,
@@ -208,7 +215,7 @@ select
 	prod_hier_l8::varchar(1) AS prod_hier_l8,
 	prod_hier_l9::varchar(255) AS prod_hier_l9,
 	product_category_name::varchar(255) AS product_category_name,
-	msl_target::numeric(180) AS msl_target,
+	msl_target::numeric(18,0) AS msl_target,
 	crt_dttm::timestamp AS crt_dttm
 from wrk_edw_sku_recom_spike_msl
 )
