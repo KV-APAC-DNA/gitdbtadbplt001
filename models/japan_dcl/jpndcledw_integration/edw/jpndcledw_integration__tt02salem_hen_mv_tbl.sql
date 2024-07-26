@@ -1,41 +1,41 @@
 with c_tbecinquirekesai as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECINQUIREKESAI
+select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 c_tbecinquiremeisai as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECINQUIREMEISAI
+select * from {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
 ),
 c_tbeckesai as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 transformed as (
 SELECT
-       'H' || CAST(c_tbEcInquireMeisai.diinquirekesaiid as VARCHAR) as SALENO,
-       NVL(c_tbEcInquireMeisai.DIMEISAIID,0) as GYONO,
-       c_tbEcInquireMeisai.dsItemID as ITEMCODE,
-       NVL(c_tbEcInquireMeisai.c_dihenpinnum,0) as SURYO,
-       NVL(c_tbEcInquireMeisai.ditotalprc,0) as TANKA,
-       NVL(c_tbEcInquireMeisai.c_diitemtotalprc,0) as KINGAKU,
-       NVL((c_tbEcInquireMeisai.diitemprc * c_dihenpinnum),0) as MEISAINUKIKINGAKU,
-       NVL(c_tbEcInquireMeisai.diitemtax,0) as MEISAITAX,
-       NVL(c_tbEcInquireMeisai.c_didiscountrate,0) as WARIRITU,
-       trunc(DECODE(c_tbEcInquireMeisai.c_dihenpinnum,0,0,((NVL(c_tbEcInquireMeisai.c_diitemtotalprc,0)+ NVL(c_tbEcInquireMeisai.c_didiscountmeisai,0))/ NVL(c_tbEcInquireMeisai.c_dihenpinnum,1)))) as WARIMAEKOMITANKA,
-       NVL((c_tbEcInquireMeisai.diUsualPrc * c_tbEcInquireMeisai.c_dihenpinnum),0) as WARIMAENUKIKINGAKU,
-       NVL((c_tbEcInquireMeisai.c_diitemtotalprc + c_tbEcInquireMeisai.c_didiscountmeisai),0) as WARIMAEKOMIKINGAKU,
-       CAST(c_tbEcInquireMeisai.c_dikesaiid as VARCHAR) as DISPSALENO,
-       c_tbEcInquireMeisai.c_dikesaiid as KESAIID,
-       null as INQMEISAIROWID,
-       null as INQKESAIROWID,
-       null as KESAIROWID
- FROM
-       c_tbEcInquireMeisai c_tbEcInquireMeisai,
-       c_tbEcInquireKesai c_tbEcInquireKesai,
-       c_tbEcKesai c_tbEcKesai
- WHERE   
-       c_tbEcInquireMeisai.diinquireid = c_tbEcInquireKesai.diinquireid AND  
-       c_tbEcInquireMeisai.diinquirekesaiid = c_tbEcInquireKesai.c_diinquirekesaiid AND  
-       c_tbEcInquireKesai.c_dikesaiid = c_tbEcKesai.c_dikesaiid AND  
-       c_tbEcKesai.diCancel = '0' AND  
-       c_tbEcInquireMeisai.dihenpinkubun <> 0
+       'H' || cast(c_tbecinquiremeisai.diinquirekesaiid as varchar) as saleno,
+       nvl(c_tbecinquiremeisai.dimeisaiid,0) as gyono,
+       c_tbecinquiremeisai.dsitemid as itemcode,
+       nvl(c_tbecinquiremeisai.c_dihenpinnum,0) as suryo,
+       nvl(c_tbecinquiremeisai.ditotalprc,0) as tanka,
+       nvl(c_tbecinquiremeisai.c_diitemtotalprc,0) as kingaku,
+       nvl((c_tbecinquiremeisai.diitemprc * c_dihenpinnum),0) as meisainukikingaku,
+       nvl(c_tbecinquiremeisai.diitemtax,0) as meisaitax,
+       nvl(c_tbecinquiremeisai.c_didiscountrate,0) as wariritu,
+       trunc(decode(c_tbecinquiremeisai.c_dihenpinnum,0,0,((nvl(c_tbecinquiremeisai.c_diitemtotalprc,0)+ nvl(c_tbecinquiremeisai.c_didiscountmeisai,0))/ nvl(c_tbecinquiremeisai.c_dihenpinnum,1)))) as warimaekomitanka,
+       nvl((c_tbecinquiremeisai.diusualprc * c_tbecinquiremeisai.c_dihenpinnum),0) as warimaenukikingaku,
+       nvl((c_tbecinquiremeisai.c_diitemtotalprc + c_tbecinquiremeisai.c_didiscountmeisai),0) as warimaekomikingaku,
+       cast(c_tbecinquiremeisai.c_dikesaiid as varchar) as dispsaleno,
+       c_tbecinquiremeisai.c_dikesaiid as kesaiid,
+       null as inqmeisairowid,
+       null as inqkesairowid,
+       null as kesairowid
+ from
+       c_tbecinquiremeisai c_tbecinquiremeisai,
+       c_tbecinquirekesai c_tbecinquirekesai,
+       c_tbeckesai c_tbeckesai
+ where   
+       c_tbecinquiremeisai.diinquireid = c_tbecinquirekesai.diinquireid and  
+       c_tbecinquiremeisai.diinquirekesaiid = c_tbecinquirekesai.c_diinquirekesaiid and  
+       c_tbecinquirekesai.c_dikesaiid = c_tbeckesai.c_dikesaiid and  
+       c_tbeckesai.dicancel = '0' and  
+       c_tbecinquiremeisai.dihenpinkubun <> 0
  ),
  final as (
 select

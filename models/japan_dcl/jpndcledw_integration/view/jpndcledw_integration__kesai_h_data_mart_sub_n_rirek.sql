@@ -1,5 +1,5 @@
 with tbecorderhist as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDERHIST
+select * from {{ ref('jpndclitg_integration__tbecorderhist') }}
 ),
 final as (
 SELECT 

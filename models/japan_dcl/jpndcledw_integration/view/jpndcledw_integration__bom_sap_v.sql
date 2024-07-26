@@ -1,8 +1,8 @@
 with edw_sap_bw_dna_material_bomlist as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_SAP_BW_DNA_MATERIAL_BOMLIST
+select * from {{ ref('aspedw_integration__edw_sap_bw_dna_material_bomlist') }}
 ),
 edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 final as (
 SELECT base1.oya_hin_cd,

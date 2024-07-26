@@ -1,5 +1,5 @@
 with tbperson as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBPERSON
+select * from {{ ref('jpndclitg_integration__tbperson') }}
 ),
 final as (
 SELECT 

@@ -1,5 +1,5 @@
 with cir07dmprn_tbl as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN_TBL
+select * from {{ ref('jpndcledw_integration__cir07dmprn_tbl') }}
 ),
 final as (
 SELECT 

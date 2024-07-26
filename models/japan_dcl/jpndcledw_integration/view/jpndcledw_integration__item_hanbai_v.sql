@@ -1,14 +1,14 @@
 with item_hanbai_tbl as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.ITEM_HANBAI_TBL
+select * {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
 ),
-final as (SELECT iht.h_itemcode,
-    CASE 
-        WHEN ((iht.h_itemcode)::TEXT = ('X000000002'::CHARACTER VARYING)::TEXT)
-            THEN '利用ポイント数(交換)'::CHARACTER VARYING
+final as (select iht.h_itemcode,
+    case 
+        when ((iht.h_itemcode)::text = ('X000000002'::character varying)::text)
+            then '利用ポイント数(交換)'::CHARACTER VARYING
         ELSE iht.h_itemname
-        END AS h_itemname,
+        end as h_itemname,
     iht.diid,
     iht.tanka_sales,
     iht.syutoku_kbn
-FROM item_hanbai_tbl iht)
+from item_hanbai_tbl iht)
 select * from final

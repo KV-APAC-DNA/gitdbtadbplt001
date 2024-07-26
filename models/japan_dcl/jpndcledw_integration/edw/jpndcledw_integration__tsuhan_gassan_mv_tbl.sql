@@ -1,62 +1,62 @@
-with CIT80SALEH as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIT80SALEH
+with cit80saleh as (
+select * from dev_dna_core.jpdcledw_integration.cit80saleh
 ),
-CIT81SALEM as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIT81SALEM
+cit81salem as (
+select * from dev_dna_core.jpdcledw_integration.cit81salem
 ),
 transformed as (
 select
-C80.SALENO
-, C80.JUCHKBN
-, C80.TORIKEIKBN
-,SUBSTRING(C80.JUCHDATE,1,6) JUCHYM
-, C80.JUCHDATE
-,SUBSTRING(C80.SHUKADATE,1,6) SHUKAYM
-, C80.SHUKADATE
-,DECODE(C80.KAKOKBN,'1',
-CASE C80.KAISHA
-WHEN '000' THEN '01'
-WHEN '001' THEN '02'
-ELSE            '03'
-END,
-CASE C80.SMKEIROID
-WHEN 6 THEN '02'
-ELSE        '01'
-END
-) CHANNEL
-,DECODE(C80.KAKOKBN,'1',
-CASE C80.KAISHA
-WHEN '000' THEN '01 : 通販'
-WHEN '001' THEN '02 : 社内販売'
-ELSE            '03 : 職域販売'
-END,
-CASE C80.SMKEIROID
-WHEN 6 THEN '02 : 社内販売'
-ELSE        '01 : 通販'
-END
-) CHANNELCNAME
-, C81.GYONO
-, C81.ITEMCODE
-, C81.ITEMCODE_HANBAI
-, C81.SURYO
-, C81.HENSU
-, C81.MEISAINUKIKINGAKU
-, C80.DAIHANROBUNNAME
-, C80.CHUHANROBUNNAME
-, C80.SYOHANROBUNNAME
-, C80.KOKYANO
-, C80.MEDIACODE
-, C80.DIPROMID
-, C80.KAISHA
-, C80.KAKOKBN
-, C81.JUCH_SHUR
-, C81.ANBUNMEISAINUKIKINGAKU
+c80.saleno
+, c80.juchkbn
+, c80.torikeikbn
+,substring(c80.juchdate,1,6) juchym
+, c80.juchdate
+,substring(c80.shukadate,1,6) shukaym
+, c80.shukadate
+,decode(c80.kakokbn,'1',
+case c80.kaisha
+when '000' then '01'
+when '001' then '02'
+else            '03'
+end,
+case c80.smkeiroid
+when 6 then '02'
+else        '01'
+end
+) channel
+,decode(c80.kakokbn,'1',
+case c80.kaisha
+when '000' then '01 : 通販'
+when '001' then '02 : 社内販売'
+else            '03 : 職域販売'
+end,
+case c80.smkeiroid
+when 6 then '02 : 社内販売'
+else        '01 : 通販'
+end
+) channelcname
+, c81.gyono
+, c81.itemcode
+, c81.itemcode_hanbai
+, c81.suryo
+, c81.hensu
+, c81.meisainukikingaku
+, c80.daihanrobunname
+, c80.chuhanrobunname
+, c80.syohanrobunname
+, c80.kokyano
+, c80.mediacode
+, c80.dipromid
+, c80.kaisha
+, c80.kakokbn
+, c81.juch_shur
+, c81.anbunmeisainukikingaku
 from
-CIT80SALEH C80
-INNER JOIN CIT81SALEM C81
-ON (C81.SALENO = C80.SALENO)
+cit80saleh c80
+inner join cit81salem c81
+on (c81.saleno = c80.saleno)
 where
-C80.CANCELFLG = 0
+c80.cancelflg = 0
 ),
 final as 
 (

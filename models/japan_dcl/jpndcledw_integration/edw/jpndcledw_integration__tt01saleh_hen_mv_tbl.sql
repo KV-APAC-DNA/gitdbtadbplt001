@@ -1,26 +1,26 @@
 with tbecorder as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 tbpromotion as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBPROMOTION
+select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
 c_tbeckesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 keirokbn as (
 select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KEIROKBN
 ),
 tt01_henpin_riyu as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TT01_HENPIN_RIYU
+select * from {{ ref('jpndcledw_integration__tt01_henpin_riyu') }}
 ),
 hanyo_attr as (
 select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR
 ),
 tbechenpinriyu as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECHENPINRIYU
+select * from {{ ref('jpndclitg_integration__tbechenpinriyu') }}
 ),
 c_tbecinquirekesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIREKESAI
+select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 c_tbEcInquire as (
 select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECINQUIRE

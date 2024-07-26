@@ -1,5 +1,5 @@
 with c_tbecprivilegemst as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECPRIVILEGEMST
+select * from {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}
 ),
 final as (
 SELECT c_tbecprivilegemst.c_diprivilegeid,

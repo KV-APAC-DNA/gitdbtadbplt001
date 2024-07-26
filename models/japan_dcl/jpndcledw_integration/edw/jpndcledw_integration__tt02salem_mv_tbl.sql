@@ -1,51 +1,51 @@
-with TT02SALEM_URI_MV as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TT02SALEM_URI_MV
+with tt02salem_uri_mv as (
+select * from dev_dna_core.jpdcledw_integration.tt02salem_uri_mv
 ),
-TT02SALEM_HEN_MV as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TT02SALEM_HEN_MV
+tt02salem_hen_mv as (
+select * from dev_dna_core.jpdcledw_integration.tt02salem_hen_mv
 ),
 transformed as (
-SELECT
-       SALENO as SALENO,
-       GYONO as GYONO,
-       ITEMCODE as ITEMCODE,
-       WARIRITU as WARIRITU,
-       TANKA as TANKA,
-       WARIMAEKOMITANKA as WARIMAEKOMITANKA,
-       SURYO as SURYO,
-       KINGAKU as KINGAKU,
-       WARIMAEKOMIKINGAKU as WARIMAEKOMIKINGAKU,
-       MEISAINUKIKINGAKU as MEISAINUKIKINGAKU,
-       WARIMAENUKIKINGAKU as WARIMAENUKIKINGAKU,
-       MEISAITAX as MEISAITAX,
-       DISPSALENO as DISPSALENO,
-       KESAIID as KESAIID,
-       TRIM(SALENO) as SALENO_TRM,
+select
+       saleno as saleno,
+       gyono as gyono,
+       itemcode as itemcode,
+       wariritu as wariritu,
+       tanka as tanka,
+       warimaekomitanka as warimaekomitanka,
+       suryo as suryo,
+       kingaku as kingaku,
+       warimaekomikingaku as warimaekomikingaku,
+       meisainukikingaku as meisainukikingaku,
+       warimaenukikingaku as warimaenukikingaku,
+       meisaitax as meisaitax,
+       dispsaleno as dispsaleno,
+       kesaiid as kesaiid,
+       trim(saleno) as saleno_trm,
        1 as maker,
-       null as SALEMROWID
- FROM
-       TT02SALEM_URI_MV TT02SALEM_URI_MV
- UNION ALL
- SELECT
-       SALENO as SALENO,
-       GYONO as GYONO,
-       ITEMCODE as ITEMCODE,
-       WARIRITU as WARIRITU,
-       TANKA as TANKA,
-       WARIMAEKOMITANKA as WARIMAEKOMITANKA,
-       SURYO as SURYO,
-       KINGAKU as KINGAKU,
-       WARIMAEKOMIKINGAKU as WARIMAEKOMIKINGAKU,
-       MEISAINUKIKINGAKU as MEISAINUKIKINGAKU,
-       WARIMAENUKIKINGAKU as WARIMAENUKIKINGAKU,
-       MEISAITAX as MEISAITAX,
-       DISPSALENO as DISPSALENO,
-       KESAIID as KESAIID,
-       TRIM(SALENO) as SALENO_TRM,
+       null as salemrowid
+ from
+       tt02salem_uri_mv tt02salem_uri_mv
+ union all
+ select
+       saleno as saleno,
+       gyono as gyono,
+       itemcode as itemcode,
+       wariritu as wariritu,
+       tanka as tanka,
+       warimaekomitanka as warimaekomitanka,
+       suryo as suryo,
+       kingaku as kingaku,
+       warimaekomikingaku as warimaekomikingaku,
+       meisainukikingaku as meisainukikingaku,
+       warimaenukikingaku as warimaenukikingaku,
+       meisaitax as meisaitax,
+       dispsaleno as dispsaleno,
+       kesaiid as kesaiid,
+       trim(saleno) as saleno_trm,
        2 as maker,
-       null as SALEMROWID
- FROM
-       TT02SALEM_HEN_MV TT02SALEM_HEN_MV
+       null as salemrowid
+ from
+       tt02salem_hen_mv tt02salem_hen_mv
  ),
 final as (
 select

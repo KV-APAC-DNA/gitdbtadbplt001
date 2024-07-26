@@ -5,7 +5,7 @@ syouhincd_henkan_qv as (
 select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.SYOUHINCD_HENKAN_QV
 ),
 cim08shkos_bunkai_qv as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIM08SHKOS_BUNKAI_QV
+select * from {{ ref('jpndcledw_integration__cim08shkos_bunkai_qv') }}
 ),
 final as (
 SELECT 

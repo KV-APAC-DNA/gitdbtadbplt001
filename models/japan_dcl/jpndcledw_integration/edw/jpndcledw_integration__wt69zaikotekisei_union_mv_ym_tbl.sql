@@ -1,5 +1,5 @@
 with tsuhan_gassan_mv as (
-select * from dev_dna_core.jpdcledw_integration.tsuhan_gassan_mv
+select * from {{ ref('jpndcledw_integration__tsuhan_gassan_mv_tbl') }}
 ),
 oroshi_gassan_mv as (
 select * from dev_dna_core.jpdcledw_integration.oroshi_gassan_mv

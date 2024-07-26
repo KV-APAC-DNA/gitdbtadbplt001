@@ -1,5 +1,5 @@
 with item_zaiko_tbl as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_ZAIKO_TBL
+select * from {{ ref('jpndcledw_integration__item_zaiko_tbl') }}
 ),
 final as (
 SELECT 

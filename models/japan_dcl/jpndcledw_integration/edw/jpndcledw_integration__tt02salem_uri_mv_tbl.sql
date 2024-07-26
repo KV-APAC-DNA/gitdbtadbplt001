@@ -1,39 +1,39 @@
-with tbEcOrderMeisai as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECORDERMEISAI
+with tbecordermeisai as (
+select * from dev_dna_core.jpdclitg_integration.tbecordermeisai
 ),
-c_tbEcKesai as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.c_tbEcKesai
+c_tbeckesai as (
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 tbecorder as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.tbecorder
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 transformed as (
-SELECT
-   'U' || CAST(tbEcOrderMeisai.c_dikesaiid as VARCHAR) as SALENO,
-   NVL(tbEcOrderMeisai.DIMEISAIID,0) as GYONO,
-   tbEcOrderMeisai.dsItemID as ITEMCODE,
-   tbEcOrderMeisai.diItemNum as SURYO,
-   trunc(DECODE(tbEcOrderMeisai.diItemNum,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/ NVL(tbEcOrderMeisai.diItemNum,1))) as TANKA,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0)) as KINGAKU,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAINUKIKINGAKU,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,(NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))- ceil(((NVL(tbEcOrderMeisai.c_diitemtotalprc,0)- NVL(tbEcOrderMeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.DITAXRATE)/ 100)))) as MEISAITAX,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_didiscountrate,0)) as WARIRITU,
-   NVL(tbEcOrderMeisai.diTotalPrc,0) as WARIMAEKOMITANKA,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL((tbEcOrderMeisai.c_diitemtotalprc - tbEcOrderMeisai.diItemTax),0)) as WARIMAENUKIKINGAKU,
-   DECODE(tbEcOrderMeisai.c_dinoshinshoitemprc,0,0,NVL(tbEcOrderMeisai.c_diitemtotalprc,0)) as WARIMAEKOMIKINGAKU,
-   CAST(tbEcOrderMeisai.c_dikesaiid as VARCHAR) as DISPSALENO,
-   tbEcOrderMeisai.c_dikesaiid as KESAIID,
-   null as MEISAIROWID,
-   null as KESAIROWID,
-   null as ORDERROWID
- FROM
-       tbEcOrderMeisai tbEcOrderMeisai,
-       c_tbEcKesai c_tbEcKesai,
+select
+   'U' || cast(tbecordermeisai.c_dikesaiid as varchar) as saleno,
+   nvl(tbecordermeisai.dimeisaiid,0) as gyono,
+   tbecordermeisai.dsitemid as itemcode,
+   tbecordermeisai.diitemnum as suryo,
+   trunc(decode(tbecordermeisai.diitemnum,0,0,(nvl(tbecordermeisai.c_diitemtotalprc,0)- nvl(tbecordermeisai.c_didiscountmeisai,0))/ nvl(tbecordermeisai.diitemnum,1))) as tanka,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,nvl(tbecordermeisai.c_diitemtotalprc,0)- nvl(tbecordermeisai.c_didiscountmeisai,0)) as kingaku,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,ceil(((nvl(tbecordermeisai.c_diitemtotalprc,0)- nvl(tbecordermeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.ditaxrate)/ 100)))) as meisainukikingaku,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,(nvl(tbecordermeisai.c_diitemtotalprc,0)- nvl(tbecordermeisai.c_didiscountmeisai,0))- ceil(((nvl(tbecordermeisai.c_diitemtotalprc,0)- nvl(tbecordermeisai.c_didiscountmeisai,0))/trunc((100 + tbecorder.ditaxrate)/ 100)))) as meisaitax,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,nvl(tbecordermeisai.c_didiscountrate,0)) as wariritu,
+   nvl(tbecordermeisai.ditotalprc,0) as warimaekomitanka,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,nvl((tbecordermeisai.c_diitemtotalprc - tbecordermeisai.diitemtax),0)) as warimaenukikingaku,
+   decode(tbecordermeisai.c_dinoshinshoitemprc,0,0,nvl(tbecordermeisai.c_diitemtotalprc,0)) as warimaekomikingaku,
+   cast(tbecordermeisai.c_dikesaiid as varchar) as dispsaleno,
+   tbecordermeisai.c_dikesaiid as kesaiid,
+   null as meisairowid,
+   null as kesairowid,
+   null as orderrowid
+ from
+       tbecordermeisai tbecordermeisai,
+       c_tbeckesai c_tbeckesai,
        tbecorder tbecorder
- WHERE   
-       tbEcOrderMeisai.c_dikesaiid = c_tbEcKesai.c_dikesaiid AND  
-       tbEcOrderMeisai.DIORDERID = tbecorder.DIORDERID AND  
-       c_tbEcKesai.diCancel = '0'
+ where   
+       tbecordermeisai.c_dikesaiid = c_tbeckesai.c_dikesaiid and  
+       tbecordermeisai.diorderid = tbecorder.diorderid and  
+       c_tbeckesai.dicancel = '0'
  ),
  final as (
  select 

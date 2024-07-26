@@ -1,5 +1,5 @@
 with edw_material_dim as (
-select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 final as (
 SELECT 
