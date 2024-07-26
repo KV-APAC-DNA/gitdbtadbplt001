@@ -700,5 +700,3 @@ models:
     config:
       alias: wk_nayol
       tags: ["m_dcl_edw_job1","transformation"]
-
-  
