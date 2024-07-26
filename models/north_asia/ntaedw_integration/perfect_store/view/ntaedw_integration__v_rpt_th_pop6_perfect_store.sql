@@ -43,6 +43,10 @@ AS (
     SELECT *
     FROM {{ ref('aspedw_integration__edw_vw_ps_targets') }}
     ),
+edw_vw_pop6_visits_rir_data
+AS (
+    SELECT * FROM {{ ref('aspedw_integration__edw_vw_pop6_visits_rir_data') }}
+   ),
 ct1
 AS (
     SELECT 'Merchandising_Response' AS dataset,
@@ -120,6 +124,8 @@ AS (
         NULL AS response,
         NULL AS response_score,
         NULL AS acc_rej_reason,
+        NULL as actual_value,
+        NULL as ref_value,
         datediff(SECOND, to_date(vst.check_in_datetime::VARCHAR), to_date(vst.check_out_datetime::VARCHAR)) AS duration
     FROM (
         (
@@ -303,6 +309,8 @@ AS (
         NULL AS response,
         NULL AS response_score,
         NULL AS acc_rej_reason,
+        NULL as actual_value,
+        NULL as ref_value,
         datediff(SECOND, to_date(vst.check_in_datetime::VARCHAR), to_date(vst.check_out_datetime::VARCHAR)) AS duration
     FROM (
         (
@@ -528,6 +536,8 @@ AS (
         NULL AS response,
         NULL AS response_score,
         NULL AS acc_rej_reason,
+        NULL as actual_value,
+        NULL as ref_value,
         datediff(SECOND, to_date(vst.check_in_datetime::VARCHAR), to_date(vst.check_out_datetime::VARCHAR)) AS duration
     FROM (
         (
@@ -791,6 +801,8 @@ AS (
         NULL AS response,
         NULL AS response_score,
         NULL AS acc_rej_reason,
+        NULL as actual_value,
+        NULL as ref_value,
         datediff(SECOND, to_date(vst.check_in_datetime::VARCHAR), to_date(vst.check_out_datetime::VARCHAR)) AS duration
     FROM (
         (
@@ -1053,6 +1065,8 @@ AS (
         NULL AS response,
         NULL AS response_score,
         NULL AS acc_rej_reason,
+        NULL as actual_value,
+        NULL as ref_value,
         datediff(SECOND, to_date(vst.check_in_datetime::VARCHAR), to_date(vst.check_out_datetime::VARCHAR)) AS duration
     FROM (
         (
@@ -1286,6 +1300,166 @@ AS (
         )
     WHERE (date_part('year', vst.visit_date) >= (date_part('year', '2024-02-09 06:03:00.8736'::TIMESTAMP) - 2))
     ),
+ct5 
+AS (  
+        select 'IR_Response' as dataset,
+                null as merchandisingresponseid,
+                null as surveyresponseid,
+                main.popdb_id  as customerid,
+                usr.userdb_id as salespersonid,
+                main.visit_id as visitid,
+                main.check_in_datetime as mrch_resp_startdt,
+                main.check_out_datetime as mrch_resp_enddt,
+                null as mrch_resp_status,
+                null as mastersurveyid,
+                null as survey_status,
+                main.check_out_datetime as survey_enddate,
+                questionkey,
+                questiontext,
+                null as valuekey,
+                main.value::varchar(100) as value ,
+                null as productid,
+                null as mustcarryitem,
+                null as presence,
+                null as outofstock, 
+                main.kpi,
+                main.ps_category as category,
+                main.ps_segment as segment,
+                main.visit_id as vst_visitid,
+                main.visit_date as scheduleddate,
+                main.check_in_datetime as scheduledtime,
+                main.vst_status,
+                NULL AS fisc_yr,
+                NULL AS fisc_per,
+                usr.first_name AS firstname,
+                usr.last_name AS lastname,
+                main.popdb_id as  cust_remotekey,
+                pop.pop_name AS customername,
+                pop.country,
+                pop.territory_or_region AS STATE,
+                NULL AS county,
+                NULL AS district,
+                NULL AS city,
+                pop.customer AS storereference,
+                pop.retail_environment_ps AS storetype,
+                pop.channel,
+                pop.sales_group_name AS salesgroup,
+                pop.business_unit_name AS bu,
+                NULL AS soldtoparty,
+                NULL AS productname,
+                NULL AS eannumber,
+                NULL AS matl_num,
+                NULL AS prod_hier_l1,
+                NULL AS prod_hier_l2,
+                NULL AS prod_hier_l3,
+                NULL AS prod_hier_l4,
+                NULL AS prod_hier_l5,
+                NULL AS prod_hier_l6,
+                NULL AS prod_hier_l7,
+                NULL AS prod_hier_l8,
+                NULL AS prod_hier_l9,
+                kpi_wt.weight as kpi_chnl_wt,
+                case when pop.channel = 'GT' then kpi_tgt_gt.value else kpi_tgt_mt.value end  as mkt_share,
+                main.ques_desc,
+                null as "y/n_flag",
+                null as rej_reason,
+                null as response,
+                null as response_score,
+                null as acc_rej_reason,
+                NULL as actual_value,
+                NULL as ref_value,
+                datediff(SECOND, to_date(main.check_in_datetime::VARCHAR), to_date(main.check_out_datetime::VARCHAR)) AS duration     
+        from 
+        (select cntry_cd,
+                visit_id,
+                field_code as questionkey,
+                kpi,
+                vst_status,
+                questiontext,
+                ques_desc,
+                sum(facing_of_this_layer)::numeric(20,2) as value,
+                visit_date,
+                check_in_datetime,
+                check_out_datetime,
+                popdb_id,
+                pop_code,
+                pop_name,
+                username,
+                ps_category,
+                ps_segment
+        from  (select  cntry_cd ,
+                        visit_id,
+                        'PS_SOS_QN' as field_code,
+                        'SHARE OF SHELF' as kpi,
+                        case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
+                        'How many facing Kenvue acquired?' as questiontext,
+                        'numerator' as ques_desc,
+                        facing_of_this_layer,
+                        visit_date,
+                        check_in_datetime,
+                        check_out_datetime,
+                        popdb_id,
+                        pop_code,
+                        pop_name,
+                        username,
+                        ps_category,
+                        ps_segment
+            from edw_vw_pop6_visits_rir_data
+            where upper(company) in ('KENVUE','JNJ','KV')
+        UNION ALL
+        select  cntry_cd ,
+                        visit_id,
+                        'PS_SOS_QN_COMP' as field_code,
+                        'SHARE OF SHELF' as kpi,
+                        case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
+                        case when upper(company) in ('KENVUE','JNJ','KV') then 'How many facing Kenvue acquired?'
+                        else 'How many facing Competitor acquired?' end  as questiontext,
+                        'denominator' as ques_desc,
+                        facing_of_this_layer,
+                        visit_date,
+                        check_in_datetime,
+                        check_out_datetime,
+                        popdb_id,
+                        pop_code,
+                        pop_name,
+                        username,
+                        ps_category,
+                        ps_segment
+            from edw_vw_pop6_visits_rir_data)
+        where   (date_part('year', visit_date) >= (date_part('year',  sysdate()) - 2))
+            group by cntry_cd,
+                    visit_id,
+                    field_code,
+                    kpi,
+                    vst_status,
+                    questiontext,
+                    ques_desc,
+                    visit_date,
+                    check_in_datetime,
+                    check_out_datetime,
+                    popdb_id,
+                    pop_code,
+                    pop_name,
+                    username,
+                    ps_category,
+                    ps_segment) main
+        left join edw_vw_pop6_salesperson usr
+        on upper(usr.username) = upper(main.username)
+        left join edw_vw_pop6_store pop
+        on pop.popdb_id  = main.popdb_id
+        left join edw_vw_ps_weights kpi_wt 
+        on upper(kpi_wt.channel) = upper(pop.channel) and upper(pop.retail_environment_ps) = upper(kpi_wt.retail_environment)
+        and upper(kpi_wt.market) = 'THAILAND' and upper(kpi_wt.kpi) = 'SOS COMPLIANCE'
+        left join edw_vw_ps_targets kpi_tgt_gt
+        on upper(kpi_tgt_gt.channel) =  upper(pop.channel) and upper(pop.retail_environment_ps) = upper(kpi_tgt_gt.retail_environment)
+        and upper(main.ps_segment) = upper(kpi_tgt_gt.attribute_1) and upper(kpi_tgt_gt.market) = 'THAILAND' and upper(kpi_tgt_gt.kpi) = 'SOS COMPLIANCE'
+        and upper(kpi_tgt_gt.channel) = 'GT'
+        left join edw_vw_ps_targets kpi_tgt_mt 
+        on upper(kpi_tgt_mt.channel) =  upper(pop.channel) and upper(pop.retail_environment_ps) = upper(kpi_tgt_mt.retail_environment)
+        and upper(main.ps_segment) = upper(kpi_tgt_mt.attribute_1) and upper(pop.customer) = upper(kpi_tgt_mt.attribute_2)
+        and upper(kpi_tgt_mt.market) = 'THAILAND' and upper(kpi_tgt_mt.kpi) = 'SOS COMPLIANCE'
+        and upper(kpi_tgt_mt.channel) = 'MT'
+    ),
 final
 AS (
     SELECT *
@@ -1305,6 +1479,11 @@ AS (
     
     SELECT *
     FROM ct4
+
+    UNION ALL
+    
+    SELECT *
+    FROM ct5
     )
 SELECT *
 FROM final
