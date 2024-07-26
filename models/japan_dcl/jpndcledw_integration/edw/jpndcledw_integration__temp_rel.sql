@@ -1,5 +1,5 @@
 with C_TBMEMBUNITREL as (
-    select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBMEMBUNITREL 
+    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBMEMBUNITREL 
 ),
 transformed as (
 SELECT
@@ -11,7 +11,7 @@ SELECT
        DIELIMFLG = 0 AND  
        --TO_CHAR(TO_DATE(DSREN,'YYYY-MM-DD HH24:MI:SS'),'YYYYMMDD')>= TO_CHAR(cast(SYSDATE as date)-7,'YYYYMMDD') 	--Timezone conversion from UTC 20220211
 	   TO_CHAR(TO_DATE(DSREN,'YYYY-MM-DD HH24:MI:SS'),'YYYYMMDD')>= 
-       TO_CHAR(cast(CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-22'::date) as date)-7,'YYYYMMDD')
+       TO_CHAR(cast(CONVERT_TIMEZONE('UTC','Asia/Tokyo',sysdate()) as date)-7,'YYYYMMDD')
 ),
 final as (
 select

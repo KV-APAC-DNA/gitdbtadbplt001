@@ -1,12 +1,16 @@
-
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
+    )
+}}
 with c_tbdmsndhist as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBDMSNDHIST
+select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBDMSNDHIST
 ),
 cl_mst as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CL_MST
+select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MST
 ),
 hanyo_attr as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
 ),
 transformed as (
 SELECT

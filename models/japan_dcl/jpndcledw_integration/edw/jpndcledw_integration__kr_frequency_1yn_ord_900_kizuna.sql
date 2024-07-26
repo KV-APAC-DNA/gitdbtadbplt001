@@ -1,8 +1,5 @@
-with KR_FREQUENCY_1YN_WORK_kizuna as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KR_FREQUENCY_1YN_WORK_KIZUNA
-),
-KR_FREQUENCY_1YN_WORK_kizuna as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KR_FREQUENCY_1YN_WORK_KIZUNA
+with KR_FREQUENCY_1YN_ORD_WORK_kizuna as (
+select * from DEV_DNA_CORE.JPdCLEDW_INTEGRATION.KR_FREQUENCY_1YN_ORD_WORK_kizuna
 ),
 transformed as (
 SELECT A.SALENO                AS SALENO       --QlikViewに合わせる
@@ -18,8 +15,8 @@ SELECT A.SALENO                AS SALENO       --QlikViewに合わせる
       ,GREATEST(NVL(A.INSERTDATE, 0),NVL(B.INSERTDATE, 0)) INSERTDATE
       ,GREATEST(NVL(A.SHUKADATE_P,0),NVL(B.SHUKADATE_P,0)) SHUKADATE_P
 --END-UPD 20200108 D.YAMASHITA ***変更21980(QlikViewのFREQUENCYデータの欠落不具合修正)****
-FROM   KR_FREQUENCY_1YN_WORK_kizuna A
-       LEFT JOIN KR_FREQUENCY_1YN_WORK_kizuna B
+FROM   KR_FREQUENCY_1YN_ORD_WORK_kizuna A
+       LEFT JOIN KR_FREQUENCY_1YN_ORD_WORK_kizuna B
               ON B.KOKYANO = A.KOKYANO
              AND B.ROWNO   = A.ROWNO - 1
 ),
@@ -41,3 +38,5 @@ null::varchar(100) as updated_by
 from transformed
 )
 select * from final
+
+

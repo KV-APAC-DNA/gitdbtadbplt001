@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";",
+    )
+}}
 with hanyo_attr as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
 ),
