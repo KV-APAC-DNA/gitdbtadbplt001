@@ -4,7 +4,7 @@
     )
 }}
 with c_tbdmsndhist as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBDMSNDHIST
+select * from {{ ref('jpndclitg_integration__c_tbdmsndhist') }}
 ),
 cl_mst as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MST
