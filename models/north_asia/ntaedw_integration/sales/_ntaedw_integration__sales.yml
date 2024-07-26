@@ -24,11 +24,11 @@ models:
   - name: ntaedw_integration__v_rpt_onpack
     config: 
       alias: v_rpt_onpack
-      tags: ["north_asia_views","transformation"]
+      tags: ["north_asia_views","J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
   - name: ntaedw_integration__v_rpt_kr_trade_promotion
     config: 
       alias: v_rpt_kr_trade_promotion
-      tags: ["north_asia_views","transformation"]
+      tags: ["north_asia_views","j_kr_trade_promotion_data_load","transformation"]
   - name: ntaedw_integration__edw_catg_sls_target
     config: 
       alias: edw_catg_sls_target
