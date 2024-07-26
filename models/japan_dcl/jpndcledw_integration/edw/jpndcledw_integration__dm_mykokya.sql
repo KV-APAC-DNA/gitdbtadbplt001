@@ -1,8 +1,8 @@
 --  add this while deploment 
---{{config(
---         pre_hook = [ " update jp_dcl_itg.mykokya set source_file_date  = null;","update jp_dcl_itg.mykokya_param set source_file_date  = null;"]
---     )
--- }}
+{{config(
+        pre_hook = ["update jp_dcl_itg.mykokya set source_file_date  = null;","update jp_dcl_itg.mykokya_param set source_file_date  = null;"]
+    )
+}}
 
 with mykokya as
 (
