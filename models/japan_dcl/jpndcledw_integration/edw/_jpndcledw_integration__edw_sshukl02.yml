@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__dcl_calendar_sysdate
+    config:
+      alias: dcl_calendar_sysdate
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__tbecorder_log
+    config:
+      alias: tbecorder_log
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__tbecorder_rireki_log
+    config:
+      alias: tbecorder_rireki_log
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__cim01kokya
+    config:
+      alias: cim01kokya
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__cit85osalh_hen_mv_tbl
+    config:
+      alias: cit85osalh_hen_mv_tbl
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__cit85osalh_uri_mv_tbl
+    config:
+      alias: cit85osalh_uri_mv_tbl
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__cit86osalm_uri_mv_tbl 
+    config:
+      alias: cit86osalm_uri_mv_tbl
+      tags: ["m_dcl_edw_job1","transformation"] 
+  - name: jpndcledw_integration__tbecordermeisai_mv_tbl
+    config:
+      alias: tbecordermeisai_mv_tbl
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__toriskhin_sub_mv_tbl
+    config:
+      alias: toriskhin_sub_mv_tbl
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_header_job
+    config:
+      alias: wk_birthday_header_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_cinextusrp_job
+    config:
+      alias: wk_birthday_cinextusrp_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_hanro_job
+    config:
+      alias: wk_birthday_hanro_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_ciline_job
+    config:
+      alias: wk_birthday_ciline_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_viewcolumn_job
+    config:
+      alias: wk_birthday_viewcolumn_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_cinextbio_job
+    config:
+      alias: wk_birthday_cinextbio_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__wk_birthday_cinextstore_job
+    config:
+      alias: wk_birthday_cinextstore_job
+      tags: ["m_dcl_edw_job1","transformation"]
+  - name: jpndcledw_integration__dm_user_attr_hist
+    config:
+      alias: dm_user_attr_hist
+      tags: ["m_dcl_edwmonthly","transformation"]
