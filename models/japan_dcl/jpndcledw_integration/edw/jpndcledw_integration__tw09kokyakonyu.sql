@@ -3,7 +3,25 @@ AS (
   SELECT *
   FROM dev_dna_core.jpdcledw_integration.tw05kokyarecalc
   ),
-tt01kokyastsh_mv
+ tm24_item
+AS (
+  SELECT *
+  FROM dev_dna_core.jpdcledw_integration.tm24_item
+  ),
+hanbai_shohin_attr
+AS (
+  SELECT *
+  FROM dev_dna_core.jpdcledw_integration.hanbai_shohin_attr
+  ),
+ tt01kokyastsh_mv_tbl 
+ AS (
+    SELECT * FROM   dev_dna_core.jpdcledw_integration.tt01kokyastsh_mv_tbl
+ ),
+ tt02kokyastsm_mv_tbl 
+ AS (
+    SELECT * FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_mv_tbl
+ ),
+tt01kokyastsh_mv 
 AS (
   SELECT --+ LEADING(TT01)
 	SALENO_TRM SALENO
@@ -18,7 +36,7 @@ AS (
 	,SOGOKEI
 	,TENPOCODE
 --	 FROM TT01SALEH_MV
-   FROM dev_dna_core.jpdcledw_integration.tt01kokyastsh_mv_tbl
+   FROM tt01kokyastsh_mv_tbl
    WHERE KOKYANO <> '0000000011' AND KOKYANO <> '9999999944'  --顧客Noが'00000000''99999999'のいずれでもない
 	 --AND HANROCODE <> '39'					--通信経路コードが'39'以外
 	 AND CANCELFLG = 0					--キャンセルフラグが0
@@ -26,16 +44,7 @@ AS (
 	 AND JUCHKBN NOT LIKE '9%'
 	 AND KOKYANO IN (SELECT KOKYANO FROM tw05kokyarecalc)  --TW05KOKYARECALCの顧客No.
   ),
-tm24_item
-AS (
-  SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tm24_item
-  ),
-hanbai_shohin_attr
-AS (
-  SELECT *
-  FROM dev_dna_core.jpdcledw_integration.hanbai_shohin_attr
-  ),
+
 tt02kokyastsm_mv
 AS (
   SELECT --+ USE_HASH(TT02)
@@ -47,7 +56,7 @@ AS (
 	,MAX(case nvl(cast(E.BUMON6_ADD_ATTR1 as NUMERIC),1) when 0 then 1 else 0 end) AS JUCHITEMKBNTRIAL
 	,MAX(case nvl(CAST(E.BUMON6_ADD_ATTR3 as NUMERIC),1) when 0 then 1 else 0 end) AS JUCHITEMKBNSAMPLE
 --	 FROM TT02SALEM_MV TT02
-  FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_mv_tbl TT02
+  FROM tt02kokyastsm_mv_tbl TT02
 	 LEFT JOIN tm24_item TM24 ON TT02.ITEMCODE = TM24.ITEMCODE
 	 LEFT JOIN hanbai_shohin_attr E ON TT02.ITEMCODE = E.SHOHIN_CODE --■追加
   GROUP BY TT02.SALENO_TRM
@@ -73,15 +82,10 @@ AS (
 	,T02.JUCHITEMKBNTRIAL
 	,T02.JUCHITEMKBNSAMPLE
 	FROM
-	(
-	 SELECT *
-     FROM tt01kokyastsh_mv
-	) T01
+	tt01kokyastsh_mv T01
 	 INNER JOIN
-	(
-	SELECT *
-    FROM tt02kokyastsm_mv
-	) T02 ON T01.SALENO = T02.SALENO
+	tt02kokyastsm_mv	 T02 
+	ON T01.SALENO = T02.SALENO
  ),
 transformed
 AS (
@@ -100,10 +104,14 @@ AS (
             ,a.MEISAINUKIKINGAKU
             ,a.WARIMAENUKIKINGAKU
             ,a.GMEISAINUKIKINGAKU
-            ,IFNULL(b.KONYUKAISU,0) AS KONYUKAISU
-            ,IFNULL(b.ZAISEKIDAYS,0) AS ZAISEKIDAYS
-            ,IFNULL(b.ZAISEKIMONTH,0) AS ZAISEKIMONTH
-            ,IFNULL(b.KEIKADAYS,0) AS KEIKADAYS
+            -- ,IFNULL(b.KONYUKAISU,0) AS KONYUKAISU
+            -- ,IFNULL(b.ZAISEKIDAYS,0) AS ZAISEKIDAYS
+            -- ,IFNULL(b.ZAISEKIMONTH,0) AS ZAISEKIMONTH
+            -- ,IFNULL(b.KEIKADAYS,0) AS KEIKADAYS
+            ,NVL(b.KONYUKAISU,0) AS KONYUKAISU
+            ,NVL(b.ZAISEKIDAYS,0) AS ZAISEKIDAYS
+            ,NVL(b.ZAISEKIMONTH,0) AS ZAISEKIMONTH
+            ,NVL(b.KEIKADAYS,0) AS KEIKADAYS
             ,a.JUCHITEMKBNSHOHIN
             ,a.JUCHITEMKBNTRIAL
             ,a.JUCHITEMKBNSAMPLE
@@ -134,26 +142,59 @@ AS (
             LEFT JOIN
             (
             SELECT 
-                saleno,
+                -- saleno,
+                -- --何回目の購入か  1/28 2の対応
+                -- DENSE_RANK() OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE) AS KONYUKAISU,
+                -- --在籍日数(初回購入日からの経過日数)
+                -- DATEDIFF(day, 
+                --         TO_DATE(FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD'),
+                --         TO_DATE(JUCHDATE::varchar, 'YYYYMMDD')
+                -- ) AS ZAISEKIDAYS,
+                -- --在籍月数(初回購入日からの経過月数("数え"で見る)   1/28 1の修正
+                -- FLOOR(MONTHS_BETWEEN(
+                --         TO_DATE(JUCHDATE::varchar, 'YYYYMMDD'),
+                --         TO_DATE(FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD')
+                -- ) + 1) AS ZAISEKIMONTH,
+                -- --前回購入日からの経過日数
+                -- -- NVL(
+                -- --     DATEDIFF(day, 
+                -- --             TO_DATE(MAX(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD'),
+                -- --             TO_DATE(JUCHDATE::varchar, 'YYYYMMDD')
+                -- --     ), 
+                -- -- 0) AS KEIKADAYS
+                -- -- NVL(
+                -- --     DATEDIFF(
+                -- --         'day',
+                -- --         TO_DATE(CAST(MAX(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) AS VARCHAR), 'YYYYMMDD'),
+                -- --         TO_DATE(CAST(JUCHDATE AS VARCHAR), 'YYYYMMDD')
+                -- --     ),
+                -- --     0
+                -- --     ) AS KEIKADAYS
+                -- NVL(TO_DATE(cast(JUCHDATE as varchar), 'YYYYMMDD') - TO_DATE(cast((
+                --         --LAG(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO)  --前回購入日
+                --         MAX(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE
+                --                         ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) ) as varchar) --1/28 2の修正
+                --     , 'YYYYMMDD')
+                -- , 0)
+                -- AS KEIKADAYS
+                saleno
                 --何回目の購入か  1/28 2の対応
-                DENSE_RANK() OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE) AS KONYUKAISU,
+                ,DENSE_RANK() OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE) AS KONYUKAISU
                 --在籍日数(初回購入日からの経過日数)
-                DATEDIFF(day, 
-                        TO_DATE(FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD'),
-                        TO_DATE(JUCHDATE::varchar, 'YYYYMMDD')
-                ) AS ZAISEKIDAYS,
+                ,TO_DATE(cast(JUCHDATE as varchar), 'YYYYMMDD')- TO_DATE(cast((FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)) as varchar), 'YYYYMMDD')
+                AS ZAISEKIDAYS
                 --在籍月数(初回購入日からの経過月数("数え"で見る)   1/28 1の修正
-                FLOOR(MONTHS_BETWEEN(
-                        TO_DATE(JUCHDATE::varchar, 'YYYYMMDD'),
-                        TO_DATE(FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD')
-                ) + 1) AS ZAISEKIMONTH,
+                ,TRUNC(MONTHS_BETWEEN(TO_DATE(cast(JUCHDATE as varchar), 'YYYYMMDD'),TO_DATE(cast((FIRST_VALUE(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)) as varchar), 'YYYYMMDD'))
+                    ) + 1
+                AS ZAISEKIMONTH
                 --前回購入日からの経過日数
-                NVL(
-                    DATEDIFF(day, 
-                            TO_DATE(MAX(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)::varchar, 'YYYYMMDD'),
-                            TO_DATE(JUCHDATE::varchar, 'YYYYMMDD')
-                    ), 
-                0) AS KEIKADAYS
+                ,NVL(TO_DATE(cast(JUCHDATE as varchar), 'YYYYMMDD') - TO_DATE(cast((
+                        --LAG(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE, SALENO)  --前回購入日
+                        MAX(JUCHDATE) OVER (PARTITION BY KOKYANO ORDER BY JUCHDATE
+                                        ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) ) as varchar) --1/28 2の修正
+                    , 'YYYYMMDD')
+                , 0)
+                AS KEIKADAYS	
             FROM v01kokyakonyu
             WHERE MEISAINUKIKINGAKU > 0
             ) b
