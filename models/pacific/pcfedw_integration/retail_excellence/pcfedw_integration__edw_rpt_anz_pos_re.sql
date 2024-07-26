@@ -140,7 +140,7 @@ final as
 (
 select 
 fisc_yr::VARCHAR(16) AS fisc_yr,
-fisc_per::VARCHAR(22) AS fisc_per,
+fisc_per::numeric(18,0) AS fisc_per,
 "cluster"::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 data_src::VARCHAR(14) AS data_src,
