@@ -165,6 +165,8 @@ sources:
     tables:
       - name: edw_sku_recom_spike_msl
       - name : edw_retailer_dim
+      - name : v_edw_rpt_retail_excellence
+      
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
