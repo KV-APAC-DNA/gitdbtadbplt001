@@ -6,7 +6,7 @@ wks_hk_regional_sellout_actuals as (
     select * from {{ ref('ntawks_integration__wks_hk_regional_sellout_actuals' )}}
 ),
 v_rpt_pop6_perfectstore as (
-    select * from {{ ref('aspedw_integration__v_rpt_pop6_perfectstore' )}}
+    select * from {{ source('ntaedw_integration','v_rpt_pop6_perfectstore') }}
 ),
 customer_hierarchy as (
     select * from {{ ref('aspedw_integration__edw_generic_customer_hierarchy') }}
@@ -19,6 +19,30 @@ edw_company_dim as (
 ),
 product_key_attributes as (
     select * from {{ ref('aspedw_integration__edw_generic_product_key_attributes') }}
+),
+edw_customer_sales_dim as (
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
+),
+EDW_GCH_CUSTOMERHIERARCHY as(
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
+EDW_CUSTOMER_BASE_DIM as(
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
+),
+EDW_DSTRBTN_CHNL as(
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+),
+EDW_SALES_ORG_DIM as(
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
+),
+EDW_CODE_DESCRIPTIONS as(
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
+),
+EDW_SUBCHNL_RETAIL_ENV_MAPPING as(
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
+),
+EDW_CODE_DESCRIPTIONS_MANUAL as(
+    select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}
 ),
 
 --final cte
@@ -52,7 +76,7 @@ hk_rpt_retail_excellence_mdp as
             --RETAILER.RTRLATITUDE AS RTRLATITUDE,
             --RETAILER.RTRLONGITUDE AS RTRLONGITUDE,
             COALESCE(ACTUAL.EAN, TARGET.EAN) AS PRODUCT_CODE,
-            COALESCE(ACTUAL.SKU_DESCRIPTION, TARGET.SKU_DESCRIPTION) AS PRODUCT_NAME,	PRODUCT_NAME,
+            COALESCE(ACTUAL.SKU_DESCRIPTION, TARGET.SKU_DESCRIPTION) AS PRODUCT_NAME,
             POP.PROD_HIER_L1,	
             POP.PROD_HIER_L2,	
             POP.PROD_HIER_L3,	
