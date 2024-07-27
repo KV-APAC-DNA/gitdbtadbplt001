@@ -11,7 +11,7 @@ wks_id_re_msl_targets as (
     select act.jj_mnth_id , 
            act.global_product_brand , 
            case when (tgt.mdp_target <> 0 or tgt.mdp_target is not null) then
-           round((mds.mdp_target/act.actuals)*100 ):: integer 
+           round((tgt.mdp_target/act.actuals)*100 ):: integer 
            else 100 end as target_complaince from
    (select jj_mnth_id , global_product_brand, count(1) as actuals from
     (select distinct jj_mnth_id , distributor_code , store_code , product_code,global_product_brand 
