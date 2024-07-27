@@ -768,6 +768,5 @@ select
 	cluster::varchar(100) AS cluster,
 	crt_dttm::timestamp AS crt_dttm
 from wks_rpt_retail_excellence
-
 )
 select * from final 
