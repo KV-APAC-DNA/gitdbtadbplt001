@@ -11,7 +11,7 @@ edw_product_dim as
 select * from {{ source('indedw_integration', 'edw_product_dim') }}
 ),
 edw_retailer_dim as (
- select * select * from {{ source('indedw_integration', 'edw_retailer_dim') }}
+select * from {{ source('indedw_integration', 'edw_retailer_dim') }}
  
 ),
 edw_material_dim as (
@@ -48,7 +48,13 @@ edw_customer_dim as (
     select * from {{ source('indedw_integration', 'edw_customer_dim') }}
 
 ),
-itg_in_mds_channel_mapping
+EDW_GCH_CUSTOMERHIERARCHY as(
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+),
+EDW_CUSTOMER_BASE_DIM as(
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
+),
+itg_in_mds_channel_mapping as 
 (
  select * from {{ source('inditg_integration', 'itg_in_mds_channel_mapping') }}
 ),
@@ -71,8 +77,10 @@ SELECT MDP.*,COM.*,SYSDATE() AS CRT_DTTM FROM (SELECT CAST(TARGET.FISC_YR AS INT
              COALESCE(ACTUAL.REGION_NAME,RETAILER.REGION_NAME) AS REGION,
              COALESCE(ACTUAL.ZONE_NAME,RETAILER.ZONE_NAME) AS ZONE_NAME,
              COALESCE(ACTUAL.TOWN_NAME,RETAILER.TOWN_NAME) AS CITY,
-             COALESCE(RETAILER.RTRLATITUDE) AS RTRLATITUDE,
-             COALESCE(RETAILER.RTRLONGITUDE) AS RTRLONGITUDE,
+             --COALESCE(RETAILER.RTRLATITUDE) AS RTRLATITUDE,
+			 RETAILER.RTRLATITUDE AS RTRLATITUDE,
+             --COALESCE(RETAILER.RTRLONGITUDE) AS RTRLONGITUDE,
+			 RETAILER.RTRLONGITUDE AS RTRLONGITUDE,
              TARGET.MOTHER_SKU_CD AS PRODUCT_CODE,
              LOCAL_PROD.MOTHERSKU_NAME AS PRODUCT_NAME,
              'India' as PROD_HIER_L1,
@@ -185,7 +193,7 @@ LEFT JOIN (SELECT * FROM(SELECT *, ROW_NUMBER() OVER (PARTITION BY CUSTOMER_CODE
                          FROM EDW_RETAILER_DIM) WHERE RN=1) RETAILER
                      ON  TARGET.STORE_CODE =  RETAILER.RTRUNIQUECODE
                     AND TARGET.DISTRIBUTOR_CODE = RETAILER.CUSTOMER_CODE
-left join 	(select distinct retailer_channel_level_3,channel_name,retailer_category_name,retailer_class,territory_classification from in_itg.itg_in_mds_channel_mapping ) cmap on cmap.channel_name= CASE WHEN CASE WHEN RETAILER.channel_name= '' THEN NULL
+left join 	(select distinct retailer_channel_level_3,channel_name,retailer_category_name,retailer_class,territory_classification from itg_in_mds_channel_mapping ) cmap on cmap.channel_name= CASE WHEN CASE WHEN RETAILER.channel_name= '' THEN NULL
  ELSE RETAILER.channel_name END IS NULL THEN 'Unknown' ELSE RETAILER.channel_name END	
 AND cmap.retailer_category_name = CASE WHEN CASE WHEN RETAILER.retailer_category_name = '' THEN NULL ELSE RETAILER.retailer_category_name END IS NULL THEN 'Unknown' ELSE RETAILER.retailer_category_name END
 AND cmap.retailer_class = CASE WHEN CASE WHEN RETAILER.class_desc = '' THEN NULL  ELSE RETAILER.class_desc END IS NULL THEN 'Unknown' ELSE RETAILER.class_desc END											   
@@ -225,7 +233,7 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EMD.PKA_VARIANT_DESC,
                           EMD.PKA_SUB_VARIANT_DESC,
 						              EMD.PRMRY_UPC_CD as EAN,					  
-                          EGPH.REGION AS GPH_REGION,
+                          EGPH."region" AS GPH_REGION,
                           EGPH.REGIONAL_FRANCHISE AS GPH_REG_FRNCHSE,
                           EGPH.REGIONAL_FRANCHISE_GROUP AS GPH_REG_FRNCHSE_GRP,
                           EGPH.GCPH_FRANCHISE AS GPH_PROD_FRNCHSE,
@@ -344,7 +352,7 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
  ),
 wks_rpt_retail_excellence_nonmdp as 
  (
- SELECT NON_MDP.*,COM.*,SYSDATE AS CRT_DTTM FROM
+ SELECT NON_MDP.*,COM.*,SYSDATE() AS CRT_DTTM FROM
 (SELECT      CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
              CAST(ACTUAL.MNTH_ID AS INTEGER) AS MNTH_ID,	 			
             ACTUAL.CNTRY_NM AS MARKET,
@@ -362,18 +370,20 @@ wks_rpt_retail_excellence_nonmdp as
              COALESCE(ACTUAL.REGION_NAME,RETAILER.REGION_NAME) AS REGION,
              COALESCE(ACTUAL.ZONE_NAME,RETAILER.ZONE_NAME) AS ZONE_NAME,
              COALESCE(ACTUAL.TOWN_NAME,RETAILER.TOWN_NAME) AS CITY,
-             COALESCE(RETAILER.RTRLATITUDE) AS RTRLATITUDE,
-             COALESCE(RETAILER.RTRLONGITUDE) AS RTRLONGITUDE,
+             --COALESCE(RETAILER.RTRLATITUDE) AS RTRLATITUDE,
+			 RETAILER.RTRLATITUDE AS RTRLATITUDE,
+             --COALESCE(RETAILER.RTRLONGITUDE) AS RTRLONGITUDE,
+			 RETAILER.RTRLONGITUDE AS RTRLONGITUDE,
              ACTUAL.MOTHERSKU_CODE AS PRODUCT_CODE,
              LOCAL_PROD.MOTHERSKU_NAME AS PRODUCT_NAME,
              'India' AS PROD_HIER_L1,
-             NULL::"UNKNOWN" AS PROD_HIER_L2,
+             NULL AS PROD_HIER_L2,
              LOCAL_PROD.FRANCHISE_NAME AS PROD_HIER_L3,
              LOCAL_PROD.BRAND_NAME AS PROD_HIER_L4,
              LOCAL_PROD.VARIANT_NAME AS PROD_HIER_L5,
-             NULL::"UNKNOWN" AS PROD_HIER_L6,
-             NULL::"UNKNOWN" AS PROD_HIER_L7,
-             NULL::"UNKNOWN" AS PROD_HIER_L8,
+             NULL AS PROD_HIER_L6,
+             NULL AS PROD_HIER_L7,
+             NULL AS PROD_HIER_L8,
              LOCAL_PROD.MOTHERSKU_NAME AS PROD_HIER_L9,
            --  LOCAL_PROD.MAPPED_SKU_CD AS MAPPED_SKU_CD,		
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_KEY,CUSTOMER.CUST_SEGMT_KEY)AS CUSTOMER_SEGMENT_KEY,
@@ -525,7 +535,7 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EMD.PKA_VARIANT_DESC,
                           EMD.PKA_SUB_VARIANT_DESC,
 						              EMD.PRMRY_UPC_CD as EAN,					  
-                          EGPH.REGION AS GPH_REGION,
+                          EGPH."region" AS GPH_REGION,
                           EGPH.REGIONAL_FRANCHISE AS GPH_REG_FRNCHSE,
                           EGPH.REGIONAL_FRANCHISE_GROUP AS GPH_REG_FRNCHSE_GRP,
                           EGPH.GCPH_FRANCHISE AS GPH_PROD_FRNCHSE,
@@ -603,7 +613,7 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                                FROM EDW_CUSTOMER_SALES_DIM
                                WHERE SLS_ORG IN
                               (SELECT DISTINCT SLS_ORG
-                                FROM RG_EDW.EDW_SALES_ORG_DIM
+                                FROM EDW_SALES_ORG_DIM
                                 WHERE STATS_CRNCY IN ('INR','LKR','BDT'))) A,
                               (SELECT DISTINCT CUSTOMER_CODE,
                                       REGION_NAME,
@@ -636,10 +646,9 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                          AND   CODES_SEGMENT.CODE_TYPE (+) = 'CUSTOMER SEGMENTATION KEY'
                          AND   CODES_SEGMENT.CODE (+) = ECSD.SEGMT_KEY)
                    WHERE RANK = 1) CUSTOMER ON LTRIM (ACTUAL.DISTRIBUTOR_CODE,'0') = LTRIM (CUSTOMER.SAP_CUST_ID,'0'))NON_MDP,
-                    
-(SELECT DISTINCT "cluster" FROM EDW_COMPANY_DIM WHERE CTRY_GROUP='India')COM
+                     (SELECT DISTINCT "cluster" FROM EDW_COMPANY_DIM WHERE CTRY_GROUP='India')COM
  ),
-wks_rpt_retail_excellence
+wks_rpt_retail_excellence as 
 (
 
 select * from wks_rpt_retail_excellence_mdp 
@@ -765,7 +774,7 @@ select
 	p12m_sales_flag::varchar(1) AS p12m_sales_flag,
 	mdp_flag::varchar(1) AS mdp_flag,
 	target_complaince::numeric(18,0) AS target_complaince,
-	cluster::varchar(100) AS cluster,
+	"cluster"::varchar(100) AS cluster,
 	crt_dttm::timestamp AS crt_dttm
 from wks_rpt_retail_excellence
 )

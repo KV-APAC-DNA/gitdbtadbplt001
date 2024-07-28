@@ -18,7 +18,7 @@ itg_udcdetails as(
 
 wrk_edw_sku_recom_spike_msl as 
 (
-SELECT substring(derived_table2.year_month,0,5)::date as fisc_yr,
+SELECT substring(derived_table2.year_month,1,4) as fisc_yr,
              derived_table2.year_month AS fisc_per,
              derived_table2.channel_name as channel_name,
              derived_table2.customer_code as Distributor_Code,

@@ -3,7 +3,7 @@ with wks_rpt_retail_excellence as
 (
 select * from {{ ref('indwks_integration__wks_rpt_retail_excellence') }}
 ),
-edw_list_price (
+edw_list_price as (
 select * from {{ ref('aspedw_integration__edw_list_price') }}
 ),
 wks_rpt_retail_excellence_sop as (
@@ -179,7 +179,7 @@ SELECT FISC_YR,
 		 nvl (PKA_BRAND_DESC,'pbd') ||nvl (PKA_SUB_BRAND_DESC,'pbsd') ||nvl (GLOBAL_PRODUCT_FRANCHISE,'gpf')||
 		 nvl (GLOBAL_PRODUCT_BRAND,'gpb') ||nvl (GLOBAL_PRODUCT_SUB_BRAND,'gpsb') ||nvl (GLOBAL_PRODUCT_SEGMENT,'gps')||
 		 nvl (GLOBAL_PRODUCT_SUBSEGMENT,'gpss') ||nvl (GLOBAL_PRODUCT_CATEGORY,'gpc') ||nvl (GLOBAL_PRODUCT_SUBCATEGORY,'gpsc')) AS PRODUCT_AGG_DIM_KEY,
-		 SYSDATE AS CRT_DTTM
+		 SYSDATE() AS CRT_DTTM
 FROM (SELECT MAIN.FISC_YR,
        MAIN.FISC_PER,
        MAIN.CLUSTER,
@@ -502,5 +502,5 @@ select
 	crt_dttm::timestamp AS crt_dttm
 	from wks_rpt_retail_excellence_sop
 )
-select * final
+select * from final
 
