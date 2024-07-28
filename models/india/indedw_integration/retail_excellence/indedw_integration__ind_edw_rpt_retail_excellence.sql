@@ -82,7 +82,7 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
 	   PKA_VARIANT_DESC, 
 	   PKA_SUB_VARIANT_DESC,	   
        GLOBAL_PRODUCT_FRANCHISE,
-       GLOBAL_PRODUCT_BRAND,
+       sop.GLOBAL_PRODUCT_BRAND,
        GLOBAL_PRODUCT_SUB_BRAND,
        GLOBAL_PRODUCT_VARIANT,
        GLOBAL_PRODUCT_SEGMENT,
@@ -161,7 +161,7 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
 	   COUNT(P6M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P6M_SALES_FLAG,MDP_FLAG) AS P6M_SALES_FLAG_COUNT,
 	   COUNT(P12M_SALES_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,P12M_SALES_FLAG,MDP_FLAG) AS P12M_SALES_FLAG_COUNT,
 	   COUNT(MDP_FLAG) OVER (PARTITION BY CUSTOMER_AGG_DIM_KEY,PRODUCT_AGG_DIM_KEY,MDP_FLAG) AS MDP_FLAG_COUNT,
-	   SYSDATE AS CRT_DTTM
+	   SYSDATE () AS CRT_DTTM
 	   FROM WKS_RPT_RETAIL_EXCELLENCE_SOP SOP 
 	   left join retail_excellence_msl_target_final  msl_final 
 	   on (SOP.fisc_per=msl_final.fisc_per and upper(SOP.global_product_brand)=upper(msl_final.global_product_brand))
@@ -171,7 +171,7 @@ final as
   select 
     fisc_yr::numeric(18,0) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::varchar(100) AS cluster,
+"CLUSTER"::varchar(100) AS "CLUSTER",
 market::varchar(5) AS market,
 data_src::varchar(8) AS data_src,
 channel_name::varchar(150) AS channel_name,

@@ -1,6 +1,6 @@
 --Import CTE
 with v_edw_rpt_retail_excellence as (
-    select * from {{ source('indedw_integration', 'v_edw_rpt_retail_excellence') }}
+    select * from {{ ref('indedw_integration__ind_edw_rpt_retail_excellence') }}
 ),
 itg_query_parameters as (
     select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
@@ -148,7 +148,7 @@ final as (
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"CLUSTER"::VARCHAR(100) as "CLUSTER",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
