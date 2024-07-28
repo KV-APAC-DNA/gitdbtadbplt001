@@ -141,7 +141,7 @@ final as (
     select
     fisc_yr::VARCHAR(11) as fisc_yr
     ,fisc_per::numeric(18,0) as fisc_per        
-    ,cluster::VARCHAR(100) as cluster
+    ,"CLUSTER"::VARCHAR(100) as "CLUSTER"
     ,market::VARCHAR(50) as market  
     ,data_src::VARCHAR(14) as   data_src    
     ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    

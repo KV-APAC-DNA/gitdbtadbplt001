@@ -30,6 +30,5 @@ FROM source SRC
   rtrim(REGEXP_REPLACE(SRC.barcode,'[\xC2\xA0]', ''))=rtrim(REGEXP_REPLACE(TGT.barcd,'[\xC2\xA0]', ''))
   AND RTRIM(SRC.cust_prod_cd,'')=rtrim(REGEXP_REPLACE(TGT.cust_prod_cd,'[\xC2\xA0]', ''))
   AND SRC.customer=rtrim(REGEXP_REPLACE(TGT.cust,'[\xC2\xA0]', ''))
-
 )
 select * from transformed
