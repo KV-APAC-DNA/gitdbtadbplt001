@@ -186,7 +186,7 @@ final as (
     size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
     size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
     size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-    target_complaince::numeric(18,0) AS target_complaince
+    target_complaince::numeric(38,6) AS target_complaince
 from transformation
 
 )

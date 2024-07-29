@@ -78,7 +78,8 @@ select fisc_yr,
        max(size_of_price_p3m_lp) as   size_of_price_p3m_lp,
        max(size_of_price_p6m_lp) as   size_of_price_p6m_lp,
        max(size_of_price_p12m_lp) as  size_of_price_p12m_lp,        
-       MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,
+       --MAX(TARGET_COMPLAINCE) OVER (PARTITION BY FISC_PER, GLOBAL_PRODUCT_BRAND) AS TARGET_COMPLAINCE,
+       TARGET_COMPLAINCE,
        SYSDATE() AS CRT_DTTM  
 from cnpc_edw_rpt_retail_excellence flags where market='China Personal Care'
 group by flags.fisc_yr,
@@ -188,7 +189,7 @@ size_of_price_lm_lp	::	numeric(38,20)	as	size_of_price_lm_lp	,
 size_of_price_p3m_lp	::	numeric(38,20)	as	size_of_price_p3m_lp	,
 size_of_price_p6m_lp	::	numeric(38,20)	as	size_of_price_p6m_lp	,
 size_of_price_p12m_lp	::	numeric(38,20)	as	size_of_price_p12m_lp	,
-target_complaince	::	numeric(38,0)	as	target_complaince	,
+target_complaince	::	numeric(38,6)	as	target_complaince	,
 crt_dttm :: timestamp without time zone as crt_Dttm
 from cnpc_edw_rpt_retail_excellence_summary_base
 )
