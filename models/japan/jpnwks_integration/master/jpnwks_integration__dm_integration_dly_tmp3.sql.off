@@ -65,7 +65,7 @@ tmp2 AS
 (
     select * from {{ ref('jpnwks_integration__dm_integration_dly_tmp2') }}
 ),
-trns
+tmp3
 AS (
 	SELECT 'SO' as JCP_DATA_SOURCE,
 		'Actual' as JCP_PLAN_TYPE,
@@ -150,7 +150,7 @@ AS (
 		AND BGN_SNDR_CD NOT LIKE 'PAN%'
 	),
 
-tmp3 as
+insert3 as
 (
     SELECT
         JCP_DATA_SOURCE::VARCHAR(40) as JCP_DATA_SOURCE,

@@ -170,7 +170,7 @@ AS (
 		AND bgn_sndr_cd NOT LIKE 'PAN%'
 	),
 
-trns as
+insert2 as
 (
     SELECT
 		JCP_DATA_SOURCE::VARCHAR(40) as JCP_DATA_SOURCE,
