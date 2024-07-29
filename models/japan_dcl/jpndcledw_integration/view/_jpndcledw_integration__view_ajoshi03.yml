@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__cim22tenso
+    config:
+      alias: cim22tenso
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim24itbun_add_qv
+    config:
+      alias: cim24itbun_add_qv
+      tags: ["japan_dcl_common_views","transformation"]
