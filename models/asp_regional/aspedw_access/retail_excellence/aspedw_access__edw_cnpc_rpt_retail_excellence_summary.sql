@@ -6,7 +6,7 @@ final as (
     select
         fisc_yr as "fisc_yr",
 fisc_per as "fisc_per",
-cluster as "cluster",
+"cluster" as "cluster",
 market as "market",
 data_src as "data_src",
 flag_agg_dim_key as "flag_agg_dim_key",

@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_hcp360_in_iqvia_brand
+      tags: ["in_iqvia_load","ingestion"]
+      tests:
+          - test_format:
+              select_columns: ["pack_description"]
+              failure_reason: "'column value mismatch'"
+              where_clause: " brand in ( 'ORS-L' , 'ORS-L FOS','ORS-L PLUS','ORS-L REHYDRATE','ORS%')and pack_description not in ( select iqvia from {{ ref('hcpitg_integration__itg_mds_hcp360_product_mapping') }} where brand = 'ORSL')"          
+              name: TRATBL_sdl_hcp360_in_iqvia_brand__test_format
+              config:
+                store_failures: true
+                schema: hcpwks_integration
