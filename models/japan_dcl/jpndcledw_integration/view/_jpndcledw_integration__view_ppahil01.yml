@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__container_collection_v
+    config:
+      alias: container_collection_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpdcledw_integration__ocl_in_userlist_v
+    config:
+      alias: ocl_in_userlist_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__ocl_contact_hist_v
+    config:
+      alias: ocl_contact_hist_v
+      tags: ["japan_dcl_common_views","transformation"]
