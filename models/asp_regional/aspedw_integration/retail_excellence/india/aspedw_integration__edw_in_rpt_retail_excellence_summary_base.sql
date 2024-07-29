@@ -1,6 +1,6 @@
 --Import CTE
 with v_edw_rpt_retail_excellence as (
-    select * from {{ source('indedw_integration', 'v_edw_rpt_retail_excellence') }}
+    select * from {{ ref('indedw_integration__ind_edw_rpt_retail_excellence') }}
 ),
 --Logical CTE
 transformation as (
@@ -120,7 +120,7 @@ final as (
     select 
     fisc_yr::numeric(18,0) AS fisc_yr,
     fisc_per::numeric(18,0) AS fisc_per,
-    cluster::VARCHAR(100) as cluster,
+    "CLUSTER"::VARCHAR(100) as "CLUSTER",
     market::VARCHAR(5) AS market,
     flag_agg_dim_key::VARCHAR(32) AS flag_agg_dim_key,
     data_src::VARCHAR(8) AS data_src,
@@ -186,7 +186,7 @@ final as (
     size_of_price_p3m_lp::NUMERIC(38,20) AS size_of_price_p3m_lp,
     size_of_price_p6m_lp::NUMERIC(38,20) AS size_of_price_p6m_lp,
     size_of_price_p12m_lp::NUMERIC(38,20) AS size_of_price_p12m_lp,
-    target_complaince::numeric(18,0) AS target_complaince
+    target_complaince::numeric(38,6) AS target_complaince
 from transformation
 
 )

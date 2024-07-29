@@ -81,8 +81,22 @@ ph_edw_rpt_retail_excellence_summary as (
         SUM(size_of_price_p3m_lp) as size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) as size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) as size_of_price_p12m_lp,
-        SYSDATE()	as crt_dttm	--// SYSDATE
-    --// FROM OS_EDW.EDW_PH_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
+        SYSDATE() as crt_dttm,
+        null as cm_actual_stores,
+        null as cm_universe_stores,
+        null as cm_numeric_distribution,
+        null as lm_actual_stores,
+        null as lm_universe_stores,
+        null as lm_numeric_distribution,
+        null as l3m_actual_stores,
+        null as l3m_universe_stores,
+        null as l3m_numeric_distribution,
+        null as l6m_actual_stores,
+        null as l6m_universe_stores,
+        null as l6m_numeric_distribution,
+        null as l12m_actual_stores,
+        null as l12m_universe_stores,
+        null as l12m_numeric_distribution
     from ph_edw_rpt_retail_excellence_summary_base
     where
         fisc_per
@@ -207,6 +221,21 @@ final as (
     ,size_of_price_p6m_lp::NUMERIC(38,14) as size_of_price_p6m_lp      
     ,size_of_price_p12m_lp::NUMERIC(38,14) as size_of_price_p12m_lp    
     ,crt_dttm :: date as crt_dttm
+    ,cm_actual_stores :: numeric(38,6) as cm_actual_stores
+    ,cm_universe_stores :: numeric(38,6) as cm_universe_stores
+    ,cm_numeric_distribution :: numeric(38,6) as cm_numeric_distribution
+    ,lm_actual_stores :: numeric(38,6) as lm_actual_stores
+    ,lm_universe_stores :: numeric(38,6) as lm_universe_stores
+    ,lm_numeric_distribution :: numeric(38,6) as lm_numeric_distribution
+    ,l3m_actual_stores :: numeric(38,6) as l3m_actual_stores
+    ,l3m_universe_stores :: numeric(38,6) as l3m_universe_stores
+    ,l3m_numeric_distribution :: numeric(38,6) as l3m_numeric_distribution
+    ,l6m_actual_stores :: numeric(38,6) as l6m_actual_stores
+    ,l6m_universe_stores :: numeric(38,6) as l6m_universe_stores
+    ,l6m_numeric_distribution :: numeric(38,6) as l6m_numeric_distribution
+    ,l12m_actual_stores :: numeric(38,6) as l12m_actual_stores
+    ,l12m_universe_stores :: numeric(38,6) as l12m_universe_stores
+    ,l12m_numeric_distribution :: numeric(38,6) as l12m_numeric_distribution
     from ph_edw_rpt_retail_excellence_summary
 )
 

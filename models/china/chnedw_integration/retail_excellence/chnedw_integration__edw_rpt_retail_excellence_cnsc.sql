@@ -1,6 +1,10 @@
 with wks_rpt_retail_excellence_sop as (
     select * from {{ ref('chnwks_integration__wks_rpt_retail_excellence_sop') }}
 ),
+retail_excellence_msl_target_final as 
+(
+    select * from {{ ref('chnwks_integration__wks_cnsc_msl_target_final') }}
+),
 
 transformation as (
     SELECT
@@ -140,7 +144,7 @@ transformation as (
        DM.P6M_SALES_FLAG,
        DM.P12M_SALES_FLAG,
        DM.MDP_FLAG,
-       DM.TARGET_COMPLAINCE,
+       case when (DM.MDP_FLAG='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 100  end as TARGET_COMPLAINCE,
        DM.LIST_PRICE,
        DM.TOTAL_SALES_LM,
        DM.TOTAL_SALES_P3M,
@@ -197,6 +201,7 @@ transformation as (
        COUNT(DM.MDP_FLAG) OVER (PARTITION BY DM.CUSTOMER_AGG_DIM_KEY,DM.PRODUCT_AGG_DIM_KEY,DM.MDP_FLAG) AS MDP_FLAG_COUNT,
        SYSDATE() AS CREATED_DATE
 FROM WKS_RPT_RETAIL_EXCELLENCE_SOP DM
+left join retail_excellence_msl_target_final  msl_final on (DM.fisc_per=msl_final.fisc_per and upper(DM.global_product_brand)=upper(msl_final.global_product_brand)) 
 ),
 
 final as (
@@ -314,7 +319,7 @@ p3m_sales_flag::varchar(1) AS p3m_sales_flag,
 p6m_sales_flag::varchar(1) AS p6m_sales_flag,
 p12m_sales_flag::varchar(1) AS p12m_sales_flag,
 mdp_flag::varchar(1) AS mdp_flag,
-target_complaince::integer AS target_complaince,
+target_complaince::numeric(38,6) AS target_complaince,
 list_price::varchar(1) AS list_price,
 total_sales_lm::numeric(38,6) AS total_sales_lm,
 total_sales_p3m::numeric(38,6) AS total_sales_p3m,

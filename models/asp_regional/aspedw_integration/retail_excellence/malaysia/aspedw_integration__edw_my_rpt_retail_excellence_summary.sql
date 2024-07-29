@@ -80,7 +80,22 @@ SELECT FISC_YR,
         SUM(size_of_price_p3m_lp) As size_of_price_p3m_lp,
         SUM(size_of_price_p6m_lp) AS size_of_price_p6m_lp,
         SUM(size_of_price_p12m_lp) AS  size_of_price_p12m_lp ,
-        current_timestamp()::date	as CRT_DTTM	--// SYSDATE
+        current_timestamp()::date as CRT_DTTM,
+        null as cm_actual_stores,
+        null as cm_universe_stores,
+        null as cm_numeric_distribution,
+        null as lm_actual_stores,
+        null as lm_universe_stores,
+        null as lm_numeric_distribution,
+        null as l3m_actual_stores,
+        null as l3m_universe_stores,
+        null as l3m_numeric_distribution,
+        null as l6m_actual_stores,
+        null as l6m_universe_stores,
+        null as l6m_numeric_distribution,
+        null as l12m_actual_stores,
+        null as l12m_universe_stores,
+        null as l12m_numeric_distribution
  FROM my_edw_rpt_retail_excellence_summary_base		--//  FROM OS_EDW.EDW_MY_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE
 WHERE FISC_PER > TO_CHAR(ADD_MONTHS((SELECT TO_DATE(MAX(fisc_per)::varchar,'YYYYMM')
                                     FROM my_edw_rpt_retail_excellence_summary_base),-15),'YYYYMM')		--//                                     FROM OS_EDW.EDW_MY_RPT_RETAIL_EXCELLENCE_SUMMARY_BASE),-15),'YYYYMM')
@@ -203,7 +218,22 @@ final as(
     ,size_of_price_p6m_lp::NUMERIC(38,14) as size_of_price_p6m_lp      
     ,size_of_price_p12m_lp::NUMERIC(38,14) as size_of_price_p12m_lp    
     ,crt_dttm :: date as crt_dttm
-    from my_edw_rpt_retail_excellence_summary
+    ,cm_actual_stores :: numeric(38,6) as cm_actual_stores
+    ,cm_universe_stores :: numeric(38,6) as cm_universe_stores
+    ,cm_numeric_distribution :: numeric(38,6) as cm_numeric_distribution
+    ,lm_actual_stores :: numeric(38,6) as lm_actual_stores
+    ,lm_universe_stores :: numeric(38,6) as lm_universe_stores
+    ,lm_numeric_distribution :: numeric(38,6) as lm_numeric_distribution
+    ,l3m_actual_stores :: numeric(38,6) as l3m_actual_stores
+    ,l3m_universe_stores :: numeric(38,6) as l3m_universe_stores
+    ,l3m_numeric_distribution :: numeric(38,6) as l3m_numeric_distribution
+    ,l6m_actual_stores :: numeric(38,6) as l6m_actual_stores
+    ,l6m_universe_stores :: numeric(38,6) as l6m_universe_stores
+    ,l6m_numeric_distribution :: numeric(38,6) as l6m_numeric_distribution
+    ,l12m_actual_stores :: numeric(38,6) as l12m_actual_stores
+    ,l12m_universe_stores :: numeric(38,6) as l12m_universe_stores
+    ,l12m_numeric_distribution :: numeric(38,6) as l12m_numeric_distribution
+        from my_edw_rpt_retail_excellence_summary
 )
 --Final select
 select * from final 

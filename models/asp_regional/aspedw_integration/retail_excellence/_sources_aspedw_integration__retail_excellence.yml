@@ -137,14 +137,15 @@ sources:
       
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: snapjpnedw_integration
+    schema: jpnedw_integration
     tables:
       - name: edi_store_m
       - name: edi_chn_m
       - name: mt_sgmt        
       - name: mt_prf       
       - name: jp_inv_coverage_area_region_mapping    
-      - name: v_edw_rpt_retail_excellence    
+      - name: edi_cstm_m
+      - name: vw_jan_change
 
   - name: jpnsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
@@ -159,3 +160,16 @@ sources:
       - name: sdl_mds_mds_reds_market_msl   
       - name : sdl_mds_mds_reds_market_msl_target
 
+  - name: indedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indedw_integration
+    tables:
+      - name: edw_sku_recom_spike_msl
+      - name : edw_retailer_dim
+ 
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    tables:
+      - name: itg_udcdetails
+      - name : itg_in_mds_channel_mapping

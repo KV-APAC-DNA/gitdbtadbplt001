@@ -11,7 +11,8 @@ sg_rpt_retail_excellence as
  (
    select b.fisc_per,
    b.global_product_brand,
-   ((total_mdp_target/mds.mdp_target)*100 ):: decimal(38,3) as target_compliance 
+   (mds.mdp_target/total_mdp_target):: numeric(38,6) as target_compliance
+    --round((mds.mdp_target/total_mdp_target)*100 ):: integer as target_compliance 
    from 
         (select fisc_per,
         global_product_brand,
@@ -20,6 +21,7 @@ sg_rpt_retail_excellence as
             (select  distinct fisc_per,
                 distributor_code,
                  store_code, 
+                 product_code,
                  global_product_brand,
                 from sg_rpt_retail_excellence
                 where   mdp_flag = 'Y'
