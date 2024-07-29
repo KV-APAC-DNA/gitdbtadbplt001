@@ -81,6 +81,7 @@ sources:
       identifier: false
     tables:
       - name: dw_so_planet_err_temp
+      - name: dw_so_planet_err_cd_2_temp
 
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
@@ -102,3 +103,4 @@ sources:
     tables:
       - name: wk_so_planet_revise_temp
       - name: wk_so_planet_no_dup_temp
+      - name: wk_so_planet_cleansed_temp

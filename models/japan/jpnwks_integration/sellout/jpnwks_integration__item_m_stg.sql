@@ -1,4 +1,3 @@
-
 with wk_so_planet_modified as(
     select * from {{ ref('jpnwks_integration__wk_so_planet_modified') }}
 ),

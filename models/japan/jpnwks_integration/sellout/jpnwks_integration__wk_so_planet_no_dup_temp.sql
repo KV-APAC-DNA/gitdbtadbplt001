@@ -1,7 +1,7 @@
 {{
     config
     (   
-        pre_hook = '{{build_wk_so_planet_revise_temp()}}',
+        pre_hook = "{{build_wk_so_planet_revise_temp()}}",
         post_hook = "
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} (
                     jcp_rec_seq, id, rcv_dt, test_flag, 
@@ -33,7 +33,7 @@
                     (
                         SELECT 
                         COUNT(*), ID, BGN_SNDR_CD, WS_CD, RTL_TYPE, RTL_CD, TRADE_TYPE, SHP_DATE, SHP_NUM, TRADE_CD, DEP_CD, CHG_CD, PERSON_IN_CHARGE, PERSON_NAME, RTL_NAME, RTL_HO_CD, RTL_ADDRESS_CD, DATA_TYPE, OPT_FLD, ITEM_NM, ITEM_CD_TYP, ITEM_CD, QTY_TYPE, PRICE_TYPE, BGN_SNDR_CD_GLN, RCV_CD_GLN, WS_CD_GLN, SHP_WS_CD, SHP_WS_CD_GLN, REP_NAME_KANJI, REP_INFO, TRADE_CD_GLN, RTL_CD_GLN, RTL_NAME_KANJI, RTL_HO_CD_GLN, ITEM_CD_GTIN, ITEM_NM_KANJI, SALES_CHAN_TYPE
-                        FROM JP_WKS.WK_SO_PLANET_NO_DUP
+                        FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
                         GROUP BY 
                         ID, BGN_SNDR_CD, WS_CD, RTL_TYPE, RTL_CD, TRADE_TYPE, SHP_DATE, SHP_NUM, TRADE_CD, DEP_CD, CHG_CD, PERSON_IN_CHARGE, PERSON_NAME, RTL_NAME, RTL_HO_CD, RTL_ADDRESS_CD, DATA_TYPE, OPT_FLD, ITEM_NM, ITEM_CD_TYP, ITEM_CD, QTY_TYPE, PRICE_TYPE, BGN_SNDR_CD_GLN, RCV_CD_GLN, WS_CD_GLN, SHP_WS_CD, SHP_WS_CD_GLN, REP_NAME_KANJI, REP_INFO, TRADE_CD_GLN, RTL_CD_GLN, RTL_NAME_KANJI, RTL_HO_CD_GLN, ITEM_CD_GTIN, ITEM_NM_KANJI, SALES_CHAN_TYPE
                         HAVING COUNT(*) > 1
@@ -94,12 +94,12 @@
 
 
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
-                    SELECT (SELECT MAX_VALUE::number as max_value FROM DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT_SEQ WHERE 
+                    SELECT (SELECT MAX_VALUE::number as max_value FROM {{ ref('jpnedw_integration__mt_constant_seq') }} WHERE 
                     IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (
                                 ORDER BY ID
                                 )AS jcp_rec_seq,
                     id, rcv_dt, test_flag, bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, trade_type, shp_date, shp_num, trade_cd, dep_cd, chg_cd, person_in_charge, person_name, rtl_name, rtl_ho_cd, rtl_address_cd_01, rtl_address_cd_02, data_type, opt_fld, item_nm, item_cd_typ, item_cd, qty, qty_type, price, price_type, bgn_sndr_cd_gln, rcv_cd_gln, ws_cd_gln, shp_ws_cd, shp_ws_cd_gln, rep_name_kanji, rep_info, trade_cd_gln, rtl_cd_gln, rtl_name_kanji, rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, unt_prc, net_prc, sales_chan_type, CURRENT_TIMESTAMP()::timestamp_ntz(9)
-                    FROM  {{ ref('jpnwks_integration__wk_so_planet_no_dup_temp') }}
+                    FROM  {{this}}
                     WHERE JCP_REC_SEQ IS NULL ;
 
                     UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }}

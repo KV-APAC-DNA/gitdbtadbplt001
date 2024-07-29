@@ -106,7 +106,7 @@
                     WHERE A.ERROR_CD!='0';
 
 
-                    INSERT INTO {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }}
+                    INSERT INTO {{ source('jpnitg_integration', 'dw_so_planet_err_cd_2_temp') }}
                     (JCP_REC_SEQ,ERROR_CD,EXEC_FLAG,EXPORT_FLAG,JCP_CREATE_DATE)
                     SELECT A.JCP_REC_SEQ,A.ERROR_CD,A.EXEC_FLAG,A.EXPORT_FLAG,A.JCP_CREATE_DATE
                     FROM
@@ -115,7 +115,7 @@
                     CASE WHEN error_cd='ERR_001' THEN 'E001' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
 
                     UNION
@@ -124,7 +124,7 @@
                     CASE WHEN error_cd='ERR_002'  THEN 'E002' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
 
                     UNION
@@ -134,7 +134,7 @@
                     CASE WHEN error_cd='ERR_004'  THEN 'E004' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
                     UNION
@@ -142,7 +142,7 @@
                     CASE WHEN error_cd='ERR_007'  THEN 'E007' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
 
                     UNION
@@ -151,7 +151,7 @@
                     CASE WHEN error_cd='ERR_008'  THEN 'E008' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
 
@@ -161,7 +161,7 @@
                     CASE WHEN error_cd='ERR_009'  THEN 'E009' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
 
@@ -171,7 +171,7 @@
                     CASE WHEN error_cd='ERR_012'  THEN 'E012' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
                     UNION
@@ -179,7 +179,7 @@
                     CASE WHEN error_cd='ERR_014'  THEN 'E014' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
 
@@ -189,7 +189,7 @@
                     CASE WHEN error_cd='ERR_017'  THEN 'E017' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
                     UNION
@@ -198,7 +198,7 @@
                     CASE WHEN error_cd='ERR_018'  THEN 'E018' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ
                     )
 
@@ -209,7 +209,7 @@
                     CASE WHEN error_cd='ERR_020'  THEN 'E020' ELSE '0' END ERROR_CD,
                     A.EXEC_FLAG,
                     '0' EXPORT_FLAG,
-                    CONVERT(timestamp,SUBSTRING(SYSDATE,1,19)) JCP_CREATE_DATE
+                    TO_TIMESTAMP(SUBSTRING(current_timestamp(),1,19)) JCP_CREATE_DATE
                     FROM {{this}} A inner join {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} B on A.JCP_REC_SEQ=B.JCP_REC_SEQ)
                     )A
                     WHERE A.error_cd != '0';

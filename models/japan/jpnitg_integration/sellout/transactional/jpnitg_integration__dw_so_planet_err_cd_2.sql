@@ -3,7 +3,8 @@
     (
         materialized='incremental',
         incremental_strategy = 'append',
-        pre_hook = "
+        pre_hook =  ["{{build_wk_so_planet_cleansed_temp()}}",                
+                    "
                     {% if is_incremental() %}
                     UPDATE {{this}}
                     SET EXPORT_FLAG = '1'
@@ -15,10 +16,10 @@
                             )
                         AND JCP_REC_SEQ IN (
                             SELECT jcp_rec_seq
-                            FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup ') }} 
+                            FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} 
                             ); 
                     {% endif %}
-                    ",
+                    "],
         post_hook = "
                     UPDATE {{this}}
                     SET EXPORT_FLAG = '1'
@@ -31,7 +32,7 @@
                                 )
                             OR JCP_REC_SEQ IN (
                                 SELECT jcp_rec_seq
-                                FROM {{ ref('jpnwks_integration__wk_so_planet_cleansed') }} 
+                                FROM {{ source('jpnwks_integration', 'wk_so_planet_cleansed_temp') }}
                                 )
                             );
                     "
