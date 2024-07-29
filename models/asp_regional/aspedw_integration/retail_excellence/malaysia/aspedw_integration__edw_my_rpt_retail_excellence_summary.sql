@@ -179,7 +179,7 @@ final as(
     ,p6m_sales_flag::VARCHAR(1) as  p6m_sales_flag  
     ,p12m_sales_flag::VARCHAR(1) as p12m_sales_flag
     ,mdp_flag::VARCHAR(1) as    mdp_flag    
-    ,target_complaince::integer as target_complaince      
+    ,target_complaince::numeric(38,6) as target_complaince      
     ,sales_value::NUMERIC(38,6) as  sales_value
     ,sales_qty::NUMERIC(38,6) as sales_qty      
     ,avg_sales_qty::NUMERIC(38,6) as avg_sales_qty      

@@ -12,7 +12,8 @@ anz_sellout_rpt_re_gcph as
  (
    select b.jj_mnth_id,
    b.global_product_brand,
-      round((mds.mdp_target/total_mdp_target)*100 ):: integer as TARGET_COMPLAINCE
+   (mds.mdp_target/total_mdp_target):: numeric(38,6) as TARGET_COMPLAINCE
+    --round((mds.mdp_target/total_mdp_target)*100 ):: integer as TARGET_COMPLAINCE
    from 
         (select jj_mnth_id,
         global_product_brand,
