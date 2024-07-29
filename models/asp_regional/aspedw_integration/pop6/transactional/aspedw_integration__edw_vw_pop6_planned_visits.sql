@@ -13,7 +13,8 @@ final as
         itg_pop6_planned_visits.pop_name,
         itg_pop6_planned_visits.address,
         itg_pop6_planned_visits.username,
-        itg_pop6_planned_visits.user_full_name
+        itg_pop6_planned_visits.user_full_name,        
     FROM itg_pop6_planned_visits
+    qualify row_number() over(partition by cntry_cd,src_file_date,planned_visit_date,popdb_id,pop_code,pop_name,address,username,user_full_name order by run_id desc) = 1
 )
 select * from final
