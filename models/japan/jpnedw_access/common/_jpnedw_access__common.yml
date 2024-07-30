@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: jpnedw_integration__dm_integration_daily
+  - name: jpnedw_access__dm_integration_daily_custom
     config:
-      alias: dm_integration_daily
+      alias: dm_integration_daily_custom
       tags: ["japan_views","transformation"]
