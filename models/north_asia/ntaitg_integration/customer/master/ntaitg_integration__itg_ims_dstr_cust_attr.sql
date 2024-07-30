@@ -14,7 +14,7 @@
                     FROM {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }} t2
                         JOIN {{this}} t1 ON 
                         RTRIM(LTRIM (t1.dstr_cust_cd, '0')) = RTRIM(LTRIM (t2.distributors_customer_code, '0'))
-                        AND t1.dstr_cd = t2.distributor_code
+                        AND RTRIM(t1.dstr_cd) = RTRIM(t2.distributor_code)
                         AND t1.ctry_cd = 'TW';
         "
     )
