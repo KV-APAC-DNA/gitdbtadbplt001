@@ -4,4 +4,4 @@ models:
   - name: hcpitg_integration__itg_mds_hcp360_product_mapping
     config: 
       alias: itg_mds_hcp360_product_mapping
-      tags: ["in_hcp360_mds_data_refresh","ingestion"]
+      tags: ["in_hcp360_mds_data_refresh","transformation"]
