@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_jp_pos_account_mapping
+    config:
+      alias: itg_mds_jp_pos_account_mapping
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+
+  - name: jpnitg_integration__itg_mds_jp_pos_product_mapping
+    config:
+      alias: itg_mds_jp_pos_product_mapping
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+
+  - name: jpnitg_integration__itg_mds_jp_pos_store_mapping
+    config:
+      alias: itg_mds_jp_pos_store_mapping
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+
+  - name: jpnitg_integration__jp_pos_daily
+    config:
+        alias: jp_pos_daily
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnitg_integration__jp_pos_daily_error
+    config:
+        alias: jp_pos_daily_error
+        tags: ["jp_pos","transformation"]

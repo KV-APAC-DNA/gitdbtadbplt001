@@ -1,0 +1,56 @@
+with source as (
+    select * from {{ source('jpnsdl_raw', 'sdl_mds_jp_pos_product_mapping') }}
+),
+
+result as (
+    select 
+        id::number(18,0) as id,
+	    muid::varchar(36) as muid,
+	    versionname::varchar(100) as versionname,
+	    versionnumber::number(18,0) as versionnumber,
+	    version_id::number(18,0) as version_id,
+	    versionflag::varchar(100) as versionflag,
+	    name::varchar(500) as name,
+	    code::varchar(500) as code,
+	    changetrackingmask::number(18,0) as changetrackingmask,
+	    category_code::varchar(500) as category_code,
+	    category_name::varchar(500) as category_name,
+	    category_id::number(18,0) as category_id,
+	    sub_category_code::varchar(500) as sub_category_code,
+	    sub_category_name::varchar(500) as sub_category_name,
+	    sub_category_id::number(18,0) as sub_category_id,
+	    marker_code::varchar(500) as marker_code,
+	    marker_name::varchar(500) as marker_name,
+	    marker_id::number(18,0) as marker_id,
+	    brand_code::varchar(500) as brand_code,
+	    brand_name::varchar(500) as brand_name,
+	    brand_id::number(18,0) as brand_id,
+	    sub_brand_code::varchar(500) as sub_brand_code,
+	    sub_brand_name::varchar(500) as sub_brand_name,
+	    sub_brand_id::number(18,0) as sub_brand_id,
+	    size_code::varchar(500) as size_code,
+	    size_name::varchar(500) as size_name,
+	    size_id::number(18,0) as size_id,
+	    form_type_code::varchar(500) as form_type_code,
+	    form_type_name::varchar(500) as form_type_name,
+	    form_type_id::number(18,0) as form_type_id,
+	    oral_function_code::varchar(500) as oral_function_code,
+	    oral_function_name::varchar(500) as oral_function_name,
+	    oral_function_id::number(18,0) as oral_function_id,
+	    other_1::varchar(200) as other_1,
+	    other_2::varchar(200) as other_2,
+	    other_3::varchar(200) as other_3,
+	    other_4::varchar(200) as other_4,
+	    other_5::varchar(200) as other_5,
+	    enterdatetime::timestamp_ntz(9) as enterdatetime,
+	    enterusername::varchar(200) as enterusername,
+	    enterversionnumber::number(18,0) as enterversionnumber,
+	    lastchgdatetime::timestamp_ntz(9) as lastchgdatetime,
+	    lastchgusername::varchar(200) as lastchgusername,
+	    lastchgversionnumber::number(18,0) as lastchgversionnumber,
+	    validationstatus::varchar(500) as validationstatus,
+        current_timestamp()::timestamp_ntz(9) as create_date
+	from source
+)
+
+select * from result
