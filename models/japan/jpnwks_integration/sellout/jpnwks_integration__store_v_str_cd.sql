@@ -1,8 +1,8 @@
-with no_dup as (
+with wk_so_planet_no_dup as (
     select * from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
 ),
 
-cd_chng as (
+edi_rtlr_cd_chng as (
     select * from {{ ref('jpnedw_integration__edi_rtlr_cd_chng') }}
 ),
 

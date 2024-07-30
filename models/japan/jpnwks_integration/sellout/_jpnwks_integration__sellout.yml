@@ -81,16 +81,6 @@ models:
         alias: wk_so_planet_modified
         tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
-  - name: jpnwks_integration__dw_so_planet_err_tmp1
-    config:
-        alias: dw_so_planet_err_tmp1
-        tags: ["j_so_japan_improvement_etl_framework","transformation"]
-
-  - name: jpnwks_integration__dw_so_planet_err_tmp2
-    config:
-        alias: dw_so_planet_err_tmp2
-        tags: ["j_so_japan_improvement_etl_framework","transformation"]
-
   - name: jpnwks_integration__wk_so_planet_revise_backup
     config:
       alias: wk_so_planet_revise_backup

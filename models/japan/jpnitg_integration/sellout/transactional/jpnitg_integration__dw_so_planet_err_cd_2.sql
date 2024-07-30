@@ -3,38 +3,6 @@
     (
         materialized='incremental',
         incremental_strategy = 'append',
-        pre_hook = "
-                    {% if is_incremental() %}
-                    UPDATE {{this}}
-                    SET EXPORT_FLAG = '1'
-                    WHERE EXPORT_FLAG = '0'
-                        AND JCP_REC_SEQ IN (
-                            SELECT jcp_rec_seq
-                            FROM {{ ref('jpnwks_integration__consistency_error_2') }} 
-                            WHERE exec_flag IN ('MANUAL', 'AUTOCORRECT')
-                            )
-                        AND JCP_REC_SEQ IN (
-                            SELECT jcp_rec_seq
-                            FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup ') }} 
-                            ); 
-                    {% endif %}
-                    ",
-        post_hook = "
-                    UPDATE {{this}}
-                    SET EXPORT_FLAG = '1'
-                    WHERE EXPORT_FLAG = '0'
-                        AND (
-                            JCP_REC_SEQ IN (
-                                SELECT jcp_rec_seq
-                                FROM {{ ref('jpnwks_integration__consistency_error_2') }}
-                                WHERE exec_flag IN ('DELETE')
-                                )
-                            OR JCP_REC_SEQ IN (
-                                SELECT jcp_rec_seq
-                                FROM {{ ref('jpnwks_integration__wk_so_planet_cleansed') }} 
-                                )
-                            );
-                    "
     )
 }}
 
