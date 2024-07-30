@@ -31,21 +31,25 @@ edw_cnsc_rpt_retail_excellence_details as (
 edw_cnpc_rpt_retail_excellence_details as
 (
   select * from   {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_details') }}
-
 ),
+edw_hk_rpt_retail_excellence_details as
+(
+  select * from   {{ ref('aspedw_integration__edw_hk_rpt_retail_excellence_details') }}
+),
+
 edw_rpt_retail_excellence_details as 
 (
-
-SELECT * FROM edw_id_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_my_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_ph_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_kr_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_sg_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_th_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_in_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_anz_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_jp_rpt_retail_excellence_details UNION all
-SELECT * FROM edw_cnsc_rpt_retail_excellence_details union all 
-SELECT * FROM edw_cnpc_rpt_retail_excellence_details
+    SELECT * FROM edw_id_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_my_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_ph_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_kr_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_sg_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_th_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_in_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_anz_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_jp_rpt_retail_excellence_details UNION all
+    SELECT * FROM edw_cnsc_rpt_retail_excellence_details UNION ALL
+    SELECT * FROM edw_cnpc_rpt_retail_excellence_details UNION ALL
+    SELECT * FROM edw_hk_rpt_retail_excellence_details
 )
 select * from edw_rpt_retail_excellence_details
