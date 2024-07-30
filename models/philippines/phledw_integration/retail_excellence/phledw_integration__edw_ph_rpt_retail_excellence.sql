@@ -132,7 +132,7 @@ edw_ph_rpt_retail_excellence as
         --TARGET_COMPLAINCE,
         CASE 
             WHEN (MDP_FLAG = 'Y' AND UPPER(SOP.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLIANCE
-            ELSE 100
+            ELSE 1
             END AS TARGET_COMPLAINCE,
         LIST_PRICE,
         TOTAL_SALES_LM,

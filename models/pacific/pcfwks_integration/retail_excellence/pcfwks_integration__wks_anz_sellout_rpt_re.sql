@@ -153,7 +153,7 @@ FROM (SELECT TARGET.jj_year,
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM itg_anz_sellout_re_msl_list TARGET
         LEFT JOIN (SELECT * FROM wks_anz_sellout_re_actuals) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
@@ -305,7 +305,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM wks_anz_sellout_re_actuals A
             WHERE NOT EXISTS (SELECT 1
