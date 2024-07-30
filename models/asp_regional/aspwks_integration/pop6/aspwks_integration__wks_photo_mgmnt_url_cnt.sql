@@ -78,7 +78,7 @@ general_audits as (
             ORDER BY run_id DESC
         ) rn
     FROM itg_pop6_general_audits
-    WHERE UPPER(field_type) LIKE 'PHOTO%'
+    WHERE (UPPER(field_type) LIKE 'PHOTO%' or  UPPER(field_type) LIKE 'RIR%' ) --Added RIR for IR response for TH
         AND regexp_count(response, '[jpg]{3}') > 0
 ),
 promotions as (

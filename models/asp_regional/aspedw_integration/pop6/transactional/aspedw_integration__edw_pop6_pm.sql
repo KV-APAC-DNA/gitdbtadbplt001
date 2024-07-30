@@ -331,7 +331,7 @@ general as (
                         ) rn
                     from itg_pop6_executed_visits visit
                 ) visit
-            WHERE UPPER(general.field_type) LIKE 'PHOTO%'
+            WHERE ( UPPER(general.field_type) LIKE 'PHOTO%' or UPPER(general.field_type) LIKE 'RIR%')
                 AND visit.visit_id = general.visit_id
                 and general.rn = '1'
                 and visit.rn = '1'
