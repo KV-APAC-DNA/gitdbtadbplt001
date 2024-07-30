@@ -6,7 +6,7 @@ models:
       alias: itg_mds_hcp360_hcp_targets
       tags: ["in_hcp360_mds_data_refresh","transformation"]
 
-  - name: hcpitg_integration_itg_mds_hcp360_hcp_targets_transpose
+  - name: hcpitg_integration__itg_mds_hcp360_hcp_targets_transpose
     config: 
       alias: itg_mds_hcp360_hcp_targets_transpose
       tags: ["in_hcp360_mds_data_refresh","transformation"]
