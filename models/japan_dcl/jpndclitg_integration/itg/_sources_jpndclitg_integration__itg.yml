@@ -189,7 +189,7 @@ sources:
         tags: ["m_dcl_itg_job1","ingestion"]
   - name: jpndcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: jpdcledw_integration
+    schema: sshukl02_workspace
     quoting:
       database: false
       schema: false

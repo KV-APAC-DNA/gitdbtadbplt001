@@ -1,0 +1,1 @@
+SELECT item.dsitemid, item.diid FROM jp_dcl_itg.tbecitem item WHERE ((item.dsoption001)::text = ('販売商品'::character varying)::text);

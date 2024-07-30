@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__tm67juch_nm
+  - name: jpndcledw_integration__cim02tokui
+  - name: jpndcledw_integration__cit86osalm
+  - name: jpndcledw_integration__dm_kesai_mart_dly_general_v
+  - name: jpndcledw_integration__dm_kesai_mart_dly_gts_v
+  - name: jpndcledw_integration__hanyo_partner
+  - name: jpndcledw_integration__henpin_riyu
+  - name: jpndcledw_integration__item_jizen_bunkai_v
+  - name: jpndcledw_integration__item_pick_bunkai_v
+  - name: jpndcledw_integration__itemid_hanbai
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_old_n
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_old_n_un
+  - name: jpndcledw_integration__kpi_016_report_ship
+  - name: jpndcledw_integration__tm31juchkbnbun
+  - name: jpndcledw_integration__tm43youbi_nm
+  - name: jpndcledw_integration__tm44kaisya_nm
+  - name: jpndcledw_integration__tm45cardcorp_nm
+  - name: jpndcledw_integration__tm55carrer_nm
+  - name: jpndcledw_integration__tm58rireki_nm
+  - name: jpndcledw_integration__tm59dmng_nm_tenpo
+  - name: jpndcledw_integration__tm59dmng_nm_tsuhan
+  - name: jpndcledw_integration__tm61kokyakbn_nm
+  - name: jpndcledw_integration__tm61kokyasts_nm
+  - name: jpndcledw_integration__tm62item_nm
+  - name: jpndcledw_integration__tm62item_nm_add_qv
+  - name: jpndcledw_integration__tm62item_nm_qv
+  - name: jpndcledw_integration__tm64kessai_nm
+  - name: jpndcledw_integration__tm66torikei_nm
+  - name: jpndcledw_integration__wt72nikkeijisseki_p
+  - name: jpndcledw_integration__wt73itemstrategy_sale
+  - name: jpndcledw_integration__wt73itemstrategy_sale_p

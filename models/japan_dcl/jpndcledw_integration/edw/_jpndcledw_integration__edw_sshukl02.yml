@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kr_054_slyotei_meisai
+  - name: jpndcledw_integration__kr_054_slyotei_sum
+  - name: jpndcledw_integration__wk_d22686_point_calc_f_hist_wk
+  - name: jpndcledw_integration__wk_d23483_nohindata_0825

@@ -14,8 +14,7 @@
 with SSMTHSALHEDDA
 as
 (
-    select * from snapjpdclitg_integration.SSMTHSALHEDDA
-    --dev_dna_load.jpdclsdl_raw.SSMTHSALHEDDA
+    select * from dev_dna_load.jpdclsdl_raw.SSMTHSALHEDDA
 ),
 final as
 (

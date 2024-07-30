@@ -1,0 +1,1 @@
+SELECT tbechenpinriyu.dihenpinriyuid, tbechenpinriyu.dshenpinriyu, tbechenpinriyu.dshenpinriyushosai FROM jp_dcl_itg.tbechenpinriyu tbechenpinriyu;
