@@ -111,7 +111,7 @@ SELECT substring(derived_table2.year_month,1,4) as fisc_yr,
                          MAX(edw_sku_recom.hit_ms_flag) AS msl_hit
                   FROM edw_sku_recom_spike_msl edw_sku_recom
                   WHERE edw_sku_recom.mothersku_name IS NOT NULL
-				  and mth_mm >= (select last_17mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
+				  and mth_mm >= (select last_16mnths from edw_vw_cal_Retail_excellence_Dim)::numeric
 						   and mth_mm <= (select prev_mnth from edw_vw_cal_Retail_excellence_Dim)::numeric  
                    -- AND   edw_sku_recom.mth_mm >(select to_char(add_months((SELECT to_date(MAX(mnth_id),'YYYYMM') FROM rg_edw.edw_rpt_regional_sellout_offtake where country_code='IN' and data_source='SELL-OUT'  ),-(select cast(parameter_value as int) from in_itg.itg_query_parameters where parameter_name='RETAIL_EXCELLENCE_TARGETS_NO_OF_MONTHS')),'yyyymm')) 
 --and mth_mm <= (select to_char(sysdate,'YYYYMM'))
