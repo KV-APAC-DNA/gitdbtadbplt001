@@ -14,19 +14,19 @@ models:
   - name: jpnedw_integration__dw_so_sell_out_dly_backup
     config:
       alias: dw_so_sell_out_dly_backup
-      tags: ['sell_out_dly','tranformation']
+      tags: ["j_so_japan_improvement_etl_framework","tranformation"]
 
   - name: jpnedw_integration__dw_so_sell_out_dly_all_backup
     config:
       alias: dw_so_sell_out_dly_all_backup
-      tags: ['sell_out_dly_all','tranformation']
+      tags: ["j_so_japan_improvement_etl_framework","tranformation"]
 
   - name: jpnedw_integration__dm_so_store_list_backup
     config:
       alias: dm_so_store_list_backup
-      tags: ['store_list','tranformation']
+      tags: ["j_so_japan_improvement_etl_framework","tranformation"]
 
   - name: jpnedw_integration__mt_constant_seq_backup
     config:
-      alias: mt_constant_seq
-      tags: ['constant_seq','tranformation']
+      alias: mt_constant_seq_backup
+      tags: ["j_so_japan_improvement_etl_framework","tranformation"]

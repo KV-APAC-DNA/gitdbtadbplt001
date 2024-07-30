@@ -3,5 +3,5 @@ version: 2
 models:
   - name: jpnitg_integration__itg_mds_jp_ps_weights
     config:
-      alias: ps_weights
-      tags: ['jp_ps_weights','ingestion']
+      alias: itg_mds_jp_ps_weights
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_jp_ps_weights
-        tags: ['jp_ps_weights','ingestion']
+        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
         tests:
         - test_null:
             select_columns: ["name","kpi","weight","channel"]
@@ -28,7 +28,7 @@ sources:
                   schema: jpnwks_integration
 
       - name: sdl_mds_jp_ps_targets
-        tags: ['jp_ps_targets','ingestion']
+        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
         tests:
         - test_null:
             select_columns: ["name","channel","re","attribute_1","attribute_2","value"]

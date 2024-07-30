@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: jpnitg_integration__da_tp_datamart_promo_amt
+  - name: jpnedw_integration__da_tp_datamart_promo_amt
     config:
         alias: da_tp_datamart_promo_amt
         tags: ["tp_integration_job","transformation"]

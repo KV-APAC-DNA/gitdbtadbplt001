@@ -84,55 +84,55 @@ models:
   - name: jpnwks_integration__wk_so_planet_revise_backup
     config:
       alias: wk_so_planet_revise_backup
-      tags: ['planet_revise_b','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__wk_so_planet_today
     config:
       alias: wk_so_planet_today
-      tags: ['planet_today','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__customer_cd
     config:
       alias: customer_cd
-      tags: ['customer_cd','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__item_m_stg
     config:
       alias: item_m_stg
-      tags: ['item_m_stg','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__store_v_price_stg
     config:
       alias: store_v_price_stg
-      tags: ['store_v_price_stg','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__store_v_price
     config:
       alias: store_v_price
-      tags: ['store_v_price','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__store_v_qty_mod
     config:
       alias: store_v_qty_mod
-      tags: ['qty_mod','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__store_v_str_cd
     config:
       alias: store_v_str_cd
-      tags: ['str_cd','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__wk_so_planet_revise
     config:
       alias: wk_so_planet_revise
-      tags: ['planet_revise','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   
   - name: jpnwks_integration__wk_so_planet_cleansed
     config:
       alias: wk_so_planet_cleansed
-      tags: ['planet_cleansed','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnwks_integration__store_variable
     config:
       alias: store_variable
-      tags: ['store_variable','transformation']
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]

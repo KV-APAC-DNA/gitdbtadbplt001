@@ -10,5 +10,5 @@ sources:
       identifier: false
     tables:
       - name: sdl_mds_jp_c360_eng_translation
-        tags: ['c360_eng_translation','transformation']
+        tags: ["j_jp_mds_refresh_etl_framework","transformation"]
         

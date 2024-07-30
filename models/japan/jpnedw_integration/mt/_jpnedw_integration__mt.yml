@@ -4,34 +4,34 @@ models:
   - name: jpnedw_integration__mt_account_key
     config:
       alias: mt_account_key
-      tags: ['mt_account_key','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
   
   - name: jpnedw_integration__mt_chn_cstm_rt
     config:
       alias: mt_chn_cstm_rt
-      tags: ['mt_chn_cstm_rt','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnedw_integration__mt_chn_mjp_emp_chg
     config:
       alias: mt_chn_mjp_emp_chg
-      tags: ['mt_chn_mjp_emp_chg','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
   
   - name: jpnedw_integration__mt_emp
     config:
       alias: mt_emp
-      tags: ["mt_emp","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
   
   - name: jpnedw_integration__mt_frnch_cdd
     config:
       alias: mt_frnch_cdd
-      tags: ["mt_frnch_cdd","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnedw_integration__mt_in_out_conv
     config:
       alias: mt_in_out_conv
-      tags: ["mt_in_out_conv","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnedw_integration__mt_item_cdd
     config:
       alias: mt_item_cdd
-      tags: ["mt_item_cdd","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]

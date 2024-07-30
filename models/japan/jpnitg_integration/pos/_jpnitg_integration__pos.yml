@@ -4,24 +4,24 @@ models:
   - name: jpnitg_integration__itg_mds_jp_pos_account_mapping
     config:
       alias: itg_mds_jp_pos_account_mapping
-      tags: ['pos_account_mapping','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnitg_integration__itg_mds_jp_pos_product_mapping
     config:
       alias: itg_mds_jp_pos_product_mapping
-      tags: ['pos_product_mapping','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnitg_integration__itg_mds_jp_pos_store_mapping
     config:
       alias: itg_mds_jp_pos_store_mapping
-      tags: ['pos_store_mapping','ingestion']
+      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
 
   - name: jpnitg_integration__jp_pos_daily
     config:
         alias: jp_pos_daily
-        tags: ["pos_data_ingestion","ingestion"]
+        tags: ["jp_pos","transformation"]
 
   - name: jpnitg_integration__jp_pos_daily_error
     config:
         alias: jp_pos_daily_error
-        tags: ["pos_data_ingestion","ingestion"]
+        tags: ["jp_pos","transformation"]
