@@ -71,7 +71,11 @@ trans as
                   Else 'U' End as KA_Flag
                   FROM (Select * from (
                     Select 
-                    row_number() over(partition by wholesalercode, distributorsapid, sapid order by ActiveDt desc) rn,
+                    row_number() over(partition by 
+                    case when wholesalercode='' then null else wholesalercode end, 
+                    case when distributorsapid=''then null else distributorsapid end,
+                    case when sapid =''then null else sapid end
+                    order by ActiveDt desc) rn,
                     i.*
                     from itg_customer_retailer i where activedt is not null)
                     Where rn=1) icr) cr 
