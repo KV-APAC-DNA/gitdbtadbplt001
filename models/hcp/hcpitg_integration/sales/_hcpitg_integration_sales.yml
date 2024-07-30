@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: hcpitg_integration_itg_mds_in_hcp_sales_hierarchy_mapping
+  - name: hcpitg_integration__itg_mds_in_hcp_sales_hierarchy_mapping
     config: 
       alias: itg_mds_in_hcp_sales_hierarchy_mapping
       tags: ["in_hcp360_mds_data_refresh","transformation"]

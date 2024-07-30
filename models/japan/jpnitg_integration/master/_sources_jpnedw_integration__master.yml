@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB')}}"
+    schema: jpnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: m_area_master
+
+      - name: m_ldw_store_local
+      
