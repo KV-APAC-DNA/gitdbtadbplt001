@@ -552,6 +552,41 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     hcp:
       config:
         +enabled: true
