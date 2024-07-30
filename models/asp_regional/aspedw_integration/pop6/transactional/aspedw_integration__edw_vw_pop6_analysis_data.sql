@@ -4611,4 +4611,4 @@ final as
         is_eyelevel
     from transformed
 )
-select  from final
+select * from final
