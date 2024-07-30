@@ -1,4 +1,12 @@
-
+{{
+    config
+    (
+        post_hook = "
+                    UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }} 
+                    SET MAX_VALUE=(select max(JCP_REC_SEQ) from {{this}});
+                    "
+    )
+}}
 with edi_sell_out_planet as (
     select * from {{ source('jpnsdl_raw', 'edi_sell_out_planet') }}
 ),
@@ -18,7 +26,7 @@ mt_cnst as (
     select 
         trim(edi_sell_out_planet.id) as id,
         trim(mt_constant_seq.max_value + row_number() over(order by edi_sell_out_planet.id desc)) as sequence_no
-    from edi_sell_out_planet,mt_constant_seq
+    from edi_sell_out_planet, mt_constant_seq
 )
 ,
 final as (
@@ -68,7 +76,7 @@ select
 	trim(net_prc)::varchar(256) as net_prc,
 	trim(sales_chan_type)::varchar(256) as sales_chan_type,
 	current_timestamp()::timestamp_ntz(9) as jcp_create_date
-from source1 s
+from edi_sell_out_planet s
 join mt_cnst m on m.id=s.id
 )
 

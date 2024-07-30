@@ -1,3 +1,11 @@
+{{
+    config
+    (
+        materialized='incremental',
+        incremental_strategy = 'append'
+    )
+}}
+
 WITH wk_so_planet_today
 AS (
     SELECT *

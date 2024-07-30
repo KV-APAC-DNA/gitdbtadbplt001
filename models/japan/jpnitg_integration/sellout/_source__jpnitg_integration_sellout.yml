@@ -81,10 +81,9 @@ sources:
       identifier: false
     tables:
       - name: dw_so_planet_err_temp
-      - name: dw_so_planet_err_cd_2_temp
 
   - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    database: "{{ env_var('DBT_ENV_CORE_DB')}}"
     schema: jpnedw_integration
     quoting:
       database: false
@@ -94,7 +93,7 @@ sources:
       - name: mt_trade_conv
 
   - name: jpnwks_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    database: "{{ env_var('DBT_ENV_CORE_DB')}}"
     schema: jpnwks_integration
     quoting:
       database: false
@@ -103,4 +102,3 @@ sources:
     tables:
       - name: wk_so_planet_revise_temp
       - name: wk_so_planet_no_dup_temp
-      - name: wk_so_planet_cleansed_temp

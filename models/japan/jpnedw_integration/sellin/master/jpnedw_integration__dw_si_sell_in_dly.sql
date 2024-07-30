@@ -4,7 +4,7 @@
         materialized = "incremental",
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
-            DELETE FROM {{this}} WHERE JCP_PAN_FLG = (SELECT IDENTIFY_VALUE FROM DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CONSTANT WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
+            DELETE FROM {{this}} WHERE JCP_PAN_FLG = (SELECT IDENTIFY_VALUE FROM {{ source('jpnedw_integration', 'mt_constant') }} WHERE IDENTIFY_CD = 'JCP_PAN_FLG' AND DELETE_FLAG = '0');
         {% endif %}"
     )
 }}
@@ -13,7 +13,7 @@ with dw_si_sell_in_dly_mod as(
 	select * from {{ source('jpnedw_integration', 'dw_si_sell_in_dly_mod') }}
 ),
 WK_SI_PAN_THIS_YEAR as(
-	select * from {{ ref('jpnwks_integration__wk_iv_edi') }}
+	select * from {{ ref('jpnwks_integration__wk_si_pan_this_year') }}
 ),
 mt_cld as(
 	select * from {{ source('jpnedw_integration', 'mt_cld') }}

@@ -3,7 +3,7 @@ with wk_so_planet_modified as(
 ),
 
 item_cd_check as (
-    select * {{ ref('jpnwks_integration__item_cd_check') }}
+    select * from {{ ref('jpnwks_integration__item_cd_check') }}
 ),
 
 consistency_error_2 as (
@@ -18,7 +18,7 @@ itg_mds_jp_mt_so_item_chg as (
     select * from {{ ref('jpnitg_integration__itg_mds_jp_mt_so_item_chg') }}
 ),
 
-item_m as (
+edi_item_m as (
     select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 insert1 as (
