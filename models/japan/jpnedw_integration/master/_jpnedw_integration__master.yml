@@ -64,7 +64,7 @@ models:
   - name: jpnedw_integration__dm_integration_dly
     config:
         alias: dm_integration_dly
-        tags: ["edi_sell_out_planet_ingestion", "sellout_integration_job", "io_integration_job", "sellin_integration_job", "transformation"]
+        tags: ["sellout_integration_job", "io_integration_job", "sellin_integration_job", "tp_integration_job", "transformation"]
         
   - name: jpnedw_integration__mt_constant_range
     config:

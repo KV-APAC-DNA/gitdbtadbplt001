@@ -5,7 +5,7 @@
         incremental_strategy = 'append',
         pre_hook = "
                     
-                    
+                    {% if var('cte_to_execute') == 'tp_integration_job' %}
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MAX_DATE = (
                             SELECT MAX(YMD_DT)
@@ -38,6 +38,8 @@
                         AND ab.JCP_DATE BETWEEN mt.MIN_DATE
                             AND mt.MAX_DATE;
 
+                    {% elif var('cte_to_execute') == 'sellin_integration_job' %}
+
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MAX_DATE = (
                             SELECT MAX(YMD_DT)
@@ -65,6 +67,8 @@
                         AND ab.JCP_DATE BETWEEN mt.MIN_DATE
                             AND mt.MAX_DATE;
 
+                    {% elif var('cte_to_execute') == 'sellout_integration_job' %}
+
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MAX_DATE = (
                             SELECT MAX(YMD_DT)
@@ -75,7 +79,6 @@
                             )
                     WHERE Identify_cd = 'SO';
 
-                    COMMIT;
 
                     UPDATE {{ ref('jpnedw_integration__mt_constant_range') }}
                     SET MIN_DATE = (
@@ -98,7 +101,7 @@
                         AND ab.JCP_DATE BETWEEN mt.MIN_DATE
                             AND mt.MAX_DATE;
 
-                    
+                    {% endif %}
                     "
     )
 }}
@@ -164,6 +167,8 @@ AS (
 	SELECT *
 	FROM {{ source('jpnedw_integration', 'mt_constant') }}
 	),
+
+{% if var("cte_to_execute") == 'io_integration_job' %}
 tmp1
 AS (
 	SELECT 'SO' AS JCP_DATA_SOURCE,
@@ -382,7 +387,10 @@ AS (
 		NULL::NUMBER(10, 0) AS SO_ID,
 		NULL::NUMBER(10, 0) AS SO_JCP_REC_SEQ
 	FROM tmp1
-	),
+	)
+select * from insert1
+
+{% elif var('cte_to_execute') == 'tp_integration_job' %}
 tmp2
 AS (
 	SELECT 'TP' AS JCP_DATA_SOURCE,
@@ -635,7 +643,11 @@ AS (
 		NULL::NUMBER(10, 0) AS SO_ID,
 		NULL::NUMBER(10, 0) AS SO_JCP_REC_SEQ
 	FROM tmp2
-	),
+	)
+
+select * from insert2
+
+{% elif var("cte_to_execute") == 'sellin_integration_job' %}
 tmp3
 AS (
 	SELECT 'SI' AS JCP_DATA_SOURCE,
@@ -831,7 +843,10 @@ AS (
 		NULL::NUMBER(10, 0) AS SO_ID,
 		NULL::NUMBER(10, 0) AS SO_JCP_REC_SEQ
 	FROM tmp3
-	),
+	)
+select * from insert3
+
+{% elif var("cte_to_execute") == 'sellout_integration_job' %}
 tmp4
 AS (
 	SELECT 'SO' AS JCP_DATA_SOURCE,
@@ -1050,26 +1065,7 @@ AS (
 		NULL::NUMBER(10, 0) AS SO_ID,
 		NULL::NUMBER(10, 0) AS SO_JCP_REC_SEQ
 	FROM tmp4
-	),
-final
-AS (
-	SELECT *
-	FROM insert1
-	
-	UNION ALL
-	
-	SELECT *
-	FROM insert2
-	
-	UNION ALL
-	
-	SELECT *
-	FROM insert3
-	
-	UNION ALL
-	
-	SELECT *
-	FROM insert4
 	)
 SELECT *
-FROM final
+FROM insert4
+{% endif %}
