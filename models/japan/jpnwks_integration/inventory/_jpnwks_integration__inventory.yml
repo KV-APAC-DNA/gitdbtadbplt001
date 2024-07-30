@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_iv_edi
+    config:
+        alias: wk_iv_edi
+        tags: ["inventory_workflow","transformation"]
+
+  - name: jpnwks_integration__wk_iv_month_end
+    config:
+        alias: wk_iv_month_end
+        tags: ["inventory_workflow","transformation"]
+
+  - name: jpnwks_integration__wk_iv_month_end_stg
+    config:
+        alias: wk_iv_month_end_stg
+        tags: ["inventory_workflow","transformation"]
+
+  - name: jpnwks_integration__wk_iv_priority
+    config:
+        alias: wk_iv_priority
+        tags: ["inventory_workflow ","transformation"]
+

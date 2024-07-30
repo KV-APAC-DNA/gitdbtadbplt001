@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_jp_c360_eng_translation
+        tags: ["j_jp_mds_refresh_etl_framework","transformation"]
+        
