@@ -76,7 +76,7 @@ SELECT jj_year AS FISC_YR,
        --TARGET_COMPLAINCE,
        CASE 
             WHEN (MDP_FLAG = 'Y' AND UPPER(main.global_product_brand) = UPPER(TRGT_CMP.global_product_brand)) THEN TRGT_CMP.TARGET_COMPLAINCE
-            ELSE 100
+            ELSE 1
             END AS TARGET_COMPLAINCE,
        LIST_PRICE,
        null as TOTAL_SALES_LM,

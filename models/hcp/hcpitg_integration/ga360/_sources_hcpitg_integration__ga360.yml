@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: snapindsdl_raw
+  - name: hcpsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: snapindsdl_raw
+    schema: hcpsdl_raw
     quoting:
       database: false
       schema: false

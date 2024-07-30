@@ -5,13 +5,13 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
-        WHERE HIT_VISITSTARTTIME >= (SELECT MIN(SDL.HIT_VISITSTARTTIME) FROM {{ source('snapindsdl_raw', 'sdl_ga360_aspac_sessions') }} as SDL);
+        WHERE HIT_VISITSTARTTIME >= (SELECT MIN(SDL.HIT_VISITSTARTTIME) FROM {{ source('hcpsdl_raw', 'sdl_ga360_aspac_sessions') }} as SDL);
         {% endif %}"
     )
 }}
 with sdl_ga360_aspac_sessions as
 (
-    select * from {{ source('snapindsdl_raw', 'sdl_ga360_aspac_sessions') }}
+    select * from {{ source('hcpsdl_raw', 'sdl_ga360_aspac_sessions') }}
 ),
 final as
 (

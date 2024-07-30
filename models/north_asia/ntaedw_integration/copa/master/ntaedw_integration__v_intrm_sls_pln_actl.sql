@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 with v_intrm_sls_pln_actl_tp as (
 select * from {{ ref('ntaedw_integration__v_intrm_sls_pln_actl_tp') }}
 ),

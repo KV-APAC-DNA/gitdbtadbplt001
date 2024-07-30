@@ -144,7 +144,7 @@ wks_id_rpt_re_mdp as (
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
 			 actual.list_price,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM  itg_id_re_msl_list TARGET
         LEFT JOIN (SELECT * FROM wks_id_re_actuals) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
@@ -294,7 +294,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              ACTUAL.P12M_SALES_FLAG,
 			 actual.list_price,
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM wks_id_re_actuals A
             WHERE NOT EXISTS (SELECT 1
