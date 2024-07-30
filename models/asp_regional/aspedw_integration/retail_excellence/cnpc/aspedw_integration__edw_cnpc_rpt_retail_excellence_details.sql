@@ -253,7 +253,7 @@ final as
     p6m_sales_flag::VARCHAR(1) AS p6m_sales_flag,
     p12m_sales_flag::VARCHAR(1) AS p12m_sales_flag,
     mdp_flag::VARCHAR(1) AS mdp_flag,
-    target_complaince::numeric(38,0) AS target_complaince,
+    target_complaince::numeric(38,6) AS target_complaince,
     list_price::NUMERIC(20,4) AS list_price,
     size_of_price_lm::NUMERIC(38,14) AS size_of_price_lm,
     size_of_price_p3m::NUMERIC(38,14) AS size_of_price_p3m,
