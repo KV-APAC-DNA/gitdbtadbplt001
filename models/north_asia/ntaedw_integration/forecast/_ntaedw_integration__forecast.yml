@@ -19,4 +19,4 @@ models:
   - name: ntaedw_integration__vw_tw_forecast
     config: 
         alias: vw_tw_forecast
-        tags: ["twsi_datamart_load","transformation"]
+        tags: ["j_tw_sell_in_forecast_transaction_data_ingestion","na_copa","transformation"]
