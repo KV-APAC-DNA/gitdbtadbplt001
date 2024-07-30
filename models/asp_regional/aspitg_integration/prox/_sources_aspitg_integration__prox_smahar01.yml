@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_prox_sys_department
+      tags: ["prox_department","ingestion"]
+    - name: sdl_prox_report_bi_budgetusage
+      tags: ["prox_budget","ingestion"]
+    - name: sdl_prox_report_bi_contract
+      tags: ["prox_budget","ingestion"]
+    - name: sdl_prox_report_bi_payment
+      tags: ["prox_payment","ingestion"]

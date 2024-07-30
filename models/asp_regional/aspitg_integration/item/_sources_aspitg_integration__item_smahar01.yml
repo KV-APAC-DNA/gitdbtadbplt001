@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_rg_total_investment_brand_map
+      tags: ["cd_scorecard_table_refresh","ingestion"]
+    - name: sdl_mds_rg_total_investment_ppm
+      tags: ["cd_scorecard_table_refresh","ingestion"]

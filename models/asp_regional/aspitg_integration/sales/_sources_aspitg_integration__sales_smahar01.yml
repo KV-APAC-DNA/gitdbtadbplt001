@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","ingestion"]

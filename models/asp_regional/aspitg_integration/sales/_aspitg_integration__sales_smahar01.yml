@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_okr_alteryx_automation
+    config:
+      alias: itg_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","ingestion"]

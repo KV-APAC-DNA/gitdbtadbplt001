@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp1
+    config:
+      alias: edw_rpt_okr_dashboard_temp1
+      tags: ["okr_dashboard_datamart_refresh","transformation"] 
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp2
+    config:
+      alias: edw_rpt_okr_dashboard_temp2
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp3
+    config:
+      alias: edw_rpt_okr_dashboard_temp3
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp4
+    config:
+      alias: edw_rpt_okr_dashboard_temp4
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp5
+    config:
+      alias: edw_rpt_okr_dashboard_temp5
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp6
+    config:
+      alias: edw_rpt_okr_dashboard_temp6
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp7
+    config:
+      alias: edw_rpt_okr_dashboard_temp
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard_intermediate
+    config:
+      alias: edw_rpt_okr_dashboard_intermediate
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_rpt_okr_dashboard
+    config:
+      alias: edw_rpt_okr_dashboard
+      tags: ["okr_dashboard_datamart_refresh","transformation"]

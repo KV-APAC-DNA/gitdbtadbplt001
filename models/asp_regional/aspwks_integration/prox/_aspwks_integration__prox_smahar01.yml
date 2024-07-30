@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_prox_sys_department
+    config:
+      alias: wks_prox_sys_department
+      tags: ["prox_department","transformation"]
+  - name: aspwks_integration__wks_prox_report_bi_budgetusage
+    config:
+      alias: wks_prox_report_bi_budgetusage
+      tags: ["prox_budget","transformation"]
+  - name: aspwks_integration__wks_prox_report_bi_contract
+    config:
+      alias: wks_prox_report_bi_contract
+      tags: ["prox_contract","transformation"]
+  - name: aspwks_integration__wks_prox_report_bi_payment
+    config:
+      alias: wks_prox_report_bi_payment
+      tags: ["prox_payment","transformation"]
+  
