@@ -4,4 +4,4 @@ models:
   - name: jpnitg_integration__itg_mds_jp_c360_eng_translation
     config:
       alias: itg_mds_jp_c360_eng_translation
-      tags: ["j_jp_mds_refresh_etl_framework","transformation"]
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","transformation"]
