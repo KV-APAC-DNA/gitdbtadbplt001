@@ -12,7 +12,7 @@ itg_pos_prom_prc_map_temp as(
 ),
 transformed as(
     SELECT 
-       rtrim(SRC.customer, ' ') as customer,
+       SRC.customer as customer,
        rtrim(SRC.barcode, ' ') as barcode,
        rtrim(SRC.cust_prod_cd, ' ') as cust_prod_cd,
        SRC.promotional_price,
@@ -28,7 +28,7 @@ FROM source SRC
   LEFT OUTER JOIN (SELECT distinct cust,cust_prod_cd,barcd, CRT_DTTM FROM itg_pos_prom_prc_map_temp) TGT
   ON 
   rtrim(SRC.barcode, ' ')=rtrim(TGT.barcd, ' ')
-  AND RTRIM(SRC.cust_prod_cd,'')=rtrim(TGT.cust_prod_cd, ' ')
-  AND SRC.customer=rtrim(TGT.cust, ' ')
+  AND RTRIM(SRC.cust_prod_cd,' ')=rtrim(TGT.cust_prod_cd, ' ')
+  AND SRC.customer=TGT.cust
 )
 select * from transformed
