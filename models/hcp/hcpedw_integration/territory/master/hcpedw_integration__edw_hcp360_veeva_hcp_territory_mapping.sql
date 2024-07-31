@@ -42,7 +42,7 @@ final as
     wks_hcp360_in_veeva_territory_loader WTL,
     itg_hcp360_veeva_territory T
     WHERE TL.TL_ID = TERRITORY_LOADER_ID 
-    AND  trim(T.TERRITORY_NAME) = trim(WTL.LEVEL_1)
+    AND  trim(T.TERRITORY_NAME) = trim(WTL.LEVEL_1(+))
 
 
     UNION 
@@ -75,7 +75,7 @@ final as
     wks_hcp360_in_veeva_territory_loader WTL,
     itg_hcp360_veeva_territory T
     WHERE TL.TL_ID = TERRITORY_LOADER_ID
-    AND   trim(T.TERRITORY_NAME) =  trim(LEVEL_2)
+    AND   trim(T.TERRITORY_NAME) =  trim(LEVEL_2(+))
     AND  LEVEL_2 IS NOT NULL
 )
 select territory_loader_id::varchar(18) as territory_loader_id,
