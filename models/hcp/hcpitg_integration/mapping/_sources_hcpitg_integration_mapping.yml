@@ -10,4 +10,4 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_in_hcp360_product_mapping
-      tags: ["in_hcp360_mds_data_refresh","transformation"]
+      tags: ["in_hcp360_mds_data_refresh","ingestion"]

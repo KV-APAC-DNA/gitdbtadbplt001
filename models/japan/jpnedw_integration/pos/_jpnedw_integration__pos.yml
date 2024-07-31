@@ -4,4 +4,4 @@ models:
   - name: jpnedw_integration__dw_pos_daily
     config:
       alias: dw_pos_daily
-      tags: ["jp_pos ","transformation"]
+      tags: ["jp_pos","transformation"]

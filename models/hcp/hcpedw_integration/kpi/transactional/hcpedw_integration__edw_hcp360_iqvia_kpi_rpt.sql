@@ -25,7 +25,7 @@ edw_hcp360_in_ventasys_hcp_dim_latest as
 ),
 wks_hcp360_projected_hcp_speciality_detail as 
 (
-    select * from {{ source('indwks_integration', 'wks_hcp360_projected_hcp_speciality_detail') }}
+    select * from {{ source('hcpwks_integration', 'wks_hcp360_projected_hcp_speciality_detail') }}
 ),
 edw_hcp360_sfmc_hcp_dim as 
 (
