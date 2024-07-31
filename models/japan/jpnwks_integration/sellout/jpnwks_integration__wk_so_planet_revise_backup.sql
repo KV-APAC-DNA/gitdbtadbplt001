@@ -1,0 +1,56 @@
+with source as (
+    select * from {{ ref('jpnwks_integration__wk_so_planet_revise') }}
+),
+
+result as (
+    select
+        jcp_rec_seq::number(10,0) as jcp_rec_seq,
+	    id::number(10,0) as id,
+	    rcv_dt::varchar(256) as rcv_dt,
+	    test_flag::varchar(256) as test_flag,
+	    bgn_sndr_cd::varchar(256) as bgn_sndr_cd,
+	    ws_cd::varchar(256) as ws_cd,
+	    rtl_type::varchar(256) as rtl_type,
+	    rtl_cd::varchar(256) as rtl_cd,
+	    trade_type::varchar(256) as trade_type,
+	    shp_date::varchar(256) as shp_date,
+	    shp_num::varchar(256) as shp_num,
+	    trade_cd::varchar(256) as trade_cd,
+	    dep_cd::varchar(256) as dep_cd,
+	    chg_cd::varchar(256) as chg_cd,
+	    person_in_charge::varchar(256) as person_in_charge,
+	    person_name::varchar(256) as person_name,
+	    column_17::varchar(256) as column_17,
+	    rtl_name::varchar(256) as rtl_name,
+	    rtl_ho_cd::varchar(256) as rtl_ho_cd,
+	    rtl_address_cd::varchar(256) as rtl_address_cd,
+	    data_type::varchar(256) as data_type,
+	    opt_fld::varchar(256) as opt_fld,
+	    item_nm::varchar(256) as item_nm,
+	    item_cd_typ::varchar(256) as item_cd_typ,
+	    item_cd::varchar(256) as item_cd,
+	    qty::varchar(256) as qty,
+	    qty_type::varchar(256) as qty_type,
+	    price::varchar(256) as price,
+	    price_type::varchar(256) as price_type,
+	    bgn_sndr_cd_gln::varchar(256) as bgn_sndr_cd_gln,
+	    rcv_cd_gln::varchar(256) as rcv_cd_gln,
+	    ws_cd_gln::varchar(256) as ws_cd_gln,
+	    shp_ws_cd::varchar(256) as shp_ws_cd,
+	    shp_ws_cd_gln::varchar(256) as shp_ws_cd_gln,
+	    rep_name_kanji::varchar(256) as rep_name_kanji,
+	    rep_info::varchar(256) as rep_info,
+	    trade_cd_gln::varchar(256) as trade_cd_gln,
+	    rtl_cd_gln::varchar(256) as rtl_cd_gln,
+	    rtl_name_kanji::varchar(256) as rtl_name_kanji,
+	    rtl_ho_cd_gln::varchar(256) as rtl_ho_cd_gln,
+	    item_cd_gtin::varchar(256) as item_cd_gtin,
+	    item_nm_kanji::varchar(256) as item_nm_kanji,
+	    unt_prc::varchar(256) as unt_prc,
+	    net_prc::varchar(256) as net_prc,
+	    sales_chan_type::varchar(256) as sales_chan_type,
+	    jcp_create_date::timestamp_ntz(9) as jcp_create_date
+    from source
+)
+
+select * from result

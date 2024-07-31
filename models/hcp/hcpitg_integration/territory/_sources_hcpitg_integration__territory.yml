@@ -80,6 +80,8 @@ sources:
 
     - name: itg_hcp360_veeva_lookup_retention_period
       tags: ["hcp_lookup","ingestion"]
+    - name: itg_hcp360_in_iqvia_brand
+    - name: itg_hcp360_in_iqvia_speciality
 
   - name: hcpedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

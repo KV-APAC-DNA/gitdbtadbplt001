@@ -572,19 +572,45 @@ models:
     japan:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      jpnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPNEDW_INTEGRATION
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
+      jpnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNEDW_INTEGRATION
+        common:
+          views:
+            +materialized: view
       jpnwks_integration:
         +materialized: table
+        +transient: false
         +schema: JPNWKS_INTEGRATION
       jpnedw_access:
         +materialized: view
         +schema: JPNEDW_ACCESS
-      
+
+
+    hcp:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Kolkata';"
+      hcpedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPEDW_INTEGRATION
+        hcp:
+          view:
+            +materialized: view
+      hcpitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPITG_INTEGRATION
+      hcpwks_integration:
+        +materialized: table
+        +schema: HCPWKS_INTEGRATION
+      hcpedw_access:
+        +materialized: view
+        +schema: HCPEDW_ACCESS

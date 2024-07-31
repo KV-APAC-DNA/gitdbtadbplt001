@@ -10,6 +10,10 @@ with itg_hcp360_in_ventasys_hcp_master as
 (
     select * from {{ ref('hcpitg_integration__itg_hcp360_in_ventasys_hcp_master') }}
 ),
+edw_hcp360_in_ventasys_brand_map_temp as 
+(
+    select * from {{ source('hcpedw_integration', 'edw_hcp360_in_ventasys_brand_map') }}
+),
 final as
 (
     SELECT
@@ -18,7 +22,7 @@ final as
    ,convert_timezone('UTC',current_timestamp())::timestamp_ntz AS CRT_DTTM	
    ,convert_timezone('UTC',current_timestamp())::timestamp_ntz AS UPDT_DTTM
    FROM itg_hcp360_in_ventasys_hcp_master ITG
-    LEFT JOIN {{this}} MAP
+    LEFT JOIN edw_hcp360_in_ventasys_brand_map_temp MAP
     ON ITG.V_CUSTID = MAP.HCP_ID
     AND CASE WHEN ITG.TEAM_NAME ='JB' THEN 'JBABY' ELSE ITG.TEAM_NAME END = MAP.TEAM_BRAND_NAME 
     WHERE MAP.TEAM_BRAND_NAME IS NULL AND MAP.HCP_ID IS NULL
