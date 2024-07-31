@@ -101,7 +101,7 @@ select fisc_yr,
 from cnpc_edw_rpt_retail_excellence_summary_base
 where  market='China Personal Care'  
 and RETAIL_ENVIRONMENT not in (select distinct parameter_value from itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='CNPC')
-and 
+and  
 data_src is not null and 
 	  fisc_per > TO_CHAR(ADD_MONTHS((
             select TO_DATE(TO_CHAR(MAX(fisc_per)), 'YYYYMM')

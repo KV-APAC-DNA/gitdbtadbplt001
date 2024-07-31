@@ -4,7 +4,7 @@ with cnpc_edw_rpt_retail_excellence as (
 
 itg_query_parameters as (
     select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
-),
+), 
 
 cnpc_edw_rpt_retail_excellence_details as 
 (
