@@ -10,6 +10,6 @@ transformed as(
         cs_qty,
         qty,
         proc_dt
-    FROM WK_IV_MONTH_END
+    FROM wk_iv_month_end
 )
 select * from transformed
