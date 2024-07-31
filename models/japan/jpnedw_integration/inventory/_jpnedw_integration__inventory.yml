@@ -4,9 +4,9 @@ models:
   - name: jpnedw_integration__da_iv_edi_accum
     config:
       alias: da_iv_edi_accum
-      tags: ["inventory_workflow ","transformation"]
+      tags: ["inventory_workflow","transformation"]
 
   - name: jpnedw_integration__dw_iv_month_end
     config:
       alias: dw_iv_month_end
-      tags: ["inventory_workflow ","transformation"]
+      tags: ["inventory_workflow","transformation"]
