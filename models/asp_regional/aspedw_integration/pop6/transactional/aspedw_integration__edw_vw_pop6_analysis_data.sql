@@ -4438,13 +4438,15 @@ FROM
         itg_pop6_executed_visits.file_name, 
         itg_pop6_executed_visits.run_id, 
         itg_pop6_executed_visits.crtd_dttm, 
-        itg_pop6_executed_visits.updt_dttm 
+        itg_pop6_executed_visits.updt_dttm,
+        ROW_NUMBER() OVER (PARTITION BY cntry_cd,src_file_date,visit_id,visit_date,check_in_datetime,check_out_datetime,popdb_id,pop_code,pop_name,address,check_in_longitude,check_in_latitude,check_out_longitude,check_out_latitude,check_in_photo,check_out_photo,username,user_full_name,superior_username,superior_name,planned_visit,cancelled_visit,cancellation_reason,cancellation_note,file_name ORDER BY run_id desc) as rn
       FROM 
         itg_pop6_executed_visits 
       WHERE 
         (
           itg_pop6_executed_visits.planned_visit = 1
         )
+        qualify rn = 1
     ) exv ON (
       (
         (
