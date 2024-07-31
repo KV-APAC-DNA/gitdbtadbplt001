@@ -1,0 +1,99 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_jp_intage_skinhealth_category
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["jan_code"]
+            not_null_columns: ["jan_code"] 
+            name: sdl_mds_jp_intage_skinhealth_category__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["jan_code"]
+                group_by_columns: ["jan_code"] 
+                name: sdl_mds_jp_intage_skinhealth_category__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+
+      - name: edi_invt_dt
+        tags: ["inventory_workflow","ingestion"]
+
+      - name: edi_frnch_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_bgn_sndr
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_brand_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_chn_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_cstm_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_cstm_rlt_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_item_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_store_m
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_item_cd_chng
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_jedpar
+        tags: ["edi_master_table","transformation"]
+
+      - name: edi_rtlr_cd_chng
+        tags: ["edi_master_table","transformation"]
+      - name: edi_excl_rtlr
+        tags: ["edi_master_table","transformation"]
+
+  - name: jpnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: mt_constant_seq
+        tags: ["sellin_workflow","ingestion"]
+      - name: mt_bravo_sap_map
+      - name: mt_sgmt
+      - name: mt_cld
+      - name: mt_jan_detail
+      - name: mt_tp_status_mapping
+      - name: edi_chn_m1
+      - name: mt_prf
+      - name: dw_si_sell_in_dly_mod
+      - name: mt_constant
+      - name: jp_inv_coverage_area_region_mapping
+      - name: mt_constant_range
+      - name: dm_iv_logical_dly
+
+  - name: jpnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpnwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: temp_tbl

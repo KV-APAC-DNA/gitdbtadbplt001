@@ -11,3 +11,13 @@ sources:
     tables:
     - name: sdl_hcp360_in_ventasys_rxdata
       tags: ["in_ventasys_load","ingestion"]
+      
+  - name: hcpwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: wks_hcp360_projected_hcp_speciality_detail

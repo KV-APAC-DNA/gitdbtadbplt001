@@ -141,17 +141,20 @@ sources:
     tables:
       - name: edi_store_m
       - name: edi_chn_m
-      - name: mt_sgmt        
-      - name: mt_prf       
-      - name: jp_inv_coverage_area_region_mapping    
+# disabling here as this is available main branch in _sources_jpnitg_integration__intage.yml file
+      #- name: mt_sgmt        
+      #- name: mt_prf       
+      #- name: jp_inv_coverage_area_region_mapping    
       - name: edi_cstm_m
       - name: vw_jan_change
 
-  - name: jpnsdl_raw
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: jpnsdl_raw
-    tables:
-      - name: sdl_mds_jp_c360_eng_translation                  
+# disabling here as this is available main branch in _sources_jpnitg_integration__customer_360.yml file
+ # - name: jpnsdl_raw
+ #   database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+ #   schema: jpnsdl_raw
+ #  tables:
+ #   - name: sdl_mds_jp_c360_eng_translation        
+               
 
   - name: aspsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"

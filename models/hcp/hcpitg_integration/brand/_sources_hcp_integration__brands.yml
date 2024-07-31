@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_hcp360_in_iqvia_brand
-      tags: ["in_iqvia_load","ingestion"]
+      # tags: ["in_iqvia_load","ingestion"]
       tests:
           - test_format:
               select_columns: ["pack_description"]
@@ -20,3 +20,12 @@ sources:
               config:
                 store_failures: true
                 schema: hcpwks_integration
+  - name: hcpedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_hcp360_in_ventasys_brand_map

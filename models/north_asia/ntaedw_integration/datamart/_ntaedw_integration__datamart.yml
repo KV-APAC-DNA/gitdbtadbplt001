@@ -24,7 +24,7 @@ models:
   - name: ntaedw_integration__v_rpt_tpfgsummary
     config: 
       alias: v_rpt_tpfgsummary
-      tags: ["north_asia_views","j_sap_bw_txn_copa10_wrapper","transformation"]
+      tags: ["north_asia_views","na_copa","transformation"]
   - name: ntaedw_integration__v_rpt_ims_inventory
     config: 
       alias: v_rpt_ims_inventory

@@ -16,11 +16,11 @@ edw_hcp360_in_iqvia_sales as
 ),
 itg_hcp360_in_iqvia_brand as 
 (
-    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_brand') }}
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_in_iqvia_brand') }}
 ),
 itg_hcp360_in_iqvia_speciality as 
 (
-    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_speciality') }}
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_in_iqvia_speciality') }}
 ),
 itg_hcp360_in_iqvia_indication as 
 (

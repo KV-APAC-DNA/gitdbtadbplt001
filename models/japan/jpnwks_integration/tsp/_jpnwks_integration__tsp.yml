@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_tp_datamart_promo_amt
+    config:
+        alias: wk_tp_datamart_promo_amt
+        tags: ["tsp_master_job","transformation"]
