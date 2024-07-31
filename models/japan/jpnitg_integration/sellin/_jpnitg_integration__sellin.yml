@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__bw_ohjapan_pan
+    config:
+        alias: bw_ohjapan_pan
+        tags: ["sellin_workflow","ingestion"]
+
+  - name: jpnitg_integration__bw_ohjapan_pan_stg
+    config:
+        alias: bw_ohjapan_pan_stg
+        tags: ["sellin_workflow","ingestion"]
+
+  - name: jpnitg_integration__bw_ohjapan_pan_stgf
+    config:
+        alias: bw_ohjapan_pan_stgf
+        tags: ["sellin_workflow","ingestion"]

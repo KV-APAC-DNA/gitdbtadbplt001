@@ -577,14 +577,17 @@ models:
         +materialized: table
         +transient: false
         +schema: JPNEDW_INTEGRATION
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
-      jpnwks_integration:
-        +materialized: table
-        +schema: JPNWKS_INTEGRATION
+
       jpnedw_access:
         +materialized: view
         +schema: JPNEDW_ACCESS
       
+      jpnwks_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPNWKS_INTEGRATION
