@@ -87,6 +87,7 @@ sources:
       - name: jp_inv_coverage_area_region_mapping
       - name: mt_constant_range
       - name: dm_iv_logical_dly
+      - name: da_iv_edi_accum_temp
 
   - name: jpnwks_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
