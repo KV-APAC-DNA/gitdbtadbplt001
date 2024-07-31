@@ -5,6 +5,10 @@ with cnpc_edw_rpt_retail_excellence_summary_base as (
         {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_summary_base') }}
 ),
 
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
+),
+
 cnpc_edw_rpt_retail_excellence_summary as (
 select fisc_yr,
        fisc_per,
@@ -95,7 +99,10 @@ select fisc_yr,
         null as l12m_universe_stores,
         null as l12m_numeric_distribution
 from cnpc_edw_rpt_retail_excellence_summary_base
-where  market='China Personal Care' and data_src is not null and 
+where  market='China Personal Care'  
+and RETAIL_ENVIRONMENT not in (select distinct parameter_value from itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='CNPC')
+and 
+data_src is not null and 
 	  fisc_per > TO_CHAR(ADD_MONTHS((
             select TO_DATE(TO_CHAR(MAX(fisc_per)), 'YYYYMM')
             from cnpc_edw_rpt_retail_excellence_summary_base
