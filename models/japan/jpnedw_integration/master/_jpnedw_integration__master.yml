@@ -71,4 +71,7 @@ models:
         alias: mt_constant_range
         tags: ["sellout_integration_job","transformation"]
 
-        
+  - name: jpnedw_integration__mt_cld
+    config:
+      alias: mt_cld
+      tags: ["sellout_integration_job","transformation"]       

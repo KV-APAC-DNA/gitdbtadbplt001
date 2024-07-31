@@ -4,17 +4,17 @@ models:
   - name: jpnitg_integration__itg_mds_jp_pos_account_mapping
     config:
       alias: itg_mds_jp_pos_account_mapping
-      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
 
   - name: jpnitg_integration__itg_mds_jp_pos_product_mapping
     config:
       alias: itg_mds_jp_pos_product_mapping
-      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
 
   - name: jpnitg_integration__itg_mds_jp_pos_store_mapping
     config:
       alias: itg_mds_jp_pos_store_mapping
-      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
 
   - name: jpnitg_integration__jp_pos_daily
     config:

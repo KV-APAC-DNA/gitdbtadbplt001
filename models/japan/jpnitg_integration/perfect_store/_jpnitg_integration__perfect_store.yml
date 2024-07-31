@@ -4,4 +4,4 @@ models:
   - name: jpnitg_integration__itg_mds_jp_ps_weights
     config:
       alias: itg_mds_jp_ps_weights
-      tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]

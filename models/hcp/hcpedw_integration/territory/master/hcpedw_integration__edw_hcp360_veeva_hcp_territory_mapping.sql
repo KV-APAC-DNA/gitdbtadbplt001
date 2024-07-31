@@ -1,3 +1,6 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
 with itg_hcp360_veeva_account_territory_loader as
 (
     select * from {{ source('hcpitg_integration', 'itg_hcp360_veeva_account_territory_loader') }}
