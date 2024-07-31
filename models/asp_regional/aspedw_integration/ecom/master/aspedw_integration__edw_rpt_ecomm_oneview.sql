@@ -1,3 +1,9 @@
+{{
+    config(
+        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
+    )
+}}
+
 with v_edw_customer_sales_dim as(
     select * from snapaspedw_integration.v_edw_customer_sales_dim
 ),
@@ -334,12 +340,12 @@ insert2 as(
 				"substring" (
 					copa.fisc_yr_per::CHARACTER VARYING::TEXT,
 					6,
-					8
+					6
 					) || '01'::CHARACTER VARYING::TEXT
 				) || "substring" (
 				copa.fisc_yr_per::CHARACTER VARYING::TEXT,
 				1,
-				4
+				2
 				), 'MMDDYYYY'::CHARACTER VARYING::TEXT) AS fisc_day,
 		NULL AS cal_day,
 		copa.fisc_yr_per,
@@ -2216,7 +2222,7 @@ insert9 as(
 	sls_grp AS banner, -- Modified
 	sls_grp AS "banner format", -- Modified
 	NULL AS platform_name,
-	str_cd + ' - ' + str_nm AS retailer_name, -- Modified
+	str_cd || ' - ' || str_nm AS retailer_name, -- Modified
 	NULL AS retailer_name_english,
 	'Johnson & Johnson' AS manufacturer_name,
 	'Y' AS jj_manufacturer_flag,
@@ -3797,7 +3803,7 @@ transformed as(
 	select * from insert1
 	union all
 	select * from insert2
-	union all
+    union all
 	select * from insert3
 	union all
 	select * from insert4
@@ -3831,13 +3837,13 @@ final as(
         Data_level::varchar(20) as data_level,
         KPI::varchar(50) as kpi,	  
         Period_type::varchar(10) as period_type,
-        fisc_year::varchar(5) as fisc_year,
-        cal_year::varchar(5) as cal_year,
-        fisc_month::varchar(10) as fisc_month,
-        cal_month::varchar(10) as cal_month,
+        fisc_year::varchar(10) as fisc_year,
+        cal_year::varchar(10) as cal_year,
+        fisc_month::varchar(20) as fisc_month,
+        cal_month::varchar(20) as cal_month,
         to_date(fisc_day) as fisc_day,
         to_date(cal_day) as cal_day,
-        fisc_yr_per::varchar(10) as fisc_yr_per,
+        fisc_yr_per::varchar(50) as fisc_yr_per,
         "cluster"::varchar(100) as cluster,
         ctry_nm::varchar(40) as market,
         sub_country::varchar(40) as sub_market,
@@ -3872,11 +3878,11 @@ final as(
         reailer_sku_code::varchar(200) as retailer_sku_code,
         pka_product_key::varchar(100) as product_key,
         pka_product_key_description::varchar(255) as product_key_description,
-        target_ori::number(38,1) as target_value,
+        target_ori::number(38,18) as target_value,
         value::varchar(30) as actual_value,
-        usd_value::number(38,1) as value_usd,
-        lcy_value::number(38,1) as value_lcy,
-        salesweight::number(38,1) as salesweight,
+        usd_value::number(38,18) as value_usd,
+        lcy_value::number(38,18) as value_lcy,
+        salesweight::number(38,18) as salesweight,
         from_crncy::varchar(5) as from_crncy,
         to_crncy::varchar(5) as to_crncy,
         acct_nm::varchar(50) as account_number,
