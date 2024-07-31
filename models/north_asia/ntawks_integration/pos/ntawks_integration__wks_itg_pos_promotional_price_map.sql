@@ -27,7 +27,7 @@ transformed as(
 FROM source SRC
   LEFT OUTER JOIN (SELECT distinct cust,cust_prod_cd,barcd, CRT_DTTM FROM itg_pos_prom_prc_map_temp) TGT
   ON 
-  rtrim(SRC.barcode, ' ')rtrim(TGT.barcd, ' ')
+  rtrim(SRC.barcode, ' ')=rtrim(TGT.barcd, ' ')
   AND RTRIM(SRC.cust_prod_cd,'')=rtrim(TGT.cust_prod_cd, ' ')
   AND SRC.customer=rtrim(TGT.cust, ' ')
 )
