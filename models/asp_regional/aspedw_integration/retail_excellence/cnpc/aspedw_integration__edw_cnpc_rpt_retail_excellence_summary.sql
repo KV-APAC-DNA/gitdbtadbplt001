@@ -40,7 +40,7 @@ select fisc_yr,
        case when p6m_sales_flag = 1 then 'Y' else 'N' end  as p6m_sales_flag,
        case when p12m_sales_flag = 1 then 'Y' else 'N' end  as p12m_sales_flag,
        case when mdp_flag = 1 then 'Y' else 'N' end  as mdp_flag,
-       target_complaince,
+       sum(target_complaince) as target_complaince,
 	   sum(sales_value)as sales_value,
        sum(sales_qty)as sales_qty,
        avg(sales_qty) as avg_sales_qty,
@@ -135,8 +135,7 @@ group by fisc_yr,
       p3m_sales_flag,
       p6m_sales_flag,
       p12m_sales_flag,
-      mdp_flag,
-	  target_complaince
+      mdp_flag
 ),
 
 final as
