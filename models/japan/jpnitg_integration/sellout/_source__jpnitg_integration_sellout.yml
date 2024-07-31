@@ -71,6 +71,8 @@ sources:
 
       - name: sdl_mds_jp_jan_description
       - name: sdl_mds_jp_product_ca_ratio
+      - name: sdl_so_planet_no_dup
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
 
   - name: jpnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"

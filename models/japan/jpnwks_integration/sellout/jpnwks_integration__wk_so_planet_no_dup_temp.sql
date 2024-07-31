@@ -196,7 +196,7 @@
 
 WITH source AS
 (
-    SELECT * FROM {{ source('jpnwks_integration', 'wk_so_planet_no_dup_temp') }}
+    SELECT * FROM {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }}
 ),
 
 final AS
