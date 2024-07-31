@@ -19,5 +19,5 @@ models:
   - name: jpnwks_integration__wk_iv_priority
     config:
         alias: wk_iv_priority
-        tags: ["inventory_workflow ","transformation"]
+        tags: ["inventory_workflow","transformation"]
 
