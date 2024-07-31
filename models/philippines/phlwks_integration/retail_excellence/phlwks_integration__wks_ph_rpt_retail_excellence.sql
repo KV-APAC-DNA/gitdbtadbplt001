@@ -415,8 +415,8 @@ ph_rpt_retail_excellence_non_mdp as
                                             zip_code AS store_postcode,
                                             latitude::VARCHAR AS store_lat,
                                             longitude::VARCHAR AS store_long,
-                                            ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC) AS rno
-                                        FROM ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y') c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')		--// 								  FROM OS_ITG.ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y') c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')
+                                            ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY upper(store_mtrx) ASC, crtd_dttm DESC) AS rno
+                                        FROM (select * from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' AND store_mtrx <> ' ')) c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')		
                                 JOIN (SELECT DISTINCT rpt_grp_1_desc AS trade_type,
                                             rpt_grp_12_desc AS sales_group,
                                             parent_cust_cd
