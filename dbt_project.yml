@@ -592,7 +592,6 @@ models:
         +materialized: view
         +schema: JPNEDW_ACCESS
 
-
     hcp:
       config:
         +enabled: true
@@ -614,3 +613,4 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
+
