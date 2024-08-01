@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_in_ventasys_samples_fact
+    config:
+      alias: edw_hcp360_in_ventasys_samples_fact
+      tags: ["in_ventasys_edw_load","transformation"]

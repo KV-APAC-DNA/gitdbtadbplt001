@@ -68,7 +68,7 @@ trans as
         current_timestamp()::timestamp_ntz(9) as UPDT_DTTM
         FROM (select * from
         (Select 
-        row_number() over( partition by distcode, smcode, smname, rmcode, rmname, targetyear, targetmonth, targetname order by targettype desc) rn,
+        row_number() over( partition by distcode, smcode, smname, rmcode, rmname, targetyear, targetmonth, targetname order by targetdate desc) rn,
         rd.*
         from  itg_rdssmweeklytarget_output rd
         where TARGETSTATUS='CONFIRMED' AND TARGETYEAR<>'0') rd1

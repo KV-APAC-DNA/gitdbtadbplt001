@@ -3,17 +3,42 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        pre_hook ="{% if is_incremental() %}
-        DELETE FROM {{this}} where nature = 'NR' AND chnl_desc2 = 'GT';
+        pre_hook = "{% if is_incremental() %}
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp1') }} where nature = 'NR' AND chnl_desc2 = 'GT';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp2') }} where nature = 'NR' AND chnl_desc2 = 'GT';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp3') }} where nature = 'NR' AND chnl_desc2 = 'GT';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp4') }} where nature = 'NR' AND chnl_desc2 = 'GT';
+        DELETE FROM {{ ref('indwks_integration__wks_fin_sim_base_temp5') }} where nature = 'NR' AND chnl_desc2 = 'GT';
         {% endif %}"
     )
 }}
-with itg_fin_sim_miscdata as (
+with itg_fin_sim_miscdata as 
+(
     select * from {{ ref('inditg_integration__itg_fin_sim_miscdata') }}
 ),
 itg_mds_in_product_hierarchy as
 (
     select * from {{ ref('inditg_integration__itg_mds_in_product_hierarchy') }}
+),
+wks_fin_sim_base_temp1 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp1') }}
+),
+wks_fin_sim_base_temp2 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp2') }}
+),
+wks_fin_sim_base_temp3 as 
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp3') }}
+),
+wks_fin_sim_base_temp4 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp4') }}
+),
+wks_fin_sim_base_temp5 as
+(
+    select * from {{ ref('indwks_integration__wks_fin_sim_base_temp5') }}
 ),
 final as
 (
@@ -26,8 +51,13 @@ final as
       (nrgt.fisc_yr || nrgt.month)::INTEGER AS caln_yr_mo,
       nrgt.fisc_yr::INTEGER as fisc_yr,
       (nrgt.fisc_yr || 0 || nrgt.month)::INTEGER AS fisc_yr_per,
-      DECODE(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')), '', 0, CAST(TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')) AS NUMERIC(38, 2))) as amt_obj_crncy,
-      CAST(NULL AS NUMERIC(38, 2)) as qty,
+      TRY_CAST(
+          DECODE(
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', '')),
+              '','0',
+              TRIM(REPLACE(REPLACE(REPLACE(amt_obj_crncy, ',', ''), '-', ''), '#N/A', ''))
+          ) AS NUMERIC(38, 2)) AS amt_obj_crncy,
+      CAST(NULL AS NUMERIC(38, 2)) AS qty,
       'NA' AS acct_hier_desc,
       'NA' AS acct_hier_shrt_desc,
       'NA' AS chnl_desc1,

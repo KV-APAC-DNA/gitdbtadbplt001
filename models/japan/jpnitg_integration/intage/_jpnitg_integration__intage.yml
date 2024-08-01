@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__itg_mds_intage_skinhealth_category
+    config:
+      alias: itg_mds_intage_skinhealth_category
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]

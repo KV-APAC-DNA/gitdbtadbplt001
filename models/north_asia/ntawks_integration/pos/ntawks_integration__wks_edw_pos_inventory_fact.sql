@@ -118,7 +118,7 @@ FROM (SELECT x.*,
               AND e.prom_end_dt
               AND x.barcode = e.barcd
       WHERE x.ctry_cd = 'TW'
-        AND   x.src_sys_cd in ( 'Poya 寶雅', 'PX 全聯', 'RT-Mart 大潤發', 'ibonMart', 'A-Mart 愛買')
+        AND   x.src_sys_cd in ( 'Poya 寶雅', 'PX 全聯', 'RT-Mart 大潤發') --, 'ibonMart', 'A-Mart 愛買'
       ) src
   LEFT JOIN (SELECT DISTINCT matl_num,
                     matl_desc

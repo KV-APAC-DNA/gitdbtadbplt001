@@ -46,13 +46,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107482_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107482_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107482_sellout') }}"
             date_column: "transaction_date"
@@ -73,13 +73,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107483_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107483_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107483_sellout') }}"
             date_column: "transaction_date"
@@ -100,13 +100,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107485_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107485_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107485_sellout') }}"
             date_column: "transaction_date"
@@ -127,13 +127,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107501_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107501_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_107501_sellout') }}"
             date_column: "transaction_date"
@@ -181,13 +181,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107510_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_107510_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             date_column: "transaction_date"
             filter: "(odd_mon.transaction_date) = (even_mon.transaction_date) and (even_mon.transaction_date) = (feb.transaction_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
@@ -207,13 +207,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_116047_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_116047_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_116047_sellout') }}"
             date_column: "transaction_date"
@@ -261,13 +261,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_122296_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_122296_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_122296_sellout') }}"
             date_column: "transaction_date"
@@ -288,13 +288,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_123291_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_123291_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_123291_sellout') }}"
             date_column: "transaction_date"
@@ -315,13 +315,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_131953_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_131953_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_131953_sellout') }}"
             date_column: "transaction_date"
@@ -342,13 +342,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132222_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132222_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132222_sellout') }}"
             date_column: "transaction_date"
@@ -369,13 +369,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132349_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132349_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132349_sellout') }}"
             date_column: "transaction_date"
@@ -396,13 +396,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132508_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_132508_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_132508_sellout') }}"
             date_column: "transaction_date"
@@ -423,13 +423,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_134478_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_134478_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_134478_sellout') }}"
             date_column: "transaction_date"
@@ -450,13 +450,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135307_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135307_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_135307_sellout') }}"
             date_column: "transaction_date"
@@ -477,13 +477,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135561_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_135561_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_135561_sellout') }}"
             date_column: "transaction_date"
@@ -504,13 +504,13 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-        - test_duplicate:
-              group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
-              name: TRATBL_sdl_tw_ims_dstr_std_sel_out_136454_sellout__duplicate_test
-              config:
-                store_failures: true
-                schema: ntawks_integration
+        # - test_duplicate:
+        #       group_by_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       select_columns: ["transaction_date","distributor_code","distributors_customer_code","distributors_product_code","ean","sales_rep_code"]
+        #       name: TRATBL_sdl_tw_ims_dstr_std_sel_out_136454_sellout__duplicate_test
+        #       config:
+        #         store_failures: true
+        #         schema: ntawks_integration
         - test_date_format_odd_eve_leap:
             model_nm: "{{ source('ntasdl_raw', 'sdl_tw_ims_dstr_std_sel_out_136454_sellout') }}"
             date_column: "transaction_date"

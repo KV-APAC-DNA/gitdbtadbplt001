@@ -4,4 +4,4 @@ models:
   - name: ntaedw_integration__edw_vw_kr_tp_tracker
     config:
       alias: edw_vw_kr_tp_tracker
-      tags: ["north_asia_views","transformation"]
+      tags: ["north_asia_views","na_copa","transformation"]

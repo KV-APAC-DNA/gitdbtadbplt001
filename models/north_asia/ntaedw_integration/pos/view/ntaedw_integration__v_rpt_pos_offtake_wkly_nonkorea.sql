@@ -44,7 +44,7 @@ final as
 	,CASE 
 		WHEN ((a.ctry_cd)::TEXT = ('TW'::CHARACTER VARYING)::TEXT)
 			THEN sum(a.prom_sls_amt)
-		ELSE (sum(a.sls_amt))::NUMERIC(18, 0)
+		ELSE trunc((sum(a.sls_amt)), 0)
 		END AS sls_amt
 	,a.crncy_cd
 	,a.src_sys_cd

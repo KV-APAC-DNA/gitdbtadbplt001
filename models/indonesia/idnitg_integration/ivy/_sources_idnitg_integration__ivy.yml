@@ -18,7 +18,7 @@ sources:
       #       name: TRATBL_sdl_distributor_ivy_inventory__null_test
       #       config:
       #         store_failures: true
-      #         schema: idnitg_integration
+      #         schema: idnwks_integration
     - name: sdl_mds_id_dms_dist_margin_control
       tags: ["id_mds_itg_load","ingestion"]
       tests:
@@ -28,14 +28,14 @@ sources:
               name: TRATBL_sdl_mds_id_dms_dist_margin_control__null_test
               config:
                 store_failures: true
-                schema: idnitg_integration
+                schema: idnwks_integration
           - test_duplicate:
               select_columns: ["distributorcode","franchise","brand","type","margin","effective_from"]
               group_by_columns: ["distributorcode","franchise","brand","type","margin","effective_from"]
               name: TRATBL_sdl_mds_id_dms_dist_margin_control__duplicate_test
               config:
                 store_failures: true
-                schema: idnitg_integration
+                schema: idnwks_integration
 
     - name: sdl_distributor_ivy_order
       tags: ["id_ivy","ingestion"]

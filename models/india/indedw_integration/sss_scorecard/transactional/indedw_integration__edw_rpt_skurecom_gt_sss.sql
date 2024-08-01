@@ -2,6 +2,10 @@ with wks_pilot_sku_recom_tbl2 as
 (
     select * from {{ ref('indwks_integration__wks_pilot_sku_recom_tbl2') }}
 ),
+wks_pilot_ly_actual_sales as
+(
+    select * from {{ ref('indwks_integration__wks_pilot_ly_actual_sales') }}
+),
 final as 
 (
     SELECT mth_mm,

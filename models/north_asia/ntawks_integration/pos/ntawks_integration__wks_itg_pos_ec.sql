@@ -68,7 +68,8 @@ final as
                 MAX(product_name) AS product_name,
                 COALESCE(SUM(qty), 0) AS qty,
                 COALESCE(SUM(selling_amt_before_tax), 0) AS selling_amt_before_tax,
-                MAX(brand) AS brand
+                MAX(brand) AS brand,
+                max(crt_dttm) as crt_dttm
             FROM source
             GROUP BY pos_date,
                 product_code
@@ -78,6 +79,7 @@ final as
             SELECT pos_dt,
                 vend_prod_cd,
                 CRT_DTTM,
+                upd_dttm,
                 COALESCE(sls_excl_vat_amt, 0) AS sls_excl_vat_amt,
                 COALESCE(sls_qty, 0) AS sls_qty
             FROM ITG_POS
@@ -85,5 +87,6 @@ final as
                 AND ctry_cd = 'TW'
         ) TGT ON SRC.pos_date = TGT.pos_dt
         AND SRC.product_code = TGT.vend_prod_cd
+        where src.crt_dttm>tgt.upd_dttm
 )
 select * from final

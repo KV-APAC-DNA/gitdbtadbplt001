@@ -16,7 +16,7 @@ with source as
     (
     select
     sdl_rsdm.rsdcode::varchar(50) as rsdcode,
-    sdl_rsdm.rsdname::varchar(50) as rsdname,
+    sdl_rsdm.rsdname::varchar(100) as rsdname,
     sdl_rsdm.rsdfirm::varchar(50) as rsdfirm,
     sdl_rsdm.rsrcode::varchar(50) as rsrcode,
     sdl_rsdm.villagecode::varchar(50) as villagecode,
@@ -71,7 +71,7 @@ WHERE rnum = '1'
 final as
 (select 
     rsdcode::varchar(50) as rsdcode,
-    rsdname::varchar(50) as rsdname,
+    rsdname::varchar(100) as rsdname,
     rsdfirm::varchar(50) as rsdfirm,
     rsrcode::varchar(50) as rsrcode,
     villagecode::varchar(50) as villagecode,

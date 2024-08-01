@@ -18,7 +18,6 @@ models:
 
   - name: indedw_integration__v_rpt_gt_target_vs_actuals
     config:
-      materialized: view
       alias: v_rpt_gt_target_vs_actuals
       tags: ["j_ap_idc_etl_framework","transformation"]
       

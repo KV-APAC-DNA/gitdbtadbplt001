@@ -3,7 +3,7 @@
         materialized="incremental",
         incremental_strategy = "append",
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_naver_sellout') }});
+        delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'MM/DD/YYYY') from {{ ref('ntawks_integration__wks_kr_ecommerce_naver_sellout') }});
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || coalesce(try_to_date(transaction_date, 'YYYYMMDD'), to_date(transaction_date, 'DD/MM/YY')) from {{ ref('ntawks_integration__wks_kr_ecom_coupang') }});
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_ebay_sellout') }});
         delete from {{this}} where upper(customer_name) || ean_number || transaction_date in (select distinct upper(cust_nm) || ean_num || to_date(transaction_date, 'YYYYMMDD') from {{ ref('ntawks_integration__wks_kr_ecommerce_trexi_sellout') }});
@@ -80,7 +80,7 @@ naver_sellout as (
         year,
         month,
         week,
-        to_date(transaction_date, 'YYYYMMDD') as transaction_date,
+        to_date(transaction_date, 'MM/DD/YYYY') as transaction_date,
         sellout_qty,
         sellout_amount,
         null as sold_to,

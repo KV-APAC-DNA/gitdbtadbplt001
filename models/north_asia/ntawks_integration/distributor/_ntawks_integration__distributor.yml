@@ -5,6 +5,10 @@ models:
     config: 
       alias: wks_itg_tw_ims_dstr_prod_map
       tags: ["tw_ims_distributor_prod_map","transformation"]
+  - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_135561_sellout
+    config:
+      alias: wks_sdl_tw_ims_dstr_std_sel_out_135561_sellout
+      tags: ["tw_ims_distributor_standard_sell_out","ingestion"]
   - name: ntawks_integration__wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout
     config:
       alias: wks_sdl_tw_ims_dstr_std_sel_out_107479_sellout

@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_veeva_sample_only
+    config:
+      alias: edw_hcp360_veeva_sample_only
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_wrk_fact_group_detail
+    config:
+      alias: edw_hcp360_veeva_wrk_fact_group_detail
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_wrk_fact_detail_only
+    config:
+      alias: edw_hcp360_veeva_wrk_fact_detail_only
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_detail_with_sample
+    config:
+      alias: edw_hcp360_veeva_detail_with_sample
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_group_detail_with_sample
+    config:
+      alias: edw_hcp360_veeva_group_detail_with_sample
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_medical_event
+    config:
+      alias: edw_hcp360_veeva_dim_medical_event
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_fact_event_attendee
+    config:
+      alias: edw_hcp360_veeva_fact_event_attendee
+      tags: ["in_veeva_edw_load","transformation"]

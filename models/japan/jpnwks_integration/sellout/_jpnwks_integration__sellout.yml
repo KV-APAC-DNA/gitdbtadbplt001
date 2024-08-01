@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wks_japan_regional_sellout
+    config:
+        alias: wks_japan_regional_sellout
+        tags: ["cutomer_360_jp","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_base
+    config:
+        alias: wks_japan_regional_sellout_base
+        tags: ["cutomer_360_jp","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_npd
+    config:
+        alias: wks_japan_regional_sellout_npd
+        tags: ["cutomer_360_jp","transformation"]
+
+  - name: jpnwks_integration__wks_rpt_regional_sellout_offtake_npd
+    config:
+        alias: wks_rpt_regional_sellout_offtake_npd
+        tags: ["cutomer_360_jp","transformation"]
+
+  - name: jpnwks_integration__consistency_error_2
+    config:
+        alias: consistency_error_2
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_no_dup
+    config:
+        alias: wk_so_planet_no_dup
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_no_dup_temp
+    config:
+        alias: wk_so_planet_no_dup_temp
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_v_sign
+    config:
+        alias: store_v_sign
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__item_cd_check
+    config:
+        alias: item_cd_check
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__planet_no_dup_qty
+    config:
+        alias: planet_no_dup_qty
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__planet_no_dup_net_prc
+    config:
+        alias: planet_no_dup_net_prc
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__planet_no_dup_unt_prc
+    config:
+        alias: planet_no_dup_unt_prc
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__temp_table_1
+    config:
+        alias: temp_table_1
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__temp_table_2
+    config:
+        alias: temp_table_2
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__temp_table_3
+    config:
+        alias: temp_table_3
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_modified
+    config:
+        alias: wk_so_planet_modified
+        tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_revise_backup
+    config:
+      alias: wk_so_planet_revise_backup
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_today
+    config:
+      alias: wk_so_planet_today
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__customer_cd
+    config:
+      alias: customer_cd
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__item_m_stg
+    config:
+      alias: item_m_stg
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_v_price_stg
+    config:
+      alias: store_v_price_stg
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_v_price
+    config:
+      alias: store_v_price
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_v_qty_mod
+    config:
+      alias: store_v_qty_mod
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_v_str_cd
+    config:
+      alias: store_v_str_cd
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__wk_so_planet_revise
+    config:
+      alias: wk_so_planet_revise
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  
+  - name: jpnwks_integration__wk_so_planet_cleansed
+    config:
+      alias: wk_so_planet_cleansed
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  - name: jpnwks_integration__store_variable
+    config:
+      alias: store_variable
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]

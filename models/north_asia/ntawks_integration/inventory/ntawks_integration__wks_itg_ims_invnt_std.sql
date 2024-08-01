@@ -94,7 +94,7 @@ stock as
         ) src
         LEFT JOIN 
         (
-            SELECT 
+            SELECT distinct
                 invnt_dt,
                 prod_cd,
                 ean_num,
@@ -193,7 +193,7 @@ d137488 as
         ) src
         LEFT JOIN 
         (
-            SELECT invnt_dt,
+            SELECT distinct invnt_dt,
                 prod_cd,
                 ean_num,
                 ctry_cd,
@@ -299,7 +299,7 @@ pxstore as
     ) src
     LEFT JOIN 
     (
-        SELECT 
+        SELECT distinct
             invnt_dt,
             prod_cd,
             ean_num,
@@ -404,7 +404,7 @@ pxstock as
         ) src
         LEFT JOIN 
         (
-            SELECT invnt_dt,
+            SELECT distinct invnt_dt,
                 prod_cd,
                 ean_num,
                 ctry_cd,

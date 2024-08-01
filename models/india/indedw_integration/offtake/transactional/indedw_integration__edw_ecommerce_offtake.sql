@@ -3,30 +3,21 @@
     (
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook="{% if is_incremental() %}
-                    {% if var('ecomm_job_to_execute') == 'ecomm_amazon_files' %}
+        pre_hook =  "{% if is_incremental() %}
                         delete from {{this}} where account_name = 'Amazon' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
                     
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_bigbasket_files' %}
                         delete from {{this}} where account_name = 'Bigbasket' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_bigbasket') }}) ;
 
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_firstcry_files' %}
                         delete from {{this}} where account_name = 'FirstCry' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_firstcry') }}) ;
 
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_grofers_files' %}
                         delete from {{this}} where account_name = 'Grofers' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_grofers') }}) ;
 
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_nykaa_files' %}
                         delete from {{this}} where account_name = 'Nykaa' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_nykaa') }}) ;
 
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_paytm_files' %}
                         delete from {{this}} where account_name = 'Paytm' and Transaction_Date in (select date from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_paytm') }}) ;
                     
-                    {% elif var('ecomm_job_to_execute') == 'ecomm_flipkart_files' %}
                         delete from {{this}} where (account_name, Transaction_Date) in (select distinct account_name, decode(txn.transaction_date,null,cast((extract(year from cast(txn.load_date as date))||'-'||extract(month from cast(txn.load_date as date))||'-'||'15') as date),txn.transaction_date) as transaction_date from {{ ref('inditg_integration__itg_ecommerce_offtake_flipkart') }} txn) ;
-
-                    {% endif %}
-                {% endif %}"
+                    {% endif %}"
     )
 }}
 
@@ -86,10 +77,7 @@ itg_ecommerce_offtake_master_mapping as
 (
     select * from {{ ref('inditg_integration__itg_ecommerce_offtake_master_mapping') }}
 ),
-
-{% if var("ecomm_job_to_execute") == 'ecomm_amazon_files' %}
-
-final as
+amazon as
 (
     select to_date(('01' || right(itg_amazon.source_file_name,5)),'DDMonYY') as transaction_date,
     'India' as country,
@@ -107,25 +95,8 @@ final as
     from itg_ecommerce_offtake_amazon itg_amazon left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_amazon.rpc = mapping.account_sku_code 
     where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_bigbasket_files' %}
-
-final as
+),
+bigbasket as
 (
     select to_date(('01' || right(itg_bigbasket.source_file_name,5)),'DDMonYY') as transaction_date,
     'India' as country,
@@ -143,25 +114,8 @@ final as
     from itg_ecommerce_offtake_bigbasket itg_bigbasket left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_bigbasket.product_id = mapping.account_sku_code 
     where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_firstcry_files' %}
-
-final as
+),
+firstcry as
 (
     select to_date(('01' || right(itg_firstcry.source_file_name,5)),'DDMonYY') as transaction_date,
     'India' as country,
@@ -179,25 +133,8 @@ final as
     from itg_ecommerce_offtake_firstcry itg_firstcry left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_firstcry.product_id = mapping.account_sku_code 
     where itg_firstcry.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_firstcry)
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_grofers_files' %}
-
-final as
+),
+grofers as
 (
     select to_date(('01' || right(itg_grofers.source_file_name,5)),'DDMonYY') as transaction_date,
     'India' as country,
@@ -215,25 +152,8 @@ final as
     from itg_ecommerce_offtake_grofers itg_grofers left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_grofers.product_id = mapping.account_sku_code 
     where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_nykaa_files' %}
-
-final as
+),
+nykaa as
 (
     select to_date(('01' || right(itg_nykaa.source_file_name,5)),'DDMonYY') as transaction_date,
     'India' as country,
@@ -251,25 +171,8 @@ final as
     from itg_ecommerce_offtake_nykaa itg_nykaa left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_nykaa.sku_code = mapping.account_sku_code 
     where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_paytm_files' %}
-
-final as
+),
+paytm as
 (
     select to_date(date) as transaction_date,
     'India' as country,
@@ -287,25 +190,8 @@ final as
     from itg_ecommerce_offtake_paytm itg_paytm left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_paytm.product_id = mapping.account_sku_code 
     where itg_paytm.load_date = (select max(load_date) from sdl_ecommerce_offtake_paytm) 
-)
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% elif var("ecomm_job_to_execute") == 'ecomm_flipkart_files' %}
-
-final as
+),
+flipkart as
 (
     select decode(txn.transaction_date,null,cast((extract(year from cast(txn.load_date as date))||'-'||extract(month from cast(txn.load_date as date))||'-'||'15') as date),txn.transaction_date) as transaction_date,
     'India' as country,
@@ -322,20 +208,39 @@ final as
     prod_map.lakshya_sku_name as generic_product_code 
     from itg_ecommerce_offtake_flipkart txn left join itg_ecommerce_offtake_master_mapping prod_map 
     on txn.fsn=prod_map.account_sku_code and txn.account_name=prod_map.account_name
+),
+transformed as 
+(
+    select * from amazon
+    union all
+    select * from bigbasket
+    union all
+    select * from firstcry
+    union all
+    select * from grofers
+    union all
+    select * from nykaa
+    union all
+    select * from paytm
+    union all
+    select * from flipkart
+),
+final as 
+(   
+    select
+        transaction_date::varchar(20) as transaction_date,
+        country::varchar(255) as country,
+        platform::varchar(255) as platform,
+        account_name::varchar(255) as account_name,
+        account_sku_code::varchar(255) as account_sku_code,
+        retailer_product_name::varchar(65535) as retailer_product_name,
+        retailer_brand::varchar(2000) as retailer_brand,
+        ean::varchar(255) as ean,
+        sales_qty::float as sales_qty,
+        sales_value::float as sales_value,
+        transaction_currency::varchar(20) as transaction_currency,
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        generic_product_code::varchar(255) as generic_product_code
+    from transformed 
 )
-select transaction_date::varchar(20) as transaction_date,
-    country::varchar(255) as country,
-    platform::varchar(255) as platform,
-    account_name::varchar(255) as account_name,
-    account_sku_code::varchar(255) as account_sku_code,
-    retailer_product_name::varchar(65535) as retailer_product_name,
-    retailer_brand::varchar(2000) as retailer_brand,
-    ean::varchar(255) as ean,
-    sales_qty::float as sales_qty,
-    sales_value::float as sales_value,
-    transaction_currency::varchar(20) as transaction_currency,
-    crt_dttm::timestamp_ntz(9) as crt_dttm,
-    generic_product_code::varchar(255) as generic_product_code
- from final
-
-{% endif %}
+select * from final

@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: jpnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB')}}"
+    schema: jpnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_mds_jp_ps_weights
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["name","kpi","weight","channel"]
+            not_null_columns: ["name","kpi","channel"] 
+            name: sdl_mds_jp_ps_weights__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["name","kpi","weight","channel"]
+                group_by_columns: ["name","kpi","channel"] 
+                name: sdl_mds_jp_ps_weights__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration
+
+      - name: sdl_mds_jp_ps_targets
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+        tests:
+        - test_null:
+            select_columns: ["name","channel","re","attribute_1","attribute_2","value"]
+            not_null_columns: ["name","channel","re","attribute_2","value"] 
+            name: sdl_mds_jp_ps_targets__null_test
+            config:
+              store_failures: true
+              schema: jpnwks_integration
+        - test_duplicate:
+                select_columns: ["name","channel","re","attribute_1","attribute_2","value"]
+                group_by_columns: ["name","channel","re","attribute_1","attribute_2","value"]
+                name: sdl_mds_jp_ps_targets__duplicate_test
+                config:
+                  store_failures: true
+                  schema: jpnwks_integration

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpitg_integration_itg_mds_in_orsl_products_target
+    config: 
+      alias: itg_mds_in_orsl_products_target
+      tags: ["in_orsl_datamart","ingestion"]

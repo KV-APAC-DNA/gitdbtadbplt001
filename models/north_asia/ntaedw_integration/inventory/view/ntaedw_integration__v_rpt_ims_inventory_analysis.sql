@@ -483,10 +483,8 @@ AS (
         COALESCE(COALESCE(sls_rep_nm, sls_rep_cd), 'Not Available'::CHARACTER VARYING) AS sls_rep_nm,
         sls_rep_cd,
         CASE 
-            WHEN ((ctry_cd)::TEXT = ('KR'::CHARACTER VARYING)::TEXT)
-                THEN 'South Korea'::CHARACTER VARYING
-            WHEN ((ctry_cd)::TEXT = ('TW'::CHARACTER VARYING)::TEXT)
-                THEN 'Taiwan'::CHARACTER VARYING
+            WHEN ((ctry_cd)::TEXT = ('HK'::CHARACTER VARYING)::TEXT)
+                THEN 'Hong Kong'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
             END AS ctry_nm,
         crncy_cd AS from_crncy,
@@ -494,23 +492,15 @@ AS (
         ex_rt,
         CASE 
             WHEN (
-                    ((ctry_cd)::TEXT = ('TW'::CHARACTER VARYING)::TEXT)
-                    AND (
-                        (prod_hier_l1 IS NULL)
-                        OR ((prod_hier_l1)::TEXT = (''::CHARACTER VARYING)::TEXT)
-                        )
-                    )
-                THEN 'Taiwan'::CHARACTER VARYING
-            WHEN (
-                    ((ctry_cd)::TEXT = ('KR'::CHARACTER VARYING)::TEXT)
-                    AND (
-                        (prod_hier_l1 IS NULL)
-                        OR ((prod_hier_l1)::TEXT = (''::CHARACTER VARYING)::TEXT)
-                        )
-                    )
-                THEN 'Korea'::CHARACTER VARYING
-            ELSE COALESCE(prod_hier_l1, '#'::CHARACTER VARYING)
-            END AS prod_hier_l1,
+            ((ctry_cd)::text = ('HK'::character varying)::text)
+            AND (
+                (prod_hier_l1 IS NULL)
+                OR ((prod_hier_l1)::text = (''::character varying)::text)
+                )
+            ) 
+            THEN 'HK'::character varying
+            ELSE NULL::character varying
+        END AS prod_hier_l1,
         COALESCE(prod_hier_l2, '#'::CHARACTER VARYING) AS prod_hier_l2,
         COALESCE(prod_hier_l3, '#'::CHARACTER VARYING) AS prod_hier_l3,
         COALESCE(prod_hier_l4, '#'::CHARACTER VARYING) AS prod_hier_l4,

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_si_pan_this_year
+    config:
+        alias: wk_si_pan_this_year
+        tags: ["sellin_workflow","transformation"]

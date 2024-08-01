@@ -1,3 +1,10 @@
+{{
+    config
+    (
+        pre_hook = "{{ build_wks_fin_sim_base() }}"
+    )
+}}
+
 with wks_fin_sim_copa_trans_fact as
 (
     select * from {{ ref('indwks_integration__wks_fin_sim_copa_trans_fact') }}

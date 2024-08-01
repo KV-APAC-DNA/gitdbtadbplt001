@@ -4,7 +4,7 @@ models:
   - name: ntaedw_integration__v_dly_ims_txn_msl
     config:
       alias: v_dly_ims_txn_msl
-      tags: ["tw_ims_distributor_standard_sell_out","kr_edw_ims_fact","na_trxn_ims","transformation"]
+      tags: ["tw_ims_distributor_standard_sell_out","kr_gt_sellout","kr_ecommerce_sellout","na_trxn_ims","transformation"]
   - name: ntaedw_integration__edw_ims_fact
     config: 
         alias: edw_ims_fact

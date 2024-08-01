@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_in_ventasys_territory_dim
+    config:
+      alias: edw_hcp360_in_ventasys_territory_dim
+      tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_hcp_territory_mapping
+    config:
+      alias: edw_hcp360_veeva_hcp_territory_mapping
+      tags: ["in_veeva_edw_load","transformation"]

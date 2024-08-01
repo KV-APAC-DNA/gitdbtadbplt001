@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__wks_hcp360_in_ventasys_hcp_compare_temp
+    config:
+      alias: wks_hcp360_in_ventasys_hcp_compare_temp
+      tags: ["in_ventasys_edw_load","transformation"]
+  - name: hcpwks_integration__wks_edw_hcp360_ventasys_hcp_status
+    config:
+      alias: wks_edw_hcp360_ventasys_hcp_status
+      tags: ["in_hcp360_data_mart","transformation"]

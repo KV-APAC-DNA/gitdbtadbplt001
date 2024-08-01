@@ -9,6 +9,7 @@
             {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
             {% if is_incremental() %}
             delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and upper(dstr_cd) in ('NH','OTC');
+            delete from {{this}} where upper(DSTR_CD) = 'OTC';
             {% endif %}
             {% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout' %}
             {% if is_incremental() %}
@@ -96,7 +97,7 @@ taiwan as
 select * from taiwan
 {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
 ,
-Korea as (
+korea as (
 select ims_txn_dt::date as ims_txn_dt,
         dstr_cd::varchar(10) as dstr_cd,
         dstr_nm::varchar(100) as dstr_nm,
@@ -153,8 +154,71 @@ from itg_kr_gt_sellout
 where upper(dstr_nm) in 
 ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
 and upper(dstr_cd) in ('NH','OTC')
+),
+korea_otc as (
+    select ims_txn_dt::date as ims_txn_dt,
+        dstr_cd::varchar(10) as dstr_cd,
+        dstr_nm::varchar(100) as dstr_nm,
+        cust_cd::varchar(50) as cust_cd,
+        cust_nm::varchar(100) as cust_nm,
+        prod_cd::varchar(255) as prod_cd,
+        prod_nm::varchar(255) as prod_nm,
+        null::date as rpt_per_strt_dt,
+        null::date as rpt_per_end_dt,
+        ean_num::varchar(20) as ean_num,
+        null::varchar(10) as uom,
+        unit_prc::number(21,5) as unit_prc,
+        sls_amt::number(21,5) as sls_amt,
+        sls_qty::number(18,0) as sls_qty,
+        null::number(18,0) as rtrn_qty,
+        null::number(21,5) as rtrn_amt,
+        null::varchar(100) as ship_cust_nm,
+        null::varchar(20) as cust_cls_grp,
+        null::varchar(20) as cust_sub_cls,
+        null::varchar(50) as prod_spec,
+        null::varchar(100) as itm_agn_nm,
+        null::varchar(20) as ordr_co,
+        null::varchar(100) as rtrn_rsn,
+        null::varchar(10) as sls_ofc_cd,
+        null::varchar(10) as sls_grp_cd,
+        null::varchar(20) as sls_ofc_nm,
+        null::varchar(20) as sls_grp_nm,
+        null::varchar(10) as acc_type,
+        null::varchar(20) as co_cd,
+        null::varchar(20) as sls_rep_cd,
+        null::varchar(50) as sls_rep_nm,
+        null::date as doc_dt,
+        null::varchar(20) as doc_num,
+        null::varchar(15) as invc_num,
+        null::varchar(100) as remark_desc,
+        null::number(18,0) as gift_qty,
+        null::number(21,5) as sls_bfr_tax_amt,
+        null::number(21,5) as sku_per_box,
+        ctry_cd::varchar(2) as ctry_cd,
+        crncy_cd::varchar(3) as crncy_cd,
+        current_timestamp AS CRT_DTTM,
+        current_timestamp AS UPDT_DTTM,
+        null::number(16,5) as prom_sls_amt,
+        null::number(16,5) as prom_rtrn_amt,
+        null::number(16,5) as prom_prc_amt,
+        null::varchar(255) as sap_code,
+        null::varchar(20) as sku_type,
+        sub_customer_code::varchar(50) as sub_customer_code,
+        sub_customer_name::varchar(100) as sub_customer_name,
+        null::varchar(10) as sales_priority,
+        null::number(21,5) as sales_stores,
+        null::number(21,5) as sales_rate
+from itg_kr_gt_sellout
+where upper(dstr_nm) not in 
+('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
+and upper(dstr_cd) = 'OTC'
+),
+final as (
+    select * from korea_otc
+    union all
+    select * from korea
 )
-select * from korea
+select * from final
 {% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout' %}
 ,
 Korea_unitoa as (

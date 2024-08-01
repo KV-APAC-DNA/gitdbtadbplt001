@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_ga360_aspac_sessions
+    config:
+      alias: edw_ga360_aspac_sessions
+      tags: ["in_ga360","transformation"]

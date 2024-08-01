@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_survey
+    config:
+      alias: edw_hcp360_veeva_dim_survey
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_dim_survey_question
+    config:
+      alias: edw_hcp360_veeva_dim_survey_question
+      tags: ["in_veeva_edw_load","transformation"]
+  - name: hcpedw_integration__edw_hcp360_veeva_fact_survey_response
+    config:
+      alias: edw_hcp360_veeva_fact_survey_response
+      tags: ["in_veeva_edw_load","transformation"]

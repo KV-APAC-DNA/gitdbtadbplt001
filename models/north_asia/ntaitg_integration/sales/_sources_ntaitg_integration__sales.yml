@@ -67,7 +67,6 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_mds_kr_sales_cust_prod_master
-      tags: ["mds_sdl_itg_load","transformation"]
       tests:
           - test_null:
               select_columns: ["sales_grp_cd","src_sys_cd","cust_prod_cd","ean_cd","ctry_cd"]
@@ -84,7 +83,6 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_mds_kr_sales_store_map
-      tags: ["mds_sdl_itg_load","transformation"]
       tests:
       - test_null:
           select_columns: ["sls_ofc_code","channel","store_type","sales_group_code_code","code"]

@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: jpnwks_integration__wk_pos_daily_aeon
+    config:
+        alias: wk_pos_daily_aeon
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_csms
+    config:
+        alias: wk_pos_daily_csms
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_dnki
+    config:
+        alias: wk_pos_daily_dnki
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_others
+    config:
+        alias: wk_pos_daily_others
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_sugi
+    config:
+        alias: wk_pos_daily_sugi
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_tsur
+    config:
+        alias: wk_pos_daily_tsur
+        tags: ["jp_pos","transformation"]
+
+  - name: jpnwks_integration__wk_pos_daily_wlca
+    config:
+        alias: wk_pos_daily_wlca
+        tags: ["jp_pos","transformation"]

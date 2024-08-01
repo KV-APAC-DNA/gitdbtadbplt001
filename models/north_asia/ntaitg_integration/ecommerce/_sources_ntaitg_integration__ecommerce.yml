@@ -145,11 +145,8 @@ sources:
     - name: sdl_kr_ecommerce_unitoa_sellout
       tags: [""]
     - name: sdl_kr_ecommerce_offtake_coupang_transaction
-      tags: ["j_kr_generic_query_execution", "ingestion"]
-
     - name: sdl_kr_ecommerce_offtake_sales_ebay
-      tags: ["j_kr_generic_query_execution", "ingestion"]
-
+    
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration

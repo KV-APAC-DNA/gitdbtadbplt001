@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: jpnedw_integratin__itg_mds_log
+    config:
+      alias : 'itg_mds_log'
+      tags: ["itg_mds_log","ingestion"]

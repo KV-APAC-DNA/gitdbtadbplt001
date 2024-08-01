@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__rpt_orsl_products_target_vs_actual
+    config: 
+      alias: rpt_orsl_products_target_vs_actual
+      tags: ["in_orsl_datamart","transformation"]
