@@ -136,7 +136,7 @@
                             FROM {{ ref('jpnitg_integration__dw_so_planet_err') }}
                             );
 
-                    
+                    delete from {{this}};
                     
                     
 
