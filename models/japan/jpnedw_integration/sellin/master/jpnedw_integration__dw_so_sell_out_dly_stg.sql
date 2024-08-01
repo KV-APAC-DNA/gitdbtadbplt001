@@ -1,8 +1,6 @@
 {{
     config
     (
-        materialized = "incremental",
-        incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
                 DELETE
                 FROM {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
