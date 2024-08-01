@@ -26,7 +26,7 @@ select datasource	,
         0 as copa_top30_nts_usd	,
         0 as copa_top30_nts_lcy	,
         0 as ecomm_nts_usd	,
-        0 as ecomm_nts_lcy	,
+        0 as ecomm_nts_lcy,
         ciw_gts_lcy	,
         ciw_gts_usd	,
         ciw_lcy	,
@@ -49,7 +49,62 @@ select datasource	,
         ,case when ciw_usd_prev_yr_mnth <> 0 then 
                   round((ciw_usd  - ciw_usd_prev_yr_mnth)/ ciw_usd_prev_yr_mnth,4)
              else 1 
-        end  growth_ciw            	
+        end  growth_ciw,
+        null::VARCHAR(50) as KPI,
+null::NUMBER(38,15) as MSL_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as MSL_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as OSA_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as OSA_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as PROMO_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as PROMO_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as PROMO_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as DISPLAY_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as DISPLAY_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as DISPLAY_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as PLANOGRAM_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as PLANOGRAM_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as PLANOGRAM_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as SOS_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as SOS_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15)  as SOS_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,15) as SOA_COMPLAINCE_NUMERATOR,
+null::NUMBER(38,15) as SOA_COMPLAINCE_DENOMINATOR,
+null::NUMBER(38,15) as SOA_COMPLAINCE_DENOMINATOR_WT,
+null::NUMBER(38,5) as HEALTHY_INVENTORY_USD,
+null::NUMBER(38,5) as TOTAL_INVENTORY_USD,
+null::NUMBER(38,5) as LAST_12_MONTHS_SO_VALUE_USD,
+null::NUMBER(8,4) as WEEKS_COVER,
+null::DATE as PERFECTSTORE_LATESTDATE,
+null::NUMBER(31,2) as DSO_GTS,
+null::NUMBER(31,2) as DSO_GROSS_ACCOUNT_RECEIVABLE,
+null::NUMBER(31,0) as DSO_JNJ_DAYS,
+null::VARCHAR(20) as MARKET_SHARE_PERIOD_TYPE,
+null::NUMBER(31,2) as MARKET_SHARE_TOTAL,
+null::NUMBER(31,2) as MARKET_SHARE_JNJ,
+null::NUMBER(31,2) as GROSS_PROFIT,
+null::NUMBER(31,2) as FINANCE_NTS,
+null::NUMBER(31,2) as MARKET_SHARE_TOTAL_PREV_YR,
+null::NUMBER(31,2) as MARKET_SHARE_JNJ_PREV_YR,
+null::NUMBER(31,2) as DSO_GTS_PREV_YR,
+null::NUMBER(31,2) as DSO_GROSS_ACCOUNT_RECEIVABLE_PREV_YR,
+null:: NUMBER(31,0) as DSO_JNJ_DAYS_PREV_YR,
+null:: NUMBER(31,2) as GROSS_PROFIT_PREV_YR,
+null:: NUMBER(31,2) as FINANCE_NTS_PREV_YR,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_USD,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_LCY,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_USD_PREV_YR_MNTH,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_LCY_PREV_YR_MNTH,
+null:: NUMBER(31,2) as NUMERATOR,
+null:: NUMBER(31,2) as DENOMINATOR,
+null:: NUMBER(31,2) as NUMERATOR_PREV_YR,
+null:: NUMBER(31,2) as DENOMINATOR_PREV_YR,
+null:: VARCHAR(20) as CUSTOMER_SEGMENT,
+null:: NUMBER(38,15) as CY_SEGMENT_NTS_USD,
+null:: NUMBER(38,15) as PY_SEGMENT_NTS_USD,
+null:: NUMBER(38,15) as CY_SEGMENT_NTS_LCY,
+null:: NUMBER(38,15) as PY_SEGMENT_NTS_LCY
 from 
   (
   select 'CIW' as datasource,
@@ -76,7 +131,7 @@ from
               from wks_scorecard_ciw_base ),
              (select distinct fisc_yr,fisc_per 
                from edw_calendar_dim  
-              where fisc_yr >= ( select fisc_yr - 4 from edw_calendar_dim where cal_day =  convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) )
+              where fisc_yr >= ( select fisc_yr - 4 from edw_calendar_dim where cal_day =  convert_timezone('UTC', current_timestamp())::DATE)
              ) fisc_per 
           ) all_months     
          , wks_scorecard_ciw_base  ciw_base
@@ -86,6 +141,6 @@ from
      and  all_months.ciw_desc      = ciw_base.ciw_desc (+) 
      and  all_months.mega_brand      = ciw_base.mega_brand (+)         
   ) ciw
-  where fisc_yr >= (select fisc_yr - 2 from edw_calendar_dim where cal_day =  convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) )
+  where fisc_yr >= (select fisc_yr - 2 from edw_calendar_dim where cal_day =  convert_timezone('UTC', current_timestamp())::DATE)
 )
 select * from final

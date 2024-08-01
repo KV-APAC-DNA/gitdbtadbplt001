@@ -5,7 +5,7 @@ edw_company_dim as(
     select * from snapaspedw_integration.edw_company_dim
 ),
 transformed as(
-    Select 'PERFECTSTORE' as Datasource
+Select 'PERFECTSTORE' as Datasource
       ,Country
       ,cd."cluster"
       ,cast(left(ym,4)||'0'||right(ym,2) as integer) as fiscper
@@ -27,48 +27,40 @@ transformed as(
       , SOA_COMPLAINCE_NUMERATOR         
       , SOA_COMPLAINCE_DENOMINATOR 
       From
-      ( 
-          select country, kpi, to_char(scheduleddate,'YYYYMM') as ym ,latestdate 
-                , 0 as  MSL_COMPLAINCE_NUMERATOR
-                , 0 as  MSL_COMPLAINCE_DENOMINATOR
-                , 0 as OSA_COMPLAINCE_NUMERATOR
-                , 0 as OSA_COMPLAINCE_DENOMINATOR
-                , 0 as  PROMO_COMPLAINCE_NUMERATOR
-                , 0 as PROMO_COMPLAINCE_DENOMINATOR
-                , 0 as DISPLAY_COMPLAINCE_NUMERATOR
-                , 0 as DISPLAY_COMPLAINCE_DENOMINATOR
-                 ,case when sum(PLANOGRAM_COMPLAINCE_NUMERATOR) > sum(PLANOGRAM_COMPLAINCE_DENOMINATOR) then 
-                               sum(PLANOGRAM_COMPLAINCE_DENOMINATOR *  weight_planogram )
-                       else
-                               sum(PLANOGRAM_COMPLAINCE_NUMERATOR *  weight_planogram )
-                       end PLANOGRAM_COMPLAINCE_NUMERATOR   
-                 ,sum(PLANOGRAM_COMPLAINCE_DENOMINATOR) as PLANOGRAM_COMPLAINCE_DENOMINATOR
-                 ,sum(PLANOGRAM_COMPLAINCE_DENOMINATOR * weight_planogram ) as PLANOGRAM_COMPLAINCE_DENOMINATOR_WT
-                ,0 as SOS_COMPLAINCE_NUMERATOR
-                 ,0 as SOS_COMPLAINCE_DENOMINATOR  
-                 ,0 as SOA_COMPLAINCE_NUMERATOR
-                 ,0 as SOA_COMPLAINCE_DENOMINATOR          
-            from
-            (
-              
-                  
-                   select  case when country='China' then 'China Selfcare' else country end as country, kpi, scheduleddate ,latestdate, round(weight_planogram,4) as weight_planogram
-                           ,(case when  mkt_share is NOT NULL  then cast (actual_value as numeric )
-                                      else null  
-                                      end ) as PLANOGRAM_COMPLAINCE_NUMERATOR
-                           , cast(ref_value as numeric) * mkt_share as PLANOGRAM_COMPLAINCE_DENOMINATOR
-                           , kpi_chnl_wt
-                     from  edw_perfect_store_rebase_wt 
-                    where  
-                      country in( 'Australia','New Zealand') and  
-                      kpi = 'PLANOGRAM COMPLIANCE'
-                      --and  to_char(scheduleddate,'YYYYMM') = '202012'
-                      and priority_store_flag ='Y'                  
-              )     
-           group by country, kpi, to_char(scheduleddate,'YYYYMM'),latestdate
-       )OSA
-      ,(select distinct ctry_group,"cluster" from edw_company_dim) cd         
-      WHERE OSA.country = cd.ctry_group(+)
+      (
+      select country, kpi, to_char(scheduleddate,'YYYYMM') as ym ,latestdate 
+            , 0 as  MSL_COMPLAINCE_NUMERATOR
+            , 0 as  MSL_COMPLAINCE_DENOMINATOR
+            , 0 as OSA_COMPLAINCE_NUMERATOR
+            , 0 as OSA_COMPLAINCE_DENOMINATOR
+            , 0 as  PROMO_COMPLAINCE_NUMERATOR
+            , 0 as PROMO_COMPLAINCE_DENOMINATOR
+            , 0 as DISPLAY_COMPLAINCE_NUMERATOR
+            , 0 as DISPLAY_COMPLAINCE_DENOMINATOR
+             ,sum(PLANOGRAM_COMPLAINCE_NUMERATOR) as PLANOGRAM_COMPLAINCE_NUMERATOR
+             ,sum(PLANOGRAM_COMPLAINCE_DENOMINATOR) as PLANOGRAM_COMPLAINCE_DENOMINATOR
+             ,sum(PLANOGRAM_COMPLAINCE_DENOMINATOR_WT) as PLANOGRAM_COMPLAINCE_DENOMINATOR_WT
+            ,0 as SOS_COMPLAINCE_NUMERATOR
+             ,0 as SOS_COMPLAINCE_DENOMINATOR  
+             ,0 as SOA_COMPLAINCE_NUMERATOR
+             ,0 as SOA_COMPLAINCE_DENOMINATOR          
+        from
+        (
+               select  case when country='China' then 'China Selfcare' else country end as country, kpi, scheduleddate ,latestdate 
+                       ,actual_value * round(weight_planogram,4) as PLANOGRAM_COMPLAINCE_NUMERATOR
+                       ,ref_value as PLANOGRAM_COMPLAINCE_DENOMINATOR
+                       ,ref_value * round(weight_planogram,4) as PLANOGRAM_COMPLAINCE_DENOMINATOR_WT 
+                 from  edw_perfect_store_rebase_wt 
+                where  country not in( 'Australia','New Zealand') 
+                  and  kpi = 'PLANOGRAM COMPLIANCE'
+                  and ref_value != 0
+                  and priority_store_flag ='Y'                  
+          )     
+       group by country, kpi, to_char(scheduleddate,'YYYYMM'), latestdate 
+    )
+    OSA
+   ,(select distinct ctry_group,"cluster" from edw_company_dim) cd         
+    WHERE OSA.country = cd.ctry_group(+)
 ),
 final as(
 select 
@@ -139,7 +131,23 @@ null::NUMBER(31,2) as FINANCE_NTS,
 null::NUMBER(31,2) as MARKET_SHARE_TOTAL_PREV_YR,
 null::NUMBER(31,2) as MARKET_SHARE_JNJ_PREV_YR,
 null::NUMBER(31,2) as DSO_GTS_PREV_YR,
-null::NUMBER(31,2) as DSO_GROSS_ACCOUNT_RECEIVABLE_PREV_YR 
+null::NUMBER(31,2) as DSO_GROSS_ACCOUNT_RECEIVABLE_PREV_YR,
+null:: NUMBER(31,0) as DSO_JNJ_DAYS_PREV_YR,
+null:: NUMBER(31,2) as GROSS_PROFIT_PREV_YR,
+null:: NUMBER(31,2) as FINANCE_NTS_PREV_YR,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_USD,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_LCY,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_USD_PREV_YR_MNTH,
+null:: NUMBER(38,0) as COPA_NTS_GREENLIGHT_SKU_LCY_PREV_YR_MNTH,
+null:: NUMBER(31,2) as NUMERATOR,
+null:: NUMBER(31,2) as DENOMINATOR,
+null:: NUMBER(31,2) as NUMERATOR_PREV_YR,
+null:: NUMBER(31,2) as DENOMINATOR_PREV_YR,
+null:: VARCHAR(20) as CUSTOMER_SEGMENT,
+null:: NUMBER(38,15) as CY_SEGMENT_NTS_USD,
+null:: NUMBER(38,15) as PY_SEGMENT_NTS_USD,
+null:: NUMBER(38,15) as CY_SEGMENT_NTS_LCY,
+null:: NUMBER(38,15) as PY_SEGMENT_NTS_LCY
 from transformed
 )
 select * from final

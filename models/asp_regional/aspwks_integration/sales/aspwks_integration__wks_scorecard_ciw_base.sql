@@ -20,7 +20,7 @@ final as
                       case when ciw_desc = 'Gross Trade Prod Sales' then amt_lcy  end ciw_gts_lcy,
                       case when ciw_desc = 'Gross Trade Prod Sales' then amt_usd  end ciw_gts_usd
                  from v_rpt_copa_ciw
-                where fisc_yr >= (select fisc_yr - 4 from edw_calendar_dim where cal_day = convert_timezone('UTC', current_timestamp())::timestamp_ntz(9))
+                where fisc_yr >= (select fisc_yr - 4 from edw_calendar_dim where cal_day = convert_timezone('UTC', current_timestamp())::date)
                 and acct_hier_shrt_desc ='NTS'
                 )
         group by ctry_nm, cluster,fisc_yr,fisc_yr_per,mega_brand,ciw_desc
