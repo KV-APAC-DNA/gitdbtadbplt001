@@ -150,7 +150,7 @@ ph_rpt_retail_excellence_mdp as
                 COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,		--//              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
                 COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,		--//              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
                 'Y' AS MDP_FLAG,
-                100 AS TARGET_COMPLAINCE
+                1 AS TARGET_COMPLAINCE
             FROM ITG_PH_RE_MSL_LIST TARGET		--// 		FROM OS_ITG.ITG_PH_RE_MSL_LIST TARGET
             LEFT JOIN (SELECT * FROM WKS_PHILIPPINES_REGIONAL_SELLOUT_ACTUALS) ACTUAL		--//         LEFT JOIN (SELECT * FROM OS_WKS.WKS_PHILIPPINES_REGIONAL_SELLOUT_ACTUALS) ACTUAL
                 ON TARGET.FISC_PER = ACTUAL.MNTH_ID		--//                ON TARGET.FISC_PER = ACTUAL.MNTH_ID
@@ -299,7 +299,7 @@ ph_rpt_retail_excellence_non_mdp as
                 ACTUAL.P6M_SALES_FLAG,		--//              ACTUAL.P6M_SALES_FLAG,
                 ACTUAL.P12M_SALES_FLAG,		--//              ACTUAL.P12M_SALES_FLAG,
                 'N' AS MDP_FLAG,
-                100 AS TARGET_COMPLAINCE
+                1 AS TARGET_COMPLAINCE
             FROM (SELECT *
                     FROM WKS_PHILIPPINES_REGIONAL_SELLOUT_ACTUALS A		--//             FROM OS_WKS.WKS_PHILIPPINES_REGIONAL_SELLOUT_ACTUALS A
                     WHERE NOT EXISTS (SELECT 1
@@ -415,8 +415,8 @@ ph_rpt_retail_excellence_non_mdp as
                                             zip_code AS store_postcode,
                                             latitude::VARCHAR AS store_lat,
                                             longitude::VARCHAR AS store_long,
-                                            ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC) AS rno
-                                        FROM ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y') c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')		--// 								  FROM OS_ITG.ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y') c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')
+                                            ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY upper(store_mtrx) ASC, crtd_dttm DESC) AS rno
+                                        FROM (select * from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' AND store_mtrx <> ' ')) c ON ltrim(a.Customer_L0,'0') = ltrim(c.Sell_Out_Parent_Customer_L1,'0')		
                                 JOIN (SELECT DISTINCT rpt_grp_1_desc AS trade_type,
                                             rpt_grp_12_desc AS sales_group,
                                             parent_cust_cd

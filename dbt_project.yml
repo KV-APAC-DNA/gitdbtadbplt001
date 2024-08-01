@@ -435,7 +435,6 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
-
     north_asia:
       config:
         +enabled: true
@@ -553,42 +552,14 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
-
-# ADDED CHINA AS PART OF RETAIL EXCELLENCE
-    china:
-      config:
-        +enabled: true
-      chnitg_integration:
-        +materialized: table
-        +schema: CHNITG_INTEGRATION
-        +transient: false
-      chnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: CHNEDW_INTEGRATION
-      chnwks_integration:
-        +materialized: table
-        +schema: CHNWKS_INTEGRATION        
     japan:
       config:
         +enabled: true
-<<<<<<< HEAD
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      jpnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPNEDW_INTEGRATION
-=======
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
->>>>>>> 11f1ba30656264df6218ba9fd90ba9a977a9f089
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
-<<<<<<< HEAD
-      jpnwks_integration:
-        +materialized: table
-=======
       jpnedw_integration:
         +materialized: table
         +transient: false
@@ -599,14 +570,10 @@ models:
       jpnwks_integration:
         +materialized: table
         +transient: false
->>>>>>> 11f1ba30656264df6218ba9fd90ba9a977a9f089
         +schema: JPNWKS_INTEGRATION
       jpnedw_access:
         +materialized: view
         +schema: JPNEDW_ACCESS
-<<<<<<< HEAD
-      
-=======
 
     hcp:
       config:
@@ -629,4 +596,3 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
->>>>>>> 11f1ba30656264df6218ba9fd90ba9a977a9f089

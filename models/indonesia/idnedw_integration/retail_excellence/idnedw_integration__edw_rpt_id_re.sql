@@ -137,7 +137,7 @@ edw_rpt_id_re as (
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-       COALESCE (tgt.TARGET_COMPLAINCE, 100) as target_complaince,
+       COALESCE (tgt.TARGET_COMPLAINCE, 1) as target_complaince,
        LIST_PRICE,
        TOTAL_SALES_LM,
        TOTAL_SALES_P3M,

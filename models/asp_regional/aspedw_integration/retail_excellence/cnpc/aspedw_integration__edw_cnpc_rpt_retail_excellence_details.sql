@@ -2,6 +2,10 @@ with cnpc_edw_rpt_retail_excellence as (
     select * from {{ ref('chnedw_integration__edw_cnpc_rpt_retail_excellence') }}
 ),
 
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration' , 'itg_query_parameters')}}
+), 
+
 cnpc_edw_rpt_retail_excellence_details as 
 (
 select fisc_yr,
@@ -136,10 +140,11 @@ sales_value_list_price,
 	   soldto_code,
 	   sysdate() as crt_dttm	
       	      from cnpc_edw_rpt_retail_excellence
-    WHERE FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(TO_CHAR(MAX(FISC_PER)),'YYYYMM'),-1),1,7),'-','')::INTEGER
+    WHERE  RETAIL_ENVIRONMENT not in (select distinct parameter_value from itg_query_parameters where parameter_name='EXCLUDE_RE_RETAIL_ENV' and country_code='CNPC') AND
+    FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(TO_CHAR(MAX(FISC_PER)),'YYYYMM'),-1),1,7),'-','')::INTEGER
                     FROM cnpc_edw_rpt_retail_excellence)		
     AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM cnpc_edw_rpt_retail_excellence)
-	and data_src is not null 
+	and data_src is not null  
 ),
 
 final as

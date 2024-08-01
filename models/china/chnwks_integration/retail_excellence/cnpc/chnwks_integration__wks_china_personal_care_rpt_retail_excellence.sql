@@ -139,7 +139,7 @@ from (select cast(target.fisc_yr as integer) as fisc_yr,
              coalesce(actual.p6m_sales_flag,'N') as p6m_sales_flag,
              coalesce(actual.p12m_sales_flag,'N') as p12m_sales_flag,
              'Y' as mdp_flag,
-             100 as target_compliance
+             1 as target_compliance
              from itg_cnpc_re_msl_list target
         left join wks_china_personal_care_actuals actual
                on target.fisc_per = actual.mnth_id
@@ -293,7 +293,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
              coalesce(actual.p6m_sales_flag,'N') as p6m_sales_flag,
              coalesce(actual.p12m_sales_flag,'N') as p12m_sales_flag,
              'N' as mdp_flag,
-             100 as target_compliance
+             1 as target_compliance
       from (select *
             from wks_china_personal_care_actuals a
             where not exists (select 1
