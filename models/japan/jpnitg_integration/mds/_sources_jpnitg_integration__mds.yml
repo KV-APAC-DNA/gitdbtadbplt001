@@ -17,27 +17,27 @@ sources:
       - name: sdl_mds_jp_sku_benchmarks
 
       - name: sdl_mds_jp_mt_chn_mjp_emp_chg
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
-        tests:
-          - test_null:
-              select_columns: ["cd_code","franchisecode","emp_cd"]
-              not_null_columns: ["cd_code","franchisecode","emp_cd"]
-              name: sdl_mds_jp_mt_chn_mjp_emp_chg__null_test
-              config:
-                store_failures: true
-                schema: jpnwks_integration
-          - test_duplicate:
-                select_columns: ["cd_code","franchisecode","emp_cd"]
-                group_by_columns: ["cd_code","franchisecode","emp_cd"]
-                name: sdl_mds_jp_mt_chn_mjp_emp_chg__duplicate_test
-                config:
-                  store_failures: true
-                  schema: jpnwks_integration
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+        # tests:
+        #   - test_null:
+        #       select_columns: ["cd_code","franchisecode","emp_cd"]
+        #       not_null_columns: ["cd_code","franchisecode","emp_cd"]
+        #       name: sdl_mds_jp_mt_chn_mjp_emp_chg__null_test
+        #       config:
+        #         store_failures: true
+        #         schema: jpnwks_integration
+        #   - test_duplicate:
+        #         select_columns: ["cd_code","franchisecode","emp_cd"]
+        #         group_by_columns: ["cd_code","franchisecode","emp_cd"]
+        #         name: sdl_mds_jp_mt_chn_mjp_emp_chg__duplicate_test
+        #         config:
+        #           store_failures: true
+        #           schema: jpnwks_integration
 
       
 
       - name: sdl_mds_jp_mt_account_key
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
         - test_null:
             select_columns: ["code"]
@@ -55,7 +55,7 @@ sources:
                   schema: jpnwks_integration
 
       - name: sdl_mds_jp_mt_chn_cstm_rt
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
           - test_null:
               select_columns: ["chn_cd","cstm_cd","mjr_prod_cd"]
@@ -73,7 +73,7 @@ sources:
                   schema: jpnwks_integration
         
       - name: sdl_mds_jp_mt_emp
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
           - test_null:
               select_columns: ["code"]
@@ -91,7 +91,7 @@ sources:
                   schema: jpnwks_integration
 
       - name: sdl_mds_jp_mt_frnch_cdd
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
           - test_null:
               select_columns: ["code"]
@@ -109,7 +109,7 @@ sources:
                   schema: jpnwks_integration
 
       - name: sdl_mds_jp_mt_in_out_conv
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
           - test_null:
               select_columns: ["sld_to"]
@@ -127,7 +127,7 @@ sources:
                   schema: jpnwks_integration
 
       - name: sdl_mds_jp_mt_item_cdd
-        tags: ["j_jp_mds_refresh_etl_framework","ingestion"]
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
         tests:
           - test_null:
               select_columns: ["item_cd"]

@@ -1,7 +1,8 @@
 {{
     config
     (   
-        pre_hook = "{{build_wk_so_planet_revise_temp()}}",
+        pre_hook = ["{{build_wk_so_planet_revise_temp()}}",
+        "delete from {{this}} where (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0"],
         post_hook = "
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} (
                     jcp_rec_seq, id, rcv_dt, test_flag, 
@@ -24,7 +25,7 @@
                     FROM 
                     {{this}} 
                     WHERE 
-                    JCP_REC_SEQ IS NOT NULL;
+                    JCP_REC_SEQ IS NOT NULL and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0;
 
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
                     SELECT (
@@ -36,7 +37,7 @@
                             ) AS jcp_rec_seq,
                         id, rcv_dt, test_flag, bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, trade_type, shp_date, shp_num, trade_cd, dep_cd, chg_cd, person_in_charge, person_name, rtl_name, rtl_ho_cd, rtl_address_cd_01, data_type, opt_fld, item_nm, item_cd_typ, item_cd, qty, qty_type, price, price_type, bgn_sndr_cd_gln, rcv_cd_gln, ws_cd_gln, shp_ws_cd, shp_ws_cd_gln, rep_name_kanji, rep_info, trade_cd_gln, rtl_cd_gln, rtl_name_kanji, rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, unt_prc, net_prc, sales_chan_type, CURRENT_TIMESTAMP()
                     FROM {{this}}
-                    WHERE JCP_REC_SEQ IS NULL;
+                    WHERE JCP_REC_SEQ IS NULL and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0;
 
                     INSERT INTO {{ ref ('jpnitg_integration__dw_so_planet_err') }}
                     SELECT 
@@ -50,19 +51,20 @@
                         ID, BGN_SNDR_CD, WS_CD, RTL_TYPE, RTL_CD, TRADE_TYPE, SHP_DATE, SHP_NUM, TRADE_CD, DEP_CD, CHG_CD, PERSON_IN_CHARGE, PERSON_NAME, RTL_NAME, RTL_HO_CD, RTL_ADDRESS_CD, DATA_TYPE, OPT_FLD, ITEM_NM, ITEM_CD_TYP, ITEM_CD, QTY_TYPE, PRICE_TYPE, BGN_SNDR_CD_GLN, RCV_CD_GLN, WS_CD_GLN, SHP_WS_CD, SHP_WS_CD_GLN, REP_NAME_KANJI, REP_INFO, TRADE_CD_GLN, RTL_CD_GLN, RTL_NAME_KANJI, RTL_HO_CD_GLN, ITEM_CD_GTIN, ITEM_NM_KANJI, SALES_CHAN_TYPE
                         HAVING COUNT(*) > 1
                         ) KEY
-                    WHERE NVL(ERR.ID, 0) = NVL(KEY.ID, 0) AND NVL(ERR.BGN_SNDR_CD, ' ') = NVL(KEY.BGN_SNDR_CD, ' ') AND NVL(ERR.WS_CD, ' ') = NVL(KEY.WS_CD, ' ') AND NVL(ERR.RTL_TYPE, ' ') = NVL(KEY.RTL_TYPE, ' ') AND NVL(ERR.RTL_CD, ' ') = NVL(KEY.RTL_CD, ' ') AND NVL(ERR.TRADE_TYPE, ' ') = NVL(KEY.TRADE_TYPE, ' ') AND NVL(ERR.SHP_DATE, ' ') = NVL(KEY.SHP_DATE, ' ') AND NVL(ERR.SHP_NUM, ' ') = NVL(KEY.SHP_NUM, ' ') AND NVL(ERR.TRADE_CD, ' ') = NVL(KEY.TRADE_CD, ' ') AND NVL(ERR.DEP_CD, ' ') = NVL(KEY.DEP_CD, ' ') AND NVL(ERR.CHG_CD, ' ') = NVL(KEY.CHG_CD, ' ') AND NVL(ERR.PERSON_IN_CHARGE, ' ') = NVL(KEY.PERSON_IN_CHARGE, ' ') AND NVL(ERR.PERSON_NAME, ' ') = NVL(KEY.PERSON_NAME, ' ') AND NVL(ERR.RTL_NAME, ' ') = NVL(KEY.RTL_NAME, ' ') AND NVL(ERR.RTL_HO_CD, ' ') = NVL(KEY.RTL_HO_CD, ' ') AND NVL(ERR.RTL_ADDRESS_CD, ' ') = NVL(KEY.RTL_ADDRESS_CD, ' ') AND NVL(ERR.DATA_TYPE, ' ') = NVL(KEY.DATA_TYPE, ' ') AND NVL(ERR.OPT_FLD, ' ') = NVL(KEY.OPT_FLD, ' ') AND NVL(ERR.ITEM_NM, ' ') = NVL(KEY.ITEM_NM, ' ') AND NVL(ERR.ITEM_CD_TYP, ' ') = NVL(KEY.ITEM_CD_TYP, ' ') AND NVL(ERR.ITEM_CD, ' ') = NVL(KEY.ITEM_CD, ' ') AND NVL(ERR.QTY_TYPE, ' ') = NVL(KEY.QTY_TYPE, ' ') AND NVL(ERR.PRICE_TYPE, ' ') = NVL(KEY.PRICE_TYPE, ' ') AND NVL(ERR.BGN_SNDR_CD_GLN, ' ') = NVL(KEY.BGN_SNDR_CD_GLN, ' ') AND NVL(ERR.RCV_CD_GLN, ' ') = NVL(KEY.RCV_CD_GLN, ' ') AND NVL(ERR.WS_CD_GLN, ' ') = NVL(KEY.WS_CD_GLN, ' ') AND NVL(ERR.SHP_WS_CD, ' ') = NVL(KEY.SHP_WS_CD, ' ') AND NVL(ERR.SHP_WS_CD_GLN, ' ') = NVL(KEY.SHP_WS_CD_GLN, ' ') AND NVL(ERR.REP_NAME_KANJI, ' ') = NVL(KEY.REP_NAME_KANJI, ' ') AND NVL(ERR.REP_INFO, ' ') = NVL(KEY.REP_INFO, ' ') AND NVL(ERR.TRADE_CD_GLN, ' ') = NVL(KEY.TRADE_CD_GLN, ' ') AND NVL(ERR.RTL_CD_GLN, ' ') = NVL(KEY.RTL_CD_GLN, ' ') AND NVL(ERR.RTL_NAME_KANJI, ' ') = NVL(KEY.RTL_NAME_KANJI, ' ') AND NVL(ERR.RTL_HO_CD_GLN, ' ') = NVL(KEY.RTL_HO_CD_GLN, ' ') AND NVL(ERR.ITEM_CD_GTIN, ' ') = NVL(KEY.ITEM_CD_GTIN, ' ') AND NVL(ERR.ITEM_NM_KANJI, ' ') = NVL(KEY.ITEM_NM_KANJI, ' ') AND NVL(ERR.SALES_CHAN_TYPE, ' ') = NVL(KEY.SALES_CHAN_TYPE, ' ');
+                    WHERE NVL(ERR.ID, 0) = NVL(KEY.ID, 0) AND NVL(ERR.BGN_SNDR_CD, ' ') = NVL(KEY.BGN_SNDR_CD, ' ') AND NVL(ERR.WS_CD, ' ') = NVL(KEY.WS_CD, ' ') AND NVL(ERR.RTL_TYPE, ' ') = NVL(KEY.RTL_TYPE, ' ') AND NVL(ERR.RTL_CD, ' ') = NVL(KEY.RTL_CD, ' ') AND NVL(ERR.TRADE_TYPE, ' ') = NVL(KEY.TRADE_TYPE, ' ') AND NVL(ERR.SHP_DATE, ' ') = NVL(KEY.SHP_DATE, ' ') AND NVL(ERR.SHP_NUM, ' ') = NVL(KEY.SHP_NUM, ' ') AND NVL(ERR.TRADE_CD, ' ') = NVL(KEY.TRADE_CD, ' ') AND NVL(ERR.DEP_CD, ' ') = NVL(KEY.DEP_CD, ' ') AND NVL(ERR.CHG_CD, ' ') = NVL(KEY.CHG_CD, ' ') AND NVL(ERR.PERSON_IN_CHARGE, ' ') = NVL(KEY.PERSON_IN_CHARGE, ' ') AND NVL(ERR.PERSON_NAME, ' ') = NVL(KEY.PERSON_NAME, ' ') AND NVL(ERR.RTL_NAME, ' ') = NVL(KEY.RTL_NAME, ' ') AND NVL(ERR.RTL_HO_CD, ' ') = NVL(KEY.RTL_HO_CD, ' ') AND NVL(ERR.RTL_ADDRESS_CD, ' ') = NVL(KEY.RTL_ADDRESS_CD, ' ') AND NVL(ERR.DATA_TYPE, ' ') = NVL(KEY.DATA_TYPE, ' ') AND NVL(ERR.OPT_FLD, ' ') = NVL(KEY.OPT_FLD, ' ') AND NVL(ERR.ITEM_NM, ' ') = NVL(KEY.ITEM_NM, ' ') AND NVL(ERR.ITEM_CD_TYP, ' ') = NVL(KEY.ITEM_CD_TYP, ' ') AND NVL(ERR.ITEM_CD, ' ') = NVL(KEY.ITEM_CD, ' ') AND NVL(ERR.QTY_TYPE, ' ') = NVL(KEY.QTY_TYPE, ' ') AND NVL(ERR.PRICE_TYPE, ' ') = NVL(KEY.PRICE_TYPE, ' ') AND NVL(ERR.BGN_SNDR_CD_GLN, ' ') = NVL(KEY.BGN_SNDR_CD_GLN, ' ') AND NVL(ERR.RCV_CD_GLN, ' ') = NVL(KEY.RCV_CD_GLN, ' ') AND NVL(ERR.WS_CD_GLN, ' ') = NVL(KEY.WS_CD_GLN, ' ') AND NVL(ERR.SHP_WS_CD, ' ') = NVL(KEY.SHP_WS_CD, ' ') AND NVL(ERR.SHP_WS_CD_GLN, ' ') = NVL(KEY.SHP_WS_CD_GLN, ' ') AND NVL(ERR.REP_NAME_KANJI, ' ') = NVL(KEY.REP_NAME_KANJI, ' ') AND NVL(ERR.REP_INFO, ' ') = NVL(KEY.REP_INFO, ' ') AND NVL(ERR.TRADE_CD_GLN, ' ') = NVL(KEY.TRADE_CD_GLN, ' ') AND NVL(ERR.RTL_CD_GLN, ' ') = NVL(KEY.RTL_CD_GLN, ' ') AND NVL(ERR.RTL_NAME_KANJI, ' ') = NVL(KEY.RTL_NAME_KANJI, ' ') AND NVL(ERR.RTL_HO_CD_GLN, ' ') = NVL(KEY.RTL_HO_CD_GLN, ' ') AND NVL(ERR.ITEM_CD_GTIN, ' ') = NVL(KEY.ITEM_CD_GTIN, ' ') AND NVL(ERR.ITEM_NM_KANJI, ' ') = NVL(KEY.ITEM_NM_KANJI, ' ') AND NVL(ERR.SALES_CHAN_TYPE, ' ') = NVL(KEY.SALES_CHAN_TYPE, ' ')
+                    and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0;
 
 
                     INSERT INTO {{ ref ('jpnitg_integration__dw_so_planet_err_cd') }}
                     select JCP_REC_SEQ,	'DUPL',
                             '0' from {{ ref ('jpnitg_integration__dw_so_planet_err') }}
-                    WHERE EXPORT_FLAG = '0' and JCP_REC_SEQ in (Select distinct JCP_REC_SEQ from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}); 
+                    WHERE (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0 and EXPORT_FLAG = '0' and JCP_REC_SEQ in (Select distinct JCP_REC_SEQ from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}); 
                     
                     delete from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
                     where JCP_REC_SEQ in 
-                    (Select distinct JCP_REC_SEQ from  {{ ref ('jpnitg_integration__dw_so_planet_err') }} where EXPORT_FLAG = '0');
+                    (Select distinct JCP_REC_SEQ from  {{ ref ('jpnitg_integration__dw_so_planet_err') }} where EXPORT_FLAG = '0' and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0);
 
-                    UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }} SET MAX_VALUE=(select max(JCP_REC_SEQ) from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }});
+                    UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }} SET MAX_VALUE=(select max(JCP_REC_SEQ) from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} where (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0);
 
                     INSERT INTO {{ ref ('jpnitg_integration__dw_so_planet_err') }} 
                         (
@@ -75,7 +77,7 @@
                             SELECT A.RTL_CD,
                                 COUNT(*) v_CNT
                             FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} A,
-                                {{ ref('jpnedw_integration__edi_excl_rtlr') }} B
+                                {{ source('jpnsdl_raw', 'edi_excl_rtlr') }} B
                             WHERE B.RTLR_CD = A.RTL_CD
                             GROUP BY A.RTL_CD
                             HAVING COUNT(*) > 0
@@ -97,7 +99,7 @@
                             SELECT A.RTL_CD,
                                 COUNT(*) v_CNT
                             FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} A,
-                                {{ ref('jpnedw_integration__edi_excl_rtlr') }} B
+                                {{ source('jpnsdl_raw', 'edi_excl_rtlr') }} B
                             WHERE B.RTLR_CD = A.RTL_CD
                             GROUP BY A.RTL_CD
                             HAVING COUNT(*) > 0
@@ -136,8 +138,7 @@
 
                     
                     
-                    DELETE
-                    FROM {{this}};
+                    
 
                     INSERT INTO {{this}}
                     (
@@ -184,7 +185,7 @@
                                 )AS jcp_rec_seq,
                     id, rcv_dt, test_flag, bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, trade_type, shp_date, shp_num, trade_cd, dep_cd, chg_cd, person_in_charge, person_name, rtl_name, rtl_ho_cd, rtl_address_cd_01, data_type, opt_fld, item_nm, item_cd_typ, item_cd, qty, qty_type, price, price_type, bgn_sndr_cd_gln, rcv_cd_gln, ws_cd_gln, shp_ws_cd, shp_ws_cd_gln, rep_name_kanji, rep_info, trade_cd_gln, rtl_cd_gln, rtl_name_kanji, rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, unt_prc, net_prc, sales_chan_type, CURRENT_TIMESTAMP()::timestamp_ntz(9)
                     FROM  {{this}}
-                    WHERE JCP_REC_SEQ IS NULL ;
+                    WHERE JCP_REC_SEQ IS NULL;
 
                     UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }}
                     SET MAX_VALUE=(select max(JCP_REC_SEQ) from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }});
@@ -196,9 +197,8 @@
 
 WITH source AS
 (
-    SELECT * FROM {{ source('jpnwks_integration', 'wk_so_planet_no_dup_temp') }}
+    SELECT * FROM {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }}
 ),
-
 final AS
 (
     SELECT 
@@ -249,7 +249,7 @@ final AS
         net_prc,
         sales_chan_type,
         jcp_create_date
-    FROM source r
+    FROM  source 
 )
 
 SELECT * FROM final

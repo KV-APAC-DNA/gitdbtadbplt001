@@ -43,7 +43,7 @@ sources:
                   store_failures: true
                   schema: hcpwks_integration
     - name: sdl_hcp360_in_iqvia_speciality
-      tags: ["in_iqvia_load","ingestion"]
+      # tags: ["in_iqvia_load","ingestion"]
       tests:
         - test_format:
                 select_columns: ["product_description"]

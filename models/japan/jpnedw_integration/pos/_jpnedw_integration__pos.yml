@@ -4,4 +4,9 @@ models:
   - name: jpnedw_integration__dw_pos_daily
     config:
       alias: dw_pos_daily
-      tags: ["jp_pos ","transformation"]
+      tags: ["jp_pos","transformation"]
+
+  - name: jpnedw_integration__mt_constant_seq
+    config:
+      alias: mt_constant_seq
+      tags: ["j_so_japan_improvement_etl_framework","tranformation"]

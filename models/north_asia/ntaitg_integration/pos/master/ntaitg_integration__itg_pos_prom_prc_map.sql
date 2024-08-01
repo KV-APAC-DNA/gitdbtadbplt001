@@ -12,9 +12,9 @@ with source as(
 ),
 final as(
     select 
-        rtrim(REGEXP_REPLACE(customer,'[\xC2\xA0]', ''))::varchar(20) as cust,
-        rtrim(REGEXP_REPLACE(barcode,'[\xC2\xA0]', ''))::varchar(20) as barcd,
-        rtrim(REGEXP_REPLACE(cust_prod_cd,'[\xC2\xA0]', ''))::varchar(20) as cust_prod_cd,
+        customer::varchar(20) as cust,
+        rtrim(barcode, ' ')::varchar(20) as barcd,
+        rtrim(cust_prod_cd, ' ')::varchar(20) as cust_prod_cd,
         promotional_price::number(30,4) as prom_prc,
         to_date(promotion_start_date) as prom_strt_dt,
         to_date(promotion_end_date) as prom_end_dt,
