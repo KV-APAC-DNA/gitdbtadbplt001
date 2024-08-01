@@ -75,7 +75,7 @@
                             SELECT A.RTL_CD,
                                 COUNT(*) v_CNT
                             FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} A,
-                                {{ ref('jpnedw_integration__edi_excl_rtlr') }} B
+                                {{ source('jpnsdl_raw', 'edi_excl_rtlr') }} B
                             WHERE B.RTLR_CD = A.RTL_CD
                             GROUP BY A.RTL_CD
                             HAVING COUNT(*) > 0
@@ -97,7 +97,7 @@
                             SELECT A.RTL_CD,
                                 COUNT(*) v_CNT
                             FROM {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} A,
-                                {{ ref('jpnedw_integration__edi_excl_rtlr') }} B
+                                {{ source('jpnsdl_raw', 'edi_excl_rtlr') }} B
                             WHERE B.RTLR_CD = A.RTL_CD
                             GROUP BY A.RTL_CD
                             HAVING COUNT(*) > 0
