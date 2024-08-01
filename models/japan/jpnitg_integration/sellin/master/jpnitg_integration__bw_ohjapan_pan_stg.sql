@@ -11,152 +11,147 @@ mt_constant as(
 	select * from {{ source('jpnedw_integration', 'mt_constant') }}
 ),
 union1 as(
-	SELECT DISTINCT A.acct_num as ACCOUNT,
-	A.caln_day as CALDAY,
-	A.chrt_acct as CHRT_ACCTS,
-	A.co_cd as COMP_CODE,
-	A.crncy_key_trans_crncy as CURKEY_TC,
-	A.crncy_key as CURRENCY,
-	A.cust_num as CUSTOMER,
-	A.cust_sls as CUST_SALES,
-	A.dstr_chnl as DISTR_CHAN,
-	SUBSTRING(A.caln_yr_mo, 1, 4) || 0 || SUBSTRING(A.caln_yr_mo, 5, 6) as FISCPER,
-	A.fisc_yr_var as FISCVARNT,
-	A.matl as MATERIAL,
-	A.obj_crncy_co_obj as OBJ_CURR,
-	'0' as RECORDTP,
-	A.sls_grp as SALES_GRP,
-	(0 || A.val_type_rpt) as VTYPE,
-	SUM(A.amt_cntl_area_crncy) as AMOCAC,
-	SUM(round(A.amt_obj_crncy)) as AMOCCC,
-	SUM(ROUND(A.grs_amt_trans_crncy)) as GROSSAMTTC,
-	D.bravo_acct_l1 as S003_0ACCOUNT,
-	D.bravo_acct_l2 as S004_0ACCOUNT,
-	D.bravo_acct_l3 as S005_0ACCOUNT,
-	D.bravo_acct_l4 as S006_0ACCOUNT,
-	D.bravo_acct_l5 as S007_0ACCOUNT,
-	A.plnt as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
+	SELECT DISTINCT 
+    rtrim(A.acct_num) as ACCOUNT,
+    rtrim(A.caln_day) as CALDAY,
+    rtrim(A.chrt_acct) as CHRT_ACCTS,
+    rtrim(A.co_cd) as COMP_CODE,
+    rtrim(A.crncy_key_trans_crncy) as CURKEY_TC,
+    rtrim(A.crncy_key) as CURRENCY,
+    rtrim(A.cust_num) as CUSTOMER,
+    rtrim(A.cust_sls) as CUST_SALES,
+    rtrim(A.dstr_chnl) as DISTR_CHAN,
+    SUBSTRING(rtrim(A.caln_yr_mo), 1, 4) || 0 || SUBSTRING(rtrim(A.caln_yr_mo), 5, 6) as FISCPER,
+    rtrim(A.fisc_yr_var) as FISCVARNT,
+    rtrim(A.matl) as MATERIAL,
+    rtrim(A.obj_crncy_co_obj) as OBJ_CURR,
+    '0' as RECORDTP,
+    rtrim(A.sls_grp) as SALES_GRP,
+    (0 || (A.val_type_rpt)) as VTYPE,
+    SUM(rtrim(A.amt_cntl_area_crncy)) as AMOCAC,
+    SUM(round(rtrim(A.amt_obj_crncy))) as AMOCCC,
+    SUM(ROUND(rtrim(A.grs_amt_trans_crncy))) as GROSSAMTTC,
+    rtrim(D.bravo_acct_l1) as S003_0ACCOUNT,
+    rtrim(D.bravo_acct_l2) as S004_0ACCOUNT,
+    rtrim(D.bravo_acct_l3) as S005_0ACCOUNT,
+    rtrim(D.bravo_acct_l4) as S006_0ACCOUNT,
+    rtrim(D.bravo_acct_l5) as S007_0ACCOUNT,
+    rtrim(A.plnt) as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
 	FROM itg_copa_trans A,
 	 edw_account_dim d 
-   WHERE co_cd IN (
+   WHERE rtrim(co_cd) IN (
 		SELECT parameter_value
 		FROM itg_query_parameters
 		WHERE parameter_name = 'company_code_filter_Kizuna'
 		) --hard coded values paramterised
-	AND A.dstr_chnl IN (
-		SELECT parameter_value
-		FROM itg_query_parameters
-		WHERE parameter_name = 'dstr_chnl_filter_Kizuna_phase2'
-		) --hard coded values paramterised
+	AND (A.dstr_chnl  IN (select rtrim(parameter_value) from aspitg_integration.itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') or A.dstr_chnl is null)--hard coded values paramterised
 	AND (
-		A.cust_num = ''
-		OR A.matl = ''
+		A.cust_num = '' or A.cust_num is null
+		OR A.matl = '' or A.matl is null
 		)
-	AND trim(A.amt_obj_crncy) = trim(A.grs_amt_trans_crncy)
-	AND A.fisc_yr IN (
+	AND rtrim(A.amt_obj_crncy) = rtrim(A.grs_amt_trans_crncy)
+	AND rtrim(A.fisc_yr) IN (
 		SELECT cast(right(identify_value, 4) AS INTEGER) AS fisc_yr
 		FROM MT_CONSTANT
 		WHERE identify_cd = 'JCP_PAN_FLG'
 		)
-	AND A.acct_num = D.ACCT_NUM
-	AND A.CHRT_ACCT = D.CHRT_ACCT 
-    GROUP BY A.acct_num,
-	A.caln_day,
-	A.chrt_acct,
-	A.co_cd,
-	A.crncy_key_trans_crncy,
-	A.crncy_key,
-	A.cust_num,
-	A.cust_sls,
-	A.dstr_chnl,
-	A.caln_yr_mo,
-	A.fisc_yr_var,
-	A.matl,
-	A.obj_crncy_co_obj,
-	RECORDTP,
-	A.sls_grp,
-	A.sls_org,
-	VTYPE,
-	D.bravo_acct_l1,
-	D.bravo_acct_l2,
-	D.bravo_acct_l3,
-	D.bravo_acct_l4,
-	D.bravo_acct_l5,
-	A.plnt
+	AND rtrim(A.acct_num) = rtrim(D.ACCT_NUM)
+	AND rtrim(A.CHRT_ACCT) = rtrim(D.CHRT_ACCT) 
+    GROUP BY 
+    rtrim(A.acct_num),
+    rtrim(A.caln_day),
+    rtrim(A.chrt_acct),
+    rtrim(A.co_cd),
+    rtrim(A.crncy_key_trans_crncy),
+    rtrim(A.crncy_key),
+    rtrim(A.cust_num),
+    rtrim(A.cust_sls),
+    rtrim(A.dstr_chnl),
+    rtrim(A.caln_yr_mo),
+    rtrim(A.fisc_yr_var),
+    rtrim(A.matl),
+    rtrim(A.obj_crncy_co_obj),
+    rtrim(RECORDTP),
+    rtrim(A.sls_grp),
+    rtrim(A.sls_org),
+    (VTYPE),
+    rtrim(D.bravo_acct_l1),
+    rtrim(D.bravo_acct_l2),
+    rtrim(D.bravo_acct_l3),
+    rtrim(D.bravo_acct_l4),
+    rtrim(D.bravo_acct_l5),
+    rtrim(A.plnt)
 	
 ),
 union2 as(
-	SELECT DISTINCT A.acct_num as ACCOUNT,
-	A.caln_day as CALDAY,
-	A.chrt_acct as CHRT_ACCTS,
-	A.co_cd as COMP_CODE,
-	A.crncy_key_trans_crncy as CURKEY_TC,
-	A.crncy_key as CURRENCY,
-	A.cust_num as CUSTOMER,
-	A.cust_sls as CUST_SALES,
-	A.dstr_chnl as DISTR_CHAN,
-	SUBSTRING(A.caln_yr_mo, 1, 4) || 0 || SUBSTRING(A.caln_yr_mo, 5, 6) as FISCPER,
-	A.fisc_yr_var as FISCVARNT,
-	A.matl as MATERIAL,
-	A.obj_crncy_co_obj as OBJ_CURR,
-	'0' as RECORDTP,
-	A.sls_grp as SALES_GRP,
-	(0 || A.val_type_rpt) as VTYPE,
-	SUM(A.amt_cntl_area_crncy) as AMOCAC,
-	SUM(round(A.amt_obj_crncy)) as AMOCCC,
-	SUM(A.grs_amt_trans_crncy) as GROSSAMTTC,
-	D.bravo_acct_l1 as S003_0ACCOUNT,
-	D.bravo_acct_l2 as S004_0ACCOUNT,
-	D.bravo_acct_l3 as S005_0ACCOUNT,
-	D.bravo_acct_l4 as S006_0ACCOUNT,
-	D.bravo_acct_l5 as S007_0ACCOUNT,
-	A.plnt as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
-	FROM itg_copa_trans A,
-	edw_account_dim d WHERE co_cd IN (
-		SELECT parameter_value
-		FROM itg_query_parameters
-		WHERE parameter_name = 'company_code_filter_Kizuna'
-		) --hard coded values paramterised
-	AND A.dstr_chnl IN (
-		SELECT parameter_value
-		FROM itg_query_parameters
-		WHERE parameter_name = 'dstr_chnl_filter_Kizuna_phase2'
-		) --hard coded values paramterised
-	AND (
-		A.cust_num = ''
-		OR A.matl = ''
-		)
-	AND trim(A.amt_obj_crncy) != trim(A.grs_amt_trans_crncy)
-	AND A.fisc_yr IN (
-		SELECT cast(right(identify_value, 4) AS INTEGER) AS fisc_yr
-		FROM MT_CONSTANT
-		WHERE identify_cd = 'JCP_PAN_FLG'
-		)
-	AND A.acct_num = D.ACCT_NUM
-	AND A.CHRT_ACCT = D.CHRT_ACCT GROUP BY A.acct_num,
-	A.caln_day,
-	A.chrt_acct,
-	A.co_cd,
-	A.crncy_key_trans_crncy,
-	A.crncy_key,
-	A.cust_num,
-	A.cust_sls,
-	A.dstr_chnl,
-	A.caln_yr_mo,
-	A.fisc_yr_var,
-	A.matl,
-	A.obj_crncy_co_obj,
-	RECORDTP,
-	A.sls_grp,
-	A.sls_org,
-	VTYPE,
-	D.bravo_acct_l1,
-	D.bravo_acct_l2,
-	D.bravo_acct_l3,
-	D.bravo_acct_l4,
-	D.bravo_acct_l5,
-	A.plnt
-	
+    select
+        rtrim(A.acct_num) as ACCOUNT,
+            rtrim(A.caln_day) as CALDAY,
+            rtrim(A.chrt_acct) as CHRT_ACCTS,
+            rtrim(A.co_cd) as COMP_CODE,
+            rtrim(A.crncy_key_trans_crncy) as CURKEY_TC,
+            rtrim(A.crncy_key) as CURRENCY,
+            rtrim(A.cust_num) as CUSTOMER,
+            rtrim(A.cust_sls) as CUST_SALES,
+            rtrim(A.dstr_chnl) as DISTR_CHAN,
+            SUBSTRING(rtrim(A.caln_yr_mo), 1, 4) || 0 || SUBSTRING(rtrim(A.caln_yr_mo), 5, 6) as FISCPER,
+            rtrim(A.fisc_yr_var) as FISCVARNT,
+            rtrim(A.matl) as MATERIAL,
+            rtrim(A.obj_crncy_co_obj) as OBJ_CURR,
+            '0' as RECORDTP,
+            rtrim(A.sls_grp) as SALES_GRP,
+            (0 || (A.val_type_rpt)) as VTYPE,
+            SUM(rtrim(A.amt_cntl_area_crncy)) as AMOCAC,
+            SUM(round(rtrim(A.amt_obj_crncy))) as AMOCCC,
+            SUM(rtrim(A.grs_amt_trans_crncy)) as GROSSAMTTC,
+            rtrim(D.bravo_acct_l1) as S003_0ACCOUNT,
+            rtrim(D.bravo_acct_l2) as S004_0ACCOUNT,
+            rtrim(D.bravo_acct_l3) as S005_0ACCOUNT,
+            rtrim(D.bravo_acct_l4) as S006_0ACCOUNT,
+            rtrim(D.bravo_acct_l5) as S007_0ACCOUNT,
+                rtrim(A.plnt) as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
+        FROM itg_copa_trans A,
+        edw_account_dim d WHERE rtrim(co_cd) IN (
+            SELECT parameter_value
+            FROM itg_query_parameters
+            WHERE parameter_name = 'company_code_filter_Kizuna'
+            ) --hard coded values paramterised
+        AND (A.dstr_chnl  IN (select rtrim(parameter_value) from aspitg_integration.itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') or A.dstr_chnl is null)--hard coded values paramterised
+        AND (
+        A.cust_num = '' or A.cust_num is null
+            OR A.matl = '' or A.matl is null
+            )
+        AND rtrim(A.amt_obj_crncy) != rtrim(A.grs_amt_trans_crncy)
+        AND rtrim(A.fisc_yr) IN (
+            SELECT cast(right(identify_value, 4) AS INTEGER) AS fisc_yr
+            FROM MT_CONSTANT
+            WHERE identify_cd = 'JCP_PAN_FLG'
+            )
+        AND rtrim(A.acct_num) = rtrim(D.ACCT_NUM)
+        AND rtrim(A.CHRT_ACCT) = rtrim(D.CHRT_ACCT) GROUP BY 
+    rtrim(A.acct_num),
+    rtrim(A.caln_day),
+    rtrim(A.chrt_acct),
+    rtrim(A.co_cd),
+    rtrim(A.crncy_key_trans_crncy),
+    rtrim(A.crncy_key),
+    rtrim(A.cust_num),
+    rtrim(A.cust_sls),
+    rtrim(A.dstr_chnl),
+    rtrim(A.caln_yr_mo),
+    rtrim(A.fisc_yr_var),
+    rtrim(A.matl),
+    rtrim(A.obj_crncy_co_obj),
+    rtrim(RECORDTP),
+    rtrim(A.sls_grp),
+    rtrim(A.sls_org),
+    (VTYPE),
+    rtrim(D.bravo_acct_l1),
+    rtrim(D.bravo_acct_l2),
+    rtrim(D.bravo_acct_l3),
+    rtrim(D.bravo_acct_l4),
+    rtrim(D.bravo_acct_l5),
+    rtrim(A.plnt)
 ),
 transformed as(
 	select * from union1
