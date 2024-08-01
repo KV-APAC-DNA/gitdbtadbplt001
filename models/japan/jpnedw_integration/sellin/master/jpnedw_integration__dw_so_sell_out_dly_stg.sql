@@ -34,6 +34,12 @@ mt_account_key as (
 mt_constant as (
 	select * from {{ source('jpnedw_integration', 'mt_constant') }}
 ),
+dw_so_sell_out_dly as(
+    select * from {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
+),
+mt_constant_range as(
+    {{ ref('jpnedw_integration__mt_constant_range') }}
+),
 transformed as(
 SELECT NULL as ID,
 	NULL as RCV_DT,
