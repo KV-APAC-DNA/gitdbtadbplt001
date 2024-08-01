@@ -74,7 +74,7 @@ sources:
       identifier: false
     tables:
       - name: mt_constant_seq
-        tags: ["sellin_workflow","ingestion"]
+        tags: ["sellin_workflow","transformation"]
       - name: mt_bravo_sap_map
       - name: mt_sgmt
       - name: mt_cld
