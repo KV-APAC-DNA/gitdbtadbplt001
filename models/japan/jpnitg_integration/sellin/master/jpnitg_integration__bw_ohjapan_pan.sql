@@ -1,3 +1,10 @@
+{{
+    config(
+        pre_hook= "UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }}
+                SET MAX_VALUE=(SELECT MAX(JCP_REC_SEQ) FROM {{ ref('jpnedw_integration__dw_so_sell_out_dly') }});"
+    )
+}}
+
 with itg_copa_trans as(
 	select * from {{ ref('aspitg_integration__itg_copa_trans') }} 
 ),
