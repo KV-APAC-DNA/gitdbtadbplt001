@@ -58,7 +58,7 @@ union1 as(
 	D.bravo_acct_l3 as S005_0ACCOUNT,
 	D.bravo_acct_l4 as S006_0ACCOUNT,
 	D.bravo_acct_l5 as S007_0ACCOUNT,
-	A.plnt as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
+	coalesce(A.plnt,'') as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
 	FROM 
 	itg_copa_trans A,
 	edw_customer_sales_dim B,
@@ -114,7 +114,7 @@ union1 as(
 	D.bravo_acct_l3,
 	D.bravo_acct_l4,
 	D.bravo_acct_l5,
-	A.plnt
+	coalesce(A.plnt,'')
 ),
 union2 as(
 	SELECT A.acct_num as ACCOUNT,
@@ -148,7 +148,7 @@ union2 as(
 	D.bravo_acct_l3 as S005_0ACCOUNT,
 	D.bravo_acct_l4 as S006_0ACCOUNT,
 	D.bravo_acct_l5 as S007_0ACCOUNT,
-	A.plnt as plnt -- added this column as part of Kizuna phase 2 DCL Integration to identify plants
+	coalesce(A.plnt,'') as plnt -- added this column as part of Kizuna phase 2 DCL Integration to identify plants
 	FROM itg_copa_trans A,
 	edw_customer_sales_dim B,
 	edw_material_sales_dim c,
@@ -203,7 +203,7 @@ union2 as(
 	D.bravo_acct_l3,
 	D.bravo_acct_l4,
 	D.bravo_acct_l5,
-	A.plnt
+	coalesce(A.plnt,'')
 ),
 union3 as(
     select distinct 
