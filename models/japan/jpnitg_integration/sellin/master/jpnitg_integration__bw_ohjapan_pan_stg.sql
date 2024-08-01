@@ -1,4 +1,4 @@
-nctwith itg_copa_trans as(
+with itg_copa_trans as(
 	select * from {{ ref('aspitg_integration__itg_copa_trans') }} 
 ),
 edw_account_dim as(
