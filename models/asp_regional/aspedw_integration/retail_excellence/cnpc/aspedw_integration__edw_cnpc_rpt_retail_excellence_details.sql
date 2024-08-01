@@ -144,7 +144,7 @@ sales_value_list_price,
     FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(TO_CHAR(MAX(FISC_PER)),'YYYYMM'),-1),1,7),'-','')::INTEGER
                     FROM cnpc_edw_rpt_retail_excellence)		
     AND   FISC_PER <= (SELECT MAX(FISC_PER) FROM cnpc_edw_rpt_retail_excellence)
-	and data_src is not null 
+	and data_src is not null  
 ),
 
 final as
