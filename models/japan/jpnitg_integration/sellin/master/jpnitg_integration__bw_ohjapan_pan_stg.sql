@@ -1,4 +1,4 @@
-with itg_copa_trans as(
+nctwith itg_copa_trans as(
 	select * from {{ ref('aspitg_integration__itg_copa_trans') }} 
 ),
 edw_account_dim as(
@@ -84,7 +84,7 @@ union1 as(
 	
 ),
 union2 as(
-    select
+    select distinct
         rtrim(A.acct_num) as ACCOUNT,
             rtrim(A.caln_day) as CALDAY,
             rtrim(A.chrt_acct) as CHRT_ACCTS,
