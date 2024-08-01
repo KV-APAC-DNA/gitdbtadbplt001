@@ -8,10 +8,10 @@ wks_india_regional_sellout_actuals as (
 ),
 edw_product_dim as 
 (
-select * from {{ source('indedw_integration', 'edw_product_dim') }}
+select * from {{ source('indedw_integration', 'edw_product_dim_sync') }}
 ),
 edw_retailer_dim as (
-select * from {{ source('indedw_integration', 'edw_retailer_dim') }}
+select * from {{ source('indedw_integration', 'edw_retailer_dim_sync') }}
  
 ),
 edw_material_dim as (
@@ -45,7 +45,7 @@ edw_code_descriptions_manual as(
     select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}
 ),
 edw_customer_dim as (
-    select * from {{ source('indedw_integration', 'edw_customer_dim') }}
+    select * from {{ source('indedw_integration', 'edw_customer_dim_sync') }}
 
 ),
 EDW_GCH_CUSTOMERHIERARCHY as(
@@ -56,7 +56,7 @@ EDW_CUSTOMER_BASE_DIM as(
 ),
 itg_in_mds_channel_mapping as 
 (
- select * from {{ source('inditg_integration', 'itg_in_mds_channel_mapping') }}
+ select * from {{ source('inditg_integration', 'itg_in_mds_channel_mapping_sync') }}
 ),
 wks_rpt_retail_excellence_mdp as(
 
