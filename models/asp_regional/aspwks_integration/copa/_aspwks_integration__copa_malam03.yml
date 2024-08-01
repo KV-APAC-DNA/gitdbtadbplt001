@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_reg_scorecard_copa_base
+    config:
+      alias: wks_reg_scorecard_copa_base
+      tags: ["cd_scorecard_table_refresh","transformation"] 
