@@ -249,7 +249,11 @@ final AS
         net_prc,
         sales_chan_type,
         jcp_create_date
-    FROM source r
+    FROM source 
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where source.jcp_create_date > (select max(jcp_create_date) from {{ this }}) 
+    {% endif %}
 )
 
 SELECT * FROM final
