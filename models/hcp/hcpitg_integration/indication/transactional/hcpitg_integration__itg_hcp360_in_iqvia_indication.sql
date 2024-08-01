@@ -4,9 +4,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} WHERE
-  data_source = 'ORSL'
-  and country = 'IN'
+        delete from {{this}} WHERE data_source = 'ORSL'and country = 'IN'
+        and 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_indication') }})
         {% endif %}"
     )
 }}
