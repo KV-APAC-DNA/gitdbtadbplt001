@@ -11,6 +11,11 @@ models:
       alias: itg_mds_th_ps_store
       tags: ["th_non_tesco","transformation"]
 
+  - name: thaitg_integration__itg_mds_th_ps_handeye_level
+    config: 
+      alias: itg_mds_th_ps_handeye_level
+      tags: ["th_non_tesco","ingestion"]
+
   - name: thaitg_integration__itg_mds_th_ps_targets
     config:
       alias: itg_mds_th_ps_targets
