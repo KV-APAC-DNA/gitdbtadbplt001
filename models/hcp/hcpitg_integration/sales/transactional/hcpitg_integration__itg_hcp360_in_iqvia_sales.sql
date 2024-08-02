@@ -4,7 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook =" {% if is_incremental() %}
-                    delete from {{this}} WHERE data_source = 'ORSL' or data_source = 'Aveeno_body'
+                    delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }})
+                    and data_source = 'ORSL' AND country = 'IN'; 
+                    delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }})
+                    and data_source = 'Aveeno_body'
                     AND country = 'IN';
                     {% endif %}"
     )
