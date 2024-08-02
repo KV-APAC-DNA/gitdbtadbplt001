@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 --Import CTE
 with cnsc_edw_rpt_retail_excellence_summary_base as (
     select * from {{ ref('aspedw_integration__edw_cnsc_rpt_retail_excellence_summary_base') }}

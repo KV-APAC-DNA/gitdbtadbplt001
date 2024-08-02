@@ -1,4 +1,9 @@
 --Import CTE
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 with edw_rpt_id_re as (
     select * from {{ ref('idnedw_integration__edw_rpt_id_re') }}
 ),
