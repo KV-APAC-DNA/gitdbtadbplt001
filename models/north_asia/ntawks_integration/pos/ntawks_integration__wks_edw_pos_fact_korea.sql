@@ -184,7 +184,7 @@ FROM (
                 on ltrim(m.ean_cd,0 )= ltrim(p.ean,0 ) where m.ctry_cd = 'KR' and  p.cntry= 'KR'
                 ) d
                
-		ON CAST (a.ean_num AS VARCHAR (40)) = CAST (ltrim(d.ean,0) AS VARCHAR (40))  
+		ON rtrim(CAST (a.ean_num AS VARCHAR (40))) =rtrim( CAST (ltrim(d.ean,0) AS VARCHAR (40))) 
                     ---- ON CAST (a.ean_num AS VARCHAR (40)) = CAST (d.ean AS VARCHAR (40)) /* Changing as product dim ean have 0 */
               AND a.ctry_cd = d.cntry
               
