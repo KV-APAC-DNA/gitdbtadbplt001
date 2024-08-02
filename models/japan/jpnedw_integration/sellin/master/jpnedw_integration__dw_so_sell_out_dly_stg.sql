@@ -1,14 +1,12 @@
 {{
     config
     (
-        materialized = "incremental",
-        incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
                 DELETE
                 FROM {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
                 WHERE BGN_SNDR_CD = (
                         SELECT IDENTIFY_VALUE
-                        FROM {{ ref('jpnedw_integration__mt_constant_range') }}
+                        FROM {{ source('jpnedw_integration', 'mt_constant') }}
                         WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
                             AND DELETE_FLAG = '0'
                             );
@@ -33,6 +31,12 @@ mt_account_key as (
 ),
 mt_constant as (
 	select * from {{ source('jpnedw_integration', 'mt_constant') }}
+),
+dw_so_sell_out_dly as(
+    select * from {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
+),
+mt_constant_range as(
+   select * from {{ ref('jpnedw_integration__mt_constant_range') }}
 ),
 transformed as(
 SELECT NULL as ID,

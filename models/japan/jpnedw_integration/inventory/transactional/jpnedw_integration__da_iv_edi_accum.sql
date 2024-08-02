@@ -28,7 +28,7 @@ final as(
     from wk_iv_edi
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where wk_iv_edi.update_dt > (select max(exec_dt) from {{ this }})
+    where wk_iv_edi.create_dt > (select max(create_dt) from {{ this }})
     {% endif %}
 )
 select * from final
