@@ -2,6 +2,9 @@
 with edw_rpt_anz_re_summary_base as (
     select * from {{ ref('aspedw_integration__edw_rpt_anz_re_summary_base') }}
 ),
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+),
 --Logical CTE
 
 --Final CTE
@@ -98,6 +101,10 @@ SELECT FISC_YR,
  WHERE 
 	  FISC_PER > TO_CHAR(ADD_MONTHS((SELECT to_date(MAX(fisc_per)::varchar,'YYYYMM') FROM edw_rpt_anz_re_summary_base),-15),'YYYYMM')
   AND FISC_PER <= (select max(fisc_per) FROM edw_rpt_anz_re_summary_base)
+  AND   UPPER(RETAIL_ENVIRONMENT) NOT IN (SELECT DISTINCT parameter_value
+                                 FROM itg_query_parameters	
+                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
+                                 AND   country_code in ('AU','NZ'))
 
 GROUP BY FISC_YR,
        FISC_PER,

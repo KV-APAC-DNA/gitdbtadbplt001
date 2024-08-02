@@ -1,6 +1,6 @@
 --Import CTE
 with v_edw_rpt_anz_re as (
-    select * from {{ source('pcfedw_integration', 'v_edw_rpt_anz_re') }}
+    select * from {{ ref('pcfedw_integration__edw_rpt_anz_sellout_re') }}
 ),
 --Logical CTE
 
