@@ -161,7 +161,7 @@ FROM (
                   ) b
             ON (case when a.src_sys_cd='Emart' then LTRIM (a.str_cd,0) = LTRIM (b.cust_store_cd,0)
               and a.str_nm=b.sm_store_nm
-              else (LTRIM (a.str_cd,0) = LTRIM (b.cust_store_cd,0))end
+              else rtrim(LTRIM (a.str_cd, 0)) = rtrim(LTRIM (b.cust_store_cd, 0)) end
               AND b.src_sys_cd = a.src_sys_cd)
               
                 LEFT JOIN (SELECT DISTINCT sls_grp,sls_grp_cd , /*Added for report */      
