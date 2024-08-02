@@ -17,10 +17,9 @@ wks_edw_hcp360_sales_cube_details as
 (
     select * from {{ ref('hcpwks_integration__wks_edw_hcp360_sales_cube_details') }}
 ),
-
 tempb as 
 (
-    SELECT 'IN' AS country
+  SELECT 'IN' AS country
        ,'SALES_CUBE' AS source_system,
        null as channel
        ,'SALES_ANALYSIS_NOCB' AS activity_type
@@ -28,17 +27,17 @@ tempb as
     ,current_timestamp() as updt_dttm
        ,sales.mth_mm as year_month
        ,CASE
-         WHEN sales.brand_name = 'ORSL' THEN 'ORSL'
-         WHEN sales.brand_name = 'Johnson''s Baby' THEN 'JBABY'
-         WHEN sales.brand_name = 'AVEENO Baby' THEN 'DERMA'
-         WHEN sales.brand_name = 'AVEENO BODY' THEN 'DERMA'
+         WHEN rtrim(sales.brand_name)  = 'ORSL' THEN 'ORSL'
+         WHEN rtrim(sales.brand_name)  = 'Johnson''s Baby' THEN 'JBABY'
+         WHEN rtrim(sales.brand_name)  = 'AVEENO Baby' THEN 'DERMA'
+         WHEN rtrim(sales.brand_name ) = 'AVEENO BODY' THEN 'DERMA'
        END AS Brand
-       ,sales.customer_code 
-       ,sales.customer_name     
-       ,sales.retailer_code
-       ,sales.retailer_name
-       ,sales.retailer_category_cd
-       ,sales.retailer_category_name	
+       ,rtrim(sales.customer_code) as customer_code
+       ,rtrim(sales.customer_name)  as customer_name
+       ,rtrim(sales.retailer_code) as retailer_code
+       ,rtrim(sales.retailer_name) as retailer_name
+       ,rtrim(sales.retailer_category_cd) as retailer_category_cd
+       ,rtrim(sales.retailer_category_name) as retailer_category_name
 	   ,(sales.customer_code || '-' || sales.retailer_code) AS  num_buying_retailer
 	   ,nvl (map.region_code ,'Non-Covered Area') AS region
        ,nvl (map.zone_code ,'Non-Covered Area') AS zone
@@ -49,21 +48,22 @@ tempb as
         wks_edw_hcp360_sales_cube_details sales
         left outer join
         itg_mds_in_hcp_sales_hierarchy_mapping map
-        on sales.customer_code = map.rds_code :: varchar
+        on rtrim(sales.customer_code) = rtrim(map.rds_code) :: varchar
         and (CASE
-                WHEN sales.brand_name = 'ORSL' THEN 'ORSL'
-                WHEN sales.brand_name = 'Johnson''s Baby' THEN 'JBABY'
-                WHEN sales.brand_name = 'AVEENO Baby' THEN 'DERMA'
-                WHEN sales.brand_name = 'AVEENO BODY' THEN 'DERMA'
-            END    ) = map.brand_name_code
-        group by  mth_mm	
-        ,brand	
-        ,customer_code	
-        ,customer_name	
-        ,retailer_code	
-        ,retailer_name	
-        ,retailer_category_cd	
-        ,retailer_category_name
+                WHEN rtrim(sales.brand_name) = 'ORSL' THEN 'ORSL'
+                WHEN rtrim(sales.brand_name) = 'Johnson''s Baby' THEN 'JBABY'
+                WHEN rtrim(sales.brand_name) = 'AVEENO Baby' THEN 'DERMA'
+                WHEN rtrim(sales.brand_name) = 'AVEENO BODY' THEN 'DERMA'
+            END    ) = rtrim(map.brand_name_code)
+        group by  
+        mth_mm	
+        ,brand
+        ,rtrim(customer_code)
+        ,rtrim(customer_name)
+        ,rtrim(retailer_code)
+        ,rtrim(retailer_name)
+        ,rtrim(retailer_category_cd)
+        ,rtrim(retailer_category_name)
         ,(sales.customer_code || '-' || sales.retailer_code)	
         ,region_code	
         ,zone_code	
@@ -72,24 +72,24 @@ tempb as
 final as 
 (
     select 
-     country
-    ,source_system
-    ,activity_type
-    ,year_month
-    ,brand
-    ,customer_code
-    ,customer_name
-    ,retailer_code
-    ,retailer_name
-    ,retailer_category_cd
-    ,retailer_category_name
-    ,num_buying_retailer
-    ,region
-    ,zone
-    ,sales_area
-    ,sales_value
-    ,crt_dttm
-    ,updt_dttm from 
-tempb
+        country
+        ,source_system
+        ,activity_type
+        ,year_month
+        ,brand
+        ,customer_code
+        ,customer_name
+        ,retailer_code
+        ,retailer_name
+        ,retailer_category_cd
+        ,retailer_category_name
+        ,num_buying_retailer
+        ,region
+        ,zone
+        ,sales_area
+        ,sales_value
+        ,crt_dttm
+        ,updt_dttm 
+    from tempb
 )
 select * from final
