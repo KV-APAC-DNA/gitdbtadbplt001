@@ -58,8 +58,8 @@ SELECT
   sum(a.invnt_amt) AS invnt_amt, 
   CASE WHEN (
     (a.ctry_cd):: text = ('TW' :: character varying):: text
-  ) THEN sum(a.prom_sls_amt) ELSE (
-    sum(a.sls_amt)
+  ) THEN trunc(sum(a.prom_sls_amt)) ELSE (
+    trunc(sum(a.sls_amt))
   ):: numeric(18, 0) END AS sls_amt, 
   a.crncy_cd, 
   a.src_sys_cd, 
