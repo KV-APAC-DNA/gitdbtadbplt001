@@ -1,8 +1,8 @@
 with edw_price_tracker as (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRICE_TRACKER
+    select * from dev_dna_core.aspedw_integration.edw_price_tracker
 ),
 itg_mds_rg_sku_benchmarks as (
-    select * from dev_dna_core.snapaspitg_integration.itg_mds_rg_sku_benchmarks
+    select * from dev_dna_core.aspitg_integration.itg_mds_rg_sku_benchmarks
 ),
 trans as
 (

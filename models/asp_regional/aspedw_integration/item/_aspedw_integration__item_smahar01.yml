@@ -15,3 +15,7 @@ models:
         materialized: view
         alias: v_rpt_rg_total_investment
         tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__edw_investment_fact
+    config: 
+        alias: edw_investment_fact
+        tags: ["cd_scorecard_table_refresh","transformation"]

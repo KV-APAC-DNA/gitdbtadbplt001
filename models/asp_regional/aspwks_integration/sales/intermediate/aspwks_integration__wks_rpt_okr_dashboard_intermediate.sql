@@ -1,6 +1,6 @@
 with edw_rpt_okr_dashboard_temp as
 (
-    select * from dev_dna_core.aspedw_integration.edw_rpt_okr_dashboard_temp
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_RPT_OKR_DASHBOARD_TEMP
 ),
 edw_okr_core_ppm as
 (
