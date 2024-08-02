@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 with cnpc_edw_rpt_retail_excellence as (
     select * from {{ ref('chnedw_integration__edw_cnpc_rpt_retail_excellence') }}
 ),

@@ -16,7 +16,9 @@
 
 with source as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_employee_master') }}
+    select *, dense_rank() over (partition by TEAM_NAME,V_EMPID order by filename desc) rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_employee_master') }}
+    qualify rn=1
 ),
 final as
 (

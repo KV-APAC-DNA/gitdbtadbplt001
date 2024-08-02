@@ -53,14 +53,14 @@ FROM
                 (
                   (
                     (
-                      (pln.ctry_cd):: text = (tgt.ctry_cd):: text
+                      rtrim(pln.ctry_cd):: text = rtrim(tgt.ctry_cd):: text
                     ) 
                     AND (
-                      (pln.dstr_cd):: text = (tgt.dstr_cd):: text
+                      rtrim(pln.dstr_cd):: text = rtrim(tgt.dstr_cd):: text
                     )
                   ) 
                   AND (
-                    (pln.sls_rep_cd):: text = (tgt.sls_rep_cd):: text
+                    rtrim(pln.sls_rep_cd):: text = rtrim(tgt.sls_rep_cd):: text
                   )
                 ) 
                 AND (tgt.cal_day >= pln.visit_dt)
@@ -68,7 +68,7 @@ FROM
               AND (
                 tgt.cal_day <= COALESCE(
                   pln.visit_end_dt, 
-                  current_timestamp():: date
+                  convert_timezone('UTC',current_timestamp()):: date
                 )
               )
             ) 
@@ -85,7 +85,7 @@ FROM
             AND (
               b.cal_day <= COALESCE(
                 pln.visit_end_dt, 
-                current_timestamp():: date
+                convert_timezone('UTC',current_timestamp()):: date
               )
             )
           ) 
@@ -447,14 +447,14 @@ FROM
                         (
                           (
                             (
-                              (a.dstr_cd):: text = (b.dstr_cd):: text
+                              rtrim(a.dstr_cd):: text = rtrim(b.dstr_cd):: text
                             ) 
                             AND (
-                              (b.cust_cd):: text = (a.store_cd):: text
+                              rtrim(b.cust_cd):: text = rtrim(a.store_cd):: text
                             )
                           ) 
                           AND (
-                            (a.ctry_cd):: text = (b.ctry_cd):: text
+                            rtrim(a.ctry_cd):: text = rtrim(b.ctry_cd):: text
                           )
                         ) 
                         AND (b.ims_txn_dt >= a.st_dt)
@@ -484,21 +484,21 @@ FROM
           (
             (
               (
-                (pln.ctry_cd):: text = (a.ctry_cd):: text
+                rtrim(pln.ctry_cd):: text = rtrim(a.ctry_cd):: text
               ) 
               AND (
-                (pln.dstr_cd):: text = (a.dstr_cd):: text
+                rtrim(pln.dstr_cd):: text = rtrim(a.dstr_cd):: text
               )
             ) 
             AND (
-              (pln.sls_rep_cd):: text = (a.sls_rep_cd):: text
+              rtrim(pln.sls_rep_cd):: text = rtrim(a.sls_rep_cd):: text
             )
           ) 
           AND (
-            (pln.store_cd):: text = (a.store_cd):: text
+            rtrim(pln.store_cd):: text = rtrim(a.store_cd):: text
           )
         ) 
-        AND (a.jj_mnth_id = tgt.jj_mnth_id)
+        AND rtrim(a.jj_mnth_id) = rtrim(tgt.jj_mnth_id)
       )
     )
   ) 
@@ -511,5 +511,4 @@ WHERE
         edw_ims_fact
     )
   )
-)
-select * from final
+)select * from final

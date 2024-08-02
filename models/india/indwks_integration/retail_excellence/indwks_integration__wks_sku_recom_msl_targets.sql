@@ -1,5 +1,5 @@
 with edw_sku_recom_spike_msl as (
-    select * from {{ source('indedw_integration', 'edw_sku_recom_spike_msl') }}
+    select * from {{ source('indedw_integration', 'edw_sku_recom_spike_msl_sync') }}
 ),
 edw_vw_cal_retail_excellence_dim as (
     select * from  {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
@@ -10,10 +10,10 @@ edw_calendar_dim as
 ),
 edw_retailer_dim as
 (
-   select * from {{ source('indedw_integration', 'edw_retailer_dim') }}  
+   select * from {{ source('indedw_integration', 'edw_retailer_dim_sync') }}  
 ),
 itg_udcdetails as(
-  select * from {{ source('inditg_integration', 'itg_udcdetails') }}     
+  select * from {{ source('inditg_integration', 'itg_udcdetails_sync') }}     
 ),
 
 wrk_edw_sku_recom_spike_msl as 

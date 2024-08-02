@@ -1,4 +1,9 @@
 --Import CTE
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 with v_edw_rpt_retail_excellence as (
     select * from {{ ref('indedw_integration__ind_edw_rpt_retail_excellence') }}
 ),
