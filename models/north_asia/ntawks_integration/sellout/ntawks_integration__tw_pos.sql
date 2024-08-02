@@ -170,7 +170,7 @@ itg_query_parameters where country_code='TW' and parameter_type='sold_to_party')
 						   prom_prc,
 						   prom_strt_dt,
 						   prom_end_dt from itg_pos_prom_prc_map) e
-        LEFT JOIN e ON x.pos_dt BETWEEN e.prom_strt_dt AND e.prom_end_dt
+         ON x.pos_dt BETWEEN e.prom_strt_dt AND e.prom_end_dt
         AND rtrim(x.barcode) = rtrim(e.barcd)
         AND x.src_sys_cd = e.cust
         And rtrim(x.vend_prod_cd) = rtrim(e.cust_prod_cd)
