@@ -25,7 +25,7 @@ t2 as(
 				)::INTEGER AS jj_mnth_id
 		FROM v_intrm_calendar_ims
 		WHERE 
-				(v_intrm_calendar_ims.cal_day::date <= current_timestamp()::date)
+				(v_intrm_calendar_ims.cal_day::date <= convert_timezone('UTC',current_timestamp())::date)
 				AND (v_intrm_calendar_ims.wkday <> 7)
 				
 ),
