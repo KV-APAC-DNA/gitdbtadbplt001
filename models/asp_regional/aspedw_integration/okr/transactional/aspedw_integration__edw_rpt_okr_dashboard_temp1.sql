@@ -1,6 +1,6 @@
 with itg_mds_ap_okr_actuals as
 (
-    select * from dev_dna_core.aspitg_integration.itg_mds_ap_okr_actuals
+    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_OKR_ACTUALS
 ),
 Trans as
 (

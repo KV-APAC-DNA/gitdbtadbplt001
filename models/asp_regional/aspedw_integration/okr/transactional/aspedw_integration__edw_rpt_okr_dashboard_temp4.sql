@@ -1,6 +1,6 @@
 with edw_rpt_ecomm_oneview as
 (
-    select * from dev_dna_core.aspedw_integration.edw_rpt_ecomm_oneview
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_RPT_ECOMM_ONEVIEW
 ),
 edw_okr_gfo_map as
 (

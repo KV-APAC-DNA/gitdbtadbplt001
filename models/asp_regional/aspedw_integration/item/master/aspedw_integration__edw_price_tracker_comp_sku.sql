@@ -52,8 +52,8 @@ final as
 	jj_promo_flag::number(38,0) as jj_promo_flag,
 	cust_comp_promo_flag::number(38,0) as cust_comp_promo_flag,
 	price_comp_promo_flag::number(38,0) as price_comp_promo_flag,
-	--price_per_volume_lcy::number(15,2) as price_per_volume_lcy,
-	--price_per_volume_usd::number(15,2) as price_per_volume_usd,
+	NULL as price_per_volume_lcy,
+	NULL as price_per_volume_usd,
 	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crt_dttm
     from v_rpt_price_tracker_comp_sku
 )

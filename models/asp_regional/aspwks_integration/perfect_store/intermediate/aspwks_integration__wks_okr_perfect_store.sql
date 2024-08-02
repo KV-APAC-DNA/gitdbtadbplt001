@@ -1,6 +1,6 @@
 with edw_perfect_store_rebase_wt as
 (
-    select * from dev_dna_core.snapaspedw_integration.edw_perfect_store_rebase_wt 
+    select * from dev_dna_core.aspedw_integration.edw_perfect_store_rebase_wt 
 ),
 edw_company_dim as
 (
@@ -174,7 +174,7 @@ final as
 	visits::number(38,4) as visits,
 	msl_presence1::number(38,4) as msl_presence1,
 	visits1::number(38,4) as visits1,
-	ps::number(38,4) as ps
-    from trans 
+	ps::NUMBER(38,4) as ps
+    from trans
 )
 select * from final
