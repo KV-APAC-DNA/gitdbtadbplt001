@@ -58,9 +58,9 @@ transformed as(
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='NOV' THEN TO_DATE('01/11/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='DEC' THEN TO_DATE('01/12/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
             ELSE null
-            END,
-        replace(a.qty,',','') as year_month,
-        replace(b.qty,',','') as total_units,
+            END as year_month,
+        replace(a.qty,',','') as total_units,
+        replace(b.qty,',','') as value,
         crt_dttm as crt_dttm,
         filename as filename
     FROM sdl_hcp360_in_iqvia_aveeno_zone a, sdl_hcp360_in_iqvia_aveeno_zone b
@@ -82,7 +82,7 @@ cte1 as
         null::varchar(50) as brand,
         pack::varchar(100) as pack_description,
         null::varchar(20) as brand_category,
-        year_month::date as year_month,
+        to_date(year_month) as year_month,
         total_units::number(18,5) as total_units,
         value::number(18,5) as value,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
