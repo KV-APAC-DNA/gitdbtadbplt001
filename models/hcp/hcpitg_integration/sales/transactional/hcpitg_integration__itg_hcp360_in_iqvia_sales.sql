@@ -45,24 +45,23 @@ transformed as(
         a.product as product,
         a.pack as pack,
         case
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JAN' THEN TO_DATE('01/01/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='FEB' THEN TO_DATE('01/02/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAR' THEN TO_DATE('01/03/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='APR' THEN TO_DATE('01/04/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAY' THEN TO_DATE('01/05/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUN' THEN TO_DATE('01/06/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUL' THEN TO_DATE('01/07/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='AUG' THEN TO_DATE('01/08/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='SEP' THEN TO_DATE('01/09/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='OCT' THEN TO_DATE('01/10/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='NOV' THEN TO_DATE('01/11/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='DEC' THEN TO_DATE('01/12/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
-            ELSE null
+         WHEN UPPER(SUBSTRING(a.year_month,0,3))='JAN' THEN TO_DATE('01/01/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='FEB' THEN TO_DATE('01/02/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAR' THEN TO_DATE('01/03/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='APR' THEN TO_DATE('01/04/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAY' THEN TO_DATE('01/05/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUN' THEN TO_DATE('01/06/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUL' THEN TO_DATE('01/07/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='AUG' THEN TO_DATE('01/08/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='SEP' THEN TO_DATE('01/09/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='OCT' THEN TO_DATE('01/9/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='NOV' THEN TO_DATE('01/11/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='DEC' THEN TO_DATE('01/12/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')            ELSE null
             END as year_month,
         replace(a.qty,',','') as total_units,
         replace(b.qty,',','') as value,
-        crt_dttm as crt_dttm,
-        filename as filename
+        a.crt_dttm as crt_dttm,
+        a.filename as filename
     FROM sdl_hcp360_in_iqvia_aveeno_zone a, sdl_hcp360_in_iqvia_aveeno_zone b
     WHERE a.data_source in ('Total_Units', 'Rxns')
     AND   b.data_source in ('Values', 'Rxers')
@@ -85,7 +84,7 @@ cte1 as
         to_date(year_month) as year_month,
         total_units::number(18,5) as total_units,
         value::number(18,5) as value,
-        current_timestamp()::timestamp_ntz(9) as crt_dttm,
+        crt_dttm as crt_dttm,
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         'Aveeno_body' as data_source,
         'IN' as country
