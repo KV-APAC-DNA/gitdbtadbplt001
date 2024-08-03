@@ -39,6 +39,40 @@ cte as
         'IN' as country
     FROM sdl_hcp360_in_iqvia_sales
 ),
+transformed as(
+    SELECT a.state as state,
+        a.region as region,
+        a.product as product,
+        a.pack as pack,
+        case
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JAN' THEN TO_DATE('01/01/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='FEB' THEN TO_DATE('01/02/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAR' THEN TO_DATE('01/03/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='APR' THEN TO_DATE('01/04/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='MAY' THEN TO_DATE('01/05/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUN' THEN TO_DATE('01/06/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUL' THEN TO_DATE('01/07/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='AUG' THEN TO_DATE('01/08/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='SEP' THEN TO_DATE('01/09/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='OCT' THEN TO_DATE('01/10/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='NOV' THEN TO_DATE('01/11/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='DEC' THEN TO_DATE('01/12/' || SUBSTRING(a.year_month,5,10),'DD/MM/YYYY')
+            ELSE null
+            END,
+        replace(a.qty,',','') as year_month,
+        replace(b.qty,',','') as total_units,
+        crt_dttm as crt_dttm,
+        filename as filename
+    FROM sdl_hcp360_in_iqvia_aveeno_zone a, sdl_hcp360_in_iqvia_aveeno_zone b
+    WHERE a.data_source in ('Total_Units', 'Rxns')
+    AND   b.data_source in ('Values', 'Rxers')
+    AND   a.line_no = b.line_no
+    AND   a.region = b.region
+    AND   a.product = b.product
+    AND   a.pack = b.pack
+    AND   a.state = b.state
+    AND   a.year_month = b.year_month
+),
 cte1 as
 (
     SELECT 
@@ -55,7 +89,7 @@ cte1 as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         'Aveeno_body' as data_source,
         'IN' as country
-    FROM sdl_hcp360_in_iqvia_aveeno_zone
+    FROM transformed
 ),
 transformed as 
 (
