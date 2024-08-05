@@ -1,7 +1,7 @@
 --import CTE 
 {{ 
     config(materialized='table', 
-    transient=true)
+    transient=false)
      
     }}
 with  wks_rpt_retail_excellence_sop as 
