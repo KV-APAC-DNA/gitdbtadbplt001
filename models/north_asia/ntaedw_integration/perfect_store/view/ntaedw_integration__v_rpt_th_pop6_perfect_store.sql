@@ -47,6 +47,10 @@ edw_vw_pop6_visits_rir_data
 AS (
     SELECT * FROM {{ ref('aspedw_integration__edw_vw_pop6_visits_rir_data') }}
    ),
+itg_mds_th_ps_handeye_level
+AS (
+    SELECT * FROM {{ ref('thaitg_integration__itg_mds_th_ps_handeye_level') }}
+   ), 
 ct1
 AS (
     SELECT 'Merchandising_Response' AS dataset,
@@ -1301,6 +1305,164 @@ AS (
     WHERE (date_part('year', vst.visit_date) >= (date_part('year', '2024-02-09 06:03:00.8736'::TIMESTAMP) - 2))
     ),
 ct5 
+AS (
+        select 'IR_Response' as dataset,
+            null as merchandisingresponseid,
+            null as surveyresponseid,
+            main.popdb_id  as customerid,
+            usr.userdb_id as salespersonid,
+            main.visit_id as visitid,
+            main.check_in_datetime as mrch_resp_startdt,
+            main.check_out_datetime as mrch_resp_enddt,
+            null as mrch_resp_status,
+            null as mastersurveyid,
+            null as survey_status,
+            main.check_out_datetime as survey_enddate,
+            questionkey,
+            questiontext,
+            null as valuekey,
+            null as value,
+            null as productid,
+            null as mustcarryitem,
+            null as presence,
+            null as outofstock, 
+            main.kpi,
+            main.ps_category as category,
+            main.ps_segment as segment,
+            main.visit_id as vst_visitid,
+            main.visit_date as scheduleddate,
+            main.check_in_datetime as scheduledtime,
+            main.vst_status,
+            NULL AS fisc_yr,
+            NULL AS fisc_per,
+            usr.first_name AS firstname,
+            usr.last_name AS lastname,
+            main.popdb_id as  cust_remotekey,
+            pop.pop_name AS customername,
+            pop.country,
+            pop.territory_or_region AS STATE,
+            NULL AS county,
+            NULL AS district,
+            NULL AS city,
+            pop.customer AS storereference,
+            pop.retail_environment_ps AS storetype,
+            pop.channel,
+            pop.sales_group_name AS salesgroup,
+            pop.business_unit_name AS bu,
+            NULL AS soldtoparty,
+            NULL AS productname,
+            NULL AS eannumber,
+            NULL AS matl_num,
+            NULL AS prod_hier_l1,
+            NULL AS prod_hier_l2,
+            NULL AS prod_hier_l3,
+            NULL AS prod_hier_l4,
+            NULL AS prod_hier_l5,
+            NULL AS prod_hier_l6,
+            NULL AS prod_hier_l7,
+            NULL AS prod_hier_l8,
+            NULL AS prod_hier_l9,
+            kpi_wt.weight as kpi_chnl_wt,
+            null as mkt_share,
+            null as ques_desc,
+            null as "y/n_flag",
+            null as rej_reason,
+            null as response,
+            null as response_score,
+            null as acc_rej_reason,
+            case when main.ques_desc = 'numerator' then value::varchar(20) else '0' end as actual_value,
+            case when main.ques_desc = 'denominator' then value::varchar(20) else '0' end  as ref_value,
+            datediff(SECOND, to_date(main.check_in_datetime::VARCHAR), to_date(main.check_out_datetime::VARCHAR)) AS duration    
+            from
+    (select cntry_cd,
+            visit_id,
+            field_code as questionkey,
+            kpi,
+            vst_status,
+            questiontext,
+            ques_desc,
+            sum(facing_of_this_layer) as value,
+            visit_date,
+            check_in_datetime,
+            check_out_datetime,
+            popdb_id,
+            pop_code,
+            pop_name,
+            username,
+            ps_category,
+            ps_segment
+    from  (select  cntry_cd ,
+                    visit_id,
+                    'PS_POG_QN' as field_code,
+                    'Planogram Compliance' as kpi,
+                    case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
+                    'How many Hand-Eye facing Kenvue acquired?' as questiontext,
+                    'numerator' as ques_desc,
+                    facing_of_this_layer,
+                    layer,
+                    total_layer,
+                    visit_date,
+                    check_in_datetime,
+                    check_out_datetime,
+                    popdb_id,
+                    pop_code,
+                    pop_name,
+                    username,
+                    ps_category,
+                    ps_segment
+        from edw_vw_pop6_visits_rir_data
+        where upper(company) in ('KENVUE','JNJ','KV')
+    UNION ALL
+    select  cntry_cd ,
+                    visit_id,
+                    'PS_POG_QN_COMP' as field_code,
+                    'Planogram Compliance' as kpi,
+                    case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
+                    case when upper(company) in ('KENVUE','JNJ','KV') then 'How many facing Kenvue acquired?'
+                    else 'How many Hand-Eye facing Competitor acquired?' end  as questiontext,
+                    'denominator' as ques_desc,
+                    facing_of_this_layer,
+                    layer,
+                    total_layer,
+                    visit_date,
+                    check_in_datetime,
+                    check_out_datetime,
+                    popdb_id,
+                    pop_code,
+                    pop_name,
+                    username,
+                    ps_category,
+                    ps_segment
+        from edw_vw_pop6_visits_rir_data) fact
+        inner join itg_mds_th_ps_handeye_level he_lvl
+        on he_lvl.total_layers = fact.total_layer and he_lvl.hand_eye_layer = fact.layer
+    where   (date_part('year', visit_date) >= (date_part('year',  sysdate()) - 2))
+        group by cntry_cd,
+                visit_id,
+                field_code,
+                kpi,
+                vst_status,
+                questiontext,
+                ques_desc,
+                visit_date,
+                check_in_datetime,
+                check_out_datetime,
+                popdb_id,
+                pop_code,
+                pop_name,
+                username,
+                ps_category,
+                ps_segment) main
+    left join edw_vw_pop6_salesperson usr
+    on upper(usr.username) = upper(main.username)
+    left join edw_vw_pop6_store pop
+    on pop.popdb_id  = main.popdb_id
+    left join edw_vw_ps_weights kpi_wt 
+    on upper(kpi_wt.channel) = upper(pop.channel) and upper(pop.retail_environment_ps) = upper(kpi_wt.retail_environment)
+    and upper(kpi_wt.market) = 'THAILAND' and upper(kpi_wt.kpi) = 'PLANOGRAM COMPLIANCE'
+
+    ),
+ct6  
 AS (  
         select 'IR_Response' as dataset,
                 null as merchandisingresponseid,
@@ -1484,6 +1646,11 @@ AS (
     
     SELECT *
     FROM ct5
+    
+    UNION ALL
+    
+    SELECT *
+    FROM ct6
     )
 SELECT *
 FROM final
