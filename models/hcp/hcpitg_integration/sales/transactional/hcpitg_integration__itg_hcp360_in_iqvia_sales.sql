@@ -60,7 +60,8 @@ transformed as(
         replace(a.qty,',','') as total_units,
         replace(b.qty,',','') as value,
         a.crt_dttm as crt_dttm,
-        a.filename as filename
+        a.filename as filename,
+        a.sheet_name as sheet_name
     FROM sdl_hcp360_in_iqvia_aveeno_zone a, sdl_hcp360_in_iqvia_aveeno_zone b
     WHERE a.data_source in ('Total_Units', 'Rxns')
     AND   b.data_source in ('Value', 'Rxers')
