@@ -1,6 +1,7 @@
 with sdl_total_investment_fdw as
 (
-    select * from {{source('aspsdl_raw', 'sdl_total_investment_fdw')}}
+    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.SDL_TOTAL_INVESTMENT_FDW
+    --select * from {{source('aspsdl_raw', 'sdl_total_investment_fdw')}}
 ),
 trans as
 (

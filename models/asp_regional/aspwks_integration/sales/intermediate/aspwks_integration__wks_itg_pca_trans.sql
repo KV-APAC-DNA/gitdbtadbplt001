@@ -4,7 +4,7 @@ with sdl_sap_bw_pca_actuals as
 ),
 itg_pca_trans as
 (
-    select * from dev_dna_core.aspitg_integration.itg_pca_trans
+    select * from {{source('aspitg_integration', 'itg_pca_trans')}}
 ),
 trans as
 (

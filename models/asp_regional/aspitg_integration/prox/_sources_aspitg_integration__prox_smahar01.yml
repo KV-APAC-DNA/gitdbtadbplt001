@@ -10,10 +10,10 @@ sources:
       identifier: false
     tables:
     - name: sdl_prox_sys_department
-      tags: ["prox_department","ingestion"]
+      tags: ["prox_department","transformation"]
     - name: sdl_prox_report_bi_budgetusage
-      tags: ["prox_budget","ingestion"]
+      tags: ["prox_budget","transformation"]
     - name: sdl_prox_report_bi_contract
-      tags: ["prox_budget","ingestion"]
+      tags: ["prox_budget","transformation"]
     - name: sdl_prox_report_bi_payment
-      tags: ["prox_payment","ingestion"]
+      tags: ["prox_payment","transformation"]

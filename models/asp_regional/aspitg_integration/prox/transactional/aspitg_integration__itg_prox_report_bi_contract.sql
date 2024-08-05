@@ -1,6 +1,7 @@
 with sdl_prox_report_bi_contract as
 (
-    select * from {{source('aspsdl_raw', 'sdl_prox_report_bi_contract')}}
+    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.SDL_PROX_REPORT_BI_CONTRACT
+    --select * from {{source('aspsdl_raw', 'sdl_prox_report_bi_contract')}}
 ),
 final as
 (

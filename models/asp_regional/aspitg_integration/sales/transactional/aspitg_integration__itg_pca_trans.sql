@@ -5,7 +5,7 @@
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
         DELETE FROM {{this}} as itg_pca_trans
-        USING DEV_DNA_CORE.ASPWKS_INTEGRATION.WKS_ITG_PCA_TRANS as WKS_itg_pca_trans
+        USING {{ ref('aspwks_integration__wks_itg_pca_trans') }} as WKS_itg_pca_trans
         WHERE itg_pca_trans.request_number=WKS_itg_pca_trans.request_number
         AND itg_pca_trans.data_packet=WKS_itg_pca_trans.data_packet
         AND itg_pca_trans.data_record=WKS_itg_pca_trans.data_record
@@ -15,50 +15,50 @@
 }}
 with wks_itg_pca_trans as
 (
-    select * from DEV_DNA_CORE.ASPWKS_INTEGRATION.WKS_ITG_PCA_TRANS
+    select * from {{ ref('aspwks_integration__wks_itg_pca_trans') }}
 ),
 trans as
 (
     select
-       request_number as REQUEST_NUMBER,
-       data_packet as DATA_PACKET,
-       data_record as DATA_RECORD,
-       fiscper as FISC_YR_PER,
-       fiscvarnt as FISC_YR_VRNT,
-       fiscyear as FISC_YR,
-       fiscper3 as PSTNG_PER,
-       currency as CRNCY,
-       unit as UOM,
-       account as ACCT_NUM,
-       chrt_accts as CHRT_OF_ACCT,
-       comp_code as CO_CD,
-       co_area as CNTL_AREA,
-       curtype as CRNCY_TYPE,
-       part_prctr as PTNR_PRFT_CTR,
-       profit_ctr as PRFT_CTR,
-       version as VERS,
-       deprarea as DEPR_AREA,
-       orig_pca as ORIG_OBJ_TYPE,
-       pcompany as TRAD_PTNR,
-       pcomp_code as PTNR_CO_CD,
-       porig_pca as PARTOROBTYPE_PCA,
-       scope as OBJ_CLS,
-       move_type as MVMT_TYPE,
-       balance as CUM_BAL,
-       credit as TOT_CR_POSTGS,
-       debit as TOT_DR_POSTGS,
-       quantity as QTY,
-       zmovper as MVMT_FOR_PER,
-       valuation as VALUT_VIEW,
-       version_ra as RA_VERS,
-       vtype as VAL_TYPE,
-       func_area as FUNC_AREA,
-       pfunc_area as PTNR_F_AREA,
-       plant as PLNT,
-       rep_matl as REP_MATL,
-       zpc_activ as PCA_ACTV,
-       CASE WHEN CHNG_FLG = 'I' THEN current_timestamp() ELSE TGT_CRT_DTTM END  AS CRT_DTTM ,
-       current_timestamp()::timestamp_ntz(9) AS UPDT_DTTM
+       request_number as request_number,
+       data_packet as data_packet,
+       data_record as data_record,
+       fiscper as fisc_yr_per,
+       fiscvarnt as fisc_yr_vrnt,
+       fiscyear as fisc_yr,
+       fiscper3 as pstng_per,
+       currency as crncy,
+       unit as uom,
+       account as acct_num,
+       chrt_accts as chrt_of_acct,
+       comp_code as co_cd,
+       co_area as cntl_area,
+       curtype as crncy_type,
+       part_prctr as ptnr_prft_ctr,
+       profit_ctr as prft_ctr,
+       version as vers,
+       deprarea as depr_area,
+       orig_pca as orig_obj_type,
+       pcompany as trad_ptnr,
+       pcomp_code as ptnr_co_cd,
+       porig_pca as partorobtype_pca,
+       scope as obj_cls,
+       move_type as mvmt_type,
+       balance as cum_bal,
+       credit as tot_cr_postgs,
+       debit as tot_dr_postgs,
+       quantity as qty,
+       zmovper as mvmt_for_per,
+       valuation as valut_view,
+       version_ra as ra_vers,
+       vtype as val_type,
+       func_area as func_area,
+       pfunc_area as ptnr_f_area,
+       plant as plnt,
+       rep_matl as rep_matl,
+       zpc_activ as pca_actv,
+       CASE WHEN CHNG_FLG = 'I' THEN current_timestamp() ELSE tgt_crt_dttm end  as crt_dttm,
+       current_timestamp()::timestamp_ntz(9) AS updt_dttm
     from wks_itg_pca_trans
 ),
 final as

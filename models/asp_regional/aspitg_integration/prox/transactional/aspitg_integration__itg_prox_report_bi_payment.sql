@@ -1,6 +1,6 @@
 with sdl_prox_report_bi_payment as
 (
-    select * from {{source('aspsdl_raw', 'sdl_prox_report_bi_payment')}}
+    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.SDL_PROX_REPORT_BI_PAYMENT
 ),
 final as
 (

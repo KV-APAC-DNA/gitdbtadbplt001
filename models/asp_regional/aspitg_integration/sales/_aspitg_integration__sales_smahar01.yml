@@ -4,20 +4,20 @@ models:
   - name: aspitg_integration__itg_pca_trans
     config:
       alias: itg_pca_trans
-      tags: ["j_sap_bw_trxn_pca_actuals_wrapper","ingestion"]
+      tags: ["j_sap_bw_trxn_pca_actuals_wrapper","transformation"]
   - name: aspitg_integration__itg_clavis_gb_products
     config:
       alias: itg_clavis_gb_products
-      tags: ["rg_clavis","ingestion"]
+      tags: ["rg_clavis","transformation"]
   - name: aspitg_integration__sdl_raw_clavis_gb_products
     config:
       alias: sdl_raw_clavis_gb_products
-      tags: ["rg_clavis","ingestion"]
+      tags: ["rg_clavis","transformation"]
   - name: aspitg_integration__itg_clavis_gb_search_terms_results
     config:
       alias: itg_clavis_gb_search_terms_results
-      tags: ["rg_clavis","ingestion"]
+      tags: ["rg_clavis","transformation"]
   - name: aspitg_integration__sdl_raw_clavis_gb_search_terms_results
     config:
       alias: sdl_raw_clavis_gb_search_terms_results
-      tags: ["rg_clavis","ingestion"]
+      tags: ["rg_clavis","transformation"]
