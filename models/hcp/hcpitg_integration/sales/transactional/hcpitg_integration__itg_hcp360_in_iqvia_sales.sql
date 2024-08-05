@@ -7,8 +7,7 @@
                     delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }})
                     and data_source = 'ORSL' AND country = 'IN'; 
                     delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }})
-                    and sheet_name in (select distinct sheet_name from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }})
-                    AND country = 'IN';
+                    and data_source in (select distinct sheet_name from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }});
                     {% endif %}"
     )
 }}
