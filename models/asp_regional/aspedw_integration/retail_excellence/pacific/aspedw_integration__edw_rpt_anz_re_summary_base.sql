@@ -8,7 +8,7 @@ with v_edw_rpt_anz_re as (
 final as (
 Select FISC_YR,
        CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,		--// INTEGER
-       CLUSTER,
+       "cluster",
        MARKET,
               MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')
             ||nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
@@ -84,7 +84,7 @@ Select FISC_YR,
  FROM v_edw_rpt_anz_re	FLAGS	--//  FROM AU_EDW.EDW_RPT_AnZ_RE FLAGS
  GROUP BY FLAGS.FISC_YR,		--//  GROUP BY FLAGS.FISC_YR,
        FLAGS.FISC_PER,		--//        FLAGS.FISC_PER,
-       FLAGS.CLUSTER,		--//        FLAGS."CLUSTER",
+       FLAGS."cluster",		--//        FLAGS."CLUSTER",
        FLAGS.MARKET,		--//        FLAGS.MARKET,
        MD5(nvl(SELL_OUT_CHANNEL,'soc')||nvl(RETAIL_ENVIRONMENT,'re')||nvl(REGION,'reg')||nvl(ZONE_NAME,'zn')
             ||nvl(CITY,'cty')||nvl(PROD_HIER_L1,'ph1')||nvl(PROD_HIER_L2,'ph2')||
