@@ -1,5 +1,9 @@
 --import cte
-
+{{ 
+    config(materialized='table', 
+    transient=true)
+     
+    }}
 with wks_cnpc_rpt_retail_excellence_sop as 
 (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_rpt_retail_excellence_sop' )}}

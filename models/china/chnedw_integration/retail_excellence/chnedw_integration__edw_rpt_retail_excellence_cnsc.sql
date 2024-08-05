@@ -1,3 +1,8 @@
+{{ 
+    config(materialized='table', 
+    transient=true)
+     
+    }}
 with wks_rpt_retail_excellence_sop as (
     select * from {{ ref('chnwks_integration__wks_rpt_retail_excellence_sop') }}
 ),

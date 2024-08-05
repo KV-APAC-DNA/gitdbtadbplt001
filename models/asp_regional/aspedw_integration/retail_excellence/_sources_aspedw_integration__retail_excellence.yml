@@ -17,6 +17,7 @@ sources:
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: idnedw_integration
+
     quoting:
       database: false
       schema: false
@@ -91,6 +92,7 @@ sources:
   - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnedw_integration
+  
     quoting:
       database: false
       schema: false
@@ -134,6 +136,7 @@ sources:
   - name: chnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnitg_integration
+  
     tables:
       - name: itg_mds_cn_otc_product_mapping
       - name: itg_cs_re_store  
@@ -141,6 +144,7 @@ sources:
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: jpnedw_integration
+ 
     tables:
       - name: edi_store_m
       - name: edi_chn_m
