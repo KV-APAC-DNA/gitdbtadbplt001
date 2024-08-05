@@ -11,7 +11,7 @@ itg_query_parameters as (
 edw_rpt_anz_re_summary_sellout as (
 SELECT FISC_YR,
        FISC_PER,
-       CLUSTER,
+       "cluster",
        MARKET,
        data_src,
        FLAG_AGG_DIM_KEY,
@@ -108,7 +108,7 @@ SELECT FISC_YR,
 
 GROUP BY FISC_YR,
        FISC_PER,
-       CLUSTER,
+       "cluster",
        MARKET,
        FLAG_AGG_DIM_KEY,
        data_src,

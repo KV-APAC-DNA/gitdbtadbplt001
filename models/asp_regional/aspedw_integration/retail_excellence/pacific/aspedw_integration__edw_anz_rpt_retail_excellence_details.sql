@@ -11,7 +11,7 @@ itg_query_parameters as (
 edw_rpt_anz_re as (
 SELECT FISC_YR,
        CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,		--// INTEGER
-       CLUSTER,
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -154,7 +154,7 @@ final as(
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,
