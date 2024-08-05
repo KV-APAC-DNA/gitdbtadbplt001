@@ -10,7 +10,7 @@
     )
 }}
 with sdl_hcp360_in_ventasys_hcprtl as (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }}
+    select *,dense_rank() over (partition by team_name, v_custid_dr, v_custid_rtl order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }} qualify rn=1
 ),
 final as (
     select
