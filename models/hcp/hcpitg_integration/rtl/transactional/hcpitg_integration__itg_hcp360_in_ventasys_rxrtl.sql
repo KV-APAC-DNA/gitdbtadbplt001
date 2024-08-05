@@ -11,7 +11,7 @@
     )
 }}
 with sdl_hcp360_in_ventasys_rxrtl as (
-    select *,dense_rank() over (partition by dcr_dt order by filename desc ) as rn {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} qualify rn=1
+    select *,dense_rank() over (partition by dcr_dt order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} qualify rn=1
 ),
 final as 
 (
