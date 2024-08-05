@@ -5,9 +5,9 @@
         incremental_strategy= "append",
         pre_hook =" {% if is_incremental() %}
                     delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }})
-                    and data_source = 'ORSL' AND country = 'IN'; 
+                    and upper(data_source) = 'ORSL' AND country = 'IN'; 
                     delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }})
-                    and data_source in (select distinct substring(sheet_name,0,11) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }});
+                    and upper(data_source) in (select distinct upper(substring(sheet_name,0,11)) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }});
                     {% endif %}"
     )
 }}
