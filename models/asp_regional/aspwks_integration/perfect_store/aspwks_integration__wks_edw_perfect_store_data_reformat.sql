@@ -350,7 +350,9 @@ cte5 as (
                 CASE
                     WHEN UPPER(COUNTRY) = 'AUSTRALIA'
                     OR UPPER(COUNTRY) = 'NEW ZEALAND'
-                    OR UPPER(COUNTRY) = 'CHINA' THEN CAST(ACTUAL AS NUMERIC(14, 4))
+                    OR UPPER(COUNTRY) = 'CHINA' 
+                    OR (UPPER(COUNTRY) = 'THAILAND' and UPPER(DATASET) = 'IR_RESPONSE')
+                    THEN CAST(ACTUAL AS NUMERIC(14, 4))
                     ELSE (
                         CASE
                             WHEN UPPER("y/n_flag") = 'YES' THEN 1
@@ -387,7 +389,9 @@ cte5 as (
                 CASE
                     WHEN UPPER(COUNTRY) = 'AUSTRALIA'
                     OR UPPER(COUNTRY) = 'NEW ZEALAND'
-                    OR UPPER(COUNTRY) = 'CHINA' THEN CAST(TARGET AS NUMERIC(14, 4))
+                    OR UPPER(COUNTRY) = 'CHINA' 
+                    OR (UPPER(COUNTRY) = 'THAILAND' and UPPER(DATASET) = 'IR_RESPONSE')
+                    THEN CAST(TARGET AS NUMERIC(14, 4))
                     ELSE (
                         CASE
                             WHEN UPPER("y/n_flag") = 'YES'
