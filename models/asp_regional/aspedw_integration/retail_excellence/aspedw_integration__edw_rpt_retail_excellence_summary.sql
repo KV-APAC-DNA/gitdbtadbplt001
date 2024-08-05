@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 with edw_id_rpt_retail_excellence_summary as (
     select * from {{ ref('aspedw_integration__edw_id_rpt_retail_excellence_summary') }}
 ),

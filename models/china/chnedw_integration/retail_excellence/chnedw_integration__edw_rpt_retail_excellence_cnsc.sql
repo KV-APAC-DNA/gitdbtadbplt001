@@ -1,6 +1,8 @@
 {{ 
     config(materialized='table', 
-    transient=false)
+    transient=true,
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
      
     }}
 with wks_rpt_retail_excellence_sop as (
