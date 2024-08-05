@@ -38,7 +38,7 @@ cte as
         'IN' as country
     FROM sdl_hcp360_in_iqvia_sales
 ),
-transformed as(
+aveeno_zone_transformed as(
     SELECT a.state as state,
         a.region as region,
         a.product as product,
@@ -61,7 +61,7 @@ transformed as(
         replace(b.qty,',','') as value,
         a.crt_dttm as crt_dttm,
         a.filename as filename,
-        a.sheet_name as sheet_name
+        substring(a.sheet_name,0,11) as sheet_name
     FROM sdl_hcp360_in_iqvia_aveeno_zone a, sdl_hcp360_in_iqvia_aveeno_zone b
     WHERE a.data_source in ('Total_Units', 'Rxns')
     AND   b.data_source in ('Value', 'Rxers')
@@ -88,7 +88,7 @@ cte1 as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         sheet_name as data_source,
         'IN' as country
-    FROM transformed
+    FROM aveeno_zone_transformed
 ),
 transformed as 
 (
