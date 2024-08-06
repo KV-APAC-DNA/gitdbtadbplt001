@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} WHERE country = 'IN' AND source_system = 'SALES_CUBE' AND activity_type = 'SALES_ANALYSIS_NOCB' ;
+        delete from {{this}} WHERE country = 'IN' AND rtrim(upper(source_system)) = 'SALES_CUBE' AND  rtrim(upper(activity_type)) = 'SALES_ANALYSIS_NOCB' ;
         {% endif %}"
     )
 }}
