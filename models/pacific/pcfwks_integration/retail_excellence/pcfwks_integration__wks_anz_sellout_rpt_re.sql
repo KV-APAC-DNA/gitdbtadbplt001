@@ -363,7 +363,7 @@ final as
 (
 select 
 jj_year::VARCHAR(16) AS jj_year,
-jj_mnth_id::VARCHAR(22) AS jj_mnth_id,
+jj_mnth_id::numeric(18,0) AS jj_mnth_id,
 market::VARCHAR(50) AS market,
 channel_name::VARCHAR(150) AS channel_name,
 soldto_code::VARCHAR(255) AS soldto_code,

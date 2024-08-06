@@ -348,7 +348,7 @@ final as
 (
 select 
 jj_year::VARCHAR(16) AS jj_year,
-jj_mnth_id::VARCHAR(22) AS jj_mnth_id,
+jj_mnth_id::numeric(18,0) AS jj_mnth_id,
 cluster::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 data_src::VARCHAR(8) AS data_src,

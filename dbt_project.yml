@@ -602,7 +602,7 @@ models:
     china:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
       chnitg_integration:
         +materialized: table
         +transient: false
