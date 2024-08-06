@@ -1,3 +1,26 @@
+{{
+    config
+    (
+        materialized="incremental",
+        incremental_strategy="append",
+        pre_hook =  "{% if is_incremental() %}
+                        delete from {{this}} where account_name = 'Amazon' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
+                    
+                        delete from {{this}} where account_name = 'Bigbasket' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_bigbasket') }}) ;
+
+                        delete from {{this}} where account_name = 'FirstCry' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_firstcry') }}) ;
+
+                        delete from {{this}} where account_name = 'Grofers' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_grofers') }}) ;
+
+                        delete from {{this}} where account_name = 'Nykaa' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_nykaa') }}) ;
+
+                        delete from {{this}} where account_name = 'Paytm' and Transaction_Date in (select date from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_paytm') }}) ;
+                    
+                        delete from {{this}} where (account_name, Transaction_Date) in (select distinct account_name, decode(txn.transaction_date,null,cast((extract(year from cast(txn.load_date as date))||'-'||extract(month from cast(txn.load_date as date))||'-'||'15') as date),txn.transaction_date) as transaction_date from {{ ref('inditg_integration__itg_ecommerce_offtake_flipkart') }} txn) ;
+                    {% endif %}"
+    )
+}}
+
 with sdl_ecommerce_offtake_amazon as
 (
     select * from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}
