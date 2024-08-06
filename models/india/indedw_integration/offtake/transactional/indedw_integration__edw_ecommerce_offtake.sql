@@ -94,7 +94,8 @@ amazon as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_amazon itg_amazon left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_amazon.rpc = mapping.account_sku_code 
-    where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
+    --where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
+    where itg_amazon.month = '202405'
 ),
 bigbasket as
 (
@@ -113,7 +114,8 @@ bigbasket as
     mapping.lakshya_sku_name as generic_product_code 
     from itg_ecommerce_offtake_bigbasket itg_bigbasket left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_bigbasket.product_id = mapping.account_sku_code 
-    where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
+    --where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
+    where itg_bigbasket.source_file_name = '202405'
 ),
 firstcry as
 (
@@ -151,7 +153,8 @@ grofers as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_grofers itg_grofers left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_grofers.product_id = mapping.account_sku_code 
-    where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
+    where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name in ('202403', '202405', '202406')
+    --itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
 ),
 nykaa as
 (
@@ -170,7 +173,8 @@ nykaa as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_nykaa itg_nykaa left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_nykaa.sku_code = mapping.account_sku_code 
-    where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
+    --where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
+    where itg_nykaa.load_date = '202403'
 ),
 paytm as
 (
