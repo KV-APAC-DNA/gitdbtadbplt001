@@ -1,26 +1,3 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy="append",
-        pre_hook =  "{% if is_incremental() %}
-                        delete from {{this}} where account_name = 'Amazon' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
-                    
-                        delete from {{this}} where account_name = 'Bigbasket' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_bigbasket') }}) ;
-
-                        delete from {{this}} where account_name = 'FirstCry' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_firstcry') }}) ;
-
-                        delete from {{this}} where account_name = 'Grofers' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_grofers') }}) ;
-
-                        delete from {{this}} where account_name = 'Nykaa' and Transaction_Date = (select distinct to_date(('01' || right(source_file_name,5)),'DDMonYY') from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_nykaa') }}) ;
-
-                        delete from {{this}} where account_name = 'Paytm' and Transaction_Date in (select date from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_paytm') }}) ;
-                    
-                        delete from {{this}} where (account_name, Transaction_Date) in (select distinct account_name, decode(txn.transaction_date,null,cast((extract(year from cast(txn.load_date as date))||'-'||extract(month from cast(txn.load_date as date))||'-'||'15') as date),txn.transaction_date) as transaction_date from {{ ref('inditg_integration__itg_ecommerce_offtake_flipkart') }} txn) ;
-                    {% endif %}"
-    )
-}}
-
 with sdl_ecommerce_offtake_amazon as
 (
     select * from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}
@@ -94,8 +71,7 @@ amazon as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_amazon itg_amazon left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_amazon.rpc = mapping.account_sku_code 
-    --where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
-    where itg_amazon.month = '202405'
+    where itg_amazon.month = (select max(month) from sdl_ecommerce_offtake_amazon)
 ),
 bigbasket as
 (
@@ -114,8 +90,7 @@ bigbasket as
     mapping.lakshya_sku_name as generic_product_code 
     from itg_ecommerce_offtake_bigbasket itg_bigbasket left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_bigbasket.product_id = mapping.account_sku_code 
-    --where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
-    where itg_bigbasket.source_file_name = '202405'
+    where itg_bigbasket.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_bigbasket)
 ),
 firstcry as
 (
@@ -153,8 +128,7 @@ grofers as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_grofers itg_grofers left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_grofers.product_id = mapping.account_sku_code 
-    where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name in ('202403', '202405', '202406')
-    --itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
+    where l_cat not like '%Total%' and l1_cat not like '%Total%' and itg_grofers.source_file_name = (select distinct source_file_name from sdl_ecommerce_offtake_grofers) 
 ),
 nykaa as
 (
@@ -173,8 +147,7 @@ nykaa as
     mapping.lakshya_sku_name as generic_product_code
     from itg_ecommerce_offtake_nykaa itg_nykaa left join itg_ecommerce_offtake_master_mapping mapping 
     on itg_nykaa.sku_code = mapping.account_sku_code 
-    --where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
-    where itg_nykaa.load_date = '202403'
+    where itg_nykaa.load_date = (select max(load_date) from sdl_ecommerce_offtake_nykaa)
 ),
 paytm as
 (
