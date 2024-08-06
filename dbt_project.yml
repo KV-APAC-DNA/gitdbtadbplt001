@@ -542,6 +542,9 @@ models:
         udc:
           view:
             +materialized: view
+        pos:
+          view:
+            +materialized: view
       inditg_integration:
         +materialized: table
         +transient: false
