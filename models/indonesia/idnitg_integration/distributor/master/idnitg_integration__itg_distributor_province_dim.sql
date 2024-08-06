@@ -3,9 +3,9 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        unique_key= ["prov_id"],
+        unique_key= ["code"],
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where (trim(prov_id)) in (select distinct trim(prov_id) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province') }});
+        delete from {{this}} where (trim(code)) in (select distinct trim(code) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province') }});
         {% endif %}"
     )
 }}
@@ -16,8 +16,8 @@ with source as
 final as 
 (
     select
-    trim(prov_id)::varchar(10) as prov_id,
-	trim(province)::varchar(50) as prov_nm,
+    trim(code)::varchar(10) as code,
+	trim(name)::varchar(50) as name,
 	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as crtd_dttm,
 	convert_timezone('UTC',current_timestamp())::timestamp_ntz(9) as updt_dttm
     from source

@@ -74,13 +74,13 @@ sources:
       tags: ["id_mds_itg_load","ingestion"]
       tests:
           - test_null__ff:
-              not_null_columns: ["prov_id"]
+              not_null_columns: ["code"]
               name: TRATBL_sdl_mds_id_ref_province__null_test
               config:
                 store_failures: true
                 schema: idnwks_integration
           - test_duplicate__ff:
-              group_by_columns: ["prov_id"]
+              group_by_columns: ["code"]
               name: TRATBL_sdl_mds_id_ref_province__duplicate_test
               config:
                 store_failures: true
