@@ -599,3 +599,19 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
+    china:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
+      chnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNITG_INTEGRATION    
+      chnwks_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNWKS_INTEGRATION   
+      chnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNEDW_INTEGRATION
