@@ -53,7 +53,7 @@ aveeno_zone_transformed as(
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='JUL' THEN TO_DATE('01/07/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='AUG' THEN TO_DATE('01/08/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='SEP' THEN TO_DATE('01/09/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
-            WHEN UPPER(SUBSTRING(a.year_month,0,3))='OCT' THEN TO_DATE('01/9/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
+            WHEN UPPER(SUBSTRING(a.year_month,0,3))='OCT' THEN TO_DATE('01/10/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='NOV' THEN TO_DATE('01/11/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')
             WHEN UPPER(SUBSTRING(a.year_month,0,3))='DEC' THEN TO_DATE('01/12/' || SUBSTRING(a.year_month,5,4),'DD/MM/YYYY')            ELSE null
             END as year_month,
