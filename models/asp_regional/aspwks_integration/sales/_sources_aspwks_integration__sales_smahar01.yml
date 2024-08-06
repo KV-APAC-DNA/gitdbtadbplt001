@@ -11,4 +11,3 @@ sources:
     tables:
     - name: sdl_sap_bw_pca_actuals
       tags: ["j_sap_bw_trxn_pca_actuals_wrapper","transformation"]
-    

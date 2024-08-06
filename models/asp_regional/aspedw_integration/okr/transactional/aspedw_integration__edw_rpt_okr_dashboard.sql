@@ -1284,7 +1284,7 @@ trans as
       sum(ju_target) AS ju_target,
       sum(nu_target) AS nu_target
     FROM edw_rpt_okr_dashboard_intermediate
-    WHERE upper(measure) = 'DQI'
+    WHERE upper(measure) = 'DQI:PHYSICAL AVAILABILITY,PLASTIC & TRANSACTIONAL DATA'
     GROUP BY year_month,
       fisc_year,
       quarter,

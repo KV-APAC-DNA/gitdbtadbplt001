@@ -13,10 +13,6 @@ models:
     config:
       alias: sdl_raw_clavis_gb_products
       tags: ["rg_clavis","transformation"]
-  - name: aspitg_integration__itg_clavis_gb_search_terms_results
-    config:
-      alias: itg_clavis_gb_search_terms_results
-      tags: ["rg_clavis","transformation"]
   - name: aspitg_integration__sdl_raw_clavis_gb_search_terms_results
     config:
       alias: sdl_raw_clavis_gb_search_terms_results

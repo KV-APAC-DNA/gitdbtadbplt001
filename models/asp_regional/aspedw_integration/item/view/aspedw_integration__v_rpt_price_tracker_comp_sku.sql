@@ -2,7 +2,7 @@ with edw_price_tracker as (
     select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PRICE_TRACKER
 ),
 itg_mds_rg_sku_benchmarks as (
-    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_RG_SKU_BENCHMARKS
+    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_RG_SKU_BENCHMARKS
 ),
 trans as
 (

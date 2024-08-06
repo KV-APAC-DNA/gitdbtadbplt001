@@ -4,27 +4,27 @@ with edw_rpt_okr_dashboard_temp as
 ),
 edw_okr_core_ppm as
 (
-    select * from dev_dna_core.aspedw_integration.edw_okr_core_ppm
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_OKR_CORE_PPM
 ),
 trans as
 (   
-    SELECT DISTINCT cy.year_month,
-      cy.fisc_year,
+    SELECT DISTINCT cy.year_month as year_month,
+      cy.fisc_year as fisc_year,
       cast(cy.quarter AS INTEGER) as quarter,
       cy.kpi as measure,
-      cy.brand,
+      cy.brand as brand,
       cy.franchise as segment,
-      cy.cluster,
-      cy.market,
+      cy.cluster as CLUSTER,
+      cy.market as market,
       cy.core as core_brand,
-      cy.ppm,
-      cy.nts_grwng_share_size,
+      cy.ppm as ppm,
+      cy.nts_grwng_share_size as nts_grwng_share_size,
       cy.cy_act as cy_actual,
       py.py_act as py_actual,
       pm.pm_act as pm_actual,
-      cy.bp_target,
-      cy.ju_target,
-      cy.nu_target,
+      cy.bp_target as bp_target,
+      cy.ju_target as ju_target,
+      cy.nu_target as nu_target,
       CASE 
         WHEN cy.nu_target IS NOT NULL
           THEN cy.nu_target
@@ -36,9 +36,9 @@ trans as
         ELSE cy.cy_ytd
         END AS ytd_cy_actual,
       py.py_ytd as ytd_py_actual,
-      cy.ytd_bp_target,
-      cy.ytd_ju_target,
-      cy.ytd_nu_target,
+      cy.ytd_bp_target as ytd_bp_target,
+      cy.ytd_ju_target as ytd_ju_target,
+      cy.ytd_nu_target as ytd_nu_target,
       CASE 
         WHEN cy.ytd_nu_target IS NOT NULL
           THEN cy.ytd_nu_target
