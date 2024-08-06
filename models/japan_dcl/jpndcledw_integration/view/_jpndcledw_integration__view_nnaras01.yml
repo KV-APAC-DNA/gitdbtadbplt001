@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kesai_m_data_mart_sub
+    config:
+      alias: kesai_m_data_mart_sub
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before
+    config:
+      alias: kesai_m_data_mart_sub_before
+      tags: ["","transformation"]
+  
+
+  
