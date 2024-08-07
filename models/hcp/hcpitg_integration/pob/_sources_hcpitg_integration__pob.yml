@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: hcpwks_integration
         - test_duplicate:
-            group_by_columns: ["team_name","v_pobid","v_empid","v_custid_rtl","dcr_dt","pob_product"]
+            group_by_columns: ["team_name","v_pobid","v_empid","v_custid_rtl","dcr_dt","pob_product","filename"]
             select_columns: ["team_name","v_pobid","v_empid","v_custid_rtl","dcr_dt","pob_product"]
             name: TRATBL_sdl_hcp360_in_ventasys_pob_data__duplicate_test
             config:
