@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__cit85osalh
+    config:
+      alias: cit85osalh
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cit80saleh
+    config:
+      alias: cit80saleh
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cit81salem
+    config:
+      alias: cit81salem
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cld_m
+    config:
+      alias: cld_m
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt01saleh_uri_mv
+    config:
+      alias: tt01saleh_uri_mv
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt01saleh_uri_mv_mt
+    config:
+      alias: tt01saleh_uri_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_hen_mv
+    config:
+      alias: tt02salem_hen_mv
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_hen_mv_mt
+    config:
+      alias: tt02salem_hen_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_hen_sub_mv_mt
+    config:
+      alias: tt02salem_hen_sub_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_mv_mt
+    config:
+      alias: tt02salem_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_sum_mv_mt
+    config:
+      alias: tt02salem_sum_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_uri_mv
+    config:
+      alias: tt02salem_uri_mv
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_uri_mv_mt
+    config:
+      alias: tt02salem_uri_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__c_tbecpribuyitem
+    config:
+      alias: c_tbecpribuyitem
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm39item_strategy
+    config:
+      alias: tm39item_strategy
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt01kokyastsh_mv
+    config:
+      alias: tt01kokyastsh_mv
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__teiki_kpi4_soukeiyaku_hnr_old
+    config:
+      alias: teiki_kpi4_soukeiyaku_hnr_old
+      tags: ["japan_dcl_common_views","transformation"]
+   

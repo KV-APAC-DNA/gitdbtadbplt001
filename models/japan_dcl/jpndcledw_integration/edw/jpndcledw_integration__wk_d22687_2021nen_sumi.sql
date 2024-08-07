@@ -1,12 +1,12 @@
 with c_tbecpointadm
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.c_tbecpointadm
+    from dev_dna_core.jpdclitg_integration.c_tbecpointadm
     ),
 kr_comm_point_para
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_comm_point_para
+    from dev_dna_core.jpdcledw_integration.kr_comm_point_para
     ),
 c1
 as (
