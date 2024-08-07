@@ -13,8 +13,7 @@
 with SSMTHSALHEPHEDDA
 as
 (
-    select * from snapjpdclitg_integration.SSMTHSALHEPHEDDA
-    --dev_dna_load.jpdclsdl_raw.SSMTHSALHEPHEDDA
+    select * from dev_dna_load.jpdclsdl_raw.SSMTHSALHEPHEDDA
 ),
 final as
 (

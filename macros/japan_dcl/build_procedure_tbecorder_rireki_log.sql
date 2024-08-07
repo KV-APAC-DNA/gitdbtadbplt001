@@ -14,12 +14,13 @@
                     {{schema}}.jpndcledw_integration__tbecorder_rireki_log
                 {% endif %}
             (   
+                DIORDERHISTID NUMBER(38,0),
                 DIORDERID NUMBER(38,0),
                 T_KBN VARCHAR(1),
                 INSERTED_DATE TIMESTAMP_NTZ(9),
                 INSERTED_BY VARCHAR(100),
                 UPDATED_DATE TIMESTAMP_NTZ(9),
-                UPDATED_BY VARCHAR(100)        
+                UPDATED_BY VARCHAR(100)       
             );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
@@ -27,8 +28,6 @@
         {% else %}
             {{schema}}.jpndcledw_integration__tbecorder_rireki_log
         {% endif %};
-    {% endset %}
-    {% set query %}
         UPDATE {{tablename}}
         SET T_KBN = 'T',
             updated_date = GETDATE(),
@@ -206,8 +205,15 @@
             ) LIST
         WHERE {{tablename}}.DIORDERID = LIST.DIORDERID
             AND {{tablename}}.DIORDERHISTID = LIST.DIORDERHISTID;
-
-                               
+        
+        INSERT INTO 
+                {% if target.name=='prod' %}
+                    jpndcledw_integration.tbecorder_rireki_log
+                {% else %}
+                    {{schema}}.jpndcledw_integration__tbecorder_rireki_log
+                {% endif %}
+        select * from  {{tablename}};
+                           
     {% endset %}
 
     {% do run_query(query) %}
