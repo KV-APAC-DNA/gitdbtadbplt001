@@ -1,0 +1,111 @@
+WITH wt34aspacdt
+AS (
+	SELECT *
+	FROM dev_dna_core.snapjpdcledw_integration.wt34aspacdt
+	)
+	,wk_h19471_menzei
+AS (
+	SELECT *
+	FROM dev_dna_core.snapjpdcledw_integration.wk_h19471_menzei
+	)
+	,transformed
+AS (
+	SELECT wt34aspacdt.ourino AS "売上no"
+		,wt34aspacdt.tokuicode AS "得意先コード"
+		,wt34aspacdt.tokuiname AS "得意先名"
+		,wt34aspacdt.tokuiname_ryaku AS "得意先名略"
+		,wt34aspacdt.tokuiname_kana AS "得意先名カナ"
+		,wt34aspacdt.juchkbn AS "受注区分"
+		,wt34aspacdt.itemkbn AS "アイテム区分"
+		,wt34aspacdt.itemkbnname AS "アイテム区分名"
+		,wt34aspacdt.senyodenno AS "専用伝票番号"
+		,wt34aspacdt.itemcode AS "商品コード"
+		,wt34aspacdt.jancode AS "janコード"
+		,wt34aspacdt.tokuiitemcode AS "取引先品目コード"
+		,wt34aspacdt.itemname AS "商品名"
+		,wt34aspacdt.suryo AS "バラ数量"
+		,wt34aspacdt.tanka AS "単価"
+		,wt34aspacdt.kingaku AS "金額"
+		,wt34aspacdt.kouritanka AS "小売単価"
+		,wt34aspacdt.shimebi AS "対象月次締日"
+		,wt34aspacdt.sum_todofuken AS "都道府県別集計用"
+		,wt34aspacdt.tokuiname2 AS "得意先名2"
+		,wt34aspacdt.todofukennm AS "地区名称"
+		,wt34aspacdt.sensyukai AS "千趣会除2"
+		,wt34aspacdt.unity_itemname AS "統合商品名"
+		,wt34aspacdt.itemkbn AS "品目分類値コード1"
+		,wt34aspacdt.sum_name AS "集計用名称"
+		,wt34aspacdt.hansoku_tanka AS "販促単価"
+		,wt34aspacdt.hansoku_ext AS "販促費抽出"
+		,wt34aspacdt.sum_tokuiname AS "集計用得意先名"
+		,wt34aspacdt.haibanhinmokucode AS "廃盤品目コード"
+		,wt34aspacdt.nohindate AS "納品日"
+		,wt34aspacdt.shukadate AS "出荷日"
+		,wt34aspacdt.processtype_cd AS "プロセスタイプコード"
+		,wt34aspacdt.juchno AS "受注番号"
+		,wt34aspacdt.torikeikbn AS "取引区分"
+		,wt34aspacdt.tokuizokuseino AS "得意先属性付与no"
+		,wt34aspacdt.skysk_name AS "請求先名"
+		,wt34aspacdt.skysk_cd AS "請求先コード"
+		,wt34aspacdt.juchkbn AS "売上区分"
+		,wt34aspacdt.shokei AS "伝票税抜合計金額"
+		,wt34aspacdt.tax AS "消費税等金額"
+		,wt34aspacdt.sogokei AS "伝票総合計金額"
+		,wt34aspacdt.juch_bko AS "得意先向備考メモ"
+		,wt34aspacdt.daihyou_shukask_cd AS "代表出荷先コード"
+		,wt34aspacdt.daihyou_shukask_nmr AS "代表出荷先名"
+		,wt34aspacdt.shohzei_ritsu AS "消費税率"
+	FROM wt34aspacdt
+	
+	UNION ALL
+	
+	SELECT wk_h19471_menzei.ourino AS "売上no"
+		,wk_h19471_menzei.tokuicode AS "得意先コード"
+		,wk_h19471_menzei.tokuiname AS "得意先名"
+		,wk_h19471_menzei.tokuiname_ryaku AS "得意先名略"
+		,wk_h19471_menzei.tokuiname_kana AS "得意先名カナ"
+		,wk_h19471_menzei.juchkbn AS "受注区分"
+		,wk_h19471_menzei.itemkbn AS "アイテム区分"
+		,wk_h19471_menzei.itemkbnname AS "アイテム区分名"
+		,wk_h19471_menzei.senyodenno AS "専用伝票番号"
+		,wk_h19471_menzei.itemcode AS "商品コード"
+		,wk_h19471_menzei.jancode AS "janコード"
+		,wk_h19471_menzei.tokuiitemcode AS "取引先品目コード"
+		,wk_h19471_menzei.itemname AS "商品名"
+		,wk_h19471_menzei.suryo AS "バラ数量"
+		,wk_h19471_menzei.tanka AS "単価"
+		,wk_h19471_menzei.kingaku AS "金額"
+		,wk_h19471_menzei.kouritanka AS "小売単価"
+		,(wk_h19471_menzei.shimebi)::CHARACTER VARYING AS "対象月次締日"
+		,wk_h19471_menzei.sum_todofuken AS "都道府県別集計用"
+		,wk_h19471_menzei.tokuiname2 AS "得意先名2"
+		,wk_h19471_menzei.todofukennm AS "地区名称"
+		,wk_h19471_menzei.sensyukai AS "千趣会除2"
+		,wk_h19471_menzei.unity_itemname AS "統合商品名"
+		,wk_h19471_menzei.itemkbn AS "品目分類値コード1"
+		,wk_h19471_menzei.sum_name AS "集計用名称"
+		,wk_h19471_menzei.hansoku_tanka AS "販促単価"
+		,wk_h19471_menzei.hansoku_ext AS "販促費抽出"
+		,wk_h19471_menzei.sum_tokuiname AS "集計用得意先名"
+		,wk_h19471_menzei.haibanhinmokucode AS "廃盤品目コード"
+		,(wk_h19471_menzei.nohindate)::CHARACTER VARYING AS "納品日"
+		,(wk_h19471_menzei.shukadate)::CHARACTER VARYING AS "出荷日"
+		,wk_h19471_menzei.processtype_cd AS "プロセスタイプコード"
+		,wk_h19471_menzei.juchno AS "受注番号"
+		,wk_h19471_menzei.torikeikbn AS "取引区分"
+		,wk_h19471_menzei.tokuizokuseino AS "得意先属性付与no"
+		,wk_h19471_menzei.skysk_name AS "請求先名"
+		,wk_h19471_menzei.skysk_cd AS "請求先コード"
+		,wk_h19471_menzei.juchkbn AS "売上区分"
+		,wk_h19471_menzei.shokei AS "伝票税抜合計金額"
+		,wk_h19471_menzei.tax AS "消費税等金額"
+		,wk_h19471_menzei.sogokei AS "伝票総合計金額"
+		,wk_h19471_menzei.juch_bko AS "得意先向備考メモ"
+		,wk_h19471_menzei.daihyou_shukask_cd AS "代表出荷先コード"
+		,wk_h19471_menzei.daihyou_shukask_nmr AS "代表出荷先名"
+		,wk_h19471_menzei.shohzei_ritsu AS "消費税率"
+	FROM wk_h19471_menzei
+	)
+    
+SELECT *
+FROM transformed

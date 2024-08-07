@@ -1,0 +1,92 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__tbecorderhist_qv
+    config:
+      alias: tbecorderhist_qv
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__item_z_h_hen_v
+    config:
+      alias: item_z_h_hen_v
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_delivery_v
+    config:
+      alias: affiliate_cancel_delivery_v
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__affiliate_cancel_sameday_order_v
+    config:
+      alias: affiliate_cancel_sameday_order_v
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__wqwt74
+    config:
+      alias: wqwt74
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add_hen_mv_mt
+    config:
+      alias: tt02salem_add_hen_mv_mt
+      tags: ["japan dcl common views","transformation"]
+  
+  - name: jpndcledw_integration__tt02salem_add1_exp_hen_mt
+    config:
+      alias: tt02salem_add1_exp_hen_mt
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add_uri_mv_mt
+    config:
+      alias: tt02salem_add_uri_mv_mt
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__aspac_common_new
+    config:
+      alias: aspac_common_new
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__c_diprivilegeshubetsu
+    config:
+      alias: c_diprivilegeshubetsu
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__tt01saleh_sum_mv
+    config:
+      alias: tt01saleh_sum_mv
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__tt02kokyastsm_mv
+    config:
+      alias: tt02kokyastsm_mv
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_mv
+    config:
+      alias: tt02salem_mv
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__jp_dcl_edw.wqwt34
+    config:
+      alias: wqwt34
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__wt01kokyah
+    config:
+      alias: wt01kokyah
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__wt03tsaledt
+    config:
+      alias: wt03tsaledt
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__wt05osaledt
+    config:
+      alias: wt05osaledt
+      tags: ["japan dcl common views","transformation"]
+
+  - name: jpndcledw_integration__wt74itemstrategy_sale_p_new
+    config:
+      alias: wt74itemstrategy_sale_p_new
+      tags: ["japan dcl common views","transformation"]

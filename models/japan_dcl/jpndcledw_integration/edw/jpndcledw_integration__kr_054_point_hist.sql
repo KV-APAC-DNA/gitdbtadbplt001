@@ -1,4 +1,4 @@
---
+
 with
     kr_054_allhist as (
         select * from dev_dna_core.snapjpdcledw_integration.kr_054_allhist
