@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: jpndcledw_integration__kr_054_result
+    config:
+      alias: kr_054_result
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_sfuyo_meisai
+    config:
+      alias: kr_054_sfuyo_meisai
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_sfuyo_sum
+    config:
+      alias: kr_054_sfuyo_sum
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_stotal_point
+    config:
+      alias: kr_054_stotal_point
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_ssoutei_meisai
+    config:
+      alias: kr_054_ssoutei_meisai
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_ssoutei_sum
+    config:
+      alias: kr_054_ssoutei_sum
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_suse_meisai
+    config:
+      alias: kr_054_suse_meisai
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_suse_sum
+    config:
+      alias: kr_054_suse_sum
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_slost_meisai
+    config:
+      alias: kr_054_slost_meisai
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_slost_sum
+    config:
+      alias: kr_054_slost_sum
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  
