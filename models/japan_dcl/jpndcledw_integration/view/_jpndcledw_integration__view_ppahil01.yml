@@ -6,7 +6,7 @@ models:
       alias: container_collection_v
       tags: ["japan_dcl_common_views","transformation"]
 
-  - name: jpdcledw_integration__ocl_in_userlist_v
+  - name: jpndcledw_integration__ocl_in_userlist_v
     config:
       alias: ocl_in_userlist_v
       tags: ["japan_dcl_common_views","transformation"]
@@ -15,3 +15,111 @@ models:
     config:
       alias: ocl_contact_hist_v
       tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__ocl_main_data_v
+    config:
+      alias: ocl_main_data_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__ocl_order_hist_v
+    config:
+      alias: ocl_order_hist_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cil02nayol
+    config:
+      alias: cil02nayol
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__syouhincd_henkan_z_h
+    config:
+      alias: syouhincd_henkan_z_h
+      tags: ["japan_dcl_common_views","transformation"]
+  
+  - name: jpndcledw_integration__cim03item_zaiko
+    config:
+      alias: cim03item_zaiko
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cit86osalm_aspac
+    config:
+      alias: cit86osalm_aspac
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm84_toriskbetsuhin
+    config:
+      alias: tm84_toriskbetsuhin
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__syouhincd_henkan
+    config:
+      alias: syouhincd_henkan
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__teikikeiyaku_data_mart_hnr_old
+    config:
+      alias: teikikeiyaku_data_mart_hnr_old
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add2_up_hen_mt
+    config:
+      alias: tt02salem_add2_up_hen_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add3_epi_hen_sub_mt
+    config:
+      alias: tt02salem_add3_epi_hen_sub_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add3_epi_hen_mt
+    config:
+      alias: tt02salem_add3_epi_hen_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim08shkos_bunkai
+    config:
+      alias: cim08shkos_bunkai
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__get_ci_next_sale
+    config:
+      alias: get_ci_next_sale
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cit86osalm_kaigai
+    config:
+      alias: cit86osalm_kaigai
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cit85osalh_kaigai
+    config:
+      alias: cit85osalh_kaigai
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim24itbun
+    config:
+      alias: cim24itbun
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__okinawa_cc_conveniblack_v
+    config:
+      alias: okinawa_cc_conveniblack_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__okinawa_cc_sample_v
+    config:
+      alias: okinawa_cc_sample_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+    
+
+  
+
+  
+    
+  
+
+
+  
+
+  
