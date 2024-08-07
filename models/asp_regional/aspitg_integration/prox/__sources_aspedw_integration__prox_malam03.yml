@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_prox_md_material
+        tests:
+        - test_null:
+            select_columns:  ["filename","id","reason"]
+            not_null_columns: ["id"]
+            filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
+            name: TRATBL_sdl_prox_md_material____null_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
+      - name: sdl_prox_md_ppgallocation
+        tests:
+        - test_null:
+            select_columns:  ["filename","id","reason"]
+            not_null_columns: ["id"]
+            filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
+            name: TRATBL_sdl_prox_md_ppgallocation____null_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
+      - name: sdl_prox_md_theme
+        tests:
+        - test_null:
+            select_columns:  ["filename","id","reason"]
+            not_null_columns: ["id"]
+            filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
+            name: TRATBL_ssdl_prox_md_theme____null_test
+            config:
+              store_failures: true
+              schema: aspwks_integration

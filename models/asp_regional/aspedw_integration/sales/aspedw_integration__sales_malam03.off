@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_pca_trans_fact
+    config: 
+      alias: edw_pca_trans_fact
+      tags: ["j_sap_bw_trxn_pca_actuals_wrapper","transformation"]

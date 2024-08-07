@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: aspitg_integration__itg_otif_glbl_con_reporting
-    config:
-      alias: itg_otif_glbl_con_reporting
-      tags: ["cd_scorecard_table_refresh","transformation"]

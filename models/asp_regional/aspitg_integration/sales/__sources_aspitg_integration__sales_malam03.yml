@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_okr_alteryx_automation
+        tests:
+        - test_null:
+            select_columns:  ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            not_null_columns: ["target_type"]
+            filter: "datatype = 'Target'"
+            name: TRATBL_sdl_okr_alteryx_automation____null_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
+        - test_duplicate:
+            select_columns: ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            group_by_columns: ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            name: TRATBL_sdl_okr_alteryx_automation__duplicate_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
