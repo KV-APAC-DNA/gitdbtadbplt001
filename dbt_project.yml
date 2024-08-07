@@ -509,13 +509,12 @@ models:
         +materialized: table
         +transient: false
         +schema: JPDCLEDW_INTEGRATION
+        view:
+            +materialized: view
       jpndclitg_integration:
         +materialized: table
         +transient: false
         +schema: JPDCLITG_INTEGRATION
-      jpndclwks_integration:
-        +materialized: table
-        +schema: JPDCLWKS_INTEGRATION
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS

@@ -10,6 +10,8 @@ sources:
       identifier: false
     
     tables:
+      - name: mykokya
+        tags: ["dcl_mykokya","transformation"]
       - name: rakutenorderdetail
         tags: ["dcl_rakuten_load","transformation"]
       - name: c_tbdmsndhist
@@ -187,14 +189,14 @@ sources:
         tags: ["m_dcl_itg_job1","ingestion"]
       - name: sfmc_unsubs  
         tags: ["m_dcl_itg_job1","ingestion"]
-  - name: jpndcledw_integration
+  - name: jpdcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: sshukl02_workspace
+    schema: jpdcledw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     
     tables:
-      - name: jpndcledw_integration__tbecorder_log_tmp
-      - name: jpndcledw_integration__tbecorder_rireki_log_tmp
+      - name: tbecorder_log_tmp
+      - name: tbecorder_rireki_log_tmp

@@ -20,7 +20,7 @@ TBECORDER as
 ),
 tbecorder_log_tmp as
 (
-    select * from {{source('jpndcledw_integration','jpndcledw_integration__tbecorder_log_tmp')}}
+    select * from {{source('jpdcledw_integration','tbecorder_log_tmp')}}
 ),
 final as
 (
