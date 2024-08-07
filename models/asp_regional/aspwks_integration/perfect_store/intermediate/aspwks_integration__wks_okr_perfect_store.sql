@@ -1,14 +1,14 @@
 with edw_perfect_store_rebase_wt as
 (
-    select * from DEV_DNA_CORE.snapASPEDW_INTEGRATION.EDW_PERFECT_STORE_REBASE_WT
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PERFECT_STORE_REBASE_WT
 ),
 edw_company_dim as
 (
-    select * from DEV_DNA_CORE.snapASPEDW_INTEGRATION.EDW_COMPANY_DIM
+    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COMPANY_DIM
 ),
 itg_query_parameters as
 (
-    select * from DEV_DNA_CORE.snapASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
 ),
 trans as
 (

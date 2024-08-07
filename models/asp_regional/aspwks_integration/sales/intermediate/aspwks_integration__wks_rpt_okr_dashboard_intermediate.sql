@@ -130,7 +130,7 @@ trans as
           ELSE market
           END market,
         kpi,
-        actual_value AS py_act,
+        coalesce(actual_value,0) AS py_act,
         ytd_actual AS py_ytd
       FROM edw_rpt_okr_dashboard_temp
       WHERE data_type = 'Actual'
