@@ -1383,3 +1383,17 @@ models:
     config:
       alias: wk_d23483_nohindata_0825
       tags: ["dcl_004_month_end_refresh","transformation"]
+  - name: jpndcledw_integration__kr_054_tounen_sumix
+    config:
+      alias: kr_054_tounen_sumix
+      tags: ["dcl_004_month_end_refresh","transformation"]
+  
+  - name: jpndcledw_integration__kr_054_tounen_yoteix
+    config:
+      alias: kr_054_tounen_yoteix
+      tags: ["dcl_004_month_end_refresh","transformation"]
+
+  - name: jpndcledw_integration__kr_054_tounen_kingaku_wk2x
+    config:
+      alias: kr_054_tounen_yoteix
+      tags: ["dcl_004_month_end_refresh","transformation"]
