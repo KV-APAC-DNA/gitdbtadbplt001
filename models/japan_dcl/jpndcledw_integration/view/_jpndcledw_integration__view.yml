@@ -97,3 +97,6 @@ models:
     config:
       alias: zaiko_shohin_attr
       tags: ["japan_dcl_common_views","transformation"]
+
+  
+  
