@@ -8,7 +8,7 @@ models:
   - name: indedw_integration__v_rpt_fran_chnl_actl_sales_by_channel
     config:
       alias: v_rpt_fran_chnl_actl_sales_by_channel
-      tags: ["india_views","transformation"]
+      tags: ["j_ap_idc_etl_framework","transformation"]
   - name: indedw_integration__v_retail_frnch_categ_mapping
     config: 
       materialized: view

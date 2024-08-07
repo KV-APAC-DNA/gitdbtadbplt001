@@ -17,7 +17,7 @@ itg_pop6_sku_audits as (
     select * from {{ ref('aspitg_integration__itg_pop6_sku_audits') }}
 ),
 itg_photo_mgmnt_url as (
-    select * from {{ source('ntaitg_integration', 'itg_photo_mgmnt_url_temp')}}
+    select * from {{ source('aspitg_integration', 'itg_photo_mgmnt_url_temp')}}
 ),
 displays as (
     SELECT DISTINCT 'display' || '_' || visit_id || '_' || display_plan_id || '_' || field_id || '_' || product_attribute_value_id AS PHOTO_KEY,

@@ -1,17 +1,9 @@
 version: 2
 
 models:
-  - name: ntaedw_integration__v_dly_ims_txn_msl
-    config:
-      alias: v_dly_ims_txn_msl
-      tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_intrm_crncy_exch
     config:
       alias: v_intrm_crncy_exch
-      tags: ["north_asia_views","transformation"]
-  - name: ntaedw_integration__v_rpt_sls_pln_actl
-    config:
-      alias: v_rpt_sls_pln_actl
       tags: ["north_asia_views","transformation"]
   - name: ntaedw_integration__v_dly_planned_ims
     config:
@@ -20,8 +12,4 @@ models:
   - name: ntaedw_integration__v_rpt_nts_vs_tgt
     config:
       alias: v_rpt_nts_vs_tgt
-      tags: ["north_asia_views","transformation"]
-  - name: ntaedw_integration__v_intrm_sls_pln_actl
-    config:
-      alias: v_intrm_sls_pln_actl
       tags: ["north_asia_views","transformation"]

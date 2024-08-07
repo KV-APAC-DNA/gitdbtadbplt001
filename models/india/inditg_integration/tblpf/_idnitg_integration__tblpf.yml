@@ -4,28 +4,28 @@ models:
   - name: inditg_integration__itg_tblpf_clstkm_wrk
     config:
       alias: itg_tblpf_clstkm_wrk
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_tblpf_clstkm
     config:
       alias: itg_tblpf_clstkm
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_tblpf_idt_wrk
     config:
       alias: itg_tblpf_idt_wrk
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_tblpf_idt
     config:
       alias: itg_tblpf_idt
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_tblpf_sit_wrk
     config:
       alias: itg_tblpf_sit_wrk
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_tblpf_sit
     config:
       alias: itg_tblpf_sit
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
   - name: inditg_integration__itg_rstockdiscrepancy_withproduct
     config:
       alias: itg_rstockdiscrepancy_withproduct
-      tags: ["in_sdlitg_tblf","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]

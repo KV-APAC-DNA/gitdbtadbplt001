@@ -43,7 +43,7 @@ models:
   - name: inditg_integration__sdl_csl_scheme_header_raw
     config:
       alias: sdl_csl_scheme_header_raw
-      tags: ["m_wrp_in_sdlitg_master","transformation"]
+      tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
   - name: inditg_integration__sdl_csl_schemeutilization_raw
     config:
       alias: sdl_csl_schemeutilization_raw

@@ -4,7 +4,7 @@ models:
   - name: inditg_integration__itg_pos_historical_btl
     config:
       alias: itg_pos_historical_btl
-      tags: ["in_key_acct_offtake","transformation"]
+      tags: ["in_key_acct_offtake","off"] #Data was last loaded into JnJ in April 2021.
   - name: inditg_integration__sdl_raw_pos_historical_btl
     config:
       alias: sdl_raw_pos_historical_btl
@@ -48,8 +48,7 @@ models:
   - name: inditg_integration__itg_pos_offtake_fact
     config:
       alias: itg_pos_offtake_fact
-      tags: ["pos_hg_files","pos_max_files","pos_vmm_files","pos_ril_files","pos_abrl_files","pos_apollo_files",
-            "pos_tesco_files","pos_dmart_files","pos_frl_files","pos_dabur_files","pos_spencer_files","transformation"]
+      tags: ["in_key_acct_offtake","transformation"]
 
   - name: inditg_integration__sdl_raw_pos_hg
     config:
