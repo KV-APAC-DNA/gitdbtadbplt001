@@ -1,4 +1,4 @@
-WITH source AS
+WITH c_tbecclient AS
 (
     SELECT * FROM dev_dna_core.snapjpdclitg_integration.c_tbecclient
 ),
@@ -8,7 +8,7 @@ final AS
 SELECT 
     s.c_dstempocode AS sokocode,
     s.c_dstemponame AS sokoname
-FROM source s
+FROM c_tbecclient s
 )
 
-SELECT * FROM final
+SELECT * FROM final 

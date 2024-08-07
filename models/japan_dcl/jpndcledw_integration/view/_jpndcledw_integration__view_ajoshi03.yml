@@ -10,3 +10,163 @@ models:
     config:
       alias: cim24itbun_add_qv
       tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim24itbun_qv
+    config:
+      alias: cim24itbun_qv
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim41baitai
+    config:
+      alias: cim41baitai
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim42bdaibun
+    config:
+      alias: cim42bdaibun
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cim43bshobun
+    config:
+      alias: cim43bshobun
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__cir01kokya
+    config:
+      alias: cir01kokya
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__ciy01kokya
+    config:
+      alias: ciy01kokya
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__daily_transaction
+    config:
+      alias: daily_transaction
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm68seibetu_nm
+    config:
+      alias: tm68seibetu_nm
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm69tokubun_nm
+    config:
+      alias: tm69tokubun_nm
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm71cancel_nm
+    config:
+      alias: tm71cancel_nm
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tm73nyuhenkan_nm
+    config:
+      alias: tm73nyuhenkan_nm
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__tt02salem_add_sum_mv_mt
+    config:
+      alias: tt02salem_add_sum_mv_mt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wqwt17
+    config:
+      alias: wqwt17
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wqwt36
+    config:
+      alias: wqwt36
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wqwt67
+    config:
+      alias: wqwt67
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wqwt70
+    config:
+      alias: wqwt70
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wqwt74_p
+    config:
+      alias: wqwt74_p
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt34aspacdt
+    config:
+      alias: wt34aspacdt
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt36aspac_sum_customer_item
+    config:
+      alias: wt36aspac_sum_customer_item
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt69zaikotekisei_union_mv_ym
+    config:
+      alias: wt69zaikotekisei_union_mv_ym
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__odr_receive_detail_v
+    config:
+      alias: odr_receive_detail_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__odr_receive_header_v
+    config:
+      alias: odr_receive_header_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__dm_user_attr_spending_trend_v
+    config:
+      alias: dm_user_attr_spending_trend_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__dm_user_attr_sfcc_v
+    config:
+      alias: dm_user_attr_sfcc_v
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__dcl_dm_purchase_dly
+    config:
+      alias: dcl_dm_purchase_dly
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wk_h19471_menzei
+    config:
+      alias: wk_h19471_menzei
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wk_item_data_mart_view
+    config:
+      alias: wk_item_data_mart_view
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt17itemstrategy_sale
+    config:
+      alias: wt17itemstrategy_sale
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt67itemstrategy_sale
+    config:
+      alias: wt67itemstrategy_sale
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt70itemstrategy_sale
+    config:
+      alias: wt70itemstrategy_sale
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt74itemstrategy_sale
+    config:
+      alias: wt74itemstrategy_sale
+      tags: ["japan_dcl_common_views","transformation"]
+
+  - name: jpndcledw_integration__wt74itemstrategy_sale_p
+    config:
+      alias: wt74itemstrategy_sale_p
+      tags: ["japan_dcl_common_views","transformation"]
