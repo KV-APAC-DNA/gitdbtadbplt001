@@ -4002,6 +4002,7 @@ rir as (
             usr.latitude as user_latitude,
             null as display_plan_id,
             null as display_type,
+            null as display_code,
             null as display_name,
             null as display_start_date,
             null as display_end_date,
