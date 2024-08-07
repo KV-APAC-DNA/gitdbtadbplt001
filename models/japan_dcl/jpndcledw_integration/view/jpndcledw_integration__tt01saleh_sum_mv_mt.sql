@@ -1,0 +1,53 @@
+with TT01SALEH_SUM_MV_MT_TBL as 
+(
+    select * from SNAPJPDCLEDW_INTEGRATION.TT01SALEH_SUM_MV_MT_TBL 
+),final as
+(
+    SELECT tt01saleh_sum_mv_mt_tbl.saleno,
+    tt01saleh_sum_mv_mt_tbl.juchkbn,
+    tt01saleh_sum_mv_mt_tbl.juchdate,
+    tt01saleh_sum_mv_mt_tbl.kokyano,
+    tt01saleh_sum_mv_mt_tbl.hanrocode,
+    tt01saleh_sum_mv_mt_tbl.syohanrobunname,
+    tt01saleh_sum_mv_mt_tbl.chuhanrobunname,
+    tt01saleh_sum_mv_mt_tbl.daihanrobunname,
+    tt01saleh_sum_mv_mt_tbl.mediacode,
+    tt01saleh_sum_mv_mt_tbl.kessaikbn,
+    tt01saleh_sum_mv_mt_tbl.soryo,
+    tt01saleh_sum_mv_mt_tbl.tax,
+    tt01saleh_sum_mv_mt_tbl.sogokei,
+    tt01saleh_sum_mv_mt_tbl.cardcorpcode,
+    tt01saleh_sum_mv_mt_tbl.henreasoncode,
+    tt01saleh_sum_mv_mt_tbl.cancelflg,
+    tt01saleh_sum_mv_mt_tbl.insertdate,
+    tt01saleh_sum_mv_mt_tbl.inserttime,
+    tt01saleh_sum_mv_mt_tbl.insertid,
+    tt01saleh_sum_mv_mt_tbl.updatedate,
+    tt01saleh_sum_mv_mt_tbl.updatetime,
+    tt01saleh_sum_mv_mt_tbl.zipcode,
+    tt01saleh_sum_mv_mt_tbl.todofukencode,
+    tt01saleh_sum_mv_mt_tbl.happenpoint,
+    tt01saleh_sum_mv_mt_tbl.riyopoint,
+    tt01saleh_sum_mv_mt_tbl.shukkasts,
+    tt01saleh_sum_mv_mt_tbl.torikeikbn,
+    tt01saleh_sum_mv_mt_tbl.tenpocode,
+    tt01saleh_sum_mv_mt_tbl.shukadate,
+    tt01saleh_sum_mv_mt_tbl.rank,
+    tt01saleh_sum_mv_mt_tbl.dispsaleno,
+    tt01saleh_sum_mv_mt_tbl.kesaiid,
+    tt01saleh_sum_mv_mt_tbl.ordercode,
+    tt01saleh_sum_mv_mt_tbl.henreasonname,
+    tt01saleh_sum_mv_mt_tbl.uketsukeusrid,
+    tt01saleh_sum_mv_mt_tbl.uketsuketelcompanycd,
+    tt01saleh_sum_mv_mt_tbl.smkeiroid,
+    tt01saleh_sum_mv_mt_tbl.dipromid,
+    tt01saleh_sum_mv_mt_tbl.dicollectprc,
+    tt01saleh_sum_mv_mt_tbl.ditoujitsuhaisoprc,
+    tt01saleh_sum_mv_mt_tbl.didiscountall,
+    tt01saleh_sum_mv_mt_tbl.point_exchange,
+    tt01saleh_sum_mv_mt_tbl.lastupdusrid,
+    tt01saleh_sum_mv_mt_tbl.maker,
+    tt01saleh_sum_mv_mt_tbl.salehrowid
+FROM TT01SALEH_SUM_MV_MT_TBL
+)
+select * from final

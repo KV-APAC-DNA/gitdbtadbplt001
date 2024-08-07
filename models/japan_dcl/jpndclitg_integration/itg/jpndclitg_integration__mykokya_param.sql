@@ -14,7 +14,6 @@ last_file_id as (
     select max(file_id) as last_file_id
     from {{ this }}
 ),
-
 transformed as (
 
     select
