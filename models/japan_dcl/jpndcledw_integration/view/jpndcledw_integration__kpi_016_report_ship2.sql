@@ -1,78 +1,155 @@
-with kesai_m_data_mart_sub_before_tbl as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_BEFORE_TBL
+with dm_user_status as (
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.DM_USER_STATUS
+),
+dm_kesai_mart_dly_bkp_20221021_deployment as (
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.DM_KESAI_MART_DLY_BKP_20221021_DEPLOYMENT
+),
+cld_m as (
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CLD_M
 ),
 final as (
 SELECT 
-  kesai_m_data_mart_sub_before_tbl.saleno, 
-  kesai_m_data_mart_sub_before_tbl.gyono, 
-  kesai_m_data_mart_sub_before_tbl.meisaikbn, 
-  kesai_m_data_mart_sub_before_tbl.itemcode, 
-  kesai_m_data_mart_sub_before_tbl.itemname, 
-  kesai_m_data_mart_sub_before_tbl.diid, 
-  kesai_m_data_mart_sub_before_tbl.disetid, 
-  kesai_m_data_mart_sub_before_tbl.setitemcd, 
-  kesai_m_data_mart_sub_before_tbl.setitemnm, 
-  kesai_m_data_mart_sub_before_tbl.suryo, 
-  kesai_m_data_mart_sub_before_tbl.tanka, 
-  kesai_m_data_mart_sub_before_tbl.kingaku, 
-  kesai_m_data_mart_sub_before_tbl.meisainukikingaku, 
-  kesai_m_data_mart_sub_before_tbl.wariritu, 
-  kesai_m_data_mart_sub_before_tbl.warimaekomitanka, 
-  kesai_m_data_mart_sub_before_tbl.warimaenukikingaku, 
-  kesai_m_data_mart_sub_before_tbl.warimaekomikingaku, 
-  kesai_m_data_mart_sub_before_tbl.bun_tanka, 
-  kesai_m_data_mart_sub_before_tbl.bun_kingaku, 
-  kesai_m_data_mart_sub_before_tbl.bun_meisainukikingaku, 
-  kesai_m_data_mart_sub_before_tbl.bun_wariritu, 
-  kesai_m_data_mart_sub_before_tbl.bun_warimaekomitanka, 
-  kesai_m_data_mart_sub_before_tbl.bun_warimaenukikingaku, 
-  kesai_m_data_mart_sub_before_tbl.bun_warimaekomikingaku, 
-  kesai_m_data_mart_sub_before_tbl.dispsaleno, 
-  kesai_m_data_mart_sub_before_tbl.kesaiid, 
-  kesai_m_data_mart_sub_before_tbl.diorderid, 
-  kesai_m_data_mart_sub_before_tbl.henpinsts, 
-  kesai_m_data_mart_sub_before_tbl.c_dspointitemflg, 
-  kesai_m_data_mart_sub_before_tbl.c_diitemtype, 
-  kesai_m_data_mart_sub_before_tbl.c_diadjustprc, 
-  kesai_m_data_mart_sub_before_tbl.ditotalprc, 
-  kesai_m_data_mart_sub_before_tbl.diitemtax, 
-  kesai_m_data_mart_sub_before_tbl.c_diitemtotalprc, 
-  kesai_m_data_mart_sub_before_tbl.c_didiscountmeisai, 
-  kesai_m_data_mart_sub_before_tbl.disetmeisaiid, 
-  kesai_m_data_mart_sub_before_tbl.c_dssetitemkbn, 
-  kesai_m_data_mart_sub_before_tbl.maker, 
-  kesai_m_data_mart_sub_before_tbl.saleno_p, 
-  kesai_m_data_mart_sub_before_tbl.gyono_p, 
-  kesai_m_data_mart_sub_before_tbl.itemcode_p, 
-  kesai_m_data_mart_sub_before_tbl.itemcode_hanbai_p, 
-  kesai_m_data_mart_sub_before_tbl.suryo_p, 
-  kesai_m_data_mart_sub_before_tbl.jyu_suryo_p, 
-  kesai_m_data_mart_sub_before_tbl.oyaflg_p, 
-  kesai_m_data_mart_sub_before_tbl.tanka_p, 
-  kesai_m_data_mart_sub_before_tbl.hensu_p, 
-  kesai_m_data_mart_sub_before_tbl.kingaku_p, 
-  kesai_m_data_mart_sub_before_tbl.meisainukikingaku_p, 
-  kesai_m_data_mart_sub_before_tbl.meisaitax_p, 
-  kesai_m_data_mart_sub_before_tbl.juchgyono_p, 
-  kesai_m_data_mart_sub_before_tbl.dispsaleno_p, 
-  kesai_m_data_mart_sub_before_tbl.juch_shur_p, 
-  kesai_m_data_mart_sub_before_tbl.tyoseikikingaku_p, 
-  kesai_m_data_mart_sub_before_tbl.anbunmeisainukikingaku_p, 
-  kesai_m_data_mart_sub_before_tbl.den_nebiki_abn_kin_p, 
-  kesai_m_data_mart_sub_before_tbl.den_nb_ab_sz_kin_p, 
-  kesai_m_data_mart_sub_before_tbl.dclsm_hin_hin_nibu_id_p, 
-  kesai_m_data_mart_sub_before_tbl.kkng_kbn_p, 
-  kesai_m_data_mart_sub_before_tbl.shimebi_p, 
-  kesai_m_data_mart_sub_before_tbl.tanka_tuka_p, 
-  kesai_m_data_mart_sub_before_tbl.kingaku_tuka_p, 
-  kesai_m_data_mart_sub_before_tbl.meisainukikingaku_tuka_p, 
-  kesai_m_data_mart_sub_before_tbl.meisaitax_tuka_p, 
-  kesai_m_data_mart_sub_before_tbl.marker_p, 
-  kesai_m_data_mart_sub_before_tbl.uri_hen_kbn_p, 
-  kesai_m_data_mart_sub_before_tbl.sal_jisk_imp_snsh_no_p, 
-  kesai_m_data_mart_sub_before_tbl.dcljuch_id_p, 
-  kesai_m_data_mart_sub_before_tbl.marker_np 
+  x.ship_dt, 
+  x.channel, 
+  status.stat AS user_status, 
+  COALESCE(
+    x.uu, 
+    (0):: bigint
+  ) AS uu, 
+  COALESCE(
+    x."# of purchase", 
+    (0):: bigint
+  ) AS "# of purchase", 
+  COALESCE(
+    x.sales, 
+    (
+      (0):: numeric
+    ):: numeric(18, 0)
+  ) AS sales, 
+  (x.ship_dt + 2) AS delivery_dt, 
+  cal.year_445, 
+  cal.month_445 
 FROM 
-  kesai_m_data_mart_sub_before_tbl
+  (
+    (
+      (
+        SELECT 
+          derived_table1.ship_dt, 
+          derived_table1.channel, 
+          derived_table1.user_status, 
+          count(DISTINCT derived_table1.kokyano) AS uu, 
+          count(DISTINCT derived_table1.saleno) AS "# of purchase", 
+          sum(derived_table1.sales) AS sales 
+        FROM 
+          (
+            SELECT 
+              "k".ship_dt, 
+              "k".channel, 
+              CASE WHEN (
+                (u.status):: text = ('Existing' :: character varying):: text
+              ) THEN (u.status):: text ELSE (
+                (
+                  (u.status):: text || ('_F' :: character varying):: text
+                ) || (
+                  (
+                    CASE WHEN ("k".f_ship445 >= 2) THEN (2):: bigint ELSE "k".f_ship445 END
+                  ):: character varying
+                ):: text
+              ) END AS user_status, 
+              "k".kokyano, 
+              "k".saleno, 
+              round(
+                sum("k".total_price)
+              ) AS sales 
+            FROM 
+              (
+                dm_kesai_mart_dly_bkp_20221021_deployment "k" 
+                JOIN dm_user_status u ON (
+                  (
+                    (
+                      ("k".kokyano):: text = (u.kokyano):: text
+                    ) 
+                    AND (
+                      "k".ship_dt = to_date(
+                        (u.dt):: timestamp without time zone
+                      )
+                    )
+                  )
+                )
+              ) 
+            WHERE 
+              (
+                (
+                  (u.base):: text = ('ship445' :: character varying):: text
+                ) 
+                AND (
+                  "k".ship_dt >= (
+                    DATEADD(day, -1095, sysdate())
+                  )
+                )
+              ) 
+            GROUP BY 
+              "k".ship_dt, 
+              "k".channel, 
+              CASE WHEN (
+                (u.status):: text = ('Existing' :: character varying):: text
+              ) THEN (u.status):: text ELSE (
+                (
+                  (u.status):: text || ('_F' :: character varying):: text
+                ) || (
+                  (
+                    CASE WHEN ("k".f_ship445 >= 2) THEN (2):: bigint ELSE "k".f_ship445 END
+                  ):: character varying
+                ):: text
+              ) END, 
+              "k".kokyano, 
+              "k".saleno
+          ) derived_table1 
+        WHERE 
+          (
+            derived_table1.sales <> (
+              (0):: numeric
+            ):: numeric(18, 0)
+          ) 
+        GROUP BY 
+          derived_table1.ship_dt, 
+          derived_table1.channel, 
+          derived_table1.user_status
+      ) x 
+      RIGHT JOIN (
+        (
+          (
+            (
+              SELECT 
+                'New_F1' :: character varying AS stat 
+              UNION 
+              SELECT 
+                'New_F2' :: character varying
+            ) 
+            UNION 
+            SELECT 
+              'Lapsed_F1' :: character varying
+          ) 
+          UNION 
+          SELECT 
+            'Lapsed_F2' :: character varying
+        ) 
+        UNION 
+        SELECT 
+          'Existing' :: character varying
+      ) status ON (
+        (
+          x.user_status = (status.stat):: text
+        )
+      )
+    ) 
+    JOIN cld_m cal ON (
+      (
+        (
+          (x.ship_dt + 2)
+        ):: timestamp without time zone = cal.ymd_dt
+      )
+    )
+  )
 )
-select * from final 
+select * from final

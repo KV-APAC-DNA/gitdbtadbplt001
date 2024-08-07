@@ -9,6 +9,120 @@ models:
     config:
       alias: kesai_m_data_mart_sub_before
       tags: ["","transformation"]
-  
-
+  - name: jpndcledw_integration__kpi_016_report_ship2
+    config:
+      alias: kpi_016_report_ship2
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__list_teiki_remind_new2_v
+    config:
+      alias: list_teiki_remind_new2_v
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__next_ruikeikingaku
+    config:
+      alias: next_ruikeikingaku
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__odr_receive_header
+    config:
+      alias: odr_receive_header
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__odr_return_header
+    config:
+      alias: odr_return_header
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__odr_returnitem_detail
+    config:
+      alias: odr_returnitem_detail
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__report__006_a_newly_added
+    config:
+      alias: report__006_a_newly_added
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__report__006_a_newly_added4
+    config:
+      alias: report__006_a_newly_added4
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__report_006_a_newly_added
+    config:
+      alias: report_006_a_newly_added
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__report_006_a_old
+    config:
+      alias: report_006_a_old
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__report_006_d
+    config:
+      alias: report_006_d
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__saleh_itemstrategy
+    config:
+      alias: saleh_itemstrategy
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__salem_itemstrategy
+    config:
+      alias: salem_itemstrategy
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__sscvwdclmjignbticjoho
+    config:
+      alias: sscvwdclmjignbticjoho
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__ssmvwdclsalpointjoho_ch
+    config:
+      alias: ssmvwdclsalpointjoho_ch
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__subscription_006_report_ce
+    config:
+      alias: subscription_006_report_ce
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tbecorder
+    config:
+      alias: tbecorder
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tbecordermeisai
+    config:
+      alias: tbecordermeisai
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tbecsoko
+    config:
+      alias: tbecsoko
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tm05hanro
+    config:
+      alias: tm05hanro
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tm08todofuken
+    config:
+      alias: tm08todofuken
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tm09nendai
+    config:
+      alias: tm09nendai
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tm13item
+    config:
+      alias: tm13item
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__tm14shkos_mainte
+    config:
+      alias: tm14shkos_mainte
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__wt06itemsale
+    config:
+      alias: wt06itemsale
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__wt26itemstrategy_gel
+    config:
+      alias: wt26itemstrategy_gel
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__wt35aspac_prefectures
+    config:
+      alias: wt35aspac_prefectures
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__wt68conveniencepaydata
+    config:
+      alias: wt68conveniencepaydata
+      tags: ["","transformation"]
+  - name: jpndcledw_integration__wt72nikkeijisseki
+    config:
+      alias: wt72nikkeijisseki
+      tags: ["","transformation"]
   
