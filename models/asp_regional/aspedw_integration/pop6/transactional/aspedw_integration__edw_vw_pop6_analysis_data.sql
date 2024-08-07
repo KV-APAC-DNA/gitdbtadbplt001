@@ -42,9 +42,6 @@ select * from {{ ref('aspedw_integration__edw_vw_pop6_planned_visits') }}
 edw_vw_pop6_visits_rir_data as (
 select * from {{ ref('aspedw_integration__edw_vw_pop6_visits_rir_data') }}
 ),
-itg_pop6_rir_data as (
-select * from {{ ref('aspitg_integration__itg_pop6_rir_data') }}
-),
 edw_product_attr_dim as (
 select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
