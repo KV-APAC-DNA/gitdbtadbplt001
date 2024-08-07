@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: jpdclsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: snapjpdclsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: mykokya
+        tags: ["dcl_mykokya","transformation"]
