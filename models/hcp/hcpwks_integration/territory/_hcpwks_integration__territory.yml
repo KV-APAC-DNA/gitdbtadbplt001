@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpwks_integration__wks_hcp360_in_veeva_territory_loader
+    config:
+      alias: wks_hcp360_in_veeva_territory_loader
+      tags: ["in_veeva_edw_load","transformation"]

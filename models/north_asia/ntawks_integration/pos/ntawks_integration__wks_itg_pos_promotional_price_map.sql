@@ -11,9 +11,10 @@ itg_pos_prom_prc_map_temp as(
     select * from {{ source('ntaitg_integration', 'itg_pos_prom_prc_map_temp') }}
 ),
 transformed as(
-    SELECT SRC.customer,
-       TRIM(SRC.barcode) as barcode,
-       TRIM(SRC.cust_prod_cd) as cust_prod_cd,
+    SELECT 
+       SRC.customer as customer,
+       rtrim(SRC.barcode, ' ') as barcode,
+       rtrim(SRC.cust_prod_cd, ' ') as cust_prod_cd,
        SRC.promotional_price,
        SRC.promotion_start_date,
        SRC.promotion_end_date,
@@ -25,8 +26,9 @@ transformed as(
        END AS CHNG_FLG
 FROM source SRC
   LEFT OUTER JOIN (SELECT distinct cust,cust_prod_cd,barcd, CRT_DTTM FROM itg_pos_prom_prc_map_temp) TGT
-  ON RTRIM(SRC.barcode,'') = RTRIM(TGT.barcd,'')
-  AND RTRIM(SRC.cust_prod_cd,'')=RTRIM(TGT.cust_prod_cd,'')
+  ON 
+  rtrim(SRC.barcode, ' ')=rtrim(TGT.barcd, ' ')
+  AND RTRIM(SRC.cust_prod_cd,' ')=rtrim(TGT.cust_prod_cd, ' ')
   AND SRC.customer=TGT.cust
 )
 select * from transformed

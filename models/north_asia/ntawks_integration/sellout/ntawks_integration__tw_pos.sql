@@ -10,9 +10,6 @@ select * from {{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}
 edw_product_attr_dim as (
 select * from {{ ref('aspedw_integration__edw_product_attr_dim') }}
 ),
-itg_pos_invnt as (
-select * from {{ ref('ntaitg_integration__itg_pos_invnt') }}
-),
 itg_pos_prom_prc_map as (
 select * from {{ ref('ntaitg_integration__itg_pos_prom_prc_map') }}
 ),
@@ -142,10 +139,10 @@ FROM (SELECT x.*,
 								WHEN cust_nm = 'Watsons' THEN 'Watsons 屈臣氏'
 								WHEN cust_nm = 'RT-Mart' THEN 'RT-Mart 大潤發'
 								END AS cust_nm,
-								cust_prod_cd,
+								rtrim(cust_prod_cd) as cust_prod_cd,
                                 MIN(barcd) AS barcd
                          FROM itg_pos_cust_prod_cd_ean_map
-                         GROUP BY cust_prod_cd,cust_nm) g ON a.vend_prod_cd = g.cust_prod_cd and a.src_sys_cd=g.cust_nm
+                         GROUP BY rtrim(cust_prod_cd),cust_nm) g ON rtrim(a.vend_prod_cd) = rtrim(g.cust_prod_cd) and a.src_sys_cd=g.cust_nm
                          left join (select distinct country_code,parameter_name as src_sys_cd,parameter_value as sold_to_party from 
 itg_query_parameters where country_code='TW' and parameter_type='sold_to_party') qp on qp.src_sys_cd=a.src_sys_cd) x
         LEFT JOIN (SELECT DISTINCT ean,
@@ -154,7 +151,7 @@ itg_query_parameters where country_code='TW' and parameter_type='sold_to_party')
                           prod_hier_l3,
                           cntry
                    FROM edw_product_attr_dim) d
-               ON CAST (x.barcode AS VARCHAR (40)) = CAST (d.ean AS VARCHAR (40))
+               ON rtrim(CAST (x.barcode AS VARCHAR (40))) = rtrim(CAST (d.ean AS VARCHAR (40)))
               AND x.ctry_cd = d.cntry
         LEFT JOIN (select CASE
 								WHEN cust = 'ibonMart' THEN 'ibonMart'
@@ -173,11 +170,10 @@ itg_query_parameters where country_code='TW' and parameter_type='sold_to_party')
 						   prom_prc,
 						   prom_strt_dt,
 						   prom_end_dt from itg_pos_prom_prc_map) e
-               ON x.pos_dt BETWEEN e.prom_strt_dt
-              AND e.prom_end_dt
-              AND x.barcode = e.barcd
-			  AND x.src_sys_cd=e.cust
-			  And x.vend_prod_cd=e.cust_prod_cd
+         ON x.pos_dt BETWEEN e.prom_strt_dt AND e.prom_end_dt
+        AND rtrim(x.barcode) = rtrim(e.barcd)
+        AND x.src_sys_cd = e.cust
+        And rtrim(x.vend_prod_cd) = rtrim(e.cust_prod_cd)
       WHERE x.ctry_cd = 'TW')src
   LEFT JOIN (SELECT DISTINCT matl_num, matl_desc
              FROM edw_material_dim) e ON COALESCE (LTRIM (e.matl_num,0),'#') = LTRIM (COALESCE (src.sap_matl_num,'#'),0)
