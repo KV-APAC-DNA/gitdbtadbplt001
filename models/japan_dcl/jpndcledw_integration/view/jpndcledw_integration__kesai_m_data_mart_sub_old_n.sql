@@ -1,1 +1,55 @@
-SELECT (('T'::character varying)::text || (cit81.saleno)::text) AS saleno, cit81.gyono, CASE WHEN (tokuten.itemcode IS NOT NULL) THEN '特典'::character varying WHEN ((cit81.itemcode_hanbai)::text = ('9990000100'::character varying)::text) THEN '利用ポイント'::character varying WHEN ((cit81.itemcode_hanbai)::text = ('9990000200'::character varying)::text) THEN '利用ポイント'::character varying ELSE '商品'::character varying END AS meisaikbn, cit81.itemcode_hanbai AS itemcode, cit81.wariritu, cit81.tanka, cit81.warimaekomitanka, cit81.suryo, cit81.hensu, cit81.kingaku, cit81.warimaekomikingaku, cit81.meisainukikingaku, cit81.warimaenukikingaku, cit81.meisaitax, cit81.saleno AS kesaiid, btrim((cit81.saleno)::text) AS saleno_trim FROM ((jp_dcl_edw.cit80saleh_ikou cit80 JOIN jp_dcl_edw.cit81salem_ikou cit81 ON ((((cit80.saleno)::text = (cit81.saleno)::text) AND (cit80.cancelflg = (0)::smallint)))) LEFT JOIN jp_dcl_edw.old_tokutencd_master tokuten ON (((cit81.itemcode_hanbai)::text = (tokuten.itemcode)::text)));
+WITH cit80saleh_ikou
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.cit80saleh_ikou
+    ),
+cit81salem_ikou
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.cit81salem_ikou
+    ),
+old_tokutencd_master
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.old_tokutencd_master
+    ),
+ final 
+ AS (
+        SELECT (('T'::CHARACTER VARYING)::TEXT || (cit81.saleno)::TEXT) AS saleno,
+            cit81.gyono,
+            CASE 
+                WHEN (tokuten.itemcode IS NOT NULL)
+                    THEN '特典'::CHARACTER VARYING
+                WHEN ((cit81.itemcode_hanbai)::TEXT = ('9990000100'::CHARACTER VARYING)::TEXT)
+                    THEN '利用ポイント'::CHARACTER VARYING
+                WHEN ((cit81.itemcode_hanbai)::TEXT = ('9990000200'::CHARACTER VARYING)::TEXT)
+                    THEN '利用ポイント'::CHARACTER VARYING
+                ELSE '商品'::CHARACTER VARYING
+                END AS meisaikbn,
+            cit81.itemcode_hanbai AS itemcode,
+            cit81.wariritu,
+            cit81.tanka,
+            cit81.warimaekomitanka,
+            cit81.suryo,
+            cit81.hensu,
+            cit81.kingaku,
+            cit81.warimaekomikingaku,
+            cit81.meisainukikingaku,
+            cit81.warimaenukikingaku,
+            cit81.meisaitax,
+            cit81.saleno AS kesaiid,
+            trim((cit81.saleno)::TEXT) AS saleno_trim
+        FROM (
+            (
+                cit80saleh_ikou cit80 JOIN cit81salem_ikou cit81 ON (
+                        (
+                            ((cit80.saleno)::TEXT = (cit81.saleno)::TEXT)
+                            AND (cit80.cancelflg = (0)::SMALLINT)
+                            )
+                        )
+                ) LEFT JOIN old_tokutencd_master tokuten ON (((cit81.itemcode_hanbai)::TEXT = (tokuten.itemcode)::TEXT))
+            )
+        )
+
+SELECT *
+FROM final

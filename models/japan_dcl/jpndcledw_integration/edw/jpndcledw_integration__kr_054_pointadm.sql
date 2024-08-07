@@ -7,7 +7,7 @@
 with c_tbecpointadm
 as (
     select *
-    from dev_dna_load.jpdclsdl_raw.c_tbecpointadm
+    from snapjpdclitg_integration.c_tbecpointadm
     ),
 c1
 as (

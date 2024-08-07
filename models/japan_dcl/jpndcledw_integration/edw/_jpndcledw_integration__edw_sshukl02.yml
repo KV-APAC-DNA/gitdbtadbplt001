@@ -2,6 +2,18 @@ version: 2
 
 models:
   - name: jpndcledw_integration__kr_054_slyotei_meisai
+    config:
+      alias: kr_054_slyotei_meisai
+      tags: ["dcl_004_month_end_refresh","transformation"]
   - name: jpndcledw_integration__kr_054_slyotei_sum
+    config:
+      alias: kr_054_slyotei_sum
+      tags: ["dcl_004_month_end_refresh","transformation"]
   - name: jpndcledw_integration__wk_d22686_point_calc_f_hist_wk
+    config:
+      alias: wk_d22686_point_calc_f_hist_wk
+      tags: ["dcl_004_month_end_refresh","transformation"]
   - name: jpndcledw_integration__wk_d23483_nohindata_0825
+    config:
+      alias: wk_d23483_nohindata_0825
+      tags: ["dcl_004_month_end_refresh","transformation"]

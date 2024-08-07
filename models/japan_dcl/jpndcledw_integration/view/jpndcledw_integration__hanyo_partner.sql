@@ -1,1 +1,22 @@
-SELECT 'TOKUI' AS kbnmei, edw_mds_jp_dcl_partner_master.tokuicode AS attr1, edw_mds_jp_dcl_partner_master.column33 AS attr2, edw_mds_jp_dcl_partner_master.column34 AS attr3, edw_mds_jp_dcl_partner_master.column35 AS attr4, edw_mds_jp_dcl_partner_master.column36 AS attr5, NULL::"unknown" AS insertdate, NULL::"unknown" AS updatedate FROM jp_dcl_edw.edw_mds_jp_dcl_partner_master WHERE (edw_mds_jp_dcl_partner_master.column33 IS NOT NULL);
+WITH edw_mds_jp_dcl_partner_master
+AS (
+    SELECT *
+    FROM SNAPJPDCLEDW_INTEGRATION.edw_mds_jp_dcl_partner_master
+    ),
+final
+AS (
+    SELECT 'TOKUI' AS kbnmei,
+        tokuicode AS attr1,
+        column33 AS attr2,
+        column34 AS attr3,
+        column35 AS attr4,
+        column36 AS attr5,
+        NULL AS insertdate,
+        NULL AS updatedate
+    FROM edw_mds_jp_dcl_partner_master
+    WHERE (column33 IS NOT NULL)
+    )
+SELECT *
+FROM
+
+final

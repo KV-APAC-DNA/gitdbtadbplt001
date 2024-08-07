@@ -1,1 +1,74 @@
-SELECT cit86osalm_uri.ourino, cit86osalm_uri.gyono, cit86osalm_uri.itemcode, cit86osalm_uri.itemcode_hanbai, cit86osalm_uri.suryo, cit86osalm_uri.tanka, cit86osalm_uri.hensu, cit86osalm_uri.henusu, cit86osalm_uri.kingaku, cit86osalm_uri.meisainukikingaku, cit86osalm_uri.meisaitax, cit86osalm_uri.anbunmeisainukikingaku, cit86osalm_uri.tanka_tuka, cit86osalm_uri.kingaku_tuka, cit86osalm_uri.meisainukikingaku_tuka, cit86osalm_uri.meisaitax_tuka, cit86osalm_uri.kakokbn, cit86osalm_uri.kkng_kbn, cit86osalm_uri.dispourino, cit86osalm_uri.shimebi, cit86osalm_uri.shohzei_ritsu FROM jp_dcl_edw.cit86osalm_uri_mv cit86osalm_uri WHERE ((cit86osalm_uri.kkng_kbn)::text = ('1'::character varying)::text) UNION ALL SELECT cit86osalm_hen.ourino, cit86osalm_hen.gyono, cit86osalm_hen.itemcode, cit86osalm_hen.itemcode_hanbai, cit86osalm_hen.suryo, cit86osalm_hen.tanka, cit86osalm_hen.hensu, cit86osalm_hen.henusu, cit86osalm_hen.kingaku, cit86osalm_hen.meisainukikingaku, cit86osalm_hen.meisaitax, cit86osalm_hen.anbunmeisainukikingaku, cit86osalm_hen.tanka_tuka, cit86osalm_hen.kingaku_tuka, cit86osalm_hen.meisainukikingaku_tuka, cit86osalm_hen.meisaitax_tuka, cit86osalm_hen.kakokbn, cit86osalm_hen.kkng_kbn, cit86osalm_hen.dispourino, cit86osalm_hen.shimebi, cit86osalm_hen.shohzei_ritsu FROM jp_dcl_edw.cit86osalm_hen_mv cit86osalm_hen WHERE ((cit86osalm_hen.kkng_kbn)::text = ('1'::character varying)::text);
+WITH cit86osalm_uri_mv
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.cit86osalm_uri_mv
+    ),
+cit86osalm_hen_mv
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.cit86osalm_hen_mv
+    ),
+t1
+AS (
+    SELECT ourino,
+        gyono,
+        itemcode,
+        itemcode_hanbai,
+        suryo,
+        tanka,
+        hensu,
+        henusu,
+        kingaku,
+        meisainukikingaku,
+        meisaitax,
+        anbunmeisainukikingaku,
+        tanka_tuka,
+        kingaku_tuka,
+        meisainukikingaku_tuka,
+        meisaitax_tuka,
+        kakokbn,
+        kkng_kbn,
+        dispourino,
+        shimebi,
+        shohzei_ritsu
+    FROM cit86osalm_uri_mv
+    WHERE ((kkng_kbn)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+    ),
+t2
+AS (
+    SELECT ourino,
+        gyono,
+        itemcode,
+        itemcode_hanbai,
+        suryo,
+        tanka,
+        hensu,
+        henusu,
+        kingaku,
+        meisainukikingaku,
+        meisaitax,
+        anbunmeisainukikingaku,
+        tanka_tuka,
+        kingaku_tuka,
+        meisainukikingaku_tuka,
+        meisaitax_tuka,
+        kakokbn,
+        kkng_kbn,
+        dispourino,
+        shimebi,
+        shohzei_ritsu
+    FROM cit86osalm_hen_mv
+    WHERE ((kkng_kbn)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+    ),
+FINAL
+AS (
+    SELECT *
+    FROM T1
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T2
+    )
+SELECT *
+FROM FINAL

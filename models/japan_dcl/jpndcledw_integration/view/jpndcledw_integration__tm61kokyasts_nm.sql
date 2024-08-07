@@ -1,7 +1,7 @@
-with jp_dcl_edw.hanyo_attr
+with hanyo_attr
 as
 (
-    select * from jpdcledw_integration.hanyo_attr
+    select * from {{ref('jpndcledw_integration__hanyo_attr')}} 
 ),
 final as
 (

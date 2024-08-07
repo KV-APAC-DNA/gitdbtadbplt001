@@ -12,7 +12,6 @@ final AS
                     ((hanyo_attr.attr2)::TEXT = (NULL::CHARACTER VARYING)::TEXT)
                     OR (
                         (hanyo_attr.attr2 IS NULL)
-                        AND (NULL::"unknown" IS NULL)
                         )
                     )
                 THEN ('その他'::CHARACTER VARYING)::TEXT

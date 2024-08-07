@@ -1,1 +1,1264 @@
-SELECT t.shukanengetu, t.channel, t.konyuchubuncode, t.torikeikbn, (((t.tokuicode)::text || (nvl2(cim02.tokuiname, ' : '::character varying, ''::character varying))::text) || COALESCE((((cim02.tokuiname)::text || (' '::character varying)::text) || (cim02.tokuiname_ryaku)::text), ((''::character varying)::character varying(65535))::text)) AS tokuicode, (((COALESCE(t.itemcode, ''::character varying))::text || (' : '::character varying)::text) || (COALESCE(COALESCE(ia.itemname, ''::character varying), (COALESCE(ia2.itemname, ''::character varying))::character varying(65535)))::text) AS hanbaiitem, ((COALESCE(btrim((ib.bar_cd2)::text), ((ib.itemcode)::character varying(65535))::text) || (' : '::character varying)::text) || (COALESCE(ib.itemname, (ib2.itemname)::character varying(65535)))::text) AS kouseiitem, t.kosecode, t.juchkbn, tm67.cname AS juchkbncname, t.suryo, t.hensu, (t.suryo + t.hensu) AS urisuryo, t.anbunmaegaku_tyouseimae, t.meisainukikingaku_tyouseimae, t.anbunmaegaku_tyouseigo, t.meisainukikingaku_tyouseigo, t.anbunmeisainukikingaku, CASE WHEN ((((((t.channel)::text = ('111'::character varying)::text) OR ((t.channel)::text = ('112'::character varying)::text)) OR ((t.channel)::text = ('113'::character varying)::text)) OR ((t.channel)::text = ('114'::character varying)::text)) OR ((t.channel)::text = ('121'::character varying)::text)) THEN '通信販売'::character varying WHEN (((((t.channel)::text = ('211'::character varying)::text) OR ((t.channel)::text = ('212'::character varying)::text)) OR ((t.channel)::text = ('213'::character varying)::text)) OR ((t.channel)::text = ('214'::character varying)::text)) THEN '対面販売'::character varying WHEN ((((((t.channel)::text = ('311'::character varying)::text) OR ((t.channel)::text = ('312'::character varying)::text)) OR ((t.channel)::text = ('313'::character varying)::text)) OR ((t.channel)::text = ('314'::character varying)::text)) OR ((t.channel)::text = ('321'::character varying)::text)) THEN '卸売'::character varying WHEN ((((t.channel)::text = ('411'::character varying)::text) OR ((t.channel)::text = ('412'::character varying)::text)) OR ((t.channel)::text = ('413'::character varying)::text)) THEN '海外'::character varying WHEN (((t.channel)::text = ('511'::character varying)::text) OR ((t.channel)::text = ('512'::character varying)::text)) THEN 'その他'::character varying ELSE NULL::character varying END AS channel1, CASE WHEN (((((t.channel)::text = ('111'::character varying)::text) OR ((t.channel)::text = ('112'::character varying)::text)) OR ((t.channel)::text = ('113'::character varying)::text)) OR ((t.channel)::text = ('114'::character varying)::text)) THEN '通販'::character varying WHEN ((t.channel)::text = ('121'::character varying)::text) THEN 'WEB'::character varying WHEN (((((t.channel)::text = ('211'::character varying)::text) OR ((t.channel)::text = ('212'::character varying)::text)) OR ((t.channel)::text = ('213'::character varying)::text)) OR ((t.channel)::text = ('214'::character varying)::text)) THEN '店舗'::character varying WHEN (((((t.channel)::text = ('311'::character varying)::text) OR ((t.channel)::text = ('312'::character varying)::text)) OR ((t.channel)::text = ('313'::character varying)::text)) OR ((t.channel)::text = ('314'::character varying)::text)) THEN '卸売'::character varying WHEN ((t.channel)::text = ('321'::character varying)::text) THEN 'QVC'::character varying WHEN ((t.channel)::text = ('411'::character varying)::text) THEN 'JJ'::character varying WHEN (((t.channel)::text = ('412'::character varying)::text) OR ((t.channel)::text = ('413'::character varying)::text)) THEN '海外'::character varying WHEN (((t.channel)::text = ('511'::character varying)::text) OR ((t.channel)::text = ('512'::character varying)::text)) THEN 'その他'::character varying ELSE NULL::character varying END AS channel2, CASE WHEN ((t.channel)::text = ('111'::character varying)::text) THEN '通販'::character varying WHEN ((t.channel)::text = ('112'::character varying)::text) THEN '社販'::character varying WHEN ((t.channel)::text = ('113'::character varying)::text) THEN 'VIP'::character varying WHEN ((t.channel)::text = ('114'::character varying)::text) THEN '通販'::character varying WHEN ((t.channel)::text = ('121'::character varying)::text) THEN 'WEB'::character varying WHEN ((t.channel)::text = ('211'::character varying)::text) THEN '買取'::character varying WHEN ((t.channel)::text = ('212'::character varying)::text) THEN '直営'::character varying WHEN ((t.channel)::text = ('213'::character varying)::text) THEN '消化'::character varying WHEN ((t.channel)::text = ('214'::character varying)::text) THEN 'アウトレット'::character varying WHEN ((t.channel)::text = ('311'::character varying)::text) THEN '代理店'::character varying WHEN ((t.channel)::text = ('312'::character varying)::text) THEN '職域（特販）'::character varying WHEN ((t.channel)::text = ('313'::character varying)::text) THEN '職域（代理店）'::character varying WHEN ((t.channel)::text = ('314'::character varying)::text) THEN '職域（販売会）'::character varying WHEN ((t.channel)::text = ('321'::character varying)::text) THEN 'QVC'::character varying WHEN ((t.channel)::text = ('411'::character varying)::text) THEN 'JJ'::character varying WHEN ((t.channel)::text = ('412'::character varying)::text) THEN '国内免税'::character varying WHEN ((t.channel)::text = ('413'::character varying)::text) THEN '海外免税'::character varying WHEN ((t.channel)::text = ('511'::character varying)::text) THEN 'FS'::character varying WHEN ((t.channel)::text = ('512'::character varying)::text) THEN 'その他'::character varying ELSE NULL::character varying END AS channel3, t.bmn_hyouji_cd, t.bmn_nms, t.henreasoncode, (((t.henreasoncode)::text || (' : '::character varying)::text) || (t.henreasonname)::text) AS henreasonname, t.sokoname, CASE WHEN (z.bumon6_kubun2 IS NULL) THEN misettei1."区分名称その他" ELSE z.bumon6_kubun2 END AS kubun2, CASE WHEN (z.bumon6_syohingun IS NULL) THEN misettei2."区分名称その他" ELSE z.bumon6_syohingun END AS syohingun, CASE WHEN (z.bumon6_jyuutenitem IS NULL) THEN misettei3."区分名称その他" ELSE z.bumon6_jyuutenitem END AS jyuutenitem, ib.itemkbnname AS item_bunr_val1, cim24_daidai.itbunname AS item_bunr_val2, ib.bunruicode3_nm AS item_bunr_val3, z.bumon7_add_attr1, z.bumon7_add_attr2, z.bumon7_add_attr3, z.bumon7_add_attr4, z.bumon7_add_attr5, z.bumon7_add_attr6, z.bumon7_add_attr7, z.bumon7_add_attr8, z.bumon7_add_attr9, z.bumon7_add_attr10, z.bumon6_20kisyohingun, z.bumon6_20kinaieki1, z.bumon6_20kinaieki2, z.bumon6_20kinaieki3, z.bumon6_zyutensyohinyobi1, z.bumon6_zyutensyohinyobi2, z.bumon6_zyutensyohinyobi3, z.bumon6_zyutensyohinyobi4, z.bumon6_zyutensyohinyobi5, z.bumon6_okikaename, z.bumon6_zukyuyosoku1, z.bumon6_zukyuyosoku2, z.bumon6_zukyuyosoku3 FROM ((((((((((((((((((((SELECT trunc(((h.shukadate)::double precision / (100)::double precision)) AS shukanengetu, CASE WHEN ((h.kaisha)::text = ('000'::character varying)::text) THEN CASE WHEN ((h.daihanrobunname)::text = ('Web'::character varying)::text) THEN '121'::character varying ELSE '111'::character varying END WHEN ((h.kaisha)::text = ('001'::character varying)::text) THEN '112'::character varying ELSE '114'::character varying END AS channel, h.daihanrobunname AS konyuchubuncode, h.torikeikbn, 'ダミーコード'::character varying AS tokuicode, m.itemcode_hanbai AS itemcode, "k".kosecode, h.juchkbn, sum(((m.suryo * COALESCE(item.bunkai_kossu, ((1)::numeric)::numeric(18,0))) * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0)))) AS suryo, sum(CASE WHEN (("substring"((h.juchkbn)::text, 1, 1) = ('9'::character varying)::text) OR (("substring"((h.juchkbn)::text, 1, 1) IS NULL) AND ('9' IS NULL))) THEN ((m.hensu * COALESCE(item.bunkai_kossu, ((1)::numeric)::numeric(18,0))) * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0))) ELSE ((0)::numeric)::numeric(18,0) END) AS hensu, 0 AS anbunmaegaku_tyouseimae, 0 AS meisainukikingaku_tyouseimae, sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo, sum((((m.meisainukikingaku)::double precision * COALESCE(item.bunkai_kosritu, (1)::double precision)) * (COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))::double precision)) AS meisainukikingaku_tyouseigo, sum((((m.anbunmeisainukikingaku)::double precision * COALESCE(item.bunkai_kosritu, (1)::double precision)) * (COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))::double precision)) AS anbunmeisainukikingaku, h.henreasoncode, h.henreasonname, ''::character varying AS sokoname, h.bmn_hyouji_cd, h.bmn_nms FROM ((((jp_dcl_edw.cit80saleh h JOIN jp_dcl_edw.cit81salem m ON (((h.saleno)::text = (m.saleno)::text))) LEFT JOIN jp_dcl_edw.cim08shkos_bunkai item ON (((m.itemcode_hanbai)::text = (item.itemcode)::text))) LEFT JOIN jp_dcl_edw.syouhincd_henkan henkan ON (((item.bunkai_itemcode)::text = (henkan.itemcode)::text))) LEFT JOIN jp_dcl_edw.tm14shkos "k" ON (((COALESCE(henkan.koseiocode, COALESCE(item.bunkai_itemcode, (m.itemcode)::character varying(65535))))::text = ("k".itemcode)::text))) WHERE (((((h.cancelflg = ((0)::numeric)::numeric(18,0)) AND ((h.torikeikbn)::text = ('01'::character varying)::text)) AND ((m.itemcode)::text <> ('9990000100'::character varying)::text)) AND ((m.itemcode)::text <> ('9990000200'::character varying)::text)) AND (h.kakokbn = ((1)::numeric)::numeric(18,0))) GROUP BY trunc(((h.shukadate)::double precision / (100)::double precision)), CASE WHEN ((h.kaisha)::text = ('000'::character varying)::text) THEN CASE WHEN ((h.daihanrobunname)::text = ('Web'::character varying)::text) THEN '121'::character varying ELSE '111'::character varying END WHEN ((h.kaisha)::text = ('001'::character varying)::text) THEN '112'::character varying ELSE '114'::character varying END, h.daihanrobunname, h.torikeikbn, m.itemcode_hanbai, "k".kosecode, h.juchkbn, h.henreasoncode, h.henreasonname, h.bmn_hyouji_cd, h.bmn_nms UNION ALL SELECT trunc(((h.shukadate)::double precision / (100)::double precision)) AS shukanengetu, CASE WHEN (h.smkeiroid = ((5)::numeric)::numeric(18,0)) THEN '121'::character varying ELSE CASE WHEN (h.smkeiroid = ((6)::numeric)::numeric(18,0)) THEN '112'::character varying WHEN (h.marker = ((4)::numeric)::numeric(18,0)) THEN '511'::character varying ELSE '111'::character varying END END AS channel, h.daihanrobunname AS konyuchubuncode, h.torikeikbn, 'ダミーコード'::character varying AS tokuicode, m.itemcode_hanbai AS itemcode, "k".kosecode, h.juchkbn, sum((m.suryo * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0)))) AS suryo, sum(CASE WHEN (("substring"((h.juchkbn)::text, 1, 1) = ('9'::character varying)::text) OR (("substring"((h.juchkbn)::text, 1, 1) IS NULL) AND ('9' IS NULL))) THEN (m.hensu * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0))) ELSE ((0)::numeric)::numeric(18,0) END) AS hensu, sum("next".tyouseimaekingaku) AS anbunmaegaku_tyouseimae, sum(("next".tyouseimaekingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS meisainukikingaku_tyouseimae, sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo, sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS meisainukikingaku_tyouseigo, sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS anbunmeisainukikingaku, h.henreasoncode, h.henreasonname, ''::character varying AS sokoname, h.bmn_hyouji_cd, h.bmn_nms FROM (((jp_dcl_edw.cit80saleh h JOIN jp_dcl_edw.cit81salem m ON (((h.saleno)::text = (m.saleno)::text))) LEFT JOIN jp_dcl_edw.tm14shkos "k" ON (((m.itemcode)::text = ("k".itemcode)::text))) LEFT JOIN jp_dcl_edw.get_ci_next_sale "next" ON ((((m.saleno)::text = ("next".saleno)::text) AND (m.juchgyono = "next".juchgyono)))) WHERE (((((h.cancelflg = ((0)::numeric)::numeric(18,0)) AND ((h.torikeikbn)::text = ('01'::character varying)::text)) AND ((m.itemcode)::text <> ('9990000100'::character varying)::text)) AND ((m.itemcode)::text <> ('9990000200'::character varying)::text)) AND (h.kakokbn = ((0)::numeric)::numeric(18,0))) GROUP BY trunc(((h.shukadate)::double precision / (100)::double precision)), CASE WHEN (h.smkeiroid = ((5)::numeric)::numeric(18,0)) THEN '121'::character varying ELSE CASE WHEN (h.smkeiroid = ((6)::numeric)::numeric(18,0)) THEN '112'::character varying WHEN (h.marker = ((4)::numeric)::numeric(18,0)) THEN '511'::character varying ELSE '111'::character varying END END, h.daihanrobunname, h.torikeikbn, m.itemcode_hanbai, "k".kosecode, h.juchkbn, h.henreasoncode, h.henreasonname, h.bmn_hyouji_cd, h.bmn_nms) UNION ALL SELECT trunc(((h.shukadate)::double precision / (100)::double precision)) AS shukanengetu, CASE WHEN ((h.torikeikbn)::text = ('02'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text = ('QVC0000001'::character varying)::text) THEN '321'::character varying WHEN (((h.tokuicode)::text = ('CC00100001'::character varying)::text) OR ((h.tokuicode)::text = ('CC00100000'::character varying)::text)) THEN '111'::character varying ELSE CASE WHEN ((h.fskbn = ((1)::numeric)::numeric(18,0)) OR (h.fskbn = ((0)::numeric)::numeric(18,0))) THEN '511'::character varying ELSE CASE WHEN ((h.shokuikibunrui)::text = ('1'::character varying)::text) THEN '312'::character varying WHEN ((h.shokuikibunrui)::text = ('2'::character varying)::text) THEN '313'::character varying WHEN ((h.shokuikibunrui)::text = ('3'::character varying)::text) THEN '314'::character varying ELSE CASE WHEN ("substring"((h.tokuicode)::text, 2, 9) <= ('000499999'::character varying)::text) THEN '311'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000600000'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000799999'::character varying)::text)) THEN '412'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000500001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000599999'::character varying)::text)) THEN '312'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000800001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000899999'::character varying)::text)) THEN '311'::character varying WHEN ("substring"((h.tokuicode)::text, 2, 9) >= ('000900000'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('VIP%'::character varying)::text) THEN '113'::character varying WHEN ((h.tokuicode)::text ~~ ('CINEXT%'::character varying)::text) THEN '111'::character varying ELSE '412'::character varying END ELSE ''::character varying END END END END ELSE CASE WHEN ((h.torikeikbn)::text = ('03'::character varying)::text) THEN '211'::character varying WHEN ((h.torikeikbn)::text = ('04'::character varying)::text) THEN '212'::character varying WHEN ((h.torikeikbn)::text = ('05'::character varying)::text) THEN '213'::character varying WHEN ((h.torikeikbn)::text = ('06'::character varying)::text) THEN '214'::character varying ELSE NULL::character varying END END AS channel, ''::character varying AS konyuchubuncode, h.torikeikbn, h.tokuicode, m.itemcode_hanbai AS itemcode, "k".kosecode, h.juchkbn, sum(((m.suryo * COALESCE(item.bunkai_kossu, ((1)::numeric)::numeric(18,0))) * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0)))) AS suryo, sum(CASE WHEN (("substring"((h.juchkbn)::text, 1, 1) = ('9'::character varying)::text) OR (("substring"((h.juchkbn)::text, 1, 1) IS NULL) AND ('9' IS NULL))) THEN ((m.hensu * COALESCE(item.bunkai_kossu, ((1)::numeric)::numeric(18,0))) * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0))) ELSE ((0)::numeric)::numeric(18,0) END) AS hensu, 0 AS anbunmaegaku_tyouseimae, 0 AS meisainukikingaku_tyouseimae, sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo, sum((((m.meisainukikingaku)::double precision * COALESCE(item.bunkai_kosritu, (1)::double precision)) * (COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))::double precision)) AS meisainukikingaku_tyouseigo, sum((((m.anbunmeisainukikingaku)::double precision * COALESCE(item.bunkai_kosritu, (1)::double precision)) * (COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))::double precision)) AS anbunmeisainukikingaku, h.henreasoncode, h.henreasonname, ''::character varying AS sokoname, h.bmn_hyouji_cd, h.bmn_nms FROM ((((jp_dcl_edw.cit85osalh h JOIN jp_dcl_edw.cit86osalm m ON (((h.ourino)::text = (m.ourino)::text))) LEFT JOIN jp_dcl_edw.cim08shkos_bunkai item ON (((m.itemcode_hanbai)::text = (item.itemcode)::text))) LEFT JOIN jp_dcl_edw.syouhincd_henkan henkan ON (((item.bunkai_itemcode)::text = (henkan.itemcode)::text))) LEFT JOIN jp_dcl_edw.tm14shkos "k" ON (((COALESCE(henkan.koseiocode, COALESCE(item.bunkai_itemcode, (m.itemcode)::character varying(65535))))::text = ("k".itemcode)::text))) WHERE (h.kakokbn = ((1)::numeric)::numeric(18,0)) GROUP BY trunc(((h.shukadate)::double precision / (100)::double precision)), CASE WHEN ((h.torikeikbn)::text = ('02'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text = ('QVC0000001'::character varying)::text) THEN '321'::character varying WHEN (((h.tokuicode)::text = ('CC00100001'::character varying)::text) OR ((h.tokuicode)::text = ('CC00100000'::character varying)::text)) THEN '111'::character varying ELSE CASE WHEN ((h.fskbn = ((1)::numeric)::numeric(18,0)) OR (h.fskbn = ((0)::numeric)::numeric(18,0))) THEN '511'::character varying ELSE CASE WHEN ((h.shokuikibunrui)::text = ('1'::character varying)::text) THEN '312'::character varying WHEN ((h.shokuikibunrui)::text = ('2'::character varying)::text) THEN '313'::character varying WHEN ((h.shokuikibunrui)::text = ('3'::character varying)::text) THEN '314'::character varying ELSE CASE WHEN ("substring"((h.tokuicode)::text, 2, 9) <= ('000499999'::character varying)::text) THEN '311'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000600000'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000799999'::character varying)::text)) THEN '412'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000500001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000599999'::character varying)::text)) THEN '312'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000800001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000899999'::character varying)::text)) THEN '311'::character varying WHEN ("substring"((h.tokuicode)::text, 2, 9) >= ('000900000'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('VIP%'::character varying)::text) THEN '113'::character varying WHEN ((h.tokuicode)::text ~~ ('CINEXT%'::character varying)::text) THEN '111'::character varying ELSE '412'::character varying END ELSE ''::character varying END END END END ELSE CASE WHEN ((h.torikeikbn)::text = ('03'::character varying)::text) THEN '211'::character varying WHEN ((h.torikeikbn)::text = ('04'::character varying)::text) THEN '212'::character varying WHEN ((h.torikeikbn)::text = ('05'::character varying)::text) THEN '213'::character varying WHEN ((h.torikeikbn)::text = ('06'::character varying)::text) THEN '214'::character varying ELSE NULL::character varying END END, h.torikeikbn, h.tokuicode, m.itemcode_hanbai, "k".kosecode, h.juchkbn, h.henreasoncode, h.henreasonname, h.bmn_hyouji_cd, h.bmn_nms) UNION ALL SELECT trunc(((h.shukadate)::double precision / (100)::double precision)) AS shukanengetu, CASE WHEN ((h.torikeikbn)::text = ('02'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text = ('QVC0000001'::character varying)::text) THEN '321'::character varying WHEN (((h.tokuicode)::text = ('CC00100001'::character varying)::text) OR ((h.tokuicode)::text = ('CC00100000'::character varying)::text)) THEN '111'::character varying ELSE CASE WHEN ((h.fskbn = ((1)::numeric)::numeric(18,0)) OR (h.fskbn = ((0)::numeric)::numeric(18,0))) THEN '511'::character varying ELSE CASE WHEN ((h.shokuikibunrui)::text = ('1'::character varying)::text) THEN '312'::character varying WHEN ((h.shokuikibunrui)::text = ('2'::character varying)::text) THEN '313'::character varying WHEN ((h.shokuikibunrui)::text = ('3'::character varying)::text) THEN '314'::character varying ELSE CASE WHEN ("substring"((h.tokuicode)::text, 2, 9) <= ('000499999'::character varying)::text) THEN '311'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000600000'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000799999'::character varying)::text)) THEN '412'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000500001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000599999'::character varying)::text)) THEN '312'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000800001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000899999'::character varying)::text)) THEN '311'::character varying WHEN ("substring"((h.tokuicode)::text, 2, 9) >= ('000900000'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('VIP%'::character varying)::text) THEN '113'::character varying WHEN ((h.tokuicode)::text ~~ ('CINEXT%'::character varying)::text) THEN '111'::character varying ELSE '412'::character varying END ELSE ''::character varying END END END END ELSE CASE WHEN ((h.torikeikbn)::text = ('03'::character varying)::text) THEN '211'::character varying WHEN ((h.torikeikbn)::text = ('04'::character varying)::text) THEN '212'::character varying WHEN ((h.torikeikbn)::text = ('05'::character varying)::text) THEN '213'::character varying WHEN ((h.torikeikbn)::text = ('06'::character varying)::text) THEN '214'::character varying ELSE NULL::character varying END END AS channel, ''::character varying AS konyuchubuncode, h.torikeikbn, h.tokuicode, m.itemcode, "k".kosecode, h.juchkbn, sum((m.suryo * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0)))) AS suryo, sum(CASE WHEN (("substring"((h.juchkbn)::text, 1, 1) = ('9'::character varying)::text) OR (("substring"((h.juchkbn)::text, 1, 1) IS NULL) AND ('9' IS NULL))) THEN (m.hensu * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0))) ELSE ((0)::numeric)::numeric(18,0) END) AS hensu, 0 AS anbunmaegaku_tyouseimae, 0 AS meisainukikingaku_tyouseimae, sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo, sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS meisainukikingaku_tyouseigo, sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS anbunmeisainukikingaku, h.henreasoncode, h.henreasonname, (t.sokoname)::character varying AS sokoname, h.bmn_hyouji_cd, h.bmn_nms FROM (((jp_dcl_edw.cit85osalh h JOIN jp_dcl_edw.cit86osalm m ON (((h.ourino)::text = (m.ourino)::text))) LEFT JOIN jp_dcl_edw.tm14shkos "k" ON (((m.itemcode)::text = ("k".itemcode)::text))) LEFT JOIN (SELECT tm.c_dstempocode AS sokocode, (((((tm.c_dstempocode)::text || (' : '::character varying)::text) || (tm.c_dstemponame)::text) || (' '::character varying)::text) || (tm.c_dstemponame)::text) AS sokoname FROM jp_dcl_itg.c_tbecclient tm) t ON (((h.tenpocode)::text = (t.sokocode)::text))) WHERE (h.kakokbn = ((0)::numeric)::numeric(18,0)) GROUP BY trunc(((h.shukadate)::double precision / (100)::double precision)), CASE WHEN ((h.torikeikbn)::text = ('02'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text = ('QVC0000001'::character varying)::text) THEN '321'::character varying WHEN (((h.tokuicode)::text = ('CC00100001'::character varying)::text) OR ((h.tokuicode)::text = ('CC00100000'::character varying)::text)) THEN '111'::character varying ELSE CASE WHEN ((h.fskbn = ((1)::numeric)::numeric(18,0)) OR (h.fskbn = ((0)::numeric)::numeric(18,0))) THEN '511'::character varying ELSE CASE WHEN ((h.shokuikibunrui)::text = ('1'::character varying)::text) THEN '312'::character varying WHEN ((h.shokuikibunrui)::text = ('2'::character varying)::text) THEN '313'::character varying WHEN ((h.shokuikibunrui)::text = ('3'::character varying)::text) THEN '314'::character varying ELSE CASE WHEN ("substring"((h.tokuicode)::text, 2, 9) <= ('000499999'::character varying)::text) THEN '311'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000600000'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000799999'::character varying)::text)) THEN '412'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000500001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000599999'::character varying)::text)) THEN '312'::character varying WHEN (("substring"((h.tokuicode)::text, 2, 9) >= ('000800001'::character varying)::text) AND ("substring"((h.tokuicode)::text, 2, 9) <= ('000899999'::character varying)::text)) THEN '311'::character varying WHEN ("substring"((h.tokuicode)::text, 2, 9) >= ('000900000'::character varying)::text) THEN CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('VIP%'::character varying)::text) THEN '113'::character varying WHEN ((h.tokuicode)::text ~~ ('CINEXT%'::character varying)::text) THEN '111'::character varying ELSE '412'::character varying END ELSE ''::character varying END END END END ELSE CASE WHEN ((h.torikeikbn)::text = ('03'::character varying)::text) THEN '211'::character varying WHEN ((h.torikeikbn)::text = ('04'::character varying)::text) THEN '212'::character varying WHEN ((h.torikeikbn)::text = ('05'::character varying)::text) THEN '213'::character varying WHEN ((h.torikeikbn)::text = ('06'::character varying)::text) THEN '214'::character varying ELSE NULL::character varying END END, h.torikeikbn, h.tokuicode, m.itemcode, "k".kosecode, h.juchkbn, h.henreasoncode, h.henreasonname, t.sokoname, h.bmn_hyouji_cd, h.bmn_nms) UNION ALL SELECT trunc(((h.shukadate)::double precision / (100)::double precision)) AS shukanengetu, CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('000091%'::character varying)::text) THEN '413'::character varying ELSE '412'::character varying END AS channel, ''::character varying AS konyuchubuncode, h.torikeikbn, h.tokuicode, m.itemcode, "k".kosecode, h.juchkbn, sum((m.suryo * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0)))) AS suryo, sum(CASE WHEN (("substring"((h.juchkbn)::text, 1, 1) = ('9'::character varying)::text) OR (("substring"((h.juchkbn)::text, 1, 1) IS NULL) AND ('9' IS NULL))) THEN (m.hensu * COALESCE("k".suryo, ((1)::numeric)::numeric(18,0))) ELSE ((0)::numeric)::numeric(18,0) END) AS hensu, 0 AS anbunmaegaku_tyouseimae, 0 AS meisainukikingaku_tyouseimae, sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo, sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS meisainukikingaku_tyouseigo, sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::numeric)::numeric(18,0)))) AS anbunmeisainukikingaku, h.henreasoncode, h.henreasonname, ''::character varying AS sokoname, h.bmn_hyouji_cd, h.bmn_nms FROM ((jp_dcl_edw.cit85osalh_kaigai h JOIN jp_dcl_edw.cit86osalm_kaigai m ON (((h.ourino)::text = (m.ourino)::text))) LEFT JOIN jp_dcl_edw.tm14shkos "k" ON (((m.itemcode)::text = ("k".itemcode)::text))) WHERE (h.kakokbn = ((0)::numeric)::numeric(18,0)) GROUP BY trunc(((h.shukadate)::double precision / (100)::double precision)), CASE WHEN ((h.tokuicode)::text ~~ ('000099%'::character varying)::text) THEN '411'::character varying WHEN ((h.tokuicode)::text ~~ ('000091%'::character varying)::text) THEN '413'::character varying ELSE '412'::character varying END, h.torikeikbn, h.tokuicode, m.itemcode, "k".kosecode, h.juchkbn, h.henreasoncode, h.henreasonname, h.bmn_hyouji_cd, h.bmn_nms) t LEFT JOIN jp_dcl_edw.cim03item_hanbai ia ON (((t.itemcode)::text = (ia.itemcode)::text))) LEFT JOIN jp_dcl_edw.cim03item_zaiko ib ON (((t.kosecode)::text = (ib.itemcode)::text))) LEFT JOIN jp_dcl_edw.cim03item_zaiko ia2 ON (((t.itemcode)::text = (ia2.itemcode)::text))) LEFT JOIN jp_dcl_edw.cim03item_hanbai ib2 ON (((t.kosecode)::text = (ib2.itemcode)::text))) LEFT JOIN jp_dcl_edw.zaiko_shohin_attr z ON (((t.kosecode)::text = (z.shohin_code)::text))) LEFT JOIN jp_dcl_edw.tm67juch_nm tm67 ON (((t.juchkbn)::text = (tm67.code)::text))) LEFT JOIN jp_dcl_edw.cim02tokui cim02 ON (((t.tokuicode)::text = (cim02.tokuicode)::text))) LEFT JOIN jp_dcl_edw.cim24itbun cim24_daidai ON (((((ib.bunruicode5)::text = (cim24_daidai.itbuncode)::text) AND ((cim24_daidai.itbunshcode)::text = ((5)::character varying)::text)) AND ((ib.syutoku_kbn)::text = ('PORT'::character varying)::text)))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('1'::character varying)::text)) misettei1 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('2'::character varying)::text)) misettei2 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('3'::character varying)::text)) misettei3 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('4'::character varying)::text)) misettei4 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('5'::character varying)::text)) misettei5 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('6'::character varying)::text)) misettei6 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('7'::character varying)::text)) misettei7 ON ((1 = 1))) JOIN (SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no", "wqtm07属性未設定名称マスタ"."区分名称その他" FROM jp_dcl_edw."wqtm07属性未設定名称マスタ" WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::text = ('8'::character varying)::text)) misettei8 ON ((1 = 1)));
+WITH cit85osalh
+AS (
+    SELECT *
+    FROM JPDCLEDW_INTEGRATION.cit85osalh
+    ),
+"wqtm07属性未設定名称マスタ" AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION."wqtm07属性未設定名称マスタ"
+),
+cit80saleh AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cit80saleh
+),
+cit81salem AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cit81salem
+),
+cim08shkos_bunkai AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cim08shkos_bunkai
+),
+syouhincd_henkan AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.syouhincd_henkan
+),
+tm14shkos AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.tm14shkos
+),
+get_ci_next_sale AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.get_ci_next_sale
+),
+cit86osalm AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cit86osalm
+),
+c_tbecclient AS 
+(
+    SELECT * FROM JPDCLITG_INTEGRATION.c_tbecclient
+),
+cit85osalh_kaigai AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cit85osalh_kaigai
+),
+cit86osalm_kaigai AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cit86osalm_kaigai
+),
+cim03item_hanbai AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cim03item_hanbai
+),
+cim03item_zaiko AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cim03item_zaiko
+),
+zaiko_shohin_attr AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.zaiko_shohin_attr
+),
+tm67juch_nm AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.tm67juch_nm
+),
+cim02tokui AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cim02tokui
+),
+cim24itbun AS 
+(
+    SELECT * FROM JPDCLEDW_INTEGRATION.cim24itbun
+),
+misettei1
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+    ),
+misettei2
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+    ),
+misettei3
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+    ),
+misettei4
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('4'::CHARACTER VARYING)::TEXT)
+    ),
+misettei5
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('5'::CHARACTER VARYING)::TEXT)
+    ),
+misettei6
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('6'::CHARACTER VARYING)::TEXT)
+    ),
+misettei7
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('7'::CHARACTER VARYING)::TEXT)
+    ),
+misettei8
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('8'::CHARACTER VARYING)::TEXT)
+    ),
+t1
+AS (
+    SELECT trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)) AS shukanengetu,
+        CASE 
+            WHEN ((h.kaisha)::TEXT = ('000'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.daihanrobunname)::TEXT = ('Web'::CHARACTER VARYING)::TEXT)
+                            THEN '121'::CHARACTER VARYING
+                        ELSE '111'::CHARACTER VARYING
+                        END
+            WHEN ((h.kaisha)::TEXT = ('001'::CHARACTER VARYING)::TEXT)
+                THEN '112'::CHARACTER VARYING
+            ELSE '114'::CHARACTER VARYING
+            END AS channel,
+        h.daihanrobunname AS konyuchubuncode,
+        h.torikeikbn,
+        'ダミーコード'::CHARACTER VARYING AS tokuicode,
+        m.itemcode_hanbai AS itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        sum(((m.suryo * COALESCE(item.bunkai_kossu, ((1)::NUMERIC)::NUMERIC(18, 0))) * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS suryo,
+        sum(CASE 
+                WHEN (
+                        (
+                            "substring" (
+                                (h.juchkbn)::TEXT,
+                                1,
+                                1
+                                ) = ('9'::CHARACTER VARYING)::TEXT
+                            )
+                        OR (
+                            (
+                                "substring" (
+                                    (h.juchkbn)::TEXT,
+                                    1,
+                                    1
+                                    ) IS NULL
+                                )
+                            AND ('9' IS NULL)
+                            )
+                        )
+                    THEN ((m.hensu * COALESCE(item.bunkai_kossu, ((1)::NUMERIC)::NUMERIC(18, 0))) * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))
+                ELSE ((0)::NUMERIC)::NUMERIC(18, 0)
+                END) AS hensu,
+        0 AS anbunmaegaku_tyouseimae,
+        0 AS meisainukikingaku_tyouseimae,
+        sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo,
+        sum((((m.meisainukikingaku)::DOUBLE PRECISION * COALESCE(item.bunkai_kosritu, (1)::DOUBLE PRECISION)) * (COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))::DOUBLE PRECISION)) AS meisainukikingaku_tyouseigo,
+        sum((((m.anbunmeisainukikingaku)::DOUBLE PRECISION * COALESCE(item.bunkai_kosritu, (1)::DOUBLE PRECISION)) * (COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))::DOUBLE PRECISION)) AS anbunmeisainukikingaku,
+        h.henreasoncode,
+        h.henreasonname,
+        ''::CHARACTER VARYING AS sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    FROM (
+        (
+            (
+                (
+                    cit80saleh h JOIN cit81salem m ON (((h.saleno)::TEXT = (m.saleno)::TEXT))
+                    ) LEFT JOIN cim08shkos_bunkai item ON (((m.itemcode_hanbai)::TEXT = (item.itemcode)::TEXT))
+                ) LEFT JOIN syouhincd_henkan henkan ON (((item.bunkai_itemcode)::TEXT = (henkan.itemcode)::TEXT))
+            ) LEFT JOIN tm14shkos "k" ON (((COALESCE(henkan.koseiocode, COALESCE(item.bunkai_itemcode, (m.itemcode)::CHARACTER VARYING(65535))))::TEXT = ("k".itemcode)::TEXT))
+        )
+    WHERE (
+            (
+                (
+                    (
+                        (h.cancelflg = ((0)::NUMERIC)::NUMERIC(18, 0))
+                        AND ((h.torikeikbn)::TEXT = ('01'::CHARACTER VARYING)::TEXT)
+                        )
+                    AND ((m.itemcode)::TEXT <> ('9990000100'::CHARACTER VARYING)::TEXT)
+                    )
+                AND ((m.itemcode)::TEXT <> ('9990000200'::CHARACTER VARYING)::TEXT)
+                )
+            AND (h.kakokbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+            )
+    GROUP BY trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)),
+        CASE 
+            WHEN ((h.kaisha)::TEXT = ('000'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.daihanrobunname)::TEXT = ('Web'::CHARACTER VARYING)::TEXT)
+                            THEN '121'::CHARACTER VARYING
+                        ELSE '111'::CHARACTER VARYING
+                        END
+            WHEN ((h.kaisha)::TEXT = ('001'::CHARACTER VARYING)::TEXT)
+                THEN '112'::CHARACTER VARYING
+            ELSE '114'::CHARACTER VARYING
+            END,
+        h.daihanrobunname,
+        h.torikeikbn,
+        m.itemcode_hanbai,
+        "k".kosecode,
+        h.juchkbn,
+        h.henreasoncode,
+        h.henreasonname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    ),
+t2
+AS (
+    SELECT trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)) AS shukanengetu,
+        CASE 
+            WHEN (h.smkeiroid = ((5)::NUMERIC)::NUMERIC(18, 0))
+                THEN '121'::CHARACTER VARYING
+            ELSE CASE 
+                    WHEN (h.smkeiroid = ((6)::NUMERIC)::NUMERIC(18, 0))
+                        THEN '112'::CHARACTER VARYING
+                    WHEN (h.marker = ((4)::NUMERIC)::NUMERIC(18, 0))
+                        THEN '511'::CHARACTER VARYING
+                    ELSE '111'::CHARACTER VARYING
+                    END
+            END AS channel,
+        h.daihanrobunname AS konyuchubuncode,
+        h.torikeikbn,
+        'ダミーコード'::CHARACTER VARYING AS tokuicode,
+        m.itemcode_hanbai AS itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        sum((m.suryo * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS suryo,
+        sum(CASE 
+                WHEN (
+                        (
+                            "substring" (
+                                (h.juchkbn)::TEXT,
+                                1,
+                                1
+                                ) = ('9'::CHARACTER VARYING)::TEXT
+                            )
+                        OR (
+                            (
+                                "substring" (
+                                    (h.juchkbn)::TEXT,
+                                    1,
+                                    1
+                                    ) IS NULL
+                                )
+                            AND ('9' IS NULL)
+                            )
+                        )
+                    THEN (m.hensu * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))
+                ELSE ((0)::NUMERIC)::NUMERIC(18, 0)
+                END) AS hensu,
+        sum("next".tyouseimaekingaku) AS anbunmaegaku_tyouseimae,
+        sum(("next".tyouseimaekingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS meisainukikingaku_tyouseimae,
+        sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo,
+        sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS meisainukikingaku_tyouseigo,
+        sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS anbunmeisainukikingaku,
+        h.henreasoncode,
+        h.henreasonname,
+        ''::CHARACTER VARYING AS sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    FROM (
+        (
+            (
+                cit80saleh h JOIN cit81salem m ON (((h.saleno)::TEXT = (m.saleno)::TEXT))
+                ) LEFT JOIN tm14shkos "k" ON (((m.itemcode)::TEXT = ("k".itemcode)::TEXT))
+            ) LEFT JOIN get_ci_next_sale "next" ON (
+                (
+                    ((m.saleno)::TEXT = ("next".saleno)::TEXT)
+                    AND (m.juchgyono = "next".juchgyono)
+                    )
+                )
+        )
+    WHERE (
+            (
+                (
+                    (
+                        (h.cancelflg = ((0)::NUMERIC)::NUMERIC(18, 0))
+                        AND ((h.torikeikbn)::TEXT = ('01'::CHARACTER VARYING)::TEXT)
+                        )
+                    AND ((m.itemcode)::TEXT <> ('9990000100'::CHARACTER VARYING)::TEXT)
+                    )
+                AND ((m.itemcode)::TEXT <> ('9990000200'::CHARACTER VARYING)::TEXT)
+                )
+            AND (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+            )
+    GROUP BY trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)),
+        CASE 
+            WHEN (h.smkeiroid = ((5)::NUMERIC)::NUMERIC(18, 0))
+                THEN '121'::CHARACTER VARYING
+            ELSE CASE 
+                    WHEN (h.smkeiroid = ((6)::NUMERIC)::NUMERIC(18, 0))
+                        THEN '112'::CHARACTER VARYING
+                    WHEN (h.marker = ((4)::NUMERIC)::NUMERIC(18, 0))
+                        THEN '511'::CHARACTER VARYING
+                    ELSE '111'::CHARACTER VARYING
+                    END
+            END,
+        h.daihanrobunname,
+        h.torikeikbn,
+        m.itemcode_hanbai,
+        "k".kosecode,
+        h.juchkbn,
+        h.henreasoncode,
+        h.henreasonname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    ),
+t3
+AS (
+    SELECT trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)) AS shukanengetu,
+        CASE 
+            WHEN ((h.torikeikbn)::TEXT = ('02'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.tokuicode)::TEXT = ('QVC0000001'::CHARACTER VARYING)::TEXT)
+                            THEN '321'::CHARACTER VARYING
+                        WHEN (
+                                ((h.tokuicode)::TEXT = ('CC00100001'::CHARACTER VARYING)::TEXT)
+                                OR ((h.tokuicode)::TEXT = ('CC00100000'::CHARACTER VARYING)::TEXT)
+                                )
+                            THEN '111'::CHARACTER VARYING
+                        ELSE CASE 
+                                WHEN (
+                                        (h.fskbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+                                        OR (h.fskbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+                                        )
+                                    THEN '511'::CHARACTER VARYING
+                                ELSE CASE 
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+                                            THEN '312'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+                                            THEN '313'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+                                            THEN '314'::CHARACTER VARYING
+                                        ELSE CASE 
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) <= ('000499999'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000600000'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000799999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '412'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000500001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000599999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '312'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000800001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000899999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) >= ('000900000'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN CASE 
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '411'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('VIP%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '113'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('CINEXT%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '111'::CHARACTER VARYING
+                                                            ELSE '412'::CHARACTER VARYING
+                                                            END
+                                                ELSE ''::CHARACTER VARYING
+                                                END
+                                        END
+                                END
+                        END
+            ELSE CASE 
+                    WHEN ((h.torikeikbn)::TEXT = ('03'::CHARACTER VARYING)::TEXT)
+                        THEN '211'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('04'::CHARACTER VARYING)::TEXT)
+                        THEN '212'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('05'::CHARACTER VARYING)::TEXT)
+                        THEN '213'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('06'::CHARACTER VARYING)::TEXT)
+                        THEN '214'::CHARACTER VARYING
+                    ELSE NULL::CHARACTER VARYING
+                    END
+            END AS channel,
+        ''::CHARACTER VARYING AS konyuchubuncode,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode_hanbai AS itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        sum(((m.suryo * COALESCE(item.bunkai_kossu, ((1)::NUMERIC)::NUMERIC(18, 0))) * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS suryo,
+        sum(CASE 
+                WHEN (
+                        (
+                            "substring" (
+                                (h.juchkbn)::TEXT,
+                                1,
+                                1
+                                ) = ('9'::CHARACTER VARYING)::TEXT
+                            )
+                        OR (
+                            (
+                                "substring" (
+                                    (h.juchkbn)::TEXT,
+                                    1,
+                                    1
+                                    ) IS NULL
+                                )
+                            AND ('9' IS NULL)
+                            )
+                        )
+                    THEN ((m.hensu * COALESCE(item.bunkai_kossu, ((1)::NUMERIC)::NUMERIC(18, 0))) * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))
+                ELSE ((0)::NUMERIC)::NUMERIC(18, 0)
+                END) AS hensu,
+        0 AS anbunmaegaku_tyouseimae,
+        0 AS meisainukikingaku_tyouseimae,
+        sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo,
+        sum((((m.meisainukikingaku)::DOUBLE PRECISION * COALESCE(item.bunkai_kosritu, (1)::DOUBLE PRECISION)) * (COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))::DOUBLE PRECISION)) AS meisainukikingaku_tyouseigo,
+        sum((((m.anbunmeisainukikingaku)::DOUBLE PRECISION * COALESCE(item.bunkai_kosritu, (1)::DOUBLE PRECISION)) * (COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))::DOUBLE PRECISION)) AS anbunmeisainukikingaku,
+        h.henreasoncode,
+        h.henreasonname,
+        ''::CHARACTER VARYING AS sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    FROM (
+        (
+            (
+                (
+                    cit85osalh h JOIN cit86osalm m ON (((h.ourino)::TEXT = (m.ourino)::TEXT))
+                    ) LEFT JOIN cim08shkos_bunkai item ON (((m.itemcode_hanbai)::TEXT = (item.itemcode)::TEXT))
+                ) LEFT JOIN syouhincd_henkan henkan ON (((item.bunkai_itemcode)::TEXT = (henkan.itemcode)::TEXT))
+            ) LEFT JOIN tm14shkos "k" ON (((COALESCE(henkan.koseiocode, COALESCE(item.bunkai_itemcode, (m.itemcode)::CHARACTER VARYING(65535))))::TEXT = ("k".itemcode)::TEXT))
+        )
+    WHERE (h.kakokbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+    GROUP BY trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)),
+        CASE 
+            WHEN ((h.torikeikbn)::TEXT = ('02'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.tokuicode)::TEXT = ('QVC0000001'::CHARACTER VARYING)::TEXT)
+                            THEN '321'::CHARACTER VARYING
+                        WHEN (
+                                ((h.tokuicode)::TEXT = ('CC00100001'::CHARACTER VARYING)::TEXT)
+                                OR ((h.tokuicode)::TEXT = ('CC00100000'::CHARACTER VARYING)::TEXT)
+                                )
+                            THEN '111'::CHARACTER VARYING
+                        ELSE CASE 
+                                WHEN (
+                                        (h.fskbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+                                        OR (h.fskbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+                                        )
+                                    THEN '511'::CHARACTER VARYING
+                                ELSE CASE 
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+                                            THEN '312'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+                                            THEN '313'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+                                            THEN '314'::CHARACTER VARYING
+                                        ELSE CASE 
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) <= ('000499999'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000600000'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000799999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '412'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000500001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000599999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '312'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000800001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000899999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) >= ('000900000'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN CASE 
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '411'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('VIP%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '113'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('CINEXT%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '111'::CHARACTER VARYING
+                                                            ELSE '412'::CHARACTER VARYING
+                                                            END
+                                                ELSE ''::CHARACTER VARYING
+                                                END
+                                        END
+                                END
+                        END
+            ELSE CASE 
+                    WHEN ((h.torikeikbn)::TEXT = ('03'::CHARACTER VARYING)::TEXT)
+                        THEN '211'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('04'::CHARACTER VARYING)::TEXT)
+                        THEN '212'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('05'::CHARACTER VARYING)::TEXT)
+                        THEN '213'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('06'::CHARACTER VARYING)::TEXT)
+                        THEN '214'::CHARACTER VARYING
+                    ELSE NULL::CHARACTER VARYING
+                    END
+            END,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode_hanbai,
+        "k".kosecode,
+        h.juchkbn,
+        h.henreasoncode,
+        h.henreasonname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    ),
+t4
+AS (
+    SELECT trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)) AS shukanengetu,
+        CASE 
+            WHEN ((h.torikeikbn)::TEXT = ('02'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.tokuicode)::TEXT = ('QVC0000001'::CHARACTER VARYING)::TEXT)
+                            THEN '321'::CHARACTER VARYING
+                        WHEN (
+                                ((h.tokuicode)::TEXT = ('CC00100001'::CHARACTER VARYING)::TEXT)
+                                OR ((h.tokuicode)::TEXT = ('CC00100000'::CHARACTER VARYING)::TEXT)
+                                )
+                            THEN '111'::CHARACTER VARYING
+                        ELSE CASE 
+                                WHEN (
+                                        (h.fskbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+                                        OR (h.fskbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+                                        )
+                                    THEN '511'::CHARACTER VARYING
+                                ELSE CASE 
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+                                            THEN '312'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+                                            THEN '313'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+                                            THEN '314'::CHARACTER VARYING
+                                        ELSE CASE 
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) <= ('000499999'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000600000'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000799999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '412'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000500001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000599999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '312'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000800001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000899999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) >= ('000900000'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN CASE 
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '411'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('VIP%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '113'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('CINEXT%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '111'::CHARACTER VARYING
+                                                            ELSE '412'::CHARACTER VARYING
+                                                            END
+                                                ELSE ''::CHARACTER VARYING
+                                                END
+                                        END
+                                END
+                        END
+            ELSE CASE 
+                    WHEN ((h.torikeikbn)::TEXT = ('03'::CHARACTER VARYING)::TEXT)
+                        THEN '211'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('04'::CHARACTER VARYING)::TEXT)
+                        THEN '212'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('05'::CHARACTER VARYING)::TEXT)
+                        THEN '213'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('06'::CHARACTER VARYING)::TEXT)
+                        THEN '214'::CHARACTER VARYING
+                    ELSE NULL::CHARACTER VARYING
+                    END
+            END AS channel,
+        ''::CHARACTER VARYING AS konyuchubuncode,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        sum((m.suryo * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS suryo,
+        sum(CASE 
+                WHEN (
+                        (
+                            "substring" (
+                                (h.juchkbn)::TEXT,
+                                1,
+                                1
+                                ) = ('9'::CHARACTER VARYING)::TEXT
+                            )
+                        OR (
+                            (
+                                "substring" (
+                                    (h.juchkbn)::TEXT,
+                                    1,
+                                    1
+                                    ) IS NULL
+                                )
+                            AND ('9' IS NULL)
+                            )
+                        )
+                    THEN (m.hensu * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))
+                ELSE ((0)::NUMERIC)::NUMERIC(18, 0)
+                END) AS hensu,
+        0 AS anbunmaegaku_tyouseimae,
+        0 AS meisainukikingaku_tyouseimae,
+        sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo,
+        sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS meisainukikingaku_tyouseigo,
+        sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS anbunmeisainukikingaku,
+        h.henreasoncode,
+        h.henreasonname,
+        (t.sokoname)::CHARACTER VARYING AS sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    FROM (
+        (
+            (
+                cit85osalh h JOIN cit86osalm m ON (((h.ourino)::TEXT = (m.ourino)::TEXT))
+                ) LEFT JOIN tm14shkos "k" ON (((m.itemcode)::TEXT = ("k".itemcode)::TEXT))
+            ) LEFT JOIN (
+            SELECT tm.c_dstempocode AS sokocode,
+                (((((tm.c_dstempocode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (tm.c_dstemponame)::TEXT) || (' '::CHARACTER VARYING)::TEXT) || (tm.c_dstemponame)::TEXT) AS sokoname
+            FROM c_tbecclient tm
+            ) t ON (((h.tenpocode)::TEXT = (t.sokocode)::TEXT))
+        )
+    WHERE (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+    GROUP BY trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)),
+        CASE 
+            WHEN ((h.torikeikbn)::TEXT = ('02'::CHARACTER VARYING)::TEXT)
+                THEN CASE 
+                        WHEN ((h.tokuicode)::TEXT = ('QVC0000001'::CHARACTER VARYING)::TEXT)
+                            THEN '321'::CHARACTER VARYING
+                        WHEN (
+                                ((h.tokuicode)::TEXT = ('CC00100001'::CHARACTER VARYING)::TEXT)
+                                OR ((h.tokuicode)::TEXT = ('CC00100000'::CHARACTER VARYING)::TEXT)
+                                )
+                            THEN '111'::CHARACTER VARYING
+                        ELSE CASE 
+                                WHEN (
+                                        (h.fskbn = ((1)::NUMERIC)::NUMERIC(18, 0))
+                                        OR (h.fskbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+                                        )
+                                    THEN '511'::CHARACTER VARYING
+                                ELSE CASE 
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+                                            THEN '312'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+                                            THEN '313'::CHARACTER VARYING
+                                        WHEN ((h.shokuikibunrui)::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+                                            THEN '314'::CHARACTER VARYING
+                                        ELSE CASE 
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) <= ('000499999'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000600000'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000799999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '412'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000500001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000599999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '312'::CHARACTER VARYING
+                                                WHEN (
+                                                        (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) >= ('000800001'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        AND (
+                                                            "substring" (
+                                                                (h.tokuicode)::TEXT,
+                                                                2,
+                                                                9
+                                                                ) <= ('000899999'::CHARACTER VARYING)::TEXT
+                                                            )
+                                                        )
+                                                    THEN '311'::CHARACTER VARYING
+                                                WHEN (
+                                                        "substring" (
+                                                            (h.tokuicode)::TEXT,
+                                                            2,
+                                                            9
+                                                            ) >= ('000900000'::CHARACTER VARYING)::TEXT
+                                                        )
+                                                    THEN CASE 
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '411'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('VIP%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '113'::CHARACTER VARYING
+                                                            WHEN ((h.tokuicode)::TEXT LIKE ('CINEXT%'::CHARACTER VARYING)::TEXT)
+                                                                THEN '111'::CHARACTER VARYING
+                                                            ELSE '412'::CHARACTER VARYING
+                                                            END
+                                                ELSE ''::CHARACTER VARYING
+                                                END
+                                        END
+                                END
+                        END
+            ELSE CASE 
+                    WHEN ((h.torikeikbn)::TEXT = ('03'::CHARACTER VARYING)::TEXT)
+                        THEN '211'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('04'::CHARACTER VARYING)::TEXT)
+                        THEN '212'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('05'::CHARACTER VARYING)::TEXT)
+                        THEN '213'::CHARACTER VARYING
+                    WHEN ((h.torikeikbn)::TEXT = ('06'::CHARACTER VARYING)::TEXT)
+                        THEN '214'::CHARACTER VARYING
+                    ELSE NULL::CHARACTER VARYING
+                    END
+            END,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        h.henreasoncode,
+        h.henreasonname,
+        t.sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    ),
+t5 AS 
+(
+    SELECT trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)) AS shukanengetu,
+        CASE 
+            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                THEN '411'::CHARACTER VARYING
+            WHEN ((h.tokuicode)::TEXT LIKE ('000091%'::CHARACTER VARYING)::TEXT)
+                THEN '413'::CHARACTER VARYING
+            ELSE '412'::CHARACTER VARYING
+            END AS channel,
+        ''::CHARACTER VARYING AS konyuchubuncode,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        sum((m.suryo * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS suryo,
+        sum(CASE 
+                WHEN (
+                        (
+                            "substring" (
+                                (h.juchkbn)::TEXT,
+                                1,
+                                1
+                                ) = ('9'::CHARACTER VARYING)::TEXT
+                            )
+                        OR (
+                            (
+                                "substring" (
+                                    (h.juchkbn)::TEXT,
+                                    1,
+                                    1
+                                    ) IS NULL
+                                )
+                            AND ('9' IS NULL)
+                            )
+                        )
+                    THEN (m.hensu * COALESCE("k".suryo, ((1)::NUMERIC)::NUMERIC(18, 0)))
+                ELSE ((0)::NUMERIC)::NUMERIC(18, 0)
+                END) AS hensu,
+        0 AS anbunmaegaku_tyouseimae,
+        0 AS meisainukikingaku_tyouseimae,
+        sum(m.meisainukikingaku) AS anbunmaegaku_tyouseigo,
+        sum((m.meisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS meisainukikingaku_tyouseigo,
+        sum((m.anbunmeisainukikingaku * COALESCE("k".koseritsu, ((1)::NUMERIC)::NUMERIC(18, 0)))) AS anbunmeisainukikingaku,
+        h.henreasoncode,
+        h.henreasonname,
+        ''::CHARACTER VARYING AS sokoname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+    FROM (
+        (
+            cit85osalh_kaigai h JOIN cit86osalm_kaigai m ON (((h.ourino)::TEXT = (m.ourino)::TEXT))
+            ) LEFT JOIN tm14shkos "k" ON (((m.itemcode)::TEXT = ("k".itemcode)::TEXT))
+        )
+    WHERE (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
+    GROUP BY trunc(((h.shukadate)::DOUBLE PRECISION / (100)::DOUBLE PRECISION)),
+        CASE 
+            WHEN ((h.tokuicode)::TEXT LIKE ('000099%'::CHARACTER VARYING)::TEXT)
+                THEN '411'::CHARACTER VARYING
+            WHEN ((h.tokuicode)::TEXT LIKE ('000091%'::CHARACTER VARYING)::TEXT)
+                THEN '413'::CHARACTER VARYING
+            ELSE '412'::CHARACTER VARYING
+            END,
+        h.torikeikbn,
+        h.tokuicode,
+        m.itemcode,
+        "k".kosecode,
+        h.juchkbn,
+        h.henreasoncode,
+        h.henreasonname,
+        h.bmn_hyouji_cd,
+        h.bmn_nms
+        ),
+t
+AS (
+    SELECT *
+    FROM T1
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T2
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T3
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T4
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T5
+    ),
+FINAL
+AS (
+    SELECT t.shukanengetu,
+        t.channel,
+        t.konyuchubuncode,
+        t.torikeikbn,
+        (((t.tokuicode)::TEXT || (nvl2(cim02.tokuiname, ' : '::CHARACTER VARYING, ''::CHARACTER VARYING))::TEXT) || COALESCE((((cim02.tokuiname)::TEXT || (' '::CHARACTER VARYING)::TEXT) || (cim02.tokuiname_ryaku)::TEXT), ((''::CHARACTER VARYING)::CHARACTER VARYING(65535))::TEXT)) AS tokuicode,
+        (((COALESCE(t.itemcode, ''::CHARACTER VARYING))::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(COALESCE(ia.itemname, ''::CHARACTER VARYING), (COALESCE(ia2.itemname, ''::CHARACTER VARYING))::CHARACTER VARYING(65535)))::TEXT) AS hanbaiitem,
+        ((COALESCE(TRIM((ib.bar_cd2)::TEXT), ((ib.itemcode)::CHARACTER VARYING(65535))::TEXT) || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(ib.itemname, (ib2.itemname)::CHARACTER VARYING(65535)))::TEXT) AS kouseiitem,
+        t.kosecode,
+        t.juchkbn,
+        tm67.cname AS juchkbncname,
+        t.suryo,
+        t.hensu,
+        (t.suryo + t.hensu) AS urisuryo,
+        t.anbunmaegaku_tyouseimae,
+        t.meisainukikingaku_tyouseimae,
+        t.anbunmaegaku_tyouseigo,
+        t.meisainukikingaku_tyouseigo,
+        t.anbunmeisainukikingaku,
+        CASE 
+            WHEN (
+                    (
+                        (
+                            (
+                                ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                                OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                                )
+                            OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '通信販売'::CHARACTER VARYING
+            WHEN (
+                    (
+                        (
+                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '対面販売'::CHARACTER VARYING
+            WHEN (
+                    (
+                        (
+                            (
+                                ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                                OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                                )
+                            OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '卸売'::CHARACTER VARYING
+            WHEN (
+                    (
+                        ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+                        OR ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '海外'::CHARACTER VARYING
+            WHEN (
+                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN 'その他'::CHARACTER VARYING
+            ELSE NULL::CHARACTER VARYING
+            END AS channel1,
+        CASE 
+            WHEN (
+                    (
+                        (
+                            ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                            OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '通販'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+                THEN 'WEB'::CHARACTER VARYING
+            WHEN (
+                    (
+                        (
+                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '店舗'::CHARACTER VARYING
+            WHEN (
+                    (
+                        (
+                            ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                            OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                            )
+                        OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                        )
+                    OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '卸売'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+                THEN 'QVC'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+                THEN 'JJ'::CHARACTER VARYING
+            WHEN (
+                    ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN '海外'::CHARACTER VARYING
+            WHEN (
+                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    )
+                THEN 'その他'::CHARACTER VARYING
+            ELSE NULL::CHARACTER VARYING
+            END AS channel2,
+        CASE 
+            WHEN ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                THEN '通販'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                THEN '社販'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                THEN 'VIP'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                THEN '通販'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+                THEN 'WEB'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                THEN '買取'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                THEN '直営'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                THEN '消化'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                THEN 'アウトレット'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                THEN '代理店'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                THEN '職域（特販）'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                THEN '職域（代理店）'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                THEN '職域（販売会）'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+                THEN 'QVC'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+                THEN 'JJ'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                THEN '国内免税'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                THEN '海外免税'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                THEN 'FS'::CHARACTER VARYING
+            WHEN ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                THEN 'その他'::CHARACTER VARYING
+            ELSE NULL::CHARACTER VARYING
+            END AS channel3,
+        t.bmn_hyouji_cd,
+        t.bmn_nms,
+        t.henreasoncode,
+        (((t.henreasoncode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (t.henreasonname)::TEXT) AS henreasonname,
+        t.sokoname,
+        CASE 
+            WHEN (z.bumon6_kubun2 IS NULL)
+                THEN misettei1."区分名称その他"
+            ELSE z.bumon6_kubun2
+            END AS kubun2,
+        CASE 
+            WHEN (z.bumon6_syohingun IS NULL)
+                THEN misettei2."区分名称その他"
+            ELSE z.bumon6_syohingun
+            END AS syohingun,
+        CASE 
+            WHEN (z.bumon6_jyuutenitem IS NULL)
+                THEN misettei3."区分名称その他"
+            ELSE z.bumon6_jyuutenitem
+            END AS jyuutenitem,
+        ib.itemkbnname AS item_bunr_val1,
+        cim24_daidai.itbunname AS item_bunr_val2,
+        ib.bunruicode3_nm AS item_bunr_val3,
+        z.bumon7_add_attr1,
+        z.bumon7_add_attr2,
+        z.bumon7_add_attr3,
+        z.bumon7_add_attr4,
+        z.bumon7_add_attr5,
+        z.bumon7_add_attr6,
+        z.bumon7_add_attr7,
+        z.bumon7_add_attr8,
+        z.bumon7_add_attr9,
+        z.bumon7_add_attr10,
+        z.bumon6_20kisyohingun,
+        z.bumon6_20kinaieki1,
+        z.bumon6_20kinaieki2,
+        z.bumon6_20kinaieki3,
+        z.bumon6_zyutensyohinyobi1,
+        z.bumon6_zyutensyohinyobi2,
+        z.bumon6_zyutensyohinyobi3,
+        z.bumon6_zyutensyohinyobi4,
+        z.bumon6_zyutensyohinyobi5,
+        z.bumon6_okikaename,
+        z.bumon6_zukyuyosoku1,
+        z.bumon6_zukyuyosoku2,
+        z.bumon6_zukyuyosoku3
+    FROM t
+    LEFT JOIN cim03item_hanbai ia ON (((t.itemcode)::TEXT = (ia.itemcode)::TEXT))
+    LEFT JOIN cim03item_zaiko ib ON (((t.kosecode)::TEXT = (ib.itemcode)::TEXT))
+    LEFT JOIN cim03item_zaiko ia2 ON (((t.itemcode)::TEXT = (ia2.itemcode)::TEXT))
+    LEFT JOIN cim03item_hanbai ib2 ON (((t.kosecode)::TEXT = (ib2.itemcode)::TEXT))
+    LEFT JOIN zaiko_shohin_attr z ON (((t.kosecode)::TEXT = (z.shohin_code)::TEXT))
+    LEFT JOIN tm67juch_nm tm67 ON (((t.juchkbn)::TEXT = (tm67.code)::TEXT))
+    LEFT JOIN cim02tokui cim02 ON (((t.tokuicode)::TEXT = (cim02.tokuicode)::TEXT))
+    LEFT JOIN cim24itbun cim24_daidai ON (
+            (
+                (
+                    ((ib.bunruicode5)::TEXT = (cim24_daidai.itbuncode)::TEXT)
+                    AND ((cim24_daidai.itbunshcode)::TEXT = ((5)::CHARACTER VARYING)::TEXT)
+                    )
+                AND ((ib.syutoku_kbn)::TEXT = ('PORT'::CHARACTER VARYING)::TEXT)
+                )
+            )
+    JOIN misettei1 ON ((1 = 1))
+    JOIN misettei2 ON ((1 = 1))
+    JOIN misettei3 ON ((1 = 1))
+    JOIN misettei4 ON ((1 = 1))
+    JOIN misettei5 ON ((1 = 1))
+    JOIN misettei6 ON ((1 = 1))
+    JOIN misettei7 ON ((1 = 1))
+    JOIN misettei8 ON ((1 = 1))
+    )
+SELECT *
+FROM FINAL

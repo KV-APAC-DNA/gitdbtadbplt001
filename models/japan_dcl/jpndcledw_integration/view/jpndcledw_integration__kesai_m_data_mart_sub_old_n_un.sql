@@ -1,1 +1,153 @@
-(SELECT (kesai_m_data_mart_sub_old_n.saleno)::character varying AS saleno, kesai_m_data_mart_sub_old_n.gyono, 0 AS bun_gyono, kesai_m_data_mart_sub_old_n.meisaikbn, kesai_m_data_mart_sub_old_n.itemcode, kesai_m_data_mart_sub_old_n.itemcode AS bun_itemcode, kesai_m_data_mart_sub_old_n.wariritu, kesai_m_data_mart_sub_old_n.tanka, kesai_m_data_mart_sub_old_n.warimaekomitanka, kesai_m_data_mart_sub_old_n.suryo, kesai_m_data_mart_sub_old_n.hensu, kesai_m_data_mart_sub_old_n.kingaku, kesai_m_data_mart_sub_old_n.warimaekomikingaku, kesai_m_data_mart_sub_old_n.meisainukikingaku, kesai_m_data_mart_sub_old_n.warimaenukikingaku, kesai_m_data_mart_sub_old_n.meisaitax, kesai_m_data_mart_sub_old_n.kesaiid, (kesai_m_data_mart_sub_old_n.saleno_trim)::character varying AS saleno_trim, NULL::"unknown" AS bun_wariritu, 0 AS bun_tanka, 0 AS bun_warimaekomitanka, 0 AS bun_suryo, 0 AS bun_hensu, 0 AS bun_kingaku, 0 AS bun_warimaekomikingaku, 0 AS bun_meisainukikingaku, 0 AS bun_warimaenukikingaku, 0 AS bun_meisaitax, CASE WHEN ((kesai_m_data_mart_sub_old_n.meisaikbn)::text = ('商品'::character varying)::text) THEN '1'::character varying WHEN ((kesai_m_data_mart_sub_old_n.meisaikbn)::text = ('特典'::character varying)::text) THEN '1'::character varying WHEN ((kesai_m_data_mart_sub_old_n.meisaikbn)::text = ('送料'::character varying)::text) THEN '1'::character varying ELSE '0'::character varying END AS ci_port_flg FROM jp_dcl_edw.kesai_m_data_mart_sub_old_n UNION ALL SELECT kesai_m_data_mart_sub_old_n_bn.saleno, kesai_m_data_mart_sub_old_n_bn.gyono, kesai_m_data_mart_sub_old_n_bn.bun_gyono, kesai_m_data_mart_sub_old_n_bn.meisaikbn, kesai_m_data_mart_sub_old_n_bn.itemcode, kesai_m_data_mart_sub_old_n_bn.bun_itemcode, NULL::"unknown" AS wariritu, 0 AS tanka, 0 AS warimaekomitanka, 0 AS suryo, 0 AS hensu, 0 AS kingaku, 0 AS warimaekomikingaku, 0 AS meisainukikingaku, 0 AS warimaenukikingaku, 0 AS meisaitax, kesai_m_data_mart_sub_old_n_bn.kesaiid, kesai_m_data_mart_sub_old_n_bn.saleno_trim, kesai_m_data_mart_sub_old_n_bn.bun_wariritu, kesai_m_data_mart_sub_old_n_bn.bun_tanka, kesai_m_data_mart_sub_old_n_bn.bun_warimaekomitanka, kesai_m_data_mart_sub_old_n_bn.bun_suryo, kesai_m_data_mart_sub_old_n_bn.bun_hensu, kesai_m_data_mart_sub_old_n_bn.bun_kingaku, kesai_m_data_mart_sub_old_n_bn.bun_warimaekomikingaku, kesai_m_data_mart_sub_old_n_bn.bun_meisainukikingaku, kesai_m_data_mart_sub_old_n_bn.bun_warimaenukikingaku, kesai_m_data_mart_sub_old_n_bn.bun_meisaitax, CASE WHEN ((kesai_m_data_mart_sub_old_n_bn.meisaikbn)::text = ('商品'::character varying)::text) THEN '1'::character varying WHEN ((kesai_m_data_mart_sub_old_n_bn.meisaikbn)::text = ('特典'::character varying)::text) THEN '1'::character varying WHEN ((kesai_m_data_mart_sub_old_n_bn.meisaikbn)::text = ('送料'::character varying)::text) THEN '1'::character varying ELSE '0'::character varying END AS ci_port_flg FROM jp_dcl_edw.kesai_m_data_mart_sub_old_n_bn) UNION ALL SELECT kesai_m_data_mart_sub_old_dum.saleno, kesai_m_data_mart_sub_old_dum.gyono, kesai_m_data_mart_sub_old_dum.gyono AS bun_gyono, kesai_m_data_mart_sub_old_dum.meisaikbn, kesai_m_data_mart_sub_old_dum.itemcode, kesai_m_data_mart_sub_old_dum.itemcode AS bun_itemcode, NULL::"unknown" AS wariritu, kesai_m_data_mart_sub_old_dum.kingaku AS tanka, kesai_m_data_mart_sub_old_dum.kingaku AS warimaekomitanka, 1 AS suryo, 0 AS hensu, kesai_m_data_mart_sub_old_dum.kingaku, kesai_m_data_mart_sub_old_dum.kingaku AS warimaekomikingaku, kesai_m_data_mart_sub_old_dum.kingaku AS meisainukikingaku, kesai_m_data_mart_sub_old_dum.kingaku AS warimaenukikingaku, kesai_m_data_mart_sub_old_dum.meisaitax, kesai_m_data_mart_sub_old_dum.kesaiid, kesai_m_data_mart_sub_old_dum.saleno_trim, NULL::"unknown" AS bun_wariritu, kesai_m_data_mart_sub_old_dum.kingaku AS bun_tanka, kesai_m_data_mart_sub_old_dum.kingaku AS bun_warimaekomitanka, 1 AS bun_suryo, 0 AS bun_hensu, kesai_m_data_mart_sub_old_dum.kingaku AS bun_kingaku, kesai_m_data_mart_sub_old_dum.kingaku AS bun_warimaekomikingaku, kesai_m_data_mart_sub_old_dum.kingaku AS bun_meisainukikingaku, kesai_m_data_mart_sub_old_dum.kingaku AS bun_warimaenukikingaku, kesai_m_data_mart_sub_old_dum.meisaitax AS bun_meisaitax, '1' AS ci_port_flg FROM jp_dcl_edw.kesai_m_data_mart_sub_old_dum WHERE ((((kesai_m_data_mart_sub_old_dum.maker)::character(3) = '1'::bpchar) OR ((kesai_m_data_mart_sub_old_dum.maker)::character(3) = '2'::bpchar)) AND ((kesai_m_data_mart_sub_old_dum.meisaikbn)::text = ('送料'::character varying)::text));
+WITH kesai_m_data_mart_sub_old_dum
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.kesai_m_data_mart_sub_old_dum
+    ),
+kesai_m_data_mart_sub_old_n_bn
+AS (
+    SELECT *
+    FROM snapjpdcledw_integration.kesai_m_data_mart_sub_old_n_bn 
+    ),
+KESAI_M_DATA_MART_SUB_OLD_N as
+(
+    select * from {{ref('jpndcledw_integration__kesai_m_data_mart_sub_old_n')}}
+),
+t1
+AS (
+    SELECT (saleno)::CHARACTER VARYING AS saleno,
+        gyono,
+        0 AS bun_gyono,
+        meisaikbn,
+        itemcode,
+        itemcode AS bun_itemcode,
+        wariritu,
+        tanka,
+        warimaekomitanka,
+        suryo,
+        hensu,
+        kingaku,
+        warimaekomikingaku,
+        meisainukikingaku,
+        warimaenukikingaku,
+        meisaitax,
+        kesaiid,
+        (saleno_trim)::CHARACTER VARYING AS saleno_trim,
+        NULL AS bun_wariritu,
+        0 AS bun_tanka,
+        0 AS bun_warimaekomitanka,
+        0 AS bun_suryo,
+        0 AS bun_hensu,
+        0 AS bun_kingaku,
+        0 AS bun_warimaekomikingaku,
+        0 AS bun_meisainukikingaku,
+        0 AS bun_warimaenukikingaku,
+        0 AS bun_meisaitax,
+        CASE 
+            WHEN ((meisaikbn)::TEXT = ('商品'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            WHEN ((meisaikbn)::TEXT = ('特典'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            WHEN ((meisaikbn)::TEXT = ('送料'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            ELSE '0'::CHARACTER VARYING
+            END AS ci_port_flg
+    FROM kesai_m_data_mart_sub_old_n
+    ),
+t2
+AS (
+    SELECT saleno,
+        gyono,
+        bun_gyono,
+        meisaikbn,
+        itemcode,
+        bun_itemcode,
+        NULL AS wariritu,
+        0 AS tanka,
+        0 AS warimaekomitanka,
+        0 AS suryo,
+        0 AS hensu,
+        0 AS kingaku,
+        0 AS warimaekomikingaku,
+        0 AS meisainukikingaku,
+        0 AS warimaenukikingaku,
+        0 AS meisaitax,
+        kesaiid,
+        saleno_trim,
+        bun_wariritu,
+        bun_tanka,
+        bun_warimaekomitanka,
+        bun_suryo,
+        bun_hensu,
+        bun_kingaku,
+        bun_warimaekomikingaku,
+        bun_meisainukikingaku,
+        bun_warimaenukikingaku,
+        bun_meisaitax,
+        CASE 
+            WHEN ((meisaikbn)::TEXT = ('商品'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            WHEN ((meisaikbn)::TEXT = ('特典'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            WHEN ((meisaikbn)::TEXT = ('送料'::CHARACTER VARYING)::TEXT)
+                THEN '1'::CHARACTER VARYING
+            ELSE '0'::CHARACTER VARYING
+            END AS ci_port_flg
+    FROM kesai_m_data_mart_sub_old_n_bn
+    ),
+t3
+AS (
+    SELECT saleno,
+        gyono,
+        gyono AS bun_gyono,
+        meisaikbn,
+        itemcode,
+        itemcode AS bun_itemcode,
+        NULL AS wariritu,
+        kingaku AS tanka,
+        kingaku AS warimaekomitanka,
+        1 AS suryo,
+        0 AS hensu,
+        kingaku,
+        kingaku AS warimaekomikingaku,
+        kingaku AS meisainukikingaku,
+        kingaku AS warimaenukikingaku,
+        meisaitax,
+        kesaiid,
+        saleno_trim,
+        NULL AS bun_wariritu,
+        kingaku AS bun_tanka,
+        kingaku AS bun_warimaekomitanka,
+        1 AS bun_suryo,
+        0 AS bun_hensu,
+        kingaku AS bun_kingaku,
+        kingaku AS bun_warimaekomikingaku,
+        kingaku AS bun_meisainukikingaku,
+        kingaku AS bun_warimaenukikingaku,
+        meisaitax AS bun_meisaitax,
+        '1' AS ci_port_flg
+    FROM kesai_m_data_mart_sub_old_dum
+    WHERE (
+            (
+                ((maker)::CHARACTER(3) = '1')
+                OR ((maker)::CHARACTER(3) = '2')
+                )
+            AND ((meisaikbn)::TEXT = ('送料'::CHARACTER VARYING)::TEXT)
+            )
+    ),
+final
+AS (
+    SELECT *
+    FROM T1
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T2
+    
+    UNION ALL
+    
+    SELECT *
+    FROM T3
+    )
+SELECT *
+FROM final
