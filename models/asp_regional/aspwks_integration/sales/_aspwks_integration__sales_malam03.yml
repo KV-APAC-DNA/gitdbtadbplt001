@@ -1,0 +1,11 @@
+version: 2
+
+models: 
+  - name: aspwks_integration__wks_scorecard_ciw_base
+    config:
+      alias: wks_scorecard_ciw_base
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspwks_integration__sdl_okr_alteryx_automation
+    config:
+      alias: sdl_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","ingestion"]
