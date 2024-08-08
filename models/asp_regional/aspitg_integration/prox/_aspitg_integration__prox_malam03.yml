@@ -5,7 +5,7 @@ models:
     config:
       alias: itg_prox_md_material
       tags: ["prox_material","transformation"]
-  - name: aspitg_integration__itg_prox_md_pgallocation
+  - name: aspitg_integration__itg_prox_md_ppgallocation
     config:
       alias: itg_prox_md_pgallocation
       tags: ["prox_ppgallocation","transformation"]
