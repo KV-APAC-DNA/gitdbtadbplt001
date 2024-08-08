@@ -1,49 +1,49 @@
 WITH hanyo_attr AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.hanyo_attr
+    FROM {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 
 zaiko_shohin_attr AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.zaiko_shohin_attr
+    FROM {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
 ),
 
 tm67juch_nm AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm67juch_nm
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
 ),
 
 cit86osalm_kaigai AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit86osalm_kaigai
+    FROM {{ ref('jpndcledw_integration__cit86osalm_kaigai') }}
 ),
 
 cit85osalh_kaigai AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit85osalh_kaigai
+    FROM {{ ref('jpndcledw_integration__cit85osalh_kaigai') }}
 ),
 
 cim03item_zaiko AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim03item_zaiko
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
 ),
 
 cim02tokui AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim02tokui
+    FROM {{ ref('jpndcledw_integration__cim02tokui') }}
 ),
 
 ssmthsalhephedda AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.ssmthsalhephedda
+    FROM {{ ref('jpndclitg_integration__ssmthsalhephedda') }}
 ),
 
 final AS

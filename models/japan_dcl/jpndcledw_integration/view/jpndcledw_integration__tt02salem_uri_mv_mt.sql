@@ -1,7 +1,7 @@
 WITH tt02salem_uri_mv_mt_tbl
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT02SALEM_URI_MV_MT_TBL
+  FROM {{ ref('jpndcledw_integration__tt02salem_uri_mv_mt_tbl') }}
   ),
 final
 AS (

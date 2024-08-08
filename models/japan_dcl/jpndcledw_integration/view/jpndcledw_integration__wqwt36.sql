@@ -1,6 +1,6 @@
 WITH wt36aspac_sum_customer_item AS
 (
-   SELECT * FROM dev_dna_core.snapjpdcledw_integration.wt36aspac_sum_customer_item
+   SELECT * FROM {{ ref('jpndcledw_integration__wt36aspac_sum_customer_item') }}
 ),
 
 final AS
