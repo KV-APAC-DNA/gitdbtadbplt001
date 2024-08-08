@@ -1,7 +1,7 @@
 with hanyo_attr
 as
 (
-    SELECT * FROM jpdcledw_integration.hanyo_attr
+    SELECT * FROM {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 final as
 (

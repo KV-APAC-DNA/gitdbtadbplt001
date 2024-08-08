@@ -1,6 +1,6 @@
 WITH hanyo_attr AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.hanyo_attr
+    SELECT * FROM {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 
 final AS

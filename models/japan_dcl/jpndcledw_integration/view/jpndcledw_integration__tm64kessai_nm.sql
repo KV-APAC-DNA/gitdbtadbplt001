@@ -1,7 +1,7 @@
 WITH c_tbecpaymentpatternmst
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.c_tbecpaymentpatternmst
+    FROM {{ ref('jpndclitg_integration__c_tbecpaymentpatternmst') }}
     ),
 FINAL
 AS (
