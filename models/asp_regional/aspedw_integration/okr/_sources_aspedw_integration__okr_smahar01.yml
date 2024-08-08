@@ -11,7 +11,5 @@ sources:
     tables:
     - name: edw_okr_gfo_map
       tags: ["okr_dashboard_datamart_refresh","transformation"]
-    - name: edw_okr_brand_map
-      tags: ["okr_dashboard_datamart_refresh","transformation"]
     - name: edw_okr_core_ppm
       tags: ["okr_dashboard_datamart_refresh","transformation"]
