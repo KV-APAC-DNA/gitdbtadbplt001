@@ -1,6 +1,6 @@
-with ITEM_HANBAI_TBL as 
+with item_hanbai_tbl as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.ITEM_HANBAI_TBL
+    select * from {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
 ),final as 
 (
 SELECT iht.h_itemcode AS itemcode,

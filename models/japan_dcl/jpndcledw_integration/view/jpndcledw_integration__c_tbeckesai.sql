@@ -1,9 +1,9 @@
-with C_TBECKESAI as 
+with c_tbeckesai as 
 (
-select * from SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 tm64kessai_nm as (
-select * from SNAPJPDCLEDW_INTEGRATION.tm64kessai_nm
+select * from {{ ref('jpndcledw_integration__tm64kessai_nm') }}
 )
 ,final as
 (

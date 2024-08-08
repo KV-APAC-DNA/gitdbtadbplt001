@@ -1,7 +1,7 @@
 WITH c_tbecpribuyitem
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECPRIBUYITEM
+  FROM {{ ref('jpndclitg_integration__c_tbecpribuyitem') }}
   ),
 final
 AS (

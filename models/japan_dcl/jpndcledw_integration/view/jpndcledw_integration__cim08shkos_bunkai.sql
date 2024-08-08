@@ -1,5 +1,5 @@
 with item_pick_bunkai_tbl as (
-    select * from dev_dna_core.snapjpdcledw_integration.item_pick_bunkai_tbl
+    select * from {{ ref('jpndcledw_integration__item_pick_bunkai_tbl') }}
 ),
 
 final as (

@@ -1,6 +1,6 @@
 WITH c_tbecclient AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.c_tbecclient
+    SELECT * from {{ ref('jpndclitg_integration__c_tbecclient') }}
 ),
 
 final AS

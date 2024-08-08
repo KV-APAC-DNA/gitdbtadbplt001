@@ -1,6 +1,6 @@
 WITH tbpromotioncate AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.tbpromotioncate
+    SELECT * FROM {{ ref('jpndclitg_integration__tbpromotioncate') }}
 ),
 
 final AS

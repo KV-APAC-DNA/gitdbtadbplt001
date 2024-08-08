@@ -1,10 +1,10 @@
-with C_TBECPRIPRESENTITEM as 
+with c_tbecpripresentitem as 
 (
-select * from SNAPJPDCLITG_INTEGRATION.C_TBECPRIPRESENTITEM
+select * from {{ ref('jpndclitg_integration__c_tbecpripresentitem') }}
 )
 ,final as 
 (
-SELECT c_tbecpripresentitem.diprivilegeid,
+select c_tbecpripresentitem.diprivilegeid,
     c_tbecpripresentitem.diid,
     c_tbecpripresentitem.c_dinum,
     c_tbecpripresentitem.c_dinondispflg,
@@ -16,6 +16,6 @@ SELECT c_tbecpripresentitem.diprivilegeid,
     c_tbecpripresentitem.dielimusr,
     c_tbecpripresentitem.dielimflg,
     c_tbecpripresentitem.disortid
-FROM C_TBECPRIPRESENTITEM
+from c_tbecpripresentitem
 )
 select * from final

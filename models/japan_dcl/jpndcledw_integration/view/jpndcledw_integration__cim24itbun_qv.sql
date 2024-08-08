@@ -1,11 +1,11 @@
-WITH cim24itbun AS
+with cim24itbun as
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.cim24itbun
+    select * from {{ ref('jpndcledw_integration__cim24itbun') }}
 ),
 
-cim24itbun_add_qv AS
+cim24itbun_add_qv as
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.cim24itbun_add_qv
+    select * from {{ ref('jpndcledw_integration__cim24itbun_add_qv') }}
 ),
 
 

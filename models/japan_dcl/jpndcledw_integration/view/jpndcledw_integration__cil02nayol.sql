@@ -1,8 +1,8 @@
 with hanyo_attr as (
-    select * from dev_dna_core.snapjpdcledw_integration.hanyo_attr
+    select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 c_tbmembunitrel as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbmembunitrel
+    select * from {{ ref('jpndclitg_integration__c_tbmembunitrel') }}
     ),
 
 derived_table1 AS (

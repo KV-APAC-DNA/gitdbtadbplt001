@@ -1,12 +1,12 @@
-with C_TBTELCOMPANYMST as(
-    select * from SNAPJPDCLITG_INTEGRATION.C_TBTELCOMPANYMST
+with c_tbtelcompanymst as(
+    select * from {{ ref('jpndclitg_integration__c_tbtelcompanymst') }}
 ),
- ZCMMNSOSHITAIK as(
-select * from SNAPJPDCLITG_INTEGRATION.ZCMMNSOSHITAIK
+ zcmmnsoshitaik as(
+select * from snapjpdclitg_integration.zcmmnsoshitaik
 )
-,HANYO_ATTR_BKP as 
+,hanyo_attr_bkp as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR_BKP
+    select * from snapjpdcledw_integration.hanyo_attr_bkp
 )
 ,final as(
 

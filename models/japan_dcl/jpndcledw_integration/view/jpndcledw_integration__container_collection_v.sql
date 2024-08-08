@@ -1,15 +1,15 @@
 with odr_receive_header_v as (
- select * from dev_dna_core.snapjpdcledw_integration.odr_receive_header_v
+ select * from {{ ref('jpndcledw_integration__odr_receive_header_v') }}
 )
 ,
 odr_receive_detail_v as (
-select * from dev_dna_core.snapjpdcledw_integration.odr_receive_detail_v
+select * from {{ ref('jpndcledw_integration__odr_receive_detail_v') }}
 ),
 tbecorder as (
-select * from dev_dna_core.snapjpdclitg_integration.tbecorder
+select * from {{ ref('jpndcledw_integration__tbecorder') }}
 ),
 container_collection_exclude_no as (
-select * from dev_dna_core.snapjpdcledw_integration.container_collection_exclude_no
+select * from {{ ref('jpndcledw_integration__container_collection_exclude_no') }}
 )
 ,
 base_data

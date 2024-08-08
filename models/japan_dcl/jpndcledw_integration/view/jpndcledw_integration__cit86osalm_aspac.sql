@@ -2,12 +2,11 @@ with cit86osalm_aspac_ikou as (
     select * from dev_dna_core.snapjpdcledw_integration.cit86osalm_aspac_ikou
 ),
 cit85osalh as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit85osalh
+    select * from {{ ref('jpndcledw_integration__cit85osalh') }}
 ),
 cit86osalm as (
-select * from dev_dna_core.snapjpdcledw_integration.cit86osalm
+select * from {{ ref('jpndcledw_integration__cit86osalm') }}
 ),
-
 cte1 as (
 SELECT cit86osalm_aspac_ikou.ourino,
     cit86osalm_aspac_ikou.gyono,

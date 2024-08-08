@@ -1,6 +1,6 @@
 with tm43youbi_nm as
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.tm43youbi_nm
+    select * from {{ ref('jpndcledw_integration__tm43youbi_nm') }}
 ),final as 
 (
 SELECT 

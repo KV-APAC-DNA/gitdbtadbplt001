@@ -4,7 +4,6 @@ with cit86osalm_uri_mv as (
 cit86osalm_hen_mv as (
     select * from dev_dna_core.snapjpdcledw_integration.cit86osalm_hen_mv
 ),
-
 cte1 as (
 SELECT cit86osalm_uri.ourino,
     cit86osalm_uri.gyono,

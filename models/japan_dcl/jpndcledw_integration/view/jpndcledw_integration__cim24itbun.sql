@@ -2,7 +2,7 @@ with cim24itbun_ikou as (
     select * from dev_dna_core.snapjpdcledw_integration.cim24itbun_ikou
 ),
 item_bunrval_v as (
-    select * from dev_dna_core.snapjpdcledw_integration.item_bunrval_v
+    select * from {{ ref('jpndcledw_integration__item_bunrval_v') }}
 ),
 
 derived_table1 as (

@@ -1,10 +1,10 @@
-with TBECSETITEM as 
+with tbecsetitem as 
 (
-    select * from SNAPJPDCLITG_INTEGRATION.TBECSETITEM
+    select * from {{ ref('jpndclitg_integration__tbecsetitem') }}
 ),
-TBECITEM
+tbecitem
 as(
-    select * from SNAPJPDCLITG_INTEGRATION.TBECITEM
+    select * from {{ ref('jpndclitg_integration__tbecitem') }}
 ),final as
 (
 

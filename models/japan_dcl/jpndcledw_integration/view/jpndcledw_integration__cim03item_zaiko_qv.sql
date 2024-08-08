@@ -1,6 +1,6 @@
-with ITEM_ZAIKO_TBL as 
+with item_zaiko_tbl as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.ITEM_ZAIKO_TBL
+    select * from {{ ref('jpndcledw_integration__item_zaiko_tbl') }}
 )
 ,final as 
 (

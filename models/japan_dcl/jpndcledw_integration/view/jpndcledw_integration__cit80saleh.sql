@@ -1,8 +1,8 @@
 with cit80saleh_uri as (
-    Select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH_URI_MV
+    select * from dev_dna_core.snapjpdcledw_integration.cit80saleh_uri_mv
 ),
 cit80saleh_hen as (
-    Select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH_HEN_MV
+    select * from dev_dna_core.snapjpdcledw_integration.cit80saleh_hen_mv
 ),
 t1 as (
     SELECT cit80saleh_uri.saleno,

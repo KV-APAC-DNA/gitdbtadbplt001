@@ -1,6 +1,6 @@
 WITH c_tbecusrcomment AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.c_tbecusrcomment
+    select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 
 final AS

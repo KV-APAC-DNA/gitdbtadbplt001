@@ -1,9 +1,9 @@
-with C_TBECPRIVILEGEKESAI as
+with c_tbecprivilegekesai as
 (
-    select * from SNAPJPDCLITG_INTEGRATION.C_TBECPRIVILEGEKESAI
+    select * from {{ ref('jpndclitg_integration__c_tbecprivilegekesai') }}
 ), final as 
 (
-SELECT c_tbecprivilegekesai.c_diprivilegeid,
+select c_tbecprivilegekesai.c_diprivilegeid,
     c_tbecprivilegekesai.c_dikesaiid,
     c_tbecprivilegekesai.diorderid,
     c_tbecprivilegekesai.dipromid,
@@ -34,6 +34,6 @@ SELECT c_tbecprivilegekesai.c_diprivilegeid,
     c_tbecprivilegekesai.direnusr,
     c_tbecprivilegekesai.dielimusr,
     c_tbecprivilegekesai.dielimflg
-FROM C_TBECPRIVILEGEKESAI
+from c_tbecprivilegekesai
 )
 select * from final

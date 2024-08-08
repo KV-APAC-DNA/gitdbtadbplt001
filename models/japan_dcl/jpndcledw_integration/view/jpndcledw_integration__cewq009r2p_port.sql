@@ -1,12 +1,12 @@
-with TBECPOINTHISTORY as 
+with tbecpointhistory as 
 (
-    select * from SNAPJPDCLITG_INTEGRATION.TBECPOINTHISTORY
+    select * from {{ ref('jpndclitg_integration__tbecpointhistory') }}
 )
-, TBECORDER as
+, tbecorder as
 (
-   select * from  SNAPJPDCLITG_INTEGRATION.TBECORDER 
+   select * from  {{ ref('jpndclitg_integration__tbecorder') }}
 )
-, GENOMER_KOKYA_KPI_INBOUND as 
+, genomer_kokya_kpi_inbound as 
 (
     select * from SNAPJPDCLEDW_INTEGRATION.GENOMER_KOKYA_KPI_INBOUND
 )
