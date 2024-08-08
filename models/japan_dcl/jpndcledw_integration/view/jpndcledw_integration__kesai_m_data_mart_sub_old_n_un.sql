@@ -1,12 +1,12 @@
 WITH kesai_m_data_mart_sub_old_dum
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.kesai_m_data_mart_sub_old_dum
+    FROM {{ source('jpdcledw_integration', 'kesai_m_data_mart_sub_old_dum') }}
     ),
 kesai_m_data_mart_sub_old_n_bn
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.kesai_m_data_mart_sub_old_n_bn 
+    FROM {{ source('jpdcledw_integration', 'kesai_m_data_mart_sub_old_n_bn') }}
     ),
 KESAI_M_DATA_MART_SUB_OLD_N as
 (

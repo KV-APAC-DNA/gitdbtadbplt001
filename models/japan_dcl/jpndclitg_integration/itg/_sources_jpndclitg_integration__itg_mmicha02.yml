@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: jpdcledw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdcledw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: genomer_kokya_kpi_inbound
+      - name: cim02tokui_ikou
+      - name: hanyo_attr_bkp
+      - name: cim24itbun_ikou
+      - name : cit80saleh_uri_mv
+      - name: cit80saleh_hen_mv
+      - name: cit81salem_uri_mv
+      - name: cit81salem_hen_mv
+      - name: cit85osalh_uri_mv
+      - name: cit85osalh_hen_mv
+      - name: cit86osalm_uri_mv
+      - name: cit86osalm_hen_mv
+      - name: cit86osalm_aspac_ikou
+      - name: cld_m
+      - name: threshold_amount_master
+      - name: kesai_h_data_mart_sub_old_tbl
+      - name: kesai_h_data_mart_sub_old_chsi_tbl
+      - name: kesai_m_data_mart_sub_old_tbl
+      - name: cit80saleh_ikou
+      - name: cit81salem_ikou
+      - name: old_tokutencd_master
+      - name: kesai_m_data_mart_sub_old_dum
+      - name: kesai_m_data_mart_sub_old_n_bn
+      - name: dm_kesai_mart_dly_bkp_20221021_deployment
+
+  - name: jpdclitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdclitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: zcmmntorisk
+      
+      - name: zcmmnjuusho
+      - name: zcmmnsoshitaik
