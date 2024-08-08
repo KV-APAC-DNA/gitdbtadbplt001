@@ -23,3 +23,7 @@ models:
     config: 
       alias: wks_rpt_copa_customergp_temp_sum
       tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_reg_scorecard_copa_base
+    config:
+      alias: wks_reg_scorecard_copa_base
+      tags: ["cd_scorecard_table_refresh","transformation"] 

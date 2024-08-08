@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: aspitg_integration__itg_market_mirror_fact
+    config:
+      alias: itg_market_mirror_fact
+      tags: ["market_mirror","ingestion"]
+  - name: aspitg_integration__itg_vw_kr_mds_salesgrp_sapcust_map
+    config:
+      alias: itg_vw_kr_mds_salesgrp_sapcust_map
+      tags: ["view","transformation"]
+  - name: aspitg_integration__itg_okr_alteryx_automation
+    config:
+      alias: itg_okr_alteryx_automation
+      tags: ["cd_scorecard_table_refresh","transformation"]
   - name: aspitg_integration__itg_clavis_gb_products
     config:
       alias: itg_clavis_gb_products

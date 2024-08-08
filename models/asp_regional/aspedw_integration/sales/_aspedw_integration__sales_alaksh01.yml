@@ -1,9 +1,0 @@
-models:
-  - name: aspedw_integration__edw_market_mirror_fact
-    config: 
-      alias: edw_market_mirror_fact
-      tags: ["market_mirror","transformation"]
-  - name: aspedw_integration__v_intrm_disc_rebate_ytd
-    config: 
-      alias: v_intrm_disc_rebate_ytd
-      tags: ["view","transformation"]

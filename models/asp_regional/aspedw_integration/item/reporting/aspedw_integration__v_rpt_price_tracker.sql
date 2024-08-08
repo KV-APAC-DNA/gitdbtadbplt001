@@ -14,7 +14,7 @@ edw_calendar_dim as
 ),
 edw_clavis_gb_products as
 (
-    select * from dev_dna_core.aspedw_integration.edw_clavis_gb_products
+    select * from {{ ref('aspedw_integration__edw_clavis_gb_products') }}
 ),
 itg_mds_rg_ecom_digital_shelf_customer_mapping as
 (

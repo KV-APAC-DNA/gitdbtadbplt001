@@ -3,14 +3,14 @@
         materialized='incremental',
         incremental_strategy='append',
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('aspsdl_raw', 'sdl_t_market_mirror_sku_nts_vs_share_l2_value_units') }}) != 0;
+        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('aspwks_integration', 'wks_t_market_mirror_sku_nts_vs_share_l2_value_units') }}) != 0;
         {% endif %}"
     )
 }}
 
 with source as 
 (
-    select * from {{ source('aspsdl_raw', 'sdl_t_market_mirror_sku_nts_vs_share_l2_value_units') }}
+    select * from {{ source('aspwks_integration', 'wks_t_market_mirror_sku_nts_vs_share_l2_value_units') }}
 ),
 final as
 (

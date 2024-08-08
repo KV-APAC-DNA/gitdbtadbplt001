@@ -1,5 +1,0 @@
-models:
-  - name: aspwks_integration__wks_itg_ecc_standard_cost_history
-    config: 
-      alias: wks_itg_ecc_standard_cost_history
-      tags: ["sap_ecc_master_etl_framework","transformation"]

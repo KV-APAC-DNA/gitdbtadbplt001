@@ -1,5 +1,5 @@
 with sdl_PROX_MD_PPGAllocation as(
-    select * from {{ ref('aspwks_integration__sdl_prox_md_ppgallocation') }}
+    select * from {{ source('aspsdl_raw', 'sdl_prox_md_ppgallocation') }}
 ),
 final as
 (SELECT 

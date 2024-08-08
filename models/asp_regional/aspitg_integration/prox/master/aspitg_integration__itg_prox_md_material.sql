@@ -1,5 +1,5 @@
 with sdl_prox_md_material as(
-    select * from {{ ref('aspwks_integration__sdl_prox_md_material') }}
+    select * from {{ source('aspsdl_raw', 'sdl_prox_md_theme') }}
 ),
 final as(
 select 

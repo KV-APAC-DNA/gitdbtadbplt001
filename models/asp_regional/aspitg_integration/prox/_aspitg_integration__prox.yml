@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_prox_report_bi_monthcommitment
+    config:
+      alias: itg_prox_report_bi_monthcommitment
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_prox_md_accountgroup
+    config:
+      alias: itg_prox_md_accountgroup
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_prox_md_channel
+    config:
+      alias: itg_prox_md_channel
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_prox_md_customer
+    config:
+      alias: itg_prox_md_customer
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_prox_md_expensetype
+    config:
+      alias: itg_prox_md_expensetype
+      tags: ["prox","ingestion"]
+  - name: aspitg_integration__itg_prox_md_material
+    config:
+      alias: itg_prox_md_material
+      tags: ["prox_material","transformation"]
+  - name: aspitg_integration__itg_prox_md_ppgallocation
+    config:
+      alias: itg_prox_md_pgallocation
+      tags: ["prox_ppgallocation","transformation"]
+  - name: aspitg_integration__itg_prox_md_theme
+    config:
+      alias: itg_prox_md_theme
+      tags: ["prox_theme","transformation"]
+  - name: aspwks_integration__sdl_raw_prox_md_theme
+    config:
+      alias: sdl_raw_prox_md_theme
+      tags: ["prox_theme","transformation"]
+  - name: aspwks_integration__sdl_raw_prox_md_ppgallocation
+    config:
+      alias: sdl_raw_prox_md_ppgallocation
+      tags: ["prox_ppgallocation","transformation"]
+  - name: aspwks_integration__sdl_raw_prox_md_material
+    config:
+      alias: sdl_raw_prox_md_material
+      tags: ["prox_material","transformation"]
+  - name: aspitg_integration__itg_prox_sys_department
+    config:
+      alias: itg_prox_sys_department
+      tags: ["prox_department","transformation"]
+  - name: aspitg_integration__sdl_raw_prox_sys_department
+    config:
+      alias: sdl_raw_prox_sys_department
+      tags: ["prox_department","transformation"]
+  - name: aspitg_integration__itg_prox_report_bi_budgetusage
+    config:
+      alias: itg_prox_report_bi_budgetusage
+      tags: ["prox_budget","transformation"]
+  - name: aspitg_integration__sdl_raw_prox_report_bi_budgetusage
+    config:
+      alias: sdl_raw_prox_report_bi_budgetusage
+      tags: ["prox_budget","transformation"]
+  - name: aspitg_integration__itg_prox_report_bi_contract
+    config:
+      alias: itg_prox_report_bi_contract
+      tags: ["prox_contract","transformation"]
+  - name: aspitg_integration__sdl_raw_prox_report_bi_contract
+    config:
+      alias: sdl_raw_prox_report_bi_contract
+      tags: ["prox_contract","transformation"]
+  - name: aspitg_integration__itg_prox_report_bi_payment
+    config:
+      alias: itg_prox_report_bi_payment
+      tags: ["prox_payment","transformation"]
+  - name: aspitg_integration__sdl_raw_prox_report_bi_payment
+    config:
+      alias: sdl_raw_prox_report_bi_payment
+      tags: ["prox_payment","transformation"]

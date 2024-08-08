@@ -1,5 +1,5 @@
-with wks_prox_md_material as(
-    select * from {{ ref('aspwks_integration__wks_prox_md_material') }}
+with sdl_prox_md_material as(
+    select * from {{ source('aspsdl_raw', 'sdl_prox_md_material') }}
 ),
 final as(
     select 
@@ -61,7 +61,8 @@ final as(
        filename,
        run_id,
        crt_dttm
-from wks_prox_md_material
+from sdl_prox_md_material
 )
 select * from final
+
 

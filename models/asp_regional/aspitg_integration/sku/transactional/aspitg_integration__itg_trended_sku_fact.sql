@@ -1,6 +1,6 @@
 with source as 
 (
-    select * from {{ source('aspsdl_raw', 'sdl_trended_sku_fact') }}
+    select * from {{ source('aspwks_integration', 'wks_trended_sku_fact') }}
 ),
 final as
 (

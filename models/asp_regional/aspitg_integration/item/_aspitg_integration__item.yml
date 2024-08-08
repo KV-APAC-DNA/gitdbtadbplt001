@@ -1,6 +1,10 @@
 version: 2
 
 models:
+  - name: aspitg_integration__itg_yimian_price_data
+    config:
+      alias: itg_yimian_price_data
+      tags: ["cn_yimian_price_data_load","ingestion"]
   - name: aspitg_integration__itg_total_investment_brand_map
     config:
       alias: itg_total_investment_brand_map

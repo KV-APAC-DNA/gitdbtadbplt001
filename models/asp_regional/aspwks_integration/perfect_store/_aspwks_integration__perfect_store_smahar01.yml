@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: aspwks_integration__wks_okr_perfect_store
-    config:
-      alias: wks_okr_perfect_store
-      tags: ["okr_dashboard_datamart_refresh","transformation"]

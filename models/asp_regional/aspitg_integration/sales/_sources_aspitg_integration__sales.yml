@@ -9,6 +9,12 @@ sources:
       schema: false
       identifier: false
     tables:
+      - name: sdl_market_mirror_fact
+      - name: sdl_mds_ap_digital_shelf_targets
+      - name: sdl_clavis_gb_products
+        tags: ["rg_clavis","transformation"]
+      - name: sdl_clavis_gb_search_terms_results
+        tags: ["rg_clavis","transformation"]
       - name: sdl_okr_alteryx_automation
         tests:
         - test_null:

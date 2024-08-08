@@ -1,9 +1,0 @@
-models:
-  - name: aspwks_integration__wks_rpt_copa_customergp
-    config: 
-      alias: wks_rpt_copa_customergp
-      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
-  - name: aspwks_integration__wks_rpt_customergp
-    config: 
-      alias: wks_rpt_customergp
-      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]

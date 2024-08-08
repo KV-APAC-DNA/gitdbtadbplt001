@@ -1,6 +1,6 @@
 with edw_rpt_ecomm_oneview as
 (
-    select * from {{ ref('aspedw_integration__edw_rpt_ecomm_oneview') }}
+    select * from aspedw_integration.edw_rpt_ecomm_oneview
 ),
 edw_okr_gfo_map as
 (

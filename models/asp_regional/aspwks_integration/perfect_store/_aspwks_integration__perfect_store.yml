@@ -49,3 +49,7 @@ models:
     config:
       alias: wks_sotp_propagation_hash
       tags: ["pop6_edw_load","transformation"]
+  - name: aspwks_integration__wks_okr_perfect_store
+    config:
+      alias: wks_okr_perfect_store
+      tags: ["okr_dashboard_datamart_refresh","transformation"]

@@ -170,6 +170,9 @@ sources:
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_pre_apsc_master
         tags: ["MDS","rg_mds_to_dna","ingestion"]
+      - name: sdl_mds_rg_prox_product_mapping
+      - name: sdl_mds_rg_prox_channel_mapping
+      - name: sdl_mds_rg_prox_customer_mapping
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
