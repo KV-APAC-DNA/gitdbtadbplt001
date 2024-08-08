@@ -1,6 +1,6 @@
 WITH wt74itemstrategy_sale_p AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.wt74itemstrategy_sale_p
+    SELECT * FROM {{ ref('jpndcledw_integration__wt74itemstrategy_sale_p') }}
 ),
 
 final AS

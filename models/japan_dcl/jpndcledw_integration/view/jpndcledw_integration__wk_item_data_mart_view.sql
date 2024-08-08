@@ -1,43 +1,43 @@
 WITH item_hanbai_v AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_hanbai_v
+    FROM {{ ref('jpndcledw_integration__item_hanbai_v') }}
 ),
 
 item_jizen_bunkai_v AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_jizen_bunkai_v
+    FROM {{ ref('jpndcledw_integration__item_jizen_bunkai_v') }}
 ),
 
 item_pick_bunkai_v AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_pick_bunkai_v
+    FROM {{ ref('jpndcledw_integration__item_pick_bunkai_v') }}
 ),
 
 item_z_h_hen_v AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_z_h_hen_v
+    FROM {{ ref('jpndcledw_integration__item_z_h_hen_v') }}
 ),
 
 item_zaiko_v AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_zaiko_v
+    FROM {{ ref('jpndcledw_integration__item_zaiko_v') }}
 ),
 
 item_zaiko_tbl AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.item_zaiko_tbl
+    FROM {{ ref('jpndcledw_integration__item_zaiko_tbl') }}
 ),
 
 cim24itbun_qv AS
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim24itbun_qv
+    FROM {{ ref('jpndcledw_integration__cim24itbun_qv') }}
 ),
 
 final AS   
