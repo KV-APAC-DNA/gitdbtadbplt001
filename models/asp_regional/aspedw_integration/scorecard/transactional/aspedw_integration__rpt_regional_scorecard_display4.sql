@@ -1,5 +1,5 @@
 with edw_perfect_store_rebase_wt as(
-    select * from snapaspedw_integration.edw_perfect_store_rebase_wt
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt') }}
 ),
 edw_company_dim as(
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
