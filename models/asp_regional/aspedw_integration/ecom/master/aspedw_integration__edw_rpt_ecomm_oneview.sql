@@ -195,26 +195,26 @@ insert1 as(
         NULL as ppm_role  
             
     FROM edw_copa_trans_fact copa
-    LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
-    LEFT JOIN edw_profit_center_franchise_mapping prod_map ON TRIM (copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT) = TRIM (prod_map.profit_center::TEXT,'0'::CHARACTER VARYING::TEXT)
+    LEFT JOIN edw_material_dim mat ON rtrim(copa.matl_num::TEXT) = rtrim(mat.matl_num::TEXT)
+    LEFT JOIN edw_profit_center_franchise_mapping prod_map ON rtrim (copa.prft_ctr::TEXT,'0'::CHARACTER VARYING::TEXT) = rtrim (prod_map.profit_center::TEXT,'0'::CHARACTER VARYING::TEXT)
     LEFT JOIN cus_sales_extn 
-            ON copa.sls_org  =   cus_sales_extn.sls_org 
-            AND copa.dstr_chnl  = cus_sales_extn.dstr_chnl 
-            AND copa.div       =  cus_sales_extn.div 
-            AND copa.cust_num  =  cus_sales_extn.cust_num 
+            ON rtrim(copa.sls_org)  =   rtrim(cus_sales_extn.sls_org)
+            AND rtrim(copa.dstr_chnl)  = rtrim(cus_sales_extn.dstr_chnl) 
+            AND rtrim(copa.div )      =  rtrim(cus_sales_extn.div )
+            AND rtrim(copa.cust_num)  =  rtrim(cus_sales_extn.cust_num) 
     JOIN  (select distinct ctry_key, ctry_group, "cluster", co_cd, gts, nts, min_year, cust_filter from wks_filter_params) filter_params --wks_filter_params 
-        ON copa.co_cd  = filter_params.co_cd  
-        AND (copa.acct_hier_shrt_desc = filter_params.gts OR copa.acct_hier_shrt_desc = filter_params.nts )
-        AND copa.fisc_yr >=  filter_params.min_year 
-        AND copa.cust_num = nvl(filter_params.cust_filter, copa.cust_num)
+        ON rtrim(copa.co_cd)  = rtrim(filter_params.co_cd ) 
+        AND (trim(copa.acct_hier_shrt_desc) = rtrim(filter_params.gts) OR rtrim(copa.acct_hier_shrt_desc) = rtrim(filter_params.nts ))
+        AND rtrim(copa.fisc_yr) >=  rtrim(filter_params.min_year) 
+        AND rtrim(copa.cust_num) = nvl(trim(filter_params.cust_filter), rtrim(copa.cust_num))
         --AND filter_params.ctry_key = 'JP'     
     LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
-            ON copa.obj_crncy_co_obj  = exch_rate.from_crncy 
-            AND exch_rate.to_crncy  = 'USD' 
-            AND copa.fisc_yr_per = exch_rate.fisc_per    
+            ON rtrim(copa.obj_crncy_co_obj)  = rtrim(exch_rate.from_crncy )
+            AND rtrim(exch_rate.to_crncy)  = 'USD' 
+            AND rtrim(copa.fisc_yr_per) = rtrim(exch_rate.fisc_per)    
     JOIN (select distinct ctry_key, retail_env from wks_filter_params) fp
-    ON copa.ctry_key =  fp.ctry_key   
-        AND cus_sales_extn.retail_env = nvl(fp.retail_env, cus_sales_extn.retail_env)
+    ON rtrim(copa.ctry_key) =  rtrim(fp.ctry_key)   
+        AND rtrim(cus_sales_extn.retail_env) = nvl(trim(fp.retail_env), rtrim(cus_sales_extn.retail_env))
                             
     GROUP BY  copa.acct_hier_shrt_desc ,	   
         copa.fisc_yr,
@@ -254,7 +254,7 @@ CN_Customer AS (
 			company.ctry_group,
 			company."cluster"
 		FROM edw_copa_trans_fact copa
-		JOIN edw_company_dim company ON copa.co_cd::TEXT = company.co_cd::TEXT
+		JOIN edw_company_dim company ON rtrim(copa.co_cd::TEXT) = rtrim(company.co_cd::TEXT)
 		WHERE company.ctry_key::TEXT = (
 				SELECT filter_value
 				FROM itg_mds_ap_ecom_oneview_config
@@ -292,7 +292,7 @@ CN_Customer AS (
 			company.ctry_group,
 			company."cluster"
 		FROM edw_copa_trans_fact copa
-		JOIN edw_company_dim company ON copa.co_cd::TEXT = company.co_cd::TEXT
+		JOIN edw_company_dim company ON rtrim(copa.co_cd::TEXT )= rtrim(company.co_cd::TEXT)
 		WHERE copa.cust_num IN (
 				SELECT filter_value
 				FROM itg_mds_ap_ecom_oneview_config
@@ -398,17 +398,17 @@ insert2 as(
 		'na' AS "Additional_Information",
 		NULL AS ppm_role
 	FROM edw_copa_trans_fact copa
-	LEFT JOIN edw_material_dim mat ON copa.matl_num::TEXT = mat.matl_num::TEXT
+	LEFT JOIN edw_material_dim mat ON rtrim(copa.matl_num::TEXT) = rtrim(mat.matl_num::TEXT)
 	LEFT JOIN edw_profit_center_franchise_mapping prod_map ON LTRIM(copa.prft_ctr::TEXT, '0'::CHARACTER VARYING::TEXT) = LTRIM(prod_map.profit_center::TEXT, '0'::CHARACTER VARYING::TEXT)
-	LEFT JOIN v_edw_customer_sales_dim cus_sales_extn ON copa.sls_org::TEXT = cus_sales_extn.sls_org::TEXT
-		AND copa.dstr_chnl::TEXT = cus_sales_extn.dstr_chnl::TEXT
-		AND copa.div::TEXT = cus_sales_extn.div::TEXT
-		AND copa.cust_num::TEXT = cus_sales_extn.cust_num::TEXT
-	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate ON copa.obj_crncy_co_obj::TEXT = exch_rate.from_crncy::TEXT
-		AND exch_rate.to_crncy::TEXT = 'USD'::CHARACTER VARYING::TEXT
-		AND copa.fisc_yr_per = exch_rate.fisc_per
-	JOIN CN_Customer c ON copa.cust_num = c.cust_num
-		AND copa.co_cd = c.co_cd
+	LEFT JOIN v_edw_customer_sales_dim cus_sales_extn ON rtrim(copa.sls_org::TEXT) = rtrim(cus_sales_extn.sls_org::TEXT)
+		AND rtrim(copa.dstr_chnl::TEXT) = rtrim(cus_sales_extn.dstr_chnl::TEXT)
+		AND rtrim(copa.div::TEXT)= rtrim(cus_sales_extn.div::TEXT)
+		AND rtrim(copa.cust_num::TEXT) = rtrim(cus_sales_extn.cust_num::TEXT)
+	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate ON rtrim(copa.obj_crncy_co_obj::TEXT) = rtrim(exch_rate.from_crncy::TEXT)
+		AND rtrim(exch_rate.to_crncy::TEXT) = rtrim('USD'::CHARACTER VARYING::TEXT)
+		AND rtrim(copa.fisc_yr_per) = rtrim(exch_rate.fisc_per)
+	JOIN CN_Customer c ON rtrim(copa.cust_num) = rtrim(c.cust_num)
+		AND rtrim(copa.co_cd )= rtrim(c.co_cd)
 		AND copa.acct_hier_shrt_desc::TEXT IN (
 			SELECT filter_value
 			FROM itg_mds_ap_ecom_oneview_config
@@ -801,13 +801,13 @@ union1 as(
 		NULL AS ppm_role
 	FROM dm_integration_dly a -- Transaction
 	LEFT JOIN edi_chn_m b -- Retailer Master
-		ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
+		ON rtrim(a.jcp_chn_cd::TEXT) = rtrim(b.chn_cd::TEXT)
 	LEFT JOIN mt_account_key c -- Account Dimension
-		ON a.jcp_account = c.accounting_code
+		ON rtrim(a.jcp_account) = rtrim(c.accounting_code)
 	JOIN mt_cld e -- Calendar Dimension
-		ON e.ymd_dt = a.jcp_date
+		ON rtrim(e.ymd_dt) = rtrim(a.jcp_date)
 	LEFT JOIN edi_item_m f -- Japan Product Master
-		ON f.jan_cd_so::TEXT = a.jcp_jan_cd::TEXT
+		ON rtrim(f.jan_cd_so::TEXT) = rtrim(a.jcp_jan_cd::TEXT)
 	-- Regional Product Master
 	LEFT JOIN (
 		SELECT matl_num,
@@ -1014,11 +1014,11 @@ SELECT h.jcp_plan_type AS data_type,
 		NULL AS ppm_role
 	FROM dm_integration_dly h -- Transactions
 	JOIN mt_cld e -- Calendar Dimension
-		ON to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE = e.ymd_dt
+		ON rtrim(to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE) = rtrim(e.ymd_dt)
 	JOIN edi_chn_m b -- Retailer Master
-		ON h.jcp_chn_offc_cd::TEXT = b.chn_offc_cd::TEXT
+		ON rtrim(h.jcp_chn_offc_cd::TEXT) = rtrim(b.chn_offc_cd::TEXT)
 	LEFT JOIN edi_item_m f -- Japan Product Master
-		ON f.jan_cd_so::TEXT = h.jcp_jan_cd::TEXT
+		ON rtrim(f.jan_cd_so::TEXT)= rtrim(h.jcp_jan_cd::TEXT)
 	-- Regional Product Master
 	LEFT JOIN (
 		SELECT matl_num,
@@ -1051,11 +1051,11 @@ SELECT h.jcp_plan_type AS data_type,
 	-- Profit Center
 	LEFT JOIN edw_profit_center_franchise_mapping prod_map ON LTRIM(mat_plant.prft_ctr::TEXT, '0'::CHARACTER VARYING::TEXT) = LTRIM(prod_map.profit_center::TEXT, '0'::CHARACTER VARYING::TEXT)
 	-- TP Mapping Table
-	LEFT JOIN mt_tp_status_mapping "map" ON "map".jcp_data_category::TEXT = h.jcp_data_category::TEXT
-		AND "map".direct_flg = h.tp_apl_direct_flg::CHARACTER(2)
-		AND "map".promo_status_cd = h.tp_promo_status_cd::CHARACTER(4)
-		AND "map".approve_status_cd = h.tp_approve_status_cd::CHARACTER(4)
-		AND "map".rslt_status_cd::TEXT = h.tp_rslt_status_cd::TEXT
+	LEFT JOIN mt_tp_status_mapping "map" ON rtrim("map".jcp_data_category::TEXT) = rtrim(h.jcp_data_category::TEXT)
+		AND rtrim("map".direct_flg) = rtrim(h.tp_apl_direct_flg::CHARACTER(2))
+		AND rtrim("map".promo_status_cd) = rtrim(h.tp_promo_status_cd::CHARACTER(4))
+		AND rtrim("map".approve_status_cd) = rtrim(h.tp_approve_status_cd::CHARACTER(4))
+		AND rtrim("map".rslt_status_cd::TEXT) = rtrim(h.tp_rslt_status_cd::TEXT)
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate -- Exchange Rates
 		ON exch_rate.from_crncy::TEXT = (
 			SELECT filter_value
@@ -1360,16 +1360,16 @@ SELECT h.jcp_plan_type AS data_type,
 	NULL AS ppm_role
 FROM dm_integration_dly h -- Transactions
 JOIN mt_cld e -- Calendar Dimension
-	ON to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE = e.ymd_dt
+	ON rtrim(to_date(h.jcp_date)::TIMESTAMP WITHOUT TIME ZONE) = rtrim(e.ymd_dt)
 JOIN edi_chn_m b -- Retailer Master
-	ON h.jcp_chn_offc_cd::TEXT = b.chn_offc_cd::TEXT
+	ON rtrim(h.jcp_chn_offc_cd::TEXT) = rtrim(b.chn_offc_cd::TEXT)
 --LEFT JOIN edi_chn_m b -- Retailer Master
 --ON h.jcp_chn_cd::TEXT = b.chn_cd::TEXT
 LEFT JOIN mt_account_key c -- Account Dimension
-	ON h.jcp_account = c.accounting_code
+	ON rtrim(h.jcp_account) = rtrim(c.accounting_code)
 --JOIN mt_sgmt c ON b.sgmt::TEXT = c.sgmt::TEXT
 LEFT JOIN edi_item_m f -- Japan Product Master
-	ON f.jan_cd_so::TEXT = h.jcp_jan_cd::TEXT
+	ON rtrim(f.jan_cd_so::TEXT) = rtrim(h.jcp_jan_cd::TEXT)
 -- Regional Product Master
 LEFT JOIN (
 	SELECT matl_num,
@@ -1402,7 +1402,7 @@ LEFT JOIN (
 -- Profit Center
 LEFT JOIN edw_profit_center_franchise_mapping prod_map ON LTRIM(mat_plant.prft_ctr::TEXT, '0'::CHARACTER VARYING::TEXT) = LTRIM(prod_map.profit_center::TEXT, '0'::CHARACTER VARYING::TEXT)
 -- TP Mapping Table
-LEFT JOIN mt_tp_status_mapping "map" ON "map".jcp_data_category::TEXT = h.jcp_data_category::TEXT
+LEFT JOIN mt_tp_status_mapping "map" ON rtrim("map".jcp_data_category::TEXT) = rtrim(h.jcp_data_category::TEXT)
 	AND "map".direct_flg = h.tp_apl_direct_flg::CHARACTER(2)
 	AND "map".promo_status_cd = h.tp_promo_status_cd::CHARACTER(4)
 	AND "map".approve_status_cd = h.tp_approve_status_cd::CHARACTER(4)
@@ -1592,13 +1592,13 @@ SELECT a.jcp_plan_type AS data_type,
 	NULL AS ppm_role
 FROM dm_integration_dly a -- Transaction
 LEFT JOIN edi_chn_m b -- Retailer Master
-	ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
+	ON rtrim(a.jcp_chn_cd::TEXT) = rtrim(b.chn_cd::TEXT)
 LEFT JOIN mt_account_key c -- Account Dimension
-	ON a.jcp_account = c.accounting_code
+	ON rtrim(a.jcp_account) = rtrim(c.accounting_code)
 JOIN mt_cld e -- Calendar Dimension
-	ON e.ymd_dt = a.jcp_date
+	ON rtrim(e.ymd_dt) = rtrim(a.jcp_date)
 LEFT JOIN edi_item_m f -- Japan Product Master
-	ON f.jan_cd_so::TEXT = a.jcp_jan_cd::TEXT
+	ON rtrim(f.jan_cd_so::TEXT) = rtrim(a.jcp_jan_cd::TEXT)
 -- Regional Product Master
 LEFT JOIN (
 	SELECT matl_num,
@@ -1646,7 +1646,7 @@ LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate -- Exchange Rates
 			AND dataset = 'Japan DMS'
 		)
 	AND (((e.year_445::TEXT || LPAD(e.month_445::CHARACTER VARYING::TEXT, 3, '0'::CHARACTER VARYING::TEXT))::CHARACTER VARYING)::TEXT) = exch_rate.fisc_per::CHARACTER VARYING::TEXT
-LEFT JOIN v_intrm_disc_rebate_ytd dr_ytd ON (e.year_445::TEXT || LPAD(e.month_445::CHARACTER VARYING::TEXT, 3, '0'::CHARACTER VARYING::TEXT)) = dr_ytd.fisc_yr_per::CHARACTER VARYING::TEXT
+LEFT JOIN v_intrm_disc_rebate_ytd dr_ytd ON rtrim(e.year_445::TEXT || LPAD(e.month_445::CHARACTER VARYING::TEXT, 3, '0'::CHARACTER VARYING::TEXT)) = rtrim(dr_ytd.fisc_yr_per::CHARACTER VARYING::TEXT)
 WHERE a.jcp_data_source::TEXT IN (
 		SELECT filter_value
 		FROM itg_mds_ap_ecom_oneview_config
@@ -1817,13 +1817,13 @@ insert7 as(
 	NULL AS ppm_role
 FROM dm_integration_dly a -- Transaction
 LEFT JOIN edi_chn_m b -- Retailer Master
-	ON a.jcp_chn_cd::TEXT = b.chn_cd::TEXT
+	ON rtrim(a.jcp_chn_cd::TEXT) = rtrim(b.chn_cd::TEXT)
 LEFT JOIN mt_account_key c -- Account Dimension
-	ON a.jcp_account = c.accounting_code
+	ON rtrim(a.jcp_account) = rtrim(c.accounting_code)
 JOIN mt_cld e -- Calendar Dimension
-	ON e.ymd_dt = a.jcp_date
+	ON rtrim(e.ymd_dt) = rtrim(a.jcp_date)
 LEFT JOIN edi_item_m f -- Japan Product Master
-	ON f.jan_cd_so::TEXT = a.jcp_jan_cd::TEXT
+	ON rtrim(f.jan_cd_so::TEXT) = rtrim(a.jcp_jan_cd::TEXT)
 -- Regional Product Master
 LEFT JOIN (
 	SELECT matl_num,
@@ -2037,13 +2037,13 @@ insert8_union1 as(
 	FROM edw_ecommerce_nts_regional apac_ecomm_nts
 	LEFT JOIN itg_query_parameters iqp ON UPPER (apac_ecomm_nts.country::TEXT) = iqp.parameter_name::TEXT
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
-			ON apac_ecomm_nts.from_crncy::TEXT = exch_rate.from_crncy::TEXT
+			ON rtrim(apac_ecomm_nts.from_crncy::TEXT) = rtrim(exch_rate.from_crncy::TEXT)
 			AND exch_rate.to_crncy::TEXT = ( select  filter_value 
 													from itg_mds_ap_ecom_oneview_config        
 													where dataset_area = 'To Currency' 
 													and column_name = 'to_crncy'
 													and dataset = 'Manual NTS Submission' )
-			AND exch_rate.fisc_per::CHARACTER VARYING::TEXT = (apac_ecomm_nts.year::CHARACTER VARYING::TEXT || LPAD (apac_ecomm_nts.month::CHARACTER VARYING::TEXT,3,'0'::CHARACTER VARYING::TEXT))
+			AND rtrim(exch_rate.fisc_per::CHARACTER VARYING::TEXT) = rtrim(apac_ecomm_nts.year::CHARACTER VARYING::TEXT || LPAD (apac_ecomm_nts.month::CHARACTER VARYING::TEXT,3,'0'::CHARACTER VARYING::TEXT))
 	WHERE apac_ecomm_nts.year  >= ( select (select fisc_yr 
 												from edw_calendar_dim 
 												where cal_day = to_date(current_timestamp())-365) - filter_value  as filter_value 
@@ -2115,7 +2115,7 @@ insert8_union2 as(
        NULL as ppm_role   
 	FROM edw_ap_ecomm_nts_manual_adjustment ecomm_nts_manual_adj
 	LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
-			ON ecomm_nts_manual_adj.from_crncy::TEXT = exch_rate.from_crncy::TEXT
+			ON rtrim(ecomm_nts_manual_adj.from_crncy::TEXT) = rtrim(exch_rate.from_crncy::TEXT)
 			AND exch_rate.to_crncy::TEXT = ( select  filter_value 
 													from itg_mds_ap_ecom_oneview_config        
 													where dataset_area = 'To Currency' 
