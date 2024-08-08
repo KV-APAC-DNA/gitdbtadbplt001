@@ -1,5 +1,5 @@
 with tbecorder as (
-select * from {{ ref('jpndcledw_integration__tbecorder') }}
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 final as (
 SELECT 

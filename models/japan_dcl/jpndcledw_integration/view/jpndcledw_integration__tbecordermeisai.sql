@@ -1,5 +1,5 @@
 with tbecordermeisai as (
-select * from {{ ref('jpndcledw_integration__tbecordermeisai') }}
+select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 final as (
 SELECT 
