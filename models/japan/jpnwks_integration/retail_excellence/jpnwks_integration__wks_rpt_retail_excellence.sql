@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with EDW_GCH_CUSTOMERHIERARCHY as(
     select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),

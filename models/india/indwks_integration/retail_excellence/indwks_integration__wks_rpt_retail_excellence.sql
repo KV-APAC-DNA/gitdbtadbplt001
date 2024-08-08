@@ -1,3 +1,8 @@
+
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import CTE
 with WKS_SKU_RECOM_MSL_TARGETS as 
 (

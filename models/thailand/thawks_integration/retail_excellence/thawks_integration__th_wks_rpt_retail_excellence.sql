@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_jnj_mer_share_of_shelf as (
 select * from {{ ref('thaitg_integration__itg_jnj_mer_share_of_shelf') }}
 ),

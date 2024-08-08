@@ -1,10 +1,8 @@
 
 {{ 
-    config(materialized='table', 
-    transient= true
-    )
-     
-    }}
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with wks_rpt_retail_excellence as (
     select * from {{ ref('chnwks_integration__wks_rpt_retail_excellence') }}
 ),

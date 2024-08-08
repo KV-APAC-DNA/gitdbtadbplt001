@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with WKS_ANZ_SELLOUT_RPT_RE as (
     select * from {{ ref('pcfwks_integration__wks_anz_sellout_rpt_re') }}
 ),

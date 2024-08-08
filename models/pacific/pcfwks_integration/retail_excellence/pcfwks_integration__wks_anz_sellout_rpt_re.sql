@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_anz_sellout_re_msl_list as (
     select * from {{ ref('pcfitg_integration__itg_anz_sellout_re_msl_list') }}
 ),

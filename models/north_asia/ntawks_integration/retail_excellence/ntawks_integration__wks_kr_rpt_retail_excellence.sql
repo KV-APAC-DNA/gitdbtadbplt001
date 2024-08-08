@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_kr_re_msl_list as (
     select * from {{ ref('ntaitg_integration__wks_itg_kr_re_msl_list') }}
 ),
