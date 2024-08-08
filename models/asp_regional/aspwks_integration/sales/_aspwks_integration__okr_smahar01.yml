@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_okr_balance_to_go
+    config:
+      alias: wks_okr_balance_to_go
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspwks_integration__wks_rpt_okr_dashboard_intermediate
+    config:
+      alias: wks_rpt_okr_dashboard_intermediate
+      tags: ["okr_dashboard_datamart_refresh","transformation"] 

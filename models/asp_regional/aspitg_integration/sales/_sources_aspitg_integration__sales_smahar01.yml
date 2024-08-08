@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_clavis_gb_products
+      tags: ["rg_clavis","transformation"]
+    - name: sdl_clavis_gb_search_terms_results
+      tags: ["rg_clavis","transformation"]

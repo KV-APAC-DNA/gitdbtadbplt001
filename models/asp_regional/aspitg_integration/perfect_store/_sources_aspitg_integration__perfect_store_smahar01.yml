@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_query_parameters
+      tags: ["okr_dashboard_datamart_refresh","transformation"]

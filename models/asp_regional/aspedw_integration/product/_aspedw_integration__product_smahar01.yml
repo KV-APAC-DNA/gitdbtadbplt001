@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_clavis_gb_products
+    config:
+      alias: edw_clavis_gb_products
+      tags: ["rg_clavis","transformation"]
