@@ -1,6 +1,6 @@
 with TSUHAN_GASSAN_MV_TBL as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.TSUHAN_GASSAN_MV_TBL
+    select * from {{ ref('jpndcledw_integration__tsuhan_gassan_mv_tbl') }}
 ),
 final as
 (

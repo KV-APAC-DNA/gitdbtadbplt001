@@ -1,6 +1,6 @@
-with TT01SALEH_SUM_MV_MT_TBL as 
+with tt01saleh_sum_mv_mt_tbl as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.TT01SALEH_SUM_MV_MT_TBL 
+    select * from {{ ref('jpndcledw_integration__tt01saleh_sum_mv_mt_tbl') }}
 ),final as
 (
     SELECT tt01saleh_sum_mv_mt_tbl.saleno,

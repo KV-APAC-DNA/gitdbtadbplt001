@@ -1,6 +1,6 @@
-with TT01SALEH_HEN_MV_MT_TBL as 
+with tt01saleh_hen_mv_mt_tbl as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.TT01SALEH_HEN_MV_MT_TBL
+    select * from {{ ref('jpndcledw_integration__tt01saleh_hen_mv_mt_tbl') }}
 ),
 final as 
 (

@@ -1,11 +1,11 @@
 with c_tbecinquiremeisai as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecinquiremeisai
+    select * from {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
 ),
 c_tbecinquirekesai as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecinquirekesai
+    select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 c_tbeckesai as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbeckesai
+    select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 
 final as (

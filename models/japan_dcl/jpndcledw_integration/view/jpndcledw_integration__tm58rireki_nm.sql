@@ -1,7 +1,7 @@
 with c_tbecusrcommentclassmst
 as
 (
-        SELECT * FROM jpdclitg_integration.c_tbecusrcommentclassmst
+        SELECT * FROM {{ ref('jpndclitg_integration__c_tbecusrcommentclassmst') }}
 ),
 final as
 (
