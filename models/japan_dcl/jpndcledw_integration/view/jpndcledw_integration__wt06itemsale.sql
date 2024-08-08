@@ -6,57 +6,57 @@ AS (
 zaiko_shohin_attr
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ZAIKO_SHOHIN_ATTR
+    FROM {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
     ),
 tm67juch_nm
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM67JUCH_NM
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
     ),
 tm66torikei_nm
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM66TORIKEI_NM
+    FROM {{ ref('jpndcledw_integration__tm66torikei_nm') }}
     ),
 tm44kaisya_nm
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM44KAISYA_NM
+    FROM {{ ref('jpndcledw_integration__tm44kaisya_nm') }}
     ),
 cit86osalm
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT86OSALM
+    FROM {{ ref('jpndcledw_integration__cit86osalm') }}
     ),
 cit85osalh
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT85OSALH
+    FROM {{ ref('jpndcledw_integration__cit85osalh') }}
     ),
 cit81salem
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT81SALEM
+    FROM {{ ref('jpndcledw_integration__cit81salem') }}
     ),
 cit80saleh
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH
+    FROM {{ ref('jpndcledw_integration__cit80saleh') }}
     ),
 cim24itbun
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIM24ITBUN
+    FROM {{ ref('jpndcledw_integration__cim24itbun') }}
     ),
 cim03item_zaiko
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM03ITEM_ZAIKO
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
     ),
 cim02tokui
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM02TOKUI_IKOU
+    FROM {{ ref('jpndcledw_integration__cim02tokui') }}
     ),
 item
 AS (

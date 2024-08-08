@@ -1,7 +1,7 @@
 with cim01kokya
 as
 (
-    select * from jpdcledw_integration.cim01kokya
+    select * from {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 final as
 (
