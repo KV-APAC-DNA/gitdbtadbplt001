@@ -1,8 +1,8 @@
 with cit80saleh_uri as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit80saleh_uri_mv
+    select * from {{ source('jpdcledw_integration', 'cit80saleh_uri_mv') }}
 ),
 cit80saleh_hen as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit80saleh_hen_mv
+    select * from {{ source('jpdcledw_integration', 'cit80saleh_hen_mv') }}
 ),
 t1 as (
     SELECT cit80saleh_uri.saleno,

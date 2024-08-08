@@ -1,4 +1,3 @@
-
 with cit81salem as (
     select * from {{ ref('jpndcledw_integration__cit81salem') }}
 ),

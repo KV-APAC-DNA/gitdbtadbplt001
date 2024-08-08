@@ -8,7 +8,7 @@ with tbecpointhistory as
 )
 , genomer_kokya_kpi_inbound as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.GENOMER_KOKYA_KPI_INBOUND
+    select * from {{ source('jpdcledw_integration', 'genomer_kokya_kpi_inbound') }}
 )
 ,final as 
 (
