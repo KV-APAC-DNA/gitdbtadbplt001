@@ -8,7 +8,7 @@
 }}
 
 with jp_pos_daily_aeon as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_aeon') }}
+    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_aeon') }} 
 ),
 final as(
     select
