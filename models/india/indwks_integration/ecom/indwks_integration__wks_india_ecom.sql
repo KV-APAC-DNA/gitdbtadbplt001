@@ -1,17 +1,17 @@
 with edw_key_account_dim as(
-    select * from snapindedw_integration.edw_key_account_dim
+    select * from {{ ref('indedw_integration__edw_key_account_dim') }}
 ),
 v_product_dim as (
-    select * from snapindedw_integration.v_product_dim
+    select * from {{ ref('indedw_integration__v_product_dim') }}
 ),
 edw_retailer_calendar_dim as (
-    select * from snapindedw_integration.edw_retailer_calendar_dim
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 edw_ka_sales_fact as (
-    select * from snapindedw_integration.edw_ka_sales_fact
+    select * from {{ ref('indedw_integration__edw_ka_sales_fact') }}
 ),
 edw_user_dim as (
-    select * from snapindedw_integration.edw_user_dim
+    select * from {{ ref('indedw_integration__edw_user_dim') }}
 ),
 union1 as(
 	SELECT CASE 

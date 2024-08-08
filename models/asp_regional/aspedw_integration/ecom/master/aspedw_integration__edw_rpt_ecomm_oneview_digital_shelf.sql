@@ -1,26 +1,26 @@
 with edw_clavis_gb_products as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CLAVIS_GB_PRODUCTS
+    select * from {{ ref('aspedw_integration__edw_clavis_gb_products') }}
 ),
 itg_mds_rg_ecom_digital_shelf_customer_mapping as(
-    select * from snapaspitg_integration.itg_mds_rg_ecom_digital_shelf_customer_mapping
+    select * from {{ ref('aspitg_integration__itg_mds_rg_ecom_digital_shelf_customer_mapping') }}
 ),
 itg_ecom_digital_salesweight as(
-    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_ECOM_DIGITAL_SALESWEIGHT
+    select * from {{ ref('aspitg_integration__itg_ecom_digital_salesweight') }}
 ),
 edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_product_key_attributes as(
-    select * from snapaspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 itg_mds_ap_digital_shelf_targets as(
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_DIGITAL_SHELF_TARGETS
+    select * from {{ ref('aspitg_integration__itg_mds_ap_digital_shelf_targets') }}
 ),
 edw_clavis_gb_search_terms_results as(
-    select * from aspedw_integration.edw_clavis_gb_search_terms_results
+    select * from {{ ref('aspedw_integration__edw_clavis_gb_search_terms_results') }}
 ),
 itg_mds_ap_ecom_oneview_config as(
-    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_AP_ECOM_ONEVIEW_CONFIG
+    select * from {{ ref('aspitg_integration__itg_mds_ap_ecom_oneview_config') }}
 ),
 union1 as(
     SELECT 'Act' AS "data_type",

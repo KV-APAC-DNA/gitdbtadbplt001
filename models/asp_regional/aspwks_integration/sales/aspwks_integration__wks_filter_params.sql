@@ -1,11 +1,11 @@
 with itg_mds_ap_ecom_oneview_config as(
-    select * from snapaspitg_integration.itg_mds_ap_ecom_oneview_config
+    select * from {{ ref('aspitg_integration__itg_mds_ap_ecom_oneview_config') }}
 ),
 edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 edw_company_dim as(
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 ctry_key as (
     select dataset, filter_value
