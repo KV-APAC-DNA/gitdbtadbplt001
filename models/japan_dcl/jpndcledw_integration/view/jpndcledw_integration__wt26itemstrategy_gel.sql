@@ -2,16 +2,16 @@ with tm14shkos as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM14SHKOS
 ),
 tm67juch_nm as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM67JUCH_NM
+select * from {{ ref('jpndcledw_integration__tm67juch_nm') }}
 ),
 tm39item_strategy as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM39ITEM_STRATEGY
+select * from {{ ref('jpndcledw_integration__tm39item_strategy') }}
 ),
 salem_itemstrategy as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.SALEM_ITEMSTRATEGY
+select * from {{ ref('jpndcledw_integration__salem_itemstrategy') }}
 ),
-SALEH_ITEMSTRATEGY as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.SALEH_ITEMSTRATEGY
+saleh_itemstrategy as (
+select * from {{ ref('jpndcledw_integration__saleh_itemstrategy') }}
 ),
 final as ((
   (

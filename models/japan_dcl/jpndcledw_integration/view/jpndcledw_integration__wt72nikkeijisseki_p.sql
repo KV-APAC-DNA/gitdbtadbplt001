@@ -1,7 +1,7 @@
 WITH cit80saleh
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.cit80saleh
+    FROM {{ ref('jpndcledw_integration__cit80saleh') }}
     ),
 CIM02TOKUI AS
 (
@@ -10,11 +10,11 @@ CIM02TOKUI AS
 ),
 cit85osalh AS 
 (
-    SELECT * FROM SNAPJPDCLEDW_INTEGRATION.cit85osalh 
+    SELECT * FROM {{ ref('jpndcledw_integration__cit85osalh') }}
 ),
 cit85osalh_kaigai AS 
 (
-    SELECT * FROM SNAPJPDCLEDW_INTEGRATION.cit85osalh_kaigai 
+    SELECT * FROM {{ ref('jpndcledw_integration__cit85osalh_kaigai') }}
 ),
 t1
 AS (
