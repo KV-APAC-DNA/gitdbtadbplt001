@@ -1,6 +1,6 @@
 with itg_okr_alteryx_automation as
 (
-    select * from dev_dna_core.aspitg_integration.itg_okr_alteryx_automation
+    select * from {{ ref('aspitg_integration__itg_okr_alteryx_automation') }}
 ),
 trans as
 (

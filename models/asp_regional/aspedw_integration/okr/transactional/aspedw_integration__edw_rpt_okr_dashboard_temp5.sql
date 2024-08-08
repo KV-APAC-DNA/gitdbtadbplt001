@@ -1,10 +1,10 @@
 with edw_rpt_ecomm_oneview as
 (
-    select * from dev_dna_core.aspedw_integration.edw_rpt_ecomm_oneview
+    select * from {{ ref('aspedw_integration__edw_rpt_ecomm_oneview') }}
 ),
 edw_okr_gfo_map as
 (
-    select * from dev_dna_core.aspedw_integration.edw_okr_gfo_map
+    select * from {{source('aspedw_integration', 'edw_okr_gfo_map')}}
 ),
 trans as
 (

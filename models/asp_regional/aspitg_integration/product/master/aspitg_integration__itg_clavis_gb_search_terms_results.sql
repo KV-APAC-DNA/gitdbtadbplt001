@@ -6,13 +6,13 @@
         DELETE FROM {{this}} 
         WHERE CAST(SUBSTRING(cast(report_date as string), 1, 4) || SUBSTRING(cast(report_date as string), 6, 2) AS INTEGER) IN (
         SELECT DISTINCT CAST(SUBSTRING(cast(report_date as string), 1, 4) || SUBSTRING(cast(report_date as string), 6, 2) AS INTEGER)
-        FROM DEV_DNA_LOAD.ASPSDL_RAW.SDL_CLAVIS_GB_SEARCH_TERMS_RESULTS);
+        FROM {{source('aspsdl_raw', 'sdl_clavis_gb_search_terms_results')}});
         {% endif %}"
     )
 }}
 with sdl_clavis_gb_search_terms_results as
 (
-    select * from DEV_DNA_LOAD.ASPSDL_RAW.SDL_CLAVIS_GB_SEARCH_TERMS_RESULTS
+    select * from {{source('aspsdl_raw', 'sdl_clavis_gb_search_terms_results')}}
 ),
 final as
 (

@@ -1,6 +1,6 @@
 with wks_okr_perfect_store as
 (
-    select * from DEV_DNA_CORE.ASPWKS_INTEGRATION.WKS_OKR_PERFECT_STORE
+    select * from {{ ref('aspwks_integration__wks_okr_perfect_store') }}
 ),
 trans as
 (

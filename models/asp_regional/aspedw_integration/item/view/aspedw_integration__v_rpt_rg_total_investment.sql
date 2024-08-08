@@ -1,11 +1,11 @@
 with edw_investment_fact as (
-    select * from dev_dna_core.aspedw_integration.edw_investment_fact
+    select * from {{ ref('aspedw_integration__edw_investment_fact') }}
 ),
 itg_total_investment_brand_map as (
-    select * from dev_dna_core.aspitg_integration.itg_total_investment_brand_map
+    select * from {{ ref('aspitg_integration__itg_total_investment_brand_map') }}
 ),
 itg_mds_rg_total_investment_ppm as (
-    select * from dev_dna_core.aspitg_integration.itg_mds_rg_total_investment_ppm
+    select * from {{ ref('aspitg_integration__itg_mds_rg_total_investment_ppm') }}
 ),
 trans as
 (

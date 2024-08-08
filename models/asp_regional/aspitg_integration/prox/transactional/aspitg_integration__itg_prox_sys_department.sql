@@ -1,7 +1,6 @@
 with sdl_prox_sys_department as
 (
-    select * from DEV_DNA_LOAD.SNAPASPSDL_RAW.SDL_PROX_SYS_DEPARTMENT
-    --select * from {{source('aspsdl_raw', 'sdl_prox_sys_department')}}
+    select * from {{source('aspsdl_raw', 'sdl_prox_sys_department')}}
 ),
 final as
 (

@@ -1,18 +1,18 @@
 with edw_ecommerce_6pai as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_ECOMMERCE_6PAI
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 itg_mds_ap_sales_ops_map as
 (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_SALES_OPS_MAP
+    select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 edw_okr_brand_map as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_OKR_BRAND_MAP
+    select * from {{source('aspedw_integration', 'edw_okr_brand_map')}}
 ),
 itg_query_parameters as
 (
-    select * from dev_dna_core.aspitg_integration.itg_query_parameters
+    select * from {{source('aspitg_integration', 'itg_query_parameters')}}
 ),
 trans as
 (

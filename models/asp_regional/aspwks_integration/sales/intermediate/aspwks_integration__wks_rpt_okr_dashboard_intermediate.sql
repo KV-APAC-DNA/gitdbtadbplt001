@@ -1,10 +1,10 @@
 with edw_rpt_okr_dashboard_temp as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_RPT_OKR_DASHBOARD_TEMP
+    select * from {{ ref('aspedw_integration__edw_rpt_okr_dashboard_temp') }}   
 ),
 edw_okr_core_ppm as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_OKR_CORE_PPM
+    select * from {{source('aspedw_integration', 'edw_okr_core_ppm')}}
 ),
 trans as
 (   
@@ -49,8 +49,8 @@ trans as
         fisc_year,
         quarter,
         kpi,
-        (substring(year_month, 1, 4) - 1) || (substring(year_month, 5, 6)) AS pm,
-        (fisc_year - 1) AS py,
+        (substring(year_month, 1, 4)::float - 1)::text || (substring(year_month, 5, 6))::text AS pm,
+        (fisc_year::float - 1)::text AS py,
         TO_CHAR(add_months(TO_DATE(year_month, 'YYYYMM'), - 1), 'YYYYMM') AS pm1,
         substring(TO_CHAR(add_months(TO_DATE(year_month, 'YYYYMM'), - 1), 'YYYYMM'), 1, 4) AS pmy,
         base.brand,
@@ -111,8 +111,8 @@ trans as
             ELSE market
             END
         ) base
-      LEFT JOIN edw_okr_core_ppm ppm ON upper(base.market) = upper(ppm.market)
-        AND upper(base.brand) = upper(ppm.brand)
+      LEFT JOIN edw_okr_core_ppm ppm ON upper(TRIM(base.market)) = upper(TRIM(ppm.market))
+    AND upper(TRIM(base.brand)) = upper(TRIM(ppm.brand))
       ) cy
     LEFT JOIN (
       SELECT year_month AS pm,
@@ -130,18 +130,18 @@ trans as
           ELSE market
           END market,
         kpi,
-        coalesce(actual_value,0) AS py_act,
+        actual_value AS py_act,
         ytd_actual AS py_ytd
       FROM edw_rpt_okr_dashboard_temp
       WHERE data_type = 'Actual'
-      ) py ON coalesce(cy.pm, '9999') = coalesce(py.pm, '9999')
-      AND coalesce(cy.brand, '9999') = coalesce(py.brand, '9999')
-      AND coalesce(cy.franchise, '9999') = coalesce(py.franchise, '9999')
-      AND coalesce(cy.cluster, '9999') = coalesce(py.cluster, '9999')
-      AND coalesce(cy.market, '9999') = coalesce(py.market, '9999')
-      AND py.kpi = cy.kpi
-      AND coalesce(cy.quarter, 9999) = coalesce(py.pq, 9999)
-      AND coalesce(cy.py, '9999') = coalesce(py.py, '9999')
+      ) py ON TRIM(coalesce(cy.pm, '9999')) = TRIM(coalesce(py.pm, '9999'))
+    AND TRIM(coalesce(cy.brand, '9999')) = TRIM(coalesce(py.brand, '9999'))
+    AND TRIM(coalesce(cy.franchise, '9999')) = TRIM(coalesce(py.franchise, '9999'))
+    AND TRIM(coalesce(cy.cluster, '9999')) = TRIM(coalesce(py.cluster, '9999'))
+    AND TRIM(coalesce(cy.market, '9999')) = TRIM(coalesce(py.market, '9999'))
+    AND py.kpi = cy.kpi
+    AND TRIM(coalesce(cy.quarter, '9999')) = TRIM(coalesce(py.pq, '9999'))
+    AND TRIM(coalesce(cy.py, '9999')) = TRIM(coalesce(py.py, '9999'))
     LEFT JOIN (
       SELECT year_month AS pm,
         fisc_year AS pmy,
@@ -160,15 +160,15 @@ trans as
       WHERE data_type = 'Actual'
         AND upper(kpi) = 'NTS% GROWING SHARE'
         AND year_month IS NOT NULL
-      ) pm ON coalesce(cy.pm1, '9999') = coalesce(pm.pm, '9999')
-      AND coalesce(cy.brand, '9999') = coalesce(pm.brand, '9999')
-      AND coalesce(cy.franchise, '9999') = coalesce(pm.franchise, '9999')
-      AND coalesce(cy.cluster, '9999') = coalesce(pm.cluster, '9999')
-      AND coalesce(cy.market, '9999') = coalesce(pm.market, '9999')
-      AND pm.kpi = cy.kpi
-      AND cy.pm IS NOT NULL
-      AND coalesce(cy.pmy, '9999') = coalesce(pm.pmy, '9999')
-    WHERE cy.fisc_year > (date_part(year, current_timestamp()) - 3)
+      ) pm ON coalesce(TRIM(cy.pm1), '9999') = coalesce(TRIM(pm.pm), '9999')
+AND coalesce(TRIM(cy.brand), '9999') = coalesce(TRIM(pm.brand), '9999')
+AND coalesce(TRIM(cy.franchise), '9999') = coalesce(TRIM(pm.franchise), '9999')
+AND coalesce(TRIM(cy.cluster), '9999') = coalesce(TRIM(pm.cluster), '9999')
+AND coalesce(TRIM(cy.market), '9999') = coalesce(TRIM(pm.market), '9999')
+AND pm.kpi = cy.kpi
+AND cy.pm IS NOT NULL
+AND coalesce(TRIM(cy.pmy), '9999') = coalesce(TRIM(pm.pmy), '9999')
+WHERE cy.fisc_year > (date_part(year, current_timestamp()) - 3)
 ),
 final as
 (

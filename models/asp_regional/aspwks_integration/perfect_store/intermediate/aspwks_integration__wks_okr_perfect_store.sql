@@ -1,14 +1,14 @@
 with edw_perfect_store_rebase_wt as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_PERFECT_STORE_REBASE_WT
+    select * from {{ ref('aspedw_integration__edw_perfect_store_rebase_wt') }}
 ),
 edw_company_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COMPANY_DIM
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 itg_query_parameters as
 (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_QUERY_PARAMETERS
+    select * from {{source('aspitg_integration', 'itg_query_parameters')}}
 ),
 trans as
 (

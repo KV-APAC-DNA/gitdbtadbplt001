@@ -1,18 +1,18 @@
 with edw_rpt_ecomm_oneview as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_RPT_ECOMM_ONEVIEW
+    select * from {{ ref('aspedw_integration__edw_rpt_ecomm_oneview') }}
 ),
 edw_okr_gfo_map as
 (
-    select * from dev_dna_core.aspedw_integration.edw_okr_gfo_map
+    select * from {{source('aspedw_integration', 'edw_okr_gfo_map')}}
 ),
 edw_material_dim as
 (
-    select * from dev_dna_core.aspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 itg_query_parameters as
 (
-    select * from dev_dna_core.aspitg_integration.itg_query_parameters
+    select * from {{source('aspitg_integration', 'itg_query_parameters')}}
 ),
 trans as
 (

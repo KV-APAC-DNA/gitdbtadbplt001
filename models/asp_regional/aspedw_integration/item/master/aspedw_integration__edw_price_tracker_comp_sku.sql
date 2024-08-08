@@ -11,7 +11,7 @@
 }}
 with v_rpt_price_tracker_comp_sku as 
 (
-    select * from dev_dna_core.aspedw_integration.v_rpt_price_tracker_comp_sku
+    select * from {{ ref('aspedw_integration__v_rpt_price_tracker_comp_sku') }}
 ),
 final as 
 (

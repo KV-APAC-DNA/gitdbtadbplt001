@@ -1,6 +1,6 @@
 with edw_rpt_okr_dashboard_intermediate as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_rpt_okr_dashboard_intermediate
+    select * from {{ ref('aspedw_integration__edw_rpt_okr_dashboard_intermediate') }}
 ),
 trans as
 (

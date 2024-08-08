@@ -1,8 +1,8 @@
 with edw_price_tracker as (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_PRICE_TRACKER
+    select * from {{ ref('aspedw_integration__edw_price_tracker') }}
 ),
 itg_mds_rg_sku_benchmarks as (
-    select * from DEV_DNA_CORE.SNAPASPITG_INTEGRATION.ITG_MDS_RG_SKU_BENCHMARKS
+    select * from {{ ref('aspitg_integration__itg_mds_rg_sku_benchmarks') }}
 ),
 jj_base
 AS (

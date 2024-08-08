@@ -1,6 +1,6 @@
 with wks_rpt_okr_dashboard_intermediate as
 (
-    select * from dev_dna_core.aspwks_integration.wks_rpt_okr_dashboard_intermediate
+    select * from {{ ref('aspwks_integration__wks_rpt_okr_dashboard_intermediate') }}
 ),
 trans as
 (

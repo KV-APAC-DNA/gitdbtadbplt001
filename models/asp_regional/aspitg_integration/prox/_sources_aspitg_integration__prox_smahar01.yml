@@ -13,9 +13,8 @@ sources:
       tags: ["prox_sdepartment","ingestion"]
       tests:
           - test_null:
-              select_columns: ["filename","DeptID","reason"]
+              select_columns: ["filename","DeptID"]
               not_null_columns: ["DeptID"]
-              filter: "TRIM(DeptID) = '' OR TRIM(DeptID) IS NULL"
               name: TRATBL_sdl_prox_sys_department__null_test
               config:
                   store_failures: true
@@ -24,9 +23,8 @@ sources:
       tags: ["prox_budget","ingestion"]
       tests:
         - test_null:
-            select_columns: ["filename","RowID","reason"]
+            select_columns: ["filename","RowID"]
             not_null_columns: ["RowID"]
-            filter: "TRIM(RowID) = '' OR TRIM(RowID) IS NULL"
             name: TRATBL_sdl_prox_report_bi_budgetusage__null_test
             config:
                 store_failures: true
@@ -35,9 +33,8 @@ sources:
       tags: ["prox_contract","ingestion"]
       tests:
         - test_null:
-            select_columns: ["filename","RowID","reason"]
+            select_columns: ["filename","RowID"]
             not_null_columns: ["RowID"]
-            filter: "TRIM(RowID) = '' OR TRIM(RowID) IS NULL"
             name: TRATBL_sdl_prox_report_bi_contract__null_test
             config:
                 store_failures: true
@@ -46,9 +43,8 @@ sources:
       tags: ["prox_payment","ingestion"]
       tests:
         - test_null:
-            select_columns: ["filename","RowID","reason"]
+            select_columns: ["filename","RowID"]
             not_null_columns: ["RowID"]
-            filter: "TRIM(RowID) = '' OR TRIM(RowID) IS NULL"
             name: TRATBL_sdl_prox_report_bi_payment__null_test
             config:
                 store_failures: true

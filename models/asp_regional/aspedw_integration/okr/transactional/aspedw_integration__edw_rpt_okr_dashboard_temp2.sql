@@ -1,6 +1,6 @@
 with itg_mds_ap_okr_targets as
 (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_MDS_AP_OKR_TARGETS
+    select * from {{ ref('aspitg_integration__itg_mds_ap_okr_targets') }}
 ),
 trans as
 (    

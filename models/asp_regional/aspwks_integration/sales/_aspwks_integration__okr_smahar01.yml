@@ -8,9 +8,4 @@ models:
   - name: aspwks_integration__wks_rpt_okr_dashboard_intermediate
     config:
       alias: wks_rpt_okr_dashboard_intermediate
-      tags: ["okr_dashboard_datamart_refresh","transformation"]
-  - name: aspwks_integration__wks_itg_pca_trans
-    config:
-      alias: wks_itg_pca_trans
-      tags: ["j_sap_bw_trxn_pca_actuals_wrapper","transformation"]
-  
+      tags: ["okr_dashboard_datamart_refresh","transformation"] 

@@ -1,10 +1,10 @@
 with wks_rpt_okr_dashboard_intermediate as
 (
-    select * from dev_dna_core.aspwks_integration.wks_rpt_okr_dashboard_intermediate
+    select * from {{ ref('aspwks_integration__wks_rpt_okr_dashboard_intermediate') }}
 ),
 wks_okr_balance_to_go as
 (
-   select * from dev_dna_core.aspwks_integration.wks_okr_balance_to_go
+    select * from {{ ref('aspwks_integration__wks_okr_balance_to_go') }}
 ),
 trans as
 (
