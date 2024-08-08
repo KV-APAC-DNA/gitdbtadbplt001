@@ -1,0 +1,9 @@
+models:
+  - name: aspedw_integration__edw_ecommerce_6pai
+    config: 
+      alias: edw_ecommerce_6pai
+      tags: ["ecommerce_6pai_ingestion","transformation"]
+  - name: aspedw_integration__edw_ecommerce_nts_regional
+    config: 
+      alias: edw_ecommerce_nts_regional
+      tags: ["j_ecommerce_nts_mds_load","transformation"]

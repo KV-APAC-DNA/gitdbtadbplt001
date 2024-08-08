@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: ntaitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntaitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_kr_gt_sellout
+    - name: itg_mds_tw_mt_store_master
+
+
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: ntasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_hk_store_master

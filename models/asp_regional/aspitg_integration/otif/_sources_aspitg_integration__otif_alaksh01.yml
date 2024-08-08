@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_otif_glbl_con_reporting
+        tags: ["global_otif_edl_dna","ingestion"]

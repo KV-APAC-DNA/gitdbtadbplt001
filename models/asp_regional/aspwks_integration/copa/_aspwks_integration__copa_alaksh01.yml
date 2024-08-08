@@ -1,0 +1,25 @@
+models:
+  - name: aspwks_integration__wks_rpt_copa_customergp_agg1
+    config: 
+      alias: wks_rpt_copa_customergp_agg1
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp_agg2
+    config: 
+      alias: wks_rpt_copa_customergp_agg2
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp_base
+    config: 
+      alias: wks_rpt_copa_customergp_base
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp_consolidate
+    config: 
+      alias: wks_rpt_copa_customergp_consolidate
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp_dim_temp
+    config: 
+      alias: wks_rpt_copa_customergp_dim_temp
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspwks_integration__wks_rpt_copa_customergp_temp_sum
+    config: 
+      alias: wks_rpt_copa_customergp_temp_sum
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]

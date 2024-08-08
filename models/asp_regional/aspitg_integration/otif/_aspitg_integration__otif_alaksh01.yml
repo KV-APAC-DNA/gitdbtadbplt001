@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_otif_glbl_con_reporting
+    config:
+      alias: itg_otif_glbl_con_reporting
+      tags: ["global_otif_edl_dna","ingestion"]
+  - name: aspitg_integration__sdl_raw_otif_glbl_con_reporting
+    config:
+      alias: sdl_raw_otif_glbl_con_reporting
+      tags: ["global_otif_edl_dna","ingestion"]  

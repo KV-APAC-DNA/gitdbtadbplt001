@@ -1,0 +1,13 @@
+models:
+  - name: aspedw_integration__edw_cn_digital_shelf_data
+    config: 
+      alias: edw_cn_digital_shelf_data
+      tags: ["cn_yimian_price_data_load","transformation"]
+  - name: aspedw_integration__edw_price_tracker
+    config: 
+      alias: edw_price_tracker
+      tags: ["j_ap_tab_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspedw_integration__v_rpt_price_tracker
+    config: 
+      alias: v_rpt_price_tracker
+      tags: ["j_ap_tab_refresh_etl_framework_customer_pl","transformation"]

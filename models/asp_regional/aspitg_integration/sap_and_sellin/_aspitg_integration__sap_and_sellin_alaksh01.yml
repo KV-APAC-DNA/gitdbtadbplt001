@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_ecc_standard_cost_history
+    config:
+      alias: itg_ecc_standard_cost_history
+      tags: ["SAP_ECC"]
