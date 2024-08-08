@@ -1,7 +1,7 @@
 WITH cld_m
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CLD_M
+  FROM {{ source('jpdcledw_integration', 'cld_m') }}
   ),
 final
 AS (

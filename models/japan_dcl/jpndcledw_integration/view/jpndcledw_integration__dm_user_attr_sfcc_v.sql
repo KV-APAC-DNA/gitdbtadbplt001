@@ -1,7 +1,7 @@
 WITH threshold_amount_master AS 
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.threshold_amount_master
+    FROM {{ source('jpdcledw_integration', 'threshold_amount_master') }}
 ),
 
 dm_user_attr AS 

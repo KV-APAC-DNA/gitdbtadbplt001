@@ -1,12 +1,12 @@
 WITH affiliate_cancel_receive
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.affiliate_cancel_receive
+  FROM {{ref('jpndclitg_integration__affiliate_cancel_receive')}}
   ),
 tbusrpram
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdclitg_integration.tbusrpram
+  FROM {{ref('jpndclitg_integration__tbusrpram')}}
   ),
 ct1
 AS (

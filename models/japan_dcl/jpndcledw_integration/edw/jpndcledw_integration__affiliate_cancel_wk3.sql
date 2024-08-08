@@ -1,12 +1,12 @@
 WITH affiliate_cancel_wk1
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.affiliate_cancel_wk1
+  FROM {{ref('jpndcledw_integration__affiliate_cancel_wk1')}}
   ),
 affiliate_cancel_wk2
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.affiliate_cancel_wk2
+  FROM {{ref('jpndcledw_integration__affiliate_cancel_wk2')}}
   ),
 transformed
 AS (

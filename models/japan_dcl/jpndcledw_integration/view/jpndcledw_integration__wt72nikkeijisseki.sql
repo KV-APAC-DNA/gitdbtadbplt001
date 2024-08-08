@@ -1,15 +1,15 @@
 with 
 cit85osalh_kaigai as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT85OSALH_KAIGAI
+select * from {{ ref('jpndcledw_integration__cit85osalh_kaigai') }}
 ),
 cit85osalh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT85OSALH
+select * from {{ ref('jpndcledw_integration__cit85osalh') }}
 ),
 cit80saleh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cit80saleh
+select * from {{ ref('jpndcledw_integration__cit80saleh') }}
 ),
 cim02tokui as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim02tokui
+select * from {{ ref('jpndcledw_integration__cim02tokui') }}
 ),
 final as (
 SELECT 

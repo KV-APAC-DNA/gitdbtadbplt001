@@ -1,4 +1,3 @@
---WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!
 WITH tm14shkos
 AS (
     SELECT *
@@ -7,57 +6,57 @@ AS (
 cim08shkos_bunkai
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim08shkos_bunkai
+    FROM {{ ref('jpndcledw_integration__cim08shkos_bunkai') }}
     ),
 zaiko_shohin_attr
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.zaiko_shohin_attr
+    FROM {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
     ),
 tm67juch_nm
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm67juch_nm
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
     ),
 syouhincd_henkan
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.syouhincd_henkan
+    FROM {{ ref('jpndcledw_integration__syouhincd_henkan') }}
     ),
 get_ci_next_sale
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.get_ci_next_sale
+    FROM {{ ref('jpndcledw_integration__get_ci_next_sale') }}
     ),
 cit86osalm
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit86osalm
+    FROM {{ ref('jpndcledw_integration__cit86osalm') }}
     ),
 cit85osalh
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit85osalh
+    FROM {{ ref('jpndcledw_integration__cit85osalh') }}
     ),
 cit81salem
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit81salem
+    FROM {{ ref('jpndcledw_integration__cit81salem') }}
     ),
 cit80saleh
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit80saleh
+    FROM {{ ref('jpndcledw_integration__cit80saleh') }}
     ),
 cim03item_zaiko
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim03item_zaiko
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
     ),
 cim03item_hanbai
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim03item_hanbai
+    FROM {{ ref('jpndcledw_integration__cim03item_hanbai') }}
     ),
 "wqtm07属性未設定名称マスタ"
 AS (

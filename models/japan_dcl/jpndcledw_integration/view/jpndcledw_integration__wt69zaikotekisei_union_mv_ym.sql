@@ -1,6 +1,6 @@
 WITH wt69zaikotekisei_union_mv_ym_tbl AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.wt69zaikotekisei_union_mv_ym_tbl
+    SELECT * FROM {{ ref('jpndcledw_integration__wt69zaikotekisei_union_mv_ym_tbl') }}
 ),
 
 final AS
