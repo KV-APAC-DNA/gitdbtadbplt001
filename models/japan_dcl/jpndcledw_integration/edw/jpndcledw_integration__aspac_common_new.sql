@@ -1,25 +1,25 @@
 WITH ssmthsalhephedda
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.ssmthsalhephedda
+	FROM {{ref('jpndclitg_integration__ssmthsalhephedda')}}
 	)
 	
 	,ssmthsalhedda
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.ssmthsalhedda
+	FROM {{ref('jpndclitg_integration__ssmthsalhedda')}}
 	)
 	
 	,aspac_common_mv
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.aspac_common_mv
+	FROM snapjpdcledw_integration.aspac_common_mv 
 	)
 	
 	,hanyo_partner
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.hanyo_partner
+	FROM {{ref('jpndcledw_integration__hanyo_partner')}}
 	)
 	
 	,cte_join_1

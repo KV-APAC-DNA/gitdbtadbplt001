@@ -11,17 +11,17 @@ AS (
 HANYO_ATTR
 AS (
     SELECT *
-    FROM jpdcledw_integration.HANYO_ATTR
+    FROM {{ref('jpndcledw_integration__hanyo_attr')}}
     ),
 SSMTHSALHEDDA
 AS (
     SELECT *
-    FROM jpdclitg_integration.SSMTHSALHEDDA
+    FROM {{ref('jpndclitg_integration__ssmthsalhedda')}}
     ),
 SSMTHJUCHHEDDA
 AS (
     SELECT *
-    FROM jpdclitg_integration.SSMTHJUCHHEDDA
+    FROM {{ref('jpndclitg_integration__ssmthsalhephedda')}}
     ),
 SSMTHDCLTHANJUCHHEDDA
 AS (
@@ -41,12 +41,12 @@ AS (
 TBECORDER
 AS (
     SELECT *
-    FROM jpdclitg_integration.TBECORDER
+    FROM {{ref('jpndclitg_integration__tbecorder')}}
     ),
 C_TBECKESAI
 AS (
     SELECT *
-    FROM jpdclitg_integration.C_TBECKESAI
+    FROM {{ref('jpndclitg_integration__c_tbeckesai')}}
     ),
 t1
 AS (

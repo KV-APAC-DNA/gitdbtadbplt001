@@ -1,7 +1,7 @@
 with affiliate_cancel_delivery
 as (
 	select *
-	from dev_dna_core.snapjpdcledw_integration.affiliate_cancel_delivery
+	from {{ref('jpndcledw_integration__affiliate_cancel_delivery')}}
 	) ,
 
 	transformed AS (
