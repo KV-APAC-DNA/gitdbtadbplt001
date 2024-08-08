@@ -1,11 +1,10 @@
---with itg_ecommerce_6pai as
+with itg_ecommerce_6pai as
 (
     select * from {{ ref('aspitg_integration__itg_ecommerce_6pai') }}
 ),
 itg_ecom_digital_salesweight as
 (
-    select * from snapaspitg_integration.itg_ecom_digital_salesweight
-    --{{ ref('aspitg_integration__itg_ecom_digital_salesweight') }}
+    select * from {{ ref('aspitg_integration__itg_ecom_digital_salesweight') }}
 ),
 final as
 (

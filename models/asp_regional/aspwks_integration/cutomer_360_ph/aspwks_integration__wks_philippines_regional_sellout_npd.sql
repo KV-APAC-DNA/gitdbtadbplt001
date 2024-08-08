@@ -1,4 +1,4 @@
---with wks_philippines_regional_sellout as
+with wks_philippines_regional_sellout as
 (
     select * from {{ ref('aspwks_integration__wks_philippines_regional_sellout') }}
 ),

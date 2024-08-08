@@ -113,6 +113,7 @@ SELECT
 	msl_product_desc,
 	store_grade,
 	retail_env,
+    channel,
 	crtd_dttm,
 	updt_dttm
 FROM
@@ -191,6 +192,7 @@ FROM
 		TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
 		TRIM(NVL (NULLIF(SELLOUT.store_grade,''),'NA')) AS store_grade,
 		TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
+        TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
 	   SELLOUT.crtd_dttm,
 	   SELLOUT.updt_dttm
 FROM WKS_HONG_KONG_REGIONAL_SELLOUT_BASE SELLOUT
@@ -478,6 +480,7 @@ GROUP BY
 		SELLOUT.msl_product_desc,
 		SELLOUT.store_grade,
 		SELLOUT.retail_env,
+        SELLOUT.channel,
 		  SELLOUT.crtd_dttm,
 		  SELLOUT.updt_dttm		  
 HAVING NOT (SUM(SELLOUT.so_sls_value) = 0 and SUM(SELLOUT.so_sls_qty) = 0)) 
@@ -545,6 +548,7 @@ msl_product_code::varchar(20) as msl_product_code,
 msl_product_desc::varchar(255) as msl_product_desc,
 store_grade::varchar(200) as store_grade,
 retail_env::varchar(300) as retail_env,
+channel::varchar(500) as channel,
 crtd_dttm::timestamp_ntz(9) as crtd_dttm,
 updt_dttm::timestamp_ntz(9) as updt_dttm
 from transformed

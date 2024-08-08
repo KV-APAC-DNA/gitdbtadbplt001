@@ -1,56 +1,46 @@
---with wks_philippines_regional_sellout_base as
+with wks_philippines_regional_sellout_base as
 (
     select * from {{ ref('aspwks_integration__wks_philippines_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as
 (
-    select * from sgpedw_integration.edw_vw_os_time_dim
-    --{{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
-    --{{ ref('aspedw_integration__edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as
 (
-    select * from aspedw_integration.edw_gch_producthierarchy
-    --{{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_gch_customerhierarchy as
 (
-    select * from aspedw_integration.edw_gch_customerhierarchy
-    --{{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_customer_sales_dim as
 (
-    select * from aspedw_integration.edw_customer_sales_dim
-    --{{ ref('aspedw_integration__edw_customer_sales_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as
 (
-    select * from aspedw_integration.edw_customer_base_dim
-    --{{ ref('aspedw_integration__edw_customer_base_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as
 (
-    select * from aspedw_integration.edw_company_dim
-    --{{ ref('aspedw_integration__edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_dstrbtn_chnl as
 (
-    select * from aspedw_integration.edw_dstrbtn_chnl
-    --{{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_sales_org_dim as
 (
-    select * from aspedw_integration.edw_sales_org_dim
-    --{{ ref('aspedw_integration__edw_sales_org_dim') }}
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 edw_code_descriptions as
 (
-    select * from aspedw_integration.edw_code_descriptions
-    --{{ ref('aspedw_integration__edw_code_descriptions') }}
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as
 (
@@ -62,8 +52,15 @@ edw_code_descriptions_manual as
 ),
 vw_edw_reg_exch_rate as
 (
-    select * from aspedw_integration.vw_edw_reg_exch_rate
-    --{{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+),
+itg_query_parameters as
+(
+    select * from {{ source('phlitg_integration', 'itg_query_parameters') }}
+),
+edw_material_sales_dim as
+(
+    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
 ),
 final as
 (
@@ -129,8 +126,16 @@ final as
             SUM(SO_SLS_VALUE*(C.EXCH_RATE/(from_ratio*to_ratio)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
         SUM(NVL(SO_LIST_PRICE,0)) as LIST_PRICE,
         SUM(NVL(SO_SELLOUT_VALUE_LIST_PRICE,0)) as SELLOUT_VALUE_LIST_PRICE,
-            TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
-            TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            --TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
+            --TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+        CASE WHEN SELLOUT.DATA_SRC='ECOM' THEN 'NA'
+             ELSE TRIM(NVL (NULLIF(emsd.mstr_cd,''),'NA')) END AS msl_product_code,
+        CASE WHEN SELLOUT.DATA_SRC='ECOM' THEN 'NA'
+             ELSE
+            (CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+            ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) IN ('N/A','NA') THEN 'NA'
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+            END) END AS msl_product_desc,
             TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
         SELLOUT.crtd_dttm,
         SELLOUT.updt_dttm
@@ -183,12 +188,19 @@ final as
             EGPH.PUT_UP_DESCRIPTION AS GPH_PROD_PUT_UP_DESC,
             EGPH.SIZE AS GPH_PROD_SIZE,
             EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
+            EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
             row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
             FROM edw_material_dim EMD,
                 EDW_GCH_PRODUCTHIERARCHY EGPH
             WHERE LTRIM(EMD.MATL_NUM,'0') = LTRIM(EGPH.MATERIALNUMBER(+),0)
             AND   EMD.PROD_HIER_CD <> '' ) product
     ON LTRIM(SELLOUT.matl_num,'0') =LTRIM(product.sap_matl_num,'0') and rnk=1
+    LEFT JOIN (SELECT DISTINCT LTRIM(matl_num,'0') AS sku,
+          mstr_cd
+       FROM edw_material_sales_dim
+       WHERE LTRIM(mstr_cd,'0') <> ' '
+       and sls_org in (SELECT parameter_value from itg_query_parameters where country_code='PH' and parameter_name='Customer360' and parameter_type='sls_org')
+       and dstr_chnl in (SELECT parameter_value from itg_query_parameters where country_code='PH' and parameter_name='Customer360' and parameter_type='dstr_chnl')) emsd ON LTRIM(emsd.sku,'0') = LTRIM(SELLOUT.matl_num,'0')
     LEFT JOIN (SELECT * FROM (SELECT DISTINCT ECBD.CUST_NUM AS SAP_CUST_ID,
         ECBD.CUST_NM AS SAP_CUST_NM,
         ECSD.SLS_ORG AS SAP_SLS_ORG,
@@ -317,10 +329,12 @@ final as
                 PRODUCT.SAP_MATL_NUM, 
                 PRODUCT.SAP_MAT_DESC, 
                 PRODUCT.PKA_PRODUCT_KEY, 
-                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION, 
+                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,
+                PRODUCT.PKA_PACKAGE, 
                 (C.EXCH_RATE/(C.from_ratio*C.to_ratio)),
-                SELLOUT.msl_product_code,
-                SELLOUT.msl_product_desc,
+                --SELLOUT.msl_product_code,
+                --SELLOUT.msl_product_desc,
+                emsd.mstr_cd,
                 SELLOUT.channel,
                 SELLOUT.crtd_dttm,
                 SELLOUT.updt_dttm

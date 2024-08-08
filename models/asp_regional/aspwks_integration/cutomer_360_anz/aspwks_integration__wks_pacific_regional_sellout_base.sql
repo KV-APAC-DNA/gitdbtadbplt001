@@ -1,12 +1,10 @@
---with vw_iri_scan_sales_analysis as
+with vw_iri_scan_sales_analysis as
 (
-    select * from snappcfedw_integration.vw_iri_scan_sales_analysis
-    --{{ ref('pcfedw_integration__vw_iri_scan_sales_analysis') }}
+    select * from {{ ref('pcfedw_integration__vw_iri_scan_sales_analysis') }}
 ),
 edw_pacific_perenso_ims_analysis as
 (
-    select * from pcfedw_integration.edw_pacific_perenso_ims_analysis
-    --{{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
+    select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}
 ),
 itg_query_parameters as
 (

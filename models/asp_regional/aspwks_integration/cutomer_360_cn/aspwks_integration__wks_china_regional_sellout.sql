@@ -1,56 +1,46 @@
---with wks_china_regional_sellout_base as
+with wks_china_regional_sellout_base as
 (
     select * from {{ ref('aspwks_integration__wks_china_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as
 (
-    select * from sgpedw_integration.edw_vw_os_time_dim
-    --{{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
-    --{{ ref('aspedw_integration__edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as
 (
-    select * from aspedw_integration.edw_gch_producthierarchy
-    --{{ ref('aspedw_integration__edw_gch_producthierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 edw_gch_customerhierarchy as
 (
-    select * from aspedw_integration.edw_gch_customerhierarchy
-    --{{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 edw_customer_sales_dim as
 (
-    select * from aspedw_integration.edw_customer_sales_dim
-    --{{ ref('aspedw_integration__edw_customer_sales_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
 edw_customer_base_dim as
 (
-    select * from aspedw_integration.edw_customer_base_dim
-    --{{ ref('aspedw_integration__edw_customer_base_dim') }}
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_company_dim as
 (
-    select * from aspedw_integration.edw_company_dim
-    --{{ ref('aspedw_integration__edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_dstrbtn_chnl as
 (
-    select * from aspedw_integration.edw_dstrbtn_chnl
-    --{{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
 edw_sales_org_dim as
 (
-    select * from aspedw_integration.edw_sales_org_dim
-    --{{ ref('aspedw_integration__edw_sales_org_dim') }}
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
 edw_code_descriptions as
 (
-    select * from aspedw_integration.edw_code_descriptions
-    --{{ ref('aspedw_integration__edw_code_descriptions') }}
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as
 (
@@ -62,8 +52,7 @@ edw_code_descriptions_manual as
 ),
 vw_edw_reg_exch_rate as
 (
-    select * from aspedw_integration.vw_edw_reg_exch_rate
-    --{{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 final as
 (

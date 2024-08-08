@@ -1,4 +1,4 @@
---with wks_china_regional_sellout as
+with wks_china_regional_sellout as
 (
     select * from {{ ref('aspwks_integration__wks_china_regional_sellout') }}
 ),

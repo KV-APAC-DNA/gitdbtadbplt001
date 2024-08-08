@@ -1,0 +1,15 @@
+models:
+  - name: aspedw_integration__v_rpt_copa_gcph
+    config: 
+      alias: v_rpt_copa_gcph
+      tags: ["view","transformation"]
+  
+  - name: aspedw_integration__v_rpt_copa_gl_hid_disc
+    config: 
+      alias: v_rpt_copa_gl_hid_disc
+      tags: ["view","transformation"]
+
+  - name: aspedw_integration__v_intrm_reg_crncy_exch
+    config: 
+      alias: v_intrm_reg_crncy_exch
+      tags: ["view","transformation"]

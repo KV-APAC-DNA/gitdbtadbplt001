@@ -1,52 +1,42 @@
---with itg_ph_dms_sellout_sales_fact as
+with itg_ph_dms_sellout_sales_fact as
 (
-    select * from phlitg_integration.itg_ph_dms_sellout_sales_fact
-    --{{ ref('phlitg_integration__itg_ph_dms_sellout_sales_fact') }}
+    select * from {{ ref('phlitg_integration__itg_ph_dms_sellout_sales_fact') }}
 ),
 edw_vw_ph_dstrbtr_material_dim as
 (
-    select * from DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_DSTRBTR_MATERIAL_DIM
-    --{{ ref('phledw_integration__edw_vw_ph_dstrbtr_material_dim') }}
+    select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_material_dim') }}
 ),
 edw_material_dim as
 (
-    select * from aspedw_integration.edw_material_dim
-    --{{ ref('aspedw_integration__edw_material_dim') }}
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_vw_ph_dstrbtr_customer_dim as
 (
-    select * from DEV_DNA_CORE.ASING012_WORKSPACE.PHLEDW_INTEGRATION__EDW_VW_PH_DSTRBTR_CUSTOMER_DIM
-    --{{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
 ),
 edw_mv_ph_customer_dim as
 (
-    select * from phledw_integration.edw_mv_ph_customer_dim
-    --{{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
+    select * from {{ ref('phledw_integration__edw_mv_ph_customer_dim') }}
 ),
 edw_vw_os_time_dim as
 (
-    select * from sgpedw_integration.edw_vw_os_time_dim
-    --{{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 itg_mds_ph_lav_customer as
 (
-    select * from phlitg_integration.itg_mds_ph_lav_customer
-    --{{ ref('phlitg_integration__itg_mds_ph_lav_customer') }}
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_customer') }}
 ),
 edw_ph_pos_analysis as
 (
-    select * from phledw_integration.edw_ph_pos_analysis
-    --{{ ref('phledw_integration__edw_ph_pos_analysis') }}
+    select * from {{ ref('phledw_integration__edw_ph_pos_analysis') }}
 ),
 edw_ph_pos_analysis_v2 as
 (
-    select * from phledw_integration.edw_ph_pos_analysis_v2
-    --{{ ref('phledw_integration__edw_ph_pos_analysis_v2') }}
+    select * from {{ ref('phledw_integration__edw_ph_pos_analysis_v2') }}
 ),
 edw_ph_ecommerce_offtake as
 (
-    select * from phledw_integration.edw_ph_ecommerce_offtake
-    --{{ ref('phledw_integration__edw_ph_ecommerce_offtake') }}
+    select * from {{ ref('phledw_integration__edw_ph_ecommerce_offtake') }}
 ),
 itg_query_parameters as
 (
@@ -85,8 +75,8 @@ final as
     BASE.so_sls_value,
     BASE.SO_LIST_PRICE,
     BASE.SO_SELLOUT_VALUE_LIST_PRICE,
-    BASE.msl_product_code,
-    BASE.msl_product_desc,
+    --BASE.msl_product_code,
+    --BASE.msl_product_desc,
     BASE.channel,
     convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
     convert_timezone('UTC',current_timestamp()) AS updt_dttm
@@ -119,8 +109,8 @@ final as
         ((case when gts_val >= 0 then gts_val else 0 end) - dscnt) as SO_SLS_VALUE,
         NULL as SO_LIST_PRICE,
         NULL as SO_SELLOUT_VALUE_LIST_PRICE,
-        nvl(mat.sap_matl_num, sls.dstrbtr_prod_id) as msl_product_code,
-        emd.matl_desc as msl_product_desc,
+        --nvl(mat.sap_matl_num, sls.dstrbtr_prod_id) as msl_product_code,
+        --emd.matl_desc as msl_product_desc,
         mds_cust.channel_desc as channel
     FROM itg_ph_dms_sellout_sales_fact sls left join
             (select distinct dstrbtr_grp_cd, dstrbtr_matl_num, sap_matl_num
@@ -163,9 +153,9 @@ final as
         pos_gts as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
-            sku as msl_product_code,
-            mt_item_nm as msl_product_desc,
-            mds_cust.channel_desc as channel
+        --sku as msl_product_code,
+        --mt_item_nm as msl_product_desc,
+        mds_cust.channel_desc as channel
         from edw_ph_pos_analysis sls
         left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls.sold_to,'0')
 
@@ -181,7 +171,7 @@ final as
         left(jj_mnth_id, 4)::INT as univ_year,
         Right(jj_mnth_id,2)::INT as univ_month,
         'NA' AS EAN,
-        sku AS MATL_NUM,
+        sls_v2.sku AS MATL_NUM,
         mt_item_nm AS Customer_Product_Desc,
         cust_brnch_cd AS STORE_CD,
         mt_cust_brnch_nm AS STORE_NAME,
@@ -198,10 +188,11 @@ final as
         pos_gts as SO_SLS_VALUE,
         jj_item_prc_per_pc as SO_LIST_PRICE,
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
-        'NA' as msl_product_code,
-            'NA' as msl_product_desc,
-            'NA' as channel
-        from edw_ph_pos_analysis_v2
+        --'NA' as msl_product_code,
+        --'NA' as msl_product_desc,
+        'NA' as channel
+        from edw_ph_pos_analysis_v2 sls_v2
+    left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
     UNION ALL
 
@@ -231,9 +222,9 @@ final as
         sales_value_lcy as SO_SLS_VALUE,
         NULL as SO_LIST_PRICE,
         NULL as SO_SELLOUT_VALUE_LIST_PRICE,
-        'NA' as msl_product_code,
-            'NA' as msl_product_desc,
-            'NA' as channel
+        --'NA' as msl_product_code,
+        --'NA' as msl_product_desc,
+        'NA' as channel
         from edw_ph_ecommerce_offtake ecom left join edw_vw_os_time_dim b on ecom.cal_day = b.cal_date
         LEFT JOIN itg_query_parameters iqp
         on upper(trim(iqp.parameter_name)) = upper(trim(ecom.distributor_name)) and parameter_type='sold_to_code' and country_code='PH'

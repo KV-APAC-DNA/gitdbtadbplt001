@@ -1,6 +1,6 @@
---with source as
+with source as
 (
-    select * from DEV_DNA_CORE.ASPWKS_INTEGRATION.WKS_MARKET_SHARE_QSD
+    select * from {{ source('aspsdl_raw', 'sdl_market_share_qsd') }}
 ),
 final as
 (
@@ -25,7 +25,7 @@ final as
         "country strategic role" as country_strategic_role,
         universe,
         "last period" as last_period,
-        value,
+        round(value,4) as value,
         brand_manufacturer_flg,
         "database category" as database_category,
         "database date" as database_date,

@@ -1,4 +1,4 @@
---with edw_copa_trans_fact as
+with edw_copa_trans_fact as
 (
     select * from aspedw_integration.edw_copa_trans_fact
     --{{ ref('aspedw_integration__edw_copa_trans_fact') }}
@@ -49,7 +49,7 @@ final as
         FROM edw_material_dim
         WHERE put_up_desc IS NOT NULL
         AND   TRIM(put_up_desc) <> '') A
-    LEFT JOIN sdl_pvc_input_content B ON A.content = B.content) B
+    LEFT JOIN sdl_pvc_input_content B ON trim(A.content) = trim(B.content)) B
     ON A.put_up = B.put_up) B
     ON A.matl_num = B.matl_num
 )

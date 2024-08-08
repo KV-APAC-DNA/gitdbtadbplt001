@@ -1,4 +1,4 @@
---with wks_pacific_regional_sellout_npd as
+with wks_pacific_regional_sellout_npd as
 (
     select * from {{ ref('aspwks_integration__wks_pacific_regional_sellout_npd') }}
 ),

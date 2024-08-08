@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: aspitg_integration__vw_itg_custgp_customer_hierarchy
+    config:
+      alias: vw_itg_custgp_customer_hierarchy
+      tags: ["view","transformation"]
+
+  - name: aspitg_integration__vw_itg_custgp_prod_hierarchy
+    config:
+      alias: vw_itg_custgp_prod_hierarchy
+      tags: ["view","transformation"]
+
