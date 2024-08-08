@@ -11,4 +11,3 @@ sources:
     tables:
     - name: itg_query_parameters
       tags: ["okr_dashboard_datamart_refresh","transformation"]
-      

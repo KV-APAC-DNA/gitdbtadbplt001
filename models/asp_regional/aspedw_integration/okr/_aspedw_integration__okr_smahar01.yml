@@ -25,7 +25,7 @@ models:
     config:
       alias: edw_rpt_okr_dashboard_temp6
       tags: ["okr_dashboard_datamart_refresh","transformation"]
-  - name: aspedw_integration__edw_rpt_okr_dashboard_temp7
+  - name: aspedw_integration__edw_rpt_okr_dashboard_temp
     config:
       alias: edw_rpt_okr_dashboard_temp
       tags: ["okr_dashboard_datamart_refresh","transformation"]
