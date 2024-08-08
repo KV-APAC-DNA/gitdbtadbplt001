@@ -1,8 +1,8 @@
 with tm14shkos_qv as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TM14SHKOS_QV
+select * from {{ ref('jpndcledw_integration__tm14shkos_qv') }}
 ),
 syouhincd_henkan_qv as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.SYOUHINCD_HENKAN_QV
+select * from {{ ref('jpndcledw_integration__syouhincd_henkan_qv') }}
 ),
 cim08shkos_bunkai_qv as (
 select * from {{ ref('jpndcledw_integration__cim08shkos_bunkai_qv') }}

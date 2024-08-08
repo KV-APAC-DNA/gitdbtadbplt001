@@ -1,11 +1,11 @@
 with dm_user_status as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.DM_USER_STATUS
+select * from {{ ref('jpndcledw_integration__dm_user_status') }}
 ),
 dm_kesai_mart_dly_bkp_20221021_deployment as (
 select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.DM_KESAI_MART_DLY_BKP_20221021_DEPLOYMENT
 ),
 cld_m as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CLD_M
+select * from {{ ref('jpndcledw_integration__cld_m') }}
 ),
 final as (
 SELECT 

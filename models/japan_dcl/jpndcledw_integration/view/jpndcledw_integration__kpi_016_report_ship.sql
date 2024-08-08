@@ -6,12 +6,12 @@ AS (
 dm_user_status
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.dm_user_status 
+    FROM {{ ref('jpndcledw_integration__dm_user_status') }} 
     ),
 cld_m
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cld_m 
+    FROM {{ ref('jpndcledw_integration__cld_m') }}
     ),
 STATUS
 AS (

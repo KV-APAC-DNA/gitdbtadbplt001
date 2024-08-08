@@ -1,7 +1,7 @@
 WITH dm_kesai_mart_dly_general
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.dm_kesai_mart_dly_general
+    FROM {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
     ),
 final
 AS (

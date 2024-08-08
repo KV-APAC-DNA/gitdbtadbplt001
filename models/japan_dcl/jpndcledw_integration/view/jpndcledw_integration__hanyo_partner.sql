@@ -1,7 +1,7 @@
 WITH edw_mds_jp_dcl_partner_master
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.edw_mds_jp_dcl_partner_master
+    FROM {{ ref('jpndcledw_integration__edw_mds_jp_dcl_partner_master') }}
     ),
 final
 AS (

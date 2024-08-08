@@ -1,6 +1,6 @@
 WITH tbecordermeisai AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.tbecordermeisai
+    SELECT * FROM {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 
 final AS

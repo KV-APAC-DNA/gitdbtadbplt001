@@ -1,6 +1,6 @@
 WITH tbecorder AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.tbecorder
+    SELECT * FROM {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 
 tbecordermeisai AS

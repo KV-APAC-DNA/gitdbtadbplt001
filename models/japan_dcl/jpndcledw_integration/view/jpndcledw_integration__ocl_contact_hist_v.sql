@@ -1,5 +1,5 @@
 with tboutcallcontactdata as(
-    select * from dev_dna_core.snapjpdcledw_integration.tboutcallcontactdata
+    select * from {{ ref('jpndcledw_integration__tboutcallcontactdata') }}
 ),
 
 final as (

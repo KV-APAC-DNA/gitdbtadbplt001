@@ -1,37 +1,37 @@
 WITH dm_kesai_mart_dly_general
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.dm_kesai_mart_dly_general
+    FROM {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
     ),
 cld_m
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cld_m
+    FROM {{ ref('jpndcledw_integration__cld_m') }}
     ),
 cim03item_zaiko
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cim03item_zaiko
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
     ),
 edw_mds_jp_dcl_product_master
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.edw_mds_jp_dcl_product_master
+    FROM {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
     ),
 cim24itbun
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cim24itbun
+    FROM {{ ref('jpndcledw_integration__cim24itbun') }}
     ),
 cim03item_hanbai
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cim03item_hanbai
+    FROM {{ ref('jpndcledw_integration__cim03item_hanbai') }}
     ),
 tm67juch_nm
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.tm67juch_nm
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
     ),
 zaiko
 AS (

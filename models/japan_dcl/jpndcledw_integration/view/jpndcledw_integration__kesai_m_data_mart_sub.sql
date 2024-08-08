@@ -1,5 +1,5 @@
 with kesai_m_data_mart_sub_tbl as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_M_DATA_MART_SUB_TBL
+select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_tbl') }}
 ),
 final as (
 SELECT 

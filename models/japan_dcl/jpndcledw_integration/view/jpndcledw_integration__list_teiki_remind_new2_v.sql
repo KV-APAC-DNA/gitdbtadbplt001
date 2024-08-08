@@ -1,17 +1,17 @@
 with tbusrpram as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 c_tbecregularcoursemst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARCOURSEMST
+select * from {{ ref('jpndclitg_integration__c_tbecregularcoursemst') }}
 ),
 c_tbecregularmeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARMEISAI
+select * from {{ ref('jpndclitg_integration__c_tbecregularmeisai') }}
 ),
 c_tbecregularcontract as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARCONTRACT
+select * from {{ ref('jpndclitg_integration__c_tbecregularcontract') }}
 ),
 tbecitem as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECITEM
+select * from {{ ref('jpndclitg_integration__tbecitem') }}
 ),
 final as (
 SELECT 

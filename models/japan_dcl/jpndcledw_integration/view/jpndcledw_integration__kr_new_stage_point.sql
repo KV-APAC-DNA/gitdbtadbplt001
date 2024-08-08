@@ -1,7 +1,7 @@
 with kr_this_stage_point_monthly
 as
 (
-    select * from jpdcledw_integration.kr_this_stage_point_monthly
+    select * from {{ ref('jpndcledw_integration__kr_this_stage_point_monthly') }}
 ),
 final as
 (

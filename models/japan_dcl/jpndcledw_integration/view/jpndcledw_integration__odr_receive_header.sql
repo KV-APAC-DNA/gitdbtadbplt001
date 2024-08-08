@@ -1,12 +1,12 @@
 
 with tbusrpram as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 tbecorder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndcledw_integration__tbecorder') }}
 ),
 tbecordermeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+select * from {{ ref('jpndcledw_integration__tbecordermeisai') }}
 ),
 final as (
 SELECT 

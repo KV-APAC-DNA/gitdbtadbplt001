@@ -1,11 +1,11 @@
 WITH dm_user_attr_hist AS 
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.dm_user_attr_hist
+    SELECT * FROM {{ ref('jpndcledw_integration__dm_user_attr_hist') }}
 ),
 
 dm_user_attr AS 
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.dm_user_attr
+    SELECT * FROM {{ ref('jpndcledw_integration__dm_user_attr') }}
 ),
 
 final AS (

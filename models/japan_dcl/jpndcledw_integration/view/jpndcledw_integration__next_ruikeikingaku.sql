@@ -1,8 +1,8 @@
 with c_tbecranksumamount as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKSUMAMOUNT
+select * from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
 ),
-C_TBECRANKADDAMOUNTADM as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKADDAMOUNTADM
+c_tbecrankaddamountadm as (
+select * from {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
 ),
 final as (
 SELECT 

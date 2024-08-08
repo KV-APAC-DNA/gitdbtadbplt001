@@ -1,11 +1,11 @@
 with kr_this_stage_point_daily_curr
 as
 (
-    select * from jpdcledw_integration.kr_this_stage_point_daily_curr
+    select * from {{ ref('jpndcledw_integration__kr_this_stage_point_daily_curr') }}
 ),
 kr_this_stage_point_daily_prv as
 (
-    select * from jpdcledw_integration.kr_this_stage_point_daily_prv
+    select * from {{ ref('jpndcledw_integration__kr_this_stage_point_daily_prv') }}
 ),
 t1 as
 (

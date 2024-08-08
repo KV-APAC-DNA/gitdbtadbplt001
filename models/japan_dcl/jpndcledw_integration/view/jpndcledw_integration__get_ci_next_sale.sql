@@ -1,6 +1,6 @@
 
 with cit81salem as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit81salem
+    select * from {{ ref('jpndcledw_integration__cit81salem') }}
 ),
 
 final as (

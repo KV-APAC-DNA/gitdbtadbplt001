@@ -1,11 +1,10 @@
 with tboutcallresult as (
-select * from dev_dna_core.snapjpdcledw_integration.tboutcallresult
+select * from {{ ref('jpndcledw_integration__tboutcallresult') }}
 ),
 
 tboutcalllatestorder as (
-select * from dev_dna_core.snapjpdcledw_integration.tboutcalllatestorder
+select * from {{ ref('jpndcledw_integration__tboutcalllatestorder') }}
 )
-
 ,
 latest_rt as (
     SELECT diusrid,

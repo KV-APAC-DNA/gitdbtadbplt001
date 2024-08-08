@@ -7,19 +7,19 @@ WITH threshold_amount_master AS
 dm_user_attr AS 
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.dm_user_attr
+    FROM {{ ref('jpndcledw_integration__dm_user_attr') }}
 ),
 
 kr_new_stage_point AS 
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_new_stage_point
+    FROM {{ ref('jpndcledw_integration__kr_new_stage_point') }}
 ),
 
 dm_user_status AS 
 (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.dm_user_status
+    FROM {{ ref('jpndcledw_integration__dm_user_status') }}
 ),
 
 final AS 

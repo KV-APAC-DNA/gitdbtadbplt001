@@ -3,23 +3,22 @@ select * from {{ ref('jpndcledw_integration__ocl_main_data_v') }}
 ),
 
 tbecorder as (
-select * from dev_dna_core.snapjpdclitg_integration.tbecorder 
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 
 tbecordermeisai as (
-select * from dev_dna_core.snapjpdclitg_integration.tbecordermeisai
+select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 
 c_tbeckesai as (
-select * from dev_dna_core.snapjpdclitg_integration.c_tbeckesai
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 
 hanyo_attr as (
-select * from dev_dna_core.snapjpdcledw_integration.hanyo_attr
+select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
-
 tbecsalesroutemst as (
-select * from dev_dna_core.snapjpdclitg_integration.tbecsalesroutemst
+select * from {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
 ),
 
 final as (

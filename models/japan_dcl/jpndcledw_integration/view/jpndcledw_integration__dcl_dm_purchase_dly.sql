@@ -1,32 +1,32 @@
 WITH kr_new_stage_point
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_new_stage_point
+    FROM {{ ref('jpndcledw_integration__kr_new_stage_point') }}
     ),
 dm_kesai_mart_dly_general
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.dm_kesai_mart_dly_general
+    FROM {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
     ),
 tm13item_qv
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm13item_qv
+    FROM {{ ref('jpndcledw_integration__tm13item_qv') }}
     ),
 cim08shkos_bunkai_qv
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim08shkos_bunkai_qv
+    FROM {{ ref('jpndcledw_integration__cim08shkos_bunkai_qv') }}
     ),
 cim01kokya
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim01kokya
+    FROM {{ ref('jpndcledw_integration__cim01kokya') }}
     ),
 edw_mds_jp_dcl_product_master
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.edw_mds_jp_dcl_product_master
+    FROM {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
     ),
 item_bunkai
 AS (

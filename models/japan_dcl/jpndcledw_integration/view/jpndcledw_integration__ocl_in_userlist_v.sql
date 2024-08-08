@@ -1,9 +1,9 @@
 with dm_mykokya as (
- select * from dev_dna_core.snapjpdcledw_integration.dm_mykokya
+ select * from {{ ref('jpndcledw_integration__dm_mykokya') }}
 ),
 
 ocl_exclude_file_id as (
-select * from dev_dna_core.snapjpdcledw_integration.ocl_exclude_file_id
+select * from {{ ref('jpndcledw_integration__ocl_exclude_file_id') }}
 ),
 
 a AS (
