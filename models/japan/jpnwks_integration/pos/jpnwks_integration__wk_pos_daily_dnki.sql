@@ -8,7 +8,8 @@
 }}
 
 with jp_pos_daily_dnki as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_dnki') }}
+    select *, dense_rank() over (partition by upload_dt order by source_file_date desc) rn
+    from {{ source('jpnsdl_raw', 'jp_pos_daily_dnki') }} qualify rn=1
 ),
 final as(
     select

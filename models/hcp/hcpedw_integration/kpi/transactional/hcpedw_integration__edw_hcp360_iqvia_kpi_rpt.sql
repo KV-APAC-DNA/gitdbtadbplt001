@@ -1383,7 +1383,7 @@ final as
 	speciality::varchar(30) as speciality,
 	core_noncore::varchar(20) as core_noncore,
 	year::varchar(12) as year,
-	month::varchar(11) as month,
+	upper(month)::varchar(11) as month,
 	hcp_created_date::date as hcp_created_date,
 	territory_id::varchar(20) as territory_id,
 	region_hq::varchar(50) as region_hq,

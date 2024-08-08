@@ -198,7 +198,7 @@ FROM (
                                 WHEN (
                                         (
                                             (upper((txn.LEVEL)::TEXT) = ('J&J'::CHARACTER VARYING)::TEXT)
-                                            AND (upper(ltrim((txn.article_cd)::TEXT, ('0'::CHARACTER VARYING)::TEXT)) = upper(ltrim((acm.article_cd)::TEXT, ('0'::CHARACTER VARYING)::TEXT)))
+                                            AND (upper(ltrim((txn.article_cd)::TEXT, ('0'::CHARACTER VARYING)::TEXT)) = rtrim(upper(ltrim((acm.article_cd)::TEXT, ('0'::CHARACTER VARYING)::TEXT)),'	'))
                                             )
                                         AND (upper((acm."level")::TEXT) = ('J&J'::CHARACTER VARYING)::TEXT)
                                         )
