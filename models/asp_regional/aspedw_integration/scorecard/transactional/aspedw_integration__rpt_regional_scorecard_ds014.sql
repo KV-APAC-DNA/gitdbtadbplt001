@@ -9,10 +9,10 @@
     )
 }}
 with itg_mds_ap_dso as(
-    select * from snapaspitg_integration.itg_mds_ap_dso
+    select * from {{ ref('aspitg_integration__itg_mds_ap_dso') }}
 ),
 itg_mds_ap_sales_ops_map as(
-    select * from snapaspitg_integration.itg_mds_ap_sales_ops_map
+    select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 dso_base as 
     (select       

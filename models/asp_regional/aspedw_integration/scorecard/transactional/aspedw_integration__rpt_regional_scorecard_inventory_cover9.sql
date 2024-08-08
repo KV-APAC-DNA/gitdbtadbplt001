@@ -10,10 +10,10 @@
 }}
 
 with edw_reg_inventory_health_analysis_propagation as(
-    select * from snapaspedw_integration.edw_reg_inventory_health_analysis_propagation
+    select * from {{ ref('aspedw_integration__edw_reg_inventory_health_analysis_propagation') }}
 ),
 edw_company_dim as(
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 transformed as 
 (    

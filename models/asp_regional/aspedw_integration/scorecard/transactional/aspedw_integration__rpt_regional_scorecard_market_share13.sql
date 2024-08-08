@@ -10,11 +10,11 @@
 }}
 with edw_market_share_qsd as(
     select *
-    from aspedw_integration.edw_market_share_qsd
+    from {{ ref('aspedw_integration__edw_market_share_qsd') }}
 ),
 itg_mds_ap_sales_ops_map as(
     select *
-    from snapaspitg_integration.itg_mds_ap_sales_ops_map
+    from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 final as(
     SELECT cy."datasource" as datasource,

@@ -2,7 +2,7 @@ with wks_okr_alteryx_automation as(
     select * from {{ source('aspsdl_raw', 'sdl_okr_alteryx_automation') }}
 ),
 edw_okr_brand_map as(
-    select * from snapaspedw_integration.edw_okr_brand_map
+    select * from {{ ref('aspedw_integration__edw_okr_brand_map') }}
 ),
 final as(
     select case when kpi = 'CM' then 'Contribution_margin' else kpi end as kpi,

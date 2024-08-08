@@ -1,8 +1,8 @@
 with edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 v_rpt_copa as(
-    select * from aspedw_integration.v_rpt_copa
+    select * from {{ ref('aspedw_integration__v_rpt_copa') }}
 ),
 final as(
        select distinct cast ('COPA' as varchar(50)) as Datasource, ctry_nm, cluster, fisc_yr_per  , nvl(nullif("parent customer",''),'NA') as parent_customer ,

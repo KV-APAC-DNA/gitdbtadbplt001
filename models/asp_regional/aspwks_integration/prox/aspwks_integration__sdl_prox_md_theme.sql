@@ -1,5 +1,5 @@
 with wks_prox_md_theme as(
-    select * from aspwks_integration.wks_prox_md_theme
+    select * from {{ ref('aspwks_integration__wks_prox_md_theme') }}
 ),
 final as(
     select 

@@ -9,7 +9,7 @@
     )
 }}
 with edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 wks_scorecard_ecomm_base as(
     select * from {{ ref('aspwks_integration__wks_scorecard_ecomm_base') }}

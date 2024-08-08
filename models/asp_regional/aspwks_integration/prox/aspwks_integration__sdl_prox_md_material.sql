@@ -1,5 +1,5 @@
 with wks_prox_md_material as(
-    select * from aspwks_integration.wks_prox_md_material
+    select * from {{ ref('aspwks_integration__wks_prox_md_material') }}
 ),
 final as(
     select 

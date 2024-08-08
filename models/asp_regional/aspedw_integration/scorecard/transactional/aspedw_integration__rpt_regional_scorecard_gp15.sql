@@ -9,10 +9,10 @@
     )
 }}
 with v_rpt_rg_total_investment as(
-    select * from aspedw_integration.v_rpt_rg_total_investment
+    select * from {{ ref('aspedw_integration__v_rpt_rg_total_investment') }}
 ),
 itg_mds_ap_sales_ops_map as(
-    select * from snapaspitg_integration.itg_mds_ap_sales_ops_map
+    select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 gp_base as
   (select   

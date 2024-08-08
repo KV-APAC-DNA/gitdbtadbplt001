@@ -1,8 +1,8 @@
 with v_rpt_copa_ciw as(
-    select * from aspedw_integration.v_rpt_copa_ciw
+    select * from {{ ref('aspedw_integration__v_rpt_copa_ciw') }}
 ),
 edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 final as
 (

@@ -1,8 +1,8 @@
 with edw_rpt_ecomm_oneview as(
-    select * from snapaspedw_integration.edw_rpt_ecomm_oneview
+    select * from {{ ref('aspedw_integration__edw_rpt_ecomm_oneview') }}
 ),
 edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 final as(
 	select 'ECOMM' as Datasource,market as ctry_nm, cluster, fisc_year,fisc_month, cast(fisc_year||'0'||lpad(fisc_month,2,'0') as integer) as fisc_per, cast(null as varchar) as parent_customer,

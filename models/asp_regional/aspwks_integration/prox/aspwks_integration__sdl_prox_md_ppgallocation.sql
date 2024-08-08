@@ -1,5 +1,5 @@
-with wks_PROX_MD_PPGAllocation as(
-    select * from aspwks_integration.wks_PROX_MD_PPGAllocation
+with wks_prox_md_ppgallocation as(
+    select * from {{ ref('aspwks_integration__wks_prox_md_ppgallocation') }}
 ),
 final as(
     SELECT 
