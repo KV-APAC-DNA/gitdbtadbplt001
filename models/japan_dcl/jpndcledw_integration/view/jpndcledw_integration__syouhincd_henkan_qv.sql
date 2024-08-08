@@ -1,7 +1,7 @@
 with item_z_h_hen_tbl
 as
 (
-    select * from jpdcledw_integration.item_z_h_hen_tbl
+    select * from {{ ref('jpndcledw_integration__item_z_h_hen_tbl') }}
 ),
 final as
 (

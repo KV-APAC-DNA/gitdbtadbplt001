@@ -1,5 +1,5 @@
 with c_tbecinquire as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
+select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 final as (
 SELECT 

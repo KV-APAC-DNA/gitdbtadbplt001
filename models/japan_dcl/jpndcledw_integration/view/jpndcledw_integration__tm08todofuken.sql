@@ -1,5 +1,5 @@
 with hanyo_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 final as (
 SELECT 

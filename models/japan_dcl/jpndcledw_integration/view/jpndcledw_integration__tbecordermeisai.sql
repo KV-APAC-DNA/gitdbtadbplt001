@@ -1,5 +1,5 @@
 with tbecordermeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+select * from {{ ref('jpndcledw_integration__tbecordermeisai') }}
 ),
 final as (
 SELECT 

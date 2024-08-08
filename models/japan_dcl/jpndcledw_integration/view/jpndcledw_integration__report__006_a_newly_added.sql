@@ -1,11 +1,11 @@
 with report_006_a_present_data1 as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.REPORT_006_A_PRESENT_DATA1
+select * from {{ ref('jpndcledw_integration__report_006_a_present_data1') }}
 ),
 report_006_a_historical_data as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.REPORT_006_A_HISTORICAL_DATA
 ),
 cld_m as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CLD_M
+select * from {{ ref('jpndcledw_integration__cld_m') }}
 ),
 final as (
 SELECT 

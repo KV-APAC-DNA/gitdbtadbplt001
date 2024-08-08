@@ -1,12 +1,11 @@
 with c_tbecinquire as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
+select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 tbecordermeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 c_tbecinquiremeisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIREMEISAI
-),
+select * from {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
 final as (
 SELECT 
   c_tbecinquiremeisai.diinquireid AS odrreturnno, 

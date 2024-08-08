@@ -1,7 +1,7 @@
 with teikikeiyaku_data_mart_cn
 as
 (
-    select * from jpdcledw_integration.teikikeiyaku_data_mart_cn
+    select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_cn') }}
 ),
 teikikeiyaku_data_mart_cl as
 (

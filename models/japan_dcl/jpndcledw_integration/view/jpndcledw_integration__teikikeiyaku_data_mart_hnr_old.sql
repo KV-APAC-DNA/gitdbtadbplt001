@@ -1,17 +1,17 @@
 with c_tbecregularcontract as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecregularcontract
+    select * from {{ ref('jpndclitg_integration__c_tbecregularcontract') }}
 ),
 c_tbecregularmeisai as (
-    select * from dev_dna_core.snapjpdclitg_integration.c_tbecregularmeisai
+    select * from {{ ref('jpndclitg_integration__c_tbecregularmeisai') }}
 ),
 tbecordermeisai as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecordermeisai
+    select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 tbecorder as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecorder
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 tbecitem as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecitem
+    select * from {{ ref('jpndclitg_integration__tbecitem') }}
 ),
 result as(
 SELECT DISTINCT rc.c_diregularcontractid,

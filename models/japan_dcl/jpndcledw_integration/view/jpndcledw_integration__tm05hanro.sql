@@ -1,5 +1,5 @@
 with tbecsalesroutemst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECSALESROUTEMST
+select * from {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
 ),
 final as (
 SELECT 

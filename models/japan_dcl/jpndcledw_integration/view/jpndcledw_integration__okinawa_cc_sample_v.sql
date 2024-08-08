@@ -1,5 +1,5 @@
 with tbusrpram as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbusrpram
+    select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 
 cte1 as (

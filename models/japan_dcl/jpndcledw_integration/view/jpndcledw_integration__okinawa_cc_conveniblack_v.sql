@@ -1,13 +1,13 @@
 with tbecsalesroutemst as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecsalesroutemst
+    select * from {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
 ),
 
 tbusrpram as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbusrpram
+    select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 
 tbecorder as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecorder
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 odr_latest as (
     SELECT tbecorder.diecusrid,

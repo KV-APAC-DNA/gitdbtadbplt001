@@ -1,7 +1,7 @@
 with item_jizen_bunkai_tbl 
 as
 (
-    select * from jpdcledw_integration.item_jizen_bunkai_tbl
+    select * from {{ ref('jpndcledw_integration__item_jizen_bunkai_tbl') }}
 ),
 final as
 (

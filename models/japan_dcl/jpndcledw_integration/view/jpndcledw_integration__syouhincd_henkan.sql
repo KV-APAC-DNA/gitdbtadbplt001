@@ -1,5 +1,5 @@
 with syouhincd_henkan_sub as (
-    select * from dev_dna_core.snapjpdcledw_integration.syouhincd_henkan_sub
+    select * from {{ ref('jpndcledw_integration__syouhincd_henkan_sub') }}
 ),
 
 sscmnhin as (
@@ -7,7 +7,7 @@ sscmnhin as (
 ),
 
 hanyo_attr as (
-    select * from dev_dna_core.snapjpdcledw_integration.hanyo_attr
+    select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 
 cte1 as (

@@ -1,7 +1,7 @@
 WITH wk_kpi_06_04
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK_KPI_06_04
+    FROM {{ ref('jpndcledw_integration__wk_kpi_06_04') }}
     ),
 ct1
 AS (

@@ -1,7 +1,7 @@
 with item_hanbai_tbl 
 as
 (
-    select * from jpdcledw_integration.item_hanbai_tbl
+    select * from {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
 ),
 final as
 (

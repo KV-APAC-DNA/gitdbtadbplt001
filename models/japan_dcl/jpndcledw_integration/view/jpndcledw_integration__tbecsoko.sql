@@ -1,5 +1,5 @@
-with TBECSOKO as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECSOKO
+with tbecsoko as (
+select * from {{ ref('jpndclitg_integration__tbecsoko') }}
 ),
 final as (
 SELECT 

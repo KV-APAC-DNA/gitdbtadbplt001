@@ -1,12 +1,12 @@
 WITH pm
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.EDW_MDS_JP_DCL_PRODUCT_MASTER
+  FROM {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
   ),
 cim03
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM03ITEM_ZAIKO
+  FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
   ),
 final
 AS (

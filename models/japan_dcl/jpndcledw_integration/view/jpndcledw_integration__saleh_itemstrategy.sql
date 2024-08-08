@@ -1,11 +1,11 @@
 with cit85osalh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT85OSALH
+select * from {{ ref('jpndcledw_integration__cit85osalh') }}
 ),
 cit80saleh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH
+select * from {{ ref('jpndcledw_integration__cit80saleh') }}
 ),
 tt01saleh_sum_mv as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT01SALEH_SUM_MV
+select * from {{ ref('jpndcledw_integration__tt01saleh_sum_mv') }}
 ),
 union_1 as (
     SELECT 

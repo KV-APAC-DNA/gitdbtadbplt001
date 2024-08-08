@@ -5,12 +5,12 @@ WITH tbecorder AS
 
 tbecordermeisai AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.tbecordermeisai
+    SELECT * FROM {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 
 tbusrpram AS
 (
-    SELECT * FROM dev_dna_core.snapjpdclitg_integration.tbusrpram
+    SELECT * FROM {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 
 final AS

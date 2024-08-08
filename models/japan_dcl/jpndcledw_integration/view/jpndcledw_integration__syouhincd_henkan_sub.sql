@@ -1,6 +1,6 @@
 with TBECITEM as 
 (
-   select * from  SNAPJPDCLITG_INTEGRATION.TBECITEM 
+   select * from {{ ref('jpndclitg_integration__tbecitem') }}
 ),
 TBECSETITEM as(
     select * from  SNAPJPDCLITG_INTEGRATION.TBECSETITEM

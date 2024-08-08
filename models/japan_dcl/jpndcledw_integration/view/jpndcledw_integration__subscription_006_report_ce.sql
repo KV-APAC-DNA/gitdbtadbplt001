@@ -1,5 +1,5 @@
 with teikikeiyaku_data_mart_uni as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_UNI
+select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_uni') }}
 ),
 final as (
 SELECT 

@@ -1,27 +1,27 @@
 WITH c_tbecregularcoursemst
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARCOURSEMST
+    FROM {{ ref('jpndclitg_integration__c_tbecregularcoursemst') }}
     ),
 c_tbecregularmeisai
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECREGULARMEISAI
+    FROM {{ ref('jpndclitg_integration__c_tbecregularmeisai') }}
     ),
-TEIKIKEIYAKU_DATA_MART_HNR_OLD
+teikikeiyaku_data_mart_hnr_old
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_HNR_OLD
+    FROM {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_hnr_old') }}
     ),
 tbecordermeisai
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDERMEISAI
+    FROM {{ ref('jpndcledw_integration__tbecordermeisai') }}
     ),
 tbecitem
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECITEM
+    FROM {{ ref('jpndclitg_integration__tbecitem') }}
     ),
 union1
 AS (

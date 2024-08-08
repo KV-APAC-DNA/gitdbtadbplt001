@@ -1,23 +1,23 @@
 with syouhincd_henkan as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.SYOUHINCD_HENKAN
+select * from {{ ref('jpndcledw_integration__syouhincd_henkan') }}
 ),
 cit86osalm as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT86OSALM
+select * from {{ ref('jpndcledw_integration__cit86osalm') }}
 ),
 cit85osalh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT85OSALH
+select * from {{ ref('jpndcledw_integration__cit85osalh') }}
 ),
 cit81salem as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT81SALEM
+select * from {{ ref('jpndcledw_integration__cit81salem') }}
 ),
 cit80saleh as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIT80SALEH
+select * from {{ ref('jpndcledw_integration__cit80saleh') }}
 ),
 tt02salem_mv as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT02SALEM_MV
+select * from {{ ref('jpndcledw_integration__tt02salem_mv') }}
 ),
 tt01saleh_sum_mv as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT01SALEH_SUM_MV
+select * from {{ ref('jpndcledw_integration__tt01saleh_sum_mv') }}
 ),
 final as (
 (
