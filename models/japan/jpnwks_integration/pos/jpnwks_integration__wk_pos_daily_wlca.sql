@@ -9,8 +9,7 @@
 }}
 
 with jp_pos_daily_wlca as(
-    select *, dense_rank() over (partition by upload_dt order by source_file_date desc) rn
-    from {{ source('jpnsdl_raw', 'jp_pos_daily_wlca') }} qualify rn=1
+    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_wlca') }}
 ),
 final as(
     select
