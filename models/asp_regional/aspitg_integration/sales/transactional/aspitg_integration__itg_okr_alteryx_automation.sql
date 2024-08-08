@@ -9,7 +9,7 @@
         coalesce (upper(segment) , 'NA'),coalesce (upper(brand) , 'NA') , 
         coalesce (upper(yearmonth) , 'NA') , year , coalesce (quarter , 9999) ,
           coalesce (upper(target_type) , 'NA') ) in (select upper(kpi), 
-          upper(datatype) , coalesce (upper(cluster) , 'NA') , coalesce (upper(market) , 'NA'),coalesce (upper(segment) , 'NA'),coalesce (upper(brand) , 'NA') , coalesce (upper(yearmonth) , 'NA') , year , coalesce (quarter , 9999) , coalesce (upper(target_type) , 'NA') from aspwks_integration__sdl_okr_alteryx_automation)
+          upper(datatype) , coalesce (upper(cluster) , 'NA') , coalesce (upper(market) , 'NA'),coalesce (upper(segment) , 'NA'),coalesce (upper(brand) , 'NA') , coalesce (upper(yearmonth) , 'NA') , year , coalesce (quarter , 9999) , coalesce (upper(target_type) , 'NA') from {{ ref('aspwks_integration__sdl_okr_alteryx_automation') }})
         {% endif %}"
     )
 }}
