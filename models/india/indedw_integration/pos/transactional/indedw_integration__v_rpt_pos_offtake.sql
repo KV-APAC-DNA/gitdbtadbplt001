@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with v_rpt_ka_sales as
 (
     select * from {{ ref('indedw_integration__v_rpt_ka_sales') }}

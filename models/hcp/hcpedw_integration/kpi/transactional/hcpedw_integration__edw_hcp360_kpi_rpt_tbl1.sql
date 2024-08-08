@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where source_system = 'VENTASYS';
+        delete from {{this}} where rtrim(upper(source_system)) = 'VENTASYS';
         {% endif %}"
     )
 }}

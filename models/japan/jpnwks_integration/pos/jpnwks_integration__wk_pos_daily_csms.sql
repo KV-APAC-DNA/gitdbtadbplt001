@@ -8,7 +8,8 @@
 }}
 
 with jp_pos_daily_csms as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }}
+    select *, dense_rank() over (partition by upload_dt order by source_file_date desc) rn
+    from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }} qualify rn=1
 ),
 final as(
     select

@@ -18,7 +18,7 @@ final as
        sm.salesman_name_sales
 FROM rx_cx_pre_rpt_tbl pre
 LEFT JOIN salesman_details sm
-       ON pre.urc = sm.urc
+       ON rtrim(pre.urc) = rtrim(sm.urc)
        AND sm.rnk = 1
 WHERE (pre.gtm_flag = 'NO' OR pre.gtm_flag IS NULL)
 UNION 
@@ -33,10 +33,10 @@ LEFT JOIN (SELECT sm.urc,
                   sku.skuhiervaluecode
            FROM salesman_details sm  
            INNER JOIN itg_salesperson_mothersku_tmp sku
-           ON sm.salesman_code_sales = sku.salesmancode
-           AND sm.distcode = sku.distrcode) salesman
-       ON pre.urc = salesman.urc
-       AND pre.franchise_code = salesman.skuhiervaluecode
+           ON rtrim(sm.salesman_code_sales) = rtrim(sku.salesmancode)
+           AND rtrim(sm.distcode) = rtrim(sku.distrcode)) salesman
+       ON rtrim(pre.urc) = rtrim(salesman.urc)
+       AND rtrim(pre.franchise_code) = rtrim(salesman.skuhiervaluecode)
        AND salesman.rnk = 1
 WHERE pre.gtm_flag = 'YES'
 )

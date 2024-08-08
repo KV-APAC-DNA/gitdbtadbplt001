@@ -64,24 +64,24 @@ final as
        prod.franchise_name
 FROM itg_rx_cx_target_data target 
   LEFT JOIN itg_rx_cx_pre_target_data actl
-         ON target.urc = actl.urc
-        AND target.product_vent = actl.rx_product
-        AND target.year = actl.year
+         ON rtrim(target.urc) = rtrim(actl.urc)
+        AND rtrim(target.product_vent) = rtrim(actl.rx_product)
+        AND rtrim(target.year) = rtrim(actl.year)
         AND trim(target.quarter,'Q') = actl.quarter 
   LEFT JOIN sales_actual_achnr_qty sales
-         ON target.urc = sales.urc
-        AND target.product_vent = sales.prod_vent
-        AND target.year = sales.cal_yr
+         ON rtrim(target.urc) = rtrim(sales.urc)
+        AND rtrim(target.product_vent) = rtrim(sales.prod_vent)
+        AND rtrim(target.year) = rtrim(sales.cal_yr)
         AND trim(target.quarter,'Q') = sales.qtr 
   LEFT JOIN retailer_dim_tmp ret
-         ON target.urc = ret.urc         
+         ON rtrim(target.urc) = rtrim(ret.urc)         
   LEFT JOIN master_hcp_urc_mapp hcp_master
-         ON target.urc = hcp_master.urc
+         ON rtrim(target.urc) = rtrim(hcp_master.urc)
   LEFT JOIN product_dim_tmp prod
-         ON target.product_vent = prod.prod_vent
+         ON rtrim(target.product_vent) = rtrim(prod.prod_vent)
   LEFT JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY URC order by null) as rnk
              FROM udc_gtm_flag_tmp) gtm
-              ON target.urc = gtm.urc
+              ON rtrim(target.urc) = rtrim(gtm.urc)
              AND gtm.rnk = 1
 )
 select * from final

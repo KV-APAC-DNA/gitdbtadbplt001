@@ -5,7 +5,7 @@
         incremental_strategy = "append",
         pre_hook ="{% if is_incremental() %}
         delete from {{this}} 
-        where source_file_name = (select distinct source_file_name from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
+        where source_file_name in (select distinct source_file_name from {{ source('indsdl_raw', 'sdl_ecommerce_offtake_amazon') }}) ;
         {% endif %}"
     )
 }}

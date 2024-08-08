@@ -27,7 +27,7 @@ LEFT JOIN (SELECT retailer_name AS urc_name,
                   ROW_NUMBER() OVER (PARTITION BY rtruniquecode ORDER BY start_date DESC) AS rnk
            FROM edw_retailer_dim
            WHERE actv_flg = 'Y') ret
-        ON tmp.urc::text = ret.urc
+        ON rtrim(tmp.urc::text) = rtrim(ret.urc)
         AND ret.rnk = 1
 )
 select * from final

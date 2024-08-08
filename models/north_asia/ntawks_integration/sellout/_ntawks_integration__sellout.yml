@@ -65,3 +65,59 @@ models:
     config:
       alias: tw_pos
       tags: ["pos_edw_load","transformation"]
+  - name: ntawks_integration__wks_sdl_kr_lotte_ak_gt_sellout
+    config:
+      alias: wks_sdl_kr_lotte_ak_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_du_bae_ro_yu_tong_gt_sellout
+    config:
+      alias: wks_sdl_kr_du_bae_ro_yu_tong_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_hyundai_gt_sellout
+    config:
+      alias: wks_sdl_kr_hyundai_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_ju_hj_life_gt_sellout
+    config:
+      alias: wks_sdl_kr_ju_hj_life_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_bo_young_jong_hap_logistics_gt_sellout
+    config:
+      alias: wks_sdl_kr_bo_young_jong_hap_logistics_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_da_in_sang_sa_gt_sellout
+    config:
+      alias: wks_sdl_kr_da_in_sang_sa_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_dongbu_lsd_gt_sellout
+    config:
+      alias: wks_sdl_kr_dongbu_lsd_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+    config:
+      alias: wks_sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_jungseok_gt_sellout
+    config:
+      alias: wks_sdl_kr_jungseok_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_nu_ri_zon_gt_sellout
+    config:
+      alias: wks_sdl_kr_nu_ri_zon_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_lotte_logistics_yang_ju_gt_sellout
+    config:
+      alias: wks_sdl_kr_lotte_logistics_yang_ju_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_nacf_gt_sellout
+    config:
+      alias: wks_sdl_kr_nacf_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_nh_gt_sellout
+    config:
+      alias: wks_sdl_kr_nh_gt_sellout
+      tags: ["kr_gt_sellout","ingestion"]
+  - name: ntawks_integration__wks_sdl_kr_otc_sellout
+    config:
+      alias: wks_sdl_kr_otc_sellout
+      tags: ["kr_gt_sellout","ingestion"]

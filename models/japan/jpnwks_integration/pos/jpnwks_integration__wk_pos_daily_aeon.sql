@@ -8,7 +8,8 @@
 }}
 
 with jp_pos_daily_aeon as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_aeon') }}
+    select *, dense_rank() over (partition by upload_dt order by source_file_date desc) rn
+     from {{ source('jpnsdl_raw', 'jp_pos_daily_aeon') }} qualify rn=1
 ),
 final as(
     select

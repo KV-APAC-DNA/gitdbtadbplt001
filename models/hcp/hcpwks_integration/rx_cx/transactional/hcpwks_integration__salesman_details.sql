@@ -33,15 +33,15 @@ FROM edw_retailer_dim ret,
      itg_in_rsalesmanroute rs,
      itg_in_rsalesman s
 WHERE cr.routetype::CHARACTER(10) = 'S'::char
-AND   cr.distcode::TEXT = r.distcode::TEXT
-AND   cr.rmcode::TEXT = r.rmcode::TEXT
-AND   rs.distrcode::TEXT = r.distcode::TEXT
-AND   rs.routecode::TEXT = r.rmcode::TEXT
-AND   s.distcode::TEXT = rs.distrcode::TEXT
-AND   s.smcode::TEXT = rs.salesmancode::TEXT
+AND   rtrim(cr.distcode::TEXT) = rtrim(r.distcode::TEXT)
+AND   rtrim(cr.rmcode::TEXT) = rtrim(r.rmcode::TEXT)
+AND   rtrim(rs.distrcode::TEXT) = rtrim(r.distcode::TEXT)
+AND   rtrim(rs.routecode::TEXT) = rtrim(r.rmcode::TEXT)
+AND   rtrim(s.distcode::TEXT) = rtrim(rs.distrcode::TEXT)
+AND   rtrim(s.smcode::TEXT) = rtrim(rs.salesmancode::TEXT)
 AND   s.status::CHARACTER(10) = 'Y'::char
-AND   ret.retailer_code =  "substring"(cr.rtrcode::text, 7)
-AND   ret.customer_code = cr.distcode
+AND   rtrim(ret.retailer_code) =  rtrim("substring"(cr.rtrcode::text, 7))
+AND   rtrim(ret.customer_code) = rtrim(cr.distcode)
 AND   ret.actv_flg = 'Y'
 )
 select * from final

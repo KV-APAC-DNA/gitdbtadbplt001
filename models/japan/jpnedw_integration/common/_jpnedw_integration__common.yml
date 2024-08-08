@@ -59,4 +59,4 @@ models:
   - name: jpnedw_integration__vw_pos_dly
     config:
       alias: vw_pos_dly
-      tags: ["japan_views","transformation"]
+      tags: ["jp_pos","transformation"]

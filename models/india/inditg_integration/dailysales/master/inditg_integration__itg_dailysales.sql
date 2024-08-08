@@ -52,7 +52,7 @@ final as
     salesroutename::varchar(200) as salesroutename,
     rtrid::number(18,0) as rtrid,
     rtrcode::varchar(100) as rtrcode,
-    rtrname::varchar(100) as rtrname,
+    TRIM(REGEXP_REPLACE(rtrname, '\\\\', ''))::varchar(100) as rtrname,
     vechname::varchar(100) as vechname,
     dlvboyname::varchar(100) as dlvboyname,
     deliveryroutecode::varchar(100) as deliveryroutecode,

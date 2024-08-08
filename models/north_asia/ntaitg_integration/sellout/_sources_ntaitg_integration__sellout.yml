@@ -206,4 +206,4 @@ sources:
     tables:
       - name: itg_ims_temp
       - name: itg_mds_hk_le_targets
-      
+      - name: itg_kr_gt_sellout
