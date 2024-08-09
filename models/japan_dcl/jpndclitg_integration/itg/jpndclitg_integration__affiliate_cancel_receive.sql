@@ -1,7 +1,7 @@
 {{ config(materialized="incremental", incremental_strategy="append") }}
 
 with
-    source as (select * from dev_dna_load.snapjpdclsdl_raw.affiliate_cancel_receive),
+    source as (select * from {{source('jpdclsdl_raw','affiliate_cancel_receive')}}),
 
     transformed as (
         select

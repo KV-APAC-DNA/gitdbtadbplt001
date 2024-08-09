@@ -1,10 +1,6 @@
-WITH c_tbeckesai
-AS (
-	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesai
-	)
+
 	
-	,c_tbecorderhistory
+	with c_tbecorderhistory
 AS (
 	SELECT *
 	FROM dev_dna_core.snapjpdclitg_integration.c_tbecorderhistory
@@ -31,7 +27,7 @@ AS (
 	,c_tbecprivilegemst
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.c_tbecprivilegemst
+	FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegemst
 	)
 	
 	,c_tbecordermeisaihistory
@@ -113,13 +109,13 @@ AS (
 										)
 									AND (c_tbeckesai.diorderhistid = tbecorder.diorderhistid)
 									)
-								AND ((c_tbeckesai.dicancel)::TEXT = ('0'::CHARACTER VARYING)::TEXT)
+								AND ((rtrim(c_tbeckesai.dicancel))::TEXT = ('0'::CHARACTER VARYING)::TEXT)
 								)
 							AND (c_tbeckesai.c_diexchangepoint <> 0)
 							)
-						AND ((c_tbeckesai.dielimflg)::TEXT = ('0'::CHARACTER VARYING)::TEXT)
+						AND ((rtrim(c_tbeckesai.dielimflg))::TEXT = ('0'::CHARACTER VARYING)::TEXT)
 						)
-					AND ((tbecorder.dielimflg)::TEXT = ('0'::CHARACTER VARYING)::TEXT)
+					AND ((rtrim(tbecorder.dielimflg))::TEXT = ('0'::CHARACTER VARYING)::TEXT)
 					)
 			)
 		

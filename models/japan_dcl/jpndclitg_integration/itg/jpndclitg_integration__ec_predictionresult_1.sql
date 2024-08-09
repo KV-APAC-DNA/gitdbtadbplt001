@@ -1,5 +1,5 @@
 with source as (
-    select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.EC_PREDICTIONRESULT
+    select * from {{source('jpdclsdl_raw','ec_predictionresult')}}
 ),
 final as (
 select * from source

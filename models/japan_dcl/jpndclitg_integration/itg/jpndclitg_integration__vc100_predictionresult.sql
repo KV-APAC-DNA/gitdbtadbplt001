@@ -9,7 +9,7 @@
 }}
 
 with vc100_predictionresult as (
-    select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.vc100_predictionresult
+    select * from {{source('jpdclsdl_raw','vc100_predictionresult')}}
 ),
 transformed as (
 SELECT nvl(lpad(customer_id, 10, '0'), '0000000000') as customer_id,

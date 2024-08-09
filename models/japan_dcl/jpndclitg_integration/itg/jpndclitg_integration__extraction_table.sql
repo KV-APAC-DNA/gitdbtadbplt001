@@ -3,7 +3,7 @@
 
 with
     sdl_extracted_table as (
-        select * from dev_dna_load.snapjpdclsdl_raw.extraction_table
+        select * from {{source('jpdclsdl_raw','extraction_table')}}
     ),
 
     transformed as (

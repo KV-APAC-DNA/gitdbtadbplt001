@@ -16,9 +16,9 @@ with
                 else
                     case
                         when
-                            dsctrlcd is not null  -- webidあり
-                            and mailaddress is not null  -- メールアドレスあり
-                            and disndflg = 1
+                            rtrim(dsctrlcd) is not null  -- webidあり
+                            and rtrim(mailaddress) is not null  -- メールアドレスあり
+                            and rtrim(disndflg) = 1
                         then 1
                         else 2
                     end

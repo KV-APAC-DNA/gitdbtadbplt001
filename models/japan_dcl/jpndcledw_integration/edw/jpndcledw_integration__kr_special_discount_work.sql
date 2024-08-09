@@ -1,12 +1,12 @@
 with
-    tbusrpram as (select * from dev_dna_core.snapjpdclitg_integration.tbusrpram),
+    tbusrpram as (select * from dev_dna_core.jpdclitg_integration.tbusrpram),
 
     c_tbecregularmeisai as (
-        select * from dev_dna_core.snapjpdclitg_integration.c_tbecregularmeisai
+        select * from dev_dna_core.jpdclitg_integration.c_tbecregularmeisai
     ),
 
     kr_special_discount_file as (
-        select * from dev_dna_core.snapjpdclitg_integration.kr_special_discount_file
+        select * from dev_dna_core.jpdclitg_integration.kr_special_discount_file
     ),
 
     c_tbecregularcontract as (
@@ -74,15 +74,15 @@ with
             on usr.diusrid = teiki.c_diusrid
         inner join
             c_tbecregularmeisai tm  -- ★定期契約明細情報
-            on teiki.c_diusrid = tm.c_diusrid
-            and teiki.c_dstodokedate = to_char(tm.c_dstodokedate, 'yyyymmdd')
-            and teiki.dsitemid = tm.dsitemid
-            and teiki.c_diregularcontractid = tm.c_diregularcontractid
+            on rtrim(teiki.c_diusrid) = rtrim(tm.c_diusrid)
+            and rtrim(teiki.c_dstodokedate) = to_char((tm.c_dstodokedate), 'yyyymmdd')
+            and rtrim(teiki.dsitemid) = rtrim(tm.dsitemid)
+            and rtrim(teiki.c_diregularcontractid) = rtrim(tm.c_diregularcontractid)
         where
-            usr.dielimflg = '0'  -- 削除フラグ
-            and usr.disecessionflg = '0'  -- 退会者除外
-            and usr.dsdat93 <> 'テストユーザ'  -- テストユーザフラグ
-            and usr.dsdat12 <> 'ブラック'  -- 顧客ステータス
+            rtrim(usr.dielimflg) = '0'  -- 削除フラグ
+            and rtrim(usr.disecessionflg) = '0'  -- 退会者除外
+            and rtrim(usr.dsdat93) <> 'テストユーザ'  -- テストユーザフラグ
+            and rtrim(usr.dsdat12) <> 'ブラック'  -- 顧客ステータス
 
     )
 

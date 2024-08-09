@@ -1,8 +1,7 @@
 with sources
 as
 (
-    select * from --{{source('jpdclsdl_raw',"rakutenorderdetail")}}
-    snapjpdclitg_integration.rakutenorderdetail
+    select * from snapjpdclitg_integration.rakutenorderdetail
 ), 
 final as
 (

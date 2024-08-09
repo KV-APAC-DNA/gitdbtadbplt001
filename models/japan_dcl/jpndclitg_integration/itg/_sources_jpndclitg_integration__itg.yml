@@ -190,7 +190,15 @@ sources:
       - name: sfmc_unsubs  
         tags: ["m_dcl_itg_job1","ingestion"]
 
+      - name: cluster_predictionresult
+
       - name: acgel_predictionresult
+      - name: ec_predictionresult
+      - name: extraction_table
+      - name: kr_special_discount_file
+      - name: mykokya_param
+      - name: vc100_predictionresult
+      - name: affiliate_cancel_receive
   - name: jpdcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: jpdcledw_integration

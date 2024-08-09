@@ -7,7 +7,7 @@
 }}
 
 with cluster_predictionresult as (
-    select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.CLUSTER_PREDICTIONRESULT
+    select * from {{source('jpdclsdl_raw','cluster_predictionresult')}}
 ),
 transformed as (
 select NVL(LPAD(customer_id,10,'0'),'0000000000') as customer_id,

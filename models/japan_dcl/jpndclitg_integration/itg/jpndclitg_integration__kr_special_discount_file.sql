@@ -1,7 +1,7 @@
  
 
 with
-    source as (select * from dev_dna_load.snapjpdclsdl_raw.kr_special_discount_file),
+    source as (select * from {{source('jpdclsdl_raw','kr_special_discount_file')}}),
 
     transformed as (
         select
