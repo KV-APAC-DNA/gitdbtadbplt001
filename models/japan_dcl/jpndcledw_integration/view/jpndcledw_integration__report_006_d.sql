@@ -1,15 +1,15 @@
 with 
 teikikeiyaku_data_mart_uni as (
-select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_uni') }}
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TEIKIKEIYAKU_DATA_MART_UNI
 ),
 cim05opera as (
-select * from {{ ref('jpndcledw_integration__cim05opera') }}
+select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIM05OPERA
 ),
 c_tbecregularmeisai as (
-select * from {{ ref('jpndclitg_integration__c_tbecregularmeisai') }}
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECREGULARMEISAI
 ),
 tbecitem as (
-select * from {{ ref('jpndclitg_integration__tbecitem') }}
+select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.TBECITEM
 ),
 final as (
 SELECT 
