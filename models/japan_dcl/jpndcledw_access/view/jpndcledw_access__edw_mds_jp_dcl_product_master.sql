@@ -1,5 +1,5 @@
 with edw_mds_jp_dcl_product_master as (
-    select * from dev_dna_core.jpdcledw_integration.edw_mds_jp_dcl_product_master
+    select * from {{ ref('jpndcledw_integration__edw_mds_jp_dcl_product_master') }}
 ),
 
 final as (
