@@ -18,7 +18,8 @@ vdfa as (
     select
         pac_source_type,
         pac_subsource_type,
-        convert_timezone('UTC', current_timestamp)::date as snap_shot_dt,
+       -- convert_timezone('UTC', current_timestamp)::date as snap_shot_dt,
+        '2024-08-12'::date as snap_shot_dt,
         jj_period,
         jj_week_no,
         jj_wk,
@@ -85,14 +86,15 @@ vdfa as (
 ),
 etd as(
     select
-        convert_timezone('UTC', current_timestamp)::date as snapshot_date,
+        --convert_timezone('UTC', current_timestamp)::date as snapshot_date,
+        '2024-08-12'::date as snap_shot_dt,
         etd.jj_wk as snapshot_week_no,
         etdw.row_number as snapshot_mnth_week_no,
         etd.jj_mnth_shrt as snapshot_mnth_shrt,
         etd.jj_year as snapshot_year
     from (select *, row_number()  over
     (partition by jj_mnth_id order by jj_wk asc) as row_number from (select distinct jj_mnth_id,jj_wk from edw_time_dim)) etdw,
-    edw_time_dim etd where etd.time_id=to_char(current_timestamp(),'YYYYMMDD')::number(18,0) and 
+    edw_time_dim etd where etd.time_id=to_char('2024-08-12'::date,'YYYYMMDD')::number(18,0) and 
     etdw.jj_mnth_id=etd.jj_mnth_id and etdw.jj_wk=etd.jj_wk
 ),
 union1 as(
@@ -179,7 +181,8 @@ vdfaa as (
      SELECT
         PAC_SOURCE_TYPE,
         PAC_SUBSOURCE_TYPE,
-        convert_timezone('UTC', current_timestamp)::date as SNAP_SHOT_DT,
+       -- convert_timezone('UTC', current_timestamp)::date as SNAP_SHOT_DT,
+        '2024-08-12'::date as snap_shot_dt,
         JJ_PERIOD,
         JJ_WEEK_NO,
         JJ_WK,
@@ -244,12 +247,13 @@ vdfaa as (
         PX_PROMO_FRCST
     FROM VW_DEMAND_FORECAST_ANALYSIS, 
     (SELECT TO_NUMBER(TO_CHAR(DATEADD('month', -1, TO_DATE(T1.JJ_MNTH_ID::STRING, 'YYYYMM')), 'YYYYMM')) 
-    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = left((convert_timezone('UTC', current_timestamp)::date+1),10)::date) PROJPRD
+    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = '2024-08-12'::date --left((convert_timezone('UTC', current_timestamp)::date+1),10)::date) PROJPRD
     WHERE PAC_SUBSOURCE_TYPE='SAPBW_ACTUAL'
 ),
 etdd as(
     SELECT
-        convert_timezone('UTC', current_timestamp)::date as SNAPSHOT_DATE,
+        --convert_timezone('UTC', current_timestamp)::date as SNAPSHOT_DATE,
+        '2024-08-12'::date as snap_shot_dt,
         ETD.JJ_WK AS SNAPSHOT_WEEK_NO,
         ETDW.ROW_NUMBER AS SNAPSHOT_MNTH_WEEK_NO,
         ETD.JJ_MNTH_SHRT AS SNAPSHOT_MNTH_SHRT,
@@ -257,7 +261,7 @@ etdd as(
     FROM (SELECT *, ROW_NUMBER()  OVER
     (PARTITION BY JJ_MNTH_ID ORDER BY JJ_WK ASC) as ROW_NUMBER FROM (SELECT DISTINCT JJ_MNTH_ID,JJ_WK FROM EDW_TIME_DIM)) ETDW,
     EDW_TIME_DIM ETD WHERE ETD.JJ_WK IN (2,6,10,15,19,23,28,32,36,41,45,49)
-    AND ETD.TIME_ID=TO_CHAR(current_timestamp(),'YYYYMMDD')::number(17,0) AND 
+    AND ETD.TIME_ID=TO_CHAR('2024-08-12'::date,'YYYYMMDD')::number(17,0) AND 
     ETDW.JJ_MNTH_ID=ETD.JJ_MNTH_ID AND ETDW.JJ_WK=ETD.JJ_WK
 ),
 union2 as(
