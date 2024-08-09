@@ -64,6 +64,10 @@ aeon as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_aeon
+         {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_aeon.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 csms as(
     select
@@ -94,6 +98,10 @@ csms as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_csms
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_csms.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 dnki as(
     select
@@ -124,6 +132,10 @@ dnki as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_dnki
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_dnki.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 otherss as(
     select
@@ -154,6 +166,10 @@ otherss as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_others
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_others.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 tsur as(
     select
@@ -184,6 +200,10 @@ tsur as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_tsur
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_tsur.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 sugi as(
     select
@@ -248,6 +268,10 @@ wlca as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_wlca
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        where wk_pos_daily_wlca.upload_dt > (select max(upload_dt) from {{ this }}) 
+        {% endif %}
 ),
 transformed as(
     select * from aeon
