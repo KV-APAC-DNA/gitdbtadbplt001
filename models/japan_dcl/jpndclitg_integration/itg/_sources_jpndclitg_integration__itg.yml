@@ -215,6 +215,7 @@ sources:
     - name: cit86osalm_hen_mv
     - name: cit86osalm_aspac_ikou
     - name: cld_m
+    - name: kr_comm_point_para
     - name: threshold_amount_master
     - name: kesai_h_data_mart_sub_old_tbl
     - name: kesai_h_data_mart_sub_old_chsi_tbl
