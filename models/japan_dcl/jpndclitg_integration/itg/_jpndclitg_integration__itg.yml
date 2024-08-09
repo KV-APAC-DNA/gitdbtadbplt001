@@ -399,3 +399,28 @@ models:
     config:
       alias: cc_predictionresult
       tags: ["dcl_ml_prediction_load","transformation"]
+
+  - name: jpndclitg_integration__vc100_predictionresult
+    config:
+      alias: vc100_predictionresult
+      tags: ["dcl_ml_prediction_load","transformation"]
+
+  - name: jpndclitg_integration__ec_predictionresult_1
+    config:
+      alias: ec_predictionresult_1
+      tags: ["dcl_ml_prediction_load","transformation"]
+ 
+  - name: jpndclitg_integration__cc_predictionresult
+    config:
+      alias: cc_predictionresult
+      tags: ["dcl_ml_prediction_load","transformation"]
+
+  - name: jpndclitg_integration__c_tbecregnumitemconvhist
+    config:
+      alias: c_tbecregnumitemconvhist
+      tags: ["m_dcl_itg_job1","transformation"]
+
+  - name: jpndclitg_integration__acgel_predictionresult
+    config:
+      alias: acgel_predictionresult
+      tags: ["dcl_ml_prediction_load","transformation"]

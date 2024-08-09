@@ -103,6 +103,7 @@ sources:
     tables:
       - name: tbecorder_log_tmp
       - name: '"wqwt03通販売上明細"'
+      - name: cim03item_ikou
       - name: tbecorder_rireki_log_tmp
       - name: genomer_kokya_kpi_inbound
       - name: cim02tokui_ikou
