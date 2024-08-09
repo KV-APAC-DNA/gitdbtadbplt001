@@ -247,7 +247,8 @@ vdfaa as (
         PX_PROMO_FRCST
     FROM VW_DEMAND_FORECAST_ANALYSIS, 
     (SELECT TO_NUMBER(TO_CHAR(DATEADD('month', -1, TO_DATE(T1.JJ_MNTH_ID::STRING, 'YYYYMM')), 'YYYYMM')) 
-    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = '2024-08-12'::date --left((convert_timezone('UTC', current_timestamp)::date+1),10)::date) PROJPRD
+    AS PREV_JJ_PERIOD FROM EDW_TIME_DIM T1 WHERE CAL_DATE::date = '2024-08-12'::date --left((convert_timezone('UTC', current_timestamp)::date+1),10)::date
+    ) PROJPRD
     WHERE PAC_SUBSOURCE_TYPE='SAPBW_ACTUAL'
 ),
 etdd as(
