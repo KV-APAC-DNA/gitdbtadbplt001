@@ -6,8 +6,12 @@
         pre_hook="{% if is_incremental() %}
         delete from {{this}}
         where (visit_id, audit_form_id, section_id, field_id, sku_id)
-        in (select distinct  visit_id, audit_form_id, section_id, field_id, sku_id from {{ ref('aspwks_integration__wks_pop6_sku_audits') }}) or response in ('no','NO','NULL','null');
-            {% endif %}"
+        in (select distinct  visit_id, audit_form_id, section_id, field_id, sku_id from {{ ref('aspwks_integration__wks_pop6_sku_audits') }} where cntry_cd <> 'TH') or response in ('no','NO','NULL','null');
+        delete from {{this}}
+        where visit_id
+        in (select distinct  visit_id from {{ ref('aspwks_integration__wks_pop6_sku_audits') }} where cntry_cd = 'TH');
+            {% endif %}" 
+        
 )}}
 with itg_pop6_sku_audits_temp as (
     select * from {{ ref('aspwks_integration__wks_pop6_sku_audits') }}
