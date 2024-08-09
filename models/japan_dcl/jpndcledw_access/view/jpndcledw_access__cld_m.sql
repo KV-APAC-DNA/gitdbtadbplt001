@@ -1,5 +1,5 @@
 with cld_m as (
-    select * from dev_dna_core.jpdcledw_integration.cld_m
+    select * from {{ ref('jpndcledw_integration__cld_m') }}
 ),
 
 final as (
