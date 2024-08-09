@@ -192,7 +192,7 @@ FROM
               itg_pop6_product_attribute_audits.product_attribute_id, 
               itg_pop6_product_attribute_audits.product_attribute_value_id 
               ORDER BY 
-                itg_pop6_product_attribute_audits.run_id DESC
+                itg_pop6_product_attribute_audits.run_id DESC,field_type DESC
             ) AS rn 
           FROM 
             itg_pop6_product_attribute_audits
