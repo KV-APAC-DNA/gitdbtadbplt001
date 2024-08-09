@@ -1,12 +1,12 @@
 WITH zcmmntorisk
 AS (
-    SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.zcmmntorisk
+    SELECT * {{ source('jpdclitg_integration', 'zcmmntorisk') }}
+    FROM 
     ),
 zcmmnjuusho
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.zcmmnjuusho
+    FROM {{ source('jpdclitg_integration', 'zcmmnjuusho') }}
     ),
 hanyo_attr
 AS (
@@ -16,7 +16,7 @@ AS (
 cim02tokui_ikou
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.cim02tokui_ikou
+    FROM {{ source('jpdcledw_integration', 'cim02tokui_ikou') }}
     ),
 T1
 AS (

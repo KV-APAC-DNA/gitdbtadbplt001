@@ -1,7 +1,7 @@
 WITH dm_kesai_mart_dly_bkp_20221021_deployment
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.dm_kesai_mart_dly_bkp_20221021_deployment
+    FROM {{ source('jpdcledw_integration', 'dm_kesai_mart_dly_bkp_20221021_deployment') }}
     ),
 dm_user_status
 AS (

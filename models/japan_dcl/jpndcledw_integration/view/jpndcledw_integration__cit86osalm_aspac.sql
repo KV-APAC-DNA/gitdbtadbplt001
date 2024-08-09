@@ -1,5 +1,5 @@
 with cit86osalm_aspac_ikou as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit86osalm_aspac_ikou
+    select * from {{ source('jpdcledw_integration', 'cit86osalm_aspac_ikou') }}
 ),
 cit85osalh as (
     select * from {{ ref('jpndcledw_integration__cit85osalh') }}

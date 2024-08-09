@@ -1,7 +1,7 @@
 with kesai_h_data_mart_sub_old_chsi_tbl
 AS
 (
-    select * from jpdcledw_integration.kesai_h_data_mart_sub_old_chsi_tbl
+    select * from {{ source('jpdcledw_integration', 'kesai_h_data_mart_sub_old_chsi_tbl') }}
 ),
 final as
 (

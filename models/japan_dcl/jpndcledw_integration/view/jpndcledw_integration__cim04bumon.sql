@@ -2,11 +2,11 @@ with c_tbtelcompanymst as(
     select * from {{ ref('jpndclitg_integration__c_tbtelcompanymst') }}
 ),
  zcmmnsoshitaik as(
-select * from snapjpdclitg_integration.zcmmnsoshitaik
+select * from {{ source('jpdclitg_integration', 'zcmmnsoshitaik') }}
 )
 ,hanyo_attr_bkp as 
 (
-    select * from snapjpdcledw_integration.hanyo_attr_bkp
+    select * from {{ source('jpdcledw_integration', 'hanyo_attr_bkp') }}
 )
 ,final as(
 

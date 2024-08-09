@@ -220,185 +220,7 @@ models:
     config:
       alias: kr_this_stage_point_monthly
       tags: ["dcl_kr_new_edw_job6", "transformation"]
-  - name: jpndcledw_integration__dm_kesai_mart_dly
-    config:
-      alias: dm_kesai_mart_dly
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__dm_kesai_mart_dly_general
-    config:
-      alias: dm_kesai_mart_dly_general
-      tags: ["", "transformation"] 
-      
-  - name: jpndcledw_integration__dm_user_status
-    config:
-      alias: dm_user_status
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__dm_user_status_tmp
-    config:
-      alias: dm_user_status_tmp
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_h_data_mart_mv_tbl_kizuna
-    config:
-      alias: kesai_h_data_mart_mv_tbl_kizuna
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_h_tbl
-    config:
-      alias: kesai_h_data_mart_sub_n_h_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_tbl
-    config:
-      alias: kesai_h_data_mart_sub_n_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_u_tbl
-    config:
-      alias: kesai_h_data_mart_sub_n_u_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl_kizuna
-    config:
-      alias: kesai_h_data_mart_sub_tbl_kizuna
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna
-    config:
-      alias: kesai_m_data_mart_mv_tbl_kizuna
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
-    config:
-      alias: kesai_m_data_mart_sub_before_tbl_kizuna
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp_tbl
-    config:
-      alias: kesai_m_data_mart_sub_n_h_notp_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_tbl
-    config:
-      alias: kesai_m_data_mart_sub_n_h_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_tbl
-    config:
-      alias: kesai_m_data_mart_sub_n_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_u_tbl
-    config:
-      alias: kesai_m_data_mart_sub_n_u_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna
-    config:
-      alias: kesai_m_data_mart_sub_tbl_kizuna
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__kesaiid_dummy_tbl
-    config:
-      alias: kesaiid_dummy_tbl
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__teikikeiyaku_data_mart_cn
-    config:
-      alias: teikikeiyaku_data_mart_cn
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__temp_existing_kokyano_list_016
-    config:
-      alias: temp_existing_kokyano_list_016
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__temp_kesai_016
-    config:
-      alias: temp_kesai_016
-      tags: ["", "transformation"]
-      
-  - name: jpndcledw_integration__temp_u_new_016
-    config:
-      alias: temp_u_new_016
-      tags: ["", "transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_mv
-    config:
-      alias: kesai_h_data_mart_mv
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_kizuna
-    config:
-      alias: kesai_h_data_mart_sub_kizuna
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n
-    config:
-      alias: kesai_h_data_mart_sub_n
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_h
-    config:
-      alias: kesai_h_data_mart_sub_n_h
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_u
-    config:
-      alias: kesai_h_data_mart_sub_n_u
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_mv
-    config:
-      alias: kesai_m_data_mart_mv
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_kizuna
-    config:
-      alias: kesai_m_data_mart_sub_before_kizuna
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_kizuna
-    config:
-      alias: kesai_m_data_mart_sub_kizuna
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n
-    config:
-      alias: kesai_m_data_mart_sub_n
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h
-    config:
-      alias: kesai_m_data_mart_sub_n_h
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp
-    config:
-      alias: kesai_m_data_mart_sub_n_h_notp
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_u
-    config:
-      alias: kesai_m_data_mart_sub_n_u
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesaiid_dummy
-    config:
-      alias: kesaiid_dummy
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_h_data_mart_mv_kizuna
-    config:
-      alias: kesai_h_data_mart_mv_kizuna
-      tags: ["","transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_mv_kizuna
-    config:
-      alias: kesai_m_data_mart_mv_kizuna
-      tags: ["","transformation"]
+  
   - name: jpndcledw_integration__item_jizen_bunkai_w14
     config:
       alias: item_jizen_bunkai_w14
@@ -1194,95 +1016,7 @@ models:
     config:
       alias: dm_user_attr_hist
       tags: ["m_dcl_edwmonthly","transformation"]
-  - name: jpndcledw_integration__tbecorderhist_qv
-    config:
-      alias: tbecorderhist_qv
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__item_z_h_hen_v
-    config:
-      alias: item_z_h_hen_v
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__affiliate_cancel_delivery_v
-    config:
-      alias: affiliate_cancel_delivery_v
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__affiliate_cancel_sameday_order_v
-    config:
-      alias: affiliate_cancel_sameday_order_v
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__wqwt74
-    config:
-      alias: wqwt74
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__tt02salem_add_hen_mv_mt
-    config:
-      alias: tt02salem_add_hen_mv_mt
-      tags: ["japan dcl common views","transformation"]
   
-  - name: jpndcledw_integration__tt02salem_add1_exp_hen_mt
-    config:
-      alias: tt02salem_add1_exp_hen_mt
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__tt02salem_add_uri_mv_mt
-    config:
-      alias: tt02salem_add_uri_mv_mt
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__aspac_common_new
-    config:
-      alias: aspac_common_new
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__c_diprivilegeshubetsu
-    config:
-      alias: c_diprivilegeshubetsu
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__tt01saleh_sum_mv
-    config:
-      alias: tt01saleh_sum_mv
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__tt02kokyastsm_mv
-    config:
-      alias: tt02kokyastsm_mv
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__tt02salem_mv
-    config:
-      alias: tt02salem_mv
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__jp_dcl_edw.wqwt34
-    config:
-      alias: wqwt34
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__wt01kokyah
-    config:
-      alias: wt01kokyah
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__wt03tsaledt
-    config:
-      alias: wt03tsaledt
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__wt05osaledt
-    config:
-      alias: wt05osaledt
-      tags: ["japan dcl common views","transformation"]
-
-  - name: jpndcledw_integration__wt74itemstrategy_sale_p_new
-    config:
-      alias: wt74itemstrategy_sale_p_new
-      tags: ["japan dcl common views","transformation"]
   - name: jpndcledw_integration__kr_054_result
     config:
       alias: kr_054_result
@@ -1397,3 +1131,118 @@ models:
     config:
       alias: kr_054_tounen_yoteix
       tags: ["dcl_004_month_end_refresh","transformation"]
+      
+  - name: jpndcledw_integration__dm_mykokya
+    config:
+      alias: dm_mykokya
+      tags: ["dcl_mykokya","transformation"]
+      
+  - name: jpndcledw_integration__tboutcalllatestorder
+    config:
+      alias: tboutcalllatestorder
+      tags: ["dcl_mykokya","transformation"]
+
+  - name: jpndcledw_integration__dm_kesai_mart_dly
+    config:
+      alias: dm_kesai_mart_dly
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__dm_kesai_mart_dly_general
+    config:
+      alias: dm_kesai_mart_dly_general
+      tags: ["m_dcl_edw_job2", "transformation"] 
+      
+  - name: jpndcledw_integration__dm_user_status
+    config:
+      alias: dm_user_status
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__dm_user_status_tmp
+    config:
+      alias: dm_user_status_tmp
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_h_data_mart_mv_tbl_kizuna
+    config:
+      alias: kesai_h_data_mart_mv_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_h_tbl
+    config:
+      alias: kesai_h_data_mart_sub_n_h_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_tbl
+    config:
+      alias: kesai_h_data_mart_sub_n_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_n_u_tbl
+    config:
+      alias: kesai_h_data_mart_sub_n_u_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl_kizuna
+    config:
+      alias: kesai_h_data_mart_sub_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_mv_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_before_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp_tbl
+    config:
+      alias: kesai_m_data_mart_sub_n_h_notp_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_tbl
+    config:
+      alias: kesai_m_data_mart_sub_n_h_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_tbl
+    config:
+      alias: kesai_m_data_mart_sub_n_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_n_u_tbl
+    config:
+      alias: kesai_m_data_mart_sub_n_u_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__kesaiid_dummy_tbl
+    config:
+      alias: kesaiid_dummy_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__teikikeiyaku_data_mart_cn
+    config:
+      alias: teikikeiyaku_data_mart_cn
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__temp_existing_kokyano_list_016
+    config:
+      alias: temp_existing_kokyano_list_016
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__temp_kesai_016
+    config:
+      alias: temp_kesai_016
+      tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__temp_u_new_016
+    config:
+      alias: temp_u_new_016
+      tags: ["m_dcl_edw_job2", "transformation"]

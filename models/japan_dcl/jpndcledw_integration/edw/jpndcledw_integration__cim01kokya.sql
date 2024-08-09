@@ -1,17 +1,17 @@
 WITH tbUsrPram
 AS (
     SELECT *
-    FROM snapjpdclitg_integration.tbUsrPram
+    FROM {{ref('jpndclitg_integration__tbusrpram')}}
     ),
 tbPromotion
 AS (
     SELECT *
-    FROM snapjpdclitg_integration.tbPromotion
+    FROM {{ref('jpndclitg_integration__tbpromotion')}}
     ),
 HANYO_ATTR
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.HANYO_ATTR
+    FROM {{ref('jpndcledw_integration__hanyo_attr')}}
     ),
 t1
 AS (

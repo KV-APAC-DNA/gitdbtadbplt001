@@ -1,7 +1,7 @@
 with affiliate_cancel_sameday_order
 as
 (
-    select * from dev_dna_core.jpdcledw_integration.affiliate_cancel_sameday_order
+    select * from {{ref('jpndcledw_integration__affiliate_cancel_sameday_order')}}
 )
 ,
 
