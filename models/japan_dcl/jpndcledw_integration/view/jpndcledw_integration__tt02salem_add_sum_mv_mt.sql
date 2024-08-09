@@ -1,11 +1,11 @@
 WITH tt02salem_add_uri_mv_mt AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add_uri_mv_mt
+    SELECT * FROM {{ ref('jpndcledw_integration__tt02salem_add_uri_mv_mt') }}
 ),
 
 tt02salem_add_hen_mv_mt AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add_hen_mv_mt
+    SELECT * FROM {{ ref('jpndcledw_integration__tt02salem_add_hen_mv_mt') }}
 ),
 
 ct1 AS

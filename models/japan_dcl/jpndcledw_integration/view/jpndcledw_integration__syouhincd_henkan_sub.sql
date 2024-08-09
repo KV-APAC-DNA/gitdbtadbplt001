@@ -1,9 +1,9 @@
-with TBECITEM as 
+with tbecitem as 
 (
    select * from {{ ref('jpndclitg_integration__tbecitem') }}
 ),
-TBECSETITEM as(
-    select * from  SNAPJPDCLITG_INTEGRATION.TBECSETITEM
+tbecsetitem as(
+    select * from  {{ ref('jpndclitg_integration__tbecsetitem') }}
 ),
 final as(
 SELECT item_hanbai.dsitemid AS itemcode,

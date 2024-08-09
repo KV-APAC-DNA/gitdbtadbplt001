@@ -3,7 +3,7 @@ with syouhincd_henkan_sub as (
 ),
 
 sscmnhin as (
-    select * from dev_dna_core.snapjpdclitg_integration.sscmnhin
+    select * from {{ source('jpdclitg_integration', 'sscmnhin') }}
 ),
 
 hanyo_attr as (

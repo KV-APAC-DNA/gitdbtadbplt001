@@ -1,5 +1,5 @@
 with tm09nendai_ikou as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM09NENDAI_IKOU
+select * from {{ source('jpdcledw_integration', 'tm09nendai_ikou') }}
 ),
 final as (
 SELECT 

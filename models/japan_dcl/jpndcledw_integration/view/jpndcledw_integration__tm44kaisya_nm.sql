@@ -1,7 +1,7 @@
 with hanyo_attr_bkp
 AS
 (
-    select * from jpdcledw_integration.hanyo_attr_bkp
+    select * from {{ source('jpdcledw_integration', 'hanyo_attr_bkp') }}
 ),
 final AS
 (

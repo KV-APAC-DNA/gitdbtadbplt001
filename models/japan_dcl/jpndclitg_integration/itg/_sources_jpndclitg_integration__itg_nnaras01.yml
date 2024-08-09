@@ -1,0 +1,42 @@
+version: 2
+
+sources:
+  - name: jpdcledw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdcledw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+        - name: teikikeiyaku_data_mart_cl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: report_006_a_historical_data
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: wk_kpi_06_04_old
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: report_006_a_historical_data2
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tm09nendai_ikou
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: hanyo_attr_bkp
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tt01saleh_hen_mv_mt
+          tags: ["japan_dcl_common_views","transformation"]
+
+      
+  - name: jpdclitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdclitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false  
+    tables:
+      - name: sscmnhin
+        tags: ["japan_dcl_common_views","transformation"]
+      - name: sscmhtoriskbetsuhin
+        tags: ["japan_dcl_common_views","transformation"]
+
+
+

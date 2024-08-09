@@ -5,8 +5,8 @@ as
 ),
 teikikeiyaku_data_mart_cl as
 (
-    select * from jpdcledw_integration.teikikeiyaku_data_mart_cl
-),
+  select * from {{ source('jpdcledw_integration', 'teikikeiyaku_data_mart_cl') }}
+    ),
 t1 as
 (
     SELECT teikikeiyaku_data_mart_cn.c_diregularcontractid,
