@@ -1,7 +1,8 @@
 --import cte
-/*with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
-),*/
+  {{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_re_msl_input_definition as (
     select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),

@@ -8,7 +8,7 @@
 }}
 
 with jp_pos_daily_tsur as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_tsur') }}
+    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_tsur') }} 
 ),
 final as(
     select

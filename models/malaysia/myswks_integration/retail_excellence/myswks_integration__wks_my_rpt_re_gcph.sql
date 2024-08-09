@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte     
 with wks_my_rpt_re as (
     select * from {{ ref('myswks_integration__wks_my_rpt_re') }}

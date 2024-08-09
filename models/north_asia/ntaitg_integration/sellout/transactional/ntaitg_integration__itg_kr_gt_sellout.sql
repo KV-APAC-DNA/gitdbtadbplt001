@@ -15,7 +15,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_hyundai_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_hyundai_gt_sellout') }}
               
               UNION ALL
               
@@ -27,7 +27,7 @@
                             END AS DSTR_NM,
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_lotte_ak_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_lotte_ak_gt_sellout') }}
               
               UNION ALL
               
@@ -36,7 +36,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_ju_hj_life_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_ju_hj_life_gt_sellout') }}
     
               UNION ALL
               
@@ -44,7 +44,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
               
               UNION ALL
               
@@ -52,7 +52,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_da_in_sang_sa_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_da_in_sang_sa_gt_sellout') }}
               
               UNION ALL
               
@@ -60,7 +60,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_dongbu_lsd_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_dongbu_lsd_gt_sellout') }}
               
               UNION ALL
               
@@ -68,7 +68,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
               
               UNION ALL
               
@@ -76,7 +76,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
               
               UNION ALL
               
@@ -84,7 +84,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_jungseok_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_jungseok_gt_sellout') }}
               
               UNION ALL
               
@@ -92,7 +92,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_nu_ri_zon_gt_sellout') }} 
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_nu_ri_zon_gt_sellout') }} 
               
               UNION ALL
               
@@ -100,7 +100,7 @@
                      UPPER(DSTR_NM),
                      CUST_CD,
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_lotte_logistics_yang_ju_gt_sellout') }})
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_lotte_logistics_yang_ju_gt_sellout') }})
               {% endif %}",
               "{% if is_incremental() %}
               DELETE FROM {{this}}
@@ -112,7 +112,7 @@
               SELECT TO_DATE(IMS_TXN_DT, 'YYYY-MM-DD'),
                      UPPER(DSTR_NM),
                      EAN
-              FROM {{ source('ntasdl_raw','sdl_kr_nacf_gt_sellout') }}
+              FROM {{ ref('ntawks_integration__wks_sdl_kr_nacf_gt_sellout') }}
               )
             {% endif %}","
             {% if is_incremental() %}
@@ -121,7 +121,7 @@ FROM {{this}}
 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
                                               UPPER(DSTR_NM) DSTR_NM,
                                               EAN,customer_code
-                                       FROM {{ source('ntasdl_raw','sdl_kr_nh_gt_sellout') }} sng
+                                       FROM {{ ref('ntawks_integration__wks_sdl_kr_nh_gt_sellout') }} sng
                                         LEFT JOIN (SELECT FISC_PER,
                     MAX(CAL_DAY) CAL_DAY
              FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
@@ -134,7 +134,7 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
                 WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd,SUB_CUSTOMER_CODE) IN (SELECT CASE WHEN (SNG.IMS_TXN_DT IS NULL OR SNG.IMS_TXN_DT='') THEN CAL.CAL_DAY ELSE TO_DATE(replace(SNG.IMS_TXN_DT,'/','-'),'MM-DD-YY') END AS IMS_TXN_DT,
                                                             UPPER(DSTR_NM) DSTR_NM,
                                                             EAN,customer_code,pcode
-                                                    FROM {{ source('ntasdl_raw','sdl_kr_otc_sellout') }} SNG
+                                                    FROM {{ ref('ntawks_integration__wks_sdl_kr_otc_sellout') }} SNG
                                                         LEFT JOIN (SELECT FISC_PER,
                                     MAX(CAL_DAY) CAL_DAY
                             FROM {{ ref('aspedw_integration__edw_calendar_dim') }}
@@ -148,46 +148,46 @@ WHERE (IMS_TXN_DT,UPPER(DSTR_CD),EAN_NUM,cust_cd) IN (SELECT CASE WHEN (SNG.IMS_
 
 with 
 sdl_kr_otc_sellout as (
-select * from  {{ source('ntasdl_raw','sdl_kr_otc_sellout') }}
+select * from  {{ ref('ntawks_integration__wks_sdl_kr_otc_sellout') }}
 ),
 sdl_kr_ju_hj_life_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_ju_hj_life_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_ju_hj_life_gt_sellout') }}
 ),
 sdl_kr_jungseok_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_jungseok_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_jungseok_gt_sellout') }}
 ),
 sdl_kr_nacf_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_nacf_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_nacf_gt_sellout') }}
 ),
 sdl_kr_hyundai_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_hyundai_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_hyundai_gt_sellout') }}
 ),
 sdl_kr_bo_young_jong_hap_logistics_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_bo_young_jong_hap_logistics_gt_sellout') }}
 ),
 sdl_kr_lotte_logistics_yang_ju_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_lotte_logistics_yang_ju_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_lotte_logistics_yang_ju_gt_sellout') }}
 ),
 sdl_kr_nu_ri_zon_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_nu_ri_zon_gt_sellout') }} 
+select * from {{ ref('ntawks_integration__wks_sdl_kr_nu_ri_zon_gt_sellout') }} 
 ),
 sdl_kr_lotte_ak_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_lotte_ak_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_lotte_ak_gt_sellout') }}
 ),
 sdl_kr_dongbu_lsd_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_dongbu_lsd_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_dongbu_lsd_gt_sellout') }}
 ),
 sdl_kr_da_in_sang_sa_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_da_in_sang_sa_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_da_in_sang_sa_gt_sellout') }}
 ),
 sdl_kr_nh_gt_sellout as (
-    select * from {{ source('ntasdl_raw','sdl_kr_nh_gt_sellout') }}
+    select * from {{ ref('ntawks_integration__wks_sdl_kr_nh_gt_sellout') }}
 ),
 sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_il_dong_hu_di_s_deok_seong_sang_sa_gt_sellout') }}
 ),
 sdl_kr_du_bae_ro_yu_tong_gt_sellout as (
-select * from {{ source('ntasdl_raw','sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
+select * from {{ ref('ntawks_integration__wks_sdl_kr_du_bae_ro_yu_tong_gt_sellout') }}
 ),
 itg_kr_gt_food_ws as (
 select * from {{ ref('ntaitg_integration__itg_kr_gt_food_ws') }}
