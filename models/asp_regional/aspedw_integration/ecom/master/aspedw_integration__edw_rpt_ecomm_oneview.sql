@@ -118,6 +118,18 @@ edw_market_share_qsd as(
 edw_gch_customerhierarchy as (
 	select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
+itg_mds_cn_ecom_brand as
+(
+    select * from itg_mds_cn_ecom_brand
+),
+itg_mds_cn_ecom_sapcustomer_map as
+(
+    select * from itg_mds_cn_ecom_sapcustomer_map
+),
+edw_ecom_oms as 
+(
+    select * from EDW_ECOM_OMS --- source
+),
 cus_sales_extn as(
     select cus_sales.sls_org  ,
             cus_sales.dstr_chnl,
@@ -2989,6 +3001,121 @@ insert10_union4 as(
 		ph_ecomm_offtake.from_crncy,
 		ph_ecomm_offtake.to_crncy 
 ),
+insert10_union5 as
+(
+    SELECT 'Act'::CHARACTER VARYING AS data_type,
+        'Offtake' as Datasource,
+        'SKU' as Data_level,
+            'Offtake' as KPI,
+        'Continuous' as Period_type,
+        cal.fisc_yr AS fisc_year,
+            cal.cal_yr AS cal_year,
+        LTRIM("substring" (cal.fisc_per::CHARACTER VARYING::TEXT,5,3),0::CHARACTER VARYING::TEXT)::CHARACTER VARYING AS fisc_month,	   
+        cal.cal_mo_2 AS cal_month,   
+        TO_DATE(("substring" (cal.fisc_per::CHARACTER VARYING::TEXT,6,2) || '01'::CHARACTER VARYING::TEXT) || "substring" (cal.fisc_per::CHARACTER VARYING::TEXT,1,4),'MMDDYYYY'::CHARACTER VARYING::TEXT) AS fisc_day,
+        cal.cal_day,
+            cal.fisc_per as fisc_yr_per,
+            'China' as cluster, -- Hardcode
+        'China Personal Care' AS country, -- Hardcode
+            'China Personal Care' AS sub_country,
+            'E-Commerce' as channel,
+        'E-Commerce' as "sub channel", -- Hardcode
+        'E-Commerce' as retail_env,	-- Hardcode
+        null as "go to model",
+        NULL AS profit_center,	   
+            null as company_code,
+        cesc.sap_cust_code AS sap_customer_code,	   
+        cesc.sap_cust_name AS customer_name,
+            cesc.sap_cust_name as banner, -- Same as Customer Name
+        cesc.sap_cust_name as banner_format, -- Same as Customer Name
+        ecomm_offtake_ch.platform,
+        ecomm_offtake_ch.retailer_name,
+        cesc.retailer_name_english,	  
+            'Johnson & Johnson' as manufacturer_name,
+            'Y' as jj_manufacturer_flag,	   
+        dt1.gcph_franchise as  franchise_l1,
+        NULL AS gcph_needstate,	 	
+            NULL AS gcph_category,
+            NULL AS gcph_subcategory,
+            dt1.gcph_brand AS gcph_brand, -- Added Brand column here
+            NULL AS gcph_subbrand,
+            NULL AS gcph_variant,
+            NULL AS put_up_desc,	
+        ecomm_offtake_ch.retailer_product_name,
+        null AS product_minor_code,
+        null as prod_minor,
+            null AS jnj_sku_code,
+        ecomm_offtake_ch.ean,
+        ecomm_offtake_ch.retailer_sku_code,
+        NULL AS generic_product_code,
+        NULL AS jnj_sku_name,	   
+            NULL AS target_ori,	   
+        SUM(ecomm_offtake_ch.quantity) AS sales_qty,
+        SUM(ecomm_offtake_ch.sales_value::DOUBLE precision*exch_rate.ex_rt::DOUBLE precision) AS sales_value_usd,	   
+        SUM(ecomm_offtake_ch.sales_value) AS sales_value_lcy,
+        0 as salesweight,
+        ecomm_offtake_ch.transaction_currency AS from_crncy,
+        exch_rate.to_crncy,
+        null AS acct_nm,
+        null AS acct_num,
+        null AS ciw_desc,
+        null AS ciw_bucket,
+        null AS csw_desc,
+        null AS "Additional_Information"	,
+        NULL as ppm_role           
+    FROM (SELECT INITCAP(edw_ecom_oms.country::TEXT) AS country,
+                edw_ecom_oms.platform,
+                edw_ecom_oms.retailer_name,
+                edw_ecom_oms.retailer_sku_code,
+                edw_ecom_oms.retailer_product_name,
+                edw_ecom_oms.retailer_brand,
+                edw_ecom_oms.ean,
+                edw_ecom_oms.transaction_currency,
+                SUM(edw_ecom_oms.sales_value) AS sales_value,
+                SUM(edw_ecom_oms.quantity) AS quantity,
+                to_date(edw_ecom_oms.transaction_date) AS transaction_date
+        FROM edw_ecom_oms
+        GROUP BY INITCAP(edw_ecom_oms.country::TEXT),
+                edw_ecom_oms.platform,
+                edw_ecom_oms.retailer_name,
+                edw_ecom_oms.retailer_sku_code,
+                edw_ecom_oms.retailer_product_name,
+                edw_ecom_oms.retailer_brand,
+                edw_ecom_oms.ean,
+                edw_ecom_oms.transaction_currency,
+                to_date(edw_ecom_oms.transaction_date)) ecomm_offtake_ch
+    LEFT JOIN edw_calendar_dim cal ON ecomm_offtake_ch.transaction_date::CHARACTER VARYING::DATE::CHARACTER VARYING::TEXT = cal.cal_day::CHARACTER VARYING::TEXT
+    LEFT JOIN v_intrm_reg_crncy_exch_fiscper exch_rate
+            ON ecomm_offtake_ch.transaction_currency::TEXT = exch_rate.from_crncy::TEXT
+            AND exch_rate.to_crncy::TEXT = 'USD'::CHARACTER VARYING::TEXT
+            AND cal.fisc_per = exch_rate.fisc_per
+    LEFT JOIN (SELECT MAX(epka.gcph_franchise) AS gcph_franchise,epka.gcph_brand,ebd.brand_cn,ebd.brand_name 					
+                FROM (SELECT itg_mds_cn_ecom_brand.brand_code,itg_mds_cn_ecom_brand.brand_cn, itg_mds_cn_ecom_brand.brand_name FROM itg_mds_cn_ecom_brand) ebd -- Added brand_code column
+                LEFT JOIN (SELECT edw_product_key_attributes.gcph_franchise,edw_product_key_attributes.gcph_brand, edw_product_key_attributes.brnd_cd FROM edw_product_key_attributes -- Added brnd_cd column
+                            WHERE edw_product_key_attributes.ctry_nm::TEXT IN ('China Personal Care'::CHARACTER VARYING::TEXT,'APSC Regional'::CHARACTER VARYING::TEXT) AND gcph_brand IS NOT NULL AND brnd_cd IS NOT NULL) epka -- Added APSC Regional as it includes China SKUs
+                            ON epka.brnd_cd = ebd.brand_code AND UPPER(epka.gcph_brand) = UPPER(ebd.brand_name) GROUP BY 2,3,4) dt1 -- Changed join condition to joining by brand code and brand name
+        ON trim (ecomm_offtake_ch.retailer_brand::TEXT) = trim (dt1.brand_cn::TEXT)
+    LEFT JOIN itg_mds_cn_ecom_sapcustomer_map cesc ON trim (ecomm_offtake_ch.retailer_name::TEXT) = trim (cesc.local_retailer_name::TEXT)
+    GROUP BY          
+        cal.fisc_yr ,
+        cal.cal_yr  ,
+        cal.fisc_per,
+        cal.cal_mo_2,   
+        cal.cal_day,
+        ecomm_offtake_ch.country,
+        cesc.sap_cust_code ,   
+        cesc.sap_cust_name ,
+        ecomm_offtake_ch.platform,
+        ecomm_offtake_ch.retailer_name,
+        cesc.retailer_name_english,	  
+        dt1.gcph_franchise ,
+        dt1.gcph_brand , -- New Group By
+        ecomm_offtake_ch.retailer_product_name,
+        ecomm_offtake_ch.ean,
+        ecomm_offtake_ch.retailer_sku_code,
+        ecomm_offtake_ch.transaction_currency ,
+        exch_rate.to_crncy 
+),
 insert10 as(
 	select * from insert10_union1
 	union all
@@ -2997,6 +3124,8 @@ insert10 as(
 	select * from insert10_union3
 	union all
 	select * from insert10_union4
+    union all
+	select * from insert10_union5
 ),
 insert11 as(
 	SELECT 'Act'::CHARACTER VARYING AS data_type,
