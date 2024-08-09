@@ -8,10 +8,10 @@ bom_sap_v AS (
 	SELECT * FROM {{ ref('jpndcledw_integration__bom_sap_v') }}
 ),
 item_bom_ikou_kizuna AS (
-	SELECT * FROM dev_dna_core.snapjpdcledw_integration.item_bom_ikou_kizuna 
+	SELECT * FROM {{ source('jpdcledw_integration','item_bom_ikou_kizuna') }}
 ),
 tm14shkos_mainte_work AS (
-	 SELECT * FROM dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work 
+	 SELECT * FROM {{ source('jpdcledw_integration','tm14shkos_mainte_work') }}
 ),
 C_TBECPRIVILEGEMST AS (
 	 SELECT * FROM {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}

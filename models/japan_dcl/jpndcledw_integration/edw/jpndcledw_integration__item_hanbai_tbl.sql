@@ -13,7 +13,7 @@ AS (
     ),
 cim03item_ikou
 AS (
-     select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim03item_ikou
+     select * from {{ source('jpdcledw_integration','cim03item_ikou') }}
     ),
 ct1
 AS (

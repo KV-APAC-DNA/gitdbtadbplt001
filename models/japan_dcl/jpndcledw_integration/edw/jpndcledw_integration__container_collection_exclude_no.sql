@@ -8,7 +8,7 @@
         DELETE FROM {{this}} container_collection_exclude_no
                 WHERE odrreceiveno  IN (
                 SELECT order_ID
-                FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CONTAINER_COLLECTION_V ccv
+                FROM {{ ref('jpndcledw_integration__container_collection_v') }} ccv
                 WHERE CCV.order_id  = container_collection_exclude_no.odrreceiveno 
                 )
                 AND TO_CHAR(convert_timezone('JST', insert_date),'YYYYMMDD') = TO_CHAR(convert_timezone('JST', sysdate()),'YYYYMMDD');

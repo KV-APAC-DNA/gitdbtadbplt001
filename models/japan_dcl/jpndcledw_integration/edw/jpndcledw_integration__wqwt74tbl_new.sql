@@ -5,7 +5,7 @@ sscmnhingrp as (
 select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCMNHINGRP
 ),
 cld_m as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CLD_M
+select * from {{ source('jpdcledw_integration','cld_m') }} 
 ),
 edw_mds_jp_dcl_partner_master as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.EDW_MDS_JP_DCL_PARTNER_MASTER

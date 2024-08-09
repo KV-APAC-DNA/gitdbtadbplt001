@@ -1,6 +1,6 @@
 WITH "wqwt03通販売上明細" AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration."wqwt03通販売上明細"
+    SELECT * FROM {{ source('jpdcledw_integration','"wqwt03通販売上明細"') }}
 ),
 
 final AS

@@ -1,7 +1,7 @@
 WITH wqwt03
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration."wqwt03通販売上明細"
+  FROM {{ source('jpdcledw_integration','"wqwt03通販売上明細"') }} 
   ),
 transformed
 AS (

@@ -24,11 +24,11 @@
                 FROM
                     {{ref('jpndcledw_integration__hanyo_attr')}} KAISHA
                 INNER JOIN 
-                    snapjpdclitg_integration.AARTNAR SAIKEN
+                    {{ source('jpdclitg_integration','aartnar') }} SAIKEN
                 ON
                     SAIKEN.KAISHA_CD = KAISHA.ATTR1
                 INNER JOIN 
-                    snapjpdclitg_integration.AARTBKAISYTIAR KAISYU
+                    {{ source('jpdclitg_integration','aartbkaisytiar') }} KAISYU
                 ON
                     KAISYU.KAISHA_CD = KAISHA.ATTR1 AND 
                     SAIKEN.AR_NAIBU_NO = KAISYU.AR_NAIBU_NO
@@ -36,7 +36,7 @@
                     KAISHA.KBNMEI = 'KAISYA' AND  
                     SAIKEN.KOUSHIN_DATE >= (SELECT
                                                 CAST( TO_CHAR( CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE()),'YYYYMMDD') AS NUMERIC) + (select CAST(ATTR1 AS NUMERIC) 
-                                            FROM snapjpdcledw_integration.HANYO_ATTR 
+                                            FROM {{ref('jpndcledw_integration__hanyo_attr')}}
                                             WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM')) 
                                             AND  
                     (SAIKEN.HASSEI_MT_DEN_SHUBT_KBN = '107' OR SAIKEN.TORI_SHUR_CD = 'Z302')
@@ -56,11 +56,11 @@ as
 ),
 AARTNAR as
 (
-    select * from snapjpdclitg_integration.AARTNAR 
+    select * from {{ source('jpdclitg_integration','aartnar') }} 
 ),
 AARTBKAISYTIAR as
 (
-    select * from snapjpdclitg_integration.AARTBKAISYTIAR
+    select * from {{ source('jpdclitg_integration','aartbkaisytiar') }} 
 ),
 datefrom as
 (

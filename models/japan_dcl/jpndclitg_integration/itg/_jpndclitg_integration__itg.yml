@@ -5,6 +5,7 @@ models:
     config:
       alias: rakutenorderdetail
       tags: ["dcl_rakuten_load","transformation"]
+
   - name: jpndclitg_integration__c_tbecdeptmst
     config:
       alias: c_tbecdeptmst
@@ -24,6 +25,7 @@ models:
     config:
       alias: c_tbecregularcoursemst
       tags: ["m_dcl_itg_job1","transformation"]
+
   - name: jpndclitg_integration__c_tbeccardcompanymst
     config:
       alias: c_tbeccardcompanymst
@@ -62,7 +64,7 @@ models:
   - name: jpndclitg_integration__c_tbecinquiremeisai
     config:
       alias: c_tbecinquiremeisai
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
 
   - name: jpndclitg_integration__sfmc_notsent
     config: 
@@ -82,36 +84,38 @@ models:
   - name: jpndclitg_integration__sfmc_sent
     config:
       alias: sfmc_sent
-      tags: ["m_DCL_ITG_Job1","ingestion"]
+      tags: ["m_dcl_itg_job1","ingestion"]
 
   - name: jpndclitg_integration__sfmc_unsubs
     config:
       alias: sfmc_unsubs
-      tags: ["m_DCL_ITG_Job1","ingestion"]
+      tags: ["m_dcl_itg_job1","ingestion"]
+
   - name: jpndclitg_integration__tbechenpinriyu
     config:
       alias: tbechenpinriyu
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__tbecsalesroutemst
     config:
       alias: tbecsalesroutemst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__tbecsoko
     config:
       alias: tbecsoko
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__tbpromotion
     config:
       alias: tbpromotion
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__tbpromotioncate
     config:
       alias: tbpromotioncate
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
+
   - name: jpndclitg_integration__extraction_table
     config:
       alias: extraction_table
@@ -164,116 +168,118 @@ models:
   - name: jpndclitg_integration__c_tbeckesai
     config:
       alias: c_tbeckesai
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbeckesaihistory
     config:
       alias: c_tbeckesaihistory
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecorderhistory
     config:
       alias: c_tbecorderhistory
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecordermeisaihistory
     config:
       alias: c_tbecordermeisaihistory
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpaymentpatternmst
     config:
       alias: c_tbecpaymentpatternmst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpointadm
     config:
       alias: c_tbecpointadm
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpointregistdivmst
     config:
       alias: c_tbecpointregistdivmst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpribuycategory
     config:
       alias: c_tbecpribuycategory
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpribuyitem
     config:
       alias: c_tbecpribuyitem
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecprimembclass
     config:
       alias: c_tbecprimembclass
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpripresentitem
     config:
       alias: c_tbecpripresentitem
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpriroute
     config:
       alias: c_tbecpriroute
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecpriusrsts
     config:
       alias: c_tbecpriusrsts
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecprivilegeinquirekesai
     config:
       alias: c_tbecprivilegeinquirekesai
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecprivilegekesai
     config:
       alias: c_tbecprivilegekesai
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecprivilegemst
     config:
       alias: c_tbecprivilegemst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecrankaddamountadm
     config:
       alias: c_tbecrankaddamountadm
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job2", "transformation"]
       
   - name: jpndclitg_integration__c_tbecranksumamount
     config:
       alias: c_tbecranksumamount
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job4", "transformation"]
       
   - name: jpndclitg_integration__c_tbecregularoperatehist
     config:
       alias: c_tbecregularoperatehist
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecusrcomment
     config:
       alias: c_tbecusrcomment
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbecusrcommentclassmst
     config:
       alias: c_tbecusrcommentclassmst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
       
   - name: jpndclitg_integration__c_tbtelcompanymst
     config:
       alias: c_tbtelcompanymst
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
+
   - name: jpndclitg_integration__contact_hist
     config: 
       alias: contact_hist
       tags: ["m_dcl_itg_job3","ingestion"]
+
   - name: jpndclitg_integration__sfcc_product_category
     config: 
       alias: sfcc_product_category
@@ -283,6 +289,7 @@ models:
     config: 
       alias: sfcc_product_mst
       tags: ["m_dcl_itg_job3","ingestion"]
+
   - name: jpndclitg_integration__sfmc_bounces
     config: 
       alias: sfmc_bounces
@@ -301,11 +308,11 @@ models:
   - name: jpndclitg_integration__tbuser
     config:
       alias: tbuser
-      tags: ["", "transformation"]
+      tags: ["m_dcl_itg_job6", "transformation"]
 
   - name: jpndclitg_integration__tbperson
     config:
-      alias: tbecitem
+      alias: tbperson
       tags: ["m_dcl_itg_job2","transformation"]
 
   - name: jpndclitg_integration__tbusrpram
@@ -342,18 +349,22 @@ models:
     config: 
       alias: tbecsetitem
       tags: ["m_dcl_itg_job3","transformation"]
+
   - name: jpndclitg_integration__ssmthsalhephedda
     config:
       alias: ssmthsalhephedda
       tags: ["m_dcl_edw_job1","transformation"]
+
   - name: jpndclitg_integration__ssmthsalhedda
     config:
       alias: ssmthsalhedda
       tags: ["m_dcl_itg_job1","transformation"]
+
   - name: jpndclitg_integration__tbecorder_1
     config:
       alias: tbecorder_1
       tags: ["m_dcl_edw_job1","transformation"]
+      
   - name: jpndclitg_integration__c_tbecorderhistory_1
     config:
       alias: c_tbecorderhistory_1

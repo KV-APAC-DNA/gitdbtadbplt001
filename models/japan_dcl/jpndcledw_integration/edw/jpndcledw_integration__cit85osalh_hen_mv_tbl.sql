@@ -1,12 +1,12 @@
 WITH CIT85OSALH_KKNG
 AS (
     SELECT *
-    FROM jpdcledw_integration.CIT85OSALH_KKNG 
+    FROM {{ source('jpdcledw_integration','cit85osalh_kkng') }}
     ),
 ZCMMNTORISK
 AS (
     SELECT *
-    FROM jpdclitg_integration.ZCMMNTORISK
+    FROM {{ source('jpdclitg_integration','zcmmntorisk') }}
     ),
 HANYO_ATTR
 AS (
@@ -23,25 +23,20 @@ AS (
     SELECT *
     FROM {{ref('jpndclitg_integration__ssmthsalhephedda')}}
     ),
-ZCMMNTORISK
-AS (
-    SELECT *
-    FROM jpdclitg_integration.ZCMMNTORISK 
-    ),
 SSCMNRIYUUKANRI
 AS (
     SELECT *
-    FROM jpdclitg_integration.SSCMNRIYUUKANRI
+    FROM {{ source('jpdclitg_integration','sscmnriyuukanri') }}
     ),
 ZCMMNDCLTOKUISK
 AS (
     SELECT *
-    FROM jpdclitg_integration.ZCMMNDCLTOKUISK
+    FROM {{ source('jpdclitg_integration','zcmmndcltokuisk') }}
     ),
 ZCMMNSOSHITAIK
 AS (
     SELECT *
-    FROM jpdclitg_integration.ZCMMNSOSHITAIK
+    FROM {{ source('jpdclitg_integration','zcmmnsoshitaik') }}
     ),
 t1
 AS (
