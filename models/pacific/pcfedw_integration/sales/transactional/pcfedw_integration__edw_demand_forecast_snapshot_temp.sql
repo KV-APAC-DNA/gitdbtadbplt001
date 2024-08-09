@@ -87,7 +87,7 @@ vdfa as (
 etd as(
     select
         --convert_timezone('UTC', current_timestamp)::date as snapshot_date,
-        '2024-08-12'::date as snap_shot_dt,
+        '2024-08-12'::date as snapshot_date,
         etd.jj_wk as snapshot_week_no,
         etdw.row_number as snapshot_mnth_week_no,
         etd.jj_mnth_shrt as snapshot_mnth_shrt,
