@@ -6,7 +6,8 @@ old as
 (
     select * from {{this}}
 ),
-combined (
+combined as 
+(
     select * from old
     union all
     select * from source
