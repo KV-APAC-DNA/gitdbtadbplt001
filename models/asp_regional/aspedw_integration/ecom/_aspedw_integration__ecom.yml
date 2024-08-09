@@ -7,3 +7,11 @@ models:
     config: 
       alias: edw_ecommerce_nts_regional
       tags: ["j_ecommerce_nts_mds_load","transformation"]
+  - name: aspedw_integration__edw_rpt_ecomm_oneview_digital_shelf
+    config: 
+      alias: edw_rpt_ecomm_oneview_digital_shelf
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]
+  - name: aspedw_integration__edw_rpt_ecomm_oneview
+    config: 
+      alias: edw_rpt_ecomm_oneview
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]

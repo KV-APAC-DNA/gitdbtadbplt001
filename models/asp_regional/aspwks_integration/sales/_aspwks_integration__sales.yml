@@ -17,3 +17,7 @@ models:
     config:
       alias: sdl_okr_alteryx_automation
       tags: ["okr_alteryx_data_ingestion","ingestion"]
+  - name: aspwks_integration__wks_filter_params
+    config: 
+      alias: wks_filter_params
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]

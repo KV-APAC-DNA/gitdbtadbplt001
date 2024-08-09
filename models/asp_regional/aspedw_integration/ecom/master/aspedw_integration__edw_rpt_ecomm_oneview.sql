@@ -1,9 +1,3 @@
-{{
-    config(
-        sql_header='use warehouse DEV_DNA_CORE_app2_wh;'
-    )
-}}
-
 with v_edw_customer_sales_dim as(
     select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
@@ -14,7 +8,7 @@ edw_copa_trans_fact as(
     select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_pharmacy_ecommerce_analysis as(
-	select * from {{ ref('SNAPPCFEDW_INTEGRATION__EDW_PHARMACY_ECOMMERCE_ANALYSIS') }}
+	select * from {{ ref('pcfedw_integration__edw_pharmacy_ecommerce_analysis') }}
 ),
 edw_profit_center_franchise_mapping as(
     select * from {{ ref('aspedw_integration__edw_profit_center_franchise_mapping') }}
@@ -38,46 +32,46 @@ itg_mds_ap_ecom_oneview_config as(
     select * from {{ ref('aspitg_integration__itg_mds_ap_ecom_oneview_config') }}
 ),
 wks_india_ecom as(
-    select * from {{ ref('INDWKS_INTEGRATION__WKS_INDIA_ECOM') }}
+    select * from {{ ref('indwks_integration__wks_india_ecom') }}
 ),
 edw_material_plant_dim as(
     select * from {{ ref('aspedw_integration__edw_material_plant_dim') }}
 ),
 dm_integration_dly as(
-    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
+    select * from snapjpnedw_integration.dm_integration_dly
 ),
 edi_chn_m as(
-    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
+    select * from snapjpnedw_integration.edi_chn_m
 ),
 edi_item_m as(
-    select * from {{ ref('jpnedw_integration__edi_item_m') }}
+    select * from snapjpnedw_integration.edi_item_m
 ),
 mt_cld as(
-    select * from {{ ref('jpnedw_integration__mt_cld') }}
+    select * from snapjpnedw_integration.mt_cld
 ),
 mt_account_key as(
-    select * from {{ ref('jpnedw_integration__mt_account_key') }}
+    select * from snapjpnedw_integration.mt_account_key
 ),
 V_INTRM_DISC_REBATE_YTD as(
-select * from {{ ref('ASPEDW_INTEGRATION__V_INTRM_DISC_REBATE_YTD') }}
+select * from {{ ref('aspedw_integration__v_intrm_disc_rebate_ytd') }}
 ),
 MT_TP_STATUS_MAPPING as(
-    select * from {{ ref('JPNEDW_INTEGRATION__MT_TP_STATUS_MAPPING') }}
+    select * from {{ source('jpnedw_integration', 'mt_tp_status_mapping') }}
 ),
 edw_ecommerce_nts_regional as(
-    select * from {{ ref('ASPEDW_INTEGRATION__EDW_ECOMMERCE_NTS_REGIONAL') }}
+    select * from {{ ref('aspedw_integration__edw_ecommerce_nts_regional') }}
 ),
 itg_query_parameters as(
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_ap_ecomm_nts_manual_adjustment as(
-    select * from {{ ref('ASPEDW_INTEGRATION__EDW_AP_ECOMM_NTS_MANUAL_ADJUSTMENT') }}
+    select * from {{ source('aspedw_integration', 'edw_ap_ecomm_nts_manual_adjustment') }}
 ),
 edw_ecomm_plan as(
     select * from {{ ref('aspedw_integration__edw_ecomm_plan') }}
 ),
 v_rpt_pos_offtake_daily as(
-    select * from {{ ref('NTAEDW_INTEGRATION__V_RPT_POS_OFFTAKE_DAILY') }}
+    select * from {{ ref('ntaedw_integration__v_rpt_pos_offtake_daily') }}
 ),
 edw_ecommerce_offtake as(
     select * from {{ ref('indedw_integration__edw_ecommerce_offtake') }}
@@ -89,16 +83,16 @@ edw_customer_base_dim as(
     select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_ims_fact as(
-    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_FACT') }}
+    select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
 edw_ph_ecommerce_offtake as(
-    select * from {{ ref('SNAPOSEEDW_INTEGRATION__EDW_PH_ECOMMERCE_OFFTAKE') }}
+    select * from {{ ref('phledw_integration__edw_ph_ecommerce_offtake') }}
 ),
 edw_ecommerce_offtake_nta as(
-select * from {{ ref('SNAPNTAEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
+select * from {{ ref('ntaedw_integration__edw_ecommerce_offtake') }}
 ),
 edw_sg_sellin_analysis as(
-	select * from {{ ref('SNAPOSEEDW_INTEGRATION__EDW_SG_SELLIN_ANALYSIS') }}
+	select * from {{ ref('sgpedw_integration__edw_sg_sellin_analysis') }}
 ),
 edw_acct_ciw_hier as(
 	select * from {{ ref('aspedw_integration__edw_acct_ciw_hier') }}
@@ -113,22 +107,22 @@ itg_mds_ap_sales_ops_map as(
 	select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 edw_market_share_qsd as(
-	select * from {{ ref('ASPEDW_INTEGRATION__EDW_MARKET_SHARE_QSD') }}
+	select * from {{ ref('aspedw_integration__edw_market_share_qsd') }}
 ),
 edw_gch_customerhierarchy as (
 	select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 itg_mds_cn_ecom_brand as
 (
-    select * from itg_mds_cn_ecom_brand
+    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_BRAND
 ),
 itg_mds_cn_ecom_sapcustomer_map as
 (
-    select * from itg_mds_cn_ecom_sapcustomer_map
+    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_SAPCUSTOMER_MAP
 ),
 edw_ecom_oms as 
 (
-    select * from EDW_ECOM_OMS --- source
+    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_ECOM_OMS --- source
 ),
 cus_sales_extn as(
     select cus_sales.sls_org  ,

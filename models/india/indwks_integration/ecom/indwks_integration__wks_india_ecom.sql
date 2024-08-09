@@ -11,7 +11,7 @@ edw_ka_sales_fact as (
     select * from {{ ref('indedw_integration__edw_ka_sales_fact') }}
 ),
 edw_user_dim as (
-    select * from {{ ref('indedw_integration__edw_user_dim') }}
+    select * from {{ source('indedw_integration', 'edw_user_dim') }}
 ),
 union1 as(
 	SELECT CASE 
