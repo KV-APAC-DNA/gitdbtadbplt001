@@ -1,7 +1,7 @@
 with item_z_h_hen_tbl
 as (
 	select *
-	from dev_dna_core.snapjpdcledw_integration.item_z_h_hen_tbl
+	from {{ ref('jpndcledw_integration__item_z_h_hen_tbl') }}
 	)
 
 	,transformed

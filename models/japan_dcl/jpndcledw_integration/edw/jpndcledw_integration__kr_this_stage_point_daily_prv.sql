@@ -10,27 +10,27 @@
 WITH kr_this_stage_point_wk_rescue
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_WK_RESCUE
+    FROM {{ ref('jpndcledw_integration__kr_this_stage_point_wk_rescue') }}
     ),
 kr_this_point_granted
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_POINT_GRANTED
+    FROM {{ ref('jpndcledw_integration__kr_this_point_granted') }}
     ),
 kr_this_stage_point_wk_prv
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_WK_PRV
+    FROM {{ ref('jpndcledw_integration__kr_this_stage_point_wk_prv') }}
     ),
 kr_last_stage_point
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_LAST_STAGE_POINT
+    FROM {{ ref('jpndcledw_integration__kr_last_stage_point') }}
     ),
 dcl_calendar_sysdate
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.DCL_CALENDAR_SYSDATE
+    FROM {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }}
     ),
 pgrnt
 AS (

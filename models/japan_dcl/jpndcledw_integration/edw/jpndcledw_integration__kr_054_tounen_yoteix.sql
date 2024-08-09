@@ -1,20 +1,20 @@
 with C_TBECRANKSUMAMOUNT as(
-    select * from snapjpdclitg_integration.C_TBECRANKSUMAMOUNT
+    select * from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
 ),
 KR_COMM_POINT_PARA as (
-    select * from snapjpdcledw_integration.KR_COMM_POINT_PARA
+    select * from snapjpdcledw_integration.KR_COMM_POINT_PARA 
 ),
 TBUSRPRAM as (
-    select * from snapjpdclitg_integration.TBUSRPRAM
+    select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 C_TBECRANKADDAMOUNTADM as (
-    select * from snapjpdclitg_integration.C_TBECRANKADDAMOUNTADM
+    select * from  {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
 ),
 TBECORDER as (
-    select * from snapjpdclitg_integration.TBECORDER
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 KR_054_ALLADM as (
-    select * from snapjpdcledw_integration.KR_054_ALLADM
+    select * from {{ ref('jpndcledw_integration__kr_054_alladm') }}
 ),
 union_1 as (
     SELECT

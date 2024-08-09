@@ -1,11 +1,11 @@
 WITH KESAI_H_DATA_MART_MV
 AS
 (
-    SELECT * FROM snapjpdcledw_integration.KESAI_H_DATA_MART_MV
+    SELECT * FROM {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
 ),
 WK_POINT_HANROJUDGE AS
 (
-    SELECT * FROM snapjpdcledw_integration.WK_POINT_HANROJUDGE
+    SELECT * FROM {{ ref('jpndcledw_integration__wk_point_hanrojudge') }}
 ),
 final as
 (

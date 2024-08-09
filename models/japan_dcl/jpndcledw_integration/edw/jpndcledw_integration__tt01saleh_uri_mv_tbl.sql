@@ -2,7 +2,7 @@ with keirokbn as (
 select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KEIROKBN 
 ),
 hanyo_attr as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 tbecorder as (
 select * from {{ ref('jpndclitg_integration__tbecorder') }}

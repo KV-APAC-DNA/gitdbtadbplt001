@@ -8,10 +8,10 @@
 }}
 
 with cir07dmprn as (
-    select * from dev_dna_core.jpdcledw_integration.cir07dmprn
+    select * from  {{ ref('jpndcledw_integration__cir07dmprn') }}
 ),
 tm06dmout as (
-    select * from dev_dna_core.nnaras01_workspace.jpndcledw_integration__tm06dmout
+    select * from  {{ ref('jpndcledw_integration__tm06dmout') }}
 ),
 hanyo_work_temp as (
 select 'DMDAIKUBUN' as kbnmei,

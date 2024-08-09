@@ -1,17 +1,17 @@
 with tbOutcallResult_wk as
 (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TBOUTCALLRESULT_WK
+select * from {{ ref('jpndcledw_integration__tboutcallresult_wk') }}
 ),
 tbecorder as (
 
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ) ,
  tbEcSalesRouteMst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECSALESROUTEMST
+select * from {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
 ),
 C_TBECINQUIRE as 
 (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
+select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 transformed as (
 SELECT outcall_result.diUsrId,

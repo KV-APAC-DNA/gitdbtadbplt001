@@ -1,7 +1,7 @@
 with c_tbecpointregistdivmst
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.c_tbecpointregistdivmst
+    from  {{ ref('jpndclitg_integration__c_tbecpointregistdivmst') }}
     ),
     -- c4 as (
     --     select '50001' as diregistdivcode,

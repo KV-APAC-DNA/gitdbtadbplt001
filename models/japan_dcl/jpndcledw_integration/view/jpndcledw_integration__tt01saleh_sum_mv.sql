@@ -1,7 +1,7 @@
 WITH tt01saleh_sum_mv_tbl
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tt01saleh_sum_mv_tbl
+	FROM {{ ref('jpndcledw_integration__tt01saleh_sum_mv_tbl') }}
 	)
 	
 	,transformed

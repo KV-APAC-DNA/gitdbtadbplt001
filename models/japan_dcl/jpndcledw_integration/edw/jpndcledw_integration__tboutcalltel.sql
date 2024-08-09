@@ -1,5 +1,5 @@
 with tbOutcallResult_wk as (
-    select * from dev_dna_core.jpdcledw_integration.tbOutcallResult_wk
+    select * from {{ ref('jpndcledw_integration__tboutcallresult_wk') }}
 ),
 base_dataset as(
     SELECT 

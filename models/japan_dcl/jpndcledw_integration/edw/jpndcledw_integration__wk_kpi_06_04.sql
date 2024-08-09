@@ -1,6 +1,6 @@
 with TEIKI_KPI4_SOUKEIYAKU_HNR_old as
 (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEIKI_KPI4_SOUKEIYAKU_HNR_OLD
+    select * from {{ ref('jpndcledw_integration__teiki_kpi4_soukeiyaku_hnr_old') }}
 ),
 
 CMNKOKYA_TM01_CALENDAR_JJ as

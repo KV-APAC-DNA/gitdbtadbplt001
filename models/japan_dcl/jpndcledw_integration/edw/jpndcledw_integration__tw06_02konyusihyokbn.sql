@@ -1,5 +1,5 @@
 with tw06_01konyujisseki as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw06_01konyujisseki
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw06_01konyujisseki {{ ref('jpndcledw_integration__tw06_01konyujisseki') }}
 ),
 tm25shihyokubunshikii as (
     select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tm25shihyokubunshikii

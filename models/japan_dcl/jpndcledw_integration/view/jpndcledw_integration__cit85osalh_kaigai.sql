@@ -1,9 +1,9 @@
 with cit85osalh_uri_mv as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit85osalh_uri_mv
+    select * from {{ source('jpdcledw_integration', 'cit85osalh_uri_mv') }}
 ),
 
 cit85osalh_hen_mv as (
-    select * from dev_dna_core.snapjpdcledw_integration.cit85osalh_hen_mv
+    select * from {{ source('jpdcledw_integration', 'cit85osalh_hen_mv') }}
 ),
 
 cte1 as (

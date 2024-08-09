@@ -1,5 +1,5 @@
 with item_hanbai_v as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_hanbai_v
+    select * from  {{ ref('jpndcledw_integration__item_hanbai_v') }}
 ),
 kesai_h_data_mart_sub_n as(
     select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}

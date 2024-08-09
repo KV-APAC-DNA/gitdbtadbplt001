@@ -1,12 +1,12 @@
 with wk_d22687_ruikei
 as (
   select *
-  from dev_dna_core.jpdcledw_integration.wk_d22687_ruikei
+  from {{ ref('jpndcledw_integration__wk_d22687_ruikei') }}
   ),
 wk_d22687_2021nen_sumi
 as (
   select *
-  from dev_dna_core.jpdcledw_integration.wk_d22687_2021nen_sumi
+  from {{ ref('jpndcledw_integration__wk_d22687_2021nen_sumi') }}
   ),
 transformed
 as (

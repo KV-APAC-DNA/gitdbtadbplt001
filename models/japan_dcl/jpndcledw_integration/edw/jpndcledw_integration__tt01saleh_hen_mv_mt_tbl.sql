@@ -1,52 +1,52 @@
 WITH c_tbecinquirekesai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecinquirekesai
+  FROM {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
   ),
 c_tbecinquire
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecinquire
+  FROM {{ ref('jpndclitg_integration__c_tbecinquire') }}
   ),
 c_tbeckesai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbeckesai
+  FROM {{ ref('jpndclitg_integration__c_tbeckesai') }}
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbecorder
+  FROM  {{ ref('jpndclitg_integration__tbecorder') }}
   ),
 c_tbecusercard
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecusercard
+  FROM {{ ref('jpndclitg_integration__c_tbecusercard') }}
   ),
 tt01_henpin_riyu
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tt01_henpin_riyu
+  FROM {{ ref('jpndcledw_integration__tt01_henpin_riyu') }}
   ),
 tbechenpinriyu
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbechenpinriyu
+  FROM  {{ ref('jpndclitg_integration__tbechenpinriyu') }}
   ),
 tbpromotion
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbpromotion
+  FROM  {{ ref('jpndclitg_integration__tbpromotion') }}
   ),
 hanyo_attr
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.hanyo_attr
+  FROM  {{ ref('jpndcledw_integration__hanyo_attr') }}
   ),
 tt02salem_add1_exp_hen_mt
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tt02salem_add1_exp_hen_mt
+  FROM  {{ ref('jpndcledw_integration__tt02salem_add1_exp_hen_mt') }}
   ),
 keirokbn
 AS (

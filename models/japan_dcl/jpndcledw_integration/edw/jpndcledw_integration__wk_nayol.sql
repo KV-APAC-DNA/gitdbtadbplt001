@@ -10,7 +10,7 @@
 WITH cil02nayol
 AS (
   SELECT *
-  FROM dev_dna_core.snapjpdcledw_integration.cil02nayol
+  FROM {{ ref('jpndcledw_integration__cil02nayol') }}
   ),
 
 transformed

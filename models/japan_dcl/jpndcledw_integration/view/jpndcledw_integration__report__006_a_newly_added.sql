@@ -2,7 +2,7 @@ with report_006_a_present_data1 as (
 select * from {{ ref('jpndcledw_integration__report_006_a_present_data1') }}
 ),
 report_006_a_historical_data as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.REPORT_006_A_HISTORICAL_DATA
+select * from {{ source('jpdcledw_integration', 'report_006_a_historical_data') }}
 ),
 cld_m as (
 select * from {{ ref('jpndcledw_integration__cld_m') }}

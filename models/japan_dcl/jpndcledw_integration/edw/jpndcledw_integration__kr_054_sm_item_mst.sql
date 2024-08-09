@@ -1,7 +1,7 @@
 with kr_054_cewq008mnth_p_mst
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_cewq008mnth_p_mst
+    from  {{ ref('jpndcledw_integration__kr_054_cewq008mnth_p_mst') }}
     ),
 c1
 as (

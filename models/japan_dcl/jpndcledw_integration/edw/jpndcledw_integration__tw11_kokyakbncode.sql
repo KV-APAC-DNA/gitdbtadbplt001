@@ -1,14 +1,14 @@
 with TW11_KOKOYAJUCHDATE2 as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW11_KOKOYAJUCHDATE2
+    select * from {{ ref('jpndcledw_integration__tw11_kokoyajuchdate2') }} 
 ),
 tt01kokyastsh_mv as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tt01kokyastsh_mv
+    select * from {{ ref('jpndcledw_integration__tt01kokyastsh_mv') }}
 ),
 TW05KOKYARECALC as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW05KOKYARECALC
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW05KOKYARECALC 
 ),
 TW09KOKYAKONYU as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW09KOKYAKONYU
+    select * from {{ ref('jpndcledw_integration__tw09kokyakonyu') }}
 ),
 transformed as (
     SELECT

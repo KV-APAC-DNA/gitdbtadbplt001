@@ -358,3 +358,33 @@ models:
     config:
       alias: c_tbecorderhistory_1
       tags: ["m_dcl_itg_job1","transformation"]
+
+  - name: jpndclitg_integration__tmp_mykokya_param
+    config:
+      alias: tmp_mykokya_param
+      tags: ["dcl_mykokya", "transformation"]
+
+  - name: jpndclitg_integration__mykokya_param
+    config:
+      alias: mykokya_param
+      tags: ["dcl_mykokya", "transformation"]
+
+  - name: jpndclitg_integration__mykokya
+    config:
+      alias: mykokya
+      tags: ["dcl_mykokya", "transformation"]
+
+  - name: jpndclitg_integration__tmp_mykokya
+    config:
+      alias: tmp_mykokya
+      tags: ["dcl_mykokya", "transformation"]
+  
+  - name: jpndclitg_integration__cc_predictionresult_1
+    config:
+      alias: cc_predictionresult_1
+      tags: ["dcl_ml_prediction_load","transformation"]
+  
+  - name: jpndclitg_integration__cc_predictionresult
+    config:
+      alias: cc_predictionresult
+      tags: ["dcl_ml_prediction_load","transformation"]

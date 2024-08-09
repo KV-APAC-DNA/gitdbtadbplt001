@@ -1,27 +1,27 @@
 WITH c_tbecordermeisaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecordermeisaihistory
+  FROM {{ ref('jpndclitg_integration__c_tbecordermeisaihistory') }}
   ),
 c_tbeckesaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbeckesaihistory
+  FROM {{ ref('jpndclitg_integration__c_tbeckesaihistory') }}
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbecorder
+  FROM  {{ ref('jpndclitg_integration__tbecorder') }}
   ),
 tbecorderhist_qv
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tbecorderhist_qv
+  FROM {{ ref('jpndcledw_integration__tbecorderhist_qv') }}
   ),
 c_tbecorderhistory
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecorderhistory
+  FROM {{ ref('jpndclitg_integration__c_tbecorderhistory') }}
   ),
 transformed
 AS (

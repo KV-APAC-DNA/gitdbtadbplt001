@@ -20,10 +20,10 @@ tbpromotion as (
     select * from {{ ref('jpndclitg_integration__tbpromotion') }}
 ),
 hanyo_attr as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.hanyo_attr
+    select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 tt01_henpin_riyu as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt01_henpin_riyu
+    select * from {{ ref('jpndcledw_integration__tt01_henpin_riyu') }}
 ),
 KESAI_M_DATA_MART_SUB_N_H_NOTP as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp') }}

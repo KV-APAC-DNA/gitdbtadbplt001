@@ -1,47 +1,47 @@
 WITH tbusrpram
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbusrpram
+  FROM {{ ref('jpndclitg_integration__tbusrpram') }}
   ),
 idokeido
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.idokeido
+  FROM dev_dna_core.jpdcledw_integration.idokeido 
   ),
 kr_chunk_002_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_002_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_002_kizuna') }}
   ),
 kr_chunk_003_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_003_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_003_kizuna') }}
   ),
 kr_chunk_004_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_004_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_004_kizuna') }}
   ),
 kr_chunk_005_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_005_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_005_kizuna') }}
   ),
 kr_chunk_006_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_006_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_006_kizuna') }}
   ),
 kr_chunk_007_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_007_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_007_kizuna') }}
   ),
 kr_chunk_100_kizuna
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.kr_chunk_100_kizuna
+  FROM {{ ref('jpndcledw_integration__kr_chunk_100_kizuna') }}
   ),
 transformed
 AS (

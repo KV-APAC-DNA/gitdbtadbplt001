@@ -7,7 +7,7 @@
 with c_tbecpointadm
 as (
     select *
-    from snapjpdclitg_integration.c_tbecpointadm
+    from {{ ref('jpndclitg_integration__c_tbecpointadm') }}
     ),
 c1
 as (

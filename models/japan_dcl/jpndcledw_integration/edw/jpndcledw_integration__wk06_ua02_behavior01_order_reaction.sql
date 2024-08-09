@@ -6,7 +6,7 @@
 
 WITH dm_kesai_mart_dly_general
 AS (
-    select * from snapjpdcledw_integration.dm_kesai_mart_dly_general
+    select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
     where channel IN ('通販', 'Web', '直営・百貨店')
         AND order_dt >= '2019-01-01'
         AND (
@@ -18,7 +18,7 @@ AS (
 ),
 edw_mds_jp_dcl_mt_h_product AS 
 (
-    select * from snapjpdcledw_integration.edw_mds_jp_dcl_mt_h_product --5982
+    select * from {{ ref('jpndcledw_integration__edw_mds_jp_dcl_mt_h_product') }}
 ),
 happy AS 
 (

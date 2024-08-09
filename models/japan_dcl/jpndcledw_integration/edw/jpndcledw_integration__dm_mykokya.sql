@@ -5,15 +5,15 @@
 }}
 
 with mykokya as (
-select * from dev_dna_core.snapjpdclitg_integration.mykokya
+select * from {{ ref('jpndclitg_integration__mykokya') }}
 ),
 
 mykokya_param as (
-select * from dev_dna_core.snapjpdclitg_integration.mykokya_param
+select * from {{ ref('jpndclitg_integration__mykokya_param') }}
 ),
 
 cim01kokya as (
-select * from dev_dna_core.snapjpdcledw_integration.cim01kokya
+select * from  {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 
 transformed as (

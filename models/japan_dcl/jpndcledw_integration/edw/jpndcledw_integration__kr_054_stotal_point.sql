@@ -1,11 +1,11 @@
 with C_TBECRANKSUMAMOUNT as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKSUMAMOUNT
+select * from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
 ),
 KR_COMM_POINT_PARA as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_COMM_POINT_PARA
 ),
 C_TBECRANKADDAMOUNTADM as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKADDAMOUNTADM
+select * from {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
 ),
 transformed as (
  SELECT

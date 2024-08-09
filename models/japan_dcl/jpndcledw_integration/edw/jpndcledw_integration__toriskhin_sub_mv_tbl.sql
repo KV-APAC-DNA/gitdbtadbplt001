@@ -1,11 +1,11 @@
 with TM84_TORISKBETSUHIN
 AS
 (
-select * from jpdcledw_integration.TM84_TORISKBETSUHIN
+select * from {{ ref('jpndcledw_integration__tm84_toriskbetsuhin') }}
 ),
 CIT86OSALM_ASPAC as
 (	
-select * from jpdcledw_integration.CIT86OSALM_ASPAC
+select * from jpdcledw_integration.CIT86OSALM_ASPAC 
 ),
 t1 as
 (

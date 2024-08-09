@@ -1,7 +1,7 @@
 with TBECORDERMEISAI
 AS
 (
-    select * from jpdclitg_integration.TBECORDERMEISAI
+    select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 t1 AS
 (

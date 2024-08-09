@@ -1,11 +1,11 @@
 with tbOutcallResult_wk as (
-    select * from dev_dna_core.jpdcledw_integration.tbOutcallResult_wk
+    select * from {{ ref('jpndcledw_integration__tboutcallresult_wk') }}
 ),
 tbOutcallTel as (
-    select * from dev_dna_core.jpdcledw_integration.tbOutcallTel
+    select * from {{ ref('jpndcledw_integration__tboutcalltel') }}
 ),
 KR_THIS_STAGE_POINT_MONTHLY as (
-    select * from dev_dna_core.jpdcledw_integration.KR_THIS_STAGE_POINT_MONTHLY
+    select * from  {{ ref('jpndcledw_integration__kr_this_stage_point_monthly') }}
 ),
 tel5 as (
     select 

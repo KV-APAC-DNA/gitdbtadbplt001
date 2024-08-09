@@ -1,5 +1,5 @@
 with tbecordermeisai as (
-select * from dev_dna_core.jpdclitg_integration.tbecordermeisai
+select * from {{ ref('jpndclitg_integration__tbecordermeisai') }}
 ),
 c_tbeckesai as (
 select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}

@@ -1,9 +1,9 @@
 with 
 kr_054_sfuyo_meisai as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_SFUYO_MEISAI
+select * from  {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
 ),
 kr_054_cal_v as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_CAL_V
+select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
 final as (
  SELECT

@@ -1,13 +1,13 @@
 with
 C_TBECRANKSUMAMOUNT as (
-    select * from snapjpdclitg_integration.C_TBECRANKSUMAMOUNT
+    select * from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
 ), 
 C_TBECRANKADDAMOUNTADM as (
-    select * from snapjpdclitg_integration.C_TBECRANKADDAMOUNTADM
+    select * from {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
 ),kr_comm_point_para as (
     select * from snapjpdcledw_integration.kr_comm_point_para
 ),TBECORDER as (
-    select * from snapjpdclitg_integration.TBECORDER
+     {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 TBUSRPRAM as (select * from snapjpdclitg_integration.TBUSRPRAM),
 cte1 as (

@@ -1,7 +1,7 @@
 WITH WK_BIRTHDAY_HEADER_JOB
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.WK_BIRTHDAY_HEADER_JOB
+    FROM {{ ref('jpndcledw_integration__wk_birthday_header_job') }}
     ),
 AA
 AS (

@@ -1,16 +1,16 @@
 {{
     config(
         post_hook = ["update {{this}} set sum = b.sum from (
-    select usrid, rankdt, sum(price) as sum from dev_dna_core.jpdcledw_integration.wk_d22687_ruikei group by usrid, rankdt order by usrid)b
+    select usrid, rankdt, sum(price) as sum from {{ ref('jpndcledw_integration__wk_d22687_ruikei') }} group by usrid, rankdt order by usrid)b
     where {{this}}.usrid = b.usrid and {{this}}.rankdt = b.rankdt;",
     
     "update {{this}} set point = b.point from (
-    select diecusrid as userid,point as point from dev_dna_core.jpdcledw_integration.wk_d22687_2021nen_sumi) b where {{this}}.usrid = b.userid;",
+    select diecusrid as userid,point as point from {{ ref('jpndcledw_integration__wk_d22687_2021nen_sumi') }}) b where {{this}}.usrid = b.userid;",
     
     "update {{this}} set usrid = cast(ltrim({{encryption_1('cast(usrid as varchar)')}}, '0')as bigint);"]
     )
 }}
-with wk_rankdt_tmp
+with wk_rankdt_tmp 
 as (
     select *
     from dev_dna_core.jpdcledw_integration.wk_rankdt_tmp
@@ -18,7 +18,7 @@ as (
 wk_d23484_nohindata_user
 as (
     select *
-    from dev_dna_core.jpdcledw_integration.wk_d23484_nohindata_user
+    from {{ ref('jpndcledw_integration__wk_d23484_nohindata_user') }}
     ),
 transformed
 as (

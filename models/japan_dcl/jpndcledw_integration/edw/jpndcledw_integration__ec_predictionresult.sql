@@ -9,7 +9,7 @@
 }}
 
 with acgel_predictionresult as (
-    select * from DEV_DNA_LOAD.SNAPJPDCLSDL_RAW.acgel_predictionresult
+    select * from  {{ source('jpdclsdl_raw', 'acgel_predictionresult') }}
 ),
 transformed as (
 SELECT NVL(LPAD(customer_id, 10, '0'), '0000000000') as customer_id,

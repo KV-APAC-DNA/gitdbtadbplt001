@@ -1,7 +1,7 @@
 WITH c_tbecprivilegemst
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegemst
+	FROM {{ref('jpndclitg_integration__c_tbecprivilegemst')}}
 	)
 	
 	,transformed

@@ -2,7 +2,7 @@
 WITH tt02salem_add3_epi_hen_mt
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add3_epi_hen_mt
+	FROM {{ ref('jpndcledw_integration__tt02salem_add3_epi_hen_mt') }}
 	)
 
 	,transformed

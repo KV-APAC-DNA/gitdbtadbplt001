@@ -1,9 +1,9 @@
 
 with tt01saleh_uri_mv as (
-select * from dev_dna_core.jpdcledw_integration.tt01saleh_uri_mv
+select * from {{ ref('jpndcledw_integration__tt01saleh_uri_mv') }}
 ),
 tt01saleh_hen_mv as (
-select * from dev_dna_core.jpdcledw_integration.tt01saleh_hen_mv
+select * from {{ ref('jpndcledw_integration__tt01saleh_hen_mv') }}
 ),
 union_1 as (
 select

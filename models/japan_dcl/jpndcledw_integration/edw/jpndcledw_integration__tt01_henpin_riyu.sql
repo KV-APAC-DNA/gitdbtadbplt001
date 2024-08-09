@@ -6,10 +6,10 @@
     )
 }}
 with C_TBECINQUIREMEISAI as (
-    select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECINQUIREMEISAI
+    select * from  {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
 ),
 HANYO_ATTR as (
-    select * from DEV_DNA_CORE.JPDCLedw_INTEGRATION.HANYO_ATTR
+    select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 transformed as (
 SELECT

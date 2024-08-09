@@ -1,23 +1,23 @@
 with cc_predictionresult as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.CC_PREDICTIONRESULT
+select * from {{ ref('jpndclitg_integration__cc_predictionresult') }}
 ),
 ec_predictionresult as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.ec_predictionresult
+select * from {{ ref('jpndclitg_integration__ec_predictionresult') }}
 ),
 clustermapping as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.clustermapping
+select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.clustermapping 
 ),
 cim01kokya as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
+select * from {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 vc100_predictionresult as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.vc100_predictionresult
+select * from {{ ref('jpndclitg_integration__vc100_predictionresult') }}
 ),
 acgel_predictionresult as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.acgel_predictionresult
+select * from {{ ref('jpndclitg_integration__acgel_predictionresult') }}
 ),
 cluster_predictionresult as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.cluster_predictionresult
+select * from {{ ref('jpndclitg_integration__cluster_predictionresult') }}
 ),
 last_file_ecpropensity AS (
   select 

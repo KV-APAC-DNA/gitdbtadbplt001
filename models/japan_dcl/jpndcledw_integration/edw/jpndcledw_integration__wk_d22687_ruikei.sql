@@ -1,12 +1,12 @@
 with c_tbecranksumamount
 as (
     select *
-    from dev_dna_core.jpdclitg_integration.c_tbecranksumamount
+    from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
     ),
 tbusrpram
 as (
     select *
-    from dev_dna_core.jpdclitg_integration.tbusrpram
+    from {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 kr_comm_point_para
 as (

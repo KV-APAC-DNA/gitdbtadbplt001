@@ -1,36 +1,36 @@
 with 
 wk02_ua02_behavior01_channel_web as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK02_UA02_BEHAVIOR01_CHANNEL_WEB
+select * from {{ ref('jpndcledw_integration__wk02_ua02_behavior01_channel_web') }}
 ),
 ua01_base_cim01kokya_v as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ua01_base_cim01kokya_v
+select * from {{ ref('jpndcledw_integration__ua01_base_cim01kokya_v') }}
 ),
 wk09_ua02_behavior01_trade as (
 select * from {{ ref('jpndcledw_integration__wk09_ua02_behavior01_trade') }}
 ),
 wk03_ua02_behavior01_channel_store as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk03_ua02_behavior01_channel_store
+select * from {{ ref('jpndcledw_integration__wk03_ua02_behavior01_channel_store') }}
 ),
 wk06_ua02_behavior01_order_reaction as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk06_ua02_behavior01_order_reaction
+select * from {{ ref('jpndcledw_integration__wk06_ua02_behavior01_order_reaction') }}
 ),
 wk25_ua02_behavior01_order_sku_cnt as (
 select * from {{ ref('jpndcledw_integration__wk25_ua02_behavior01_order_sku_cnt') }}
 ),
 wk17_ua02_behavior01_i_order_dt_inc_sample as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk17_ua02_behavior01_i_order_dt_inc_sample
+select * from  {{ ref('jpndcledw_integration__wk17_ua02_behavior01_I_Order_dt_inc_sample') }}
 ),
 wk07_ua02_behavior01_coupon_usage as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk07_ua02_behavior01_coupon_usage
+select * from {{ ref('jpndcledw_integration__wk07_ua02_behavior01_coupon_usage') }}
 ),
 wk18_ua02_behavior01_l_order_dt_channel as (
 select * from {{ ref('jpndcledw_integration__wk18_ua02_behavior01_l_order_dt_channel') }}
 ),
 WK26_UA02_BEHAVIOR01_ORDER_CNT_CHANNEL_EXC_SUB as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK26_UA02_BEHAVIOR01_ORDER_CNT_CHANNEL_EXC_SUB
+select * from {{ ref('jpndcledw_integration__wk26_ua02_behavior01_order_cnt_channel_exc_sub') }}
 ),
 wk04_ua02_behavior01_order_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk04_ua02_behavior01_order_attr
+select * from {{ ref('jpndcledw_integration__wk04_ua02_behavior01_order_attr') }}
 ),
 wk24_ua02_behavior01_order_cnt_this_year as (
 select * from {{ ref('jpndcledw_integration__wk24_ua02_behavior01_order_cnt_this_year') }}
@@ -42,13 +42,13 @@ wk23_ua02_behavior01_order_amt_term_start as (
 select * from {{ ref('jpndcledw_integration__wk23_ua02_behavior01_order_amt_term_start') }}
 ),
 wk05_ua02_behavior01_order_channel as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk05_ua02_behavior01_order_channel
+select * from  {{ ref('jpndcledw_integration__wk05_ua02_behavior01_order_channel') }}
 ),
 wk08_ua02_behavior01_point_usage as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk08_ua02_behavior01_point_usage
+select * from  {{ ref('jpndcledw_integration__wk08_ua02_behavior01_point_usage') }}
 ),
 wk01_ua02_behavior01_channel_call as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.wk01_ua02_behavior01_channel_call
+select * from  {{ ref('jpndcledw_integration__wk01_ua02_behavior01_channel_call') }}
 ),
 transformed as (
 SELECT 

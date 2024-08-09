@@ -1,9 +1,9 @@
 with kr_054_allhist as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_allhist
+    select * from {{ ref('jpndcledw_integration__kr_054_allhist') }}
 ),
 
 tbusrpram as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbusrpram
+    select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 
 result as (

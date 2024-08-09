@@ -1,7 +1,7 @@
 WITH tm40shihanki
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM40SHIHANKI
+    FROM {{ source('jpdcledw_integration', 'tm40shihanki') }}
     ),
 zaiko_shohin_attr
 AS (

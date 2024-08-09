@@ -1,5 +1,5 @@
 with tw08_01konyujissekiw1 as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw08_01konyujissekiw1
+    select * from {{ ref('jpndcledw_integration__tw08_01konyujissekiw1') }}
 ),
 transformed as (
     select

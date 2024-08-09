@@ -1,8 +1,8 @@
 with KR_054_ALLADM as  (
-    select * from snapjpdcledw_integration.KR_054_ALLADM
+    select * from {{ ref('jpndcledw_integration__kr_054_alladm') }}
 ),
 KR_COMM_POINT_PARA as (
-    select * from snapjpdcledw_integration.KR_COMM_POINT_PARA
+    select * from snapjpdcledw_integration.KR_COMM_POINT_PARA 
 ),
 final as (
 

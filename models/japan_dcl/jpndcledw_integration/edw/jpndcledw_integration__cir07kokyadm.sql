@@ -4,7 +4,7 @@
     )
 }}
 with hanyo_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from {{ref('jpndcledw_integration__hanyo_attr')}}
 ),
 cl_mst as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MST
@@ -13,7 +13,7 @@ cl_meisai as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MEISAI
 ),
 c_tbdmsndhist as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBDMSNDHIST
+select * from {{ref('jpndclitg_integration__c_tbdmsndhist')}}
 ),
 transformed as (
 SELECT

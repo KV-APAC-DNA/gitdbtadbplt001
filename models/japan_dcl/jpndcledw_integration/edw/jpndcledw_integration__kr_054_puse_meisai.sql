@@ -3,23 +3,23 @@ with kr_054_pfuyo_meisai as (
 ),
 
 kr_054_allhist as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_allhist
+    select * from {{ ref('jpndcledw_integration__kr_054_allhist') }}
 ),
 
 tbecorder as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecorder
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 
 kr_054_alladm as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_alladm
+    select * from {{ ref('jpndcledw_integration__kr_054_alladm') }}
 ),
 
 kr_comm_point_para as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_comm_point_para
+    select * from dev_dna_core.snapjpdcledw_integration.kr_comm_point_para 
 ),
 
 tbusrpram as (
-select * from dev_dna_core.snapjpdclitg_integration.tbusrpram
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 )
 ,
 

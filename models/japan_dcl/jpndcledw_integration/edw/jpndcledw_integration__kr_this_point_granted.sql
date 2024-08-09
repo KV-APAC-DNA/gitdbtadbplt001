@@ -1,8 +1,8 @@
 with KR_THIS_STAGE_POINT_MONTHLY as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_MONTHLY
+    select * from {{ ref('jpndcledw_integration__kr_this_stage_point_monthly') }}
 ),
 dcl_calendar_sysdate as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.dcl_calendar_sysdate
+    select * from {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }}
 ),
 C_TBMEMBUNITREL as(
     select * from {{ ref('jpndclitg_integration__c_tbmembunitrel') }}

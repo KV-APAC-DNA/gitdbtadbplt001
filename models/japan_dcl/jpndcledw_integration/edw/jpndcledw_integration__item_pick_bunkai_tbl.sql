@@ -1,32 +1,32 @@
 WITH item_hanbai_tbl
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_HANBAI_TBL
+      FROM  {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
       ),
 tbecsetitem
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLitg_INTEGRATION.TBECSETITEM
+      FROM  {{ ref('jpndclitg_integration__tbecsetitem') }}
       ),
 tbecitem
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLitg_INTEGRATION.TBECITEM
+      FROM {{ ref('jpndclitg_integration__tbecitem') }}
       ),
 cim24itbun_ikou
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM24ITBUN_IKOU
+      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM24ITBUN_IKOU 
       ),
 item_bunrval_v
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ITEM_BUNRVAL_V
+      FROM {{ ref('jpndcledw_integration__item_bunrval_v') }}
       ),
 c_tbecprivilegemst
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLitg_INTEGRATION.C_TBECPRIVILEGEMST
+      FROM  {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}
       ),
 cim03
 AS (

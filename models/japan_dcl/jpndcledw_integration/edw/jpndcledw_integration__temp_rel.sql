@@ -1,5 +1,5 @@
 with C_TBMEMBUNITREL as (
-    select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBMEMBUNITREL 
+    select * from {{ ref('jpndclitg_integration__c_tbmembunitrel') }}
 ),
 transformed as (
 SELECT

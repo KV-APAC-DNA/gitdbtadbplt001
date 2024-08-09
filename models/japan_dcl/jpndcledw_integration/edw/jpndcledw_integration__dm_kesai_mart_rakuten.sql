@@ -1,21 +1,21 @@
 WITH rakutenorderdetail
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.rakutenorderdetail
+    FROM {{ ref('jpndclitg_integration__rakutenorderdetail') }}
     ),
 tbecitem
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.tbecitem
+    FROM {{ ref('jpndclitg_integration__tbecitem') }}
     ),
 tbecsetitem 
 AS (
-    SELECT * FROM SNAPJPDCLITG_INTEGRATION.tbecsetitem
+    SELECT * FROM  {{ ref('jpndclitg_integration__tbecsetitem') }}
     ),
 cim01kokya
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.cim01kokya
+    FROM {{ ref('jpndcledw_integration__cim01kokya') }}
     ),
 cim01
 AS (

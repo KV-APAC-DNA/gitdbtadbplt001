@@ -1,5 +1,5 @@
 with tw06_02konyusihyokbn as (
-    select * from dev_dna_core.jpdcledw_integration.tw06_02konyusihyokbn
+    select * from {{ ref('jpndcledw_integration__tw06_02konyusihyokbn') }}
 ),
 tm28rfmsegment as (
     select * from dev_dna_core.jpdcledw_integration.tm28rfmsegment

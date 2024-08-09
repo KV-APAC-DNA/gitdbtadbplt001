@@ -1,5 +1,5 @@
 with kr_054_cal_v as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_cal_v
+    select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
 
 kr_054_pfuyo_meisai as (

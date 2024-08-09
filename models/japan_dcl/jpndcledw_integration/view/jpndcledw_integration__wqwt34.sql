@@ -1,12 +1,12 @@
 WITH wt34aspacdt
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.wt34aspacdt
+	FROM {{ ref('jpndcledw_integration__wt34aspacdt') }}
 	)
 	,wk_h19471_menzei
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.wk_h19471_menzei
+	FROM  {{ ref('jpndcledw_integration__wk_h19471_menzei') }}
 	)
 	,transformed
 AS (

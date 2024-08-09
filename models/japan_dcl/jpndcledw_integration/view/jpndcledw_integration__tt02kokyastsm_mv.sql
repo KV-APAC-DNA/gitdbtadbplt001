@@ -1,7 +1,7 @@
 WITH tt02kokyastsm_mv_tbl
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tt02kokyastsm_mv_tbl
+	FROM {{ ref('jpndcledw_integration__tt02kokyastsm_mv_tbl') }}
 	)
 	
 	,transformed

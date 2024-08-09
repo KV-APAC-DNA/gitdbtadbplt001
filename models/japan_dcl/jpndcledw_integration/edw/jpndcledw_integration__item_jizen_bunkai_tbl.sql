@@ -5,13 +5,13 @@ item_hanbai_tbl AS (
 	SELECT * FROM {{ ref('jpndcledw_integration__item_hanbai_tbl') }}
 ),
 bom_sap_v AS (
-	SELECT * FROM dev_dna_core.snapjpdcledw_integration.bom_sap_v
+	SELECT * FROM {{ ref('jpndcledw_integration__bom_sap_v') }}
 ),
 item_bom_ikou_kizuna AS (
-	SELECT * FROM dev_dna_core.snapjpdcledw_integration.item_bom_ikou_kizuna
+	SELECT * FROM dev_dna_core.snapjpdcledw_integration.item_bom_ikou_kizuna 
 ),
 tm14shkos_mainte_work AS (
-	 SELECT * FROM dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work
+	 SELECT * FROM dev_dna_core.snapjpdcledw_integration.tm14shkos_mainte_work 
 ),
 C_TBECPRIVILEGEMST AS (
 	 SELECT * FROM {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}

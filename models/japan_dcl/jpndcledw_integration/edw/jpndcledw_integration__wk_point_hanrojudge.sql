@@ -1,12 +1,12 @@
 WITH WK_BIRTHDAY_HANRO
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.WK_BIRTHDAY_HANRO
+    FROM {{ ref('jpndcledw_integration__wk_birthday_hanro') }}
     ),
 TBUSRPRAM
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+    FROM {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 FINAL
 AS (

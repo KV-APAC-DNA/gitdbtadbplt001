@@ -1,17 +1,17 @@
 with kr_054_alladm
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_alladm
+    from {{ ref('jpndcledw_integration__kr_054_alladm') }}
     ),
 kr_054_pfuyo_meisai
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_pfuyo_meisai
+    from {{ ref('jpndcledw_integration__kr_054_pfuyo_meisai') }}
     ),
 tbusrpram
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.tbusrpram
+    from {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 transformed
 as (

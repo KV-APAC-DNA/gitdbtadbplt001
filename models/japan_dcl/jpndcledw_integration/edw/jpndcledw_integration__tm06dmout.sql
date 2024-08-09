@@ -7,7 +7,7 @@
 
 
 with CIR07DMPRN as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN
+    select * from {{ ref('jpndcledw_integration__cir07dmprn') }}
 ),
 final as (
 SELECT DISTINCT 

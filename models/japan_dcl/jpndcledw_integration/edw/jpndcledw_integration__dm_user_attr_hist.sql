@@ -8,7 +8,7 @@
 with dm_user_attr
 as
 (
-    select * from snapjpdcledw_integration.dm_user_attr
+    select * from  {{ ref('jpndcledw_integration__dm_user_attr') }}
 ),
 final as 
 (

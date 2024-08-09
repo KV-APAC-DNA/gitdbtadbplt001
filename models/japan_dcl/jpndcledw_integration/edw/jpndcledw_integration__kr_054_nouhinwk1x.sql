@@ -1,13 +1,13 @@
 with kr_054_tounen_sumix as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_tounen_sumix
+    select * from  {{ ref('jpndcledw_integration__kr_054_tounen_sumix') }}
 ),
 
 kr_054_tounen_yoteix as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_tounen_yoteix
+    select * from {{ ref('jpndcledw_integration__kr_054_tounen_yoteix') }}
 ),
 
 kr_054_tounen_kingaku_wk2x as (
-    select * from dev_dna_core.snapjpdcledw_integration.kr_054_tounen_kingaku_wk2x
+    select * from {{ ref('jpndcledw_integration__kr_054_tounen_kingaku_wk2x') }}
 ),
 
 kr_054_user_allx as (

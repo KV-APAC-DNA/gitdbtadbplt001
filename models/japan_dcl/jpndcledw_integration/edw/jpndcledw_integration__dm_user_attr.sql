@@ -2,7 +2,7 @@ with ua02_behavior02 as (
 select * from {{ ref('jpndcledw_integration__ua02_behavior02') }}
 ),
 ua01_base_cim01kokya_v as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA01_BASE_CIM01KOKYA_V
+select * from {{ ref('jpndcledw_integration__ua01_base_cim01kokya_v') }}
 ),
 ua02_directmail as (
 select * from {{ ref('jpndcledw_integration__ua02_directmail') }}

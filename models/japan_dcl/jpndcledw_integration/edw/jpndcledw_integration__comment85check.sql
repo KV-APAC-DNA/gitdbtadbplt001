@@ -1,8 +1,8 @@
 with cim01kokya as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIM01KOKYA
+select * from  {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 c_tbecusrcomment as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECUSRCOMMENT
+select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 transformed as (
 SELECT

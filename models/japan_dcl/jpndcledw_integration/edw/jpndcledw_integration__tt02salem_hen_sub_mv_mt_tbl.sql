@@ -1,17 +1,17 @@
 WITH c_tbecinquiremeisai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecinquiremeisai
+  FROM  {{ ref('jpndclitg_integration__c_tbecinquiremeisai') }}
   ),
 c_tbecinquirekesai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecinquirekesai
+  FROM  {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
   ),
 c_tbeckesai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbeckesai
+  FROM  {{ ref('jpndclitg_integration__c_tbeckesai') }}
   ),
 transformed
 AS (

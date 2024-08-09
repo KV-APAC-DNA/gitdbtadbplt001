@@ -1,17 +1,17 @@
 WITH WK_BIRTHDAY_CINEXTUSRPRAM
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_BIRTHDAY_CINEXTUSRPRAM
+    FROM {{ ref('jpndcledw_integration__wk_birthday_cinextusrpram') }}
     ),
 WK_BIRTHDAY_CINEXTBIOPTRON as
 (
     SELECT *
-    FROM snapjpdcledw_integration.WK_BIRTHDAY_CINEXTBIOPTRON
+    FROM {{ ref('jpndcledw_integration__wk_birthday_cinextbioptron') }}
 ),
 WK_BIRTHDAY_CINEXTSTORE as
 (
     SELECT *
-    FROM snapjpdcledw_integration.WK_BIRTHDAY_CINEXTSTORE
+    FROM {{ ref('jpndcledw_integration__wk_birthday_cinextstore') }}
 ),
 union_of as
 (

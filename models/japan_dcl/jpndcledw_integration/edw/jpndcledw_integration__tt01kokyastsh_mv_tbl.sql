@@ -6,7 +6,7 @@ AS (
 tt01saleh_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tt01saleh_mv_mt
+  FROM  {{ ref('jpndcledw_integration__tt01saleh_mv_mt') }}
   ),
 transformed
 AS (

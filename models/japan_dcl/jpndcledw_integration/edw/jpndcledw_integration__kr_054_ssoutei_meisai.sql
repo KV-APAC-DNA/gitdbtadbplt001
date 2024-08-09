@@ -1,14 +1,14 @@
 with KR_054_STOTAL_POINT as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_STOTAL_POINT
+select * from {{ ref('jpndcledw_integration__kr_054_stotal_point') }}
 ),
 KR_054_SFUYO_MEISAI as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_SFUYO_MEISAI
+select * from {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
 ),
 KR_COMM_POINT_PARA as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_COMM_POINT_PARA
 ),
 TBUSRPRAM as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 transformed as (
 SELECT

@@ -1,17 +1,17 @@
 WITH cit80saleh_ikou
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cit80saleh_ikou
+    FROM {{ source('jpdcledw_integration', 'cit80saleh_ikou') }}
     ),
 cit81salem_ikou
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cit81salem_ikou
+    FROM {{ source('jpdcledw_integration', 'cit81salem_ikou') }}
     ),
 old_tokutencd_master
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.old_tokutencd_master
+    FROM {{ source('jpdcledw_integration', 'old_tokutencd_master') }}
     ),
  final 
  AS (

@@ -5,7 +5,7 @@
 }}
 with tbecpointhistory
 as (
-    select * from dev_dna_core.snapjpdclitg_integration.tbecpointhistory
+    select * from  {{ ref('jpndclitg_integration__tbecpointhistory') }}
     ),
 c1
 as (

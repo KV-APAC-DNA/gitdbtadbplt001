@@ -1,32 +1,32 @@
 WITH kr_this_stage_point_wk_curr
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_this_stage_point_wk_curr
+    FROM {{ ref('jpndcledw_integration__kr_this_stage_point_wk_curr') }}
     ),
 kr_last_stage_point
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_last_stage_point
+    FROM {{ ref('jpndcledw_integration__kr_last_stage_point') }}
     ),
 kr_this_stage_point_daily_prv
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_this_stage_point_daily_prv
+    FROM {{ ref('jpndcledw_integration__kr_this_stage_point_daily_prv') }}
     ),
 kr_this_point_granted
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_this_point_granted
+    FROM  {{ ref('jpndcledw_integration__kr_this_point_granted') }}
     ),
 kr_this_stage_point_wk_rescue
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.kr_this_stage_point_wk_rescue
+    FROM  {{ ref('jpndcledw_integration__kr_this_stage_point_wk_rescue') }}
     ),
 dcl_calendar_sysdate
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.dcl_calendar_sysdate
+    FROM {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }}
     ),
 stage_prv
 AS (

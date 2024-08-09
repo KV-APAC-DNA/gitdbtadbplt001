@@ -1,12 +1,12 @@
 WITH tbusrpram
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.tbusrpram
+    FROM {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 tbecorder
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.tbecorder
+    FROM  {{ ref('jpndclitg_integration__tbecorder') }}
     ),
 cust_info
 AS (

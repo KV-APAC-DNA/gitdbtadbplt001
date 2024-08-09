@@ -23,7 +23,7 @@
 WITH tw09kokyakonyu
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tw09kokyakonyu
+  FROM  {{ ref('jpndcledw_integration__tw09kokyakonyu') }}
   ),
 transformed
 AS (

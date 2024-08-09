@@ -1,5 +1,5 @@
 with aspac_common_new as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.aspac_common_new
+select * from {{ ref('jpndcledw_integration__aspac_common_new') }}
 ),
 final as (
 SELECT 

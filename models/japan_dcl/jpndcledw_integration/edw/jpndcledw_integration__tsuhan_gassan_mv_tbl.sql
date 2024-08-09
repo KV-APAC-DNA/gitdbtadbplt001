@@ -1,8 +1,8 @@
 with cit80saleh as (
-select * from dev_dna_core.jpdcledw_integration.cit80saleh
+select * from {{ ref('jpndcledw_integration__cit80saleh') }}
 ),
 cit81salem as (
-select * from dev_dna_core.jpdcledw_integration.cit81salem
+select * from  {{ ref('jpndcledw_integration__cit81salem') }}
 ),
 transformed as (
 select

@@ -8,11 +8,11 @@
 
 with report_006_a
 as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.REPORT_006_A
+    select * from {{ ref('jpndcledw_integration__report_006_a') }}
     ),
 cld_m
 as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cld_m 
     ),
 transformed
 as (

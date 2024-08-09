@@ -1,17 +1,17 @@
 WITH WK_BIRTHDAY_HANRO
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_BIRTHDAY_HANRO
+    FROM {{ ref('jpndcledw_integration__wk_birthday_hanro') }}
     ),
 TBUSRPRAM
 AS (
     SELECT *
-    FROM snapjpdclitg_integration.TBUSRPRAM
-    ),
+    FROM {{ ref('jpndclitg_integration__tbusrpram') }}
+    ), 
 WK_STORE_KONYU
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_STORE_KONYU
+    FROM {{ ref('jpndcledw_integration__wk_store_konyu') }}
     ),
 final
 AS (

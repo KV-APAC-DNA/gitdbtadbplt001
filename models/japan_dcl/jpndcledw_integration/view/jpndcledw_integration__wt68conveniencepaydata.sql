@@ -1,11 +1,11 @@
 with tm64kessai_nm as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM64KESSAI_NM
+select * from {{ ref('jpndcledw_integration__tm64kessai_nm') }}
 ),
 tbecorder as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 c_tbeckesai as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 final as (
 SELECT 

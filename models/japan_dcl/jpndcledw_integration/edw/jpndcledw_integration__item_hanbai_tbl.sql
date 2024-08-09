@@ -9,7 +9,7 @@ AS (
     ),
 item_bunrval_v
 AS (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.item_bunrval_v
+    select * from {{ ref('jpndcledw_integration__item_bunrval_v') }}
     ),
 cim03item_ikou
 AS (

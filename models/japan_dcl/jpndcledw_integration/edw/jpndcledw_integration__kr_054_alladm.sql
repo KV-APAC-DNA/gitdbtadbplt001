@@ -1,12 +1,12 @@
 with kr_054_pointadm
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_pointadm
+    from {{ ref('jpndcledw_integration__kr_054_pointadm') }}
     ),
 kr_054_cpadm
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_cpadm
+    from {{ ref('jpndcledw_integration__kr_054_cpadm') }}
     ),
 c1
 as (

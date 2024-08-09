@@ -1,7 +1,7 @@
 with kr_comm_point_para
 AS
 (
-    select * from jpdcledw_integration.kr_comm_point_para
+    select * from {{ source('jpdcledw_integration', 'kr_comm_point_para') }}
 ),
 cim01kokya as
 (

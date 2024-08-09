@@ -1,6 +1,6 @@
 with
 wk16_ua02_directmail_main_channel_bddm as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK16_UA02_DIRECTMAIL_MAIN_CHANNEL_BDDM
+select * from {{ ref('jpndcledw_integration__wk16_ua02_directmail_main_channel_bddm') }}
 ),
 wk15_ua02_directmail_stage as (
 select * from {{ ref('jpndcledw_integration__wk15_ua02_directmail_stage') }}
@@ -12,7 +12,7 @@ wk11_ua02_directmail_register_card_flg as (
 select * from {{ ref('jpndcledw_integration__wk11_ua02_directmail_register_card_flg') }}
 ),
 ua01_base_cim01kokya_v as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.ua01_base_cim01kokya_v
+select * from {{ ref('jpndcledw_integration__ua01_base_cim01kokya_v') }}
 ),
 wk14_ua02_directmail_familysale_class as (
 select * from {{ ref('jpndcledw_integration__wk14_ua02_directmail_familysale_class') }}

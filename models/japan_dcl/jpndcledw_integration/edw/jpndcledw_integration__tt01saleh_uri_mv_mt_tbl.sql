@@ -1,42 +1,42 @@
 WITH c_tbeckesaihistory
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbeckesaihistory
+  FROM  {{ ref('jpndclitg_integration__c_tbeckesaihistory') }}
   ),
 c_tbecorderhistory
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecorderhistory
+  FROM {{ ref('jpndclitg_integration__c_tbecorderhistory') }}
   ),
 c_tbecusercard
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbecusercard
+  FROM  {{ ref('jpndclitg_integration__c_tbecusercard') }}
   ),
 tbpromotion
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbpromotion
+  FROM {{ ref('jpndclitg_integration__tbpromotion') }}
   ),
 hanyo_attr
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.hanyo_attr
+  FROM {{ ref('jpndcledw_integration__hanyo_attr') }}
   ),
 tbecorderhist_qv
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tbecorderhist_qv
+  FROM {{ ref('jpndcledw_integration__tbecorderhist_qv') }}
   ),
 c_tbeckesai
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.c_tbeckesai
+  FROM {{ ref('jpndclitg_integration__c_tbeckesai') }}
   ),
 tbecorder
 AS (
   SELECT *
-  FROM dev_dna_core.jpdclitg_integration.tbecorder
+  FROM {{ ref('jpndclitg_integration__tbecorder') }}
   ),
 keirokbn
 AS (

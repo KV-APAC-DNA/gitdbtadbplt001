@@ -1,7 +1,7 @@
 with kesai_m_data_mart_sub_old_tbl
 as
 (
-    select * from jpdcledw_integration.kesai_m_data_mart_sub_old_tbl
+    select * from {{ source('jpdcledw_integration', 'kesai_m_data_mart_sub_old_tbl') }}
 ),
 final as
 (

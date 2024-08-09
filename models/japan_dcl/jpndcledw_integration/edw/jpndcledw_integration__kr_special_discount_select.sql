@@ -1,10 +1,10 @@
 with
     kr_special_discount_work as (
-        select * from dev_dna_core.jpdcledw_integration.kr_special_discount_work
+        select * from  {{ ref('jpndcledw_integration__kr_special_discount_work') }}
     ),
 
     kr_special_discount_file as (
-        select * from dev_dna_core.jpdclitg_integration.kr_special_discount_file
+        select * from {{ ref('jpndclitg_integration__kr_special_discount_file') }}
     ),
 
     transformed as (

@@ -1,12 +1,12 @@
 with kr_054_v_ptrgstdivmst
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_v_ptrgstdivmst
+    from {{ ref('jpndcledw_integration__kr_054_v_ptrgstdivmst') }}
     ),
 kr_054_v_tm05hanro
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_v_tm05hanro
+    from {{ ref('jpndcledw_integration__kr_054_v_tm05hanro') }}
     ),
 transformed
 as (

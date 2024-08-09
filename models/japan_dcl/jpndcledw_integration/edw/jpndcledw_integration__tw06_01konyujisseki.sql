@@ -1,11 +1,11 @@
 with tt05kokyakonyu as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tt05kokyakonyu
+    select * from  {{ ref('jpndcledw_integration__tt05kokyakonyu') }}
 ),
 tt01kokyastsh_mv as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tt01kokyastsh_mv
+    select * from  {{ ref('jpndcledw_integration__tt01kokyastsh_mv') }}
 ),
 tw05kokyarecalc as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw05kokyarecalc
+    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.tw05kokyarecalc 
 ),
 ttxx as (
     select
