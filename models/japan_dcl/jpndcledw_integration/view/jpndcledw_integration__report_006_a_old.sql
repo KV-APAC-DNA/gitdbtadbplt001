@@ -1,5 +1,5 @@
 with wk_kpi_06_04_old as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK_KPI_06_04_OLD
+select * from {{ source('jpdcledw_integration', 'wk_kpi_06_04_old') }}
 ),
 final as (
 (

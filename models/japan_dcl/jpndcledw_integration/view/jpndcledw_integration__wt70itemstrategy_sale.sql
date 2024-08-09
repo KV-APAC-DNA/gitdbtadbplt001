@@ -1,67 +1,67 @@
 WITH tm14shkos
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm14shkos
+    FROM {{ source('jpdcledw_integration', 'tm14shkos') }}
     ),
 zaiko_shohin_attr
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.zaiko_shohin_attr
+    FROM {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
     ),
 tm67juch_nm
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm67juch_nm
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
     ),
 get_ci_next_sale
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.get_ci_next_sale
+    FROM {{ ref('jpndcledw_integration__get_ci_next_sale') }}
     ),
 cit86osalm_kaigai
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit86osalm_kaigai
+    FROM {{ ref('jpndcledw_integration__cit86osalm_kaigai') }}
     ),
 cit86osalm
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit86osalm
+    FROM {{ ref('jpndcledw_integration__cit86osalm') }}
     ),
 cit85osalh_kaigai
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit85osalh_kaigai
+    FROM {{ ref('jpndcledw_integration__cit85osalh_kaigai') }}
     ),
 cit85osalh
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit85osalh
+    FROM {{ ref('jpndcledw_integration__cit85osalh') }}
     ),
 cit81salem
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit81salem
+    FROM {{ ref('jpndcledw_integration__cit81salem') }}
     ),
 cit80saleh
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cit80saleh
+    FROM {{ ref('jpndcledw_integration__cit80saleh') }}
     ),
 cim03item_zaiko
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim03item_zaiko
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
     ),
 cim02tokui
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim02tokui
+    FROM {{ ref('jpndcledw_integration__cim02tokui') }}
     ),
 cim03item_hanbai
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.cim03item_hanbai
+    FROM {{ ref('jpndcledw_integration__cim03item_hanbai') }}
     ),
 "wqtm07属性未設定名称マスタ"
 AS (
@@ -71,7 +71,7 @@ AS (
 c_tbecclient
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.c_tbecclient
+    FROM {{ ref('jpndclitg_integration__c_tbecclient') }}
     ),
 ct1
 AS (

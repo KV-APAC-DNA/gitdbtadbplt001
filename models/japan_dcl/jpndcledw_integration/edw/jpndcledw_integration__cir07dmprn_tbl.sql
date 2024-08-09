@@ -7,10 +7,10 @@ with c_tbdmsndhist as (
 select * from {{ ref('jpndclitg_integration__c_tbdmsndhist') }}
 ),
 cl_mst as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MST
+select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CL_MST 
 ),
 hanyo_attr as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from {{ref('jpndcledw_integration__hanyo_attr')}}
 ),
 transformed as (
 SELECT

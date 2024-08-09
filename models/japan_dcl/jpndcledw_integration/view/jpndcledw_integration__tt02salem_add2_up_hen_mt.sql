@@ -1,7 +1,6 @@
 with tt01saleh_hen_mv_mt as (
-    select * from dev_dna_core.snapjpdcledw_integration.tt01saleh_hen_mv_mt
+    select * from {{ source('jpdcledw_integration', 'tt01saleh_hen_mv_mt') }}
 ),
-
 final as (
 SELECT tt01saleh_hen_mv_mt.saleno,
     9000000001::BIGINT AS gyono,

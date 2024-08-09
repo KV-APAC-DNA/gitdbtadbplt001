@@ -1,7 +1,7 @@
 
-with TBECORDERMEISAI_MV_TBL as 
+with tbecordermeisai_mv_tbl as 
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.TBECORDERMEISAI_MV_TBL
+    select * from {{ ref('jpndcledw_integration__tbecordermeisai_mv_tbl') }}
 ),final as 
 (
 SELECT tbecordermeisai_mv_tbl.row_number,

@@ -1,22 +1,22 @@
 WITH cit80saleh
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit80saleh
+    FROM {{ ref('jpndcledw_integration__cit80saleh') }} 
     ),
 cit81salem
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit81salem
+    FROM {{ ref('jpndcledw_integration__cit81salem') }}
     ),
 cim08shkos_bunkai
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cim08shkos_bunkai
+    FROM {{ ref('jpndcledw_integration__cim08shkos_bunkai') }}
     ),
 syouhincd_henkan
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.syouhincd_henkan
+    FROM {{ ref('jpndcledw_integration__syouhincd_henkan') }}
     ),
 tm14shkos
 AS (
@@ -26,57 +26,57 @@ AS (
 get_ci_next_sale
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.get_ci_next_sale
+    FROM {{ ref('jpndcledw_integration__get_ci_next_sale') }}
     ),
 cit85osalh
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit85osalh
+    FROM {{ ref('jpndcledw_integration__cit85osalh') }}
     ),
 cit86osalm
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit86osalm
+    FROM {{ ref('jpndcledw_integration__cit86osalm') }}
     ),
 cit85osalh_kaigai
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit85osalh_kaigai
+    FROM {{ ref('jpndcledw_integration__cit85osalh_kaigai') }}
     ),
 cit86osalm_kaigai
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cit86osalm_kaigai
+    FROM {{ ref('jpndcledw_integration__cit86osalm_kaigai') }}
     ),
 cim03item_hanbai
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cim03item_hanbai
+    FROM {{ ref('jpndcledw_integration__cim03item_hanbai') }}
     ),
 cim03item_zaiko
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cim03item_zaiko
+    FROM {{ ref('jpndcledw_integration__cim03item_zaiko') }}
     ),
 zaiko_shohin_attr
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.zaiko_shohin_attr
+    FROM {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
     ),
 tm67juch_nm
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.tm67juch_nm
+    FROM {{ ref('jpndcledw_integration__tm67juch_nm') }}
     ),
 cim02tokui
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cim02tokui
+    FROM {{ ref('jpndcledw_integration__cim02tokui') }}
     ),
 cim24itbun
 AS (
     SELECT *
-    FROM dev_dna_core.jpdcledw_integration.cim24itbun
+    FROM {{ ref('jpndcledw_integration__cim24itbun') }} 
     ),
 "wqtm07属性未設定名称マスタ"
 AS (
@@ -86,9 +86,9 @@ AS (
 c_tbecclient
 AS (
     SELECT *
-    FROM dev_dna_core.jpdclitg_integration.c_tbecclient
+    FROM {{ ref('jpndclitg_integration__c_tbecclient') }}
     ),
-t
+ct1
 AS (
     SELECT h.saleno,
         h.shukadate AS shukanengetubi,
@@ -189,9 +189,9 @@ AS (
                 )
             AND (h.kakokbn = ((1)::NUMERIC)::NUMERIC(18, 0))
             )
-    
-    UNION ALL
-    
+    ),
+ct2
+AS (
     SELECT h.saleno,
         h.shukadate AS shukanengetubi,
         CASE 
@@ -290,9 +290,9 @@ AS (
                 )
             AND (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
             )
-    
-    UNION ALL
-    
+    ),
+ct3
+AS (
     SELECT h.ourino AS saleno,
         h.shukadate AS shukanengetubi,
         CASE 
@@ -463,9 +463,9 @@ AS (
             ) LEFT JOIN tm14shkos "k" ON (((COALESCE(henkan.koseiocode, COALESCE(item.bunkai_itemcode, (m.itemcode)::CHARACTER VARYING(65535))))::TEXT = ("k".itemcode)::TEXT))
         )
     WHERE (h.kakokbn = ((1)::NUMERIC)::NUMERIC(18, 0))
-    
-    UNION ALL
-    
+    ),
+ct4
+AS (
     SELECT h.ourino AS saleno,
         h.shukadate AS shukanengetubi,
         CASE 
@@ -638,9 +638,9 @@ AS (
             ) t ON (((h.tenpocode)::TEXT = (t.sokocode)::TEXT))
         )
     WHERE (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
-    
-    UNION ALL
-    
+    ),
+ct5
+AS (
     SELECT h.ourino AS saleno,
         h.shukadate AS shukanengetubi,
         CASE 
@@ -699,18 +699,99 @@ AS (
         )
     WHERE (h.kakokbn = ((0)::NUMERIC)::NUMERIC(18, 0))
     ),
+t
+AS (
+    SELECT *
+    FROM ct1
+    
+    UNION ALL
+    
+    SELECT *
+    FROM ct2
+    
+    UNION ALL
+    
+    SELECT *
+    FROM ct3
+    
+    UNION ALL
+    
+    SELECT *
+    FROM ct4
+    
+    UNION ALL
+    
+    SELECT *
+    FROM ct5
+    ),
+misettei1
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('1'::CHARACTER VARYING)::TEXT)
+    ),
+misettei2
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('2'::CHARACTER VARYING)::TEXT)
+    ),
+misettei3
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('3'::CHARACTER VARYING)::TEXT)
+    ),
+misettei4
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('4'::CHARACTER VARYING)::TEXT)
+    ),
+misettei5
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('5'::CHARACTER VARYING)::TEXT)
+    ),
+misettei6
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('6'::CHARACTER VARYING)::TEXT)
+    ),
+misettei7
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('7'::CHARACTER VARYING)::TEXT)
+    ),
+misettei8
+AS (
+    SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
+        "wqtm07属性未設定名称マスタ"."区分名称その他"
+    FROM "wqtm07属性未設定名称マスタ"
+    WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('8'::CHARACTER VARYING)::TEXT)
+    ),
 final
 AS (
-    SELECT t.shukanengetubi,
-        t.channel,
-        t.konyuchubuncode,
-        t.torikeikbn,
-        (((t.tokuicode)::TEXT || (nvl2(cim02.tokuiname, ' : '::CHARACTER VARYING, ''::CHARACTER VARYING))::TEXT) || COALESCE((((cim02.tokuiname)::TEXT || (' '::CHARACTER VARYING)::TEXT) || (cim02.tokuiname_ryaku)::TEXT), ((''::CHARACTER VARYING)::CHARACTER VARYING(65535))::TEXT)) AS tokuicode,
-        (((COALESCE(t.itemcode, ''::CHARACTER VARYING))::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(COALESCE(ia.itemname, ''::CHARACTER VARYING), COALESCE(ia2.itemname, ''::CHARACTER VARYING)))::TEXT) AS hanbaiitem,
-        ((COALESCE(TRIM((ib.bar_cd2)::TEXT), ((ib.itemcode)::CHARACTER VARYING(65535))::TEXT) || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(ib.itemname, (ib2.itemname)::CHARACTER VARYING(65535)))::TEXT) AS kouseiitem,
-        t.kosecode,
-        t.juchkbn,
-        tm67.cname AS juchkbncname,
+    SELECT rtrim(t.shukanengetubi) AS shukanengetubi,
+        rtrim(t.channel) AS channel,
+        rtrim(t.konyuchubuncode) AS konyuchubuncode,
+        rtrim(t.torikeikbn) AS torikeikbn,
+        ((rtrim(t.tokuicode)::TEXT || (nvl2(rtrim(cim02.tokuiname), ' : '::CHARACTER VARYING, ''::CHARACTER VARYING))::TEXT) || COALESCE(((rtrim(cim02.tokuiname)::TEXT || (' '::CHARACTER VARYING)::TEXT) || rtrim(cim02.tokuiname_ryaku)::TEXT), ((''::CHARACTER VARYING)::CHARACTER VARYING(65535))::TEXT)) AS tokuicode,
+        (((COALESCE(rtrim(t.itemcode), ''::CHARACTER VARYING))::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(COALESCE(rtrim(ia.itemname), ''::CHARACTER VARYING), COALESCE(rtrim(ia2.itemname), ''::CHARACTER VARYING)))::TEXT) AS hanbaiitem,
+        ((COALESCE(TRIM((ib.bar_cd2)::TEXT), (rtrim(ib.itemcode)::CHARACTER VARYING(65535))::TEXT) || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(rtrim(ib.itemname), rtrim(ib2.itemname)::CHARACTER VARYING(65535)))::TEXT) AS kouseiitem,
+        rtrim(t.kosecode) AS kosecode,
+        rtrim(t.juchkbn) AS juchkbn,
+        rtrim(tm67.cname) AS juchkbncname,
         sum(t.suryo) AS suryo,
         sum(t.hensu) AS hensu,
         sum((t.suryo + t.hensu)) AS urisuryo,
@@ -726,52 +807,52 @@ AS (
                     (
                         (
                             (
-                                ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
-                                OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                                (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                                OR (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                                 )
-                            OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '通信販売'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '対面販売'::CHARACTER VARYING
             WHEN (
                     (
                         (
                             (
-                                ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
-                                OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                                (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                                OR (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                                 )
-                            OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '卸売'::CHARACTER VARYING
             WHEN (
                     (
-                        ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
-                        OR ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                        (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '海外'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                     )
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
@@ -780,268 +861,228 @@ AS (
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                 THEN 'WEB'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '店舗'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '卸売'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                 THEN 'QVC'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
                 THEN 'JJ'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '海外'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                     )
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
             END AS channel2,
         CASE 
-            WHEN ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                 THEN '社販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                 THEN 'VIP'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                 THEN 'WEB'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
                 THEN '買取'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                 THEN '直営'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                 THEN '消化'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                 THEN 'アウトレット'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
                 THEN '代理店'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                 THEN '職域（特販）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                 THEN '職域（代理店）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                 THEN '職域（販売会）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                 THEN 'QVC'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
                 THEN 'JJ'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
                 THEN '国内免税'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                 THEN '海外免税'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
                 THEN 'FS'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
             END AS channel3,
-        t.bmn_hyouji_cd,
-        t.bmn_nms,
-        t.henreasoncode,
-        (((t.henreasoncode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (t.henreasonname)::TEXT) AS henreasonname,
-        t.sokoname,
+        rtrim(t.bmn_hyouji_cd) AS bmn_hyouji_cd,
+        rtrim(t.bmn_nms) AS bmn_nms,
+        rtrim(t.henreasoncode) AS henreasoncode,
+        ((rtrim(t.henreasoncode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || rtrim(t.henreasonname)::TEXT) AS henreasonname,
+        rtrim(t.sokoname) AS sokoname,
         CASE 
-            WHEN (z.bumon6_kubun2 IS NULL)
-                THEN misettei1."区分名称その他"
-            ELSE z.bumon6_kubun2
+            WHEN (rtrim(z.bumon6_kubun2) IS NULL)
+                THEN rtrim(misettei1."区分名称その他")
+            ELSE rtrim(z.bumon6_kubun2)
             END AS kubun2,
         CASE 
-            WHEN (z.bumon6_syohingun IS NULL)
-                THEN misettei2."区分名称その他"
-            ELSE z.bumon6_syohingun
+            WHEN (rtrim(z.bumon6_syohingun) IS NULL)
+                THEN rtrim(misettei2."区分名称その他")
+            ELSE rtrim(z.bumon6_syohingun)
             END AS syohingun,
         CASE 
-            WHEN (z.bumon6_jyuutenitem IS NULL)
-                THEN misettei3."区分名称その他"
-            ELSE z.bumon6_jyuutenitem
+            WHEN (rtrim(z.bumon6_jyuutenitem) IS NULL)
+                THEN rtrim(misettei3."区分名称その他")
+            ELSE rtrim(z.bumon6_jyuutenitem)
             END AS jyuutenitem,
-        ib.itemkbnname AS item_bunr_val1,
-        cim24_daidai.itbunname AS item_bunr_val2,
-        ib.bunruicode3_nm AS item_bunr_val3,
-        z.bumon7_add_attr1,
-        z.bumon7_add_attr2,
-        z.bumon7_add_attr3,
-        z.bumon7_add_attr4,
-        z.bumon7_add_attr5,
-        z.bumon7_add_attr6,
-        z.bumon7_add_attr7,
-        z.bumon7_add_attr8,
-        z.bumon7_add_attr9,
-        z.bumon7_add_attr10,
-        z.bumon6_20kisyohingun,
-        z.bumon6_20kinaieki1,
-        z.bumon6_20kinaieki2,
-        z.bumon6_20kinaieki3,
-        z.bumon6_zyutensyohinyobi1,
-        z.bumon6_zyutensyohinyobi2,
-        z.bumon6_zyutensyohinyobi3,
-        z.bumon6_zyutensyohinyobi4,
-        z.bumon6_zyutensyohinyobi5,
-        z.bumon6_okikaename,
-        z.bumon6_zukyuyosoku1,
-        z.bumon6_zukyuyosoku2,
-        z.bumon6_zukyuyosoku3
+        rtrim(ib.itemkbnname) AS item_bunr_val1,
+        rtrim(cim24_daidai.itbunname) AS item_bunr_val2,
+        rtrim(ib.bunruicode3_nm) AS item_bunr_val3,
+        rtrim(z.bumon7_add_attr1) AS bumon7_add_attr1,
+        rtrim(z.bumon7_add_attr2) AS bumon7_add_attr2,
+        rtrim(z.bumon7_add_attr3) AS bumon7_add_attr3,
+        rtrim(z.bumon7_add_attr4) AS bumon7_add_attr4,
+        rtrim(z.bumon7_add_attr5) AS bumon7_add_attr5,
+        rtrim(z.bumon7_add_attr6) AS bumon7_add_attr6,
+        rtrim(z.bumon7_add_attr7) AS bumon7_add_attr7,
+        rtrim(z.bumon7_add_attr8) AS bumon7_add_attr8,
+        rtrim(z.bumon7_add_attr9) AS bumon7_add_attr9,
+        rtrim(z.bumon7_add_attr10) AS bumon7_add_attr10,
+        rtrim(z.bumon6_20kisyohingun) AS bumon6_20kisyohingun,
+        rtrim(z.bumon6_20kinaieki1) AS bumon6_20kinaieki1,
+        rtrim(z.bumon6_20kinaieki2) AS bumon6_20kinaieki2,
+        rtrim(z.bumon6_20kinaieki3) AS bumon6_20kinaieki3,
+        rtrim(z.bumon6_zyutensyohinyobi1) AS bumon6_zyutensyohinyobi1,
+        rtrim(z.bumon6_zyutensyohinyobi2) AS bumon6_zyutensyohinyobi2,
+        rtrim(z.bumon6_zyutensyohinyobi3) AS bumon6_zyutensyohinyobi3,
+        rtrim(z.bumon6_zyutensyohinyobi4) AS bumon6_zyutensyohinyobi4,
+        rtrim(z.bumon6_zyutensyohinyobi5) AS bumon6_zyutensyohinyobi5,
+        rtrim(z.bumon6_okikaename) AS bumon6_okikaename,
+        rtrim(z.bumon6_zukyuyosoku1) AS bumon6_zukyuyosoku1,
+        rtrim(z.bumon6_zukyuyosoku2) AS bumon6_zukyuyosoku2,
+        rtrim(z.bumon6_zukyuyosoku3) AS bumon6_zukyuyosoku3
     FROM t
-    LEFT JOIN cim03item_hanbai ia ON (((t.itemcode)::TEXT = (ia.itemcode)::TEXT))
-    LEFT JOIN cim03item_zaiko ib ON (((t.kosecode)::TEXT = (ib.itemcode)::TEXT))
-    LEFT JOIN cim03item_zaiko ia2 ON (((t.itemcode)::TEXT = (ia2.itemcode)::TEXT))
-    LEFT JOIN cim03item_hanbai ib2 ON (((t.kosecode)::TEXT = (ib2.itemcode)::TEXT))
-    LEFT JOIN zaiko_shohin_attr z ON (((t.kosecode)::TEXT = (z.shohin_code)::TEXT))
-    LEFT JOIN tm67juch_nm tm67 ON (((t.juchkbn)::TEXT = (tm67.code)::TEXT))
-    LEFT JOIN cim02tokui cim02 ON (((t.tokuicode)::TEXT = (cim02.tokuicode)::TEXT))
+    LEFT JOIN cim03item_hanbai ia ON ((rtrim(t.itemcode)::TEXT = rtrim(ia.itemcode)::TEXT))
+    LEFT JOIN cim03item_zaiko ib ON ((rtrim(t.kosecode)::TEXT = rtrim(ib.itemcode)::TEXT))
+    LEFT JOIN cim03item_zaiko ia2 ON ((rtrim(t.itemcode)::TEXT = rtrim(ia2.itemcode)::TEXT))
+    LEFT JOIN cim03item_hanbai ib2 ON ((rtrim(t.kosecode)::TEXT = rtrim(ib2.itemcode)::TEXT))
+    LEFT JOIN zaiko_shohin_attr z ON ((rtrim(t.kosecode)::TEXT = rtrim(z.shohin_code)::TEXT))
+    LEFT JOIN tm67juch_nm tm67 ON ((rtrim(t.juchkbn)::TEXT = rtrim(tm67.code)::TEXT))
+    LEFT JOIN cim02tokui cim02 ON ((rtrim(t.tokuicode)::TEXT = rtrim(cim02.tokuicode)::TEXT))
     LEFT JOIN cim24itbun cim24_daidai ON (
             (
                 (
-                    ((ib.bunruicode5)::TEXT = (cim24_daidai.itbuncode)::TEXT)
-                    AND ((cim24_daidai.itbunshcode)::TEXT = ((5)::CHARACTER VARYING)::TEXT)
+                    (rtrim(ib.bunruicode5)::TEXT = rtrim(cim24_daidai.itbuncode)::TEXT)
+                    AND (rtrim(cim24_daidai.itbunshcode)::TEXT = ((5)::CHARACTER VARYING)::TEXT)
                     )
-                AND ((ib.syutoku_kbn)::TEXT = ('PORT'::CHARACTER VARYING)::TEXT)
+                AND (rtrim(ib.syutoku_kbn)::TEXT = ('PORT'::CHARACTER VARYING)::TEXT)
                 )
             )
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('1'::CHARACTER VARYING)::TEXT)
-        ) misettei1 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('2'::CHARACTER VARYING)::TEXT)
-        ) misettei2 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('3'::CHARACTER VARYING)::TEXT)
-        ) misettei3 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('4'::CHARACTER VARYING)::TEXT)
-        ) misettei4 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('5'::CHARACTER VARYING)::TEXT)
-        ) misettei5 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('6'::CHARACTER VARYING)::TEXT)
-        ) misettei6 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('7'::CHARACTER VARYING)::TEXT)
-        ) misettei7 ON ((1 = 1))
-    JOIN (
-        SELECT "wqtm07属性未設定名称マスタ"."区分名称その他no",
-            "wqtm07属性未設定名称マスタ"."区分名称その他"
-        FROM "wqtm07属性未設定名称マスタ"
-        WHERE (("wqtm07属性未設定名称マスタ"."属性区分コード")::TEXT = ('8'::CHARACTER VARYING)::TEXT)
-        ) misettei8 ON ((1 = 1))
+    JOIN misettei1 ON ((1 = 1))
+    JOIN misettei2 ON ((1 = 1))
+    JOIN misettei3 ON ((1 = 1))
+    JOIN misettei4 ON ((1 = 1))
+    JOIN misettei5 ON ((1 = 1))
+    JOIN misettei6 ON ((1 = 1))
+    JOIN misettei7 ON ((1 = 1))
+    JOIN misettei8 ON ((1 = 1))
     WHERE (1 = 1)
-    GROUP BY t.shukanengetubi,
-        t.channel,
-        t.konyuchubuncode,
-        t.torikeikbn,
-        (((t.tokuicode)::TEXT || (nvl2(cim02.tokuiname, ' : '::CHARACTER VARYING, ''::CHARACTER VARYING))::TEXT) || COALESCE((((cim02.tokuiname)::TEXT || (' '::CHARACTER VARYING)::TEXT) || (cim02.tokuiname_ryaku)::TEXT), ((''::CHARACTER VARYING)::CHARACTER VARYING(65535))::TEXT)),
-        (((COALESCE(t.itemcode, ''::CHARACTER VARYING))::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(COALESCE(ia.itemname, ''::CHARACTER VARYING), COALESCE(ia2.itemname, ''::CHARACTER VARYING)))::TEXT),
-        ((COALESCE(TRIM((ib.bar_cd2)::TEXT), ((ib.itemcode)::CHARACTER VARYING(65535))::TEXT) || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(ib.itemname, (ib2.itemname)::CHARACTER VARYING(65535)))::TEXT),
-        t.kosecode,
-        t.juchkbn,
-        tm67.cname,
+    GROUP BY rtrim(t.shukanengetubi),
+        rtrim(t.channel),
+        rtrim(t.konyuchubuncode),
+        rtrim(t.torikeikbn),
+        ((rtrim(t.tokuicode)::TEXT || (nvl2(rtrim(cim02.tokuiname), ' : '::CHARACTER VARYING, ''::CHARACTER VARYING))::TEXT) || COALESCE(((rtrim(cim02.tokuiname)::TEXT || (' '::CHARACTER VARYING)::TEXT) || rtrim(cim02.tokuiname_ryaku)::TEXT), ((''::CHARACTER VARYING)::CHARACTER VARYING(65535))::TEXT)),
+        (((COALESCE(rtrim(t.itemcode), ''::CHARACTER VARYING))::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(COALESCE(rtrim(ia.itemname), ''::CHARACTER VARYING), COALESCE(rtrim(ia2.itemname), ''::CHARACTER VARYING)))::TEXT),
+        ((COALESCE(TRIM((ib.bar_cd2)::TEXT), (rtrim(ib.itemcode)::CHARACTER VARYING(65535))::TEXT) || (' : '::CHARACTER VARYING)::TEXT) || (COALESCE(rtrim(ib.itemname), rtrim(ib2.itemname)::CHARACTER VARYING(65535)))::TEXT),
+        rtrim(t.kosecode),
+        rtrim(t.juchkbn),
+        rtrim(tm67.cname),
         CASE 
             WHEN (
                     (
                         (
                             (
-                                ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
-                                OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                                (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                                OR (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                                 )
-                            OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '通信販売'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '対面販売'::CHARACTER VARYING
             WHEN (
                     (
                         (
                             (
-                                ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
-                                OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                                (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                                OR (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                                 )
-                            OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '卸売'::CHARACTER VARYING
             WHEN (
                     (
-                        ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
-                        OR ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                        (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '海外'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                     )
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
@@ -1050,141 +1091,141 @@ AS (
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                 THEN 'WEB'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '店舗'::CHARACTER VARYING
             WHEN (
                     (
                         (
-                            ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
-                            OR ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+                            (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+                            OR (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                             )
-                        OR ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+                        OR (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                         )
-                    OR ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '卸売'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                 THEN 'QVC'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
                 THEN 'JJ'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                     )
                 THEN '海外'::CHARACTER VARYING
             WHEN (
-                    ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
-                    OR ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+                    (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+                    OR (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                     )
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
             END,
         CASE 
-            WHEN ((t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('111'::CHARACTER VARYING)::TEXT)
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('112'::CHARACTER VARYING)::TEXT)
                 THEN '社販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('113'::CHARACTER VARYING)::TEXT)
                 THEN 'VIP'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('114'::CHARACTER VARYING)::TEXT)
                 THEN '通販'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('121'::CHARACTER VARYING)::TEXT)
                 THEN 'WEB'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('211'::CHARACTER VARYING)::TEXT)
                 THEN '買取'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('212'::CHARACTER VARYING)::TEXT)
                 THEN '直営'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('213'::CHARACTER VARYING)::TEXT)
                 THEN '消化'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('214'::CHARACTER VARYING)::TEXT)
                 THEN 'アウトレット'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('311'::CHARACTER VARYING)::TEXT)
                 THEN '代理店'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('312'::CHARACTER VARYING)::TEXT)
                 THEN '職域（特販）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('313'::CHARACTER VARYING)::TEXT)
                 THEN '職域（代理店）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('314'::CHARACTER VARYING)::TEXT)
                 THEN '職域（販売会）'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('321'::CHARACTER VARYING)::TEXT)
                 THEN 'QVC'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('411'::CHARACTER VARYING)::TEXT)
                 THEN 'JJ'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('412'::CHARACTER VARYING)::TEXT)
                 THEN '国内免税'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('413'::CHARACTER VARYING)::TEXT)
                 THEN '海外免税'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('511'::CHARACTER VARYING)::TEXT)
                 THEN 'FS'::CHARACTER VARYING
-            WHEN ((t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
+            WHEN (rtrim(t.channel)::TEXT = ('512'::CHARACTER VARYING)::TEXT)
                 THEN 'その他'::CHARACTER VARYING
             ELSE NULL::CHARACTER VARYING
             END,
-        t.bmn_hyouji_cd,
-        t.bmn_nms,
-        t.henreasoncode,
-        (((t.henreasoncode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || (t.henreasonname)::TEXT),
-        t.sokoname,
+        rtrim(t.bmn_hyouji_cd),
+        rtrim(t.bmn_nms),
+        rtrim(t.henreasoncode),
+        ((rtrim(t.henreasoncode)::TEXT || (' : '::CHARACTER VARYING)::TEXT) || rtrim(t.henreasonname)::TEXT),
+        rtrim(t.sokoname),
         CASE 
-            WHEN (z.bumon6_kubun2 IS NULL)
-                THEN misettei1."区分名称その他"
-            ELSE z.bumon6_kubun2
+            WHEN (rtrim(z.bumon6_kubun2) IS NULL)
+                THEN rtrim(misettei1."区分名称その他")
+            ELSE rtrim(z.bumon6_kubun2)
             END,
         CASE 
-            WHEN (z.bumon6_syohingun IS NULL)
-                THEN misettei2."区分名称その他"
-            ELSE z.bumon6_syohingun
+            WHEN (rtrim(z.bumon6_syohingun) IS NULL)
+                THEN rtrim(misettei2."区分名称その他")
+            ELSE rtrim(z.bumon6_syohingun)
             END,
         CASE 
-            WHEN (z.bumon6_jyuutenitem IS NULL)
-                THEN misettei3."区分名称その他"
-            ELSE z.bumon6_jyuutenitem
+            WHEN (rtrim(z.bumon6_jyuutenitem) IS NULL)
+                THEN rtrim(misettei3."区分名称その他")
+            ELSE rtrim(z.bumon6_jyuutenitem)
             END,
-        ib.itemkbnname,
-        cim24_daidai.itbunname,
-        ib.bunruicode3_nm,
-        z.bumon7_add_attr1,
-        z.bumon7_add_attr2,
-        z.bumon7_add_attr3,
-        z.bumon7_add_attr4,
-        z.bumon7_add_attr5,
-        z.bumon7_add_attr6,
-        z.bumon7_add_attr7,
-        z.bumon7_add_attr8,
-        z.bumon7_add_attr9,
-        z.bumon7_add_attr10,
-        z.bumon6_20kisyohingun,
-        z.bumon6_20kinaieki1,
-        z.bumon6_20kinaieki2,
-        z.bumon6_20kinaieki3,
-        z.bumon6_zyutensyohinyobi1,
-        z.bumon6_zyutensyohinyobi2,
-        z.bumon6_zyutensyohinyobi3,
-        z.bumon6_zyutensyohinyobi4,
-        z.bumon6_zyutensyohinyobi5,
-        z.bumon6_okikaename,
-        z.bumon6_zukyuyosoku1,
-        z.bumon6_zukyuyosoku2,
-        z.bumon6_zukyuyosoku3
+        rtrim(ib.itemkbnname),
+        rtrim(cim24_daidai.itbunname),
+        rtrim(ib.bunruicode3_nm),
+        rtrim(z.bumon7_add_attr1),
+        rtrim(z.bumon7_add_attr2),
+        rtrim(z.bumon7_add_attr3),
+        rtrim(z.bumon7_add_attr4),
+        rtrim(z.bumon7_add_attr5),
+        rtrim(z.bumon7_add_attr6),
+        rtrim(z.bumon7_add_attr7),
+        rtrim(z.bumon7_add_attr8),
+        rtrim(z.bumon7_add_attr9),
+        rtrim(z.bumon7_add_attr10),
+        rtrim(z.bumon6_20kisyohingun),
+        rtrim(z.bumon6_20kinaieki1),
+        rtrim(z.bumon6_20kinaieki2),
+        rtrim(z.bumon6_20kinaieki3),
+        rtrim(z.bumon6_zyutensyohinyobi1),
+        rtrim(z.bumon6_zyutensyohinyobi2),
+        rtrim(z.bumon6_zyutensyohinyobi3),
+        rtrim(z.bumon6_zyutensyohinyobi4),
+        rtrim(z.bumon6_zyutensyohinyobi5),
+        rtrim(z.bumon6_okikaename),
+        rtrim(z.bumon6_zukyuyosoku1),
+        rtrim(z.bumon6_zukyuyosoku2),
+        rtrim(z.bumon6_zukyuyosoku3)
     )
 SELECT *
 FROM final

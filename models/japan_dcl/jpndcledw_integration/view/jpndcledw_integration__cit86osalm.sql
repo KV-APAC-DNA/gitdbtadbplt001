@@ -1,12 +1,12 @@
 WITH cit86osalm_uri_mv
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cit86osalm_uri_mv
+    FROM {{ source('jpdcledw_integration', 'cit86osalm_uri_mv') }}
     ),
 cit86osalm_hen_mv
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cit86osalm_hen_mv
+    FROM {{ source('jpdcledw_integration', 'cit86osalm_hen_mv') }}
     ),
 t1
 AS (

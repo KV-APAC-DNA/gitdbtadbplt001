@@ -1,6 +1,6 @@
 WITH aspac_common_new AS
 (
-    SELECT * FROM dev_dna_core.snapjpdcledw_integration.aspac_common_new
+    SELECT * FROM {{ ref('jpndcledw_integration__aspac_common_new') }}
 ),
 
 final AS

@@ -22,7 +22,7 @@
                     SUM(KAISYU.MI_KAIS_KIN) as MI_KAIS_KIN,
                     CASE WHEN SUM(KAISYU.SKY_KIN)= SUM(KAISYU.KAIS_KSKM_KIN)THEN 1 ELSE 0 END as NYUHENKANFLG
                 FROM
-                    snapjpdcledw_integration.HANYO_ATTR KAISHA
+                    {{ref('jpndcledw_integration__hanyo_attr')}} KAISHA
                 INNER JOIN 
                     snapjpdclitg_integration.AARTNAR SAIKEN
                 ON
@@ -52,11 +52,11 @@
 with HANYO_ATTR
 as
 (
-    select * from snapjpdcledw_integration.HANYO_ATTR
+    select * from {{ref('jpndcledw_integration__hanyo_attr')}}
 ),
 AARTNAR as
 (
-    select * from snapjpdclitg_integration.AARTNAR
+    select * from snapjpdclitg_integration.AARTNAR 
 ),
 AARTBKAISYTIAR as
 (

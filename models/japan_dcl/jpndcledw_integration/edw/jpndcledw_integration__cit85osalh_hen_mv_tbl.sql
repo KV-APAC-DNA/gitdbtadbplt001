@@ -1,7 +1,7 @@
 WITH CIT85OSALH_KKNG
 AS (
     SELECT *
-    FROM jpdcledw_integration.CIT85OSALH_KKNG
+    FROM jpdcledw_integration.CIT85OSALH_KKNG 
     ),
 ZCMMNTORISK
 AS (
@@ -11,22 +11,22 @@ AS (
 HANYO_ATTR
 AS (
     SELECT *
-    FROM jpdcledw_integration.HANYO_ATTR
+    FROM {{ref('jpndcledw_integration__hanyo_attr')}}
     ),
 SSMTHSALHEDDA
 AS (
     SELECT *
-    FROM jpdclitg_integration.SSMTHSALHEDDA
+    FROM {{ref('jpndclitg_integration__ssmthsalhedda')}}
     ),
 SSMTHSALHEPHEDDA
 AS (
     SELECT *
-    FROM jpdclitg_integration.SSMTHSALHEPHEDDA
+    FROM {{ref('jpndclitg_integration__ssmthsalhephedda')}}
     ),
 ZCMMNTORISK
 AS (
     SELECT *
-    FROM jpdclitg_integration.ZCMMNTORISK
+    FROM jpdclitg_integration.ZCMMNTORISK 
     ),
 SSCMNRIYUUKANRI
 AS (

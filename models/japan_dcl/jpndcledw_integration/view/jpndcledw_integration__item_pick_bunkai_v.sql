@@ -1,7 +1,7 @@
 WITH item_pick_bunkai_tbl
 AS (
     SELECT *
-    FROM {{'jpndcledw_integration__item_pick_bunkai_tbl'}}
+    FROM {{ ref('jpndcledw_integration__item_pick_bunkai_tbl') }}
     ),
 final
 AS (
