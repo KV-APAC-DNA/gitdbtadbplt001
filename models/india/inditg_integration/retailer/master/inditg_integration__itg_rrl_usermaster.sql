@@ -1,14 +1,15 @@
-{{
-    config
-    (
-        materialized="incremental",
-        incremental_strategy="delete+insert",
-        unique_key=["userid"]
-    )
-}}
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_usermaster') }}
+),
+old as 
+(
+    select * from {{this}}
+),
+combined (
+    select * from old
+    union all
+    select * from source
 ),
 trans as 
 (
@@ -38,10 +39,10 @@ trans as
 	sdl_usm.distuserid::number(18,0) as distuserid,
 	sdl_usm.freezeday::number(18,0) as freezeday,
 	sdl_usm.filename::varchar(100) as filename,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm,
+	sdl_usm.crt_dttm as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     row_number() over (partition by sdl_usm.userid order by sdl_usm.crt_dttm desc) rnum
-      from source sdl_usm)
+      from combined sdl_usm)
 where rnum = '1'
 ),
 final as 
