@@ -1,5 +1,5 @@
 with tt01saleh_hen_mv_mt as (
-    select * from {{ source('jpdcledw_integration', 'tt01saleh_hen_mv_mt') }}
+    select * from {{ ref('jpndcledw_integration__tt01saleh_hen_mv_mt') }}
 ),
 final as (
 SELECT tt01saleh_hen_mv_mt.saleno,

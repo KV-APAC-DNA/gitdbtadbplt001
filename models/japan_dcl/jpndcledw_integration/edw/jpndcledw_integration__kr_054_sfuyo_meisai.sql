@@ -12,7 +12,7 @@ KR_054_CAL_V as (
 select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
 KR_054_SFUYO_MEISAI as (
-select * from {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
+select * from {{this}}                  ---macro needs to be added at start
 ),
 transformed as (
  SELECT

@@ -1,7 +1,7 @@
 WITH tt02salem_hen_mv_tb1
 AS (
   SELECT *
-  FROM {{ source('jpdcledw_integration', 'tt02salem_hen_mv_tbl') }}
+  FROM {{ ref('jpndcledw_integration__tt02salem_hen_mv_tbl') }}
   ),
 final
 AS (

@@ -3,7 +3,7 @@
 
 with
     ocl_in_userlist_v as (
-        select * from {{ ref('jpndcledw_integration__ocl_in_userlist_v') }}
+        select * from {{ source('jpdcledw_integration', 'ocl_in_userlist_v') }} --using as source as cycle is created
     ),
 
     transformed as (
