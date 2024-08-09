@@ -1,6 +1,6 @@
 with
     kr_special_discount_select as (
-        select * from dev_dna_core.jpdcledw_integration.kr_special_discount_select
+        select * from {{ ref('jpndcledw_integration__kr_special_discount_select') }}
     ),
     transformed as (
         select

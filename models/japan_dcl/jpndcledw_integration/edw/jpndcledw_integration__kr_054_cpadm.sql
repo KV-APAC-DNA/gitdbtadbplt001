@@ -1,12 +1,12 @@
 with c_tbecpointadm
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.c_tbecpointadm
+    from {{ ref('jpndclitg_integration__c_tbecpointadm') }}
     ),
 tbusrpram
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.tbusrpram
+    from {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 cte_1
 as (

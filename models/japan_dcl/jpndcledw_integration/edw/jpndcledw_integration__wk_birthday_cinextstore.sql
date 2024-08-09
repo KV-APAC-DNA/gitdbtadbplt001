@@ -6,11 +6,11 @@
 with tbEcOrder
 as
 (
-    select * from snapjpdclitg_integration.tbEcOrder
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 UP AS
 (
- SELECT * FROM snapjpdclitg_integration.TBUSRPRAM
+ SELECT * FROM {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 WK as
 (

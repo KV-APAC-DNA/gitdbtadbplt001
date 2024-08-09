@@ -17,7 +17,7 @@
 }}
 
 with CONTAINER_COLLECTION_V as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CONTAINER_COLLECTION_V
+    select * from {{ ref('jpndcledw_integration__container_collection_v') }}
 ),
 transformed as (
 select

@@ -13,10 +13,10 @@
                                     WHEN NVL(TENPO.CNT,0) = NVL(TUHAN.CNT,0) AND NVL(TENPO.MAX,0) < NVL(TUHAN.MAX,0) THEN '通販'
                                     WHEN NVL(TENPO.CNT,0) = NVL(TUHAN.CNT,0) AND NVL(TENPO.MAX,0) = NVL(TUHAN.MAX,0) THEN '通販'
                             END HANTEI
-                                FROM (SELECT DISTINCT SUMMARY.KOKYANO FROM snapjpdcledw_integration.WK_TENPOJUDGE_SUMMARY SUMMARY) LIST
-                                LEFT JOIN (SELECT KOKYANO, MAX, CNT FROM snapjpdcledw_integration.WK_TENPOJUDGE_SUMMARY WHERE TORIKEIKBN = '店舗') TENPO
+                                FROM (SELECT DISTINCT SUMMARY.KOKYANO FROM {{ ref('jpndcledw_integration__wk_tenpojudge_summary') }} SUMMARY) LIST
+                                LEFT JOIN (SELECT KOKYANO, MAX, CNT FROM {{ ref('jpndcledw_integration__wk_tenpojudge_summary') }} WHERE TORIKEIKBN = '店舗') TENPO
                                 ON TENPO.KOKYANO = LIST.KOKYANO
-                                LEFT JOIN (SELECT KOKYANO, MAX, CNT FROM snapjpdcledw_integration.WK_TENPOJUDGE_SUMMARY WHERE TORIKEIKBN = '通販') TUHAN
+                                LEFT JOIN (SELECT KOKYANO, MAX, CNT FROM {{ ref('jpndcledw_integration__wk_tenpojudge_summary') }} WHERE TORIKEIKBN = '通販') TUHAN
                                 ON TUHAN.KOKYANO = LIST.KOKYANO
                             ) REJUDGE
                         WHERE (LPAD(HANRO.DIUSRID,10,0) = REJUDGE.KOKYANO AND REJUDGE.HANTEI = '店舗');"
@@ -26,17 +26,17 @@
 WITH WK_BIRTHDAY_HANRO
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_BIRTHDAY_HANRO
+    FROM {{ ref('jpndcledw_integration__wk_birthday_hanro') }}
     ),
 TBUSRPRAM
 AS (
     SELECT *
-    FROM snapjpdclitg_integration.TBUSRPRAM
+    FROM {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 WK_STORE_KONYU
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_STORE_KONYU
+    FROM {{ ref('jpndcledw_integration__wk_store_konyu') }}
     ),
 final
 AS (

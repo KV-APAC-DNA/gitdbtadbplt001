@@ -6,16 +6,16 @@ tbEcOrder as (
 select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 tbEcSalesRouteMst as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECSALESROUTEMST
+select * from {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
 ),
 c_tbEcInquire as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECINQUIRE
+select * from {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 C_TBECUSRCOMMENT as (
 select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}
 ),
 C_TBDMSNDHIST as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBDMSNDHIST
+select * from {{ ref('jpndclitg_integration__c_tbdmsndhist') }}
 ),
 c_tbeckesai as (
 select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}

@@ -2,7 +2,7 @@ with dm_kesai_mart_dly_general as (
 select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
 KESAI_H_DATA_MART_MV as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KESAI_H_DATA_MART_MV
+select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
 ),
 WEB as (
   select 

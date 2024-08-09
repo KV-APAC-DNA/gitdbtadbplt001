@@ -1,8 +1,8 @@
 with kr_this_stage_point_daily as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_DAILY
+select * from {{ ref('jpndcledw_integration__kr_this_stage_point_daily') }}
 ),
 cim01kokya as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
+select * from  {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 kr_new_stage_point as (
 select * from {{ ref('jpndcledw_integration__kr_new_stage_point_prev') }}

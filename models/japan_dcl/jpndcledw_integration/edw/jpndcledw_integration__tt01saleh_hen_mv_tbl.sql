@@ -14,7 +14,7 @@ tt01_henpin_riyu as (
 select * from {{ ref('jpndcledw_integration__tt01_henpin_riyu') }}
 ),
 hanyo_attr as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.HANYO_ATTR
+select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 tbechenpinriyu as (
 select * from {{ ref('jpndclitg_integration__tbechenpinriyu') }}
@@ -23,10 +23,10 @@ c_tbecinquirekesai as (
 select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
 ),
 c_tbEcInquire as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECINQUIRE
+select * from  {{ ref('jpndclitg_integration__c_tbecinquire') }}
 ),
 c_tbEcUserCard as (
-select * from DEV_DNA_CORE.JPDCLITG_INTEGRATION.C_TBECUSERCARD
+select * from {{ ref('jpndclitg_integration__c_tbecusercard') }}
 ),
 
 transformed as (

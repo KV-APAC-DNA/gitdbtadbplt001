@@ -1,5 +1,5 @@
 with KR_054_SLOST_MEISAI as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_SLOST_MEISAI
+select * from {{ ref('jpndcledw_integration__kr_054_slost_meisai') }}
 ),
 transformed as (
 SELECT

@@ -1,5 +1,5 @@
 with WK_RANKDM_HANRO as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.WK_RANKDM_HANRO
+select * from {{ ref('jpndcledw_integration__wk_rankdm_hanro') }}
 ),
 ------add reference from sourav's model 
 final as (

@@ -1,11 +1,11 @@
 with tw06_kokyastatus as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tw06_kokyastatus
+    select * from {{ ref('jpndcledw_integration__tw06_kokyastatus') }}
 ),
 tt05kokyakonyu as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt05kokyakonyu
+    select * from  {{ ref('jpndcledw_integration__tt05kokyakonyu') }}
 ),
 tm55_teisuchi as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tm55_teisuchi
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tm55_teisuchi 
 ),
 combined_source as (
     select

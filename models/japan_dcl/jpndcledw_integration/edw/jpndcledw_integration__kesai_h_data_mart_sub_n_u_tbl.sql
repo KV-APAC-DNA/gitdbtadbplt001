@@ -20,10 +20,10 @@ KEIROKBN as(
     select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KEIROKBN
 ),
 kesai_h_data_mart_sub_n_rirek as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kesai_h_data_mart_sub_n_rirek
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_rirek') }}
 ),
 hanyo_attr as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.hanyo_attr
+    select * from {{ ref('jpndcledw_integration__hanyo_attr') }}
 ),
 kesaiid_dummy as(
     select * from {{ ref('jpndcledw_integration__kesaiid_dummy') }}

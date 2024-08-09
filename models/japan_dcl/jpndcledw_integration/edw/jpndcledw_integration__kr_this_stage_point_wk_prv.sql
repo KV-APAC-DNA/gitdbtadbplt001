@@ -1,27 +1,27 @@
 WITH c_tbecranksumamount
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKSUMAMOUNT
+      FROM {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
       ),
 c_tbecrankaddamountadm
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECRANKADDAMOUNTADM
+      FROM {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
       ),
 tbusrpram
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+      FROM {{ ref('jpndclitg_integration__tbusrpram') }}
       ),
 kr_this_stage_point_wk_rescue
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_WK_RESCUE
+      FROM  {{ ref('jpndcledw_integration__kr_this_stage_point_wk_rescue') }}
       ),
 DCL_CALENDAR_SYSDATE
 AS (
       SELECT *
-      FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.DCL_CALENDAR_SYSDATE
+      FROM {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }}
       ),
 sum_pre_month
 AS (

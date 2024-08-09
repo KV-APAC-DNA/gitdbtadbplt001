@@ -1,5 +1,5 @@
 with kesai_h_data_mart_mv_kizuna as (
-select * from dev_dna_core.jpdcledw_integration.kesai_h_data_mart_mv_kizuna
+select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 transformed as (
 select

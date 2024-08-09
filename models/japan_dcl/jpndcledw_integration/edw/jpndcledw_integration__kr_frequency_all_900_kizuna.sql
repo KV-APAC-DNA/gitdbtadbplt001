@@ -1,8 +1,8 @@
 with KR_FREQUENCY_ALL_WORK_kizuna as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KR_FREQUENCY_ALL_WORK_KIZUNA
+select * from {{ ref('jpndcledw_integration__kr_frequency_all_work_kizuna') }}
 ),
 KR_FREQUENCY_ALL_WORK_kizuna as (
-select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.KR_FREQUENCY_ALL_WORK_KIZUNA
+select * from {{ ref('jpndcledw_integration__kr_frequency_all_work_kizuna') }}
 ),
 transformed as (
 SELECT A.SALENO                AS SALENO       --QlikViewに合わせる

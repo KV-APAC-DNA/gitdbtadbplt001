@@ -3,7 +3,7 @@ with kesai_h_data_mart_mv as(
    -- TO_DATE(CAST(date_column AS STRING), 'YYYYMMDD') 
 ),
 cim01kokya as(
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.cim01kokya
+    select * from {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 kokyano_list_016_manual as(
     select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.kokyano_list_016_manual

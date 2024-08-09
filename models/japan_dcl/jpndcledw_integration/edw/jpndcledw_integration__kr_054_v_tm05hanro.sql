@@ -1,7 +1,7 @@
 with tbecsalesroutemst
 as (
     select *
-    from dev_dna_core.snapjpdclitg_integration.tbecsalesroutemst
+    from  {{ ref('jpndclitg_integration__tbecsalesroutemst') }}
     ),
 c1
 as (

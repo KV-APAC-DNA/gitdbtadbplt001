@@ -1,6 +1,6 @@
 with source as
 (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.dm_user_attr
+    select * from {{ ref('jpndcledw_integration__dm_user_attr') }}
 ),
 
 final as

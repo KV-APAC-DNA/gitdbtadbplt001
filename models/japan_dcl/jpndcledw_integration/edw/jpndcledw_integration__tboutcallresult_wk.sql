@@ -1,6 +1,6 @@
 with 
 dmkokya as (
-    select * from dev_dna_core.jpdcledw_integration.dm_mykokya
+    select * from {{ ref('jpndcledw_integration__dm_mykokya') }}
 ),
 ocl_in_userlist_v as (
     -- select * from dev_dna_core.jpdcledw_integration.OCL_in_userlist_v

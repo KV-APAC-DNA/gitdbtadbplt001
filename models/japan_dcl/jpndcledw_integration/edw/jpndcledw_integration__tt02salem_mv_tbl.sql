@@ -1,8 +1,8 @@
 with tt02salem_uri_mv as (
-select * from dev_dna_core.jpdcledw_integration.tt02salem_uri_mv
+select * from i_mv {{ ref('jpndcledw_integration__tt02salem_uri_mv') }}
 ),
 tt02salem_hen_mv as (
-select * from dev_dna_core.jpdcledw_integration.tt02salem_hen_mv
+select * from {{ ref('jpndcledw_integration__tt02salem_hen_mv') }}
 ),
 transformed as (
 select

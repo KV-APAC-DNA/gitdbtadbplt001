@@ -1,11 +1,11 @@
 with tw07_01kokyahanro_w as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tw07_01kokyahanro_w
+    select * from {{ ref('jpndcledw_integration__tw07_01kokyahanro_w') }}
 ),
 tt01kokyastsh_mv as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tt01kokyastsh_mv
+    select * from  {{ ref('jpndcledw_integration__tt01kokyastsh_mv') }}
 ),
 tm55_teisuchi as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tm55_teisuchi
+    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.tm55_teisuchi 
 ),
 tw07_01kokyahanro_w_null as (
     select * from tw07_01kokyahanro_w where hanrocode is null

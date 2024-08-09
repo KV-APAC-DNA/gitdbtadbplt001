@@ -1,19 +1,19 @@
 WITH
 WK_BIRTHDAY_CINEXTUSRP_JOB AS
 (
-    SELECT * FROM JPDCLEDW_INTEGRATION.WK_BIRTHDAY_CINEXTUSRP_JOB
+    SELECT * FROM {{ ref('jpndcledw_integration__wk_birthday_cinextusrp_job') }}
 ),
 WK_BIRTHDAY_CINEXTBIO_JOB AS
 (
-    SELECT * FROM JPDCLEDW_INTEGRATION.WK_BIRTHDAY_CINEXTBIO_JOB
+    SELECT * FROM  {{ ref('jpndcledw_integration__wk_birthday_cinextbio_job') }}
 ),
 WK_BIRTHDAY_CINEXTSTORE_JOB AS
 (
-    SELECT * FROM JPDCLEDW_INTEGRATION.WK_BIRTHDAY_CINEXTSTORE_JOB
+    SELECT * FROM {{ ref('jpndcledw_integration__wk_birthday_cinextstore_job') }}
 ),
 WK_BIRTHDAY_VIEWCOLUMN_JOB AS
 (
-    SELECT * FROM JPDCLEDW_INTEGRATION.WK_BIRTHDAY_VIEWCOLUMN_JOB
+    SELECT * FROM {{ ref('jpndcledw_integration__wk_birthday_viewcolumn_job') }}
 ),
 T1 AS
 (

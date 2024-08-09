@@ -3,7 +3,7 @@
 
 with
     ocl_in_userlist_v as (
-        select * from dev_dna_core.snapjpdcledw_integration.ocl_in_userlist_v
+        select * from {{ ref('jpndcledw_integration__ocl_in_userlist_v') }}
     ),
 
     transformed as (

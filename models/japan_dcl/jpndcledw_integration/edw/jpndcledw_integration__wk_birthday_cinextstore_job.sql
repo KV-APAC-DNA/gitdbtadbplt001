@@ -9,11 +9,11 @@
 with tbEcOrder
 as
 (
-    select * from snapjpdclitg_integration.tbEcOrder
+    select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 TBUSRPRAM as
 (
-    select * from snapjpdclitg_integration.TBUSRPRAM
+    select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 final as
 (

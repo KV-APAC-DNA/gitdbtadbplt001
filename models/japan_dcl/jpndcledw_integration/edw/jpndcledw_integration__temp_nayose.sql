@@ -1,9 +1,9 @@
 
 with TEMP_REL as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TEMP_REL
+    select * from  {{ ref('jpndcledw_integration__temp_rel') }}
 ),
 TM58_KOYKARANK_YM as (
-   select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TM58_KOYKARANK_YM
+   select * from  {{ ref('jpndcledw_integration__tm58_koykarank_ym') }}
 ),
 union_1 as (
 SELECT

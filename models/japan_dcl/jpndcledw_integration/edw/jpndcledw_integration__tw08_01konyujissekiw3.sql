@@ -1,8 +1,8 @@
 with TW08_01KONYUJISSEKIW1 as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW08_01KONYUJISSEKIW1
+    select * from {{ ref('jpndcledw_integration__tw08_01konyujissekiw1') }}
 ),
 TW08_KOKYASTATUSW03 as (
-    select * from DEV_DNA_CORE.JPDCLEDW_INTEGRATION.TW08_KOKYASTATUSW03
+    select * from {{ ref('jpndcledw_integration__tw08_kokyastatusw03') }}
 ),	
 transformed as (
     select

@@ -1,8 +1,8 @@
 with tw06_kokyastatus as (
-    select * from dev_dna_core.jpdcledw_integration.tw06_kokyastatus
+    select * from {{ ref('jpndcledw_integration__tw06_kokyastatus') }}
 ),
 tt05kokyakonyu as (
-    select * from dev_dna_core.jpdcledw_integration.tt05kokyakonyu
+    select * from {{ ref('jpndcledw_integration__tt05kokyakonyu') }}
 ),
 
 transformed as(

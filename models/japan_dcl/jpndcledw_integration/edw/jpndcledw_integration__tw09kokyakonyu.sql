@@ -6,20 +6,20 @@ AS (
  tm24_item
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tm24_item
+  FROM dev_dna_core.jpdcledw_integration.tm24_item 
   ),
 hanbai_shohin_attr
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.hanbai_shohin_attr
+  FROM dev_dna_core.jpdcledw_integration.hanbai_shohin_attr 
   ),
  tt01kokyastsh_mv_tbl 
  AS (
-    SELECT * FROM   dev_dna_core.jpdcledw_integration.tt01kokyastsh_mv_tbl
+    SELECT * FROM {{ ref('jpndcledw_integration__tt01kokyastsh_mv_tbl') }}
  ),
  tt02kokyastsm_mv_tbl 
  AS (
-    SELECT * FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_mv_tbl
+    SELECT * FROM {{ ref('jpndcledw_integration__tt02kokyastsm_mv_tbl') }}
  ),
 tt01kokyastsh_mv 
 AS (

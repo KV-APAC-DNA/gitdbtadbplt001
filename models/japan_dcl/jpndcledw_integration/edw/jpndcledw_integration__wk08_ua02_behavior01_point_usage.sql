@@ -1,6 +1,6 @@
 WITH dm_kesai_mart_dly_general
 AS (
-    select * from snapjpdcledw_integration.dm_kesai_mart_dly_general
+    select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
     transform AS (
     SELECT DISTINCT kokyano,

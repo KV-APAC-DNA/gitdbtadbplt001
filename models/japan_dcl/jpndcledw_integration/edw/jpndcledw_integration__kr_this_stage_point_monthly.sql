@@ -3,17 +3,17 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "DELETE FROM {{this}}
-                    WHERE YYYYMM =(SELECT TARGET_MONTH FROM snapjpdcledw_integration.DCL_CALENDAR_SYSDATE CAL WHERE  CAL.IS_ACTIVE = TRUE AND TO_CHAR(CURR_DATE,'DD')= '20');"
+                    WHERE YYYYMM =(SELECT TARGET_MONTH FROM {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }} CAL WHERE  CAL.IS_ACTIVE = TRUE AND TO_CHAR(CURR_DATE,'DD')= '20');"
         )
 }}
 
 with KR_THIS_STAGE_POINT_DAILY as
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.KR_THIS_STAGE_POINT_DAILY
+    select * from {{ ref('jpndcledw_integration__kr_this_stage_point_daily') }}
 ),
 DCL_CALENDAR_SYSDATE as
 (
-    select * from SNAPJPDCLEDW_INTEGRATION.DCL_CALENDAR_SYSDATE
+    select * from {{ ref('jpndcledw_integration__dcl_calendar_sysdate') }}
 ),
 final as
 (

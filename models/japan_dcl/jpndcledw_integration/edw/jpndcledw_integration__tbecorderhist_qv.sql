@@ -1,7 +1,7 @@
 with tbecorderhist
 as (
 	select *
-	from dev_dna_core.snapjpdclitg_integration.tbecorderhist
+	from {{ ref('jpndclitg_integration__tbecorderhist') }}
 	)
 
 	,transformed

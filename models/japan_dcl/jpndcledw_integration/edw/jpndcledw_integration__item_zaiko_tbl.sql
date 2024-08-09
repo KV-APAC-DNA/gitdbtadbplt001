@@ -1,28 +1,28 @@
 WITH tbecitem
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.tbecitem
+    FROM {{ ref('jpndclitg_integration__tbecitem') }}
     ),
 item_sap_v
 AS (
-    select * from dev_dna_core.snapjpdcledw_integration.item_sap_v
+    select * from  {{ ref('jpndcledw_integration__item_sap_v') }}
     ),
 item_bunrval_v
 AS (
-    select * from dev_dna_core.snapjpdcledw_integration.item_bunrval_v
+    select * from {{ ref('jpndcledw_integration__item_bunrval_v') }}
     ),
 zaiko_shohin_attr
 AS (
-    select * from dev_dna_core.snapjpdcledw_integration.zaiko_shohin_attr
+    select * from {{ ref('jpndcledw_integration__zaiko_shohin_attr') }}
     ),
 cim03item_zaiko_ikou_kizuna
 AS (
-      select * from dev_dna_core.snapjpdcledw_integration.cim03item_zaiko_ikou_kizuna
+      select * from dev_dna_core.snapjpdcledw_integration.cim03item_zaiko_ikou_kizuna 
     ),
 c_tbecprivilegemst
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegemst
+    FROM  {{ ref('jpndclitg_integration__c_tbecprivilegemst') }}
     ),
 
 ct1

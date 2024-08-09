@@ -9,11 +9,11 @@
 WITH WK_BIRTHDAY_CILINE_JOB
 AS
 (
-    SELECT * FROM SNAPJPDCLEDW_INTEGRATION.WK_BIRTHDAY_CILINE_JOB
+    SELECT * FROM  {{ ref('jpndcledw_integration__wk_birthday_ciline_job') }}
 ),
 TBUSRPRAM AS
 (
-    SELECT * FROM SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+    SELECT * FROM {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 FINAL AS
 ( 

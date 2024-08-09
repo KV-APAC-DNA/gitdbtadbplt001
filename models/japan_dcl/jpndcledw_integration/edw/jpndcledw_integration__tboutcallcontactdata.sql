@@ -1,7 +1,7 @@
 with
     tboutcallresult as (
 
-        select * from dev_dna_core.snapjpdcledw_integration.tboutcallresult
+        select * from {{ ref('jpndcledw_integration__tboutcallresult') }}
 
     ),
 

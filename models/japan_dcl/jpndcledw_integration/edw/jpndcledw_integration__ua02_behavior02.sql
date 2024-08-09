@@ -4,7 +4,7 @@ wk21_ua02_behavior02_subscription_flg as (
 select * from {{ ref('jpndcledw_integration__wk21_ua02_behavior02_subscription_flg') }}
 ),
 ua01_base_cim01kokya_v as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.UA01_BASE_CIM01KOKYA_V
+select * from {{ ref('jpndcledw_integration__ua01_base_cim01kokya_v') }}
 ),
 wk20_ua02_behavior02_outcall_flg as (
 select * from {{ ref('jpndcledw_integration__wk20_ua02_behavior02_outcall_flg') }}

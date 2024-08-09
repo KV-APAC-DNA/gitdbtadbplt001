@@ -6,7 +6,7 @@ AS (
 KR_054_SFUYO_MEISAI
 AS (
     SELECT *
-    FROM SNAPJPDCLEDW_INTEGRATION.KR_054_SFUYO_MEISAI
+    FROM {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
     ),
 TBUSRPRAM
 AS (

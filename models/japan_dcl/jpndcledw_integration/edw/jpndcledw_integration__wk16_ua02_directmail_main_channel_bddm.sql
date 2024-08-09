@@ -1,12 +1,12 @@
 WITH cim01kokya
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.cim01kokya
+    FROM {{ ref('jpndcledw_integration__cim01kokya') }}
     ),
 WK_RANKDM_HANRO
 AS (
     SELECT *
-    FROM snapjpdcledw_integration.WK_RANKDM_HANRO
+    FROM {{ ref('jpndcledw_integration__wk_rankdm_hanro') }}
     ),
 a
 AS (

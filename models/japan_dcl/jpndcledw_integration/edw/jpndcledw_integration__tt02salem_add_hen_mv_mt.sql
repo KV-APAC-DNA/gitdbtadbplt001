@@ -1,19 +1,19 @@
 WITH tt02salem_add2_up_hen_mt
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add2_up_hen_mt
+	FROM  {{ ref('jpndcledw_integration__tt02salem_add2_up_hen_mt') }}
 	)
 
 	,tt02salem_add3_epi_hen_sub_mt
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tt02salem_add3_epi_hen_sub_mt
+	FROM {{ ref('jpndcledw_integration__tt02salem_add3_epi_hen_sub_mt') }}
 	)
 
     ,tt02salem_add1_exp_hen_mt
     as
     (
-        select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT02SALEM_ADD1_EXP_HEN_MT
+        select * from {{ ref('jpndcledw_integration__tt02salem_add1_exp_hen_mt') }}
     )
     
 	,transform_union1 

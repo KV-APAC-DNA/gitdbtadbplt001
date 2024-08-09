@@ -1,12 +1,12 @@
 WITH tt02kokyastsm_ikou
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_ikou
+  FROM dev_dna_core.jpdcledw_integration.tt02kokyastsm_ikou 
   ),
 tt02salem_mv_mt
 AS (
   SELECT *
-  FROM dev_dna_core.jpdcledw_integration.tt02salem_mv_mt
+  FROM {{ ref('jpndcledw_integration__tt02salem_mv_mt') }}
   ),
 transformed
 AS (

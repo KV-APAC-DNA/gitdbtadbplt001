@@ -1,43 +1,43 @@
 WITH c_tbeckesai
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesai
+	FROM  {{ ref('jpndclitg_integration__c_tbeckesai') }}
 	)
 	
 	,c_tbecorderhistory
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbecorderhistory
+	FROM {{ ref('jpndclitg_integration__c_tbecorderhistory') }}
 	)
 	
 	,tbecorderhist_qv
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.tbecorderhist_qv
+	FROM {{ ref('jpndcledw_integration__tbecorderhist_qv') }}
 	)
 	
 	,c_tbeckesaihistory
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbeckesaihistory
+	FROM {{ ref('jpndclitg_integration__c_tbeckesaihistory') }}
 	)
 	
 	,c_tbecprivilegekesaihistory
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbecprivilegekesaihistory
+	FROM  {{ ref('jpndclitg_integration__c_tbecprivilegekesaihistory') }}
 	)
 	
 	,c_tbecprivilegemst
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdcledw_integration.c_tbecprivilegemst
+	FROM {{ ref('jpndcledw_integration__c_tbecprivilegemst') }}
 	)
 	
 	,c_tbecordermeisaihistory
 AS (
 	SELECT *
-	FROM dev_dna_core.snapjpdclitg_integration.c_tbecordermeisaihistory
+	FROM {{ ref('jpndclitg_integration__c_tbecordermeisaihistory') }}
 	)
 	
 	,transformed_cte_1

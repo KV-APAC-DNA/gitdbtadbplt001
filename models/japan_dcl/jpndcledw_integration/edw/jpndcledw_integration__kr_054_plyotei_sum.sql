@@ -1,12 +1,12 @@
 with kr_054_cal_v
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_cal_v
+    from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
     ),
 kr_054_plyotei_meisai
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_plyotei_meisai
+    from {{ ref('jpndcledw_integration__kr_054_plyotei_meisai') }}
     ),
 transformed
 as (

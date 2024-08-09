@@ -1,14 +1,14 @@
 with KR_054_POINT_HIST as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_POINT_HIST
+select * from {{ ref('jpndcledw_integration__kr_054_point_hist') }}
 ),
 KR_COMM_POINT_PARA as (
 select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_COMM_POINT_PARA
 ),
 KR_054_SM_ITEM_MST as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_SM_ITEM_MST
+select * from {{ ref('jpndcledw_integration__kr_054_sm_item_mst') }}
 ),
 KR_054_CEWQ008MNTH_P_MST as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_CEWQ008MNTH_P_MST
+select * from {{ ref('jpndcledw_integration__kr_054_cewq008mnth_p_mst') }}
 ),
 transformed as (
  SELECT

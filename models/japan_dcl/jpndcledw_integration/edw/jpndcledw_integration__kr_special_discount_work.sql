@@ -1,16 +1,19 @@
 with
-    tbusrpram as (select * from dev_dna_core.snapjpdclitg_integration.tbusrpram),
+    tbusrpram as 
+    (
+        select * from {{ ref('jpndclitg_integration__tbusrpram') }}
+        ),
 
     c_tbecregularmeisai as (
-        select * from dev_dna_core.snapjpdclitg_integration.c_tbecregularmeisai
+        select * from  {{ ref('jpndclitg_integration__c_tbecregularmeisai') }}
     ),
 
     kr_special_discount_file as (
-        select * from dev_dna_core.snapjpdclitg_integration.kr_special_discount_file
+        select * from  {{ ref('jpndclitg_integration__kr_special_discount_file') }}
     ),
 
     c_tbecregularcontract as (
-        select * from dev_dna_core.jpdclitg_integration.c_tbecregularcontract
+        select * from  {{ ref('jpndclitg_integration__c_tbecregularcontract') }}
     ),
 
     transformed as (

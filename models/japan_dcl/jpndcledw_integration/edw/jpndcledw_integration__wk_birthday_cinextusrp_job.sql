@@ -9,22 +9,22 @@
 WITH TBUSRPRAM
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+    FROM {{ ref('jpndclitg_integration__tbusrpram') }}
     ),
 tbEcOrder
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.tbEcOrder
+    FROM {{ ref('jpndclitg_integration__tbecorder') }}
     ),
 c_tbEcShippingResults
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.c_tbEcShippingResults
+    FROM {{ ref('jpndclitg_integration__c_tbecshippingresults') }}
     ),
 c_tbEcRankAddAmountAdm
 AS (
     SELECT *
-    FROM SNAPJPDCLITG_INTEGRATION.c_tbEcRankAddAmountAdm
+    FROM  {{ ref('jpndclitg_integration__c_tbecrankaddamountadm') }}
     ),
 t1
 AS (

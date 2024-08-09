@@ -1,5 +1,5 @@
 with KR_FREQUENCY_1YN_ORD_WORK_kizuna as (
-select * from DEV_DNA_CORE.JPdCLEDW_INTEGRATION.KR_FREQUENCY_1YN_ORD_WORK_kizuna
+select * from {{ ref('jpndcledw_integration__kr_frequency_1yn_ord_work_kizuna') }}
 ),
 transformed as (
 SELECT A.SALENO                AS SALENO       --QlikViewに合わせる

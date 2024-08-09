@@ -1,14 +1,14 @@
 with cim01kokya as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
+select * from {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 c_tbecusercard as (
 select * from {{ ref('jpndclitg_integration__c_tbecusercard') }}
 ),
 TBECORDER as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBECORDER
+select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 C_TBECKESAI as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.C_TBECKESAI
+select * from {{ ref('jpndclitg_integration__c_tbeckesai') }}
 ),
 C_TBECUSRCOMMENT as (
 select * from {{ ref('jpndclitg_integration__c_tbecusrcomment') }}

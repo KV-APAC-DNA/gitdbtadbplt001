@@ -6,11 +6,11 @@
         pre_hook = ["{% if is_incremental() %}
                     DELETE FROM {{this}} WHERE 1 = 1 AND KOKYANO IN (
                                 SELECT C_DICHILDUSRID
-                                FROM DEV_DNA_CORE.nnaras01_workspace.jpndcledw_integration__temp_nayose1);
+                                FROM {{ ref('jpndcledw_integration__temp_nayose1') }} );
                                 {% endif %}",
             
                 "{% if is_incremental() %}
-                        DELETE FROM DEV_DNA_CORE.nnaras01_workspace.jpndcledw_integration__temp_nayose1 WHERE SEQ IN (
+                        DELETE FROM {{ ref('jpndcledw_integration__temp_nayose1') }}  WHERE SEQ IN (
                         SELECT SEQ
                         FROM (
                             SELECT A.SEQ,
@@ -21,8 +21,8 @@
                                         PARTITION BY A.YM,
                                         A.KOKYANO ORDER BY B.HYOJIJUN
                                         ) AS SELECTED
-                            FROM DEV_DNA_CORE.nnaras01_workspace.jpndcledw_integration__temp_nayose1 A
-                            INNER JOIN DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.STAGE_MSt B ON A.RANK = B.RANK
+                            FROM  {{ ref('jpndcledw_integration__temp_nayose1') }} A
+                            INNER JOIN DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.STAGE_MSt  B ON A.RANK = B.RANK
                             ) T
                         WHERE 1 = 1
                             AND T.SELECTED <> 1
@@ -32,7 +32,7 @@
     )
 }}
 with TEMP_NAYOSE as (
-    select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TEMP_NAYOSE
+    select * from  {{ ref('jpndcledw_integration__temp_nayose') }}
 ),
 transformed as (
 SELECT YM,

@@ -1,7 +1,7 @@
 with kr_054_plost_meisai
 as (
     select *
-    from dev_dna_core.snapjpdcledw_integration.kr_054_plost_meisai
+    from {{ ref('jpndcledw_integration__kr_054_plost_meisai') }}
     ),
 kr_comm_point_para
 as (

@@ -1,12 +1,12 @@
 with kr_054_pointhistory
 as (
     select *
-    from dev_dna_core.jpdcledw_integration.kr_054_pointhistory
+    from {{ ref('jpndcledw_integration__kr_054_pointhistory') }}
     ),
 kr_054_cphistory
 as (
     select *
-    from dev_dna_core.jpdcledw_integration.kr_054_cphistory
+    from {{ ref('jpndcledw_integration__kr_054_cphistory') }}
     ),
 c1
 as (

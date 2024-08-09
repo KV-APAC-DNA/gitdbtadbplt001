@@ -1,31 +1,35 @@
 
 with
     kr_054_allhist as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_allhist
+        select * from  {{ ref('jpndcledw_integration__kr_054_allhist') }}
     ),
 
-    tbecorder as (select * from dev_dna_core.snapjpdclitg_integration.tbecorder),
+    tbecorder as 
+    (
+        select * from {{ ref('jpndclitg_integration__tbecorder') }}
+        ),
 
     kr_054_alladm as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_alladm
+        select * from {{ ref('jpndcledw_integration__kr_054_alladm') }}
     ),
 
     kr_054_v_ptrgstdivmst as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_v_ptrgstdivmst
+        select * from {{ ref('jpndcledw_integration__kr_054_v_ptrgstdivmst') }}
     ),
 
-    tbusrpram as (select * from dev_dna_core.snapjpdclitg_integration.tbusrpram),
+    tbusrpram as (select * from {{ ref('jpndclitg_integration__tbusrpram') }}
+    ),
 
     kr_054_pfuyo_meisai as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_pfuyo_meisai
+        select * from {{ ref('jpndcledw_integration__kr_054_pfuyo_meisai') }}
     ),
 
     kr_054_puse_meisai as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_puse_meisai
+        select * from  {{ ref('jpndcledw_integration__kr_054_puse_meisai') }}
     ),
 
     kr_054_plost_meisai as (
-        select * from dev_dna_core.snapjpdcledw_integration.kr_054_plost_meisai
+        select * from {{ ref('jpndcledw_integration__kr_054_plost_meisai') }}
     ),
 
     raw_transformed as (

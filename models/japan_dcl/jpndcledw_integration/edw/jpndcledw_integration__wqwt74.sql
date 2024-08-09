@@ -1,7 +1,7 @@
 with wt74itemstrategy_sale
 as
 (
-    select * from dev_dna_core.snapjpdcledw_integration.wt74itemstrategy_sale 
+    select * from {{ ref('jpndcledw_integration__wt74itemstrategy_sale') }}
 )
 ,
 transformed

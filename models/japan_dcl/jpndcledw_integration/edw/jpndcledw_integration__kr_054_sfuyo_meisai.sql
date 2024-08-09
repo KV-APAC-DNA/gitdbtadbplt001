@@ -1,18 +1,18 @@
 
 with tbusrpram as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.TBUSRPRAM
+select * from {{ ref('jpndclitg_integration__tbusrpram') }}
 ),
 kr_054_allhist as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_ALLHIST
+select * from  {{ ref('jpndcledw_integration__kr_054_allhist') }}
 ),
 kr_054_point_hist as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_POINT_HIST
+select * from  {{ ref('jpndcledw_integration__kr_054_point_hist') }}
 ),
 KR_054_CAL_V as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_CAL_V
+select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
 KR_054_SFUYO_MEISAI as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.KR_054_SFUYO_MEISAI
+select * from {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
 ),
 transformed as (
  SELECT

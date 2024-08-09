@@ -1,5 +1,5 @@
 with cim01kokya as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.CIM01KOKYA
+select * from {{ ref('jpndcledw_integration__cim01kokya') }}
 ),
 tbecpointhistory as (
 select * from {{ ref('jpndclitg_integration__tbecpointhistory') }}
