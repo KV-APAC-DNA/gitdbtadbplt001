@@ -1,7 +1,7 @@
 WITH tt02salem_hen_mv_tb1
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TT02SALEM_HEN_MV_TBL
+  FROM {{ source('jpdcledw_integration', 'tt02salem_hen_mv_tbl') }}
   ),
 final
 AS (

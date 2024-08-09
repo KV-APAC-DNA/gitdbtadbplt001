@@ -23,8 +23,21 @@ sources:
           tags: ["japan_dcl_common_views","transformation"]
         - name: tt01saleh_hen_mv_mt
           tags: ["japan_dcl_common_views","transformation"]
+        - name: tt02salem_hen_mv_tbl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tt02salem_hen_mv_mt_tbl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tt02salem_hen_sub_mv_mt_tbl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tt02salem_mv_mt_tbl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tt02salem_sum_mv_mt_tbl
+          tags: ["japan_dcl_common_views","transformation"]
+        - name: tm40shihanki       
+          tags: ["japan_dcl_common_views","transformation"]
 
-      
+
+
   - name: jpdclitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: jpdclitg_integration

@@ -12,7 +12,6 @@ sources:
     tables:
       - name: genomer_kokya_kpi_inbound
       - name: cim02tokui_ikou
-      - name: hanyo_attr_bkp
       - name: cim24itbun_ikou
       - name : cit80saleh_uri_mv
       - name: cit80saleh_hen_mv
