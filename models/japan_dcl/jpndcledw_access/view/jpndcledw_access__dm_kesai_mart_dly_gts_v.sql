@@ -1,0 +1,55 @@
+with dm_kesai_mart_dly_gts_v as (
+    select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_gts_v') }}
+),
+
+final as (
+select  
+saleno as "saleno",
+	"出荷年月日（通常カレンダー基準",
+	"j&j日付",
+ship_jnj_month_view as "ship_jnj_month_view",
+ship_jnj_month_name as "ship_jnj_month_name",
+shipment_week_jnj as "shipment_week_jnj",
+shipment_week_jnj_number as "shipment_week_jnj_number",
+ship_jnj_month_year as "ship_jnj_month_year",
+	"着荷日年月日（通常カレンダー基準",
+delivery_jnj_month_view as "delivery_jnj_month_view",
+delivery_jnj_month_name as "delivery_jnj_month_name",
+delivery_week_jnj as "delivery_week_jnj",
+delivery_week_jnj_number as "delivery_week_jnj_number",
+delivery_jnj_month_year as "delivery_jnj_month_year",
+"チャネル",
+"得意先",
+"販売商品",
+"販売商品区分",
+"商品構成",
+"在庫商品コード(事前)",
+"在庫商品コード",
+"受注区分コード",
+"受注区分名",
+	gts as "gts",
+	gts_qty as "gts_qty",
+	ciw_return as "ciw_return",
+	ciw_return_qty as "ciw_return_qty",
+	ciw_discount as "ciw_discount",
+	ciw_point as "ciw_point",
+	nts as "nts",
+	"店舗名",
+	"品目分類値コード1",
+	"品目分類値コード2",
+	"品目分類値コード3",
+	"品目グループ名",
+	"部門7追加属性1",
+	"部門7追加属性2",
+	"部門7追加属性3",
+	"部門7追加属性4",
+	"部門7追加属性5",
+	"部門7追加属性6",
+	"部門7追加属性7",
+	"部門7追加属性8",
+	"部門7追加属性9",
+	"部門7追加属性10"
+from dm_kesai_mart_dly_gts_v
+)
+
+select * from final

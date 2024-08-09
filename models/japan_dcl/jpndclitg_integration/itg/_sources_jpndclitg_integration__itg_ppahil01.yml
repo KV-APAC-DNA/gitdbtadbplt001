@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  
+  - name: jpdcledw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: jpdcledw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    tables:
+      - name: kr_frequency_1yn_900
+      - name: '"cewq028破損商品"'
+
+      - name: '"wqwt34明細出力リスト"'
+
+      - name: '"wqwt74戦略商品別売上ｐ"'

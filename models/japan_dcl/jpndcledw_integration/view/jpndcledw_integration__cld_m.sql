@@ -1,3 +1,8 @@
+{{
+    config(
+        post_hook='{{update_kr_comm_point_para()}}'
+    )
+}}
 WITH cld_m
 AS (
   SELECT *

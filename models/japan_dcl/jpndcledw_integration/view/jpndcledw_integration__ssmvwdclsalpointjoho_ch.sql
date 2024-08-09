@@ -1,40 +1,39 @@
 
-
 with zcmmntorisk as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.ZCMMNTORISK
+select * from {{ source('jpdclitg_integration', 'zcmmntorisk') }}
 ),
 zcmmnsoshitaik as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.ZCMMNSOSHITAIK
+select * from {{ source('jpdclitg_integration', 'zcmmnsoshitaik') }}
 ),
 ssmthdclsalhephedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHDCLSALHEPHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthdclsalhephedda') }}
 ),
 ssmthdclthanjuchhedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHDCLTHANJUCHHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthdclthanjuchhedda') }}
 ),
 ssmtndclsaljisk as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTNDCLSALJISK
+select * from {{ source('jpdclitg_integration', 'ssmtndclsaljisk') }}
 ),
 ssmthsalhephedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHSALHEPHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthsalhephedda') }}
 ),
 ssmthshkahedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHSHKAHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthshkahedda') }}
 ),
 ssmtndclshkahedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTNDCLSHKAHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmtndclshkahedda') }}
 ),
 ssmthjuchhedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHJUCHHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthjuchhedda') }}
 ),
 ssmthsalhedda as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSMTHSALHEDDA
+select * from {{ source('jpdclitg_integration', 'ssmthsalhedda') }}
 ),
 ssctnkaisytimei as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCTNKAISYTIMEI
+select * from {{ source('jpdclitg_integration', 'ssctnkaisytimei') }}
 ),
 aartnskyden as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.AARTNSKYDEN
+select * from {{ source('jpdclitg_integration', 'aartnskyden') }}
 ),
 union_1 as (
   SELECT 
