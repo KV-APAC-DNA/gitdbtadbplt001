@@ -2,7 +2,7 @@ with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_usermaster') }}
 ),
-old as 
+itg as 
 (
     select * from {{this}}
 ),
