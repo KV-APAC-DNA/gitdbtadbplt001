@@ -1,5 +1,5 @@
 with tm14shkos as (
-select * from DEV_DNA_CORE.SNAPJPDCLEDW_INTEGRATION.TM14SHKOS
+select * from {{ source('jpdcledw_integration', 'tm14shkos') }}
 ),
 tm67juch_nm as (
 select * from {{ ref('jpndcledw_integration__tm67juch_nm') }}

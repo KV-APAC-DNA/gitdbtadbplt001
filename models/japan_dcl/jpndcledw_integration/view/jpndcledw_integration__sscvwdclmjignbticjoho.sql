@@ -1,20 +1,20 @@
 with zcmmnkbn as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.ZCMMNKBN
+select * from {{ source('jpdclitg_integration', 'zcmmnkbn') }}
 ),
 sscmnhin as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCMNHIN
+select * from {{ source('jpdclitg_integration', 'sscmnhin') }}
 ),
 sscmhsoko as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCMHSOKO
+select * from {{ source('jpdclitg_integration', 'sscmhsoko') }}
 ),
 sscmnichinshitukbn as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCMNICHINSHITUKBN
+select * from {{ source('jpdclitg_integration', 'sscmnichinshitukbn') }}
 ),
 zcmmnsoshitaik as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.ZCMMNSOSHITAIK
+select * from {{ source('jpdclitg_integration', 'zcmmnsoshitaik') }}
 ),
 ssctnmjignbtic as (
-select * from DEV_DNA_CORE.SNAPJPDCLITG_INTEGRATION.SSCTNMJIGNBTIC
+select * from {{ source('jpdclitg_integration', 'ssctnmjignbtic') }}
 ),
 final as (
 SELECT 

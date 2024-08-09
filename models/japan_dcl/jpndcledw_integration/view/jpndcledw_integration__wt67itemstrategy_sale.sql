@@ -1,7 +1,7 @@
 WITH tm14shkos
 AS (
     SELECT *
-    FROM dev_dna_core.snapjpdcledw_integration.tm14shkos
+    FROM {{ source('jpdcledw_integration', 'tm14shkos') }}
     ),
 zaiko_shohin_attr
 AS (
