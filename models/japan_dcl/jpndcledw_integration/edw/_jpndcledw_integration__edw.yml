@@ -765,7 +765,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
-      alias: "wqwt74戦略商品別売上ｐ_tbl_new"
+      alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
@@ -801,7 +801,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"]
   - name: jpndcledw_integration__kr_frequency_1yn_900_kizuna
     config:
-      alias: kr_frequency_all_900_kizuna
+      alias: kr_frequency_1yn_900_kizuna
       tags: ["m_dcl_edw_job2","transformation"]
   - name: jpndcledw_integration__kr_frequency_all_ord_work_kizuna
     config:
@@ -809,7 +809,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"]
   - name: jpndcledw_integration__kr_frequency_all_work_kizuna
     config:
-      alias: kr_frequency_all_ord_work_kizuna
+      alias: kr_frequency_all_work_kizuna
       tags: ["m_dcl_edw_job2","transformation"]
   - name: jpndcledw_integration__kr_frequency_1yn_ord_work_kizuna
     config:
@@ -1129,7 +1129,7 @@ models:
 
   - name: jpndcledw_integration__kr_054_tounen_kingaku_wk2x
     config:
-      alias: kr_054_tounen_yoteix
+      alias: kr_054_tounen_kingaku_wk2x
       tags: ["dcl_004_month_end_refresh","transformation"]
       
   - name: jpndcledw_integration__dm_mykokya
@@ -1246,3 +1246,8 @@ models:
     config:
       alias: temp_u_new_016
       tags: ["m_dcl_edw_job2", "transformation"]
+      
+  - name: jpndcledw_integration__item_jizen_bunkai_maint
+    config:
+      alias: item_jizen_bunkai_maint
+      tags: ["m_dcl_edw_job1","transformation"]
