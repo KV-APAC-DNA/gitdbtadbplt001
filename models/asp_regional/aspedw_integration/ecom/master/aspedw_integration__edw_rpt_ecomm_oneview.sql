@@ -5,118 +5,118 @@
 }}
 
 with v_edw_customer_sales_dim as(
-    select * from snapaspedw_integration.v_edw_customer_sales_dim
+    select * from {{ ref('aspedw_integration__v_edw_customer_sales_dim') }}
 ),
 itg_mds_in_ecom_nts_adjustment as(
-    select * from DEV_DNA_CORE.snapinditg_integration.itg_mds_in_ecom_nts_adjustment
+    select * from {{ ref('inditg_integration__itg_mds_in_ecom_nts_adjustment') }}
 ),
 edw_copa_trans_fact as(
-    select * from snapaspedw_integration.edw_copa_trans_fact
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
 edw_pharmacy_ecommerce_analysis as(
-	select * from DEV_DNA_CORE.SNAPPCFEDW_INTEGRATION.EDW_PHARMACY_ECOMMERCE_ANALYSIS
+	select * from {{ ref('SNAPPCFEDW_INTEGRATION__EDW_PHARMACY_ECOMMERCE_ANALYSIS') }}
 ),
 edw_profit_center_franchise_mapping as(
-    select * from snapaspedw_integration.edw_profit_center_franchise_mapping
+    select * from {{ ref('aspedw_integration__edw_profit_center_franchise_mapping') }}
 ),
 edw_material_dim as(
-    select * from snapaspedw_integration.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_company_dim as(
-    select * from snapaspedw_integration.edw_company_dim
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
 edw_calendar_dim as(
-    select * from snapaspedw_integration.edw_calendar_dim
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
 v_intrm_reg_crncy_exch_fiscper as(
-    select * from snapaspedw_integration.v_intrm_reg_crncy_exch_fiscper
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 wks_filter_params as(
-    select * from DEV_DNA_CORE.sm05_workspace.aspwks_integration__wks_filter_params
+    select * from {{ ref('aspwks_integration__wks_filter_params') }}
 ),
 itg_mds_ap_ecom_oneview_config as(
-    select * from DEV_DNA_CORE.snapaspitg_integration.itg_mds_ap_ecom_oneview_config
+    select * from {{ ref('aspitg_integration__itg_mds_ap_ecom_oneview_config') }}
 ),
 wks_india_ecom as(
-    select * from DEV_DNA_CORE.INDWKS_INTEGRATION.WKS_INDIA_ECOM
+    select * from {{ ref('INDWKS_INTEGRATION__WKS_INDIA_ECOM') }}
 ),
 edw_material_plant_dim as(
-    select * from snapaspedw_integration.edw_material_plant_dim
+    select * from {{ ref('aspedw_integration__edw_material_plant_dim') }}
 ),
 dm_integration_dly as(
-    select * from DEV_DNA_CORE.snapjpnedw_integration.dm_integration_dly
+    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
 edi_chn_m as(
-    select * from DEV_DNA_CORE.snapjpnedw_integration.edi_chn_m
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
 edi_item_m as(
-    select * from DEV_DNA_CORE.snapjpnedw_integration.edi_item_m
+    select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 mt_cld as(
-    select * from DEV_DNA_CORE.snapjpnedw_integration.mt_cld
+    select * from {{ ref('jpnedw_integration__mt_cld') }}
 ),
 mt_account_key as(
-    select * from DEV_DNA_CORE.snapjpnedw_integration.mt_account_key
+    select * from {{ ref('jpnedw_integration__mt_account_key') }}
 ),
 V_INTRM_DISC_REBATE_YTD as(
-select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.V_INTRM_DISC_REBATE_YTD
+select * from {{ ref('ASPEDW_INTEGRATION__V_INTRM_DISC_REBATE_YTD') }}
 ),
 MT_TP_STATUS_MAPPING as(
-    select * from DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_TP_STATUS_MAPPING
+    select * from {{ ref('JPNEDW_INTEGRATION__MT_TP_STATUS_MAPPING') }}
 ),
 edw_ecommerce_nts_regional as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_ECOMMERCE_NTS_REGIONAL
+    select * from {{ ref('ASPEDW_INTEGRATION__EDW_ECOMMERCE_NTS_REGIONAL') }}
 ),
 itg_query_parameters as(
-    select * from DEV_DNA_CORE.snapaspitg_integration.itg_query_parameters
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 edw_ap_ecomm_nts_manual_adjustment as(
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_AP_ECOMM_NTS_MANUAL_ADJUSTMENT
+    select * from {{ ref('ASPEDW_INTEGRATION__EDW_AP_ECOMM_NTS_MANUAL_ADJUSTMENT') }}
 ),
 edw_ecomm_plan as(
-    select * from snapaspedw_integration.edw_ecomm_plan
+    select * from {{ ref('aspedw_integration__edw_ecomm_plan') }}
 ),
 v_rpt_pos_offtake_daily as(
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.V_RPT_POS_OFFTAKE_DAILY
+    select * from {{ ref('NTAEDW_INTEGRATION__V_RPT_POS_OFFTAKE_DAILY') }}
 ),
 edw_ecommerce_offtake as(
-    select * from DEV_DNA_CORE.snapindedw_integration.edw_ecommerce_offtake
+    select * from {{ ref('indedw_integration__edw_ecommerce_offtake') }}
 ),
 edw_product_key_attributes as(
-    select * from DEV_DNA_CORE.snapaspedw_integration.edw_product_key_attributes
+    select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
 ),
 edw_customer_base_dim as(
-    select * from DEV_DNA_CORE.snapaspedw_integration.edw_customer_base_dim
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
 edw_ims_fact as(
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_IMS_FACT
+    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_FACT') }}
 ),
 edw_ph_ecommerce_offtake as(
-    select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_PH_ECOMMERCE_OFFTAKE
+    select * from {{ ref('SNAPOSEEDW_INTEGRATION__EDW_PH_ECOMMERCE_OFFTAKE') }}
 ),
 edw_ecommerce_offtake_nta as(
-select * from DEV_DNA_CORE.SNAPNTAEDW_INTEGRATION.EDW_ECOMMERCE_OFFTAKE
+select * from {{ ref('SNAPNTAEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
 ),
 edw_sg_sellin_analysis as(
-	select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.EDW_SG_SELLIN_ANALYSIS
+	select * from {{ ref('SNAPOSEEDW_INTEGRATION__EDW_SG_SELLIN_ANALYSIS') }}
 ),
 edw_acct_ciw_hier as(
-	select * from snapaspedw_integration.edw_acct_ciw_hier
+	select * from {{ ref('aspedw_integration__edw_acct_ciw_hier') }}
 ),
 edw_account_ciw_dim as(
-	select * from snapaspedw_integration.edw_account_ciw_dim
+	select * from {{ ref('aspedw_integration__edw_account_ciw_dim') }}
 ),
 edw_gch_producthierarchy as (
-	select * from snapaspedw_integration.edw_gch_producthierarchy
+	select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 itg_mds_ap_sales_ops_map as(
-	select * from snapaspitg_integration.itg_mds_ap_sales_ops_map
+	select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map') }}
 ),
 edw_market_share_qsd as(
-	select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MARKET_SHARE_QSD
+	select * from {{ ref('ASPEDW_INTEGRATION__EDW_MARKET_SHARE_QSD') }}
 ),
 edw_gch_customerhierarchy as (
-	select * from snapaspedw_integration.edw_gch_customerhierarchy
+	select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
 cus_sales_extn as(
     select cus_sales.sls_org  ,
@@ -3402,10 +3402,10 @@ insert13 as(
 			AND copa.fisc_yr_per >= (
 				SELECT (
 						SELECT fisc_yr
-						FROM edw_calendar_dim
-						WHERE cal_day = to_date(current_timestamp()) - 365
-						) - filter_value || '001' AS filter_value
-				FROM itg_mds_ap_ecom_oneview_config
+						FROM EDW_CALENDAR_DIM
+						WHERE cal_day = to_date(convert_timezone('UTC',current_timestamp())) - 365
+						) - filter_value::float || '001' AS filter_value
+				FROM ITG_MDS_AP_ECOM_ONEVIEW_CONFIG
 				WHERE column_name = 'fisc_yr_per'
 					AND dataset = 'CIW (SAP)'
 				)
