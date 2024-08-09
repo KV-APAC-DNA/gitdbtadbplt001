@@ -239,7 +239,7 @@ vdfaa as (
         SALES_GRP_DESC,
         CURR_CD,
        -- (CASE WHEN JJ_PERIOD <= PROJPRD.PREV_JJ_PERIOD THEN ACTUAL_SALES_QTY ELSE 0 END) AS 
-        ACTUAL_SALES_QTY
+        --ACTUAL_SALES_QTY
         ACTUAL_SALES_QTY,
         APO_TOT_FRCST,
         APO_BASE_FRCST,
@@ -347,9 +347,9 @@ final as(
     select * from union1
     union all
     select * from union2
-    {% if is_incremental() %}
+   /* {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     where snap_shot_dt > (select max(snap_shot_dt) from {{ this }}) 
-    {% endif %}
+    {% endif %}*/
 )
 select * from final
