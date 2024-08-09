@@ -11,186 +11,79 @@ sources:
     
     tables:
       - name: mykokya
-        tags: ["dcl_mykokya","transformation"]
       - name: rakutenorderdetail
-        tags: ["dcl_rakuten_load","transformation"]
       - name: c_tbdmsndhist
-        tags: ["m_dcl_itg_job1","transformation"]
-
       - name: c_tbecdeptmst
-        tags: ["m_dcl_itg_job1","transformation"]
-
-      - name: c_tbecclient  
-        tags: ["m_dcl_itg_job1","transformation"]
-      
-      - name: c_tbecinquirekesai  
-        tags: ["m_dcl_itg_job1","transformation"]
-      
+      - name: c_tbecclient        
+      - name: c_tbecinquirekesai        
       - name: c_tbecregularcoursemst  
-        tags: ["m_dcl_itg_job1","transformation"]
-      
       - name: c_tbecregnumitemconvhist  
-        tags: ["m_dcl_itg_job1","transformation"]
-
-      - name: c_tbecinquire
-        tags: ["m_dcl_itg_job2","transformation"]
-      
-      - name: c_tbecshippingresults  
-        tags: ["m_dcl_itg_job2","transformation"]
-      
-      - name: c_tbecusercard  
-        tags: ["m_dcl_itg_job2","transformation"]
-      
-      - name: c_tbeccardcompanymst  
-        tags: ["m_dcl_itg_job2","transformation"]
-      
-      - name: c_tbecprivilegekesaihistory  
-        tags: ["m_dcl_itg_job3","transformation"]
-      
-      - name: tbecorderhist  
-        tags: ["m_dcl_itg_job3","transformation"]
-      
-      - name: c_tbecregularcontract  
-        tags: ["m_dcl_itg_job3","transformation"]
-      
+      - name: c_tbecinquire      
+      - name: c_tbecshippingresults        
+      - name: c_tbecusercard        
+      - name: c_tbeccardcompanymst        
+      - name: c_tbecprivilegekesaihistory        
+      - name: tbecorderhist        
+      - name: c_tbecregularcontract        
       - name: c_tbecregularmeisai  
-        tags: ["m_dcl_itg_job3","transformation"]
-
       - name: c_tbecpridiscratecategory
-        tags: ["m_dcl_itg_job1","transformation"]
-
       - name: c_tbecpridiscrateitem
-        tags: ["m_dcl_itg_job1","transformation"]
-
-      - name: c_tbecregnumitemconvmst
-        tags: ["m_dcl_itg_job1","transformation"]
-      
-      - name: c_tbmembunitrel
-        tags: ["m_dcl_itg_job3","transformation"]
-      
+      - name: c_tbecregnumitemconvmst      
+      - name: c_tbmembunitrel      
       - name: c_tbecpripromotion
-        tags: ["m_dcl_itg_job3","transformation"]
-
       - name: c_tbecprimembtype
-        tags: ["m_dcl_itg_job3","transformation"]
-
       - name: sdl_mds_jp_dcl_partner_master
-        tags: ["m_dcl_edw_job1","transformation"] 
-
-      - name: sdl_mds_jp_dcl_product_master
-        tags: ["m_dcl_edw_job1","transformation"]     
-        
+      - name: sdl_mds_jp_dcl_product_master        
       - name: sdl_mds_jp_dcl_mt_h_product
-        tags: ["m_dcl_edw_job1","transformation"]     
-
       - name: c_tbecinquiremeisai
-        tags: ["","transformation"]
       - name: c_tbeckesai
-        tags: ["","transformation"]
       - name: c_tbecpaymentpatternmst
-        tags: ["","transformation"]
       - name: c_tbecprivilegekesai
-        tags: ["","transformation"]
       - name: c_tbecprivilegemst
-        tags: ["","transformation"]
       - name: c_tbecrankaddamountadm
-        tags: ["","transformation"]
       - name: c_tbecprivilegeinquirekesai
-        tags: ["","transformation"]
       - name: c_tbecpointadm
-        tags: ["","transformation"]
       - name: c_tbecranksumamount
-        tags: ["","transformation"]
       - name: c_tbecordermeisaihistory
-        tags: ["","transformation"]
       - name: c_tbeckesaihistory
-        tags: ["","transformation"]
       - name: c_tbecorderhistory
-        tags: ["","transformation"]
       - name: c_tbecusrcomment
-        tags: ["","transformation"]
       - name: c_tbecusrcommentclassmst
-        tags: ["","transformation"]
       - name: c_tbtelcompanymst
-        tags: ["","transformation"]
       - name: c_tbecpointregistdivmst
-        tags: ["","transformation"]
       - name: c_tbecregularoperatehist
-        tags: ["","transformation"]
       - name: c_tbecpribuycategory
-        tags: ["","transformation"]
       - name: c_tbecprimembclass
-        tags: ["","transformation"]
       - name: c_tbecpripresentitem
-        tags: ["","transformation"]
       - name: c_tbecpribuyitem
-        tags: ["","transformation"]
       - name: c_tbecpriroute
-        tags: ["","transformation"]
       - name: c_tbecpriusrsts
-        tags: ["","transformation"]
       - name: contact_hist
-        tags: ["m_dcl_itg_job3","ingestion"]
       - name: tbechenpinriyu
-        tags: ["","transformation"]
-  
       - name: tbecsalesroutemst
-        tags: ["","transformation"]
-      
       - name: tbecsoko
-        tags: ["","transformation"]
-      
       - name: tbpromotion
-        tags: ["","transformation"]
-      
       - name: tbpromotioncate
-        tags: ["","transformation"]
       - name: tbuser
-        tags: ["","transformation"]
       - name: tbperson
-        tags: ["m_dcl_itg_job2","ingestion"]
-
-      - name: tbusrpram  
-        tags: ["m_dcl_itg_job2","ingestion"]
-      
-      - name: tbecpointhistory  
-        tags: ["m_dcl_itg_job2","ingestion"]
-
+      - name: tbusrpram
+      - name: tbecpointhistory
       - name: tbecitem
-        tags: ["m_dcl_itg_job3","ingestion"]
-
       - name: tbecordermeisai
-        tags: ["m_dcl_itg_job3","ingestion"]
-
-      - name: tbecorder  
-        tags: ["m_dcl_itg_job3","ingestion"]
-
+      - name: tbecorder
       - name: tbecsetitem
-        tags: ["m_dcl_itg_job3","ingestion"]
-
-      - name: sfcc_product_category
-        tags: ["m_dcl_itg_job5","ingestion"]
-      
+      - name: sfcc_product_category      
       - name: sfcc_product_mst
-        tags: ["m_dcl_itg_job5","ingestion"]
       - name: sfmc_bounces
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_clicks
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_notsent
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_opens
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_sendjobs
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_kokya_subskey_mapping
-        tags: ["m_dcl_itg_job6","transformation"]
       - name: sfmc_sent  
-        tags: ["m_dcl_itg_job1","ingestion"]
       - name: sfmc_unsubs  
-        tags: ["m_dcl_itg_job1","ingestion"]
-
       - name: acgel_predictionresult
+
   - name: jpdcledw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: jpdcledw_integration
@@ -226,34 +119,20 @@ sources:
     - name: kesai_m_data_mart_sub_old_dum
     - name: kesai_m_data_mart_sub_old_n_bn
     - name: dm_kesai_mart_dly_bkp_20221021_deployment
-    - name: teikikeiyaku_data_mart_cl
-      tags: ["japan_dcl_common_views","transformation"]
+    - name: teikikeiyaku_data_mart_c
+    - name: report_006_a_historical_dat
+    - name: wk_kpi_06_04_ol
     - name: report_006_a_historical_data
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: wk_kpi_06_04_old
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: report_006_a_historical_data2
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tm09nendai_ikou
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: hanyo_attr_bkp
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt01saleh_hen_mv_mt
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt02salem_hen_mv_tbl
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt02salem_hen_mv_mt_tbl
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt02salem_hen_sub_mv_mt_tbl
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt02salem_mv_mt_tbl
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tt02salem_sum_mv_mt_tbl
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tm40shihanki       
-      tags: ["japan_dcl_common_views","transformation"]
-    - name: tm14shkos       
-      tags: ["japan_dcl_common_views","transformation"]
+    - name: tm09nendai_iko
+    - name: hanyo_attr_bk
+    - name: tt01saleh_hen_mv_m
+    - name: tt02salem_hen_mv_tb
+    - name: tt02salem_hen_mv_mt_tb
+    - name: tt02salem_hen_sub_mv_mt_tb
+    - name: tt02salem_mv_mt_tb
+    - name: tt02salem_sum_mv_mt_tb
+    - name: tm40shihanki      
+    - name: tm14shkos      
 
   - name: jpdclitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -264,49 +143,22 @@ sources:
       identifier: false  
     tables:
       - name: sscmnhin
-        tags: ["japan_dcl_common_views","transformation"]
       - name: sscmhtoriskbetsuhin
-        tags: ["japan_dcl_common_views","transformation"]
       - name: zcmmnkbn       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: scmnhin       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: sscmhsoko       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: sscmnichinshitukbn       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: zcmmnsoshitaik       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: ssctnmjignbtic       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: zcmmntorisk       
-        tags: ["japan_dcl_common_views","transformation"]
       - name: ssmthdclthanjuchhedda 
-        tags: ["japan_dcl_common_views","transformation"]
       - name: ssmtndclsaljisk 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmthsalhephedda 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmthshkahedda 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmtndclshkahedda
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmthjuchhedda 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmthsalhedda 
-        tags: ["japan_dcl_common_views","transformation"]
       - name: ssctnkaisytimei 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: aartnskyden 
-        tags: ["japan_dcl_common_views","transformation"]
-
       - name: ssmthdclsalhephedda
-        tags: ["japan_dcl_common_views","transformation"]
       - name: zcmmnjuusho
-        tags: ["japan_dcl_common_views","transformation"]
