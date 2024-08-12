@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: chnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: chnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_cn_ecom_sapcustomer_map
+      tags: ["ch_ecomm_mds","ingestion"]
+    - name: sdl_mds_cn_ecom_brand
+      tags: ["ch_ecomm_mds","ingestion"]
+    - name: sdl_mds_cn_otc_soldto_mapping
+      tags: ["ch_ecomm_mds","ingestion"]
+    - name: sdl_mds_cn_otc_product_mapping
+      tags: ["ch_ecomm_mds","ingestion"]
+    - name: sdl_mds_cn_ps_weights
+      tags: ["ch_pms_mds","ingestion"]
+    - name: sdl_mds_cn_ps_target
+      tags: ["ch_pms_mds","ingestion"]

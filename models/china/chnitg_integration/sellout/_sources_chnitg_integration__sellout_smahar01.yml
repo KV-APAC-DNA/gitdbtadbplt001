@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: chnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: chnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_cn_selfcare_sellout_fact
+      tags: ["j_ap_dna_etl_framework_cn_otc_selfcare","ingestion"]
