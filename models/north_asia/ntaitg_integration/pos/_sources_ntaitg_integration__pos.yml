@@ -31,13 +31,11 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
-          - test_date_format_odd_eve:
-              model_nm: "{{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }}"
-              date_column: "date"
-              filter: "(odd_mon.date) = (even_mon.date) and (odd_mon.result) = (even_mon.result)"
-              failure_reason: "'DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: DD/MM/YYYY'"
+          - test_format:
               select_columns: ["vendorid","brand","productid","date"]
-              name: TRATBL_sdl_hk_pos_scorecard_mannings__test_date_format_odd_eve
+              failure_reason: "'DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: DD/MM/YYYY'"
+              where_clause: "not regexp_like(date,'(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)/(01|03|05|07|08|10|12)/(20)[0-9]{2}') and not regexp_like(date,'(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)/(02|04|06|09|11)/(20)[0-9]{2}')"
+              name: TRATBL_sdl_hk_pos_scorecard_mannings__date_format_test
               config:
                 store_failures: true
                 schema: ntawks_integration
