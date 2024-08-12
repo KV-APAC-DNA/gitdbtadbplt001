@@ -256,7 +256,8 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
                           ROW_NUMBER() OVER (PARTITION BY sap_matl_num ORDER BY sap_matl_num) RANK
                    FROM  EDW_MATERIAL_DIM EMD,
-                        EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        --EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        (SELECT * FROM (SELECT a.*, ROW_NUMBER() OVER (PARTITION BY LTRIM(MATERIALNUMBER,0) ORDER BY LTRIM(MATERIALNUMBER,0)) rnum FROM EDW_GCH_PRODUCTHIERARCHY a) where rnum=1) EGPH,
                   (SELECT * FROM (SELECT DISTINCT FRANCHISE_NAME,BRAND_NAME,PRODUCT_CATEGORY_NAME,
 						       VARIANT_NAME,MOTHERSKU_NAME,MOTHERSKU_CODE,PRODUCT_CODE,row_number () over (partition by mothersku_code order by crt_dttm desc) as rn
                    FROM EDW_PRODUCT_DIM  WHERE PRODUCT_CODE NOT IN ('233test1')) WHERE RN=1)INDIA_PROD 
@@ -558,7 +559,8 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
                           ROW_NUMBER() OVER (PARTITION BY sap_matl_num ORDER BY sap_matl_num) RANK
                    FROM  EDW_MATERIAL_DIM EMD,
-                        EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        --EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        (SELECT * FROM (SELECT a.*, ROW_NUMBER() OVER (PARTITION BY LTRIM(MATERIALNUMBER,0) ORDER BY LTRIM(MATERIALNUMBER,0)) rnum FROM EDW_GCH_PRODUCTHIERARCHY a) where rnum=1) EGPH,
                   (SELECT * FROM (SELECT DISTINCT FRANCHISE_NAME,BRAND_NAME,PRODUCT_CATEGORY_NAME,
 						       VARIANT_NAME,MOTHERSKU_NAME,MOTHERSKU_CODE,PRODUCT_CODE,row_number () over (partition by mothersku_code order by crt_dttm desc) as rn
                    FROM EDW_PRODUCT_DIM  WHERE PRODUCT_CODE NOT IN ('233test1')) WHERE RN=1)INDIA_PROD 
