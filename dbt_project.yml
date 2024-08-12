@@ -599,3 +599,21 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
+    
+    hcposea:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      oseedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPOSEEDW_INTEGRATION
+        view:
+            +materialized: view
+      oseitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPOSEITG_INTEGRATION
+      oseedw_access:
+        +materialized: view
+        +schema: HCPOSEEDW_ACCESS
