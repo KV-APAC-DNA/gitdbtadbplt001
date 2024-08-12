@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook =" {% if is_incremental() %}
-                    delete from {{this}} USING {{ ref('aspwks_integration__wks_itg_ecc_standard_cost_history') }}
+                    delete from {{this}} itg_ecc_standard_cost_history USING {{ ref('aspwks_integration__wks_itg_ecc_standard_cost_history') }} WKS_itg_ecc_standard_cost_history
                     WHERE WKS_itg_ecc_standard_cost_history.mandt=itg_ecc_standard_cost_history.mandt
                     AND WKS_itg_ecc_standard_cost_history.matnr=itg_ecc_standard_cost_history.matnr
                     AND WKS_itg_ecc_standard_cost_history.bwkey=itg_ecc_standard_cost_history.bwkey

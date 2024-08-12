@@ -6,7 +6,7 @@
 
 with itg_prox_report_bi_budgetusage as
 (
-    select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_PROX_REPORT_BI_BUDGETUSAGE
+    select * from {{ ref('aspitg_integration__itg_prox_report_bi_budgetusage') }}
 ),
 vw_edw_reg_exch_rate as
 (
@@ -14,7 +14,7 @@ vw_edw_reg_exch_rate as
 ),
 itg_prox_report_bi_contract as
 (
-	select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_PROX_REPORT_BI_CONTRACT
+	select * from {{ ref('aspitg_integration__itg_prox_report_bi_contract') }}
 ),
 edw_customer_base_dim as
 (
@@ -50,7 +50,7 @@ v_rpt_copa_gcph as
 ),
 itg_prox_report_bi_payment as
 (
-	select * from DEV_DNA_CORE.ASPITG_INTEGRATION.ITG_PROX_REPORT_BI_PAYMENT
+	select * from {{ ref('aspitg_integration__itg_prox_report_bi_payment') }}
 ),
 cur as
 (

@@ -1,6 +1,6 @@
 with edw_ecommerce_6pai as
 (
-    select * from {{ ref('aspedw_integration__edw_company_dim') }}
+    select * from {{ ref('aspedw_integration__edw_ecommerce_6pai') }}
 ),
 itg_mds_ap_sales_ops_map as
 (

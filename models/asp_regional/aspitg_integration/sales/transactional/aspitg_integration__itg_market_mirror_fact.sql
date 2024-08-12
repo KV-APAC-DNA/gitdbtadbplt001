@@ -3,14 +3,14 @@
         materialized='incremental',
         incremental_strategy='append',
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('aspsdl_raw', 'sdl_market_mirror_fact') }}) != 0;
+        delete from {{this}} where (SELECT COUNT(*) FROM {{ source('aspwks_integration', 'wks_market_mirror_fact') }}) != 0;
         {% endif %}"
     )
 }}
 
 with source as 
 (
-    select * from {{ source('aspsdl_raw', 'sdl_market_mirror_fact') }}
+    select * from {{ source('aspwks_integration', 'wks_market_mirror_fact') }}
 ),
 final as
 (

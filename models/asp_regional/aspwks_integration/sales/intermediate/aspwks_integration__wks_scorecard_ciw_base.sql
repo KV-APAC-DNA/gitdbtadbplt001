@@ -13,7 +13,7 @@ final as
                    sum(ciw_lcy) as ciw_lcy,
                    sum(ciw_usd) as ciw_usd 
          from      
-                (select ctry_nm, cluster, fisc_yr, fisc_yr_per, nvl(nullif("b1 mega-brand",''),'NA')  as mega_brand,
+                (select ctry_nm, "cluster" as cluster, fisc_yr, fisc_yr_per, nvl(nullif("b1 mega-brand",''),'NA')  as mega_brand,
                       case when ciw_desc !='Gross Trade Prod Sales' then 'Non_GTS' else 'GTS' end as ciw_desc,
                       case when ciw_desc != 'Gross Trade Prod Sales' then amt_lcy end ciw_lcy ,
                       case when ciw_desc != 'Gross Trade Prod Sales' then amt_usd end ciw_usd ,

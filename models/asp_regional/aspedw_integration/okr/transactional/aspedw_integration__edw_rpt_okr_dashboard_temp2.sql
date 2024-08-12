@@ -91,7 +91,7 @@ trans as
 final as
 (
         select
-        	data_type::varchar(20) as data_type,
+        	data_type::varchar(100) as data_type,
 	        kpi::varchar(100) as kpi,
 	        year_month::varchar(10) as year_month,
 	        fisc_year::varchar(10) as fisc_year,

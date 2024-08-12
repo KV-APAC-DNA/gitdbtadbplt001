@@ -34,4 +34,12 @@ sources:
               schema: aspwks_integration
 
 
-
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_market_mirror_fact

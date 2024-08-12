@@ -4,8 +4,7 @@ with itg_ecommerce_nts_regional as
 ),
 v_intrm_reg_crncy_exch_fiscper as
 (
-    select * from aspedw_integration.v_intrm_reg_crncy_exch_fiscper
-    --{{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
+    select * from {{ ref('aspedw_integration__v_intrm_reg_crncy_exch_fiscper') }}
 ),
 final as
 (

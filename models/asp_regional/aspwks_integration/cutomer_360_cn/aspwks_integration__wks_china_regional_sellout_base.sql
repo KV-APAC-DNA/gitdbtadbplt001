@@ -32,7 +32,7 @@ itg_mds_ap_customer360_config as
 ),
 itg_mds_master_mother_code_mapping as
 (
-    select * from snapaspitg_integration.itg_mds_master_mother_code_mapping
+    select * from {{ source('aspitg_integration', 'itg_mds_master_mother_code_mapping') }}
 ),
 final as
 (

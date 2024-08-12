@@ -12,7 +12,7 @@ edw_material_dim as
 ),
 edw_vw_ph_dstrbtr_customer_dim as
 (
-    select * from {{ ref('phledw_integration__edw_vw_ph_customer_dim') }}
+    select * from {{ ref('phledw_integration__edw_vw_ph_dstrbtr_customer_dim') }}
 ),
 edw_mv_ph_customer_dim as
 (

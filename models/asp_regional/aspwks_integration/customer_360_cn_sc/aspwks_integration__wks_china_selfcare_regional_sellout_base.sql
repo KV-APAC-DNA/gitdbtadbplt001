@@ -1,6 +1,6 @@
 with itg_cn_selfcare_sellout_fact as
 (
-    select * from {{ source('chnitg_integration', 'itg_cn_selfcare_sellout_fact') }}
+    select * from chnitg_integration.itg_cn_selfcare_sellout_fact
 ),
 edw_vw_os_time_dim as
 (
