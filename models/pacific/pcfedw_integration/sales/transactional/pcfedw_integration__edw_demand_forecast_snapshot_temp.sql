@@ -18,7 +18,7 @@ vdfa as (
     select
         pac_source_type,
         pac_subsource_type,
-        (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE as snap_shot_dt,
+        DATEADD(HOUR, -16, (convert_timezone('UTC', current_timestamp )::TIMESTAMPNTZ )::DATE) as snap_shot_dt,
         jj_period,
         jj_week_no,
         jj_wk,
@@ -85,7 +85,7 @@ vdfa as (
 ),
 etd as(
     select
-        (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE as  snapshot_date,
+        DATEADD(HOUR, -16, (convert_timezone('UTC', current_timestamp )::TIMESTAMPNTZ )::DATE) as  snapshot_date,
        etd.jj_wk as snapshot_week_no,
         etdw.row_number as snapshot_mnth_week_no,
         etd.jj_mnth_shrt as snapshot_mnth_shrt,
@@ -179,7 +179,7 @@ vdfaa as (
      SELECT
         PAC_SOURCE_TYPE,
         PAC_SUBSOURCE_TYPE,
-       (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE as SNAP_SHOT_DT,
+       DATEADD(HOUR, -16, (convert_timezone('UTC', current_timestamp )::TIMESTAMPNTZ )::DATE) as SNAP_SHOT_DT,
         JJ_PERIOD,
         JJ_WEEK_NO,
         JJ_WK,
@@ -251,7 +251,7 @@ vdfaa as (
 ),
 etdd as(
     SELECT
-         (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE  as SNAPSHOT_DATE,
+         DATEADD(HOUR, -16, (convert_timezone('UTC', current_timestamp )::TIMESTAMPNTZ )::DATE)  as SNAPSHOT_DATE,
         ETD.JJ_WK AS SNAPSHOT_WEEK_NO,
         ETDW.ROW_NUMBER AS SNAPSHOT_MNTH_WEEK_NO,
         ETD.JJ_MNTH_SHRT AS SNAPSHOT_MNTH_SHRT,
