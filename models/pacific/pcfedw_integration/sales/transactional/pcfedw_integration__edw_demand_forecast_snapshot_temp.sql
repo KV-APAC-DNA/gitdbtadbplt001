@@ -18,7 +18,7 @@ vdfa as (
     select
         pac_source_type,
         pac_subsource_type,
-        (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE as SNAP_SHOT_DATE,
+        (convert_timezone('UTC', current_timestamp)::TIMESTAMPNTZ )::DATE as snap_shot_dt,
         jj_period,
         jj_week_no,
         jj_wk,
