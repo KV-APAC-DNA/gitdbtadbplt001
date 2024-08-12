@@ -16,6 +16,31 @@ sources:
       - name: sdl_kr_pos_emart_line
       - name: sdl_kr_pos_emart_header
       - name: sdl_hk_pos_scorecard_mannings
+        tests:
+          - test_duplicate:
+              select_columns: ["vendorid","brand","productid","date"]
+              group_by_columns: ["vendorid","brand","productid","date"]
+              name: TRATBL_sdl_hk_pos_scorecard_mannings__duplicate_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_null:
+              not_null_columns: ["date"]
+              select_columns: ["vendorid","brand","productid","date"]
+              name: TRATBL_sdl_hk_pos_scorecard_mannings__null_test
+              config:
+                store_failures: true
+                schema: ntawks_integration
+          - test_date_format_odd_eve:
+              model_nm: "{{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }}"
+              date_column: "date"
+              filter: "(odd_mon.date) = (even_mon.date) and (odd_mon.result) = (even_mon.result)"
+              failure_reason: "'DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: DD/MM/YYYY'"
+              select_columns: ["vendorid","brand","productid","date"]
+              name: TRATBL_sdl_hk_pos_scorecard_mannings__test_date_format_odd_eve
+              config:
+                store_failures: true
+                schema: ntawks_integration
       - name: sdl_tw_pos_watson_store
         tags: ["tw_pos_watson","ingestion"]
         tests:
