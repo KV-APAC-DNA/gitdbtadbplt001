@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: oseaedw_integration__vw_employee_hier
+    config:
+      alias: vw_employee_hier
+      tags: ["hcp_views","transformation"]
+  - name: oseaedw_integration__vw_rep_cycle_plan
+    config:
+      alias: vw_rep_cycle_plan
+      tags: ["hcp_views","transformation"]
