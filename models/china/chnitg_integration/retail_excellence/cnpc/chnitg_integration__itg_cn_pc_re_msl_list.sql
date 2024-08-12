@@ -77,7 +77,8 @@ FROM (SELECT distinct base.start_date,
              noo.zone,
              --noo.province,
              noo.city,
-			 nvl(noo.msl_product_desc,pd.msl_product_desc) as msl_product_desc,
+			 --nvl(noo.msl_product_desc,pd.msl_product_desc) as msl_product_desc,
+             mother_description as msl_product_desc,
 			 nvl(noo.mapped_sku_code,pd.sku_code) as mapped_sku_code
 			 --,
 --             noo.pka_product_key_description
@@ -89,6 +90,7 @@ FROM (SELECT distinct base.start_date,
 					   ltrim(ean_code,'0') as ean_Code,
 					   -----Include mother code as per new changes - June'2024
 					   mother_code,
+                       mother_description,
                       jj_mnth_id,
                       fisc_yr
                FROM (SELECT DISTINCT 
