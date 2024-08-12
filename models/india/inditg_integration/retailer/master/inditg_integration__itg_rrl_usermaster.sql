@@ -2,14 +2,15 @@ with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_usermaster') }}
 ),
-old as 
+itg as 
 (
     select * from {{this}}
 ),
-combined (
-    select * from old
+combined as 
+(
+    select * from itg
     union all
-    select * from source
+    select *,current_timestamp()::timestamp_ntz(9) as updt_dttm from source
 ),
 trans as 
 (
