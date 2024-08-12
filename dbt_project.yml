@@ -604,16 +604,16 @@ models:
       config:
         +enabled: true
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      oseedw_integration:
+      hcposeedw_integration:
         +materialized: table
         +transient: false
         +schema: HCPOSEEDW_INTEGRATION
         view:
             +materialized: view
-      oseitg_integration:
+      hcposeitg_integration:
         +materialized: table
         +transient: false
         +schema: HCPOSEITG_INTEGRATION
-      oseedw_access:
+      hcposeedw_access:
         +materialized: view
         +schema: HCPOSEEDW_ACCESS
