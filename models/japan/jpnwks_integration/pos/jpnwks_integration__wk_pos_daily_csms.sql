@@ -8,7 +8,7 @@
 }}
 
 with jp_pos_daily_csms as(
-    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }}
+    select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }} 
 ),
 final as(
     select
