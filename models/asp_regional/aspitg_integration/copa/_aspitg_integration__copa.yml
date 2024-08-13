@@ -4,10 +4,10 @@ models:
   - name: aspitg_integration__vw_itg_custgp_customer_hierarchy
     config:
       alias: vw_itg_custgp_customer_hierarchy
-      tags: ["view","transformation"]
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
 
   - name: aspitg_integration__vw_itg_custgp_prod_hierarchy
     config:
       alias: vw_itg_custgp_prod_hierarchy
-      tags: ["view","transformation"]
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
 

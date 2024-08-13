@@ -60,6 +60,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_material
+        tags: ["prox","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -70,6 +71,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_md_ppgallocation
+        tags: ["prox","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -80,6 +82,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_md_theme
+        tags: ["prox","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -90,7 +93,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_sys_department
-        tags: ["prox_sdepartment","ingestion"]
+        tags: ["prox","ingestion"]
         tests:
             - test_null:
                 select_columns: ["filename","DeptID"]
@@ -100,7 +103,7 @@ sources:
                     store_failures: true
                     schema: aspwks_integration
       - name: sdl_prox_report_bi_budgetusage
-        tags: ["prox_budget","ingestion"]
+        tags: ["prox","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]
@@ -110,7 +113,7 @@ sources:
                   store_failures: true
                   schema: aspwks_integration
       - name: sdl_prox_report_bi_contract
-        tags: ["prox_contract","ingestion"]
+        tags: ["prox","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]
@@ -120,7 +123,7 @@ sources:
                   store_failures: true
                   schema: aspwks_integration
       - name: sdl_prox_report_bi_payment
-        tags: ["prox_payment","ingestion"]
+        tags: ["prox","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]

@@ -6,7 +6,7 @@ models:
   - name: aspedw_integration__v_intrm_disc_rebate_ytd
     config: 
       alias: v_intrm_disc_rebate_ytd
-      tags: ["view","transformation"]
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]
   - name: aspedw_integration__edw_clavis_gb_search_terms_results
     config:
       alias: edw_clavis_gb_search_terms_results
