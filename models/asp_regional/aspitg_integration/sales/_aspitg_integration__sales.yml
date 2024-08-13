@@ -12,7 +12,7 @@ models:
   - name: aspitg_integration__itg_okr_alteryx_automation
     config:
       alias: itg_okr_alteryx_automation
-      tags: ["okr_alteryx_data_ingestion","transformation"]
+      tags: ["okr_alteryx_data_ingestion","ingestion"]
   - name: aspitg_integration__sdl_raw_okr_alteryx_automation
     config:
       alias: sdl_raw_okr_alteryx_automation

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
       - name: sdl_prox_report_bi_monthcommitment
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["RowID"]
@@ -20,7 +20,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_accountgroup
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["ID"]
@@ -30,7 +30,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_channel
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["ID"]
@@ -40,7 +40,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_customer
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["ID"]
@@ -50,7 +50,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_expensetype
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null__ff:
               not_null_columns: ["ID"]
@@ -60,7 +60,7 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
       - name: sdl_prox_md_material
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -71,7 +71,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_md_ppgallocation
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -82,7 +82,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_md_theme
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
         - test_null:
             select_columns:  ["filename","id","reason"]
@@ -93,7 +93,7 @@ sources:
               store_failures: true
               schema: aspwks_integration
       - name: sdl_prox_sys_department
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
             - test_null:
                 select_columns: ["filename","DeptID"]
@@ -103,7 +103,7 @@ sources:
                     store_failures: true
                     schema: aspwks_integration
       - name: sdl_prox_report_bi_budgetusage
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]
@@ -113,7 +113,7 @@ sources:
                   store_failures: true
                   schema: aspwks_integration
       - name: sdl_prox_report_bi_contract
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]
@@ -123,7 +123,7 @@ sources:
                   store_failures: true
                   schema: aspwks_integration
       - name: sdl_prox_report_bi_payment
-        tags: ["prox","ingestion"]
+        tags: ["prox_master","ingestion"]
         tests:
           - test_null:
               select_columns: ["filename","RowID"]
