@@ -1,46 +1,52 @@
+{{ 
+    config
+    (
+    materialized='view'
+    ) 
+}}
 with edw_perfect_store_source_msl as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_msl
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_MSL
 ),
 edw_perfect_store_must_stock_sku_list as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_must_stock_sku_list
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_MUST_STOCK_SKU_LIST
 ),
 edw_perfect_store_store_hierarchy as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_store_hierarchy
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_STORE_HIERARCHY
 ),
 edw_vw_ps_weights as 
 (
-    select * from dev_dna_core.aspedw_integration.edw_vw_ps_weights
+    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_WEIGHTS
 ),
 edw_perfect_store_source_sos_display as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_sos_display
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS_DISPLAY
 ),
 edw_perfect_store_source_osa as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_osa
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_OSA
 ),
 edw_perfect_store_source_sos as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_sos
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS
 ),
 edw_perfect_store_source_planogram as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_planogram
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_PLANOGRAM
 ),
 edw_perfect_store_source_sos_shelf as
 (
-    select * from dev_chndna_core.chnedw_integration.edw_perfect_store_source_sos_shelf
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS_SHELF
 ),
 edw_perfect_store_product_master as
 (
-    select * from dev_dna_core.chnedw_integration.edw_perfect_store_product_master
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_PRODUCT_MASTER
 ),
 EDW_PERFECT_STORE_SOURCE_PROM as
 (
-    select * from DEV_CHNDNA_CORE.CHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_PROM
+    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_PROM
 ),
 
 union_1 as  (
