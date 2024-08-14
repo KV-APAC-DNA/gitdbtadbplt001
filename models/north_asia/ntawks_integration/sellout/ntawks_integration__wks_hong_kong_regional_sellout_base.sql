@@ -19,6 +19,10 @@ select * from {{ source('aspitg_integration','itg_query_parameters') }}
 edw_vw_pop6_store as (
 select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 ),
+sdl_mds_hk_store_master as
+(
+    select * from {{ source('ntasdl_raw', 'sdl_mds_hk_store_master') }}
+),
 transformed as (
 SELECT
 BASE.data_src,
@@ -46,6 +50,7 @@ BASE.msl_product_code,
 BASE.msl_product_desc,
 BASE.store_grade,
 UPPER(BASE.retail_env) as retail_env,
+channel,
 convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
 convert_timezone('UTC',current_timestamp()) AS updt_dttm
 FROM
@@ -75,7 +80,8 @@ SELECT 'POS' AS DATA_SRC,
 	   'NA' as msl_product_code,
 		'NA' as msl_product_desc,
 		'NA'as store_grade,
-		'NA' as retail_env
+		'NA' as retail_env,
+        'NA' as channel
       FROM  edw_pos_fact POS
 	  left join edw_vw_os_time_dim as time_dim
 	on POS.pos_dt = time_dim.cal_date 
@@ -107,18 +113,25 @@ SELECT 'SELL-OUT' AS DATA_SRC,
 	   (sls_amt - rtrn_amt) as SO_SLS_VALUE,
 	   sls.ean_num as msl_product_code,
 		prod_nm as msl_product_desc,
-		pop.store_grade as store_grade,
-		pop.retail_env as retail_env
+		--pop.store_grade as store_grade,
+		--pop.retail_env as retail_env
+        str_mstr.store_grade as store_grade,
+		str_mstr.retail_env as retail_env,
+		channel
 from edw_ims_fact sls LEFT JOIN edw_vw_os_time_dim time_dim
 on sls.ims_txn_dt = time_dim.cal_date
 left join (SELECT DISTINCT dstr_cd, "replace"("replace"("replace"("replace"(dstr_cust_cd::text, 'Indirect'::text, ''::text),
 	  'Direct'::text, ''::text), 'Indi'::text, ''::text), 'Dire'::text, ''::text) AS dstr_cust_cd, 
 	dstr_cust_clsn1 FROM itg_ims_dstr_cust_attr where ctry_cd = 'HK'
 	) dc on sls.dstr_cd = dc.dstr_cd and sls.cust_cd = dc.dstr_cust_cd
-LEFT JOIN (SELECT DISTINCT sales_group_name AS store_grade, channel AS retail_env, POP_CODE FROM edw_vw_pop6_store
-             WHERE cntry_cd = 'HK' AND   UPPER(sales_group_name) IN --('GENERAL TRADE','GENERAL TRADE B/C')) 
-			 (select parameter_value from itg_query_parameters where country_code='HK' and parameter_name='sales_group_name')) pop 
-	 ON LTRIM(SUBSTRING (pop.pop_code,3),0) = LTRIM(sls.cust_cd,0) 
+--LEFT JOIN (SELECT DISTINCT sales_group_name AS store_grade, channel AS retail_env, POP_CODE FROM edw_vw_pop6_store
+             --WHERE cntry_cd = 'HK' AND   UPPER(sales_group_name) IN --('GENERAL TRADE','GENERAL TRADE B/C')) 
+			 --(select parameter_value from itg_query_parameters where country_code='HK' and parameter_name='sales_group_name')) pop 
+	 --ON LTRIM(SUBSTRING (pop.pop_code,3),0) = LTRIM(sls.cust_cd,0) 
+  LEFT JOIN (SELECT DISTINCT sales_group_name_code AS store_grade,
+                    "retail environment (ps)_code" AS retail_env, channel_code AS channel,
+                    distributor_customer_number
+             FROM SDL_MDS_HK_Store_master where retail_env IS NOT NULL) str_mstr ON LTRIM (str_mstr.distributor_customer_number,'0') = LTRIM (sls.cust_cd,'0')
 where ctry_cd = 'HK' and crncy_cd = 'HKD'  and not (sls.prod_cd like '1U%' OR sls.prod_cd like 'COUNTER TOP%' OR sls.prod_cd like 'DUMPBIN%' OR sls.prod_cd IS NULL OR sls.prod_cd = '') 
 	  )BASE
 WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
@@ -152,6 +165,7 @@ msl_product_code::varchar(20) as msl_product_code,
 msl_product_desc::varchar(255) as msl_product_desc,
 store_grade::varchar(200) as store_grade,
 retail_env::varchar(300) as retail_env,
+channel::varchar(500) as channel,
 crtd_dttm::timestamp_ntz(9) as crtd_dttm,
 updt_dttm::timestamp_ntz(9) as updt_dttm
 from transformed

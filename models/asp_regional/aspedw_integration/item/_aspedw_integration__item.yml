@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: aspedw_integration__v_rpt_price_tracker_comp_sku
+    config: 
+        materialized: view
+        alias: v_rpt_price_tracker_comp_sku
+        tags: ["price_tracker_datamart_refresh","transformation"]
+  - name: aspedw_integration__edw_price_tracker_comp_sku
+    config: 
+        alias: edw_price_tracker_comp_sku
+        tags: ["price_tracker_datamart_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_rg_total_investment
+    config: 
+        materialized: view
+        alias: v_rpt_rg_total_investment
+        tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__edw_investment_fact
+    config: 
+        alias: edw_investment_fact
+        tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__edw_cn_digital_shelf_data
+    config: 
+      alias: edw_cn_digital_shelf_data
+      tags: ["cn_yimian_price_data_load","transformation"]
+  - name: aspedw_integration__edw_price_tracker
+    config: 
+      alias: edw_price_tracker
+      tags: ["price_tracker_datamart_refresh","transformation"]
+  - name: aspedw_integration__v_rpt_price_tracker
+    config: 
+      alias: v_rpt_price_tracker
+      tags: ["price_tracker_datamart_refresh","transformation"]

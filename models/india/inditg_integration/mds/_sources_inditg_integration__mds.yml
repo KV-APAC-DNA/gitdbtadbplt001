@@ -267,6 +267,7 @@ sources:
         tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
       - name: sdl_winculum_salesreturn
         tags: ["in_sdlitg_daily","transformation"]
+      - name: sdl_mds_in_customer_segmentation
 
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
