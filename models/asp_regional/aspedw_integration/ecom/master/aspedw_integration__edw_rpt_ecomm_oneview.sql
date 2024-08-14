@@ -114,11 +114,11 @@ edw_gch_customerhierarchy as (
 ),
 itg_mds_cn_ecom_brand as
 (
-    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_BRAND
+    select * from CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_BRAND
 ),
 itg_mds_cn_ecom_sapcustomer_map as
 (
-    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_SAPCUSTOMER_MAP
+    select * from CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_SAPCUSTOMER_MAP
 ),
 edw_ecom_oms as 
 (
