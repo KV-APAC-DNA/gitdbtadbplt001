@@ -1,6 +1,6 @@
 with v_rpt_cn_perfect_store as
 (
-    select * from dev_dna_core.chnedw_integration.v_rpt_cn_perfect_store
+    select * from {{ ref('chnedw_integration__v_rpt_cn_perfect_store') }}
 ),
 final as
 (

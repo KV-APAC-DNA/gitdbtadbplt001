@@ -6,49 +6,48 @@
 }}
 with edw_perfect_store_source_msl as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_MSL
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_msl') }}
 ),
 edw_perfect_store_must_stock_sku_list as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_MUST_STOCK_SKU_LIST
+    select * from {{ ref('chnedw_integration__edw_perfect_store_must_stock_sku_list') }}
 ),
 edw_perfect_store_store_hierarchy as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_STORE_HIERARCHY
+    select * from {{ ref('chnedw_integration__edw_perfect_store_store_hierarchy') }}
 ),
 edw_vw_ps_weights as 
 (
-    select * from DEV_DNA_CORE.SNAPASPEDW_INTEGRATION.EDW_VW_PS_WEIGHTS
+    select * from {{ ref('aspedw_integration__edw_vw_ps_weights') }}
 ),
 edw_perfect_store_source_sos_display as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS_DISPLAY
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_display') }}
 ),
 edw_perfect_store_source_osa as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_OSA
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_display') }}
 ),
 edw_perfect_store_source_sos as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos') }}
 ),
 edw_perfect_store_source_planogram as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_PLANOGRAM
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_planogram') }}
 ),
 edw_perfect_store_source_sos_shelf as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_SOS_SHELF
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_shelf') }}
 ),
 edw_perfect_store_product_master as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_PRODUCT_MASTER
+     select * from {{ ref('chnedw_integration__edw_perfect_store_product_master') }}
 ),
 EDW_PERFECT_STORE_SOURCE_PROM as
 (
-    select * from DEV_DNA_CORE.SNAPCHNEDW_INTEGRATION.EDW_PERFECT_STORE_SOURCE_PROM
+    select * from {{ ref('chnedw_integration__edw_perfect_store_source_prom') }}
 ),
-
 union_1 as  (
                                     SELECT 'Merchandising_Response' AS dataset,
                                         epssm.sfa_store_code AS customerid,
@@ -97,7 +96,7 @@ union_1 as  (
                                         NULL AS segment,
                                         icpw.weight AS kpi_chnl_wt,
                                         NULL AS actual,
-                                        NULL AS "target",
+                                        NULL AS target,
                                         NULL AS mkt_share,
                                         NULL AS ques_desc,
                                         NULL AS "y/n_flag",
@@ -252,7 +251,7 @@ union_1 as  (
                                                         4
                                                         )
                                                     )::INTEGER
-                                                )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                                                )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                                             )
                                     
                                     UNION ALL
@@ -263,7 +262,7 @@ union_1 as  (
                                         NULL AS mrch_resp_startdt,
                                         NULL AS mrch_resp_enddt,
                                         NULL AS survey_enddate,
-                                        NULL AS questiontext,
+                                       NULL AS questiontext,
                                         NULL AS value,
                                         'true' AS mustcarryitem,
                                         'true' AS presence,
@@ -304,7 +303,7 @@ union_1 as  (
                                         NULL AS segment,
                                         icpw.weight AS kpi_chnl_wt,
                                         NULL AS actual,
-                                        NULL AS "target",
+                                        NULL AS target,
                                         NULL AS mkt_share,
                                         NULL AS ques_desc,
                                         NULL AS "y/n_flag",
@@ -468,7 +467,7 @@ union_1 as  (
                                                         4
                                                         )
                                                     )::INTEGER
-                                                )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                                                )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                                             )
                                     ),
 
@@ -519,7 +518,7 @@ union_2 as                            (
                                     NULL AS segment,
                                     icpw.weight AS kpi_chnl_wt,
                                     (epssp.actual)::CHARACTER VARYING AS actual,
-                                    (epssp.PLAN)::CHARACTER VARYING AS "target",
+                                    (epssp.PLAN)::CHARACTER VARYING AS target,
                                     NULL AS mkt_share,
                                     NULL AS ques_desc,
                                     NULL AS "y/n_flag",
@@ -689,7 +688,7 @@ union_2 as                            (
                                                     4
                                                     )
                                                 )::INTEGER
-                                            )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                                            )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                                         )
                                 ),
 
@@ -744,7 +743,7 @@ union_3 as (
                                 NULL AS segment,
                                 icpw.weight AS kpi_chnl_wt,
                                 NULL AS actual,
-                                NULL AS "target",
+                                NULL AS target,
                                 epsss.shelf_num AS mkt_share,
                                 'numerator' AS ques_desc,
                                 NULL AS "y/n_flag",
@@ -963,7 +962,7 @@ union_4 as (
                             NULL AS segment,
                             icpw.weight AS kpi_chnl_wt,
                             NULL AS actual,
-                            NULL AS "target",
+                            NULL AS target,
                             epsss.shelf_num AS mkt_share,
                             'denominator' AS ques_desc,
                             NULL AS "y/n_flag",
@@ -1174,7 +1173,7 @@ union_5 as (
                         NULL AS segment,
                         icpw.weight AS kpi_chnl_wt,
                         NULL AS actual,
-                        NULL AS "target",
+                        NULL AS target,
                         1 AS mkt_share,
                         'numerator' AS ques_desc,
                         NULL AS "y/n_flag",
@@ -1348,7 +1347,7 @@ union_5 as (
                                         4
                                         )
                                     )::INTEGER
-                                )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                                )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                             )
                     )
                 ,                                     
@@ -1399,7 +1398,7 @@ union_6 as (
                     NULL AS segment,
                     icpw.weight AS kpi_chnl_wt,
                     NULL AS actual,
-                    NULL AS "target",
+                    NULL AS target,
                     1 AS mkt_share,
                     'denominator' AS ques_desc,
                     NULL AS "y/n_flag",
@@ -1573,7 +1572,7 @@ union_6 as (
                                     4
                                     )
                                 )::INTEGER
-                            )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                            )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                         )
                 )
             ,
@@ -1623,7 +1622,7 @@ union_7 as  (
                 NULL AS segment,
                 icpw.weight AS kpi_chnl_wt,
                 NULL AS actual,
-                NULL AS "target",
+                NULL AS target,
                 epssss.shelf_value AS mkt_share,
                 'numerator' AS ques_desc,
                 NULL AS "y/n_flag",
@@ -1798,7 +1797,7 @@ union_7 as  (
                                 4
                                 )
                             )::INTEGER
-                        )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                        )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                     )
             )
         ,
@@ -1847,7 +1846,7 @@ union_8 as (
             NULL AS segment,
             icpw.weight AS kpi_chnl_wt,
             NULL AS actual,
-            NULL AS "target",
+            NULL AS target,
             epssss.shelf_value AS mkt_share,
             'denominator' AS ques_desc,
             NULL AS "y/n_flag",
@@ -2022,7 +2021,7 @@ union_8 as (
                             4
                             )
                         )::INTEGER
-                    )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+                    )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
                 )
         ),
 
@@ -2070,7 +2069,7 @@ SELECT 'Survey_Response' AS dataset,
     NULL AS segment,
     icpw.weight AS kpi_chnl_wt,
     NULL AS actual,
-    NULL AS "target",
+    NULL AS target,
     0 AS mkt_share,
     NULL AS ques_desc,
     CASE 
@@ -2112,7 +2111,7 @@ FROM (
                     (('Plan - '::CHARACTER VARYING)::TEXT || ((rowref.rownum)::CHARACTER VARYING)::TEXT) AS ques_text
                 FROM (
                     edw_perfect_store_source_prom trans JOIN (
-                        SELECT row_number() OVER (ORDER BY NULL) AS rownum
+                        SELECT row_number() OVER (ORDER BY 1) AS rownum
                         FROM edw_perfect_store_source_prom
                         ) rowref ON ((trans.kpis_plan >= (((rowref.rownum)::NUMERIC)::NUMERIC(18, 0))::NUMERIC(20, 4)))
                     )
@@ -2263,10 +2262,10 @@ WHERE (
                     4
                     )
                 )::INTEGER
-            )::DOUBLE PRECISION >= (DATE_PART(year,dateadd(day,-2,sysdate())))
+            )::DOUBLE PRECISION >= (date_part(year,current_timestamp()))-2
         )
 ),
-final as
+merge_all as
 (
     select * from union_1
     UNION ALL
@@ -2285,5 +2284,64 @@ final as
     select * from union_8
     UNION ALL
     select * from union_9
+),
+final as
+(
+    select
+    dataset::varchar(22) as dataset,
+	customerid::varchar(200) as customerid,
+	salespersonid::varchar(16777216) as salespersonid,
+	mrch_resp_startdt::varchar(16777216) as mrch_resp_startdt,
+	mrch_resp_enddt::varchar(16777216) as mrch_resp_enddt,
+	survey_enddate::varchar(16777216) as survey_enddate,
+	questiontext::varchar(28) as questiontext,
+	value::varchar(40) as value,
+	mustcarryitem::varchar(4) as mustcarryitem,
+	presence::varchar(5) as presence,
+	outofstock::varchar(4) as outofstock,
+	kpi::varchar(20) as kpi,
+	scheduleddate::date as scheduleddate,
+	vst_status::varchar(9) as vst_status, 
+	fisc_yr::number(38,0) as fisc_yr,
+	fisc_per::number(38,0) as fisc_per,
+	firstname::varchar(100) as firstname,
+	lastname::varchar(16777216) as lastname,
+	customername::varchar(500) as customername,
+	country::varchar(5) as country,
+	state::varchar(100) as state,
+	storereference::varchar(100) as storereference,
+	storetype::varchar(100) as storetype,
+	channel::varchar(2) as channel,
+	salesgroup::varchar(100) as salesgroup,
+	bu::varchar(100) as bu,
+	prod_hier_l1::varchar(5) as prod_hier_l1,
+	prod_hier_l4::varchar(30) as prod_hier_l4,
+	prod_hier_l5::varchar(300) as prod_hier_l5,
+	prod_hier_l6::varchar(200) as prod_hier_l6,
+	prod_hier_l9::varchar(100) as prod_hier_l9,
+	productname::varchar(100) as productname,
+	eannumber::varchar(100) as eannumber,
+	category::varchar(300) as category,
+	segment::varchar(16777216) as segment,
+	kpi_chnl_wt::number(38,5) as kpi_chnl_wt,
+	actual::varchar(40) as actual,
+	TARGET::VARCHAR(40) AS TARGET,
+	mkt_share::number(20,4) as mkt_share,
+	ques_desc::varchar(11) as ques_desc,
+	"y/n_flag"::VARCHAR(3) as "y/n_flag",
+	province::varchar(100) as province,
+	city::varchar(100) as city,
+	district::varchar(100) as district,
+	address::varchar(500) as address,
+	area::varchar(100) as area,
+	ka_type::varchar(100) as ka_type,
+	store_property::varchar(100) as store_property,
+	store_g_d::varchar(100) as store_g_d,
+	supply_type::varchar(100) as supply_type,
+	agent::varchar(100) as agent,
+	customer_manager::varchar(100) as customer_manager,
+	sales_supervisor::varchar(100) as sales_supervisor,
+	asm_name::varchar(100) as asm_name
+    from merge_all
 )
 select * from final
