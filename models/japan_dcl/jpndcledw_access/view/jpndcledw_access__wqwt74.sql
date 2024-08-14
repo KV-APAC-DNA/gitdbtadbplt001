@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('jpdcledw_integration', '"WQWT74戦略商品別売上Ｐ"') }}
+    select * from {{ ref('jpndcledw_integration__wqwt74_p') }}
 ),
 
 final as (
