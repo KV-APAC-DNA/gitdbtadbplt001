@@ -1,3 +1,8 @@
+
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with wks_cnpc_rpt_retail_excellence
 as (select * from {{ ref('chnwks_integration__wks_china_personal_care_rpt_retail_excellence') }}),
 
@@ -269,7 +274,7 @@ from (select main.fisc_yr,
              main.p6m_sales_flag,
              main.p12m_sales_flag,
              main.mdp_flag,
-             100 as target_compliance,
+             1 as target_compliance,
              lp.list_price,
              sum(main.lm_sales) over (partition by fisc_per,distributor_code,global_product_brand) as total_sales_lm,
              sum(main.p3m_sales) over (partition by fisc_per,distributor_code,global_product_brand) as total_sales_p3m,

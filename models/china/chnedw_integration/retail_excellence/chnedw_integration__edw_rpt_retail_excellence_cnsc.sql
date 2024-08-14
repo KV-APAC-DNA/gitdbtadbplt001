@@ -1,3 +1,8 @@
+{{ 
+    config(materialized='table', 
+    transient=true )   
+     
+    }}
 with wks_rpt_retail_excellence_sop as (
     select * from {{ ref('chnwks_integration__wks_rpt_retail_excellence_sop') }}
 ),
@@ -144,7 +149,7 @@ transformation as (
        DM.P6M_SALES_FLAG,
        DM.P12M_SALES_FLAG,
        DM.MDP_FLAG,
-       case when (DM.MDP_FLAG='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 100  end as TARGET_COMPLAINCE,
+       case when (DM.MDP_FLAG='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 1 end as TARGET_COMPLAINCE,
        DM.LIST_PRICE,
        DM.TOTAL_SALES_LM,
        DM.TOTAL_SALES_P3M,

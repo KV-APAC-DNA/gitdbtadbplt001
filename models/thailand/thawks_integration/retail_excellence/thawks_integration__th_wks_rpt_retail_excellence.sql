@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_jnj_mer_share_of_shelf as (
 select * from {{ ref('thaitg_integration__itg_jnj_mer_share_of_shelf') }}
 ),
@@ -239,7 +243,7 @@ FROM (SELECT CAST(TARGET.FISC_YR AS INTEGER) AS FISC_YR,
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM ITG_TH_RE_MSL_LIST TARGET
         LEFT JOIN (SELECT * FROM WKS_TH_REGIONAL_SELLOUT_ACTUALS) ACTUAL
                ON TARGET.FISC_PER = ACTUAL.MNTH_ID
@@ -460,7 +464,7 @@ FROM (SELECT CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM WKS_TH_REGIONAL_SELLOUT_ACTUALS A
             WHERE NOT EXISTS (SELECT 1

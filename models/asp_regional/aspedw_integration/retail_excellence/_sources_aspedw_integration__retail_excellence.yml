@@ -17,6 +17,7 @@ sources:
   - name: idnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: idnedw_integration
+
     quoting:
       database: false
       schema: false
@@ -42,6 +43,10 @@ sources:
       identifier: false
     tables:
       - name: v_edw_rpt_retail_excellence
+      - name: edw_sku_recom_spike_msl_sync
+      - name : edw_retailer_dim_sync
+      - name : edw_product_dim_sync
+      - name : edw_customer_dim_sync
 
   - name: mysedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -87,6 +92,7 @@ sources:
   - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnedw_integration
+  
     quoting:
       database: false
       schema: false
@@ -110,7 +116,6 @@ sources:
       - name: edw_company_dim
       - name: edw_list_price
       - name : edw_customer_attr_flat_dim
-      - name: v_rpt_pop6_perfectstore
 
   - name: aspitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
@@ -131,6 +136,7 @@ sources:
   - name: chnitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: chnitg_integration
+  
     tables:
       - name: itg_mds_cn_otc_product_mapping
       - name: itg_cs_re_store  
@@ -138,23 +144,24 @@ sources:
   - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: jpnedw_integration
+ 
     tables:
       - name: edi_store_m
       - name: edi_chn_m
+
 # disabling here as this is available main branch in _sources_jpnitg_integration__intage.yml file
-      #- name: mt_sgmt        
-      #- name: mt_prf       
-      #- name: jp_inv_coverage_area_region_mapping    
+    #  - name: mt_sgmt        
+    #  - name: mt_prf       
+    #  - name: jp_inv_coverage_area_region_mapping    
       - name: edi_cstm_m
       - name: vw_jan_change
 
 # disabling here as this is available main branch in _sources_jpnitg_integration__customer_360.yml file
- # - name: jpnsdl_raw
- #   database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
- #   schema: jpnsdl_raw
- #  tables:
- #   - name: sdl_mds_jp_c360_eng_translation        
-               
+  #- name: jpnsdl_raw
+  #  database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+  #  schema: jpnsdl_raw
+  #  tables:
+  #    - name: sdl_mds_jp_c360_eng_translation                  
 
   - name: aspsdl_raw
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
@@ -163,16 +170,10 @@ sources:
       - name: sdl_mds_mds_reds_market_msl   
       - name : sdl_mds_mds_reds_market_msl_target
 
-  - name: indedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: indedw_integration
-    tables:
-      - name: edw_sku_recom_spike_msl
-      - name : edw_retailer_dim
- 
+
   - name: inditg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: inditg_integration
     tables:
-      - name: itg_udcdetails
-      - name : itg_in_mds_channel_mapping
+      - name: itg_udcdetails_sync
+      - name : itg_in_mds_channel_mapping_sync

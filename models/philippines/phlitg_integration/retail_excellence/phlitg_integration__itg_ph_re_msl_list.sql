@@ -1,7 +1,8 @@
 --import cte
-/*with itg_re_msl_input_definition as (
-    select * from {{ source('aspitg_integration', 'itg_re_msl_input_definition') }}
-),*/
+  {{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_re_msl_input_definition as (
     select * from {{ ref('aspitg_integration__itg_re_msl_input_definition') }}
 ),
@@ -99,8 +100,8 @@ POS_CUST as
                          zip_code AS store_postcode,
                          latitude::VARCHAR AS store_lat,
                          longitude::VARCHAR AS store_long,
-                         ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY crtd_dttm DESC) AS rno
-                  FROM ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y'),
+                         ROW_NUMBER() OVER (PARTITION BY ltrim(SPLIT_PART(code, '-', 2),'0') ORDER BY upper(store_mtrx) ASC, crtd_dttm DESC) AS rno
+                  FROM (select * from ITG_MDS_PH_POS_CUSTOMERS WHERE UPPER(active) = 'Y' AND store_mtrx <> ' ')),
 
 --final cte
 

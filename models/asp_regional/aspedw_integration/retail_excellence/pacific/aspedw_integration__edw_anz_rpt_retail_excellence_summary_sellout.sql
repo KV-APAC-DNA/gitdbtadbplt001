@@ -2,13 +2,16 @@
 with edw_rpt_anz_re_summary_base as (
     select * from {{ ref('aspedw_integration__edw_rpt_anz_re_summary_base') }}
 ),
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
+),
 --Logical CTE
 
 --Final CTE
 edw_rpt_anz_re_summary_sellout as (
 SELECT FISC_YR,
        FISC_PER,
-       CLUSTER,
+       "cluster",
        MARKET,
        data_src,
        FLAG_AGG_DIM_KEY,
@@ -40,7 +43,7 @@ SELECT FISC_YR,
        CASE WHEN P6M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P6M_SALES_FLAG,
        CASE WHEN P12M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P12M_SALES_FLAG,
        CASE WHEN MDP_FLAG = 1 THEN 'Y' ELSE 'N' END  AS MDP_FLAG,
-       TARGET_COMPLAINCE,
+       SUM(TARGET_COMPLAINCE) AS TARGET_COMPLAINCE,
 	   SUM(SALES_VALUE)AS SALES_VALUE,
        SUM(SALES_QTY)AS SALES_QTY,
        AVG(SALES_QTY) AS AVG_SALES_QTY,		--// AVG
@@ -98,10 +101,14 @@ SELECT FISC_YR,
  WHERE 
 	  FISC_PER > TO_CHAR(ADD_MONTHS((SELECT to_date(MAX(fisc_per)::varchar,'YYYYMM') FROM edw_rpt_anz_re_summary_base),-15),'YYYYMM')
   AND FISC_PER <= (select max(fisc_per) FROM edw_rpt_anz_re_summary_base)
+  AND   UPPER(RETAIL_ENVIRONMENT) NOT IN (SELECT DISTINCT parameter_value
+                                 FROM itg_query_parameters	
+                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
+                                 AND   country_code in ('AU','NZ'))
 
 GROUP BY FISC_YR,
        FISC_PER,
-       CLUSTER,
+       "cluster",
        MARKET,
        FLAG_AGG_DIM_KEY,
        data_src,
@@ -132,8 +139,7 @@ GROUP BY FISC_YR,
       P3M_SALES_FLAG,
       P6M_SALES_FLAG,
       P12M_SALES_FLAG,
-      MDP_FLAG,
-	  TARGET_COMPLAINCE
+      MDP_FLAG
 
 )
 ,
@@ -142,7 +148,7 @@ final as
 select
     fisc_yr::VARCHAR(11) as fisc_yr
     ,fisc_per::numeric(18,0) as fisc_per        
-    ,cluster::VARCHAR(100) as "cluster"
+    ,"cluster"::VARCHAR(100) as "cluster"
     ,market::VARCHAR(50) as market  
     ,data_src::VARCHAR(14) as   data_src    
     ,flag_agg_dim_key::VARCHAR(50) as   flag_agg_dim_key    

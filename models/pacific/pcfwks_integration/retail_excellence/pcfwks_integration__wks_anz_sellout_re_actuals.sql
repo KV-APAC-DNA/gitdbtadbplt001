@@ -87,20 +87,20 @@ select re_base_dim.cntry_cd,
        l12m_avg_sales_qty as p12m_avg_qty,
        l12m_sales_lp as p12m_sales_lp,
        case
-         when lm_sales > 0 then 'y'
-         else 'n'
+         when lm_sales > 0 then 'Y'
+         else 'N'
        end as lm_sales_flag,
        case
-         when p3m_sales > 0 then 'y'
-         else 'n'
+         when p3m_sales > 0 then 'Y'
+         else 'N'
        end as p3m_sales_flag,
        case
-         when p6m_sales > 0 then 'y'
-         else 'n'
+         when p6m_sales > 0 then 'Y'
+         else 'N'
        end as p6m_sales_flag,
        case
-         when p12m_sales > 0 then 'y'
-         else 'n'
+         when p12m_sales > 0 then 'Y'
+         else 'N'
        end as p12m_sales_flag,
        sysdate() as crt_dttm
 from (select distinct cntry_cd,
@@ -218,7 +218,7 @@ cntry_cd::VARCHAR(2) AS cntry_cd,
 cntry_nm::VARCHAR(50) AS cntry_nm,
 data_src::VARCHAR(14) AS data_src,
 year::VARCHAR(16) AS year,
-mnth_id::VARCHAR(23) AS mnth_id,
+mnth_id::numeric(18,0) AS mnth_id,
 soldto_code::VARCHAR(255) AS soldto_code,
 distributor_code::VARCHAR(32) AS distributor_code,
 distributor_name::VARCHAR(255) AS distributor_name,

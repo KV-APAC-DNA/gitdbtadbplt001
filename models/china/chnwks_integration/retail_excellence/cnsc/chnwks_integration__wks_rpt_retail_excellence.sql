@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with itg_cn_sc_re_msl_list as (
     select * from {{ ref('chnitg_integration__itg_cn_sc_re_msl_list') }}
 ),
@@ -108,7 +112,7 @@ transformation as (
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-      			 100 AS TARGET_COMPLAINCE
+      		 1 AS TARGET_COMPLAINCE
    FROM ITG_CN_SC_RE_MSL_LIST TARGET
         LEFT JOIN (SELECT * FROM WKS_CNSC_REGIONAL_SELLOUT_ACTUALS) ACTUAL
                ON TARGET.FISC_PER = ACTUAL.MNTH_ID
@@ -242,7 +246,7 @@ UNION ALL
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-                100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
                 --sys_date as Created_date
        FROM ( SELECT  distinct *
 		FROM WKS_CNSC_REGIONAL_SELLOUT_ACTUALS A
