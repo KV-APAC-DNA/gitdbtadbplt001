@@ -31,3 +31,16 @@ sources:
       identifier: false
     tables:
       - name: edw_ap_ecomm_nts_manual_adjustment
+
+  - name: chnedw_integration
+    database: "{{ env_var('DBT_ENV_CHN_DB') }}"
+    schema: chnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_ecom_oms
+      - name: v_rpt_jdes_cube
+      - name: v_rpt_pos_sales_new
+      - name: edw_cube_jdesii_jnj_cal_weekly_dim

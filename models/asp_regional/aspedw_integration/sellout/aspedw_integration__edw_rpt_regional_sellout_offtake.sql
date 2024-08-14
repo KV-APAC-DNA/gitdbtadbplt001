@@ -27,7 +27,7 @@ with itg_mds_ap_customer360_config as
 ),
 jp_wks_rpt_regional_sellout_offtake_npd as
 (
-    select * from 
+    select * from {{ ref('jpnwks_integration__wks_rpt_regional_sellout_offtake_npd') }}
 ),
 in_wks_rpt_regional_sellout_offtake_npd as
 (

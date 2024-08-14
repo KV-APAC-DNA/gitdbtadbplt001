@@ -1,14 +1,14 @@
 with v_rpt_jdes_cube as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.V_RPT_JDES_CUBE
+    select * from {{ source('chnedw_integration', 'v_rpt_jdes_cube') }}
 ),
 v_rpt_pos_sales_new as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.V_RPT_POS_SALES_NEW
+    select * from {{ source('chnedw_integration', 'v_rpt_pos_sales_new') }}
 ),
 edw_cube_jdesii_jnj_cal_weekly_dim as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_CUBE_JDESII_JNJ_CAL_WEEKLY_DIM
+    select * from {{ source('chnedw_integration', 'edw_cube_jdesii_jnj_cal_weekly_dim') }}
 ),
 edw_material_sales_dim as
 (
