@@ -1,7 +1,7 @@
 {% macro build_wk_nayol_temp() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                jpndcledw_integration.wk_nayol_temp
+                jpdcledw_integration.wk_nayol_temp
             {% else %}
                 {{schema}}.jpndcledw_integration__wk_nayol_temp
     {% endif %}
@@ -9,7 +9,7 @@
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    jpndcledw_integration.wk_nayol
+                    jpdcledw_integration.wk_nayol
                 {% else %}
                     {{schema}}.jpndcledw_integration__wk_nayol
                 {% endif %}
@@ -24,7 +24,7 @@
     );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            jpndcledw_integration.wk_nayol
+            jpdcledw_integration.wk_nayol
         {% else %}
             {{schema}}.jpndcledw_integration__wk_nayol
         {% endif %};
