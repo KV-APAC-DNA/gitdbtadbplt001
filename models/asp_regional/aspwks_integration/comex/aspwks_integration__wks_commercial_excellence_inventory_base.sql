@@ -26,7 +26,7 @@ from (
 	sum(inventory_val) as inventory_val,
 	sum(inventory_val_usd) as inventory_val_usd,
 	sum(l12m_weeks_avg_sales_usd) as l12m_weeks_avg_sales_usd,
-	round(nvl(sum(inventory_val_usd)/nullif(sum(l12m_weeks_avg_sales_usd), 0),0)) as weeks_cover
+	nvl(sum(inventory_val_usd)/nullif(sum(l12m_weeks_avg_sales_usd), 0),0) as weeks_cover
 	from edw_reg_inventory_health_analysis_propagation
 	group by 1,2,3,4,5,6,7,8,9,10,11,12,13
 	order by 1,2,3,4,5,6,7,8,9,10,11,12,13)
