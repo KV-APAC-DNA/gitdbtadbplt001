@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
 --Import CTE
 with jp_edw_rpt_retail_excellence_summary_base as (
     select * from {{ ref('aspedw_integration__edw_jp_rpt_retail_excellence_summary_base') }}
@@ -43,7 +48,7 @@ SELECT FISC_YR,
        CASE WHEN P6M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P6M_SALES_FLAG,
        CASE WHEN P12M_SALES_FLAG = 1 THEN 'Y' ELSE 'N' END  AS P12M_SALES_FLAG,
        CASE WHEN MDP_FLAG = 1 THEN 'Y' ELSE 'N' END  AS MDP_FLAG,
-       TARGET_COMPLAINCE,
+       SUM(TARGET_COMPLAINCE) AS TARGET_COMPLAINCE,
 	   SUM(SALES_VALUE)AS SALES_VALUE,
        SUM(SALES_QTY)AS SALES_QTY,
        TRUNC(AVG(SALES_QTY)) AS AVG_SALES_QTY,		--// AVG
@@ -139,8 +144,7 @@ GROUP BY FISC_YR,
       P3M_SALES_FLAG,
       P6M_SALES_FLAG,
       P12M_SALES_FLAG,
-      MDP_FLAG,
-	  TARGET_COMPLAINCE
+      MDP_FLAG
 
 ),
 final as(

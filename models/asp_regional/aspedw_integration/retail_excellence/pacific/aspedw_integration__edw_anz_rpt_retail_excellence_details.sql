@@ -1,6 +1,9 @@
 --Import CTE
 with v_edw_rpt_anz_re as (
-    select * from {{ source('pcfedw_integration', 'v_edw_rpt_anz_re') }}
+    select * from {{ ref('pcfedw_integration__edw_rpt_anz_sellout_re') }}
+),
+itg_query_parameters as (
+    select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
 --Logical CTE
 
@@ -8,7 +11,7 @@ with v_edw_rpt_anz_re as (
 edw_rpt_anz_re as (
 SELECT FISC_YR,
        CAST(FISC_PER AS numeric(18,0) ) AS FISC_PER,		--// INTEGER
-       CLUSTER,
+       "cluster",
        MARKET,
        CHANNEL_NAME,
        DISTRIBUTOR_CODE,
@@ -142,13 +145,16 @@ WHERE market in ('Australia','New Zealand')
 AND   FISC_PER >= (SELECT REPLACE(SUBSTRING(add_months (TO_DATE(MAX(fisc_per)::varchar,'YYYYMM'),-1),1,7),'-','')::INTEGER
                    FROM v_edw_rpt_anz_re)
 AND   FISC_PER <= (SELECT MAX(fisc_per) FROM v_edw_rpt_anz_re)
-
+AND   UPPER(RETAIL_ENVIRONMENT) NOT IN (SELECT DISTINCT parameter_value
+                                 FROM itg_query_parameters	
+                                 WHERE parameter_name = 'EXCLUDE_RE_RETAIL_ENV'
+                                 AND   country_code in ('AU','NZ'))
 ),
 final as(
     select
 fisc_yr::VARCHAR(11) AS fisc_yr,
 fisc_per::numeric(18,0) AS fisc_per,
-cluster::VARCHAR(100) as cluster,
+"cluster"::VARCHAR(100) as "cluster",
 market::VARCHAR(20) AS market,
 channel_name::VARCHAR(500) AS channel_name,
 distributor_code::VARCHAR(500) AS distributor_code,

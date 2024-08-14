@@ -1,3 +1,8 @@
+
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with wks_rpt_retail_excellence as (
     select * from {{ ref('chnwks_integration__wks_rpt_retail_excellence') }}
 ),
@@ -307,7 +312,7 @@ FROM  (SELECT MAIN.FISC_YR,
              MAIN.P6M_SALES_FLAG,
              MAIN.P12M_SALES_FLAG,
              MAIN.MDP_FLAG,
-             100 AS TARGET_COMPLAINCE,
+             1 AS TARGET_COMPLAINCE,
              Null as LIST_PRICE,
              SUM(MAIN.LM_SALES) OVER (PARTITION BY FISC_PER,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_LM,
              SUM(MAIN.P3M_SALES) OVER (PARTITION BY FISC_PER,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P3M,

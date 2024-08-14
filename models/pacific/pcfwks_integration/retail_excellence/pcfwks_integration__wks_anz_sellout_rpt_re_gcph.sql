@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with WKS_ANZ_SELLOUT_RPT_RE as (
     select * from {{ ref('pcfwks_integration__wks_anz_sellout_rpt_re') }}
 ),
@@ -316,7 +320,7 @@ FROM (SELECT MAIN.jj_year,
              MAIN.P6M_SALES_FLAG,
              MAIN.P12M_SALES_FLAG,
              MAIN.MDP_FLAG,
-             100 AS TARGET_COMPLAINCE,
+             1 AS TARGET_COMPLAINCE,
              MAIN.LIST_PRICE,
              SUM(MAIN.LM_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_NAME,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_LM,
              SUM(MAIN.P3M_SALES) OVER (PARTITION BY jj_mnth_id,DISTRIBUTOR_NAME,GLOBAL_PRODUCT_BRAND) AS TOTAL_SALES_P3M,
@@ -348,7 +352,7 @@ final as
 (
 select 
 jj_year::VARCHAR(16) AS jj_year,
-jj_mnth_id::VARCHAR(22) AS jj_mnth_id,
+jj_mnth_id::numeric(18,0) AS jj_mnth_id,
 cluster::VARCHAR(100) AS "cluster",
 market::VARCHAR(50) AS market,
 data_src::VARCHAR(8) AS data_src,

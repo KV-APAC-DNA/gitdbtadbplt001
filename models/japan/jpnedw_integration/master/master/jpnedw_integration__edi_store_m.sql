@@ -11,7 +11,7 @@ final AS
         update_dt::TIMESTAMP_NTZ(9) AS update_dt,
         update_user::VARCHAR(256) AS update_user,
         reg_dt::TIMESTAMP_NTZ(9) AS reg_dt,
-        str_cd::VARCHAR(256) AS str_cd,
+        rtrim(str_cd)::VARCHAR(256) AS str_cd,
         lgl_nm_knj1::VARCHAR(256) AS lgl_nm_knj1,
         lgl_nm_knj2::VARCHAR(256) AS lgl_nm_knj2,
         lgl_nm_kn::VARCHAR(256) AS lgl_nm_kn,

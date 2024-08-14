@@ -12,6 +12,10 @@ cnpc_regional_sellout_ean as (
     select * from {{ ref('chnwks_integration__wks_china_personal_care_regional_sellout_ean') }}
 ),
 
+itg_mds_master_mother_code_mapping as (
+     select * from {{ ref('aspitg_integration__itg_mds_master_mother_code_mapping') }}
+),
+
 cnpc_base_retail_excellence
 as
 (
@@ -99,7 +103,8 @@ case when main.mother_code = 'NA' or main.mother_code is null then main.ean else
 pd.sku_code as mapped_sku_code,
 --case when main.mother_code = 'na' then pd.msl_product_desc else ed.msl_product_desc as msl_product_desc
 --case when ean != 'na' and ean is not null then pd.msl_product_desc else msl_product_desc end as msl_product_desc,
-pd.msl_product_desc as msl_product_desc,
+--pd.msl_product_desc as msl_product_desc,
+mother_code_desc.mother_description as msl_product_desc,
 data_source,
 year,
 mnth_id,
@@ -196,6 +201,8 @@ left join cnpc_regional_sellout_ean ed
 on upper(main.mother_code) = ed.mother_code
 left join cnpc_regional_sellout_mapped_sku_cd pd
 on case when main.mother_code = 'NA' then upper(main.ean) else ed.ean end = pd.ean
+left join (select distinct mother_code,mother_description from itg_mds_master_mother_code_mapping) mother_code_desc
+on main.mother_code = mother_code_desc.mother_code
 )
 
 group by country_code,

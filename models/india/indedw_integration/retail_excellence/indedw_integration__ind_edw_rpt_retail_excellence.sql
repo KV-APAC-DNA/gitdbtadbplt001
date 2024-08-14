@@ -1,4 +1,9 @@
 --import CTE 
+  {{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
+  
 with  wks_rpt_retail_excellence_sop as 
 (
     select * from {{ ref('indwks_integration__wks_rpt_retail_excellence_sop') }}
@@ -123,7 +128,7 @@ SELECT CAST(FISC_YR AS INTEGER) AS FISC_YR,
        P6M_SALES_FLAG,
        P12M_SALES_FLAG,
        MDP_FLAG,
-	   case when (mdp_flag='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 100  end as TARGET_COMPLAINCE,
+	   case when (mdp_flag='Y' and msl_final.global_product_brand  is not null ) then msl_final.TARGET_COMPLAINCE else 1 end as TARGET_COMPLAINCE,
 	   LIST_PRICE,
 	   TOTAL_SALES_LM,TOTAL_SALES_P3M,TOTAL_SALES_P6M,TOTAL_SALES_P12M,
 	   TOTAL_SALES_BY_STORE_LM,TOTAL_SALES_BY_STORE_P3M,TOTAL_SALES_BY_STORE_P6M,TOTAL_SALES_BY_STORE_P12M,

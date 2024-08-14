@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with EDW_GCH_CUSTOMERHIERARCHY as(
     select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
@@ -184,7 +188,7 @@ FROM (SELECT TARGET.YEAR AS FISC_YR,
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM ITG_JP_RE_MSL_LIST TARGET
         LEFT JOIN (SELECT * FROM WKS_JAPAN_REGIONAL_SELLOUT_ACTUALS) ACTUAL
                ON TARGET.MNTH_ID = ACTUAL.MNTH_ID
@@ -422,7 +426,7 @@ FROM (SELECT CAST(ACTUAL.YEAR AS INTEGER) AS YEAR,
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-              100 AS TARGET_COMPLAINCE
+              1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM WKS_JAPAN_REGIONAL_SELLOUT_ACTUALS A
             WHERE NOT EXISTS (SELECT 1

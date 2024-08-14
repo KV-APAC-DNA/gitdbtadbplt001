@@ -1,3 +1,7 @@
+  {{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with WKS_INDIA_REGIONAL_SELLOUT_BASEDIM as 
 (
 select * from {{ ref('indwks_integration__wks_india_regional_sellout_basedim') }}

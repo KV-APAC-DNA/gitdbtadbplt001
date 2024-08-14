@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 with WKS_CNSC_BASE_RETAIL_EXCELLENCE as (
     select * from {{ ref('chnwks_integration__wks_cnsc_base_retail_excellence') }}
 ),

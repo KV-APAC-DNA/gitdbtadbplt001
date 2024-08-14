@@ -1,3 +1,7 @@
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import cte     
 with itg_MY_re_msl_list as (
     select * from {{ ref('myswks_integration__wks_my_re_msl_list') }}
@@ -147,7 +151,7 @@ FROM (SELECT DISTINCT TARGET.jj_year,
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM itg_MY_re_msl_list TARGET
         LEFT JOIN (SELECT * FROM WKS_MY_RE_ACTUALS) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
@@ -312,7 +316,7 @@ FROM (SELECT DISTINCT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              NVL(ACTUAL.P6M_SALES_FLAG,'N') as P6M_SALES_FLAG,
              NVL(ACTUAL.P12M_SALES_FLAG,'N') as P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM WKS_MY_RE_ACTUALS A
             WHERE NOT EXISTS (SELECT 1

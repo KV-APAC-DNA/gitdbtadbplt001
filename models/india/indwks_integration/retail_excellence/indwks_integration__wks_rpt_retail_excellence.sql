@@ -1,3 +1,8 @@
+
+{{ 
+    config(
+    sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )}}
 --import CTE
 with WKS_SKU_RECOM_MSL_TARGETS as 
 (
@@ -8,10 +13,10 @@ wks_india_regional_sellout_actuals as (
 ),
 edw_product_dim as 
 (
-select * from {{ source('indedw_integration', 'edw_product_dim') }}
+select * from {{ source('indedw_integration', 'edw_product_dim_sync') }}
 ),
 edw_retailer_dim as (
-select * from {{ source('indedw_integration', 'edw_retailer_dim') }}
+select * from {{ source('indedw_integration', 'edw_retailer_dim_sync') }}
  
 ),
 edw_material_dim as (
@@ -45,7 +50,7 @@ edw_code_descriptions_manual as(
     select * from {{ source('aspedw_integration', 'edw_code_descriptions_manual') }}
 ),
 edw_customer_dim as (
-    select * from {{ source('indedw_integration', 'edw_customer_dim') }}
+    select * from {{ source('indedw_integration', 'edw_customer_dim_sync') }}
 
 ),
 EDW_GCH_CUSTOMERHIERARCHY as(
@@ -56,7 +61,7 @@ EDW_CUSTOMER_BASE_DIM as(
 ),
 itg_in_mds_channel_mapping as 
 (
- select * from {{ source('inditg_integration', 'itg_in_mds_channel_mapping') }}
+ select * from {{ source('inditg_integration', 'itg_in_mds_channel_mapping_sync') }}
 ),
 wks_rpt_retail_excellence_mdp as(
 
@@ -176,7 +181,7 @@ SELECT MDP.*,COM.*,SYSDATE() AS CRT_DTTM FROM (SELECT CAST(TARGET.FISC_YR AS INT
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N')AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-      		 100 AS TARGET_COMPLAINCE
+      		 1 AS TARGET_COMPLAINCE
 FROM WKS_SKU_RECOM_MSL_TARGETS TARGET
         LEFT JOIN (SELECT * FROM WKS_INDIA_REGIONAL_SELLOUT_ACTUALS) ACTUAL
                ON TARGET.FISC_PER = ACTUAL.MNTH_ID
@@ -251,7 +256,8 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
                           ROW_NUMBER() OVER (PARTITION BY sap_matl_num ORDER BY sap_matl_num) RANK
                    FROM  EDW_MATERIAL_DIM EMD,
-                        EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        --EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        (SELECT * FROM (SELECT a.*, ROW_NUMBER() OVER (PARTITION BY LTRIM(MATERIALNUMBER,0) ORDER BY LTRIM(MATERIALNUMBER,0)) rnum FROM EDW_GCH_PRODUCTHIERARCHY a) where rnum=1) EGPH,
                   (SELECT * FROM (SELECT DISTINCT FRANCHISE_NAME,BRAND_NAME,PRODUCT_CATEGORY_NAME,
 						       VARIANT_NAME,MOTHERSKU_NAME,MOTHERSKU_CODE,PRODUCT_CODE,row_number () over (partition by mothersku_code order by crt_dttm desc) as rn
                    FROM EDW_PRODUCT_DIM  WHERE PRODUCT_CODE NOT IN ('233test1')) WHERE RN=1)INDIA_PROD 
@@ -469,7 +475,7 @@ wks_rpt_retail_excellence_nonmdp as
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,				  				
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
 FROM ( SELECT *
 		FROM WKS_INDIA_REGIONAL_SELLOUT_ACTUALS A
 		WHERE NOT EXISTS (SELECT 1
@@ -553,7 +559,8 @@ LEFT JOIN (SELECT * FROM(SELECT DISTINCT
                           EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
                           ROW_NUMBER() OVER (PARTITION BY sap_matl_num ORDER BY sap_matl_num) RANK
                    FROM  EDW_MATERIAL_DIM EMD,
-                        EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        --EDW_GCH_PRODUCTHIERARCHY EGPH,
+                        (SELECT * FROM (SELECT a.*, ROW_NUMBER() OVER (PARTITION BY LTRIM(MATERIALNUMBER,0) ORDER BY LTRIM(MATERIALNUMBER,0)) rnum FROM EDW_GCH_PRODUCTHIERARCHY a) where rnum=1) EGPH,
                   (SELECT * FROM (SELECT DISTINCT FRANCHISE_NAME,BRAND_NAME,PRODUCT_CATEGORY_NAME,
 						       VARIANT_NAME,MOTHERSKU_NAME,MOTHERSKU_CODE,PRODUCT_CODE,row_number () over (partition by mothersku_code order by crt_dttm desc) as rn
                    FROM EDW_PRODUCT_DIM  WHERE PRODUCT_CODE NOT IN ('233test1')) WHERE RN=1)INDIA_PROD 

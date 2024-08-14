@@ -145,7 +145,7 @@ transformation as (
        DM.P6M_SALES_FLAG,
        DM.P12M_SALES_FLAG,
        DM.MDP_FLAG,
-       case when mdp_flag='Y' and DM.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 100 end as TARGET_COMPLAINCE,--DM.TARGET_COMPLAINCE,
+       case when mdp_flag='Y' and DM.global_product_brand=target.global_product_brand then target.TARGET_COMPLAINCE else 1 end as TARGET_COMPLAINCE,--DM.TARGET_COMPLAINCE,
        DM.LIST_PRICE,
        DM.TOTAL_SALES_LM,
        DM.TOTAL_SALES_P3M,
