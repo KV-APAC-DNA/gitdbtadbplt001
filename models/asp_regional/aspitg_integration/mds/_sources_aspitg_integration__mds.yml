@@ -97,8 +97,8 @@ sources:
                 store_failures: true
                 schema: aspwks_integration
           - test_duplicate:
-              group_by_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type"]
-              select_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","type","target_ori"]
+              group_by_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","brand","type"]
+              select_columns: ["cluster","country","sub_country","fisc_month","fisc_year","franchise","brand","type","target_ori"]
               name: TRATBL_sdl_mds_rg_ecom_plan__duplicate_test
               config:
                 store_failures: true
@@ -171,6 +171,9 @@ sources:
         tags: ["MDS","rg_mds_to_dna","ingestion"]
       - name: sdl_mds_ap_pre_apsc_master
         tags: ["MDS","rg_mds_to_dna","ingestion"]
+      - name: sdl_mds_rg_prox_product_mapping
+      - name: sdl_mds_rg_prox_channel_mapping
+      - name: sdl_mds_rg_prox_customer_mapping
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
@@ -189,3 +192,5 @@ sources:
       identifier: false
     tables:
       - name: itg_mds_rg_ps_channel_weights # currently used as source, but need a confirmation from Kenvue team
+      - name: itg_mds_master_mother_code_mapping
+      - name: itg_mysls_cust_hier

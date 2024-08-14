@@ -20,8 +20,8 @@ sources:
                 store_failures: true
                 schema: hcpwks_integration
           - test_duplicate:
-              select_columns: ["team_name","v_custid"]
-              group_by_columns: ["team_name","v_custid"]
+              select_columns: ["team_name","v_custid",]
+              group_by_columns: ["team_name","v_custid","filename"]
               name: TRATBL_sdl_hcp360_in_ventasys_hcp_master__duplicate_test
               config:
                 store_failures: true

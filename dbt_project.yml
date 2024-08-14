@@ -435,7 +435,6 @@ models:
       idnedw_access:
         +materialized: view
         +schema: IDNEDW_ACCESS
-
     north_asia:
       config:
         +enabled: true
@@ -543,6 +542,9 @@ models:
         udc:
           view:
             +materialized: view
+        pos:
+          view:
+            +materialized: view
       inditg_integration:
         +materialized: table
         +transient: false
@@ -553,36 +555,14 @@ models:
       indedw_access:
         +materialized: view
         +schema: INDEDW_ACCESS
-
-# ADDED CHINA AS PART OF RETAIL EXCELLENCE
-    china:
-      config:
-        +enabled: true
-      chnitg_integration:
-        +materialized: table
-        +schema: CHNITG_INTEGRATION
-        +transient: false
-      chnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: CHNEDW_INTEGRATION
-      chnwks_integration:
-        +materialized: table
-        +schema: CHNWKS_INTEGRATION        
     japan:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      jpnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: JPNEDW_INTEGRATION
         +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
       jpnitg_integration:
         +materialized: table
         +transient: false
         +schema: JPNITG_INTEGRATION
-
       jpnedw_integration:
         +materialized: table
         +transient: false
@@ -590,12 +570,10 @@ models:
         common:
           views:
             +materialized: view
-
       jpnwks_integration:
         +materialized: table
         +transient: false
         +schema: JPNWKS_INTEGRATION
-
       jpnedw_access:
         +materialized: view
         +schema: JPNEDW_ACCESS
@@ -621,4 +599,19 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
-
+    china:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      chnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNITG_INTEGRATION    
+      chnwks_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNWKS_INTEGRATION   
+      chnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNEDW_INTEGRATION

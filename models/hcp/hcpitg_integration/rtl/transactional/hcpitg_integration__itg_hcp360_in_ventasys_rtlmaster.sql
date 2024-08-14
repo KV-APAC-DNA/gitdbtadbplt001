@@ -7,14 +7,14 @@
         delete from {{this}} WHERE (team_name,v_custid_rtl) IN (SELECT sdl.team_name,sdl.v_custid_rtl
                                    FROM {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }} sdl 
                                    INNER JOIN {{this}}  itg
-                                   ON sdl.team_name = itg.team_name
-                                   AND sdl.v_custid_rtl = itg.v_custid_rtl
+                                   ON rtrim(sdl.team_name) = rtrim(itg.team_name)
+                                   AND rtrim(sdl.v_custid_rtl) = rtrim(itg.v_custid_rtl)
                                    )
         {% endif %}"
     )
 }}
 with sdl_hcp360_in_ventasys_rtlmaster as(
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }}
+    select *, dense_rank() over (partition by team_name,v_custid_rtl order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }} qualify rn=1
 ),
 final as 
 (
