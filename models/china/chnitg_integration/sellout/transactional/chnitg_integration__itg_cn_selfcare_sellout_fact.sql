@@ -15,11 +15,11 @@ with sdl_cn_selfcare_sellout_fact as
 ),
 itg_mds_cn_otc_product_mapping as
 (
-    select * from dev_dna_core.chnitg_integration.itg_mds_cn_otc_product_mapping
+    select * from {{ ref('chnitg_integration__itg_mds_cn_otc_product_mapping') }} 
 ),
 itg_mds_cn_otc_soldto_mapping as
 (
-    select * from dev_dna_core.chnitg_integration.itg_mds_cn_otc_soldto_mapping
+    select * from {{ ref('chnitg_integration__itg_mds_cn_otc_soldto_mapping') }}
 ),
 trans as
 (
