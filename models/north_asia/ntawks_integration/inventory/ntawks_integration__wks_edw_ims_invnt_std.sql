@@ -59,5 +59,6 @@ transformed as(
                 GROUP BY matl_num) lkp2 ON LTRIM (x.prod_cd,0) = lkp2.matl_num
     left join (select parameter_name as storage_name,parameter_value as area from itg_query_parameters where country_code='TW' and parameter_type='Area') qp
                 on x.storage_name=qp.storage_name
+    WHERE x.dstr_cd in ('107479','107485','107501','107507','107510','116047','120812','122296','123291','131953','132349','132508','135307','135561','107482','107483','132222','136454','134478')
 )
 select * from transformed

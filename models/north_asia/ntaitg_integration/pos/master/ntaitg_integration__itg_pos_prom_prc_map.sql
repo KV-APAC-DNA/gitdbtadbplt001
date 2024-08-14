@@ -13,8 +13,8 @@ with source as(
 final as(
     select 
         customer::varchar(20) as cust,
-        barcode::varchar(20) as barcd,
-        cust_prod_cd::varchar(20) as cust_prod_cd,
+        rtrim(barcode, ' ')::varchar(20) as barcd,
+        rtrim(cust_prod_cd, ' ')::varchar(20) as cust_prod_cd,
         promotional_price::number(30,4) as prom_prc,
         to_date(promotion_start_date) as prom_strt_dt,
         to_date(promotion_end_date) as prom_end_dt,

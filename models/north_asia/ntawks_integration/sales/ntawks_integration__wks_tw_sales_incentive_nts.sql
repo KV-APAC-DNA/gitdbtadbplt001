@@ -78,7 +78,7 @@ FROM (
                                           mnth_id
                                    FROM edw_vw_promo_calendar
                                    ) cal ON forecast_for_year || forecast_for_mnth = cal.year || cal.mnth_no
-                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON a.strategy_customer_hierachy_name = b.customer_name
+                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON rtrim(a.strategy_customer_hierachy_name) = rtrim(b.customer_name)
                             WHERE subsource_type = 'SAPBW_ACTUAL'
                                    AND to_crncy = 'TWD'
                             GROUP BY cntry_cd,
@@ -218,7 +218,7 @@ FROM (
                                           qrtr
                                    FROM edw_vw_promo_calendar
                                    ) cal ON forecast_for_year || forecast_for_mnth = cal.year || cal.mnth_no
-                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON a.strategy_customer_hierachy_name = b.customer_name
+                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON rtrim(a.strategy_customer_hierachy_name) = rtrim(b.customer_name)
                             WHERE subsource_type = 'SAPBW_ACTUAL'
                                    AND to_crncy = 'TWD'
                             GROUP BY cntry_cd,
@@ -375,7 +375,7 @@ FROM (
                                           qrtr
                                    FROM edw_vw_promo_calendar
                                    ) cal ON forecast_for_year || forecast_for_mnth = cal.year || cal.mnth_no
-                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON a.strategy_customer_hierachy_name = b.customer_name
+                            LEFT JOIN itg_mds_tw_customer_sales_rep_mapping b ON rtrim(a.strategy_customer_hierachy_name) = rtrim(b.customer_name)
                             WHERE subsource_type = 'SAPBW_ACTUAL'
                                    AND to_crncy = 'TWD'
                             GROUP BY cntry_cd,

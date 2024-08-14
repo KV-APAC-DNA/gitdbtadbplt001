@@ -5,12 +5,12 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where (team_name, v_custid_dr, v_custid_rtl) in (select  sdl.team_name,  sdl.v_custid_dr,  sdl.v_custid_rtl from  {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }} sdl  inner join {{this}} itg on sdl.team_name = itg.team_name  and sdl.v_custid_dr = itg.v_custid_dr  and sdl.v_custid_rtl = itg.v_custid_rtl)
+        delete from {{this}} where (team_name, v_custid_dr, v_custid_rtl) in (select  sdl.team_name,  sdl.v_custid_dr,  sdl.v_custid_rtl from  {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }} sdl  inner join {{this}} itg on rtrim(sdl.team_name) = rtrim(itg.team_name)  and rtrim(sdl.v_custid_dr) = rtrim(itg.v_custid_dr)  and rtrim(sdl.v_custid_rtl) = rtrim(itg.v_custid_rtl))
         {% endif %}"
     )
 }}
 with sdl_hcp360_in_ventasys_hcprtl as (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }}
+    select *,dense_rank() over (partition by team_name, v_custid_dr, v_custid_rtl order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_hcprtl') }} qualify rn=1
 ),
 final as (
     select

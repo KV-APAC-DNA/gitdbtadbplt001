@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: jpnedw_integration__dw_si_sell_in_dly
+    config:
+      alias: dw_si_sell_in_dly
+      tags: ["sellin_workflow","transformation"]
+
+  - name: jpnedw_integration__dw_so_sell_out_dly_stg
+    config:
+      alias: dw_so_sell_out_dly_stg
+      tags: ["sellin_workflow","transformation"]

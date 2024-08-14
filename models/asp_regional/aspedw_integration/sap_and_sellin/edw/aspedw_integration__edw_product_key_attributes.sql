@@ -214,6 +214,7 @@ final as (
                 FROM (SELECT MATL_NUM,FISC_YR_PER,SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
                     FROM EDW_COPA_TRANS_FACT
                     WHERE ACCT_HIER_SHRT_DESC = 'NTS' AND TRIM(MATL_NUM) IS NOT NULL AND TRIM(MATL_NUM) != ''
+                    AND  FISC_YR>=YEAR(CURRENT_TIMESTAMP)-3
                     GROUP BY MATL_NUM,FISC_YR_PER)
                 WHERE AMT_OBJ_CRNCY != '0.0'
                 GROUP BY MATL_NUM) NTS
