@@ -1,0 +1,63 @@
+with sdl_sap_bw_pca_actuals as(
+    select * from {{ source('aspsdl_raw', 'sdl_sap_bw_pca_actuals') }}
+),
+itg_pca_trans as(
+    select * from aspitg_integration.itg_pca_trans
+),
+final as(
+    SELECT
+       src.request_number,
+       src.data_packet,
+       src.data_record,
+       fiscper,
+       fiscvarnt,
+       fiscyear,
+       fiscper3,
+       currency,
+       unit,
+       account,
+       chrt_accts,
+       comp_code,
+       co_area,
+       curtype,
+       part_prctr,
+       profit_ctr,
+       version,
+       deprarea,
+       orig_pca,
+       pcompany,
+       pcomp_code,
+       porig_pca,
+       scope,
+       move_type,
+       balance,
+       credit,
+       debit,
+       quantity,
+       zmovper,
+       valuation,
+       version_ra,
+       vtype,
+       func_area,
+       pfunc_area,
+       plant,
+       rep_matl,
+       zpc_activ,
+TGT.CRT_DTTM AS TGT_CRT_DTTM,
+UPDT_DTTM,
+   CASE WHEN 
+TGT.CRT_DTTM IS NULL
+THEN 'I' ELSE 'U' END
+AS CHNG_FLG
+FROM 
+sdl_sap_bw_pca_actuals SRC
+LEFT OUTER JOIN (SELECT request_number, data_packet, data_record, CRT_DTTM FROM itg_pca_trans) TGT
+ON SRC.request_number=TGT.request_number
+AND SRC.data_packet=TGT.data_packet
+AND SRC.data_record=TGT.data_record
+)
+select * from final
+
+
+
+
