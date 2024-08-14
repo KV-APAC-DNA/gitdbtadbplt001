@@ -82,3 +82,7 @@ models:
     config:
       alias: itg_ittarget
       tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+  - name: inditg_integration__itg_mds_in_customer_segmentation
+    config:
+      alias: itg_mds_in_customer_segmentation
+      tags: ["in_mds_refresh","ingestion"]

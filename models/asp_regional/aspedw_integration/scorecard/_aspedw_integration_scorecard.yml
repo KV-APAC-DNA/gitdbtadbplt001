@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: aspedw_integration__rpt_regional_scorecard
+    config:
+      alias: rpt_regional_scorecard
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecardmsl1
+    config:
+      alias: rpt_regional_scorecardmsl1
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecardoos2
+    config:
+      alias: rpt_regional_scorecardoos2
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_promo3
+    config:
+      alias: rpt_regional_scorecard_promo3
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_display4
+    config:
+      alias: rpt_regional_scorecard_display4
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_planogram5
+    config:
+      alias: rpt_regional_scorecard_planogram5
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_planogram_compliance6
+    config:
+      alias: rpt_regional_scorecard_planogram_compliance6
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_sos7
+    config:
+      alias: rpt_regional_scorecard_sos7
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_soa8
+    config:
+      alias: rpt_regional_scorecard_soa8
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_inventory_cover9
+    config:
+      alias: rpt_regional_scorecard_inventory_cover9
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_copa10
+    config:
+      alias: rpt_regional_scorecard_copa10
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_ecomm11
+    config:
+      alias: rpt_regional_scorecard_ecomm11
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_ciw12
+    config:
+      alias: rpt_regional_scorecard_ciw12
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_market_share13
+    config:
+      alias: rpt_regional_scorecard_market_share13
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_ds014
+    config:
+      alias: rpt_regional_scorecard_ds014
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_gp15
+    config:
+      alias: rpt_regional_scorecard_gp15
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspedw_integration__rpt_regional_scorecard_otif16
+    config:
+      alias: rpt_regional_scorecard_otif16
+      tags: ["cd_scorecard_table_refresh","transformation"]

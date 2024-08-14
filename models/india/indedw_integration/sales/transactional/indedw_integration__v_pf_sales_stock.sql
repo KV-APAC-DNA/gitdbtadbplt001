@@ -51,6 +51,10 @@ itg_query_parameters as
 (
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}
 ),
+edw_customer_dim as
+(
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
+),
 final as
 (
     SELECT 

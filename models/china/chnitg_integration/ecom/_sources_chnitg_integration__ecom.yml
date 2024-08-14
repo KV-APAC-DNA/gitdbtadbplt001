@@ -1,0 +1,45 @@
+version: 2
+
+sources:
+  - name: chnsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: chnsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_cn_ecom_sapcustomer_map
+      tags: ["ch_ecomm_mds","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["CODE"]
+            select_columns: ["CODE","NAME"]
+            name: TRATBL_sdl_mds_cn_ecom_sapcustomer_map__null_test
+            config:
+                store_failures: true
+                schema: hcpwks_integration
+        - test_duplicate:
+            group_by_columns: ["CODE"]
+            select_columns: ["CODE","NAME"]
+            name: TRATBL_sdl_mds_cn_ecom_sapcustomer_map__duplicate_test
+            config:
+              store_failures: true
+              schema: hcpwks_integration
+    - name: sdl_mds_cn_ecom_brand
+      tags: ["ch_ecomm_mds","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["CODE"]
+            select_columns: ["CODE","NAME"]
+            name: TRATBL_sdl_mds_cn_ecom_brand__null_test
+            config:
+                store_failures: true
+                schema: hcpwks_integration
+        - test_duplicate:
+            group_by_columns: ["CODE"]
+            select_columns: ["CODE","NAME"]
+            name: TRATBL_sdl_mds_cn_ecom_brand__duplicate_test
+            config:
+              store_failures: true
+              schema: hcpwks_integration

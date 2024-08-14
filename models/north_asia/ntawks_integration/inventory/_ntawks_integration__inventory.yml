@@ -185,3 +185,7 @@ models:
     config:
       alias: wks_hk_inventory_healthy_unhealthy_analysis
       tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_lastnmonths
+    config:
+      alias: wks_hk_lastnmonths
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
