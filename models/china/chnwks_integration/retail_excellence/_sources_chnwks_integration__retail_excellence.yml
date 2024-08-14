@@ -9,9 +9,10 @@ sources:
       database: false
       schema: false
       identifier: false
-    tables:
-     
-      - name: itg_mds_master_mother_code_mapping
+
+  # disabling here as this is available main branch in (models/asp_regional/aspitg_integration/mds/_sources_aspitg_integration__mds.yml) file
+    #tables:
+     # - name: itg_mds_master_mother_code_mapping
 
   - name: chnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
