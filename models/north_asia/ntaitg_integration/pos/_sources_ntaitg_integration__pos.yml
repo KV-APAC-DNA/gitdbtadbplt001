@@ -16,6 +16,7 @@ sources:
       - name: sdl_kr_pos_emart_line
       - name: sdl_kr_pos_emart_header
       - name: sdl_hk_pos_scorecard_mannings
+        tags: ["hk_pos","ingestion"]
         tests:
           - test_duplicate:
               select_columns: ["vendorid","brand","productid","date"]
