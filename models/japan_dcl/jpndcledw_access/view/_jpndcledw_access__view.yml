@@ -1,0 +1,277 @@
+version: 2
+
+models:
+  - name: jpndcledw_access__cim01kokya
+    config:
+      alias: cim01kokya
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__cim05opera
+    config:
+      alias: cim05opera
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__cim08shkos_bunkai_qv
+    config:
+      alias: cim08shkos_bunkai_qv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__cld_m
+    config:
+      alias: cld_m
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__c_tbdmsndhist
+    config:
+      alias: c_tbdmsndhist
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__c_tbeckesai
+    config:
+      alias: c_tbeckesai
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__c_tbecregularmeisai
+    config:
+      alias: c_tbecregularmeisai
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__c_tbecregularoperatehist
+    config:
+      alias: c_tbecregularoperatehist
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__c_tbtelcompanymst
+    config:
+      alias: c_tbtelcompanymst
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_kesai_mart_dly
+    config:
+      alias: dm_kesai_mart_dly
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_kesai_mart_dly_general
+    config:
+      alias: dm_kesai_mart_dly_general
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_kesai_mart_dly_gts_v
+    config:
+      alias: dm_kesai_mart_dly_gts_v
+      tags: ["japan_dcl_views","transformation"]
+      
+  - name: jpndcledw_access__dm_kesai_mart_rakuten
+    config:
+      alias: dm_kesai_mart_rakuten
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_user_attr
+    config:
+      alias: dm_user_attr
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_user_attr_spending_trend_v
+    config:
+      alias: dm_user_attr_spending_trend_v
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__dm_user_status
+    config:
+      alias: dm_user_status
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__edw_mds_jp_dcl_mt_h_product
+    config:
+      alias: edw_mds_jp_dcl_mt_h_product
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__edw_mds_jp_dcl_product_master
+    config:
+      alias: edw_mds_jp_dcl_product_master
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__item_hanbai_p_zaiko_c_v
+    config:
+      alias: item_hanbai_p_zaiko_c_v
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__item_hanbai_v
+    config:
+      alias: item_hanbai_v
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__item_zaiko_v
+    config:
+      alias: item_zaiko_v
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kesai_h_data_mart_mv
+    config:
+      alias: kesai_h_data_mart_mv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kesai_h_data_mart_mv_kizuna
+    config:
+      alias: kesai_h_data_mart_mv_kizuna
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kesai_m_data_mart_mv
+    config:
+      alias: kesai_m_data_mart_mv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kesai_m_data_mart_mv_kizuna
+    config:
+      alias: kesai_m_data_mart_mv_kizuna
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_cal_v
+    config:
+      alias: kr_054_cal_v
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_pfuyo_sum
+    config:
+      alias: kr_054_pfuyo_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_plost_sum
+    config:
+      alias: kr_054_plost_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_plyotei_sum
+    config:
+      alias: kr_054_plyotei_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_puse_sum
+    config:
+      alias: kr_054_puse_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_result
+    config:
+      alias: kr_054_result
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_sfuyo_sum
+    config:
+      alias: kr_054_sfuyo_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_slost_sum
+    config:
+      alias: kr_054_slost_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_slyotei_sum
+    config:
+      alias: kr_054_slyotei_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_ssoutei_sum
+    config:
+      alias: kr_054_ssoutei_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_054_suse_sum
+    config:
+      alias: kr_054_suse_sum
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_frequency_1yn_900
+    config:
+      alias: kr_frequency_1yn_900
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__kr_new_stage_point
+    config:
+      alias: kr_new_stage_point
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__report_006_a_newly_added
+    config:
+      alias: report_006_a_newly_added
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__report_006_d
+    config:
+      alias: report_006_d
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__syouhincd_henkan_qv
+    config:
+      alias: syouhincd_henkan_qv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tbecorder
+    config:
+      alias: tbecorder
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tbecordermeisai
+    config:
+      alias: tbecordermeisai
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tbpromotion
+    config:
+      alias: tbpromotion
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__teikikeiyaku_data_mart_uni
+    config:
+      alias: teikikeiyaku_data_mart_uni
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tm13item_qv
+    config:
+      alias: tm13item_qv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tm14shkos_qv
+    config:
+      alias: tm14shkos_qv
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tm22kokyasts
+    config:
+      alias: tm22kokyasts
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__tt06juchkokyasts
+    config:
+      alias: tt06juchkokyasts
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__vw_3monthactiveuserv2
+    config:
+      alias: vw_3monthactiveuserv2
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__wk_d23483_nohindata_0825
+    config:
+      alias: wk_d23483_nohindata_0825
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__wk_d23484_nohindata_final
+    config:
+      alias: wk_d23484_nohindata_final
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__cewq028
+    config:
+      alias: '"cewq028破損商品"'
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_access__wqwt34
+    config:
+      alias: '"wqwt34明細出力リスト"'
+      tags: ["japan_dcl_views","transformation"]
+      
+  - name: jpndcledw_access__wqwt74
+    config:
+      alias: '"wqwt74戦略商品別売上ｐ"'
+      tags: ["japan_dcl_views","transformation"]

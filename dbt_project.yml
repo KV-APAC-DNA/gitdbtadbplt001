@@ -599,3 +599,26 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
+    japan_dcl:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
+      jpndcledw_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPDCLEDW_INTEGRATION
+        view:
+            +materialized: view
+      jpndclitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPDCLITG_INTEGRATION
+      jpndcledw_access:
+        +materialized: view
+        +schema: JPDCLEDW_ACCESS
+
+
+
+
+
+
