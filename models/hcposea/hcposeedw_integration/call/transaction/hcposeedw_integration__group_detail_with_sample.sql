@@ -1,54 +1,54 @@
 with itg_call as (
-    select * from prod_dna_core.hcposeitg_integration.itg_call
+    select * from dev_dna_core.hcposeitg_integration.itg_call
 ),
 
 itg_call_detail as (
-    select * from prod_dna_core.hcposeitg_integration.itg_call_detail
+    select * from dev_dna_core.hcposeitg_integration.itg_call_detail
 ),
 
 itg_call_discussion as (
-    select * from prod_dna_core.hcposeitg_integration.itg_call_discussion
+    select * from dev_dna_core.hcposeitg_integration.itg_call_discussion
 ),
 
 itg_recordtype as (
-    select * from prod_dna_core.hcposeitg_integration.itg_recordtype
+    select * from dev_dna_core.hcposeitg_integration.itg_recordtype
 ),
 
 dim_country as (
-     select * from dev_dna_core.oseedw_integration.dim_country
+     select * from dev_dna_core.hcposeedw_integration.dim_country
 ),
 
 dim_employee as (
-    select * from dev_dna_core.oseedw_integration.dim_employee
+    select * from dev_dna_core.hcposeedw_integration.dim_employee
 ),
 
 dim_profile as (
-    select * from prod_dna_core.hcposeedw_integration.dim_profile
+    select * from dev_dna_core.hcposeedw_integration.dim_profile
 ),
 
 dim_organization as (
-    select * from dev_dna_core.oseedw_integration.dim_organization
-),
+    select * from dev_dna_core.hcposeedw_integration.dim_organization
 
 dim_date as (
-    select * from prod_dna_core.hcposeedw_integration.dim_date
+    select * from dev_dna_core.hcposeedw_integration.dim_date
 ),
 
 dim_product_indication as (
-    select * from dev_dna_core.oseedw_integration.dim_product_indication
+    select * from dev_dna_core.hcposeedw_integration.dim_product_indication
 ),
 
 dim_hcp as (
-     select * from dev_dna_core.oseedw_integration.dim_hcp
+     select * from dev_dna_core.hcposeedw_integration.dim_hcp
 ),
 
 dim_hco as (
-    select * from dev_dna_core.oseedw_integration.dim_hco
+    select * from dev_dna_core.hcposeedw_integration.dim_hco
 ),
 
 itg_lookup_retention_period as (
-    select * from dev_dna_core.thaitg_integration.itg_lookup_retention_period
-),
+    select * from dev_dna_core.snaposeitg_integration.itg_lookup_retention_period
+    {# table is missing from snowflake #}
+), 
 
 call
 AS (
