@@ -599,7 +599,7 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
-<<<<<<< HEAD
+
     china:
       config:
         +enabled: true
@@ -616,7 +616,7 @@ models:
         +materialized: table
         +transient: false
         +schema: CHNEDW_INTEGRATION
-=======
+
     japan_dcl:
       config:
         +enabled: true
@@ -635,9 +635,3 @@ models:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
 
-
-
-
-
-
->>>>>>> d4ec2981a3c1fd7bbfc87bbd7a1c9a96f456e811
