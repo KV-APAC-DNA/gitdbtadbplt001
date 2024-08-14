@@ -27,7 +27,7 @@ from (select distinct cntry_cd,
                    sellout_dim_key,
                    data_src
             from wks_china_personal_care_base_retail_excellence
-			where nvl(so_sls_value,0) != 0 and
+			where --nvl(so_sls_value,0) != 0 and
 			(mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)
 and mnth_id <= (select  last_2mnths from edw_vw_cal_retail_excellence_dim))) a,
            (select distinct "year" as "year",
