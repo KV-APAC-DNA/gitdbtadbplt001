@@ -1,7 +1,7 @@
 {% macro build_procedure_tbecorder_rireki_log() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                jpndcledw_integration.tbecorder_log_rireki_tmp
+                jpdcledw_integration.tbecorder_log_rireki_tmp
             {% else %}
                 {{schema}}.jpndcledw_integration__tbecorder_rireki_log_tmp
     {% endif %}
@@ -9,7 +9,7 @@
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    jpndcledw_integration.tbecorder_rireki_log
+                    jpdcledw_integration.tbecorder_rireki_log
                 {% else %}
                     {{schema}}.jpndcledw_integration__tbecorder_rireki_log
                 {% endif %}
@@ -24,7 +24,7 @@
             );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            jpndcledw_integration.tbecorder_rireki_log
+            jpdcledw_integration.tbecorder_rireki_log
         {% else %}
             {{schema}}.jpndcledw_integration__tbecorder_rireki_log
         {% endif %};
@@ -208,7 +208,7 @@
         
         INSERT INTO 
                 {% if target.name=='prod' %}
-                    jpndcledw_integration.tbecorder_rireki_log
+                    jpdcledw_integration.tbecorder_rireki_log
                 {% else %}
                     {{schema}}.jpndcledw_integration__tbecorder_rireki_log
                 {% endif %}

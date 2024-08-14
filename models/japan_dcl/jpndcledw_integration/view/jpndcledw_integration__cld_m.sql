@@ -6,7 +6,7 @@
 WITH cld_m
 AS (
   SELECT *
-  FROM {{ source('jpdcledw_integration', 'cld_m') }}
+  FROM {{ ref('jpndcledw_integration__cld_m') }}
   ),
 final
 AS (

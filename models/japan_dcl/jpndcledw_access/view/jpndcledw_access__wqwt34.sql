@@ -1,6 +1,6 @@
 
 with source as (
-    select * from {{ source('jpdcledw_integration', '"wqwt34明細出力リスト"') }}
+    select * from {{ source('jpdcledw_integration', '"WQWT34明細出力リスト"') }}
 ),
 
 final as (

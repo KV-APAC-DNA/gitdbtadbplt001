@@ -626,7 +626,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
-      alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
+      alias: '"WQWT74戦略商品別売上Ｐ_TBL_NEW"'
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
@@ -921,47 +921,47 @@ models:
   - name: jpndcledw_integration__kr_054_user_allx
     config:
       alias: kr_054_user_allx
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_nouhinwk1x
     config:
       alias: kr_054_nouhinwk1x
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_pfuyo_meisai
     config:
       alias: kr_054_pfuyo_meisai
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_pfuyo_sum
     config:
       alias: kr_054_pfuyo_sum
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_fsoutei_meisai
     config:
       alias: kr_054_fsoutei_meisai
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_fsoutei_sum
     config:
       alias: kr_054_fsoutei_sum
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_puse_meisai
     config:
       alias: kr_054_puse_meisai
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_puse_sum
     config:
       alias: kr_054_puse_sum
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
 
   - name: jpndcledw_integration__kr_054_plost_meisai
     config:
       alias: kr_054_plost_meisai
-      tags: ["DCL_004_Month_End_Refresh","transformation"]
+      tags: ["dcl_004_month_end_refresh","transformation"]
   - name: jpndcledw_integration__kr_054_slyotei_meisai
     config:
       alias: kr_054_slyotei_meisai
@@ -1027,6 +1027,11 @@ models:
     config:
       alias: kesai_h_data_mart_mv_tbl_kizuna
       tags: ["m_dcl_edw_job2", "transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_mv_tbl
+    config:
+      alias: kesai_h_data_mart_mv_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesai_h_data_mart_sub_n_h_tbl
     config:
@@ -1056,6 +1061,11 @@ models:
   - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
     config:
       alias: kesai_m_data_mart_sub_before_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl
+    config:
+      alias: kesai_m_data_mart_sub_before_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp_tbl

@@ -1,7 +1,7 @@
 {% macro build_procedure_tbecorder_log() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                jpndcledw_integration.tbecorder_log_tmp
+                jpdcledw_integration.tbecorder_log_tmp
             {% else %}
                 {{schema}}.jpndcledw_integration__tbecorder_log_tmp
     {% endif %}
@@ -9,7 +9,7 @@
     {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
-                    jpndcledw_integration.tbecorder_log
+                    jpdcledw_integration.tbecorder_log
                 {% else %}
                     {{schema}}.jpndcledw_integration__tbecorder_log
                 {% endif %}
@@ -23,7 +23,7 @@
             );
         create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
-            jpndcledw_integration.tbecorder_log
+            jpdcledw_integration.tbecorder_log
         {% else %}
             {{schema}}.jpndcledw_integration__tbecorder_log
         {% endif %};
