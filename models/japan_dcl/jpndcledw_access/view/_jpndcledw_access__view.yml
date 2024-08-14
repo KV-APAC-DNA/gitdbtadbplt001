@@ -263,15 +263,15 @@ models:
 
   - name: jpndcledw_access__cewq028
     config:
-      alias: '"cewq028破損商品"'
+      alias: '"CEWQ028破損商品"'
       tags: ["japan_dcl_views","transformation"]
 
   - name: jpndcledw_access__wqwt34
     config:
-      alias: '"wqwt34明細出力リスト"'
+      alias: '"WQWT34明細出力リスト"'
       tags: ["japan_dcl_views","transformation"]
       
   - name: jpndcledw_access__wqwt74
     config:
-      alias: '"wqwt74戦略商品別売上ｐ"'
+      alias: '"WQWT74戦略商品別売上Ｐ"'
       tags: ["japan_dcl_views","transformation"]

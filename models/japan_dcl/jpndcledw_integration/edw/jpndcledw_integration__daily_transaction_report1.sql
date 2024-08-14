@@ -1,7 +1,7 @@
 WITH wqwt03
 AS (
   SELECT *
-  FROM {{ source('jpdcledw_integration','"wqwt03通販売上明細"') }} 
+  FROM {{ source('jpdcledw_integration','"WQWT03通販売上明細"') }} 
   ),
 transformed
 AS (

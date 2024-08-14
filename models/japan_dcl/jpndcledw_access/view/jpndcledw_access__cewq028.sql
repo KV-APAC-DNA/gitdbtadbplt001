@@ -1,6 +1,6 @@
 
 with source as (
-    select * from {{ source('jpdcledw_integration', '"cewq028破損商品"') }}
+    select * from {{ source('jpdcledw_integration', '"CEWQ028破損商品"') }}
 ),
 
 final as (
