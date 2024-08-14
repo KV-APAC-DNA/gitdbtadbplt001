@@ -1,4 +1,4 @@
-WITH "wqwt03通販売上明細" AS
+WITH "WQWT03通販売上明細" AS
 (
     SELECT * FROM {{ source('jpdcledw_integration','"wqwt03通販売上明細"') }}
 ),
