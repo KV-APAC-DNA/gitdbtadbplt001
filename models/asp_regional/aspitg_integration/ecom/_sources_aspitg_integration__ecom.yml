@@ -12,16 +12,6 @@ sources:
       - name: sdl_ecommerce_6pai
         tags: ["ecommerce_6pai_ingestion","ingestion"]
 
-  - name: jpnedw_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: jpnedw_integration
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: mt_tp_status_mapping
-
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration
