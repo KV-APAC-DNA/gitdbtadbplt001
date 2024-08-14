@@ -1,6 +1,6 @@
-WITH "WQWT03通販売上明細" AS
+WITH "wqwt03通販売上明細" AS
 (
-    SELECT * FROM {{ source('jpdcledw_integration','"wqwt03通販売上明細"') }}
+    SELECT * FROM {{ source('jpdcledw_integration','"WQWT03通販売上明細"') }}
 ),
 
 final AS
