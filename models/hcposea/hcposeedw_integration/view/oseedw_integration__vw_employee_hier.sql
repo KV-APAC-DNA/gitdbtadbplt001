@@ -1,12 +1,12 @@
 WITH dim_employee_iconnect
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_employee_iconnect
+    FROM oseedw_integration.dim_employee_iconnect
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_sector_mapping
+    FROM oseedw_integration.edw_isight_sector_mapping
     ),
 derived_table1
 AS (
@@ -42,7 +42,7 @@ AS (
         l1.user_type,
         l1.email_id,
         l1.user_license,
-        l1."region",
+        l1.region,
         l1.phone,
         l1.profile_name,
         l1.title,
@@ -130,7 +130,7 @@ AS (
         derived_table1.user_type,
         derived_table1.email_id,
         derived_table1.user_license,
-        derived_table1."region",
+        derived_table1.region,
         derived_table1.phone,
         derived_table1.profile_name,
         derived_table1.title,

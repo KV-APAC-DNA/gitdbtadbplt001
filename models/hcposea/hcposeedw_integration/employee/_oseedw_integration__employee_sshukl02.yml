@@ -1,47 +1,47 @@
 version: 2
 
 models:
-  - name: oseaedw_integration__dim_employee
+  - name: oseedw_integration__dim_employee
     config:
       alias: dim_employee
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__wrk_fact_group_detail
+  - name: oseedw_integration__wrk_fact_group_detail
     config:
       alias: wrk_fact_group_detail
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__detail_with_sample
+  - name: oseedw_integration__detail_with_sample
     config:
       alias: detail_with_sample
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__wrk_dim_organization
+  - name: oseedw_integration__wrk_dim_organization
     config:
       alias: wrk_dim_organization
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__dim_employee_iconnect
+  - name: oseedw_integration__dim_employee_iconnect
     config:
       alias: dim_employee_iconnect
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__dim_date
+  - name: oseedw_integration__dim_date
     config:
       alias: dim_date
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__fact_timeoff_territory
+  - name: oseedw_integration__fact_timeoff_territory
     config:
       alias: fact_timeoff_territory
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__fact_call_detail
+  - name: oseedw_integration__fact_call_detail
     config:
       alias: fact_call_detail
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__fact_cycle_plan
+  - name: oseedw_integration__fact_cycle_plan
     config:
       alias: fact_cycle_plan
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__wrk_call_detail
+  - name: oseedw_integration__wrk_call_detail
     config:
       alias: wrk_call_detail
       tags: ["edw_load","transformation"]
-  - name: oseaedw_integration__wrk_cycle_plan
+  - name: oseedw_integration__wrk_cycle_plan
     config:
       alias: wrk_cycle_plan
       tags: ["edw_load","transformation"]
