@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: chnitg_integration__itg_cn_selfcare_sellout_fact
+    config:
+        alias: itg_cn_selfcare_sellout_fact
+        tags: ["j_ap_dna_etl_framework_cn_otc_selfcare", "ingestion"]

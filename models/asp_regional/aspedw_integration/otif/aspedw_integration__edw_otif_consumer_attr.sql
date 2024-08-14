@@ -12,7 +12,7 @@ with itg_otif_consumer_attr as (
 ),
 itg_otif_glbl_con_reporting as 
 (
-     select * from {{ source('aspitg_integration' , 'itg_otif_glbl_con_reporting')}}
+     select * from {{ ref('aspitg_integration__itg_otif_glbl_con_reporting') }}
 ),
 itg_mds_ap_sales_ops_map as (
     select * from {{ ref('aspitg_integration__itg_mds_ap_sales_ops_map')}}

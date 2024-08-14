@@ -196,6 +196,9 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+
+      - name: sdl_mds_hk_store_master
+
   - name: ntaitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: ntaitg_integration
@@ -207,3 +210,4 @@ sources:
       - name: itg_ims_temp
       - name: itg_mds_hk_le_targets
       - name: itg_kr_gt_sellout
+      - name: itg_mds_tw_mt_store_master
