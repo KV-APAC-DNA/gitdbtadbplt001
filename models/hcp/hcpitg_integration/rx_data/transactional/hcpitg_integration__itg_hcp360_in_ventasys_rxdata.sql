@@ -13,7 +13,9 @@
 
 with source as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxdata') }}
+    select *, dense_rank() over (partition by TO_CHAR(dcr_dt,'YYYYMM') order by filename desc) rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxdata') }}
+    qualify rn=1
 ),
 final as
 (

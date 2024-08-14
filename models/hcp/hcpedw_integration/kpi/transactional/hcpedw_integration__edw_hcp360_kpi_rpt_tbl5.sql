@@ -4,7 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where source_system = 'IQVIA'
+        delete from {{this}} where rtrim(upper(source_system)) = 'IQVIA'
         and country = 'IN';
         {% endif %}"
     )
@@ -16,11 +16,11 @@ edw_hcp360_in_iqvia_sales as
 ),
 itg_hcp360_in_iqvia_brand as 
 (
-    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_brand') }}
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_in_iqvia_brand') }}
 ),
 itg_hcp360_in_iqvia_speciality as 
 (
-    select * from {{ ref('hcpitg_integration__itg_hcp360_in_iqvia_speciality') }}
+    select * from {{ source('hcpitg_integration', 'itg_hcp360_in_iqvia_speciality') }}
 ),
 itg_hcp360_in_iqvia_indication as 
 (
@@ -101,7 +101,7 @@ temp1 as
                     I.data_source,
                     I.pack_volume
                 FROM ITG_HCP360_IN_IQVIA_BRAND I,
-(
+              (
                         select *
                         from ITG_MDS_HCP360_PRODUCT_MAPPING
                         where Brand = 'ORSL'
@@ -192,7 +192,7 @@ WHERE BASE.country = REPORT_BRAND.country (+)
     AND BASE.brand_category = REPORT_BRAND.brand_category (+)
     AND BASE.iqvia_brand = REPORT_BRAND.iqvia_brand (+) --AND BASE.report_brand_reference = REPORT_BRAND. report_brand_reference (+)
     AND BASE.activity_date = REPORT_BRAND.activity_date (+)
-),
+) ,
 temp2 as 
 (
     with BASE as (
@@ -1510,9 +1510,10 @@ temp11 as
             convert_timezone('UTC',current_timestamp()) AS CRT_DTTM,
             convert_timezone('UTC',current_timestamp()) AS UPDT_DTTM
         FROM (
-                SELECT nvl(
+                 SELECT 
+                nvl(
                         M.BRAND,
-case
+                        case
                             when position(' ' in I.Product_description) > 0 then split_part(I.Product_description, ' ', 1)
                             when position('-' in I.Product_description) > 0 then split_part(I.Product_description, '-', 1)
                             else I.Product_description
@@ -1529,17 +1530,17 @@ case
                     I.total_units,
                     I.value,
                     I.data_source
-                FROM edw_hcp360_in_iqvia_sales I
+             FROM hcpitg_integration.itg_hcp360_in_iqvia_sales I 
                     LEFT OUTER JOIN (
-                        SELECT iqvia,
+                        SELECT iqvia::varchar(200) as iqvia,
                             case
-                                when split_part(iqvia, ' ', 1) = 'AVEENO' then 'AVEENO BODY'
+                                when split_part(iqvia, '', 0) = 'AVEENO' then 'AVEENO BODY'
                                 else brand
                             end as brand
-                        FROM ITG_MDS_HCP360_PRODUCT_MAPPING
+                        FROM hcpitg_integration.ITG_MDS_HCP360_PRODUCT_MAPPING
                         WHERE Brand = 'DERMA'
-                    ) M ON i.PACK_DESCRIPTION = m.iqvia
-                WHERE I.data_source = 'Aveeno_body'
+                    ) M ON (upper(I.product_DESCRIPTION)) = (upper(m.iqvia))
+                WHERE rtrim(upper(I.data_source)) = upper('Aveeno_body')
             ) iqvia
     ),
     REPORT_BRAND as (
@@ -1691,7 +1692,7 @@ case
                         FROM ITG_MDS_HCP360_PRODUCT_MAPPING
                         WHERE Brand = 'AVEENO BABY'
                     ) M ON i.PACK_DESCRIPTION = m.iqvia
-                WHERE I.data_source = 'Aveeno_baby'
+                WHERE upper(I.data_source) = upper('Aveeno_baby')
                     and upper (split_part(I.Product_description, ' ', 1)) != 'JOHNSON'
             ) iqvia
     ),
@@ -1841,7 +1842,7 @@ case
                         FROM ITG_MDS_HCP360_PRODUCT_MAPPING
                         WHERE Brand = 'JBABY'
                     ) M ON i.PACK_DESCRIPTION = m.iqvia
-                WHERE I.data_source = 'Aveeno_baby'
+                WHERE upper(I.data_source) = upper('Aveeno_baby')
                     and upper (split_part(I.Product_description, ' ', 1)) != 'AVEENO'
                     and upper(pack_description) like '%BABY%'
             ) iqvia
@@ -2801,17 +2802,17 @@ final as
     union all
     select * from trans3
     union all
-    select * from trans4
+   select * from trans4
     union all
-    select * from trans5
+     select * from trans5
     union all
     select * from trans6
     union all
-    select * from trans7
+   select * from trans7
     union all
     select * from trans8
     union all
-    select * from trans9
+   select * from trans9
     union all
     select * from trans10
     union all
@@ -2819,6 +2820,6 @@ final as
     union all
     select * from trans12
     union all
-    select * from trans13
+     select * from trans13
 )
 select * from final
