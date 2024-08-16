@@ -25,7 +25,7 @@ final as
         columnname::varchar(100) as columnname,
         columnvalue::varchar(100) as columnvalue,
         uploadflag::varchar(1) as uploadflag,
-        createddate::timestamp_ntz(9)::date as createddate,
+        createddate::timestamp_ntz(9) as createddate,
         syncid::number(38,0) as syncid,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

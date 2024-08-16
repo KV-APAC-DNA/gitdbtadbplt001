@@ -468,13 +468,13 @@ final as (
         )::text = (
             COALESCE(a.sold_to_party, '~'::character varying)
         )::text
-        LEFT JOIN prod_attr f ON ltrim(
+        LEFT JOIN prod_attr f ON rtrim(ltrim(
             ((f.ean_num)::character varying)::text,
             ((0)::character varying)::text
-        ) = ltrim(
+        )) = rtrim(ltrim(
             (a.ean_num)::text,
             ((0)::character varying)::text
-        )
+        ))
         AND ((f.cntry)::text = (a.ctry_cd)::text)
         LEFT JOIN v_calendar_dtls b ON ((a.pos_dt = b.cal_day))
         LEFT JOIN v_intrm_crncy_exch g ON (((a.crncy_cd)::text = (g.from_crncy)::text))

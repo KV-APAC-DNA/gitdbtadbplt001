@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_rpt_pob_cx_final
+    config:
+        alias: edw_rpt_pob_cx_final
+        tags: ["in_pob_to_cx_datamart","transformation"]
+  - name: hcpedw_integration__edw_rpt_rx_to_cx
+    config:
+        alias: edw_rpt_rx_to_cx
+        tags: ["in_rx_to_cx_datamart","transformation"]
+  - name: hcpedw_integration__edw_rpt_rx_to_cx_to_pob
+    config:
+        alias: edw_rpt_rx_to_cx_to_pob
+        tags: ["in_rx_to_cx_datamart","transformation"]

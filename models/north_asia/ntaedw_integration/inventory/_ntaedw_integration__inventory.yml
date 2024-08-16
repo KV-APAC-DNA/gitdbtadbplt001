@@ -8,7 +8,7 @@ models:
   - name: ntaedw_integration__edw_ims_inventory_fact
     config: 
       alias: edw_ims_inventory_fact
-      tags: ["tw_ims_distributor_standard_stock","transformation"]
+      tags: ["edw_ims_inventory_fact_load","tw_ims_distributor_standard_stock","transformation"]
   - name: ntaedw_integration__v_rpt_onpack_inventory
     config: 
       alias: v_rpt_onpack_inventory
@@ -24,4 +24,4 @@ models:
   - name: ntaedw_integration__v_rpt_ims_inventory_analysis
     config: 
       alias: v_rpt_ims_inventory_analysis
-      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+      tags: ["north_asia_views","transformation"]

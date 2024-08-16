@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_kr_coupang_product_ranking_weekly
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
@@ -30,7 +30,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_product_ranking_monthly
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
@@ -50,7 +50,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_product_master
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
@@ -60,7 +60,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_product_summary_weekly
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
@@ -70,7 +70,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_product_summary_monthly
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["category_depth1","category_depth2","category_depth3","all_brand","coupang_sku_id","coupang_sku_name","ranking","jnj_product_flag"]
@@ -80,7 +80,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_product_ranking_daily
-      tags: ["kr_coupang_premium_productranking","ingestion"]
+      tags: ["kr_coupang_premium_ing","ingestion"]
       tests:
       - test_null:
           select_columns: ["product_ranking_date","category_depth1","category_depth2","category_depth3","coupang_sku_id","coupang_sku_name","ranking"]
@@ -100,7 +100,7 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_kr_coupang_search_keyword_by_category
-      tags: ["kr_coupang_premium_search_keyword_by_category", "ingestion"]
+      tags: ["kr_coupang_premium_ing", "ingestion"]
       tests:
         - test_null:
             select_columns: ["by_search_keyword", "by_product_ranking", "category_depth1", "category_depth2", "category_depth3", "ranking", "search_keyword", "product_ranking", "product_name", "jnj_product_flag"]
@@ -110,7 +110,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_coupang_search_keyword_by_product
-      tags: ["kr_coupang_premium_search_keyword_by_product", "ingestion"]
+      tags: ["kr_coupang_premium_ing", "ingestion"]
       tests:
           - test_null:
               select_columns: ["category_depth1", "category_depth2", "category_depth3", "product_name", "ranking", "search_keyword"]
@@ -148,7 +148,6 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_mds_kr_sales_store_master
-      tags: ["mds_sdl_itg_load", "gt_sellout_daiso", "ingestion"]
       tests:
         - test_duplicate:
             select_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
@@ -195,7 +194,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_coupang_brand_ranking
-      tags: ["kr_coupang_premium_brandranking", "ingestion"]
+      tags: ["kr_coupang_premium_ing", "ingestion"]
       tests:
         - test_null:
             select_columns: ["category_depth1", "category_depth2", "category_depth3", "ranking", "brand"]

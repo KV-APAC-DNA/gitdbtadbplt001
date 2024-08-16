@@ -475,8 +475,8 @@ transformed as (
 
 --Final CTE
 final as (
-    select 
-        kpi_code::varchar(50) as kpi,
+    select
+        kpi_code::varchar(500) as kpi,
         pyramid_code::varchar(30) as pyramid_code, 
         cluster::varchar(30) as cluster, 
         market_name::varchar(50) as market, 

@@ -1,3 +1,25 @@
+{{
+    config(
+        post_hook="update {{this}}
+            set cust_hier_l1 = map.cust_hier_l1,
+                cust_hier_l2 = map.cust_hier_l2,
+                cust_hier_l3 = map.cust_hier_l3,
+                cust_hier_l4 = map.cust_hier_l4,
+                cust_hier_l5 = map.cust_hier_l5
+            from {{ source('aspitg_integration','itg_mysls_cust_hier') }} map,
+                (
+                    select case
+                            when cntry = 'HongKong' then 'HK'
+                            when cntry = 'Taiwan' then 'TW'
+                            when cntry = 'Korea' then 'KR'
+                        END AS cntry
+                    from {{this}}
+                ) cust_hier
+            where {{this}}.aw_remote_key = map.sfa_cust_code
+                AND cust_hier.cntry = map.cntry
+                and {{this}}.cntry in ('Taiwan', 'HongKong');"
+    )
+}}
 with itg_tw_strategic_cust_hier as(
     select * from {{ ref('ntaitg_integration__itg_tw_strategic_cust_hier') }}
 ),
@@ -8,7 +30,7 @@ transformed as(
     select 
         src.aw_remote_key::varchar(100) as aw_remote_key,
         src.cust_nm::varchar(100) as cust_nm,
-        src.street_num::varchar(100) as street_num,
+        src.street_num::varchar(256) as street_num,
         src.street_nm::varchar(500) as street_nm,
         src.city::varchar(100) as city,
         src.post_cd::varchar(100) as post_cd,

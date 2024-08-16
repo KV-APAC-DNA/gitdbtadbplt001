@@ -1,3 +1,8 @@
+{{
+    config(
+        pre_hook="{{ build_itg_ims_invnt_temp() }}"
+    )
+}}
 with sdl_tw_ims_dstr_std_stock as(
     select * from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_stock') }}
 ),
@@ -89,7 +94,7 @@ stock as
         ) src
         LEFT JOIN 
         (
-            SELECT 
+            SELECT distinct
                 invnt_dt,
                 prod_cd,
                 ean_num,
@@ -188,7 +193,7 @@ d137488 as
         ) src
         LEFT JOIN 
         (
-            SELECT invnt_dt,
+            SELECT distinct invnt_dt,
                 prod_cd,
                 ean_num,
                 ctry_cd,
@@ -294,7 +299,7 @@ pxstore as
     ) src
     LEFT JOIN 
     (
-        SELECT 
+        SELECT distinct
             invnt_dt,
             prod_cd,
             ean_num,
@@ -399,7 +404,7 @@ pxstock as
         ) src
         LEFT JOIN 
         (
-            SELECT invnt_dt,
+            SELECT distinct invnt_dt,
                 prod_cd,
                 ean_num,
                 ctry_cd,

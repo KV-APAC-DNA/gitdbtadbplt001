@@ -96,7 +96,7 @@ models:
   - name: ntawks_integration__wks_itg_ims_invnt
     config:
       alias: wks_itg_ims_invnt
-      tags: ["na_trxn_ims_inv","ingestion"]
+      tags: ["na_trxn_ims_inv","transformation"]
   - name: ntawks_integration__wks_itg_ims_invnt_std
     config:
       alias: wks_itg_ims_invnt_std
@@ -184,4 +184,8 @@ models:
   - name: ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis
     config:
       alias: wks_hk_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
+  - name: ntawks_integration__wks_hk_lastnmonths
+    config:
+      alias: wks_hk_lastnmonths
       tags: ["j_ap_ph_reg_data_refresh","transformation"]

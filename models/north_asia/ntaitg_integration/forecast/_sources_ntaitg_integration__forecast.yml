@@ -43,7 +43,7 @@ sources:
             select_columns: ["sap_code","representative_cust_no","forecast_for_year","forecast_for_mnth"]
             column: "sap_code"
             lookup_column: "ltrim(matl_num, '0')"
-            lookup_table: "{{ ref('aspedw_integration__edw_material_sales_dim') }}"
+            lookup_table: "{{ source('aspedw_integration','edw_material_sales_dim') }}"
             lookup_filter: "sls_org IN ('1200', '120S')"
             name: TRATBL_sdl_tw_bu_forecast_sku__lookup_test_sapcode
             config:
@@ -70,3 +70,12 @@ sources:
               config:
                 store_failures: true
                 schema: ntawks_integration
+  - name: aspedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_material_sales_dim

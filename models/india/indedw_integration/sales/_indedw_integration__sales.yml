@@ -41,9 +41,13 @@ models:
   - name: indedw_integration__edw_ka_sales_fact
     config:
       alias: edw_ka_sales_fact
-      tags: ["m_wrp_in_edw_kasales","transformation"]
+      tags: ["in_edw_kasales","transformation"]
 
   - name: indedw_integration__v_rpt_ka_sales
     config:
       alias: v_rpt_ka_sales
       tags: ["india_views","transformation"]
+  - name: indedw_integration__v_pf_sales_stock
+    config:
+      alias: v_pf_sales_stock
+      tags: ["in_sdlitg_daily","transformation"]

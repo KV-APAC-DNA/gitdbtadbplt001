@@ -11,7 +11,7 @@ AS (
         attribute_2::VARCHAR(100) as attribute_2,
         channel::VARCHAR(100) as channel,
         value::NUMBER(20,4) as target ,
-        convert_timezone('Asia/Singapore',current_timestamp()::timestamp_ntz(9)) as crtd_dttm
+        convert_timezone('Asia/Singapore',current_timestamp())::timestamp_ntz(9) as crtd_dttm
     FROM sources
     )
 SELECT *

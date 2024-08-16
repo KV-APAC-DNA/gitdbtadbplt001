@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcpedw_integration__edw_rpt_urc_vent_ret_mapping
+    config:
+      alias: edw_rpt_urc_vent_ret_mapping
+      tags: ["in_rx_to_cx_extracts_data_mart","transformation"]

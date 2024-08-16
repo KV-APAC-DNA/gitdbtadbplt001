@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
     - name: sdl_kr_ecommerce_ebay_sellout
-      tags: ["j_kr_ecommerce_ebay_etl_framework", "ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing", "ingestion"]
       tests:
         - test_null:
             select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
@@ -61,7 +61,7 @@ sources:
                 store_failures: true
                 schema: ntawks_integration
     - name: sdl_kr_ecommerce_trexi_sellout
-      tags: ["j_kr_ecommerce_ebay_etl_framework", "ingestion"]
+      tags: ["j_kr_ecommerce_sellout_ing", "ingestion"]
       tests:
         - test_null:
             select_columns: ["transaction_date", "cust_nm", "ean_num", "brand", "prod_desc"]
@@ -114,7 +114,7 @@ sources:
               store_failures: true
               schema: ntawks_integration
     - name: sdl_kr_ecom_coupang
-      tags: ["j_kr_ecommerce_sellout_coupang3p_ingestion","transformation"]
+      tags: ["j_kr_ecommerce_sellout_ing","ingestion"]
       tests:
           - test_null:
               select_columns:  ["transaction_date", "cust_nm", "ean_num", "sellout_qty", "sellout_amount","prod_desc"]
@@ -145,11 +145,8 @@ sources:
     - name: sdl_kr_ecommerce_unitoa_sellout
       tags: [""]
     - name: sdl_kr_ecommerce_offtake_coupang_transaction
-      tags: ["j_kr_generic_query_execution", "ingestion"]
-
     - name: sdl_kr_ecommerce_offtake_sales_ebay
-      tags: ["j_kr_generic_query_execution", "ingestion"]
-
+    
   - name: aspedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
     schema: aspedw_integration

@@ -10,7 +10,7 @@ sources:
       identifier: false
     tables:
         - name: sdl_kr_sfmc_naver_data
-          tags: ["kr_sfmc_naver_data","transformation"]
+          tags: ["kr_sfmc_naver_data","ingestion"]
           tests:
             - test_duplicate:
                 select_columns: ["naver_id" , "file_name"]
@@ -27,7 +27,6 @@ sources:
                   store_failures: true
                   schema: ntawks_integration
         - name: sdl_kr_sfmc_naver_data_additional
-          tags: ["mds_sdl_itg_load", "gt_sellout_daiso", "ingestion"]
           tests:
             - test_duplicate:
                 select_columns: ["naver_id" ,"attribute_name", "attribute_value", "file_name"]

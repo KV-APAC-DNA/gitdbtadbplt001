@@ -29,13 +29,13 @@
                     and upper(itg_pos.src_sys_cd) = 'EMART' and upper(itg_pos.ctry_cd) = 'KR';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }} WKS_ITG_POS_EMART_EVYDY where wks_itg_pos_emart_evydy.pos_dt = itg_pos.pos_dt and wks_itg_pos_emart_evydy.ean_num = itg_pos.ean_num and wks_itg_pos_emart_evydy.str_cd = itg_pos.str_cd and wks_itg_pos_emart_evydy.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos_emart_evydy.ctry_cd = itg_pos.ctry_cd and wks_itg_pos_emart_evydy.chng_flg = 'U';
                     delete from {{this}} itg_pos using {{ ref('ntawks_integration__wks_itg_pos') }} wks_itg_pos
-                    where wks_itg_pos.pos_dt = itg_pos.pos_dt and wks_itg_pos.ean_num = itg_pos.ean_num and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos.ctry_cd = itg_pos.ctry_cd and wks_itg_pos.chng_flg = 'U' and itg_pos.src_sys_cd not in ('Emart', 'Costco') and wks_itg_pos.str_cd = itg_pos.str_cd;
+                    where trim(wks_itg_pos.pos_dt) = trim(itg_pos.pos_dt) and trim(wks_itg_pos.ean_num) = trim(itg_pos.ean_num) and wks_itg_pos.src_sys_cd = itg_pos.src_sys_cd and wks_itg_pos.ctry_cd = itg_pos.ctry_cd and wks_itg_pos.chng_flg = 'U' and itg_pos.src_sys_cd not in ('Emart', 'Costco') and trim(wks_itg_pos.str_cd) = trim(itg_pos.str_cd) and trim(nvl(wks_itg_pos.vend_prod_cd,'#')) = trim(nvl(itg_pos.vend_prod_cd,'#'));
                     delete from {{this}} where (pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd) in
                     (
                         select distinct pos_dt,ean_num,src_sys_cd,ctry_cd,str_cd from ( select * from {{ ref('ntawks_integration__wks_itg_pos_emart') }} ) where chng_flg = 'U'
                     );
                     {% elif var('pos_job_to_execute') == 'hk_pos' %}
-                    delete from {{this}} itg using {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }} sdl where to_date (sdl.date::character varying::text,'dd/mm/yyyy'::character varying::text) = itg.pos_dt  AND  itg.src_sys_cd = 'Mannings' AND  itg.ctry_cd = 'HK';
+                    delete from {{this}} itg using {{ ref('ntawks_integration__wks_sdl_hk_pos_scorecard_mannings') }} sdl where to_date (sdl.date::character varying::text,'dd/mm/yyyy'::character varying::text) = itg.pos_dt  AND  itg.src_sys_cd = 'Mannings' AND  itg.ctry_cd = 'HK';
                     {% endif %}
                     {% endif %}   
                     "
@@ -79,7 +79,7 @@ wks_itg_pos_emart_ecvan_ssg as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_ecvan_ssg') }}
 ),
 sdl_hk_pos_scorecard_mannings as (
-    select * from {{ source('ntasdl_raw', 'sdl_hk_pos_scorecard_mannings') }}
+    select * from {{ ref('ntawks_integration__wks_sdl_hk_pos_scorecard_mannings') }}
 ),
 wks_itg_pos_emart_evydy as (
       select * from {{ ref('ntawks_integration__wks_itg_pos_emart_evydy') }}

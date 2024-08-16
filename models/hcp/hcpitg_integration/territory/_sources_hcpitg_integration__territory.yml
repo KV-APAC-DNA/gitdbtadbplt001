@@ -1,0 +1,140 @@
+version: 2
+
+sources:
+  - name: hcpsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcpsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_hcp360_in_ventasys_territory_master
+      tags: ["in_ventasys_load","ingestion"]
+      tests:
+        - test_null:
+            not_null_columns: ["team_name","v_terrid"]
+            select_columns: ["team_name","v_terrid"]
+            name: TRATBL_sdl_hcp360_in_ventasys_territory_master__null_test
+            config:
+                store_failures: true
+                schema: hcpwks_integration
+        - test_duplicate:
+            group_by_columns: ["team_name","v_terrid","filename"]
+            select_columns: ["team_name","v_terrid"]
+            name: TRATBL_sdl_hcp360_in_ventasys_territory_master__duplicate_test
+            config:
+              store_failures: true
+              schema: hcpwks_integration
+
+
+  - name: hcpitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_hcp360_veeva_territory
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_account_hcp
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_account_hco
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_address
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_call
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_call_detail
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_cycle_plan
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_cycle_plan_detail
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_cycle_plan_target
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_recordtype
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_product
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_product_metrics
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_territory_model
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_territory_type
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_territory_fields
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_account_territory_loader
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_object_territory_association
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_user
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_userterritory
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_event_attendee
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_medical_event
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_survey_target
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_survey_question
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_question_response
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_survey
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_call2_key
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_medical_inquiry
+      tags: ["in_veeva_ingestion","ingestion"]
+    - name: itg_hcp360_veeva_key_message
+      tags: ["in_veeva_ingestion","ingestion"]
+
+    - name: itg_hcp360_veeva_lookup_retention_period
+      tags: ["hcp_lookup","ingestion"]
+    - name: itg_hcp360_in_iqvia_brand
+    - name: itg_hcp360_in_iqvia_speciality
+
+  - name: hcpedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcpedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: edw_hcp360_veeva_dim_country
+      tags: ["hcp_lookup","ingestion"]
+    - name: edw_hcp360_veeva_dim_key_message
+      tags: ["hcp_lookup","ingestion"]
+    - name: edw_hcp360_veeva_fact_call_key_message
+      tags: ["hcp_lookup","ingestion"]
+
+  - name: inditg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: inditg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: itg_ventasys_jnj_prod_mapping
+      tags: ["in_lookup","ingestion"]
+    - name: itg_salesperson_mothersku_tmp
+      tags: ["in_lookup","ingestion"]
+    - name: itg_mds_in_vent_prod_msku_mapping
+      tags: ["in_lookup","ingestion"]
+  
+  - name: indsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_in_orsl_products_target
+      tags: ["in_source","ingestion"]

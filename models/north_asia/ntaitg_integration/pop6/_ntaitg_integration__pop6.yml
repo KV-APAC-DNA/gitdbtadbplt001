@@ -49,56 +49,52 @@ models:
     config:
       alias: sdl_raw_pop6_kr_exclusion
       tags: ["pop6_master_load","ingestion"]
-  - name: ntaitg_integration__itg_photo_mgmnt_url
-    config:
-      alias: itg_photo_mgmnt_url
-      tags: ["pop6_photo_management_pre_conversion","transformation"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_service_levels
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_service_levels
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_planned_visits
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_planned_visits
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_executed_visits
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_executed_visits
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_sku_audits
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_sku_audits
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_product_attribute_audits
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_product_attribute_audits
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_general_audits
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_general_audits
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_display_plans
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_display_plans
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_displays
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_displays
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_promotion_plans
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_promotion_plans
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_promotions
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_promotions
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_tasks
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_tasks
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_hk_exclusion
-    config: 
+    config:
       alias: sdl_raw_pop6_hk_exclusion
       tags: ["pop6_master_load", "ingestion"]
   - name: ntaitg_integration__sdl_raw_pop6_tw_display_plans

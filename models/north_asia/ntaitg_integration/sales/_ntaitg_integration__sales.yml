@@ -20,11 +20,11 @@ models:
   - name: ntaitg_integration__itg_sales_cust_prod_master
     config:
       alias: itg_sales_cust_prod_master
-      tags: ["mds_sdl_itg_load","ingestion"]
+      tags: ["kr_mds_refresh","transformation"]
   - name: ntaitg_integration__itg_sales_store_master
     config:
       alias: itg_sales_store_master
-      tags: ["mds_sdl_itg_load","ingestion"]
+      tags: ["kr_mds_refresh","transformation"]
   - name: ntaitg_integration__itg_kr_coupang_productsalereport
     config:
       alias: itg_kr_coupang_productsalereport
@@ -36,7 +36,7 @@ models:
   - name: ntaitg_integration__itg_kr_sales_store_map
     config:
       alias: itg_kr_sales_store_map
-      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
   - name: ntaitg_integration__itg_kr_sales_target_am_brand
     config:
       alias: itg_kr_sales_target_am_brand
