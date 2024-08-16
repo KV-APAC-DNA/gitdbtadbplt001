@@ -118,7 +118,7 @@ sources:
       - name: hanbai_shohin_attr
       - name: tm24_item
       - name: cim03item_zaiko_ikou_kizuna
-      - name: '"WQWT03通販売上明細"'
+      - name: '"wqwt03通販売上明細"'
       - name: cim03item_ikou
       - name: tbecorder_rireki_log_tmp
       - name: genomer_kokya_kpi_inbound
