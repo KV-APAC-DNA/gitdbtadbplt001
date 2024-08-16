@@ -1,0 +1,43 @@
+with source as 
+(
+    select * from {{ ref('indedw_integration__edw_rpt_mi_msl_dashboard') }}
+)
+select
+    mth_mm as "mth_mm",
+    customer_code as "customer_code",
+    customer_name as "customer_name",
+    retailer_code as "retailer_code",
+    retailer_name as "retailer_name",
+    rtruniquecode as "rtruniquecode",
+    region_name as "region_name",
+    zone_name as "zone_name",
+    territory_name as "territory_name",
+    channel_name as "channel_name",
+    retailer_category_name as "retailer_category_name",
+    unique_sales_code as "unique_sales_code",
+    salesman_code as "salesman_code",
+    salesman_name as "salesman_name",
+    mothersku_code_recom as "mothersku_code_recom",
+    mothersku_name_recom as "mothersku_name_recom",
+    mothersku_code_sold as "mothersku_code_sold",
+    mothersku_name_sold as "mothersku_name_sold",
+    quantity as "quantity",
+    achievement_nr as "achievement_nr",
+    total_subd as "total_subd",
+    qtr as "qtr",
+    period as "period",
+    msl_count as "msl_count",
+    msl_sold_count as "msl_sold_count",
+    ms_flag as "ms_flag",
+    hit_ms_flag as "hit_ms_flag",
+    dataset as "dataset",
+    crtdtm as "crtdtm",
+    upddtm as "upddtm",
+    latest_customer_code as "latest_customer_code",
+    latest_customer_name as "latest_customer_name",
+    latest_territory_code as "latest_territory_code",
+    latest_territory_name as "latest_territory_name",
+    latest_salesman_code as "latest_salesman_code",
+    latest_salesman_name as "latest_salesman_name",
+    latest_uniquesalescode as "latest_uniquesalescode"
+from source
