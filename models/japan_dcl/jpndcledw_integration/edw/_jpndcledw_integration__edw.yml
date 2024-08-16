@@ -626,7 +626,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
-      alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
+      alias: '"wqwt74戦略商品別売上Ｐ_tbl_new"'
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
