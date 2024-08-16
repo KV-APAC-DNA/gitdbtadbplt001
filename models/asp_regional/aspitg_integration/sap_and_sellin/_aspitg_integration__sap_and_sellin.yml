@@ -775,7 +775,7 @@ models:
     config:
       alias: sdl_raw_sap_bw_sales
       tags: ["rg_s3_to_dna_sales","transformation"]
-  - name: aspitg_integration__itg_ecc_standard_cost_history
-    config:
-      alias: itg_ecc_standard_cost_history
-      tags: ["SAP_ECC"]
+##  - name: aspitg_integration__itg_ecc_standard_cost_history
+##    config:
+##      alias: itg_ecc_standard_cost_history
+##      tags: ["SAP_ECC"]
