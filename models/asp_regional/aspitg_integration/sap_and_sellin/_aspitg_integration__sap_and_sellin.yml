@@ -779,3 +779,7 @@ models:
     config:
       alias: itg_ecc_standard_cost_history
       tags: ["SAP_ECC"]
+  - name: aspitg_integration__vw_stg_sdl_ecc_standard_cost_history
+    config:
+      alias: vw_stg_sdl_ecc_standard_cost_history
+      tags: ["sap_ecc_master_etl_framework","ingestion"]
