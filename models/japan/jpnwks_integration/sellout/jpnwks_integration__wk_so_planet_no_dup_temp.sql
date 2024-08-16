@@ -137,8 +137,6 @@
                             );
 
                     delete from {{this}};
-                    delete from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }};
-                    
                     
 
                     INSERT INTO {{this}}
