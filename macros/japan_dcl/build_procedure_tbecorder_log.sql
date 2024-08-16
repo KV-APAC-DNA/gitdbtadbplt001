@@ -5,6 +5,7 @@
             {% else %}
                 {{schema}}.jpndcledw_integration__tbecorder_log_tmp
     {% endif %}
+    {% endset %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
                     jpdcledw_integration.tbecorder_log
@@ -25,7 +26,6 @@
         {% else %}
             {{schema}}.jpndcledw_integration__tbecorder_log
         {% endif %};
-    {% endset %}
     {% set query %}
         UPDATE {{tablename}}
         SET T_KBN = 'T',
