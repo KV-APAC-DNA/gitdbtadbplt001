@@ -626,7 +626,7 @@ models:
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
-      alias: '"WQWT74戦略商品別売上Ｐ_TBL_NEW"'
+      alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
       tags: ["m_dcl_edw_job2","transformation"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
@@ -639,7 +639,7 @@ models:
   - name: jpndcledw_integration__tm58_koykarank_ym
     config:
       alias: tm58_koykarank_ym
-      tags: ["m_dcl_edw_job2","transformation"] 
+      tags: ["m_dcl_edwmonthly","transformation"] 
   - name: jpndcledw_integration__temp_rel
     config:
       alias: temp_rel
@@ -876,7 +876,7 @@ models:
   - name: jpndcledw_integration__dm_user_attr_hist
     config:
       alias: dm_user_attr_hist
-      tags: ["m_dcl_edwmonthly","transformation"]
+      tags: ["m_dcl_edwmonthly_dm_user_attr_hist","transformation"]
   
   - name: jpndcledw_integration__kr_054_result
     config:
