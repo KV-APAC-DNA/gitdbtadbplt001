@@ -5,13 +5,13 @@
         incremental_strategy= "append",
         unique_key= ["code"],
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where (trim(code)) in (select distinct trim(code) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province') }});
+        delete from {{this}} where (trim(code)) in (select distinct trim(code) from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province_temp') }});
         {% endif %}"
     )
 }}
 with source as 
 (
-    select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province') }}
+    select * from {{ source('idnsdl_raw', 'sdl_mds_id_ref_province_temp') }}
 ),
 final as 
 (
