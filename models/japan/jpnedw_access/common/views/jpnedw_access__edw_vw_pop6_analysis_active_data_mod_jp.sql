@@ -1,0 +1,43 @@
+with source as(
+    select * from {{ ref('jpnedw_integration__edw_vw_pop6_analysis_active_data_mod_jp') }}
+),
+transformed as(
+    SELECT audit_form as "audit_form"
+        ,audit_form_id as "audit_form_id"
+        ,brand_l4 as "brand_l4"
+        ,business_unit_name as "business_unit_name"
+        ,cancellation_note as "cancellation_note"
+        ,cancellation_reason as "cancellation_reason"
+        ,channel as "channel"
+        ,company as "company"
+        ,customer as "customer"
+        ,data_type as "data_type"
+        ,display_code as "display_code"
+        ,display_comments as "display_comments"
+        ,display_name as "display_name"
+        ,display_order as "display_order"
+        ,display_type as "display_type"
+        ,field_code as "field_code"
+        ,field_id as "field_id"
+        ,field_label as "field_label"
+        ,franchise_l3 as "franchise_l3"
+        ,msl_rank as "msl_rank"
+        ,platform_l6 as "platform_l6"
+        ,pop_name as "pop_name"
+        ,product_attribute as "product_attribute"
+        ,ps_category as "ps_category"
+        ,ps_segment as "ps_segment"
+        ,regional_franchise_l2 as "regional_franchise_l2"
+        ,response as "response"
+        ,retail_environment_ps as "retail_environment_ps"
+        ,sales_group_name as "sales_group_name"
+        ,sku as "sku"
+        ,sku_code as "sku_code"
+        ,sku_english as "sku_english"
+        ,sub_category_l5 as "sub_category_l5"
+        ,visit_date as "visit_date"
+        ,"y/n_flag"
+        ,mkt_share as "mkt_share"
+    FROM source
+)
+select * from transformed

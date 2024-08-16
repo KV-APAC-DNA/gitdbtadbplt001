@@ -2,43 +2,42 @@
     config
     (
         post_hook = "
-                    UPDATE {{this}}
-					SET RTL_CD = mds.str_cd
-					FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_rtlr_chg') }} mds
-					INNER JOIN {{this}} tb2 ON mds.rtlr_cd = tb2.rtl_cd
-						AND mds.bgn_sndr_cd = tb2.bgn_sndr_cd
-						AND mds.rtlr_name = tb2.rtl_name
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON tb2.jcp_rec_seq = CDS.jcp_rec_seq
-					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
-					WHERE CDS.error_cd = 'E004'
-						AND CE.export_flag = 0
-						AND CDS.export_flag = 0
-						AND CDS.exec_flag = 'AUTOCORRECT';
-
-
 					UPDATE {{this}}
 					SET RTL_CD = chg.str_cd
 					FROM {{ ref('jpnedw_integration__edi_rtlr_cd_chng') }} chg
-					INNER JOIN {{this}} tb2 ON chg.rtlr_cd = tb2.rtl_cd
-						AND chg.bgn_sndr_cd = tb2.bgn_sndr_cd
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON tb2.jcp_rec_seq = CDS.jcp_rec_seq
-					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
+					INNER JOIN {{this}} tb2 ON rtrim(chg.rtlr_cd) = rtrim(tb2.rtl_cd)
+						AND rtrim(chg.bgn_sndr_cd) = rtrim(tb2.bgn_sndr_cd)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON rtrim(tb2.jcp_rec_seq) = rtrim(CE.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON rtrim(tb2.jcp_rec_seq) = rtrim(CDS.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON rtrim(YT.jcp_rec_seq) = rtrim(tb2.jcp_rec_seq)
 					WHERE CDS.error_cd = 'E004'
 						AND CE.export_flag = 0
 						AND CDS.export_flag = 0
 						AND CDS.exec_flag = 'AUTOCORRECT';
 
+                    UPDATE {{this}}
+					SET RTL_CD = mds.str_cd
+					FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_rtlr_chg') }} mds
+					INNER JOIN {{this}} tb2 ON rtrim(mds.rtlr_cd) = rtrim(tb2.rtl_cd)
+						AND rtrim(mds.bgn_sndr_cd) = rtrim(tb2.bgn_sndr_cd)
+						AND rtrim(mds.rtlr_name) = rtrim(tb2.rtl_name)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON rtrim(tb2.jcp_rec_seq) = rtrim(CE.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON rtrim(tb2.jcp_rec_seq) = rtrim(CDS.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON rtrim(YT.jcp_rec_seq) = rtrim(tb2.jcp_rec_seq)
+					WHERE CDS.error_cd = 'E004'
+						AND CE.export_flag = 0
+						AND CDS.export_flag = 0
+						AND CDS.exec_flag = 'AUTOCORRECT'
+                        and mds.str_cd is not null;
 
 					UPDATE {{this}}
 					SET WS_CD = sv.int_partner_number
 					FROM {{ ref('jpnitg_integration__itg_mds_jp_mt_so_ws_chg') }} sv
-					INNER JOIN {{this}} tb2 ON sv.ws_cd = tb2.ws_cd
-						AND sv.bgn_sndr_cd = tb2.bgn_sndr_cd
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON tb2.jcp_rec_seq = CE.jcp_rec_seq
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON tb2.jcp_rec_seq = CDS.jcp_rec_seq
-					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON YT.jcp_rec_seq = tb2.jcp_rec_seq
+					INNER JOIN {{this}} tb2 ON rtrim(sv.ws_cd) = rtrim(tb2.ws_cd)
+						AND rtrim(sv.bgn_sndr_cd) = rtrim(tb2.bgn_sndr_cd)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err') }} CE ON rtrim(tb2.jcp_rec_seq) = rtrim(CE.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON rtrim(tb2.jcp_rec_seq) = rtrim(CDS.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} YT ON rtrim(YT.jcp_rec_seq) = rtrim(tb2.jcp_rec_seq)
 					WHERE CDS.error_cd = 'E017'
 						AND CE.export_flag = 0
 						AND CDS.export_flag = 0
@@ -48,11 +47,11 @@
 					UPDATE {{this}}
 					SET PRICE_TYPE = 'K'
 					FROM {{ ref('jpnitg_integration__dw_so_planet_err') }} PR
-					INNER JOIN {{this}} tb2 ON tb2.jcp_rec_seq = PR.jcp_rec_seq
-						AND PR.bgn_sndr_cd = tb2.bgn_sndr_cd
-						AND PR.RTL_CD = tb2.RTL_CD
-					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} ERR ON tb2.jcp_rec_seq = ERR.jcp_rec_seq
-					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON tb2.jcp_rec_seq = CDS.jcp_rec_seq
+					INNER JOIN {{this}} tb2 ON rtrim(tb2.jcp_rec_seq) = rtrim(PR.jcp_rec_seq)
+						AND rtrim(PR.bgn_sndr_cd) = rtrim(tb2.bgn_sndr_cd)
+						AND rtrim(PR.RTL_CD) = rtrim(tb2.RTL_CD)
+					INNER JOIN {{ ref('jpnwks_integration__consistency_error_2') }} ERR ON rtrim(tb2.jcp_rec_seq) =rtrim( ERR.jcp_rec_seq)
+					INNER JOIN {{ ref('jpnitg_integration__dw_so_planet_err_cd_2') }} CDS ON rtrim(tb2.jcp_rec_seq) = rtrim(CDS.jcp_rec_seq)
 					WHERE CDS.error_cd = 'E020'
 						AND PR.export_flag = 0
 						AND CDS.export_flag = 0

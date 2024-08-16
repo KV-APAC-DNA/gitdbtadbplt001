@@ -8,8 +8,8 @@
             {% endif %}
             {% elif var('ims_job_to_execute') == 'kr_gt_sellout' %}
             {% if is_incremental() %}
-            delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and upper(dstr_cd) in ('NH','OTC');
-            delete from {{this}} where upper(DSTR_CD) = 'OTC';
+            -- delete from {{this}} where upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and upper(dstr_cd) in ('NH','OTC');
+            delete from {{this}} where upper(dstr_cd) in ('NH','OTC');
             {% endif %}
             {% elif var('ims_job_to_execute') == 'kr_ecommerce_sellout' %}
             {% if is_incremental() %}
@@ -151,9 +151,9 @@ select ims_txn_dt::date as ims_txn_dt,
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
 from itg_kr_gt_sellout
-where upper(dstr_nm) in 
-('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
-and upper(dstr_cd) in ('NH','OTC')
+where 
+-- upper(dstr_nm) in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and 
+upper(dstr_cd) = 'NH'
 ),
 korea_otc as (
     select ims_txn_dt::date as ims_txn_dt,
@@ -209,9 +209,9 @@ korea_otc as (
         null::number(21,5) as sales_stores,
         null::number(21,5) as sales_rate
 from itg_kr_gt_sellout
-where upper(dstr_nm) not in 
-('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF')
-and upper(dstr_cd) = 'OTC'
+where 
+-- upper(dstr_nm) not in ('DAISO','HYUNDAI','LOTTE','AK','(JU) HJ LIFE','BO YOUNG JONG HAP LOGISTICS','DA IN SANG SA','DONGBU LSD','DU BAE RO YU TONG','IL DONG HU DI S DEOK SEONG SANG SA','JUNGSEOK','KOREA DAE DONG LTD','NU RI ZON','LOTTE LOGISTICS YANG JU','NACF') and 
+upper(dstr_cd) = 'OTC'
 ),
 final as (
     select * from korea_otc

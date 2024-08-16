@@ -50,4 +50,4 @@ models:
   - name: indedw_integration__v_pf_sales_stock
     config:
       alias: v_pf_sales_stock
-      tags: ["india_views","transformation"]
+      tags: ["in_sdlitg_daily","transformation"]
