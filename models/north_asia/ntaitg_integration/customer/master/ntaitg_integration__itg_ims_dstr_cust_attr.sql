@@ -8,14 +8,13 @@
         delete from {{this}} as itg_ims_dstr_cust_attr using {{ ref('ntawks_integration__wks_itg_hk_ims_dstr_cust_attr') }} as wks_itg_hk_ims_dstr_cust_attr where wks_itg_hk_ims_dstr_cust_attr.dstr_customer_code = itg_ims_dstr_cust_attr.dstr_cust_cd and wks_itg_hk_ims_dstr_cust_attr.ctry_cd = itg_ims_dstr_cust_attr.ctry_cd and wks_itg_hk_ims_dstr_cust_attr.dstr_code = itg_ims_dstr_cust_attr.dstr_cd and wks_itg_hk_ims_dstr_cust_attr.chng_flg = 'U';
         {% endif %}",
         post_hook="
-                UPDATE {{this}}
-                    SET store_type = t2.store_type,
-                        hq = t2.hq
-                    FROM {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }} t2
-                        JOIN {{this}} t1 ON 
-                        RTRIM(LTRIM (t1.dstr_cust_cd, '0')) = RTRIM(LTRIM (t2.distributors_customer_code, '0'))
-                        AND RTRIM(t1.dstr_cd) = RTRIM(t2.distributor_code)
-                        AND t1.ctry_cd = 'TW';
+                UPDATE {{this}} t1
+                SET t1.store_type = t2.store_type,
+                    t1.hq = t2.hq
+                FROM {{ ref('ntaitg_integration__itg_tw_ims_dstr_customer_mapping') }} t2
+                WHERE RTRIM(LTRIM (t1.dstr_cust_cd, '0')) = RTRIM(LTRIM (t2.distributors_customer_code, '0'))
+                    AND RTRIM(t1.dstr_cd) = RTRIM(t2.distributor_code)
+                    AND t1.ctry_cd = 'TW';
         "
     )
 }}
