@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_call_detail
+    config:
+      alias: itg_call_detail
+      tags: ["iconnect_data_ingestion","transformation"]

@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__wrk_fact_group_detail
+    config:
+      alias: wrk_fact_group_detail
+      tags: ["edw_load","transformation"]
+  - name: hcposeedw_integration__detail_with_sample
+    config:
+      alias: detail_with_sample
+      tags: ["edw_load","transformation"]
+  - name: hcposeedw_integration__fact_call_detail
+    config:
+      alias: fact_call_detail
+      tags: ["edw_load","transformation"]
+  - name: hcposeedw_integration__wrk_call_detail
+    config:
+      alias: wrk_call_detail
+      tags: ["edw_load","transformation"]
+  - name: hcposeedw_integration__vw_rep_call_activity
+    config:
+      alias: vw_rep_call_activity
+      tags: ["hcp_views","transformation"]
