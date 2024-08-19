@@ -179,7 +179,7 @@ final as (
 select 
 month::varchar(23) as month,
 dstrbtr_grp_cd::varchar(50) as dstrbtr_grp_cd,
-brand::varchar(30) as brand,
+brand::varchar(80) as brand,
 variant::varchar(100) as variant,
 segment::varchar(50) as segment,
 prod_category::varchar(50) as prod_category,

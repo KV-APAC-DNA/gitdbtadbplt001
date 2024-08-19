@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: aspwks_integration__wks_okr_balance_to_go
+    config:
+      alias: wks_okr_balance_to_go
+      tags: ["okr_dashboard_datamart_refresh","transformation"]
+  - name: aspwks_integration__wks_rpt_okr_dashboard_intermediate
+    config:
+      alias: wks_rpt_okr_dashboard_intermediate
+      tags: ["okr_dashboard_datamart_refresh","transformation"] 
+  - name: aspwks_integration__wks_scorecard_ciw_base
+    config:
+      alias: wks_scorecard_ciw_base
+      tags: ["cd_scorecard_table_refresh","transformation"]
+  - name: aspwks_integration__sdl_okr_alteryx_automation
+    config:
+      alias: sdl_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","ingestion"]
+  - name: aspwks_integration__wks_filter_params
+    config: 
+      alias: wks_filter_params
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]

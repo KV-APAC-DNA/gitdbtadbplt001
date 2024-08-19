@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_rpt_copa_customergp_agg
+    config: 
+      alias: edw_rpt_copa_customergp_agg
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
