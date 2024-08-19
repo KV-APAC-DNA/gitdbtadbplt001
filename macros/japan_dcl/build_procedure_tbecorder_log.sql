@@ -27,8 +27,6 @@
         {% else %}
             {{schema}}.jpndcledw_integration__tbecorder_log
         {% endif %};
-    {% endset %}
-    {% set query %}
         UPDATE {{tablename}}
         SET T_KBN = 'T',
             updated_date = GETDATE(),
