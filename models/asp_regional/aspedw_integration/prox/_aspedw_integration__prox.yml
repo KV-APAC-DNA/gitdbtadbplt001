@@ -2,9 +2,9 @@ models:
   - name: aspedw_integration__edw_prox_dm
     config: 
       alias: edw_prox_dm
-      tags: ["prox_datamart_refresh","transformation"]
+      tags: ["prox_datamart","transformation"]
 
   - name: aspedw_integration__edw_vw_prox_dm
     config: 
       alias: edw_vw_prox_dm
-      tags: ["prox_datamart_refresh","transformation"]
+      tags: ["prox_datamart","transformation"]

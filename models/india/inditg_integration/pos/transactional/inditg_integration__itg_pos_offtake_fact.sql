@@ -152,7 +152,7 @@ sdl_pos_spencer as
 hg as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -170,7 +170,7 @@ hg as
 hg1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -189,7 +189,7 @@ hg1 as
 max as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -207,7 +207,7 @@ max as
 max1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -226,7 +226,7 @@ max1 as
 vmm as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -244,7 +244,7 @@ vmm as
 vmm1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -263,7 +263,7 @@ vmm1 as
 ril as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -281,7 +281,7 @@ ril as
 ril1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -300,7 +300,7 @@ ril1 as
 abrl as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -318,7 +318,7 @@ abrl as
 abrl1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -337,7 +337,7 @@ abrl1 as
 apollo as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -355,7 +355,7 @@ apollo as
 apollo1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -374,7 +374,7 @@ apollo1 as
 tesco as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -392,7 +392,7 @@ tesco as
 tesco1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -411,7 +411,7 @@ tesco1 as
 dmart as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -429,7 +429,7 @@ dmart as
 dmart1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -448,7 +448,7 @@ dmart1 as
 frl as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -466,7 +466,7 @@ frl as
 frl1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -485,7 +485,7 @@ frl1 as
 dabur as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -503,7 +503,7 @@ dabur as
 dabur1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -522,7 +522,7 @@ dabur1 as
 spencer as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,
@@ -540,7 +540,7 @@ spencer as
 spencer1 as
 (
     select
-        key_account_name::varchar(255) as key_account_name,
+        upper(key_account_name)::varchar(255) as key_account_name,
         pos_dt::date as pos_dt,
         store_code::varchar(20) as store_cd,
         subcategory::varchar(255) as subcategory,

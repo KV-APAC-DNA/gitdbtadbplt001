@@ -3,7 +3,7 @@
         materialized="incremental",
         incremental_strategy='append',
         pre_hook="{% if is_incremental() %}
-        delete from {{this}} where ims_txn_dt in (select distinct transaction_date from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and dstr_cd in (select distinct distributor_code from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and ctry_cd = 'TW';
+        delete from {{this}} where (ims_txn_dt,dstr_cd) in (select distinct transaction_date,distributor_code from {{ ref('ntaitg_integration__sdl_tw_ims_dstr_std_sel_out') }}) and ctry_cd = 'TW';
         delete from {{this}} as itg_ims using {{ ref('ntawks_integration__wks_itg_ims_sls') }} as wks_itg_ims_sls where itg_ims.ims_txn_dt = wks_itg_ims_sls.ims_txn_dt and itg_ims.cust_cd = wks_itg_ims_sls.cust_cd and itg_ims.prod_cd = wks_itg_ims_sls.prod_cd and itg_ims.doc_type = wks_itg_ims_sls.doc_type and wks_itg_ims_sls.chng_flg = 'U' and itg_ims.dstr_cd = '110256';
         delete from {{this}} as itg_ims using {{ ref('ntawks_integration__wks_itg_ims_sls') }} as wks_itg_ims_sls where itg_ims.ims_txn_dt = wks_itg_ims_sls.ims_txn_dt and itg_ims.cust_cd = wks_itg_ims_sls.cust_cd and itg_ims.prod_cd = wks_itg_ims_sls.prod_cd and itg_ims.doc_type = wks_itg_ims_sls.doc_type and wks_itg_ims_sls.chng_flg = 'U' and itg_ims.dstr_cd = '100681';
         {% endif %}"

@@ -38,19 +38,19 @@ edw_material_plant_dim as(
     select * from {{ ref('aspedw_integration__edw_material_plant_dim') }}
 ),
 dm_integration_dly as(
-    select * from snapjpnedw_integration.dm_integration_dly
+    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
 edi_chn_m as(
-    select * from snapjpnedw_integration.edi_chn_m
+    select * from {{ ref('jpnedw_integration__edi_chn_m') }}
 ),
 edi_item_m as(
-    select * from snapjpnedw_integration.edi_item_m
+    select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
 mt_cld as(
-    select * from snapjpnedw_integration.mt_cld
+    select * from {{ ref('jpnedw_integration__mt_cld') }}
 ),
 mt_account_key as(
-    select * from snapjpnedw_integration.mt_account_key
+    select * from {{ ref('jpnedw_integration__mt_account_key') }}
 ),
 V_INTRM_DISC_REBATE_YTD as(
 select * from {{ ref('aspedw_integration__v_intrm_disc_rebate_ytd') }}
@@ -114,15 +114,15 @@ edw_gch_customerhierarchy as (
 ),
 itg_mds_cn_ecom_brand as
 (
-    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_BRAND
+    select * from {{ ref('chnitg_integration__itg_mds_cn_ecom_brand') }}
 ),
 itg_mds_cn_ecom_sapcustomer_map as
 (
-    select * from DEV_DNA_CORE.CHNITG_INTEGRATION.ITG_MDS_CN_ECOM_SAPCUSTOMER_MAP
+    select * from {{ ref('chnitg_integration__itg_mds_cn_ecom_sapcustomer_map') }}
 ),
 edw_ecom_oms as 
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_ECOM_OMS --- source
+    select * from {{ source('chnedw_integration', 'edw_ecom_oms') }}
 ),
 cus_sales_extn as(
     select cus_sales.sls_org  ,

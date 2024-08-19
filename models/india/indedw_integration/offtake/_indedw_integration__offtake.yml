@@ -4,5 +4,4 @@ models:
   - name: indedw_integration__edw_ecommerce_offtake
     config:
       alias: edw_ecommerce_offtake
-      tags: ["ecomm_amazon_files","ecomm_bigbasket_files","ecomm_grofers_files","ecomm_firstcry_files","ecomm_nykaa_files","ecomm_paytm_files","ecomm_flipkart_files","transformation"]
-      
+      tags: ["j_india_generic_query_execution","transformation"]

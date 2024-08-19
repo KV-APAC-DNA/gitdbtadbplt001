@@ -8,11 +8,15 @@ models:
   - name: aspitg_integration__itg_vw_kr_mds_salesgrp_sapcust_map
     config:
       alias: itg_vw_kr_mds_salesgrp_sapcust_map
-      tags: ["view","transformation"]
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
   - name: aspitg_integration__itg_okr_alteryx_automation
     config:
       alias: itg_okr_alteryx_automation
-      tags: ["cd_scorecard_table_refresh","transformation"]
+      tags: ["okr_alteryx_data_ingestion","ingestion"]
+  - name: aspitg_integration__sdl_raw_okr_alteryx_automation
+    config:
+      alias: sdl_raw_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","transformation"]
   - name: aspitg_integration__itg_clavis_gb_products
     config:
       alias: itg_clavis_gb_products

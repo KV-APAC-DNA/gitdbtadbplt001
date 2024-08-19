@@ -63,11 +63,11 @@ rd as
             SELECT customer_code,
                   retailer_code,
 				  CASE
-					WHEN TRIM(rtrlatitude) like '^[0-9]+(\.[0-9]+)?$' THEN rtrlatitude
+					WHEN TRIM(rtrlatitude) rlike '^[0-9]+(\.[0-9]+)?$' THEN rtrlatitude
 				    ELSE NULL
 				  END AS rtrlatitude,
 				  CASE
-					WHEN TRIM(rtrlongitude) like '^[0-9]+(\.[0-9]+)?$' THEN rtrlongitude
+					WHEN TRIM(rtrlongitude) rlike '^[0-9]+(\.[0-9]+)?$' THEN rtrlongitude
 				    ELSE NULL
 				  END AS rtrlongitude,
                   end_date,

@@ -1,9 +1,4 @@
 models:
-  - name: aspedw_integration__t_market_mirror_sku_l2_apac
-    config: 
-      alias: t_market_mirror_sku_l2_apac
-      tags: ["market_pulse_datamart_refresh","transformation"]
-
   - name: aspedw_integration__edw_trended_sku_fact
     config: 
       alias: edw_trended_sku_fact

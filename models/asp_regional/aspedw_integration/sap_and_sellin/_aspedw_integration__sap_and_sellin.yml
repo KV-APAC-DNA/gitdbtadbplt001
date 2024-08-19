@@ -183,14 +183,14 @@ models:
   - name: aspedw_integration__v_rpt_copa_gcph
     config: 
       alias: v_rpt_copa_gcph
-      tags: ["view","transformation"]
+      tags: ["prox_datamart_refresh","transformation"]
   
   - name: aspedw_integration__v_rpt_copa_gl_hid_disc
     config: 
       alias: v_rpt_copa_gl_hid_disc
-      tags: ["view","transformation"]
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
 
   - name: aspedw_integration__v_intrm_reg_crncy_exch
     config: 
       alias: v_intrm_reg_crncy_exch
-      tags: ["view","transformation"]
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]

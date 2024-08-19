@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: jpnitg_integration__dw_so_planet_err
+    config:
+        alias: dw_so_planet_err
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","transformation"]
+
+  - name: jpnitg_integration__dw_so_planet_err_cd_2
+    config:
+        alias: dw_so_planet_err_cd_2
+        tags: ["j_jp_mds_refresh_etl_framework_sellout","transformation"]
+
+  - name: jpnitg_integration__itg_mds_jp_mt_so_item_chg
+    config:
+      alias: itg_mds_jp_mt_so_item_chg
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+
+  - name: jpnitg_integration__itg_mds_jp_mt_so_rtlr_chg
+    config:
+      alias: itg_mds_jp_mt_so_rtlr_chg
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+
+  - name: jpnitg_integration__itg_mds_jp_mt_so_ws_chg
+    config:
+      alias: itg_mds_jp_mt_so_ws_chg
+      tags: ["j_jp_mds_refresh_etl_framework_sellout","ingestion"]
+
+  - name: jpnitg_integration__dw_so_planet_err_backup
+    config:
+      alias: dw_so_planet_err_backup
+      tags: ["j_so_japan_improvement_etl_framework","trasformation"]
+
+  - name: jpnitg_integration__dw_so_planet_err_cd_backup
+    config:
+      alias: dw_so_planet_err_cd_backup
+      tags: ["j_so_japan_improvement_etl_framework",transformation]
+
+  - name: jpnsdl_integration__edi_sell_out_planet_backup
+    config:
+      alias: edi_sell_out_planet_backup
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+  
+  - name: jpnitg_integration__da_so_planet_accum_backup
+    config:
+      alias: da_so_planet_accum_backup
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
+
+
+  - name: jpnitg_integration__dw_so_planet_err_cd
+    config:
+      alias: dw_so_planet_err_cd
+      tags: ["j_so_japan_improvement_etl_framework",transformation]
+
+  - name: jpnitg_integration__da_so_planet_accum
+    config:
+      alias: da_so_planet_accum
+      tags: ["j_so_japan_improvement_etl_framework","transformation"]
