@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: chnitg_integration__itg_cn_ps_weights
+    config:
+        alias: itg_cn_ps_weights
+        tags: ["ch_pms_mds", "ingestion"]
+  - name: chnitg_integration__itg_mds_cn_ps_targets
+    config:
+        alias: itg_mds_cn_ps_targets
+        tags: ["ch_pms_mds", "ingestion"]

@@ -11,3 +11,7 @@ models:
     config: 
       alias: v_calendar_promo_univ_fisc
       tags: ["north_asia_views","transformation"]
+  - name: aspedw_integration__v_calendar_promo_dtls
+    config: 
+      alias: v_calendar_promo_dtls
+      tags: ["north_asia_views","transformation"]

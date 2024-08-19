@@ -1,0 +1,5 @@
+models:
+  - name: aspedw_integration__edw_market_share_qsd
+    config: 
+      alias: edw_market_share_qsd
+      tags: ["j_rg_mrkt_share_etl_framework","transformation"]
