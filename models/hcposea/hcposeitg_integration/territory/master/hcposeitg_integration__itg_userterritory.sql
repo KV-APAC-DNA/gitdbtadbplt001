@@ -3,14 +3,26 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-                delete from {{this}} where user_territory_source_id in (select user_territory_source_id from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_userterritory) and diorderid in (select diorderid from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_userterritory);
+                DELETE FROM {{this}} 
+WHERE user_territory_source_id  IN(SELECT user_territory_source_id FROM {{source('hcposesdl_raw', 'sdl_hcp_osea_userterritory')}});
                     {% endif %}"
     )
 }}
 with sdl_hcp_osea_userterritory
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_userterritory
+select 
+    USER_TERRITORY_SOURCE_ID,
+	USER_TERRITORY_USER_SOURCE_ID,
+	TERRITORY_SOURCE_ID,
+	IS_ACTIVE,
+	ROLE_IN_TERRITORY,
+	LAST_MODIFIED_DATE,
+	LAST_MODIFIED_BY_ID,
+	CRT_DTTM,
+	FILENAME,
+	RUN_ID
+ from {{ source('hcposesdl_raw', 'sdl_hcp_osea_userterritory') }}
 )
 ,
 

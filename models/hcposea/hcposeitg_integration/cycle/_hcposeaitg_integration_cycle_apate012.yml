@@ -5,4 +5,4 @@ models:
   - name: hcposeitg_integration__itg_cycle_plan
     config: 
       alias: itg_cycle_plan
-      tags: ["iconnect_Data_Ingestion","transformation"]
+      tags: ["iconnect_data_ingestion","ingestion"]

@@ -5,10 +5,10 @@
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
 where (cycle_plan_source_id) in (select stg.cycle_plan_source_id
-                                 from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_cycle_plan
+                                 from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
  stg
                                  where stg.cycle_plan_source_id = cycle_plan_source_id)
-and   country_code in (select distinct country_code from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_cycle_plan
+and   country_code in (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
 );
                     {% endif %}"
     )
@@ -16,7 +16,7 @@ and   country_code in (select distinct country_code from dev_dna_load.hcposesdl_
 
 with sdl_hcp_osea_cycle_plan AS
 (
-	select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_cycle_plan
+	select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
 )
 ,
 transformed 

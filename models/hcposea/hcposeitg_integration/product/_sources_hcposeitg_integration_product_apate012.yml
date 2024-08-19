@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_hcp_osea_product
+      tests:
+      - test_null:
+          select_columns: ["product_source_id", "country"]
+          not_null_columns: ["product_source_id", "country"]
+          name: TRATBL_sdl_hcp_osea_product__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["product_source_id", "country"]
+          group_by_columns: ["product_source_id", "country"]
+          name: TRATBL_sdl_hcp_osea_product__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration

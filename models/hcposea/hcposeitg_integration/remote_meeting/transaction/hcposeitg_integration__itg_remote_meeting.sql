@@ -6,7 +6,7 @@
                 delete
 from {{this}}
 where remote_meeting_source_id in (select distinct remote_meeting_source_id
-                                   from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_remote_meeting a
+                                   from {{ source('hcposesdl_raw', 'sdl_hcp_osea_remote_meeting') }} a
                                    where a.remote_meeting_source_id = remote_meeting_source_id);
                     {% endif %}"
     )
@@ -15,7 +15,7 @@ with
 sdl_hcp_osea_remote_meeting
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_remote_meeting
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_remote_meeting') }}
 ),
 transformed 
 as

@@ -5,16 +5,16 @@
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
 where (product_source_id) in (select product_source_id
-                              from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_product stg_prod
+                              from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }} stg_prod
                               where stg_prod.product_source_id = product_source_id)
-and   country_code = (select distinct country_code from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_product);
+and   country_code = (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }});
                     {% endif %}"
     )
 }}
 
 with sdl_hcp_osea_product as
 (
-    select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_product
+    select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }}
 )
 ,
 transformed
@@ -55,7 +55,7 @@ select md5(country||product_source_id) as product_indication_key,
        sku_id,
        business_unit,
        franchise,
-       upper(country),
+       upper(country) as country_code,
        biz_sub_unit,
        biz_unit,
        product_sector,

@@ -2,7 +2,7 @@ with
 sdl_hcp_osea_isight_sector_mapping
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_isight_sector_mapping
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_isight_sector_mapping') }}
 )
 ,
 transformed 

@@ -1,7 +1,7 @@
 with sdl_hcp_osea_holiday_list 
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_holiday_list
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_holiday_list') }}
 ),
 
 transformed 

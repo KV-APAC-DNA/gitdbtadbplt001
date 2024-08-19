@@ -1,7 +1,7 @@
 with sdl_hcp_osea_isight_licenses
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_isight_licenses
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_isight_licenses') }}
 )
 ,
 transformed

@@ -5,7 +5,7 @@
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
 where (key_message_id) in (select key_message_id
-                           from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_key_message
+                           from {{ source('hcposesdl_raw', 'sdl_hcp_osea_key_message') }} stg_key_message
                            where stg_key_message.key_message_id = key_message_id);
                     {% endif %}"
     )
@@ -14,7 +14,7 @@ where (key_message_id) in (select key_message_id
 with sdl_hcp_osea_key_message
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_key_message
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_key_message') }}
 )
 ,
 transformed as

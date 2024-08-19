@@ -5,7 +5,7 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}} 
-where territory_model_source_id  in(select territory_model_source_id from hcp_osea_sdl.sdl_hcp_osea_territory_model);
+where territory_model_source_id  in(select territory_model_source_id from {{ source('hcposesdl_raw', 'sdl_hcp_osea_territory_model') }});
                     {% endif %}"
     )
 }}
@@ -13,7 +13,7 @@ where territory_model_source_id  in(select territory_model_source_id from hcp_os
 with sdl_hcp_osea_territory_model
 as
 (
-select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_territory_model
+select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_territory_model') }}
 )
 ,
 transformed

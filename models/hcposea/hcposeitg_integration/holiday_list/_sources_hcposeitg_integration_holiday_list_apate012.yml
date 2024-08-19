@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_hcp_osea_holiday_list
+      tests:
+      - test_null:
+          select_columns: ["country", "holiday_key"]
+          not_null_columns: ["country", "holiday_key"]
+          name: TRATBL_sdl_hcp_osea_holiday_list__null_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration
+      - test_duplicate:
+          select_columns: ["country", "holiday_key"]
+          group_by_columns: ["country", "holiday_key"]
+          name: TRATBL_sdl_hcp_osea_holiday_list__duplicate_test
+          config:
+            store_failures: true
+            schema: hcposewks_integration

@@ -5,4 +5,4 @@ models:
   - name: hcposeitg_integration__itg_key_message
     config: 
       alias: itg_key_message
-      tags: ["iconnect_Data_Ingestion","transformation"]
+      tags: ["iconnect_Data_Ingestion","ingestion"]

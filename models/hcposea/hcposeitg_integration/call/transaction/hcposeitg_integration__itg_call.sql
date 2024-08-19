@@ -5,16 +5,16 @@
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
 where call_source_id in (select stg.call_source_id
-                         from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_call stg
+                         from {{ source('hcposesdl_raw', 'sdl_hcp_osea_call') }} stg
                          where stg.call_source_id = call_source_id)
-and   country_code in (select distinct upper(country) from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_call);
+and   country_code in (select distinct upper(country) from {{ source('hcposesdl_raw', 'sdl_hcp_osea_call') }});
                     {% endif %}"
     )
 }}
 with 
 sdl_hcp_osea_call as
 (
-	select * from dev_dna_load.hcposesdl_raw.sdl_hcp_osea_call
+	select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_call') }}
 )
 ,
 transformed 
