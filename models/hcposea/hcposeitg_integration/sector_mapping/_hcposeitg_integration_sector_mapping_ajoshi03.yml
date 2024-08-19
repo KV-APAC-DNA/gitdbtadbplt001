@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__sdl_raw_hcp_osea_isight_sector_mapping
+    config:
+      alias: sdl_raw_hcp_osea_isight_sector_mapping
+      tags: ["master_file_data_ingestion","ingestion"]
