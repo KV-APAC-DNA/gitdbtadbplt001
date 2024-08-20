@@ -165,7 +165,7 @@ hk_rpt_retail_excellence_summary_base as (
     city::VARCHAR(255) AS city,
     retail_environment::VARCHAR(382) AS retail_environment,
     prod_hier_l1::VARCHAR(11) AS prod_hier_l1,
-    prod_hier_l2::VARCHAR(1) AS prod_hier_l2,
+    prod_hier_l2::VARCHAR(255) AS prod_hier_l2,
     prod_hier_l3::VARCHAR(255) AS prod_hier_l3,
     prod_hier_l4::VARCHAR(255) AS prod_hier_l4,
     prod_hier_l5::VARCHAR(1) AS prod_hier_l5,
