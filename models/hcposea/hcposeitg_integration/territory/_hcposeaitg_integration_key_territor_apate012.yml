@@ -1,0 +1,18 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_territory_model
+    config: 
+      alias: itg_territory_model
+      tags: ["iconnect_Data_Ingestion","transformation"]
+
+  - name: hcposeitg_integration__itg_user_iconnect
+    config: 
+      alias: itg_user_iconnect
+      tags: ["iconnect_Data_Ingestion","transformation"]
+
+  - name: hcposeitg_integration__itg_userterritory
+    config: 
+      alias: itg_userterritory
+      tags: ["iconnect_Data_Ingestion","ingestion"]

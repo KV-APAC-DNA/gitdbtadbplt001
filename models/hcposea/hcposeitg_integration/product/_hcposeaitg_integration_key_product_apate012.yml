@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_product
+    config: 
+      alias: itg_product
+      tags: ["iconnect_data_ingestion","ingestion"]
