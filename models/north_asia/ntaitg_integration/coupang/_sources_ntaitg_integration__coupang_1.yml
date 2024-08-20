@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: ntasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: sshukl02_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_mds_kr_sales_store_master_1
+      tests:
+        - test_duplicate_file_name:
+            select_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
+            group_by_columns: ["code", "sales_grp_cd", "cust_store_cd", "channel", "store_type", "sold_to", "ctry_cd"]
+            name: TRATBL_sdl_mds_kr_sales_store_master__duplicate_test_filename
+            config:
+              store_failures: true
+              schema: ntawks_integration
