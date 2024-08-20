@@ -1,0 +1,65 @@
+models:
+  - name: aspwks_integration__wks_commercial_excellence_all_nts_base
+    config: 
+      alias: wks_commercial_excellence_all_nts_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_customer_segmentation_summation_mtd
+    config: 
+      alias: wks_commercial_excellence_customer_segmentation_summation_mtd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_customer_segmentation_summation_ytd
+    config: 
+      alias: wks_commercial_excellence_customer_segmentation_summation_ytd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_dso_base
+    config: 
+      alias: wks_commercial_excellence_dso_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_dso_summation_mtd
+    config: 
+      alias: wks_commercial_excellence_dso_summation_mtd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_dso_summation_ytd
+    config: 
+      alias: wks_commercial_excellence_dso_summation_ytd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_ecomm_base
+    config: 
+      alias: wks_commercial_excellence_ecomm_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_ecomm_summation_ytd
+    config: 
+      alias: wks_commercial_excellence_ecomm_summation_ytd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_gts_base
+    config: 
+      alias: wks_commercial_excellence_gts_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_gts_phasing_summation
+    config: 
+      alias: wks_commercial_excellence_gts_phasing_summation
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_gts_summation_mtd
+    config: 
+      alias: wks_commercial_excellence_gts_summation_mtd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_gts_summation_ytd
+    config: 
+      alias: wks_commercial_excellence_gts_summation_ytd
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_inventory_base
+    config: 
+      alias: wks_commercial_excellence_inventory_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_market_share_base
+    config: 
+      alias: wks_commercial_excellence_market_share_base
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_market_share_summation
+    config: 
+      alias: wks_commercial_excellence_market_share_summation
+      tags: ["comex_base_datamart","transformation"]
+  - name: aspwks_integration__wks_commercial_excellence_market_share_summation_ytd
+    config: 
+      alias: wks_commercial_excellence_market_share_summation_ytd
+      tags: ["comex_base_datamart","transformation"]

@@ -171,3 +171,7 @@ models:
     config: 
       alias: v_edw_otif_consumer_attr
       tags: ["otif_etl_framework","transformation"]
+  - name: aspedw_access__rpt_regional_commercial_excellence_scorecard
+    config: 
+      alias: rpt_regional_commercial_excellence_scorecard
+      tags: ["comex_datamart","transformation"]
