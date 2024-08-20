@@ -3,5 +3,5 @@ version: 2
 models:
   - name: aspedw_integration__rpt_regional_commercial_excellence_scorecard
     config:
-      alias: edw_calendar_dim
+      alias: rpt_regional_commercial_excellence_scorecard
       tags: ["comex_datamart","transformation"]
