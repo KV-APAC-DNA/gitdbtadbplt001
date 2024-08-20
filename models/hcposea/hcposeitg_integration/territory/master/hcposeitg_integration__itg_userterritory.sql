@@ -32,7 +32,7 @@ as
 select user_territory_source_id,
        user_territory_user_source_id,
        territory_source_id,
-       (case when upper(is_active) = 'true' then 1 when upper(is_active) is null then 0 when upper(is_active) = ' ' then 0 else 0 end) as is_active,
+       (case when upper(is_active) = 'TRUE' then 1 when upper(is_active) is null then 0 when upper(is_active) = ' ' then 0 else 0 end) as is_active,
 	   role_in_territory,
        last_modified_date,
        last_modified_by_id,
