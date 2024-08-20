@@ -171,3 +171,11 @@ models:
     config: 
       alias: v_edw_otif_consumer_attr
       tags: ["otif_etl_framework","transformation"]
+  - name: aspedw_access__edw_rpt_regional_sellout_offtake_temp
+    config: 
+      alias: edw_rpt_regional_sellout_offtake_temp
+      tags: ["cutomer_360_datamart","transformation"]
+  - name: aspedw_access__edw_perfect_store_rebase_wt_temp
+    config: 
+      alias: edw_perfect_store_rebase_wt_temp
+      tags: ["pop6_edw_load","transformation"]
