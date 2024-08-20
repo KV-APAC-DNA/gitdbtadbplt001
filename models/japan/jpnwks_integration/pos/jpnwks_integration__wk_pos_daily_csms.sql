@@ -11,7 +11,7 @@ with jp_pos_daily_csms as(
     select * from {{ source('jpnsdl_raw', 'jp_pos_daily_csms') }} 
 ),
 final as(
-    select
+    select distinct
         store_key_1,
         store_key_2,
         jan_code,
