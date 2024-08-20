@@ -2,7 +2,11 @@
     config(
         materialized = 'incremental',
         incremental_strategy ='append',
-        pre_hook = "DELETE FROM {{ this }} WHERE ORGANIZATION_KEY = 'Not Applicable';",
+        pre_hook = "
+        {% if is_incremental() %}
+            DELETE FROM {{ this }} WHERE ORGANIZATION_KEY = 'Not Applicable';
+        {% endif %}
+            ",
 
         post_hook = " 
                     UPDATE {{ this }} SET FLAG = 'HT', EFFECTIVE_TO_DATE = dateadd(day, -1, current_timestamp())
