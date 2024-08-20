@@ -16,7 +16,6 @@
 
 with wk_pos_daily_aeon as(
 	select * from {{ ref('jpnwks_integration__wk_pos_daily_aeon')}}
-    where accounting_date in ('20240810','20240809','20240808','20240807','20240806','20240805','20240804')
 ),
 wk_pos_daily_csms as(
 	select * from {{ ref('jpnwks_integration__wk_pos_daily_csms')}}
@@ -65,7 +64,10 @@ aeon as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_aeon
-
+  {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+    where TO_DATE(wk_pos_daily_aeon.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{this}} where account_key='AEON')     
+    {% endif %}
 ),
 csms as(
     select
