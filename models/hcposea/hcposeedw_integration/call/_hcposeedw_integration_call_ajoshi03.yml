@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcposeedw_integration__wrk_fact_detail_only
-    config:
-      alias: wrk_fact_detail_only
-      tags: ["edw_load","transformation"]

@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__dim_profile
+    config:
+      alias: dim_profile
+      tags: ["edw_load","transformation"]
+
+  - name: hcposeedw_integration__dim_profile_iconnect
+    config:
+      alias: dim_profile_iconnect
+      tags: ["edw_load","transformation"]

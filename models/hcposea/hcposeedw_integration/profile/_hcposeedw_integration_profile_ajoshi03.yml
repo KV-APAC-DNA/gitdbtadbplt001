@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcposeedw_integration__dim_profile
-    config:
-      alias: itg_cycle_plan_target
-      tags: ["edw_load","transformation"]

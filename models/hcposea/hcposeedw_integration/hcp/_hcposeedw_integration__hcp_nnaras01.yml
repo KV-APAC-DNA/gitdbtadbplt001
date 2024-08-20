@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: hcposeedw_integration__dim_hcp
-    config:
-      alias: dim_hcp
-      tags: ["","transformation"]
- 

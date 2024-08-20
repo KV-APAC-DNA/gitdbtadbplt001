@@ -1,8 +1,0 @@
-version: 2
-
-models:
-
-  - name: hcposeitg_integration__itg_holiday_list
-    config: 
-      alias: itg_holiday_list
-      tags: ["Master_File_Data_Ingestion","transformation"]

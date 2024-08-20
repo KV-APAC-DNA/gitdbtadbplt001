@@ -1,8 +1,0 @@
-version: 2
-
-models:
-
-  - name: hcposeitg_integration__itg_recordtype_iconnect
-    config: 
-      alias: itg_recordtype_iconnect
-      tags: ["iconnect_Data_Ingestion","transformation"]

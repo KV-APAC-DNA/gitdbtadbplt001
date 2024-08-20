@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: hcposeedw_integration__wrk_fact_cycle_plan
-    config:
-      alias: wrk_fact_cycle_plan
-      tags: ["","transformation"]
- 

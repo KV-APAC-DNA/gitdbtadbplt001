@@ -7,7 +7,7 @@
                 {% else %}
                     {{schema}}.hcposeedw_integration__dim_organization
                 {% endif %}
-        (   organization_key varchar(32),
+            (organization_key varchar(32),
 	        territory_source_id varchar(18),
 	        country_code varchar(8),
             my_organization_code varchar(18),
@@ -35,8 +35,8 @@
             flag varchar(18),
             inserted_date timestamp_ntz(9),
             updated_date timestamp_ntz(9)
-    );
-        create or replace table {{tablename}} clone
+    );  
+     create or replace table {{tablename}} clone
         {% if target.name=='prod' %}
             hcposeedw_integration.dim_organization
         {% else %}
@@ -44,6 +44,6 @@
         {% endif %};
 {% endset %}
 
-{% do run_query(query) %}
+    {% do run_query(query) %}
 
 {% endmacro%}

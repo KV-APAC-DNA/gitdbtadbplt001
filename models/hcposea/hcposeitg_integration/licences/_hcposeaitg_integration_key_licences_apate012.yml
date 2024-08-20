@@ -1,8 +1,0 @@
-version: 2
-
-models:
-
-  - name: hcposeitg_integration__itg_isight_licenses
-    config: 
-      alias: itg_isight_licenses
-      tags: ["master_file_data_ingestion","ingestion"]

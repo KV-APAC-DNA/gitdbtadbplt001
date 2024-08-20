@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: hcposeitg_integration__itg_product_metrics
-    config:
-      alias: itg_product_metrics
-      tags: ["iconnect_data_ingestion","ingestion"]

@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_cycle_plan_target
+    config:
+      alias: itg_cycle_plan_target
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_cycle_plan_detail
+    config:
+      alias: itg_cycle_plan_target_detail
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_cycle_plan
+    config: 
+      alias: itg_cycle_plan
+      tags: ["iconnect_data_ingestion","ingestion"]

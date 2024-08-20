@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__rep_level_kpi
+    config:
+      alias: rep_level_kpi
+      tags: ["edw_load","transformation"]
+ 

@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: oseedw_integration__wrk_dim_organization
-    config:
-      alias: wrk_dim_organization
-      tags: ["edw_load","transformation"]
-

@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__dim_key_message
+    config:
+      alias: dim_key_message
+      tags: ["edw_load","transformation"]
+ 
