@@ -4,7 +4,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = ["{% if is_incremental() %}
-                     delete from fact_call_key_message where(call_key_message_source_id) in (select call_key_message_id from itg_call_key_message);
+                     delete from {{this}} where(call_key_message_source_id) in (select call_key_message_id from itg_call_key_message);
                     {% endif %}"]
     )
 }}
