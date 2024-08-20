@@ -170,7 +170,6 @@ f as (
             FROM edw_product_attr_dim edw_product_attr_dim
         ) derived_table1
     WHERE (derived_table1.rnum = 1)
-        and ean_num = '8801008002148'
 ),
 final as (
     SELECT b.fisc_per,
