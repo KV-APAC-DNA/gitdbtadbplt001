@@ -1,0 +1,45 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: sdl_hcp_osea_call_detail
+      tags: ["iconnect_data_ingestion","transformation"]
+      tests:
+      - test_null:
+          select_columns: ["call_detail_source_id", "call_source_id"]
+          not_null_columns: ["call_detail_source_id, call_source_id"]
+          name: TRATBL_sdl_hcp_osea_call_detail__null_test
+          config:
+            store_failures: true
+            schema: hcposeitg_integration
+      - test_duplicate:
+          select_columns: ["call_detail_source_id", "call_source_id"]
+          group_by_columns: ["call_detail_source_id", "call_source_id"]
+          name: TRATBL_sdl_hcp_osea_call_detail__duplicate_test
+          config:
+          store_failures: true
+          schema: hcposeitg_integration 
+    - name: sdl_hcp_osea_call_discussion
+      tags: ["iconnect_data_ingestion","transformation"]
+      tests:
+      - test_null:
+          select_columns: ["call_discussion_source_id", "call_source_id"]
+          not_null_columns: ["call_discussion_source_id", "call_source_id"]
+          name: TRATBL_sdl_hcp_osea_call_discussion__null_test
+          config:
+            store_failures: true
+            schema: hcposeitg_integration
+      - test_duplicate:
+          select_columns: ["call_discussion_source_id", "call_source_id"]
+          group_by_columns: ["call_discussion_source_id", "call_source_id"]
+          name: TRATBL_sdl_hcp_osea_call_discussion__duplicate_test
+          config:
+          store_failures: true
+          schema: hcposeitg_integration     
