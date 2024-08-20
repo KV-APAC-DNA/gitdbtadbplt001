@@ -64,10 +64,7 @@ aeon as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_aeon
-         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_aeon.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
-        {% endif %}
+
 ),
 csms as(
     select
@@ -98,10 +95,7 @@ csms as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_csms
-        {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_csms.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
-        {% endif %}
+
 ),
 dnki as(
     select
