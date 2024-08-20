@@ -20,7 +20,7 @@ current_table as
         updt_dttm,
         sls_grp_cd,
         pricing_sold_to
-    from {{this}}
+    from PROD_DNA_CORE.NTAITG_INTEGRATION.itg_pos_invoice_prc_lookup
 ),
 wave_1 as
 (
@@ -74,18 +74,18 @@ wave_1 as
                             (
                                 select pos_dt,
                                     ltrim(sold_to_party, 0) as sold_to_party,
-                                    ltrim(ean_num, 0) as ean_num
+                                    rtrim(ltrim(ean_num, 0)) as ean_num
                                 from wks_edw_pos_fact_korea
                                 minus
                                 select pos_dt,
                                     ltrim(sold_to_party, 0) as sold_to_party,
-                                    ltrim(ean_num, 0) as ean_num
+                                    rtrim(ltrim(ean_num, 0)) as ean_num
                                 from current_table
                                     --
                             ) pos_data
                             inner join wks_pos_prc_condition_map map on pos_data.pos_dt between map.vld_frm and map.vld_to
                             and ltrim (pos_data.sold_to_party, 0) = ltrim (map.sold_to_cust_cd, 0)
-                            and ltrim (pos_data.ean_num, 0) = ltrim (map.ean_num, 0)
+                            and rtrim(ltrim (pos_data.ean_num, 0)) = rtrim(ltrim (map.ean_num, 0))
                             and map.cnd_type <> 'ZKSD' ---------- Added new filter per as 3rd Aug Req,ZKSD to be ignored
                     ) pos_map
                 group by pos_dt,
@@ -133,12 +133,12 @@ wks_pos_gross_prc_condition_map as
                 (
                     select pos_dt,
                         ltrim(sold_to_party, 0) as sold_to_party,
-                        ltrim(ean_num, 0) as ean_num
+                        rtrim(ltrim(ean_num, 0)) as ean_num
                     from wks_edw_pos_fact_korea
                     minus
                     select pos_dt,
                         ltrim(sold_to_party, 0) as sold_to_party,
-                        ltrim(ean_num, 0) as ean_num
+                        rtrim(ltrim(ean_num, 0)) as ean_num
                     from
                     (
                         select * from current_table
@@ -151,7 +151,7 @@ wks_pos_gross_prc_condition_map as
                 /*pos_data.pos_dt between map.vld_frm and map.vld_to and*/
                 --REMOVED JOIN WITH POS DATE
                 ltrim (pos_data.sold_to_party, 0) = ltrim (map.sold_to_cust_cd, 0)
-                and ltrim (pos_data.ean_num, 0) = ltrim (map.ean_num, 0)
+                and rtrim(ltrim (pos_data.ean_num, 0)) = rtrim(ltrim (map.ean_num, 0))
                 and pos_data.pos_dt >= map.vld_frm
                 and cnd_type = 'ZPR0'
                 /* ADDED NEW Condition */
@@ -219,7 +219,7 @@ wave_2 as
                                 map.vld_to
                             from wks_pos_gross_prc_condition_map a
                                 inner join wks_pos_prc_condition_map map on ltrim (a.sold_to_party, 0) = ltrim (map.sold_to_cust_cd, 0)
-                                and ltrim (a.ean_num, 0) = ltrim (map.ean_num, 0)
+                                and rtrim(ltrim (a.ean_num, 0)) = rtrim(ltrim (map.ean_num, 0))
                                 and ltrim (a.matl_num) = ltrim(map.matl_num)
                                 and a.vld_to between map.vld_frm and map.vld_to
                                 and map.cnd_type not in ('ZKSD', 'ZPR0') ---------  3-aug18 only  ZKTD values to be considered
@@ -295,7 +295,7 @@ wave_3 as
                                 (
                                     select distinct pos_dt,
                                         ltrim(sold_to_party, 0) as edw_sold_to_party,
-                                        ltrim(ean_num, 0) as ean_num,
+                                        rtrim(ltrim(ean_num, 0)) as ean_num,
                                         sls_grp_cd
                                     from wks_edw_pos_fact_korea fact -- TAKE SALES GROUP FROM HERE
                                     where not exists (
@@ -310,12 +310,12 @@ wave_3 as
                                             ) lookup
                                             where lookup.pos_dt = fact.pos_dt
                                                 and ltrim(lookup.sold_to_party, 0) = fact.sold_to_party
-                                                and ltrim(lookup.ean_num, 0) = ltrim(fact.ean_num, 0)
+                                                and rtrim(ltrim(lookup.ean_num, 0)) = rtrim(ltrim(fact.ean_num, 0))
                                         )
                                 ) pos_data
                                 inner join wks_pos_prc_condition_map map on pos_data.pos_dt between map.vld_frm and map.vld_to
                                 and ltrim (pos_data.sls_grp_cd, 0) = ltrim (map.sales_grp_cd, 0) -- JOIN WITH SALES GROUP and NOT sold to
-                                and ltrim (pos_data.ean_num, 0) = ltrim (map.ean_num, 0)
+                                and rtrim(ltrim (pos_data.ean_num, 0)) = rtrim(ltrim (map.ean_num, 0))
                                 and map.cnd_type <> 'ZKSD' ---------- ZKSD to be ignored
                         ) pos_map
                     group by pos_dt,
