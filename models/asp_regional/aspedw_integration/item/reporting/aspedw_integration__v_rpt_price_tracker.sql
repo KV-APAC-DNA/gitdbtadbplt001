@@ -349,11 +349,11 @@ greenlight as
                 edw_vw_greenlight_skus.crncy_key, 
                 edw_vw_greenlight_skus.ctry_nm, 
                 edw_vw_greenlight_skus.ctry_group, 
-                EDW_VW_GREENLIGHT_SKUS.cluster, 
+                EDW_VW_GREENLIGHT_SKUS."cluster" as cluster, 
                 edw_vw_greenlight_skus.market, 
                 edw_vw_greenlight_skus.greenlight_sku_flag, 
                 ltrim((edw_vw_greenlight_skus.ean_num):: text,('0' :: character varying):: text) AS ean_num, 
-                row_number() OVER(PARTITION BY ltrim((edw_vw_greenlight_skus.ean_num):: text,('0' :: character varying):: text),edw_vw_greenlight_skus.ctry_nm,EDW_VW_GREENLIGHT_SKUS.cluster ORDER BY edw_vw_greenlight_skus.matl_num,edw_vw_greenlight_skus.dstr_chnl DESC) AS rnk 
+                row_number() OVER(PARTITION BY ltrim((edw_vw_greenlight_skus.ean_num):: text,('0' :: character varying):: text),edw_vw_greenlight_skus.ctry_nm,EDW_VW_GREENLIGHT_SKUS."cluster" ORDER BY edw_vw_greenlight_skus.matl_num,edw_vw_greenlight_skus.dstr_chnl DESC) AS rnk 
         FROM edw_vw_greenlight_skus) gn 
         WHERE gn.rnk = 1
 ),

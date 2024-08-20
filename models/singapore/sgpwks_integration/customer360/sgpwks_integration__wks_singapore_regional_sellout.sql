@@ -47,6 +47,9 @@ edw_code_descriptions_manual as (
 vw_edw_reg_exch_rate as (
   select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
+edw_material_dim as (
+  select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
 --Logical CTE--
 c as 
 (
