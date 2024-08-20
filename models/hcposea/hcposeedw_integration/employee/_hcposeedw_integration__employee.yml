@@ -12,12 +12,12 @@ models:
   - name: hcposeedw_integration__vw_employee_hier
     config:
       alias: vw_employee_hier
-      tags: ["hcp_views","transformation"]
+      tags: ["hcp_common_views","transformation"]
 
   - name: hcposeedw_integration__edw_isight_dim_employee_snapshot_xref
     config:
       alias: edw_isight_dim_employee_snapshot_xref
-      tags: ["Monthly_Snapshot_Data_Ingestion","transformation"]
+      tags: ["monthly_snapshot_data_ingestion","transformation"]
     
   - name: hcposeedw_integration__isight_dim_employee_snapshot_xref
     config:

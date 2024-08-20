@@ -5,19 +5,19 @@ models:
   - name: hcposeitg_integration__itg_territory_model
     config: 
       alias: itg_territory_model
-      tags: ["iconnect_Data_Ingestion","ingestion"]
+      tags: ["iconnect_data_ingestion","ingestion"]
 
   - name: hcposeitg_integration__itg_user_iconnect
     config: 
       alias: itg_user_iconnect
-      tags: ["iconnect_Data_Ingestion","transformation"]
+      tags: ["iconnect_data_ingestion","transformation"]
 
   - name: hcposeitg_integration__itg_userterritory
     config: 
       alias: itg_userterritory
-      tags: ["iconnect_Data_Ingestion","ingestion"]
+      tags: ["iconnect_data_ingestion","ingestion"]
 
   - name: hcposeitg_integration__itg_territory
     config: 
       alias: itg_territory
-      tags: ["iconnect_Data_Ingestion","ingestion"]
+      tags: ["iconnect_data_ingestion","ingestion"]

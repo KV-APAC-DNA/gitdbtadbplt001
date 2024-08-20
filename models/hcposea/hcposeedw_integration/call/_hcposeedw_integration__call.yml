@@ -33,7 +33,7 @@ models:
   - name: hcposeedw_integration__vw_rep_call_activity
     config:
       alias: vw_rep_call_activity
-      tags: ["hcp_views","transformation"]
+      tags: ["hcp_common_views","transformation"]
   
   - name: hcposeedw_integration__wrk_fact_detail_only
     config:
