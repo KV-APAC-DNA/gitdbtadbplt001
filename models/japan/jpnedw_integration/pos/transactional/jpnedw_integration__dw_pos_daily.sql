@@ -16,6 +16,7 @@
 
 with wk_pos_daily_aeon as(
 	select * from {{ ref('jpnwks_integration__wk_pos_daily_aeon')}}
+    where accounting_date in ('20240810','20240809','20240808','20240807','20240806','20240805','20240804')
 ),
 wk_pos_daily_csms as(
 	select * from {{ ref('jpnwks_integration__wk_pos_daily_csms')}}
@@ -95,7 +96,10 @@ csms as(
         upload_dt as upload_dt,
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_csms
-
+  {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+    where TO_DATE(wk_pos_daily_csms.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{this}} where account_key='CSMS')     
+    {% endif %}
 ),
 dnki as(
     select
@@ -128,7 +132,7 @@ dnki as(
     from wk_pos_daily_dnki
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_dnki.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(wk_pos_daily_dnki.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }} where account_key='DNKI') 
         {% endif %}
 ),
 otherss as(
@@ -162,7 +166,7 @@ otherss as(
     from wk_pos_daily_others
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_others.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(wk_pos_daily_others.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }} ) 
         {% endif %}
 ),
 tsur as(
@@ -196,7 +200,7 @@ tsur as(
     from wk_pos_daily_tsur
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_tsur.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(wk_pos_daily_tsur.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }} where account_key='TSUR') 
         {% endif %}
 ),
 sugi as(
@@ -230,7 +234,7 @@ sugi as(
     from wk_pos_daily_sugi
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_sugi.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(wk_pos_daily_sugi.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }} where account_key='SUGI') 
         {% endif %}
 ),
 wlca as(
@@ -264,7 +268,7 @@ wlca as(
     from wk_pos_daily_wlca
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_wlca.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(wk_pos_daily_wlca.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }} where account_key='WLCA') 
         {% endif %}
 ),
 transformed as(
