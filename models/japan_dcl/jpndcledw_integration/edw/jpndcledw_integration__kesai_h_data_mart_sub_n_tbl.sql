@@ -1,3 +1,7 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
+
 with KESAI_H_DATA_MART_SUB_N_U as(
     select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_n_u') }}
 ),
