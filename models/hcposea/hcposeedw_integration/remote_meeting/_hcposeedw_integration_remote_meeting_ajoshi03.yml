@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__dim_remote_meeting
+    config:
+      alias: dim_remote_meeting
+      tags: ["edw_load","transformation"]
+  
+  - name: hcposeedw_integration__fact_call_detail
+    config:
+      alias: fact_call_detail
+      tags: ["edw_load","transformation"]
