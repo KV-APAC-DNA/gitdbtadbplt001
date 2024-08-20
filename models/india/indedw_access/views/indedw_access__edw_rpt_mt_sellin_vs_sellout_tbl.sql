@@ -1,0 +1,42 @@
+with source as 
+(
+    select * from {{ ref('indedw_integration__edw_rpt_mt_sellin_vs_sellout_tbl') }}
+)
+select
+    fisc_yr as "fisc_yr",
+    mth_mm as "mth_mm",
+    common_account_name as "common_account_name",
+    common_channel_name as "common_channel_name",
+    channel_name_sellin as "channel_name_sellin",
+    franchise_name_sellin as "franchise_name_sellin",
+    brand_name_sellin as "brand_name_sellin",
+    variant_name_sellin as "variant_name_sellin",
+    product_category_name_sellin as "product_category_name_sellin",
+    mothersku_name_sellin as "mothersku_name_sellin",
+    invoice_quantity_sellin as "invoice_quantity_sellin",
+    invoice_value_sellin as "invoice_value_sellin",
+    data_source_sellout as "data_source_sellout",
+    pos_offtake_level_sellout as "pos_offtake_level_sellout",
+    account_name_sellout as "account_name_sellout",
+    mother_sku_name_sellout as "mother_sku_name_sellout",
+    brand_name_sellout as "brand_name_sellout",
+    franchise_name_sellout as "franchise_name_sellout",
+    internal_category_sellout as "internal_category_sellout",
+    internal_subcategory_sellout as "internal_subcategory_sellout",
+    external_category_sellout as "external_category_sellout",
+    external_subcategory_sellout as "external_subcategory_sellout",
+    product_category_name_sellout as "product_category_name_sellout",
+    variant_name_sellout as "variant_name_sellout",
+    external_mothersku_code_sellout as "external_mothersku_code_sellout",
+    external_mothersku_name_sellout as "external_mothersku_name_sellout",
+    sls_qty_sellout as "sls_qty_sellout",
+    sls_val_lcy_sellout as "sls_val_lcy_sellout",
+    factorized_sls_val_lcy_sellout as "factorized_sls_val_lcy_sellout",
+    sales_factor_sellout as "sales_factor_sellout",
+    sales_factor_ref_month_sellout as "sales_factor_ref_month_sellout",
+    internal_mothersku_name as "internal_mothersku_name",
+    internal_brand_name as "internal_brand_name",
+    internal_franchise_name as "internal_franchise_name",
+    crt_dttm as "crt_dttm",
+    updt_dttm as "updt_dttm"
+from source

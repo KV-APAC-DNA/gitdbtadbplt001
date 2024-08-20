@@ -138,7 +138,6 @@
 
                     delete from {{this}};
                     
-                    
 
                     INSERT INTO {{this}}
                     (

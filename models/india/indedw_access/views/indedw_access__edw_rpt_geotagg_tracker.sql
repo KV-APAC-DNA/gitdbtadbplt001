@@ -1,0 +1,43 @@
+with source as 
+(
+    select * from {{ ref('indedw_integration__edw_rpt_geotagg_tracker') }}
+)
+select
+    fisc_yr as "fisc_yr",
+    mth_mm as "mth_mm",
+    retailer_cd as "retailer_cd",
+    retailer_name as "retailer_name",
+    rtruniquecode as "rtruniquecode",
+    channel_name as "channel_name",
+    retailer_channel_3 as "retailer_channel_3",
+    loyalty_program_name as "loyalty_program_name",
+    qtr_target as "qtr_target",
+    qtr_actuals as "qtr_actuals",
+    month_target as "month_target",
+    month_actuals as "month_actuals",
+    os_flag as "os_flag",
+    msl_recom as "msl_recom",
+    msl_lines_sold_p3m as "msl_lines_sold_p3m",
+    region_name as "region_name",
+    zone_name as "zone_name",
+    territory_name as "territory_name",
+    rtrlatitude as "rtrlatitude",
+    rtrlongitude as "rtrlongitude",
+    latest_customer_code as "latest_customer_code",
+    latest_customer_name as "latest_customer_name",
+    latest_salesman_code as "latest_salesman_code",
+    latest_salesman_name as "latest_salesman_name",
+    latest_uniquesalescode as "latest_uniquesalescode",
+    latest_region_name as "latest_region_name",
+    latest_zone_name as "latest_zone_name",
+    latest_territory_name as "latest_territory_name",
+    nielsen_popstrata as "nielsen_popstrata",
+    nielsen_statename as "nielsen_statename",
+    lat_zone as "lat_zone",
+    long_zone as "long_zone",
+    lat_territory as "lat_territory",
+    long_territory as "long_territory",
+    lat_customer as "lat_customer",
+    long_customer as "long_customer",
+    dataset as "dataset"
+from source

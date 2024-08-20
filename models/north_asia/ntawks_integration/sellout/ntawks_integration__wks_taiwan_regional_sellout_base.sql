@@ -20,6 +20,10 @@ select * from {{ ref('aspedw_integration__edw_vw_pop6_store') }}
 itg_query_parameters as (
 select * from {{ source('ntaitg_integration', 'itg_query_parameters') }}
 ),
+itg_mds_tw_mt_store_master as
+(
+    select * from {{ source('ntaitg_integration', 'itg_mds_tw_mt_store_master') }}
+),
 pos as (
 SELECT 'POS' AS DATA_SRC,
        'TW' AS 	CNTRY_CD,
@@ -43,27 +47,31 @@ SELECT 'POS' AS DATA_SRC,
 	   POS.sls_qty as SO_SLS_QTY, 
 	   POS.sls_amt as SO_SLS_VALUE,
 	   ean_num as msl_product_code,
-		vend_prod_nm as msl_product_desc,
+		--vend_prod_nm as msl_product_desc,
 		--'NA'as store_grade,
-		pop6.retail_environment_ps as retail_env,
-		pop6.channel as channel
+		--pop6.retail_environment_ps as retail_env,
+		--pop6.channel as channel
+        'MT' as retail_env,
+		str_mtr.retail_environment as channel
       FROM  edw_pos_fact POS
 	  left join edw_vw_os_time_dim as time_dim
 	on POS.pos_dt = time_dim.cal_date 
-	left join (select * from
-		(select *,  row_number() OVER(PARTITION BY pop_code, customer order by retail_environment_ps, channel NULLS LAST) rnk  from 
-		(select distinct case when customer in 
-		--('Carrefour 家樂福','RT-Mart 大潤發','PX 全聯', 'Cosmed 康是美', 'Poya 寶雅')
-		(select parameter_value from itg_query_parameters where country_code='TW' and parameter_name='customer' and parameter_type='split')
-		then ltrim(reverse(split_part(reverse(pop_code),'-',1)),'0')
-		  when customer in 
-		  --('Watsons 屈臣氏') 
-		  (select parameter_value from itg_query_parameters where country_code='TW' and parameter_name='customer' and parameter_type='suffix')
-		  then ltrim(right(pop_code,3),'0') 
-		  else ltrim(pop_code,'0') end as pop_code, customer, retail_environment_ps, channel from edw_vw_pop6_store )
-		where NULLIF(pop_code,'') is not null) 
-		where rnk=1) pop6
-	on ltrim(POS.str_cd,'0') = pop6.pop_code and POS.sls_grp = pop6.customer
+	--left join (select * from
+	--	(select *,  row_number() OVER(PARTITION BY pop_code, customer order by retail_environment_ps, channel NULLS LAST) rnk  from 
+	--	(select distinct case when customer in 
+	--	--('Carrefour 家樂福','RT-Mart 大潤發','PX 全聯', 'Cosmed 康是美', 'Poya 寶雅')
+	--	(select parameter_value from itg_query_parameters where country_code='TW' and parameter_name='customer' and parameter_type='split')
+	--	then ltrim(reverse(split_part(reverse(pop_code),'-',1)),'0')
+	--	  when customer in 
+	--	  --('Watsons 屈臣氏') 
+	--	  (select parameter_value from itg_query_parameters where country_code='TW' and parameter_name='customer' and parameter_type='suffix')
+	--	  then ltrim(right(pop_code,3),'0') 
+	--	  else ltrim(pop_code,'0') end as pop_code, customer, retail_environment_ps, channel from edw_vw_pop6_store )
+	--	where NULLIF(pop_code,'') is not null) 
+	--	where rnk=1) pop6
+	--on ltrim(POS.str_cd,'0') = pop6.pop_code and POS.sls_grp = pop6.customer
+    left join (select distinct store_code,retail_environment,ltrim(customer_code,0) as customer_code from itg_mds_tw_mt_store_master) str_mtr
+	on str_mtr.store_code = POS.str_cd and ltrim(POS.sold_to_party,'0')= ltrim(str_mtr.customer_code,'0')
 	WHERE ctry_cd = 'TW' and crncy_cd = 'TWD' 
 	and not (sls_qty = 0 and sls_amt = 0)
 ),
@@ -90,7 +98,7 @@ SELECT 'SELL-OUT' AS DATA_SRC,
 	   (sls_qty - rtrn_qty) as SO_SLS_QTY, 
 	   (sls_amt - rtrn_amt) as SO_SLS_VALUE,
 	   sls.ean_num as msl_product_code,
-		prod_nm as msl_product_desc,
+		--prod_nm as msl_product_desc,
 		--'NA'as store_grade,
 		pop6.retail_environment_ps as retail_env,
 		pop6.channel as channel
@@ -134,7 +142,7 @@ BASE.zone_or_area,
 BASE.so_sls_qty,
 BASE.so_sls_value,
 BASE.msl_product_code,
-BASE.msl_product_desc,
+--BASE.msl_product_desc,
 --BASE.store_grade,
 UPPER(BASE.retail_env) as retail_env,
 BASE.channel,
@@ -177,7 +185,7 @@ select
     so_sls_qty::number(18,0) as so_sls_qty,
     so_sls_value::number(22,5) as so_sls_value,
     msl_product_code::varchar(100) as msl_product_code,
-    msl_product_desc::varchar(255) as msl_product_desc,
+    --msl_product_desc::varchar(255) as msl_product_desc,
     retail_env::varchar(300) as retail_env,
     channel::varchar(200) as channel,
     crtd_dttm::timestamp_ntz(9) as crtd_dttm,
