@@ -19,7 +19,7 @@ final as
     SELECT 
         client_id::varchar(10) as client_id,
 	    report_date::date as report_date,
-	    region::varchar(2) as region,
+	    region::varchar(3) as region,
 	    product_id::varchar(150) as product_id,
 	    api_type::varchar(30) as api_type,
 	    online_store::varchar(50) as online_store,
