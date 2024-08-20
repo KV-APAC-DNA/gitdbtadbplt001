@@ -37,6 +37,7 @@ edw_cnpc_rpt_retail_excellence_summary as (
     select * from {{ ref('aspedw_integration__edw_cnpc_rpt_retail_excellence_summary') }}
 ),
 
+
 edw_rpt_retail_excellence_summary as 
 (
 SELECT * FROM edw_id_rpt_retail_excellence_summary UNION
