@@ -6,15 +6,15 @@
 }}
 with edw_perfect_store_source_msl as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_msl') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_msl')}}
 ),
 edw_perfect_store_must_stock_sku_list as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_must_stock_sku_list') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_must_stock_sku_list')}}
 ),
 edw_perfect_store_store_hierarchy as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_store_hierarchy') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_store_hierarchy')}}
 ),
 edw_vw_ps_weights as 
 (
@@ -22,31 +22,31 @@ edw_vw_ps_weights as
 ),
 edw_perfect_store_source_sos_display as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_display') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_sos_display')}}
 ),
 edw_perfect_store_source_osa as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_display') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_osa')}}
 ),
 edw_perfect_store_source_sos as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_sos')}}
 ),
 edw_perfect_store_source_planogram as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_planogram') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_planogram')}}
 ),
 edw_perfect_store_source_sos_shelf as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_sos_shelf') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_sos_shelf')}}
 ),
 edw_perfect_store_product_master as
 (
-     select * from {{ ref('chnedw_integration__edw_perfect_store_product_master') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_product_master')}}
 ),
-EDW_PERFECT_STORE_SOURCE_PROM as
+edw_perfect_store_source_prom as
 (
-    select * from {{ ref('chnedw_integration__edw_perfect_store_source_prom') }}
+    select * from {{source('chnedw_integration', 'edw_perfect_store_source_prom')}}
 ),
 union_1 as  (
                                     SELECT 'Merchandising_Response' AS dataset,
