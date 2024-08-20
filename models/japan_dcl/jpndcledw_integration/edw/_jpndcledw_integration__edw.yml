@@ -215,18 +215,6 @@ models:
       tags: ["dcl_kr_new_edw_job6", "transformation"]
   
 
-
-  - name: jpndcledw_integration__item_jizen_bunkai_maint
-    config:
-      alias: item_jizen_bunkai_maint
-      tags: ["m_dcl_edw_job1","ingestion"]
-
-  - name: jpndcledw_integration__item_jizen_bunkai_tbl
-    config:
-      alias: item_jizen_bunkai_tbl
-      tags: ["m_dcl_edw_job1","ingestion"]
-
-  
       
   - name: jpndcledw_integration__item_zaiko_tbl
     config:
@@ -1126,10 +1114,7 @@ models:
     config:
       alias: dm_kesai_mart_rakuten
       tags: ["dcl_rakuten_load", "transformation"]
-  - name: jpndcledw_integration__item_jizen_bunkai_w06
-    config:
-      alias: item_jizen_bunkai_w06
-      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kr_frequency_all_900_kizuna
     config:
       alias: kr_frequency_all_900_kizuna
