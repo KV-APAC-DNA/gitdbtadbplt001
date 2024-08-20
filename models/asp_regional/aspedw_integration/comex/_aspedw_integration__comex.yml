@@ -4,4 +4,4 @@ models:
   - name: aspedw_integration__rpt_regional_commercial_excellence_scorecard
     config:
       alias: edw_calendar_dim
-      tags: ["sap_comex_framework","transformation"]
+      tags: ["comex_datamart","transformation"]
