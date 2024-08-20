@@ -20,7 +20,7 @@ current_table as
         updt_dttm,
         sls_grp_cd,
         pricing_sold_to
-    from PROD_DNA_CORE.NTAITG_INTEGRATION.itg_pos_invoice_prc_lookup
+    from {{this}}
 ),
 wave_1 as
 (
