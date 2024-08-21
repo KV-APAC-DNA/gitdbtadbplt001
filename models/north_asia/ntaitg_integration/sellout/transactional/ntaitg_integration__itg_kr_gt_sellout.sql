@@ -793,7 +793,7 @@ FROM SDL_KR_OTC_SELLOUT SNG
 WHERE SNG.QUANTITY not like '%.%'
 qualify row_number() over (partition by ims_txn_dt,dstr_cd,dstr_nm,cust_cd,cust_nm,prod_cd,prod_nm,ean_num,unit_prc,sls_amt,sls_qty,sub_customer_code,sub_customer_name order by null) = 1
 
-)
+),
 final as (
 
 select * from hyundai
