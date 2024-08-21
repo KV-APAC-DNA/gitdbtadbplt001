@@ -107,20 +107,19 @@ IQ AS (
                     KEY_VALUE,
                     TARGET_VALUE
                 FROM itg_lookup_eng_data
-                WHERE UPPER(TABLE_NAME) = 'DIM_PROFILE'
-                    AND UPPER(COLUMN_NAME) = 'PROFILE_NAME'
-                    AND UPPER(TARGET_COLUMN_NAME) = 'FUNCTION_NAME'
+                WHERE trim(UPPER(TABLE_NAME)) = 'DIM_PROFILE'
+                    AND trim(UPPER(COLUMN_NAME)) = 'PROFILE_NAME'
+                    AND trim(UPPER(TARGET_COLUMN_NAME)) = 'FUNCTION_NAME'
                 ) PROF_NAME
-        WHERE IU.EMPLOYEE_SOURCE_ID = IUT.USER_TERRITORY_USER_SOURCE_ID(+)
+        WHERE trim(IU.EMPLOYEE_SOURCE_ID) = trim(IUT.USER_TERRITORY_USER_SOURCE_ID(+))
             --and iu.country_code = iut.country_code(+)  -- country code is null for IUT
-            AND IUT.TERRITORY_SOURCE_ID = IT.TERRITORY_SOURCE_ID(+)
+            AND trim(IUT.TERRITORY_SOURCE_ID) = trim(IT.TERRITORY_SOURCE_ID(+))
             --and iut.country_code = it.country_code (+) --- Country code is null for IT
-            AND IU.EMPLOYEE_PROFILE_ID = IP.PROFILE_SOURCE_ID(+)
-            AND IP.PROFILE_NAME = PROF_NAME.KEY_VALUE(+)
-            AND IP.COUNTRY_CODE = PROF_NAME.COUNTRY_CODE(+)
-            AND IT.TERRITORY_SOURCE_ID = ORG_HIER.TERRITORY_SOURCE_ID(+)
+            AND trim(IU.EMPLOYEE_PROFILE_ID) = trim(IP.PROFILE_SOURCE_ID(+))
+            AND trim(IP.PROFILE_NAME) = trim(PROF_NAME.KEY_VALUE(+))
+            AND trim(IP.COUNTRY_CODE) = trim(PROF_NAME.COUNTRY_CODE(+))
+            AND trim(IT.TERRITORY_SOURCE_ID) = trim(ORG_HIER.TERRITORY_SOURCE_ID(+))
         ),
-    
 
 wrk_dim_employee_temp
 AS (
@@ -200,6 +199,7 @@ AS (
         END RNK
 FROM IQ
     ),
+
 T1
 AS (
     SELECT IQ.EMPLOYEE_KEY,
