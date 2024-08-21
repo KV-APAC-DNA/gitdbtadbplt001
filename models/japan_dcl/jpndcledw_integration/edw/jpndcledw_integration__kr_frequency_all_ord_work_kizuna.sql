@@ -1,5 +1,5 @@
 with KESAI_H_DATA_MART_MV_kizuna as (
-select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
+select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
 ),
 transformed as (
 SELECT SALENO                                                      AS    SALENO
