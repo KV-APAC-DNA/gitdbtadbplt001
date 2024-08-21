@@ -3,14 +3,14 @@
     (
         materialized = 'incremental',
         incremental_model = 'append',
-        pre_hook = "{% if is_incremental() %}
+        pre_hook = "
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_aeon')}} WHERE account_key NOT IN ('AEON', 'aeon') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_csms')}} WHERE account_key NOT IN ('CSMS', 'csms') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_dnki')}} WHERE account_key NOT IN ('DNKI', 'dnki') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_sugi')}} WHERE account_key NOT IN ('SUGI', 'sugi') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_tsur')}} WHERE account_key NOT IN ('TSUR', 'tsur') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;
                     DELETE FROM {{ ref('jpnwks_integration__wk_pos_daily_wlca')}} WHERE account_key NOT IN ('WLCA', 'wlca') OR account_key = ' ' OR account_key = '' OR account_key IS NULL;                    
-                    {% endif %}"
+                   "
     )
 }}
 
@@ -270,7 +270,7 @@ wlca as(
     from wk_pos_daily_wlca
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_wlca.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{ this }} where account_key='WLCA') 
+        where TO_DATE(wk_pos_daily_wlca.accounting_date, 'YYYY-MM-DD') > (select max(accounting_date) from {{ this }} where account_key='WLCA') 
         {% endif %}
 ),
 transformed as(
