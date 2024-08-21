@@ -1,12 +1,12 @@
 WITH dim_employee_iconnect
 AS (
     SELECT *
-    FROM oseedw_integration.dim_employee_iconnect
+    FROM hcposeedw_integration.dim_employee_iconnect
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM oseedw_integration.edw_isight_sector_mapping
+    FROM hcposeedw_integration.edw_isight_sector_mapping
     ),
 derived_table1
 AS (

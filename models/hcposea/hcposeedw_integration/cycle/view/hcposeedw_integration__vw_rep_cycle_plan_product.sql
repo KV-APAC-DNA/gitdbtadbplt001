@@ -166,7 +166,7 @@ derived_table1 AS (
                 fact_cycle_plan.number_of_targets,
                 fact_cycle_plan.number_of_cfa_100_targets,
                 fact_cycle_plan.cycle_plan_attainment_cptarget,
-                dateadd(day, floor(((fact_cycle_plan.end_date_key) -                         (fact_cycle_plan.start_date_key))/2)::NUMBER,TO_DATE(to_char(fact_cycle_plan.start_date_key), 'YYYYMMDD')) AS mid_date,                
+                dateadd(day, floor(((fact_cycle_plan.end_date_key) -(fact_cycle_plan.start_date_key))/2)::NUMBER,TO_DATE(to_char(fact_cycle_plan.start_date_key), 'YYYYMMDD')) AS mid_date,                
                 fact_cycle_plan.hcp_product_achieved_100,
                 fact_cycle_plan.hcp_products_planned,
                 fact_cycle_plan.cpa_100,

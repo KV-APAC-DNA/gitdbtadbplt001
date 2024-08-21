@@ -92,13 +92,14 @@ SELECT src1.country,
                         THEN 'Time On'::CHARACTER VARYING
                     ELSE fact.sea_time_on_time_off
                     END AS time_on_off,
-                ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
+                    to_date(to_char(date_dim.date_key),'YYYYMMDD') as date,
+                -- ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
                 date_dim.date_year AS "year",
                 date_dim.date_month AS "month",
                 date_dim.date_quarter AS quarter,
                 fact.total_time_off AS hours_off,
                 fact.sea_frml_hours_on AS hours_on,
-                ((ds.working_days)::NUMERIC)::NUMERIC(18, 0) AS working_days,
+                ds.working_days AS working_days,
                 CASE 
                     WHEN ((fact.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
                         THEN (COALESCE(fact.total_time_off, ((0)::NUMERIC)::NUMERIC(18, 0)) / ((8)::NUMERIC)::NUMERIC(18, 0))
@@ -175,9 +176,9 @@ SELECT src1.country,
                                                                 )
                                                             )
                                                         )
-                                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                 )
                                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                             )
@@ -204,9 +205,9 @@ SELECT src1.country,
                                                                 )
                                                             )
                                                         )
-                                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                 )
                                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                             )
@@ -234,9 +235,9 @@ SELECT src1.country,
                                                             )
                                                         )
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                             )
                                         AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                         )
@@ -264,9 +265,9 @@ SELECT src1.country,
                                                         )
                                                     )
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                         )
                                     AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                     )
@@ -294,9 +295,9 @@ SELECT src1.country,
                                                     )
                                                 )
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                     )
                                 AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                 )
@@ -324,9 +325,9 @@ SELECT src1.country,
                                                 )
                                             )
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                     )
-                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                 )
                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                             )
@@ -454,13 +455,14 @@ cte2 as (
                         THEN 'Time On'::CHARACTER VARYING
                     ELSE fact.sea_time_on_time_off
                     END AS time_on_off,
-                ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
+                    to_date(to_char(date_dim.date_key),'YYYYMMDD') as date,
+                -- ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
                 date_dim.jnj_date_year,
                 date_dim.jnj_date_month,
                 date_dim.jnj_date_quarter,
                 fact.total_time_off AS hours_off,
                 fact.sea_frml_hours_on AS hours_on,
-                ((ds.working_days)::NUMERIC)::NUMERIC(18, 0) AS working_days,
+                ds.working_days AS working_days,
                 CASE 
                     WHEN ((fact.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
                         THEN (COALESCE(fact.total_time_off, ((0)::NUMERIC)::NUMERIC(18, 0)) / ((8)::NUMERIC)::NUMERIC(18, 0))
@@ -537,9 +539,9 @@ cte2 as (
                                                                 )
                                                             )
                                                         )
-                                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                 )
                                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                             )
@@ -566,9 +568,9 @@ cte2 as (
                                                                 )
                                                             )
                                                         )
-                                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                 )
                                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                             )
@@ -596,9 +598,9 @@ cte2 as (
                                                             )
                                                         )
                                                     )
-                                                AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                             )
                                         AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                         )
@@ -626,9 +628,9 @@ cte2 as (
                                                         )
                                                     )
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                         )
                                     AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                     )
@@ -656,9 +658,9 @@ cte2 as (
                                                     )
                                                 )
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                     )
                                 AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                 )
@@ -686,9 +688,9 @@ cte2 as (
                                                 )
                                             )
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                     )
-                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                 )
                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                             )
@@ -822,13 +824,14 @@ FROM (
                 THEN 'Time On'::CHARACTER VARYING
             ELSE fact.sea_time_on_time_off
             END AS time_on_off,
-        ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
+            to_date(to_char(date_dim.date_key),'YYYYMMDD') as date,
+        -- ((date_dim.date_key)::CHARACTER VARYING)::DATE AS DATE,
         date_dim.my_date_year,
         date_dim.my_date_month,
         date_dim.my_date_quarter,
         fact.total_time_off AS hours_off,
         fact.sea_frml_hours_on AS hours_on,
-        ((ds.working_days)::NUMERIC)::NUMERIC(18, 0) AS working_days,
+        ds.working_days AS working_days,
         CASE 
             WHEN ((fact.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
                 THEN (COALESCE(fact.total_time_off, ((0)::NUMERIC)::NUMERIC(18, 0)) / ((8)::NUMERIC)::NUMERIC(18, 0))
@@ -905,9 +908,9 @@ FROM (
                                                         )
                                                     )
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                         )
                                     AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                     )
@@ -934,9 +937,9 @@ FROM (
                                                         )
                                                     )
                                                 )
-                                            AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                         )
                                     AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                     )
@@ -964,9 +967,9 @@ FROM (
                                                     )
                                                 )
                                             )
-                                        AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                     )
                                 AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                                 )
@@ -994,9 +997,9 @@ FROM (
                                                 )
                                             )
                                         )
-                                    AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                    AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                     )
-                                AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                 )
                             AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                             )
@@ -1024,9 +1027,9 @@ FROM (
                                             )
                                         )
                                     )
-                                AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                                AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                                 )
-                            AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                             )
                         AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                         )
@@ -1054,9 +1057,9 @@ FROM (
                                         )
                                     )
                                 )
-                            AND ((ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
+                            AND (rtrim(ds.date_dayofweek)::TEXT <> ('Saturday'::CHARACTER VARYING)::TEXT)
                             )
-                        AND ((ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
+                        AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                         )
                     AND (to_date(to_char(ds.date_key),'YYYYMMDD') < current_date())
                     )
@@ -1114,10 +1117,8 @@ result as (
     select * from table1
     union all
     select * from cte3
-),
-
-final as (
-    select * from result
 )
 
-select * from final
+select * from result
+
+

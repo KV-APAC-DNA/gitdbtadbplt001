@@ -1,10 +1,10 @@
 
 {{
     config(
-        materialized= "incremental",
-        incremental_strategy= "append",
+        materialized= 'incremental',
+        incremental_strategy= 'append',
         pre_hook = ["{% if is_incremental() %}
-                     delete from {{this}} where(call_key_message_source_id) in (select call_key_message_id from itg_call_key_message);
+                     delete from {{this}} where(call_key_message_source_id) in (select call_key_message_id from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL_KEY_MESSAGE);
                     {% endif %}"]
     )
 }}

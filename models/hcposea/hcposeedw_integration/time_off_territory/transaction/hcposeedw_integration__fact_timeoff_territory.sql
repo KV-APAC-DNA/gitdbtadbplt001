@@ -1,27 +1,27 @@
 WITH itg_time_off_territory
 AS (
     SELECT *
-    FROM OSEITG_INTEGRATION.itg_time_off_territory
+    FROM hcpOSEITG_INTEGRATION.itg_time_off_territory
     ),
 dim_employee
 AS (
     SELECT *
-    FROM OSEEDW_INTEGRATION.dim_employee
+    FROM hcpOSEEDW_INTEGRATION.dim_employee
     ),
 dim_date
 AS (
     SELECT *
-    FROM OSEEDW_INTEGRATION.dim_date
+    FROM hcpOSEEDW_INTEGRATION.dim_date
     ),
 dim_country
 AS (
     SELECT *
-    FROM OSEEDW_INTEGRATION.dim_country
+    FROM hcpOSEEDW_INTEGRATION.dim_country
     ),
 itg_lookup_retention_period
 AS (
     SELECT *
-    FROM SNAPOSEITG_INTEGRATION.itg_lookup_retention_period
+    FROM hcpOSEITG_INTEGRATION.itg_lookup_retention_period
     ),
 T1
 AS (
