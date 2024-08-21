@@ -173,6 +173,9 @@ sources:
       - name: sdl_pop6_th_executed_visits_test
       - name: sdl_pop6_th_sku_audits_test
       - name: sdl_pop6_th_general_audits_test
+      - name: sdl_pop6_th_products_test
+      - name: sdl_pop6_th_users_test
+      - name: sdl_pop6_th_pops_test
       - name: sdl_pop6_th_sku_audits
         tags: ["pop6_master_load","ingestion"]
         tests:

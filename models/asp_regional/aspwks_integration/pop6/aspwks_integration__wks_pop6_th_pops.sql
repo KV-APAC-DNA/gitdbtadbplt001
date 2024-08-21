@@ -1,7 +1,7 @@
 with 
 source as
 (
-    select * from {{ source('thasdl_raw', 'sdl_pop6_th_pops') }}
+    select * from {{ source('thasdl_raw', 'sdl_pop6_th_pops_test') }}
 ),
 final as
 (
