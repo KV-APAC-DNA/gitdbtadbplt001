@@ -4,8 +4,8 @@ models:
   - name: chnedw_integration__edw_cn_perfect_store
     config:
         alias: edw_cn_perfect_store
-        tags: ["ch_pms_edw", "ingestion"]
+        tags: ["ch_pms_edw", "transformation"]
   - name: chnedw_integration__v_rpt_cn_perfect_store
     config:
         alias: v_rpt_cn_perfect_store
-        tags: ["ch_pms_edw", "ingestion"]
+        tags: ["ch_pms_edw", "transformation"]
