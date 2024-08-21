@@ -63,7 +63,7 @@ sources:
         tags: ["prox_master","ingestion"]
         tests:
         - test_null:
-            select_columns:  ["filename","id","reason"]
+            select_columns:  ["filename","id"]
             not_null_columns: ["id"]
             filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
             name: TRATBL_sdl_prox_md_material____null_test
@@ -74,7 +74,7 @@ sources:
         tags: ["prox_master","ingestion"]
         tests:
         - test_null:
-            select_columns:  ["filename","id","reason"]
+            select_columns:  ["filename","id"]
             not_null_columns: ["id"]
             filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
             name: TRATBL_sdl_prox_md_ppgallocation____null_test
@@ -85,7 +85,7 @@ sources:
         tags: ["prox_master","ingestion"]
         tests:
         - test_null:
-            select_columns:  ["filename","id","reason"]
+            select_columns:  ["filename","id"]
             not_null_columns: ["id"]
             filter: "TRIM(ID) = '' OR TRIM(ID) IS NULL"
             name: TRATBL_ssdl_prox_md_theme____null_test

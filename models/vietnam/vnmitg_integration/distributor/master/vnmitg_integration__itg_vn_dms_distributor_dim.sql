@@ -18,7 +18,7 @@ select
     dstrbtr_id::varchar(30) as dstrbtr_id,
     dstrbtr_type::varchar(100) as dstrbtr_type,
     dstrbtr_name::varchar(100) as dstrbtr_name,
-    dstrbtr_address::varchar(200) as dstrbtr_address,
+    dstrbtr_address::varchar(500) as dstrbtr_address,
     trim(longitude, ',')::varchar(20) as longitude,
     trim(latitude, ',')::varchar(20) as latitude,
     region::varchar(20) as region,

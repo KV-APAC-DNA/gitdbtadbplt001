@@ -104,7 +104,7 @@ sources:
     
     tables:
       - name: item_data_mart_mv
-      - name: '"WQTM07属性未設定名称マスタ"'
+      - name: '"wqtm07属性未設定名称マスタ"'
       - name: tm72del_nm
       - name: aspac_common_mv
       - name: tbecorder_log_tmp
@@ -176,9 +176,9 @@ sources:
       - name: tm58_koykarank_ym
       - name: kr_this_stage_point_monthly
       - name: kr_frequency_1yn_900
-      - name: '"CEWQ028破損商品"'
-      - name: '"WQWT34明細出力リスト"'
-      - name: '"WQWT74戦略商品別売上Ｐ"'
+      - name: '"cewq028破損商品"'
+      - name: '"wqwt34明細出力リスト"'
+      - name: '"wqwt74戦略商品別売上ｐ"'
       - name: ocl_in_userlist_v
       - name: kr_last_stage_point
       - name: kesai_m_data_mart_sub_old_chsi_tbl

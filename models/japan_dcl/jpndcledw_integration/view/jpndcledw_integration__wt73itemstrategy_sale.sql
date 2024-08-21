@@ -5,7 +5,7 @@ AS (
     ),
 "wqtm07属性未設定名称マスタ" AS 
 (
-    SELECT * FROM {{ source('jpdcledw_integration', '"WQTM07属性未設定名称マスタ"') }}
+    SELECT * FROM {{ source('jpdcledw_integration', '"wqtm07属性未設定名称マスタ"') }}
 ),
 cit80saleh AS 
 (

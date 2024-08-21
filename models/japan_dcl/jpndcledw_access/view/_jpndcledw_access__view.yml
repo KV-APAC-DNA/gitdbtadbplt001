@@ -111,19 +111,9 @@ models:
       alias: kesai_h_data_mart_mv
       tags: ["japan_dcl_views","transformation"]
 
-  - name: jpndcledw_access__kesai_h_data_mart_mv_kizuna
-    config:
-      alias: kesai_h_data_mart_mv_kizuna
-      tags: ["japan_dcl_views","transformation"]
-
   - name: jpndcledw_access__kesai_m_data_mart_mv
     config:
       alias: kesai_m_data_mart_mv
-      tags: ["japan_dcl_views","transformation"]
-
-  - name: jpndcledw_access__kesai_m_data_mart_mv_kizuna
-    config:
-      alias: kesai_m_data_mart_mv_kizuna
       tags: ["japan_dcl_views","transformation"]
 
   - name: jpndcledw_access__kr_054_cal_v
@@ -264,7 +254,7 @@ models:
   - name: jpndcledw_access__cewq028
     config:
       alias: '"cewq028破損商品"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_access__wqwt34
     config:
