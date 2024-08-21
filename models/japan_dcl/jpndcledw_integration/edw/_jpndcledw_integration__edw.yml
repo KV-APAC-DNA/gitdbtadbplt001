@@ -1050,11 +1050,6 @@ models:
     config:
       alias: kesai_m_data_mart_sub_before_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
-
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl
-    config:
-      alias: kesai_m_data_mart_sub_before_tbl
-      tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesai_m_data_mart_sub_n_h_notp_tbl
     config:
