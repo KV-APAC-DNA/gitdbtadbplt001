@@ -24,10 +24,6 @@ final as(
         upload_dt,
         upload_time
     from jp_pos_daily_sugi
-    {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-    where TO_DATE(jp_pos_daily_sugi.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
-     or (select (TO_DATE(jp_pos_daily_sugi.accounting_date, 'YYYYMMDD')) from {{this}}) is null
-    {% endif %}
+
 )
 select * from final
