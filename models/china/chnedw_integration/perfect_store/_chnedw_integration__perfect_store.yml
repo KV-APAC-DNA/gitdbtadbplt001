@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: chnedw_integration__edw_cn_perfect_store
+    config:
+        alias: edw_cn_perfect_store
+        tags: ["ch_pms_edw", "ingestion"]
+  - name: chnedw_integration__v_rpt_cn_perfect_store
+    config:
+        alias: v_rpt_cn_perfect_store
+        tags: ["ch_pms_edw", "ingestion"]
