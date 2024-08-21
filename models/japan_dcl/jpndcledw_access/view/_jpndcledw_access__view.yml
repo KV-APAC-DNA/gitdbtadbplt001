@@ -254,7 +254,7 @@ models:
   - name: jpndcledw_access__cewq028
     config:
       alias: '"cewq028破損商品"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_access__wqwt34
     config:
