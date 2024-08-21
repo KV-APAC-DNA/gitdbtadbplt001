@@ -1036,21 +1036,16 @@ models:
       alias: kesai_h_data_mart_sub_n_u_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
-  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl_kizuna
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl
     config:
-      alias: kesai_h_data_mart_sub_tbl_kizuna
+      alias: kesai_h_data_mart_sub_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
-  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl
     config:
-      alias: kesai_m_data_mart_mv_tbl_kizuna
+      alias: kesai_m_data_mart_mv_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
-    config:
-      alias: kesai_m_data_mart_sub_before_tbl_kizuna
-      tags: ["m_dcl_edw_job2", "transformation"]
-
   - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl
     config:
       alias: kesai_m_data_mart_sub_before_tbl
@@ -1076,9 +1071,9 @@ models:
       alias: kesai_m_data_mart_sub_n_u_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
-  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl
     config:
-      alias: kesai_m_data_mart_sub_tbl_kizuna
+      alias: kesai_m_data_mart_sub_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesaiid_dummy_tbl
