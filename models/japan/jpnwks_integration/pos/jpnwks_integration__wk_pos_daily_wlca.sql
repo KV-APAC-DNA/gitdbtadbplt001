@@ -28,7 +28,7 @@ final as(
     {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
     where TO_DATE(jp_pos_daily_wlca.accounting_date, 'YYYY-MM-DD') > (select max(TO_DATE(accounting_date, 'YYYY-MM-DD')) from {{this}}) 
-     or (select max(TO_DATE(jp_pos_daily_wlca.accounting_date, 'YYYY-MM-DD')) from {{this}}) is null
+     or (select (TO_DATE(jp_pos_daily_wlca.accounting_date, 'YYYY-MM-DD')) from {{this}}) is null
     {% endif %}
 )
 select * from final
