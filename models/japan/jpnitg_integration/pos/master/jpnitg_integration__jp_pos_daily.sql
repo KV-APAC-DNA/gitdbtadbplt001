@@ -40,10 +40,10 @@ aeon as(
         upload_dt::VARCHAR(10) as upload_dt,
 	    upload_time::varchar(8) as upload_time
     from jp_pos_daily_aeon
-         {% if is_incremental() %}
+    {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_aeon.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
-        {% endif %}
+    where TO_DATE(jp_pos_daily_aeon.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
+    {% endif %}
 ),
 csms as(
     SELECT TRIM(store_key_1) as store_key_1,
@@ -60,7 +60,7 @@ csms as(
     from jp_pos_daily_csms
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_csms.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_csms.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 dnki as(
@@ -78,7 +78,7 @@ dnki as(
     from jp_pos_daily_dnki
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_dnki.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_dnki.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 otherss as(
@@ -96,7 +96,7 @@ otherss as(
     from jp_pos_daily_others
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_others.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_others.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 tsur as(
@@ -114,7 +114,7 @@ tsur as(
     from jp_pos_daily_tsur
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_tsur.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_tsur.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 sugi as(
@@ -132,7 +132,7 @@ sugi as(
     from jp_pos_daily_sugi
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_sugi.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_sugi.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 wlca as(
@@ -150,7 +150,7 @@ wlca as(
     from jp_pos_daily_wlca
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(jp_pos_daily_wlca.upload_dt, 'MM-DD-YYYY') > (select max(TO_DATE(upload_dt, 'MM-DD-YYYY')) from {{ this }}) 
+        where TO_DATE(jp_pos_daily_wlca.accounting_date, 'YYYYMMDD') > (select max(TO_DATE(accounting_date, 'YYYYMMDD')) from {{this}}) 
         {% endif %}
 ),
 transformed as(
