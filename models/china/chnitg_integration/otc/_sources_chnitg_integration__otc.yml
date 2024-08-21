@@ -10,6 +10,5 @@ sources:
       identifier: false
     tables:
     - name: sdl_mds_cn_otc_soldto_mapping
-      tags: ["ch_ecomm_mds","transformation"]
+
     - name: sdl_mds_cn_otc_product_mapping
-      tags: ["ch_ecomm_mds","transformation"]
