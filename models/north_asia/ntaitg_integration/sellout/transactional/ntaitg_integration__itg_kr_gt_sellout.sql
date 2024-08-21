@@ -791,8 +791,6 @@ FROM SDL_KR_OTC_SELLOUT SNG
 	LEFT JOIN (SELECT DISTINCT OUTLET_CODE,NAME,PHARMACY_NAME,SAP_CUSTOMER_CODE FROM ITG_MDS_KR_SUB_CUSTOMER_MASTER) V2
 	ON V2.PHARMACY_NAME = SNG.ACCOUNT_NAME and V2.SAP_CUSTOMER_CODE = SNG.CUSTOMER_CODE and V2.outlet_code = SNG.pcode
 WHERE SNG.QUANTITY not like '%.%'
-qualify row_number() over (partition by ims_txn_dt,dstr_cd,dstr_nm,cust_cd,cust_nm,prod_cd,prod_nm,ean_num,unit_prc,sls_amt,sls_qty,sub_customer_code,sub_customer_name order by null) = 1
-
 ),
 final as (
 
