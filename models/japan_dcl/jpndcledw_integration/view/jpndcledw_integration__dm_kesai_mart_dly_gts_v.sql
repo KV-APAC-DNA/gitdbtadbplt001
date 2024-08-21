@@ -56,14 +56,14 @@ AS (
 final
 AS (
     SELECT base.saleno::VARCHAR(63) AS SALENO,
-        base.ship_dt::DATE AS "出荷年月日（通常カレンダー基準)",
+        base.ship_dt::DATE AS "出荷年月日（通常カレンダー基準）",
         cld1.ymd_dt::TIMESTAMP_NTZ(9) AS "j&j日付",
         cld1.month_445::VARCHAR(256) AS SHIP_JNJ_MONTH_VIEW,
         cld1.month_445_nm::VARCHAR(256) AS SHIP_JNJ_MONTH_NAME,
         cld1.mweek_445::VARCHAR(256) AS SHIPMENT_WEEK_JNJ,
         cld1.week_ms::VARCHAR(256) AS SHIPMENT_WEEK_JNJ_NUMBER,
         cld1.ymonth_445::VARCHAR(256) AS SHIP_JNJ_MONTH_YEAR,
-        dateadd('day', 2, (base.ship_dt)::TIMESTAMP without TIME zone)::DATE AS "着荷日年月日（通常カレンダー基準)",
+        dateadd('day', 2, (base.ship_dt)::TIMESTAMP without TIME zone)::DATE AS "着荷日年月日（通常カレンダー基準）",
         cld2.month_445::VARCHAR(256) AS DELIVERY_JNJ_MONTH_VIEW,
         cld2.month_445_nm::VARCHAR(256) AS DELIVERY_JNJ_MONTH_NAME,
         cld2.mweek_445::VARCHAR(256) AS DELIVERY_WEEK_JNJ,
