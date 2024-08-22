@@ -29,7 +29,7 @@ sources:
             select_columns: ["year_code", "sales_office_code_code", "sales_group_code_code", "product_h2_code", "product_h4_code"]
             column: "(upper(trim(product_h2_code)),upper(trim(product_h4_code)))"
             lookup_column: "upper(trim(prod_hier_l2)), upper(trim(prod_hier_l4))"
-            lookup_table: "{{ ref('aspedw_integration__edw_product_attr_dim') }}"
+            lookup_table: " {{ env_var('DBT_ENV_CORE_DB') }}.aspedw_integration.edw_product_attr_dim "
             lookup_filter: "cntry = 'KR' and (trim(prod_hier_l2) <> '' and prod_hier_l2 is not null) and (trim(prod_hier_l4) <> '' and prod_hier_l4 is not null)"
             failure_reason: "'MISSING PRODUCT_HIER2,PRODUCT_HIER4 IN MASTER TABLE'"
             name: TRATBL_sdl_mds_kr_target__lookup_test_producth2code
