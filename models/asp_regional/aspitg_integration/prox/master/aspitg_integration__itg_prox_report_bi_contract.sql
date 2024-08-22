@@ -58,7 +58,7 @@ final as
 	paymentmethod::varchar(255) as paymentmethod,
 	expenseamount::number(18,2) as expenseamount,
 	commitmentamount::number(18,2) as commitmentamount,
-	accrualreleaseamountwithouttax::number(18,2),
+	accrualreleaseamountwithouttax::number(18,2) as accrualreleaseamountwithouttax,
 	closeamount::number(18,2) as closeamount,
 	paidamount::number(18,2) as paidamount,
 	approvedamount::number(18,2) as approvedamount,
