@@ -1418,7 +1418,7 @@ AS (
                     'PS_POG_QN_COMP' as field_code,
                     'Planogram Compliance' as kpi,
                     case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
-                    case when upper(company) in ('KENVUE','JNJ','KV') then 'How many facing Kenvue acquired?'
+                    case when upper(company) in ('KENVUE','JNJ','KV') then 'How many Hand-Eye facing Kenvue acquired?'
                     else 'How many Hand-Eye facing Competitor acquired?' end  as questiontext,
                     'denominator' as ques_desc,
                     facing_of_this_layer,
