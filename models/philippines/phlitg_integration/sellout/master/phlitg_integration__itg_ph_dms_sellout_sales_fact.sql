@@ -8,7 +8,12 @@
         nvl(to_char(case when try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') else to_date(order_dt,'MM/DD/YYYY HH24:MI')    end,'YYYYMMDD'), '') || 
         to_char(case when try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(invoice_dt,'MM/DD/YYYY HH12:MI:SS AM') else to_date(invoice_dt,'MM/DD/YYYY HH24:MI') end,'YYYYMMDD') || 
         nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id 
-        from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }} );"]
+        from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }} 
+        where file_name not in (
+        select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__null_test') }} 
+        union all
+        select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test') }} )
+        );"]
     )
 }}
 
@@ -23,6 +28,10 @@ with sdl_ph_dms_sellout_sales_fact as(
             else  to_date(invoice_dt,'MM/DD/YYYY HH24:MI') 
         end as invoice_dt_mod
     from {{ source('phlsdl_raw', 'sdl_ph_dms_sellout_sales_fact') }}
+    where file_name not in (
+    select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__null_test') }} 
+    union all
+    select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test') }} )
 
 ),
 source as (

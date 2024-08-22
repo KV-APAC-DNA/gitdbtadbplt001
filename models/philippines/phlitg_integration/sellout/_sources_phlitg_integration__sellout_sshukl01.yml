@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: phlwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: phlwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_ph_dms_sellout_stock_fact__lookup_test
+    - name: TRATBL_sdl_ph_dms_sellout_stock_fact__null_test
+    - name: TRATBL_sdl_ph_dms_sellout_sales_fact__null_test
+    - name: TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test
