@@ -18,7 +18,7 @@ sources:
             select_columns: ["year_code", "sales_office_code_code", "sales_group_code_code", "product_h2_code", "product_h4_code"]
             column: "(upper(trim(sales_office_code_code)),upper(trim(sales_group_code_code)))"
             lookup_column: "upper(trim(sls_ofc)), upper(trim(sls_grp_cd))"
-            lookup_table: "{{ env_var('DBT_ENV_CORE_DB') }}.aspedw_integration.edw_customer_attr_flat_dim"
+            lookup_table: " {{ env_var('DBT_ENV_CORE_DB') }}.aspedw_integration.edw_customer_attr_flat_dim "
             lookup_filter: "county = 'KR' and (trim(sls_ofc) <> '' and sls_ofc is not null) and (trim(sls_grp_cd) <> '' and sls_grp_cd is not null)"
             failure_reason: "'MISSING SLS_OFC_CD,SLS_GRP_CD IN MASTER TABLE'"
             name: TRATBL_sdl_mds_kr_target__lookup_test_salesofficecode
