@@ -1,32 +1,32 @@
 WITH wrk_fact_call_only
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.wrk_fact_call_only
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__wrk_fact_call_only
     ),
 wrk_fact_group_detail
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.wrk_fact_group_detail
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__WRK_FACT_GROUP_DETAIL
     ),
 wrk_fact_detail_only
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.wrk_fact_detail_only
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__wrk_fact_detail_only
     ),
 Sample_Only
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.Sample_Only
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Sample_Only
     ),
 Detail_with_Sample
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.Detail_with_Sample
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Detail_with_Sample
     ),
 Group_Detail_with_Sample
 AS (
     SELECT *
-    FROM HCPOSEEDW_INTEGRATION.Group_Detail_with_Sample
+    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Group_Detail_with_Sample
     ),
 T1
 AS (
@@ -51,7 +51,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -187,7 +187,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -323,7 +323,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -459,7 +459,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -595,7 +595,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -703,7 +703,9 @@ AS (
         call_detail_name,
         call_discussion_name,
         inserted_date,
-        updated_date
+        updated_date,
+        null as remote_meeting_key,
+        null as veeva_remote_meeting_id
     FROM Detail_with_Sample
     ),
 T6
@@ -729,7 +731,7 @@ AS (
             WHEN is_parent_call_base = 1
                 THEN is_parent_call_base
             ELSE NULL
-            END,
+            END as parent_call_flag,
         attendees,
         attendee_type,
         call_comments,
@@ -837,7 +839,9 @@ AS (
         call_detail_name,
         call_discussion_name,
         inserted_date,
-        updated_date
+        updated_date,
+        null as remote_meeting_key,
+        null as veeva_remote_meeting_id
     FROM Group_Detail_with_Sample
     ),
 UNION_OF
@@ -872,23 +876,23 @@ AS (
     ),
 FINAL
 AS (
-    SELECT COUNTRY_KEY::VARCHAR(18) AS COUNTRY_KEY,
+    SELECT country_code::VARCHAR(18) AS COUNTRY_KEY,
         HCP_KEY::VARCHAR(132) AS HCP_KEY,
         HCO_KEY::VARCHAR(132) AS HCO_KEY,
         EMPLOYEE_KEY::VARCHAR(132) AS EMPLOYEE_KEY,
         PROFILE_KEY::VARCHAR(132) AS PROFILE_KEY,
         ORGANIZATION_KEY::VARCHAR(132) AS ORGANIZATION_KEY,
-        CALL_DATE_KEY::NUMBER(38,0) AS CALL_DATE_KEY,
+        DATE_KEY::NUMBER(38,0) AS CALL_DATE_KEY,
         CALL_DATE_TIME::TIMESTAMP_NTZ(9) AS CALL_DATE_TIME,
-        CALL_ENTRY_DATETIME::TIMESTAMP_NTZ(9) AS CALL_ENTRY_DATETIME,
-        CALL_MOBILE_LAST_MODIFIED_DATE_TIME::TIMESTAMP_NTZ(9) AS CALL_MOBILE_LAST_MODIFIED_DATE_TIME,
+        last_modified_date::TIMESTAMP_NTZ(9) AS CALL_ENTRY_DATETIME,
+        MOBILE_LAST_MODIFIED_DATE_TIME::TIMESTAMP_NTZ(9) AS CALL_MOBILE_LAST_MODIFIED_DATE_TIME,
         UTC_CALL_DATE_TIME::TIMESTAMP_NTZ(9) AS UTC_CALL_DATE_TIME,
         UTC_CALL_ENTRY_TIME::TIMESTAMP_NTZ(9) AS UTC_CALL_ENTRY_TIME,
         CALL_STATUS_TYPE::VARCHAR(1255) AS CALL_STATUS_TYPE,
-        CALL_CHANNEL_TYPE::VARCHAR(15) AS CALL_CHANNEL_TYPE,
+        CALL_CHANNEL_TYP::VARCHAR(15) AS CALL_CHANNEL_TYPE,
         CALL_TYPE::VARCHAR(1255) AS CALL_TYPE,
         CALL_DURATION::NUMBER(18,0) AS CALL_DURATION,
-        CALL_CLM_FLAG::NUMBER(38,0) AS CALL_CLM_FLAG,
+        CALL_CLM::NUMBER(38,0) AS CALL_CLM_FLAG,
         PARENT_CALL_FLAG::NUMBER(38,0) AS PARENT_CALL_FLAG,
         ATTENDEE_TYPE::VARCHAR(1255) AS ATTENDEE_TYPE,
         CALL_COMMENTS::VARCHAR(32000) AS CALL_COMMENTS,
@@ -966,7 +970,7 @@ AS (
         MD_IN_OR_OT::NUMBER(38,0) AS MD_IN_OR_OT,
         MD_D_CALL_TYPE::VARCHAR(1255) AS MD_D_CALL_TYPE,
         MD_HOURS::VARCHAR(1255) AS MD_HOURS,
-        CALL_RECORD_TYPE_NAME::VARCHAR(180) AS CALL_RECORD_TYPE_NAME,
+        RECORD_TYPE_NAME::VARCHAR(180) AS CALL_RECORD_TYPE_NAME,
         CALL_NAME::VARCHAR(180) AS CALL_NAME,
         PARENT_CALL_NAME::VARCHAR(180) AS PARENT_CALL_NAME,
         SUBMITTED_BY_MOBILE::NUMBER(38,0) AS SUBMITTED_BY_MOBILE,
@@ -989,16 +993,16 @@ AS (
         CALL_DETAIL_NAME::VARCHAR(183) AS CALL_DETAIL_NAME,
         CALL_DISCUSSION_SOURCE_ID::VARCHAR(118) AS CALL_DISCUSSION_SOURCE_ID,
         CALL_DISCUSSION_NAME::VARCHAR(183) AS CALL_DISCUSSION_NAME,
-        CALL_MODIFY_DT::TIMESTAMP_NTZ(9) AS CALL_MODIFY_DT,
-        CALL_MODIFY_ID::VARCHAR(118) AS CALL_MODIFY_ID,
-        CALL_DETAIL_MODIFY_DT::TIMESTAMP_NTZ(9) AS CALL_DETAIL_MODIFY_DT,
-        CALL_DETAIL_MODIFY_ID::VARCHAR(118) AS CALL_DETAIL_MODIFY_ID,
-        CALL_DISCUSSION_MODIFY_DT::TIMESTAMP_NTZ(9) AS CALL_DISCUSSION_MODIFY_DT,
+        lastmodifieddate::TIMESTAMP_NTZ(9) AS CALL_MODIFY_DT,
+        last_modified_by_id::VARCHAR(118) AS CALL_MODIFY_ID,
+        call_detail_modify_date::TIMESTAMP_NTZ(9) AS CALL_DETAIL_MODIFY_DT,
+        call_detail_modify_id::VARCHAR(118) AS CALL_DETAIL_MODIFY_ID,
+        CALL_DISCUSSION_MODIFY_DATE::TIMESTAMP_NTZ(9) AS CALL_DISCUSSION_MODIFY_DT,
         CALL_DISCUSSION_MODIFY_ID::VARCHAR(118) AS CALL_DISCUSSION_MODIFY_ID,
         INSERTED_DATE::TIMESTAMP_NTZ(9) AS INSERTED_DATE,
         UPDATED_DATE::TIMESTAMP_NTZ(9) AS UPDATED_DATE,
         REMOTE_MEETING_KEY::VARCHAR(32) AS REMOTE_MEETING_KEY,
-        ATTENDEE_REMOTE_MEETING_ID::VARCHAR(20) AS ATTENDEE_REMOTE_MEETING_ID
+        veeva_remote_meeting_id::VARCHAR(20) AS ATTENDEE_REMOTE_MEETING_ID
 	
     FROM UNION_OF
     )
