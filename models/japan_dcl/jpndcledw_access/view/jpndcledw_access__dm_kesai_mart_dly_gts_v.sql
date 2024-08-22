@@ -5,14 +5,14 @@ with dm_kesai_mart_dly_gts_v as (
 final as (
 select  
 saleno as "saleno",
-	"出荷年月日（通常カレンダー基準",
+	"出荷年月日（通常カレンダー基準）",
 	"j&j日付",
 ship_jnj_month_view as "ship_jnj_month_view",
 ship_jnj_month_name as "ship_jnj_month_name",
 shipment_week_jnj as "shipment_week_jnj",
 shipment_week_jnj_number as "shipment_week_jnj_number",
 ship_jnj_month_year as "ship_jnj_month_year",
-	"着荷日年月日（通常カレンダー基準",
+	"着荷日年月日（通常カレンダー基準）",
 delivery_jnj_month_view as "delivery_jnj_month_view",
 delivery_jnj_month_name as "delivery_jnj_month_name",
 delivery_week_jnj as "delivery_week_jnj",
