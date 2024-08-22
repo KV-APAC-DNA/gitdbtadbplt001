@@ -21,7 +21,7 @@ c_tbecclient as(
     select * from {{ ref('jpndclitg_integration__c_tbecclient') }}
 ),
 cld_m as(
-    select * from {{ source('jpdcledw_integration','cld_m') }} 
+    select * from {{ ref('jpndcledw_integration__cld_m') }} 
 ),
 TEIKIKEIYAKU_DATA_MART_UNI as(
     select * from {{ ref('jpndcledw_integration__teikikeiyaku_data_mart_uni') }}
