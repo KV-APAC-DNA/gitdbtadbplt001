@@ -12,7 +12,7 @@ as (
     ),
 cld_m
 as (
-    select * from {{ source('jpdcledw_integration','cld_m') }}  
+    select * from {{ ref('jpndcledw_integration__cld_m') }}  
     ),
 transformed
 as (
