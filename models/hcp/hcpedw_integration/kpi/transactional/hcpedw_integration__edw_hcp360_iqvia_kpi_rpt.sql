@@ -604,9 +604,10 @@ left join (select email_name,hcp_id from EDW_HCP360_KPI_RPT where upper(source_s
 on sfmc.email_name = vent_hcp.email_name
 LEFT JOIN temp_ventasys AS rpt
 ON sfmc.HCP_MASTER_ID = rpt.hcp_MASTER_ID
-WHERE rpt.hcp_MASTER_ID IS NULL
-OR sfmc.HCP_MASTER_ID IS NULL
-and rtrim(sfmc.SOURCE_SYSTEM) = rtrim('SFMC')
+WHERE trim(sfmc.SOURCE_SYSTEM) = 'SFMC' 
+AND sfmc.HCP_ID IS NOT NULL
+and (rpt.hcp_MASTER_ID IS NULL
+OR sfmc.HCP_MASTER_ID IS NULL)
 
 ),NOOFEMAILSENT
 AS
