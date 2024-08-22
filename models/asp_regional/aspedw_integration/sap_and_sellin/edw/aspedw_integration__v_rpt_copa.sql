@@ -67,20 +67,13 @@ transformed as(
   main.obj_crncy_co_obj as obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
 
-  /*gmc.B1_BRAND as BRAND,
+  gmc.B1_BRAND as BRAND,
   gmc.B2_SUBBRAND as SUBBRAND,
   gmc.C1_BUSINESS_SEGMENT as BUSINESS_SEGMENT,
   gmc.C2_BUSINESS_SUBSEGMENT as BUSINESS_SUBSEGMENT,
   gmc.C3_NEED_STATE as NEED_STATE,
   gmc.C4_CATEGORY as CATEGORY,
-  gmc.C5_SUBCATEGORY as SUBCATEGORY,*/
-  null as BRAND,
-  null as SUBBRAND,
-  null  as BUSINESS_SEGMENT,
-  null as BUSINESS_SUBSEGMENT,
-  null as NEED_STATE,
-  null as CATEGORY,
-  null as SUBCATEGORY,
+  gmc.C5_SUBCATEGORY as SUBCATEGORY,
 
   IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
@@ -1489,8 +1482,8 @@ FROM (
       )
     )
 )
-/*left join (
-Select d.B1_BRAND,d.B2_SUBBRAND,c.C1_BUSINESS_SEGMENT,c.C2_BUSINESS_SUBSEGMENT,c.C3_NEED_STATE,c.C4_CATEGORY,c.C5_SUBCATEGORY,a.GMC_SKU_CODE  
+left join (
+Select distinct d.B1_BRAND,d.B2_SUBBRAND,c.C1_BUSINESS_SEGMENT,c.C2_BUSINESS_SUBSEGMENT,c.C3_NEED_STATE,c.C4_CATEGORY,c.C5_SUBCATEGORY,a.GMC_SKU_CODE  
 FROM VW_DIM_GMC_SKU_MAPPINGS a 
 LEFT OUTER JOIN VW_DIM_GMC_ATTRIBUTE_MAPPINGS b 
 ON a.GMC_CODE = b.GMC_CODE 
@@ -1500,8 +1493,8 @@ LEFT OUTER JOIN VW_DIM_GMC_GLOBAL_BRAND_HIER d
 ON b.B2_SUBBRAND_CODE = d.B2_SUBBRAND_CODE 
 LEFT OUTER JOIN VW_DIM_GMC_PROFIT_CENTER_HIER e
 ON b.P4_BRAND_CATEGORY_CODE = e.P4_CODE )gmc on right(gmc.GMC_SKU_CODE,18)= main.matl_num	
-left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(main.cust_num,0)
-*/
+--left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(main.cust_num,0)
+
 GROUP BY
   main.prev_fisc_yr_per,
   main.latest_date,
@@ -1522,7 +1515,7 @@ GROUP BY
   main.obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc),
 
-  /*gmc.B1_BRAND,gmc.B2_SUBBRAND,gmc.C1_BUSINESS_SEGMENT,gmc.C2_BUSINESS_SUBSEGMENT,gmc.C3_NEED_STATE,gmc.C4_CATEGORY,gmc.C5_SUBCATEGORY, */
+  gmc.B1_BRAND,gmc.B2_SUBBRAND,gmc.C1_BUSINESS_SEGMENT,gmc.C2_BUSINESS_SUBSEGMENT,gmc.C3_NEED_STATE,gmc.C4_CATEGORY,gmc.C5_SUBCATEGORY, 
 
   IFF(mat.brnd_desc='',null,mat.brnd_desc),
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc),
