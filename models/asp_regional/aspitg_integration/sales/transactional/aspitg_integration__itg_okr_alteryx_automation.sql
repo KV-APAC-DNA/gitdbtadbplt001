@@ -14,7 +14,7 @@
     )
 }}
 with sdl_okr_alteryx_automation as(
-    select * from {{ source('aspsdl_raw', 'sdl_okr_alteryx_automation') }}
+    select * from {{ ref('aspwks_integration__sdl_okr_alteryx_automation') }}
 ),
 final as(
 select        
