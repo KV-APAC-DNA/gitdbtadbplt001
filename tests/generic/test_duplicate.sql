@@ -91,7 +91,7 @@
                         coalesce(upper(trim({{item}})),'NA') as {{item}}
                         {%- if not loop.last -%},{%- endif -%}
                     {%- endif -%}
-                {%- endfor -%}
+                {%- endfor %}
         from {{model}}
         where (file_name,{{c_pk}}) in (select file_name,{{c_pk}} from grouped_by)
         {% else %}
