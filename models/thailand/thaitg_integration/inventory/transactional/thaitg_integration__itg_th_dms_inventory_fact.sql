@@ -9,7 +9,7 @@
 with source as(
         SELECT *,
             dense_rank() OVER (
-                PARTITION BY distributorid,recdate,whcode,productcode,
+                PARTITION BY distributorid,recdate,whcode,productcode
                 ORDER BY file_name DESC
                 ) AS rnk
         FROM {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} source
