@@ -197,7 +197,7 @@ final as
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         updt_dttm::timestamp_ntz(9) as updt_dttm
     from transformed
-    qualify row_number() over (partition by ims_txn_dt,dstr_cd,dstr_nm,cust_cd,cust_nm,prod_cd,prod_nm,rpt_per_strt_dt,rpt_per_end_dt,ean_num,uom,unit_prc,sls_amt,sls_qty,rtrn_qty,rtrn_amt,ship_cust_nm,cust_cls_grp,cust_sub_cls,prod_spec,itm_agn_nm,ordr_co,rtrn_rsn,sls_ofc_cd,sls_grp_cd,sls_ofc_nm,sls_grp_nm,acc_type,co_cd,sls_rep_cd,sls_rep_nm,doc_dt,doc_type,doc_num,invc_num,remark_desc,gift_qty,sls_bfr_tax_amt,sku_per_box,ctry_cd,crncy_cd  order by crt_dttm,updt_dttm) = 1
+    -- qualify row_number() over (partition by ims_txn_dt,dstr_cd,dstr_nm,cust_cd,cust_nm,prod_cd,prod_nm,rpt_per_strt_dt,rpt_per_end_dt,ean_num,uom,unit_prc,sls_amt,sls_qty,rtrn_qty,rtrn_amt,ship_cust_nm,cust_cls_grp,cust_sub_cls,prod_spec,itm_agn_nm,ordr_co,rtrn_rsn,sls_ofc_cd,sls_grp_cd,sls_ofc_nm,sls_grp_nm,acc_type,co_cd,sls_rep_cd,sls_rep_nm,doc_dt,doc_type,doc_num,invc_num,remark_desc,gift_qty,sls_bfr_tax_amt,sku_per_box,ctry_cd,crncy_cd  order by crt_dttm,updt_dttm) = 1
 )
 select * from final
 

@@ -615,7 +615,7 @@ models:
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
       alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
-      tags: ["m_dcl_edw_job2","transformation"] 
+      tags: ["m_dcl_edw_job2","inactive"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
       alias: hanyo_attr
@@ -816,15 +816,15 @@ models:
   - name: jpndcledw_integration__cit85osalh_hen_mv_tbl
     config:
       alias: cit85osalh_hen_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cit85osalh_uri_mv_tbl
     config:
       alias: cit85osalh_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cit86osalm_uri_mv_tbl 
     config:
       alias: cit86osalm_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"] 
+      tags: ["m_dcl_edw_job1","inactive"] 
   - name: jpndcledw_integration__tbecordermeisai_mv_tbl
     config:
       alias: tbecordermeisai_mv_tbl
