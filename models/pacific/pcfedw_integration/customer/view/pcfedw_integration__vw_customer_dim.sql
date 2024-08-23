@@ -105,7 +105,7 @@ SELECT cust.cust_no
 	,pac_lkup.dstr_chnl_code AS channel_cd
 	,pac_lkup.dstr_chnl_name AS channel_desc
 	,cust.ctry_key
-	,pac_lkup.dstr_chnl_name AS country
+	,pac_lkup.cmp_id_name AS country
 	,cust.state_cd
 	,cust.post_cd
 	,cust.cust_suburb
