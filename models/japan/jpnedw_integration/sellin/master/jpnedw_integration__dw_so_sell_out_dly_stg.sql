@@ -59,7 +59,7 @@
                     jcp_create_date,
                     jcp_shp_to_cd,
                     jcp_str_cd,
-                    jcp_net_price,)
+                    jcp_net_price)
 				    SELECT 
 					id, 
 					rcv_dt, 
