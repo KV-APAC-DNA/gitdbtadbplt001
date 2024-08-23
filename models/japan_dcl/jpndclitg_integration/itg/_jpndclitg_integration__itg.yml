@@ -419,3 +419,8 @@ models:
     config:
       alias: acgel_predictionresult
       tags: ["dcl_ml_prediction_load","transformation"]
+  
+  - name: jpndclitg_integration__hanyo_attr_temp
+    config:
+      alias: hanyo_attr_temp
+      tags: ["m_dcl_edw_job2","transformation"] 

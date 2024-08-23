@@ -2,9 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook=" {% if is_incremental() %}
-                delete from {{this}} where TO_CHAR(TO_DATE(upload_dt, 'MM-DD-YYYY'), 'YYYY-MM-DD') < TO_CHAR(current_timestamp(), 'YYYY-MM-DD');
-                {% endif %}"    )
+        pre_hook="delete from {{this}} where TO_CHAR(TO_DATE(upload_dt, 'MM-DD-YYYY'), 'YYYY-MM-DD') < TO_CHAR(current_timestamp(), 'YYYY-MM-DD');"    
+    )
 }}
 
 with jp_pos_daily_csms as(
@@ -24,5 +23,6 @@ final as(
         upload_dt,
         upload_time
     from jp_pos_daily_csms
+
 )
 select * from final
