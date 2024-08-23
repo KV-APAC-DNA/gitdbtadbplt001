@@ -20,6 +20,6 @@ sources:
       database: false
       schema: false
       identifier: false
-    tables:
-     
-      - name: edw_perfect_store_product_master
+      # disabling here as this is available main branch 
+          #tables:
+     # name: edw_perfect_store_product_master

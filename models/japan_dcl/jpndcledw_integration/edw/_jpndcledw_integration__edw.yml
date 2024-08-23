@@ -615,11 +615,8 @@ models:
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
       alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
-<<<<<<< HEAD
       tags: ["m_dcl_edw_job2","transformation"] 
-=======
       tags: ["m_dcl_edw_job2","inactive"] 
->>>>>>> f2171806ad1b53d23eb81a3837be1df58453c4fb
   - name: jpndcledw_integration__hanyo_attr
     config:
       alias: hanyo_attr
