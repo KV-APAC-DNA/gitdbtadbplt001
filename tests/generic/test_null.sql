@@ -1,4 +1,4 @@
-{% test test_null(model,not_null_columns=None,select_columns=None,filter=none)%}
+{% test test_null(model,not_null_columns=None,select_columns=None,filter=none,condition="OR")%}
 {% if not_null_columns!=None %}
     select
         'KEY COLUMN IS NULL/BLANK' AS failure_reason,
@@ -40,7 +40,7 @@
     where
         {%- for item in not_null_columns %}
         (trim({{item}}) is null or trim({{item}}) = '')
-            {%- if not loop.last %} OR
+            {%- if not loop.last %} {{condition}}
             {%- endif -%}
         {% endfor %}
 {%- endif -%}
