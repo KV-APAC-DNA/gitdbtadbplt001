@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         pre_hook = ["{% if is_incremental() %}
                 delete from {{this}}
-                where hco_key in (select hco_key from hcp_osea_itg.itg_account_hco itg_hco  where itg_hco.hco_key = hco_key);
+                where hco_key in (select hco_key from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO itg_hco  where itg_hco.hco_key = hco_key);
                     {% endif %}",
                     "{% if is_incremental() %}
                 delete from {{this}} where hco_key ='Not Applicable';
@@ -38,11 +38,11 @@ select distinct
 hco_key as hco_key,
 itg_hco.country_code as country_code,
 itg_hco.account_source_id as hco_source_id,
-nvl(itg_hco.last_modified_by_id,'not applicable') as modify_id,
+nvl(itg_hco.last_modified_by_id,'Not Applicable') as modify_id,
 itg_hco.last_modified_date as modify_dt,
-'not applicable' as hco_business_id ,
+'Not Applicable' as hco_business_id ,
 nvl(itg_hco.inactive,0) as inactive_flag,
-'not applicable' as inactive_reason,
+'Not Applicable' as inactive_reason,
 account_name as hco_name,
 hco_type as hco_type,
 nvl(target_value,hco_type) as hco_type_english_name,
@@ -87,7 +87,7 @@ kam_total_aestheticsurgeons as kam_total_aestheticsurgeons,
 kam_general_differnentiations as kam_general_differnentiations,
 kam_clinical_differentiations as kam_clinical_differentiations,
 itg_rec.record_type_name as record_type_name,
-nvl(itg_hco.external_id,'not applicable') as hco_external_id,
+nvl(itg_hco.external_id,'Not Applicable') as hco_external_id,
 parent_hco_key as parent_hco_key,
 parent_hco_name as parent_hco_name,
 itg_hco.is_deleted as deleted_flag,
@@ -99,7 +99,7 @@ state as state,
 zip as postcode,
 brick as brick,
 map as map,
-nvl(address_source_id,'not applicable') as hco_address_source_id,
+nvl(address_source_id,'Not Applicable') as hco_address_source_id,
 appt_required as appt_required_flag,
 itg_add.external_id as address_external_id,
 phone as address_phone,

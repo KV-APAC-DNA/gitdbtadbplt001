@@ -1,8 +1,205 @@
-WITH wrk_dim_employee_temp
+with itg_territory as (
+    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_TERRITORY
+),
+
+itg_userterritory as (
+    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_USERTERRITORY
+),
+
+itg_user as (
+    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_USER
+),
+
+itg_profile as (
+    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_PROFILE
+),
+
+itg_lookup_eng_data as (
+    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_ENG_DATA
+),
+
+wrk_dim_organization as (
+    select * from DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__WRK_DIM_ORGANIZATION
+),
+
+IQ AS (
+        SELECT DISTINCT IU.EMPLOYEE_KEY,
+            IU.COUNTRY_CODE,
+            IU.EMPLOYEE_SOURCE_ID,
+            IU.LAST_MODIFIED_DATE,
+            IU.LAST_MODIFIED_BY_ID,
+            IU.EMPLOYEE_NAME,
+            IU.WWID,
+            IU.MOBILE_PHONE,
+            IU.EMAIL,
+            IU.USER_NAME,
+            IU.NICKNAME,
+            IU.LOCAL_EMPLOYEE_NUMBER,
+            IP.PROFILE_NAME,
+            IU.EMPLOYEE_PROFILE_ID,
+            PROF_NAME.TARGET_VALUE,
+            IU.COMPANY_NAME,
+            IU.DIVISION,
+            IU.DEPARTMENT,
+            IU.COUNTRY,
+            IU.ADDRESS,
+            IU.ALIAS,
+            IU.TIMEZONESIDKEY,
+            IU.USER_ROLE_SOURCE_ID,
+            CAST(IU.RECEIVES_INFO_EMAILS AS INTEGER) AS RECEIVES_INFO_EMAILS,
+            IU.FEDERATION_IDENTIFIER,
+            IU.LAST_IPAD_SYNC,
+            IU.USER_LICENSE,
+            IU.title,
+            IU.phone,
+            IU.last_login_date,
+            IU.region,
+            IU.profile_group_ap,
+            IU.manager_name,
+            IU.manager_wwid,
+            CAST(IU.is_active AS INTEGER) AS active_flag,
+            ORG_HIER.MY_ORGANIZATION_CODE,
+            ORG_HIER.MY_ORGANIZATION_NAME,
+            ORG_HIER.ORGANIZATION_L1_CODE,
+            ORG_HIER.ORGANIZATION_L1_NAME,
+            ORG_HIER.ORGANIZATION_L2_CODE,
+            ORG_HIER.ORGANIZATION_L2_NAME,
+            ORG_HIER.ORGANIZATION_L3_CODE,
+            ORG_HIER.ORGANIZATION_L3_NAME,
+            ORG_HIER.ORGANIZATION_L4_CODE,
+            ORG_HIER.ORGANIZATION_L4_NAME,
+            ORG_HIER.ORGANIZATION_L5_CODE,
+            ORG_HIER.ORGANIZATION_L5_NAME,
+            ORG_HIER.ORGANIZATION_L6_CODE,
+            ORG_HIER.ORGANIZATION_L6_NAME,
+            ORG_HIER.ORGANIZATION_L7_CODE,
+            ORG_HIER.ORGANIZATION_L7_NAME,
+            ORG_HIER.ORGANIZATION_L8_CODE,
+            ORG_HIER.ORGANIZATION_L8_NAME,
+            ORG_HIER.ORGANIZATION_L9_CODE,
+            ORG_HIER.ORGANIZATION_L9_NAME,
+            ORG_HIER.ORGANIZATION_L1_CODE AS COMMON_ORGANIZATION_L1_CODE,
+            ORG_HIER.ORGANIZATION_L1_NAME AS COMMON_ORGANIZATION_L1_NAME,
+            ORG_HIER.ORGANIZATION_L2_CODE AS COMMON_ORGANIZATION_L2_CODE,
+            ORG_HIER.ORGANIZATION_L2_NAME AS COMMON_ORGANIZATION_L2_NAME,
+            ORG_HIER.ORGANIZATION_L3_CODE AS COMMON_ORGANIZATION_L3_CODE,
+            ORG_HIER.ORGANIZATION_L3_NAME AS COMMON_ORGANIZATION_L3_NAME,
+            IU.MSL_PRIMARY_RESPONSIBLE_TA,
+            IU.MSL_SECONDARY_RESPONSIBLE_TA,
+            IU.city,
+            IU.first_name,
+            IU.language_local_key,
+            IU.last_name,
+            IU.manager_source_id,
+            IU.postal_code,
+            IU.STATE,
+            IU.user_type,
+            IU.veeva_user_type,
+            IU.veeva_country_code,
+            IU.shc_user_franchise
+        FROM itg_territory IT,
+            itg_userterritory IUT,
+            itg_user IU,
+            itg_profile IP,
+            wrk_dim_organization ORG_HIER,
+            (
+                SELECT COUNTRY_CODE,
+                    KEY_VALUE,
+                    TARGET_VALUE
+                FROM itg_lookup_eng_data
+                WHERE trim(UPPER(TABLE_NAME)) = 'DIM_PROFILE'
+                    AND trim(UPPER(COLUMN_NAME)) = 'PROFILE_NAME'
+                    AND trim(UPPER(TARGET_COLUMN_NAME)) = 'FUNCTION_NAME'
+                ) PROF_NAME
+        WHERE trim(IU.EMPLOYEE_SOURCE_ID) = trim(IUT.USER_TERRITORY_USER_SOURCE_ID(+))
+            --and iu.country_code = iut.country_code(+)  -- country code is null for IUT
+            AND trim(IUT.TERRITORY_SOURCE_ID) = trim(IT.TERRITORY_SOURCE_ID(+))
+            --and iut.country_code = it.country_code (+) --- Country code is null for IT
+            AND trim(IU.EMPLOYEE_PROFILE_ID) = trim(IP.PROFILE_SOURCE_ID(+))
+            AND trim(IP.PROFILE_NAME) = trim(PROF_NAME.KEY_VALUE(+))
+            AND trim(IP.COUNTRY_CODE) = trim(PROF_NAME.COUNTRY_CODE(+))
+            AND trim(IT.TERRITORY_SOURCE_ID) = trim(ORG_HIER.TERRITORY_SOURCE_ID(+))
+        ),
+
+wrk_dim_employee_temp
 AS (
-    SELECT *
-    FROM HCPOSEEDW_INTEGRATION.wrk_dim_employee_temp
+    SELECT IQ.*,
+    CASE 
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                AND IQ.ORGANIZATION_L5_CODE <> ''
+                AND IQ.ORGANIZATION_L6_CODE <> ''
+                AND IQ.ORGANIZATION_L7_CODE <> ''
+                AND IQ.ORGANIZATION_L8_CODE <> ''
+                AND IQ.ORGANIZATION_L9_CODE <> ''
+                )
+            THEN 1
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                AND IQ.ORGANIZATION_L5_CODE <> ''
+                AND IQ.ORGANIZATION_L6_CODE <> ''
+                AND IQ.ORGANIZATION_L7_CODE <> ''
+                AND IQ.ORGANIZATION_L8_CODE <> ''
+                )
+            THEN 2
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                AND IQ.ORGANIZATION_L5_CODE <> ''
+                AND IQ.ORGANIZATION_L6_CODE <> ''
+                AND IQ.ORGANIZATION_L7_CODE <> ''
+                )
+            THEN 3
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                AND IQ.ORGANIZATION_L5_CODE <> ''
+                AND IQ.ORGANIZATION_L6_CODE <> ''
+                )
+            THEN 4
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                AND IQ.ORGANIZATION_L5_CODE <> ''
+                )
+            THEN 5
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                AND IQ.ORGANIZATION_L4_CODE <> ''
+                )
+            THEN 6
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                AND IQ.ORGANIZATION_L3_CODE <> ''
+                )
+            THEN 7
+        WHEN (
+                IQ.ORGANIZATION_L1_CODE <> ''
+                AND IQ.ORGANIZATION_L2_CODE <> ''
+                )
+            THEN 8
+        WHEN (IQ.ORGANIZATION_L1_CODE <> '')
+            THEN 9
+        ELSE 0
+        END RNK
+FROM IQ
     ),
+
 T1
 AS (
     SELECT IQ.EMPLOYEE_KEY,
@@ -450,23 +647,23 @@ FINAL AS
     SELECT 	EMPLOYEE_KEY::VARCHAR(32) AS EMPLOYEE_KEY,
         COUNTRY_CODE::VARCHAR(8) AS COUNTRY_CODE,
         EMPLOYEE_SOURCE_ID::VARCHAR(18) AS EMPLOYEE_SOURCE_ID,
-        MODIFIED_DT::TIMESTAMP_NTZ(9) AS MODIFIED_DT,
-        MODIFIED_ID::VARCHAR(18) AS MODIFIED_ID,
+        LAST_MODIFIED_DATE::TIMESTAMP_NTZ(9) AS MODIFIED_DT,
+        LAST_MODIFIED_BY_ID::VARCHAR(18) AS MODIFIED_ID,
         EMPLOYEE_NAME::VARCHAR(121) AS EMPLOYEE_NAME,
-        EMPLOYEE_WWID::VARCHAR(20) AS EMPLOYEE_WWID,
+        WWID::VARCHAR(20) AS EMPLOYEE_WWID,
         MOBILE_PHONE::VARCHAR(40) AS MOBILE_PHONE,
-        EMAIL_ID::VARCHAR(128) AS EMAIL_ID,
-        USERNAME::VARCHAR(80) AS USERNAME,
+        EMAIL::VARCHAR(128) AS EMAIL_ID,
+        USER_NAME::VARCHAR(80) AS USERNAME,
         NICKNAME::VARCHAR(40) AS NICKNAME,
         LOCAL_EMPLOYEE_NUMBER::VARCHAR(20) AS LOCAL_EMPLOYEE_NUMBER,
         PROFILE_ID::VARCHAR(18) AS PROFILE_ID,
         PROFILE_NAME::VARCHAR(255) AS PROFILE_NAME,
-        FUNCTION_NAME::VARCHAR(255) AS FUNCTION_NAME,
+        TARGET_VALUE::VARCHAR(255) AS FUNCTION_NAME,
         EMPLOYEE_PROFILE_ID::VARCHAR(18) AS EMPLOYEE_PROFILE_ID,
         COMPANY_NAME::VARCHAR(80) AS COMPANY_NAME,
-        DIVISION_NAME::VARCHAR(80) AS DIVISION_NAME,
-        DEPARTMENT_NAME::VARCHAR(80) AS DEPARTMENT_NAME,
-        COUNTRY_NAME::VARCHAR(80) AS COUNTRY_NAME,
+        DIVISION::VARCHAR(80) AS DIVISION_NAME,
+        DEPARTMENT::VARCHAR(80) AS DEPARTMENT_NAME,
+        COUNTRY::VARCHAR(80) AS COUNTRY_NAME,
         ADDRESS::VARCHAR(255) AS ADDRESS,
         ALIAS::VARCHAR(18) AS ALIAS,
         TIMEZONESIDKEY::VARCHAR(40) AS TIMEZONESIDKEY,
@@ -509,8 +706,8 @@ FINAL AS
         COMMON_ORGANIZATION_L2_NAME::VARCHAR(80) AS COMMON_ORGANIZATION_L2_NAME,
         COMMON_ORGANIZATION_L3_CODE::VARCHAR(18) AS COMMON_ORGANIZATION_L3_CODE,
         COMMON_ORGANIZATION_L3_NAME::VARCHAR(80) AS COMMON_ORGANIZATION_L3_NAME,
-        INSERTED_DATE::TIMESTAMP_NTZ(9) AS INSERTED_DATE,
-        UPDATED_DATE::TIMESTAMP_NTZ(9) AS UPDATED_DATE,
+        current_timestamp()::TIMESTAMP_NTZ(9) AS INSERTED_DATE,
+        current_timestamp()::TIMESTAMP_NTZ(9) AS UPDATED_DATE,
         MSL_PRIMARY_RESPONSIBLE_TA::VARCHAR(255) AS MSL_PRIMARY_RESPONSIBLE_TA,
         MSL_SECONDARY_RESPONSIBLE_TA::VARCHAR(255) AS MSL_SECONDARY_RESPONSIBLE_TA,
         CITY::VARCHAR(40) AS CITY,

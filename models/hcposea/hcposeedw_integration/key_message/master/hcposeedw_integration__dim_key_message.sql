@@ -4,7 +4,7 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = ["{% if is_incremental() %}
-                     delete from dim_key_message where (key_message_source_id) in (select key_message_id from itg_key_message);
+                     delete from {{ this }} where (key_message_source_id) in (select key_message_id from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_KEY_MESSAGE);
                     {% endif %}"]
     )
 }}
