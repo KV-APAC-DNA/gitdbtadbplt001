@@ -1,12 +1,12 @@
 WITH kesai_h_data_mart_mv_kizuna
 AS (
   SELECT *
-  FROM {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
+  FROM {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
   ),
 kesai_m_data_mart_mv_kizuna
 AS (
   SELECT *
-  FROM {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
+  FROM {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}
   ),
 item_z_h_hen_v
 AS (
