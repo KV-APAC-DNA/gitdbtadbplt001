@@ -24,6 +24,7 @@
         {% if item | lower not in  file_name_columns %}
                 trim({{item}}) as {{item}}
             {%- if not loop.last -%},{%- endif -%}
+            {% break %}
         {%- endif -%}
     {% endfor %}
 {% endif %}

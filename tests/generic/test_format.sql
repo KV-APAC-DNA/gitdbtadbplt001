@@ -24,7 +24,13 @@ select distinct
                     {%- endif -%}
                     {% endfor %}
                 {% else %}
-                        *exclude{{col}}
+                {%- for col in reversed_columns %}
+                {% if col in file_name_columns%}
+                    *exclude({{col}})
+                {% if not loop.last  %},{% endif %}
+                   {% break %}
+                {% endif %} 
+                {%- endfor %}
                 {% endif %}
     from {{model}}
     {% if where_clause!=None %}
