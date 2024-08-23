@@ -13,211 +13,214 @@ AS (
     SELECT *
     FROM HCPOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
     ),
-T1
-AS (
-    SELECT COUNTRY_KEY,
-        NVL(EMPLOYEE_KEY, 'Not Applicable') AS EMPLOYEE_KEY,
-        NVL(ORGANIZATION_KEY, 'Not Applicable') AS ORGANIZATION_KEY,
-        TERRITORY_NAME,
-        NVL(START_DATE_KEY, 0) AS START_DATE_KEY,
-        NVL(END_DATE_KEY, 0) AS END_DATE_KEY,
-        ACTIVE_FLAG,
-        --DELETED_FLAG,
-        MANAGER_NAME,
-        APPROVER_NAME,
-        CLOSE_OUT_FLAG,
-        READY_FOR_APPROVAL_FLAG,
-        STATUS_TYPE,
-        CYCLE_PLAN_NAME,
-        CHANNEL_TYPE,
-        ACTUAL_CALL_CNT_CP,
-        PLANNED_CALL_CNT_CP,
-        CYCLE_PLAN_EXTERNAL_ID,
-        MANAGER,
-        CP_APPROVAL_TIME,
-        NUMBER_OF_TARGETS,
-        NUMBER_OF_CFA_100_TARGETS,
-        CYCLE_PLAN_ATTAINMENT_CPTARGET,
-        MID_DATE,
-        HCP_PRODUCT_ACHIEVED_100,
-        HCP_PRODUCTS_PLANNED,
-        CPA_100,
-        cast(NVL(HCP_KEY, 'Not Applicable') as VARCHAR) AS HCP_KEY,
-        NVL(HCO_KEY, 'Not Applicable') AS HCO_KEY,
-        SCHEDULED_CALL_COUNT,
-        ACTUAL_CALL_COUNT,
-        PLANNED_CALL_COUNT,
-        REMAINING_CALL_COUNT,
-        ATTAINMENT,
-        ORIGINAL_PLANNED_CALLS,
-        TOTAL_ACTUAL_CALLS,
-        TOTAL_ATTAINMENT,
-        TOTAL_PLANNED_CALLS,
-        CYCLE_PLAN_TARGET_EXTERNAL_ID,
-        TOTAL_SCHEDULED_CALLS,
-        REMAINING,
-        TOTAL_REMAINING,
-        TOTAL_REMAINING_SCHEDULE,
-        PRIMARY_PARENT_NAME,
-        SPECIALTY_1,
-        ACCOUNT_SOURCE_ID,
-        CPT_CFA_100,
-        CPT_CFA_66,
-        CPT_CFA_33,
-        NUMBER_OF_CFA_100_DETAILS,
-        NUMBER_OF_PRODUCT_DETAILS,
-        CYCLE_PLAN_TYPE,
-        CYCLE_PLAN_SOURCE_ID,
-        CYCLE_PLAN_TARGET_SOURCE_ID,
-        CYCLE_PLAN_TARGET_NAME,
-        CYCLE_PLAN_MODIFY_DT,
-        CYCLE_PLAN_MODIFY_ID,
-        CYCLE_PLAN_TARGET_MODIFY_DT,
-        CYCLE_PLAN_TARGET_MODIFY_ID,
-        CASE 
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 7
-                THEN 'W' ---- WEEKLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 7
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 31
-                THEN 'M' -- MONTHLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 31
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 92
-                THEN 'Q' -- QUARTERLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 92
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 182
-                THEN 'H' -- HALF YEARLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 182
-                THEN 'Y' -- YEARLY 
-            ELSE 'Not Applicable'
-            END AS CYCLE_PLAN_INDICATOR,
-        'Not Applicable' AS PRODUCT_INDICATION_KEY,
-        CLASSIFICATION,
-        null as PLANNED_CALL_DETAIL_COUNT,
-        null as SCHEDULED_CALL_DETAIL_COUNT,
-        null as ACTUAL_CALL_DETAIL_COUNT,
-        null as REMAINING_CALL_DETAIL_COUNT,
-        null as CYCLE_PLAN_DETAIL_ATTAINMENT,
-        null as TOTAL_ACTUAL_DETAILS,
-        null as TOTAL_ATTAINMENT_DETAILS,
-        null as TOTAL_PLANNED_DETAILS,
-        null as TOTAL_SCHEDULED_DETAILS,
-        null as TOTAL_REMAINING_DETAILS,
-        null as CFA_100,
-        null as CFA_33,
-        null as CFA_66,
-        null as CYCLE_PLAN_DETAIL_SOURCE_ID,
-        null as CYCLE_PLAN_DETAIL_NAME,
-        null::TIMESTAMP_NTZ(9) as CYCLE_PLAN_DETAIL_MODIFY_DT,
-        null as CYCLE_PLAN_DETAIL_MODIFY_ID,
-        null as CLASSIFICATION_TYPE
-    FROM WRK_FACT_CYCLE_PLAN
-    ),
-T2
-AS (
-    SELECT TARGET.COUNTRY_KEY,
-        NVL(TARGET.EMPLOYEE_KEY, 'Not Applicable') AS EMPLOYEE_KEY,
-        NVL(TARGET.ORGANIZATION_KEY, 'Not Applicable') AS ORGANIZATION_KEY,
-        TARGET.TERRITORY_NAME,
-        NVL(TARGET.START_DATE_KEY, 0) AS START_DATE_KEY,
-        NVL(TARGET.END_DATE_KEY, 0) AS END_DATE_KEY,
-        TARGET.ACTIVE_FLAG,
-        --TARGET.DELETED_FLAG,
-        TARGET.MANAGER_NAME,
-        TARGET.APPROVER_NAME,
-        TARGET.CLOSE_OUT_FLAG,
-        TARGET.READY_FOR_APPROVAL_FLAG,
-        TARGET.STATUS_TYPE,
-        TARGET.CYCLE_PLAN_NAME,
-        TARGET.CHANNEL_TYPE,
-        TARGET.ACTUAL_CALL_CNT_CP,
-        TARGET.PLANNED_CALL_CNT_CP,
-        cast(NVL(TARGET.HCP_KEY, 'Not Applicable') as VARCHAR) AS HCP_KEY,
-        NVL(TARGET.HCO_KEY, 'Not Applicable') AS HCO_KEY,
-        NVL(PROD.PRODUCT_INDICATION_KEY, 'Not Applicable') AS PRODUCT_INDICATION_KEY,
-        DETAIL.CLASSIFICATION_TYPE,
-        DETAIL.PLANNED_DETAILS PLANNED_CALL_DETAIL_COUNT,
-        DETAIL.SCHEDULED_DETAILS SCHEDULED_CALL_DETAIL_COUNT,
-        null as MID_DATE,
-        DETAIL.REMAINING REMAINING_CALL_DETAIL_COUNT,
-        DETAIL.ATTAINMENT,
-        DETAIL.TOTAL_ACTUAL_DETAILS,
-        DETAIL.TOTAL_ATTAINMENT,
-        DETAIL.TOTAL_PLANNED_DETAILS,
-        DETAIL.TOTAL_SCHEDULED_DETAILS,
-        DETAIL.TOTAL_REMAINING,
-        DETAIL.CFA_100,
-        DETAIL.CFA_33,
-        DETAIL.CFA_66,
-        'PRODUCT' CYCLE_PLAN_TYPE,
-        TARGET.CYCLE_PLAN_SOURCE_ID,
-        TARGET.CYCLE_PLAN_TARGET_SOURCE_ID,
-        DETAIL.CYCLE_PLAN_DETAIL_SOURCE_ID,
-        TARGET.CYCLE_PLAN_TARGET_NAME,
-        DETAIL.CYCLE_PLAN_DETAIL_NAME,
-        null as HCP_PRODUCTS_PLANNED,
-        TARGET.CYCLE_PLAN_MODIFY_ID,
-        null as SCHEDULED_CALL_COUNT ,
-        TARGET.CYCLE_PLAN_TARGET_MODIFY_ID,
-        DETAIL.LAST_MODIFIED_DATE CYCLE_PLAN_DETAIL_MODIFY_DT,
-        DETAIL.LAST_MODIFIED_BY_ID CYCLE_PLAN_DETAIL_MODIFY_ID,
-        CASE 
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 7
-                THEN 'W' ---- WEEKLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 7
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 31
-                THEN 'M' -- MONTHLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 31
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 92
-                THEN 'Q' -- QUARTERLY
-            WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 92
-                AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 182
-                THEN 'H' -- HALF YEARLY
-            WHEN TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD') > 182
-                THEN 'Y' -- YEARLY 
-            ELSE 'Not Applicable'
-            END AS CYCLE_PLAN_INDICATOR,
-            null as CYCLE_PLAN_EXTERNAL_ID,
-            null as MANAGER,
-            null as CP_APPROVAL_TIME,
-            null as NUMBER_OF_TARGETS,
-            null as NUMBER_OF_CFA_100_TARGETS,
-            null as CYCLE_PLAN_ATTAINMENT_CPTARGET,
+T1 AS (
+        SELECT COUNTRY_KEY,
+            NVL(EMPLOYEE_KEY, 'Not Applicable') AS EMPLOYEE_KEY,
+            NVL(ORGANIZATION_KEY, 'Not Applicable') AS ORGANIZATION_KEY,
+            TERRITORY_NAME,
+            NVL(START_DATE_KEY, 0) AS START_DATE_KEY,
+            NVL(END_DATE_KEY, 0) AS END_DATE_KEY,
+            ACTIVE_FLAG,
+            --DELETED_FLAG,
+            MANAGER_NAME,
+            APPROVER_NAME,
+            CLOSE_OUT_FLAG,
+            READY_FOR_APPROVAL_FLAG,
+            STATUS_TYPE,
+            CYCLE_PLAN_NAME,
+            CHANNEL_TYPE,
+            ACTUAL_CALL_CNT_CP,
+            PLANNED_CALL_CNT_CP,
+            NVL(HCP_KEY, 'Not Applicable') AS HCP_KEY,
+            NVL(HCO_KEY, 'Not Applicable') AS HCO_KEY,
+            'Not Applicable' AS PRODUCT_INDICATION_KEY,
+            NULL AS CLASSIFICATION_TYPE,
+            NULL AS PLANNED_CALL_DETAIL_COUNT,
+            NULL AS SCHEDULED_CALL_DETAIL_COUNT,
+            MID_DATE,
+            NULL AS REMAINING_CALL_DETAIL_COUNT,
+            ATTAINMENT as CYCLE_PLAN_TARGET_ATTAINMENT,
+            NULL AS TOTAL_ACTUAL_DETAILS,
+            TOTAL_ATTAINMENT,
+            NULL AS TOTAL_PLANNED_DETAILS,
+            NULL AS TOTAL_SCHEDULED_DETAILS,
+            TOTAL_REMAINING,
+            NULL AS CFA_100,
+            NULL AS CFA_33,
+            NULL AS CFA_66,
+            CYCLE_PLAN_TYPE,
+            CYCLE_PLAN_SOURCE_ID,
+            CYCLE_PLAN_TARGET_SOURCE_ID,
+            NULL AS CYCLE_PLAN_DETAIL_SOURCE_ID,
+            CYCLE_PLAN_TARGET_NAME,
+            NULL AS CYCLE_PLAN_DETAIL_NAME,
+            HCP_PRODUCTS_PLANNED,
+            CYCLE_PLAN_MODIFY_ID,
+            SCHEDULED_CALL_COUNT,
+            CYCLE_PLAN_TARGET_MODIFY_ID,
+            SPECIALTY_1,
+            NULL AS CYCLE_PLAN_DETAIL_MODIFY_ID,
+            CASE 
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 7
+                    THEN 'W' ---- WEEKLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 7
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 31
+                    THEN 'M' -- MONTHLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 31
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 92
+                    THEN 'Q' -- QUARTERLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 92
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 182
+                    THEN 'H' -- HALF YEARLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 182
+                    THEN 'Y' -- YEARLY 
+                ELSE 'Not Applicable'
+                END AS CYCLE_PLAN_INDICATOR,
+            CYCLE_PLAN_EXTERNAL_ID,
+            MANAGER,
+            CP_APPROVAL_TIME,
+            NUMBER_OF_TARGETS,
+            NUMBER_OF_CFA_100_TARGETS,
+            CYCLE_PLAN_ATTAINMENT_CPTARGET,
+            NULL AS ACTUAL_CALL_DETAIL_COUNT,
+            HCP_PRODUCT_ACHIEVED_100,
+            CYCLE_PLAN_MODIFY_DT,
+            CPA_100,
+            TOTAL_REMAINING_SCHEDULE,
+            ACTUAL_CALL_COUNT,
+            PLANNED_CALL_COUNT,
+            REMAINING_CALL_COUNT,
+            ORIGINAL_PLANNED_CALLS,
+            TOTAL_ACTUAL_CALLS,
+            TOTAL_PLANNED_CALLS,
+            CYCLE_PLAN_TARGET_EXTERNAL_ID,
+            TOTAL_SCHEDULED_CALLS,
+            REMAINING,
+            CYCLE_PLAN_TARGET_MODIFY_DT,
+            PRIMARY_PARENT_NAME,
+            NULL::TIMESTAMP_NTZ(9) AS CYCLE_PLAN_DETAIL_MODIFY_DT,
+            ACCOUNT_SOURCE_ID,
+            CPT_CFA_100,
+            CPT_CFA_66,
+            CPT_CFA_33,
+            NUMBER_OF_CFA_100_DETAILS,
+            NUMBER_OF_PRODUCT_DETAILS,
+            NULL AS CYCLE_PLAN_DETAIL_ATTAINMENT,
+            null AS TOTAL_ATTAINMENT_DETAILS,
+            NULL AS TOTAL_REMAINING_DETAILS,
+            CLASSIFICATION,
+            current_timestamp() as INSERTED_DATE,
+            current_timestamp() as UPDATED_DATE
+        FROM WRK_FACT_CYCLE_PLAN
+        ),
+    T2 AS (
+        SELECT TARGET.COUNTRY_KEY,
+            NVL(TARGET.EMPLOYEE_KEY, 'Not Applicable') AS EMPLOYEE_KEY,
+            NVL(TARGET.ORGANIZATION_KEY, 'Not Applicable') AS ORGANIZATION_KEY,
+            TARGET.TERRITORY_NAME,
+            NVL(TARGET.START_DATE_KEY, 0) AS START_DATE_KEY,
+            NVL(TARGET.END_DATE_KEY, 0) AS END_DATE_KEY,
+            TARGET.ACTIVE_FLAG,
+            --TARGET.DELETED_FLAG,
+            TARGET.MANAGER_NAME,
+            TARGET.APPROVER_NAME,
+            TARGET.CLOSE_OUT_FLAG,
+            TARGET.READY_FOR_APPROVAL_FLAG,
+            TARGET.STATUS_TYPE,
+            TARGET.CYCLE_PLAN_NAME,
+            TARGET.CHANNEL_TYPE,
+            TARGET.ACTUAL_CALL_CNT_CP,
+            TARGET.PLANNED_CALL_CNT_CP,
+            NVL(TARGET.HCP_KEY, 'Not Applicable') AS HCP_KEY,
+            NVL(TARGET.HCO_KEY, 'Not Applicable') AS HCO_KEY,
+            NVL(PROD.PRODUCT_INDICATION_KEY, 'Not Applicable') AS PRODUCT_INDICATION_KEY,
+            DETAIL.CLASSIFICATION_TYPE,
+            DETAIL.PLANNED_DETAILS PLANNED_CALL_DETAIL_COUNT,
+            DETAIL.SCHEDULED_DETAILS SCHEDULED_CALL_DETAIL_COUNT,
+            NULL AS MID_DATE,
+            DETAIL.REMAINING REMAINING_CALL_DETAIL_COUNT,
+            DETAIL.ATTAINMENT as CYCLE_PLAN_DETAIL_ATTAINMENT,
+            DETAIL.TOTAL_ACTUAL_DETAILS,
+            DETAIL.TOTAL_ATTAINMENT,
+            nvl(DETAIL.TOTAL_PLANNED_DETAILS,0),
+            DETAIL.TOTAL_SCHEDULED_DETAILS,
+            DETAIL.TOTAL_REMAINING,
+            DETAIL.CFA_100,
+            DETAIL.CFA_33,
+            DETAIL.CFA_66,
+            'PRODUCT' CYCLE_PLAN_TYPE,
+            TARGET.CYCLE_PLAN_SOURCE_ID,
+            TARGET.CYCLE_PLAN_TARGET_SOURCE_ID,
+            DETAIL.CYCLE_PLAN_DETAIL_SOURCE_ID,
+            TARGET.CYCLE_PLAN_TARGET_NAME,
+            DETAIL.CYCLE_PLAN_DETAIL_NAME,
+            NULL AS HCP_PRODUCTS_PLANNED,
+            TARGET.CYCLE_PLAN_MODIFY_ID,
+            NULL AS SCHEDULED_CALL_COUNT,
+            TARGET.CYCLE_PLAN_TARGET_MODIFY_ID,
+            NULL AS SPECIALTY_1,
+            DETAIL.LAST_MODIFIED_BY_ID CYCLE_PLAN_DETAIL_MODIFY_ID,
+            CASE 
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 7
+                    THEN 'W' ---- WEEKLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 7
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 31
+                    THEN 'M' -- MONTHLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 31
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 92
+                    THEN 'Q' -- QUARTERLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 92
+                    AND (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) <= 182
+                    THEN 'H' -- HALF YEARLY
+                WHEN (TO_DATE(to_char(END_DATE_KEY), 'YYYYMMDD') - TO_DATE(to_char(START_DATE_KEY), 'YYYYMMDD')) > 182
+                    THEN 'Y' -- YEARLY 
+                ELSE 'Not Applicable'
+                END AS CYCLE_PLAN_INDICATOR,
+            NULL AS CYCLE_PLAN_EXTERNAL_ID,
+            NULL AS MANAGER,
+            NULL AS CP_APPROVAL_TIME,
+            NULL AS NUMBER_OF_TARGETS,
+            NULL AS NUMBER_OF_CFA_100_TARGETS,
+            NULL AS CYCLE_PLAN_ATTAINMENT_CPTARGET,
             DETAIL.ACTUAL_DETAILS ACTUAL_CALL_DETAIL_COUNT,
-            null as HCP_PRODUCT_ACHIEVED_100,
+            NULL AS HCP_PRODUCT_ACHIEVED_100,
             TARGET.CYCLE_PLAN_MODIFY_DT,
-            null as CPA_100,
+            NULL AS CPA_100,
+            NULL AS TOTAL_REMAINING_SCHEDULE,
+            NULL AS ACTUAL_CALL_COUNT,
+            NULL AS PLANNED_CALL_COUNT,
+            NULL AS REMAINING_CALL_COUNT,
+            NULL AS ORIGINAL_PLANNED_CALLS,
+            NULL AS TOTAL_ACTUAL_CALLS,
+            NULL AS TOTAL_PLANNED_CALLS,
+            NULL AS CYCLE_PLAN_TARGET_EXTERNAL_ID,
+            NULL AS TOTAL_SCHEDULED_CALLS,
+            NULL AS REMAINING,
             TARGET.CYCLE_PLAN_TARGET_MODIFY_DT,
-            null as ACTUAL_CALL_COUNT,
-            null as PLANNED_CALL_COUNT,
-            null as REMAINING_CALL_COUNT,
-            null as ORIGINAL_PLANNED_CALLS,
-            null as TOTAL_ACTUAL_CALLS,
-            null as TOTAL_PLANNED_CALLS,
-            null as CYCLE_PLAN_TARGET_EXTERNAL_ID,
-            null as TOTAL_SCHEDULED_CALLS,
-            null as REMAINING,
-            null as TOTAL_REMAINING_SCHEDULE,
-            null as PRIMARY_PARENT_NAME,
-            null as SPECIALTY_1,
-            null as ACCOUNT_SOURCE_ID,
-            null as CPT_CFA_100,
-            null as CPT_CFA_66,
-            null as CPT_CFA_33,
-            null as NUMBER_OF_CFA_100_DETAILS,
-            null as NUMBER_OF_PRODUCT_DETAILS,
-            null as CYCLE_PLAN_DETAIL_ATTAINMENT,
-            null as TOTAL_ATTAINMENT_DETAILS,
-            null as TOTAL_REMAINING_DETAILS,
-            null as CLASSIFICATION
-    FROM WRK_FACT_CYCLE_PLAN TARGET,
-        itg_CYCLE_PLAN_DETAIL DETAIL,
-        DIM_PRODUCT_INDICATION PROD
-    WHERE to_char(DETAIL.CYCLE_PLAN_TARGET_SOURCE_ID) = to_char(TARGET.CYCLE_PLAN_TARGET_SOURCE_ID)
-        AND to_char(DETAIL.COUNTRY_CODE) = to_char(TARGET.COUNTRY_CODE)
-        AND DETAIL.IS_DELETED = '0'
-        AND to_char(DETAIL.PRODUCT_SOURCE_ID) = to_char(PROD.PRODUCT_SOURCE_ID(+))
-        AND to_char(DETAIL.COUNTRY_CODE) = to_char(PROD.COUNTRY_CODE(+))
-    ),
+            NULL AS PRIMARY_PARENT_NAME,
+            DETAIL.LAST_MODIFIED_DATE CYCLE_PLAN_DETAIL_MODIFY_DT,
+            NULL AS ACCOUNT_SOURCE_ID,
+            NULL AS CPT_CFA_100,
+            NULL AS CPT_CFA_66,
+            NULL AS CPT_CFA_33,
+            NULL AS NUMBER_OF_CFA_100_DETAILS,
+            NULL AS NUMBER_OF_PRODUCT_DETAILS,
+            TARGET.ATTAINMENT as CYCLE_PLAN_TARGET_ATTAINMENT,
+            NULL AS TOTAL_ATTAINMENT_DETAILS,
+            NULL AS TOTAL_REMAINING_DETAILS,
+            NULL AS CLASSIFICATION,
+            current_timestamp() as INSERTED_DATE,
+            current_timestamp() as UPDATED_DATE
+        FROM WRK_FACT_CYCLE_PLAN TARGET,
+            itg_CYCLE_PLAN_DETAIL DETAIL,
+            DIM_PRODUCT_INDICATION PROD
+        WHERE trim(DETAIL.CYCLE_PLAN_TARGET_SOURCE_ID) = trim(TARGET.CYCLE_PLAN_TARGET_SOURCE_ID)
+            AND trim(DETAIL.COUNTRY_CODE) =trim(TARGET.COUNTRY_CODE)
+            AND trim(DETAIL.IS_DELETED) = '0'
+            AND trim(DETAIL.PRODUCT_SOURCE_ID) = trim(PROD.PRODUCT_SOURCE_ID(+))
+            AND trim(DETAIL.COUNTRY_CODE) = trim(PROD.COUNTRY_CODE(+))
+        ),
+
 
 result as (
     SELECT * from T1
@@ -258,7 +261,7 @@ AS (
         ACTUAL_CALL_COUNT::NUMBER(38,0) AS ACTUAL_CALL_COUNT,
         PLANNED_CALL_COUNT::NUMBER(38,0) AS PLANNED_CALL_COUNT,
         REMAINING_CALL_COUNT::NUMBER(38,0) AS REMAINING_CALL_COUNT,
-        ATTAINMENT::NUMBER(38,0) AS CYCLE_PLAN_TARGET_ATTAINMENT,
+        CYCLE_PLAN_TARGET_ATTAINMENT::NUMBER(38,0) AS CYCLE_PLAN_TARGET_ATTAINMENT,
         ORIGINAL_PLANNED_CALLS::NUMBER(38,0) AS ORIGINAL_PLANNED_CALLS,
         TOTAL_ACTUAL_CALLS::NUMBER(38,0) AS TOTAL_ACTUAL_CALLS,
         TOTAL_ATTAINMENT::NUMBER(38,0) AS TOTAL_ATTAINMENT,
@@ -310,6 +313,6 @@ AS (
     FROM result
     )
 SELECT *
-FROM result
+FROM FINAL
 
 
