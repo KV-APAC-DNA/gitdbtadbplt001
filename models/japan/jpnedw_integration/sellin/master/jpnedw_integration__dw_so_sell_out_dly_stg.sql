@@ -10,8 +10,9 @@
                         WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
                             AND DELETE_FLAG = '0'
                             );
-				insert into {{ ref('jpnedw_integration__dw_so_sell_out')}}
-				SELECT 
+                {% endif %}",
+        post_hook = "insert into {{ ref('jpnedw_integration__dw_so_sell_out_dly')}}
+				    SELECT 
 					id, 
 					rcv_dt, 
 					test_flag, 
@@ -59,8 +60,7 @@
 					jcp_shp_to_cd, -- 2016/01/27 add end yamamura shp_to_cdを項目追加
 					jcp_str_cd, 
 					jcp_net_price 
-					from {{this}}
-                {% endif %}"
+					from {{this}}"
     )
 }}
 
