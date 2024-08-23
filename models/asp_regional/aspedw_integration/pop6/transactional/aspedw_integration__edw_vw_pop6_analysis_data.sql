@@ -4245,7 +4245,7 @@ union
 select * from product_attribute_audit_4
 union
 select * from display_4
-union 
+union all
 select * from rir
 union all
 select * from planned_visits
