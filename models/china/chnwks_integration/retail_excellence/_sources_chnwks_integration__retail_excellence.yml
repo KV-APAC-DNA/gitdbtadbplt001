@@ -20,6 +20,9 @@ sources:
       database: false
       schema: false
       identifier: false
-      # disabling here as this is available main branch 
-          #tables:
-     # name: edw_perfect_store_product_master
+
+    # disabling here as this is available main branch in _sources_chnedw_integration__perfect_store.yml file
+    #tables:
+     
+     # - name: edw_perfect_store_product_master
+
