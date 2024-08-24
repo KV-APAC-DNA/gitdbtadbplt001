@@ -11,7 +11,7 @@
                         WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
                             AND DELETE_FLAG = '0'
                             );
-                DELETE from {{this}}
+                DELETE from {{this}};
                 {% endif %}",
         post_hook = "insert into {{ ref('jpnedw_integration__dw_so_sell_out_dly')}}
                     (id,
