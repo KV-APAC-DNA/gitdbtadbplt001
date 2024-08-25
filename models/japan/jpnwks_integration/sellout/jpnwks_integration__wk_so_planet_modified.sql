@@ -67,7 +67,7 @@
                         and rtrim(tb2.jcp_rec_seq) = rtrim(CDS.jcp_rec_seq);
 
 
-					UPDATE {{this}}
+					UPDATE {{this}} ER
 					SET unt_prc = CASE 
 							WHEN (
 									ER.opt_fld = 'S'
@@ -83,11 +83,10 @@
 									)
 								THEN to_number(ER.net_prc) / 1.10
 							ELSE to_number( ER.net_prc)
-							END
-					FROM {{this}} ER;
+							END;
 
 
-					UPDATE {{this}}
+					UPDATE {{this}} ER
 					SET opt_fld = CASE 
 							WHEN (
 									ER.opt_fld = 'S'
@@ -95,8 +94,7 @@
 									)
 								THEN NULL
 							ELSE ER.opt_fld
-							END
-					FROM {{this}} ER;
+							END;
                 "
     )
 }}
