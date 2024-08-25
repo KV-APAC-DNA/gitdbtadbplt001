@@ -41,7 +41,7 @@ VW_DIM_GMC_GLOBAL_BRAND_HIER as(
 VW_DIM_GMC_PROFIT_CENTER_HIER as(
     select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_PROFIT_CENTER_HIER') }}
 ),
-/vw_itg_custgp_customer_hierarchy as(
+vw_itg_custgp_customer_hierarchy as(
     select * from {{ ref('aspitg_integration__vw_itg_custgp_customer_hierarchy') }}
 ),
 transformed as(
