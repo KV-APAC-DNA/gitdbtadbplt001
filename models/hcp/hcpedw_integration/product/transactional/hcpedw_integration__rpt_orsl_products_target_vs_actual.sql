@@ -43,7 +43,7 @@ sales_data as
     from
     (
         select
-            'sales data' as source,
+            'SALES DATA' as source,
             customer_code,
             product_code,
             fisc_yr,
@@ -58,18 +58,18 @@ sales_data as
         from
             v_rpt_sales_details
         where
-            to_date(cast(mth_mm as varchar(20)), 'yyyymm') > to_date(
+            to_date(cast(mth_mm as varchar(20)), 'YYYYMM') > to_date(
             add_months(
-                convert_timezone('utc', current_timestamp()),
+                convert_timezone('UTC', current_timestamp()),
                 -(
                 select
                     cast(parameter_value as integer) as parameter_value
                 from
                     itg_query_parameters
                 where
-                    upper(country_code) = 'in'
-                    and upper(parameter_type) = 'orsl_reporting'
-                    and upper(parameter_name) = 'orsl_reporting_date_range'
+                    upper(country_code) = 'IN'
+                    and upper(parameter_type) = 'ORSL_REPORTING'
+                    and upper(parameter_name) = 'ORSL_REPORTING_DATE_RANGE'
                 )
             )
             )
@@ -79,9 +79,9 @@ sales_data as
             from
                 itg_query_parameters
             where
-                upper(country_code) = 'in'
-                and upper(parameter_type) = 'orsl_reporting'
-                and upper(parameter_name) = 'orsl_reporting_product_code'
+                upper(country_code) = 'IN'
+                and upper(parameter_type) = 'ORSL_REPORTING'
+                and upper(parameter_name) = 'ORSL_REPORTING_PRODUCT_CODE'
             )
         group by
             customer_code,
@@ -93,7 +93,7 @@ sales_data as
             retailer_channel_1
 	) tde
 	left join itg_mds_in_hcp_sales_hierarchy_mapping map1 on tde.customer_code = map1.rds_code
-	and brand_name_code = 'orsl'
+	and brand_name_code = 'ORSL'
 	left join itg_mds_in_orsl_products_target tgt on tde.product_code = tgt.product_code
 	left join 
     (
@@ -103,7 +103,7 @@ sales_data as
         from
             itg_mds_in_hcp_sales_rep_mapping map1
         where
-            designation = 'msr'
+            designation = 'MSR'
         group by
             map1.hq_sales_area_code
 	) temp on upper (trim (map1.sales_area_code)) = upper (trim (temp.hq_sales_area_code))
@@ -115,14 +115,14 @@ invoicing_data as
       upper(trim(map1.region_code)) as region,
       upper(trim(map1.zone_code)) as zone,
       upper(trim(map1.sales_area_code)) as hq,
-      'invoicing data' as source,
+      'INVOICING DATA' as source,
       inv.product_code,
       case
         when upper(trim(tgt.product_name)) is null then upper(trim(inv.product_name))
         else upper(trim(tgt.product_name))
       end as product_name,
       case
-        when upper(trim(tgt.product_category_code)) is null then 'unknown'
+        when upper(trim(tgt.product_category_code)) is null then 'Unknown'
         else upper(trim(tgt.product_category_code))
       end as product_category,
       inv.fisc_yr as year,
@@ -140,7 +140,7 @@ invoicing_data as
       and upper (trim (inv.zone_name)) = upper (trim (tgt.zone_code))
       and upper (trim (inv.territory_name)) = upper (trim (tgt.hq_code))
       left join itg_mds_in_hcp_sales_hierarchy_mapping map1 on inv.customer_code = map1.rds_code
-      and map1.brand_name_code = 'orsl'
+      and map1.brand_name_code = 'ORSL'
       left join (
         select
           hq_sales_area_code,
@@ -148,7 +148,7 @@ invoicing_data as
         from
           itg_mds_in_hcp_sales_rep_mapping map1
         where
-          designation = 'msr'
+          designation = 'MSR'
         group by
           map1.hq_sales_area_code
       ) temp on upper (trim (map1.sales_area_code)) = upper (trim (temp.hq_sales_area_code))
@@ -159,9 +159,9 @@ invoicing_data as
         from
           itg_query_parameters
         where
-          upper(country_code) = 'in'
-          and upper(parameter_type) = 'orsl_reporting'
-          and upper(parameter_name) = 'orsl_reporting_product_code'
+          upper(country_code) = 'IN'
+          and upper(parameter_type) = 'ORSL_REPORTING'
+          and upper(parameter_name) = 'ORSL_REPORTING_PRODUCT_CODE'
       )
     group by
       1,
@@ -181,7 +181,7 @@ temp as
         from
           itg_mds_in_hcp_sales_rep_mapping map1,
         where
-          map1.designation = 'msr'
+          map1.designation = 'MSR'
         group by
           map1.hq_sales_area_code
 )
@@ -192,7 +192,7 @@ target_data as
       distinct upper(tgt.region_code) as region,
       upper(tgt.zone_code) as zone,
       upper(tgt.hq_code) as hq,
-      'target data' as source,
+      'TARGET DATA' as source,
       cast(tgt.product_code as varchar(50)),
       tgt.product_name,
       tgt.product_category_code as product_category,
