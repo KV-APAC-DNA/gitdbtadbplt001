@@ -41,9 +41,9 @@ VW_DIM_GMC_GLOBAL_BRAND_HIER as(
 VW_DIM_GMC_PROFIT_CENTER_HIER as(
     select * from {{ source('GLOBALMASTER_ACCESS','VW_DIM_GMC_PROFIT_CENTER_HIER') }}
 ),
-/*vw_itg_custgp_customer_hierarchy as(
+/vw_itg_custgp_customer_hierarchy as(
     select * from {{ ref('aspitg_integration__vw_itg_custgp_customer_hierarchy') }}
-),*/
+),
 transformed as(
 
   select
@@ -106,8 +106,8 @@ transformed as(
   SUM(main.ord_pc_qty) as ord_pc_qty,
   SUM(main.unspp_qty) as unspp_qty,
   main.cust_num as cust_num ,
-  --nvl(cust.customer_segmentation,'Not Available') as customer_segmentation 
-  null as customer_segmentation
+  nvl(cust.customer_segmentation,'Not Available') as customer_segmentation 
+  --null as customer_segmentation
 FROM (
   (
     (
@@ -1493,7 +1493,7 @@ LEFT OUTER JOIN VW_DIM_GMC_GLOBAL_BRAND_HIER d
 ON b.B2_SUBBRAND_CODE = d.B2_SUBBRAND_CODE 
 LEFT OUTER JOIN VW_DIM_GMC_PROFIT_CENTER_HIER e
 ON b.P4_BRAND_CATEGORY_CODE = e.P4_CODE )gmc on right(gmc.GMC_SKU_CODE,18)= main.matl_num	
---left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(main.cust_num,0)
+left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=trim(upper(cust.ctry_nm)) and ltrim(cust.cust_num,0)=ltrim(main.cust_num,0)
 
 GROUP BY
   main.prev_fisc_yr_per,
@@ -1536,8 +1536,8 @@ GROUP BY
   IFF(cus_sales_extn.retail_env='',null,cus_sales_extn.retail_env),
   main.from_crncy,
   main.to_crncy,
-  main.cust_num /*,
-  nvl(cust.customer_segmentation,'Not Available') */
+  main.cust_num ,
+  nvl(cust.customer_segmentation,'Not Available') 
 )
 
 select * from transformed
