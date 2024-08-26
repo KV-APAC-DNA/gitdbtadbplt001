@@ -1,0 +1,14 @@
+version: 2
+
+sources:  
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_rrl_townmaster__null_test
+        # tags: ["in_rt_sales","ingestion"]
+        

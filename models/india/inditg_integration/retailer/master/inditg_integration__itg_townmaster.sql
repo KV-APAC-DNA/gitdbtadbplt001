@@ -8,8 +8,13 @@
 }}
 with source as 
 (
-    select * from {{ source('indsdl_raw', 'sdl_rrl_townmaster') }}
-),
+    select *,dense_rank() over(partition by rsrcode,rsdcode,routecode,villagecode order by file_name desc) as rnk from {{ source('indsdl_raw', 'sdl_rrl_townmaster') }}
+   
+    where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_rrl_townmaster__null_test')}}
+        
+
+) ) qualify rnk = 1,
 trans as 
 (
     select * from 
