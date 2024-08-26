@@ -74,3 +74,5 @@ sources:
     - name: TRATBL_sdl_th_gt_msl_distribution__test_format_flag
     - name: TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag
     - name: TRATBL_sdl_th_gt_msl_distribution__test_multiple_column
+    - name: TRATBL_sdl_th_mt_7_11__null_test
+    - name: TRATBL_sdl_th_mt_7_11__duplicate_test

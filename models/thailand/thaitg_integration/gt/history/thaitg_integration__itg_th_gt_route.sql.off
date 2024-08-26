@@ -7,7 +7,7 @@
         pre_hook="delete from {{this}} where (coalesce(upper(trim(saleunit)),'N/A')) 
         in (select distinct (coalesce(upper(trim(saleunit)),'N/A')) 
         from {{ source('thasdl_raw', 'sdl_th_gt_route') }}
-        where file_name not in (
+        where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route__duplicate_test') }}
@@ -38,7 +38,7 @@ final as (
         effective_start_date::date as effective_start_date,
         effective_end_date::date as effective_end_date,
         flag::varchar(5) as flag,
-        filename::varchar(100) as filename,
+        filename::varchar(100) as file_name,
         file_uploaded_date::date as file_uploaded_date,
         run_id::varchar(50) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm

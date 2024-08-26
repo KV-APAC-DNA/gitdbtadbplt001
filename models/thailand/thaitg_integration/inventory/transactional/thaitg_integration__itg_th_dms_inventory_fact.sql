@@ -32,7 +32,8 @@ final as(
         batchno::varchar(200) as batchno,
         to_date(expirydate, 'YYYYMMDD')::timestamp_ntz(9) as expirydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
-        run_id::number(18,0) as run_id
+        run_id::number(18,0) as run_id,
+        file_name as file_name
     from source
 )
 select * from final

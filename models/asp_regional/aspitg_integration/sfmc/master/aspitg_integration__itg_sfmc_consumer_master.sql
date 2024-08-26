@@ -20,7 +20,7 @@ source as
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__duplicate_test') }}
-    )
+    ) qualify rnk=1
 ),
 wks_itg_sfmc_consumer_master as
 (

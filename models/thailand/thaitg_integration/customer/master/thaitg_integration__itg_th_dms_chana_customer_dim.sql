@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         pre_hook= "delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) 
                     FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
-                    where file_name not in (
+                    where filename not in (
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
                     union all
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}
@@ -21,7 +21,7 @@ with source as(
     select *,
     dense_rank() over(partition by UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) order by filename desc) as rnk
     from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
-    where file_name not in (
+    where filename not in (
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
                     union all
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}
@@ -70,7 +70,7 @@ final as(
         branchcode::varchar(50) as branchcode,
         branchname::varchar(150) as branchname,
         frequencyofvisit::varchar(50) as frequencyofvisit,
-        filename::varchar(100) as filename,
+        filename::varchar(100) as file_name,
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source

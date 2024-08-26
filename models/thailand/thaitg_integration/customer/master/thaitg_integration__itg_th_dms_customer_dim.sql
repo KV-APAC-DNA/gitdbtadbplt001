@@ -17,7 +17,7 @@ AS (
     WHERE file_name NOT IN (
             SELECT DISTINCT file_name
             FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_customer_dim__duplicate_test') }}
-            )
+            ) qualify rnk=1
     ),
 final
 AS (
@@ -59,7 +59,8 @@ AS (
         old_custid::VARCHAR(500) AS old_custid,
         try_to_timestamp(modifydate) AS modifydate,
         current_timestamp()::timestamp_ntz(9) AS curr_date,
-        run_id::number(18, 0) AS run_id
+        run_id::number(18, 0) AS run_id,
+        file_name as file_name
     FROM source
     )
 SELECT *

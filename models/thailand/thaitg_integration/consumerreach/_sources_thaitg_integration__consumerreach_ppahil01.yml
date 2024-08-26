@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: thasdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thasdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    
+    - name: TRATBL_sdl_jnj_consumerreach_cvs__null_test
+    - name: TRATBL_sdl_jnj_consumerreach_cvs__test_date_format_odd_eve
+    - name: TRATBL_sdl_jnj_consumerreach_sfm__null_test
+    - name: TRATBL_sdl_jnj_consumerreach_sfm__test_date_format_odd_eve
+    - name: TRATBL_sdl_jnj_consumerreach_711__null_test
+    - name: TRATBL_sdl_jnj_consumerreach_711__test_date_format_odd_eve

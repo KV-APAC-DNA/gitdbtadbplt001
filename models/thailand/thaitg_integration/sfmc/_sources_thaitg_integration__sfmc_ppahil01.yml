@@ -33,4 +33,7 @@ sources:
     - name: TRATBL_sdl_th_sfmc_complaint_data__null_test
     - name: TRATBL_sdl_th_sfmc_complaint_data__duplicate_test
     - name: TRATBL_sdl_th_sfmc_complaint_data__lookup_test
+    - name: TRATBL_sdl_th_sfmc_sent_data__null_test
+    - name: TRATBL_sdl_th_sfmc_sent_data__duplicate_test
+    - name: TRATBL_sdl_th_sfmc_sent_data__lookup_test
     

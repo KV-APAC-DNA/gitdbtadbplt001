@@ -43,7 +43,7 @@ final as(
         try_to_date(schedule_date) as schedule_date,
         approved::varchar(10) as approved,
         saleunit::varchar(50) as saleunit,
-        filename::varchar(100) as filename,
+        filename::varchar(100) as file_name,
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source

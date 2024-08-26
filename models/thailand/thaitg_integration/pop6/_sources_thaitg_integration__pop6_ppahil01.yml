@@ -37,3 +37,5 @@ sources:
       - name: TRATBL_sdl_pop6_th_products__duplicate_test
       - name: TRATBL_sdl_pop6_th_product_lists_allocation__null_test
       - name: TRATBL_sdl_pop6_th_product_lists_allocation__duplicate_test
+      - name: TRATBL_sdl_pop6_th_tasks__null_test
+      - name: TRATBL_sdl_pop6_th_tasks__duplicate_test

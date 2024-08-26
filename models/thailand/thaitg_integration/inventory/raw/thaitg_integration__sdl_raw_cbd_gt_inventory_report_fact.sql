@@ -7,7 +7,7 @@
 
 with sdl_cbd_gt_inventory_report_fact as (
     select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
-    where file_name not in (
+    where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test') }}
@@ -27,7 +27,7 @@ SELECT
     "181-365days",
     ">365days",
     total_qty,
-    filename file_name,
+    filename as file_name,
     run_id,
     crt_dttm
 FROM

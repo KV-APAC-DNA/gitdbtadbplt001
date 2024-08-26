@@ -6,7 +6,7 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
-    where file_name not in (
+    where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
@@ -55,7 +55,7 @@ final as(
        branchcode as branchcode,
        branchname as branchname,
        frequencyofvisit as frequencyofvisit,
-       filename as filename,
+       filename as file_name,
        run_id as run_id,
        crt_dttm as crt_dttm
     from source

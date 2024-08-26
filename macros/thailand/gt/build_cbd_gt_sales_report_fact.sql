@@ -6,7 +6,7 @@
     {{ log("===============================================================================================") }}
     {% set get_file_names_query %}
         select filename from {{ source('thasdl_raw', 'sdl_cbd_gt_sales_report_fact') }}
-        where file_name not in (
+        where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_sales_report_fact__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_sales_report_fact__duplicate_test') }}

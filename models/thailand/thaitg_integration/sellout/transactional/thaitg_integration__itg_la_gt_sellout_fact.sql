@@ -10,7 +10,7 @@ with source as(
     select *,
     dense_rank() over(partition by distributorid,orderno,orderdate,arcode,linenumber order by filename desc) as rnk 
     from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }}
-    where file_name not in (
+    where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__duplicate_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__test_format') }}
@@ -61,7 +61,7 @@ final as
         promocode2::varchar(255) as promocode2,
         promocode3::varchar(255) as promocode3,
         avgdiscount::number(18,4) as avgdiscount,
-        filename::varchar(50) as filename,
+        filename::varchar(50) as file_name,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,

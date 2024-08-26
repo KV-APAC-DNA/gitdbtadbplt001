@@ -6,7 +6,7 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
-    where file_name not in (
+    where filename not in (
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
                     union all
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}

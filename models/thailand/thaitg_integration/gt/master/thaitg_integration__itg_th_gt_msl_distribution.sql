@@ -5,7 +5,7 @@
         pre_hook= "delete from {{this}} 
         where substring(filename,6,8)::integer <= (select distinct substring(filename,6,8)::integer 
         from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}
-        where file_name not in (
+        where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__duplicate_test') }}
@@ -27,7 +27,7 @@
 
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}
-    where file_name not in (
+    where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__duplicate_test') }}
