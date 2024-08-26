@@ -14,7 +14,8 @@
                 DELETE from {{this}};
                 {% endif %}",
         post_hook = "insert into {{ ref('jpnedw_integration__dw_so_sell_out_dly')}}
-                    (id,
+                    (jcp_rec_seq,
+                    id,
                     rcv_dt,
                     test_flag,
                     bgn_sndr_cd,
@@ -62,6 +63,10 @@
                     jcp_str_cd,
                     jcp_net_price)
 				    SELECT 
+                    (SELECT MAX_VALUE::number as max_value FROM {{ ref('jpnedw_integration__mt_constant_seq') }} WHERE 
+                    IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (
+                                ORDER BY ID
+                                )AS jcp_rec_seq,
 					id, 
 					rcv_dt, 
 					test_flag, 
@@ -109,7 +114,8 @@
 					jcp_shp_to_cd, -- 2016/01/27 add end yamamura shp_to_cdを項目追加
 					jcp_str_cd, 
 					jcp_net_price 
-					from {{this}}"
+					from {{this}};
+                    "
     )
 }}
 

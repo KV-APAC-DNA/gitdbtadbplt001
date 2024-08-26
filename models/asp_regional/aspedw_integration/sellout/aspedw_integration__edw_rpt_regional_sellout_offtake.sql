@@ -83,19 +83,19 @@ wks_vietnam_regional_sellout_offtake_npd as
 ),
 cn_wks_rpt_regional_sellout_offtake_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_rpt_regional_sellout_offtake_npd') }}
+    select * from {{ ref('chnwks_integration__wks_rpt_regional_sellout_offtake_npd') }}
 ),
 wks_rpt_regional_cn_sc_sellout_offtake_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_rpt_regional_cn_sc_sellout_offtake_npd') }}
+    select * from {{ ref('chnwks_integration__wks_rpt_regional_cn_sc_sellout_offtake_npd') }}
 ),
 wks_rpt_regional_ph_sellout_offtake_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_rpt_regional_ph_sellout_offtake_npd') }}
+    select * from {{ ref('phlwks_integration__wks_rpt_regional_ph_sellout_offtake_npd') }}
 ),
 wks_rpt_regional_pacific_sellout_offtake_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_rpt_regional_pacific_sellout_offtake_npd') }}
+    select * from {{ ref('pcfwks_integration__wks_rpt_regional_pacific_sellout_offtake_npd') }}
 ),
 final as 
 (

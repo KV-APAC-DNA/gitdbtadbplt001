@@ -1,6 +1,6 @@
 with wks_china_selfcare_regional_sellout as
 (
-    select * from {{ ref('aspwks_integration__wks_china_selfcare_regional_sellout') }}
+    select * from {{ ref('chnwks_integration__wks_china_selfcare_regional_sellout') }}
 ),
 final as
 (
