@@ -50,7 +50,7 @@ AS (
                 END) AS Coupon_Usage_Cnt_web_2y
     FROM dm_kesai_mart_dly_general
     WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 24)
-    --add_months(date_trunc('day', sysdate()), - 24)
+    --add_months(date_trunc('day', current_timestamp()), - 24)
         --date_trunc('day', sysdate) + interval '2 year ago'
         AND channel IN ('Web')
         AND (
@@ -80,7 +80,7 @@ AS (
                 END) AS Coupon_Usage_Cnt_web_1y
     FROM dm_kesai_mart_dly_general
     WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 12)
-    --add_months(date_trunc('day', sysdate()), - 12)
+    --add_months(date_trunc('day', current_timestamp()), - 12)
         --date_trunc('day', sysdate) + interval '1 year ago'
         AND channel IN ('Web')
         AND (
@@ -110,7 +110,7 @@ AS (
                 END) AS Coupon_Usage_Cnt_web_6m
     FROM dm_kesai_mart_dly_general
     WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 6)
-    --add_months(date_trunc('day', sysdate()), - 6)
+    --add_months(date_trunc('day', current_timestamp()), - 6)
         --date_trunc('day', sysdate) + interval '6 month ago'
         AND channel IN ('Web')
         AND (
@@ -140,7 +140,7 @@ AS (
                 END) AS Coupon_Usage_Cnt_web_3m
     FROM dm_kesai_mart_dly_general
     WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 3)
-    --add_months(date_trunc('day', sysdate()), - 3)
+    --add_months(date_trunc('day', current_timestamp()), - 3)
         --date_trunc('day', sysdate) + interval '3 month ago'
         AND channel IN ('Web')
         AND (
@@ -170,7 +170,7 @@ AS (
                 END) AS Coupon_Usage_Cnt_web_1m
     FROM dm_kesai_mart_dly_general
     WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 1)
-        --add_months(date_trunc('day', sysdate()), - 1)
+        --add_months(date_trunc('day', current_timestamp()), - 1)
         --date_trunc('day', sysdate) + interval '1 month ago'
         AND channel IN ('Web')
         AND (

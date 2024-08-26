@@ -14,7 +14,7 @@ one_year AS (
     dm_kesai_mart_dly_general kesai 
     LEFT JOIN item_zaiko_v zaiko ON kesai.z_item_code = zaiko.z_itemcode 
   WHERE 
-    kesai.order_dt >= add_months(date_trunc(day, sysdate()),-12)
+    kesai.order_dt >= add_months(date_trunc(day, current_timestamp()),-12)
     AND zaiko.bumon7_add_attr6 = '10_商品' --this will filter out promotion product 
     AND channel IN (
       '通販', 'Web', '直営・百貨店'
@@ -33,8 +33,8 @@ term_start AS(
     LEFT JOIN item_zaiko_v zaiko ON kesai.z_item_code = zaiko.z_itemcode 
   WHERE 
     -- (first day of last year, will change once in a year) and order dt <=yyyy1231 (last day of last year)
-    kesai.order_dt BETWEEN  add_months(date_trunc(year, sysdate()),-12)
-    AND dateadd(day,-1,DATE_TRUNC('YEAR', sysdate())) 
+    kesai.order_dt BETWEEN  add_months(date_trunc(year, current_timestamp()),-12)
+    AND dateadd(day,-1,DATE_TRUNC('YEAR', current_timestamp())) 
     AND zaiko.bumon7_add_attr6 = '10_商品' --this will filter out promotion product 
     AND channel IN (
       '通販', 'Web', '直営・百貨店'

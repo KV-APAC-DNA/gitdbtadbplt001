@@ -20,7 +20,7 @@ models:
   - name: ntawks_integration__wks_edw_pos_fact
     config:
       alias: wks_edw_pos_fact
-      tags: ["pos_edw_load","transformation"]
+      tags: ["pos_edw_load","hk_pos","transformation"]
   - name: ntawks_integration__wks_parameter_gt_sellout
     config:
       alias: wks_parameter_gt_sellout
