@@ -617,6 +617,26 @@ models:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
 
+    china:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
+      chnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNEDW_INTEGRATION
+      chnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNITG_INTEGRATION
+      chnwks_integration:
+        +materialized: table
+        +schema: CHNWKS_INTEGRATION
+      chnedw_access:
+        +materialized: view
+        +schema: CHNEDW_ACCESS
+    
+
 
 
 
