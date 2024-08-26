@@ -9,6 +9,12 @@
 
 with source as(
     select * from {{ source('thasdl_raw','sdl_th_mt_7_11') }}
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_7_11__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_7_11__duplicate_test') }}
+    )
+
 ),
 final as(
     select
@@ -29,7 +35,7 @@ final as(
         item_price::number(15,3) as item_price,
         item_price_unit::varchar(20) as item_price_unit,
         price_currency::varchar(10) as price_currency,
-        filename::varchar(100) as filename,
+        filename::varchar(100) as file_name,
         run_id::varchar(14) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) AS updt_dttm

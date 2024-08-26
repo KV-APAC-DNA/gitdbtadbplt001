@@ -3,12 +3,29 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['distributorid', 'arcode'],
-        pre_hook= " delete from {{this}} where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) from {{ source('thasdl_raw', 'sdl_la_gt_customer') }})"
+        pre_hook= " delete from {{this}} 
+        where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) 
+        from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
+        where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
+        )
+        )"
     )
 }}
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
+        )
 ),
 final as(
     select 
@@ -51,7 +68,7 @@ final as(
         branchcode::varchar(50) as branchcode,
         branchname::varchar(150) as branchname,
         frequencyofvisit::varchar(50) as frequencyofvisit,
-        filename::varchar(50) as filename,
+        filename::varchar(50) as file_name,
         run_id::varchar(14) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

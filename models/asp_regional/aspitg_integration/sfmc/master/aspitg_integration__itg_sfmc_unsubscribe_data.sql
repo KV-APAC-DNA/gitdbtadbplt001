@@ -4,7 +4,15 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook="{% if var('sfmc_job_to_execute') == 'th_sfmc_files' %}
-                    delete from {{this}} where event_date >= (select min(event_date) from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}) and cntry_cd = 'TH';
+                    delete from {{this}} where event_date >= (select min(event_date) 
+                                                            from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}
+                                                            where file_name not in (
+                                                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__null_test') }}
+                                                            union all
+                                                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__duplicate_test') }}
+                                                            union all
+                                                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__lookup_test') }}
+                                                            ) qualify rnk=1 ) and cntry_cd = 'TH';
                     {% elif var('sfmc_job_to_execute') == 'ph_sfmc_files' %}
                     delete from {{this}} where event_date >= (select min(event_date) from {{ source('phlsdl_raw','sdl_ph_sfmc_unsubscribe_data') }}) and cntry_cd = 'PH';
                     {% elif var('sfmc_job_to_execute') == 'tw_sfmc_files' %}
@@ -15,7 +23,15 @@
 }}
 
 with source as(
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
+    from {{ source('thasdl_raw','sdl_th_sfmc_unsubscribe_data') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_unsubscribe_data__lookup_test') }}
+            ) qualify rnk=1
 ),
 source_ph as
 (

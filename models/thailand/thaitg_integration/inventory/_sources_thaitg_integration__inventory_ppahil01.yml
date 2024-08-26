@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_th_dms_inventory_fact__test_date_format
+    - name: TRATBL_sdl_la_gt_inventory_fact__test_format_recdate
+    - name: TRATBL_sdl_la_gt_inventory_fact__test_format_expirydate
+    - name: TRATBL_sdl_cbd_gt_inventory_report_fact__null_test
+    - name: TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test

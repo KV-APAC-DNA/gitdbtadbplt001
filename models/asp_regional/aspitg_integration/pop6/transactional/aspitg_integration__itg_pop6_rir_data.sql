@@ -9,6 +9,11 @@
                     WHERE visit_id IN (
                             SELECT DISTINCT visit_id
                             from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
+                            where file_name not in (
+                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__null_test') }}
+                            union all
+                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__duplicate_test') }}
+                            )
                             );
                     {% endif %}"
     )
@@ -18,6 +23,11 @@
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
+    where file_name not in (
+                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__null_test') }}
+                            union all
+                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_rir_data__duplicate_test') }}
+                            )
 ),
 
 final as

@@ -6,6 +6,23 @@
     {{ log("===============================================================================================") }}
     {% set get_file_names_query %}
         select filename from {{ source('thasdl_raw', 'sdl_la_gt_sales_order_fact') }}
+        where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format_2') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format_3') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format_4') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format_5') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sales_order_fact__test_format_6') }}
+            )
         group by filename
         order by filename asc;
     {% endset %}

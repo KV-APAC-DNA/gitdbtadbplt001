@@ -13,7 +13,17 @@
                     {{schema}}.thaitg_integration__itg_th_gt_route_detail
                 {% endif %}	
    where (coalesce(upper(trim(saleunit)),'N/A')) in (
-    select distinct (coalesce(upper(trim(saleunit)),'N/A')) from {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }} where filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
+    select distinct (coalesce(upper(trim(saleunit)),'N/A')) from {{ source('thasdl_raw', 'sdl_th_gt_route_detail') }} 
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route_detail__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route_detail__duplicate_test') }}
+            union all 
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route_detail__test_format') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_route_detail__test_date_format_odd_eve_leap') }}
+            )
+    and filename = '{{filename}}' ) AND   UPPER(flag) IN ('I','U');
     {% endset %}
     { log("-----------------------------------------------------------------------------------------------") }}
     {{ log("Query set to delete records from itg table -> itg_th_gt_route_detail for file: "~ filename) }}

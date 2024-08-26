@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_th_dms_customer_dim__duplicate_test
+    - name: TRATBL_sdl_th_dms_chana_customer_dim__null_test
+    - name: TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test
+    - name: TRATBL_sdl_th_dms_chana_customer_dim__test_file
+    - name: TRATBL_sdl_la_gt_customer__null_test
+    - name: TRATBL_sdl_la_gt_customer__test_file
+    - name: TRATBL_sdl_la_gt_customer__duplicate_test

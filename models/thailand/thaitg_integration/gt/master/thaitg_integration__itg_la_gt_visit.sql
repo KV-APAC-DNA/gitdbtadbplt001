@@ -2,13 +2,51 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook="delete from {{this}} where (id_sale, id_customer, date_plan, coalesce (date_visi, '9999-12-31'), coalesce (time_visi, 'NA'), coalesce (visit_end, '9999-12-31'), saleunit, coalesce(trim(time_plan), 'NA')) in (select distinct id_sale, id_customer, try_to_date(date_plan,'yyyymmdd'), cast(coalesce (try_to_date(date_visi,'yyyymmdd'), '9999-12-31') as date) as date_visi, coalesce (time_visi, 'NA') as time_visi, cast(coalesce (try_to_date(visit_end,'yyyymmdd'), '9999-12-31') as date) as visit_end, saleunit, coalesce(trim(time_plan), 'NA') from {{source('thasdl_raw','sdl_la_gt_visit')}})"
+        pre_hook="delete from {{this}} 
+        where (id_sale, id_customer, date_plan, coalesce (date_visi, '9999-12-31'), coalesce (time_visi, 'NA'), coalesce (visit_end, '9999-12-31'), saleunit, coalesce(trim(time_plan), 'NA')) 
+        in (select distinct id_sale, id_customer, try_to_date(date_plan,'yyyymmdd'), cast(coalesce (try_to_date(date_visi,'yyyymmdd'), '9999-12-31') as date) as date_visi, coalesce (time_visi, 'NA') as time_visi, cast(coalesce (try_to_date(visit_end,'yyyymmdd'), '9999-12-31') as date) as visit_end, saleunit, coalesce(trim(time_plan), 'NA') 
+        from {{source('thasdl_raw','sdl_la_gt_visit')}}
+        where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__null_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__date_plan_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__date_visi_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__visit_end_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__time_visi_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__visit_time_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__id_sale_format_test') }}
+            )
+        )"
     )
 }}
 with source as (
     select *,
     dense_rank() over(partition by id_sale,id_customer,try_to_date(date_plan,'yyyymmdd'),try_to_date(date_visi,'yyyymmdd'),time_visi,try_to_date(visit_end,'yyyymmdd'),saleunit,time_plan order by filename desc) as rnk
     from {{ source('thasdl_raw', 'sdl_la_gt_visit') }}
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__null_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__date_plan_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__date_visi_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__visit_end_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__time_visi_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__visit_time_format_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_visit__id_sale_format_test') }}
+            ) qualify rnk=1
 ),
 final as (
     select
@@ -30,7 +68,7 @@ final as (
         time_survey_in::varchar(50) as time_survey_in,
         time_survey_out::varchar(50) as time_survey_out,
         count_survey::varchar(50) as count_survey,
-        filename::varchar(50) as filename,
+        filename::varchar(50) as file_name,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
