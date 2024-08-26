@@ -1,6 +1,6 @@
 with wks_china_selfcare_regional_sellout_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_china_selfcare_regional_sellout_npd') }}
+    select * from {{ ref('chnwks_integration__wks_china_selfcare_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as
 (

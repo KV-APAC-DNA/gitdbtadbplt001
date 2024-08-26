@@ -1,6 +1,6 @@
-with wks_philippines_regional_sellout_base as
+with wks_pacific_regional_sellout_base as
 (
-    select * from {{ ref('aspwks_integration__wks_philippines_regional_sellout_base') }}
+    select * from {{ ref('pcfwks_integration__wks_pacific_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as
 (
@@ -54,14 +54,6 @@ vw_edw_reg_exch_rate as
 (
     select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
-itg_query_parameters as
-(
-    select * from {{ source('phlitg_integration', 'itg_query_parameters') }}
-),
-edw_material_sales_dim as
-(
-    select * from {{ ref('aspedw_integration__edw_material_sales_dim') }}
-),
 final as
 (
     SELECT  
@@ -75,16 +67,16 @@ final as
         SELLOUT.CNTRY_CD AS COUNTRY_CODE,	   
         SELLOUT.CNTRY_NM AS COUNTRY_NAME,
         SELLOUT.DATA_SRC AS DATA_SOURCE,
-        CASE WHEN SELLOUT.DATA_SRC='SELL-OUT' THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))) ELSE SELLOUT.Customer_Product_Desc END AS Customer_Product_Desc,
+        TRIM(NVL (NULLIF(SELLOUT.Customer_Product_Desc,''),'NA')) AS Customer_Product_Desc,
         TRIM(NVL (NULLIF(SELLOUT.SOLDTO_CODE,''),'NA')) AS SOLDTO_CODE,
         TRIM(NVL (NULLIF(SELLOUT.DISTRIBUTOR_CODE,''),'NA')) AS DISTRIBUTOR_CODE,
         TRIM(NVL (NULLIF(SELLOUT.DISTRIBUTOR_NAME,''),'NA')) AS DISTRIBUTOR_NAME,
         TRIM(NVL (NULLIF(SELLOUT.STORE_CD,''),'NA')) AS store_code,
         TRIM(NVL (NULLIF(SELLOUT.store_name,''),'NA')) AS store_name,
         TRIM(NVL (NULLIF(SELLOUT.store_type,''),'NA')) AS store_type,
-        DSTRBTR_LVL1 AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
-        DSTRBTR_LVL2 AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,
-        DSTRBTR_LVL3 AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,
+        TRIM(NVL (NULLIF(SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,''),'NA')) AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
+        TRIM(NVL (NULLIF(SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,''),'NA')) AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,
+        TRIM(NVL (NULLIF(SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,''),'NA')) AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,
         TRIM(NVL (NULLIF(CUST.SAP_PRNT_CUST_KEY,''),'NA')) AS SAP_PARENT_CUSTOMER_KEY,
         UPPER(TRIM(NVL (NULLIF(CUST.SAP_PRNT_CUST_DESC,''),'NA'))) AS SAP_PARENT_CUSTOMER_DESCRIPTION,
         TRIM(NVL (NULLIF(CUST.SAP_CUST_CHNL_KEY,''),'NA')) AS SAP_CUSTOMER_CHANNEL_KEY,
@@ -113,50 +105,54 @@ final as
         TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_PUT_UP_DESC,''),'NA')) AS GLOBAL_PUT_UP_DESCRIPTION,
         SELLOUT.ean AS EAN,
         TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) AS SKU_CODE,
-        UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))) AS SKU_DESCRIPTION,
+        UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))) AS SKU_DESCRIPTION,	   
         CASE WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) IN ('N/A','NA') THEN 'NA'
             ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) END AS PKA_PRODUCT_KEY,
         CASE WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) IN ('N/A','NA') THEN 'NA'
             ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END AS PKA_PRODUCT_KEY_DESCRIPTION,
-        CAST('PHP' AS VARCHAR) AS FROM_CURRENCY,
+        CASE WHEN SELLOUT.CNTRY_CD = 'NZ' THEN CAST('NZD' AS VARCHAR)
+            WHEN SELLOUT.CNTRY_CD = 'AU' THEN CAST('AUD' AS VARCHAR) END AS FROM_CURRENCY,
         'USD' AS TO_CURRENCY,
             (C.EXCH_RATE/(C.from_ratio*C.to_ratio))::NUMERIC(15,5) AS EXCHANGE_RATE,
             SUM(SO_SLS_QTY) SELLOUT_SALES_QUANTITY,
             SUM(SO_SLS_VALUE) AS SELLOUT_SALES_VALUE,
-            SUM(SO_SLS_VALUE*(C.EXCH_RATE/(from_ratio*to_ratio)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
-        SUM(NVL(SO_LIST_PRICE,0)) as LIST_PRICE,
-        SUM(NVL(SO_SELLOUT_VALUE_LIST_PRICE,0)) as SELLOUT_VALUE_LIST_PRICE,
-            --TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
-            --TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
-        CASE WHEN SELLOUT.DATA_SRC='ECOM' THEN 'NA'
-             ELSE TRIM(NVL (NULLIF(emsd.mstr_cd,''),'NA')) END AS msl_product_code,
-        CASE WHEN SELLOUT.DATA_SRC='ECOM' THEN 'NA'
-             ELSE
-            (CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
-            ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) IN ('N/A','NA') THEN 'NA'
-            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
-            END) END AS msl_product_desc,
+            SUM(SO_SLS_VALUE*((C.EXCH_RATE/(C.from_ratio*C.to_ratio))::NUMERIC(15,5)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
+            TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
+            TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            TRIM(NVL (NULLIF(SELLOUT.store_grade,''),'NA')) AS store_grade,
+            TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
             TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
         SELLOUT.crtd_dttm,
         SELLOUT.updt_dttm
-    FROM  WKS_PHILIPPINES_REGIONAL_SELLOUT_BASE SELLOUT
+    FROM  wks_pacific_regional_sellout_base SELLOUT
+
     LEFT JOIN (SELECT DISTINCT CAL_YEAR AS YEAR,
         CAL_QRTR_NO AS QRTR_NO,
         CAL_MNTH_ID AS MNTH_ID,
         CAL_MNTH_NO AS MNTH_NO
-    FROM EDW_VW_OS_TIME_DIM) TIME
+    FROM edw_vw_os_time_dim) TIME
     ON SELLOUT.MNTH_ID=TIME.MNTH_ID
+
+    --product selection
     LEFT JOIN (SELECT DISTINCT 
+
             EMD.matl_num AS SAP_MATL_NUM,
             EMD.MATL_DESC AS SAP_MAT_DESC,
             EMD.MATL_TYPE_CD AS SAP_MAT_TYPE_CD,
             EMD.MATL_TYPE_DESC AS SAP_MAT_TYPE_DESC,
+            --EMD.SAP_BASE_UOM_CD AS SAP_BASE_UOM_CD,
+            --EMD.SAP_PRCHSE_UOM_CD AS SAP_PRCHSE_UOM_CD,
             EMD.PRODH1 AS SAP_PROD_SGMT_CD,
             EMD.PRODH1_TXTMD AS SAP_PROD_SGMT_DESC,
+            --EMD.SAP_BASE_PROD_CD AS SAP_BASE_PROD_CD,
             EMD.BASE_PROD_DESC AS SAP_BASE_PROD_DESC,
+            --EMD.SAP_MEGA_BRND_CD AS SAP_MEGA_BRND_CD,
             EMD.MEGA_BRND_DESC AS SAP_MEGA_BRND_DESC,
+            --EMD.SAP_BRND_CD AS SAP_BRND_CD,
             EMD.BRND_DESC AS SAP_BRND_DESC,
+            --EMD.SAP_VRNT_CD AS SAP_VRNT_CD,
             EMD.VARNT_DESC AS SAP_VRNT_DESC,
+            --EMD.SAP_PUT_UP_CD AS SAP_PUT_UP_CD,
             EMD.PUT_UP_DESC AS SAP_PUT_UP_DESC,
             EMD.PRODH2 AS SAP_GRP_FRNCHSE_CD,
             EMD.PRODH2_TXTMD AS SAP_GRP_FRNCHSE_DESC,
@@ -188,19 +184,16 @@ final as
             EGPH.PUT_UP_DESCRIPTION AS GPH_PROD_PUT_UP_DESC,
             EGPH.SIZE AS GPH_PROD_SIZE,
             EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
-            EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
             row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
             FROM edw_material_dim EMD,
-                EDW_GCH_PRODUCTHIERARCHY EGPH
-            WHERE LTRIM(EMD.MATL_NUM,'0') = LTRIM(EGPH.MATERIALNUMBER(+),0)
-            AND   EMD.PROD_HIER_CD <> '' ) product
+                edw_gch_producthierarchy EGPH
+            WHERE LTRIM(EMD.MATL_NUM,'0') = LTRIM(EGPH.MATERIALNUMBER(+),0) ---Change
+            AND   EMD.PROD_HIER_CD <> ''
+            
+        ) product
     ON LTRIM(SELLOUT.matl_num,'0') =LTRIM(product.sap_matl_num,'0') and rnk=1
-    LEFT JOIN (SELECT DISTINCT LTRIM(matl_num,'0') AS sku,
-          mstr_cd
-       FROM edw_material_sales_dim
-       WHERE LTRIM(mstr_cd,'0') <> ' '
-       and sls_org in (SELECT parameter_value from itg_query_parameters where country_code='PH' and parameter_name='Customer360' and parameter_type='sls_org')
-       and dstr_chnl in (SELECT parameter_value from itg_query_parameters where country_code='PH' and parameter_name='Customer360' and parameter_type='dstr_chnl')) emsd ON LTRIM(emsd.sku,'0') = LTRIM(SELLOUT.matl_num,'0')
+    
+    ---customer selection
     LEFT JOIN (SELECT * FROM (SELECT DISTINCT ECBD.CUST_NUM AS SAP_CUST_ID,
         ECBD.CUST_NM AS SAP_CUST_NM,
         ECSD.SLS_ORG AS SAP_SLS_ORG,
@@ -220,6 +213,8 @@ final as
         ECSD.BNR_FRMT_KEY AS SAP_BNR_FRMT_KEY,
         CDDES_BNRFMT.CODE_DESC AS SAP_BNR_FRMT_DESC,
         SUBCHNL_RETAIL_ENV.RETAIL_ENV,
+        -- REGZONE.REGION_NAME AS REGION,
+        -- REGZONE.ZONE_NAME AS ZONE_OR_AREA,
         EGCH.GCGH_REGION AS GCH_REGION,
         EGCH.GCGH_CLUSTER AS GCH_CLUSTER,
         EGCH.GCGH_SUBCLUSTER AS GCH_SUBCLUSTER,
@@ -227,7 +222,8 @@ final as
         EGCH.GCCH_RETAIL_BANNER AS GCH_RETAIL_BANNER,
         ECSD.SEGMT_KEY AS CUST_SEGMT_KEY,
         CODES_SEGMENT.code_desc AS cust_segment_desc,
-        ROW_NUMBER() OVER (PARTITION BY SAP_CUST_ID ORDER BY SAP_PRNT_CUST_KEY DESC) AS RANK
+        --ROW_NUMBER() OVER (PARTITION BY SAP_CUST_ID ORDER BY SAP_PRNT_CUST_KEY DESC) AS RANK
+        ROW_NUMBER() OVER (PARTITION BY SAP_CUST_ID ORDER BY NULLIF(ECSD.PRNT_CUST_KEY,''),NULLIF(ECSD.BNR_KEY,''),NULLIF(ECSD.BNR_FRMT_KEY,''),NULLIF(ECSD.SEGMT_KEY,'') ASC NULLS LAST) AS RANK
     FROM edw_gch_customerhierarchy EGCH,
         edw_customer_sales_dim ECSD,
         edw_customer_base_dim ECBD,
@@ -242,9 +238,11 @@ final as
         edw_code_descriptions CDDES_SUBCHNL,
         edw_subchnl_retail_env_mapping SUBCHNL_RETAIL_ENV,
         edw_code_descriptions_manual CODES_SEGMENT,
-        (SELECT DISTINCT CUST_NUM,REC_CRT_DT,PRNT_CUST_KEY,ROW_NUMBER() OVER (PARTITION BY CUST_NUM ORDER BY REC_CRT_DT DESC)RN from edw_customer_sales_dim) A
+        (SELECT DISTINCT CUST_NUM,REC_CRT_DT,PRNT_CUST_KEY,ROW_NUMBER() OVER (PARTITION BY CUST_NUM ORDER BY REC_CRT_DT DESC)RN from edw_customer_sales_dim)
+            A
     WHERE EGCH.CUSTOMER(+) = ECBD.CUST_NUM
     AND   ECSD.CUST_NUM = ECBD.CUST_NUM
+    --AND   DECODE(ECSD.CUST_DEL_FLAG,NULL,'O','','O',ECSD.CUST_DEL_FLAG) = A.CUST_DEL_FLAG
     AND   A.CUST_NUM = ECSD.CUST_NUM
     AND   ECSD.DSTR_CHNL = EDC.DISTR_CHAN
     AND   ECSD.SLS_ORG = ESOD.SLS_ORG
@@ -270,14 +268,14 @@ final as
 
     LEFT JOIN (SELECT *
                 FROM vw_edw_reg_exch_rate
-                WHERE cntry_key = 'PH'
+                WHERE (cntry_key = 'AU' or cntry_key = 'NZ')
                 AND   TO_CCY = 'USD'
                 AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
                 ) C
                 
     ON   UPPER(SELLOUT.CNTRY_NM) = UPPER(C.CNTRY_NM)  
                 
-    where  C.FROM_CCY = 'PHP' 
+    where  C.FROM_CCY = 'AUD' OR C.FROM_CCY = 'NZD' 
     GROUP BY 
                 TIME.YEAR    ,
                 TIME.QRTR_NO  ,
@@ -288,6 +286,7 @@ final as
                 SELLOUT.CNTRY_NM,
                 SELLOUT.MNTH_ID  ,
                 TIME.MNTH_NO  ,
+                --CONCAT(CAST(TIME.MNTH_ID AS VARCHAR(21)),'01'),
                 SELLOUT.DATA_SRC,
                 SELLOUT.customer_product_desc,
                 SELLOUT.SOLDTO_CODE, 
@@ -296,9 +295,9 @@ final as
                 STORE_CD,
                 STORE_NAME,
                 STORE_TYPE,
-                DSTRBTR_LVL1,
-                DSTRBTR_LVL2 ,
-                DSTRBTR_LVL3 ,
+                SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
+                SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,
+                SELLOUT.DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,
                 CUST.SAP_PRNT_CUST_KEY, 
                 CUST.SAP_PRNT_CUST_DESC, 
                 CUST.SAP_CUST_CHNL_KEY, 
@@ -328,14 +327,15 @@ final as
                 SELLOUT.ean,
                 PRODUCT.SAP_MATL_NUM, 
                 PRODUCT.SAP_MAT_DESC, 
+                --PRODUCT.GREENLIGHT_SKU_FLAG, 
                 PRODUCT.PKA_PRODUCT_KEY, 
-                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,
-                PRODUCT.PKA_PACKAGE, 
+                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION, 
                 (C.EXCH_RATE/(C.from_ratio*C.to_ratio)),
-                --SELLOUT.msl_product_code,
-                --SELLOUT.msl_product_desc,
-                emsd.mstr_cd,
-                SELLOUT.channel,
+                SELLOUT.msl_product_code,
+                    SELLOUT.msl_product_desc,
+                    SELLOUT.store_grade,
+                    SELLOUT.retail_env,
+                    SELLOUT.channel,
                 SELLOUT.crtd_dttm,
                 SELLOUT.updt_dttm
     HAVING NOT (SUM(SELLOUT.so_sls_value) = 0 and SUM(SELLOUT.so_sls_qty) = 0)

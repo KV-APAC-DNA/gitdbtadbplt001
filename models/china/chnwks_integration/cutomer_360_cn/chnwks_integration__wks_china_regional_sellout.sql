@@ -1,6 +1,6 @@
 with wks_china_regional_sellout_base as
 (
-    select * from {{ ref('aspwks_integration__wks_china_regional_sellout_base') }}
+    select * from {{ ref('chnwks_integration__wks_china_regional_sellout_base') }}
 ),
 edw_vw_os_time_dim as
 (
