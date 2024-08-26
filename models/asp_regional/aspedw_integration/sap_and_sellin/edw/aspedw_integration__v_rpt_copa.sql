@@ -1501,7 +1501,7 @@ GROUP BY
   main.latest_fisc_yrmnth,
   main.fisc_yr,
   main.fisc_yr_per,
-  main.fisc_day,.
+  main.fisc_day,
   case when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='APSC Regional' then 'Travel Retail'
       when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='Japan' then 'Japan DCL'
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Selfcare' then 'China Selfcare DCL'	
