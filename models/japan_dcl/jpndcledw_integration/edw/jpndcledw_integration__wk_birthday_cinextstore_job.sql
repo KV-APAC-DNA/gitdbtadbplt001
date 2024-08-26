@@ -29,7 +29,7 @@ final as
       FROM tbEcOrder o
      WHERE (o.dirouteid = '7' OR o.dirouteid = '8' OR o.dirouteid = '9' )
     --    AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,'2024-07-25'),'YYYYMMDD')
-       AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,SYSDATE()),'YYYYMMDD')
+       AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(dateadd(day,-181,current_timestamp()),'YYYYMMDD')
        AND o.c_diallhenpinflg = '0'
        AND o.diCancel = '0'
        AND o.dielimflg = '0'
