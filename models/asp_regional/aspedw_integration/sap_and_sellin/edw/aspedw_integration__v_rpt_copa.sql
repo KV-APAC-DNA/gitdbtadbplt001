@@ -67,13 +67,13 @@ transformed as(
   main.obj_crncy_co_obj as obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
 
-  gmc.B1_BRAND as BRAND,
-  gmc.B2_SUBBRAND as SUBBRAND,
-  gmc.C1_BUSINESS_SEGMENT as BUSINESS_SEGMENT,
-  gmc.C2_BUSINESS_SUBSEGMENT as BUSINESS_SUBSEGMENT,
-  gmc.C3_NEED_STATE as NEED_STATE,
-  gmc.C4_CATEGORY as CATEGORY,
-  gmc.C5_SUBCATEGORY as SUBCATEGORY,
+  nvl(gmc.B1_BRAND,'Not Available') as BRAND,
+  nvl(gmc.B2_SUBBRAND,'Not Available') as SUBBRAND,
+  nvl(gmc.C1_BUSINESS_SEGMENT,'Not Available') as BUSINESS_SEGMENT,
+  nvl(gmc.C2_BUSINESS_SUBSEGMENT,'Not Available') as BUSINESS_SUBSEGMENT,
+  nvl(gmc.C3_NEED_STATE,'Not Available') as NEED_STATE,
+  nvl(gmc.C4_CATEGORY,'Not Available') as CATEGORY,
+  nvl(gmc.C5_SUBCATEGORY,'Not Available') as SUBCATEGORY,
 
   IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
@@ -1501,7 +1501,7 @@ GROUP BY
   main.latest_fisc_yrmnth,
   main.fisc_yr,
   main.fisc_yr_per,
-  main.fisc_day,
+  main.fisc_day,.
   case when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='APSC Regional' then 'Travel Retail'
       when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='Japan' then 'Japan DCL'
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Selfcare' then 'China Selfcare DCL'	
@@ -1515,7 +1515,13 @@ GROUP BY
   main.obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc),
 
-  gmc.B1_BRAND,gmc.B2_SUBBRAND,gmc.C1_BUSINESS_SEGMENT,gmc.C2_BUSINESS_SUBSEGMENT,gmc.C3_NEED_STATE,gmc.C4_CATEGORY,gmc.C5_SUBCATEGORY, 
+  nvl(gmc.B1_BRAND,'Not Available'),
+  nvl(gmc.B2_SUBBRAND,'Not Available'),
+  nvl(gmc.C1_BUSINESS_SEGMENT,'Not Available'),
+  nvl(gmc.C2_BUSINESS_SUBSEGMENT,'Not Available'),
+  nvl(gmc.C3_NEED_STATE,'Not Available'),
+  nvl(gmc.C4_CATEGORY,'Not Available'),
+  nvl(gmc.C5_SUBCATEGORY,'Not Available'), 
 
   IFF(mat.brnd_desc='',null,mat.brnd_desc),
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc),
