@@ -50,9 +50,6 @@ models:
       schema: CORE_INTEGRATION
       arsadpprd001_raw:
         materialized: view
-    dq_check_notification:
-      materialized: table
-      schema: CORE_INTEGRATION
     asp_regional:
       config:
         +enabled: true
