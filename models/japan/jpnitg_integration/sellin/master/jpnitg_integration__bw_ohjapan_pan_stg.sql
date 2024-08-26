@@ -41,10 +41,10 @@ union1 as(
 	 edw_account_dim d 
    WHERE rtrim(co_cd) IN (
 		SELECT parameter_value
-		FROM aspitg_integration.itg_query_parameters
+		FROM itg_query_parameters
 		WHERE parameter_name = 'company_code_filter_Kizuna'
 		) --hard coded values paramterised
-	AND A.dstr_chnl_upd  IN (select rtrim(parameter_value) from aspitg_integration.itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') --hard coded values paramterised
+	AND A.dstr_chnl_upd  IN (select rtrim(parameter_value) from itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') --hard coded values paramterised
 	AND (
 		rtrim(A.cust_num_upd)  = ''  
 		OR rtrim(A.matl_upd) = '' 
@@ -52,7 +52,7 @@ union1 as(
 	AND rtrim(A.amt_obj_crncy) = rtrim(A.grs_amt_trans_crncy)
 	AND rtrim(A.fisc_yr) IN (
 		SELECT cast(right(identify_value, 4) AS INTEGER) AS fisc_yr
-		FROM jpnedw_integration.MT_CONSTANT
+		FROM MT_CONSTANT
 		WHERE identify_cd = 'JCP_PAN_FLG'
 		)
 	AND rtrim(A.acct_num) = rtrim(D.ACCT_NUM)
@@ -116,7 +116,7 @@ union2 as(
             FROM itg_query_parameters
             WHERE parameter_name = 'company_code_filter_Kizuna'
             ) --hard coded values paramterised
-        AND (A.dstr_chnl  IN (select rtrim(parameter_value) from aspitg_integration.itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') or A.dstr_chnl is null)--hard coded values paramterised
+        AND (A.dstr_chnl  IN (select rtrim(parameter_value) from itg_query_parameters where rtrim(parameter_name)='dstr_chnl_filter_Kizuna_phase2') or A.dstr_chnl is null)--hard coded values paramterised
         AND (
         A.cust_num = '' or A.cust_num is null
             OR A.matl = '' or A.matl is null
