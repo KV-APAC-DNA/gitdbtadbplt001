@@ -1,0 +1,15 @@
+version: 2
+
+sources:  
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_in_rretailergeoextension__null_test
+        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+      - name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
+        
