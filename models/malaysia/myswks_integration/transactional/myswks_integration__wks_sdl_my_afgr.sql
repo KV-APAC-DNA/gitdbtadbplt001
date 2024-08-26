@@ -1,5 +1,9 @@
 with sdl_my_afgr as (
-    select * from {{ source('myssdl_raw','sdl_my_afgr') }} 
+    select * from {{ source('myssdl_raw','sdl_my_afgr') }} where file_name not in
+    ( select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_afgr__null_test') }}
+      union all
+      select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_afgr__duplicate_test') }}
+    )
 ),
 edw_vw_my_orders_fact as (
     select * from {{ ref('mysedw_integration__edw_vw_my_orders_fact') }}

@@ -1,8 +1,10 @@
 with source as (
-    select * from {{ source('myssdl_raw','sdl_my_accruals') }}
+    select * from {{ source('myssdl_raw','sdl_my_accruals') }} where file_name not in
+    ( select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_accruals__null_test') }}
+      union all 
+      select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_accruals__lookup_test') }}
+    )
 ),
-
-
 tbl1 as (
     select
         cust_id,

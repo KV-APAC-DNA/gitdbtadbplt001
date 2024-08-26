@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: myswks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: myswks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_my_customer_dim__null_test
+    - name: TRATBL_sdl_my_customer_dim__duplicate_test
+    - name: TRATBL_sdl_my_dstrbtrr_dim__null_test
+    - name: TRATBL_sdl_my_dstrbtrr_dim__duplicate_test
+    - name: TRATBL_sdl_my_dstrbtr_doc_type__duplicate_test
+    - name: TRATBL_sdl_my_accruals__null_test
+    - name: TRATBL_sdl_my_accruals__lookup_test
+    - name: TRATBL_sdl_my_pos_cust_mstr__duplicate_test
+    - name: TRATBL_sdl_my_in_transit__duplicate_test
+    - name: TRATBL_sdl_my_trgts__null_test
+    - name: TRATBL_sdl_my_trgts__lookup_test
+    - name: TRATBL_sdl_my_afgr__null_test
+    - name: TRATBL_sdl_my_afgr__duplicate_test
+    - name: TRATBL_sdl_my_le_trgt__lookup_test
+    - name: TRATBL_sdl_so_sales_133983__lookup_test
+    - name: TRATBL_sdl_so_sales_130518__lookup_test
+    - name: TRATBL_sdl_so_inv_108565__lookup_test
+    - name: TRATBL_sdl_so_inv_133981__lookup_test
+    - name: TRATBL_sdl_so_sales_131164__lookup_test
+    - name: TRATBL_sdl_my_as_watsons_inventory__duplicate_test
+    - name: TRATBL_sdl_my_as_watsons_inventory__null_test
