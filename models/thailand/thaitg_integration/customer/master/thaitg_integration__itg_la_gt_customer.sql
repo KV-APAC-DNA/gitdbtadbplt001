@@ -3,12 +3,29 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['distributorid', 'arcode'],
-        pre_hook= " delete from {{this}} where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) from {{ source('thasdl_raw', 'sdl_la_gt_customer') }})"
+        pre_hook= " delete from {{this}} 
+        where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) 
+        from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
+        where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
+        )
+        )"
     )
 }}
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
+        )
 ),
 final as(
     select 

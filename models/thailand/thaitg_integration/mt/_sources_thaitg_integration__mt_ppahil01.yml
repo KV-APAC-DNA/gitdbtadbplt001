@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_sdl_th_mt_price_data__duplicate_test
+    - name: TRATBL_sdl_th_mt_price_data__null_test
+    - name: TRATBL_sdl_th_mt_price_data__format_test

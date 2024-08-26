@@ -2,7 +2,16 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }});"
+        pre_hook= "delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) 
+                    FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
+                    where file_name not in (
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__test_file') }}
+                    )   
+                    );"
     )
 }}
 
@@ -12,6 +21,13 @@ with source as(
     select *,
     dense_rank() over(partition by UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) order by filename desc) as rnk
     from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
+    where file_name not in (
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__test_file') }}
+                    ) qualify rnk=1
 ),
 final as(
     select

@@ -9,6 +9,11 @@
 
 with sdl_cbd_gt_inventory_report_fact as (
     select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test') }}
+    )
 ),
 final as (
  select 
@@ -23,7 +28,7 @@ final as (
     cast ("181-365days" as NUMERIC(18,4)) as "181-365days",
     cast (">365days" as NUMERIC(18,4)) as ">365days",
     cast (total_qty as NUMERIC(18,4)) as total_qty,
-    filename::varchar(50) as filename,
+    filename::varchar(50) as file_name,
     run_id::varchar(14) as run_id,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) AS updt_dttm

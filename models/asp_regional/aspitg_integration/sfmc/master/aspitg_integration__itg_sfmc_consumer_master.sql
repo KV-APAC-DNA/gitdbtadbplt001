@@ -14,7 +14,13 @@
 with
 source as
 (
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_th_sfmc_consumer_master') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_consumer_master__duplicate_test') }}
+    )
 ),
 wks_itg_sfmc_consumer_master as
 (

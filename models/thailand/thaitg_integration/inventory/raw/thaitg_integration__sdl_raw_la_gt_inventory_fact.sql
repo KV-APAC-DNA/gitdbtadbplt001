@@ -6,6 +6,11 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_la_gt_inventory_fact') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_inventory_fact__test_format_recdate') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_inventory_fact__test_format_expirydate') }}
+            )
 ),
 final as(
     select * from source

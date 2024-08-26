@@ -1,0 +1,39 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_pop6_th_promotions__null_test
+      - name: TRATBL_sdl_pop6_th_promotions__duplicate_test
+      - name: TRATBL_sdl_pop6_th_product_attribute_audits__null_test
+      - name: TRATBL_sdl_pop6_th_product_attribute_audits__duplicate_test
+      - name: TRATBL_sdl_pop6_th_users__null_test
+      - name: TRATBL_sdl_pop6_th_users__duplicate_test
+      - name: TRATBL_sdl_pop6_th_executed_visits__null_test
+      - name: TRATBL_sdl_pop6_th_executed_visits__duplicate_test
+      - name: TRATBL_sdl_pop6_th_displays__null_test
+      - name: TRATBL_sdl_pop6_th_displays__duplicate_test
+      - name: TRATBL_sdl_pop6_th_promotion_plans__null_test
+      - name: TRATBL_sdl_pop6_th_promotion_plans__duplicate_test
+      - name: TRATBL_sdl_pop6_th_rir_data__null_test
+      - name: TRATBL_sdl_pop6_th_rir_data__duplicate_test
+      - name: TRATBL_sdl_pop6_th_product_lists_pops__null_test
+      - name: TRATBL_sdl_pop6_th_product_lists_pops__duplicate_test
+      - name: TRATBL_sdl_pop6_th_sku_audits__null_test
+      - name: TRATBL_sdl_pop6_th_sku_audits__duplicate_test
+      - name: TRATBL_sdl_pop6_th_pops__null_test
+      - name: TRATBL_sdl_pop6_th_pops__duplicate_test
+      - name: TRATBL_sdl_pop6_th_general_audits__null_test
+      - name: TRATBL_sdl_pop6_th_general_audits__duplicate_test
+      - name: TRATBL_sdl_pop6_th_product_lists_products__null_test
+      - name: TRATBL_sdl_pop6_th_product_lists_products__duplicate_test
+      - name: TRATBL_sdl_pop6_th_products__null_test
+      - name: TRATBL_sdl_pop6_th_products__duplicate_test
+      - name: TRATBL_sdl_pop6_th_product_lists_allocation__null_test
+      - name: TRATBL_sdl_pop6_th_product_lists_allocation__duplicate_test

@@ -1,0 +1,76 @@
+version: 2
+
+sources:
+  - name: thawks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: thawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_sdl_th_mt_tops__null_test
+    - name: TRATBL_sdl_th_mt_tops__duplicate_test
+    - name: TRATBL_sdl_la_gt_schedule__duplicate_test
+    - name: TRATBL_sdl_la_gt_schedule__null_test
+    - name: TRATBL_sdl_la_gt_schedule__schedule_date_format_test
+    - name: TRATBL_sdl_la_gt_schedule__employee_id_format_test
+    - name: TRATBL_sdl_la_gt_route_header__null_test
+    - name: TRATBL_sdl_la_gt_route_header__duplicate_test
+    - name: TRATBL_sdl_la_gt_route_header__test_format
+    - name: TRATBL_sdl_la_gt_route_header__test_format_2
+    - name: TRATBL_sdl_th_gt_schedule__null_test
+    - name: TRATBL_sdl_th_gt_schedule__duplicate_test
+    - name: TRATBL_sdl_th_gt_schedule__test_format
+    - name: TRATBL_sdl_th_gt_schedule__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_th_gt_route_detail__null_test
+    - name: TRATBL_sdl_th_gt_route_detail__duplicate_test
+    - name: TRATBL_sdl_th_gt_route_detail__test_format
+    - name: TRATBL_sdl_th_gt_route_detail__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_th_gt_route__null_test
+    - name: TRATBL_sdl_th_gt_route__duplicate_test
+    - name: TRATBL_sdl_th_gt_route__test_format
+    - name: TRATBL_sdl_th_gt_route__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_th_gt_sales_order__null_test
+    - name: TRATBL_sdl_th_gt_sales_order__duplicate_test
+    - name: TRATBL_sdl_th_gt_sales_order__test_format
+    - name: TRATBL_sdl_th_gt_sales_order__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_la_gt_visit__duplicate_test
+    - name: TRATBL_sdl_la_gt_visit__null_test
+    - name: TRATBL_sdl_la_gt_visit__date_plan_format_test
+    - name: TRATBL_sdl_la_gt_visit__date_visi_format_test
+    - name: TRATBL_sdl_la_gt_visit__visit_end_format_test
+    - name: TRATBL_sdl_la_gt_visit__time_visi_format_test
+    - name: TRATBL_sdl_la_gt_visit__visit_time_format_test
+    - name: TRATBL_sdl_la_gt_visit__id_sale_format_test
+    - name: TRATBL_sdl_la_gt_sales_order_fact__null_test
+    - name: TRATBL_sdl_la_gt_sales_order_fact__duplicate_test
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format_2
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format_3
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format_4
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format_5
+    - name: TRATBL_sdl_la_gt_sales_order_fact__test_format_6
+    - name: TRATBL_sdl_la_gt_route_detail__null_test
+    - name: TRATBL_sdl_la_gt_route_detail__duplicate_test
+    - name: TRATBL_sdl_la_gt_route_detail__test_format_created_date
+    - name: TRATBL_sdl_la_gt_route_detail__test_format_sale_unit
+    - name: TRATBL_sdl_cbd_gt_sales_report_fact__null_test
+    - name: TRATBL_sdl_cbd_gt_sales_report_fact__duplicate_test
+    - name: TRATBL_sdl_cbd_gt_sales_report_fact__test_format
+    - name: TRATBL_sdl_cbd_gt_sales_report_fact__test_format_2
+    - name: TRATBL_sdl_mym_gt_sales_report_fact__null_test
+    - name: TRATBL_sdl_mym_gt_sales_report_fact__duplicate_test
+    - name: TRATBL_sdl_mym_gt_sales_report_fact__test_format
+    - name: TRATBL_sdl_th_gt_visit__null_test
+    - name: TRATBL_sdl_th_gt_visit__duplicate_test
+    - name: TRATBL_sdl_th_gt_visit__test_format
+    - name: TRATBL_sdl_th_gt_visit__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_th_gt_msl_distribution__null_test
+    - name: TRATBL_sdl_th_gt_msl_distribution__duplicate_test
+    - name: TRATBL_sdl_th_gt_msl_distribution__test_format
+    - name: TRATBL_sdl_th_gt_msl_distribution__test_date_format_odd_eve_leap
+    - name: TRATBL_sdl_th_gt_msl_distribution__test_format_flag
+    - name: TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag
+    - name: TRATBL_sdl_th_gt_msl_distribution__test_multiple_column

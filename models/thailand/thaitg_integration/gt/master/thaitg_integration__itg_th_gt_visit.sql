@@ -3,7 +3,19 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['saleunit','id_sale', 'id_customer', 'date_plan', 'time_plan','time_visit_in', 'visit_end','time_visit_out'],
-        pre_hook= "delete from {{this}} where (upper(trim(saleunit)), upper(trim(id_sale)), upper(trim(id_customer)), date_plan, coalesce(trim(time_plan), 'NA'), COALESCE(TRIM(time_visit_in), 'NA'), COALESCE(visit_end, '9999-12-31'), COALESCE(TRIM(time_visit_out), 'NA')) IN ( SELECT DISTINCT UPPER(TRIM(saleunit)), UPPER(TRIM(id_sale)), UPPER(TRIM(id_customer)), date_plan, COALESCE(TRIM(time_plan), 'NA'), COALESCE(TRIM(time_visi), 'NA'), COALESCE(visit_end, '9999-12-31'), COALESCE(TRIM(visit_time), 'NA') FROM {{ source('thasdl_raw','sdl_th_gt_visit') }})"
+        pre_hook= "delete from {{this}} 
+        where (upper(trim(saleunit)), upper(trim(id_sale)), upper(trim(id_customer)), date_plan, coalesce(trim(time_plan), 'NA'), COALESCE(TRIM(time_visit_in), 'NA'), COALESCE(visit_end, '9999-12-31'), COALESCE(TRIM(time_visit_out), 'NA')) IN ( SELECT DISTINCT UPPER(TRIM(saleunit)), UPPER(TRIM(id_sale)), UPPER(TRIM(id_customer)), date_plan, COALESCE(TRIM(time_plan), 'NA'), COALESCE(TRIM(time_visi), 'NA'), COALESCE(visit_end, '9999-12-31'), COALESCE(TRIM(visit_time), 'NA') 
+        FROM {{ source('thasdl_raw','sdl_th_gt_visit') }}
+        where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_date_format_odd_eve_leap') }}
+            )
+        )"
     )
 }}
 
@@ -21,6 +33,15 @@ with source as(
         order by filename desc
         ) as rnk
     from {{ source('thasdl_raw','sdl_th_gt_visit') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_date_format_odd_eve_leap') }}
+    ) qualify rnk=1
 ),
 final as(
     select
@@ -44,7 +65,7 @@ final as(
         time_survey_in::varchar(50) as time_survey_in,
         time_survey_out::varchar(50) as time_survey_out,
         count_survey::varchar(50) as count_survey,
-        filename::varchar(100) as filename,
+        filename::varchar(100) as file_name,
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source

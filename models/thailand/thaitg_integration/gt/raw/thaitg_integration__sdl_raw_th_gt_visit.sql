@@ -6,6 +6,15 @@
 
 with source as(
     select * from {{ source('thasdl_raw', 'sdl_th_gt_visit') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_visit__test_date_format_odd_eve_leap') }}
+    )
 ),
 final as(
     select   
@@ -29,7 +38,7 @@ final as(
         time_survey_in as time_survey_in,
         time_survey_out as time_survey_out,
         count_survey as count_survey,
-        filename as filename,
+        filename as file_name,
         run_id as run_id,
         crt_dttm as crt_dttm
    from source

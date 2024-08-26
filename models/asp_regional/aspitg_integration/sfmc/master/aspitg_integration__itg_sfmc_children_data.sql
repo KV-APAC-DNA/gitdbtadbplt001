@@ -16,7 +16,15 @@
 
 with sdl_th_sfmc_children_data as
 (
-    select *, dense_rank() over(partition by null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
+    select *, dense_rank() over(partition by null order by file_name desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__lookup_test') }}
+            ) qualify rnk=1
 ),
 itg_mds_rg_sfmc_gender as
 (

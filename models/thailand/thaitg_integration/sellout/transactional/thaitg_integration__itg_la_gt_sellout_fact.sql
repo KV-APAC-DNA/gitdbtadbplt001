@@ -10,6 +10,11 @@ with source as(
     select *,
     dense_rank() over(partition by distributorid,orderno,orderdate,arcode,linenumber order by filename desc) as rnk 
     from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }}
+    where file_name not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__test_format') }}
+            ) qualify rnk=1
 ),
 final as
 (

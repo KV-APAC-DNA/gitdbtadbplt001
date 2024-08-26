@@ -12,3 +12,7 @@ sources:
     - name: TRATBL_sdl_jnj_mer_share_of_shelf__null_test
     - name: TRATBL_sdl_jnj_mer_share_of_shelf__duplicate_test
     - name: TRATBL_sdl_jnj_mer_share_of_shelf__test_date_format_odd_eve
+    - name: TRATBL_sdl_jnj_osa_oos_report__null_test
+    - name: TRATBL_sdl_jnj_osa_oos_report__test_date_format_odd_eve
+    - name: TRATBL_sdl_jnj_mer_cop__null_test
+    - name: TRATBL_sdl_jnj_mer_cop__test_date_format_odd_eve
