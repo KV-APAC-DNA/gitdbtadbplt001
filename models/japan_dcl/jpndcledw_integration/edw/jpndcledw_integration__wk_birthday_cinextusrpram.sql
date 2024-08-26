@@ -37,7 +37,7 @@ AS (
     INNER JOIN tbEcOrder orderinfo ON rtrim(orderinfo.diEcUsrID) = rtrim(memberinfo.diusrid)
         AND orderinfo.dirouteid NOT IN ('7', '8', '9', '12', '13')
     INNER JOIN c_tbEcShippingResults ship ON rtrim(orderinfo.diOrderID) = rtrim(ship.diOrderID)
-    WHERE TO_CHAR(orderinfo.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE( 'Asia/Tokyo', SYSDATE()), - 36), 'YYYYMMDD')
+    WHERE TO_CHAR(orderinfo.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE( 'Asia/Tokyo', current_timestamp()), - 36), 'YYYYMMDD')
         -- 
         AND orderinfo.c_diallhenpinflg = '0'
         AND orderinfo.diCancel = '0'
@@ -60,7 +60,7 @@ AS (
             OR orderinfo.dirouteid = '8'
             OR orderinfo.dirouteid = '9'
             )
-    WHERE TO_CHAR(orderinfo.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('Asia/Tokyo', SYSDATE()), - 36), 'YYYYMMDD')
+    WHERE TO_CHAR(orderinfo.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()), - 36), 'YYYYMMDD')
         
         AND orderinfo.c_diallhenpinflg = '0'
         AND orderinfo.diCancel = '0'
@@ -77,7 +77,7 @@ AS (
         memberinfo.dielimflg
     FROM c_tbEcRankAddAmountAdm amountadm
     INNER JOIN TBUSRPRAM memberinfo ON rtrim(memberinfo.diusrid) = rtrim(amountadm.diecusrid)
-    WHERE TO_CHAR(amountadm.dsOrderDt, 'YYYYMMDD') >=  TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE( 'Asia/Tokyo', SYSDATE()), - 36), 'YYYYMMDD')
+    WHERE TO_CHAR(amountadm.dsOrderDt, 'YYYYMMDD') >=  TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE( 'Asia/Tokyo', current_timestamp()), - 36), 'YYYYMMDD')
     --TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', '2024-07-01'::DATE), - 36), 'YYYYMMDD')
         AND amountadm.dielimflg = 0
     ),
