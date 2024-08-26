@@ -47,6 +47,7 @@ vw_itg_custgp_customer_hierarchy as(
 transformed as(
 
   select
+  src,
   main.matl_num,
   main.prev_fisc_yr_per as prev_fisc_yr_per,
   main.latest_date as latest_date,
@@ -121,7 +122,7 @@ FROM (
   (
     (
       (
-        SELECT
+        SELECT 'copa' as src,
           cast((((
                 cast((
                   cast((
@@ -1222,6 +1223,7 @@ FROM (
           mat.mega_brnd_desc
         UNION ALL
         SELECT
+        'invoice' as src,
           cast((((
                 cast((
                   cast((
@@ -1506,6 +1508,7 @@ left join vw_itg_custgp_customer_hierarchy cust on trim(upper(main.ctry_nm))=tri
 where fisc_yr_per='2024002' and 
 main.ctry_nm='Australia' and "b1 mega-brand"='PCH Agarol'
 GROUP BY
+main.src,
 main.matl_num,
   main.prev_fisc_yr_per,
   main.latest_date,
