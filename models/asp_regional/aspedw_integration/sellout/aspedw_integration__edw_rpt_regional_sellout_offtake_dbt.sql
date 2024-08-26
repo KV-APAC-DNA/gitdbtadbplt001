@@ -171,8 +171,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM cn_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -261,8 +261,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM jp_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -355,8 +355,8 @@ final as
         main.store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM in_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -447,8 +447,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM WKS_SINGAPORE_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -539,8 +539,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM th_wks_rpt_regional_sellout_offtake_npd main
         left join (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key FROM 
         (select material,dt_from,valid_to,max(amount) as amount,sls_org,cdl_dttm,currency from sdl_raw_sap_bw_price_list
@@ -629,8 +629,8 @@ final as
         main.store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM wks_rpt_regional_my_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -722,8 +722,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM WKS_KOREA_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -814,8 +814,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm,
-        main.updt_dttm 
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm 
         FROM wks_rpt_regional_cn_sc_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -905,8 +905,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm	
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm	
         FROM wks_rpt_regional_id_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -996,8 +996,8 @@ final as
         'NA' AS store_grade,
         'NA' AS retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm 
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm 
         FROM wks_rpt_regional_ph_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1087,8 +1087,8 @@ final as
         main.store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM WKS_HONG_KONG_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC, b.ctry_key NULLS LAST) AS rn FROM 
@@ -1179,8 +1179,8 @@ final as
         main.store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM wks_rpt_regional_pacific_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1271,8 +1271,8 @@ final as
         'NA' as store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM WKS_TAIWAN_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1363,8 +1363,8 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm,
-        main.updt_dttm
+        main.crtd_dttm::timestamp_ntz as crtd_dttm,
+        main.updt_dttm::timestamp_ntz as updt_dttm
         FROM WKS_VIETNAM_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
