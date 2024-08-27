@@ -410,7 +410,7 @@ FROM (SELECT CAST(ACTUAL.YEAR AS numeric(18,0) ) AS FISC_YR,
 						and (lst_nts is not null)
 						) PROD_KEY 
             JOIN ITG_VN_PRODUCT_MAPPING PROD_MAP ON LTRIM(PROD_KEY.EAN_CODE, '0') = LTRIM(PROD_MAP.BARCODE, '0') where rn = 1) epd 
-                ON LTRIM(ACTUAL.sku_code,'0') = LTRIM(epd.matl_num,'0')
+                ON LTRIM(ACTUAL.ean,'0') = LTRIM(epd.ean_code,'0')
 ----------------customer hierarchy------------------------------
         LEFT JOIN (SELECT * FROM (SELECT DISTINCT ECBD.CUST_NUM AS SAP_CUST_ID,		
                     ECBD.CUST_NM AS SAP_CUST_NM,
