@@ -2,9 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook=" {% if is_incremental() %}
+        pre_hook=" 
                 delete from {{this}} where TO_CHAR(TO_DATE(upload_dt, 'MM-DD-YYYY'), 'YYYY-MM-DD') < TO_CHAR(current_timestamp(), 'YYYY-MM-DD');
-                {% endif %}"    )
+                "    )
 }}
 
 with jp_pos_daily_sugi as(
@@ -24,5 +24,6 @@ final as(
         upload_dt,
         upload_time
     from jp_pos_daily_sugi
+
 )
 select * from final

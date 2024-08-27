@@ -1,6 +1,6 @@
 with wks_philippines_regional_sellout_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_philippines_regional_sellout_npd') }}
+    select * from {{ ref('phlwks_integration__wks_philippines_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as
 (

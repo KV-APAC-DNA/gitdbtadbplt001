@@ -8,7 +8,7 @@ sub_cnt_call AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt >= dateadd(year,-1,date_trunc('day', sysdate()))  
+    order_dt >= dateadd(year,-1,date_trunc('day', current_timestamp()))  
     AND channel IN ('通販') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 
@@ -29,7 +29,7 @@ sub_cnt_web AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt >= dateadd(year,-1,date_trunc('day', sysdate()))
+    order_dt >= dateadd(year,-1,date_trunc('day', current_timestamp()))
     AND channel IN ('Web') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 
@@ -50,7 +50,7 @@ sub_cnt_store AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt >= dateadd(year,-1,date_trunc('day', sysdate())) 
+    order_dt >= dateadd(year,-1,date_trunc('day', current_timestamp())) 
     AND channel IN ('直営・百貨店') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 

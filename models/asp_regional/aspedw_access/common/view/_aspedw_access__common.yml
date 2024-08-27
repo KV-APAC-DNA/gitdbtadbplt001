@@ -186,3 +186,8 @@ models:
     config: 
       alias: rpt_regional_commercial_excellence_scorecard
       tags: ["comex_datamart","transformation"]
+
+  - name: aspedw_access__edw_rpt_okr_dashboard
+    config: 
+      alias: edw_rpt_okr_dashboard
+      tags: ["okr_dashboard_datamart_refresh","transformation"]

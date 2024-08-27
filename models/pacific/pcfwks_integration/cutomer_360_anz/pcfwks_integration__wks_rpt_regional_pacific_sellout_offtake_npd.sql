@@ -1,6 +1,6 @@
-with wks_china_regional_sellout_npd as
+with wks_pacific_regional_sellout_npd as
 (
-    select * from {{ ref('aspwks_integration__wks_china_regional_sellout_npd') }}
+    select * from {{ ref('pcfwks_integration__wks_pacific_regional_sellout_npd') }}
 ),
 itg_mds_ap_customer360_config as
 (
@@ -28,6 +28,7 @@ final as
         country_code,
         country_name,
         data_source,
+        Customer_Product_Desc,
         soldto_code,
         distributor_code,
         distributor_name,
@@ -70,7 +71,6 @@ final as
         pka_product_key,
         pka_product_key_description,
         --sls_org,
-        Customer_Product_Desc,
         from_currency,
         to_currency,
         exchange_rate,
@@ -87,10 +87,12 @@ final as
         rn_mkt,
         msl_product_code,
         msl_product_desc,
+        store_grade,
         retail_env,
+        channel,
         crtd_dttm,
-        updt_dttm    
-    FROM wks_china_regional_sellout_npd
+        updt_dttm   
+    FROM wks_pacific_regional_sellout_npd
     )))
 )
 select * from final

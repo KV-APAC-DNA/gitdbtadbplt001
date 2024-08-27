@@ -28,6 +28,22 @@
                     JCP_REC_SEQ IS NOT NULL and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0;
 
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
+                    (
+                    jcp_rec_seq, id, rcv_dt, test_flag, 
+                    bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, 
+                    trade_type, shp_date, shp_num, trade_cd, 
+                    dep_cd, chg_cd, person_in_charge, 
+                    person_name, rtl_name, rtl_ho_cd, 
+                    rtl_address_cd, data_type, opt_fld, 
+                    item_nm, item_cd_typ, item_cd, qty, 
+                    qty_type, price, price_type, bgn_sndr_cd_gln, 
+                    rcv_cd_gln, ws_cd_gln, shp_ws_cd, 
+                    shp_ws_cd_gln, rep_name_kanji, rep_info, 
+                    trade_cd_gln, rtl_cd_gln, rtl_name_kanji, 
+                    rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, 
+                    unt_prc, net_prc, sales_chan_type, 
+                    jcp_create_date
+                    ) 
                     SELECT (
                             SELECT MAX_VALUE::number AS max_value
                             FROM {{ ref('jpnedw_integration__mt_constant_seq')}}
@@ -37,7 +53,7 @@
                             ) AS jcp_rec_seq,
                         id, rcv_dt, test_flag, bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, trade_type, shp_date, shp_num, trade_cd, dep_cd, chg_cd, person_in_charge, person_name, rtl_name, rtl_ho_cd, rtl_address_cd_01, data_type, opt_fld, item_nm, item_cd_typ, item_cd, qty, qty_type, price, price_type, bgn_sndr_cd_gln, rcv_cd_gln, ws_cd_gln, shp_ws_cd, shp_ws_cd_gln, rep_name_kanji, rep_info, trade_cd_gln, rtl_cd_gln, rtl_name_kanji, rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, unt_prc, net_prc, sales_chan_type, CURRENT_TIMESTAMP()
                     FROM {{this}}
-                    WHERE JCP_REC_SEQ IS NULL and (select count(*) from {{ source('jpnsdl_raw', 'sdl_so_planet_no_dup') }})>0;
+                    WHERE JCP_REC_SEQ IS NULL;
 
                     INSERT INTO {{ ref ('jpnitg_integration__dw_so_planet_err') }}
                     SELECT 
@@ -178,6 +194,22 @@
 
 
                     INSERT INTO {{ ref('jpnwks_integration__wk_so_planet_no_dup') }}
+                    (
+                    jcp_rec_seq, id, rcv_dt, test_flag, 
+                    bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, 
+                    trade_type, shp_date, shp_num, trade_cd, 
+                    dep_cd, chg_cd, person_in_charge, 
+                    person_name, rtl_name, rtl_ho_cd, 
+                    rtl_address_cd, data_type, opt_fld, 
+                    item_nm, item_cd_typ, item_cd, qty, 
+                    qty_type, price, price_type, bgn_sndr_cd_gln, 
+                    rcv_cd_gln, ws_cd_gln, shp_ws_cd, 
+                    shp_ws_cd_gln, rep_name_kanji, rep_info, 
+                    trade_cd_gln, rtl_cd_gln, rtl_name_kanji, 
+                    rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, 
+                    unt_prc, net_prc, sales_chan_type, 
+                    jcp_create_date
+                    ) 
                     SELECT (SELECT MAX_VALUE::number as max_value FROM {{ ref('jpnedw_integration__mt_constant_seq') }} WHERE 
                     IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (
                                 ORDER BY ID
