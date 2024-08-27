@@ -170,27 +170,27 @@ models:
   - name: jpndcledw_integration__wqwt17
     config:
       alias: '"wqwt17戦略商品別売上"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wqwt36
     config:
       alias: '"wqwt36集計得意先商品別売上"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wqwt67
     config:
       alias: '"wqwt67戦略商品別売上"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wqwt70
     config:
       alias: '"wqwt70戦略商品別売上"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wqwt74_p
     config:
       alias: '"wqwt74戦略商品別売上ｐ"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wt34aspacdt
     config:
@@ -734,7 +734,7 @@ models:
   - name: jpndcledw_integration__wqwt74
     config:
       alias: '"wqwt74戦略商品別売上"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__tt02salem_add_hen_mv_mt
     config:
@@ -779,7 +779,7 @@ models:
   - name: jpndcledw_integration__wqwt34
     config:
       alias: '"wqwt34明細出力リスト"'
-      tags: ["japan_dcl_views","transformation"]
+      tags: ["japan_dcl_views","inactive"]
 
   - name: jpndcledw_integration__wt01kokyah
     config:
@@ -829,12 +829,12 @@ models:
   - name: jpndcledw_integration__cdtm43
     config:
       alias: '"cdtm43曜日名称マスタ"'
-      tags: ["japan_dcl_views", "transformation"]
+      tags: ["japan_dcl_views", "inactive"]
       
   - name: jpndcledw_integration__cewq009r2p_port
     config:
       alias: '"cewq009r2月次p集計_port基準"'
-      tags: ["japan_dcl_views", "transformation"]
+      tags: ["japan_dcl_views", "inactive"]
       
   - name: jpndcledw_integration__cim03item_zaiko_qv
     config:
