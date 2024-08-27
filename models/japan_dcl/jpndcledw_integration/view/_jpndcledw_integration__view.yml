@@ -351,10 +351,16 @@ models:
       alias: teiki_kpi4_soukeiyaku_hnr_old
       tags: ["japan_dcl_views","transformation"]
  
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_before_kizuna
+      tags: ["japan_dcl_views","transformation"]
+
   - name: jpndcledw_integration__kesai_m_data_mart_sub_before
     config:
       alias: kesai_m_data_mart_sub_before
       tags: ["japan_dcl_views","transformation"]
+      
   - name: jpndcledw_integration__kpi_016_report_ship2
     config:
       alias: kpi_016_report_ship2
@@ -890,9 +896,14 @@ models:
       alias: tt01saleh_sum_mv_mt
       tags: ["japan_dcl_views", "transformation"]
 
-  - name: jpndcledw_integration__kesai_h_data_mart_mv
+  - name: jpndcledw_integration__kesai_h_data_mart_mv_kizuna
     config:
-      alias: kesai_h_data_mart_mv
+      alias: kesai_h_data_mart_mv_kizuna
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_kizuna
+    config:
+      alias: kesai_h_data_mart_sub_kizuna
       tags: ["japan_dcl_views","transformation"]
 
   - name: jpndcledw_integration__kesai_h_data_mart_sub
@@ -915,9 +926,14 @@ models:
       alias: kesai_h_data_mart_sub_n_u
       tags: ["japan_dcl_views","transformation"]
 
-  - name: jpndcledw_integration__kesai_m_data_mart_mv
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_kizuna
     config:
-      alias: kesai_m_data_mart_mv
+      alias: kesai_m_data_mart_mv_kizuna
+      tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_kizuna
       tags: ["japan_dcl_views","transformation"]
 
   - name: jpndcledw_integration__kesai_m_data_mart_sub
@@ -950,8 +966,6 @@ models:
       alias: kesaiid_dummy
       tags: ["japan_dcl_views","transformation"]
 
-
- 
   - name: jpndcledw_integration__kesai_m_data_mart_sub_old_chsi
     config:
       alias: kesai_m_data_mart_sub_old_chsi
