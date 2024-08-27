@@ -15,7 +15,7 @@
 
 --import CTE
 with source as (
-    select *, dense_rank() over(partition by year,mnth_id,matl_num order by file_name desc) as rnk from {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }}  where file_name not in
+    select *, dense_rank() over(partition by year,mnth_id,matl_num order by file_name desc) as rnk from {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }}  where filename not in
     ( 
       select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_as_watsons_inventory__duplicate_test') }}
       union all

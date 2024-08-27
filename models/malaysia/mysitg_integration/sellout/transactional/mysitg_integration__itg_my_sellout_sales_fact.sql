@@ -6,7 +6,10 @@
     )
 }}
 with source as (
-  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }}
+  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }} where file_name not in
+            ( 
+            select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test') }}
+            ) 
 ),
 imier as (
   select * from {{ ref('mysitg_integration__itg_my_ids_exchg_rate') }}
