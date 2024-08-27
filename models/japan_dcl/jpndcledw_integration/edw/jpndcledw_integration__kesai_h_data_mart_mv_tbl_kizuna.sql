@@ -18,7 +18,7 @@ conv_mst_smkeiroid as(
     select * from {{ source('jpdcledw_integration', 'conv_mst_smkeiroid') }} 
 ),
 kesai_h_data_mart_sub as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
 ),
 c_tbecinquirekesai as(
     select * from {{ ref('jpndclitg_integration__c_tbecinquirekesai') }}
