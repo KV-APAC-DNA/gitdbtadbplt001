@@ -80,5 +80,6 @@ final as(
                 END
             )::CHARACTER VARYING(1) AS port_uniq_flg
     FROM kesai_h_data_mart_mv_tbl kesai_h_data_mart_mv_tbl
+    WHERE ("substring" ((kesai_h_data_mart_mv_tbl.saleno)::TEXT,1,1) <> ('O'::CHARACTER VARYING)::TEXT)
 )
 select * from final
