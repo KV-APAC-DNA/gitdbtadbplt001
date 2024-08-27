@@ -95,6 +95,7 @@ final as
        prd.company,
        prd.ps_category,
        prd.ps_segment,
+       rir.related_attribute,
        rir.layer,
        rir.total_layer,
        rir.facing_of_this_layer

@@ -174,6 +174,9 @@ sku_audit as ((
                           NULL  AS mkt_share, 
                           NULL  AS planned_visit_date, 
                           NULL  AS visited_flag, 
+                          NULL AS related_attribute,
+                          NULL as total_layer,
+                          NULL as layer,
                           NULL  AS facing, 
                           NULL  AS is_eyelevel 
                         FROM 
@@ -402,6 +405,9 @@ sku_audit as ((
                           NULL  AS mkt_share, 
                           NULL  AS planned_visit_date, 
                           NULL  AS visited_flag, 
+                          NULL AS related_attribute,
+                          NULL as total_layer,
+                          NULL as layer,
                           NULL  AS facing, 
                           NULL  AS is_eyelevel 
                         FROM 
@@ -537,6 +543,9 @@ tasks as (SELECT
                         NULL  AS mkt_share, 
                         NULL  AS planned_visit_date, 
                         NULL  AS visited_flag, 
+                        NULL AS related_attribute,
+                        NULL as total_layer,
+                        NULL as layer,
                         NULL  AS facing, 
                         NULL  AS is_eyelevel 
                       FROM 
@@ -672,6 +681,9 @@ promotions as (SELECT
                       NULL  AS mkt_share, 
                       NULL  AS planned_visit_date, 
                       NULL  AS visited_flag, 
+                      NULL AS related_attribute,
+                      NULL as total_layer,
+                      NULL as layer,
                       NULL  AS facing, 
                       NULL  AS is_eyelevel 
                     FROM 
@@ -834,6 +846,9 @@ product_attribute_audit as  (
                     mkt_shr.mkt_share, 
                     NULL AS planned_visit_date, 
                     NULL AS visited_flag, 
+                    NULL AS related_attribute,
+                    NULL as total_layer,
+                    NULL as layer,
                     NULL AS facing, 
                     NULL AS is_eyelevel 
                   FROM 
@@ -1234,6 +1249,9 @@ product_attribute_audit as  (
                   mkt_shr.mkt_share, 
                   NULL AS planned_visit_date, 
                   NULL AS visited_flag, 
+                  NULL AS related_attribute,
+                  NULL as total_layer,
+                  NULL as layer,
                   NULL AS facing, 
                   NULL AS is_eyelevel 
                 FROM 
@@ -1642,6 +1660,9 @@ PRODUCT_ATTRIBUTE_AUDIT_2 as (
                 mkt_shr."target" AS mkt_share, 
                 NULL AS planned_visit_date, 
                 NULL AS visited_flag, 
+                NULL AS related_attribute,
+                NULL as total_layer,
+                NULL as layer,
                 NULL AS facing, 
                 NULL AS is_eyelevel 
               FROM 
@@ -2070,6 +2091,9 @@ display_2 as (
               NULL AS mkt_share, 
               NULL AS planned_visit_date, 
               NULL AS visited_flag, 
+              NULL AS related_attribute,
+              NULL as total_layer,
+              NULL as layer,
               NULL AS facing, 
               NULL AS is_eyelevel 
             FROM 
@@ -2435,6 +2459,9 @@ display_2 as (
             mkt_shr."target" AS mkt_share, 
             NULL AS planned_visit_date, 
             NULL AS visited_flag, 
+            NULL AS related_attribute,
+            NULL as total_layer,
+            NULL as layer,
             NULL AS facing, 
             NULL AS is_eyelevel 
           FROM 
@@ -2862,7 +2889,10 @@ display_3 as  (
           ) THEN 'NO' :: character varying ELSE srv.response END AS "y/n_flag", 
           NULL AS mkt_share, 
           NULL AS planned_visit_date, 
-          NULL AS visited_flag, 
+          NULL AS visited_flag,
+          NULL AS related_attribute,
+          NULL as total_layer,
+          NULL as layer, 
           NULL AS facing, 
           NULL AS is_eyelevel 
         FROM 
@@ -3228,6 +3258,9 @@ product_attribute_audit_4 as (
         mkt_shr."target" AS mkt_share, 
         NULL AS planned_visit_date, 
         NULL AS visited_flag, 
+        NULL AS related_attribute,
+        NULL as total_layer,
+        NULL as layer,
         NULL AS facing, 
         NULL AS is_eyelevel 
       FROM 
@@ -3654,7 +3687,10 @@ display_4 as (
       ) THEN 'NO' :: character varying ELSE srv.response END AS "y/n_flag", 
       NULL AS mkt_share, 
       NULL AS planned_visit_date, 
-      NULL AS visited_flag, 
+      NULL AS visited_flag,
+      NULL AS related_attribute,
+      NULL as total_layer,
+      NULL as layer, 
       NULL AS facing, 
       NULL AS is_eyelevel 
     FROM 
@@ -4010,6 +4046,9 @@ rir as (
             null as mkt_share,
             null as planned_visit_date,
             null as visited_flag,
+            srv.related_attribute,
+            srv.total_layer,
+            srv.layer,
             srv.facing_of_this_layer as facing,
             coalesce( he_lvl.is_eyelevel,0) as is_eyelevel     
         from edw_vw_pop6_visits_rir_data srv
@@ -4149,6 +4188,9 @@ planned_visits as (SELECT
       ):: text <> ('' :: character varying):: text
     )
   ) THEN 'Y' :: character varying ELSE 'N' :: character varying END AS visited_flag, 
+  NULL AS related_attribute,
+  NULL as total_layer,
+  NULL as layer,
   NULL AS facing, 
   NULL AS is_eyelevel 
 FROM 
@@ -4368,6 +4410,9 @@ final as
         mkt_share,
         planned_visit_date,
         visited_flag,
+        related_attribute,
+        total_layer,
+        layer,
         facing,
         is_eyelevel
     from transformed
