@@ -2,7 +2,17 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="delete from {{this}} where transaction_date is not null and transaction_date in (select transaction_date from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }});"
+        pre_hook=[
+            "
+            {% if is_incremental() %}
+            delete from {{this}} wks where wks.file_name in (select sdl.file_name 
+			from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }} sdl 
+            ) 
+            {% endif %}
+            "            
+            ,"delete from {{this}} where transaction_date is not null and transaction_date 
+                in (select transaction_date from {{ source('thasdl_raw', 'sdl_th_mt_bigc') }});"
+                ]
     )
 }}
 
