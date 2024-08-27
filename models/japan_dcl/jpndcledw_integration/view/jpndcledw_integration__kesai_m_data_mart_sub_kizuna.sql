@@ -1,8 +1,10 @@
-with kesai_m_data_mart_sub_tbl as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_tbl') }}
+with kesai_m_data_mart_sub_tbl as (
+select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna') }}
 ),
-final as(
-    SELECT kesai_m_data_mart_sub_tbl.saleno,
+
+final as (
+    SELECT 
+        kesai_m_data_mart_sub_tbl.saleno,
         kesai_m_data_mart_sub_tbl.gyono,
         kesai_m_data_mart_sub_tbl.meisaikbn,
         kesai_m_data_mart_sub_tbl.itemcode,
@@ -39,38 +41,7 @@ final as(
         kesai_m_data_mart_sub_tbl.c_didiscountmeisai,
         kesai_m_data_mart_sub_tbl.disetmeisaiid,
         kesai_m_data_mart_sub_tbl.c_dssetitemkbn,
-        kesai_m_data_mart_sub_tbl.maker,
-        kesai_m_data_mart_sub_tbl.saleno_p,
-        kesai_m_data_mart_sub_tbl.gyono_p,
-        kesai_m_data_mart_sub_tbl.itemcode_p,
-        kesai_m_data_mart_sub_tbl.itemcode_hanbai_p,
-        kesai_m_data_mart_sub_tbl.suryo_p,
-        kesai_m_data_mart_sub_tbl.jyu_suryo_p,
-        kesai_m_data_mart_sub_tbl.oyaflg_p,
-        kesai_m_data_mart_sub_tbl.tanka_p,
-        kesai_m_data_mart_sub_tbl.hensu_p,
-        kesai_m_data_mart_sub_tbl.kingaku_p,
-        kesai_m_data_mart_sub_tbl.meisainukikingaku_p,
-        kesai_m_data_mart_sub_tbl.meisaitax_p,
-        kesai_m_data_mart_sub_tbl.juchgyono_p,
-        kesai_m_data_mart_sub_tbl.dispsaleno_p,
-        kesai_m_data_mart_sub_tbl.juch_shur_p,
-        kesai_m_data_mart_sub_tbl.tyoseikikingaku_p,
-        kesai_m_data_mart_sub_tbl.anbunmeisainukikingaku_p,
-        kesai_m_data_mart_sub_tbl.den_nebiki_abn_kin_p,
-        kesai_m_data_mart_sub_tbl.den_nb_ab_sz_kin_p,
-        kesai_m_data_mart_sub_tbl.dclsm_hin_hin_nibu_id_p,
-        kesai_m_data_mart_sub_tbl.kkng_kbn_p,
-        kesai_m_data_mart_sub_tbl.shimebi_p,
-        kesai_m_data_mart_sub_tbl.tanka_tuka_p,
-        kesai_m_data_mart_sub_tbl.kingaku_tuka_p,
-        kesai_m_data_mart_sub_tbl.meisainukikingaku_tuka_p,
-        kesai_m_data_mart_sub_tbl.meisaitax_tuka_p,
-        kesai_m_data_mart_sub_tbl.marker_p,
-        kesai_m_data_mart_sub_tbl.uri_hen_kbn_p,
-        kesai_m_data_mart_sub_tbl.sal_jisk_imp_snsh_no_p,
-        kesai_m_data_mart_sub_tbl.dcljuch_id_p,
-        kesai_m_data_mart_sub_tbl.marker_np
+        kesai_m_data_mart_sub_tbl.maker 
     FROM kesai_m_data_mart_sub_tbl
 )
 select * from final
