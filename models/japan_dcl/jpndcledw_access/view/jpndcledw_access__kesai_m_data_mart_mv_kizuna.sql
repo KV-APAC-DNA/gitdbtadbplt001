@@ -1,5 +1,5 @@
 with kesai_m_data_mart_mv_kizuna as (
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
 ),
 
 final as (
