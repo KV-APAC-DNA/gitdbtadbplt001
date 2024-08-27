@@ -8,10 +8,10 @@ with kesai_m_data_mart_sub_old as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_old') }}
 ),
 kesai_m_data_mart_sub_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_kizuna') }}
 ),
 kesai_h_data_mart_sub as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_sub_kizuna') }}
 ),
 kesai_m_data_mart_sub_old_chsi as(
     select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_old_chsi') }}
