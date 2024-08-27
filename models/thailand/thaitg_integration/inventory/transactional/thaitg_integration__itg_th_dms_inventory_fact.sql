@@ -2,7 +2,18 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','recdate','whcode','productcode']
+        unique_key=  ['distributorid','recdate','whcode','productcode'],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.file_name in (select sdl.SOURCE_FILE_NAME from
+            {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} sdl 
+            where SOURCE_FILE_NAME not in
+            (
+                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
+            )  
+            )
+            {% endif %}
+        "
     )
 }}
 
@@ -10,10 +21,10 @@ with source as(
         SELECT *,
             dense_rank() OVER (
                 PARTITION BY distributorid,recdate,whcode,productcode
-                ORDER BY file_name DESC
+                ORDER BY SOURCE_FILE_NAME DESC
                 ) AS rnk
         FROM {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} source
-        WHERE file_name NOT IN (
+        WHERE SOURCE_FILE_NAME NOT IN (
                 SELECT DISTINCT file_name
                 FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
                 ) qualify rnk = 1
@@ -33,7 +44,7 @@ final as(
         to_date(expirydate, 'YYYYMMDD')::timestamp_ntz(9) as expirydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
         run_id::number(18,0) as run_id,
-        file_name as file_name
+        SOURCE_FILE_NAME as file_name
     from source
 )
 select * from final

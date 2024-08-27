@@ -2,7 +2,22 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) 
+        pre_hook= [
+            "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.filename in (select sdl.filename 
+			from {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }} sdl
+            where filename not in (
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__duplicate_test') }}
+                    union all
+                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__test_file') }}
+                    ) ) 
+            {% endif %}
+            "
+            
+            ,"delete from {{this}} WHERE (UPPER(TRIM(distributorid)),UPPER(TRIM(arcode))) IN (SELECT DISTINCT UPPER(TRIM(distributorid)),UPPER(TRIM(arcode)) 
                     FROM {{ source('thasdl_raw', 'sdl_th_dms_chana_customer_dim') }}
                     where filename not in (
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__null_test') }}
@@ -11,7 +26,8 @@
                     union all
                     select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_chana_customer_dim__test_file') }}
                     )   
-                    );"
+                    )
+                    "]
     )
 }}
 
@@ -70,7 +86,7 @@ final as(
         branchcode::varchar(50) as branchcode,
         branchname::varchar(150) as branchname,
         frequencyofvisit::varchar(50) as frequencyofvisit,
-        filename::varchar(100) as file_name,
+        filename::varchar(100) as filename,
         run_id::varchar(50) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source

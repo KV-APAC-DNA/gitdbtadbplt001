@@ -2,7 +2,23 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["employee_id","route_id","schedule_date"]
+        unique_key=["employee_id","route_id","schedule_date"],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.filename in (select sdl.filename 
+			from {{ source('thasdl_raw', 'sdl_la_gt_schedule') }} sdl
+            where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_schedule__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_schedule__null_test') }}
+            union all 
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_schedule__schedule_date_format_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_schedule__employee_id_format_test') }}
+            ) 
+            ) 
+            {% endif %}
+        "
     )
 }}
 with source as (
@@ -27,7 +43,7 @@ final as (
         try_to_date(schedule_date,'yyyymmdd') as schedule_date,
         approved::varchar(5) as approved,
         saleunit::varchar(20) as saleunit,
-        filename::varchar(50) as file_name,
+        filename::varchar(50) as filename,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

@@ -3,7 +3,21 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
-        pre_hook="delete from {{this}} 
+        pre_hook=[
+            "
+                {% if is_incremental() %}
+                delete from {{this}} itg where itg.filename in (select sdl.filename 
+                from {{source('thasdl_raw','sdl_mym_gt_sales_report_fact')}}
+                where filename not in (
+                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__null_test') }}
+                union all
+                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__duplicate_test') }}
+                union all
+                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__test_format') }}
+                ) ) 
+                {% endif %}
+            "
+            ,"delete from {{this}} 
         where md5(coalesce(upper(item_no),'N/A') || coalesce(upper(customer_code),'N/A') || coalesce(upper(customer_name),'N/A')) in (select md5(coalesce(upper(item_no),'N/A') || coalesce(upper(customer_code),'N/A') || coalesce(upper(customer_name),'N/A')) 
         from {{source('thasdl_raw','sdl_mym_gt_sales_report_fact')}}
         where filename not in (
@@ -14,7 +28,7 @@
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_mym_gt_sales_report_fact__test_format') }}
     )
         
-         )"
+         )"]
     )
 }}
 
@@ -41,7 +55,7 @@ final as
         customer_group::varchar(100) as customer_group,
         customer_code::varchar(50) as customer_code,
         customer_name::varchar(100) as customer_name,
-        filename::varchar(50) as file_name,
+        filename::varchar(50) as filename,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm

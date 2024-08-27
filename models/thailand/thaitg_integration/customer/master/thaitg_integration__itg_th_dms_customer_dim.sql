@@ -2,7 +2,19 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','arcode']
+        unique_key=  ['distributorid','arcode'],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.file_name in 
+            (select sdl.SOURCE_FILE_NAME from
+            {{ source('thasdl_raw', 'sdl_th_dms_customer_dim') }} sdl 
+		    where SOURCE_FILE_NAME not in
+            (
+                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_customer_dim__duplicate_test') }}
+            )
+            )
+            {% endif %}
+        "
     )
 }}
 
@@ -11,10 +23,10 @@ AS (
     SELECT *,
         dense_rank() OVER (
             PARTITION BY distributorid,
-            arcode ORDER BY file_name DESC
+            arcode ORDER BY SOURCE_FILE_NAME DESC
             ) AS rnk
     FROM {{ source('thasdl_raw', 'sdl_th_dms_customer_dim') }} source
-    WHERE file_name NOT IN (
+    WHERE SOURCE_FILE_NAME NOT IN (
             SELECT DISTINCT file_name
             FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_customer_dim__duplicate_test') }}
             ) qualify rnk=1
@@ -60,7 +72,7 @@ AS (
         try_to_timestamp(modifydate) AS modifydate,
         current_timestamp()::timestamp_ntz(9) AS curr_date,
         run_id::number(18, 0) AS run_id,
-        file_name as file_name
+        SOURCE_FILE_NAME as file_name
     FROM source
     )
 SELECT *

@@ -2,7 +2,18 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['date','product_code','product_name']
+        unique_key=  ['date','product_code','product_name'],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.filename in (select sdl.filename 
+			from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }} sdl
+            where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test') }}
+            ) ) 
+            {% endif %}
+        "
     )
 }}
 
@@ -28,7 +39,7 @@ final as (
     cast ("181-365days" as NUMERIC(18,4)) as "181-365days",
     cast (">365days" as NUMERIC(18,4)) as ">365days",
     cast (total_qty as NUMERIC(18,4)) as total_qty,
-    filename::varchar(50) as file_name,
+    filename::varchar(50) as filename,
     run_id::varchar(14) as run_id,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) AS updt_dttm

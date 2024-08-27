@@ -2,7 +2,19 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ["distributorid","orderno","orderdate","arcode","linenumber"]
+        unique_key=  ["distributorid","orderno","orderdate","arcode","linenumber"],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.filename in (select sdl.filename 
+			from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }} sdl 
+            where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__duplicate_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__test_format') }}
+            )
+            ) 
+            {% endif %}
+        "
     )
 }}
 
@@ -61,7 +73,7 @@ final as
         promocode2::varchar(255) as promocode2,
         promocode3::varchar(255) as promocode3,
         avgdiscount::number(18,4) as avgdiscount,
-        filename::varchar(50) as file_name,
+        filename::varchar(50) as filename,
         run_id::varchar(14) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,

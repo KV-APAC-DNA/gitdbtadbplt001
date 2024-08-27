@@ -8,7 +8,7 @@
 WITH source AS (
         SELECT *
         FROM {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} source
-        WHERE file_name NOT IN (
+        WHERE SOURCE_FILE_NAME NOT IN (
                 SELECT DISTINCT file_name
                 FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
                 )

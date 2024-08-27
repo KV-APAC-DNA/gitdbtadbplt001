@@ -2,7 +2,29 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} 
+        pre_hook= [
+            "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.filename in (select sdl.filename 
+			from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }} sdl
+            where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__duplicate_test') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_date_format_odd_eve_leap') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format_flag') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_format_null_flag') }}
+			union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_multiple_column') }}
+            ) ) 
+            {% endif %}
+            "
+            ,"delete from {{this}} 
         where substring(filename,6,8)::integer <= (select distinct substring(filename,6,8)::integer 
         from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }}
         where filename not in (
@@ -20,7 +42,7 @@
 			union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_msl_distribution__test_multiple_column') }}
             )
-        ) and substring(filename,6,6) = (select distinct substring(filename,6,6) from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }} )"
+        ) and substring(filename,6,6) = (select distinct substring(filename,6,6) from {{ source('thasdl_raw','sdl_th_gt_msl_distribution') }} )"]
     )
 }}
 
@@ -68,7 +90,7 @@ final as(
         osa::varchar(10) as osa,
         oos::varchar(10) as oos,
         oos_reason::varchar(255) as oos_reason,
-        filename::varchar(100) as file_name,
+        filename::varchar(100) as filename,
         run_id::varchar(100) as run_id,
         current_timestamp()::timestamp_ntz(9) as crt_dttm
     from source
