@@ -1,17 +1,17 @@
 models:
-  - name: aspwks_integration__wks_philippines_regional_sellout
+  - name: phlwks_integration__wks_philippines_regional_sellout
     config: 
       alias: wks_philippines_regional_sellout
       tags: ["cutomer_360_ph","transformation"]
-  - name: aspwks_integration__wks_philippines_regional_sellout_base
+  - name: phlwks_integration__wks_philippines_regional_sellout_base
     config: 
       alias: wks_philippines_regional_sellout_base
       tags: ["cutomer_360_ph","transformation"]
-  - name: aspwks_integration__wks_philippines_regional_sellout_npd
+  - name: phlwks_integration__wks_philippines_regional_sellout_npd
     config: 
       alias: wks_philippines_regional_sellout_npd
       tags: ["cutomer_360_ph","transformation"]
-  - name: aspwks_integration__wks_rpt_regional_ph_sellout_offtake_npd
+  - name: phlwks_integration__wks_rpt_regional_ph_sellout_offtake_npd
     config: 
       alias: wks_rpt_regional_ph_sellout_offtake_npd
       tags: ["cutomer_360_ph","transformation"]

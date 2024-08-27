@@ -1,8 +1,8 @@
-with wks_china_regional_sellout as
+with wks_philippines_regional_sellout as
 (
-    select * from {{ ref('aspwks_integration__wks_china_regional_sellout') }}
+    select * from {{ ref('phlwks_integration__wks_philippines_regional_sellout') }}
 ),
-final as 
+final as
 (
     SELECT *,
     Min(cal_date) Over (Partition By sap_parent_customer_key) as Customer_Min_Date,
@@ -11,6 +11,6 @@ final as
     RANK() OVER (PARTITION BY country_name,pka_product_key ORDER BY cal_date) AS rn_mkt,
     Min(cal_date) Over (Partition By sap_parent_customer_key,pka_product_key) as Customer_Product_Min_Date, 
     Min(cal_date) Over (Partition By country_name,pka_product_key) as Market_Product_Min_Date
-    FROM wks_china_regional_sellout
+    FROM wks_philippines_regional_sellout
 )
 select * from final

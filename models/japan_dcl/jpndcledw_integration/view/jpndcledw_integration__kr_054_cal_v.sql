@@ -10,7 +10,7 @@ cim01kokya as
 numbers_table as
 (
     SELECT row_number() OVER (order by kokyano) AS numbers_column,
-            (SELECT 365 * ((date_part('year',convert_timezone('UTC','Asia/Tokyo',sysdate())) -2020) + 1)) AS days,
+            (SELECT 365 * ((date_part('year',convert_timezone('UTC','Asia/Tokyo',current_timestamp())) -2020) + 1)) AS days,
             to_date(('20200101'::CHARACTER VARYING)::TEXT, ('YYYYMMDD'::CHARACTER VARYING)::TEXT)::timestamp_ntz(9) AS start_date
     FROM cim01kokya     
 ),

@@ -1,6 +1,6 @@
 with wks_pacific_regional_sellout as
 (
-    select * from {{ ref('aspwks_integration__wks_pacific_regional_sellout') }}
+    select * from {{ ref('pcfwks_integration__wks_pacific_regional_sellout') }}
 ),
 final as
 (

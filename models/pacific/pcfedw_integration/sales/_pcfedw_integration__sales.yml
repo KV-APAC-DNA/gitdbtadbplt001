@@ -115,7 +115,7 @@ models:
   - name: pcfedw_integration__vw_iri_scan_sales_analysis
     config:
       alias: vw_iri_scan_sales_analysis
-      tags: ["pacific_view","transformation"]
+      tags: ["j_pac_iri_scan_sales_etl_framework","transformation"]
   - name: pcfedw_integration__edw_vw_iri_ps_base_data
     config:
       alias: edw_vw_iri_ps_base_data
