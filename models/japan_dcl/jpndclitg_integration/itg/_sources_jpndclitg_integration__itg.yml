@@ -107,6 +107,8 @@ sources:
       - name: '"wqtm07属性未設定名称マスタ"'
       - name: tm72del_nm
       - name: aspac_common_mv
+      - name: kesai_m_data_mart_mv
+      - name: kesai_h_data_mart_mv
       - name: tbecorder_log_tmp
       - name: keirokbn
       - name: tm25shihyokubunshikii
