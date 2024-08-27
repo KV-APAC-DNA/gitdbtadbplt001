@@ -6,7 +6,7 @@
 }}
 
 with itg_copa_trans as(
-	select * from {{ ref('aspitg_integration__itg_copa_trans') }} 
+	select *,coalesce(cust_num,'') as cust_num_upd, coalesce(matl,'') as matl_upd, coalesce(dstr_chnl,'') as dstr_chnl_upd, coalesce(sls_grp,'') as sls_grp_upd, coalesce(cust_sls,'') as cust_sls_upd, coalesce(sls_org,'') as sls_org_upd, coalesce(plnt,'') as plnt_upd from {{ ref('aspitg_integration__itg_copa_trans') }} 
 ),
 edw_customer_sales_dim as(
 	select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }} 
@@ -33,15 +33,15 @@ union1 as(
 	A.co_cd as COMP_CODE,
 	A.crncy_key_trans_crncy as CURKEY_TC,
 	A.crncy_key as CURRENCY,
-	coalesce(A.cust_num,'') as CUSTOMER,
-	coalesce(A.cust_sls,'') as CUST_SALES,
-	coalesce(A.dstr_chnl,'') as DISTR_CHAN,
+	A.cust_num_upd as CUSTOMER,
+	A.cust_sls_upd as CUST_SALES,
+	A.dstr_chnl_upd as DISTR_CHAN,
 	SUBSTRING(A.caln_yr_mo, 1, 4) || 0 || SUBSTRING(A.caln_yr_mo, 5, 6) as FISCPER,
 	A.fisc_yr_var as FISCVARNT,
-	coalesce(A.matl,'') as MATERIAL,
+	A.matl_upd as MATERIAL,
 	A.obj_crncy_co_obj as OBJ_CURR,
 	'0' as RECORDTP,
-	coalesce(A.sls_grp,'') as SALES_GRP,
+	A.sls_grp_upd as SALES_GRP,
 	(0 || A.val_type_rpt) as VTYPE,
 	SUM(A.amt_cntl_area_crncy) as AMOCAC,
 	SUM(round(A.amt_obj_crncy)) as AMOCCC,
@@ -58,7 +58,7 @@ union1 as(
 	D.bravo_acct_l3 as S005_0ACCOUNT,
 	D.bravo_acct_l4 as S006_0ACCOUNT,
 	D.bravo_acct_l5 as S007_0ACCOUNT,
-	coalesce(A.plnt,'') as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
+	A.plnt_upd as plnt-- added this column as part of Kizuna phase 2 DCL Integration to identify plants
 	FROM 
 	itg_copa_trans A,
 	edw_customer_sales_dim B,
@@ -68,17 +68,17 @@ union1 as(
 		FROM itg_query_parameters
 		WHERE parameter_name = 'company_code_filter_Kizuna'
 		) --hard coded values paramterised
-	AND A.dstr_chnl IN (
+	AND A.dstr_chnl_upd IN (
 		SELECT parameter_value
 		FROM itg_query_parameters
 		WHERE parameter_name = 'dstr_chnl_filter_Kizuna_phase2'
 		) --hard coded values paramterised
 	AND A.amt_obj_crncy = A.grs_amt_trans_crncy
-	AND A.cust_num = B.CUST_NUM
-	AND A.dstr_chnl = B.DSTR_CHNL
-	AND A.dstr_chnl = C.DSTR_CHNL
-	AND A.SLS_ORG = B.SLS_ORG
-	AND A.MATL = C.MATL_NUM
+	AND A.cust_num_upd = B.CUST_NUM
+	AND A.dstr_chnl_upd = B.DSTR_CHNL
+	AND A.dstr_chnl_upd = C.DSTR_CHNL
+	AND A.SLS_ORG_upd = B.SLS_ORG
+	AND A.MATL_upd = C.MATL_NUM
 	AND B.SLS_ORG = C.SLS_ORG
 	AND A.acct_num = D.ACCT_NUM
 	AND A.CHRT_ACCT = D.CHRT_ACCT
@@ -92,15 +92,15 @@ union1 as(
 	A.co_cd,
 	A.crncy_key_trans_crncy,
 	A.crncy_key,
-	coalesce(A.cust_num,''),
-	coalesce(A.cust_sls,''),
-	coalesce(A.dstr_chnl,''),
+	A.cust_num_upd,
+	A.cust_sls_upd,
+	A.dstr_chnl_upd,
 	A.caln_yr_mo,
 	A.fisc_yr_var,
-	coalesce(A.matl,''),
+	A.matl_upd,
 	A.obj_crncy_co_obj,
 	RECORDTP,
-	coalesce(A.sls_grp,''),
+	A.sls_grp_upd,
 	A.val_type_rpt,
 	B.SLS_GRP,
 	B.SLS_OFC,
@@ -114,7 +114,7 @@ union1 as(
 	D.bravo_acct_l3,
 	D.bravo_acct_l4,
 	D.bravo_acct_l5,
-	coalesce(A.plnt,'')
+	A.plnt_upd
 ),
 union2 as(
 	SELECT A.acct_num as ACCOUNT,
