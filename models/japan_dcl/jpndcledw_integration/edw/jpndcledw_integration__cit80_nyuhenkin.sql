@@ -36,7 +36,7 @@
                         WHERE   
                             KAISHA.KBNMEI = 'KAISYA' AND  
                             SAIKEN.KOUSHIN_DATE >= (SELECT
-                                                        CAST( TO_CHAR( CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
+                                                        CAST( TO_CHAR( CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
                                                     FROM {{ref('jpndcledw_integration__hanyo_attr')}} HANYO_ATTR
                                                     WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM')) 
                                                     AND  
@@ -68,7 +68,7 @@ AARTBKAISYTIAR as
 datefrom as
 (
     SELECT
-        CAST( TO_CHAR(CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
+        CAST( TO_CHAR(CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
     FROM HANYO_ATTR 
     WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM')
 ),

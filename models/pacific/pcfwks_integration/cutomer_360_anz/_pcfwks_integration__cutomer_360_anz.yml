@@ -1,17 +1,17 @@
 models:
-  - name: aspwks_integration__wks_pacific_regional_sellout
+  - name: pcfwks_integration__wks_pacific_regional_sellout
     config: 
       alias: wks_pacific_regional_sellout
       tags: ["cutomer_360_anz","transformation"]
-  - name: aspwks_integration__wks_pacific_regional_sellout_base
+  - name: pcfwks_integration__wks_pacific_regional_sellout_base
     config: 
       alias: wks_pacific_regional_sellout_base
       tags: ["cutomer_360_anz","transformation"]
-  - name: aspwks_integration__wks_pacific_regional_sellout_npd
+  - name: pcfwks_integration__wks_pacific_regional_sellout_npd
     config: 
       alias: wks_pacific_regional_sellout_npd
       tags: ["cutomer_360_anz","transformation"]
-  - name: aspwks_integration__wks_rpt_regional_pacific_sellout_offtake_npd
+  - name: pcfwks_integration__wks_rpt_regional_pacific_sellout_offtake_npd
     config: 
       alias: wks_rpt_regional_pacific_sellout_offtake_npd
       tags: ["cutomer_360_anz","transformation"]

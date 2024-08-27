@@ -123,7 +123,7 @@ final AS
 		"wqwt03通販売上明細"."部門6追加属性19",
 		"wqwt03通販売上明細"."部門6追加属性20"
 	FROM "wqwt03通販売上明細"
-    WHERE TO_CHAR(TO_DATE(TO_CHAR("wqwt03通販売上明細"."出荷年月日"), 'YYYYMMDD'), 'YYYY/MM') >= TO_CHAR(DATEADD(year, -3, CURRENT_DATE), 'YYYY/MM')
+    WHERE TO_CHAR(TO_DATE(TO_CHAR("wqwt03通販売上明細"."出荷年月日"), 'YYYYMMDD'), 'YYYY/MM') >= TO_CHAR(DATEADD(year, -3, current_timestamp()), 'YYYY/MM')
 	ORDER BY "wqwt03通販売上明細"."売上no",
 		"wqwt03通販売上明細"."受注区分コード",
 		"wqwt03通販売上明細"."返品理由コード"
