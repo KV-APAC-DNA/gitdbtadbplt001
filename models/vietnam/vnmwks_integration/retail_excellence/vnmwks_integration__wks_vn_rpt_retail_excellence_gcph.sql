@@ -333,7 +333,7 @@ FROM (SELECT MAIN.FISC_YR,
              SUM(MAIN.P3M_SALES_LP) OVER (PARTITION BY FISC_PER,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P3M_LP,		
              SUM(MAIN.P6M_SALES_LP) OVER (PARTITION BY FISC_PER,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P6M_LP,		
              SUM(MAIN.P12M_SALES_LP) OVER (PARTITION BY FISC_PER,DISTRIBUTOR_CODE,GLOBAL_PRODUCT_BRAND,PRODUCT_CODE) AS TOTAL_SALES_BY_SKU_P12M_LP		
-      FROM WKS_HK_RPT_RETAIL_EXCELLENCE MAIN)
+      FROM WKS_VN_RPT_RETAIL_EXCELLENCE MAIN)
 ),
 
 final as 
@@ -344,7 +344,7 @@ final as
 	market :: varchar(30) as market,
 	data_src :: varchar(14) as data_src,
 	channel_name :: varchar(337) as channel_name,
-	sold_to_code :: varchar(382) as sold_to_code,
+	soldto_code :: varchar(382) as soldto_code,
 	distributor_code :: varchar(225) as distributor_code,
 	distributor_name :: varchar(801) as distributor_name,
 	sell_out_channel :: varchar(337) as sell_out_channel,

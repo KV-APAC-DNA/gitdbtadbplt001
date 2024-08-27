@@ -83,7 +83,7 @@ as
                    AND   matl_type_cd = 'FERT'
                    AND   (lst_nts IS NOT NULL)) a
                JOIN itg_vn_product_mapping c ON a.ean_code = c.barcode
-             WHERE rn = 1) prodhier ON LTRIM (msl.sku_unique_identifier,'0') = LTRIM (prodhier.matl_num)
+             WHERE rn = 1) prodhier ON LTRIM (msl.sku_unique_identifier,'0') = LTRIM (prodhier.ean_code)
   LEFT JOIN (SELECT Data_Src,
                     CNTRY_CD,
                     CNTRY_NM,

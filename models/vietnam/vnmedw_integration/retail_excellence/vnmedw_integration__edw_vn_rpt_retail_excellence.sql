@@ -19,7 +19,7 @@ edw_vn_rpt_retail_excellence as
        MARKET,
        DATA_SRC,
        CHANNEL_NAME,
-       SOLDTO_CODE,
+       SOLDTO_CODE AS SOLD_TO_CODE,
        DISTRIBUTOR_CODE,
        DISTRIBUTOR_NAME,
        SELL_OUT_CHANNEL,
