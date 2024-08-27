@@ -84,7 +84,7 @@ models:
   - name: aspitg_integration__itg_prox_report_bi_contract
     config:
       alias: itg_prox_report_bi_contract
-      tags: ["prox_master","transformation"]
+      tags: ["prox_master","ingestion"]
   - name: aspitg_integration__sdl_raw_prox_report_bi_contract
     config:
       alias: sdl_raw_prox_report_bi_contract
