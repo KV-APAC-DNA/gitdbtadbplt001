@@ -7,6 +7,9 @@
 
 with source as(
     select * from {{ source('phlsdl_raw', 'sdl_ph_cpg_calls') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_cpg_calls__null_test')}}
+    )
 ),
 final as
 (

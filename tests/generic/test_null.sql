@@ -40,6 +40,7 @@
     where
         {%- for item in not_null_columns %}
         (trim({{item}}) is null or trim({{item}}) = '')
+
             {%- if not loop.last %} {{ condition }}
             {%- endif -%}
         {% endfor %}

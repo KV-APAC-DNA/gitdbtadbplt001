@@ -4,11 +4,39 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "delete from {{this}} where left(jj_mnth_id,4) in (select distinct year 
-					   from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }} );"
+					   from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }} 
+                       where file_name not in (
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+                    union all
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+                    union all
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+                    union all
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+                    union all
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+                    union all
+                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+    )
+                       );"
     )
 }}
 with sdl_ph_iop_trgt as (
-select * from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }}
+    select *,dense_rank() over(partition by jj_mnth_id order by file_name desc) as rnk
+     from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+    ) qualify rnk = 1
 ),
 
 transformed as (
