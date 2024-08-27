@@ -6,10 +6,10 @@
 
 
 with kesai_h_data_mart_mv_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 kesai_m_data_mart_mv_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
 ),
 cim01kokya as(
     select * from  {{ ref('jpndcledw_integration__cim01kokya') }}
