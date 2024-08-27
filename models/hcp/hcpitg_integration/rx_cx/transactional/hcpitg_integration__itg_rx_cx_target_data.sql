@@ -34,7 +34,7 @@ final as
 	lysq_ach_nr::number(10,2) as lysq_ach_nr,
 	lysq_qty::number(18,0) as lysq_qty,
 	lysq_presc::number(10,2) as lysq_presc,
-	target_qty::number(18,0) as target_qty,
+	target_qty::number(18,4) as target_qty,
 	target_presc::number(10,2) as target_presc,
 	"case"::number(18,0) as case,
 	prescription_action::varchar(100) as prescription_action,
