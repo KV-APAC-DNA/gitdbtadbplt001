@@ -7,6 +7,15 @@
 
 with source as(
     select * from {{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}
+    where filename not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_non_ise_puregold__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_non_ise_puregold__duplicate_test')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_non_ise_puregold__test_date_format_odd_eve_leap')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_non_ise_puregold__lookup_test')}}
+    )
 ),
 final as
 (

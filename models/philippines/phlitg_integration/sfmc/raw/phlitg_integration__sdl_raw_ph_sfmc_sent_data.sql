@@ -8,6 +8,15 @@ with
 source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_ph_sfmc_sent_data') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_sfmc_sent_data__test_null__ff')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_sfmc_sent_data__test_duplicate__ff')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_sfmc_sent_data__test_lookup__ff')}}
+        union all
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_sfmc_sent_data_format_test')}}
+    )
 ),
 
 final as

@@ -3,12 +3,20 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['filename'],
-        pre_hook= ["delete from {{this}} where substring(filename, 15, 6) in ( select substring(filename, 15, 6) from {{ source('phlsdl_raw', 'sdl_ph_ecommerce_offtake_acommerce') }} );"]
+        pre_hook= ["delete from {{this}} where substring(filename, 15, 6) in ( select substring(filename, 15, 6) from {{ source('phlsdl_raw', 'sdl_ph_ecommerce_offtake_acommerce') }} where filename not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_ecommerce_offtake_acommerce__null_test')}}
+    )
+        
+        );"]
     )
 }}
 
 with source as(
-    select * from {{ source('phlsdl_raw', 'sdl_ph_ecommerce_offtake_acommerce') }}
+    select *
+     from {{ source('phlsdl_raw', 'sdl_ph_ecommerce_offtake_acommerce') }}
+    where filename not in (
+        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_ecommerce_offtake_acommerce__null_test')}}
+    )
 ),
 final as(
     select 
