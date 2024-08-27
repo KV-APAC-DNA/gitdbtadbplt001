@@ -2392,7 +2392,7 @@ block5 as
 				 ELSE CASE WHEN ((sell.country_code):: text = 'PH' :: text) THEN 'PHP' :: character varying 
 			ELSE sell.from_currency END END END END AS from_currency, 
 			'USD' :: character varying AS to_currecy, 
-			((cur.exch_rate / (cur.from_ratio * cur.to_ratio))):: numeric(15, 5) AS exchange_rate, 
+			trunc((cur.exch_rate / (cur.from_ratio * cur.to_ratio)),5) AS exchange_rate, 
 			cur.from_ratio AS exrt_from_ratio, 
 			cur.to_ratio AS exrt_to_ratio, 
 			(sell.sellout_sales_quantity):: numeric(38, 11) AS sellout_sales_quantity, 
