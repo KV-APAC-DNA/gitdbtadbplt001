@@ -1,8 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
 
 with v_rpt_order_details_with_history as
 (

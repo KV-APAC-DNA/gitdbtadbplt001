@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
-
 with edw_retailer_calendar_dim as
 (
     select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
