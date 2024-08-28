@@ -3,7 +3,7 @@
     (
         materialized='incremental',
         incremental_strategy= 'delete+insert',
-        unique_key= ['diinquireid']
+        unique_key= ['diinquireid', 'c_diinquirekesaiid']
     )
 }}
 
