@@ -818,7 +818,7 @@ FROM (
                                                                         END
                                                                     )
                                                                     AND (
-                                                                        ltrim((d.sku_id)::text, (0)::text) = ltrim((f.trusted_upc)::text, (0)::text)
+                                                                        rtrim(ltrim((d.sku_id)::text, (0)::text)) = rtrim(ltrim((f.trusted_upc)::text, (0)::text))
                                                                     )
                                                                 )
                                                             )
