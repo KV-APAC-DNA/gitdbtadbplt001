@@ -272,7 +272,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -290,7 +290,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -308,7 +308,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -326,7 +326,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -344,7 +344,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -362,7 +362,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -618,7 +618,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.date_year AS yr,
             dimdate.date_month AS mnth,
@@ -908,7 +908,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -926,7 +926,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -944,7 +944,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -962,7 +962,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -980,7 +980,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -998,7 +998,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -1254,7 +1254,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.jnj_date_year AS yr,
             dimdate.jnj_date_month AS mnth,
@@ -1277,7 +1277,7 @@ AS (
             hier.l2_manager_name,
             hier.sector,
             employee.organization_l3_name
-        ) fct5 ON src1.employee_key::TEXT = fct5.employee_key::TEXT
+        ) fct5 ON rtrim(src1.employee_key)::TEXT = rtrim(fct5.employee_key)::TEXT
         AND src1.jnj_date_year = fct5.yr
         AND src1.jnj_date_month::TEXT = fct5.mnth::TEXT
         AND fct5.country_key::TEXT = src1.country::TEXT
@@ -1544,7 +1544,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1562,7 +1562,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1580,7 +1580,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1598,7 +1598,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1616,7 +1616,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1634,7 +1634,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1891,7 +1891,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.my_date_year AS yr,
             dimdate.my_date_month AS mnth,

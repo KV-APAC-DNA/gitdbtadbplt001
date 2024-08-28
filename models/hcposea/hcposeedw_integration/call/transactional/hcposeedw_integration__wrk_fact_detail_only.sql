@@ -193,7 +193,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.CALL_DATE_TIME)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.CALL_DATE_TIME)
+        THEN dateadd(hour,-7, C1.CALL_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.CALL_DATE_TIME)
@@ -216,7 +216,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.LAST_MODIFIED_DATE)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.LAST_MODIFIED_DATE)
+        THEN dateadd(hour,-7,CALL_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.LAST_MODIFIED_DATE)
@@ -239,7 +239,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+        THEN dateadd(hour,-7, C1.MOBILE_LAST_MODIFIED_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
@@ -480,7 +480,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.CALL_DATE_TIME)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.CALL_DATE_TIME)
+        THEN dateadd(hour,-7, C1.CALL_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.CALL_DATE_TIME)
@@ -503,7 +503,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.LAST_MODIFIED_DATE)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.LAST_MODIFIED_DATE)
+        THEN dateadd(hour,-7,CALL_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.LAST_MODIFIED_DATE)
@@ -526,7 +526,7 @@ AS (
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
       WHEN c1.country_code = 'ID'
         -- THEN convert_timezone('UTC+07', C1.CALL_DATE_TIME)
-        THEN CONVERT_TIMEZONE('UTC', 'Asia/Jakarta', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+        THEN dateadd(hour,-7, C1.MOBILE_LAST_MODIFIED_DATE_TIME)
       WHEN c1.country_code = 'MY'
         -- THEN convert_timezone('MYT', C1.CALL_DATE_TIME)
         THEN CONVERT_TIMEZONE('UTC', 'Asia/Kuala Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)

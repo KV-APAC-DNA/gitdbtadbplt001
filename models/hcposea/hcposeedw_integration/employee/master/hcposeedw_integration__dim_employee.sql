@@ -19,7 +19,7 @@ itg_lookup_eng_data as (
 ),
 
 wrk_dim_organization as (
-    select * from DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__WRK_DIM_ORGANIZATION
+    select * from {{ ref('hcposeedw_integration__wrk_dim_organization') }}
 ),
 
 IQ AS (
