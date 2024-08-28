@@ -11,7 +11,7 @@ AS (
 itg_common_prod_hier
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_COMMON_PROD_HIER
+    FROM {{ source('hcposeitg_integration', 'itg_common_prod_hier') }}
     ),
 T1 AS
  (

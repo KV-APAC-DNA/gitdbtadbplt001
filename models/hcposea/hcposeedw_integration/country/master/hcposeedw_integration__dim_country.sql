@@ -1,5 +1,5 @@
 with itg_country as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_COUNTRY
+select * from {{ source('hcposeitg_integration', 'itg_country') }}
 ),
 final as (
 SELECT 

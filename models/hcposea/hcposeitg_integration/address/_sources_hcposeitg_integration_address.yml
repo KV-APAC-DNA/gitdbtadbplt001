@@ -38,6 +38,7 @@ sources:
     tables:
       - name: itg_common_prod_hier
       - name: itg_date_time
+      - name: itg_country
 
 
         

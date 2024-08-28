@@ -1,7 +1,7 @@
 WITH itg_date_time
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_date_time
+    FROM {{ source('hcposeitg_integration', 'itg_date_time') }}
     ),
 T1
 AS (

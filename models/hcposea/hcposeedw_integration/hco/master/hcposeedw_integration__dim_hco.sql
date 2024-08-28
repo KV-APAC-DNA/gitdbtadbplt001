@@ -4,7 +4,7 @@
         incremental_strategy= "append",
         pre_hook = ["{% if is_incremental() %}
                 delete from {{this}}
-                where hco_key in (select hco_key from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO itg_hco  where itg_hco.hco_key = hco_key);
+                where hco_key in (select hco_key from {{ ref('hcposeitg_integration__itg_account_hco') }} itg_hco  where itg_hco.hco_key = hco_key);
                 {% endif %}",
                 "{% if is_incremental() %}
                 delete from {{this}} where hco_key ='Not Applicable';
@@ -18,13 +18,13 @@ itg_lookup_eng_data as (
 select * from {{ source('hcposeitg_integration', 'itg_lookup_eng_data') }}
 ),
 itg_account_hco as (
-select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO 
+select * from {{ ref('hcposeitg_integration__itg_account_hco') }}
 ),
 itg_recordtype as (
 select * from {{ ref('hcposeitg_integration__itg_recordtype') }}
 ),
 itg_address as (
-select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ADDRESS
+select * from {{ ref('hcposeitg_integration__itg_address') }}
 ),
 HCO_TYP_ENG AS
 (SELECT COUNTRY_CODE, KEY_VALUE, TARGET_VALUE
