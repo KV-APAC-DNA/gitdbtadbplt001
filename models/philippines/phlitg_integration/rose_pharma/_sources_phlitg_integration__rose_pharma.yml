@@ -18,4 +18,5 @@ sources:
       schema: false
       identifier: false
     tables:
-      - name: ph_rka_Customers
+      - name: itg_mds_ph_pos_rosepharma_products
+      - name : itg_mds_ph_pos_rosepharma_customers
