@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where ( coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) ) in (
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where ( coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) ) in (
           select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }} WHERE encoded_report = '1'
           union 
           select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }} WHERE encoded_report = '1'
@@ -22,40 +23,60 @@
           select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }} WHERE encoded_report = '1'
           union 
           select distinct coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') as branch_code,UPPER(retailer_name) as retailer_name from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }} WHERE encoded_report = '1'
-         );"
+         );{% endif %}"
     )
 }}
 
 
 with wks_ph_non_ise_landmark_sm as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_sm') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_landmark_ds as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_landmark_ds') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_puregold as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_puregold') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_robinsons_ds as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_ds') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_robinsons_sm as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_robinsons_sm') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_rustans as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_rustans') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_shm as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_shm') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_super_8 as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_super_8') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_svi_smc as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_svi_smc') }}
+    qualify rnk = 1
 ),
 wks_ph_non_ise_waltermart as (
-    select * from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }}
+    select *, dense_rank() over (partition by coalesce(sku_code, 'NA'),coalesce(osa_check_date,'9999-12-31'),coalesce(upper(branch_code),'NA') ,UPPER(retailer_name) order by filename) as rnk
+    from {{ ref('phlwks_integration__wks_ph_non_ise_waltermart') }}
+    qualify rnk = 1
 ), 
 landmark_ds as (
     SELECT ret_nm_prefix,

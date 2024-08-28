@@ -1,16 +1,25 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy='append'
+        incremental_strategy='append',
+        pre_hook = 
+            "{% if is_incremental() %}
+                delete from {{this}} itg where itg.filename  in (select sdl.filename from
+                {{ source('phlsdl_raw','sdl_ph_tbl_surveynotes') }} sdl where filename not in (
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__null_test')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__duplicate_test')}}
+            ));
+            {%endif%}"
     )
 }}
 
 with source as(
     select * from {{ source('phlsdl_raw', 'sdl_ph_tbl_surveynotes') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__null_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__duplicate_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveynotes__duplicate_test')}}
     )
 ),
 final as(

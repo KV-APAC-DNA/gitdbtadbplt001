@@ -3,25 +3,42 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['jj_mnth_id'],
-        pre_hook= "delete from {{this}} where (jj_mnth_id) in (
-        select distinct jj_mnth_id from {{ source('phlsdl_raw', 'sdl_ph_bp_trgt') }}
-        where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_bp_trgt__null_test')}}
-        union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_bp_trgt__duplicate_test')}}
-    )
-        );"
+        pre_hook= 
+        ["{% if is_incremental() %}
+                delete from {{this}} itg where itg.filename  in (select sdl.filename from
+                {{ source('phlsdl_raw','sdl_ph_bp_trgt') }} sdl where filename not in
+                (
+                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_bp_trgt__null_test') }}
+                union all
+                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_bp_trgt__duplicate_test') }}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__format_test')}}
+                ));
+          {%endif%}",
+        "{% if is_incremental() %}
+            delete from {{this}} where (jj_mnth_id) in (
+            select distinct jj_mnth_id from {{ source('phlsdl_raw', 'sdl_ph_bp_trgt') }}
+            where filename not in (
+            select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__null_test')}}
+            union all
+            select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__duplicate_test')}}
+            union all
+            select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__format_test')}}
+        )
+        );{%endif%}"]
     )
 }}
 with source as
 (
-    select *,dense_rank() over(partition by jj_mnth_id  order by file_name desc) as rnk
+    select *,dense_rank() over(partition by jj_mnth_id  order by filename desc) as rnk
     from {{ source('phlsdl_raw', 'sdl_ph_bp_trgt') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_bp_trgt__null_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_bp_trgt__duplicate_test')}}
-    )
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_bp_trgt__format_test')}}
+    ) qualify rnk=1
 ),
 final as
 (
@@ -34,8 +51,7 @@ final as
     concat(left(filename, 10), '.xlsx')::varchar(100) as filename,
     run_id::varchar(50) as run_id,
     current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-    current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    filename
+    current_timestamp()::timestamp_ntz(9) as updt_dttm
     from source
 )
 select * from final

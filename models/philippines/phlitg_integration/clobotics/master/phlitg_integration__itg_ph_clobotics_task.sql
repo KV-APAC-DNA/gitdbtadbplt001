@@ -3,23 +3,36 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['filename'],
-        pre_hook= "delete from {{this}} where split_part(filename, '_', 1) in (
-        select distinct split_part(filename, '_', 1) as filename from {{ source('phlsdl_raw', 'sdl_ph_clobotics_task_raw_data') }});"
+        pre_hook= "{% if is_incremental() %}
+                delete from {{this}} where split_part(filename, '_', 1) in (
+                select distinct split_part(filename, '_', 1) as filename from {{ source('phlsdl_raw', 'sdl_ph_clobotics_task_raw_data') }}
+                where filename not in (
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__null_test')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test1')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test2')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test3')}}
+            )
+                );
+        {%endif%}"
     )
 }}
 
 with sdl_ph_clobotics_task_raw_data as 
 (
-    select * from {{ source('phlsdl_raw', 'sdl_ph_clobotics_task_raw_data') }}
+    select *, dense_rank() over (partition by null order by filename desc) as rnk
+    from {{ source('phlsdl_raw', 'sdl_ph_clobotics_task_raw_data') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__null_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test1')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test1')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test2')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test2')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test3')}}
-    )
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test3')}}
+    ) qualify rnk =1
 ),
 itg_ph_clobotics_store_mapping as 
 (

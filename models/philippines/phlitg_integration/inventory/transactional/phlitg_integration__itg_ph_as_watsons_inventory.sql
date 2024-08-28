@@ -4,14 +4,28 @@
         materialized="incremental",
         incremental_strategy="append",
         unique_key=["year","mnth_no","inv_week","item_cd"],
-        pre_hook="delete from {{this}} where nvl(year, 'NA') || nvl(mnth_no, 'NA') || nvl(inv_week, 'NA') || nvl(item_cd, '#') in ( select distinct nvl(substring(filename, 17, 4), 'NA') || substring(filename, 21, 2) || nvl(substring(filename, 23, 2), 'NA') || nvl(item_cd, '#') from {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
-        where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_null__ff')}}
-        union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff')}}
-        union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff')}})
-        );"
+        pre_hook=
+        ["{% if is_incremental() %}
+                delete from {{this}} itg where itg.filename  in (select sdl.filename from
+                {{ source('phlsdl_raw','sdl_ph_as_watsons_inventory') }} sdl where filename not in
+                (
+                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_as_watsons_inventory__test_null__ff') }}
+                union all
+                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff') }}
+                ));
+          {%endif%}",
+            
+        "{% if is_incremental() %}
+                delete from {{this}} where nvl(year, 'NA') || nvl(mnth_no, 'NA') || nvl(inv_week, 'NA') || nvl(item_cd, '#') in ( select distinct nvl(substring(filename, 17, 4), 'NA') || substring(filename, 21, 2) || nvl(substring(filename, 23, 2), 'NA') || nvl(item_cd, '#') from {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
+                where filename not in (
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_null__ff')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff')}})
+                );
+        {%endif%}"]
+        
 
 
     )
@@ -19,11 +33,11 @@
 with source as (
     select *, dense_rank() over(partition by null order by filename desc) as rnk from  {{ source('phlsdl_raw', 'sdl_ph_as_watsons_inventory') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_null__ff')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_null__ff')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_duplicate__ff')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_as_watsons_inventory__test_lookup__ff')}}
     )
     qualify rnk =1
 ),

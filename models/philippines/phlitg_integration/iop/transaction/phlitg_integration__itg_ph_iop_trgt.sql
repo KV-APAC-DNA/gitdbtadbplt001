@@ -3,39 +3,58 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where left(jj_mnth_id,4) in (select distinct year 
+        pre_hook= [
+            "{% if is_incremental() %}
+                delete from {{this}} itg where itg.filename  in (select sdl.filename from
+                {{ source('phlsdl_raw','sdl_ph_iop_trgt') }} sdl 
+                where filename not in (
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+                union all
+                select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+            ) );
+            {%endif%}",                    
+            "{% if is_incremental() %}
+                    delete from {{this}} where left(jj_mnth_id,4) in (select distinct year 
 					   from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }} 
-                       where file_name not in (
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+                       where filename not in (
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
                     union all
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
                     union all
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
                     union all
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
                     union all
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
                     union all
-                    select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
-    )
-                       );"
+                    select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+                    ));
+                    {%endif%}"]
     )
 }}
 with sdl_ph_iop_trgt as (
-    select *,dense_rank() over(partition by jj_mnth_id order by file_name desc) as rnk
+    select *,dense_rank() over(partition by null order by filename desc) as rnk
      from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }}
-    where file_name not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+    where filename not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
     ) qualify rnk = 1
 ),
 
