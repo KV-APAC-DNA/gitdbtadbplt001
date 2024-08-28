@@ -12,7 +12,7 @@ models:
   - name: ntaedw_integration__v_rpt_invc
     config: 
         alias: v_rpt_invc
-        tags: ["north_asia_views","transformation"]
+        tags: ["north_asia_views","rg_s3_to_dna_billing","J_Sap_bw_txn_Invoice_Wrapper_File_pooling","transformation"]
   - name: ntaedw_integration__v_intrm_invc_sls_cust_hier
     config: 
         alias: v_intrm_invc_sls_cust_hier
