@@ -1,17 +1,17 @@
 WITH itg_product
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_product
+    FROM {{ ref('hcposeitg_integration__itg_product') }}
     ),
 itg_recordtype
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_recordtype
+    FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
     ),
 itg_common_prod_hier
 AS (
-    SELECT *
-    FROM hcposeitg_integration.itg_common_prod_hier
+    SELECT * DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_COMMON_PROD_HIER
+    FROM 
     ),
 T1 AS
  (

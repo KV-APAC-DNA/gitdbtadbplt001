@@ -1,27 +1,27 @@
 WITH itg_time_off_territory
 AS (
     SELECT *
-    FROM hcpOSEITG_INTEGRATION.itg_time_off_territory
+    FROM {{ ref('hcposeitg_integration__itg_time_off_territory') }}
     ),
 dim_employee
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_employee
+    FROM hcpOSEEDW_INTEGRATION.dim_employee {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_date
+    FROM hcpOSEEDW_INTEGRATION.dim_date  {{ ref('hcposeedw_integration__dim_date') }}
     ),
 dim_country
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_country
+    FROM hcpOSEEDW_INTEGRATION.dim_country {{ ref('hcposeedw_integration__dim_country') }}
     ),
 itg_lookup_retention_period
 AS (
     SELECT *
-    FROM hcpOSEITG_INTEGRATION.itg_lookup_retention_period
+    FROM {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
     ),
 T1
 AS (

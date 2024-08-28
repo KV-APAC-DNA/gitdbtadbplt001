@@ -1,21 +1,21 @@
 with itg_territory as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_TERRITORY
+    select * from {{ ref('hcposeitg_integration__itg_territory') }}
 ),
 
 itg_userterritory as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_USERTERRITORY
+    select * from {{ ref('hcposeitg_integration__itg_userterritory') }}
 ),
 
 itg_user as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_USER
+    select * from {{ ref('hcposeitg_integration__itg_user') }}
 ),
 
 itg_profile as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_PROFILE
+    select * from {{ ref('hcposeitg_integration__itg_profile') }}
 ),
 
 itg_lookup_eng_data as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_ENG_DATA
+    select * from {{ source('hcposeitg_integration', 'itg_lookup_eng_data') }}
 ),
 
 wrk_dim_organization as (

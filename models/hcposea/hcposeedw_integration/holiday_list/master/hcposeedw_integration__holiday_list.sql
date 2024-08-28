@@ -1,5 +1,5 @@
 with itg_holiday_list as (
-    select * from dev_dna_core.hcposeitg_integration.itg_holiday_list
+    select * from {{ ref('hcposeitg_integration__itg_holiday_list') }}
 ),  
 
 result as ( 

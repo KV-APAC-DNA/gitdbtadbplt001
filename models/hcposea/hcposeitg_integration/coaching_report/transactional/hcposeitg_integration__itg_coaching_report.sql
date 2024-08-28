@@ -25,7 +25,7 @@ AS (
 itg_recordtype
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_recordtype
+  FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
   ),
 trns
 AS (

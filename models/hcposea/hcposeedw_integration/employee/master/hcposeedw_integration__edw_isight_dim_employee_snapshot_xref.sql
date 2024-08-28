@@ -1,7 +1,7 @@
 WITH isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.ISIGHT_DIM_EMPLOYEE_SNAPSHOT_XREF
+    FROM {{ ref('hcposeedw_integration__isight_dim_employee_snapshot_xref') }}
     ),
 result
 AS (

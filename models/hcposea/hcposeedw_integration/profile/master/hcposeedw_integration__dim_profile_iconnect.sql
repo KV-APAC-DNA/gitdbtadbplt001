@@ -1,5 +1,5 @@
 with dim_profile as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_PROFILE
+    select * from {{ ref('hcposeedw_integration__dim_profile') }}
 ),
 
 

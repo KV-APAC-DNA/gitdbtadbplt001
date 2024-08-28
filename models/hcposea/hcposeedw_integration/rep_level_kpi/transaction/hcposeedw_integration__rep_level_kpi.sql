@@ -1,23 +1,23 @@
 with dim_date as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_DATE
+select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
 holiday_list as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.HOLIDAY_LIST
+select * from {{ ref('hcposeedw_integration__holiday_list') }}
 ),
 vw_employee_hier as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.VW_EMPLOYEE_HIER
+select * from {{ ref('hcposeedw_integration__vw_employee_hier') }}
 ),
 dim_employee_iconnect as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_EMPLOYEE_ICONNECT
+select * from {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
 ),
 wrk_call_detail as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.WRK_CALL_DETAIL
-),
+select * from {{ ref('hcposeedw_integration__wrk_call_detail') }}
+), 
 wrk_coaching_detail as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.WRK_COACHING_DETAIL
+select * from {{ ref('hcposeedw_integration__wrk_coaching_detail') }}
 ),
 wrk_cycle_plan as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.WRK_CYCLE_PLAN
+select * from {{ ref('hcposeedw_integration__wrk_cycle_plan') }}
 ),
 transformed as
 (

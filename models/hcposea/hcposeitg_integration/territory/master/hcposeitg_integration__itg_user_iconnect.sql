@@ -1,7 +1,7 @@
 with itg_USER
 as
 (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_USER
+select * from {{ ref('hcposeitg_integration__itg_user') }}
 )
 ,
 transformed 

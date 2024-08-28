@@ -10,7 +10,7 @@ with sdl_hcp_osea_holiday_list as (
 ),
 
 result as (
-    select * from sdl_hcp_osea_holiday_list
+    select * from sdl_hcp_osea_holiday_list 
 ),
 
 final as (

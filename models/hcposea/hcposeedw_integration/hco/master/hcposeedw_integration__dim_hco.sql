@@ -5,23 +5,23 @@
         pre_hook = ["{% if is_incremental() %}
                 delete from {{this}}
                 where hco_key in (select hco_key from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO itg_hco  where itg_hco.hco_key = hco_key);
-                    {% endif %}",
-                    "{% if is_incremental() %}
+                {% endif %}",
+                "{% if is_incremental() %}
                 delete from {{this}} where hco_key ='Not Applicable';
-                    {% endif %}"]
+                {% endif %}"]
     )
 }}
 
 
 WITH 
 itg_lookup_eng_data as (
-select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_ENG_DATA
+select * from {{ source('hcposeitg_integration', 'itg_lookup_eng_data') }}
 ),
 itg_account_hco as (
-select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO
+select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ACCOUNT_HCO 
 ),
 itg_recordtype as (
-select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_RECORDTYPE
+select * from {{ ref('hcposeitg_integration__itg_recordtype') }}
 ),
 itg_address as (
 select * from dev_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_ADDRESS
