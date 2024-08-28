@@ -2,7 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','orderno','orderdate','arcode','linenumber']
+        unique_key=  ['distributorid','orderno','orderdate','arcode','linenumber'],
+        pre_hook = "
+            {% if is_incremental() %}
+            delete from {{this}} itg where itg.file_name in (select sdl.SOURCE_FILE_NAME 
+			from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }} sdl ) 
+            {% endif %}
+        "
     )
 }}
 
@@ -59,7 +65,8 @@ final as(
         promocode3::varchar(255) as promocode3,
         avgdiscount::number(18,4) as avgdiscount,
         current_timestamp()::timestamp_ntz(9) as curr_date,
-        run_id::number(18,0) as run_id
+        run_id::number(18,0) as run_id,
+        SOURCE_FILE_NAME::varchar(255) as file_name
     from source
     where rnk=1
 )
