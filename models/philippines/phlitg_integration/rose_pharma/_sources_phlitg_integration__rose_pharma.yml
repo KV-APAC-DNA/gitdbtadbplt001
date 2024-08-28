@@ -9,3 +9,13 @@ sources:
     tables:
       - name: sdl_pos_rks_rose_pharma
         tags: ["ph_rks_rose_pharma","ingestion"]
+
+  - name: phlitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: phlitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: ph_rka_Customers
