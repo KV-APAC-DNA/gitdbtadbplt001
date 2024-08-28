@@ -6,17 +6,17 @@ AS (
 dim_employee
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_employee {{ ref('hcposeedw_integration__dim_employee') }}
+    FROM {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_date  {{ ref('hcposeedw_integration__dim_date') }}
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 dim_country
 AS (
     SELECT *
-    FROM hcpOSEEDW_INTEGRATION.dim_country {{ ref('hcposeedw_integration__dim_country') }}
+    FROM {{ ref('hcposeedw_integration__dim_country') }}
     ),
 itg_lookup_retention_period
 AS (
