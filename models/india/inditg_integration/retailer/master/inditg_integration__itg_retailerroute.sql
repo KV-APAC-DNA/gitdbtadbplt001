@@ -33,7 +33,8 @@ final as
         syncid::number(38,0) as syncid,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        to_date(convert_timezone('UTC', current_timestamp())) as file_rec_dt
+        to_date(convert_timezone('UTC', current_timestamp())) as file_rec_dt,
+        file_name::varchar(225) as file_name
     from wks_csl_retailerroute
 )
 select * from final

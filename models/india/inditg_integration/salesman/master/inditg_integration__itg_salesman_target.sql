@@ -2,9 +2,13 @@
    config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "{% if is_incremental() %}
+        pre_hook= ["{% if is_incremental() %}
         delete from {{this}} where fisc_year||month_nm in (select year||month from {{source('indsdl_raw','sdl_salesman_target')}});
-        {% endif %}"
+        {% endif %}",
+        "{% if is_incremental %}
+        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_salesman_target') }} sdl 
+        {% endif %}"]
     )
 }}
 with sdl_salesman_target as
@@ -40,7 +44,8 @@ trans as
         brand_focus,
         measure_type,
         sm_target as sm_tgt_amt,
-        CURRENT_TIMESTAMP() as crt_dttm
+        CURRENT_TIMESTAMP() as crt_dttm,
+        file_name
     from sdl_salesman_target
 ),
 
@@ -58,7 +63,8 @@ final as
 	brand_focus::varchar(50) as brand_focus,
 	measure_type::varchar(50) as measure_type,
 	sm_tgt_amt::number(38,6) as sm_tgt_amt,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm
+	current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    file_name::varchar(225) as file_name
     
     from trans
 )

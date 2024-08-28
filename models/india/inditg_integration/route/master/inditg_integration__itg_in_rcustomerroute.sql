@@ -4,7 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_retailer_route') }} ) > 0 then 1 else 0 end = 1;
+        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_retailer_route') }} where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer_route__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer_route__duplicate_test')}})) > 0 then 1 else 0 end = 1;
         {% endif %}"
     )
 }}
@@ -12,6 +15,10 @@
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_in_retailer_route') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer_route__duplicate_test')}})
 ),
 final as 
 (
@@ -26,7 +33,8 @@ final as
         createddt::timestamp_ntz(9) as createddt,
         filename::varchar(100) as filename,
         run_id::varchar(50) as run_id,
-        crt_dttm::timestamp_ntz(9) as crt_dttm
+        crt_dttm::timestamp_ntz(9) as crt_dttm,
+        file_name::varchar(225) as file_name
     from source
 )
 select * from final

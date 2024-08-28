@@ -24,5 +24,6 @@ select load_date::timestamp_ntz(9) as load_date,
     product_id::varchar(20) as product_id,
     product_name::varchar(65535) as product_name,
     sum_of_sales::float as sum_of_sales,
-    sum_of_mrpsales::float as sum_of_mrpsales
+    sum_of_mrpsales::float as sum_of_mrpsales,
+    file_name:: varchar(255) as file_name
  from final

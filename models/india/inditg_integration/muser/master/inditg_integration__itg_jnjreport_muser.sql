@@ -3,7 +3,9 @@
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["musername"],
-        merge_exclude_columns= ["crt_dttm", "updt_dttm"]
+        merge_exclude_columns= ["crt_dttm", "updt_dttm"],
+        pre_hook  = "delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_muser') }}) sdl) "
     )
 }}
 
@@ -52,7 +54,8 @@ final as
 	NULL::number(18,0) as nwczone,
 	NULL::number(18,0) as nwcterritory, 
 	current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-	current_timestamp()::timestamp_ntz(9) AS updt_dttm
+	current_timestamp()::timestamp_ntz(9) AS updt_dttm,
+    file_name:: varchar(255) as file_name
 	FROM
 	(Select distinct * from source) src
 )

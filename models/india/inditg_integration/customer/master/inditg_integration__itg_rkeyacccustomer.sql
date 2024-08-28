@@ -3,7 +3,9 @@
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["customercode"],
-        merge_exclude_columns= ["crt_dttm", "updt_dttm"]
+        merge_exclude_columns= ["crt_dttm", "updt_dttm"],
+        pre_hook = "delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }} sdl" 
     )
 }}
 
@@ -43,7 +45,8 @@ final as
         modusercode::varchar(50) as modusercode,
         createddt::timestamp_ntz(9) as createddt,
         current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-        current_timestamp()::timestamp_ntz(9) AS updt_dttm
+        current_timestamp()::timestamp_ntz(9) AS updt_dttm,
+        file_name:: varchar(225) as file_name
 	FROM
 	(Select distinct * from source) src
 )

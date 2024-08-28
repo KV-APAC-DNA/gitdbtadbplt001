@@ -9,6 +9,7 @@
                     IN (SELECT DISTINCT COALESCE(TRIM(distcode), 'NA'),COALESCE(UPPER(TRIM(srnrefno)), 'NA')
                     FROM {{ ref('inditg_integration__itg_salesreturn_del') }});
                     {% endif %}"
+                    
     )
 }}
 

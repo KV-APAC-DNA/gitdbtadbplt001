@@ -3,7 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
+        pre_hook = ["{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE UPPER(TRIM(LEFT(Visit_DateTime,10)) )||UPPER(TRIM(Region) )||UPPER(TRIM(JnJRKAM) )||UPPER(TRIM(JnJZM_Code) )||UPPER(TRIM(JNJ_ABI_Code) )||UPPER(TRIM(JnJSupervisor_Code) )||UPPER(TRIM(ISP_Code) )||UPPER(TRIM(JnJISP_Name) )||UPPER(TRIM(MONTH) )||UPPER(TRIM(YEAR) 
         )||UPPER(TRIM(Format) )||UPPER(TRIM(Chain_Code) )||UPPER(TRIM(Chain) )||UPPER(TRIM(Store_Code) )||UPPER(TRIM(Store_Name) )||UPPER(TRIM(Category) )||UPPER(TRIM(Prod_Facings) )||UPPER(TRIM(Total_Facings) )|| UPPER(TRIM(Priority_Store))
@@ -38,14 +38,37 @@
             Prod_Facings,
             Total_Facings,
             Priority_Store
-        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}));
-        {% endif %}"
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}
+        where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__duplicate_test')}}
+        union all
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__date_format_test')}})));
+        {% endif %}",
+         "{%if is_incremental()%}
+         delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }} sdl where file_name not in
+            (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__null_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__date_format_test')}}
+        )
+        {% endif %}"]
     )
 }}
 
 with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}
+    where file_name not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__null_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__date_format_test')}})
 ),
 final as
 (

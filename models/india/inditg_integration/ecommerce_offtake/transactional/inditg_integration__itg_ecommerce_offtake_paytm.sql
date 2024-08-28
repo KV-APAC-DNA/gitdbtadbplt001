@@ -32,5 +32,6 @@ select load_date::timestamp_ntz(9) as load_date,
     product_category::varchar(2000) as product_category,
     category_id::varchar(20) as category_id,
     quantity_ordered::float as quantity_ordered,
-    gmv_ordered::float as gmv_ordered
+    gmv_ordered::float as gmv_ordered,
+    file_name::varchar(255) as file_name
  from final

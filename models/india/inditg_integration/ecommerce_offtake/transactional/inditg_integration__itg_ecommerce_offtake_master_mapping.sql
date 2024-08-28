@@ -29,5 +29,6 @@ select load_date::timestamp_ntz(9) as load_date,
     sku_name_in_file::varchar(2000) as sku_name_in_file,
     brand_name::varchar(255) as brand_name,
     lakshya_sku_name::varchar(255) as lakshya_sku_name,
-    ean::varchar(255) as ean
+    ean::varchar(255) as ean,
+    file_name:: varchar(225) as file_name
  from final

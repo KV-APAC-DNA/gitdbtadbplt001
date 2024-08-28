@@ -1,6 +1,11 @@
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_in_rtlsalesman') }}
+    where filename not in (
+        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_rtlsalesman__null_test')}}
+        union all
+        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_rtlsalesman__duplicate_test')}})
+
 ),
 final as 
 (

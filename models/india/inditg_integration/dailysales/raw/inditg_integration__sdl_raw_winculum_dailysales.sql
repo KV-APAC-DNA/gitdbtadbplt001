@@ -1,7 +1,9 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "append"
+        incremental_strategy= "append",
+        pre_hook =  "delete from {{this}} itg where itg.filename  in (select sdl.filename from
+        {{ source('indsdl_raw', 'sdl_winculum_dailysales')}} sdl"
     )
 }}
 with source as (

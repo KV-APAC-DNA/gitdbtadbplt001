@@ -36,7 +36,8 @@ final as
         createddate::timestamp_ntz(9) as createddate,
         modifieddate::timestamp_ntz(9) as modifieddate,
         createddt::timestamp_ntz(9) as createddt,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(225) as file_name
     from itg_rmrpstockprocess_opstk
 )
 select * from final

@@ -75,7 +75,8 @@ final as
         taxtype,
         createddt,
         downloadflag,
-        convert_timezone('Asia/Kolkata',current_timestamp()) AS updt_dttm
+        convert_timezone('Asia/Kolkata',current_timestamp()) AS updt_dttm,
+        file_name
     FROM wks_rpurchasedetail
 )
 select distcode::varchar(50) as distcode,
@@ -149,5 +150,6 @@ select distcode::varchar(50) as distcode,
     taxtype::varchar(10) as taxtype,
     createddt::timestamp_ntz(9) as createddt,
     downloadflag::varchar(3) as downloadflag,
-    updt_dttm::timestamp_ntz(9) as updt_dttm
+    updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
 from final

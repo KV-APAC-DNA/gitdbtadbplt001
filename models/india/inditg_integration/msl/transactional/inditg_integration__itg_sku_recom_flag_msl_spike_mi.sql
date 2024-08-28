@@ -28,7 +28,8 @@ final as (
 	retailer_code::varchar(50) as retailer_cd,
 	null::varchar(50) as route_code,
 	null::varchar(50) as salesman_code,
-	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm
+	convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as crtd_dttm,
+    file_name::varchar(255) as file_name
     from wks_skurecom_mi_target_tmp3
 )
 select * from final

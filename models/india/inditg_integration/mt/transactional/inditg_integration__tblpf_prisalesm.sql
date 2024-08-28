@@ -27,7 +27,8 @@ final as
 	value::number(16,4) as value,
 	nr::number(12,4) as nr,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name:: varchar(255) as file_name
     from tblpf_prisalesm_wrk
 )
 select * from final

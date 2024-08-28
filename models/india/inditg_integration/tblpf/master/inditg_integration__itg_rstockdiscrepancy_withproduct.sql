@@ -3,10 +3,14 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        pre_hook = "{% if is_incremental() %}
+        pre_hook = ["{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE to_date(closingdate) >= (SELECT MIN(to_date(closingdate)) FROM {{ source('indsdl_raw', 'sdl_rstockdiscrepancy_withproduct') }});
-        {% endif %}"
+        {% endif %}",
+        "{% if is_incremental()%}
+        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_rstockdiscrepancy_withproduct') }} sdl
+        {% endif %}"]
     )
 }}
 
@@ -80,7 +84,8 @@ final as
     COALESCE(ptr,0) AS ptr,
     createddate,
     createddt,
-    convert_timezone('Asia/Kolkata',current_timestamp()) AS updt_dttm
+    convert_timezone('Asia/Kolkata',current_timestamp()) AS updt_dttm,
+    file_name
     FROM source
 )
 select distcode::varchar(50) as distcode,
@@ -146,5 +151,6 @@ select distcode::varchar(50) as distcode,
     ptr::number(18,6) as ptr,
     createddate::timestamp_ntz(9) as createddate,
     createddt::timestamp_ntz(9) as createddt,
-    updt_dttm::timestamp_ntz(9) as updtdttm
+    updt_dttm::timestamp_ntz(9) as updtdttm,
+    file_name::varchar(225) as file_name
 from final

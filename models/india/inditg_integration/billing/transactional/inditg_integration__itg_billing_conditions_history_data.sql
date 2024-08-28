@@ -90,5 +90,6 @@ select bill_num::varchar(10) as bill_num,
     acrn_id::varchar(2) as acrn_id,
     recordmode::varchar(1) as recordmode,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
-    updt_dttm::timestamp_ntz(9) as updt_dttm
+    updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name:: varchar(255) as file_name
 from final

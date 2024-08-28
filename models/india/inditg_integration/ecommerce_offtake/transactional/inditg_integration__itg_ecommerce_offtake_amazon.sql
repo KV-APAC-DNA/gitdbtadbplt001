@@ -27,5 +27,6 @@ select load_date::timestamp_ntz(9) as load_date,
     quantity::number(18,0) as quantity,
     mrp::float as mrp,
     mrp_offtakes_value::float as mrp_offtakes_value,
-    month::varchar(20) as month
+    month::varchar(20) as month,
+    file_name:: varchar(255) as file_name
  from final

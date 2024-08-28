@@ -6,7 +6,11 @@
 }}
 
 with source as(
-    select * from {{ source('indsdl_raw', 'sdl_in_retailer_route') }} 
+    select * from {{ source('indsdl_raw', 'sdl_in_retailer_route') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer_route__duplicate_test')}}) 
 ),
 final as(
     select 
@@ -20,7 +24,8 @@ final as(
         createddt as createddt,
         filename as filename,
         run_id as run_id,
-        crt_dttm as crt_dttm
+        crt_dttm as crt_dttm,
+        file_name
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

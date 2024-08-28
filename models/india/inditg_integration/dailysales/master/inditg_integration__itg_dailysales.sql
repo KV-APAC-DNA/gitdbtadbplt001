@@ -10,7 +10,10 @@
         "
         ,"
         delete from {{this}} where (distcode, salinvno) in (select distcode, salinvno from {{ source('indsdl_raw', 'sdl_csl_dailysales') }} as s where datediff(day, s.createddate, s.modifieddate) > 6);
-        "]
+        "
+        ,
+        " delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_csl_dailysales') }} sdl"]
     )
 }}
 with source as
@@ -83,7 +86,8 @@ final as
     vcpschemeamount::number(18,6) as vcpschemeamount,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    modifieddate::timestamp_ntz(9) as modifieddate
+    modifieddate::timestamp_ntz(9) as modifieddate,
+    file_name:: varchar(225) as file_name
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

@@ -3,15 +3,27 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_retailer_route') }} ) > 0 then 1 else 0 end = 1;
-        {% endif %}"
+        pre_hook = [" {% if is_incremental() %}
+        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_retailer_route') }}  
+        ) > 0 then 1 else 0 end = 1;
+        {% endif %}",
+        " delete from {{this}} itg where itg.filename  in (select sdl.filename from
+        {{ source('indsdl_raw', 'sdl_in_retailer') }} sdl where filename not in (
+        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
+        union all
+        select distinct filename from {{source('indwks_integration','TRATBL_sdl_in_retailer__duplicate_test')}})"
+        ]
     )
 }}
 
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_in_retailer') }}
+    where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
+        union all
+        select distinct file_name from {{SOURCE('TRATBL_sdl_in_retailer__duplicate_test')}})
+
 ),
 final as 
 (

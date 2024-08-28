@@ -58,7 +58,8 @@ transformed as
     actv_flg,
     filename,
     crt_dttm,
-    updt_dttm
+    updt_dttm,
+    file_name
     from source
 ),
 final as
@@ -100,7 +101,8 @@ final as
 	actv_flg::varchar(1) as actv_flg,
 	filename::varchar(100) as filename,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
 
     from transformed
 )

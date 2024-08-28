@@ -39,7 +39,8 @@ final as
        COALESCE(unsalclsnrvalue,0) AS unsalclsnrvalue,
        COALESCE(offerclsnrvalue,0) AS offerclsnrvalue,
        crt_dttm,
-       updt_dttm
+       updt_dttm,
+       file_name
     FROM source
 )
 select serno::number(38,0) as serno,
@@ -65,5 +66,6 @@ select serno::number(38,0) as serno,
     unsalclsnrvalue::number(18,3) as unsalclsnrvalue,
     offerclsnrvalue::number(18,3) as offerclsnrvalue,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
-    updt_dttm::timestamp_ntz(9) as updt_dttm
+    updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(225) as file_name
 from final

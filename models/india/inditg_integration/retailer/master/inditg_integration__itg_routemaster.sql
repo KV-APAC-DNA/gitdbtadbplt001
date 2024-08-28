@@ -8,7 +8,10 @@
 }}
 with source as 
 (
-    select * from {{ source('indsdl_raw', 'sdl_rrl_routemaster') }}
+    select *,dense_rank() over(partition by distributorcode,routecode order by file_name desc) as rnk from {{ source('indsdl_raw', 'sdl_rrl_routemaster') }}
+     where file_name not in (
+        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_rrl_townmaster__null_test')}}
+     )
 ),
 trans as 
 (
@@ -25,7 +28,8 @@ trans as
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     row_number() over (partition by upper(sdl_rtm.routecode),upper(sdl_rtm.distributorcode) order by sdl_rtm.crt_dttm desc) rnum
-      from source sdl_rtm)
+      from source sdl_rtm),
+      file_name::varchar(225) as file_name
 where rnum = '1'
 ),
 final as 
@@ -39,7 +43,8 @@ final as
     rowid,
     filename,
     crt_dttm,
-    updt_dttm
+    updt_dttm,
+    file_name
 from trans
 )
 select * from final

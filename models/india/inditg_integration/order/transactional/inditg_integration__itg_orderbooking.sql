@@ -3,10 +3,14 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook = "{% if is_incremental() %}
+        pre_hook =[ "{% if is_incremental() %}
                     delete from {{this}} WHERE createdDate >= (SELECT min(s.createdDate)
                     FROM {{ source('indsdl_raw', 'sdl_csl_orderbooking') }} s);
-                    {% endif %}"
+                    {% endif %}",
+                    "{%if is_incremental()%}
+                     delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }} sdl)
+        {% endif %}"]
     )
 }}
 
@@ -47,7 +51,8 @@ final as
         syncid::number(38,0) as syncid,
         recommendedsku::varchar(10) as recommendedsku,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
 )
 select * from final

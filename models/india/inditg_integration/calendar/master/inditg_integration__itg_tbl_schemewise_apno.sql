@@ -20,7 +20,8 @@ final as
     schcategorytype1code::VARCHAR(50) AS schcategorytype1code,
     schcategorytype2code::VARCHAR(50) AS schcategorytype2code,
     current_timestamp()::timestamp_ntz(9) AS crt_dttm,
-    current_timestamp()::timestamp_ntz(9) AS updt_dttm
+    current_timestamp()::timestamp_ntz(9) AS updt_dttm,
+    file_name::varchar(255) as file_name
   FROM wks_csl_tbl_schemewise_apno
 )
 select * from final

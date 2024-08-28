@@ -1,0 +1,14 @@
+version: 2
+
+sources:  
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: APATE012_WORKSPACE
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_sss_scorecard_data__null_test
+      
+        

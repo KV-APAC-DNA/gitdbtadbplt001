@@ -1,0 +1,18 @@
+version: 2
+
+sources:  
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: APATE012_WORKSPACE
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_in_rtlsalesman__null_test
+        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+      - name: TRATBL_sdl_in_rtlsalesman__duplicate_test  
+      - name: TRATBL_sdl_in_rtldistributor__null_test
+      - name: TRATBL_sdl_in_rtldistributor__duplicate_test
+      - name: TRATBL_sdl_in_rtlheader__null_test
+      - name: TRATBL_sdl_in_rtlheader__duplicate_test

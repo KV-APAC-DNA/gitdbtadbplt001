@@ -3,7 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook = "{% if is_incremental() %}
+        pre_hook = ["{% if is_incremental() %}
                 DELETE FROM {{this}}
                   WHERE modifieddate >=(
                   SELECT min(modifieddate)
@@ -16,7 +16,11 @@
                   FROM {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }}
                   where DATEDIFF(day, CreatedDate, ModifiedDate) > 7
               );
-                {% endif %}"
+                {% endif %}",
+                "{% if is_incremental %}
+        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+        {{ source('indsdl_raw', 'sdl_csl_schemeutilization') }} sdl 
+        {% endif %}"]
     )
 }}
 
@@ -56,7 +60,8 @@ final as
         servicecrnrefno::varchar(100) as servicecrnrefno,
         rtrurccode::varchar(100) as rtrurccode,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(225) as file_name
     from source
 )
 select * from final

@@ -3,7 +3,7 @@ version: 2
 sources:  
   - name: indwks_integration
     database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: indwks_integration
+    schema: APATE012_WORKSPACE
     quoting:
       database: false
       schema: false
@@ -11,4 +11,8 @@ sources:
     tables:
       - name: TRATBL_sdl_rrl_townmaster__null_test
         # tags: ["in_rt_sales","ingestion"]
+      - name: TRATBL_sdl_rrl_usermaster__null_test
+      - name: TRATBL_sdl_rrl_retailervalueclass__null_test
+      - name: TRATBL_sdl_rrl_retailercategory__null_test
+     
         

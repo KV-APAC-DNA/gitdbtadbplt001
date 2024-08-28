@@ -61,7 +61,8 @@ final as
 	coalesce(dbrestore_prdnrvalue_current,0)::number(16,4) as dbrestore_prdnrvalue_current,
 	coalesce(dbrestore_ptrvalue_current,0)::number(16,4) as dbrestore_ptrvalue_current,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name:: varchar(255) as file_name
     from itg_tblpf_secsalesm_wrk
 )
 select * from final

@@ -23,5 +23,6 @@ select load_date::timestamp_ntz(9) as load_date,
     sku_code::varchar(255) as sku_code,
     qty::float as qty,
     mrp::float as mrp,
-    product_name::varchar(65535) as product_name
+    product_name::varchar(65535) as product_name,
+    file_name::varchar(255) as file_name
  from final

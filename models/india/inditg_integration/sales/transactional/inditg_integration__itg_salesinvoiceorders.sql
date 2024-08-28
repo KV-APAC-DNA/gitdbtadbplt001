@@ -2,7 +2,11 @@
     config
     (
         materialized="incremental",
-        incremental_strategy="append"
+        incremental_strategy="append",
+        pre_hook = "{%if is_incremental()%}
+    delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+       {{ source('indsdl_raw', 'sdl_csl_salesinvoiceorders') }} sdl)
+        {% endif %}"
     )
 }}
 
@@ -21,7 +25,8 @@ final as
         createddate::timestamp_ntz(9) as createddate,
         syncid::number(38,0) as syncid,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

@@ -22,7 +22,8 @@ final as
 	retail_value::number(18,3) as retail_value,
 	wt_ret_qty::number(38,11) as wt_ret_qty,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm
+	current_timestamp()::timestamp_ntz(9) as updt_dttm,
+    file_name::varchar(255) as file_name
     from wks_cg_retail_ds
 )
 select * from final
