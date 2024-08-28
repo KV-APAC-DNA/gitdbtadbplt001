@@ -1,5 +1,5 @@
 with kesai_h_data_mart_mv as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }} 
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }} 
    -- TO_DATE(CAST(date_column AS STRING), 'YYYYMMDD') 
 ),
 cim01kokya as(
@@ -9,7 +9,7 @@ kokyano_list_016_manual as(
     select * from {{ source('jpdcledw_integration','kokyano_list_016_manual') }} 
 ),
 kesai_m_data_mart_mv as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }} 
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }} 
 ),
 cld_m as(
     select * from {{ ref('jpndcledw_integration__cld_m') }} 

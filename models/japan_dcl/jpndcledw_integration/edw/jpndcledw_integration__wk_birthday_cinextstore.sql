@@ -20,7 +20,7 @@ WK as
       FROM tbEcOrder o
      WHERE (o.dirouteid = '7' OR o.dirouteid = '8' OR o.dirouteid = '9' )
        AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-01'::DATE)),'YYYYMMDD') 
-       --TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE())),'YYYYMMDD') 
+       --TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp())),'YYYYMMDD') 
        AND o.c_diallhenpinflg = '0'
        AND o.diCancel = '0'
        AND o.dielimflg = '0'

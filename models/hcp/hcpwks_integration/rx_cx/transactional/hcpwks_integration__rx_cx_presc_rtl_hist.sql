@@ -20,7 +20,7 @@ FROM (SELECT fisc_yr,
              month,
              hcp_id,
              product,
-             (hcp_presc / cnt_tbl.vent_ret_count) AS presc_fair_share
+             trunc((hcp_presc / cnt_tbl.vent_ret_count),2) AS presc_fair_share
       FROM rx_cx_hcp_presc hcp
       INNER JOIN (SELECT v_custid_dr,
                          COUNT(v_custid_rtl) AS vent_ret_count
