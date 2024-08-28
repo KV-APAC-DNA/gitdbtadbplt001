@@ -66,7 +66,7 @@ aeon as(
     from wk_pos_daily_aeon
   {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-    where TO_DATE(wk_pos_daily_aeon.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{this}} where account_key='AEON')     
+    where TO_DATE(wk_pos_daily_aeon.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{this}} where account_key='AEON')     
     {% endif %}
 ),
 csms as(
@@ -100,7 +100,7 @@ csms as(
     from wk_pos_daily_csms
   {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-    where TO_DATE(wk_pos_daily_csms.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{this}} where account_key='CSMS')     
+    where TO_DATE(wk_pos_daily_csms.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{this}} where account_key='CSMS')     
     {% endif %}
 ),
 dnki as(
@@ -134,7 +134,7 @@ dnki as(
     from wk_pos_daily_dnki
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_dnki.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{ this }} where account_key='DNKI') 
+        where TO_DATE(wk_pos_daily_dnki.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{ this }} where account_key='DNKI') 
         {% endif %}
 ),
 otherss as(
@@ -168,7 +168,7 @@ otherss as(
     from wk_pos_daily_others
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_others.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{ this }} ) 
+        where TO_DATE(wk_pos_daily_others.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{ this }} ) 
         {% endif %}
 ),
 tsur as(
@@ -202,7 +202,7 @@ tsur as(
     from wk_pos_daily_tsur
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_tsur.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{ this }} where account_key='TSUR') 
+        where TO_DATE(wk_pos_daily_tsur.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{ this }} where account_key='TSUR') 
         {% endif %}
 ),
 sugi as(
@@ -235,8 +235,8 @@ sugi as(
         to_char(CURRENT_TIME, 'HH24:MI:SS') as upload_time
     from wk_pos_daily_sugi
         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_sugi.accounting_date, 'YYYYMMDD') > (select max(accounting_date) from {{ this }} where account_key='SUGI') 
+        -- this filter will only be applied on an incremental run             
+        where TO_DATE(wk_pos_daily_sugi.accounting_date, 'YYYYMMDD') not in (select distinct accounting_date from {{ this }} where account_key='SUGI') 
         {% endif %}
 ),
 wlca as(
@@ -270,7 +270,7 @@ wlca as(
     from wk_pos_daily_wlca
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
-        where TO_DATE(wk_pos_daily_wlca.accounting_date, 'YYYY-MM-DD') > (select max(accounting_date) from {{ this }} where account_key='WLCA') 
+        where TO_DATE(wk_pos_daily_wlca.accounting_date, 'YYYY-MM-DD') not in (select distinct accounting_date from {{ this }} where account_key='WLCA') 
         {% endif %}
 ),
 transformed as(
