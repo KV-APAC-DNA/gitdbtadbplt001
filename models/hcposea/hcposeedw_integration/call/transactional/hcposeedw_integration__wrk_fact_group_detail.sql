@@ -26,7 +26,7 @@ as (
 itg_lookup_retention_period 
 as (
     select *
-    from hcposeitg_integration.itg_lookup_retention_period
+    from {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
 ),
 dim_hco
 as (
