@@ -5,29 +5,29 @@ edw_okr_brand_map as(
     select * from {{ source('aspedw_integration', 'edw_okr_brand_map') }}
 ),
 final as(
-    select case when kpi = 'CM' then 'Contribution_margin' else nvl(kpi,'') end as kpi,
-       nvl(datatype,'') as datatype,
+    select case when kpi = 'CM' then 'Contribution_margin' else kpi end as kpi,
+       datatype,
        case when cluster = 'MA' then 'Metropolitan Asia'
             when cluster = 'ANZ' then 'Pacific'
             when cluster = 'One CHINA' then 'China'
             when cluster = 'ONE JP' then 'Japan'
             when cluster = 'South Asia' then 'Southern Asia'
-            else nvl(cluster,'') end as cluster ,
+            else cluster end as cluster ,
        case when market = 'China Personal Care' then 'China PC'
             when market = 'China Selfcare' then 'China Self'
             when market = 'Japan JJKK' then 'JJKK'
 			when market = 'DCL Japan' then 'Japan DCL'
 			when market = 'Korea' then 'South Korea'
-            else nvl(market,'') end as market,
-       case when (fact.brand is not null or fact.brand <> '') then br_map.segment else nvl(fact.segment,'') end as segment ,
+            else market end as market,
+       case when (fact.brand is not null or fact.brand <> '') then br_map.segment else fact.segment end as segment ,
        case when fact.brand = 'Ci Labo' then 'Dr. Ci: Labo'
-            else nvl(fact.brand,'') end as brand,
-  nvl(yearmonth,'') as yearmonth,
+            else fact.brand end as brand,
+  yearmonth,
   year,
-  nvl(quarter,'') as quarter,
+  quarter,
   actuals,
   target,
-  nvl(target_type,'') as target_type,
+  target_type,
 filename,
 run_id ,
 crt_dttm
