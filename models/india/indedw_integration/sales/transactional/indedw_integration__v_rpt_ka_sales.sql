@@ -1,3 +1,7 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
+
 with edw_key_account_dim as
 (
     select * from {{ ref('indedw_integration__edw_key_account_dim') }}

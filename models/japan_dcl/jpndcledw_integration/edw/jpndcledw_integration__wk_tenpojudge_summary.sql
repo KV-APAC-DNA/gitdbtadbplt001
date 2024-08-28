@@ -1,7 +1,7 @@
 WITH KESAI_H_DATA_MART_MV
 AS
 (
-    SELECT * FROM {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
+    SELECT * FROM {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 WK_POINT_HANROJUDGE AS
 (
