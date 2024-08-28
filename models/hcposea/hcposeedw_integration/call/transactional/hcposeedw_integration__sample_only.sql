@@ -27,7 +27,7 @@ AS (
 dim_country
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_COUNTRY
+    from {{ ref('hcposeedw_integration__dim_country') }}
     ),
 d
 AS (
@@ -36,49 +36,49 @@ AS (
     WHERE nvl(d.is_deleted, '0') = '0'
     ),
 dim_employee
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_EMPLOYEE
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_profile
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_PROFILE
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_profile') }}
     ),
 dim_organization
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_ORGANIZATION
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_organization') }}
     ),
 dim_date
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_DATE
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_date') }}
     ),
 itg_lookup_retention_period
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEITG_INTEGRATION.ITG_LOOKUP_RETENTION_PERIOD
+as (
+    select *
+    from {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
     ),
-DIM_PRODUCT_INDICATION
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
+dim_product_indication
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 dim_remote_meeting
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_REMOTE_MEETING
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_remote_meeting') }}
     ),
 dim_hcp
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_HCP
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 dim_hco
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.hcpOSEEDW_INTEGRATION.DIM_HCO
+as (
+    select *
+    from {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 us_pr
 AS (
