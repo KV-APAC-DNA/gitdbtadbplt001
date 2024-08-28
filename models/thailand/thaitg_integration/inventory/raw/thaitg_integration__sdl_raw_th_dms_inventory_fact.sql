@@ -15,12 +15,14 @@ WITH source AS (
         ),
     final AS (
         SELECT *
-        FROM source { % IF is_incremental() % }
-            -- this filter will only be applied on an incremental run
+        FROM source 
+        {% if is_incremental() %}
             WHERE curr_date > (
                 SELECT max(curr_date)
                 FROM {{ this }}
-                ) { % endif % } )
+                ) 
+        {% endif %} 
+        )
 
 
          SELECT *

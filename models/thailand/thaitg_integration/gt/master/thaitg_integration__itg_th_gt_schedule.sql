@@ -6,7 +6,7 @@
             "
             {% if is_incremental() %}
             delete from {{this}} itg where itg.filename in (select sdl.filename 
-			from {{ source('thasdl_raw','sdl_th_gt_schedule') }}
+			from {{ source('thasdl_raw','sdl_th_gt_schedule') }} sdl
             where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__null_test') }}
             union all
