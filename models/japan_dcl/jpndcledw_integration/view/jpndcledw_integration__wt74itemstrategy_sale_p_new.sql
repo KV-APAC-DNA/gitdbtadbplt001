@@ -1004,7 +1004,7 @@ AS (
 	),
 main
 AS (
-	SELECT to_date((
+	SELECT try_to_date((
 				(
 					(
 						(
