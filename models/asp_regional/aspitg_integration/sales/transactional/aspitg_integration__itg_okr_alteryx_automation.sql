@@ -4,12 +4,17 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
-        delete from {{this}} where (upper(kpi), upper(datatype) , 
-        coalesce (upper(cluster) , 'NA') , coalesce (upper(market) , 'NA'),
-        coalesce (upper(segment) , 'NA'),coalesce (upper(brand) , 'NA') , 
-        coalesce (upper(yearmonth) , 'NA') , year , coalesce (quarter , 9999) ,
-          coalesce (upper(target_type) , 'NA') ) in (select upper(kpi), 
-          upper(datatype) , coalesce (upper(cluster) , 'NA') , coalesce (upper(market) , 'NA'),coalesce (upper(segment) , 'NA'),coalesce (upper(brand) , 'NA') , coalesce (upper(yearmonth) , 'NA') , year , coalesce (quarter , 9999) , coalesce (upper(target_type) , 'NA') from {{ ref('aspwks_integration__sdl_okr_alteryx_automation') }})
+        delete from {{this}} a USING {{ ref('aspwks_integration__sdl_okr_alteryx_automation') }} b 
+        where upper(a.datatype) = upper(b.datatype) 
+        and upper(a.kpi) = upper(b.kpi)
+        and nvl(a.cluster,'') =nvl(b.cluster,'')
+        and nvl(a.market,'')=nvl(b.market,'')
+        and nvl(a.segment,'') = nvl(b.segment,'')
+        and nvl(a.brand,'')= nvl(b.brand,'')
+        and nvl(a.yearmonth,'') = nvl(b.yearmonth,'')
+        and nvl(a.target_type,'') = nvl(b.target_type,'')
+        and a.year= b.year
+        and nvl(a.quarter,9999) = nvl(b.quarter,9999);
         {% endif %}"
     )
 }}
