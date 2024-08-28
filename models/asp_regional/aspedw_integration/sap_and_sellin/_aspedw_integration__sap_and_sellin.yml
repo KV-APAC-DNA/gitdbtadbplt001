@@ -183,7 +183,7 @@ models:
   - name: aspedw_integration__v_rpt_copa_gcph
     config: 
       alias: v_rpt_copa_gcph
-      tags: ["prox_datamart_refresh","transformation"]
+      tags: ["prox_datamart","transformation"]
   
   - name: aspedw_integration__v_rpt_copa_gl_hid_disc
     config: 

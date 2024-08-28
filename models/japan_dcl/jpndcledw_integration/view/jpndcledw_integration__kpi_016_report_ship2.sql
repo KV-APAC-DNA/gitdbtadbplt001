@@ -84,7 +84,7 @@ FROM
                 ) 
                 AND (
                   "k".ship_dt >= (
-                    DATEADD(day, -1095, sysdate())
+                    DATEADD(day, -1095, current_timestamp())
                   )
                 )
               ) 

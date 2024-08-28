@@ -1539,7 +1539,7 @@ temp11 as
                             end as brand
                         FROM hcpitg_integration.ITG_MDS_HCP360_PRODUCT_MAPPING
                         WHERE Brand = 'DERMA'
-                    ) M ON (upper(I.product_DESCRIPTION)) = (upper(m.iqvia))
+                    ) M ON (upper(I.PACK_DESCRIPTION)) = (upper(m.iqvia))
                 WHERE rtrim(upper(I.data_source)) = upper('Aveeno_body')
             ) iqvia
     ),
