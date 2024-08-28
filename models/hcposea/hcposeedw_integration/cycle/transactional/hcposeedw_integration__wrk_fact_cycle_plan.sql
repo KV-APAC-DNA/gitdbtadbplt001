@@ -21,7 +21,7 @@ dim_organization as (
 select * from {{ ref('hcposeedw_integration__dim_organization') }}
 ),
 itg_lookup_retention_period as (
-select * from dev_dna_core.hcposeitg_integration.itg_lookup_retention_period
+select * from {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
 ),
 final as (
 SELECT COUNTRY.COUNTRY_KEY,

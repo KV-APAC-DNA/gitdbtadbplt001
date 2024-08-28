@@ -11,7 +11,7 @@ AS (
 itg_lookup_retention_period
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_lookup_retention_period
+  FROM {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
   ),
 itg_call_discussion
 AS (

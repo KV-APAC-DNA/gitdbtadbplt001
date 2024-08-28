@@ -45,7 +45,7 @@ dim_country as (
 select * from {{ ref('hcposeedw_integration__dim_country') }}
 ),
 itg_lookup_retention_period as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_RETENTION_PERIOD
+select * from {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
 ),
 transformed as (
 select DISTINCT
