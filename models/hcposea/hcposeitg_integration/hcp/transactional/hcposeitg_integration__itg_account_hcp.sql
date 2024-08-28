@@ -18,10 +18,10 @@
 
 with sdl_hcp_osea_account_hcp as (
     select * from {{ source('hcposesdl_raw', 'sdl_hcp_osea_account_hcp') }}
-)
+),
 t1
 as (
-    select md5(upper(country_code) || account_source_id) as hcp_key,
+    select md5(concat(upper(country_code),account_source_id)) as hcp_key,
         account_source_id,
         (
             case 

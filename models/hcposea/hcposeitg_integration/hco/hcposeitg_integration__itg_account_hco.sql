@@ -8,9 +8,9 @@
                                                 FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_account_hco') }} STG_HCO
                                                 WHERE STG_HCO.ACCOUNT_SOURCE_ID = ACCOUNT_SOURCE_ID)
                     AND   COUNTRY_CODE IN (SELECT DISTINCT UPPER(COUNTRY_CODE)
-                                        FROM hcp_osea_sdl.sdl_hcp_OSEA_ACCOUNT_HCO);",
+                                        FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_account_hco') }});",
                         
-        post_hook=" UPDATE {{this}}
+        post_hook=" UPDATE {{this}} ITG_ACCOUNT_HCO
             SET PARENT_HCO_NAME = STG.HCO_NAME
             FROM (SELECT STG_HCO.ACCOUNT_SOURCE_ID,
                         UPPER(STG_HCO.COUNTRY_CODE) COUNTRY_CODE,
