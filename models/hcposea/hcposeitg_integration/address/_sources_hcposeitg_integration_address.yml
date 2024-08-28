@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: hcposesdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: hcposesdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: sdl_hcp_osea_address
+      tests:
+        - test_null:
+            select_columns: ["account_source_id", "country_code"]
+            not_null_columns: ["account_source_id", "country_code"]
+            name: TRATBL_sdl_hcp_osea_address__null_test
+            config:
+              store_failures: true
+              schema: hcposewks_integration
+        - test_duplicate:
+            select_columns: ["account_source_id", "country_code"]
+            group_by_columns: ["account_source_id", "country_code"]
+            name: TRATBL_sdl_hcp_osea_address__duplicate_test
+            config:
+              store_failures: true
+              schema: hcposewks_integration
+            
+
+  - name: hcposeitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcposeitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_common_prod_hier
+      - name: itg_date_time
+
+
+        
