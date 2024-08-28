@@ -1,14 +1,14 @@
-with itg_PROFILE
+with itg_profile
 as
 (
-    select * from dev_dna_core.hcposeitg_integration.itg_PROFILE
+    select * from {{ ref('hcposeitg_integration__itg_profile') }}
 )
 ,
 
 transformed 
 as
 (
- SELECT * FROM itg_PROFILE WHERE LOWER(CREATED_BY_ID) NOT like '%_rg'
+ select * from itg_profile where lower(created_by_id) not like '%_rg'
 )
 ,
 final

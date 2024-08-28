@@ -1,40 +1,30 @@
 with fact_cycle_plan as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.FACT_CYCLE_PLAN
+    select * from {{ ref('hcposeedw_integration__fact_cycle_plan') }}
 ),
-
 dim_hcp as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_HCP
+    select * from {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
-
 vw_employee_hier as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.VW_EMPLOYEE_HIER
+    select * from {{ ref('hcposeedw_integration__vw_employee_hier') }}
 ),
-
 dim_hco as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_HCO
+    select * from {{ ref('hcposeedw_integration__dim_hco') }}
 ),
-
 dim_product_indication as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
+    select * from {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
-
 dim_employee as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_EMPLOYEE
+    select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
-
 edw_isight_dim_employee_snapshot_xref as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.EDW_ISIGHT_DIM_EMPLOYEE_SNAPSHOT_XREF
+    select * from {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
 ),
-
 edw_isight_sector_mapping as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.EDW_ISIGHT_SECTOR_MAPPING
+    select * from {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
 ),
-
 itg_cycle_plan as (
-    select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CYCLE_PLAN
+    select * from {{ ref('hcposeitg_integration__itg_cycle_plan') }}
 ),
-
---WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!
 derived_table1 AS (
         SELECT fact.mid_date AS DATE,
             "date_part" (

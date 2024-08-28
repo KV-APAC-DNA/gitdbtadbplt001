@@ -7,8 +7,8 @@
                     {% if is_incremental() %}
                     DELETE FROM {{this}}
                     WHERE (TOT_SOURCE_ID) IN (SELECT TOT_SOURCE_ID
-                                            FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_time_off_territory') }} STG_TOT
-                                            WHERE STG_TOT.TOT_SOURCE_ID = TOT_SOURCE_ID);
+                    FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_time_off_territory') }} STG_TOT
+                    WHERE STG_TOT.TOT_SOURCE_ID = TOT_SOURCE_ID);
                     {% endif %}
                     "
     )
@@ -22,7 +22,7 @@ AS (
 itg_user
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_user
+  FROM {{ ref('hcposeitg_integration__itg_user') }}
   ),
 trns
 AS (

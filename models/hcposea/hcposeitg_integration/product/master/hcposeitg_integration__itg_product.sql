@@ -4,11 +4,11 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
-where (product_source_id) in (select product_source_id
-                              from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }} stg_prod
-                              where stg_prod.product_source_id = product_source_id)
-and   country_code = (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }});
-                    {% endif %}"
+                where (product_source_id) in (select product_source_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }} stg_prod
+                where stg_prod.product_source_id = product_source_id)
+                and country_code = (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_product') }});
+                {% endif %}"
     )
 }}
 

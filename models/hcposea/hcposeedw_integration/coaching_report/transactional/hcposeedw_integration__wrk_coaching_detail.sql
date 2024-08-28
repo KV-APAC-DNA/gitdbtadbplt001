@@ -1,17 +1,17 @@
 with fact_coaching_report as (
-    select * from dev_dna_core.hcposeedw_integration.fact_coaching_report
+    select * from {{ ref('hcposeedw_integration__fact_coaching_report') }}
 ),
 
 dim_date as (
-    select * from dev_dna_core.hcposeedw_integration.dim_date
+    select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
 
 dim_employee_iconnect as (
-    select * from dev_dna_core.hcposeedw_integration.dim_employee_iconnect
+    select * from {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
 ),
 
 vw_employee_hier as (
-    select * from dev_dna_core.hcposeedw_integration.vw_employee_hier
+    select * from {{ ref('hcposeedw_integration__vw_employee_hier') }}
 ),
 
 

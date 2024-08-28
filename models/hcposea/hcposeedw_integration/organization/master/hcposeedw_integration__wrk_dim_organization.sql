@@ -1,17 +1,17 @@
 WITH itg_USER
 AS (
     SELECT *
-    FROM HCPOSEITG_INTEGRATION.itg_USER
+    FROM {{ ref('hcposeitg_integration__itg_user') }}
     ),
 itg_USERTERRITORY
 AS (
     SELECT *
-    FROM HCPOSEITG_INTEGRATION.itg_USERTERRITORY
+    FROM {{ ref('hcposeitg_integration__itg_userterritory') }}
     ),
 itg_TERRITORY
 AS (
     SELECT *
-    FROM HCPOSEITG_INTEGRATION.itg_TERRITORY
+    FROM {{ ref('hcposeitg_integration__itg_territory') }}
     ),
 t1
 AS (

@@ -1,32 +1,32 @@
 WITH wrk_fact_call_only
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__wrk_fact_call_only
+    FROM {{ ref('hcposeedw_integration__wrk_fact_call_only') }}
     ),
 wrk_fact_group_detail
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__WRK_FACT_GROUP_DETAIL
+    FROM {{ ref('hcposeedw_integration__wrk_fact_group_detail') }}
     ),
 wrk_fact_detail_only
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__wrk_fact_detail_only
+    FROM {{ ref('hcposeedw_integration__wrk_fact_detail_only') }}
     ),
 Sample_Only
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Sample_Only
+    FROM {{ ref('hcposeedw_integration__sample_only') }}
     ),
-Detail_with_Sample
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Detail_with_Sample
+detail_with_sample
+as (
+    select *
+    from {{ ref('hcposeedw_integration__detail_with_sample') }}
     ),
-Group_Detail_with_Sample
-AS (
-    SELECT *
-    FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__Group_Detail_with_Sample
+group_detail_with_sample
+as (
+    select *
+    from {{ ref('hcposeedw_integration__group_detail_with_sample') }}
     ),
 T1
 AS (

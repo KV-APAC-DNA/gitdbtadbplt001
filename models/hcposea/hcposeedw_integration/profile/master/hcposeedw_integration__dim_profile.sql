@@ -9,7 +9,7 @@
                     FROM {{this}}
                     WHERE PROFILE_KEY IN (
                         SELECT PROFILE_KEY
-                        FROM dev_dna_core.hcposeitg_integration.itg_profile ITG_PROF
+                        FROM {{ ref('hcposeitg_integration__itg_profile') }} ITG_PROF
                         WHERE ITG_PROF.PROFILE_KEY = PROFILE_KEY
                         );
                     DELETE
@@ -24,12 +24,12 @@
 WITH itg_lookup_eng_data
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_ENG_DATA
+  FROM {{ source('hcposeitg_integration', 'itg_lookup_eng_data') }}
   ),
 itg_profile
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.HCPOSEITG_INTEGRATION.itg_profile
+  FROM {{ ref('hcposeitg_integration__itg_profile') }}
   ),
 prof_func_name
 AS (

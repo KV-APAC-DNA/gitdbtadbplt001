@@ -5,8 +5,8 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}} 
-where territory_model_source_id  in(select territory_model_source_id from {{ source('hcposesdl_raw', 'sdl_hcp_osea_territory_model') }});
-                    {% endif %}"
+                where territory_model_source_id  in(select territory_model_source_id from {{ source('hcposesdl_raw', 'sdl_hcp_osea_territory_model') }});
+                {% endif %}"
     )
 }}
 

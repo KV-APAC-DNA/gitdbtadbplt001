@@ -1,82 +1,82 @@
 WITH fact_call_detail
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_detail
+    FROM {{ ref('hcposeedw_integration__fact_call_detail') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 vw_employee_hier
 AS (
     SELECT *
-    FROM hcposeedw_integration.vw_employee_hier
+    FROM {{ ref('hcposeedw_integration__vw_employee_hier') }}
     ),
-DIM_EMPLOYEE_ICONNECT
+dim_employee_iconnect
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_EMPLOYEE_ICONNECT
+    FROM {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
     ),
 dim_hco
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hco
+    FROM {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 dim_hcp
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hcp
+    FROM {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 holiday_list
 AS (
     SELECT *
-    FROM hcposeedw_integration.holiday_list
+    FROM {{ ref('hcposeedw_integration__holiday_list') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_dim_employee_snapshot_xref
+    FROM {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 fact_timeoff_territory
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_timeoff_territory
+    FROM {{ ref('hcposeedw_integration__fact_timeoff_territory') }}
     ),
 fact_call_key_message
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_key_message
+    FROM {{ ref('hcposeedw_integration__fact_call_key_message') }}
     ),
 itg_call_detail
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_detail
+    FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
-itg_PRODUCT_METRICS
+itg_product_metrics
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_PRODUCT_METRICS
+    FROM {{ ref('hcposeitg_integration__itg_product_metrics') }}
     ),
-DIM_PRODUCT_INDICATION
+dim_product_indication
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_PRODUCT_INDICATION
+    FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 T1
 AS (
@@ -272,7 +272,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -290,7 +290,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -308,7 +308,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -326,7 +326,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -344,7 +344,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -362,7 +362,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
@@ -618,7 +618,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.date_year AS yr,
             dimdate.date_month AS mnth,
@@ -908,7 +908,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -926,7 +926,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -944,7 +944,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -962,7 +962,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -980,7 +980,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -998,7 +998,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
@@ -1254,7 +1254,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.jnj_date_year AS yr,
             dimdate.jnj_date_month AS mnth,
@@ -1277,7 +1277,7 @@ AS (
             hier.l2_manager_name,
             hier.sector,
             employee.organization_l3_name
-        ) fct5 ON src1.employee_key::TEXT = fct5.employee_key::TEXT
+        ) fct5 ON rtrim(src1.employee_key)::TEXT = rtrim(fct5.employee_key)::TEXT
         AND src1.jnj_date_year = fct5.yr
         AND src1.jnj_date_month::TEXT = fct5.mnth::TEXT
         AND fct5.country_key::TEXT = src1.country::TEXT
@@ -1544,7 +1544,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'SG'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1562,7 +1562,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'MY'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1580,7 +1580,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'VN'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1598,7 +1598,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'TH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1616,7 +1616,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'PH'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1634,7 +1634,7 @@ AS (
                         FROM holiday_list
                         WHERE country = 'ID'
                         )
-                    AND date_dayofweek NOT IN ('Saturday', 'Sunday')
+                    AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
                     AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
@@ -1891,7 +1891,7 @@ AS (
         AND COALESCE(src1.organization_l3_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.organization_l3_name, '#'::CHARACTER VARYING)::TEXT
         AND COALESCE(src1.l3_manager_name, '#'::CHARACTER VARYING)::TEXT = COALESCE(fct4.l2_manager_name, '#'::CHARACTER VARYING)::TEXT
     LEFT JOIN (
-        SELECT COUNT(fckm.*) AS total_key_message,
+        SELECT COUNT(*) AS total_key_message,
             fckm.employee_key,
             dimdate.my_date_year AS yr,
             dimdate.my_date_month AS mnth,

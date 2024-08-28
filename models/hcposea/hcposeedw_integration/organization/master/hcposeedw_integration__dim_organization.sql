@@ -30,7 +30,7 @@
 }}
 
 with wrk_dim_organization as (
-    select * from dev_dna_core.hcposeedw_integration.wrk_dim_organization
+    select * from {{ ref('hcposeedw_integration__wrk_dim_organization') }}
 ),
 
 NEW_REC as (

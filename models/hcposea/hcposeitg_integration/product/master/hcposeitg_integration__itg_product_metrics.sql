@@ -29,7 +29,7 @@ AS (
 itg_product
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_product
+  FROM {{ ref('hcposeitg_integration__itg_product') }}
   ),
 trns
 AS (

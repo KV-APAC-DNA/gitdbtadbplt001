@@ -13,12 +13,12 @@
                         WHERE STG_CYC_TAR.CYCLE_PLAN_TARGET_SOURCE_ID = CYCLE_PLAN_TARGET_SOURCE_ID
                         AND CYCLE_PLAN_VOD_SOURCE_ID IN (
                             SELECT CYCLE_PLAN_SOURCE_ID
-                            FROM dev_dna_core.hcposeitg_integration.itg_cycle_plan
+                            FROM {{ ref('hcposeitg_integration__itg_cycle_plan') }}
                             )
                         )
                     AND COUNTRY_CODE IN (
                         SELECT COUNTRY_CODE
-                        FROM dev_dna_core.hcposeitg_integration.itg_cycle_plan
+                        FROM {{ ref('hcposeitg_integration__itg_cycle_plan') }}
                         WHERE CYCLE_PLAN_SOURCE_ID IN (
                             SELECT CYCLE_PLAN_VOD_SOURCE_ID
                             FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan_target') }}
@@ -37,7 +37,7 @@ AS (
 itg_cycle_plan
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_cycle_plan
+  FROM {{ ref('hcposeitg_integration__itg_cycle_plan') }}
   ),
 trns
 AS (

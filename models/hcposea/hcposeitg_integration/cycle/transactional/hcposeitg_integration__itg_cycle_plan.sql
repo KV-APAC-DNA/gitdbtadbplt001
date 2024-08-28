@@ -4,14 +4,13 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
-where (cycle_plan_source_id) in (select stg.cycle_plan_source_id
-                                 from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
- stg
-                                 where stg.cycle_plan_source_id = cycle_plan_source_id)
-and   country_code in (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
-);
-                    {% endif %}"
-    )
+                where (cycle_plan_source_id) in (select stg.cycle_plan_source_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }} stg
+                where stg.cycle_plan_source_id = cycle_plan_source_id)
+                and country_code in (select distinct country_code from {{ source('hcposesdl_raw', 'sdl_hcp_osea_cycle_plan') }}
+                );
+                {% endif %}"
+            )
 }}
 
 with sdl_hcp_osea_cycle_plan AS

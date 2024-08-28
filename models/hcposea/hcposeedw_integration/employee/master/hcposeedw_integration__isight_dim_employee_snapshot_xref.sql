@@ -6,7 +6,7 @@
 }}
 
 with dim_employee_iconnect as (
-    select * from dev_dna_core.hcposeedw_integration.dim_employee_iconnect
+    select * from {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
 ),
 
 result as (

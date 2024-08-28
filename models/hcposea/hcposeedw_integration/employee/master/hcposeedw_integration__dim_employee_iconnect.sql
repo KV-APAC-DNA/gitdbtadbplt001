@@ -1,7 +1,7 @@
 with dim_employee
 as
 (
-    select * from hcposeedw_integration.dim_employee
+    select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 final as
 (

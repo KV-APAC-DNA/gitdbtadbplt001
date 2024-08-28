@@ -4,10 +4,10 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete from {{this}}
-where (key_message_id) in (select key_message_id
-                           from {{ source('hcposesdl_raw', 'sdl_hcp_osea_key_message') }} stg_key_message
-                           where stg_key_message.key_message_id = key_message_id);
-                    {% endif %}"
+                where (key_message_id) in (select key_message_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_key_message') }} stg_key_message
+                where stg_key_message.key_message_id = key_message_id);
+                {% endif %}"
     )
 }}
 

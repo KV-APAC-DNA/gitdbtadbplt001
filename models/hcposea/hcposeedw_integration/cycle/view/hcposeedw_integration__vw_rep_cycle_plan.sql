@@ -1,56 +1,56 @@
 WITH fact_cycle_plan
 AS (
     SELECT *
-    FROM oseedw_integration.fact_cycle_plan
+    FROM {{ ref('hcposeedw_integration__fact_cycle_plan') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM oseedw_integration.edw_isight_dim_employee_snapshot_xref
+    FROM {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM oseedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM oseedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 dim_employee
 AS (
     SELECT *
-    FROM oseedw_integration.dim_employee
+    FROM {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM oseedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 dim_hcp AS
 (
-    SELECT * FROM oseedw_integration.dim_hcp
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
 vw_employee_hier AS
 (
-    SELECT * FROM oseedw_integration.vw_employee_hier
+    SELECT * FROM {{ ref('hcposeedw_integration__vw_employee_hier') }}
 ),
 dim_hco AS
 (
-    SELECT * FROM oseedw_integration.dim_hco
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_hco') }}
 ),
 itg_cycle_plan AS
 (
-    SELECT * FROM oseitg_integration.itg_cycle_plan
+    SELECT * FROM {{ ref('hcposeitg_integration__itg_cycle_plan') }}
 ),
 dim_product_indication AS
 (
-    SELECT * FROM oseedw_integration.dim_product_indication
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
 dim_employee AS
 (
-    SELECT * FROM oseedw_integration.dim_employee
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 fact
 AS (

@@ -1,7 +1,7 @@
 WITH itg_isight_licenses
 AS (
     SELECT *
-    FROM dev_dna_core.hcposeitg_integration.itg_isight_licenses
+    FROM {{ ref('hcposeitg_integration__itg_isight_licenses') }}
     ),
 trns
 AS (

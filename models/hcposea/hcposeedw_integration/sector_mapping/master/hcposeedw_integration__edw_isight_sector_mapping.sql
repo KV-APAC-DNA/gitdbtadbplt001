@@ -1,7 +1,7 @@
 WITH itg_isight_sector_mapping
 AS (
     SELECT *
-    FROM dev_dna_core.hcposeitg_integration.itg_isight_sector_mapping
+    FROM {{ ref('hcposeitg_integration__isight_sector_mapping') }}
     ),
 trns
 AS (

@@ -1,7 +1,7 @@
 WITH itg_remote_meeting
 AS (
   SELECT *
-  FROM DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_REMOTE_MEETING
+  FROM {{ ref('hcposeitg_integration__itg_remote_meeting') }}
   ),
 trns
 AS (

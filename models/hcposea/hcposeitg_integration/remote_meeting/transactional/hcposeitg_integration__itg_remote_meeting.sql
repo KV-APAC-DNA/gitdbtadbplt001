@@ -4,12 +4,12 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
                 delete
-from {{this}}
-where remote_meeting_source_id in (select distinct remote_meeting_source_id
-                                   from {{ source('hcposesdl_raw', 'sdl_hcp_osea_remote_meeting') }} a
-                                   where a.remote_meeting_source_id = remote_meeting_source_id);
-                    {% endif %}"
-    )
+                from {{this}}
+                where remote_meeting_source_id in (select distinct remote_meeting_source_id
+                from {{ source('hcposesdl_raw', 'sdl_hcp_osea_remote_meeting') }} a
+                where a.remote_meeting_source_id = remote_meeting_source_id)
+                {% endif %}"
+                )
 }}
 with 
 sdl_hcp_osea_remote_meeting

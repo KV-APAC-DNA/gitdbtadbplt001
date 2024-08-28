@@ -1,16 +1,16 @@
 
 with 
 itg_account_hcp as (
-select * from dev_dna_core.hcposeitg_integration.itg_account_hcp
+select * from {{ ref('hcposeitg_integration__itg_account_hcp') }}
 ),
 itg_recordtype as (
-select * from dev_dna_core.hcposeitg_integration.itg_recordtype
+select * from {{ ref('hcposeitg_integration__itg_recordtype') }}
 ),
 itg_account_hco as (
-select * from dev_dna_core.hcposeitg_integration.itg_account_hco
+select * from {{ ref('hcposeitg_integration__itg_account_hco') }}
 ),
 itg_lookup_eng_data as (
-select * from dev_dna_core.hcposeitg_integration.itg_lookup_eng_data
+select * from {{ source('hcposeitg_integration', 'itg_lookup_eng_data') }}
 ),
 HCP_POS_ENG AS(
 SELECT COUNTRY_CODE, KEY_VALUE, TARGET_VALUE

@@ -1,72 +1,72 @@
 WITH itg_call
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
 itg_call_detail
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_detail
+    FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call_discussion
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_discussion
+    FROM {{ ref('hcposeitg_integration__itg_call_discussion') }}
     ),
 itg_recordtype
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_recordtype
+    FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
     ),
 dim_country
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_country
+    FROM {{ ref('hcposeedw_integration__dim_country') }}
     ),
 dim_employee
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_employee
+    FROM {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_profile
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_profile
+    FROM {{ ref('hcposeedw_integration__dim_profile') }}
     ),
 dim_organization
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_organization
+    FROM {{ ref('hcposeedw_integration__dim_organization') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 itg_lookup_retention_period
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_lookup_retention_period
+    FROM {{ source('hcposeitg_integration', 'itg_lookup_retention_period') }}
     ),
-DIM_PRODUCT_INDICATION
+dim_product_indication
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_PRODUCT_INDICATION
+    FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 dim_remote_meeting
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_remote_meeting
+    FROM {{ ref('hcposeedw_integration__dim_remote_meeting') }}
     ),
 dim_hcp
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hcp
+    FROM {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 dim_hco
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hco
+    FROM {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 call
 AS (
@@ -186,51 +186,51 @@ AS (
         ,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Manila', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.CALL_DATE_TIME)
+                THEN dateadd(hour,-7,C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.CALL_DATE_TIME)
             END CALL_DATE_TIME,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Manila', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.LAST_MODIFIED_DATE)
+                THEN dateadd(hour,-7,C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.LAST_MODIFIED_DATE)
             END LAST_MODIFIED_DATE,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Manila', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN dateadd(hour,-7,C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             END MOBILE_LAST_MODIFIED_DATE_TIME,
         C1.CALL_DATE_TIME utc_call_date_time,
         C1.LAST_MODIFIED_DATE utc_call_entry_time,
@@ -452,51 +452,51 @@ AS (
         ,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Manila', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.CALL_DATE_TIME)
+                THEN dateadd(hour,-7,C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.CALL_DATE_TIME)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.CALL_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.CALL_DATE_TIME)
             END CALL_DATE_TIME,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Manila', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.LAST_MODIFIED_DATE)
+                THEN dateadd(hour,-7,C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.LAST_MODIFIED_DATE)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.LAST_MODIFIED_DATE)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.LAST_MODIFIED_DATE)
             END LAST_MODIFIED_DATE,
         CASE 
             WHEN c1.country_code = 'PH'
-                THEN convert_timezone('Asia/Manila', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Manila', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'SG'
-                THEN convert_timezone('Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Singapore', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'ID'
-                THEN convert_timezone('Asia/Jakarta', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN dateadd(hour,-7,C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'MY'
-                THEN convert_timezone('Asia/Kuala_Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kuala_Lumpur', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'TH'
-                THEN convert_timezone('Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'VN'
-                THEN convert_timezone('Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Bangkok', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             WHEN c1.country_code = 'NP'
-                THEN convert_timezone('Asia/Kathmandu', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
+                THEN convert_timezone('UTC','Asia/Kathmandu', C1.MOBILE_LAST_MODIFIED_DATE_TIME)
             END MOBILE_LAST_MODIFIED_DATE_TIME,
         C1.CALL_DATE_TIME utc_call_date_time,
         C1.LAST_MODIFIED_DATE utc_call_entry_time,

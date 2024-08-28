@@ -1,47 +1,47 @@
 with fact_cycle_plan
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.fact_cycle_plan
+    from {{ ref('hcposeedw_integration__fact_cycle_plan') }}
     ),
 dim_date
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.dim_date
+    from {{ ref('hcposeedw_integration__dim_date') }}
     ),
 dim_hcp
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.dim_hcp
+    from {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 vw_employee_hier
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.vw_employee_hier
+    from {{ ref('hcposeedw_integration__vw_employee_hier') }}
     ),
 dim_hco
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.dim_hco
+    from {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 dim_employee_iconnect
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.dim_employee_iconnect
+    from {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.edw_isight_dim_employee_snapshot_xref
+    from {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 edw_isight_sector_mapping
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.edw_isight_sector_mapping
+    from {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 dim_product_indication
 as (
     select *
-    from dev_dna_core.hcposeedw_integration.dim_product_indication
+    from {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 cte1
 AS (

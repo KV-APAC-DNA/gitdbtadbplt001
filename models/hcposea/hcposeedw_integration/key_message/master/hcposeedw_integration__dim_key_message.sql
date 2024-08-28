@@ -4,24 +4,24 @@
         materialized= "incremental",
         incremental_strategy= "append",
         pre_hook = ["{% if is_incremental() %}
-                     delete from {{ this }} where (key_message_source_id) in (select key_message_id from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_KEY_MESSAGE);
+                     delete from {{ this }} where (key_message_source_id) in (select key_message_id from {{ ref('hcposeitg_integration__itg_key_message') }});
                     {% endif %}"]
     )
 }}
 with itg_key_message as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_KEY_MESSAGE
+select * from {{ ref('hcposeitg_integration__itg_key_message') }}
 ),
 itg_call_key_message as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL_KEY_MESSAGE
+select * from {{ ref('hcposeitg_integration__itg_call_key_message') }}
 ),
 itg_call as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL
+select * from {{ ref('hcposeitg_integration__itg_call') }}
 ),
 dim_country as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_COUNTRY
+select * from {{ ref('hcposeedw_integration__dim_country') }}
 ),
 dim_product_indication as (
-select * from DEV_DNA_CORE.SNAPOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
+select * from {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
 transformed as (
 select distinct 

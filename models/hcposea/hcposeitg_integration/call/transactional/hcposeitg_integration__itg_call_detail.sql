@@ -5,10 +5,10 @@
         pre_hook = "{% if is_incremental() %}
                     DELETE FROM {{this}}
                     WHERE (CALL_DETAIL_SOURCE_ID) IN (SELECT STG.CALL_DETAIL_SOURCE_ID
-                                                    FROM dev_dna_load.hcposesdl_raw.sdl_hcp_osea_call_detail STG
+                                                    FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_call_detail') }} STG
                                                     WHERE STG.CALL_DETAIL_SOURCE_ID = CALL_DETAIL_SOURCE_ID
-                                                    AND CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM hcposeitg_integration.itg_CALL))
-                    AND   COUNTRY_CODE IN (SELECT UPPER(COUNTRY_CODE) FROM  hcposeitg_integration.itg_CALL WHERE  CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM dev_dna_load.hcposesdl_raw.sdl_hcp_osea_call_detail)) ;
+                                                    AND CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM {{ ref('hcposeitg_integration__itg_call') }}))
+                    AND COUNTRY_CODE IN (SELECT UPPER(COUNTRY_CODE) FROM {{ ref('hcposeitg_integration__itg_call') }} WHERE  CALL_SOURCE_ID IN (SELECT CALL_SOURCE_ID FROM {{ source('hcposesdl_raw', 'sdl_hcp_osea_call_detail') }} )) ;
                     {% endif %}"
     )
 }}
@@ -21,7 +21,7 @@ AS (
 itg_CALL
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_CALL
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
 t1
 AS (

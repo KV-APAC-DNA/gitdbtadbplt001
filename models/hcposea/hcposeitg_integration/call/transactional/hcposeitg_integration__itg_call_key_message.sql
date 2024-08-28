@@ -15,7 +15,7 @@ with sdl_hcp_osea_call_key_message as (
 ),
 
 itg_key_message as (
-    select * from dev_dna_core.hcposeitg_integration.itg_key_message
+    select * from {{ ref('hcposeitg_integration__itg_key_message') }}
 ),
 
 result as (

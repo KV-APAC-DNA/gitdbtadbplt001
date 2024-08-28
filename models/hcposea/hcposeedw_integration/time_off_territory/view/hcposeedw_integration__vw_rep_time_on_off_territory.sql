@@ -1,21 +1,21 @@
 with fact_timeoff_territory as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.FACT_TIMEOFF_TERRITORY
+    select * from {{ ref('hcposeedw_integration__fact_timeoff_territory') }}
 ),
 
 vw_employee_hier as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.VW_EMPLOYEE_HIER
+    select * from {{ ref('hcposeedw_integration__vw_employee_hier') }}
 ),
 
 dim_employee as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_EMPLOYEE
+    select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 
 dim_date as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_DATE
+    select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
 
 holiday_list as (
-    select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.HOLIDAY_LIST
+    select * from {{ ref('hcposeedw_integration__holiday_list') }}
 ),
 
 cte1 as (

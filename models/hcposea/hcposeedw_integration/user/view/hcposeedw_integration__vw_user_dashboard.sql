@@ -1,22 +1,22 @@
 WITH edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 edw_isight_licenses
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_licenses
+    FROM {{ ref('hpcoseedw_integration__edw_isight_licenses') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_dim_employee_snapshot_xref
+    FROM {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 dim_employee_iconnect
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_employee_iconnect
+    FROM {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
     ),
 T1
 AS (
