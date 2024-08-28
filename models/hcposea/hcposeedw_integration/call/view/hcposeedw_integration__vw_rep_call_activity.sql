@@ -1,57 +1,52 @@
 WITH dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 vw_employee_hier
 AS (
     SELECT *
-    FROM hcposeedw_integration.vw_employee_hier
-    ),
-vw_employee_hier
-AS (
-    SELECT *
-    FROM hcposeedw_integration.vw_employee_hier
+    FROM {{ ref('hcposeedw_integration__vw_employee_hier') }}
     ),
 holiday_list
 AS (
     SELECT *
-    FROM hcposeedw_integration.holiday_list
+    FROM {{ ref('hcposeedw_integration__holiday_list') }}
     ),
 fact_timeoff_territory
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_timeoff_territory
+    FROM {{ ref('hcposeedw_integration__fact_timeoff_territory') }}
     ),
 fact_call_key_message
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_key_message
+    FROM {{ ref('hcposeedw_integration__fact_call_key_message') }}
     ),
 fact_call_detail
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_detail
+    FROM {{ ref('hcposeedw_integration__fact_call_detail') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_dim_employee_snapshot_xref
+    FROM {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 dim_employee
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_employee
+    FROM {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 T1
 AS (

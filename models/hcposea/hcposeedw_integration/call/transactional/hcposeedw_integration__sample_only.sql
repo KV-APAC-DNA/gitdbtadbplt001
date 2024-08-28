@@ -1,22 +1,22 @@
 WITH itg_call
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.hcpOSEITG_INTEGRATION.ITG_CALL
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
 itg_call_detail
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.hcpOSEITG_INTEGRATION.ITG_CALL_DETAIL
+    FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call_discussion
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.hcpOSEITG_INTEGRATION.itg_call_discussion
+    FROM {{ ref('hcposeitg_integration__itg_call_discussion') }}
     ),
 itg_recordtype
 AS (
     SELECT *
-    FROM DEV_DNA_CORE.hcpOSEITG_INTEGRATION.ITG_RECORDTYPE
+    FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
     ),
 cd
 AS (

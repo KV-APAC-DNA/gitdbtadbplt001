@@ -1,27 +1,27 @@
 
 with itg_cycle_plan as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CYCLE_PLAN
+select * from {{ ref('hcposeitg_integration__itg_cycle_plan') }}
 ),
 itg_cycle_plan_target as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CYCLE_PLAN_TARGET
+select * from {{ ref('hcposeitg_integration__itg_cycle_plan_target') }}
 ),
 dim_hcp as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_HCP
+select * from {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
 dim_employee as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_EMPLOYEE
+select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 dim_date as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_DATE
+select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
 dim_country as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_COUNTRY
+select * from {{ ref('hcposeedw_integration__dim_country') }}
 ),
 dim_organization as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_ORGANIZATION
+select * from {{ ref('hcposeedw_integration__dim_organization') }}
 ),
-ITG_LOOKUP_RETENTION_PERIOD as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_RETENTION_PERIOD
+itg_lookup_retention_period as (
+select * from dev_dna_core.hcposeitg_integration.itg_lookup_retention_period
 ),
 final as (
 SELECT COUNTRY.COUNTRY_KEY,

@@ -1,82 +1,82 @@
 WITH fact_call_detail
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_detail
+    FROM {{ ref('hcposeedw_integration__fact_call_detail') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 vw_employee_hier
 AS (
     SELECT *
-    FROM hcposeedw_integration.vw_employee_hier
+    FROM {{ ref('hcposeedw_integration__vw_employee_hier') }}
     ),
-DIM_EMPLOYEE_ICONNECT
+dim_employee_iconnect
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_EMPLOYEE_ICONNECT
+    FROM {{ ref('hcposeedw_integration__dim_employee_iconnect') }}
     ),
 dim_hco
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hco
+    FROM {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 dim_hcp
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hcp
+    FROM {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 holiday_list
 AS (
     SELECT *
-    FROM hcposeedw_integration.holiday_list
+    FROM {{ ref('hcposeedw_integration__holiday_list') }}
     ),
 edw_isight_dim_employee_snapshot_xref
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_dim_employee_snapshot_xref
+    FROM {{ ref('hcposeedw_integration__edw_isight_dim_employee_snapshot_xref') }}
     ),
 edw_isight_sector_mapping
 AS (
     SELECT *
-    FROM hcposeedw_integration.edw_isight_sector_mapping
+    FROM {{ ref('hcposeedw_integration__edw_isight_sector_mapping') }}
     ),
 fact_timeoff_territory
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_timeoff_territory
+    FROM {{ ref('hcposeedw_integration__fact_timeoff_territory') }}
     ),
 fact_call_key_message
 AS (
     SELECT *
-    FROM hcposeedw_integration.fact_call_key_message
+    FROM {{ ref('hcposeedw_integration__fact_call_key_message') }}
     ),
 itg_call_detail
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_detail
+    FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
-itg_PRODUCT_METRICS
+itg_product_metrics
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_PRODUCT_METRICS
+    FROM {{ ref('hcposeitg_integration__itg_product_metrics') }}
     ),
-DIM_PRODUCT_INDICATION
+dim_product_indication
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_PRODUCT_INDICATION
+    FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 T1
 AS (

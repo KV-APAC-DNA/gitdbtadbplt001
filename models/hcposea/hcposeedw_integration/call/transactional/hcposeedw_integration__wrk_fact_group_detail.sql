@@ -1,27 +1,27 @@
 with itg_call
 as (
     select *
-    from hcposeitg_integration.itg_call
+    from {{ ref('hcposeitg_integration__itg_call') }}
     ),
 itg_call_detail
 as (
     select *
-    from hcposeitg_integration.itg_call_detail
+    from {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call_discussion
 as (
     select *
-    from hcposeitg_integration.itg_call_discussion
+    from {{ ref('hcposeitg_integration__itg_call_discussion') }}
     ),
 itg_recordtype
 as (
     select *
-    from hcposeitg_integration.itg_recordtype
+    from {{ ref('hcposeitg_integration__itg_recordtype') }}
     ),
 dim_country
 as (
     select *
-    from hcposeedw_integration.dim_country
+    from {{ ref('hcposeedw_integration__dim_country') }}
     ),
 itg_lookup_retention_period 
 as (
@@ -31,42 +31,42 @@ as (
 dim_hco
 as (
     select *
-    from hcposeedw_integration.dim_hco
+    from {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 dim_date
 as (
     select *
-    from hcposeedw_integration.dim_date
+    from {{ ref('hcposeedw_integration__dim_date') }}
     ),
 dim_employee
 as (
     select *
-    from hcposeedw_integration.dim_employee
+    from {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_profile
 as (
     select *
-    from hcposeedw_integration.dim_profile
+    from {{ ref('hcposeedw_integration__dim_profile') }}
     ),
 dim_organization
 as (
     select *
-    from hcposeedw_integration.dim_organization
+    from {{ ref('hcposeedw_integration__dim_organization') }}
     ),
 dim_product_indication
 as (
     select *
-    from hcposeedw_integration.dim_product_indication
+    from {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 dim_remote_meeting
 as (
     select *
-    from hcposeedw_integration.dim_remote_meeting
+    from {{ ref('hcposeedw_integration__dim_remote_meeting') }}
     ),
 dim_hcp
 as (
     select *
-    from hcposeedw_integration.dim_hcp
+    from {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 final as (with call as (
 

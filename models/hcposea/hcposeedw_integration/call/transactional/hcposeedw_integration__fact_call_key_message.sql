@@ -9,40 +9,40 @@
     )
 }}
 with itg_call_key_message as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL_KEY_MESSAGE
+select * from {{ ref('hcposeitg_integration__itg_call_key_message') }}
 ),
 itg_call as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL
+select * from {{ ref('hcposeitg_integration__itg_call') }}
 ),
 itg_call_discussion as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL_DISCUSSION
+select * from {{ ref('hcposeitg_integration__itg_call_discussion') }}
 ),
 itg_call_detail as (
-select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_CALL_DETAIL
+select * from {{ ref('hcposeitg_integration__itg_call_detail') }}
 ),
 dim_product_indication as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
+select * from {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
 dim_hcp as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_HCP
+select * from {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
 dim_hco as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_HCO
+select * from {{ ref('hcposeedw_integration__dim_hco') }}
 ),
 dim_date as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_DATE
+select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
 dim_employee as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_EMPLOYEE
+select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 dim_profile as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_PROFILE
+select * from {{ ref('hcposeedw_integration__dim_profile') }}
 ),
 dim_organization as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_ORGANIZATION
+select * from {{ ref('hcposeedw_integration__dim_organization') }}
 ),
 dim_country as (
-select * from DEV_DNA_CORE.HCPOSEEDW_INTEGRATION.DIM_COUNTRY
+select * from {{ ref('hcposeedw_integration__dim_country') }}
 ),
 itg_lookup_retention_period as (
 select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_RETENTION_PERIOD

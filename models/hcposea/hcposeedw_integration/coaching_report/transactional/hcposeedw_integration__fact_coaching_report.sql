@@ -1,7 +1,7 @@
 WITH itg_coaching_report
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeitg_integration.itg_coaching_report
+  FROM {{ ref('hcposeitg_integration__itg_coaching_report') }}
   ),
 itg_lookup_retention_period
 AS (
@@ -11,17 +11,17 @@ AS (
 dim_country
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeedw_integration.dim_country
+  FROM {{ ref('hcposeedw_integration__dim_country') }}
   ),
 dim_date
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeedw_integration.dim_date
+  FROM {{ ref('hcposeedw_integration__dim_date') }}
   ),
 dim_employee
 AS (
   SELECT *
-  FROM dev_dna_core.hcposeedw_integration.dim_employee
+  FROM {{ ref('hcposeedw_integration__dim_employee') }}
   ),
 scr
 AS (

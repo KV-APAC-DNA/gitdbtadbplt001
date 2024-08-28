@@ -1,56 +1,46 @@
 with itg_call as (
-    select * from dev_dna_core.hcposeitg_integration.itg_call
+    select * from {{ ref('hcposeitg_integration__itg_call') }}
 ),
 
 itg_call_detail as (
-    select * from dev_dna_core.hcposeitg_integration.itg_call_detail
+    select * from {{ ref('hcposeitg_integration__itg_call_detail') }}
 ),
 
 itg_call_discussion as (
-    select * from dev_dna_core.hcposeitg_integration.itg_call_discussion
+    select * from {{ ref('hcposeitg_integration__itg_call_discussion') }}
 ),
 
 itg_recordtype as (
-    select * from dev_dna_core.hcposeitg_integration.itg_recordtype
+    select * from {{ ref('hcposeitg_integration__itg_recordtype') }}
 ),
-
 dim_country as (
-     select * from dev_dna_core.hcposeedw_integration.dim_country
+     select * from {{ ref('hcposeedw_integration__dim_country') }}
 ),
-
 dim_employee as (
-    select * from dev_dna_core.hcposeedw_integration.dim_employee
+    select * from {{ ref('hcposeedw_integration__dim_employee') }}
 ),
-
 dim_profile as (
-    select * from dev_dna_core.hcposeedw_integration.dim_profile
+    select * from {{ ref('hcposeedw_integration__dim_profile') }}
 ),
-
 dim_organization as (
-    select * from dev_dna_core.hcposeedw_integration.dim_organization
+    select * from {{ ref('hcposeedw_integration__dim_organization') }}
 ),
-
 dim_date as (
-    select * from dev_dna_core.hcposeedw_integration.dim_date
+    select * from {{ ref('hcposeedw_integration__dim_date') }}
 ),
-
 dim_product_indication as (
-    select * from dev_dna_core.hcposeedw_integration.dim_product_indication
+    select * from {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
-
 dim_hcp as (
-     select * from dev_dna_core.hcposeedw_integration.dim_hcp
+     select * from {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
-
 dim_hco as (
-    select * from dev_dna_core.hcposeedw_integration.dim_hco
+    select * from {{ ref('hcposeedw_integration__dim_hco') }}
 ),
-
 itg_lookup_retention_period as (
     select * from DEV_DNA_CORE.HCPOSEITG_INTEGRATION.ITG_LOOKUP_RETENTION_PERIOD
     {# table is missing from snowflake #}
 ), 
-
 call
 AS (
     SELECT inn.*,
