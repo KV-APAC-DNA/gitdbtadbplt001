@@ -1,57 +1,55 @@
 WITH itg_call_detail
 AS (
-    SELECT * FROM hcposeitg_integration.itg_call_detail
+    SELECT * FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
 ),
 itg_call_discussion
 AS (
-    SELECT * FROM hcposeitg_integration.itg_call_discussion
+    SELECT * FROM {{ ref('hcposeitg_integration__itg_call_discussion') }}
 ),
 itg_recordtype
 AS (
-    SELECT * FROM hcposeitg_integration.itg_recordtype
+    SELECT * FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
 ),
 dim_country
 AS (
-    SELECT * FROM hcposeedw_integration.dim_country
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_country') }}
 ),
 dim_date
 AS (
-    SELECT * FROM hcposeedw_integration.dim_date
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_date') }}
 ),
 dim_employee
 AS (
-    SELECT * FROM hcposeedw_integration.dim_employee
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_employee') }}
 ),
 dim_profile
 AS (
-    SELECT * FROM hcposeedw_integration.dim_profile
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_profile') }}
 ),
 dim_organization
 AS (
-    SELECT * FROM hcposeedw_integration.dim_organization
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_organization') }}
 ),
-DIM_PRODUCT_INDICATION
+dim_product_indication
 AS (
-    SELECT * FROM hcposeedw_integration.DIM_PRODUCT_INDICATION
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
 ),
-ITG_LOOKUP_RETENTION_PERIOD
+itg_lookup_retention_period
 AS (
     SELECT * FROM hcposeitg_integration.ITG_LOOKUP_RETENTION_PERIOD
 ),
 dim_hco
 AS (
-    SELECT * FROM hcposeedw_integration.dim_hco
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_hco') }}
 ),
 itg_call
 AS (
-    SELECT * FROM hcposeitg_integration.itg_call
+    SELECT * FROM {{ ref('hcposeitg_integration__itg_call') }}
 ),
 dim_hcp
 AS (
-    SELECT * FROM hcposeedw_integration.dim_hcp
+    SELECT * FROM {{ ref('hcposeedw_integration__dim_hcp') }}
 ),
-
-
 call
 AS (
     SELECT inn.*,

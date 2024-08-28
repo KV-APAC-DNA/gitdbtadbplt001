@@ -1,17 +1,17 @@
-WITH WRK_FACT_CYCLE_PLAN
-AS (
-	SELECT *
-	FROM DEV_DNA_CORE.PPAHIL01_WORKSPACE.HCPOSEEDW_INTEGRATION__WRK_FACT_CYCLE_PLAN
+with wrk_fact_cycle_plan
+as (
+	select *
+	from {{ ref('hcposeedw_integration__wrk_fact_cycle_plan') }}
 	),
-itg_CYCLE_PLAN_DETAIL
-AS (
-	SELECT *
-	FROM HCPOSEITG_INTEGRATION.itg_CYCLE_PLAN_DETAIL
+itg_cycle_plan_detail
+as (
+	select *
+	from {{ ref('hcposeitg_integration__itg_cycle_plan_detail') }}
 	),
-DIM_PRODUCT_INDICATION
-AS (
-	SELECT *
-	FROM HCPOSEEDW_INTEGRATION.DIM_PRODUCT_INDICATION
+dim_product_indication
+as (
+	select *
+	from {{ ref('hcposeedw_integration__dim_product_indication') }}
 	),
 T1
 AS (

@@ -1,72 +1,72 @@
 WITH itg_call
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call
+    FROM {{ ref('hcposeitg_integration__itg_call') }}
     ),
 itg_call_detail
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_detail
+    FROM {{ ref('hcposeitg_integration__itg_call_detail') }}
     ),
 itg_call_discussion
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_call_discussion
+    FROM {{ ref('hcposeitg_integration__itg_call_discussion') }}
     ),
 itg_recordtype
 AS (
     SELECT *
-    FROM hcposeitg_integration.itg_recordtype
+    FROM {{ ref('hcposeitg_integration__itg_recordtype') }}
     ),
 dim_country
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_country
+    FROM {{ ref('hcposeedw_integration__dim_country') }}
     ),
 dim_employee
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_employee
+    FROM {{ ref('hcposeedw_integration__dim_employee') }}
     ),
 dim_profile
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_profile
+    FROM {{ ref('hcposeedw_integration__dim_profile') }}
     ),
 dim_organization
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_organization
+    FROM {{ ref('hcposeedw_integration__dim_organization') }}
     ),
 dim_date
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_date
+    FROM {{ ref('hcposeedw_integration__dim_date') }}
     ),
 itg_lookup_retention_period
 AS (
     SELECT *
     FROM hcposeitg_integration.itg_lookup_retention_period
     ),
-DIM_PRODUCT_INDICATION
+dim_product_indication
 AS (
     SELECT *
-    FROM hcposeedw_integration.DIM_PRODUCT_INDICATION
+    FROM {{ ref('hcposeedw_integration__dim_product_indication') }}
     ),
 dim_remote_meeting
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_remote_meeting
+    FROM {{ ref('hcposeedw_integration__dim_remote_meeting') }}
     ),
 dim_hcp
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hcp
+    FROM {{ ref('hcposeedw_integration__dim_hcp') }}
     ),
 dim_hco
 AS (
     SELECT *
-    FROM hcposeedw_integration.dim_hco
+    FROM {{ ref('hcposeedw_integration__dim_hco') }}
     ),
 call
 AS (
