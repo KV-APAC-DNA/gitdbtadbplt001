@@ -32,7 +32,8 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
+    select *, dense_rank() over(partition by distributorid,arcode order by file_name desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
             union all

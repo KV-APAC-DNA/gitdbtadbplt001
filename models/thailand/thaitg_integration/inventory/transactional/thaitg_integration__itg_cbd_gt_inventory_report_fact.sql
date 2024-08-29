@@ -19,7 +19,8 @@
 
 
 with sdl_cbd_gt_inventory_report_fact as (
-    select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
+    select * ,dense_rank() over(partition by date,product_code,product_name order by filename desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
             union all

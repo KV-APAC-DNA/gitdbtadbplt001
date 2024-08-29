@@ -19,14 +19,15 @@
     )
 }}
 with source as (
-    select * from {{ source('thasdl_raw', 'sdl_th_mt_price_data') }}
+    select * ,dense_rank() over(partition by date order by file_name desc) as rnk 
+    from {{ source('thasdl_raw', 'sdl_th_mt_price_data') }}
     where file_name not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_price_data__duplicate_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_price_data__null_test') }}
 			union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_price_data__format_test') }}
-    )
+    ) qualify rnk =1
 ),
 final as (
     select
