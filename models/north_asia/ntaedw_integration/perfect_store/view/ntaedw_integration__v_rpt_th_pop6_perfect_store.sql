@@ -1555,7 +1555,7 @@ AS (
                         'PS_SOS_QN' as field_code,
                         'SHARE OF SHELF' as kpi,
                         case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
-                        'How many facing Kenvue acquired?' as questiontext,
+                        'How many ' || ps_category || ' ' || ps_segment || ' facing Kenvue acquired?' as questiontext,
                         'numerator' as ques_desc,
                         facing_of_this_layer,
                         visit_date,
@@ -1575,8 +1575,9 @@ AS (
                         'PS_SOS_QN_COMP' as field_code,
                         'SHARE OF SHELF' as kpi,
                         case  when cancelled_visit = 0 then 'completed'else 'cancelled' end as vst_status,
-                        case when upper(company) in ('KENVUE','JNJ','KV') then 'How many facing Kenvue acquired?'
-                        else 'How many facing Competitor acquired?' end  as questiontext,
+                        case when upper(company) in ('KENVUE','JNJ','KV') 
+                        then 'How many ' || ps_category || ' ' || ps_segment || ' facing Kenvue acquired?'
+                        else 'How many ' || ps_category || ' ' || ps_segment || ' facing Competitor acquired?' end  as questiontext,
                         'denominator' as ques_desc,
                         facing_of_this_layer,
                         visit_date,
