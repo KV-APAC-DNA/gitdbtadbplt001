@@ -19,7 +19,7 @@
 
 
 with source as(
-    select * dense_rank() over(partition by partner_gln, supplier_code, inventory_report_date, ean_item_code ,inventory_location order by filename desc) as rnk 
+    select *, dense_rank() over(partition by partner_gln, supplier_code, inventory_report_date, ean_item_code ,inventory_location order by filename desc) as rnk 
     from {{ source('thasdl_raw','sdl_th_mt_7_11') }}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_mt_7_11__null_test') }}
