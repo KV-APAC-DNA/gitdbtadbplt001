@@ -5,9 +5,9 @@ models:
   - name: hcposeitg_integration__itg_recordtype_iconnect
     config: 
       alias: itg_recordtype_iconnect
-      tags: ["iconnect_data_ingestion","transformation"]
+      tags: ["iconnect_data_ingestion","ingestion"]
 
   - name: hcposeitg_integration__itg_recordtype
     config: 
       alias: itg_recordtype
-      tags: ["iconnect_data_ingestion","transformation"]
+      tags: ["iconnect_data_ingestion","ingestion"]
