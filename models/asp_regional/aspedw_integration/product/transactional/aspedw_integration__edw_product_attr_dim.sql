@@ -18,7 +18,32 @@
                     and   wks_edw_product_attr_dim.cntry = edw_product_attr_dim.cntry
                     and   wks_edw_product_attr_dim.chng_flg = 'U';
                     {% endif %}
-                    "]
+                    "],
+        post_hook="
+        ------------Update the lcl_prod_nm for non_korea region--------------------------
+            UPDATE {{this}}
+            SET lcl_prod_nm = A.prod_nm
+            FROM {{ source('aspitg_integration', 'itg_mysls_prod_trnl') }} a, {{this}} b where REPLACE (A.aw_rmte_key, ' ', '') = REPLACE (B.aw_remote_key, ' ', '')
+                AND UPPER (SUBSTRING (A.lang, 4, 5)) = B.cntry
+            and UPPER (SUBSTRING (A.lang, 4, 5)) <> 'KR';
+            ------------Update the lcl_prod_nm for korea region--------------------------
+            UPDATE {{this}}
+            SET lcl_prod_nm = A.prod_nm
+            from (
+                    select distinct aw_rmte_key,
+                        A.lang,
+                        A.prod_nm
+                    FROM {{ source('aspitg_integration', 'itg_mysls_prod_trnl') }} a
+                    where REPLACE (A.aw_rmte_key, ' ', '') || UPPER (SUBSTRING (A.lang, 4, 5)) not in (
+                            select REPLACE(REPLACE(barcode, '-', ''), ' ', '') || cntry_cd
+                            from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
+                            union
+                            select distinct ean || cntry
+                            from {{ ref('aspwks_integration__wks_edw_product_attr_dim_2') }}
+                        )
+                ) a, {{this}} b where REPLACE (A.aw_rmte_key, ' ', '') = REPLACE (B.aw_remote_key, ' ', '')
+                AND UPPER (SUBSTRING (A.lang, 4, 5)) = B.cntry
+            and UPPER (SUBSTRING (A.lang, 4, 5)) = 'KR';"
     )
 }}
 with wks_edw_product_attr_dim as (
