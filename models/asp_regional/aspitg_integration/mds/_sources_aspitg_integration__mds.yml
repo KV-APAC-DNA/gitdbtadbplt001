@@ -189,4 +189,3 @@ sources:
     tables:
       - name: itg_mds_rg_ps_channel_weights # currently used as source, but need a confirmation from Kenvue team
       - name: itg_mysls_cust_hier
-      - name: itg_mysls_prod_trnl
