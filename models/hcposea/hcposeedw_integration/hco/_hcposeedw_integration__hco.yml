@@ -4,5 +4,5 @@ models:
   - name: hcposeedw_integration__dim_hco
     config:
       alias: dim_hco
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
  

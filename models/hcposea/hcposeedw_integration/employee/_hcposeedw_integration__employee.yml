@@ -4,11 +4,11 @@ models:
   - name: hcposeedw_integration__dim_employee
     config:
       alias: dim_employee
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__dim_employee_iconnect
     config:
       alias: dim_employee_iconnect
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__vw_employee_hier
     config:
       alias: vw_employee_hier

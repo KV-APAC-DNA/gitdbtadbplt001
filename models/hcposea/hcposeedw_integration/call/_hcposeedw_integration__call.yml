@@ -4,32 +4,32 @@ models:
   - name: hcposeedw_integration__fact_call_key_message
     config:
       alias: fact_call_key_message
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__sample_only
     config:
       alias: sample_only
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__wrk_fact_call_only
     config:
       alias: wrk_fact_call_only
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   
   - name: hcposeedw_integration__wrk_fact_group_detail
     config:
       alias: wrk_fact_group_detail
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__detail_with_sample
     config:
       alias: detail_with_sample
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__fact_call_detail
     config:
       alias: fact_call_detail
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__wrk_call_detail
     config:
       alias: wrk_call_detail
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
   - name: hcposeedw_integration__vw_rep_call_activity
     config:
       alias: vw_rep_call_activity
@@ -38,9 +38,9 @@ models:
   - name: hcposeedw_integration__wrk_fact_detail_only
     config:
       alias: wrk_fact_detail_only
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
 
   - name: hcposeedw_integration__group_detail_with_sample
     config:
       alias: group_detail_with_sample
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]

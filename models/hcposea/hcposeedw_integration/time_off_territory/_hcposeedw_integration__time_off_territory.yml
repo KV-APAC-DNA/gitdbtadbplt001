@@ -4,7 +4,7 @@ models:
   - name: hcposeedw_integration__fact_timeoff_territory
     config:
       alias: fact_timeoff_territory
-      tags: ["edw_load","transformation"]
+      tags: ["hcp_onesea_edw_load","transformation"]
 
   - name: hcposeedw_integration__vw_rep_time_on_off_territory
     config:
