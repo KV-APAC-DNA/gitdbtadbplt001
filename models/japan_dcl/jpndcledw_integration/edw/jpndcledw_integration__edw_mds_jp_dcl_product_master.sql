@@ -15,7 +15,7 @@ final as
 		name::varchar(500) as name,
 		code::varchar(500) as code,
 		changetrackingmask::number(18,0) as changetrackingmask,
-		itemcode::varchar(200) as itemcode,
+		rtrim(itemcode)::varchar(200) as itemcode,
 		itemname::varchar(200) as itemname,
 		attr01::varchar(200) as attr01,
 		attr02::varchar(200) as attr02,
