@@ -2,7 +2,9 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="delete from {{this}} where (to_date(trans_dt),ltrim(brnch_no,0),ltrim(ctgry_cd,0)) IN (select to_date(ir_date),ltrim(warehouse,0),ltrim(supplier_id,0) FROM {{ source('thasdl_raw', 'sdl_th_tesco_transdata') }})"
+        pre_hook="delete from {{this}} where (to_date(trans_dt),ltrim(brnch_no,0),ltrim(ctgry_cd,0)) 
+                    IN (select to_date(ir_date),ltrim(warehouse,0),ltrim(supplier_id,0) 
+                    FROM {{ source('thasdl_raw', 'sdl_th_tesco_transdata') }})"
     )
 }}
 

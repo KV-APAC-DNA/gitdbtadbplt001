@@ -2,18 +2,7 @@
     config
     (
         materialized = 'incremental',
-        incremental_model = 'append',
-        pre_hook = "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.file_name in (select sdl.file_name 
-			from {{ source('thasdl_raw', 'sdl_pop6_th_tasks') }} sdl
-            where file_name not in (
-                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_tasks__null_test') }}
-                    union all
-                    select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_tasks__duplicate_test') }}
-            ) ) 
-            {% endif %}
-        "
+        incremental_model = 'append'
     )
 }}
 
@@ -45,11 +34,7 @@ sdl_pop6_sg_tasks as
 sdl_pop6_th_tasks as
 (
 	select * from {{ source('thasdl_raw', 'sdl_pop6_th_tasks') }}
-    where file_name not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_tasks__null_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_pop6_th_tasks__duplicate_test') }}
-    )
+   
 ),
 
 

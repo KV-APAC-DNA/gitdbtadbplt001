@@ -3,28 +3,14 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook=[
-                "
-                    {% if is_incremental() %}
-                    delete from {{this}} itg where itg.file_name in (select sdl.file_name 
-                    from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }} sdl
-                    where file_name not in (
-                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__null_test') }}
-                            union all
-                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__duplicate_test') }}
-                            union all
-                            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__lookup_test') }}
-                            ) ) 
-                    {% endif %}
-                "           
-            ,"{% if var('crm_job_to_execute') == 'th_crm_files' %}
+        pre_hook="{% if var('crm_job_to_execute') == 'th_crm_files' %}
                     delete from {{this}} where cntry_cd = 'TH';
                     {% elif var('crm_job_to_execute') == 'ph_crm_files' %}
                     delete from {{this}} where cntry_cd = 'PH'
                     {% elif var('crm_job_to_execute') == 'tw_crm_files' %}
                     delete from {{this}} where cntry_cd = 'TW';
                     {% endif %}
-                "]
+                "
     )
 }}
 
@@ -32,13 +18,7 @@ with sdl_th_sfmc_children_data as
 (
     select *, dense_rank() over(partition by null order by file_name desc) as rnk 
     from {{ source('thasdl_raw', 'sdl_th_sfmc_children_data') }}
-    where file_name not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__null_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__duplicate_test') }}
-			union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_sfmc_children_data__lookup_test') }}
-            ) qualify rnk=1
+   
 ),
 itg_mds_rg_sfmc_gender as
 (
