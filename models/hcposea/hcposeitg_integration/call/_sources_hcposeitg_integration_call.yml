@@ -11,6 +11,7 @@ sources:
     tables:
 
     - name: sdl_hcp_osea_call
+      tags: ["iconnect_data_ingestion","ingestion"]
       tests:
       - test_null:
           select_columns: ["call_source_id", "country"]
@@ -28,6 +29,7 @@ sources:
             schema: hcposewks_integration
 
     - name: sdl_hcp_osea_call_detail
+      tags: ["iconnect_data_ingestion","ingestion"]
       tests:
       - test_null:
           select_columns: ["call_detail_source_id", "call_source_id"]
@@ -45,6 +47,7 @@ sources:
             schema: hcposewks_integration 
 
     - name: sdl_hcp_osea_call_discussion
+      tags: ["iconnect_data_ingestion","ingestion"]
       tests:
       - test_null:
           select_columns: ["call_discussion_source_id", "call_source_id"]
@@ -62,6 +65,7 @@ sources:
             schema: hcposewks_integration 
 
     - name: sdl_hcp_osea_call_key_message
+      tags: ["iconnect_data_ingestion","ingestion"]
       tests:
       - test_null:
           select_columns: ["call_key_message_id"]
