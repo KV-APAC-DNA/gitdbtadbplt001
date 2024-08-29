@@ -1,7 +1,7 @@
  with itg_recordtype
  as
  (
- select * from dev_dna_core.hcposeitg_integration.itg_recordtype
+ select * from {{ ref('hcposeitg_integration__itg_recordtype') }}
  )
 
 ,
