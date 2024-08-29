@@ -1647,6 +1647,11 @@ AS (
     
     SELECT *
     FROM ct5
+
+    UNION ALL
+    
+    SELECT *
+    FROM ct6
     
     )
 SELECT *
