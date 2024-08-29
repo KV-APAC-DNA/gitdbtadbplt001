@@ -109,7 +109,7 @@ FROM (SELECT x.*,
              COALESCE(e.prom_prc,CAST(0 AS NUMERIC(16,5))) AS prom_prc_amt,
              x.str_cd AS str_num
       FROM (SELECT a.*,
-                   qp.sold_to_party,
+                   c.sold_to_party,
                    CASE
                      WHEN a.src_sys_cd LIKE '7-11' OR a.src_sys_cd LIKE 'A-Mart%' OR a.src_sys_cd LIKE 'Cosmed%' OR a.src_sys_cd LIKE 'EC' OR a.src_sys_cd LIKE 'Watsons%' THEN CAST(g.barcd AS VARCHAR(100))
                      ELSE CAST(a.ean_num AS VARCHAR(100))
@@ -143,8 +143,7 @@ FROM (SELECT x.*,
                                 MIN(barcd) AS barcd
                          FROM itg_pos_cust_prod_cd_ean_map
                          GROUP BY rtrim(cust_prod_cd),cust_nm) g ON rtrim(a.vend_prod_cd) = rtrim(g.cust_prod_cd) and a.src_sys_cd=g.cust_nm
-                         left join (select distinct country_code,parameter_name as src_sys_cd,parameter_value as sold_to_party from 
-itg_query_parameters where country_code='TW' and parameter_type='sold_to_party') qp on qp.src_sys_cd=a.src_sys_cd) x
+                         ) x
         LEFT JOIN (SELECT DISTINCT ean,
                           sap_matl_num,
                           prod_hier_l4,
