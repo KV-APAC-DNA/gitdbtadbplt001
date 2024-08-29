@@ -39,7 +39,7 @@
                             from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
                             union
                             select distinct ean || cntry
-                            from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }}
+                            from {{ ref('aspwks_integration__wks_edw_product_attr_dim_2') }}
                         )
                 ) a, {{this}} b where REPLACE (A.aw_rmte_key, ' ', '') = REPLACE (B.aw_remote_key, ' ', '')
                 AND UPPER (SUBSTRING (A.lang, 4, 5)) = B.cntry
