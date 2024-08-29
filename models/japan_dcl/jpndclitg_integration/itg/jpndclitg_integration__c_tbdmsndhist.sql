@@ -35,12 +35,12 @@ final as
 		dselim::timestamp_ntz(9) as dselim,
 		dielimusr::number(38,0) as dielimusr,
 		c_diusrchanelid::number(38,0) as c_diusrchanelid,
-		null::varchar(10) as source_file_date,
+		source_file_date::varchar(10) as source_file_date,
 		inserted_date::timestamp_ntz(9) as inserted_date,
-		null::varchar(100) as inserted_by,
+		inserted_by::varchar(100) as inserted_by,
 		updated_date::timestamp_ntz(9) as updated_date,
-		null::varchar(100) as updated_by,
-		null::varchar(250) as rowid
+		updated_by::varchar(100) as updated_by,
+		rowid::varchar(250) as rowid
     from source
 )
 
