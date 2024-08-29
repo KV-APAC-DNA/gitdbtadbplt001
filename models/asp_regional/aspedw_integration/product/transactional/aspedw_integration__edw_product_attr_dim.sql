@@ -36,10 +36,10 @@
                     FROM {{ source('aspitg_integration', 'itg_mysls_prod_trnl') }} a
                     where REPLACE (A.aw_rmte_key, ' ', '') || UPPER (SUBSTRING (A.lang, 4, 5)) not in (
                             select REPLACE(REPLACE(barcode, '-', ''), ' ', '') || cntry_cd
-                            from NA_EDW.EDW_VW_POP6_PRODUCTS
+                            from {{ ref('aspedw_integration__edw_vw_pop6_products') }}
                             union
                             select distinct ean || cntry
-                            from rg_wks.wks_edw_product_attr_dim
+                            from {{ ref('aspwks_integration__wks_edw_product_attr_dim') }}
                         )
                 ) a, {{this}} b where REPLACE (A.aw_rmte_key, ' ', '') = REPLACE (B.aw_remote_key, ' ', '')
                 AND UPPER (SUBSTRING (A.lang, 4, 5)) = B.cntry
