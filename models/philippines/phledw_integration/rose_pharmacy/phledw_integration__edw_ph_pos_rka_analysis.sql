@@ -1,40 +1,42 @@
 with ph_pos_rka_rose_pharma as 
  (
-select * from {{ ref('phlitg_integration__itg_ph_pos_rka_rose_pharma') }}
+    select * from {{ ref('phlitg_integration__itg_ph_pos_rka_rose_pharma') }}
  ),
-rosepharma_customers as 
+ph_rosepharma_customers as 
 (
- select * from {{source('phlitg_integration'.'itg_mds_ph_pos_rosepharma_customers')}}
+    select * from phlitg_integration.itg_mds_ph_pos_rosepharma_customers
 ),
-rosepharma_products as 
+ph_rosepharma_products as 
 (
- select * from {{source('phlitg_integration'.'itg_mds_ph_pos_rosepharma_products')}}
+     select * from phlitg_integration.itg_mds_ph_pos_rosepharma_products
+),
+price_list as 
+(
+select * from PHLITG_INTEGRATION.ITG_MDS_PH_POS_PRICELIST
 ),
 transformed as 
 (
 select 
-    jj_year,
-    jj_month,
-    jj_month_id,
-    pos.Code,
-    brnch_cd,
-    brnch_nm,
-    prefix,
-    Code,
-    sap_item_cd,
-    JJ_item_Description,
-    UOM,
-    jnj_pc_per_cust_unit,
-    ListPriceUnit,
-    pos_qty,
+    pos.jj_year,
+    pos.jj_month,
+    pos.jj_month_id,
+    cust.Code,
+    cust.brnch_cd,
+    cust.brnch_nm,
+    split_part(cust.Code,'-',1) as prefix,
+    prod.sap_item_cd,
+    prod.sap_item_desc,
+    prod.UOM,
+    prod.jnj_pc_per_cust_unit,
+    price.Lst_Price_Unit as ListPriceUnit,
+    (prod.UOM/prod.jnj_pc_per_cust_unit) as pos_qty,
     (pos_qty*ListPriceUnit) as pos_gts
 
     from ph_pos_rka_rose_pharma as pos
-
-  
-
-
-),
+    join ph_rosepharma_products prod on (pos.sku=prod.item_cd)
+    join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
+    join price_list price on (prod.sap_item_cd=price.item_cd )--and prod.mnth_id=price.jj_month_id) 
+  ),
 final as 
 (
 select 
