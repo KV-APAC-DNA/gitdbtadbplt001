@@ -58,7 +58,7 @@ final as
 		lastchgversionnumber::number(18,0) as lastchgversionnumber,
 		validationstatus::varchar(500) as validationstatus,
 		current_timestamp()::timestamp_ntz(9) as inserted_date,
-		null::varchar(100) as inserted_by,
+		'ETL_Batch'::varchar(100) as inserted_by,
 		current_timestamp()::timestamp_ntz(9) as updated_date,
 		null::varchar(100) as updated_by
     from source
