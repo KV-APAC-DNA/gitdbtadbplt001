@@ -32,7 +32,7 @@
 }}
 
 with source as(
-    select *, dense_rank() over(partition by distributorid,arcode order by file_name desc) as rnk 
+    select *, dense_rank() over(partition by distributorid,arcode order by filename desc) as rnk 
     from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
     where filename not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
@@ -40,7 +40,7 @@ with source as(
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
-        )
+        ) qualify rnk=1
 ),
 final as(
     select 
