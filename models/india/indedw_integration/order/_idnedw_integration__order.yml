@@ -12,4 +12,4 @@ models:
   - name: indedw_integration__v_rpt_order_details
     config:
       alias: v_rpt_order_details
-      tags: ["india_views","transformation"]
+      tags: ["in_edw_sales_order","transformation"]

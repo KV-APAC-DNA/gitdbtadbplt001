@@ -4,7 +4,7 @@ models:
   - name: inditg_integration__itg_pos_historical_btl
     config:
       alias: itg_pos_historical_btl
-      tags: ["in_key_acct_offtake","transformation"]
+      tags: ["in_key_acct_offtake","off"] #Data was last loaded into JnJ in April 2021.
   - name: inditg_integration__sdl_raw_pos_historical_btl
     config:
       alias: sdl_raw_pos_historical_btl

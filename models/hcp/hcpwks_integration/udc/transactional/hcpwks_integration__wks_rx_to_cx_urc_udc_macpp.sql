@@ -21,8 +21,8 @@ transformed as
                 FROM v_retailer_udc_map
                 WHERE udc_orslcac2021 = 'YES'
                 GROUP BY 1,2,3) udc
-            ON ret.customer_code = udc.customer_code_udc
-        AND ret.retailer_code = udc.retailer_code_udc
+            ON trim(ret.customer_code) = trim(udc.customer_code_udc)
+        AND trim(ret.retailer_code) = trim(udc.retailer_code_udc)
         AND ret.rn = 1
     GROUP BY 1,2
 ),

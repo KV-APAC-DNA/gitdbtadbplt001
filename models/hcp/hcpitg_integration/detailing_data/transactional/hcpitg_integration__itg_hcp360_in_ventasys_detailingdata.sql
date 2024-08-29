@@ -13,7 +13,9 @@
 
 with source as
 (
-    select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_detailingdata') }}
+    select *, dense_rank() over (partition by TO_CHAR(dcr_dt,'YYYYMM') order by filename desc) rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_detailingdata') }}
+    qualify rn=1
 ),
 final as
 (
@@ -38,8 +40,8 @@ select team_name::varchar(20) as team_name,
     dcr_dt::date as dcr_dt,
     p1_dtl::varchar(100) as p1_dtl,
     p2_dtl::varchar(100) as p2_dtl,
-    p3_dtl::varchar(50) as p3_dtl,
-    p4_dtl::varchar(50) as p4_dtl,
+    p3_dtl::varchar(100) as p3_dtl,
+    p4_dtl::varchar(100) as p4_dtl,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm,
     filename::varchar(50) as filename

@@ -41,3 +41,7 @@ models:
     config:
       alias: edw_vw_hk_pos
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__v_rpt_pos_offtake_daily
+    config:
+      alias: v_rpt_pos_offtake_daily
+      tags: ["north_asia_views","transformation"]

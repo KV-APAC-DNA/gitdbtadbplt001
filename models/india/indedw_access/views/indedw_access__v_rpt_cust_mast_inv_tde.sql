@@ -1,0 +1,43 @@
+with source as 
+(
+    select * from {{ ref('indedw_integration__v_rpt_cust_mast_inv_tde') }}
+)
+select
+    customer_code as "customer_code",
+    region_code as "region_code",
+    region_name as "region_name",
+    zone_code as "zone_code",
+    zone_name as "zone_name",
+    zone_classification as "zone_classification",
+    territory_code as "territory_code",
+    territory_name as "territory_name",
+    territory_classification as "territory_classification",
+    state_code as "state_code",
+    state_name as "state_name",
+    town_name as "town_name",
+    town_classification as "town_classification",
+    city as "city",
+    type_code as "type_code",
+    type_name as "type_name",
+    customer_name as "customer_name",
+    customer_address1 as "customer_address1",
+    customer_address2 as "customer_address2",
+    customer_address3 as "customer_address3",
+    active_flag as "active_flag",
+    active_start_date as "active_start_date",
+    wholesalercode as "wholesalercode",
+    super_stockiest as "super_stockiest",
+    direct_account_flag as "direct_account_flag",
+    abi_code as "abi_code",
+    abi_name as "abi_name",
+    rds_size as "rds_size",
+    crt_dttm as "crt_dttm",
+    updt_dttm as "updt_dttm",
+    num_of_retailers as "num_of_retailers",
+    customer_type as "customer_type",
+    psnonps as "psnonps",
+    suppliedby as "suppliedby",
+    cfa as "cfa",
+    cfa_name as "cfa_name",
+    town_code as "town_code"
+from source

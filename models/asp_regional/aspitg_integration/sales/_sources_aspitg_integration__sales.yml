@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: aspsdl_raw
+    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
+    schema: aspsdl_raw
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: sdl_market_mirror_fact
+      - name: sdl_mds_ap_digital_shelf_targets
+      - name: sdl_clavis_gb_products
+        tags: ["rg_clavis","ingestion"]
+      - name: sdl_clavis_gb_search_terms_results
+        tags: ["rg_clavis","ingestion"]
+      - name: sdl_okr_alteryx_automation
+        tags: ["okr_alteryx_data_ingestion","ingestion"]
+        tests:
+        - test_null:
+            select_columns:  ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            not_null_columns: ["target_type"]
+            filter: "datatype = 'Target'"
+            name: TRATBL_sdl_okr_alteryx_automation____null_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
+        - test_duplicate:
+            select_columns: ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            group_by_columns: ["kpi","datatype","cluster","market","segment","brand","yearmonth","year","quarter"]
+            name: TRATBL_sdl_okr_alteryx_automation__duplicate_test
+            config:
+              store_failures: true
+              schema: aspwks_integration
+
+
+  - name: aspwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: wks_market_mirror_fact

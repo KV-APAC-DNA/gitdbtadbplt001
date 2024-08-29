@@ -180,3 +180,21 @@ models:
     config:
       alias: edw_crncy_exch_rates
       tags: ["sap_ecc_master_etl_framework","transformation"]
+  - name: aspedw_integration__v_rpt_copa_gcph
+    config: 
+      alias: v_rpt_copa_gcph
+      tags: ["prox_datamart","transformation"]
+  
+  - name: aspedw_integration__v_rpt_copa_gl_hid_disc
+    config: 
+      alias: v_rpt_copa_gl_hid_disc
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+
+  - name: aspedw_integration__v_intrm_reg_crncy_exch
+    config: 
+      alias: v_intrm_reg_crncy_exch
+      tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]
+  - name: aspedw_integration__v_rpt_copa_commercial_excellence
+    config: 
+      alias: v_rpt_copa_commercial_excellence
+      tags: ["comex_base_datamart","transformation"]

@@ -1,0 +1,9 @@
+models:
+  - name: aspedw_integration__edw_rpt_regional_sellout_offtake
+    config: 
+      alias: edw_rpt_regional_sellout_offtake
+      tags: ["cutomer_360_datamart","inactive"]
+  - name: aspedw_integration__edw_rpt_regional_sellout_offtake_dbt
+    config: 
+      alias: edw_rpt_regional_sellout_offtake_dbt
+      tags: ["cutomer_360_datamart","transformation"]
