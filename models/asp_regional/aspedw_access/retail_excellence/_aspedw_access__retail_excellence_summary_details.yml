@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: aspedw_access__edw_rpt_retail_excellence_details
+    config: 
+      alias: edw_rpt_retail_excellence_details_view
+      tags: ["retail_excellence_details_view","ingestion"]
+
+  - name: aspedw_access__edw_rpt_retail_excellence_summary
+    config: 
+      alias: edw_rpt_retail_excellence_summary_view
+      tags: ["retail_excellence_summary_view","ingestion"]

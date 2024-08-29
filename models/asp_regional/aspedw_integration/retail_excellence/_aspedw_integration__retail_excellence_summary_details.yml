@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: aspedw_integration__edw_rpt_retail_excellence_details
+    config:
+      alias: edw_rpt_retail_excellence_details
+      tags: ["retail_excellence_details_datamart","transformation"]
+
+  - name: aspedw_integration__edw_rpt_retail_excellence_summary
+    config:
+      alias: edw_rpt_retail_excellence_summary
+      tags: ["retail_excellence_summary_datamart","transformation"]
