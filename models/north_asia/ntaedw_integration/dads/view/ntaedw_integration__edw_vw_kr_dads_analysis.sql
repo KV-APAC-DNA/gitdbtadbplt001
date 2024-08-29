@@ -107,8 +107,8 @@ FROM (
                 sum((derived_table8.pa_cost)::numeric) AS pa_cost,
                 sum((derived_table8.bpa_cost)::numeric) AS bpa_cost,
                 sum((derived_table8.sa_cost)::numeric) AS sa_cost,
-                avg((derived_table8.observed_price)::numeric) AS observed_price,
-                avg(derived_table8.rocket_wow_price) AS rocket_wow_price,
+                trunc(avg((derived_table8.observed_price)::numeric),0) AS observed_price,
+                trunc(avg(derived_table8.rocket_wow_price),0) AS rocket_wow_price,
                 sum(derived_table8.total_monthly_search_volume) AS total_monthly_search_volume,
                 sum(derived_table8.payment_amount) AS payment_amount
             FROM (
