@@ -177,6 +177,8 @@ FROM (SELECT CAST(TARGET.FISC_YR AS numeric(18,0) ) AS FISC_YR,
                AND UPPER(LTRIM(TARGET.STORE_CODE, '0')) = UPPER(LTRIM(ACTUAL.STORE_CODE,'0'))
                AND UPPER (TRIM (TARGET.EAN)) = UPPER (TRIM (ACTUAL.EAN))	
                AND UPPER(TARGET.RETAIL_ENVIRONMENT) = UPPER(ACTUAL.RETAIL_ENVIRONMENT)
+               AND LTRIM(TARGET.SOLDTO_CODE, '0') = LTRIM(ACTUAL.SOLDTO_CODE, '0')
+               AND UPPER(TARGET.DATA_SRC) = UPPER(ACTUAL.DATA_SRC)
     
         ----------------customer hierarchy------------------------------
         LEFT JOIN (SELECT * FROM (SELECT DISTINCT ECBD.CUST_NUM AS SAP_CUST_ID,		
@@ -391,7 +393,9 @@ FROM (SELECT CAST(ACTUAL.YEAR AS numeric(18,0) ) AS FISC_YR,
                               AND UPPER(LTRIM(A.DISTRIBUTOR_CODE, '0')) = UPPER(LTRIM(T.DISTRIBUTOR_CODE, '0'))	
                               AND UPPER(LTRIM(A.STORE_CODE, '0')) = UPPER(LTRIM(T.STORE_CODE, '0'))
                               AND UPPER(TRIM(A.EAN)) = UPPER(TRIM(T.EAN))
-                              AND UPPER(A.RETAIL_ENVIRONMENT) = UPPER(T.RETAIL_ENVIRONMENT))) ACTUAL
+                              AND UPPER(A.RETAIL_ENVIRONMENT) = UPPER(T.RETAIL_ENVIRONMENT)
+                              AND LTRIM(A.SOLDTO_CODE, '0') = LTRIM(T.SOLDTO_CODE, '0')
+                              AND UPPER(A.DATA_SRC) = UPPER(T.DATA_SRC))) ACTUAL
 			LEFT JOIN (select matl_num,
 						ean_code,
 						prod_hier_l1,
