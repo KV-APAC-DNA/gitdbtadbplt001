@@ -2,13 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','orderno','orderdate','arcode','linenumber'],
-        pre_hook = "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.file_name in (select sdl.SOURCE_FILE_NAME 
-			from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }} sdl ) 
-            {% endif %}
-        "
+        unique_key=  ['distributorid','orderno','orderdate','arcode','linenumber']
     )
 }}
 

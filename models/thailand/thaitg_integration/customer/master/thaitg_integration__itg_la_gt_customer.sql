@@ -3,21 +3,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['distributorid', 'arcode'],
-        pre_hook= [
-            "
-                {% if is_incremental() %}
-                delete from {{this}} itg where itg.filename in (select sdl.filename 
-                from {{ source('thasdl_raw', 'sdl_la_gt_customer') }} sdl
-                where filename not in (
-                        select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__null_test') }}
-                        union all
-                        select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__test_file') }}
-                        union all
-                        select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
-                    ) ) 
-                {% endif %}
-            "
-            ,"delete from {{this}} 
+        pre_hook= "delete from {{this}} 
         where (upper(trim(distributorid)), upper(trim(arcode))) in ( select distinct upper(trim(distributorid)), upper(trim(arcode)) 
         from {{ source('thasdl_raw', 'sdl_la_gt_customer') }}
         where filename not in (
@@ -27,7 +13,7 @@
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_customer__duplicate_test') }}
         )
-        )"]
+        )"
     )
 }}
 

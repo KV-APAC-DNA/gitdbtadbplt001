@@ -2,18 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['distributorid','recdate','whcode','productcode'],
-        pre_hook = "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.file_name in (select sdl.SOURCE_FILE_NAME from
-            {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} sdl 
-            where SOURCE_FILE_NAME not in
-            (
-                select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
-            )  
-            )
-            {% endif %}
-        "
+        unique_key=  ['distributorid','recdate','whcode','productcode']
     )
 }}
 

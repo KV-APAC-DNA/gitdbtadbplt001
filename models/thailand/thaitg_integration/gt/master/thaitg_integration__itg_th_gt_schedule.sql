@@ -2,24 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= [
-            "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.filename in (select sdl.filename 
-			from {{ source('thasdl_raw','sdl_th_gt_schedule') }} sdl
-            where filename not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__null_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__duplicate_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__test_format') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__test_date_format_odd_eve_leap') }}
-            ) 
-            ) 
-            {% endif %}
-            "
-        ,
+        pre_hook=
         "delete from {{this}} where exists( select 1 
         from ( select upper(trim(saleunit)) as saleunit, min(schedule_date)::date as schedule_date 
         from {{ source('thasdl_raw','sdl_th_gt_schedule') }}
@@ -32,7 +15,7 @@
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_th_gt_schedule__test_date_format_odd_eve_leap') }}
             ) 
-        group by upper(trim(saleunit)) ) as sdl where upper(trim({{this}}.saleunit)) = upper(trim(sdl.saleunit)) and {{this}}.schedule_date::date >= sdl.schedule_date::date )"]
+        group by upper(trim(saleunit)) ) as sdl where upper(trim({{this}}.saleunit)) = upper(trim(sdl.saleunit)) and {{this}}.schedule_date::date >= sdl.schedule_date::date )"
     )
 }}
 

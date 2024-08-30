@@ -2,30 +2,18 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ['file_name'],
-        pre_hook = "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.file_name in (select sdl.file_name 
-			from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_sfm') }} sdl
-            where file_name not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_sfm__null_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_sfm__test_date_format_odd_eve') }}
-            )
-            ) 
-            {% endif %}
-        "
+        unique_key=  ['file_name']
     )
 }}
-with 
-source as
+
+with source as
 (
     select *, dense_rank() over(PARTITION BY file_name order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_sfm') }}
     where file_name not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_sfm__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_sfm__test_date_format_odd_eve') }}
-    )
+    ) qualify rnk =1
 ),
 
 final as

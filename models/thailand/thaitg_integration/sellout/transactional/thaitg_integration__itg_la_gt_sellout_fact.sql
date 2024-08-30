@@ -2,19 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy= "delete+insert",
-        unique_key=  ["distributorid","orderno","orderdate","arcode","linenumber"],
-        pre_hook = "
-            {% if is_incremental() %}
-            delete from {{this}} itg where itg.filename in (select sdl.filename 
-			from {{ source('thasdl_raw', 'sdl_la_gt_sellout_fact') }} sdl 
-            where filename not in (
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__duplicate_test') }}
-            union all
-            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_sellout_fact__test_format') }}
-            )
-            ) 
-            {% endif %}
-        "
+        unique_key=  ["distributorid","orderno","orderdate","arcode","linenumber"]
     )
 }}
 
