@@ -1,0 +1,16 @@
+sources:
+  - name: idnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ppahil01_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    
+    - name: TRATBL_sdl_id_ps_promotion__null_test
+    - name: TRATBL_sdl_id_ps_promotion__duplicate_test
+    - name: TRATBL_sdl_id_ps_promotion_competitor__null_test
+    - name: TRATBL_sdl_id_ps_promotion_competitor__duplicate_test
+    - name: TRATBL_sdl_id_ps_pricing__null_test
+    - name: TRATBL_sdl_id_ps_pricing__duplicate_test
