@@ -10,6 +10,9 @@ with sdl_vn_dms_data_extract_summary as(
 ),
 sdl_vn_dms_call_details as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_call_details') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_call_details__duplicate_test')}}
+    )
 ),
 itg_vn_dms_call_details as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_call_details') }} 
@@ -36,14 +39,15 @@ itg_vn_dms_d_sellout_sales_fact as (
 ),
 sdl_vn_dms_distributor_dim as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_distributor_dim') }} 
-),
-itg_vn_dms_distributor_dim as (
-       select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
        where file_name not in (
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_distributor_dim__null_test')}}
         union all
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_distributor_dim__duplicate_test')}}
     )
+),
+itg_vn_dms_distributor_dim as (
+       select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
+
 ),
 sdl_vn_dms_forecast as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_forecast') }} 
@@ -98,12 +102,20 @@ itg_vn_dms_kpi_sellin_sellthrgh as (
 ),
 sdl_vn_dms_msl as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_msl') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_msl__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_msl__duplicate_test')}}
+    )
 ),
 itg_vn_dms_msl as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_msl') }}
 ),
 sdl_vn_dms_order_promotion as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_order_promotion') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_order_promotion__duplicate_test')}}
+    )
 ),
 itg_vn_dms_order_promotion as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_order_promotion') }}
@@ -162,6 +174,7 @@ sdl_vn_dms_sellthrgh_sales_fact as (
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__null_test')}}
         union all
         select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__duplicate_test')}}
+        )
 ),
 itg_vn_dms_sellthrgh_sales_fact as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_sellthrgh_sales_fact') }}
@@ -207,7 +220,7 @@ FROM (
   FROM sdl_vn_dms_data_extract_summary
   WHERE
     --to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
-    to_date(date_of_extraction, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
+    to_date(date_of_extraction::varchar, 'MM/DD/YYYY HH12:MI:SS AM') = TO_DATE(DATE_TRUNC('DAY', CURRENT_TIMESTAMP()::timestamp_ntz(9)))
 ) AS SRC, (
   SELECT
     source_file_name AS file_name,
