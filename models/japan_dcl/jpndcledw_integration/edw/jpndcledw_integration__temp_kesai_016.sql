@@ -17,15 +17,15 @@ cld_m as(
 kokyano_list AS (
     SELECT kokyano
     FROM kesai_h_data_mart_mv
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
     SELECT kokyano
     FROM cim01kokya
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
