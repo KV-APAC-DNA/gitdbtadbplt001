@@ -37,7 +37,8 @@ from
           t4.gph_prod_subctgry, 
           t4.gph_prod_put_up_desc, 
           ltrim(t4.sap_matl_num) as sku_cd, 
-          sap_mat_desc 
+          sap_mat_desc,
+          emd.PKA_PACKAGE_DESC AS PKA_PACKAGE
         from 
           (
             select 

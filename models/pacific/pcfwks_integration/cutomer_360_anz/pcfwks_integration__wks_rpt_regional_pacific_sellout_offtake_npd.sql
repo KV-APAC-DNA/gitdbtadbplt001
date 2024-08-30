@@ -90,6 +90,9 @@ final as
         store_grade,
         retail_env,
         channel,
+        numeric_distribution,
+        weighted_distribution,
+        store_count_where_scanned,
         crtd_dttm,
         updt_dttm   
     FROM wks_pacific_regional_sellout_npd
