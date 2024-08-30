@@ -8,7 +8,7 @@
 
 with source as
 (
-    select *, dense_rank() over(PARTITION BY file_name order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_sfm') }}
+    select *, dense_rank() over(PARTITION BY null order by file_name desc) as rnk from {{ source('thasdl_raw', 'sdl_jnj_consumerreach_sfm') }}
     where file_name not in (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_jnj_consumerreach_sfm__null_test') }}
             union all
