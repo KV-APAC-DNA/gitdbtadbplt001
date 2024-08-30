@@ -630,7 +630,7 @@ mkt_mirror as
                 trans.brand AS source_prod_hier_l3, 
                 trans.sub_brand AS source_prod_hier_l5, 
                 trans.packsize AS source_packsize, 
-                max(CASE WHEN (upper((trans.attribute_1):: text) = ('EAN' :: character varying):: text) 
+                rtrim(max(CASE WHEN (upper((trans.attribute_1):: text) = ('EAN' :: character varying):: text) 
                         THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_1_desc):: text, ('0' :: character varying):: text)
                                 ELSE left(ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_1_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_2):: text) = ('EAN' :: character varying):: text) 
@@ -680,7 +680,7 @@ mkt_mirror as
                                 ELSE left(ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_16_desc):: text,('0' :: character varying):: text):: text)) END 
                         WHEN (upper((trans.attribute_17):: text) = ('EAN' :: character varying):: text) 
                         THEN CASE WHEN (position((' ' :: character varying),ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text):: text) IS NULL) THEN ltrim((trans.attribute_17_desc):: text, ('0' :: character varying):: text) 
-                                ELSE left(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text):: text)) END ELSE ltrim((("map".ean):: character varying):: text, ('0' :: character varying):: text) END) AS ean_upc, 
+                                ELSE left(ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text),position((' ' :: character varying),ltrim((trans.attribute_17_desc):: text,('0' :: character varying):: text):: text)) END ELSE ltrim((("map".ean):: character varying):: text, ('0' :: character varying):: text) END)) AS ean_upc, 
                 trans.utag, 
                 trans.product, 
                 CASE WHEN (sum(trans.sku_unit_sales) <> (0):: double precision) THEN (sum(trans.sku_value_sales_lc) / sum(trans.sku_unit_sales)) ELSE NULL :: double precision END AS asp_lcy, 
