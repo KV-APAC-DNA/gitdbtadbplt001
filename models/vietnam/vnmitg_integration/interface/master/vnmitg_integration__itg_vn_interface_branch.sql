@@ -3,12 +3,24 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['branch_code', 'parent_cust_code'],
-        pre_hook= "delete from {{this}} where (branch_code, parent_cust_code) in (select branch_code, parent_cust_code from {{ source('vnmsdl_raw', 'sdl_vn_interface_branch') }})"
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where (branch_code, parent_cust_code) in (select branch_code, parent_cust_code from {{ source('vnmsdl_raw', 'sdl_vn_interface_branch') }}
+        where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_branch__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_branch__duplicate_test')}}
+        )); {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_interface_branch') }}
+    select *, dense_rank() over (partition by branch_code, parent_cust_code order by filename desc) rnk
+     from {{ source('vnmsdl_raw', 'sdl_vn_interface_branch') }}
+    where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_branch__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_branch__duplicate_test')}}
+        ) qualify rnk = 1
 ),
 final as(
     select 

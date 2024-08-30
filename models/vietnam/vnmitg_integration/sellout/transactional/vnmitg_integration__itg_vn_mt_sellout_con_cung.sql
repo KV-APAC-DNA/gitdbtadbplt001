@@ -7,7 +7,11 @@
 }}
 
 with source as (
-    select * from {{ source('vnmsdl_raw','sdl_vn_mt_sellout_con_cung') }}
+    select *, dense_rank() over (partition by null order by filename desc) rnk
+     from {{ source('vnmsdl_raw','sdl_vn_mt_sellout_con_cung') }}
+    where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_con_cung__null_test')}}
+    ) qualify rnk = 1
 ),
 
 final as

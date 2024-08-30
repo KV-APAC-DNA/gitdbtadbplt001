@@ -3,12 +3,22 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['user_id','rsm_name','group_jb','franchise','brand', 'variant', 'product_group', 'dmsproduct_group', 'product_code', 'productcodesap', 'dmsproductid', 'sku_name', 'tax', 'province', 'cycle'],
-        pre_hook= "delete from {{this}} where (user_id, rsm_name, group_jb, franchise, brand, variant, product_group, dmsproduct_group, product_code, productcodesap, dmsproductid, sku_name, tax, province, cycle) in ( select user_id, rsm_name, group_jb, franchise, brand, variant, product_group, dmsproduct_group, product_code, productcodesap, dmsproductid, sku_name, cast(tax as decimal(15, 4)), province, cast(cycle as int) from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }} )"
+        pre_hook= "{% if is_incremental()%}
+        delete from {{this}} where (user_id, rsm_name, group_jb, franchise, brand, variant, product_group, dmsproduct_group, product_code, productcodesap, dmsproductid, sku_name, tax, province, cycle) in ( select user_id, rsm_name, group_jb, franchise, brand, variant, product_group, dmsproduct_group, product_code, productcodesap, dmsproductid, sku_name, cast(tax as decimal(15, 4)), province, cast(cycle as int) from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }} 
+        where SOURCE_FILE_NAME not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_history_saleout__duplicate_test')}}
+        ));
+        {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }}
+    select *, 
+    dense_rank() over (partition by user_id,rsm_name,group_jb,franchise,brand, variant, product_group, dmsproduct_group, product_code, productcodesap, dmsproductid,sku_name, tax, province, cycle order by SOURCE_FILE_NAME desc) rnk
+    from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }}
+    where SOURCE_FILE_NAME not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_history_saleout__duplicate_test')}}
+    ) qualify rnk = 1
 ),
 final as(
     select 
@@ -31,7 +41,8 @@ final as(
         sellout_afvat_afdisc::number(15,4) as sellout_afvat_afdisc,
         curr_date::timestamp_ntz(9) as crtd_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        run_id::number(14,0) as run_id
+        run_id::number(14,0) as run_id,
+        SOURCE_FILE_NAME as file_name
     from source
 )
 select * from final

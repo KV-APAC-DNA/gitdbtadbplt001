@@ -1,0 +1,81 @@
+version: 2
+
+sources:
+  - name: vnmwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: sshukl02_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_vn_dms_product_dim__null_test
+      - name: TRATBL_sdl_vn_dms_product_dim__duplicate_test
+      - name: TRATBL_sdl_vn_dms_d_sellout_sales_fact__duplicate_test
+      - name: TRATBL_sdl_vn_dms_history_saleout__duplicate_test
+      - name: TRATBL_sdl_vn_dms_call_details__duplicate_test
+      - name: TRATBL_sdl_vn_dms_order_promotion__duplicate_test
+      - name: TRATBL_sdl_vn_dms_msl__null_test
+      - name: TRATBL_sdl_vn_dms_msl__duplicate_test
+      - name: TRATBL_sdl_vn_dms_distributor_dim__null_test
+      - name: TRATBL_sdl_vn_dms_distributor_dim__duplicate_test
+      - name: TRATBL_sdl_vn_dms_h_sellout_sales_fact__duplicate_test
+      - name: TRATBL_sdl_vn_dms_customer_dim__null_test
+      - name: TRATBL_sdl_vn_dms_customer_dim__duplicate_test
+      - name: TRATBL_sdl_vn_dms_sellthrgh_sales_fact__null_test
+      - name: TRATBL_sdl_vn_dms_sellthrgh_sales_fact__duplicate_test
+      - name: TRATBL_sdl_vn_dms_sales_stock_fact__null_test
+      - name: TRATBL_sdl_vn_dms_sales_stock_fact__duplicate_test
+      - name: TRATBL_sdl_vn_dms_kpi__duplicate_test
+      - name: TRATBL_sdl_vn_dms_kpi__null_test
+      - name: TRATBL_sdl_vn_dms_forecast__null_test
+      - name: TRATBL_sdl_vn_dms_forecast__duplicate_test
+      - name: TRATBL_sdl_spiral_mti_offtake__null_test
+      - name: TRATBL_sdl_vn_dksh_daily_sales__null_test
+      - name: TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__null_test
+      - name: TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__duplicate_test
+      - name: TRATBL_sdl_vn_dms_promotion_list__null_test
+      - name: TRATBL_sdl_vn_dms_promotion_list__duplicate_test
+      - name: TRATBL_sdl_vn_dms_sales_org_dim__null_test
+      - name: TRATBL_sdl_vn_dms_sales_org_dim__duplicate_test
+      - name: TRATBL_sdl_vn_dms_sales_org_dim__test_format
+      - name: TRATBL_sdl_vn_dms_sales_org_dim__test_format2
+      - name: TRATBL_sdl_vn_dms_yearly_target__null_test
+      - name: TRATBL_sdl_vn_dms_yearly_target__duplicate_test
+      - name: TRATBL_sdl_vn_gt_topdoor_target__duplicate_test
+      - name: TRATBL_sdl_vn_gt_topdoor_target__null_test
+      - name: TRATBL_sdl_vn_gt_topdoor_target__format_test_from_cycle
+      - name: TRATBL_sdl_vn_gt_topdoor_target__format_test_to_cycle
+      - name: TRATBL_sdl_vn_interface_answers__null_test
+      - name: TRATBL_sdl_vn_interface_answers__duplicate_test
+      - name: TRATBL_sdl_vn_interface_branch__null_test
+      - name: TRATBL_sdl_vn_interface_branch__duplicate_test
+      - name: TRATBL_sdl_vn_interface_choices__null_test
+      - name: TRATBL_sdl_vn_interface_choices__duplicate_test
+      - name: TRATBL_sdl_vn_interface_cpg__null_test
+      - name: TRATBL_sdl_vn_interface_cpg__duplicate_test
+      - name: TRATBL_sdl_vn_interface_customer_visited__null_test
+      - name: TRATBL_sdl_vn_interface_customer_visited__duplicate_test
+      - name: TRATBL_sdl_vn_interface_ise_header__null_test
+      - name: TRATBL_sdl_vn_interface_ise_header__duplicate_test
+      - name: TRATBL_sdl_vn_interface_notes__null_test
+      - name: TRATBL_sdl_vn_interface_notes__duplicate_test
+      - name: TRATBL_sdl_vn_interface_question__null_test
+      - name: TRATBL_sdl_vn_interface_question__duplicate_test
+      - name: TRATBL_sdl_vn_mt_sellin_coop__null_test
+      - name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test
+      - name: TRATBL_sdl_vn_mt_sellin_coop__lookup_test2
+      - name: TRATBL_sdl_vn_mt_sellin_dksh__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_con_cung__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_coop__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_coop__duplicate_test
+      - name: TRATBL_sdl_vn_mt_sellout_guardian__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_mega__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_mega__duplicate_test
+      - name: TRATBL_sdl_vn_mt_sellout_vinmart__null_test
+      - name: TRATBL_sdl_vn_mt_sellout_vinmart__duplicate_test
+      - name: TRATBL_sdl_vn_oneview_otc__null_test
+      - name: TRATBL_sdl_vn_oneview_otc__format_test
+      - name: TRATBL_sdl_vn_product_mapping__null_test
+      - name: TRATBL_sdl_vn_product_mapping__duplicate_test
+

@@ -8,8 +8,14 @@
 --Import CTE
 with source as 
 (
-    select * 
+    select * , dense_rank() over (partition by ise_id,ques_no order by filename desc) rnk
     from {{ source('vnmsdl_raw', 'sdl_vn_interface_question') }}
+    where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_question__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_question__duplicate_test')}}
+        )
+        qualify rnk = 1
 ),
 --Final CTE
 final as (

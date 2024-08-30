@@ -3,13 +3,16 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_id','outlet_id','order_no','line_number'],
-        pre_hook= " delete from {{this}} where (dstrbtr_id, outlet_id, order_no, line_number) in ( select dstrbtr_id, outlet_id, order_no, line_number from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }});"
+        pre_hook= " {% if is_incremental()%}
+        delete from {{this}} where (dstrbtr_id, outlet_id, order_no, line_number) in ( select dstrbtr_id, outlet_id, order_no, line_number from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}); {%endif%}"
     )
 }}
 
 
 with wks_itg_vn_dms_d_sellout_sales_fact as(
-    select * from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}
+    select *, dense_rank() over (partition by dstrbtr_id,outlet_id,order_no,line_number order by file_name desc) rnk
+    from {{ ref('vnmwks_integration__wks_itg_vn_dms_d_sellout_sales_fact') }}
+    qualify rnk = 1
 ),
 transformed as(
     SELECT
@@ -38,7 +41,8 @@ transformed as(
         RTRIM(status, ',')::varchar(1) AS status,
         curr_date::timestamp_ntz(9) as crtd_dttm,
         CURRENT_TIMESTAMP()::timestamp_ntz(9) AS updt_dttm,
-        run_id::number(14,0) as run_id
+        run_id::number(14,0) as run_id,
+        file_name::varchar(255) as file_name
     FROM wks_itg_vn_dms_d_sellout_sales_fact
 )
 select * from transformed

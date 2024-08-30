@@ -3,12 +3,18 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['billing_no', 'invoice_date'],
-        pre_hook= "delete from {{this}} where (billing_no,invoice_date) in (select distinct billing_no, case when invoice_date like '%-%' then to_char(to_date(invoice_date,'DD-MM-YYYY'),'YYYYMMDD') else invoice_date end as invoice_date from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellin_dksh') }})"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (billing_no,invoice_date) in (select distinct billing_no, case when invoice_date like '%-%' then to_char(to_date(invoice_date,'DD-MM-YYYY'),'YYYYMMDD') else invoice_date end as invoice_date from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellin_dksh') }});
+        {% endif %}"
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellin_dksh') }}
+    select *, dense_rank() over (partition by billing_no, invoice_date order by filename desc) rnk
+    from {{ source('vnmsdl_raw', 'sdl_vn_mt_sellin_dksh') }}
+    where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellin_dksh__null_test')}}
+    )
 ),
 itg_query_parameters as(
     select * from {{ source('aspitg_integration', 'itg_query_parameters') }}

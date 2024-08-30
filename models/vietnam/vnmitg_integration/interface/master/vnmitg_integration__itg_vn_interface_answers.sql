@@ -8,7 +8,14 @@
 
 with source as 
 (
-    select * from {{ source('vnmsdl_raw','sdl_vn_interface_answers') }}
+    select *, dense_rank() over (partition by ise_id,slsper_id,cust_code,ques_no,shop_code,answer_seq,createddate order by filename desc) rnk
+    from {{ source('vnmsdl_raw','sdl_vn_interface_answers') }}
+    where filename not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_answers__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_interface_answers__duplicate_test')}}
+        ) qualify rnk = 1
+
 ),
 
 final as

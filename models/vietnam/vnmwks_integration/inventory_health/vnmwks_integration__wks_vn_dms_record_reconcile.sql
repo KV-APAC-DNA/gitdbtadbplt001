@@ -16,12 +16,20 @@ itg_vn_dms_call_details as (
 ),
 sdl_vn_dms_customer_dim as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_customer_dim') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_customer_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_customer_dim__duplicate_test')}}
+    )
 ),
 itg_vn_dms_customer_dim as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_customer_dim') }}
 ),
 sdl_vn_dms_d_sellout_sales_fact as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_d_sellout_sales_fact') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_d_sellout_sales_fact__duplicate_test')}}
+    )
 ),
 itg_vn_dms_d_sellout_sales_fact as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_d_sellout_sales_fact') }}
@@ -31,33 +39,59 @@ sdl_vn_dms_distributor_dim as (
 ),
 itg_vn_dms_distributor_dim as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_distributor_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_distributor_dim__duplicate_test')}}
+    )
 ),
 sdl_vn_dms_forecast as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_forecast') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_forecast__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_forecast__duplicate_test')}}
+       )
 ),
 itg_vn_dms_forecast as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_forecast') }}
 ),
 sdl_vn_dms_h_sellout_sales_fact as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_h_sellout_sales_fact') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_h_sellout_sales_fact__duplicate_test')}}
+       )
 ),
 itg_vn_dms_h_sellout_sales_fact as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_h_sellout_sales_fact') }}
 ),
 sdl_vn_dms_history_saleout as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_history_saleout') }} 
+       where SOURCE_FILE_NAME not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_history_saleout__duplicate_test')}}
+    )
 ),
 itg_vn_dms_history_saleout as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_history_saleout') }}
 ),
 sdl_vn_dms_kpi as (
-       select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_kpi') }} 
+       select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_kpi') }}
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_kpi__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_kpi__null_test')}}
+    ) 
 ),
 itg_vn_dms_kpi as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi') }}
 ),
 sdl_vn_dms_kpi_sellin_sellthrgh as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_kpi_sellin_sellthrgh') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_kpi_sellin_sellthrgh__duplicate_test')}}
+        )
 ),
 itg_vn_dms_kpi_sellin_sellthrgh as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_kpi_sellin_sellthrgh') }}
@@ -76,36 +110,69 @@ itg_vn_dms_order_promotion as (
 ),
 sdl_vn_dms_product_dim as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__duplicate_test')}}
+     ) 
 ),
 itg_vn_dms_product_dim as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_product_dim') }}
 ),
 sdl_vn_dms_promotion_list as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_promotion_list') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_promotion_list__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_promotion_list__duplicate_test')}}
+     ) 
 ),
 itg_vn_dms_promotion_list as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_promotion_list') }}
 ),
 sdl_vn_dms_sales_org_dim as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sales_org_dim') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_org_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_org_dim__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_org_dim__test_format')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_org_dim__test_format2')}}
+    )
 ),
 itg_vn_dms_sales_org_dim as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_org_dim') }}
 ),
 sdl_vn_dms_sales_stock_fact as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sales_stock_fact') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_stock_fact__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sales_stock_fact__duplicate_test')}}
+    ) 
 ),
 itg_vn_dms_sales_stock_fact as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_stock_fact') }}
 ),
 sdl_vn_dms_sellthrgh_sales_fact as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_sellthrgh_sales_fact') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_sellthrgh_sales_fact__duplicate_test')}}
 ),
 itg_vn_dms_sellthrgh_sales_fact as (
        select * from {{ ref('vnmitg_integration__itg_vn_dms_sellthrgh_sales_fact') }}
 ),
 sdl_vn_dms_yearly_target as (
        select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_yearly_target') }} 
+       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_yearly_target__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_yearly_target__duplicate_test')}}
+    ) 
 ),
 sdl_raw_vn_dms_yearly_target as (
        select * from {{ ref('vnmitg_integration__sdl_raw_vn_dms_yearly_target') }} 

@@ -3,12 +3,35 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['product_code'],
-        pre_hook= "delete from {{this}} where product_code in ( select product_code from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} )"
+        pre_hook= [
+        "{% if is_incremental() %}
+            delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
+            {{ source('vnmsdl_raw','sdl_vn_dms_product_dim') }} sdl where file_name not in
+            (
+            select distinct file_name from {{ source('vnmwks_integration', 'TRATBL_sdl_vn_dms_product_dim__null_test') }}
+            union all
+            select distinct file_name from {{ source('vnmwks_integration', 'TRATBL_sdl_vn_dms_product_dim__duplicate_test') }}
+            );
+        {% endif %}"
+        ,
+        "{% if is_incremental() %}
+            delete from {{this}} where product_code in ( select product_code from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }} 
+            where file_name not in (
+            select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__null_test')}}
+            union all
+            select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__duplicate_test')}});
+        {% endif %}"]
     )
 }}
 
 with source as(
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }}
+    select *, dense_rank() over (partition by product_code order by file_name desc) rnk 
+     from {{ source('vnmsdl_raw', 'sdl_vn_dms_product_dim') }}
+     where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_product_dim__duplicate_test')}}
+     ) qualify rnk = 1
 ),
 final as(
     select

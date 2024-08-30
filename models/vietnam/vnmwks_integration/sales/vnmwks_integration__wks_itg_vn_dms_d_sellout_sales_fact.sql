@@ -1,5 +1,8 @@
 with sdl_vn_dms_d_sellout_sales_fact as(
     select * from {{ source('vnmsdl_raw', 'sdl_vn_dms_d_sellout_sales_fact') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_d_sellout_sales_fact__duplicate_test')}}
+    )
 ),
  cte as(
   select 
@@ -27,7 +30,8 @@ with sdl_vn_dms_d_sellout_sales_fact as(
     promotion_id, 
     status, 
     run_id,
-    curr_date 
+    curr_date,
+    file_name
   from sdl_vn_dms_d_sellout_sales_fact 
   where 
     (
@@ -75,7 +79,8 @@ cte2 as(
       promotion_id, 
       status, 
       run_id,
-      curr_date 
+      curr_date,
+      file_name
     from sdl_vn_dms_d_sellout_sales_fact minus 
     select 
       dstrbtr_id, 
@@ -102,7 +107,8 @@ cte2 as(
       promotion_id, 
       status, 
       run_id,
-      curr_date 
+      curr_date,
+      file_name
     from cte
   ) 
   union all 
@@ -131,7 +137,8 @@ cte2 as(
     promotion_id, 
     status, 
     run_id,
-    curr_date 
+    curr_date,
+    file_name
   from cte 
   where status = 'V'
 ) 

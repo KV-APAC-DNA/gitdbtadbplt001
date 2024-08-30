@@ -3,13 +3,25 @@ config(
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=['billingdate','order_no'],
-        pre_hook= "delete from {{this}} where  (billingdate,order_no) in (select distinct order_no,case when billingdate like '%-%' then to_char(to_date(billingdate,'dd-mm-yyyy'),'yyyymmdd') else billingdate end as billingdate from {{ source('vnmsdl_raw', 'sdl_vn_oneview_otc') }})"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where  (billingdate,order_no) in (select distinct order_no,case when billingdate like '%-%' then to_char(to_date(billingdate,'dd-mm-yyyy'),'yyyymmdd') else billingdate end as billingdate from {{ source('vnmsdl_raw', 'sdl_vn_oneview_otc') }}where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_vinmart__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_vinmart__duplicate_test')}}
+        ));
+        {%endif%}"
 )
 }}
 
 with sdl_vn_oneview_otc as 
 (
-    select * from {{ source('vnmsdl_raw', 'sdl_vn_oneview_otc') }}
+    select *,dense_rank() over (partition by billingdate,order_no order by file_name desc) rnk
+     from {{ source('vnmsdl_raw', 'sdl_vn_oneview_otc') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_vinmart__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_mt_sellout_vinmart__duplicate_test')}}
+        ) qualify rnk = 1
 ),
 edw_vw_vn_mt_dist_products as 
 (

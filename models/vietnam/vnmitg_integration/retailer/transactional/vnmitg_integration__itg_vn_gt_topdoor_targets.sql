@@ -7,7 +7,17 @@
 }}
 
 with source as (
-    select * from {{ source('vnmsdl_raw','sdl_vn_gt_topdoor_target') }}
+    select *, dense_rank() over (partition by from_cycle,to_cycle,customer_code order by file_name desc) rnk 
+    from {{ source('vnmsdl_raw','sdl_vn_gt_topdoor_target') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_gt_topdoor_target__duplicate_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_gt_topdoor_target__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_gt_topdoor_target__format_test_from_cycle')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_gt_topdoor_target__format_test_to_cycle')}}
+    ) qualify rnk = 1
 ),
 
 final as
