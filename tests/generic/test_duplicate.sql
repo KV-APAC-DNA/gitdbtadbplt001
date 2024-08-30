@@ -101,7 +101,7 @@
                      file_name,
                    {% break %}
                 {% endif %}   
-            {%- endfor %}{{c_pk}}) in (select {%- for col in reversed_columns %}
+            {%- endfor %}{{c_pk}}) in (select {% for col in reversed_columns %}
                 {% if col in file_name_columns%}
                      file_name,
                    {% break %}
