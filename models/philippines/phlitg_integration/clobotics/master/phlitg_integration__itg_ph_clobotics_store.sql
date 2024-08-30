@@ -8,7 +8,7 @@
         "{% if is_incremental() %}
             delete from {{this}} where split_part(filename, '_', 1) in (
             select distinct split_part(filename, '_', 1) as filename from {{ source('phlsdl_raw', 'sdl_ph_clobotics_store_raw_data') }}
-            where file_name not in (
+            where filename not in (
             select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_store_raw_data__null_test')}}
             union all
             select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_store_raw_data__format_test1')}}

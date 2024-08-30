@@ -3,14 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_grp_cd', 'dstrbtr_cust_id', 'order_dt', 'invoice_dt', 'order_no', 'dstrbtr_prod_id', 'invoice_no'],
-        pre_hook= ["{% if is_incremental() %}
-                delete from {{this}} itg where itg.filename  in (select sdl.filename from
-                {{ source('phlsdl_raw','sdl_ph_dms_sellout_sales_fact') }} sdl where file_name not in (
-                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__null_test') }} 
-                union all
-                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test') }} ));
-                {%endif%}",
-        "{% if is_incremental() %}
+        pre_hook= [
+                "{% if is_incremental() %}
                     delete from {{this}} where dstrbtr_grp_cd || dstrbtr_cust_id || nvl(to_char(order_dt, 'YYYYMMDD'), '') || to_char(invoice_dt, 'YYYYMMDD') || nvl(order_no, '') || nvl(invoice_no, '') || dstrbtr_prod_id in 
                     ( select distinct dstrbtr_grp_cd || dstrbtr_cust_id || 
                     nvl(to_char(case when try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') is not null then try_to_date(order_dt,'MM/DD/YYYY HH12:MI:SS AM') else to_date(order_dt,'MM/DD/YYYY HH24:MI')    end,'YYYYMMDD'), '') || 
@@ -20,8 +14,8 @@
                     where file_name not in (
                         select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__null_test') }} 
                         union all
-                        select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test') }} )
-                        );{%endif%}"]
+                        select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_dms_sellout_sales_fact__lookup_test') }} ));
+                {%endif%}"]
     )
 }}
 
