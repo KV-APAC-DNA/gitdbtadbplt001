@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: hcpwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ppahil01_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: TRATBL_sdl_hcp360_in_sfmc_click_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_open_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_open_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_unsubscribe_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_unsubscribe_data__duplicate_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__null_test
+    - name: TRATBL_sdl_hcp360_in_sfmc_bounce_data__duplicate_test

@@ -12,7 +12,12 @@
                         AND sdl.SUBSCRIBER_KEY = itg.SUBSCRIBER_KEY
                         AND sdl.EVENT_DATE = itg.EVENT_DATE
                         AND sdl.URL = itg.URL
-                        AND NVL(sdl.LINK_NAME, 'NA') = NVL(itg.LINK_NAME, 'NA');
+                        AND NVL(sdl.LINK_NAME, 'NA') = NVL(itg.LINK_NAME, 'NA')
+                        AND sdl.file_name not in (
+                        select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__null_test') }}
+                        union all
+                        select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test') }}
+                    );
                     {% endif %}"
     )
 }}
@@ -20,6 +25,11 @@
 with sdl_hcp360_in_sfmc_click_data as 
 (
         select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_sfmc_click_data') }}
+        where file_name not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_sfmc_click_data__duplicate_test') }}
+        )
 ),
 final as
 (
@@ -45,5 +55,6 @@ select
 	email_name::varchar(100) as email_name,
 	email_subject::varchar(200) as email_subject,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	updt_dttm::timestamp_ntz(9) as updt_dttm
+	updt_dttm::timestamp_ntz(9) as updt_dttm,
+    file_name as file_name
 from final

@@ -5,13 +5,24 @@
         incremental_strategy= "append",
         pre_hook = "{% if is_incremental() %}
         delete from {{this}} WHERE TO_CHAR(dcr_dt,'YYYYMM') IN (SELECT  TO_CHAR(sdl.dcr_dt,'YYYYMM') 
-                                   FROM  {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} sdl
-                                   )
+                                    FROM  {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} sdl
+                                  where sdl.filename not in (
+                                  select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rxrtl__null_test') }}
+                                  union all
+                                  select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rxrtl__duplicate_test') }}
+                                  )
+                                  )
         {% endif %}"
     )
 }}
 with sdl_hcp360_in_ventasys_rxrtl as (
-    select *,dense_rank() over (partition by dcr_dt order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} qualify rn=1
+    select *,dense_rank() over (partition by dcr_dt order by filename desc ) as rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rxrtl') }} 
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rxrtl__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rxrtl__duplicate_test') }}
+    ) qualify rn=1
 ),
 final as 
 (

@@ -12,6 +12,9 @@
 }}
 with sdl_hcp360_in_iqvia_brand as(
     select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_brand') }}
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_brand__test_format') }}
+    )
 ),
 final as(
     select
@@ -28,7 +31,8 @@ final as(
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         'ORSL'::varchar(20) as data_source,
         null ::varchar(20) as pack_volume,
-        'IN'::varchar(50) as country
+        'IN'::varchar(50) as country,
+        filename as filename
     from
     sdl_hcp360_in_iqvia_brand
 )

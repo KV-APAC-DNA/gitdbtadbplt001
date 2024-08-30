@@ -4,10 +4,22 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook =" {% if is_incremental() %}
-                    delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }})
+                    delete from {{this}} WHERE 0 != (select count(*) 
+                    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }}
+                    where filename not in (
+                    select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_sales__test_format') }} )
+                    )
                     and upper(data_source) = 'ORSL' AND country = 'IN'; 
-                    delete from {{this}} WHERE 0 != (select count(*) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }})
-                    and upper(data_source) in (select distinct upper(substring(sheet_name,0,11)) from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }});
+                     delete from {{this}} WHERE 0 != (select count(*) 
+                    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }}
+                    where filename not in (
+                    select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format') }}  )
+                    )
+                    and upper(data_source) in (select distinct upper(substring(sheet_name,0,11)) 
+                    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }}
+                    where filename not in (
+                    select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format') }} )
+                    );
                     {% endif %}"
     )
 }}
@@ -15,10 +27,14 @@
 with sdl_hcp360_in_iqvia_sales as 
 (
     select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_sales') }}
+     where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_sales__test_format') }}
+    )
 ),
 sdl_hcp360_in_iqvia_aveeno_zone as
 (
     select * from {{ source('hcpsdl_raw', 'sdl_hcp360_in_iqvia_aveeno_zone') }}
+    where filename not in (select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_iqvia_aveeno_zone__test_format') }} )
 ),
 cte as
 (
@@ -35,7 +51,8 @@ cte as
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         'ORSL' as data_source,
-        'IN' as country
+        'IN' as country,
+        filename as filename
     FROM sdl_hcp360_in_iqvia_sales
 ),
 aveeno_zone_transformed as(
@@ -87,7 +104,8 @@ cte1 as
         crt_dttm as crt_dttm,
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         sheet_name as data_source,
-        'IN' as country
+        'IN' as country,
+        filename as filename
     FROM aveeno_zone_transformed
 ),
 transformed as 

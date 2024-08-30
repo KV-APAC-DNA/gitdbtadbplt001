@@ -9,12 +9,23 @@
                                    INNER JOIN {{this}}  itg
                                    ON rtrim(sdl.team_name) = rtrim(itg.team_name)
                                    AND rtrim(sdl.v_custid_rtl) = rtrim(itg.v_custid_rtl)
-                                   )
+                                   where sdl.filename not in (
+                                  select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rtlmaster__null_test') }}
+                                  union all
+                                  select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rtlmaster__duplicate_test') }}
+                                  )
+                                  )
         {% endif %}"
     )
 }}
 with sdl_hcp360_in_ventasys_rtlmaster as(
-    select *, dense_rank() over (partition by team_name,v_custid_rtl order by filename desc ) as rn from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }} qualify rn=1
+    select *, dense_rank() over (partition by team_name,v_custid_rtl order by filename desc ) as rn 
+    from {{ source('hcpsdl_raw', 'sdl_hcp360_in_ventasys_rtlmaster') }} 
+    where filename not in (
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rtlmaster__null_test') }}
+            union all
+            select distinct file_name from {{ source('hcpwks_integration', 'TRATBL_sdl_hcp360_in_ventasys_rtlmaster__duplicate_test') }}
+    ) qualify rn=1
 ),
 final as 
 (
