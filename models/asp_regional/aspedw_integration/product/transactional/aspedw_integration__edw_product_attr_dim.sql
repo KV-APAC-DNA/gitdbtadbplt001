@@ -43,7 +43,10 @@
                         )
                 ) a where REPLACE (A.aw_rmte_key, ' ', '') = REPLACE (B.aw_remote_key, ' ', '')
                 AND UPPER (SUBSTRING (A.lang, 4, 5)) = B.cntry
-            and UPPER (SUBSTRING (A.lang, 4, 5)) = 'KR';"
+            and UPPER (SUBSTRING (A.lang, 4, 5)) = 'KR';
+            UPDATE {{this}} b SET b.lcl_prod_nm = A.prod_nm FROM {{ source('aspitg_integration', 'itg_mysls_prod_trnl') }} a
+            where REPLACE (A.aw_rmte_key,' ','') = REPLACE (B.aw_remote_key,' ','')
+            AND UPPER (SUBSTRING (A.lang,4,5)) = B.cntry;"
     )
 }}
 with wks_edw_product_attr_dim as (
