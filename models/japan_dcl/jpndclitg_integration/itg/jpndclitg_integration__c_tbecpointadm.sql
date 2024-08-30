@@ -28,21 +28,21 @@ final as(
         dipointcode::varchar(1) as dipointcode,
         divalidflg::varchar(1) as divalidflg,
         dspointmemo::varchar(1728) as dspointmemo,
-        current_timestamp()::timestamp_ntz(9) as dspointren,
+        dspointren::timestamp_ntz(9) as dspointren,
         c_dsvaliddate::timestamp_ntz(9) as c_dsvaliddate,
         c_dstenpoorderno::varchar(19) as c_dstenpoorderno,
-        current_timestamp()::timestamp_ntz(9) as dsprep,
-        current_timestamp()::timestamp_ntz(9) as dsren,
+        dsprep::timestamp_ntz(9) as dsprep,
+        dsren::timestamp_ntz(9) as dsren,
         dselim::timestamp_ntz(9) as dselim,
         diprepusr::number(38,0) as diprepusr,
         direnusr::number(38,0) as direnusr,
         dielimusr::number(38,0) as dielimusr,
         dielimflg::varchar(1) as dielimflg,
-        NULL::varchar(10) as source_file_date,
-        current_timestamp()::timestamp_ntz(9) as inserted_date,
-        NULL::varchar(10) as inserted_by,
-        current_timestamp()::timestamp_ntz(9) as updated_date,
-        NULL::varchar(100) as updated_by
+        source_file_date::varchar(10) as source_file_date,
+		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		inserted_by::varchar(100) as inserted_by,
+		current_timestamp()::timestamp_ntz(9) as updated_date,
+		updated_by::varchar(100) as updated_by
     from source
 )
 select * from final
