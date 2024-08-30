@@ -189,7 +189,13 @@ final as
             SUM(SO_SLS_VALUE) AS SELLOUT_SALES_VALUE,
             SUM(SO_SLS_VALUE*(C.EXCH_RATE/(C.from_ratio*C.to_ratio)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
             TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
-            TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            --TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+            ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+            END AS msl_product_desc,
             TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
         SELLOUT.crtd_dttm,
         SELLOUT.updt_dttm
@@ -246,6 +252,7 @@ final as
             EGPH.PUT_UP_DESCRIPTION AS GPH_PROD_PUT_UP_DESC,
             EGPH.SIZE AS GPH_PROD_SIZE,
             EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
+            EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
             row_number() over( partition by sap_matl_num order by sap_matl_num) rnk   
             FROM edw_material_dim EMD,
                 edw_gch_producthierarchy EGPH
@@ -427,9 +434,10 @@ final as
         WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
         WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
         ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END,
+        PRODUCT.PKA_PACKAGE,
         (C.EXCH_RATE/(C.from_ratio*C.to_ratio)),
         SELLOUT.msl_product_code,
-        SELLOUT.msl_product_desc,
+        --SELLOUT.msl_product_desc,
         SELLOUT.retail_env,
         SELLOUT.crtd_dttm,
         SELLOUT.updt_dttm
