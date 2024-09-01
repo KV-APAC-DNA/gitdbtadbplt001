@@ -1,5 +1,5 @@
 with kesai_h_data_mart_mv as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }} 
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }} 
    -- TO_DATE(CAST(date_column AS STRING), 'YYYYMMDD') 
 ),
 cim01kokya as(
@@ -9,7 +9,7 @@ kokyano_list_016_manual as(
     select * from {{ source('jpdcledw_integration','kokyano_list_016_manual') }} 
 ),
 kesai_m_data_mart_mv as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }} 
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }} 
 ),
 cld_m as(
     select * from {{ ref('jpndcledw_integration__cld_m') }} 
@@ -17,15 +17,15 @@ cld_m as(
 kokyano_list AS (
     SELECT kokyano
     FROM kesai_h_data_mart_mv
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
     SELECT kokyano
     FROM cim01kokya
-    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
-        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('UTC', 'Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+    WHERE insertdate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
+        OR updatedate >= to_char(to_date(CONVERT_TIMEZONE('Asia/Tokyo', current_timestamp()))- 1, 'YYYYMMDD')::number
     
     UNION
     
