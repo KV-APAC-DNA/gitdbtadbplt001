@@ -26,16 +26,16 @@ select
     split_part(cust.Code,'-',1) as prefix,
     prod.sap_item_cd,
     prod.sap_item_desc,
-    prod.UOM,
-    prod.jnj_pc_per_cust_unit,
+    POS.qty,
+    coalesce(prod.jnj_pc_per_cust_unit,1) as jnj_pc_per_cust_unit,
     price.Lst_Price_Unit as ListPriceUnit,
-    (prod.UOM/prod.jnj_pc_per_cust_unit) as pos_qty,
+    (pos.qty/prod.jnj_pc_per_cust_unit) as pos_qty,
     (pos_qty*ListPriceUnit) as pos_gts
 
     from ph_pos_rka_rose_pharma as pos
     join ph_rosepharma_products prod on (pos.sku=prod.item_cd)
     join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
-    join price_list price on (prod.sap_item_cd=price.item_cd )--and prod.mnth_id=price.jj_month_id) 
+    join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id) 
   ),
 final as 
 (
