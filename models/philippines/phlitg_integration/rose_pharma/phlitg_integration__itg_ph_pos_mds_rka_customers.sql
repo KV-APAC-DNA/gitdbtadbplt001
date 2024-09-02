@@ -11,11 +11,10 @@ with source as
     select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_customer_mapping') }}
 ),
 transformed as (
-
 select 
 AcctCode||'-'||brcode as code,
 'ROSE PHARMACY' as cust_cd,
-a.brcode as brnch_cd,
+brcode as brnch_cd,
 brname as brnch_nm,
 null as prov_cd,
 province as prov_nm,

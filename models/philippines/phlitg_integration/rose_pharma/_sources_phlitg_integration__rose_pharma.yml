@@ -11,6 +11,7 @@ sources:
         tags: ["ph_rks_rose_pharma","ingestion"]
 
       - name : sdl_rosepharmacy_customer_mapping 
+      - name : sdl_rosepharmacy_product_mapping
 
   - name: phlitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
