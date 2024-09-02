@@ -23,7 +23,8 @@ final as (
         region::varchar(20) as region,
         cdl_dttm::varchar(255) as cdl_dttm,
         curr_dt::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from source
 )
 
