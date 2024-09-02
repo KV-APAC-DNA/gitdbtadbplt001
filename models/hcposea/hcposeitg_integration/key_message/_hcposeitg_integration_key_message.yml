@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_key_message
+    config: 
+      alias: itg_key_message
+      tags: ["iconnect_data_ingestion","ingestion"]

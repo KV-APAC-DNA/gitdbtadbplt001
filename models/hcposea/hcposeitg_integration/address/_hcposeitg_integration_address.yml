@@ -1,0 +1,10 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_address
+    config: 
+      alias: itg_address
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  
