@@ -80,8 +80,8 @@ select
     null as sub_chnl_desc,
     split_part(cust.Code,'-',1) as parent_customer_cd,
     cust.cust_cd as parent_customer,
-    null as sku,
-    null as sku_desc,
+   ltrim(veomd.sap_matl_num, '0') as sku,
+	veomd.sap_mat_desc as sku_desc,
     POS.qty,
     coalesce(prod.jnj_pc_per_cust_unit,1) as jnj_pc_per_cust_unit,
     price.Lst_Price_Unit as ListPriceUnit,
@@ -124,7 +124,7 @@ select
 		WHEN UPPER(EPMAD.PROMO_REG_IND) = 'REG'
 			THEN 'Y'
 		ELSE 'N'
-		END AS IS_REG,
+		END AS IS_REG
 ,null as sap_addr
 ,veomd.sap_put_up_desc as sap_put_up_desc
 ,null as is_promo
@@ -158,16 +158,16 @@ select
 ,null as region_nm
 ,null as sap_sls_grp_desc
 ,null as sap_prod_mnr_cd
-,null as prov_cd
+,cust.prov_cd as prov_cd
+,cust.prov_nm as prov_nm
 ,null as sap_curr_cd
 ,null as sap_prod_mnr_desc
-,null as prov_nm
 ,null as gch_region
 ,null as sap_prod_hier_cd
-,null as mncplty_cd
+,cust.mncplty_cd as mncplty_cd
+,cust.mncplty_nm as mncplty_nm
 ,null as gch_cluster
 ,null as sap_prod_hier_desc
-,null as mncplty_nm
 ,null as gch_subcluster
 ,null as global_mat_region
 ,null as city_cd
@@ -185,11 +185,11 @@ select
 ,null as pms_nm
     from ph_pos_rka_rose_pharma as pos
      left  join edw_vw_os_time_dim time_dim on (pos.jj_month_id=time_dim.mnth_id)
-    left   join ph_rosepharma_products prod on (pos.sku=prod.item_cd)
-   left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
-  left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
-  left join veomd on ( upper(ltrim(veomd.sap_matl_num, 0)) = prod.sap_item_cd)
-  left join epmad upper(trim(epmad.item_cd)) = prod.sap_item_cd
+     left   join ph_rosepharma_products prod on (pos.sku=prod.item_cd)
+     left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
+     left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
+     left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = prod.sap_item_cd)
+     left join epmad on (upper(trim(epmad.item_cd)) = prod.sap_item_cd)
   ),
 final as 
 (

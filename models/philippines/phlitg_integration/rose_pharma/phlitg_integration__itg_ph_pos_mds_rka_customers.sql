@@ -1,0 +1,88 @@
+{{
+    config(
+        materialized="incremental",
+        incremental_strategy="delete+insert",
+        unique_key=  ['code','cust_cd','brnch_cd']
+      
+    )
+}}
+with source as
+(
+    select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_customer_mapping') }}
+),
+transformed as (
+
+select 
+AcctCode||'-'||brcode as code,
+'ROSE PHARMACY' as cust_cd,
+a.brcode as brnch_cd,
+brname as brnch_nm,
+null as prov_cd,
+province as prov_nm,
+null as region_cd,
+region as region_nm,
+null as mncplty_cd,
+municipality as mncplty_nm,
+null as city_cd,
+null as city_nm,
+null as chnl_sub_grp_cd,
+null as pms_nm,
+null as ash_no,
+null as ash_nm,
+null as address1,
+null as address2,
+null as jj_chnl_cd,
+null as tsr,
+null as pmr,
+null as chnl,
+null as area_cd,
+null as area_nm,
+null as region_nm2,
+null as wsman,
+null as route,
+null as status,
+null as operating_hrs,
+null as da_tag,
+null as dizr_tag,
+null as brnch_grp1,
+null as brnch_grp2,
+null as outlet_typ,
+null as store_typ_cd,
+null as store_type_desc,
+null as prov_cd2,
+null as data_compln_status,
+null as ae_nm,
+null as dt_opnd,
+null as store_tin_no,
+null as store_size_cd,
+null as store_size,
+null as store_mtrx_cd,
+null as store_mtrx,
+null as class,
+null as store_clsfn,
+null as jj_sold_to,
+null as jj_ship_to,
+null as bp,
+null as sales_grp,
+null as dsm,
+null as sales_man_tag,
+null as branch_no,
+null as mdc_tag,
+null as derived_branchno,
+current_timestamp as last_chg_datetime,
+'1990-01-01 00:00:00' as effective_from,
+'9999-12-31 00:00:00.000' as effective_to,
+'Y ' as active,
+current_timestamp as crtd_dtm,
+current_timestamp as updt_dttm,
+null as zip_code,
+null as zip_cd_name,
+null as barangay_code,
+null as  barangay_cd_name,
+null as long_lat_source,
+null as latitude,
+null as longitude,
+from source
+
+)
+select * from transformed
