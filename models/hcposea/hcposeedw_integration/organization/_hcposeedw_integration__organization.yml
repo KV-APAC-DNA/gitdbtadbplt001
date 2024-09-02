@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__wrk_dim_organization
+    config:
+      alias: wrk_dim_organization
+      tags: ["hcp_onesea_edw_load","transformation"]
+
+  - name: hcposeedw_integration__dim_organization
+    config:
+      alias: wrk_dim_organization
+      tags: ["hcp_onesea_edw_load","transformation"]
+
