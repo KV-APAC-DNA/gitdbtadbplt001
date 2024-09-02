@@ -34,7 +34,7 @@ kokyano_list AS (
 ),
 prev_ship AS (
 SELECT kokyano,
-    to_date(IFF(CAST(SHUKADATE AS STRING) = 0, NULL, CAST(SHUKADATE AS STRING)),'YYYYMMDD'),
+    to_date(IFF(CAST(SHUKADATE AS STRING) = 0, NULL, CAST(SHUKADATE AS STRING)),'YYYYMMDD') as ship_dt,
     lag(to_date(IFF(CAST(SHUKADATE AS STRING) = 0, NULL, CAST(SHUKADATE AS STRING)),'YYYYMMDD'), 1) OVER (
         PARTITION BY kokyano ORDER BY to_date(IFF(CAST(SHUKADATE AS STRING) = 0, NULL, CAST(SHUKADATE AS STRING)),'YYYYMMDD')
         ) AS prev_ship_dt
@@ -125,7 +125,7 @@ SELECT c.kokyano,
 FROM kesai_h_data_mart_mv h
 INNER JOIN kokyano_list ON kokyano_list.kokyano = h.kokyano
 LEFT JOIN prev_ship ON h.kokyano = prev_ship.kokyano
-	AND  to_date(IFF(CAST(h.SHUKADATE AS STRING) = 0, NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = prev_ship.prev_ship_dt --- ヘッダーテーブル
+	AND  to_date(IFF(CAST(h.SHUKADATE AS STRING) = 0, NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
 LEFT JOIN prev_order ON h.kokyano = prev_order.kokyano
 	AND to_date(IFF(CAST(h.juchdate as STRING) = 0, NULL, CAST(h.juchdate AS STRING)),'YYYYMMDD') = prev_order.order_dt
 INNER JOIN cim01kokya c --- 顧客テーブル
