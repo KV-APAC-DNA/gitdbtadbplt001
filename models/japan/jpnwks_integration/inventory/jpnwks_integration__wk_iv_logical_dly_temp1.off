@@ -2,10 +2,10 @@ with check_date as(
     select SUBSTRING(current_timestamp(),6,2)||SUBSTRING(current_timestamp(),9,2) as daate
 ),
 DW_SI_SELL_IN_DLY as(
-select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY
+select * from {{ env_var('DBT_ENV_CORE_DB') }}.SNAPJPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY
 ),
 EDI_ITEM_M as(
-select * from DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.EDI_ITEM_M
+select * from {{ env_var('DBT_ENV_CORE_DB') }}.SNAPJPNEDW_INTEGRATION.EDI_ITEM_M
 ),
 ty_date as(
     select SUBSTRING(DATEADD(year,-1,DATEADD(day,1,SUBSTRING(current_timestamp(),1,10))),1,10) as ty_exec_start_dt
@@ -22,8 +22,8 @@ condi as(
     from check_date, ty_date, ty_date2
 ),
 t_date as(
-    SELECT	SUBSTRING(MIN(MAIN.YMD_DT),1,10) as ty_tounen_start_dt FROM DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CLD	MAIN WHERE	EXISTS
-(SELECT * FROM	DEV_DNA_CORE.SNAPJPNEDW_INTEGRATION.MT_CLD SUB 
+    SELECT	SUBSTRING(MIN(MAIN.YMD_DT),1,10) as ty_tounen_start_dt FROM {{ env_var('DBT_ENV_CORE_DB') }}.SNAPJPNEDW_INTEGRATION.MT_CLD	MAIN WHERE	EXISTS
+(SELECT * FROM	{{ env_var('DBT_ENV_CORE_DB') }}.SNAPJPNEDW_INTEGRATION.MT_CLD SUB 
 WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
 )
 ),
