@@ -4,11 +4,11 @@ with ph_pos_rka_rose_pharma as
  ),
 ph_rosepharma_customers as 
 (
-    select * from phlitg_integration.itg_mds_ph_pos_rosepharma_customers
+    select * from {{ ref('phlitg_integration__itg_ph_pos_mds_rka_customers') }}
 ),
 ph_rosepharma_products as 
 (
-     select * from phlitg_integration.itg_mds_ph_pos_rosepharma_products
+     select * from {{ ref('phlitg_integration__itg_ph_pos_rka_product_mapping') }}
 ),
 price_list as 
 (
