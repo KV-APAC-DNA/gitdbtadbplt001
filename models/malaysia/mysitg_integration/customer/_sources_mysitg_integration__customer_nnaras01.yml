@@ -23,10 +23,48 @@ sources:
     - name: TRATBL_sdl_my_afgr__null_test
     - name: TRATBL_sdl_my_afgr__duplicate_test
     - name: TRATBL_sdl_my_le_trgt__lookup_test
-    - name: TRATBL_sdl_so_sales_133983__lookup_test
-    - name: TRATBL_sdl_so_sales_130518__lookup_test
-    - name: TRATBL_sdl_so_inv_108565__lookup_test
-    - name: TRATBL_sdl_so_inv_133981__lookup_test
-    - name: TRATBL_sdl_so_sales_131164__lookup_test
     - name: TRATBL_sdl_my_as_watsons_inventory__duplicate_test
     - name: TRATBL_sdl_my_as_watsons_inventory__null_test
+    - name: TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test
+    - name: TRATBL_sdl_so_sales_130518__lookup_test
+    - name: TRATBL_sdl_so_sales_133983__lookup_test
+    - name: TRATBL_sdl_so_sales_131164__lookup_test
+    - name: TRATBL_sdl_so_sales_133986__lookup_test
+    - name: TRATBL_sdl_so_sales_130520__lookup_test
+    - name: TRATBL_sdl_so_sales_133980__lookup_test
+    - name: TRATBL_sdl_so_sales_137021__lookup_test
+    - name: TRATBL_sdl_so_sales_131166__lookup_test
+    - name: TRATBL_sdl_so_sales_108273__lookup_test
+    - name: TRATBL_sdl_so_sales_130521__lookup_test
+    - name: TRATBL_sdl_so_sales_133984__lookup_test
+    - name: TRATBL_sdl_so_sales_133982__lookup_test
+    - name: TRATBL_sdl_so_sales_118477__lookup_test
+    - name: TRATBL_sdl_so_sales_135976__lookup_test
+    - name: TRATBL_sdl_so_sales_131167__lookup_test
+    - name: TRATBL_sdl_so_sales_130519__lookup_test
+    - name: TRATBL_sdl_so_sales_131165__lookup_test
+    - name: TRATBL_sdl_so_sales_119025__lookup_test
+    - name: TRATBL_sdl_so_sales_133985__lookup_test
+    - name: TRATBL_sdl_so_sales_130517__lookup_test
+    - name: TRATBL_sdl_so_sales_109772__lookup_test
+    - name: TRATBL_sdl_so_sales_130516__lookup_test
+    - name: TRATBL_sdl_so_sales_108129__lookup_test
+    - name: TRATBL_sdl_so_sales_119024__lookup_test
+    - name: TRATBL_sdl_so_sales_108565__lookup_test
+    - name: TRATBL_sdl_so_inv_133983__lookup_test
+    - name: TRATBL_sdl_so_inv_118477__lookup_test
+    - name: TRATBL_sdl_so_inv_133985__lookup_test
+    - name: TRATBL_sdl_so_inv_130520__lookup_test
+    - name: TRATBL_sdl_so_inv_108273__lookup_test
+    - name: TRATBL_sdl_so_inv_130516__lookup_test
+    - name: TRATBL_sdl_so_inv_131167__lookup_test
+    - name: TRATBL_sdl_so_inv_131164__lookup_test
+    - name: TRATBL_sdl_so_inv_131166__lookup_test
+    - name: TRATBL_sdl_so_inv_133980__lookup_test
+    - name: TRATBL_sdl_so_inv_131165__lookup_test
+    - name: TRATBL_sdl_so_inv_133986__lookup_test
+    - name: TRATBL_sdl_so_inv_130519__lookup_test
+    - name: TRATBL_sdl_so_inv_108129__lookup_test
+    - name: TRATBL_sdl_so_inv_133982__lookup_test
+    - name: TRATBL_sdl_so_inv_135976__lookup_test
+    - name: TRATBL_sdl_so_inv_109772__lookup_test

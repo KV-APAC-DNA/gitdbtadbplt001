@@ -2,20 +2,19 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
-        pre_hook="delete from {{this}} where filename in (select distinct filename from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact') 
+        pre_hook="delete from {{this}} where filename in (select distinct filename from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact')}} 
              where filename not in
             ( 
             select distinct filename from {{ source('myswks_integration', 'TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test') }}
-            ) }});"
+            ) );"
     )}}
 
 with source as (
-      select * from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact') }} )
-     where filename not in
+      select * from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact') }} 
+       where filename not in
             ( 
             select distinct filename from {{ source('myswks_integration', 'TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test') }}
-            ) 
-     
+            ) ),
 final as (
     select 
         iff(trim(dstrbtr_id)='',null,trim(dstrbtr_id))::varchar(255) as distributor_id,

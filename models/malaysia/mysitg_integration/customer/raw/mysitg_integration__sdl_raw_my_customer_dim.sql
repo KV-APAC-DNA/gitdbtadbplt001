@@ -6,7 +6,11 @@
 }}
 
 with source as(
-    select * from {{ source('myssdl_raw','sdl_my_customer_dim') }}
+    select * from {{ source('myssdl_raw','sdl_my_customer_dim') }} where filename not in 
+    ( select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_customer_dim__null_test') }}
+      union all 
+      select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_customer_dim__duplicate_test') }}
+    )
 ),
 final as(
     select * from source
