@@ -608,7 +608,20 @@ models:
         +materialized: table
         +transient: false
         +schema: HCPOSEEDW_INTEGRATION
-        view:
+        call:
+          view:
+            +materialized: view
+        cycle:
+          view:
+            +materialized: view
+        employee:
+          view:
+            +materialized: view
+        time_off_territory:
+          view:
+            +materialized: view
+        user:
+          view:
             +materialized: view
       hcposeitg_integration:
         +materialized: table
