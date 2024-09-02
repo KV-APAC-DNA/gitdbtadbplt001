@@ -1,0 +1,5 @@
+models:
+  - name: aspwks_integration__wks_ecommerce_nts_regional
+    config: 
+      alias: wks_ecommerce_nts_regional
+      tags: ["j_ecommerce_nts_mds_load","transformation"]

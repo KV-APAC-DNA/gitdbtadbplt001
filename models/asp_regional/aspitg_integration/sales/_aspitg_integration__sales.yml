@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_market_mirror_fact
+    config:
+      alias: itg_market_mirror_fact
+      tags: ["market_mirror","ingestion"]
+  - name: aspitg_integration__itg_vw_kr_mds_salesgrp_sapcust_map
+    config:
+      alias: itg_vw_kr_mds_salesgrp_sapcust_map
+      tags: ["j_ap_dna_datamart_refresh_etl_framework_customer_pl","transformation"]
+  - name: aspitg_integration__itg_okr_alteryx_automation
+    config:
+      alias: itg_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","ingestion"]
+  - name: aspitg_integration__sdl_raw_okr_alteryx_automation
+    config:
+      alias: sdl_raw_okr_alteryx_automation
+      tags: ["okr_alteryx_data_ingestion","transformation"]
+  - name: aspitg_integration__itg_clavis_gb_products
+    config:
+      alias: itg_clavis_gb_products
+      tags: ["rg_clavis","transformation"]
+  - name: aspitg_integration__sdl_raw_clavis_gb_products
+    config:
+      alias: sdl_raw_clavis_gb_products
+      tags: ["rg_clavis","transformation"]
+  - name: aspitg_integration__sdl_raw_clavis_gb_search_terms_results
+    config:
+      alias: sdl_raw_clavis_gb_search_terms_results
+      tags: ["rg_clavis","transformation"]
