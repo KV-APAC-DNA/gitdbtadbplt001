@@ -39,8 +39,7 @@ final as
     calculateflag::varchar(10) as calculateflag,
     filecode::number(18,0) as filecode,
     convert_timezone('UTC',current_timestamp())::timestamp_ntz as crt_dttm,
-    convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
-    file_name::varchar as file_name
+    convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm
     FROM source
 )
 select * from final

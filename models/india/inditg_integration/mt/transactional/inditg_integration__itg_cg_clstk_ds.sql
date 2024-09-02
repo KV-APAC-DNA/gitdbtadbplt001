@@ -22,8 +22,8 @@ final as
 	cl_stck_value::number(18,3) as cl_stck_value,
 	wt_stock_qty::number(38,11) as wt_stock_qty,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    file_name::varchar(255) as file_name
+	current_timestamp()::timestamp_ntz(9) as updt_dttm
+    
     from wks_cg_clstk_ds
 )
 select * from final

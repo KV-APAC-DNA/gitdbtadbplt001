@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: indwks_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: APATE012_WORKSPACE
     quoting:
       database: false
       schema: false
@@ -11,4 +11,6 @@ sources:
     tables:
     - name: TRATBL_sdl_in_rrsrdistributor__null_test
     - name: TRATBL_sdl_in_rrsrdistributor__duplicate_test
+    - name: TRATBL_sdl_in_rrsrheader__null_test
+    - name: TRATBL_sdl_in_rrsrheader__duplicate_test
       

@@ -8,11 +8,11 @@
 with source as(
     select * from {{ source('indsdl_raw', 'sdl_in_perfectstore_sos') }}
     where file_name not in (
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__null_test')}}
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__duplicate_test')}}
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__duplicate_test')}}
         union all
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_sos__date_format_test')}})
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_sos__date_format_test')}})
 ),
 final as(
     select * from source

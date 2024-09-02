@@ -2,13 +2,9 @@
    config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= ["{% if is_incremental() %}
+        pre_hook= "{% if is_incremental() %}
         delete from {{this}} where fisc_year||month_nm in (select year||month from {{source('indsdl_raw','sdl_salesman_target')}});
-        {% endif %}",
-        "{% if is_incremental %}
-        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_salesman_target') }} sdl 
-        {% endif %}"]
+        {% endif %}"
     )
 }}
 with sdl_salesman_target as

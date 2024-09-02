@@ -2,19 +2,13 @@
     config(
         materialized="incremental",
         incremental_strategy="append",
-        pre_hook = " delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_in_retailer') }} sdl where file_name not in (
-        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
-        union all
-        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__duplicate_test')}}) "
-
-    )
+        )
 
 }}
 
 with source as(
     select * from {{ source('indsdl_raw', 'sdl_in_retailer') }}
-    where file_name not in (
+    where filename not in (
         select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
         union all
         select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__duplicate_test')}})

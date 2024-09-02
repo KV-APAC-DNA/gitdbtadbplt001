@@ -3,9 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["customercode"],
-        merge_exclude_columns= ["crt_dttm", "updt_dttm"],
-        pre_hook = "delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }} sdl" 
+        merge_exclude_columns= ["crt_dttm", "updt_dttm"]
     )
 }}
 

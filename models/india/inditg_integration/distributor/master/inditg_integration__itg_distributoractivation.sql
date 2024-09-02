@@ -28,8 +28,8 @@ final as
         activestatus::number(18,0) as activestatus,
         createddate::timestamp_ntz(9) as createddate,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        file_name:: varchar(255) as file_name
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        
     from wks_csl_distributoractivation
 )
 select * from final

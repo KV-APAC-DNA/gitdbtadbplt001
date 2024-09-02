@@ -3,7 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook = ["{% if is_incremental() %}
+        pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE UPPER(TRIM(Visit_ID)) ||UPPER(TRIM(LEFT(Visit_DateTime,10))) ||UPPER(TRIM(Region)) ||UPPER(TRIM(JnJRKAM)) ||UPPER(TRIM(JnJZM_Code)) ||UPPER(TRIM(JNJ_ABI_Code)) ||UPPER(TRIM(JnJSupervisor_Code)) ||UPPER(TRIM(ISP_Code)) ||UPPER(TRIM(ISP_Name)) ||UPPER(TRIM(MONTH)) ||UPPER(TRIM(YEAR)) ||UPPER(TRIM(Format)) 
         ||UPPER(TRIM(Chain_Code)) ||UPPER(TRIM(Chain)) ||UPPER(TRIM(Store_Code)) ||UPPER(TRIM(Store_Name)) ||UPPER(TRIM(Product_Category)) ||UPPER(TRIM(Product_Brand)) ||UPPER(TRIM(Promotion_Product_Code)) ||UPPER(TRIM(Promotion_Product_Name)) ||UPPER(TRIM(IsPromotionAvailable)) ||UPPER(TRIM(Priority_Store))
@@ -46,25 +46,8 @@
             NotAvailableReason,
             Price_Off,
             Priority_Store
-        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_promo') }} where file_name not in (
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_promo__null_test')}}
-        union all
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_promo__duplicate_test')}}
-        union all
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_perfectstore_promo__date_format_test')}}
-    )));
-        {% endif %}",
-        "{%if is_incremental()%}
-         delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_in_perfectstore_promo') }} sdl where file_name not in
-            (
-        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_promo__null_test')}}
-        union all
-        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_promo__duplicate_test')}}
-        union all
-        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_perfectstore_promo__date_format_test')}}
-        )
-        {% endif %}"]
+        FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_promo') }}));
+        {% endif %}"
     )
 }}
 

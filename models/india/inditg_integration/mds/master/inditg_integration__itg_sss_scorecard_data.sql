@@ -3,7 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook =[ " {% if is_incremental() %}
+        pre_hook = " {% if is_incremental() %}
         delete FROM {{this}}
         WHERE (
         program_type,
@@ -19,8 +19,7 @@
             COALESCE(sdl.brand, 'NA'),
             sdl.quarter,
             sdl.year
-        FROM ({{ source('indsdl_raw', 'sdl_sss_scorecard_data') }} where file_name not in (
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_sss_scorecard_data__null_test')}})) SDL
+        FROM {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }} SDL
             INNER JOIN {{this}} ITG ON Upper(SDL.program_type) = Upper(ITG.program_type)
             AND Upper(SDL.jnj_id) = Upper(ITG.jnj_id)
             AND Upper(SDL.kpi) = Upper(ITG.kpi)
@@ -33,20 +32,14 @@
                 ELSE 0
             END = 1
         );
-        {% endif %}",
-        "{%if is_incremental()%}
-        delete from {{this}} itg where itg.filename  in (select sdl.filename from
-        {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }} sdl where filename not in
-            (
-            select distinct filename from {{source('indwks_integration','TRATBL_sdl_sss_scorecard_data__null_test')}})
-            {% endif %}"]
+        {% endif %}"
     )
 }}
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }}
     where filename not in (
-        select distinct filename from {{source('indwks_integration','TRATBL_sdl_sss_scorecard_data__null_test')}})
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_sss_scorecard_data__null_test')}})
 ),
 final as 
 (

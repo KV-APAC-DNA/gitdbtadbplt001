@@ -3,17 +3,13 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        pre_hook = ["{% if is_incremental() %}
+        pre_hook = "{% if is_incremental() %}
                     DELETE FROM {{this}}
                     WHERE CASE WHEN (SELECT COUNT(*) FROM {{source('indsdl_raw', 'sdl_rmrpstockprocess_clstk')}}) > 0
                         THEN 1
                         ELSE 0
                         END = 1;
-                    {% endif %}",
-                    "{% if is_incremental%}
-                    delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{source('indsdl_raw', 'sdl_rmrpstockprocess_clstk')}} sdl 
-        {% endif %}"]
+                    {% endif %}"
     )
 }}
 
@@ -41,8 +37,7 @@ final as
         createddate::timestamp_ntz(9) as createddate,
         modifieddate::timestamp_ntz(9) as modifieddate,
         createddt::timestamp_ntz(9) as createddt,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        file_name::varchar(225) as file_name
+        current_timestamp()::timestamp_ntz(9) as updt_dttm
     from sdl_rmrpstockprocess_clstk
 )
 select * from final

@@ -4,11 +4,7 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook = " {% if is_incremental() %}
-        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_salesman_route') }} where file_name not in 
-    (select distinct filename {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__null_test') }}
-    union all
-    select distinct filename {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__duplicate_test') }}
-    )) > 0 then 1 else 0 end = 1;
+        delete from {{this}} where case  when ( select count(*) from {{ source('indsdl_raw', 'sdl_in_salesman_route') }} ) > 0 then 1 else 0 end = 1;
         {% endif %}"
     )
 }}
@@ -17,9 +13,9 @@ with source as
 (
     select * from {{ source('indsdl_raw', 'sdl_in_salesman_route') }}
     where filename not in 
-    (select distinct filename {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__null_test') }}
+    (select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__null_test') }}
     union all
-    select distinct filename {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__duplicate_test') }}
+    select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_salesman_route__duplicate_test') }}
     )
 ),
 final as 

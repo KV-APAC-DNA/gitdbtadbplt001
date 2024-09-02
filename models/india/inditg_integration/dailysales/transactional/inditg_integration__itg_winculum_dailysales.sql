@@ -26,8 +26,8 @@ final as
 	filename::varchar(100) as filename,
 	run_id::number(14,0) as run_id,
     crtd_dttm::timestamp_ntz(9) as crtd_dttm,
-    convert_timezone('Asia/Singapore', CURRENT_TIMESTAMP())::timestamp_ntz(9) as updt_dttm,
-    file_name:: varchar(255) as file_name
+    convert_timezone('Asia/Singapore', CURRENT_TIMESTAMP())::timestamp_ntz(9) as updt_dttm
+    
     from sdl_winculum_dailysales
 )
 select * from final

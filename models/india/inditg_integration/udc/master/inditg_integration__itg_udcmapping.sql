@@ -3,15 +3,11 @@
         materialized='incremental',
         incremental_strategy= "append",
         unique_key= ["udccode"],
-        pre_hook = ["{% if is_incremental() %}
+        pre_hook = "{% if is_incremental() %}
         delete from {{this}} where (upper(distCode),upper(RsdCode),upper(OutletCode),
         upper(UserCode),upper(UdcCode)) in (select distinct upper(distCode),upper(RsdCode),
         upper(OutletCode),upper(UserCode),upper(UdcCode) from {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }} ) ;
-        {% endif %}",
-        "{% if is_incremental() %}
-        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_rrl_udcmapping') }} sdl
-        {% endif %}"]
+        {% endif %}"
     )
 }}
 

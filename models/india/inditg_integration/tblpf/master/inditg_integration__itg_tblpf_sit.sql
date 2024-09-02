@@ -28,8 +28,7 @@ final as
     src,
     createddate,
     crt_dttm,
-    updt_dttm,
-    file_name
+    updt_dttm
     FROM source
 )
 select serno::varchar(50) as serno,
@@ -43,6 +42,5 @@ select serno::varchar(50) as serno,
     src::varchar(10) as src,
     createddate::timestamp_ntz(9) as createddate,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
-    updt_dttm::timestamp_ntz(9) as updt_dttm,
-    file_name::varchar(225) as file_name
+    updt_dttm::timestamp_ntz(9) as updt_dttm
 from final

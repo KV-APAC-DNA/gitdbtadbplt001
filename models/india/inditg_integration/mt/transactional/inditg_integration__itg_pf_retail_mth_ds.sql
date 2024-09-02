@@ -57,14 +57,13 @@ trans as
        SUM(CASE WHEN src <> 'SR' AND CAST(yr||lpad (mon,2,'0') AS INTEGER) < CAST(runyr||lpad (runmm,2,'0') AS INTEGER) THEN dbrestore_prdGrossAmt_current ELSE 0 END) AS dbrestore_Sec_Late_Gross_Amt_current,
        SUM(CASE WHEN src = 'SR' AND CAST(yr||lpad (mon,2,'0') AS INTEGER) < CAST(runyr||lpad (runmm,2,'0') AS INTEGER) THEN dbrestore_prdGrossAmt_current ELSE 0 END) AS dbrestore_Sec_Late_Gross_Amt_Ret_current,
        current_timestamp() as crt_dttm,
-       current_timestamp() as updt_dttm,
-       file_name
+       current_timestamp() as updt_dttm
+      
 FROM itg_tblpf_secsalesm
 GROUP BY runmm,
          runyr,
          DistCode,
-         PrdCode,
-         file_name),
+         PrdCode),
 final as 
 (
     select 
@@ -119,8 +118,7 @@ final as
 	dbrestore_sec_late_gross_amt_current::number(16,4) as dbrestore_sec_late_gross_amt_current,
 	dbrestore_sec_late_gross_amt_ret_current::number(16,4) as dbrestore_sec_late_gross_amt_ret_current,
 	crt_dttm::timestamp_ntz(9) as crt_dttm,
-	updt_dttm::timestamp_ntz(9) as updt_dttm,
-    file_name:: varchar(255) as file_name
+	updt_dttm::timestamp_ntz(9) as updt_dttm
     from trans
 )
 select * from final

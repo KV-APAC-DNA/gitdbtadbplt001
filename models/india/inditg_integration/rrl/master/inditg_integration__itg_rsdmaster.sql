@@ -3,12 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=["rsdcode","rsrcode","distributorcode"],
-        pre_hook = "{%if is_incremental()%}
-                    delete from {{this}} itg where itg.filename  in 
-                    (select sdl.filename from 
-                    {{ source('indsdl_raw', 'sdl_rrl_rsdmaster') }} sdl)
-        {% endif %}"
+        unique_key=["rsdcode","rsrcode","distributorcode"]
     )
 }}
 with source as

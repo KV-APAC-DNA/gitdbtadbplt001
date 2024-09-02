@@ -8,8 +8,8 @@
 }}
 with source as 
 (
-    select *,dense_rank() over(partition by distcode,ctgmainid,classid order by file_name desc) as rnk from {{ source('indsdl_raw', 'sdl_rrl_retailervalueclass') }}
-    where file_name not in (
+    select *,dense_rank() over(partition by distcode,ctgmainid,classid order by filename desc) as rnk from {{ source('indsdl_raw', 'sdl_rrl_retailervalueclass') }}
+    where filename not in (
         select distinct file_name from {{source('indwks_integration','TRATBL_sdl_rrl_retailervalueclass__null_test')}})
 ),
 trans as 
@@ -27,8 +27,8 @@ trans as
 	sdl_rvc.filename::varchar(100) as filename,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    row_number() over (partition by sdl_rvc.classid,sdl_rvc.ctgmainid,upper(sdl_rvc.distcode) order by sdl_rvc.crt_dttm desc) rnum,
-    file_name::varchar(225) as file_name
+    row_number() over (partition by sdl_rvc.classid,sdl_rvc.ctgmainid,upper(sdl_rvc.distcode) order by sdl_rvc.crt_dttm desc) rnum
+    
       from source sdl_rvc)
 where rnum = '1'
 )

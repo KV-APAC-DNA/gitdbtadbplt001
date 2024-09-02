@@ -3,9 +3,7 @@
         materialized= "incremental",
         incremental_strategy= "merge",
         unique_key= ["musername"],
-        merge_exclude_columns= ["crt_dttm", "updt_dttm"],
-        pre_hook  = "delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_muser') }}) sdl) "
+        merge_exclude_columns= ["crt_dttm", "updt_dttm"]
     )
 }}
 

@@ -3,7 +3,7 @@
     (
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook = ["{% if is_incremental() %}
+        pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE UPPER(TRIM(Visit_ID)) ||UPPER(TRIM(LEFT(Visit_DateTime,10))) ||UPPER(TRIM(Region)) ||UPPER(TRIM(JnJRKAM)) ||UPPER(TRIM(JnJZM_Code)) ||UPPER(TRIM(JNJ_ABI_Code)) ||UPPER(TRIM(JnJSupervisor_Code)) ||UPPER(TRIM(ISP_Code)) ||UPPER(TRIM(ISP_Name)) 
         ||UPPER(TRIM(MONTH)) ||UPPER(TRIM(YEAR)) ||UPPER(TRIM(Format)) ||UPPER(TRIM(Chain_Code)) ||UPPER(TRIM(Chain)) ||UPPER(TRIM(Store_Code)) ||UPPER(TRIM(Store_Name)) ||UPPER(TRIM(Asset)) ||UPPER(TRIM(Product_Category)) ||UPPER(TRIM(Product_Brand)) ||UPPER(TRIM(POSM_Brand)) ||UPPER(TRIM(Start_Date)) ||UPPER(TRIM(End_Date)) ||UPPER(TRIM(Audit_Status)) ||UPPER(TRIM(Is_Available)) 
@@ -61,28 +61,8 @@
             Reason,
             Priority_Store
         FROM {{ source('indsdl_raw', 'sdl_in_perfectstore_paid_display') }}
-        where file_name not in 
-    (
-        select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__null_test') }}
-        union all
-        select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__duplicate_test') }}
-        union all
-        select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__date_format_test') }}
-    )
         ));
-        {% endif %}",
-        
-         "{%if is_incremental()%}
-         delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_in_perfectstore_paid_display') }} sdl where file_name not in
-            (
-            select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__null_test') }}
-        union all
-        select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__duplicate_test') }}
-        union all
-        select distinct file_name from {{ source('indwks_integration', 'TRATBL_sdl_in_perfectstore_paid_display__date_format_test') }}
-        )
-        {% endif %}"]
+        {% endif %}"
     )
 }}
 

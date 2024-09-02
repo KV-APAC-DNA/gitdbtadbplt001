@@ -2,8 +2,9 @@ version: 2
 
 sources:
   - name: indwks_integration
-    database: "{{ env_var('DBT_ENV_LOAD_DB') }}"
-    schema: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: APATE012_WORKSPACE
+
     quoting:
       database: false
       schema: false

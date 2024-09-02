@@ -1,11 +1,7 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy= "append",
-        pre_hook = "{%if is_incremental()%}
-    delete from {{this}} itg where itg.filename  in (select sdl.filename from
-        {{ source('indsdl_raw', 'sdl_rrl_ruralstoreorderdetail') }} sdl)
-        {% endif %}"
+        incremental_strategy= "append"
     )
 }}
 with source as

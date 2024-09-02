@@ -62,8 +62,7 @@ ct1 as
         CAST(NULL AS CHAR) AS isdisteligibleforclaims,
         isparent,
         crt_dttm,
-        updt_dttm,
-        file_name
+        updt_dttm
     FROM itg_rkeyacccustomer
 ),
 
@@ -122,8 +121,7 @@ ct2 as
         CAST(NULL AS CHAR) AS isdisteligibleforclaims,
         'N' AS isparent,
         crtd_dttm AS crt_dttm,
-        updt_dttm,
-        file_name
+        updt_dttm
     FROM itg_mds_in_sv_winculum_master
     WHERE active = 'Y'
 ),
@@ -189,8 +187,7 @@ final as (
         isdisteligibleforclaims::varchar(10) as isdisteligibleforclaims,
         isparent::varchar(10) as isparent,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
-        updt_dttm::timestamp_ntz(9) as updt_dttm,
-        file_name::varchar(225) as file_name
+        updt_dttm::timestamp_ntz(9) as updt_dttm
     from transformed
 )
 select * from final

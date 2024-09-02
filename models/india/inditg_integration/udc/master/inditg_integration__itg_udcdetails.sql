@@ -3,14 +3,10 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-		pre_hook = ["{% if is_incremental() %}
+		pre_hook = "{% if is_incremental() %}
         delete from {{this}} where createddate >= (select min(createddate)
         from {{source('indsdl_raw', 'sdl_csl_udcdetails')}});
-        {% endif %}",
-        "{% if is_incremental() %}
-        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{source('indsdl_raw', 'sdl_csl_udcdetails')}} sdl
-        {% endif %}"]
+        {% endif %}"
     )
 }}
 

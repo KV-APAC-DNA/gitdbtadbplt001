@@ -13,13 +13,13 @@ final as
 	sum(value)::number(18,2) as cl_stck_value,
 	sum(nr)::number(18,3) as cl_stck_nr,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
-	current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    file_name::varchar(255) as file_name
+	current_timestamp()::timestamp_ntz(9) as updt_dttm
+    
     from itg_tblpf_clstkm
     group by mon,
              yr,
              distcode,
-             prdcode,
-             file_name
+             prdcode
+             
 )
 select * from final

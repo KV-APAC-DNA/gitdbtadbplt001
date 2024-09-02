@@ -7,10 +7,10 @@
 
 with source as(
     select * from {{ source('indsdl_raw', 'sdl_in_rtlsalesman') }} 
-     where file_name not in (
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_rtlsalesman__null_test')}}
+     where filename not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_rtlsalesman__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_in_rtlsalesman__duplicate_test')}})
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_rtlsalesman__duplicate_test')}})
 ),
 final as(
     select * from source

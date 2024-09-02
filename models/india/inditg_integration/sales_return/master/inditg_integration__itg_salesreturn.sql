@@ -9,11 +9,7 @@
                     where DATEDIFF(day, s.createddate, s.modifieddate) <= 6 );"
                    "delete from {{this}} where (distcode, srnrefno) in 
                    (select distcode, srnrefno from {{ source('indsdl_raw', 'sdl_csl_salesreturn') }} as s 
-                   where datediff(day, s.createddate, s.modifieddate) > 6);",
-                   "{% if is_incremental()%}
-                   delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_csl_salesreturn') }} sdl
-        {% endif %}"
+                   where datediff(day, s.createddate, s.modifieddate) > 6);"
                 ]
     )
 }}
@@ -75,7 +71,7 @@ final as
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     modifieddate::timestamp_ntz(9) as modifieddate,
-    file_name::varchar(255) as file_name
+    file_name::varchar(50) as file_name
     from source
     {% if is_incremental() %}
     --this filter will only be applied on an incremental run

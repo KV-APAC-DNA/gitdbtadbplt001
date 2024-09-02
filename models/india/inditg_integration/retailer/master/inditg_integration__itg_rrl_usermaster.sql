@@ -1,9 +1,7 @@
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_rrl_usermaster') }}
-    where file_name not in (
-        select distinct file_name from {{SOURCE('indwks_integration','TRATBL_sdl_rrl_usermaster__null_test')}}
-     )
+    
 ),
 itg as 
 (
@@ -45,8 +43,8 @@ trans as
 	sdl_usm.filename::varchar(100) as filename,
 	sdl_usm.crt_dttm as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
-    row_number() over (partition by sdl_usm.userid order by sdl_usm.crt_dttm desc) rnum,
-    file_name::varchar(225) as file_name
+    row_number() over (partition by sdl_usm.userid order by sdl_usm.crt_dttm desc) rnum
+    
       from combined sdl_usm)
 where rnum = '1'
 ),
@@ -77,8 +75,7 @@ final as
     freezeday,
     filename,
     crt_dttm,
-    updt_dttm,
-    file_name
+    updt_dttm
 from trans
 )
 select * from final

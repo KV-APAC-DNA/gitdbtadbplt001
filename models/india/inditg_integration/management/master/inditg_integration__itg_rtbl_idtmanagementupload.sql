@@ -3,16 +3,11 @@
     (
         materialized = "incremental",
         incremental_strategy = "append",
-        pre_hook = ["{% if is_incremental() %}
+        pre_hook = "{% if is_incremental() %}
         DELETE FROM {{this}}
         WHERE TO_DATE(idtmngdate) >= (SELECT MIN(TO_DATE(idtmngdate)) 
         FROM {{ source('indsdl_raw', 'sdl_rtbl_idtmanagementupload') }});
-        {% endif %}",
-        "{%if is_incremental()%}  
-        delete from {{this}} itg where itg.file_name  in (select sdl.file_name from
-        {{ source('indsdl_raw', 'sdl_rtbl_idtmanagementupload') }} )sdl 
-        {% endif %}"]
-
+        {% endif %}"
     )
 }}
 
@@ -56,8 +51,7 @@ final as
         mnfdate,
         expdate,
         createddt,
-        convert_timezone('Asia/Kolkata',current_timestamp())::timestamp_ntz AS updt_dttm,
-        file_name
+        convert_timezone('Asia/Kolkata',current_timestamp())::timestamp_ntz AS updt_dttm
     FROM source
 )
 select distcode::varchar(50) as distcode,
@@ -94,6 +88,5 @@ select distcode::varchar(50) as distcode,
     mnfdate::timestamp_ntz(9) as mnfdate,
     expdate::timestamp_ntz(9) as expdate,
     createddt::timestamp_ntz(9) as createddt,
-    updt_dttm::timestamp_ntz(9) as updt_dttm,
-    file_name::varchar(255) as file_name
+    updt_dttm::timestamp_ntz(9) as updt_dttm
 from final
