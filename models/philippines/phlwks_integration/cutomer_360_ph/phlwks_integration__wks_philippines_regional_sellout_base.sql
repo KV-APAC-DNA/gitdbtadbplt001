@@ -190,7 +190,7 @@ final as
         jj_gts as SO_SELLOUT_VALUE_LIST_PRICE,
         --'NA' as msl_product_code,
         --'NA' as msl_product_desc,
-        'NA' as channel
+        mds_cust.channel_desc as channel
         from edw_ph_pos_analysis_v2 sls_v2
     left join (SELECT distinct cust_id, channel_cd, channel_desc FROM itg_mds_ph_lav_customer WHERE UPPER(active) = 'Y') mds_cust on ltrim(mds_cust.cust_id,'0') = ltrim(sls_v2.sold_to,'0')
 
