@@ -73,6 +73,10 @@ edw_rpt_th_perfect_store as (
 v_rpt_vn_perfect_store as (
     select * from {{ ref('vnmedw_integration__v_rpt_vn_perfect_store') }}
 ),
+edw_cn_perfect_store as (
+    select * from {{ ref('chnedw_integration__edw_cn_perfect_store') }}
+),
+
 rex as (
     SELECT UPPER(derived_table1.dataset)::CHARACTER VARYING AS dataset,
     derived_table1.merchandisingresponseid,
@@ -2639,6 +2643,86 @@ vnm as (
     NULL AS store_grade
 FROM v_rpt_vn_perfect_store
 ),
+
+chn as (
+SELECT UPPER(edw_cn_perfect_store.dataset::TEXT)::CHARACTER VARYING AS dataset,
+       NULL::"unknown" AS merchandisingresponseid,
+       NULL::"unknown" AS surveyresponseid,
+       edw_cn_perfect_store.customerid,
+       edw_cn_perfect_store.salespersonid,
+       NULL::"unknown" AS visitid,
+       edw_cn_perfect_store.mrch_resp_startdt::DATE AS mrch_resp_startdt,
+       edw_cn_perfect_store.mrch_resp_enddt::DATE AS mrch_resp_enddt,
+       NULL::"unknown" AS mrch_resp_status,
+       NULL::"unknown" AS mastersurveyid,
+       NULL::"unknown" AS survey_status,
+       edw_cn_perfect_store.survey_enddate,
+       NULL::"unknown" AS questionkey,
+       edw_cn_perfect_store.questiontext,
+       NULL::"unknown" AS valuekey,
+       edw_cn_perfect_store.value,
+       NULL::"unknown" AS productid,
+       UPPER(edw_cn_perfect_store.mustcarryitem::TEXT)::CHARACTER VARYING AS mustcarryitem,
+       NULL::"unknown" AS answerscore,
+       UPPER(edw_cn_perfect_store.presence::TEXT)::CHARACTER VARYING AS presence,
+       edw_cn_perfect_store.outofstock,
+       NULL::"unknown" AS mastersurveyname,
+       UPPER(edw_cn_perfect_store.kpi::TEXT)::CHARACTER VARYING AS kpi,
+       edw_cn_perfect_store.category,
+       edw_cn_perfect_store.segment,
+       NULL::"unknown" AS vst_visitid,
+       edw_cn_perfect_store.scheduleddate,
+       NULL::"unknown" AS scheduledtime,
+       NULL::"unknown" AS duration,
+       UPPER(edw_cn_perfect_store.vst_status::TEXT)::CHARACTER VARYING AS vst_status,
+       edw_cn_perfect_store.fisc_yr,
+       edw_cn_perfect_store.fisc_per,
+       edw_cn_perfect_store.firstname,
+       edw_cn_perfect_store.lastname,
+       NULL::"unknown" AS cust_remotekey,
+       edw_cn_perfect_store.customername,
+       edw_cn_perfect_store.country,
+       edw_cn_perfect_store.state,
+       NULL::"unknown" AS county,
+       NULL::"unknown" AS district,
+       NULL::"unknown" AS city,
+       edw_cn_perfect_store.storereference,
+       edw_cn_perfect_store.storetype,
+       edw_cn_perfect_store.channel,
+       edw_cn_perfect_store.salesgroup,
+       edw_cn_perfect_store.bu,
+       NULL::"unknown" AS soldtoparty,
+       NULL::"unknown" AS brand,
+       edw_cn_perfect_store.productname,
+       edw_cn_perfect_store.eannumber,
+       NULL::"unknown" AS matl_num,
+       edw_cn_perfect_store.prod_hier_l1,
+       NULL::"unknown" AS prod_hier_l2,
+       NULL::"unknown" AS prod_hier_l3,
+       edw_cn_perfect_store.prod_hier_l4,
+       edw_cn_perfect_store.prod_hier_l5,
+       edw_cn_perfect_store.prod_hier_l6,
+       NULL::"unknown" AS prod_hier_l7,
+       NULL::"unknown" AS prod_hier_l8,
+       edw_cn_perfect_store.prod_hier_l9,
+       edw_cn_perfect_store.kpi_chnl_wt,
+       edw_cn_perfect_store.mkt_share,
+       UPPER(edw_cn_perfect_store.ques_desc::TEXT)::CHARACTER VARYING AS ques_desc,
+       edw_cn_perfect_store."y/n_flag",
+       NULL::"unknown" AS posm_execution_flag,
+       '' AS rej_reason,
+       NULL::"unknown" AS response,
+       NULL::"unknown" AS response_score,
+       '' AS acc_rej_reason,
+       edw_cn_perfect_store.actual,
+       edw_cn_perfect_store."target",
+       'Y' AS priority_store_flag,
+       NULL::"unknown" AS photo_url,
+       NULL::"unknown" AS website_url,
+       NULL AS store_grade
+FROM edw_cn_perfect_store
+WHERE UPPER(edw_cn_perfect_store.storetype::TEXT) <> 'CASH&CARRY'::CHARACTER VARYING::TEXT
+),
 final as (
     select * from sgp
     union all
@@ -2667,5 +2751,7 @@ final as (
     select * from ind_2
     union all
     select * from vnm
+    union all
+    select * from chn
 )
 select * from final
