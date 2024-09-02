@@ -599,7 +599,7 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
-    
+
     hcposea:
       config:
         +enabled: true
@@ -630,3 +630,41 @@ models:
       hcposeedw_access:
         +materialized: view
         +schema: HCPOSEEDW_ACCESS
+
+    japan_dcl:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Tokyo';"
+      jpndcledw_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPDCLEDW_INTEGRATION
+        view:
+            +materialized: view
+      jpndclitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: JPDCLITG_INTEGRATION
+      jpndcledw_access:
+        +materialized: view
+        +schema: JPDCLEDW_ACCESS
+
+    china:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Shanghai';"
+      chnedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNEDW_INTEGRATION
+      chnitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: CHNITG_INTEGRATION
+      chnwks_integration:
+        +materialized: table
+        +schema: CHNWKS_INTEGRATION
+      chnedw_access:
+        +materialized: view
+        +schema: CHNEDW_ACCESS
+    

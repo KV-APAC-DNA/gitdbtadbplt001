@@ -4,8 +4,10 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['RGN_MKT_CD','FISC_YR_MO_NUM'],
-        pre_hook= "delete from {{this}} where (trim(RGN_MKT_CD) || FISC_YR_MO_NUM) in (
-        select distinct trim(RGN_MKT_CD) || FISC_YR_MO_NUM from {{ source('aspsdl_raw', 'sdl_otif_consumer_attr') }});"
+        pre_hook= "{% if is_incremental() %}
+        delete from {{this}} where (trim(RGN_MKT_CD) || FISC_YR_MO_NUM) in (
+        select distinct trim(RGN_MKT_CD) || FISC_YR_MO_NUM from {{ source('aspsdl_raw', 'sdl_otif_consumer_attr') }});
+        {% endif %}"
     )
 }}
 with source as (

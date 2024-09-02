@@ -291,12 +291,10 @@ select
       'na'
     )
   ) as msl_product_code, 
-  trim(
-    nvl (
-      nullif(t4.sap_mat_desc, ''), 
-      'NA'
-    )
-  ) as msl_product_desc, 
+  CASE WHEN (UPPER(T4.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR T4.PKA_PACKAGE IS NULL) THEN UPPER(T4.SAP_MAT_DESC)
+       ELSE (CASE WHEN TRIM(NVL (NULLIF(T4.pka_product_key_description,''),'NA')) IN ('N/A','NA') THEN 'NA'
+         ELSE TRIM(NVL (NULLIF(T4.pka_product_key_description,''),'NA')) END)
+       END AS msl_product_desc,
   --trim(nvl (nullif(sellout.store_grade,''),'na')) as store_grade,
   trim(
     nvl (
@@ -446,6 +444,7 @@ group by
   --t4.greenlight_sku_flag, 
   t4.pka_product_key, 
   t4.pka_product_key_description, 
+  t4.PKA_PACKAGE,
   --t4.sls_org,
   sellout.customer_product_desc, 
   sellout.region, 

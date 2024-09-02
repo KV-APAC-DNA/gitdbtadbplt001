@@ -1,0 +1,108 @@
+{{
+    config
+    (
+        materialized='incremental',
+        incremental_strategy= 'delete+insert',
+        unique_key= ['diinquireid', 'c_diinquirekesaiid']
+    )
+}}
+
+with source as
+(
+    select * from {{ source('jpdclsdl_raw', 'c_tbecinquirekesai') }}
+),
+
+final as
+(
+    select 
+        diinquireid::number(38,0) as diinquireid,
+		c_diinquirekesaiid::number(38,0) as c_diinquirekesaiid,
+		diorderid::number(38,0)as diorderid,
+		c_dikesaiid::number(38,0) as c_dikesaiid,
+		c_dsinquireprep::timestamp_ntz(9)as c_dsinquireprep,
+		dshenkinhoho::varchar(3) as dshenkinhoho,
+		c_dshenkinyoteidt::timestamp_ntz(9)as c_dshenkinyoteidt,
+		c_dihenkinriyuid::number(38,0)as c_dihenkinriyuid,
+		dstorihikimemo::varchar(768)as dstorihikimemo,
+		didifftotalprc::number(38,0)as didifftotalprc,
+		disagakukbn::varchar(1)as disagakukbn,
+		c_dshenpinsts::varchar(6) as c_dshenpinsts,
+		direnkeists::varchar(1) as direnkeists,
+		c_dshenpinmaehenkyakuflg::varchar(1) as c_dshenpinmaehenkyakuflg,
+		c_dikakutokuyoteipoint::number(38,0)as c_dikakutokuyoteipoint,
+		c_dihenkyakuyoteipoint::number(38,0)as c_dihenkyakuyoteipoint,
+		c_dikigengirepoint::number(38,0)as c_dikigengirepoint,
+		ditotalprc::number(38,0)as ditotalprc,
+		diordertax::number(38,0) as diordertax,
+		ditaxrate::number(38,0) as ditaxrate,
+		c_didiscountprc::number(38,0)as c_didiscountprc,
+		c_didiscountall::number(38,0)as c_didiscountall,
+		c_diteikidiscountprc::number(38,0)as c_diteikidiscountprc,
+		dihaisoprc::number(38,0)as dihaisoprc,
+		c_dicollectprc::number(38,0)as c_dicollectprc,
+		c_ditoujitsuhaisoprc::number(38,0)as c_ditoujitsuhaisoprc,
+		diusepoint::number(38,0)as diusepoint,
+		c_diexchangepoint::number(38,0)as c_diexchangepoint,
+		c_dinyukinprc::number(38,0)as c_dinyukinprc,
+		c_dsshikyuhenkinflg::varchar(1) as c_dsshikyuhenkinflg,
+		dstodokesei::varchar(30)as dstodokesei,
+		dstodokemei::varchar(30)as dstodokemei,
+		dstodokeseikana::varchar(30)as dstodokeseikana,
+		dstodokemeikana::varchar(30)as dstodokemeikana,
+		dstodokezip::varchar(15)as dstodokezip,
+		c_dstodokeprefcd::varchar(3)as c_dstodokeprefcd,
+		dstodokepref::varchar(15)as dstodokepref,
+		dstodokecity::varchar(108)as dstodokecity,
+		dstodokeaddr::varchar(90)as dstodokeaddr,
+		dstodoketatemono::varchar(90)as dstodoketatemono,
+		dstodokeaddrkana::varchar(3072)as dstodokeaddrkana,
+		dstodoketel::varchar(24)as dstodoketel,
+		dstodokefax::varchar(24)as dstodokefax,
+		dihaisokeitai::number(38,0) as dihaisokeitai,
+		dicreditcd::number(38,0)as dicreditcd,
+		dshenkinbankcd::varchar(6)as dshenkinbankcd,
+		dshenkinmeisho::varchar(96)as dshenkinmeisho,
+		c_dshenkinbankkana::varchar(1536)as c_dshenkinbankkana,
+		dshenkinshitenmei::varchar(96)as dshenkinshitenmei,
+		dshenkinshubetsu::varchar(12)as dshenkinshubetsu,
+		dshenkinbango::varchar(24)as dshenkinbango,
+		dshenkinmeigi::varchar(192)as dshenkinmeigi,
+		c_dshenkinsei::varchar(30)as c_dshenkinsei,
+		c_dshenkinmei::varchar(30)as c_dshenkinmei,
+		c_dshenkinseikana::varchar(30)as c_dshenkinseikana,
+		c_dshenkinmeikana::varchar(30)as c_dshenkinmeikana,
+		c_dsrelationship::varchar(30)as c_dsrelationship,
+		c_dshenkinzip::varchar(15)as c_dshenkinzip,
+		c_dshenkinpref::varchar(15)as c_dshenkinpref,
+		c_dshenkincity::varchar(108)as c_dshenkincity,
+		c_dshenkinaddr::varchar(90)as c_dshenkinaddr,
+		c_dshenkintatemono::varchar(90)as c_dshenkintatemono,
+		c_dshenkinaddrkana::varchar(3072)as c_dshenkinaddrkana,
+		c_dshenkintel::varchar(24)as c_dshenkintel,
+		c_dshenkinfax::varchar(24)as c_dshenkinfax,
+		c_dihenkincalcprc::number(38,0)as c_dihenkincalcprc,
+		dshenkinmemo::varchar(768)as dshenkinmemo,
+		diorderhistid::number(38,0) as diorderhistid,
+		dsprep::timestamp_ntz(9) as dsprep,
+		dsren::timestamp_ntz(9) as dsren,
+		dselim::timestamp_ntz(9)as dselim,
+		diprepusr::number(38,0)as diprepusr,
+		direnusr::number(38,0)as direnusr,
+		dielimusr::number(38,0)as dielimusr,
+		dielimflg::varchar(1) as dielimflg,
+		c_dsnoshinshomemo::varchar(3000)as c_dsnoshinshomemo,
+		c_dsokurijomemo::varchar(3000)as c_dsokurijomemo,
+		c_diadjustprc::number(38,0)as c_diadjustprc,
+		c_dihenkinprcinputdiff::number(38,0) as c_dihenkinprcinputdiff,
+		c_dihenkinprcinputdifftotal::number(38,0) as c_dihenkinprcinputdifftotal,
+		c_dshenpinprockbn::varchar(1)as c_dshenpinprockbn,
+		source_file_date::varchar(10) as source_file_date,
+		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		inserted_by::varchar(100) as inserted_by,
+		current_timestamp()::timestamp_ntz(9) as updated_date,
+		updated_by::varchar(100) as updated_by 
+    from source
+)
+
+select * from final
+

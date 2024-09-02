@@ -1,0 +1,42 @@
+with source as 
+(
+    select * from {{ ref('indedw_integration__v_rpt_mon_cls_stock') }}
+)
+select
+    customer_code as "customer_code",
+    customer_name as "customer_name",
+    region_name as "region_name",
+    state_name as "state_name",
+    territory_classification as "territory_classification",
+    territory_name as "territory_name",
+    town_name as "town_name",
+    zone_name as "zone_name",
+    brand_name as "brand_name",
+    franchise_name as "franchise_name",
+    mothersku_name as "mothersku_name",
+    product_category_name as "product_category_name",
+    product_name as "product_name",
+    variant_name as "variant_name",
+    product_code as "product_code",
+    "year" as "year",
+    qtr as "qtr",
+    "month" as "month",
+    calsalclosing as "calsalclosing",
+    calsalclosingval as "calsalclosingval",
+    calunsalclosing as "calunsalclosing",
+    calunsalclosingval as "calunsalclosingval",
+    calofferclosing as "calofferclosing",
+    calofferclosingval as "calofferclosingval",
+    salstockadjqty as "salstockadjqty",
+    salstockadjval as "salstockadjval",
+    unsalstockadjqty as "unsalstockadjqty",
+    unsalstockadjval as "unsalstockadjval",
+    offerstockadjqty as "offerstockadjqty",
+    offerstockadjval as "offerstockadjval",
+    retailer_count as "retailer_count",
+    type_name as "type_name",
+    abi_ntid as "abi_ntid",
+    flm_ntid as "flm_ntid",
+    bdm_ntid as "bdm_ntid",
+    rsm_ntid as "rsm_ntid"
+from source

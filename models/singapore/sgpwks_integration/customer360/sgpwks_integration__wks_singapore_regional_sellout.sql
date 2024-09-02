@@ -47,490 +47,454 @@ edw_code_descriptions_manual as (
 vw_edw_reg_exch_rate as (
   select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
---Logical CTE--
-c as 
-(
-    select
-      *
-    from vw_edw_reg_exch_rate
-    where
-      cntry_key = 'SG'
-      and to_ccy = 'USD'
-      and jj_mnth_id = (
-        select
-          max(jj_mnth_id)
-        from vw_edw_reg_exch_rate
-      )
-  ),
-cust as 
-(
-    select
-      *
-    from (
-      select distinct
-        ecbd.cust_num as sap_cust_id,
-        ecbd.cust_nm as sap_cust_nm,
-        ecsd.sls_org as sap_sls_org,
-        ecd.company as sap_cmp_id,
-        ecd.ctry_key as sap_cntry_cd,
-        ecd.ctry_nm as sap_cntry_nm,
-        ecsd.prnt_cust_key as sap_prnt_cust_key,
-        cddes_pck.code_desc as sap_prnt_cust_desc,
-        ecsd.chnl_key as sap_cust_chnl_key,
-        cddes_chnl.code_desc as sap_cust_chnl_desc,
-        ecsd.sub_chnl_key as sap_cust_sub_chnl_key,
-        cddes_subchnl.code_desc as sap_sub_chnl_desc,
-        ecsd.go_to_mdl_key as sap_go_to_mdl_key,
-        cddes_gtm.code_desc as sap_go_to_mdl_desc,
-        ecsd.bnr_key as sap_bnr_key,
-        cddes_bnrkey.code_desc as sap_bnr_desc,
-        ecsd.bnr_frmt_key as sap_bnr_frmt_key,
-        cddes_bnrfmt.code_desc as sap_bnr_frmt_desc,
-        subchnl_retail_env.retail_env,
-        egch.gcgh_region as gch_region,
-        egch.gcgh_cluster as gch_cluster,
-        egch.gcgh_subcluster as gch_subcluster,
-        egch.gcgh_market as gch_market,
-        egch.gcch_retail_banner as gch_retail_banner,
-        ecsd.segmt_key as cust_segmt_key,
-        codes_segment.code_desc as cust_segment_desc,
-        row_number() over (partition by sap_cust_id order by sap_prnt_cust_key, cust_segmt_key asc) as rank
-      /* row_number() over (partition by sap_cust_id order by nullif(ecsd.prnt_cust_key,''),nullif(ecsd.bnr_key,''),nullif(ecsd.bnr_frmt_key,''),nullif(ecsd.segmt_key,'') asc nulls last) as rank */
-      from edw_gch_customerhierarchy as egch, edw_customer_sales_dim as ecsd, edw_customer_base_dim as ecbd, edw_company_dim as ecd, edw_dstrbtn_chnl as edc, edw_sales_org_dim as esod, edw_code_descriptions as cddes_pck, edw_code_descriptions as cddes_bnrkey, edw_code_descriptions as cddes_bnrfmt, edw_code_descriptions as cddes_chnl, edw_code_descriptions as cddes_gtm, edw_code_descriptions as cddes_subchnl, edw_subchnl_retail_env_mapping as subchnl_retail_env, edw_code_descriptions_manual as codes_segment, (
-        select distinct
-          cust_num,
-          rec_crt_dt,
-          prnt_cust_key,
-          row_number() over (partition by cust_num order by rec_crt_dt desc) as rn
-        from edw_customer_sales_dim
-      ) as a
-      /* (select distinct customer_code,region_name,zone_name */ /* from in_edw.edw_customer_dim) regzone */
-      where
-        egch.customer = ecbd.cust_num
-        and ecsd.cust_num = ecbd.cust_num
-        and a.cust_num = ecsd.cust_num
-        and ecsd.dstr_chnl = edc.distr_chan
-        and ecsd.sls_org = esod.sls_org
-        and esod.sls_org_co_cd = ecd.co_cd
-        and a.rn = 1
-        and upper(trim(cddes_pck.code_type)) = 'PARENT CUSTOMER KEY'
-        and cddes_pck.code = ecsd.prnt_cust_key
-        and upper(trim(cddes_bnrkey.code_type)) = 'BANNER KEY'
-        and cddes_bnrkey.code = ecsd.bnr_key
-        and upper(trim(cddes_bnrfmt.code_type)) = 'BANNER FORMAT KEY'
-        and cddes_bnrfmt.code = ecsd.bnr_frmt_key
-        and upper(trim(cddes_chnl.code_type)) = 'CHANNEL KEY'
-        and cddes_chnl.code = ecsd.chnl_key
-        and upper(trim(cddes_gtm.code_type)) = 'GO TO MODEL KEY'
-        and cddes_gtm.code = ecsd.go_to_mdl_key
-        and upper(trim(cddes_subchnl.code_type)) = 'SUB CHANNEL KEY'
-        and cddes_subchnl.code = ecsd.sub_chnl_key
-        and upper(subchnl_retail_env.sub_channel) = upper(cddes_subchnl.code_desc)
-        and codes_segment.code_type = 'customer segmentation key'
-        and codes_segment.code = ecsd.segmt_key
-    )
-    where
-      rank = 1
-  ),
-  prod_key2 AS (
-    select
-      a.ctry_nm,
-      a.ean_upc,
-      a.sku,
-      a.pka_productkey,
-      a.pka_productdesc
-    from (
-      select
-        ctry_nm,
-        ltrim(ean_upc, '0') as ean_upc,
-        ltrim(matl_num, '0') as sku,
-        pka_productkey,
-        pka_productdesc,
-        lst_nts as nts_date
-      from edw_product_key_attributes
-      where
-        (
-          matl_type_cd = 'FERT' or matl_type_cd = 'HALB' or matl_type_cd = 'SAPR'
-        )
-        and not lst_nts is null
-    ) as a
-    join (
-      select
-        ctry_nm,
-        ltrim(ean_upc, '0') as ean_upc,
-        ltrim(matl_num, '0') as sku,
-        lst_nts as latest_nts_date,
-        row_number() over (partition by ctry_nm, ean_upc order by lst_nts desc) as row_number
-      from edw_product_key_attributes
-      where
-        (
-          matl_type_cd = 'FERT' or matl_type_cd = 'HALB' or matl_type_cd = 'SAPR'
-        )
-        and not lst_nts is null
-    ) as b
-      on a.ctry_nm = b.ctry_nm
-      and a.ean_upc = b.ean_upc
-      and a.sku = b.sku
-      and b.latest_nts_date = a.nts_date
-      and b.row_number = 1
-      and a.ctry_nm = 'Singapore'
-  ),
-prod_key1 as 
-(
-    select
-      a.ctry_nm,
-      a.ean_upc,
-      a.sku,
-      a.pka_productkey,
-      a.pka_productdesc
-    from (
-      select
-        ctry_nm,
-        ltrim(ean_upc, '0') as ean_upc,
-        ltrim(matl_num, '0') as sku,
-        pka_productkey,
-        pka_productdesc,
-        lst_nts as nts_date
-      from edw_product_key_attributes
-      where
-        (
-          matl_type_cd = 'FERT' or matl_type_cd = 'HALB' or matl_type_cd = 'SAPR'
-        )
-        and not lst_nts is null
-    ) as a
-    join (
-      select
-        ctry_nm,
-        ltrim(ean_upc, '0') as ean_upc,
-        ltrim(matl_num, '0') as sku,
-        lst_nts as latest_nts_date,
-        row_number() over (partition by ctry_nm, ean_upc order by lst_nts desc) as row_number
-      from edw_product_key_attributes
-      where
-        (
-          matl_type_cd = 'FERT' or matl_type_cd = 'HALB' or matl_type_cd = 'SAPR'
-        )
-        and not lst_nts is null
-    ) as b
-      on a.ctry_nm = b.ctry_nm
-      and a.ean_upc = b.ean_upc
-      and a.sku = b.sku
-      and b.latest_nts_date = a.nts_date
-      and b.row_number = 1
-      and a.ctry_nm = 'Singapore'
-  ) ,
-  product as 
-  (
-    select distinct
-      emd.matl_num as sap_matl_num,
-      emd.matl_desc as sap_mat_desc,
-      emd.matl_type_cd as sap_mat_type_cd,
-      emd.matl_type_desc as sap_mat_type_desc,
-      emd.prodh1 as sap_prod_sgmt_cd,
-      emd.prodh1_txtmd as sap_prod_sgmt_desc,
-      emd.base_prod_desc as sap_base_prod_desc,
-      emd.mega_brnd_desc as sap_mega_brnd_desc,
-      emd.brnd_desc as sap_brnd_desc,
-      emd.varnt_desc as sap_vrnt_desc,
-      emd.put_up_desc as sap_put_up_desc,
-      emd.prodh2 as sap_grp_frnchse_cd,
-      emd.prodh2_txtmd as sap_grp_frnchse_desc,
-      emd.prodh3 as sap_frnchse_cd,
-      emd.prodh3_txtmd as sap_frnchse_desc,
-      emd.prodh4 as sap_prod_frnchse_cd,
-      emd.prodh4_txtmd as sap_prod_frnchse_desc,
-      emd.prodh5 as sap_prod_mjr_cd,
-      emd.prodh5_txtmd as sap_prod_mjr_desc,
-      emd.prodh5 as sap_prod_mnr_cd,
-      emd.prodh5_txtmd as sap_prod_mnr_desc,
-      emd.prodh6 as sap_prod_hier_cd,
-      emd.prodh6_txtmd as sap_prod_hier_desc,
-      emd.pka_product_key as pka_product_key,
-      emd.pka_product_key_description as pka_product_key_description,
-      egph."region" as gph_region,
-      egph.regional_franchise as gph_reg_frnchse,
-      egph.regional_franchise_group as gph_reg_frnchse_grp,
-      egph.gcph_franchise as gph_prod_frnchse,
-      egph.gcph_brand as gph_prod_brnd,
-      egph.gcph_subbrand as gph_prod_sub_brnd,
-      egph.gcph_variant as gph_prod_vrnt,
-      egph.gcph_needstate as gph_prod_needstate,
-      egph.gcph_category as gph_prod_ctgry,
-      egph.gcph_subcategory as gph_prod_subctgry,
-      egph.gcph_segment as gph_prod_sgmnt,
-      egph.gcph_subsegment as gph_prod_subsgmnt,
-      egph.put_up_code as gph_prod_put_up_cd,
-      egph.put_up_description as gph_prod_put_up_desc,
-      egph.size as gph_prod_size,
-      egph.unit_of_measure as gph_prod_size_uom,
-      row_number() over (partition by sap_matl_num order by sap_matl_num) as rnk
-    from edw_material_dim as emd, edw_gch_producthierarchy as egph
-    where
-      ltrim(emd.matl_num, 0) = ltrim(egph.materialnumber, 0) and emd.prod_hier_cd <> ''
-  ),
-time as
-(
-    select distinct
-      cal_year as year,
-      cal_qrtr_no as qrtr_no,
-      cal_mnth_id as mnth_id,
-      cal_mnth_no as mnth_no
-    from edw_vw_os_time_dim
-  ),
-transformed as (
-  select
-    cast(time.year as varchar(10)) as year,
-    cast(time.qrtr_no as varchar(14)) as qrtr_no,
-    cast(time.mnth_id as varchar(21)) as mnth_id,
-    cast(time.mnth_no as varchar(10)) as mnth_no,
-    sellout.day as cal_date,
-    sellout.cntry_cd as country_code,
-    sellout.cntry_nm as country_name,
-    sellout.data_src as data_source,
-    trim(coalesce(nullif(sellout.soldto_code, ''), 'NA')) as soldto_code,
-    distributor_code,
-    distributor_name,
-    store_cd as store_code,
-    trim(store_name) as store_name,
-    trim(coalesce(nullif(sellout.store_type, ''), 'NA')) as store_type,
-    'NA' as distributor_additional_attribute1,
-    'NA' as distributor_additional_attribute2,
-    'NA' as distributor_additional_attribute3,
-    trim(coalesce(nullif(cust.sap_prnt_cust_key, ''), 'NA')) as sap_parent_customer_key,
-    upper(trim(coalesce(nullif(cust.sap_prnt_cust_desc, ''), 'NA'))) as sap_parent_customer_description,
-    trim(coalesce(nullif(cust.sap_cust_chnl_key, ''), 'NA')) as sap_customer_channel_key,
-    upper(trim(coalesce(nullif(cust.sap_cust_chnl_desc, ''), 'NA'))) as sap_customer_channel_description,
-    trim(coalesce(nullif(cust.sap_cust_sub_chnl_key, ''), 'NA')) as sap_customer_sub_channel_key,
-    upper(trim(coalesce(nullif(cust.sap_sub_chnl_desc, ''), 'NA'))) as sap_sub_channel_description,
-    trim(coalesce(nullif(cust.sap_go_to_mdl_key, ''), 'NA')) as sap_go_to_mdl_key,
-    upper(trim(coalesce(nullif(cust.sap_go_to_mdl_desc, ''), 'NA'))) as sap_go_to_mdl_description,
-    trim(coalesce(nullif(cust.sap_bnr_key, ''), 'NA')) as sap_banner_key,
-    upper(trim(coalesce(nullif(cust.sap_bnr_desc, ''), 'NA'))) as sap_banner_description,
-    trim(coalesce(nullif(cust.sap_bnr_frmt_key, ''), 'NA')) as sap_banner_format_key,
-    upper(trim(coalesce(nullif(cust.sap_bnr_frmt_desc, ''), 'NA'))) as sap_banner_format_description,
-    trim(coalesce(nullif(cust.retail_env, ''), 'NA')) as retail_environment,
-    trim(coalesce(nullif(cust.cust_segmt_key, ''), 'NA')) /* trim(nvl (nullif(cust.region,''),'NA')) as region, */ /* trim(nvl (nullif(cust.zone_or_area,''),'NA')) as zone_or_area, */ as customer_segment_key,
-    trim(coalesce(nullif(cust.cust_segment_desc, ''), 'NA')) as customer_segment_description,
-    trim(coalesce(nullif(product.gph_prod_frnchse, ''), 'NA')) as global_product_franchise,
-    trim(coalesce(nullif(product.gph_prod_brnd, ''), 'NA')) as global_product_brand,
-    trim(coalesce(nullif(product.gph_prod_sub_brnd, ''), 'NA')) as global_product_sub_brand,
-    trim(coalesce(nullif(product.gph_prod_vrnt, ''), 'NA')) as global_product_variant,
-    trim(coalesce(nullif(product.gph_prod_sgmnt, ''), 'NA')) as global_product_segment,
-    trim(coalesce(nullif(product.gph_prod_subsgmnt, ''), 'NA')) as global_product_subsegment,
-    trim(coalesce(nullif(product.gph_prod_ctgry, ''), 'NA')) as global_product_category,
-    trim(coalesce(nullif(product.gph_prod_subctgry, ''), 'NA')) as global_product_subcategory,
-    trim(coalesce(nullif(product.gph_prod_put_up_desc, ''), 'NA')) as global_put_up_description,
-    sellout.ean as ean,
-    trim(coalesce(nullif(product.sap_matl_num, ''), 'NA')) as sku_code,
-    upper(trim(coalesce(nullif(product.sap_mat_desc, ''), 'NA'))) as sku_description,
-    case
-      when not trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA'))
-      when not trim(coalesce(nullif(product.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(product.pka_product_key, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA'))
-      else trim(coalesce(nullif(product.pka_product_key, ''), 'NA'))
-    end /* trim(nvl (nullif(product.greenlight_sku_flag,''),'NA')) as greenlight_sku_flag, */ as pka_product_key,
-    case
-      when not trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(sellout.pka_product_key_description, ''), 'NA'))
-      when not trim(coalesce(nullif(product.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(product.pka_product_key_description, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key1.pka_productdesc, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key2.pka_productdesc, ''), 'NA'))
-      else trim(coalesce(nullif(product.pka_product_key_description, ''), 'NA'))
-    end as pka_product_key_description,
-    trim(coalesce(nullif(sellout.customer_product_desc, ''), 'NA')) /* trim(nvl (nullif(product.pka_product_key,''),'NA')) as pka_product_key, */ /* trim(nvl (nullif(product.pka_product_key_description,''),'NA')) as pka_product_key_description, */ /* trim(nvl (nullif(product.sls_org,''),'NA')) as sls_org, */ as customer_product_desc,
-    trim(coalesce(nullif(sellout.region, ''), 'NA')) as region,
-    trim(coalesce(nullif(sellout.zone_or_area, ''), 'NA')) as zone_or_area,
-    cast('SGD' as varchar) as from_currency,
-    'USD' as to_currency,
-    cast((
-      c.exch_rate / (
-        c.from_ratio * c.to_ratio
-      )
-    ) /* c.exch_rate as exchange_rate, */ as decimal(15, 5)) as exchange_rate,
-    sum(so_sls_qty) as sellout_sales_quantity,
-    sum(so_sls_value) as sellout_sales_value,
-    cast(sum(so_sls_value * (
-      c.exch_rate / (
-        c.from_ratio * c.to_ratio
-      )
-    )) as decimal(38, 11)) as sellout_sales_value_usd,
-    sellout.master_code,
-    sellout.crtd_dttm,
-    sellout.updt_dttm
-  from wks_singapore_regional_sellout_base as sellout
-  left join time
-    on sellout.mnth_id = time.mnth_id
-  /* product selection */
-  left join  product
-    on ltrim(sellout.matl_num, '0') = ltrim(product.sap_matl_num, '0') and rnk = 1
-  /* product key attribute selection */
-  left join  prod_key1
-    on ltrim(sellout.matl_num, '0') = ltrim(prod_key1.sku, '0')
-  left join  prod_key2
-    on ltrim(sellout.ean, '0') = ltrim(prod_key2.ean_upc, '0')
-  /* -customer selection */
-  left join cust
-    on ltrim(sellout.soldto_code, '0') = ltrim(cust.sap_cust_id, '0')
-  left join c
-    on upper(sellout.cntry_nm) = upper(c.cntry_nm)
-  where
-    c.from_ccy = 'SGD'
-  group by
-    time.year,
-    time.qrtr_no,
-    sellout.day,
-    sellout.cntry_cd,
-    sellout.cntry_nm,
-    time.mnth_id,
-    time.mnth_no,
-    concat(coalesce(cast(time.mnth_id as varchar(21)), ''), coalesce('01', '')),
-    sellout.data_src,
-    sellout.soldto_code,
-    distributor_code,
-    distributor_name,
-    store_cd,
-    store_name,
-    store_type,
-    distributor_additional_attribute1,
-    distributor_additional_attribute2,
-    distributor_additional_attribute3,
-    cust.sap_prnt_cust_key,
-    cust.sap_prnt_cust_desc,
-    cust.sap_cust_chnl_key,
-    cust.sap_cust_chnl_desc,
-    cust.sap_cust_sub_chnl_key,
-    cust.sap_sub_chnl_desc,
-    cust.sap_go_to_mdl_key,
-    cust.sap_go_to_mdl_desc,
-    cust.sap_bnr_key,
-    cust.sap_bnr_desc,
-    cust.sap_bnr_frmt_key,
-    cust.sap_bnr_frmt_desc,
-    cust.retail_env,
-    cust.cust_segmt_key,
-    cust.cust_segment_desc,
-    product.gph_prod_frnchse,
-    product.gph_prod_brnd,
-    product.gph_prod_sub_brnd,
-    product.gph_prod_vrnt,
-    product.gph_prod_sgmnt,
-    product.gph_prod_subsgmnt,
-    product.gph_prod_ctgry,
-    product.gph_prod_subctgry,
-    product.gph_prod_put_up_desc,
-    sellout.ean,
-    product.sap_matl_num,
-    product.sap_mat_desc,
-    case
-      when not trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA'))
-      when not trim(coalesce(nullif(product.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(product.pka_product_key, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA'))
-      else trim(coalesce(nullif(product.pka_product_key, ''), 'NA'))
-    end, /* product.greenlight_sku_flag, */ /* product.pka_product_key, */ /* product.pka_product_key_description, */
-    case
-      when not trim(coalesce(nullif(sellout.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(sellout.pka_product_key_description, ''), 'NA'))
-      when not trim(coalesce(nullif(product.pka_product_key, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(product.pka_product_key_description, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key1.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key1.pka_productdesc, ''), 'NA'))
-      when not trim(coalesce(nullif(prod_key2.pka_productkey, ''), 'NA')) in ('N/A', 'NA')
-      then trim(coalesce(nullif(prod_key2.pka_productdesc, ''), 'NA'))
-      else trim(coalesce(nullif(product.pka_product_key_description, ''), 'NA'))
-    end,
-    sellout.customer_product_desc,
-    sellout.region,
-    sellout.zone_or_area,
-    (
-      c.exch_rate / (
-        c.from_ratio * c.to_ratio
-      )
-    ), /* c.exch_rate  */
-    sellout.master_code,
-    sellout.crtd_dttm,
-    sellout.updt_dttm
-  having
-    not (
-      sum(sellout.so_sls_value) = 0 and sum(sellout.so_sls_qty) = 0
-    )
+edw_material_dim as (
+  select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-final as (
-select
-  year::varchar(10) as year,
-  qrtr_no::varchar(14) as qrtr_no,
-  mnth_id::varchar(21) as mnth_id,
-  mnth_no::varchar(10) as mnth_no,
-  cal_date::date as cal_date,
-  country_code::varchar(2) as country_code,
-  country_name::varchar(9) as country_name,
-  data_source::varchar(3) as data_source,
-  soldto_code::varchar(200) as soldto_code,
-  distributor_code::varchar(200) as distributor_code,
-  distributor_name::varchar(10) as distributor_name,
-  store_code::varchar(300) as store_code,
-  store_name::varchar(300) as store_name,
-  store_type::varchar(200) as store_type,
-  distributor_additional_attribute1::varchar(2) as distributor_additional_attribute1,
-  distributor_additional_attribute2::varchar(2) as distributor_additional_attribute2,
-  distributor_additional_attribute3::varchar(2) as distributor_additional_attribute3,
-  sap_parent_customer_key::varchar(12) as sap_parent_customer_key,
-  sap_parent_customer_description::varchar(75) as sap_parent_customer_description,
-  sap_customer_channel_key::varchar(12) as sap_customer_channel_key,
-  sap_customer_channel_description::varchar(75) as sap_customer_channel_description,
-  sap_customer_sub_channel_key::varchar(12) as sap_customer_sub_channel_key,
-  sap_sub_channel_description::varchar(75) as sap_sub_channel_description,
-  sap_go_to_mdl_key::varchar(12) as sap_go_to_mdl_key,
-  sap_go_to_mdl_description::varchar(75) as sap_go_to_mdl_description,
-  sap_banner_key::varchar(12) as sap_banner_key,
-  sap_banner_description::varchar(75) as sap_banner_description,
-  sap_banner_format_key::varchar(12) as sap_banner_format_key,
-  sap_banner_format_description::varchar(75) as sap_banner_format_description,
-  retail_environment::varchar(50) as retail_environment,
-  region::varchar(2) as region,
-  zone_or_area::varchar(2) as zone_or_area,
-  customer_segment_key::varchar(12) as customer_segment_key,
-  customer_segment_description::varchar(50) as customer_segment_description,
-  global_product_franchise::varchar(30) as global_product_franchise,
-  global_product_brand::varchar(30) as global_product_brand,
-  global_product_sub_brand::varchar(100) as global_product_sub_brand,
-  global_product_variant::varchar(100) as global_product_variant,
-  global_product_segment::varchar(50) as global_product_segment,
-  global_product_subsegment::varchar(100) as global_product_subsegment,
-  global_product_category::varchar(50) as global_product_category,
-  global_product_subcategory::varchar(50) as global_product_subcategory,
-  global_put_up_description::varchar(100) as global_put_up_description,
-  ean::varchar(255) as ean,
-  sku_code::varchar(40) as sku_code,
-  sku_description::varchar(150) as sku_description,
---   greenlight_sku_flag::varchar(300) as greenlight_sku_flag,
-  case when pka_product_key in ('N/A', 'NA') then 'NA' else pka_product_key end as pka_product_key,
-  case
-  when pka_product_key_description::varchar(500) in ('N/A', 'NA')
-  then 'NA'
-  else pka_product_key_description::varchar(500)
-  end as pka_product_key_description,
-  from_currency::varchar(3) as from_currency, /* trim(nvl (nullif(product.sls_org,''),'NA')) as sls_org, */
-  to_currency::varchar(3) as to_currency,
-  exchange_rate::numeric(15,5) as exchange_rate,
-  sellout_sales_quantity::numeric(38,0) as sellout_sales_quantity,
-  sellout_sales_value::numeric(38,6) as sellout_sales_value,
-  sellout_sales_value_usd::numeric(38,11) as sellout_sales_value_usd,
-  master_code::varchar(255) as master_code,
-  current_timestamp() as crtd_dttm,
-  current_timestamp() as updt_dttm
-  from transformed
+--Logical CTE--
+final as 
+(
+    SELECT 
+        YEAR,
+        QRTR_NO,
+        MNTH_ID,
+        mnth_no,
+        CAL_DATE,
+        COUNTRY_CODE,	   
+        COUNTRY_NAME,
+        DATA_SOURCE,
+        SOLDTO_CODE,
+        DISTRIBUTOR_CODE,
+        DISTRIBUTOR_NAME,
+        STORE_CODE,
+        STORE_NAME,
+        store_type,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,
+        SAP_PARENT_CUSTOMER_KEY,
+        SAP_PARENT_CUSTOMER_DESCRIPTION,
+        SAP_CUSTOMER_CHANNEL_KEY,
+        SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+        SAP_CUSTOMER_SUB_CHANNEL_KEY,
+        SAP_SUB_CHANNEL_DESCRIPTION,
+        SAP_GO_TO_MDL_KEY,
+        SAP_GO_TO_MDL_DESCRIPTION,
+        SAP_BANNER_KEY,
+        SAP_BANNER_DESCRIPTION,
+        SAP_BANNER_FORMAT_KEY,
+        SAP_BANNER_FORMAT_DESCRIPTION,
+        RETAIL_ENVIRONMENT,
+        REGION,
+        ZONE_OR_AREA,
+        CUSTOMER_SEGMENT_KEY,
+        CUSTOMER_SEGMENT_DESCRIPTION, 
+        GLOBAL_PRODUCT_FRANCHISE,
+        GLOBAL_PRODUCT_BRAND,
+        GLOBAL_PRODUCT_SUB_BRAND,
+        GLOBAL_PRODUCT_VARIANT,
+        GLOBAL_PRODUCT_SEGMENT,
+        GLOBAL_PRODUCT_SUBSEGMENT,
+        GLOBAL_PRODUCT_CATEGORY,
+        GLOBAL_PRODUCT_SUBCATEGORY,
+        GLOBAL_PUT_UP_DESCRIPTION,
+        EAN,
+        SKU_CODE,
+        SKU_DESCRIPTION,
+        --GREENLIGHT_SKU_FLAG,
+        CASE WHEN PKA_PRODUCT_KEY IN ('N/A','NA') THEN 'NA'
+            ELSE PKA_PRODUCT_KEY END AS PKA_PRODUCT_KEY,
+        CASE WHEN PKA_PRODUCT_KEY_DESCRIPTION IN ('N/A','NA') THEN 'NA'
+            ELSE PKA_PRODUCT_KEY_DESCRIPTION END AS PKA_PRODUCT_KEY_DESCRIPTION,	
+        --TRIM(NVL (NULLIF(PRODUCT.SLS_ORG,''),'NA')) AS SLS_ORG,
+        Customer_Product_Desc,
+        FROM_CURRENCY,
+        TO_CURRENCY,
+        EXCHANGE_RATE,
+        SELLOUT_SALES_QUANTITY,
+        SELLOUT_SALES_VALUE,
+        SELLOUT_SALES_VALUE_USD,
+        master_code,
+        msl_product_code,
+        msl_product_desc,
+        retail_env,
+        crtd_dttm,
+        updt_dttm
+    FROM
+    (SELECT  
+            CAST(TIME.YEAR AS VARCHAR(10)) AS YEAR,
+        CAST(TIME.QRTR_NO AS VARCHAR(14)) AS QRTR_NO,
+        CAST(TIME.MNTH_ID AS VARCHAR(21)) AS MNTH_ID,
+        CAST(TIME.MNTH_NO AS VARCHAR(10)) AS mnth_no,
+        SELLOUT.DAY  AS CAL_DATE,
+        SELLOUT.CNTRY_CD AS COUNTRY_CODE,	   
+        SELLOUT.CNTRY_NM AS COUNTRY_NAME,
+        SELLOUT.DATA_SRC AS DATA_SOURCE,
+        TRIM(NVL (NULLIF(SELLOUT.SOLDTO_CODE,''),'NA')) AS SOLDTO_CODE,
+        DISTRIBUTOR_CODE,
+        DISTRIBUTOR_NAME,
+        STORE_CD AS STORE_CODE,
+        TRIM(STORE_NAME) AS STORE_NAME,
+        TRIM(NVL (NULLIF(SELLOUT.store_type,''),'NA')) AS store_type,
+        'NA' AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
+        'NA' AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2,
+        'NA' AS DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3,
+        TRIM(NVL (NULLIF(CUST.SAP_PRNT_CUST_KEY,''),'NA')) AS SAP_PARENT_CUSTOMER_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_PRNT_CUST_DESC,''),'NA'))) AS SAP_PARENT_CUSTOMER_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.SAP_CUST_CHNL_KEY,''),'NA')) AS SAP_CUSTOMER_CHANNEL_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_CUST_CHNL_DESC,''),'NA'))) AS SAP_CUSTOMER_CHANNEL_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.SAP_CUST_SUB_CHNL_KEY,''),'NA')) AS SAP_CUSTOMER_SUB_CHANNEL_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_SUB_CHNL_DESC,''),'NA'))) AS SAP_SUB_CHANNEL_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.SAP_GO_TO_MDL_KEY,''),'NA')) AS SAP_GO_TO_MDL_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_GO_TO_MDL_DESC,''),'NA'))) AS SAP_GO_TO_MDL_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.SAP_BNR_KEY,''),'NA')) AS SAP_BANNER_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_BNR_DESC,''),'NA'))) AS SAP_BANNER_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.SAP_BNR_FRMT_KEY,''),'NA')) AS SAP_BANNER_FORMAT_KEY,
+        UPPER(TRIM(NVL (NULLIF(CUST.SAP_BNR_FRMT_DESC,''),'NA'))) AS SAP_BANNER_FORMAT_DESCRIPTION,
+        TRIM(NVL (NULLIF(CUST.RETAIL_ENV,''),'NA')) AS RETAIL_ENVIRONMENT,
+        --TRIM(NVL (NULLIF(CUST.REGION,''),'NA')) AS REGION,
+        --TRIM(NVL (NULLIF(CUST.ZONE_OR_AREA,''),'NA')) AS ZONE_OR_AREA,
+        TRIM(NVL (NULLIF(CUST.CUST_SEGMT_KEY,''),'NA')) AS CUSTOMER_SEGMENT_KEY,
+        TRIM(NVL (NULLIF(CUST.CUST_SEGMENT_DESC,''),'NA')) AS CUSTOMER_SEGMENT_DESCRIPTION, 
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_FRNCHSE,''),'NA')) AS GLOBAL_PRODUCT_FRANCHISE,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_BRND,''),'NA')) AS GLOBAL_PRODUCT_BRAND,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_SUB_BRND,''),'NA')) AS GLOBAL_PRODUCT_SUB_BRAND,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_VRNT,''),'NA')) AS GLOBAL_PRODUCT_VARIANT,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_SGMNT,''),'NA')) AS GLOBAL_PRODUCT_SEGMENT,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_SUBSGMNT,''),'NA')) AS GLOBAL_PRODUCT_SUBSEGMENT,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_CTGRY,''),'NA')) AS GLOBAL_PRODUCT_CATEGORY,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_SUBCTGRY,''),'NA')) AS GLOBAL_PRODUCT_SUBCATEGORY,
+        TRIM(NVL (NULLIF(PRODUCT.GPH_PROD_PUT_UP_DESC,''),'NA')) AS GLOBAL_PUT_UP_DESCRIPTION,
+        SELLOUT.EAN AS EAN,
+        TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) AS SKU_CODE,
+        UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA'))) AS SKU_DESCRIPTION,
+        --TRIM(NVL (NULLIF(PRODUCT.GREENLIGHT_SKU_FLAG,''),'NA')) AS GREENLIGHT_SKU_FLAG,
+        CASE WHEN  TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA'))
+        WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) END AS PKA_PRODUCT_KEY,
+        CASE WHEN  TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+        WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END AS PKA_PRODUCT_KEY_DESCRIPTION,	
+        --TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) AS PKA_PRODUCT_KEY,
+        --TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) AS PKA_PRODUCT_KEY_DESCRIPTION,
+        --TRIM(NVL (NULLIF(PRODUCT.SLS_ORG,''),'NA')) AS SLS_ORG,
+        TRIM(NVL (NULLIF(SELLOUT.Customer_Product_Desc,''),'NA')) AS Customer_Product_Desc,
+        TRIM(NVL (NULLIF(SELLOUT.region,''),'NA')) AS REGION,
+        TRIM(NVL (NULLIF(SELLOUT.zone_or_area,''),'NA')) AS ZONE_OR_AREA,
+        CAST('SGD' AS VARCHAR) AS FROM_CURRENCY,
+        'USD' AS TO_CURRENCY,
+        --C.EXCH_RATE AS EXCHANGE_RATE,
+        (C.EXCH_RATE/(C.from_ratio*C.to_ratio))::NUMERIC(15,5) as EXCHANGE_RATE,
+            SUM(SO_SLS_QTY) SELLOUT_SALES_QUANTITY,
+            SUM(SO_SLS_VALUE) AS SELLOUT_SALES_VALUE,
+            SUM(SO_SLS_VALUE*(C.EXCH_RATE/(C.from_ratio*C.to_ratio)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
+            TRIM(NVL (NULLIF(SELLOUT.master_code,''),'NA')) AS master_code,
+            TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
+            --TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            
+            CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+            ELSE (CASE WHEN  TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+        WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+            END AS msl_product_desc,
+            
+            TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
+        SELLOUT.crtd_dttm,
+        SELLOUT.updt_dttm
+    FROM WKS_SINGAPORE_REGIONAL_SELLOUT_BASE SELLOUT
+
+    LEFT JOIN (SELECT DISTINCT CAL_YEAR AS YEAR,
+        CAL_QRTR_NO AS QRTR_NO,
+        CAL_MNTH_ID AS MNTH_ID,
+        CAL_MNTH_NO AS MNTH_NO
+    FROM EDW_VW_OS_TIME_DIM) TIME
+    ON SELLOUT.MNTH_ID=TIME.MNTH_ID
+
+
+    --product selection
+    LEFT JOIN (SELECT DISTINCT 
+
+            EMD.matl_num AS SAP_MATL_NUM,
+            EMD.MATL_DESC AS SAP_MAT_DESC,
+            EMD.MATL_TYPE_CD AS SAP_MAT_TYPE_CD,
+            EMD.MATL_TYPE_DESC AS SAP_MAT_TYPE_DESC,
+            --EMD.SAP_BASE_UOM_CD AS SAP_BASE_UOM_CD,
+            --EMD.SAP_PRCHSE_UOM_CD AS SAP_PRCHSE_UOM_CD,
+            EMD.PRODH1 AS SAP_PROD_SGMT_CD,
+            EMD.PRODH1_TXTMD AS SAP_PROD_SGMT_DESC,
+            --EMD.SAP_BASE_PROD_CD AS SAP_BASE_PROD_CD,
+            EMD.BASE_PROD_DESC AS SAP_BASE_PROD_DESC,
+            --EMD.SAP_MEGA_BRND_CD AS SAP_MEGA_BRND_CD,
+            EMD.MEGA_BRND_DESC AS SAP_MEGA_BRND_DESC,
+            --EMD.SAP_BRND_CD AS SAP_BRND_CD,
+            EMD.BRND_DESC AS SAP_BRND_DESC,
+            --EMD.SAP_VRNT_CD AS SAP_VRNT_CD,
+            EMD.VARNT_DESC AS SAP_VRNT_DESC,
+            --EMD.SAP_PUT_UP_CD AS SAP_PUT_UP_CD,
+            EMD.PUT_UP_DESC AS SAP_PUT_UP_DESC,
+            EMD.PRODH2 AS SAP_GRP_FRNCHSE_CD,
+            EMD.PRODH2_TXTMD AS SAP_GRP_FRNCHSE_DESC,
+            EMD.PRODH3 AS SAP_FRNCHSE_CD,
+            EMD.PRODH3_TXTMD AS SAP_FRNCHSE_DESC,
+            EMD.PRODH4 AS SAP_PROD_FRNCHSE_CD,
+            EMD.PRODH4_TXTMD AS SAP_PROD_FRNCHSE_DESC,
+            EMD.PRODH5 AS SAP_PROD_MJR_CD,
+            EMD.PRODH5_TXTMD AS SAP_PROD_MJR_DESC,
+            EMD.PRODH5 AS SAP_PROD_MNR_CD,
+            EMD.PRODH5_TXTMD AS SAP_PROD_MNR_DESC,
+            EMD.PRODH6 AS SAP_PROD_HIER_CD,
+            EMD.PRODH6_TXTMD AS SAP_PROD_HIER_DESC,
+            --EMD.SLS_ORG AS SLS_ORG,
+            --EMD.greenlight_sku_flag AS greenlight_sku_flag,
+            EMD.pka_product_key AS pka_product_key,
+            EMD.pka_product_key_description AS pka_product_key_description,
+            EGPH."region" AS GPH_REGION,
+            EGPH.regional_franchise AS GPH_REG_FRNCHSE,
+            EGPH.regional_franchise_group AS GPH_REG_FRNCHSE_GRP,
+            EGPH.GCPH_FRANCHISE AS GPH_PROD_FRNCHSE,
+            EGPH.GCPH_BRAND AS GPH_PROD_BRND,
+            EGPH.GCPH_SUBBRAND AS GPH_PROD_SUB_BRND,
+            EGPH.GCPH_VARIANT AS GPH_PROD_VRNT,
+            EGPH.GCPH_NEEDSTATE AS GPH_PROD_NEEDSTATE,
+            EGPH.GCPH_CATEGORY AS GPH_PROD_CTGRY,
+            EGPH.GCPH_SUBCATEGORY AS GPH_PROD_SUBCTGRY,
+            EGPH.GCPH_SEGMENT AS GPH_PROD_SGMNT,
+            EGPH.GCPH_SUBSEGMENT AS GPH_PROD_SUBSGMNT,
+            EGPH.PUT_UP_CODE AS GPH_PROD_PUT_UP_CD,
+            EGPH.PUT_UP_DESCRIPTION AS GPH_PROD_PUT_UP_DESC,
+            EGPH.SIZE AS GPH_PROD_SIZE,
+            EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
+            EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
+            row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
+            FROM 
+            --(SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY matl_num ORDER BY matl_num ASC NULLS LAST) AS rank
+            --FROM edw_vw_greenlight_skus 
+            --sls_org = '2210'
+            --WHERE ctry_group='Singapore' and ctry_nm ='Singapore') WHERE rank = 1) 
+            edw_material_dim EMD,
+                EDW_GCH_PRODUCTHIERARCHY EGPH
+            WHERE LTRIM(EMD.MATL_NUM,0) = LTRIM(EGPH.MATERIALNUMBER(+),0)
+            AND   EMD.PROD_HIER_CD <> ''
+            --AND   LTRIM(EMD.MATL_NUM,'0') IN (SELECT DISTINCT LTRIM(MATL_NUM,'0')
+                --FROM edw_material_sales_dim
+                --WHERE 
+                --sls_org = '2210'
+                --sls_org IN (SELECT distinct sls_org FROM edw_vw_greenlight_skus WHERE ctry_group='Singapore' and ctry_nm ='Singapore'))
+                ) product
+    ON LTRIM(SELLOUT.matl_num,'0') = LTRIM(product.sap_matl_num,'0') and rnk=1
+    
+    --product key attribute selection
+    LEFT JOIN
+    (SELECT a.ctry_nm, a.ean_upc, a.sku, a.pka_productkey, a.pka_productdesc
+        FROM ( SELECT ctry_nm, ltrim(ean_upc, '0') AS ean_upc, ltrim(matl_num, '0') as sku, pka_productkey, pka_productdesc, lst_nts AS nts_date
+            FROM edw_product_key_attributes
+            WHERE (matl_type_cd = 'FERT' OR matl_type_cd = 'HALB' OR matl_type_cd = 'SAPR') AND lst_nts IS NOT null) a
+        JOIN ( SELECT ctry_nm, ltrim(ean_upc, '0') AS ean_upc, ltrim(matl_num, '0') as sku, lst_nts AS latest_nts_date, 
+        row_number() OVER( 
+            PARTITION BY ctry_nm, ean_upc
+            ORDER BY lst_nts DESC) AS row_number
+            FROM edw_product_key_attributes
+            WHERE (matl_type_cd = 'FERT' OR matl_type_cd = 'HALB' OR matl_type_cd = 'SAPR') AND lst_nts IS NOT null
+            ) b
+        ON a.ctry_nm = b.ctry_nm AND a.ean_upc = b.ean_upc AND a.sku = b.sku
+        AND b.latest_nts_date = a.nts_date AND b.row_number = 1 and a.ctry_nm = 'Singapore') PROD_KEY1
+    ON ltrim(SELLOUT.matl_num, '0') = ltrim(PROD_KEY1.sku, '0') 
+
+    LEFT JOIN
+    (SELECT a.ctry_nm, a.ean_upc, a.sku, a.pka_productkey, a.pka_productdesc
+        FROM ( SELECT ctry_nm, ltrim(ean_upc, '0') AS ean_upc, ltrim(matl_num, '0') as sku, pka_productkey, pka_productdesc, lst_nts AS nts_date
+            FROM edw_product_key_attributes
+            WHERE (matl_type_cd = 'FERT' OR matl_type_cd = 'HALB' OR matl_type_cd = 'SAPR') AND lst_nts IS NOT null) a
+        JOIN ( SELECT ctry_nm, ltrim(ean_upc, '0') AS ean_upc, ltrim(matl_num, '0') as sku, lst_nts AS latest_nts_date, 
+        row_number() OVER( 
+            PARTITION BY ctry_nm, ean_upc
+            ORDER BY lst_nts DESC) AS row_number
+            FROM edw_product_key_attributes
+            WHERE (matl_type_cd = 'FERT' OR matl_type_cd = 'HALB' OR matl_type_cd = 'SAPR') AND lst_nts IS NOT null
+            ) b
+        ON a.ctry_nm = b.ctry_nm AND a.ean_upc = b.ean_upc AND a.sku = b.sku
+        AND b.latest_nts_date = a.nts_date AND b.row_number = 1 and a.ctry_nm = 'Singapore') PROD_KEY2
+    ON ltrim(SELLOUT.ean, '0') = ltrim(PROD_KEY2.ean_upc, '0') 
+    
+    ---customer selection
+    LEFT JOIN (SELECT * FROM (SELECT DISTINCT ECBD.CUST_NUM AS SAP_CUST_ID,
+        ECBD.CUST_NM AS SAP_CUST_NM,
+        ECSD.SLS_ORG AS SAP_SLS_ORG,
+        ECD.COMPANY AS SAP_CMP_ID,
+        ECD.CTRY_KEY AS SAP_CNTRY_CD,
+        ECD.CTRY_NM AS SAP_CNTRY_NM,
+        ECSD.PRNT_CUST_KEY AS SAP_PRNT_CUST_KEY,
+        CDDES_PCK.CODE_DESC AS SAP_PRNT_CUST_DESC,
+        ECSD.CHNL_KEY AS SAP_CUST_CHNL_KEY,
+        CDDES_CHNL.CODE_DESC AS SAP_CUST_CHNL_DESC,
+        ECSD.SUB_CHNL_KEY AS SAP_CUST_SUB_CHNL_KEY,
+        CDDES_SUBCHNL.CODE_DESC AS SAP_SUB_CHNL_DESC,
+        ECSD.GO_TO_MDL_KEY AS SAP_GO_TO_MDL_KEY,
+        CDDES_GTM.CODE_DESC AS SAP_GO_TO_MDL_DESC,
+        ECSD.BNR_KEY AS SAP_BNR_KEY,
+        CDDES_BNRKEY.CODE_DESC AS SAP_BNR_DESC,
+        ECSD.BNR_FRMT_KEY AS SAP_BNR_FRMT_KEY,
+        CDDES_BNRFMT.CODE_DESC AS SAP_BNR_FRMT_DESC,
+        SUBCHNL_RETAIL_ENV.RETAIL_ENV,
+        --REGZONE.REGION_NAME AS REGION,
+        --REGZONE.ZONE_NAME AS ZONE_OR_AREA,
+        EGCH.GCGH_REGION AS GCH_REGION,
+        EGCH.GCGH_CLUSTER AS GCH_CLUSTER,
+        EGCH.GCGH_SUBCLUSTER AS GCH_SUBCLUSTER,
+        EGCH.GCGH_MARKET AS GCH_MARKET,
+        EGCH.GCCH_RETAIL_BANNER AS GCH_RETAIL_BANNER,
+        ECSD.SEGMT_KEY AS CUST_SEGMT_KEY,
+        CODES_SEGMENT.code_desc AS cust_segment_desc,
+        ROW_NUMBER() OVER (PARTITION BY SAP_CUST_ID ORDER BY SAP_PRNT_CUST_KEY,cust_segmt_key ASC NULLS LAST) AS RANK
+        --ROW_NUMBER() OVER (PARTITION BY SAP_CUST_ID ORDER BY NULLIF(ECSD.PRNT_CUST_KEY,''),NULLIF(ECSD.BNR_KEY,''),NULLIF(ECSD.BNR_FRMT_KEY,''),NULLIF(ECSD.SEGMT_KEY,'') ASC NULLS LAST) AS RANK
+    FROM EDW_GCH_CUSTOMERHIERARCHY EGCH,
+        EDW_CUSTOMER_SALES_DIM ECSD,
+        EDW_CUSTOMER_BASE_DIM ECBD,
+        EDW_COMPANY_DIM ECD,
+        EDW_DSTRBTN_CHNL EDC,
+        EDW_SALES_ORG_DIM ESOD,
+        EDW_CODE_DESCRIPTIONS CDDES_PCK,
+        EDW_CODE_DESCRIPTIONS CDDES_BNRKEY,
+        EDW_CODE_DESCRIPTIONS CDDES_BNRFMT,
+        EDW_CODE_DESCRIPTIONS CDDES_CHNL,
+        EDW_CODE_DESCRIPTIONS CDDES_GTM,
+        EDW_CODE_DESCRIPTIONS CDDES_SUBCHNL,
+        EDW_SUBCHNL_RETAIL_ENV_MAPPING SUBCHNL_RETAIL_ENV,
+        edw_code_descriptions_manual CODES_SEGMENT,
+        --(SELECT CUST_NUM,
+            --MIN(DECODE(CUST_DEL_FLAG,NULL,'O','','O',CUST_DEL_FLAG)) AS CUST_DEL_FLAG
+        --FROM EDW_CUSTOMER_SALES_DIM
+        --WHERE SLS_ORG IN ('3200','320A','320S','321A')
+        --GROUP BY CUST_NUM) A,
+        (SELECT DISTINCT CUST_NUM,REC_CRT_DT,PRNT_CUST_KEY,ROW_NUMBER() OVER (PARTITION BY CUST_NUM ORDER BY REC_CRT_DT DESC)RN from EDW_CUSTOMER_SALES_DIM)
+            A
+        --(SELECT DISTINCT CUSTOMER_CODE,REGION_NAME,ZONE_NAME
+        --FROM IN_EDW.EDW_CUSTOMER_DIM) REGZONE
+    WHERE EGCH.CUSTOMER(+) = ECBD.CUST_NUM
+    AND   ECSD.CUST_NUM = ECBD.CUST_NUM
+    --AND   DECODE(ECSD.CUST_DEL_FLAG,NULL,'O','','O',ECSD.CUST_DEL_FLAG) = A.CUST_DEL_FLAG
+    AND   A.CUST_NUM = ECSD.CUST_NUM
+    AND   ECSD.DSTR_CHNL = EDC.DISTR_CHAN
+    AND   ECSD.SLS_ORG = ESOD.SLS_ORG
+    AND   ESOD.SLS_ORG_CO_CD = ECD.CO_CD
+    AND   A.RN=1
+    --AND   ECSD.SLS_ORG = '2210'
+    --AND   ECSD.SLS_ORG IN (SELECT distinct sls_org FROM edw_vw_greenlight_skus WHERE ctry_group='Singapore' and ctry_nm ='Singapore')
+    AND   UPPER(TRIM(CDDES_PCK.CODE_TYPE(+))) = 'PARENT CUSTOMER KEY'
+    AND   CDDES_PCK.CODE(+) = ECSD.PRNT_CUST_KEY
+    AND   UPPER(TRIM(cddes_bnrkey.code_type(+))) = 'BANNER KEY'
+    AND   CDDES_BNRKEY.CODE(+) = ECSD.BNR_KEY
+    AND   UPPER(TRIM(cddes_bnrfmt.code_type(+))) = 'BANNER FORMAT KEY'
+    AND   CDDES_BNRFMT.CODE(+) = ECSD.BNR_FRMT_KEY
+    AND   UPPER(TRIM(cddes_chnl.code_type(+))) = 'CHANNEL KEY'
+    AND   CDDES_CHNL.CODE(+) = ECSD.CHNL_KEY
+    AND   UPPER(TRIM(cddes_gtm.code_type(+))) = 'GO TO MODEL KEY'
+    AND   CDDES_GTM.CODE(+) = ECSD.GO_TO_MDL_KEY
+    AND   UPPER(TRIM(cddes_subchnl.code_type(+))) = 'SUB CHANNEL KEY'
+    AND   CDDES_SUBCHNL.CODE(+) = ECSD.SUB_CHNL_KEY
+    AND   UPPER(SUBCHNL_RETAIL_ENV.SUB_CHANNEL(+)) = UPPER(CDDES_SUBCHNL.CODE_DESC)
+    --AND   LTRIM(ECSD.CUST_NUM,'0') = REGZONE.CUSTOMER_CODE(+)
+    AND   CODES_SEGMENT.code_type(+) = 'Customer Segmentation Key'
+    AND   CODES_SEGMENT.CODE(+) = ECSD.segmt_key)
+    WHERE RANK = 1) CUST
+    ON LTRIM(SELLOUT.SOLDTO_CODE,'0')=LTRIM(CUST.SAP_CUST_ID,'0')
+
+    LEFT JOIN 
+    --(SELECT *
+    --            FROM vw_edw_reg_exch_rate
+    --            WHERE cntry_key = 'SG'
+    --            AND   TO_CCY = 'USD'
+    --            AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)		
+    --            ) C
+    (SELECT *
+    FROM vw_edw_reg_exch_rate
+    WHERE cntry_key = 'SG'
+    AND   TO_CCY = 'USD'
+    AND   JJ_MNTH_ID = (SELECT MAX(JJ_MNTH_ID) FROM vw_edw_reg_exch_rate)
+    ) C
+
+    ON   UPPER(SELLOUT.CNTRY_NM) = UPPER(C.CNTRY_NM)  
+                
+    where  C.FROM_CCY = 'SGD' 
+    GROUP BY 
+        TIME.YEAR    ,
+        TIME.QRTR_NO  ,
+        SELLOUT.DAY,
+        SELLOUT.CNTRY_CD,	   
+        SELLOUT.CNTRY_NM,
+        TIME.MNTH_ID  ,
+        TIME.MNTH_NO  ,
+        CONCAT(CAST(TIME.MNTH_ID AS VARCHAR(21)),'01'),
+        SELLOUT.DATA_SRC,
+        SELLOUT.SOLDTO_CODE, 
+        DISTRIBUTOR_CODE,
+        DISTRIBUTOR_NAME,
+        STORE_CD,
+        STORE_NAME,
+        STORE_TYPE,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE1,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE2 ,
+        DISTRIBUTOR_ADDITIONAL_ATTRIBUTE3 ,
+        CUST.SAP_PRNT_CUST_KEY, 
+        CUST.SAP_PRNT_CUST_DESC, 
+        CUST.SAP_CUST_CHNL_KEY, 
+        CUST.SAP_CUST_CHNL_DESC, 
+        CUST.SAP_CUST_SUB_CHNL_KEY, 
+        CUST.SAP_SUB_CHNL_DESC, 
+        CUST.SAP_GO_TO_MDL_KEY, 
+        CUST.SAP_GO_TO_MDL_DESC, 
+        CUST.SAP_BNR_KEY, 
+        CUST.SAP_BNR_DESC, 
+        CUST.SAP_BNR_FRMT_KEY, 
+        CUST.SAP_BNR_FRMT_DESC, 
+        CUST.RETAIL_ENV, 
+        --CUST.REGION, 
+        --CUST.ZONE_OR_AREA, 
+        CUST.CUST_SEGMT_KEY, 
+        CUST.CUST_SEGMENT_DESC, 
+        PRODUCT.GPH_PROD_FRNCHSE, 
+        PRODUCT.GPH_PROD_BRND, 
+        PRODUCT.GPH_PROD_SUB_BRND, 
+        PRODUCT.GPH_PROD_VRNT, 
+        PRODUCT.GPH_PROD_SGMNT, 
+        PRODUCT.GPH_PROD_SUBSGMNT, 
+        PRODUCT.GPH_PROD_CTGRY, 
+        PRODUCT.GPH_PROD_SUBCTGRY, 
+        PRODUCT.GPH_PROD_PUT_UP_DESC, 
+        SELLOUT.EAN,
+        PRODUCT.SAP_MATL_NUM, 
+        PRODUCT.SAP_MAT_DESC, 
+        --PRODUCT.GREENLIGHT_SKU_FLAG, 
+        --PRODUCT.PKA_PRODUCT_KEY, 
+        --PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,
+        CASE WHEN  TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA'))
+        WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) END,
+        CASE WHEN  TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(SELLOUT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+        WHEN  TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END,
+            PRODUCT.PKA_PACKAGE,
+            --PRODUCT.SLS_ORG,
+            SELLOUT.customer_product_desc,
+            SELLOUT.region, 
+            SELLOUT.zone_or_area,
+            --C.EXCH_RATE  
+            (C.EXCH_RATE/(C.from_ratio*C.to_ratio)),
+            SELLOUT.master_code,
+            SELLOUT.msl_product_code,
+            --SELLOUT.msl_product_desc,
+            SELLOUT.retail_env,
+            SELLOUT.crtd_dttm,
+            SELLOUT.updt_dttm		  
+    HAVING NOT (SUM(SELLOUT.so_sls_value) = 0 and SUM(SELLOUT.so_sls_qty) = 0))
 )
 select * from final

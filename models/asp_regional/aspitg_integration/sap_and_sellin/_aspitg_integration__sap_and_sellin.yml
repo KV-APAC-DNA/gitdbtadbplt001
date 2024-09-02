@@ -775,3 +775,11 @@ models:
     config:
       alias: sdl_raw_sap_bw_sales
       tags: ["rg_s3_to_dna_sales","transformation"]
+  - name: aspitg_integration__itg_ecc_standard_cost_history
+    config:
+      alias: itg_ecc_standard_cost_history
+      tags: ["sap_ecc_master_etl_framework"]
+  - name: aspitg_integration__vw_stg_sdl_ecc_standard_cost_history
+    config:
+      alias: vw_stg_sdl_ecc_standard_cost_history
+      tags: ["sap_ecc_master_etl_framework","ingestion"]

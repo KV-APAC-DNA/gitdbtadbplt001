@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: aspitg_integration__itg_ecommerce_6pai
+    config:
+      alias: itg_ecommerce_6pai
+      tags: ["ecommerce_6pai_ingestion","ingestion"]
+  - name: aspitg_integration__sdl_raw_ecommerce_6pai
+    config:
+      alias: sdl_raw_ecommerce_6pai
+      tags: ["ecommerce_6pai_ingestion","ingestion"]
+  - name: aspitg_integration__itg_ecommerce_nts_regional
+    config:
+      alias: itg_ecommerce_nts_regional
+      tags: ["j_ecommerce_nts_mds_load","transformation"]
