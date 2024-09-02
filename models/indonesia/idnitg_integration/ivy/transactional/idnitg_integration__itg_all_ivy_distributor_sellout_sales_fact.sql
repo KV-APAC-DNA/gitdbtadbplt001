@@ -11,7 +11,13 @@
                                         TRIM(SDII.INVOICE_NO),
                                         TRIM(SDII.PRODUCT_CODE),
                                         replace(sdii.invoice_date,'T',' ')::timestamp_ntz(9)
-                                FROM {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }} SDII) 
+                                FROM {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }} SDII
+                                where SDII.source_file_name not in (
+                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
+                                union all
+                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
+                                )
+                                ) 
                                 AND 
                                     (
                                         (nvl(upper(trim(DSTRBTR_GRP_CD)),'NA')) in 
@@ -29,6 +35,11 @@
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
+    where source_file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
+    )
 ),
 itg_mds_id_dist_reporting_control_sellout_sales as (
     select * from {{ ref('idnitg_integration__itg_mds_id_dist_reporting_control_sellout_sales') }}

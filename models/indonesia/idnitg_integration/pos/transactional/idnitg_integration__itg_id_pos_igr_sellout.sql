@@ -5,13 +5,22 @@
         incremental_strategy= "append",
         unique_key= ["filename"],
         pre_hook="{% if is_incremental() %}
-                delete from {{this}} where filename  in (select distinct filename from {{ source('idnsdl_raw', 'sdl_id_pos_igr_sellout') }});
+                delete from {{this}} 
+                where filename  in (select distinct filename 
+                from {{ source('idnsdl_raw', 'sdl_id_pos_igr_sellout') }}
+                where filename not in (
+                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_igr_sellout__null_test') }}
+                )
+                );
                 {% endif %}"
     )
 }}
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_id_pos_igr_sellout') }}
+    where filename not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_igr_sellout__null_test') }}
+    )
 ),
 
 final as (

@@ -14,3 +14,13 @@ sources:
     - name: TRATBL_sdl_id_ps_promotion_competitor__duplicate_test
     - name: TRATBL_sdl_id_ps_pricing__null_test
     - name: TRATBL_sdl_id_ps_pricing__duplicate_test
+    - name: TRATBL_sdl_id_ps_product_availability__null_test
+    - name: TRATBL_sdl_id_ps_product_availability__duplicate_test
+    - name: TRATBL_sdl_id_ps_visibility__null_test
+    - name: TRATBL_sdl_id_ps_visibility__duplicate_test
+    - name: TRATBL_sdl_id_ps_secondary_display__null_test
+    - name: TRATBL_sdl_id_ps_secondary_display__duplicate_test
+    - name: TRATBL_sdl_id_ps_planogram__null_test
+    - name: TRATBL_sdl_id_ps_planogram__duplicate_test
+    - name: TRATBL_sdl_id_ps_brand_blocking__null_test
+    - name: TRATBL_sdl_id_ps_brand_blocking__duplicate_test

@@ -7,6 +7,11 @@
 
 with source as(
     select * from {{ source('idnsdl_raw','sdl_id_pos_daily_basedline_sellout') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_daily_basedline_sellout__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_daily_basedline_sellout__duplicate_test') }}
+    )
 ),
 final as(
     select 

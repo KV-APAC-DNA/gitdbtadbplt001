@@ -1,0 +1,18 @@
+sources:
+  - name: idnwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ppahil01_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    
+    - name: TRATBL_sdl_distributor_ivy_merchandising__null_test
+    - name: TRATBL_sdl_distributor_ivy_merchandising__duplicate_test
+    - name: TRATBL_sdl_distributor_ivy_invoice__null_test
+    - name: TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff
+    - name: TRATBL_sdl_distributor_ivy_order__null_test
+    - name: TRATBL_sdl_distributor_ivy_order__test_lookup__ff
+    - name: TRATBL_sdl_distributor_ivy_outlet_master__null_test
+    - name: TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test

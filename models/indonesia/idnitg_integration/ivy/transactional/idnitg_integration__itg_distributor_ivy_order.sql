@@ -12,6 +12,11 @@
                                                    trim(sdio.product_code),
                                                    replace(sdio.order_date,'T',' ')::timestamp_ntz(9)
                                                from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }} sdio
+                                               where sdio.source_file_name not in (
+                                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
+                                                union all
+                                                select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
+                                                )
                                            )
                                    and
                                        (
@@ -23,6 +28,11 @@
 }}
 with source as (
    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
+   where source_file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
+    )
 ),
 edw_distributor_dim as (
    select * from {{ ref('idnedw_integration__edw_distributor_dim') }}
@@ -75,12 +85,14 @@ case
       end as rtrn_val,
       current_timestamp()::timestamp_ntz(9) crtd_dttm,
       null updt_dttm,
- sdio.run_id
+ sdio.run_id,
+ source_file_name
 from (
    select
        t1.*,
        etd.jj_mnth_id,
-       etd.jj_wk
+       etd.jj_wk,
+       t1.source_file_name
    from
    source t1 ,
    edw_time_dim etd
@@ -126,7 +138,8 @@ final as (
        rtrn_val::number(18,4) as rtrn_val,
        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
        updt_dttm::timestamp_ntz(9) as updt_dttm,
-       run_id::number(14,0) as run_id
+       run_id::number(14,0) as run_id,
+       source_file_name::varchar(256) as source_file_name
    from transformed
 )
 select * from transformed

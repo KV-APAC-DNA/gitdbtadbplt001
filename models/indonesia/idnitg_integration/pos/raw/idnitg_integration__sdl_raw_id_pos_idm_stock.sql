@@ -8,7 +8,7 @@
 with source as (
     select * from {{ source('idnsdl_raw','sdl_id_pos_idm_stock') }}
     where file_name not in (
-            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_idm_stock__null_test') }}
+            select distinct filename from {{ source('idnwks_integration', 'TRATBL_sdl_id_pos_idm_stock__null_test') }}
     )
 ),
 

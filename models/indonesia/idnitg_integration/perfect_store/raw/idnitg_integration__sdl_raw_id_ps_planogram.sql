@@ -1,5 +1,10 @@
 with source as(
     select * from  {{ source('idnsdl_raw', 'sdl_id_ps_planogram') }}
+    where file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_id_ps_planogram__duplicate_test') }}
+    )
 ),
 final as(
     select 

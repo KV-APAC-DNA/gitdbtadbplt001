@@ -25,13 +25,24 @@
             ) as surveydate,
             upper(aq_name),
             coalesce(link, 'NA')
-        from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }});
+        from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }}
+        where source_file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__duplicate_test') }}
+	    )
+        );
         {% endif %}"
     )
 }}
 with source as
 (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_merchandising') }}
+    where source_file_name not in (
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__null_test') }}
+            union all
+            select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_merchandising__duplicate_test') }}
+	)
 ),
 final as
 (

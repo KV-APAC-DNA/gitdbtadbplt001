@@ -19,3 +19,37 @@ sources:
     - name: TRATBL_sdl_id_pos_carrefour_stock__duplicate_test
     - name: TRATBL_sdl_id_pos_carrefour_stock__date_format_test
     - name: TRATBL_sdl_id_pos_matahari_jb_stock__null_test
+    - name: TRATBL_sdl_id_pos_igr_sellout__null_test
+    - name: TRATBL_sdl_id_pos_superindo_sellout__null_test
+    - name: TRATBL_sdl_id_pos_superindo_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_superindo_sellout__date_format_test
+    - name: TRATBL_sdl_id_pos_midi_stock__null_test
+    - name: TRATBL_sdl_id_pos_midi_stock__duplicate_test
+    - name: TRATBL_sdl_id_pos_midi_stock__date_format_test
+    - name: TRATBL_sdl_id_pos_diamond_sellout__null_test
+    - name: TRATBL_sdl_id_pos_diamond_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_diamond_sellout__date_format_test
+    - name: TRATBL_sdl_id_pos_matahari_beauty_stock__null_test
+    - name: TRATBL_sdl_id_pos_matahari_beauty_stock__date_check
+    - name: TRATBL_sdl_id_pos_matahari_otc_stock__null_test
+    - name: TRATBL_sdl_id_pos_idm_sellout__null_test
+    - name: TRATBL_sdl_id_pos_superindo_stock__null_test
+    - name: TRATBL_sdl_id_pos_superindo_stock__duplicate_test
+    - name: TRATBL_sdl_id_pos_superindo_stock__date_format_test
+    - name: TRATBL_sdl_id_pos_sat_sellout__null_test
+    - name: TRATBL_sdl_id_pos_sat_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_sat_sellout__date_format_test
+    - name: TRATBL_sdl_id_pos_watson_sellout__null_test
+    - name: TRATBL_sdl_id_pos_watson_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_watson_sellout__date_format_test
+    - name: TRATBL_sdl_id_pos_carrefour_sellout__null_test
+    - name: TRATBL_sdl_id_pos_carrefour_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_carrefour_sellout__date_format_test
+    - name: TRATBL_sdl_id_pos_daily_basedline_sellout__null_test
+    - name: TRATBL_sdl_id_pos_daily_basedline_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_sat_stock__null_test
+    - name: TRATBL_sdl_id_pos_sat_stock__duplicate_test
+    - name: TRATBL_sdl_id_pos_sat_stock__date_format_test
+    - name: TRATBL_sdl_id_pos_midi_sellout__null_test
+    - name: TRATBL_sdl_id_pos_midi_sellout__duplicate_test
+    - name: TRATBL_sdl_id_pos_midi_sellout__date_format_test
