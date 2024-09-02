@@ -68,3 +68,13 @@ sources:
     - name: TRATBL_sdl_so_inv_133982__lookup_test
     - name: TRATBL_sdl_so_inv_135976__lookup_test
     - name: TRATBL_sdl_so_inv_109772__lookup_test
+    - name: TRATBL_sdl_so_inv_130518__lookup_test
+    - name: TRATBL_sdl_so_inv_130521__lookup_test
+    - name: TRATBL_sdl_so_inv_119024__lookup_test
+    - name: TRATBL_sdl_so_inv_133981__lookup_test
+    - name: TRATBL_sdl_so_inv_133984__lookup_test
+    - name: TRATBL_sdl_so_inv_137021__lookup_test
+    - name: TRATBL_sdl_so_inv_119025__lookup_test
+    - name: TRATBL_sdl_so_inv_108565__lookup_test
+    - name: TRATBL_sdl_so_inv_130517__lookup_test
+    - name: TRATBL_sdl_so_sales_133981__lookup_test
