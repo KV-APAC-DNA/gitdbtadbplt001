@@ -51,9 +51,17 @@ epmad as(
 		from itg_mds_ph_lav_product
 		where active = 'Y'
 ),
+veocd as(
+    select *
+		from edw_vw_ph_customer_dim
+		where sap_cntry_cd = 'PH'
+),
+
 transformed as 
 (
 select 
+    'PH' AS cntry_cd,
+    'Philippines' AS cntry_nm,
     pos.jj_year,
     pos.jj_month,
     pos.jj_month_id,
@@ -112,7 +120,11 @@ select
 ,veomd.gph_prod_size_uom as global_prod_size_uom
 ,null as sap_cntry_nm
 ,veomd.sap_put_up_cd as sap_put_up_cd
-,null as is_reg
+,case
+		WHEN UPPER(EPMAD.PROMO_REG_IND) = 'REG'
+			THEN 'Y'
+		ELSE 'N'
+		END AS IS_REG,
 ,null as sap_addr
 ,veomd.sap_put_up_desc as sap_put_up_desc
 ,null as is_promo
@@ -124,7 +136,11 @@ select
 ,null as is_npi
 ,null as sap_post_cd
 ,null as sap_frnchse_cd
-,null as is_hero
+,	CASE
+		WHEN UPPER(EPMAD.HERO_SKU_IND) = 'Y'
+			THEN 'HERO'
+		ELSE 'NA'
+		END AS IS_HERO
 ,null as sap_chnl_cd
 ,null as sap_frnchse_desc
 ,null as is_mcl
@@ -159,12 +175,12 @@ select
 ,null as global_prod_franchise
 ,null as city_nm
 ,null as gch_retail_banner
-,null as global_prod_brand
+,veomd.gph_prod_brnd as global_prod_brand
 ,null as ae_nm
-,null as sap_mat_type_cd
-,null as global_prod_variant
+,veomd.sap_mat_type_cd as sap_mat_type_cd
+,veomd.gph_prod_vrnt as global_prod_variant
 ,null as ash_no
-,null as sap_mat_type_desc
+,veomd.sap_mat_type_desc as sap_mat_type_desc
 ,null as ash_nm
 ,null as pms_nm
     from ph_pos_rka_rose_pharma as pos
@@ -173,7 +189,7 @@ select
    left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
   left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
   left join veomd on ( upper(ltrim(veomd.sap_matl_num, 0)) = prod.sap_item_cd)
-  left join epmad upper(trim(epmad.item_cd(+))) = ltrim(veposf.sap_item_cd, '0')
+  left join epmad upper(trim(epmad.item_cd)) = prod.sap_item_cd
   ),
 final as 
 (
