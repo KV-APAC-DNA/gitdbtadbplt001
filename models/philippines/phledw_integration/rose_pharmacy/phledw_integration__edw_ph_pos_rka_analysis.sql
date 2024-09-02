@@ -42,7 +42,15 @@ veocd as(
 		from edw_vw_ph_customer_dim
 		where sap_cntry_cd = 'PH'
 ),
-
+epmad as(
+    select distinct item_cd,
+			promo_reg_ind,
+			hero_sku_ind,
+			promo_strt_period,
+			npi_strt_period
+		from itg_mds_ph_lav_product
+		where active = 'Y'
+),
 transformed as 
 (
 select 
@@ -76,43 +84,43 @@ select
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
 ,veomd.gph_prod_put_up_cd as global_prod_put_up_cd
 ,veomd.sap_prod_sgmt_desc as sap_prod_sgmt_desc
-,null as sap_prchse_uom_cd
-,null as global_put_up_desc
+,veomd.sap_prchse_uom_cd as sap_prchse_uom_cd
+,veomd.gph_prod_put_up_desc as global_put_up_desc
 ,null as jj_nts
-,null as sap_base_prod_cd
-,null as global_prod_sub_brand
+,veomd.sap_base_prod_cd as sap_base_prod_cd
+,gph_prod_sub_brnd as global_prod_sub_brand
 ,null as account_grp
-,null as sap_base_prod_desc
-,null as global_prod_need_state
-,null as trade_type
-,null as sap_mega_brnd_cd
-,null as global_prod_category
+,veomd.sap_base_prod_desc as sap_base_prod_desc
+,veomd.gph_prod_needstate as global_prod_need_state
+,'MODERN TRADE' as trade_type
+,veomd.sap_mega_brnd_cd as sap_mega_brnd_cd
+,veomd.gph_prod_ctgry as global_prod_category
 ,null as sls_grp_desc
-,null as sap_mega_brnd_desc
-,null as global_prod_subcategory
+,veomd.sap_mega_brnd_desc as sap_mega_brnd_desc
+,veomd.gph_prod_subctgry as global_prod_subcategory
 ,null as sap_state_cd
-,null as sap_brnd_cd
-,null as global_prod_segment
+,veomd.sap_brnd_cd as sap_brnd_cd
+,veomd.gph_prod_sgmnt as global_prod_segment
 ,null as sap_sls_org
-,null as sap_brnd_desc
-,null as global_prod_subsegment
+,veomd.sap_brnd_desc as sap_brnd_desc
+,veomd.gph_prod_subsgmnt as global_prod_subsegment
 ,null as sap_cmp_id
 ,null as sap_vrnt_cd
-,null as global_prod_size
-,null as sap_cntry_cd
-,null as sap_vrnt_desc
-,null as global_prod_size_uom
+,veomd.gph_prod_size as global_prod_size
+,veomd.sap_vrnt_desc as sap_cntry_cd
+,veomd.sap_vrnt_desc as sap_vrnt_desc
+,veomd.gph_prod_size_uom as global_prod_size_uom
 ,null as sap_cntry_nm
-,null as sap_put_up_cd
+,veomd.sap_put_up_cd as sap_put_up_cd
 ,null as is_reg
 ,null as sap_addr
-,null as sap_put_up_desc
+,veomd.sap_put_up_desc as sap_put_up_desc
 ,null as is_promo
 ,null as sap_region
-,null as sap_grp_frnchse_cd
+,veomd.sap_grp_frnchse_cd as sap_grp_frnchse_cd
 ,null as local_mat_promo_strt_period
 ,null as sap_city
-,null as sap_grp_frnchse_desc
+,veomd.sap_grp_frnchse_desc as sap_grp_frnchse_desc
 ,null as is_npi
 ,null as sap_post_cd
 ,null as sap_frnchse_cd
@@ -164,8 +172,8 @@ select
     left   join ph_rosepharma_products prod on (pos.sku=prod.item_cd)
    left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
   left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
-  left join veomd on ( upper(ltrim(veomd.sap_matl_num(+), 0)) = prod.sap_item_cd)
-
+  left join veomd on ( upper(ltrim(veomd.sap_matl_num, 0)) = prod.sap_item_cd)
+  left join epmad upper(trim(epmad.item_cd(+))) = ltrim(veposf.sap_item_cd, '0')
   ),
 final as 
 (

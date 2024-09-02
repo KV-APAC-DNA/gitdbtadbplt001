@@ -2,7 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy="delete+insert",
-        unique_key=  ['sku','month','branch_code']
+        unique_key=  ['sku','jj_month_id','branch_code']
       
     )
 }}
