@@ -65,7 +65,7 @@ base as(
 		SUM(SELLOUT.QTY) AS SO_SLS_QTY,
 		SUM(SELLOUT.JCP_NET_PRICE) AS SO_SLS_VALUE,
 		ITEM.ITEM_CD AS msl_product_code,
-		SELLOUT.item_nm AS msl_product_desc,
+		--SELLOUT.item_nm AS msl_product_desc,
 		CASE --WHEN MDS.NAME = 'Retailer Name' THEN MDS.NAME_ENG
 			WHEN MDS1.NAME = 'Store Type'
 				AND MDS1.NAME_ENG <> 'Others'
@@ -148,7 +148,7 @@ SELECT BASE.cntry_cd,
 	BASE.so_sls_qty,
 	BASE.so_sls_value,
 	BASE.msl_product_code,
-	BASE.msl_product_desc,
+	--BASE.msl_product_desc,
 	UPPER(BASE.retail_env) AS retail_env,
 	UPPER(BASE.channel) AS channel,
 	current_timestamp()::timestamp_ntz(9) AS crtd_dttm,

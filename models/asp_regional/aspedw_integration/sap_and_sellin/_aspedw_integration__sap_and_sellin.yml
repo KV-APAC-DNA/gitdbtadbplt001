@@ -183,7 +183,7 @@ models:
   - name: aspedw_integration__v_rpt_copa_gcph
     config: 
       alias: v_rpt_copa_gcph
-      tags: ["prox_datamart_refresh","transformation"]
+      tags: ["prox_datamart","transformation"]
   
   - name: aspedw_integration__v_rpt_copa_gl_hid_disc
     config: 
@@ -194,3 +194,7 @@ models:
     config: 
       alias: v_intrm_reg_crncy_exch
       tags: ["j_rg_ecomm_oneview_etl_framework","transformation"]
+  - name: aspedw_integration__v_rpt_copa_commercial_excellence
+    config: 
+      alias: v_rpt_copa_commercial_excellence
+      tags: ["comex_base_datamart","transformation"]

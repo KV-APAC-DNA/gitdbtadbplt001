@@ -184,7 +184,12 @@ from
 		sum(so_sls_value*((c.exch_rate/(c.from_ratio*c.to_ratio))::numeric(15,5)))::numeric(38,11) sellout_sales_value_usd,
         CASE WHEN SELLOUT.DATA_SRC='POS' THEN TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA'))
          ELSE TRIM(NVL (NULLIF(PRODUCT.SAP_MATL_NUM,''),'NA')) END AS msl_product_code,
-        TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+        CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+        ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY1.pka_productdesc,''),'NA'))
+            WHEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productkey,''),'NA')) NOT IN ('N/A','NA') THEN TRIM(NVL (NULLIF(PROD_KEY2.pka_productdesc,''),'NA'))
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+        END AS msl_product_desc,
         --TRIM(NVL (NULLIF(SELLOUT.store_grade,''),'NA')) AS store_grade,
         TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
         TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
@@ -253,6 +258,7 @@ left join (select distinct
           egph.put_up_description as gph_prod_put_up_desc,
           egph.size as gph_prod_size,
           egph.unit_of_measure as gph_prod_size_uom,
+          EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
           row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
           from 
 		   
@@ -442,6 +448,7 @@ group by
 		when trim(nvl (nullif(prod_key1.pka_productkey,''),'NA')) not in ('N/A','NA') then trim(nvl (nullif(prod_key1.pka_productdesc,''),'NA'))
 		when trim(nvl (nullif(prod_key2.pka_productkey,''),'NA')) not in ('N/A','NA') then trim(nvl (nullif(prod_key2.pka_productdesc,''),'NA'))
 		else trim(nvl (nullif(product.pka_product_key_description,''),'NA')) end,
+        PRODUCT.PKA_PACKAGE,
 		  --product.sls_org,
 		  sellout.customer_product_desc,
 		  sellout.region, 
@@ -449,7 +456,7 @@ group by
 		  --c.exch_rate  
 		(c.exch_rate/(c.from_ratio*c.to_ratio)),
           sellout.msl_product_code,
-          sellout.msl_product_desc,
+          --sellout.msl_product_desc,
           sellout.retail_env,
           sellout.channel,
 		  sellout.crtd_dttm,

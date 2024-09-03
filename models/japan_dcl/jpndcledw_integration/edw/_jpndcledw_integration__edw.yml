@@ -215,28 +215,16 @@ models:
       tags: ["dcl_kr_new_edw_job6", "transformation"]
   
 
-
-  - name: jpndcledw_integration__item_jizen_bunkai_maint
-    config:
-      alias: item_jizen_bunkai_maint
-      tags: ["m_dcl_edw_job1","ingestion"]
-
-  - name: jpndcledw_integration__item_jizen_bunkai_tbl
-    config:
-      alias: item_jizen_bunkai_tbl
-      tags: ["m_dcl_edw_job1","ingestion"]
-
-  
       
   - name: jpndcledw_integration__item_zaiko_tbl
     config:
       alias: item_zaiko_tbl
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
 
   - name: jpndcledw_integration__item_hanbai_tbl
     config:
       alias: item_hanbai_tbl
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__item_z_h_hen_tbl
     config:
       alias: item_z_h_hen_tbl
@@ -249,106 +237,106 @@ models:
   - name: jpndcledw_integration__kr_last_stage_point
     config:
       alias: kr_last_stage_point
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
 
   - name: jpndcledw_integration__kr_last_stage_point_wk_nayose
     config:
       alias: kr_last_stage_point_wk_nayose
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
 
   - name: jpndcledw_integration__kr_last_stage_wk_raw
     config:
       alias: kr_last_stage_wk_raw
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__kr_this_point_granted
     config:
       alias: kr_this_point_granted
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__kr_this_stage_point_wk_rescue
     config:
       alias: kr_this_stage_point_wk_rescue
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__edw_mds_jp_dcl_partner_master
     config:
       alias: edw_mds_jp_dcl_partner_master
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
 
   - name: jpndcledw_integration__edw_mds_jp_dcl_product_master
     config:
       alias: edw_mds_jp_dcl_product_master
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
 
   - name: jpndcledw_integration__edw_mds_jp_dcl_mt_h_product
     config:
       alias: edw_mds_jp_dcl_mt_h_product
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__kr_new_stage_point_prev
     config:
       alias: kr_new_stage_point_prev
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__kr_new_stage_point_prev1
     config:
       alias: kr_new_stage_point_prev1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_user_attr_prev
     config:
       alias: dm_user_attr_prev
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_user_attr_prev1
     config:
       alias: dm_user_attr_prev1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_kesai_mart_dly_general_prev
     config:
       alias: dm_kesai_mart_dly_general_prev
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_kesai_mart_dly_general_prev1
     config:
       alias: dm_kesai_mart_dly_general_prev1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__teikikeiyaku_data_mart_uni_prev
     config:
       alias: teikikeiyaku_data_mart_uni_prev
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__teikikeiyaku_data_mart_uni_prev1
     config:
       alias: teikikeiyaku_data_mart_uni_prev1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_user_attr_sfcc_v_prev
     config:
       alias: dm_user_attr_sfcc_v_prev
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__dm_user_attr_sfcc_v_prev1
     config:
       alias: dm_user_attr_sfcc_v_prev1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__report_006_a_present_data1
     config:
       alias: report_006_a_present_data1
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__wk_kpi_06_04_history
     config:
       alias: wk_kpi_06_04_history
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   
   - name: jpndcledw_integration__report_006_a_history
     config:
       alias: report_006_a_history
-      tags: ["m_dcl_edw_job1","ingestion"]
+      tags: ["m_dcl_edw_job1","transformation"]
   - name: jpndcledw_integration__wk_kpi_06_04
     config:
       alias: wk_kpi_06_04
@@ -627,7 +615,7 @@ models:
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
       alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
-      tags: ["m_dcl_edw_job2","transformation"] 
+      tags: ["m_dcl_edw_job2","inactive"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
       alias: hanyo_attr
@@ -820,7 +808,7 @@ models:
   - name: jpndcledw_integration__tbecorder_rireki_log
     config:
       alias: tbecorder_rireki_log
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cim01kokya
     config:
       alias: cim01kokya
@@ -828,15 +816,15 @@ models:
   - name: jpndcledw_integration__cit85osalh_hen_mv_tbl
     config:
       alias: cit85osalh_hen_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cit85osalh_uri_mv_tbl
     config:
       alias: cit85osalh_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cit86osalm_uri_mv_tbl 
     config:
       alias: cit86osalm_uri_mv_tbl
-      tags: ["m_dcl_edw_job1","transformation"] 
+      tags: ["m_dcl_edw_job1","inactive"] 
   - name: jpndcledw_integration__tbecordermeisai_mv_tbl
     config:
       alias: tbecordermeisai_mv_tbl
@@ -1052,12 +1040,22 @@ models:
     config:
       alias: kesai_h_data_mart_sub_tbl_kizuna
       tags: ["m_dcl_edw_job2", "transformation"]
+
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl
+    config:
+      alias: kesai_h_data_mart_sub_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna
     config:
       alias: kesai_m_data_mart_mv_tbl_kizuna
       tags: ["m_dcl_edw_job2", "transformation"]
-      
+
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl
+    config:
+      alias: kesai_m_data_mart_mv_tbl
+      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
     config:
       alias: kesai_m_data_mart_sub_before_tbl_kizuna
@@ -1091,6 +1089,11 @@ models:
   - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna
     config:
       alias: kesai_m_data_mart_sub_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl
+    config:
+      alias: kesai_m_data_mart_sub_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
   - name: jpndcledw_integration__kesaiid_dummy_tbl
@@ -1126,10 +1129,7 @@ models:
     config:
       alias: dm_kesai_mart_rakuten
       tags: ["dcl_rakuten_load", "transformation"]
-  - name: jpndcledw_integration__item_jizen_bunkai_w06
-    config:
-      alias: item_jizen_bunkai_w06
-      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kr_frequency_all_900_kizuna
     config:
       alias: kr_frequency_all_900_kizuna

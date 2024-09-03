@@ -19,12 +19,12 @@
                 ATT.ATTR2,
                 ATT.ATTR4,
                 ATT.INSERTDATE
-        FROM DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN DMP
+        FROM {{ ref('jpndcledw_integration__cir07dmprn') }} DMP
         INNER JOIN {{this}} ATT ON ATT.KBNMEI = 'DMCHUKUBUN'
                 AND ATT.ATTR1 = DMP.DMPRNNO
         WHERE DMP.DMPRNNO IN (
                     SELECT DMPRNNO
-                    FROM DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN DMP
+                    FROM {{ ref('jpndcledw_integration__cir07dmprn') }} DMP
                     LEFT JOIN {{this}} ATTR ON ATTR.KBNMEI = 'DMCHUKUBUN'
                             AND ATTR.ATTR1 = DMP.DMPRNNO
                     WHERE DMP.INSERTDATE > ATTR.INSERTDATE
@@ -58,12 +58,12 @@
                 ATT.ATTR2,
                 ATT.ATTR4,
                 ATT.INSERTDATE
-        FROM DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN DMP
+        FROM {{ ref('jpndcledw_integration__cir07dmprn') }} DMP
         INNER JOIN {{this}} ATT ON ATT.KBNMEI = 'DMSYOKUBUN'
                 AND ATT.ATTR1 = DMP.DMPRNNO
         WHERE DMP.DMPRNNO IN (
                     SELECT DMPRNNO
-                    FROM DEV_DNA_CORE.JPDCLEDW_INTEGRATION.CIR07DMPRN DMP
+                    FROM {{ ref('jpndcledw_integration__cir07dmprn') }} DMP
                     LEFT JOIN {{this}} ATTR ON ATTR.KBNMEI = 'DMSYOKUBUN'
                             AND ATTR.ATTR1 = DMP.DMPRNNO
                     WHERE DMP.INSERTDATE > ATTR.INSERTDATE

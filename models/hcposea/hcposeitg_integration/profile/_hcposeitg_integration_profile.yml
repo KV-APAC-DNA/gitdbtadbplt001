@@ -1,0 +1,13 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_profile_iconnect
+    config: 
+      alias: itg_profile_iconnect
+      tags: ["iconnect_data_ingestion","transformation"]
+  
+  - name: hcposeitg_integration__itg_profile
+    config: 
+      alias: itg_profile
+      tags: ["iconnect_data_ingestion","transformation"]

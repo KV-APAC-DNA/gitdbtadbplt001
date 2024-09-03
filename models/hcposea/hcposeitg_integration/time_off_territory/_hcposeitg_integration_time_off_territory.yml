@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_time_off_territory
+    config:
+      alias: itg_time_off_territory
+      tags: ["iconnect_data_ingestion","ingestion"]

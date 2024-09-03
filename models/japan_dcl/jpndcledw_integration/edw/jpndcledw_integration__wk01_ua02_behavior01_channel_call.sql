@@ -53,7 +53,7 @@ b as
                     END) AS Coupon_Usage_Cnt_call_2y
         FROM dm_kesai_mart_dly_general
         WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-24)
-        --add_months( date_trunc('day', sysdate())::date,-24) 
+        --add_months( date_trunc('day', current_timestamp())::date,-24) 
         -- + interval '2 year ago'
             AND channel IN ('通販')
             AND (
@@ -83,7 +83,7 @@ c as
                     END) AS Coupon_Usage_Cnt_call_1y
         FROM dm_kesai_mart_dly_general
         WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-12)
-        --add_months( date_trunc('day', sysdate())::date,-12) 
+        --add_months( date_trunc('day', current_timestamp())::date,-12) 
         --date_trunc('day', sysdate) + interval '1 year ago'
             AND channel IN ('通販')
             AND (
@@ -113,7 +113,7 @@ d as
                     END) AS Coupon_Usage_Cnt_call_6m
         FROM dm_kesai_mart_dly_general
         WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-6)
-        --add_months( date_trunc('day', sysdate())::date,-6) 
+        --add_months( date_trunc('day', current_timestamp())::date,-6) 
         --date_trunc('day', sysdate) + interval '6 month ago'
             AND channel IN ('通販')
             AND (
@@ -143,7 +143,7 @@ e as
                     END) AS Coupon_Usage_Cnt_call_3m
         FROM dm_kesai_mart_dly_general
         WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-3)
-        --add_months( date_trunc('day', sysdate())::date,-3) 
+        --add_months( date_trunc('day', current_timestamp())::date,-3) 
         --date_trunc('day', sysdate) + interval '3 month ago'
             AND channel IN ('通販')
             AND (
@@ -173,7 +173,7 @@ f as
                     END) AS Coupon_Usage_Cnt_call_1m
         FROM dm_kesai_mart_dly_general
         WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-1)
-        --add_months( date_trunc('day', sysdate())::date,-1) 
+        --add_months( date_trunc('day', current_timestamp())::date,-1) 
         --date_trunc('day', sysdate) + interval '1 month ago'
             AND channel IN ('通販')
             AND (

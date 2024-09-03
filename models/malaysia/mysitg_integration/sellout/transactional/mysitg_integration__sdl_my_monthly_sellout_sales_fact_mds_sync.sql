@@ -2,7 +2,8 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
-        pre_hook="delete from {{this}} where filename in (select distinct filename from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact') }});"
+        pre_hook="delete from {{this}} where 
+        filename in (select distinct filename from {{ source('myssdl_raw','sdl_my_monthly_sellout_sales_fact') }});"
     )}}
 
 with source as (

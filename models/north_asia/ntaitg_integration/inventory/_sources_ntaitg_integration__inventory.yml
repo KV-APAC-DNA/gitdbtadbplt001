@@ -38,7 +38,7 @@ sources:
                   schema: ntawks_integration
             - test_duplicate:
                 select_columns: ["item_cd","item_desc"]
-                group_by_columns: ["item_cd"]
+                group_by_columns: ["item_cd","supplier","buy_code","home_cdesc","prdt_grp","grp_desc","prdt_cat","category_desc","item_desc","type","avg_sls_cost_value","total_stock_qty","total_stock_value","weeks_holding_sales","weeks_holding","first_recv_date","turn_type_sales","turn_type","uda73","discontinue_date","stock_class","pog","ean_num","filename"]
                 name: TRATBL_sdl_tw_as_watsons_inventory__duplicate_test
                 config:
                   store_failures: true
@@ -47,7 +47,8 @@ sources:
                 select_columns: ["item_cd","item_desc"]
                 column: " nvl(trim(item_cd),'#')"
                 lookup_column: "cust_prod_cd"
-                lookup_table: "{{ ref('ntaitg_integration__itg_pos_cust_prod_cd_ean_map') }}"
+                lookup_table: " {{ env_var('DBT_ENV_CORE_DB') }}.ntaitg_integration.itg_pos_cust_prod_cd_ean_map "
+                lookup_filter: "upper(cust_nm) = 'WATSONS'"
                 name: TRATBL_sdl_tw_as_watsons_inventory__lookup_test
                 config:
                   store_failures: true
