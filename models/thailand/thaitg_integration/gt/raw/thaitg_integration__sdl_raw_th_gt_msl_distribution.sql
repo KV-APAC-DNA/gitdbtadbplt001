@@ -45,7 +45,7 @@ final as(
         osa as osa,
         oos as oos,
         oos_reason as oos_reason,
-        filename as file_name,
+        filename as filename,
         run_id as run_id,
         crt_dttm as crt_dttm
    from source

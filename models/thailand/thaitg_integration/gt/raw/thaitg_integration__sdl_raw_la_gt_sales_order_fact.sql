@@ -84,7 +84,7 @@ final as (
         approved_time,
         ref_15,
         paymenttype,
-        filename as file_name,
+        filename as filename,
         run_id,
         crt_dttm 
     from source

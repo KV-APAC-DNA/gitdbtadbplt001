@@ -27,7 +27,7 @@ SELECT
     "181-365days",
     ">365days",
     total_qty,
-    filename as file_name,
+    filename as filename,
     run_id,
     crt_dttm
 FROM

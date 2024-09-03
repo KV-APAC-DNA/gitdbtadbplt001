@@ -60,7 +60,7 @@ AS (
         try_to_timestamp(modifydate) AS modifydate,
         current_timestamp()::timestamp_ntz(9) AS curr_date,
         run_id::number(18, 0) AS run_id,
-        SOURCE_FILE_NAME as file_name
+        SOURCE_FILE_NAME::varchar(255) as file_name
     FROM source
     )
 SELECT *

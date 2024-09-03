@@ -55,7 +55,7 @@ final as(
        branchcode as branchcode,
        branchname as branchname,
        frequencyofvisit as frequencyofvisit,
-       filename as file_name,
+       filename as filename,
        run_id as run_id,
        crt_dttm as crt_dttm
     from source

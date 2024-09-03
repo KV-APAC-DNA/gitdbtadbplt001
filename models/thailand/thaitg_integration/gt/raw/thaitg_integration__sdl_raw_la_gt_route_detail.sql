@@ -22,20 +22,7 @@ with source as
 
 final as
 (   
-    select 
-        HASHKEY::VARCHAR(500) as HASHKEY,
-        ROUTE_ID::VARCHAR(50) as ROUTE_ID,
-        CUSTOMER_ID::VARCHAR(50) as CUSTOMER_ID,
-        ROUTE_NO::VARCHAR(10) as ROUTE_NO,
-        SALEUNIT::VARCHAR(100) as SALEUNIT,
-        SHIP_TO::VARCHAR(50) as SHIP_TO,
-        CONTACT_PERSON::VARCHAR(100) as CONTACT_PERSON,
-        CREATED_DATE::VARCHAR(20) as CREATED_DATE,
-        FILE_UPLOAD_DATE::DATE as FILE_UPLOAD_DATE,
-        FILENAME::VARCHAR(50) as FILE_NAME,
-        RUN_ID::VARCHAR(14) as RUN_ID,
-        CRT_DTTM::TIMESTAMP_NTZ(9) as CRT_DTTM
-    from source
+    select * from source
     {% if is_incremental() %}
         where source.crt_dttm > (select max(crt_dttm) from {{ this }}) 
     {% endif%}

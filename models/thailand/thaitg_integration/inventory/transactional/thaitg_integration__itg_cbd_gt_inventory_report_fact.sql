@@ -14,7 +14,7 @@ with sdl_cbd_gt_inventory_report_fact as (
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test') }}
-    )
+    ) qualify rnk=1
 ),
 final as (
  select 

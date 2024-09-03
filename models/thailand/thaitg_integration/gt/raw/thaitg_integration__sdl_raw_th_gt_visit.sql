@@ -38,7 +38,7 @@ final as(
         time_survey_in as time_survey_in,
         time_survey_out as time_survey_out,
         count_survey as count_survey,
-        filename as file_name,
+        filename as filename,
         run_id as run_id,
         crt_dttm as crt_dttm
    from source

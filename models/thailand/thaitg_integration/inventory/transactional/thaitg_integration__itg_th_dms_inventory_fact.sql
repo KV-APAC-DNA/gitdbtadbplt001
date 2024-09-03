@@ -33,7 +33,7 @@ final as(
         to_date(expirydate, 'YYYYMMDD')::timestamp_ntz(9) as expirydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
         run_id::number(18,0) as run_id,
-        SOURCE_FILE_NAME as file_name
+        SOURCE_FILE_NAME::varchar(255) as file_name
     from source
 )
 select * from final

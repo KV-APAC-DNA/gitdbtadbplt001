@@ -29,7 +29,7 @@ final as
         customer_group,
         customer_code,
         customer_name,
-        filename as file_name,
+        filename as filename,
         run_id,
         crt_dttm
     from source
