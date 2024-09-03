@@ -44,6 +44,5 @@ as (
     )
 select * from final
 {% else %}
-    -- If the condition is not met, build the model with historical data
     select * from {{this}}
 {% endif %}

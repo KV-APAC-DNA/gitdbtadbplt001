@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with kr_054_cal_v as (
     select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
@@ -31,3 +32,6 @@ final as (
 )
 
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

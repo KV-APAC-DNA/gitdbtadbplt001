@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with kr_054_v_ptrgstdivmst
 as (
     select *
@@ -46,5 +47,7 @@ as (
         disp_seq::number(38, 18) as disp_seq
     from transformed
     )
-select *
-from final
+select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}
