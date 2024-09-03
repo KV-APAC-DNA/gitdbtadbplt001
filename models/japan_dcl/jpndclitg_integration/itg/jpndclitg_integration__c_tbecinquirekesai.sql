@@ -3,7 +3,7 @@
     (
         materialized='incremental',
         incremental_strategy= 'delete+insert',
-        unique_key= ['diinquireid']
+        unique_key= ['diinquireid', 'c_diinquirekesaiid']
     )
 }}
 
@@ -96,11 +96,11 @@ final as
 		c_dihenkinprcinputdiff::number(38,0) as c_dihenkinprcinputdiff,
 		c_dihenkinprcinputdifftotal::number(38,0) as c_dihenkinprcinputdifftotal,
 		c_dshenpinprockbn::varchar(1)as c_dshenpinprockbn,
-		null::varchar(40)as source_file_date,
-		inserted_date::timestamp_ntz(9) as inserted_date,
-		inserted_by::varchar(100)as inserted_by,
-		updated_date::timestamp_ntz(9) as updated_date,
-		updated_by::varchar(100)as updated_by  
+		source_file_date::varchar(10) as source_file_date,
+		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		inserted_by::varchar(100) as inserted_by,
+		current_timestamp()::timestamp_ntz(9) as updated_date,
+		updated_by::varchar(100) as updated_by 
     from source
 )
 

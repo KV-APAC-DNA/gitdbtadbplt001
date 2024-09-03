@@ -6,10 +6,10 @@
 
 
 with kesai_h_data_mart_mv_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 kesai_m_data_mart_mv_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_kizuna') }}
 ),
 cim01kokya as(
     select * from  {{ ref('jpndcledw_integration__cim01kokya') }}
@@ -99,7 +99,7 @@ amount_header AS (
         ROUND((c_didiscountprc + didiscountall)::FLOAT / ((100 + ditaxrate)::FLOAT / 100::FLOAT)::FLOAT) AS new_discount_notax
     FROM kesai_h_data_mart_mv_kizuna cn
     ),--,
-    -- select * from {{ref ('jpndcledw_integration__kesai_h_data_mart_mv')}} where saleno_trm like 'T1%' limit 100;
+    
 kesai AS (
     SELECT h.kokyano,
         h.saleno_key,

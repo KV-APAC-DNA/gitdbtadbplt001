@@ -115,8 +115,8 @@ final as(
         c_dsnpsaitorokusts::varchar(3) as c_dsnpsaitorokusts,
         c_dsrakutenuriagests::varchar(3) as c_dsrakutenuriagests,
         c_dsnpprintdatagetflg::varchar(1) as c_dsnpprintdatagetflg,
-        current_timestamp()::timestamp_ntz(9) as dsprep,
-        current_timestamp()::timestamp_ntz(9) as dsren,
+        dsprep::timestamp_ntz(9) as dsprep,
+        dsren::timestamp_ntz(9) as dsren,
         dselim::timestamp_ntz(9) as dselim,
         diprepusr::number(38,0) as diprepusr,
         direnusr::number(38,0) as direnusr,
@@ -137,11 +137,11 @@ final as(
         c_dsgmotransactionid::varchar(16) as c_dsgmotransactionid,
         c_dsgmoauthprckbn::varchar(3) as c_dsgmoauthprckbn,
         c_dsgmotransactionsts::varchar(3) as c_dsgmotransactionsts,
-        NULL::varchar(10) as source_file_date,
-        current_timestamp()::timestamp_ntz(9) as inserted_date,
-        NULL::varchar(10) as inserted_by,
-        current_timestamp()::timestamp_ntz(9) as updated_date,
-        NULL::varchar(100) as updated_by
+        null::varchar(10) as source_file_date,
+		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		null::varchar(100) as inserted_by,
+		current_timestamp()::timestamp_ntz(9) as updated_date,
+		null::varchar(100) as updated_by
     from source
 )
 select * from final

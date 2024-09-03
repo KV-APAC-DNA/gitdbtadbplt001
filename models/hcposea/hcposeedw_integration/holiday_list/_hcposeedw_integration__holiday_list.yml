@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__holiday_list
+    config:
+      alias: holiday_list
+      tags: ["master_file_data_ingestion","transformation"]

@@ -1,5 +1,5 @@
 with kesai_m_data_mart_mv_tbl as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna') }}
 ),
 final as(
     SELECT kesai_m_data_mart_mv_tbl.saleno_key
@@ -49,12 +49,5 @@ final as(
         ,NULL AS gyono_p
         ,NULL AS bun_gyono_p
     FROM kesai_m_data_mart_mv_tbl kesai_m_data_mart_mv_tbl
-    WHERE (
-            "substring" (
-                (kesai_m_data_mart_mv_tbl.saleno)::TEXT
-                ,1
-                ,1
-                ) <> ('O'::CHARACTER VARYING)::TEXT
-            )
 )
 select * from final

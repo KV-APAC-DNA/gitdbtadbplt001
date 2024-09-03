@@ -1,6 +1,7 @@
 {{
     config
     (
+        materialized = "incremental",
         pre_hook ="{% if is_incremental() %}
                 DELETE
                 FROM {{ ref('jpnedw_integration__dw_so_sell_out_dly') }}
@@ -10,7 +11,111 @@
                         WHERE IDENTIFY_CD = 'JCP_PAN_FLG'
                             AND DELETE_FLAG = '0'
                             );
-                {% endif %}"
+                DELETE from {{this}};
+                {% endif %}",
+        post_hook = "insert into {{ ref('jpnedw_integration__dw_so_sell_out_dly')}}
+                    (jcp_rec_seq,
+                    id,
+                    rcv_dt,
+                    test_flag,
+                    bgn_sndr_cd,
+                    ws_cd,
+                    rtl_type,
+                    rtl_cd,
+                    trade_type,
+                    shp_date,
+                    shp_num,
+                    trade_cd,
+                    dep_cd,
+                    chg_cd,
+                    person_in_charge,
+                    person_name,
+                    rtl_name,
+                    rtl_ho_cd,
+                    rtl_address_cd,
+                    data_type,
+                    opt_fld,
+                    item_nm,
+                    item_cd_typ,
+                    item_cd,
+                    qty,
+                    qty_type,
+                    price,
+                    price_type,
+                    bgn_sndr_cd_gln,
+                    rcv_cd_gln,
+                    ws_cd_gln,
+                    shp_ws_cd,
+                    shp_ws_cd_gln,
+                    rep_name_kanji,
+                    rep_info,
+                    trade_cd_gln,
+                    rtl_cd_gln,
+                    rtl_name_kanji,
+                    rtl_ho_cd_gln,
+                    item_cd_gtin,
+                    item_nm_kanji,
+                    unt_prc,
+                    net_prc,
+                    sales_chan_type,
+                    jcp_create_date,
+                    jcp_shp_to_cd,
+                    jcp_str_cd,
+                    jcp_net_price)
+				    SELECT 
+                    (SELECT MAX_VALUE::number as max_value FROM {{ ref('jpnedw_integration__mt_constant_seq') }} WHERE 
+                    IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (
+                                ORDER BY ID
+                                )AS jcp_rec_seq,
+					id, 
+					rcv_dt, 
+					test_flag, 
+					bgn_sndr_cd, 
+					ws_cd, 
+					rtl_type, 
+					rtl_cd, 
+					trade_type, 
+					shp_date, 
+					shp_num, 
+					trade_cd, 
+					dep_cd, 
+					chg_cd, 
+					person_in_charge, 
+					person_name, 
+					rtl_name, 
+					rtl_ho_cd, 
+					rtl_address_cd, 
+					data_type, 
+					opt_fld, 
+					item_nm, 
+					item_cd_typ, 
+					item_cd, 
+					qty, 
+					qty_type, 
+					price, 
+					price_type, 
+					bgn_sndr_cd_gln, 
+					rcv_cd_gln, 
+					ws_cd_gln, 
+					shp_ws_cd, 
+					shp_ws_cd_gln, 
+					rep_name_kanji, 
+					rep_info, 
+					trade_cd_gln, 
+					rtl_cd_gln, 
+					rtl_name_kanji, 
+					rtl_ho_cd_gln, 
+					item_cd_gtin, 
+					item_nm_kanji, 
+					unt_prc, 
+					net_prc, 
+					sales_chan_type, 
+					jcp_create_date, -- 2016/01/27 add start yamamura shp_to_cdを項目追加
+					jcp_shp_to_cd, -- 2016/01/27 add end yamamura shp_to_cdを項目追加
+					jcp_str_cd, 
+					jcp_net_price 
+					from {{this}};
+                    "
     )
 }}
 
