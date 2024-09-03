@@ -6,6 +6,11 @@
     {{ log("===============================================================================================") }}
     {% set get_file_names_query %}
         select file_name from {{ source('phlsdl_raw', 'sdl_ph_sfmc_consumer_master') }}
+        where file_name not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_null__ff')}}
+        union all
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_sfmc_consumer_master__test_duplicate__ff')}}
+    )
         group by file_name
         order by file_name asc;
     {% endset %}

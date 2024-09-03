@@ -28,8 +28,7 @@ brnd_vrnt::varchar(100) as brnd_vrnt,
 frnchse_cd::varchar(50) as frnchse_cd,
 cdl_dttm::varchar(20) as cdl_dttm,
 current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-null::timestamp_ntz(9) as updt_dttm,
-file_name::varchar(255) as file_name
+null::timestamp_ntz(9) as updt_dttm
 from sdl_ph_pricelist
 )
 select * from final
