@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: pcfwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: sshukl02_workspace
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_symbion_dstr__null_test
+      - name: TRATBL_sdl_api_dstr__null_test
+      - name: TRATBL_sdl_chs_dstr__null_test
+      - name: TRATBL_sdl_perenso_call_objectives__null_test
+      - name: TRATBL_sdl_perenso_diary_item_time__null_test
+      - name: TRATBL_sdl_sigma_dstr__null_test
+      - name: TRATBL_sdl_perenso_fssi_sales__null_test
+      - name: TRATBL_sdl_iri_scan_sales__duplicate_test
+      - name: TRATBL_sdl_pharm_sellout_outlet__duplicate_test
+      - name: TRATBL_sdl_national_ecomm_data__null_test
+      - name: TRATBL_sdl_pharm_sellout_product__duplicate_test
+      - name: TRATBL_sdl_pharm_sellout_probe__duplicate_test
+      - name: TRATBL_sdl_perenso_fsni_sales__null_test
+      - name: TRATBL_sdl_chw_ecomm_data__null_test

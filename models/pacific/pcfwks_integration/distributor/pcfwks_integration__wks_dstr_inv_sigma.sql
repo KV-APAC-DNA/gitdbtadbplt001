@@ -1,6 +1,9 @@
 with sdl_sigma_dstr as 
 (
     select * from {{ source('pcfsdl_raw', 'sdl_sigma_dstr') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_sigma_dstr__null_test')}}
+    )
 ),
 edw_customer_sales_dim as
 (

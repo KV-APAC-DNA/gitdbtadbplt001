@@ -7,6 +7,9 @@
 
 with source as(
     select * from {{ source('pcfsdl_raw', 'sdl_perenso_fsni_sales') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_fsni_sales__null_test')}}
+    )
 ),
 final as(
     select * from source

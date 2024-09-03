@@ -2,12 +2,20 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook= "delete from {{this}} where to_date(diary_session_start_time) in (select distinct to_date(try_to_timestamp_ntz(start_time,'dd/mm/yyyy hh12:mi:ss am')) from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where to_date(diary_session_start_time) in (select distinct to_date(try_to_timestamp_ntz(start_time,'dd/mm/yyyy hh12:mi:ss am')) from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }} 
+        where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_diary_item_time__null_test')}}
+        ));{%endif%}"
     )
 }}
 with source as 
 (
-    select * from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }}
+    select *, dense_rank() over (partition by to_date(try_to_timestamp_ntz(start_time,'dd/mm/yyyy hh12:mi:ss am')) order by file_name desc) rnk
+    from {{ source('pcfsdl_raw', 'sdl_perenso_diary_item_time') }}
+    where file_name not in (
+        select distinct file_name from {{source('pcfwks_integration','TRATBL_sdl_perenso_diary_item_time__null_test')}}
+        ) qualify rnk = 1
 ),
 final as 
 (
