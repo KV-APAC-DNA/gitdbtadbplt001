@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: GLOBALMASTER_ACCESS
+    database: "{{ env_var('DBT_ENV_C360_DB') }}"
+    schema: GLOBALMASTER_ACCESS
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: VW_DIM_GMC_ATTRIBUTE_MAPPINGS  
+      - name: VW_DIM_GMC_GLOBAL_CATEGORY_HIER
+      - name: VW_DIM_GMC_GLOBAL_BRAND_HIER  
+      - name: VW_DIM_GMC_PROFIT_CENTER_HIER
+      - name: VW_DIM_GMC_SKU_MAPPINGS
