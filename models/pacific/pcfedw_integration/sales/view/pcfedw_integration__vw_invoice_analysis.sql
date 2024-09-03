@@ -137,7 +137,7 @@ SELECT ltrim((vmd.matl_id)::TEXT, (0)::TEXT) AS matl_id
 	,eif.fisc_yr_src
 	,eif.fut_sls_qty
 	,eif.good_iss_dt
-	,(eif.gros_trd_sls * currex.exch_rate) AS future_gts_val
+	,(ZEROIFNULL((eif.gros_trd_sls/NULLIF(eif.fut_sls_qty,0))*eif.cnfrm_qty_pc) * currex.exch_rate) AS future_gts_val
 	,eif.mat_avail_dt
 	,ltrim((eif.matl_num)::TEXT, (0)::TEXT) AS matl_num
 	,eif.net_amt
