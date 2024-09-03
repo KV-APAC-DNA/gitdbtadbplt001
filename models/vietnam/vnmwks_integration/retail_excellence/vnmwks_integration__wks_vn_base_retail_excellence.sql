@@ -8,6 +8,9 @@ edw_vw_cal_retail_excellence_dim as (
 wks_vn_regional_sellout_mapped_sku_cd as (
     select * from {{ ref('vnmwks_integration__wks_vn_regional_sellout_mapped_sku_cd') }}
 ),
+wks_vn_regional_sellout_region as (
+    select * from {{ ref('vnmwks_integration__wks_vn_regional_sellout_region') }}
+),
 
 --final cte
 vn_base_retail_excellence as 
@@ -16,7 +19,7 @@ vn_base_retail_excellence as
        COUNTRY_NAME AS CNTRY_NM,
        DATA_SOURCE AS DATA_SRC,
        MD5(nvl (SOLDTO_CODE,'stc') || NVL (DISTRIBUTOR_CODE,'DC') ||NVL (STORE_CODE,'SC') ||
-       NVL (DISTRIBUTOR_NAME,'DN') ||nvl (zone,'zone') ||nvl (SKU_Code,'SKU') || 
+       NVL (DISTRIBUTOR_NAME,'DN') ||nvl (SKU_Code,'SKU') || 
        nvl (EAN,'EAN') || NVL (STORE_TYPE,'ST') || NVL (STORE_NAME,'SN') ||
        NVL (SAP_PARENT_CUSTOMER_KEY,'SPCK') ||NVL (SAP_PARENT_CUSTOMER_DESCRIPTION,'SPSCD') || 
        NVL (SAP_CUSTOMER_CHANNEL_KEY,'SCCK') ||NVL (SAP_CUSTOMER_CHANNEL_DESCRIPTION,'SCCD') ||
@@ -31,8 +34,8 @@ vn_base_retail_excellence as
        NVL (GLOBAL_PRODUCT_SUBSEGMENT,'GPSS') || NVL (GLOBAL_PRODUCT_CATEGORY,'GPC') ||
        NVL (GLOBAL_PRODUCT_SUBCATEGORY,'GPSC') ||NVL (GLOBAL_PUT_UP_DESCRIPTION,'GPUD') ||
        NVL (PKA_PRODUCT_KEY,'PK') ||NVL (PKA_PRODUCT_KEY_DESCription,'PKD') ||
-       NVL (CHANNEL,'CN') || NVL (RETAIL_ENVIRONMENT,'RE') || nvl (Region,'rg') ||
-       nvl (zone,'ar') ||NVL (SKU_DESCRIPTION,'mpd')) AS SELLOUT_DIM_KEY,
+       NVL (CHANNEL,'CN') || nvl (Region,'rg') ||
+       nvl (zone,'zn') ||NVL (SKU_DESCRIPTION,'mpd')) AS SELLOUT_DIM_KEY,
        YEAR,
        MNTH_ID,
        SOLDTO_CODE,
@@ -88,8 +91,8 @@ FROM (SELECT COUNTRY_CODE,
              SOLDTO_CODE,
              UPPER(DISTRIBUTOR_CODE) AS DISTRIBUTOR_CODE,
 			 DISTRIBUTOR_NAME|| '#' ||LTRIM(DISTRIBUTOR_CODE,'0') AS DISTRIBUTOR_NAME,
-             STORE_CODE,
-			 STORE_NAME|| '#' ||LTRIM(STORE_CODE,'0') AS STORE_NAME,
+             MAIN.STORE_CODE,
+			 STORE_NAME|| '#' ||LTRIM(MAIN.STORE_CODE,'0') AS STORE_NAME,
              STORE_TYPE,
              LIST_PRICE,
              Channel,
@@ -106,7 +109,7 @@ FROM (SELECT COUNTRY_CODE,
              SAP_BANNER_FORMAT_KEY,
              SAP_BANNER_FORMAT_DESCRIPTION,
              RETAIL_ENVIRONMENT,
-             REGION,
+             REG.REGION,
              ZONE,
              --CITY,
              CUSTOMER_SEGMENT_KEY,
@@ -154,7 +157,7 @@ FROM (SELECT COUNTRY_CODE,
                    SAP_BANNER_FORMAT_KEY,
                    SAP_BANNER_FORMAT_DESCRIPTION,
                    RETAIL_ENV AS RETAIL_ENVIRONMENT,
-                   REGION,
+                   --REGION,
                    ZONE_OR_AREA AS ZONE,
                    --CITY,
                    CUSTOMER_SEGMENT_KEY,
@@ -181,7 +184,8 @@ FROM (SELECT COUNTRY_CODE,
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
             AND   MNTH_ID <= (SELECT last_2mnths FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
             ) MAIN
-            LEFT JOIN WKS_VN_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0'))
+            LEFT JOIN WKS_VN_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0')
+            LEFT JOIN WKS_VN_REGIONAL_SELLOUT_REGION REG ON UPPER(LTRIM(MAIN.STORE_CODE, '0')) = UPPER(LTRIM(REG.STORE_CODE, '0')))
 GROUP BY COUNTRY_CODE,
          COUNTRY_NAME,
          DATA_SOURCE,

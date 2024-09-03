@@ -184,6 +184,7 @@ FROM (SELECT DISTINCT CNTRY_CD,
         AND RE_BASE_DIM.DATA_SRC = BASE_DIM.DATA_SRC	
   LEFT OUTER JOIN (SELECT DISTINCT CNTRY_CD,
                           sellout_dim_key,
+                          data_src,
                           mnth_id,
                           SO_SLS_QTY,
                           SO_SLS_VALUE,
