@@ -30,7 +30,7 @@ final as(
         crt_dttm::timestamp_ntz(9) as crt_dttm,
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         '/source_type' as data_source,
-        filename as filename
+        filename::varchar(255) as file_name
     from
     sdl_hcp360_in_iqvia_brand
 )

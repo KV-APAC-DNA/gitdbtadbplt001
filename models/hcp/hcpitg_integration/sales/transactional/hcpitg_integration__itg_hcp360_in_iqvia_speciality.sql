@@ -32,7 +32,7 @@ transformed as
         'ORSL' as data_source,
         null::varchar(20) as pack_volume,
         'IN' as country,
-        filename as filename
+        filename::varchar(255) as file_name
     FROM sdl_hcp360_in_iqvia_speciality
 )
 select * from transformed

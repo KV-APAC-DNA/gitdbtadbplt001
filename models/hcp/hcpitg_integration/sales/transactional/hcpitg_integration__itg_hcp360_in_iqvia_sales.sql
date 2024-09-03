@@ -52,7 +52,7 @@ cte as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         'ORSL' as data_source,
         'IN' as country,
-        filename as filename
+        filename::varchar(255) as file_name
     FROM sdl_hcp360_in_iqvia_sales
 ),
 aveeno_zone_transformed as(
@@ -105,7 +105,7 @@ cte1 as
         convert_timezone('UTC',current_timestamp())::timestamp_ntz as updt_dttm,
         sheet_name as data_source,
         'IN' as country,
-        filename as filename
+        filename::varchar(255) as file_name
     FROM aveeno_zone_transformed
 ),
 transformed as 

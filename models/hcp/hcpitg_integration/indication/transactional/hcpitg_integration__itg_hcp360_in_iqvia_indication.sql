@@ -34,7 +34,7 @@ final as(
         convert_timezone('UTC', current_timestamp())::timestamp_ntz(9) as updt_dttm,
         'ORSL' as data_source,
         'IN' as country,
-        filename as filename
+        filename::varchar(255) as file_name
     from sdl_hcp360_in_iqvia_indication
     )
 select * from final

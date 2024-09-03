@@ -32,7 +32,7 @@ final as(
         'ORSL'::varchar(20) as data_source,
         null ::varchar(20) as pack_volume,
         'IN'::varchar(50) as country,
-        filename as filename
+        filename::varchar(255) as file_name
     from
     sdl_hcp360_in_iqvia_brand
 )
