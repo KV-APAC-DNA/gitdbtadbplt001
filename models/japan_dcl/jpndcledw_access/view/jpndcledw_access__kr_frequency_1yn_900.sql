@@ -1,5 +1,5 @@
 with kr_frequency_1yn_900 as (
-    select * from {{ source('jpdcledw_integration', 'kr_frequency_1yn_900') }}
+    select * from {{ ref('jpndcledw_integration__kr_frequency_1yn_900') }}
 ),
 
 final as (
