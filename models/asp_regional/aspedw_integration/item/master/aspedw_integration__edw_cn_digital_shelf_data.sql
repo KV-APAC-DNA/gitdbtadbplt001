@@ -1,3 +1,8 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
 with final as
 (
     select * from {{ ref('aspitg_integration__itg_yimian_price_data') }}
