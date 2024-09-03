@@ -86,13 +86,12 @@ case
       current_timestamp()::timestamp_ntz(9) crtd_dttm,
       null updt_dttm,
  sdio.run_id,
- source_file_name
+ sdio.source_file_name
 from (
    select
        t1.*,
        etd.jj_mnth_id,
-       etd.jj_wk,
-       t1.source_file_name
+       etd.jj_wk
    from
    source t1 ,
    edw_time_dim etd
