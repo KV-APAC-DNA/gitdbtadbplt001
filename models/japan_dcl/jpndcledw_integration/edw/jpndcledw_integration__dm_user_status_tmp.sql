@@ -164,16 +164,19 @@ u_month_end_new_order AS (
         ymd AS dt,
         'New' AS STATUS
     FROM u_all_month_end_order
-    INNER JOIN cld_m x ON u_all_month_end_order.ymd = x.ymd_dt
+    INNER JOIN cld_m x ON u_all_month_end_order.ymd = to_date(x.ymd_dt)
     join temp_u_new_016 u_new
     on (u_new.kokyano = u_all_month_end_order.kokyano
                 AND u_new.first_order_year = x.year
                 AND u_all_month_end_order.ymd > u_new.first_order_dt
                 AND datediff(day, u_new.first_order_dt, u_all_month_end_order.ymd) < 365)
-    join temp_kesai_016 kesai  --Added 07252022 for leap year
-     on (kesai.kokyano = u_all_month_end_order.kokyano
-                AND u_all_month_end_order.ymd = kesai.order_dt
-            )
+    --Added 07252022 for leap year
+    and not exists (
+            select 1
+            from temp_kesai_016 kesai
+            where kesai.kokyano = u_all_month_end_order.kokyano
+                and u_all_month_end_order.ymd = kesai.order_dt
+        )
 ),
 u_month_end_lapsed_order AS (
     SELECT 'order' AS base,
