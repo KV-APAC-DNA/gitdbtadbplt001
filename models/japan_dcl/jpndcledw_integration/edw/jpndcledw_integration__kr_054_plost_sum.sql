@@ -1,3 +1,5 @@
+{% if build_month_end_job_models()  %}
+
 with kr_054_plost_meisai
 as (
     select *
@@ -40,5 +42,8 @@ as (
         lpoint::number(18, 0) as lpoint
     from transformed
     )
-select *
-from final
+select * from final
+{% else %}
+    -- If the condition is not met, build the model with historical data
+    select * from {{this}}
+{% endif %}
