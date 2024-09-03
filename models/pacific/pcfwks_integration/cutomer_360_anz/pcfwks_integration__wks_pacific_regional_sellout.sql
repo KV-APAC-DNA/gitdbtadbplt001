@@ -118,12 +118,19 @@ final as
             SUM(SO_SLS_VALUE) AS SELLOUT_SALES_VALUE,
             SUM(SO_SLS_VALUE*((C.EXCH_RATE/(C.from_ratio*C.to_ratio))::NUMERIC(15,5)))::NUMERIC(38,11) SELLOUT_SALES_VALUE_USD,
             TRIM(NVL (NULLIF(SELLOUT.msl_product_code,''),'NA')) AS msl_product_code,
-            TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,
+            --TRIM(NVL (NULLIF(SELLOUT.msl_product_desc,''),'NA')) AS msl_product_desc,            
+            CASE WHEN (UPPER(PRODUCT.PKA_PACKAGE) IN ('MIX PACK', 'ASSORTED PACK') OR PRODUCT.PKA_PACKAGE IS NULL) THEN UPPER(TRIM(NVL (NULLIF(PRODUCT.SAP_MAT_DESC,''),'NA')))
+            ELSE (CASE WHEN TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) IN ('N/A','NA') THEN 'NA'
+            ELSE TRIM(NVL (NULLIF(PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,''),'NA')) END)
+            END AS msl_product_desc,
             TRIM(NVL (NULLIF(SELLOUT.store_grade,''),'NA')) AS store_grade,
             TRIM(NVL (NULLIF(SELLOUT.retail_env,''),'NA')) AS retail_env,
             TRIM(NVL (NULLIF(SELLOUT.channel,''),'NA')) AS channel,
-        SELLOUT.crtd_dttm,
-        SELLOUT.updt_dttm
+            SELLOUT.numeric_distribution,
+            SELLOUT.weighted_distribution,
+            SELLOUT.store_count_where_scanned,
+            SELLOUT.crtd_dttm,
+            SELLOUT.updt_dttm
     FROM  wks_pacific_regional_sellout_base SELLOUT
 
     LEFT JOIN (SELECT DISTINCT CAL_YEAR AS YEAR,
@@ -184,6 +191,7 @@ final as
             EGPH.PUT_UP_DESCRIPTION AS GPH_PROD_PUT_UP_DESC,
             EGPH.SIZE AS GPH_PROD_SIZE,
             EGPH.UNIT_OF_MEASURE AS GPH_PROD_SIZE_UOM,
+            EMD.PKA_PACKAGE_DESC AS PKA_PACKAGE,
             row_number() over( partition by sap_matl_num order by sap_matl_num) rnk           
             FROM edw_material_dim EMD,
                 edw_gch_producthierarchy EGPH
@@ -329,13 +337,17 @@ final as
                 PRODUCT.SAP_MAT_DESC, 
                 --PRODUCT.GREENLIGHT_SKU_FLAG, 
                 PRODUCT.PKA_PRODUCT_KEY, 
-                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION, 
+                PRODUCT.PKA_PRODUCT_KEY_DESCRIPTION,
+                PRODUCT.PKA_PACKAGE, 
                 (C.EXCH_RATE/(C.from_ratio*C.to_ratio)),
                 SELLOUT.msl_product_code,
-                    SELLOUT.msl_product_desc,
-                    SELLOUT.store_grade,
-                    SELLOUT.retail_env,
-                    SELLOUT.channel,
+                    --SELLOUT.msl_product_desc,
+                SELLOUT.store_grade,
+                SELLOUT.retail_env,
+                SELLOUT.channel,
+                SELLOUT.numeric_distribution,
+                SELLOUT.weighted_distribution,
+                SELLOUT.store_count_where_scanned,
                 SELLOUT.crtd_dttm,
                 SELLOUT.updt_dttm
     HAVING NOT (SUM(SELLOUT.so_sls_value) = 0 and SUM(SELLOUT.so_sls_qty) = 0)

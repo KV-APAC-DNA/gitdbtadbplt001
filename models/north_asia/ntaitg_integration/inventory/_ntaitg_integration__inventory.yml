@@ -16,7 +16,7 @@ models:
   - name: ntaitg_integration__itg_tw_as_watsons_inventory
     config:
       alias: itg_tw_as_watsons_inventory
-      tags: ["j_rg_watsons_inv_ingestion","transformation"]
+      tags: ["j_rg_watsons_inv_ingestion","ingestion"]
   - name: ntaitg_integration__itg_kr_otc_inventory
     config: 
       alias: itg_kr_otc_inventory
@@ -25,7 +25,7 @@ models:
     config: 
       alias: sdl_kr_raw_otc_inventory
       tags: ["j_kr_otc_inv_etl_framework","ingestion"]
-  - name: ntaitg_integration__sdl_tw_as_watsons_inventory
+  - name: ntaitg_integration__sdl_tw_raw_as_watsons_inventory
     config: 
-      alias: sdl_tw_as_watsons_inventory
+      alias: sdl_tw_raw_as_watsons_inventory
       tags: ["j_rg_watsons_inv_ingestion","ingestion"]

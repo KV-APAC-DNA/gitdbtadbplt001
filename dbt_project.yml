@@ -599,6 +599,38 @@ models:
       hcpedw_access:
         +materialized: view
         +schema: HCPEDW_ACCESS
+
+    hcposea:
+      config:
+        +enabled: true
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+      hcposeedw_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPOSEEDW_INTEGRATION
+        call:
+          view:
+            +materialized: view
+        cycle:
+          view:
+            +materialized: view
+        employee:
+          view:
+            +materialized: view
+        time_off_territory:
+          view:
+            +materialized: view
+        user:
+          view:
+            +materialized: view
+      hcposeitg_integration:
+        +materialized: table
+        +transient: false
+        +schema: HCPOSEITG_INTEGRATION
+      hcposeedw_access:
+        +materialized: view
+        +schema: HCPOSEEDW_ACCESS
+
     japan_dcl:
       config:
         +enabled: true
@@ -636,9 +668,3 @@ models:
         +materialized: view
         +schema: CHNEDW_ACCESS
     
-
-
-
-
-
-
