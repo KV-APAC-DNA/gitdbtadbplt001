@@ -12,7 +12,7 @@
                                         TRIM(SDII.PRODUCT_CODE),
                                         replace(sdii.invoice_date,'T',' ')::timestamp_ntz(9)
                                 FROM {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }} SDII
-                                where SDII.source_file_name not in (
+                                where SDII.file_name not in (
                                 select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
                                 union all
                                 select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
@@ -35,7 +35,7 @@
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_invoice') }}
-    where source_file_name not in (
+    where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_invoice__test_lookup__ff') }}
