@@ -30,17 +30,17 @@ AS (
             amt.c_dsranktotalprcbymonth AS prc
       FROM c_tbecranksumamount amt
       WHERE amt.dielimflg = '0'
-      
+
       UNION ALL
-      
+
       SELECT diecusrid AS usrid,
             to_char(dsorderdt, 'YYYYMM') AS rankdt,
             c_dsrankaddprc AS prc
       FROM c_tbecrankaddamountadm adda
       WHERE dielimflg = '0'
-      
+
       UNION ALL
-      
+
       SELECT usrid AS usrid,
             yyyymm AS rankdt,
             diff_amout AS prc
@@ -54,13 +54,13 @@ AS (
       FROM sum_pre_month
       JOIN dcl_calendar_sysdate cal ON cal.is_active = true
             AND 1 = 1
-      WHERE sum_pre_month.rankdt BETWEEN CASE 
+      WHERE sum_pre_month.rankdt BETWEEN CASE
                               WHEN to_char(cal.curr_date, 'dd') <= 20
                                     THEN to_char(add_months(cal.curr_date, - 1), 'yyyy') || '01'
                               WHEN to_char(cal.curr_date, 'dd') > 20
                                     THEN to_char(cal.curr_date, 'yyyy') || '01'
                               END
-                  AND CASE 
+                  AND CASE
                               WHEN to_char(cal.curr_date, 'dd') <= 20
                                     THEN to_char(add_months(cal.curr_date, - 1), 'yyyymm')
                               END
@@ -71,7 +71,7 @@ transformed
 AS (
       SELECT ruikei.yyyymm,
             ruikei.usrid,
-            CASE 
+            CASE
                   WHEN ruikei.thistotalprc >= 80000
                         THEN 'ダイヤモンド'
                   WHEN ruikei.thistotalprc >= 50000
@@ -80,7 +80,7 @@ AS (
                         THEN 'ゴールド'
                   ELSE 'レギュラー'
                   END AS tstage,
-            CASE 
+            CASE
                   WHEN ruikei.thistotalprc >= 80000
                         THEN '04'
                   WHEN ruikei.thistotalprc >= 50000
@@ -90,7 +90,7 @@ AS (
                   ELSE '01'
                   END AS tstage_cd,
             nvl(ruikei.thistotalprc, 0) AS thistotalprc,
-            CASE 
+            CASE
                   WHEN ruikei.thistotalprc >= 80000
                         THEN 8500
                   WHEN ruikei.thistotalprc >= 50000
@@ -99,7 +99,7 @@ AS (
                         THEN 500
                   ELSE 0
                   END AS goalp,
-            to_char(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()), 'YYYYMMDD HH24:MI:SS') insertdate
+            to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'YYYYMMDD HH24:MI:SS') insertdate
       FROM ruikei
       WHERE ruikei.usrid IN (
                   SELECT diusrid
