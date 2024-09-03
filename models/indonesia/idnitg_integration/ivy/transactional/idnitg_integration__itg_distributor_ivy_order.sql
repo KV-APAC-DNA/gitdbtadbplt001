@@ -12,7 +12,7 @@
                                                    trim(sdio.product_code),
                                                    replace(sdio.order_date,'T',' ')::timestamp_ntz(9)
                                                from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }} sdio
-                                               where sdio.source_file_name not in (
+                                               where sdio.file_name not in (
                                                 select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
                                                 union all
                                                 select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
@@ -28,7 +28,7 @@
 }}
 with source as (
    select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
-   where source_file_name not in (
+   where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
@@ -86,7 +86,7 @@ case
       current_timestamp()::timestamp_ntz(9) crtd_dttm,
       null updt_dttm,
  sdio.run_id,
- sdio.source_file_name
+ sdio.file_name
 from (
    select
        t1.*,
@@ -138,7 +138,7 @@ final as (
        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
        updt_dttm::timestamp_ntz(9) as updt_dttm,
        run_id::number(14,0) as run_id,
-       source_file_name::varchar(256) as source_file_name
+       file_name::varchar(256) as file_name
    from transformed
 )
 select * from transformed

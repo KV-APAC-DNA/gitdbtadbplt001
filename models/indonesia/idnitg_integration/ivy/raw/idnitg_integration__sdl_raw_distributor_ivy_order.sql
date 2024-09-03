@@ -7,7 +7,7 @@
 
 with source as (
     select * from {{ source('idnsdl_raw', 'sdl_distributor_ivy_order') }}
-    where source_file_name not in (
+    where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_order__test_lookup__ff') }}
@@ -45,7 +45,7 @@ final as (
         order_longitude,
         cdl_dttm,
         run_id,
-        source_file_name
+        file_name
     from source
     {% if is_incremental() %}
         -- this filter will only be applied on an incremental run

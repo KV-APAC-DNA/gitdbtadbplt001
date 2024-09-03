@@ -8,7 +8,7 @@
     where (upper(trim(distributorcode)), upper(trim(outletcode))) 
     in (select distinct upper(trim(distributorcode)) as distributorcode, upper(trim(outletcode)) as outletcode
     from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
-    where source_file_name not in (
+    where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test') }}
@@ -20,7 +20,7 @@
 with sdl_distributor_ivy_outlet_master as 
 (
     select * from {{source ('idnsdl_raw', 'sdl_distributor_ivy_outlet_master')}}
-    where source_file_name not in (
+    where file_name not in (
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__null_test') }}
             union all
             select distinct file_name from {{ source('idnwks_integration', 'TRATBL_sdl_distributor_ivy_outlet_master__duplicate_test') }}
@@ -65,7 +65,7 @@ itg_distributor_ivy_outlet_master as (
         tieringname,
         run_id,
         row_number() over (partition by distributorcode, outletcode order by run_id) as rn,
-        source_file_name
+        file_name
     from sdl_distributor_ivy_outlet_master
 ),
 final as (
@@ -104,7 +104,7 @@ final as (
         null::timestamp_ntz(9) as cust_crtd_dt,
         tieringname::varchar(100) as cust_grp2,
         run_id::number(14,0) as run_id,
-        source_file_name::varchar(256) as source_file_name
+        file_name::varchar(256) as file_name
     from itg_distributor_ivy_outlet_master
     where rn = 1
 ),
@@ -144,7 +144,7 @@ updt as(
         nvl(edw_distributor_customer_dim.cust_crtd_dt, final.cust_crtd_dt) as cust_crtd_dt,
         final.cust_grp2 as cust_grp2,
         final.run_id as run_id,
-        final.source_file_name 
+        final.file_name 
     from final
     left join edw_distributor_customer_dim
     on (upper(trim(final.distributorcode)) || upper(trim(final.outletcode))) = upper(trim(edw_distributor_customer_dim.key_outlet))
@@ -185,7 +185,7 @@ updt2 as(
         updt.cust_crtd_dt as cust_crtd_dt,
         updt.cust_grp2 as cust_grp2,
         updt.run_id as run_id,
-        updt.source_file_name
+        updt.file_name
     from updt 
     left join edw_channelgroup_metadata channelgroup
     on updt.cust_grp2 = channelgroup.cust_grp2
