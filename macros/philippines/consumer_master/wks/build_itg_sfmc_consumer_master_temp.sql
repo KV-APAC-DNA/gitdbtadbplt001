@@ -59,7 +59,8 @@
                             delete_flag varchar(10),
                             subscriber_status varchar(100),
                             opt_in_for_jnj_communication varchar(100),
-                            opt_in_for_campaign varchar(100)
+                            opt_in_for_campaign varchar(100),
+                            file_name varchar(255)
 
         );
         create or replace table {{tablename}} clone
