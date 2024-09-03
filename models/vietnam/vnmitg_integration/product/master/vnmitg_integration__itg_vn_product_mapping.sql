@@ -11,5 +11,6 @@ SELECT
     putupid,
     barcode,
     trim(productname) as productname,
-    convert_timezone('Asia/Singapore',current_timestamp) as crt_dttm
+    convert_timezone('Asia/Singapore',current_timestamp) as crt_dttm,
+    filename::varchar(255) as file_name
 FROM source

@@ -31,7 +31,7 @@ select
     current_timestamp()::timestamp_ntz(9) as crtd_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm,
     run_id::number(14,0) as run_id,
-    file_name
+    file_name::varchar(255) as file_name
 from source
 )
 select * from final
