@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='view'
+        materialized='view',
+        sql_header = "alter session set week_start= 7;"
+
     )
 }}
 
