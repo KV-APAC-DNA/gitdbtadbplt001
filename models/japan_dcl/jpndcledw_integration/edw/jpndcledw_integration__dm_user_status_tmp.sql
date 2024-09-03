@@ -164,7 +164,7 @@ u_month_end_new_order AS (
         ymd AS dt,
         'New' AS STATUS
     FROM u_all_month_end_order
-    INNER JOIN cld_m x ON u_all_month_end_order.ymd = to_date(x.ymd_dt)
+    INNER JOIN cld_m x ON u_all_month_end_order.ymd = x.ymd_dt
     join temp_u_new_016 u_new
     on (u_new.kokyano = u_all_month_end_order.kokyano
                 AND u_new.first_order_year = x.year
