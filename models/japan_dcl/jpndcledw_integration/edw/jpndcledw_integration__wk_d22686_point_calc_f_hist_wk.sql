@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 WITH TBECORDER
 AS (
     SELECT *
@@ -88,3 +89,6 @@ AS (
     )
 SELECT *
 FROM final
+{% else %}
+    select * from {{this}}
+{% endif %}

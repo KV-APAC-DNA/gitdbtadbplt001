@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 WITH C_TBECRANKSUMAMOUNT
 AS (
   SELECT *
@@ -131,3 +132,6 @@ WHERE EXISTS (
     )
 GROUP BY A.USRID
 HAVING SUM(A.PRC) >= 1
+{% else %}
+    select * from {{this}}
+{% endif %}

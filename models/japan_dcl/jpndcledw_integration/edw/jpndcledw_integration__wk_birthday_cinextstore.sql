@@ -1,6 +1,6 @@
 {{
     config(
-        pre_hook = "{{build_wk_birthday_cinextstore()}}"     
+        pre_hook = "{{build_wk_birthday_cinextstore()}}"
     )
 }}
 with tbEcOrder
@@ -19,8 +19,8 @@ WK as
            MAX(TO_CHAR(o.DSORDERDT,'YYYYMMDD')) AS c_dsShukkaDate
       FROM tbEcOrder o
      WHERE (o.dirouteid = '7' OR o.dirouteid = '8' OR o.dirouteid = '9' )
-       AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-01'::DATE)),'YYYYMMDD') 
-       --TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp())),'YYYYMMDD') 
+       AND TO_CHAR(o.DSORDERDT,'YYYYMMDD') >= TO_CHAR(DATEADD(DAY, -181, CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp())),'YYYYMMDD')
+       --TO_CHAR(DATEADD(DAY, -181, convert_timezone('Asia/Tokyo',current_timestamp())),'YYYYMMDD')
        AND o.c_diallhenpinflg = '0'
        AND o.diCancel = '0'
        AND o.dielimflg = '0'

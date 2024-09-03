@@ -8,15 +8,15 @@ tbecorder as (
 select * from {{ ref('jpndclitg_integration__tbecorder') }}
 ),
 transformed as (
-select 
+select
 distinct ck.kokyano as Customer_No, a.C_DSTEMPONAME as main_store --case when ck.kokyano=a.kokyano then a.C_DSTEMPONAME else null end as main_store
 from cim01kokya ck
-left join ( 
-SELECT 
+left join (
+SELECT
 	NVL(LPAD("最多購入店舗"."顧客ID",10,'0'),'0000000000') AS kokyano, "取引先".C_DSTEMPONAME --★main_store
 FROM (
 	select diEcUsrId AS "顧客ID",max(c_dstempocode) AS "件数店舗コード"
-	from ( 
+	from (
         select diEcUsrId,c_dstempocode, dense_rank() over(PARTITION BY diEcUsrId ORDER BY cnt desc, MAX_dsUriageDt DESC nulls last) as dens_rank
          from (
 	SELECT
@@ -32,7 +32,7 @@ FROM (
 		MAX(dsUriageDt) AS MAX_dsUriageDt
 		FROM tbEcOrder
 		WHERE c_dspotsalesno IS NOT NULL
-		AND dsUriageDt >= to_date(ADD_MONTHS(CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-01'),-36)) --TO_DATE(TO_CHAR(ADD_MONTHS(TO_DATE(current_timestamp()),-36),'YYYYMMDD'))
+		AND dsUriageDt >= to_date(ADD_MONTHS(convert_timezone('Asia/Tokyo',current_timestamp()),-36)) --TO_DATE(TO_CHAR(ADD_MONTHS(TO_DATE(current_timestamp()),-36),'YYYYMMDD'))
 		AND diCancel = '0'
 		AND c_diallhenpinflg = '0'
 		AND dielimflg = '0'
@@ -46,11 +46,11 @@ GROUP BY diEcUsrID
 LEFT OUTER JOIN c_tbecClient "取引先"
 ON "最多購入店舗"."件数店舗コード" = "取引先".c_dstempocode
 ) a
-on ck.kokyano=a.kokyano 
+on ck.kokyano=a.kokyano
 where ck.testusrflg = '通常ユーザ'
 ),
 final as (
-select 
+select
 CUSTOMER_NO::VARCHAR(68) as customer_no,
 MAIN_STORE::VARCHAR(60) as main_store
 from transformed

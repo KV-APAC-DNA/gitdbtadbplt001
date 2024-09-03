@@ -7,11 +7,11 @@ SELECT
        LPAD(REL.C_DICHILDUSRID,10,'0') as C_DICHILDUSRID
  FROM
        C_TBMEMBUNITREL REL
- WHERE   
-       DIELIMFLG = 0 AND  
+ WHERE
+       DIELIMFLG = 0 AND
        --TO_CHAR(TO_DATE(DSREN,'YYYY-MM-DD HH24:MI:SS'),'YYYYMMDD')>= TO_CHAR(cast(SYSDATE as date)-7,'YYYYMMDD') 	--Timezone conversion from UTC 20220211
-	   TO_CHAR(TO_DATE(DSREN,'YYYY-MM-DD HH24:MI:SS'),'YYYYMMDD')>= 
-       TO_CHAR(cast(CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()) as date)-7,'YYYYMMDD')
+	   TO_CHAR(TO_DATE(DSREN,'YYYY-MM-DD HH24:MI:SS'),'YYYYMMDD')>=
+       TO_CHAR(cast(CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp()) as date)-7,'YYYYMMDD')
 ),
 final as (
 select

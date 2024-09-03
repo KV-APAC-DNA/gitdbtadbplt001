@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with kr_054_tounen_sumix as (
     select * from  {{ ref('jpndcledw_integration__kr_054_tounen_sumix') }}
 ),
@@ -21,3 +22,6 @@ select usrid from kr_054_tounen_kingaku_wk2x
 select
     kokyano::number(38,18) as kokyano
 from result
+{% else %}
+    select * from {{this}}
+{% endif %}
