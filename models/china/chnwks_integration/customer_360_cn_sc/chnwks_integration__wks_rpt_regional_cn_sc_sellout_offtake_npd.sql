@@ -9,7 +9,7 @@ itg_mds_ap_customer360_config as
 final as
 (
     SELECT *,
-        CASE WHEN sellout_sales_quantity<>0 then sellout_sales_value/sellout_sales_quantity ELSE 0 END AS selling_price,
+        CASE WHEN sellout_sales_quantity<>0 then trunc(sellout_sales_value/sellout_sales_quantity,4) ELSE 0 END AS selling_price,
         COUNT(CASE WHEN FIRST_SCAN_FLAG_MARKET_LEVEL = 'Y' THEN FIRST_SCAN_FLAG_MARKET_LEVEL END) over (partition by country_name,pka_product_key) as cnt_mkt FROM (
     SELECT *,
         CASE WHEN FIRST_SCAN_FLAG_PARENT_CUSTOMER_LEVEL_INITIAL='Y' AND rn_cus=1 THEN 'Y' ELSE 'N' END AS FIRST_SCAN_FLAG_PARENT_CUSTOMER_LEVEL,

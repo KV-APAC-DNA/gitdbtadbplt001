@@ -171,8 +171,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM cn_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -261,8 +264,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM jp_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -355,8 +361,11 @@ final as
         main.store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM in_wks_rpt_regional_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -447,8 +456,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM WKS_SINGAPORE_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -539,8 +551,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM th_wks_rpt_regional_sellout_offtake_npd main
         left join (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key FROM 
         (select material,dt_from,valid_to,max(amount) as amount,sls_org,cdl_dttm,currency from sdl_raw_sap_bw_price_list
@@ -629,8 +644,11 @@ final as
         main.store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM wks_rpt_regional_my_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -722,8 +740,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM WKS_KOREA_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -814,8 +835,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         'NA' AS channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm 
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned 
         FROM wks_rpt_regional_cn_sc_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -905,8 +929,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm	
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned	
         FROM wks_rpt_regional_id_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -996,8 +1023,11 @@ final as
         'NA' AS store_grade,
         'NA' AS retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm 
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned 
         FROM wks_rpt_regional_ph_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1086,9 +1116,12 @@ final as
         main.msl_product_desc,
         main.store_grade,
         main.retail_env,
-        'NA' AS channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.channel,
+        main.crtd_dttm,
+        main.updt_dttm,
+	    0 AS numeric_distribution, 
+	    0 AS weighted_distribution,
+	    0 AS store_count_where_scanned
         FROM WKS_HONG_KONG_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC, b.ctry_key NULLS LAST) AS rn FROM 
@@ -1179,8 +1212,11 @@ final as
         main.store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        main.numeric_distribution,
+        main.weighted_distribution,
+        main.store_count_where_scanned
         FROM wks_rpt_regional_pacific_sellout_offtake_npd main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1271,8 +1307,11 @@ final as
         'NA' as store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM WKS_TAIWAN_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1363,8 +1402,11 @@ final as
         'NA' AS store_grade,
         main.retail_env,
         main.channel,
-        main.crtd_dttm::timestamp_ntz as crtd_dttm,
-        main.updt_dttm::timestamp_ntz as updt_dttm
+        main.crtd_dttm,
+        main.updt_dttm,
+        0 AS numeric_distribution,
+        0 AS weighted_distribution,
+        0 AS store_count_where_scanned
         FROM WKS_VIETNAM_REGIONAL_SELLOUT_OFFTAKE_NPD main
         left join (Select * from (select distinct a.material,a.dt_from,a.valid_to,a.amount,a.sls_org,b.ctry_key,row_number() OVER(PARTITION BY 
         ltrim(a.material, 0) ORDER BY to_date(a.valid_to, 'YYYYMMDD') DESC, to_date(a.dt_from, 'YYYYMMDD') DESC) AS rn FROM 
@@ -1453,7 +1495,7 @@ select year::number(18,0) as year,
     channel::varchar(150) as channel,
     crtd_dttm::timestamp_ntz(9) as crtd_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm,
-    null::number(20,4) as numeric_distribution,
-    null::number(20,4) as weighted_distribution,
-    null::number(20,4) as store_count_where_scanned
+    numeric_distribution::number(20,4) as numeric_distribution,
+    weighted_distribution::number(20,4) as weighted_distribution,
+    store_count_where_scanned::number(20,4) as store_count_where_scanned
  from final
