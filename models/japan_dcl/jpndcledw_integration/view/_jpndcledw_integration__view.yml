@@ -985,3 +985,8 @@ models:
     config:
       alias: kr_frequency_1yn_900
       tags: ["japan_dcl_views","transformation"]
+    
+  - name: jpndcledw_integration__cewq028
+    config:
+      alias: '"cewq028破損商品"'
+      tags: ["japan_dcl_views","inactive"]
