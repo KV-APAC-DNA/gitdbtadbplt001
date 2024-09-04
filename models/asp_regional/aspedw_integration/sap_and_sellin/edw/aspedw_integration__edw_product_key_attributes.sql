@@ -179,7 +179,7 @@ final as (
                                 FROM EDW_COPA_TRANS_FACT
                                 WHERE ACCT_HIER_SHRT_DESC = 'NTS'
                                 AND   TRIM(MATL_NUM) IS NOT NULL
-                                OR   TRIM(MATL_NUM) != ''
+                                AND   TRIM(MATL_NUM) != ''
                                 GROUP BY MATL_NUM,
                                         FISC_YR_PER)
                         WHERE FISC_YR_PER >= '2017001'
@@ -213,7 +213,7 @@ final as (
             (SELECT MATL_NUM, MAX(FISC_YR_PER) FISC_YR_PER
                 FROM (SELECT MATL_NUM,FISC_YR_PER,SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
                     FROM EDW_COPA_TRANS_FACT
-                    WHERE ACCT_HIER_SHRT_DESC = 'NTS' AND TRIM(MATL_NUM) IS NOT NULL OR TRIM(MATL_NUM) != ''
+                    WHERE ACCT_HIER_SHRT_DESC = 'NTS' AND TRIM(MATL_NUM) IS NOT NULL AND TRIM(MATL_NUM) != ''
                     AND  FISC_YR>=YEAR(CURRENT_TIMESTAMP)-3
                     GROUP BY MATL_NUM,FISC_YR_PER)
                 WHERE AMT_OBJ_CRNCY != '0.0'
