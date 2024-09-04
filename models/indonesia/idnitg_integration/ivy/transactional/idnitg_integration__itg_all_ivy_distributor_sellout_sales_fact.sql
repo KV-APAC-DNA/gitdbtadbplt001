@@ -79,7 +79,7 @@ invoice as (
         ,trim(sdii.batch_no) as batch_no
         ,trim(sdii.uom) as uom
         ,invoice_status,
-        sddi.file_name
+        sdii.file_name
     from sdii
         ,edw_distributor_dim edd
         ,edw_product_dim epd
