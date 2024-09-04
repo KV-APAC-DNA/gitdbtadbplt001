@@ -1,5 +1,5 @@
 with report_006_a_newly_added as (
-    select * from {{ ref('jpndcledw_integration__report__006_a_newly_added') }}
+    select * from {{ ref('jpndcledw_integration__report_006_a_newly_added') }}
 ),
 
 final as (
