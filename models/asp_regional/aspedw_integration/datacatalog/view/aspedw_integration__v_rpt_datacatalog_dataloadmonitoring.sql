@@ -5,103 +5,103 @@
 }}
 with dm_integration_dly as
 (
-    select * from dev_dna_core.jpnedw_integration.dm_integration_dly
+    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
 edi_cstm_m as
 (
-    select * from dev_dna_core.jpnedw_integration.edi_cstm_m
+    select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 dw_iv_month_end as
 (
-    select * from DEV_DNA_CORE.JPNEDW_INTEGRATION.DW_IV_MONTH_END
+    select * from {{ ref('jpnedw_integration__dw_iv_month_end') }}
 ),
 T_BI_POSDATA as
 (
-    select * from DEV_DNA_CORE.JPNEDW_INTEGRATION.T_BI_POSDATA
+    select * from {{ source('JPNEDW_INTEGRATION', 'T_BI_POSDATA') }}
 ),
 M_ACCOUNT_STORE as
 (
-    select * from DEV_DNA_CORE.JPNEDW_INTEGRATION.M_ACCOUNT_STORE
+    select * from {{ source('JPNEDW_INTEGRATION', 'M_ACCOUNT_STORE') }}
 ),
 ITG_MY_SELLOUT_SALES_FACT as
 (
-    select * from DEV_DNA_CORE.MYSITG_INTEGRATION.ITG_MY_SELLOUT_SALES_FACT
+    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_SELLOUT_SALES_FACT') }}
 ),
 ITG_MY_CUSTOMER_DIM as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_MY_CUSTOMER_DIM
+    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_CUSTOMER_DIM') }}
 ),
 ITG_MY_POS_SALES_FACT as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_MY_POS_SALES_FACT
+    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_POS_SALES_FACT') }}
 ),
 EDW_CALENDAR_DIM as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM 
+    select * from {{ ref('ASPEDW_INTEGRATION__EDW_CALENDAR_DIM') }}
 ),
 ITG_SG_POS_SALES_FACT as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_SG_POS_SALES_FACT
+    select * from {{ ref('SGPITG_INTEGRATION__ITG_SG_POS_SALES_FACT') }}
 ),
 ITG_SG_ZUELLIG_SELLOUT as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_SG_ZUELLIG_SELLOUT
+    select * from {{ ref('sgpitg_integration__itg_sg_zuellig_sellout') }}
 ),
 EDW_IMS_FACT as
 (
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_IMS_FACT
+    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_FACT') }}
 ),
 EDW_IMS_INVENTORY_FACT as
 (
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_IMS_INVENTORY_FACT
+    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_INVENTORY_FACT') }}
 ),
 EDW_POS_FACT as
 (
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_POS_FACT
+    select * from {{ ref('NTAEDW_INTEGRATION__EDW_POS_FACT') }}
 ),
 EDW_ECOMMERCE_OFFTAKE_NTA as
 (
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_ECOMMERCE_OFFTAKE
+    select * from {{ ref('NTAEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
 ),
 EDW_ECOMMERCE_OFFTAKE_IND as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_ECOMMERCE_OFFTAKE
+    select * from {{ ref('INDEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
 ),
 EDW_DAY_CLS_STOCK_FACT as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_DAY_CLS_STOCK_FACT
+    select * from {{ ref('INDEDW_INTEGRATION__EDW_DAY_CLS_STOCK_FACT') }}
 ),
 EDW_CUSTOMER_DIM as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_CUSTOMER_DIM
+    select * from {{ ref('INDEDW_INTEGRATION__EDW_CUSTOMER_DIM') }}
 ),
 EDW_COPA_TRANS_FACT as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COPA_TRANS_FACT
+    select * from {{ ref('ASPEDW_INTEGRATION__EDW_COPA_TRANS_FACT') }}
 ),
 EDW_IVY_INDONESIA_NOO_ANALYSIS as
 (
-    select * from DEV_DNA_CORE.IDNEDW_INTEGRATION.EDW_IVY_INDONESIA_NOO_ANALYSIS
+    select * from {{ ref('IDNEDW_INTEGRATION__EDW_IVY_INDONESIA_NOO_ANALYSIS') }}
 ),
 EDW_DAILYSALES_FACT as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_DAILYSALES_FACT
+    select * from {{ ref('INDEDW_INTEGRATION__EDW_DAILYSALES_FACT') }}
 ),
 EDW_RETAILER_CALENDAR_DIM as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_RETAILER_CALENDAR_DIM
+    select * from {{ ref('INDEDW_INTEGRATION__EDW_RETAILER_CALENDAR_DIM') }}
 ),
 ITG_PH_DMS_SELLOUT_SALES_FACT as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_PH_DMS_SELLOUT_SALES_FACT
+    select * from {{ ref('phlitg_integration__itg_ph_dms_sellout_sales_fact') }}
 ),
 itg_ph_customer_dim as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_PH_CUSTOMER_DIM
+    select * from {{ source('PHLITG_INTEGRATION', 'itg_ph_customer_dim') }}
 ),
 EDW_PH_POS_ANALYSIS as
 (
-    select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_PH_POS_ANALYSIS
+    select * from {{ ref('phledw_integration__edw_ph_pos_analysis') }}
 ),
 EDW_TH_POS_ANALYSIS as
 (

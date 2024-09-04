@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: JPNEDW_INTEGRATION
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: JPNEDW_INTEGRATION
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: T_BI_POSDATA
+        tags: ["dataloadmonitoring","transformation"]
+      - name: M_ACCOUNT_STORE
+        tags: ["dataloadmonitoring","transformation"]
+      - name: M_ACCOUNT_STORE
+        tags: ["dataloadmonitoring","transformation"]
+  - name: PHLITG_INTEGRATION
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: PHLITG_INTEGRATION
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_ph_customer_dim
+        tags: ["dataloadmonitoring","transformation"]
