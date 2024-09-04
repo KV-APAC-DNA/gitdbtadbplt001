@@ -56,8 +56,8 @@ AS (
         TOT_SOURCE_ID TIMEOFF_TERRITORY_SOURCE_ID,
         TOT.LAST_MODIFIED_DATE AS MODIFY_DT,
         TOT.LAST_MODIFIED_BY_ID AS MODIFY_ID,
-        SYSDATE() AS INSERTED_DATE,
-        SYSDATE() AS UPDATED_DATE
+        current_timestamp() AS INSERTED_DATE,
+        current_timestamp() AS UPDATED_DATE
     FROM itg_time_off_territory TOT,
         dim_employee US,
         dim_date D1,
@@ -71,7 +71,7 @@ AS (
         AND D1.date_value = TOT.TOT_DATE
         AND D2.date_value = nvl((DATEADD('DAY', CAST((nvl(TOT.WORKING_HOURS_ON, 0) + nvl(simp_frml_non_working_hours_off, 0)) / 8 AS INTEGER), TOT.TOT_DATE) - 1), TOT.TOT_DATE)
         AND TOT_DATE > (
-            SELECT DATE_TRUNC(year, DATEADD(DAY,- retention_years * 365 ,SYSDATE() ))
+            SELECT DATE_TRUNC(year, DATEADD(DAY,- retention_years * 365 ,current_timestamp() ))
             FROM itg_lookup_retention_period
             WHERE upper(table_name) = 'FACT_TIMEOFF_TERRITORY'
             )

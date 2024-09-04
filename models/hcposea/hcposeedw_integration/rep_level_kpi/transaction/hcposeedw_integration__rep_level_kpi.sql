@@ -86,7 +86,7 @@ transformed as
        fact_cycle_product.cfa_66
 FROM (SELECT *
       FROM dim_date
-      WHERE (DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(sysdate())) -2) AND DATE_PART(YEAR,to_date(sysdate())))) DAT
+      WHERE (DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(current_timestamp())) -2) AND DATE_PART(YEAR,to_date(current_timestamp())))) DAT
   INNER JOIN (SELECT 'SG' AS country,
                      ds.date_year,
                      ds.date_month,
@@ -96,7 +96,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'SG')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month
@@ -110,7 +110,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'MY')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month
@@ -124,7 +124,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'VN')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month
@@ -138,7 +138,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'TH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month
@@ -152,7 +152,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'PH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month
@@ -166,7 +166,7 @@ FROM (SELECT *
                                      FROM holiday_list
                                      WHERE country = 'ID')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        date_year,
                        date_month) WRK_DS
@@ -431,7 +431,7 @@ UNION ALL
        fact_cycle_product.cfa_100,
        fact_cycle_product.cfa_33,
        fact_cycle_product.cfa_66
-FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(sysdate())) -2) AND DATE_PART(YEAR,to_date(sysdate())))) DAT
+FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(current_timestamp())) -2) AND DATE_PART(YEAR,to_date(current_timestamp())))) DAT
   INNER JOIN (SELECT 'SG' AS country,
                      ds.my_date_year,
                      ds.my_date_month,
@@ -441,7 +441,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'SG')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month
@@ -455,7 +455,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'MY')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month
@@ -469,7 +469,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'VN')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month
@@ -483,7 +483,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'TH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month
@@ -497,7 +497,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'PH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month
@@ -511,7 +511,7 @@ FROM (SELECT * FROM dim_date WHERE (MY_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date
                                      FROM holiday_list
                                      WHERE country = 'ID')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        my_date_year,
                        my_date_month) WRK_DS
@@ -777,7 +777,7 @@ UNION ALL
        fact_cycle_product.cfa_100,
        fact_cycle_product.cfa_33,
        fact_cycle_product.cfa_66
-FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(sysdate())) -3) AND DATE_PART(YEAR,to_date(sysdate())))) DAT
+FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_date(current_timestamp())) -3) AND DATE_PART(YEAR,to_date(current_timestamp())))) DAT
   INNER JOIN (SELECT 'SG' AS country,
                      ds.jnj_date_year,
                      ds.jnj_date_month,
@@ -787,7 +787,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'SG')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month
@@ -801,7 +801,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'MY')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month
@@ -815,7 +815,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'VN')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month
@@ -829,7 +829,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'TH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month
@@ -843,7 +843,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'PH')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month
@@ -857,7 +857,7 @@ FROM (SELECT * FROM dim_date WHERE (JNJ_DATE_YEAR BETWEEN (DATE_PART(YEAR,to_dat
                                      FROM holiday_list
                                      WHERE country = 'ID')
               AND   date_dayofweek NOT IN ('Saturday','Sunday')
-              AND   date_key < TO_CHAR(sysdate(),'YYYYMMDD')
+              AND   date_key < TO_CHAR(current_timestamp(),'YYYYMMDD')
               GROUP BY country,
                        jnj_date_year,
                        jnj_date_month) WRK_DS
