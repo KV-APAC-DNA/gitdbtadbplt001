@@ -29,7 +29,11 @@ select snapshot_date,
 
        curr_key,
 
-       gros_trd_sls
+       gros_trd_sls,
+--NEW
+       cnfrm_qty_pc,
+                   
+       fut_sls_qty
 
 from {{this}} eifs,
 
@@ -66,7 +70,11 @@ select snapshot_date,
 
        curr_key,
 
-       gros_trd_sls
+       gros_trd_sls,
+--NEW
+       cnfrm_qty_pc,
+                   
+       fut_sls_qty
 
 from wks_invoice_fact_snapshot
 ),
@@ -88,7 +96,12 @@ select convert_timezone ('Australia/Sydney',current_timestamp())::date as snapsh
 
        orders.curr_key,
 
-       orders.gros_trd_sls
+       orders.gros_trd_sls,
+    
+    --NEW COLUMNS
+       orders.cnfrm_qty_pc,
+                   
+       orders.fut_sls_qty
 
 from (select eif.co_cd,
 
@@ -102,7 +115,12 @@ from (select eif.co_cd,
 
              eif.curr_key,
 
-             sum(eif.gros_trd_sls) as gros_trd_sls
+             sum(eif.gros_trd_sls) as gros_trd_sls,
+
+            --NEW SUM CALCULATION
+             sum(eif.cnfrm_qty_pc) as cnfrm_qty_pc,
+                   
+             sum(eif.fut_sls_qty) as fut_sls_qty
 
       from (select a.co_cd,
 
@@ -111,6 +129,10 @@ from (select eif.co_cd,
                    ltrim(a.matl_num,'0') as matl_num,
 
                    a.gros_trd_sls,
+
+                   -- NEW COLUMNS FOR CALCULATION
+                   a.cnfrm_qty_pc, 
+
 
                    ltrim(a.sls_doc,'0') as sls_doc,
 
@@ -175,6 +197,8 @@ matl_num::varchar(40) as matl_num,
 sls_doc::varchar(50) as sls_doc,
 curr_key::varchar(10) as curr_key,
 gros_trd_sls::number(38,7) as gros_trd_sls,
+cnfrm_qty_pc::number(38,7) as cnfrm_qty_pc,
+fut_sls_qty::number(38,7) as fut_sls_qty
 from transformed
 )
 select * from final
