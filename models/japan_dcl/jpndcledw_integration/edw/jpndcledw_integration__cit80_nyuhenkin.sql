@@ -24,25 +24,25 @@
                             CASE WHEN SUM(KAISYU.SKY_KIN)= SUM(KAISYU.KAIS_KSKM_KIN)THEN 1 ELSE 0 END as NYUHENKANFLG
                         FROM
                             {{ref('jpndcledw_integration__hanyo_attr')}} KAISHA
-                        INNER JOIN 
+                        INNER JOIN
                             {{ source('jpdclitg_integration','aartnar') }} SAIKEN
                         ON
                             SAIKEN.KAISHA_CD = KAISHA.ATTR1
-                        INNER JOIN 
+                        INNER JOIN
                             {{ source('jpdclitg_integration','aartbkaisytiar') }} KAISYU
                         ON
-                            KAISYU.KAISHA_CD = KAISHA.ATTR1 AND 
+                            KAISYU.KAISHA_CD = KAISHA.ATTR1 AND
                             SAIKEN.AR_NAIBU_NO = KAISYU.AR_NAIBU_NO
-                        WHERE   
-                            KAISHA.KBNMEI = 'KAISYA' AND  
+                        WHERE
+                            KAISHA.KBNMEI = 'KAISYA' AND
                             SAIKEN.KOUSHIN_DATE >= (SELECT
-                                                        CAST( TO_CHAR( CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
+                                                        CAST( TO_CHAR( CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC))
                                                     FROM {{ref('jpndcledw_integration__hanyo_attr')}} HANYO_ATTR
-                                                    WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM')) 
-                                                    AND  
+                                                    WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM'))
+                                                    AND
                             (SAIKEN.HASSEI_MT_DEN_SHUBT_KBN = '107' OR SAIKEN.TORI_SHUR_CD = 'Z302')
                         GROUP BY
-                            SAIKEN.HASSEI_MT_DEN_NO 
+                            SAIKEN.HASSEI_MT_DEN_NO
                         ORDER BY
                             SAIKEN.HASSEI_MT_DEN_NO) NYUHEN
                         WHERE
@@ -59,17 +59,17 @@ as
 ),
 AARTNAR as
 (
-    select * from {{ source('jpdclitg_integration','aartnar') }} 
+    select * from {{ source('jpdclitg_integration','aartnar') }}
 ),
 AARTBKAISYTIAR as
 (
-    select * from {{ source('jpdclitg_integration','aartbkaisytiar') }} 
+    select * from {{ source('jpdclitg_integration','aartbkaisytiar') }}
 ),
 datefrom as
 (
     SELECT
-        CAST( TO_CHAR(CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC)) 
-    FROM HANYO_ATTR 
+        CAST( TO_CHAR(CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp()),'YYYYMMDD') AS NUMERIC) + (select distinct(CAST(ATTR1 AS NUMERIC))
+    FROM HANYO_ATTR
     WHERE HANYO_ATTR.KBNMEI = 'DAILYFROM')
 ),
 NYUHEN as
@@ -85,17 +85,17 @@ NYUHEN as
     INNER JOIN AARTNAR SAIKEN
     ON SAIKEN.KAISHA_CD = KAISHA.ATTR1
     INNER JOIN AARTBKAISYTIAR KAISYU
-    ON KAISYU.KAISHA_CD = KAISHA.ATTR1 AND 
+    ON KAISYU.KAISHA_CD = KAISHA.ATTR1 AND
         SAIKEN.AR_NAIBU_NO = KAISYU.AR_NAIBU_NO
-    WHERE   
-        KAISHA.KBNMEI = 'KAISYA' AND  
-        SAIKEN.KOUSHIN_DATE >= (SELECT * FROM datefrom) AND  
+    WHERE
+        KAISHA.KBNMEI = 'KAISYA' AND
+        SAIKEN.KOUSHIN_DATE >= (SELECT * FROM datefrom) AND
         (SAIKEN.HASSEI_MT_DEN_SHUBT_KBN = '107' OR SAIKEN.TORI_SHUR_CD = 'Z302')
     GROUP BY
-        SAIKEN.HASSEI_MT_DEN_NO 
+        SAIKEN.HASSEI_MT_DEN_NO
     ORDER BY
         SAIKEN.HASSEI_MT_DEN_NO
-        
+
 ),
 final as
 (SELECT
@@ -118,5 +118,5 @@ final as
     ON CIT80.SAL_NO = NYUHEN.SAL_NO
     WHERE CIT80.SAL_NO  IS NULL
 )
-    
+
 select * from final

@@ -30,17 +30,17 @@ as (
         amt.c_dsranktotalprcbymonth as prc
     from c_tbecranksumamount amt
     where amt.dielimflg = '0'
-    
+
     union all
-    
+
     select diecusrid as usrid,
         to_char(dsorderdt, 'yyyymm') as rankdt,
         c_dsrankaddprc as prc
     from c_tbecrankaddamountadm adda
     where dielimflg = '0'
-    
+
     union all
-    
+
     select usrid as usrid,
         yyyymm as rankdt,
         diff_amout as prc
@@ -48,17 +48,17 @@ as (
     ),
 ruikei
 as (
-    select 
+    select
         to_char(cal.curr_date, 'yyyymm') as yyyymm,
         sum_curr_month.usrid as usrid,
         sum(sum_curr_month.prc) as thistotalprc
-    from 
+    from
         sum_curr_month
-    join 
-        dcl_calendar_sysdate cal 
+    join
+        dcl_calendar_sysdate cal
         on cal.is_active = true
         and 1 = 1
-    where 
+    where
         sum_curr_month.rankdt between to_char(cal.curr_date, 'yyyy') || '01'
         and to_char(cal.curr_date, 'yyyymm')
     group by to_char(cal.curr_date, 'yyyymm'),
@@ -68,7 +68,7 @@ transformed
 as (
     select ruikei.yyyymm,
         ruikei.usrid,
-        case 
+        case
             when ruikei.thistotalprc >= 80000
                 then 'ダイヤモンド'
             when ruikei.thistotalprc >= 50000
@@ -77,7 +77,7 @@ as (
                 then 'ゴールド'
             else 'レギュラー'
             end as tstage,
-        case 
+        case
             when ruikei.thistotalprc >= 80000
                 then '04'
             when ruikei.thistotalprc >= 50000
@@ -87,7 +87,7 @@ as (
             else '01'
             end as tstage_cd,
         nvl(ruikei.thistotalprc, 0) as thistotalprc,
-        case 
+        case
             when ruikei.thistotalprc >= 80000
                 then 8500
             when ruikei.thistotalprc >= 50000
@@ -96,7 +96,7 @@ as (
                 then 500
             else 0
             end as goalp,
-        to_char(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') insertdate
+        to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') insertdate
     from ruikei
     where ruikei.usrid in (
             select diusrid
@@ -106,7 +106,7 @@ as (
     ),
 final as
 (
-    select 
+    select
         yyyymm::varchar(14) as yyyymm,
         usrid::number(38,0) as usrid,
         tstage::varchar(18) as tstage,

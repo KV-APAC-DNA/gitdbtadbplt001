@@ -9,9 +9,9 @@
                 WHERE odrreceiveno  IN (
                 SELECT order_ID
                 FROM {{ source('jpdcledw_integration', 'container_collection_v') }} ccv
-                WHERE CCV.order_id  = container_collection_exclude_no.odrreceiveno 
+                WHERE CCV.order_id  = container_collection_exclude_no.odrreceiveno
                 )
-                AND TO_CHAR(convert_timezone('UTC', 'Asia/Tokyo', insert_date),'YYYYMMDD') = TO_CHAR(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()),'YYYYMMDD');
+                AND TO_CHAR(convert_timezone('Asia/Tokyo', insert_date),'YYYYMMDD') = TO_CHAR(convert_timezone('Asia/Tokyo', current_timestamp()),'YYYYMMDD');
         {% endif %}"
     )
 }}
@@ -21,9 +21,9 @@ with CONTAINER_COLLECTION_V as (
 ),
 transformed as (
 select
-order_ID, 
-convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()) AS insert_date
-FROM container_collection_v 
+order_ID,
+convert_timezone('Asia/Tokyo', current_timestamp()) AS insert_date
+FROM container_collection_v
 WHERE shipment_status = '出荷対象外' AND  sort_key ='1'
 AND NOT EXISTS
 (

@@ -43,15 +43,15 @@ AS (
         SELECT usrid,
             nvl(point, 0) point
         FROM kr_this_point_granted
-        
+
         UNION ALL
-        
+
         SELECT rsc.usrid,
             nvl(rsc.point_granted, 0) point
         FROM kr_this_stage_point_wk_rescue rsc
         JOIN dcl_calendar_sysdate cal1 ON cal1.is_active = true
             AND 1 = 1
-        WHERE rsc.yyyymm BETWEEN CASE 
+        WHERE rsc.yyyymm BETWEEN CASE
                         WHEN to_char(cal1.curr_date, 'dd') <= 20
                             THEN to_char(add_months(cal1.curr_date, - 1), 'yyyy') || '01'
                         WHEN to_char(cal1.curr_date, 'dd') > 20
@@ -69,13 +69,13 @@ AS (
         nvl(lp.stage_cd, '01') AS lstage_cd,
         nvl(tp.tstage, 'レギュラー') AS tstage,
         nvl(tp.tstage_cd, '01') AS tstage_cd,
-        CASE 
+        CASE
             WHEN nvl(lp.stage_cd, '01') >= nvl(tp.tstage_cd, '01')
                 THEN nvl(lp.stage, 'レギュラー')
             WHEN nvl(lp.stage_cd, '01') < nvl(tp.tstage_cd, '01')
                 THEN nvl(tp.tstage, 'レギュラー')
             END AS stage,
-        CASE 
+        CASE
             WHEN nvl(lp.stage_cd, '01') >= nvl(tp.tstage_cd, '01')
                 THEN nvl(lp.stage_cd, '01')
             WHEN nvl(lp.stage_cd, '01') < nvl(tp.tstage_cd, '01')
@@ -84,12 +84,12 @@ AS (
         nvl(tp.thistotalprc, 0) AS thistotalprc,
         nvl(tp.goalp, 0) AS goalp,
         nvl(pgrnt.sump, 0) AS point_granted_sum,
-        CASE 
+        CASE
             WHEN to_char(cal.curr_date, 'dd') < '20'
                 THEN greatest(nvl(tp.goalp, 0), nvl(pgrnt.sump, 0)) - nvl(pgrnt.sump, 0)
             ELSE 0
             END AS point_tobe_granted,
-        CASE 
+        CASE
             WHEN to_char(cal.curr_date, 'dd') = '20'
                 THEN greatest(nvl(tp.goalp, 0), nvl(pgrnt.sump, 0)) - nvl(pgrnt.sump, 0)
             ELSE 0
@@ -98,7 +98,7 @@ AS (
         NULL AS promo_stage_cd,
         NULL::INTEGER AS next_promo_stage_amt,
         NULL::INTEGER AS next_promo_stage_point,
-        to_char(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') AS upddate
+        to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') AS upddate
     FROM kr_this_stage_point_wk_prv tp
     FULL OUTER JOIN kr_last_stage_point lp ON tp.usrid = lp.usrid
     LEFT JOIN pgrnt ON nvl2(tp.usrid, tp.usrid, lp.usrid) = pgrnt.usrid

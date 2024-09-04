@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 WITH kr_054_sfuyo_meisai
 AS (
     SELECT *
@@ -33,3 +34,6 @@ AS (
     )
 SELECT *
 FROM final
+{% else %}
+    select * from {{this}}
+{% endif %}
