@@ -179,7 +179,7 @@ final as (
                                 FROM EDW_COPA_TRANS_FACT
                                 WHERE ACCT_HIER_SHRT_DESC = 'NTS'
                                 AND   TRIM(MATL_NUM) IS NOT NULL
-                                OR   TRIM(MATL_NUM) != ''
+                                AND   TRIM(MATL_NUM) != ''
                                 GROUP BY MATL_NUM,
                                         FISC_YR_PER)
                         WHERE FISC_YR_PER >= '2017001'
