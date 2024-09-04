@@ -9,7 +9,7 @@
 with source as(
     select *,
     dense_rank() over(partition by distributorid,orderno,orderdate,arcode,linenumber order by source_file_name desc) as rnk
-    from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }}
+    from {{ source('thasdl_raw', 'sdl_th_dms_sellout_fact') }} qualify rnk=1
 ),
 final as(
     select

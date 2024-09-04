@@ -41,7 +41,7 @@ final as (
         order_no,
         return_reason,
         payment_term,
-        filename as filename,
+        filename,
         run_id,
         crt_dttm 
     from source
