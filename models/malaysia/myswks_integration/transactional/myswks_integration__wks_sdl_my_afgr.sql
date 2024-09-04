@@ -27,7 +27,8 @@ transformed as
         evmof.bill_dt as bill_dt, 
         evmof.bill_net_val as cn_amt, 
         source.cdl_dttm,
-        source.curr_dt
+        source.curr_dt,
+        source.file_name
     from sdl_my_afgr as source
     left join edw_vw_my_orders_fact as evmof
     on afgr_num = evmof.po_num

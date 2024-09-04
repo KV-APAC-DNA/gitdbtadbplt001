@@ -19,7 +19,8 @@ tbl1 as (
         trgt_type,
         trgt_val_type,
         cast(jan_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 
 ),
@@ -36,7 +37,8 @@ tbl2 as (
         trgt_type,
         trgt_val_type,
         cast(feb_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 
 ),
@@ -53,7 +55,8 @@ tbl3 as (
         trgt_type,
         trgt_val_type,
         cast(mar_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl4 as (
@@ -69,7 +72,8 @@ tbl4 as (
         trgt_type,
         trgt_val_type,
         cast(apr_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl5 as (
@@ -85,7 +89,8 @@ tbl5 as (
         trgt_type,
         trgt_val_type,
         cast(may_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl6 as (
@@ -101,7 +106,8 @@ tbl6 as (
         trgt_type,
         trgt_val_type,
         cast(jun_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl7 as (
@@ -117,7 +123,8 @@ tbl7 as (
         trgt_type,
         trgt_val_type,
         cast(jul_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl8 as (
@@ -133,7 +140,8 @@ tbl8 as (
         trgt_type,
         trgt_val_type,
         cast(aug_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl9 as (
@@ -149,7 +157,8 @@ tbl9 as (
         trgt_type,
         trgt_val_type,
         cast(sep_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl10 as (
@@ -165,7 +174,8 @@ tbl10 as (
         trgt_type,
         trgt_val_type,
         cast(oct_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl11 as (
@@ -181,7 +191,8 @@ tbl11 as (
         trgt_type,
         trgt_val_type,
         cast(nov_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 tbl12 as (
@@ -197,7 +208,8 @@ tbl12 as (
         trgt_type,
         trgt_val_type,
         cast(dec_val as decimal(20, 6)) as trgt_val,
-        cdl_dttm
+        cdl_dttm,
+        file_name
     from source
 ),
 transformed as (
@@ -240,7 +252,8 @@ final as (
         trgt_val::number(20,6) as trgt_val,
         cdl_dttm::varchar(20) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from transformed
 )
 

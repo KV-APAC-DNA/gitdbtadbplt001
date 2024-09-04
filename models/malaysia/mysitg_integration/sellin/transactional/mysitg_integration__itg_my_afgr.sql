@@ -4,7 +4,6 @@ with sdl_my_afgr as (
 itg_my_customer_dim as (
     select * from {{ref('mysitg_integration__itg_my_customer_dim') }}
 ),
-
 transformed as 
 (
     select
@@ -54,7 +53,8 @@ transformed as
         imcd.chnl as chnl,
         sma.cdl_dttm,
         current_timestamp() as crtd_dttm,
-        current_timestamp() as updt_dttm
+        current_timestamp() as updt_dttm,
+        sma.file_name::varchar(255) as file_name
     from sdl_my_afgr as sma, itg_my_customer_dim as imcd
     where imcd.cust_id = sma.cust_id
 ),
@@ -83,7 +83,8 @@ final as
         chnl::varchar(30) as chnl,
         cdl_dttm::varchar(30) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from transformed
 )
 select * from final

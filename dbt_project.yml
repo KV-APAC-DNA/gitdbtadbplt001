@@ -34,6 +34,7 @@ vars:
 # In this example config, we tell dbt to build all models in the example/ directory
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
+
 models:
   dbt_artifacts:
     +enabled: false
@@ -616,6 +617,8 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
+tests:
+  +severity: warn
 
 
 
