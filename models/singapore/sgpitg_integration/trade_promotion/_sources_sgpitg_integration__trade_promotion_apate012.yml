@@ -11,4 +11,6 @@ sources:
     tables:
       - name: TRATBL_sdl_sg_tp_closed_year_bal__null_test
       - name: TRATBL_sdl_sg_tp_closed_year_bal__lookup_test
+      - name: TRATBL_sdl_sg_tp_closed_month__null_test
+      - name: TRATBL_sdl_sg_tp_closed_month__lookup_test
         
