@@ -15,244 +15,244 @@ dw_iv_month_end as
 (
     select * from {{ ref('jpnedw_integration__dw_iv_month_end') }}
 ),
-T_BI_POSDATA as
+t_bi_posdata as
 (
-    select * from {{ source('JPNEDW_INTEGRATION', 'T_BI_POSDATA') }}
+    select * from {{ source('jpnedw_integration', 't_bi_posdata') }}
 ),
-M_ACCOUNT_STORE as
+m_account_store as
 (
-    select * from {{ source('JPNEDW_INTEGRATION', 'M_ACCOUNT_STORE') }}
+    select * from {{ source('jpnedw_integration', 'm_account_store') }}
 ),
-ITG_MY_SELLOUT_SALES_FACT as
+itg_my_sellout_sales_fact as
 (
-    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_SELLOUT_SALES_FACT') }}
+    select * from {{ ref('mysitg_integration__itg_my_sellout_sales_fact') }}
 ),
-ITG_MY_CUSTOMER_DIM as
+itg_my_customer_dim as
 (
-    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_CUSTOMER_DIM') }}
+    select * from {{ ref('mysitg_integration__itg_my_customer_dim') }}
 ),
-ITG_MY_POS_SALES_FACT as
+itg_my_pos_sales_fact as
 (
-    select * from {{ ref('MYSITG_INTEGRATION__ITG_MY_POS_SALES_FACT') }}
+    select * from {{ ref('mysitg_integration__itg_my_pos_sales_fact') }}
 ),
-EDW_CALENDAR_DIM as
+edw_calendar_dim as
 (
-    select * from {{ ref('ASPEDW_INTEGRATION__EDW_CALENDAR_DIM') }}
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
-ITG_SG_POS_SALES_FACT as
+itg_sg_pos_sales_fact as
 (
-    select * from {{ ref('SGPITG_INTEGRATION__ITG_SG_POS_SALES_FACT') }}
+    select * from {{ ref('sgpitg_integration__itg_sg_pos_sales_fact') }}
 ),
-ITG_SG_ZUELLIG_SELLOUT as
+itg_sg_zuellig_sellout as
 (
     select * from {{ ref('sgpitg_integration__itg_sg_zuellig_sellout') }}
 ),
-EDW_IMS_FACT as
+edw_ims_fact as
 (
-    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_FACT') }}
+    select * from {{ ref('ntaedw_integration__edw_ims_fact') }}
 ),
-EDW_IMS_INVENTORY_FACT as
+edw_ims_inventory_fact as
 (
-    select * from {{ ref('NTAEDW_INTEGRATION__EDW_IMS_INVENTORY_FACT') }}
+    select * from {{ ref('ntaedw_integration__edw_ims_inventory_fact') }}
 ),
-EDW_POS_FACT as
+edw_pos_fact as
 (
-    select * from {{ ref('NTAEDW_INTEGRATION__EDW_POS_FACT') }}
+    select * from {{ ref('ntaedw_integration__edw_pos_fact') }}
 ),
-EDW_ECOMMERCE_OFFTAKE_NTA as
+edw_ecommerce_offtake_nta as
 (
-    select * from {{ ref('NTAEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
+    select * from {{ ref('ntaedw_integration__edw_ecommerce_offtake') }}
 ),
-EDW_ECOMMERCE_OFFTAKE_IND as
+edw_ecommerce_offtake_ind as
 (
-    select * from {{ ref('INDEDW_INTEGRATION__EDW_ECOMMERCE_OFFTAKE') }}
+    select * from {{ ref('indedw_integration__edw_ecommerce_offtake') }}
 ),
-EDW_DAY_CLS_STOCK_FACT as
+edw_day_cls_stock_fact as
 (
-    select * from {{ ref('INDEDW_INTEGRATION__EDW_DAY_CLS_STOCK_FACT') }}
+    select * from {{ ref('indedw_integration__edw_day_cls_stock_fact') }}
 ),
-EDW_CUSTOMER_DIM as
+edw_customer_dim as
 (
-    select * from {{ ref('INDEDW_INTEGRATION__EDW_CUSTOMER_DIM') }}
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
-EDW_COPA_TRANS_FACT as
+edw_copa_trans_fact as
 (
-    select * from {{ ref('ASPEDW_INTEGRATION__EDW_COPA_TRANS_FACT') }}
+    select * from {{ ref('aspedw_integration__edw_copa_trans_fact') }}
 ),
-EDW_IVY_INDONESIA_NOO_ANALYSIS as
+edw_ivy_indonesia_noo_analysis as
 (
-    select * from {{ ref('IDNEDW_INTEGRATION__EDW_IVY_INDONESIA_NOO_ANALYSIS') }}
+    select * from {{ ref('idnedw_integration__edw_ivy_indonesia_noo_analysis') }}
 ),
-EDW_DAILYSALES_FACT as
+edw_dailysales_fact as
 (
-    select * from {{ ref('INDEDW_INTEGRATION__EDW_DAILYSALES_FACT') }}
+    select * from {{ ref('indedw_integration__edw_dailysales_fact') }}
 ),
-EDW_RETAILER_CALENDAR_DIM as
+edw_retailer_calendar_dim as
 (
-    select * from {{ ref('INDEDW_INTEGRATION__EDW_RETAILER_CALENDAR_DIM') }}
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
-ITG_PH_DMS_SELLOUT_SALES_FACT as
+itg_ph_dms_sellout_sales_fact as
 (
     select * from {{ ref('phlitg_integration__itg_ph_dms_sellout_sales_fact') }}
 ),
 itg_ph_customer_dim as
 (
-    select * from {{ source('PHLITG_INTEGRATION', 'itg_ph_customer_dim') }}
+    select * from {{ source('phlitg_integration', 'itg_ph_customer_dim') }}
 ),
-EDW_PH_POS_ANALYSIS as
+edw_ph_pos_analysis as
 (
     select * from {{ ref('phledw_integration__edw_ph_pos_analysis') }}
 ),
-EDW_TH_POS_ANALYSIS as
+edw_th_pos_analysis as
 (
-    select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_TH_POS_ANALYSIS
+    select * from {{ ref('thaedw_integration__edw_th_pos_analysis') }}
 ),
-EDW_TH_SELLOUT_ANALYSIS as
+edw_th_sellout_analysis as
 (
-    select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_TH_SELLOUT_ANALYSIS
+    select * from {{ ref('thaedw_integration__edw_th_sellout_analysis') }}
 ),
-EDW_METCASH_IND_GROCERY_FACT as
+edw_metcash_ind_grocery_fact as
 (
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.EDW_METCASH_IND_GROCERY_FACT
+    select * from {{ ref('pcfedw_integration__edw_metcash_ind_grocery_fact') }}
 ),
-EDW_SALES_REPORTING as
+edw_sales_reporting as
 (
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.EDW_SALES_REPORTING
+    select * from {{ ref('pcfedw_integration__edw_sales_reporting') }}
 ),
-EDW_CUBE_EXPENSE_TP_FACT as
+edw_cube_expense_tp_fact as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_CUBE_EXPENSE_TP_FACT
+    select * from {{ source('chnedw_integration', 'edw_cube_expense_tp_fact') }}
 ),
-EDW_CUBE_EXPENSE_TT_FACT as
+edw_cube_expense_tt_fact as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_CUBE_EXPENSE_TT_FACT
+    select * from {{ source('chnedw_integration', 'edw_cube_expense_tt_fact') }}
 ),
-EDW_GT_SO_FACT as
+edw_gt_so_fact as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_GT_SO_FACT
+    select * from {{ source('chnedw_integration', 'edw_gt_so_fact') }}
 ),
-EDW_CUBE_SALES_CUSTOMER_DIM  as
+edw_cube_sales_customer_dim  as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.EDW_CUBE_SALES_CUSTOMER_DIM 
+    select * from {{ source('chnedw_integration', 'edw_cube_sales_customer_dim') }}
 ),
 edw_inventory_fact  as
 (
-    select * from DEV_DNA_CORE.CHNEDW_INTEGRATION.edw_inventory_fact
+    select * from {{ source('chnedw_integration', 'edw_inventory_fact') }}
 ),
-ITG_MY_SELLOUT_STOCK_FACT  as
+itg_my_sellout_stock_fact  as
 (
-    select * from DEV_DNA_CORE.MYSITG_INTEGRATION.ITG_MY_SELLOUT_STOCK_FACT
+    select * from {{ ref('mysitg_integration__itg_my_sellout_stock_fact') }}
 ),
-ITG_PH_DMS_SELLOUT_STOCK_FACT  as
+itg_ph_dms_sellout_stock_fact  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_PH_DMS_SELLOUT_STOCK_FACT
+    select * from {{ ref('phlitg_integration__itg_ph_dms_sellout_stock_fact') }}
 ),
-ITG_VN_DMS_D_SELLOUT_SALES_FACT  as
+itg_vn_dms_d_sellout_sales_fact  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_VN_DMS_D_SELLOUT_SALES_FACT
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_d_sellout_sales_fact') }}
 ),
-ITG_VN_DMS_DISTRIBUTOR_DIM  as
+itg_vn_dms_distributor_dim  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_VN_DMS_DISTRIBUTOR_DIM
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_distributor_dim') }}
 ),
-ITG_VN_DMS_SALES_STOCK_FACT  as
+itg_vn_dms_sales_stock_fact  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_VN_DMS_SALES_STOCK_FACT
+    select * from {{ ref('vnmitg_integration__itg_vn_dms_sales_stock_fact') }}
 ),
-ITG_TH_SELLOUT_INVENTORY_FACT  as
+itg_th_sellout_inventory_fact  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_TH_SELLOUT_INVENTORY_FACT
+    select * from {{ ref('thaitg_integration__itg_th_sellout_inventory_fact') }}
 ),
-ITG_TH_DMS_INVENTORY_FACT  as
+itg_th_dms_inventory_fact  as
 (
-    select * from DEV_DNA_CORE.THAITG_INTEGRATION.ITG_TH_DMS_INVENTORY_FACT
+    select * from {{ ref('thaitg_integration__itg_th_dms_inventory_fact') }}
 ),
-VW_PACIFIC_INVENTORY  as
+vw_pacific_inventory  as
 (
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_PACIFIC_INVENTORY
+    select * from {{ ref('pcfedw_integration__vw_pacific_inventory') }}
 ),
-ITG_CUSTOMER_SELLOUT  as
+itg_customer_sellout  as
 (
-    select * from DEV_DNA_CORE.PCFITG_INTEGRATION.ITG_CUSTOMER_SELLOUT
+    select * from {{ ref('pcfitg_integration__itg_customer_sellout') }}
 ),
-VW_PACIFIC_SELLOUT  as
+vw_pacific_sellout  as
 (
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_PACIFIC_SELLOUT
+    select * from {{ ref('pcfedw_integration__vw_pacific_sellout') }}
 ),
-VW_IRI_SCAN_SALES_ANALYSIS  as
+vw_iri_scan_sales_analysis  as
 (
-    select * from DEV_DNA_CORE.PCFEDW_INTEGRATION.VW_IRI_SCAN_SALES_ANALYSIS
+    select * from {{ ref('pcfedw_integration__vw_iri_scan_sales_analysis') }}
 ),
-ITG_KR_ECOM_DSTR_INVENTORY  as
+itg_kr_ecom_dstr_inventory  as
 (
-    select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_ECOM_DSTR_INVENTORY
+    select * from {{ ref('ntaitg_integration__itg_kr_ecom_dstr_inventory') }}
 ),
-EDW_CUSTOMER_SALES_DIM  as
+edw_customer_sales_dim  as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_CUSTOMER_BASE_DIM  as
+edw_customer_base_dim  as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-ITG_KR_ECOM_DSTR_SELLOUT  as
+itg_kr_ecom_dstr_sellout  as
 (
-    select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_KR_ECOM_DSTR_SELLOUT
+    select * from {{ ref('ntaitg_integration__itg_kr_ecom_dstr_sellout') }}
 ),
-ITG_POS_OFFTAKE_FACT  as
+itg_pos_offtake_fact  as
 (
-    select * from DEV_DNA_CORE.INDITG_INTEGRATION.ITG_POS_OFFTAKE_FACT
+    select * from {{ ref('inditg_integration__itg_pos_offtake_fact') }}
 ),
-ITG_VN_MT_SELLIN_DKSH  as
+itg_vn_mt_sellin_dksh  as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_VN_MT_SELLIN_DKSH
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_dksh') }}
 ),
-ITG_VN_MT_SELLIN_TARGET  as
+itg_vn_mt_sellin_target  as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLIN_TARGET 
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellin_target') }}
 ),
-ITG_VN_MT_SELLOUT_CON_CUNG as
+itg_vn_mt_sellout_con_cung as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_CON_CUNG
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_con_cung') }}
 ),
-ITG_VN_MT_SELLOUT_COOP as
+itg_vn_mt_sellout_coop as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_COOP
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_coop') }}
 ),
-ITG_VN_MT_SELLOUT_GUARDIAN as
+itg_vn_mt_sellout_guardian as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_GUARDIAN 
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_guardian') }}
 ),
-ITG_VN_MT_SELLOUT_LOTTE as
+itg_vn_mt_sellout_lotte as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_LOTTE
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_lotte') }}
 ),
-ITG_VN_MT_SELLOUT_MEGA as
+itg_vn_mt_sellout_mega as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_MEGA
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_mega') }}
 ),
-ITG_VN_MT_SELLOUT_VINMART as
+itg_vn_mt_sellout_vinmart as
 (
-    select * from DEV_DNA_CORE.VNMITG_INTEGRATION.ITG_VN_MT_SELLOUT_VINMART
+    select * from {{ ref('vnmitg_integration__itg_vn_mt_sellout_vinmart') }}
 ),
-ITG_TW_AS_WATSONS_INVENTORY as
+itg_tw_as_watsons_inventory as
 (
-    select * from DEV_DNA_CORE.NTAITG_INTEGRATION.ITG_TW_AS_WATSONS_INVENTORY 
+    select * from {{ ref('ntaitg_integration__itg_tw_as_watsons_inventory') }}
 ),
-ITG_MY_AS_WATSONS_INVENTORY as
+itg_my_as_watsons_inventory as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_MY_AS_WATSONS_INVENTORY
+    select * from {{ ref('mysitg_integration__itg_my_as_watsons_inventory') }}
 ),
-ITG_PH_AS_WATSONS_INVENTORY as
+itg_ph_as_watsons_inventory as
 (
-    select * from DEV_DNA_CORE.OSEITG_INTEGRATION.ITG_PH_AS_WATSONS_INVENTORY 
+    select * from {{ ref('phlitg_integration__itg_ph_as_watsons_inventory') }} 
 ),
-EDW_KR_OTC_INVENTORY as
+edw_kr_otc_inventory as
 (
-    select * from DEV_DNA_CORE.NTAEDW_INTEGRATION.EDW_KR_OTC_INVENTORY
+    select * from {{ ref('ntaedw_integration__edw_kr_otc_inventory') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-    select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_VW_OS_TIME_DIM
+edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 dm_integration_dly_temp1
 AS (
@@ -446,7 +446,6 @@ AS (
                       ELSE TO_DATE(sales_date, 'YYYY-MM-DD')
                   END
               )), 'YYYY-MM-DD') AS transaction_date,
-              --DATE_TRUNC('day',MAX(TO_DATE(sales_date, 'yyyy-mm-dd'))) AS transaction_date,
               'Retailers' AS subject_name,
               customer_code AS account_cd,
               customer_name AS account_nm,
@@ -585,7 +584,6 @@ AS (
               SUM(salclsstock) AS jcp_qty_sum,
               SUM(salclsstockval) AS jcp_amt_sum,
               DATE_TRUNC('day', MAX(stock_date)) AS transaction_date,
-              --DATE_TRUNC('day',MAX(TO_DATE(stock_date, 'yyyy-mm-dd'))) AS transaction_date,
               'Distributors' AS subject_name,
               a.customer_code AS account_cd,
               b.customer_name AS account_nm,
@@ -594,7 +592,6 @@ AS (
        FROM EDW_DAY_CLS_STOCK_FACT a
        LEFT JOIN EDW_CUSTOMER_DIM b ON a.customer_code = b.customer_code
        WHERE stock_date >= CURRENT_DATE - INTERVAL '90 days'
-       --TO_DATE(stock_date, 'yyyy-mm-dd') >= CURRENT_DATE - INTERVAL '90 days'
        GROUP BY a.customer_code,
               b.customer_name
        ),
@@ -611,7 +608,6 @@ AS (
                 WHEN caln_day = '00000000' THEN '00010101'
                 ELSE TO_DATE(caln_day, 'yyyymmdd')
             END AS transaction_date,
-              --TO_DATE(caln_day, 'yyyymmdd') AS transaction_date,
               'GL Accounts' AS subject_name,
               acct_num AS account_cd,
               NULL AS account_nm,
@@ -622,7 +618,6 @@ AS (
             WHEN caln_day = '00000000' THEN '00010101'
             ELSE TO_DATE(caln_day, 'yyyymmdd')
             END >= CURRENT_DATE - INTERVAL '90 days'
-       --TO_DATE(caln_day, 'yyyymmdd') >= CURRENT_DATE - INTERVAL '90 days'
        GROUP BY acct_num,
               crt_dttm,
               ctry_key,
@@ -1417,7 +1412,6 @@ AS (
               SUM(total_stock_qty) AS jcp_qty_sum,
               SUM(total_stock_value) AS jcp_amt_sum,
               TO_DATE(inv.year || '-' || SUBSTRING(TD.MNTH_ID, 5, 2) || '-15', 'YYYY-MM-DD') AS transaction_date,
-              --CAST(inv.year + '-' + SUBSTRING(TD.MNTH_ID, 5, 2) + '-' + '15' AS DATE) AS transaction_date,
               'Distributors' AS subject_name,
               '107323' AS account_cd,
               'AS WATSONS' AS account_nm,
@@ -1436,10 +1430,8 @@ AS (
        WHERE LTRIM(INV.WEEK_NO, '0') = LTRIM(TD.WK, '0')
               AND INV.YEAR = TD.YEAR
               AND TD.MNTH_ID >= TO_NUMBER(TO_CHAR(DATEADD(MONTH, -3, CURRENT_DATE), 'YYYYMM')) 
-              --TD.MNTH_ID >= CAST(TO_CHAR(ADD_MONTHS(DATE_TRUNC('day',current_timestamp()), - 3), 'YYYYMM') AS INTEGER)
        GROUP BY Inv.crtd_dttm,
                TO_DATE(inv.year || '-' || SUBSTRING(TD.MNTH_ID, 5, 2) || '-15', 'YYYY-MM-DD'),
-              --CAST(inv.year + '-' + SUBSTRING(TD.MNTH_ID, 5, 2) + '-' + '15' AS DATE),
               filename
        ),
 itg_my_as_watsons_inventory_temp1
@@ -1452,7 +1444,6 @@ AS (
               SUM(inv_qty_pc) AS jcp_qty_sum,
               SUM(inv_value) AS jcp_amt_sum,
               TO_DATE(YEAR || '-' || SUBSTRING(mnth_id, 5, 2) || '-15', 'YYYY-MM-DD') AS transaction_date,
-              --CAST(YEAR + '-' + SUBSTRING(mnth_id, 5, 2) + '-' + '15' AS DATE) AS transaction_date,
               'Distributors' AS subject_name,
               cust_cd AS account_cd,
               'AS WATSONS' AS account_nm,
@@ -1460,10 +1451,8 @@ AS (
               'MY' AS country
        FROM ITG_MY_AS_WATSONS_INVENTORY Inv
        WHERE mnth_id >= TO_NUMBER(TO_CHAR(DATEADD(MONTH, -3, CURRENT_DATE), 'YYYYMM'))
-       --mnth_id >= CAST(TO_CHAR(ADD_MONTHS(DATE_TRUNC('day',current_timestamp()), - 3), 'YYYYMM') AS INTEGER)
        GROUP BY Inv.crtd_dttm,
               TO_DATE(YEAR || '-' || SUBSTRING(mnth_id, 5, 2) || '-15', 'YYYY-MM-DD'),
-              --CAST(YEAR + '-' + SUBSTRING(mnth_id, 5, 2) + '-' + '15' AS DATE),
               cust_cd,
               filename
        ),
@@ -1477,7 +1466,6 @@ AS (
               SUM(total_units) AS jcp_qty_sum,
               SUM(total_cost) AS jcp_amt_sum,
               TO_DATE(YEAR || '-' || mnth_no || '-15', 'YYYY-MM-DD') AS transaction_date,
-              --CAST(YEAR + '-' + mnth_no + '-' + '15' AS DATE) AS transaction_date,
               'Distributors' AS subject_name,
               '110680' AS account_cd,
               'AS WATSONS' AS account_nm,
@@ -1485,10 +1473,8 @@ AS (
               'PH' AS country
        FROM ITG_PH_AS_WATSONS_INVENTORY Inv
        WHERE TO_NUMBER(YEAR || mnth_no) >= TO_NUMBER(TO_CHAR(DATEADD(MONTH, -3, CURRENT_DATE), 'YYYYMM'))
-       --YEAR + mnth_no >= CAST(TO_CHAR(ADD_MONTHS(DATE_TRUNC('day',current_timestamp()), - 3), 'YYYYMM') AS INTEGER)
        GROUP BY Inv.crtd_dttm,
             TO_DATE(YEAR || '-' || mnth_no || '-15', 'YYYY-MM-DD'),
-              --CAST(YEAR + '-' + mnth_no + '-' + '15' AS DATE),
               filename
        ),
 edw_kr_otc_inventory_temp1
@@ -1501,7 +1487,6 @@ AS (
               SUM(inv_qty) AS jcp_qty_sum,
               SUM(inv_amt) AS jcp_amt_sum,
               TO_DATE(SUBSTRING(mnth_id, 1, 4) || '-' || SUBSTRING(mnth_id, 5, 2) || '-15', 'YYYY-MM-DD') AS transaction_date,
-              --CAST(SUBSTRING(mnth_id, 0, 5) + '-' + SUBSTRING(mnth_id, 5, 2) + '-' + '15' AS DATE) AS transaction_date,
               'Distributors' AS subject_name,
               distributor_cd AS account_cd,
               NULL AS account_nm,
@@ -1509,10 +1494,8 @@ AS (
               'KR' AS country
        FROM EDW_KR_OTC_INVENTORY Inv
        WHERE TO_NUMBER(mnth_id) >= TO_NUMBER(TO_CHAR(DATEADD(MONTH, -3, CURRENT_DATE), 'YYYYMM'))
-       --mnth_id >= CAST(TO_CHAR(ADD_MONTHS(DATE_TRUNC('day',current_timestamp()), - 3), 'YYYYMM') AS INTEGER)
        GROUP BY Inv.crtd_dttm,
               TO_DATE(SUBSTRING(mnth_id, 1, 4) || '-' || SUBSTRING(mnth_id, 5, 2) || '-15', 'YYYY-MM-DD'),
-              --CAST(SUBSTRING(mnth_id, 0, 5) + '-' + SUBSTRING(mnth_id, 5, 2) + '-' + '15' AS DATE),
               distributor_cd,
               filename
        ),

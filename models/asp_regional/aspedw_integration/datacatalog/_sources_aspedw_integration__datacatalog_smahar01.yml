@@ -1,23 +1,21 @@
 version: 2
 
 sources:
-  - name: JPNEDW_INTEGRATION
+  - name: jpnedw_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: JPNEDW_INTEGRATION
+    schema: jpnedw_integration
     quoting:
       database: false
       schema: false
       identifier: false
     tables:
-      - name: T_BI_POSDATA
+      - name: t_bi_posdata
         tags: ["dataloadmonitoring","transformation"]
-      - name: M_ACCOUNT_STORE
+      - name: m_account_store
         tags: ["dataloadmonitoring","transformation"]
-      - name: M_ACCOUNT_STORE
-        tags: ["dataloadmonitoring","transformation"]
-  - name: PHLITG_INTEGRATION
+  - name: phlitg_integration
     database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: PHLITG_INTEGRATION
+    schema: phlitg_integration
     quoting:
       database: false
       schema: false
@@ -25,3 +23,32 @@ sources:
     tables:
       - name: itg_ph_customer_dim
         tags: ["dataloadmonitoring","transformation"]
+  - name: chnedw_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: chnedw_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: edw_cube_expense_tp_fact
+        tags: ["dataloadmonitoring","transformation"]
+      - name: edw_cube_expense_tt_fact
+        tags: ["dataloadmonitoring","transformation"]
+      - name: edw_gt_so_fact
+        tags: ["dataloadmonitoring","transformation"]
+      - name: edw_cube_sales_customer_dim
+        tags: ["dataloadmonitoring","transformation"]
+      - name: edw_inventory_fact
+        tags: ["dataloadmonitoring","transformation"]
+
+
+        
+
+
+
+
+
+
+
+
