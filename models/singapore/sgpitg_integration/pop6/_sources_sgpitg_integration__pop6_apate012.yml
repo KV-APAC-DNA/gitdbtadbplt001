@@ -1,0 +1,19 @@
+sources:
+  - name: sgpwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: APATE012_WORKSPACE
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_pop6_sg_sku_audits__null_test
+      - name: TRATBL_sdl_pop6_sg_sku_audits__duplicate_test
+      - name: TRATBL_sdl_sg_scan_data_marketplace__null_test
+      - name: TRATBL_sdl_pop6_sg_promotions__duplicate_test
+      - name: TRATBL_sdl_pop6_sg_promotions__null_test
+      - name: TRATBL_sdl_pop6_sg_product_attribute_audits__null_test
+      - name: TRATBL_sdl_pop6_sg_product_attribute_audits__duplicate_test
+      - name: TRATBL_sdl_pop6_sg_displays__duplicate_test
+      - name: TRATBL_sdl_pop6_sg_displays__null_test
+     

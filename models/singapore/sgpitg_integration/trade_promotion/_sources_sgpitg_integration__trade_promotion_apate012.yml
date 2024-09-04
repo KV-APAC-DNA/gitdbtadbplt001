@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: sgpwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: APATE012_WORKSPACE
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_sg_tp_closed_year_bal__null_test
+      - name: TRATBL_sdl_sg_tp_closed_year_bal__lookup_test
+        

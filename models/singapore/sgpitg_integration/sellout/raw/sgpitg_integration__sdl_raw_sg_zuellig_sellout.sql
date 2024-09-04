@@ -8,7 +8,11 @@
 with source as 
 (
     select *
-    from {{ source('sgpsdl_raw', 'sdl_sg_zuellig_sellout') }}
+    from {{ source('sgpsdl_raw', 'sdl_sg_zuellig_sellout') }} 
+    where file_name not in 
+    (
+        select distinct file_name from {{ source('sgpwks_integration', 'TRATBL_sdl_sg_zuellig_sellout__lookup_test') }}
+    )
 ),
 --Final CTE
 final as (

@@ -9,6 +9,10 @@
 --import CTE
 with source as (
     select * from {{ source('sgpsdl_raw','sdl_sg_scan_data_dfi') }}
+    where file_name not in 
+    (
+        select distinct file_name from {{ source('sgpwks_integration', 'TRATBL_sdl_sg_scan_data_dfi__null_test') }}
+    )
 ),
 
 edw_calendar_dim as (
