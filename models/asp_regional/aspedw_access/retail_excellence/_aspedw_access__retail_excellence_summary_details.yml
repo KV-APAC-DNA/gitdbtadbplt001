@@ -1,12 +1,122 @@
 version: 2
 
 models:
-  - name: aspedw_access__edw_rpt_retail_excellence_details
-    config: 
-      alias: edw_rpt_retail_excellence_details_view
-      tags: ["retail_excellence_details_view","ingestion"]
+  - name: aspedw_access__edw_id_rpt_retail_excellence_summary
+    config:
+      alias: edw_id_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_my_rpt_retail_excellence_summary
+    config:
+      alias: edw_my_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_ph_rpt_retail_excellence_summary
+    config:
+      alias: edw_ph_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_sg_rpt_retail_excellence_summary
+    config:
+      alias: edw_sg_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_kr_rpt_retail_excellence_summary
+    config:
+      alias: edw_kr_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_th_rpt_retail_excellence_summary
+    config:
+      alias: edw_th_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_in_rpt_retail_excellence_summary
+    config:
+      alias: edw_in_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_anz_rpt_retail_excellence_summary
+    config:
+      alias: edw_anz_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_jp_rpt_retail_excellence_summary
+    config:
+      alias: edw_jp_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_cnsc_rpt_retail_excellence_summary
+    config:
+      alias: edw_cnsc_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_cnpc_rpt_retail_excellence_summary
+    config:
+      alias: edw_cnpc_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_id_rpt_retail_excellence_details
+    config:
+      alias: edw_id_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_my_rpt_retail_excellence_details
+    config:
+      alias: edw_my_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_ph_rpt_retail_excellence_details
+    config:
+      alias: edw_ph_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_sg_rpt_retail_excellence_details
+    config:
+      alias: edw_sg_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_kr_rpt_retail_excellence_details
+    config:
+      alias: edw_kr_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_th_rpt_retail_excellence_details
+    config:
+      alias: edw_th_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_in_rpt_retail_excellence_details
+    config:
+      alias: edw_in_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_anz_rpt_retail_excellence_details
+    config:
+      alias: edw_anz_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_jp_rpt_retail_excellence_details
+    config:
+      alias: edw_jp_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_cnsc_rpt_retail_excellence_details
+    config:
+      alias: edw_cnsc_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_cnpc_rpt_retail_excellence_details
+    config:
+      alias: edw_cnpc_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
 
   - name: aspedw_access__edw_rpt_retail_excellence_summary
     config: 
-      alias: edw_rpt_retail_excellence_summary_view
-      tags: ["retail_excellence_summary_view","ingestion"]
+      alias: edw_rpt_retail_excellence_summary
+      tags: ["retail_excellence_access_datamart","transformation"]
+
+  - name: aspedw_access__edw_rpt_retail_excellence_details
+    config: 
+      alias: edw_rpt_retail_excellence_details
+      tags: ["retail_excellence_access_datamart","transformation"]
