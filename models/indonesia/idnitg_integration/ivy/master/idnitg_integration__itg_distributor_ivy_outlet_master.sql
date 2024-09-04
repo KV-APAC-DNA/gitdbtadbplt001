@@ -104,7 +104,7 @@ final as (
         null::timestamp_ntz(9) as cust_crtd_dt,
         tieringname::varchar(100) as cust_grp2,
         run_id::number(14,0) as run_id,
-        file_name::varchar(256) as file_name
+        file_name::varchar(255) as file_name
     from itg_distributor_ivy_outlet_master
     where rn = 1
 ),

@@ -138,7 +138,7 @@ final as (
        crtd_dttm::timestamp_ntz(9) as crtd_dttm,
        updt_dttm::timestamp_ntz(9) as updt_dttm,
        run_id::number(14,0) as run_id,
-       file_name::varchar(256) as file_name
+       file_name::varchar(255) as file_name
    from transformed
 )
 select * from transformed

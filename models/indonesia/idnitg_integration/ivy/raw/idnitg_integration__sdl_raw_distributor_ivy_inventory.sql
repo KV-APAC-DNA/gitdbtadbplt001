@@ -20,7 +20,7 @@ final as
         qty::number(10,0) as qty,
         current_timestamp()::varchar(50) as cdl_dttm,
         run_id::number(14,0) as run_id,
-        source_file_name::varchar(256) as source_file_name
+        file_name::varchar(256) as file_name
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run

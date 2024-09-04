@@ -25,7 +25,8 @@ final as
         uom::varchar(15) as uom,
         qty::number(10,0) as qty,
         trim((DATEADD(DAY, -1, TO_DATE(SUBSTRING(CDL_DTTM,1,10),'YYYY-MM-DD'))))::varchar(50) as create_dt,
-        run_id::number(14,0) as run_id  
+        run_id::number(14,0) as run_id,
+        file_name::varchar(255) as file_name
     from source
 )
 

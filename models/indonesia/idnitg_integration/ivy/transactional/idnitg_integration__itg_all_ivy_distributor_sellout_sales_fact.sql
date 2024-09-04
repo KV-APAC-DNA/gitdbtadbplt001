@@ -78,7 +78,8 @@ invoice as (
         ,jj_mnth_id
         ,trim(sdii.batch_no) as batch_no
         ,trim(sdii.uom) as uom
-        ,invoice_status
+        ,invoice_status,
+        sddi.file_name
     from sdii
         ,edw_distributor_dim edd
         ,edw_product_dim epd
@@ -259,7 +260,8 @@ transformed as (
 		,sdii.run_id
 		,trim(sdii.batch_no) as batch_no
 		,trim(sdii.uom) as uom
-		,trim(invoice_status) as invoice_status
+		,trim(invoice_status) as invoice_status,
+        sdii.file_name as file_name
 	FROM sdii
 		,edw_distributor_dim edd
 		,edw_product_dim epd
@@ -308,6 +310,7 @@ final as (
         ,crtd_dttm::timestamp_ntz(9) as crtd_dttm
         ,updt_dttm::timestamp_ntz(9) as updt_dttm
         ,run_id::number(14,0) as run_id
+        ,transformed.file_name::varchar(255) as file_name
     from transformed
     left join joined lkp on coalesce(lkp.trans_key,'') || coalesce(lkp.batch_no,'') || coalesce(lkp.uom,'')  =   coalesce(transformed.trans_key,'') || coalesce(transformed.batch_no,'') || coalesce(transformed.uom,'')
 )
