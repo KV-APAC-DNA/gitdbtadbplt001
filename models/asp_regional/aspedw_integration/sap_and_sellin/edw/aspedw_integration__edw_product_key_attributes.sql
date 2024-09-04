@@ -143,6 +143,7 @@ final as (
         FROM (SELECT *
         -- Start Add new column total_size = size*package AEBU-10288
                 ,CASE
+                WHEN pka_package_desc='Dummy - Do not use' THEN '1'
                 WHEN UPPER(pka_package_desc) = 'PREMIX' THEN '1'
                 WHEN COALESCE(pka_package_desc, '0') = '0' THEN '0' -- Replace NULL with '0'
                 WHEN SUBSTRING(pka_package_desc,1,1) = 'x' THEN SUBSTRING(pka_package_desc,2,LENGTH(pka_package_desc))
@@ -164,6 +165,7 @@ final as (
             CASE 
                 WHEN COALESCE(pka_size_desc, '0') = '0' THEN '0'
                 WHEN pka_size_desc is null THEN '0'
+                WHEN pka_size_desc = 'Dummy - Do not use' THEN '0'
                 WHEN UPPER(pka_size_desc) = 'PACK' THEN '11111'
                 WHEN UPPER(pka_size_desc) = 'BULK' THEN '99999'
                 ELSE replace(substring(pka_size_desc,1,regexp_instr(pka_size_desc,'[a-z]|[A-Z]') -1),',','.')
@@ -213,8 +215,8 @@ final as (
             (SELECT MATL_NUM, MAX(FISC_YR_PER) FISC_YR_PER
                 FROM (SELECT MATL_NUM,FISC_YR_PER,SUM(AMT_OBJ_CRNCY) AMT_OBJ_CRNCY
                     FROM EDW_COPA_TRANS_FACT
-                    WHERE ACCT_HIER_SHRT_DESC = 'NTS' AND TRIM(MATL_NUM) IS NOT NULL OR TRIM(MATL_NUM) != ''
-                    AND  FISC_YR>=YEAR(CURRENT_TIMESTAMP)-3
+                    WHERE ACCT_HIER_SHRT_DESC = 'NTS' AND TRIM(MATL_NUM) IS NOT NULL AND TRIM(MATL_NUM) != ''
+                    --AND  FISC_YR>=YEAR(CURRENT_TIMESTAMP)-3
                     GROUP BY MATL_NUM,FISC_YR_PER)
                 WHERE AMT_OBJ_CRNCY != '0.0'
                 GROUP BY MATL_NUM) NTS
