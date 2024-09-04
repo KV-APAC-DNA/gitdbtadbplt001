@@ -166,7 +166,7 @@ AS (
                 END
             ) AS PARENT_HCO_NAME,
         TW_CUSTOMER_CODE as CUSTOMER_CODE,
-        SYSDATE() as inserted_date,
+        current_timestamp() as inserted_date,
         NULL as updated_date,
         jj_external_id,
         specialty_2,

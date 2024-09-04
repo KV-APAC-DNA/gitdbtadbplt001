@@ -19,10 +19,10 @@ final as
       ,COUNT(1)::NUMBER(38,0) as CNT
     FROM KESAI_H_DATA_MART_MV JUCH
     WHERE JUCH.JUCHDATE BETWEEN
-    TO_NUMBER(TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-01'::date),-36),'YYYYMMDD'),'9999999999') AND TO_NUMBER(TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC','Asia/Tokyo','2024-07-01'::date))),'YYYYMMDD'),'9999999999')
-    
+    TO_NUMBER(TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp()),-36),'YYYYMMDD'),'9999999999') AND TO_NUMBER(TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp()))),'YYYYMMDD'),'9999999999')
+
     -- redshift
-    -- TO_NUMBER(TO_CHAR(ADD_MONTHS(CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()),-36),'YYYYMMDD'),'9999999999') AND TO_NUMBER(TO_CHAR(dateadd(day,-181,(CONVERT_TIMEZONE('UTC','Asia/Tokyo',current_timestamp()))),'YYYYMMDD'),'9999999999') --181D-3Y対応
+    -- TO_NUMBER(TO_CHAR(ADD_MONTHS(convert_timezone('Asia/Tokyo',current_timestamp()),-36),'YYYYMMDD'),'9999999999') AND TO_NUMBER(TO_CHAR(dateadd(day,-181,(convert_timezone('Asia/Tokyo',current_timestamp()))),'YYYYMMDD'),'9999999999') --181D-3Y対応
     AND   EXISTS(SELECT 'X'
                 FROM  KESAI_H_DATA_MART_MV
                 WHERE  KOKYANO = JUCH.KOKYANO

@@ -212,7 +212,7 @@ AS (
                                                     CASE 
                                                         WHEN (
                                                                 
-                                                                    datediff(day,sysdate(),xref.last_login_date)
+                                                                    datediff(day,current_timestamp(),xref.last_login_date)
                                                                         <= (30)::DOUBLE PRECISION
                                                                 )
                                                             THEN 1
@@ -579,11 +579,11 @@ AS (
             (
                 SELECT date_part (
                         year,
-                        sysdate()
+                        current_timestamp()
                         ) AS year,
                     date_part (
                         month,
-                        sysdate()
+                        current_timestamp()
                         ) AS month,
                     src1.country,
                     src1.sector,
@@ -741,7 +741,7 @@ AS (
                                                     CASE 
                                                         WHEN (
                                                                 
-                                                                    datediff(day,sysdate(),xref.last_login_date)
+                                                                    datediff(day,current_timestamp(),xref.last_login_date)
                                                                      <= (30)::DOUBLE PRECISION
                                                                 )
                                                             THEN 1
@@ -786,7 +786,7 @@ AS (
                                             sum(CASE 
                                                     WHEN (
                                                             
-                                                                datediff(day,sysdate(),xref.last_login_date)
+                                                                datediff(day,current_timestamp(),xref.last_login_date)
                                                                  <= (30)::DOUBLE PRECISION
                                                             )
                                                         THEN 1
@@ -825,7 +825,7 @@ AS (
                                         sum(CASE 
                                                 WHEN (
                                                         
-                                                            datediff(day,sysdate(),xref.last_login_date)
+                                                            datediff(day,current_timestamp(),xref.last_login_date)
                                                              <= (30)::DOUBLE PRECISION
                                                         )
                                                     THEN 1
@@ -864,7 +864,7 @@ AS (
                                     sum(CASE 
                                             WHEN (
                                                     
-                                                        datediff(day,sysdate(),xref.last_login_date)
+                                                        datediff(day,current_timestamp(),xref.last_login_date)
                                                          <= (30)::DOUBLE PRECISION
                                                     )
                                                 THEN 1
@@ -903,7 +903,7 @@ AS (
                                 sum(CASE 
                                         WHEN (
                                                 
-                                                    datediff(day,sysdate(),xref.last_login_date)
+                                                    datediff(day,current_timestamp(),xref.last_login_date)
                                                      <= (30)::DOUBLE PRECISION
                                                 )
                                             THEN 1
@@ -942,7 +942,7 @@ AS (
                             sum(CASE 
                                     WHEN (
                                             
-                                                datediff(day,sysdate(),xref.last_login_date)
+                                                datediff(day,current_timestamp(),xref.last_login_date)
                                                  <= (30)::DOUBLE PRECISION
                                             )
                                         THEN 1
@@ -1015,11 +1015,11 @@ AS (
             SELECT count(dim_employee_iconnect.employee_name) AS lgn,
                 date_part (
                     year,
-                    sysdate()
+                    current_timestamp()
                     ) AS year,
                 date_part (
                     month,
-                    sysdate()
+                    current_timestamp()
                     ) AS month,
                 dim_employee_iconnect.country_code,
                 sect.sector
@@ -1040,7 +1040,7 @@ AS (
                                     dim_employee_iconnect.last_login_date
                                     ) = date_part (
                                     year,
-                                    sysdate()
+                                    current_timestamp()
                                     )
                                 )
                             AND (
@@ -1049,7 +1049,7 @@ AS (
                                     dim_employee_iconnect.last_login_date
                                     ) = date_part (
                                     month,
-                                    sysdate()
+                                    current_timestamp()
                                     )
                                 )
                             )

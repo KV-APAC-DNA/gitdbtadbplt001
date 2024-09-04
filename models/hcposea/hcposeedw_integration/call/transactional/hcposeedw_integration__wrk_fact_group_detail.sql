@@ -141,7 +141,7 @@ select inn.*
       --and ci.load_flag  = 'N'
         and ci.is_deleted ='0'
 		and (ci.msl_interaction_type is null)
-        and ci.call_date > (select DATE_TRUNC('year', dateadd(day,-retention_years*365,sysdate())) 
+        and ci.call_date > (select DATE_TRUNC('year', dateadd(day,-retention_years*365,current_timestamp())) 
                           from itg_lookup_retention_period 
                          where upper(table_name) = 'FACT_CALL_DETAIL')
         and ci.call_date >= nvl(us_pr.effective_from_date,to_date('1900-01-01 00:00:00','yyyy-mm-dd hh24:mi:ss'))
@@ -302,8 +302,8 @@ SELECT distinct c1.country_code
   C1.veeva_remote_meeting_id,
 
   ------ new columns ends
- SYSDATE() inserted_date
-, SYSDATE() updated_date
+ current_timestamp() inserted_date
+, current_timestamp() updated_date
 from 
     (select c1.call_source_id, c1.call_source_id as parent_call_source_id ,c1.call_name parent_call_name, c1.attendees ,c1.attendee_type, C1.CALL_NAME, c1.is_parent_call, hcp.hcp_key, c1.country_code,c1.call_source_id main_call_source_id
 	from itg_call c1
@@ -493,7 +493,7 @@ SELECT distinct c1.country_code
   nvl(remote_meeting_key,'Not Applicable') as remote_meeting_key,
   C1.veeva_remote_meeting_id,
   ------ new columns ends
-SYSDATE(), SYSDATE() 
+current_timestamp(), current_timestamp() 
 from 
     (select c1.call_source_id, c1.call_source_id as parent_call_source_id , c1.call_name parent_call_name,c1.attendees,c1.attendee_type, C1.CALL_NAME, c1.is_parent_call, hco.hco_key, c1.country_code, c1.call_source_id main_call_source_id
         from itg_call c1

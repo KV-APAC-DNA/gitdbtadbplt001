@@ -89,8 +89,8 @@ ICK.Call_Key_Message_User as call_key_message_source_user,
 ICK.Call_Key_Message_Vehicle as call_key_message_vehicle,
 CDT.call_detail_source_id as call_detail_source_id,
 CDS.call_discussion_source_id as call_discussion_source_id,
-SYSDATE() as call_key_message_data_inserted_date,
-SYSDATE() as call_key_message_data_updated_date
+current_timestamp() as call_key_message_data_inserted_date,
+current_timestamp() as call_key_message_data_updated_date
 FROM itg_call_key_message ICK
 LEFT JOIN itg_call IC
 ON (ICK.call_key_message_call2 = IC.CALL_SOURCE_ID AND IC.is_deleted=0)
@@ -105,7 +105,7 @@ ON(ICK.Call_Key_Message_Account = HCP.hcp_source_id)
 LEFT JOIN dim_hco HCO
 ON(ICK.Call_Key_Message_Account = HCO.hco_source_id)
 LEFT JOIN dim_date DD
-ON(NVL(ICK.Call_Key_Message_Call_Date,to_date(SYSDATE()))=to_date(DD.DATE_VALUE))
+ON(NVL(ICK.Call_Key_Message_Call_Date,to_date(current_timestamp()))=to_date(DD.DATE_VALUE))
 LEFT JOIN ( select employee_key,employee_profile_id ,employee_source_id,pf.profile_source_id, us.profile_name , profile_key, us.country_code ,o.organization_key,o.effective_from_date ,o.effective_to_date
             from dim_employee us, 
                  dim_profile pf,
@@ -115,12 +115,12 @@ LEFT JOIN ( select employee_key,employee_profile_id ,employee_source_id,pf.profi
             and   us.my_organization_code = o.my_organization_code(+)
             and   us.country_code = o.country_code (+)) us_pr
 ON (IC.owner_source_id = us_pr.employee_source_id
-AND NVL(ICK.Call_Key_Message_Call_Date,to_date(SYSDATE())) >= nvl(us_pr.effective_from_date,to_date('1900-01-01 00:00:00','yyyy-mm-dd hh24:mi:ss'))
-AND NVL(ICK.Call_Key_Message_Call_Date,to_date(SYSDATE())) <= nvl(us_pr.effective_to_date,to_date('2099-12-31 00:00:00','yyyy-mm-dd hh24:mi:ss'))
+AND NVL(ICK.Call_Key_Message_Call_Date,to_date(current_timestamp())) >= nvl(us_pr.effective_from_date,to_date('1900-01-01 00:00:00','yyyy-mm-dd hh24:mi:ss'))
+AND NVL(ICK.Call_Key_Message_Call_Date,to_date(current_timestamp())) <= nvl(us_pr.effective_to_date,to_date('2099-12-31 00:00:00','yyyy-mm-dd hh24:mi:ss'))
 )
 left join dim_country DC
 ON(ICK.COUNTRY_CODE=DC.country_code)
-WHERE NVL(ICK.Call_Key_Message_Call_Date,to_date(SYSDATE())) > (select DATE_TRUNC('year', dateadd(day,-retention_years*365,SYSDATE())) 
+WHERE NVL(ICK.Call_Key_Message_Call_Date,to_date(current_timestamp())) > (select DATE_TRUNC('year', dateadd(day,-retention_years*365,current_timestamp())) 
                                                             from itg_lookup_retention_period
                                                             where UPPER(table_name) = 'FACT_CALL_KEY_MESSAGE')
 ),

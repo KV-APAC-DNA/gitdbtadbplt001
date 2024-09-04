@@ -9,13 +9,13 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web,
         sum(gts) AS Order_Amt_web,
         sum(ciw_point) AS Point_Usage_Amt_web,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web,
         sum(ciw_discount) AS Coupon_Usage_Amt_web,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
@@ -37,19 +37,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web_2y,
         sum(gts) AS Order_Amt_web_2y,
         sum(ciw_point) AS Point_Usage_Amt_web_2y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web_2y,
         sum(ciw_discount) AS Coupon_Usage_Amt_web_2y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_web_2y
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 24)
+    WHERE order_dt >= add_months(date_trunc('day', current_timestamp()), - 24)
     --add_months(date_trunc('day', current_timestamp()), - 24)
         --date_trunc('day', sysdate) + interval '2 year ago'
         AND channel IN ('Web')
@@ -67,19 +67,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web_1y,
         sum(gts) AS Order_Amt_web_1y,
         sum(ciw_point) AS Point_Usage_Amt_web_1y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web_1y,
         sum(ciw_discount) AS Coupon_Usage_Amt_web_1y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_web_1y
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 12)
+    WHERE order_dt >= add_months(date_trunc('day', current_timestamp()), - 12)
     --add_months(date_trunc('day', current_timestamp()), - 12)
         --date_trunc('day', sysdate) + interval '1 year ago'
         AND channel IN ('Web')
@@ -97,19 +97,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web_6m,
         sum(gts) AS Order_Amt_web_6m,
         sum(ciw_point) AS Point_Usage_Amt_web_6m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web_6m,
         sum(ciw_discount) AS Coupon_Usage_Amt_web_6m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_web_6m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 6)
+    WHERE order_dt >= add_months(date_trunc('day', current_timestamp()), - 6)
     --add_months(date_trunc('day', current_timestamp()), - 6)
         --date_trunc('day', sysdate) + interval '6 month ago'
         AND channel IN ('Web')
@@ -127,19 +127,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web_3m,
         sum(gts) AS Order_Amt_web_3m,
         sum(ciw_point) AS Point_Usage_Amt_web_3m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web_3m,
         sum(ciw_discount) AS Coupon_Usage_Amt_web_3m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_web_3m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 3)
+    WHERE order_dt >= add_months(date_trunc('day', current_timestamp()), - 3)
     --add_months(date_trunc('day', current_timestamp()), - 3)
         --date_trunc('day', sysdate) + interval '3 month ago'
         AND channel IN ('Web')
@@ -157,19 +157,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_web_1m,
         sum(gts) AS Order_Amt_web_1m,
         sum(ciw_point) AS Point_Usage_Amt_web_1m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_web_1m,
         sum(ciw_discount) AS Coupon_Usage_Amt_web_1m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_web_1m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months(date_trunc('day', '2024-07-01'::DATE), - 1)
+    WHERE order_dt >= add_months(date_trunc('day', current_timestamp()), - 1)
         --add_months(date_trunc('day', current_timestamp()), - 1)
         --date_trunc('day', sysdate) + interval '1 month ago'
         AND channel IN ('Web')
@@ -237,6 +237,6 @@ AS (
         OR dkmd.juchkbn::TEXT = 1::CHARACTER VARYING::TEXT
         OR dkmd.juchkbn::TEXT = 2::CHARACTER VARYING::TEXT
         )
-    AND dkmd.meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0) 
+    AND dkmd.meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
 )
 select * from final

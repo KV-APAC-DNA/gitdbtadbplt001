@@ -1,7 +1,25 @@
+{{
+    config
+    (
+        materialized = 'incremental',
+        incremental_strategy = 'append',
+        pre_hook = "
+                    {% if is_incremental() %}
+                    DELETE
+                    FROM {{this}}
+                    WHERE order_no IN (
+                            SELECT distinct order_no
+                            FROM {{source('jpdclsdl_raw','rakutenorderdetail')}}
+                            );
+                    {% endif %}
+                    "
+    )
+}}
+
 with sources
 as
 (
-    select * from {{source('jpdclsdl_raw',"rakutenorderdetail")}}
+    select * from {{source('jpdclsdl_raw','rakutenorderdetail')}}
 ), 
 final as
 (

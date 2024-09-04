@@ -1,4 +1,4 @@
-
+{% if build_month_end_job_models()  %}
 with kr_054_sfuyo_meisai as (
 select * from {{ ref('jpndcledw_integration__kr_054_sfuyo_meisai') }}
 ),
@@ -91,3 +91,6 @@ dsren::timestamp_ntz(9) as dsren
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

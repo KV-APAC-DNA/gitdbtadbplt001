@@ -10,7 +10,7 @@ a AS
             ,
             sum(ciw_point) AS Point_Usage_Amt_call --CIW_POINT
             ,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
@@ -18,7 +18,7 @@ a AS
                     ,
             sum(ciw_discount) AS Coupon_Usage_Amt_call --CIW_Discount
             ,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
@@ -40,20 +40,20 @@ b as
             count(DISTINCT saleno) AS Order_Cnt_call_2y,
             sum(gts) AS Order_Amt_call_2y,
             sum(ciw_point) AS Point_Usage_Amt_call_2y,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Point_Usage_Cnt_call_2y,
             sum(ciw_discount) AS Coupon_Usage_Amt_call_2y,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Coupon_Usage_Cnt_call_2y
         FROM dm_kesai_mart_dly_general
-        WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-24)
-        --add_months( date_trunc('day', current_timestamp())::date,-24) 
+        WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-24)
+        --add_months( date_trunc('day', current_timestamp())::date,-24)
         -- + interval '2 year ago'
             AND channel IN ('通販')
             AND (
@@ -64,26 +64,26 @@ b as
             AND meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
         GROUP BY 1
 ),
-c as 
+c as
 (
     SELECT kokyano,
             count(DISTINCT saleno) AS Order_Cnt_call_1y,
             sum(gts) AS Order_Amt_call_1y,
             sum(ciw_point) AS Point_Usage_Amt_call_1y,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Point_Usage_Cnt_call_1y,
             sum(ciw_discount) AS Coupon_Usage_Amt_call_1y,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Coupon_Usage_Cnt_call_1y
         FROM dm_kesai_mart_dly_general
-        WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-12)
-        --add_months( date_trunc('day', current_timestamp())::date,-12) 
+        WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-12)
+        --add_months( date_trunc('day', current_timestamp())::date,-12)
         --date_trunc('day', sysdate) + interval '1 year ago'
             AND channel IN ('通販')
             AND (
@@ -93,27 +93,27 @@ c as
                 )
             AND meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
         GROUP BY 1
-), 
-d as 
+),
+d as
 (
     SELECT kokyano,
             count(DISTINCT saleno) AS Order_Cnt_call_6m,
             sum(gts) AS Order_Amt_call_6m,
             sum(ciw_point) AS Point_Usage_Amt_call_6m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Point_Usage_Cnt_call_6m,
             sum(ciw_discount) AS Coupon_Usage_Amt_call_6m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Coupon_Usage_Cnt_call_6m
         FROM dm_kesai_mart_dly_general
-        WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-6)
-        --add_months( date_trunc('day', current_timestamp())::date,-6) 
+        WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-6)
+        --add_months( date_trunc('day', current_timestamp())::date,-6)
         --date_trunc('day', sysdate) + interval '6 month ago'
             AND channel IN ('通販')
             AND (
@@ -123,27 +123,27 @@ d as
                 )
             AND meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
         GROUP BY 1
-), 
-e as 
+),
+e as
 (
     SELECT kokyano,
             count(DISTINCT saleno) AS Order_Cnt_call_3m,
             sum(gts) AS Order_Amt_call_3m,
             sum(ciw_point) AS Point_Usage_Amt_call_3m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Point_Usage_Cnt_call_3m,
             sum(ciw_discount) AS Coupon_Usage_Amt_call_3m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Coupon_Usage_Cnt_call_3m
         FROM dm_kesai_mart_dly_general
-        WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-3)
-        --add_months( date_trunc('day', current_timestamp())::date,-3) 
+        WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-3)
+        --add_months( date_trunc('day', current_timestamp())::date,-3)
         --date_trunc('day', sysdate) + interval '3 month ago'
             AND channel IN ('通販')
             AND (
@@ -152,28 +152,28 @@ e as
                 OR juchkbn::TEXT = 2::CHARACTER VARYING::TEXT
                 )
             AND meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
-        GROUP BY 1  
-), 
-f as 
+        GROUP BY 1
+),
+f as
 (
     SELECT kokyano,
             count(DISTINCT saleno) AS Order_Cnt_call_1m,
             sum(gts) AS Order_Amt_call_1m,
             sum(ciw_point) AS Point_Usage_Amt_call_1m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_point > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Point_Usage_Cnt_call_1m,
             sum(ciw_discount) AS Coupon_Usage_Amt_call_1m,
-            count(DISTINCT CASE 
+            count(DISTINCT CASE
                     WHEN ciw_discount > 0
                         THEN saleno
                     ELSE NULL
                     END) AS Coupon_Usage_Cnt_call_1m
         FROM dm_kesai_mart_dly_general
-        WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-1)
-        --add_months( date_trunc('day', current_timestamp())::date,-1) 
+        WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-1)
+        --add_months( date_trunc('day', current_timestamp())::date,-1)
         --date_trunc('day', sysdate) + interval '1 month ago'
             AND channel IN ('通販')
             AND (
@@ -237,4 +237,4 @@ final as
             )
         AND dkmd.meisainukikingaku <> 0::NUMERIC::NUMERIC(18, 0)
 )
-select * from final 
+select * from final
