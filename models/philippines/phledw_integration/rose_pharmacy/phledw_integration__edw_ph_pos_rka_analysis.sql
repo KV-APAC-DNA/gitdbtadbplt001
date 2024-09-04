@@ -4,11 +4,11 @@ with ph_pos_rka_rose_pharma as
  ),
 ph_rosepharma_customers as 
 (
-    select * from {{ ref('phlitg_integration__itg_ph_pos_mds_rka_customers') }}
+    select * from {{ ref('phlitg_integration__itg_ph_pos_rka_mds_customers') }}
 ),
 ph_rosepharma_products as 
 (
-     select * from {{ ref('phlitg_integration__itg_ph_pos_rka_product_mapping') }}
+     select * from {{ ref('phlitg_integration__itg_ph_pos_rka_mds_product_mapping') }}
 ),
 price_list as 
 (
@@ -28,6 +28,9 @@ edw_vw_ph_customer_dim as(
 ),
 edw_product_key_attributes as(
     select * from {{ ref('aspedw_integration__edw_product_key_attributes') }}
+),
+itg_mds_ph_lav_product as (
+    select * from {{ ref('phlitg_integration__itg_mds_ph_lav_product') }}
 ),
 veomd as (
     select mat.*,
@@ -66,7 +69,6 @@ select
     pos.jj_month,
     pos.jj_month_id,
     time_dim.qrtr_no as jj_qtr,
-    null as cntry_nm,
     cust.Code as cust_cd,
     cust.brnch_cd as cust_brnch_cd,
     cust.brnch_nm as mt_cust_brnch_nm,

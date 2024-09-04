@@ -13,7 +13,7 @@ with source as
 transformed as 
 (
     select 
-effectivesalescycle||'-'||acctcode||'-'||rka_skucode,
+effectivesalescycle||'-'||acctcode||'-'||rka_skucode as code,
 salescycle as mnth_id,
 rka_skucode  as item_cd,
 null as bar_cd,
