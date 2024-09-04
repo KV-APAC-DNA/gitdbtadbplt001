@@ -11,6 +11,7 @@ sources:
     tables:
 
     - name: sdl_hcp_osea_account_hcp
+      tags: ["master_file_data_ingestion","ingestion"]
       tests:
         - test_null:
             select_columns: ["account_source_id", "country_code"]

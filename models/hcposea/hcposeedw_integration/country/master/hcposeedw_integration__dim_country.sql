@@ -18,7 +18,7 @@ attr4 as attr4,
 attr5 as attr5,
 manual_update_date as manual_update_date,
 manual_update_user as manual_update_user,
-sysdate() as inserted_date,
+current_timestamp() as inserted_date,
 null as updated_date
 FROM itg_country
 )

@@ -9,8 +9,8 @@ AS (
         company,
         division,
         sector,
-        sysdate() AS inserted_date,
-        sysdate() AS updated_date
+        current_timestamp() AS inserted_date,
+        current_timestamp() AS updated_date
     FROM itg_isight_sector_mapping
     ),
 final

@@ -135,8 +135,8 @@ AS (
         ELSE STG_PM.UPTRAVI_USAGE
         END
       ) AS UPTRAVI_USAGE, -- new column
-    SYSDATE() AS inserted_date,
-    SYSDATE() AS updated_date
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date
   FROM sdl_hcp_osea_product_metrics STG_PM
   JOIN itg_product ITG_P ON ITG_P.PRODUCT_SOURCE_ID = STG_PM.PRODUCT_SOURCE_ID
     AND ITG_P.COUNTRY_CODE = STG_PM.COUNTRY_CODE

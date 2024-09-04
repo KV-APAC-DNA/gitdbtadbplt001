@@ -12,8 +12,8 @@ as
  sector ,
  qty,
  licensetype,
- sysdate() as inserted_date,
- sysdate() as updated_date
+ current_timestamp() as inserted_date,
+ current_timestamp() as updated_date
  from sdl_hcp_osea_isight_licenses
 )
 ,

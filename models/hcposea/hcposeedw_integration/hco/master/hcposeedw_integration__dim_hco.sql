@@ -109,8 +109,8 @@ itg_add.inactive as address_inactive_flag,
 controlling_address as controlling_address,
 veeva_autogen_id as veeva_autogen_id,
 customer_code as customer_code,
-sysdate() as inserted_date,
-sysdate() as updated_date
+current_timestamp() as inserted_date,
+current_timestamp() as updated_date
 FROM itg_account_hco ITG_HCO
   JOIN itg_recordtype ITG_REC ON ITG_HCO.RECORD_TYPE_SOURCE_ID = ITG_REC.RECORD_TYPE_SOURCE_ID
   AND ITG_HCO.COUNTRY_CODE = ITG_REC.COUNTRY_CODE
@@ -131,7 +131,7 @@ SELECT 'Not Applicable',
        'ZZ',
        'Not Applicable',
        'Not Applicable',
-       sysdate(),
+       current_timestamp(),
        'Not Applicable',
        0,
        'Not Applicable',
@@ -201,8 +201,8 @@ SELECT 'Not Applicable',
        'Not Applicable',
        'Not Applicable',
        'Not Applicable',
-       sysdate(),
-       sysdate()
+       current_timestamp(),
+       current_timestamp()
 ),
 transformed as (
 select * from cte1 

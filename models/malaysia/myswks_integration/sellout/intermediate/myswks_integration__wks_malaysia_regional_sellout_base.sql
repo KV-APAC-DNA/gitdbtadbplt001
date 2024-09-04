@@ -117,7 +117,7 @@ SELECT 'POS' AS DATA_SRC,
 	   POS.sap_matl_num as msl_product_code,
 		--POS.mt_item_desc as msl_product_desc,
 		--cust_hier.channel as store_grade,
-		cust_hier.reg_group as store_grade,
+		cust_hier.reg_group1 as store_grade,
 		'MT' as retail_env
       FROM  itg_my_pos_sales_fact POS
 	  left join (select cust_id, store_cd,max(store_type) as store_type,max(store_frmt)as store_frmt,max(dept_nm) as dept_nm

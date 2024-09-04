@@ -387,8 +387,8 @@ AS (
     nvl(remote_meeting_key, 'Not Applicable') AS remote_meeting_key,
     C1.veeva_remote_meeting_id,
     ------ new columns ends
-    sysdate() AS inserted_date,
-    sysdate() AS updated_date
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date
   FROM (
     SELECT c1.call_source_id,
       c1.call_source_id AS parent_call_source_id,
@@ -688,8 +688,8 @@ AS (
     nvl(remote_meeting_key, 'Not Applicable') AS remote_meeting_key,
     C1.veeva_remote_meeting_id,
     ------ new columns ends
-    sysdate() AS inserted_date,
-    sysdate() AS updated_date
+    current_timestamp() AS inserted_date,
+    current_timestamp() AS updated_date
   FROM (
     SELECT c1.call_source_id,
       c1.call_source_id AS parent_call_source_id,

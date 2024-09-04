@@ -83,7 +83,7 @@ AS (
         CONTROLLING_ADDRESS,
         SUBURB_TOWN,
         VEEVA_AUTOGEN_ID,
-        SYSDATE() as inserted_date,
+        current_timestamp() as inserted_date,
         NULL as updated_date,
         (
             CASE 

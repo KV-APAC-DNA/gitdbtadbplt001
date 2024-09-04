@@ -56,8 +56,8 @@ IKM.Country_Code as key_message_simp_country,
 IKM.AP_CLM_Country as key_message_ap_clm_country,
 IKM.Key_Message_Is_Shared_Resource as key_message_shared_resource_flag,
 IKM.Key_Message_Shared_Resource as key_message_shared_resource,
-Sysdate() as inserted_date,
-Sysdate() as updated_date
+current_timestamp() as inserted_date,
+current_timestamp() as updated_date
 FROM itg_key_message IKM
 LEFT JOIN itg_call_key_message ICKM
 ON(IKM.Key_Message_Id=ICKM.Call_Key_Message_Key_Message)
