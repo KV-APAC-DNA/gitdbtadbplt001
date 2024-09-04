@@ -1,5 +1,11 @@
 {{
     config(
+        sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+    )
+}}
+
+{{
+    config(
         post_hook="delete from {{this}} where country='Malaysia' and channel='GT' and storetype='SUPERMARKET' and customername not in (select distinct customername from  {{ source('mysedw_integration','my_perfect_store_supermarket_adjust') }});"
     )
 }}

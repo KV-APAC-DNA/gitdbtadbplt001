@@ -42,7 +42,7 @@ AS (
         AND tbec.dirouteid <> '9'
     INNER JOIN c_tbEcShippingResults ship ON tbec.diOrderID = ship.diOrderID
     WHERE TO_CHAR(tbec.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(current_timestamp(), - 36), 'YYYYMMDD')
-    --TO_CHAR(ADD_MONTHS('2024-07-25'::DATE, - 36), 'YYYYMMDD')
+    --TO_CHAR(ADD_MONTHS(current_timestamp()::DATE, - 36), 'YYYYMMDD')
         AND tbec.c_diallhenpinflg = '0'
         AND tbec.diCancel = '0'
         AND tbec.dielimflg = '0'
@@ -64,7 +64,7 @@ AS (
             OR tbec.dirouteid = '9'
             )
     WHERE TO_CHAR(tbec.DSORDERDT, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(current_timestamp(), - 36), 'YYYYMMDD')
-    --TO_CHAR(ADD_MONTHS('2024-07-25'::DATE, - 36), 'YYYYMMDD')
+    --TO_CHAR(ADD_MONTHS(current_timestamp()::DATE, - 36), 'YYYYMMDD')
     --TO_CHAR(ADD_MONTHS(current_timestamp(), - 36), 'YYYYMMDD')
         AND tbec.c_diallhenpinflg = '0'
         AND tbec.diCancel = '0'
@@ -82,7 +82,7 @@ AS (
     FROM c_tbEcRankAddAmountAdm tbecrank
     INNER JOIN TBUSRPRAM tbus ON tbus.diusrid = tbecrank.diecusrid
     WHERE TO_CHAR(tbecrank.dsOrderDt, 'YYYYMMDD') >= TO_CHAR(ADD_MONTHS(current_timestamp(), - 36), 'YYYYMMDD')
-    --TO_CHAR(ADD_MONTHS('2024-07-25'::DATE, - 36), 'YYYYMMDD')
+    --TO_CHAR(ADD_MONTHS(current_timestamp()::DATE, - 36), 'YYYYMMDD')
     --TO_CHAR(ADD_MONTHS(current_timestamp(), - 36), 'YYYYMMDD')
         AND tbecrank.dielimflg = 0
     ),
@@ -90,14 +90,14 @@ UNION_OF
 AS (
     SELECT *
     FROM t1
-    
+
     UNION
-    
+
     SELECT *
     FROM t2
-    
+
     UNION
-    
+
     SELECT *
     FROM t3
     ),
@@ -141,7 +141,7 @@ final AS
         WK.DIMONTH::VARCHAR(3) AS DIMONTH
     FROM prefinal WK
     WHERE NOT EXISTS (
-                        SELECT 'X' 
+                        SELECT 'X'
                         FROM {{this}} a
                         WHERE a.DIUSRID = WK.DIUSRID
                     )

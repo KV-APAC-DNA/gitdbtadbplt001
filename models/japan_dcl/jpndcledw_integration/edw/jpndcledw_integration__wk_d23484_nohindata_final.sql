@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 {{
     config(
         post_hook = ["update {{this}} set sum = b.sum from (
@@ -39,3 +40,6 @@ as (
     )
 select *
 from final  
+{% else %}
+    select * from {{this}}
+{% endif %}

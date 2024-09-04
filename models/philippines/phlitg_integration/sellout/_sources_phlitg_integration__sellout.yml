@@ -42,7 +42,7 @@ sources:
                 schema: phlwks_integration
           - test_lookup:
               select_columns: ["dstrbtr_prod_id"]
-              column: "nvl((dstrbtr_prod_id), '#')"
+              column: "nvl(trim(dstrbtr_prod_id), '#')"
               lookup_column: "nvl((item_cd), '#')"
               lookup_table: "{{ env_var('DBT_ENV_CORE_DB') }}.phlitg_integration.itg_mds_ph_lav_product"
               lookup_filter: "ACTIVE='Y' UNION ALL SELECT DISTINCT nvl(dstrbtr_item_cd,'#') as item_cd FROM {{ env_var('DBT_ENV_CORE_DB') }}.phlitg_integration.itg_mds_ph_distributor_product where ACTIVE='Y'"
