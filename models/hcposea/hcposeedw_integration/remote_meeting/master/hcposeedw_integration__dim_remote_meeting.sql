@@ -18,7 +18,7 @@ AS (
     owner_source_id,
     description,
     JJ_NumOfAttendee,
-    sysdate() AS inserted_date
+    current_timestamp() AS inserted_date
   FROM itg_remote_meeting
   WHERE is_deleted = 'false'
   ),

@@ -122,11 +122,11 @@ AS (
                     (
                         date_part (
                             year,
-                            sysdate()
+                            current_timestamp()
                             )::CHARACTER VARYING(5)::TEXT || '-'::CHARACTER VARYING::TEXT
                         ) || date_part (
                         month,
-                        sysdate()
+                        current_timestamp()
                         )::CHARACTER VARYING(5)::TEXT
                     )
                 THEN emp1.current_mnth_emp_cnt
@@ -254,8 +254,8 @@ AS (
                     parent_call_name
                 ) fact
             JOIN dim_date dimdate ON fact.call_date_key = dimdate.date_key
-                AND DATE_YEAR BETWEEN (DATE_PART(year,sysdate()) - 2)
-                AND DATE_PART(year,sysdate())
+                AND DATE_YEAR BETWEEN (DATE_PART(year,current_timestamp()) - 2)
+                AND DATE_PART(year,current_timestamp())
             JOIN vw_employee_hier hier ON fact.employee_key::TEXT = hier.employee_key::TEXT
                 AND fact.country_key::TEXT = hier.country_code::TEXT
             LEFT JOIN DIM_EMPLOYEE_ICONNECT employee ON fact.employee_key::TEXT = employee.employee_key::TEXT
@@ -273,7 +273,7 @@ AS (
                         WHERE country = 'SG'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -291,7 +291,7 @@ AS (
                         WHERE country = 'MY'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -309,7 +309,7 @@ AS (
                         WHERE country = 'VN'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -327,7 +327,7 @@ AS (
                         WHERE country = 'TH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -345,7 +345,7 @@ AS (
                         WHERE country = 'PH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -363,7 +363,7 @@ AS (
                         WHERE country = 'ID'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     date_year,
                     date_month
@@ -758,11 +758,11 @@ AS (
                     (
                         date_part (
                             year,
-                            sysdate()
+                            current_timestamp()
                             )::CHARACTER VARYING(5)::TEXT || '-'::CHARACTER VARYING::TEXT
                         ) || date_part (
                         month,
-                        sysdate()
+                        current_timestamp()
                         )::CHARACTER VARYING(5)::TEXT
                     )
                 THEN emp1.current_mnth_emp_cnt
@@ -890,8 +890,8 @@ AS (
                     parent_call_name
                 ) fact
             JOIN dim_date dimdate ON fact.call_date_key = dimdate.date_key
-                AND jnj_date_year BETWEEN (DATE_PART(year,sysdate()) - 2)
-                AND DATE_PART(year,sysdate())
+                AND jnj_date_year BETWEEN (DATE_PART(year,current_timestamp()) - 2)
+                AND DATE_PART(year,current_timestamp())
             JOIN vw_employee_hier hier ON fact.employee_key::TEXT = hier.employee_key::TEXT
                 AND fact.country_key::TEXT = hier.country_code::TEXT
             LEFT JOIN DIM_EMPLOYEE_ICONNECT employee ON fact.employee_key::TEXT = employee.employee_key::TEXT
@@ -909,7 +909,7 @@ AS (
                         WHERE country = 'SG'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -927,7 +927,7 @@ AS (
                         WHERE country = 'MY'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -945,7 +945,7 @@ AS (
                         WHERE country = 'VN'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -963,7 +963,7 @@ AS (
                         WHERE country = 'TH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -981,7 +981,7 @@ AS (
                         WHERE country = 'PH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -999,7 +999,7 @@ AS (
                         WHERE country = 'ID'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     jnj_date_year,
                     jnj_date_month
@@ -1394,11 +1394,11 @@ AS (
                     (
                         date_part (
                             year,
-                            sysdate()
+                            current_timestamp()
                             )::CHARACTER VARYING(5)::TEXT || '-'::CHARACTER VARYING::TEXT
                         ) || date_part (
                         month,
-                        sysdate()
+                        current_timestamp()
                         )::CHARACTER VARYING(5)::TEXT
                     )
                 THEN emp1.current_mnth_emp_cnt
@@ -1526,8 +1526,8 @@ AS (
                     parent_call_name
                 ) fact
             JOIN dim_date dimdate ON fact.call_date_key = dimdate.date_key
-                AND my_date_year BETWEEN (DATE_PART(year,sysdate()) - 2)
-                AND DATE_PART(year,sysdate())
+                AND my_date_year BETWEEN (DATE_PART(year,current_timestamp()) - 2)
+                AND DATE_PART(year,current_timestamp())
             JOIN vw_employee_hier hier ON fact.employee_key::TEXT = hier.employee_key::TEXT
                 AND fact.country_key::TEXT = hier.country_code::TEXT
             LEFT JOIN DIM_EMPLOYEE_ICONNECT employee ON fact.employee_key::TEXT = employee.employee_key::TEXT
@@ -1545,7 +1545,7 @@ AS (
                         WHERE country = 'SG'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month
@@ -1563,7 +1563,7 @@ AS (
                         WHERE country = 'MY'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month
@@ -1581,7 +1581,7 @@ AS (
                         WHERE country = 'VN'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month
@@ -1599,7 +1599,7 @@ AS (
                         WHERE country = 'TH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month
@@ -1617,7 +1617,7 @@ AS (
                         WHERE country = 'PH'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month
@@ -1635,7 +1635,7 @@ AS (
                         WHERE country = 'ID'
                         )
                     AND rtrim(date_dayofweek) NOT IN ('Saturday', 'Sunday')
-                    AND date_key < TO_CHAR(sysdate(), 'YYYYMMDD')
+                    AND date_key < TO_CHAR(current_timestamp(), 'YYYYMMDD')
                 GROUP BY country,
                     my_date_year,
                     my_date_month

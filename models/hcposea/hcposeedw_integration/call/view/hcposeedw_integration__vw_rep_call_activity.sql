@@ -88,7 +88,7 @@ AS (
         terr.cnt_total_time_on,
         terr1.cnt_total_time_off,
         CASE 
-            WHEN (((((src1.jnj_date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || (src1.jnj_date_month)::TEXT) = ((((date_part(year, sysdate()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, sysdate()))::CHARACTER VARYING(5))::TEXT))
+            WHEN (((((src1.jnj_date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || (src1.jnj_date_month)::TEXT) = ((((date_part(year, current_timestamp()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, current_timestamp()))::CHARACTER VARYING(5))::TEXT))
                 THEN emp1.current_mnth_emp_cnt
             ELSE actve_usr.total_active
             END AS total_active,
@@ -461,7 +461,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.jnj_date_year,
@@ -490,7 +490,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.jnj_date_year,
@@ -520,7 +520,7 @@ AS (
                                                                                 )
                                                                             AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                             )
-                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                         )
                                                                 GROUP BY 1,
                                                                     ds.jnj_date_year,
@@ -550,7 +550,7 @@ AS (
                                                                             )
                                                                         AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                         )
-                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                     )
                                                             GROUP BY 1,
                                                                 ds.jnj_date_year,
@@ -580,7 +580,7 @@ AS (
                                                                         )
                                                                     AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                     )
-                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                 )
                                                         GROUP BY 1,
                                                             ds.jnj_date_year,
@@ -610,7 +610,7 @@ AS (
                                                                     )
                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                 )
-                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                             )
                                                     GROUP BY 1,
                                                         ds.jnj_date_year,
@@ -1114,7 +1114,7 @@ AS (
                             )
                         WHERE (
                                 ((terr.sea_time_on_time_off)::TEXT = ('Time On'::CHARACTER VARYING)::TEXT)
-                                AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                 )
                         GROUP BY terr.employee_key,
                             terr.country_key,
@@ -1241,7 +1241,7 @@ AS (
                         )
                     WHERE (
                             ((terr.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
-                            AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                            AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                             )
                     GROUP BY terr.employee_key,
                         terr.country_key,
@@ -1614,7 +1614,7 @@ AS (
         terr.cnt_total_time_on,
         terr1.cnt_total_time_off,
         CASE 
-            WHEN (((((src1.my_date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((src1.my_date_month)::CHARACTER VARYING)::TEXT) = ((((date_part(year, sysdate()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, sysdate()))::CHARACTER VARYING(5))::TEXT))
+            WHEN (((((src1.my_date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((src1.my_date_month)::CHARACTER VARYING)::TEXT) = ((((date_part(year, current_timestamp()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, current_timestamp()))::CHARACTER VARYING(5))::TEXT))
                 THEN emp1.current_mnth_emp_cnt
             ELSE actve_usr.total_active
             END AS total_active,
@@ -1987,7 +1987,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.my_date_year,
@@ -2016,7 +2016,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.my_date_year,
@@ -2046,7 +2046,7 @@ AS (
                                                                                 )
                                                                             AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                             )
-                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                         )
                                                                 GROUP BY 1,
                                                                     ds.my_date_year,
@@ -2076,7 +2076,7 @@ AS (
                                                                             )
                                                                         AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                         )
-                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                     )
                                                             GROUP BY 1,
                                                                 ds.my_date_year,
@@ -2106,7 +2106,7 @@ AS (
                                                                         )
                                                                     AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                     )
-                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                 )
                                                         GROUP BY 1,
                                                             ds.my_date_year,
@@ -2136,7 +2136,7 @@ AS (
                                                                     )
                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                 )
-                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                             )
                                                     GROUP BY 1,
                                                         ds.my_date_year,
@@ -2640,7 +2640,7 @@ AS (
                             )
                         WHERE (
                                 ((terr.sea_time_on_time_off)::TEXT = ('Time On'::CHARACTER VARYING)::TEXT)
-                                AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                 )
                         GROUP BY terr.employee_key,
                             terr.country_key,
@@ -2767,7 +2767,7 @@ AS (
                         )
                     WHERE (
                             ((terr.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
-                            AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                            AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                             )
                     GROUP BY terr.employee_key,
                         terr.country_key,
@@ -3140,7 +3140,7 @@ AS (
         terr.cnt_total_time_on,
         terr1.cnt_total_time_off,
         CASE 
-            WHEN (((((src1.date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || (src1.date_month)::TEXT) = ((((date_part(year, sysdate()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, sysdate()))::CHARACTER VARYING(5))::TEXT))
+            WHEN (((((src1.date_year)::CHARACTER VARYING)::TEXT || ('-'::CHARACTER VARYING)::TEXT) || (src1.date_month)::TEXT) = ((((date_part(year, current_timestamp()))::CHARACTER VARYING(5))::TEXT || ('-'::CHARACTER VARYING)::TEXT) || ((date_part(month, current_timestamp()))::CHARACTER VARYING(5))::TEXT))
                 THEN emp1.current_mnth_emp_cnt
             ELSE actve_usr.total_active
             END AS total_active,
@@ -3513,7 +3513,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.date_year,
@@ -3542,7 +3542,7 @@ AS (
                                                                                     )
                                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                                 )
-                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                             )
                                                                     GROUP BY 1,
                                                                         ds.date_year,
@@ -3572,7 +3572,7 @@ AS (
                                                                                 )
                                                                             AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                             )
-                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                        AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                         )
                                                                 GROUP BY 1,
                                                                     ds.date_year,
@@ -3602,7 +3602,7 @@ AS (
                                                                             )
                                                                         AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                         )
-                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                    AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                     )
                                                             GROUP BY 1,
                                                                 ds.date_year,
@@ -3632,7 +3632,7 @@ AS (
                                                                         )
                                                                     AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                     )
-                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                                AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                                 )
                                                         GROUP BY 1,
                                                             ds.date_year,
@@ -3662,7 +3662,7 @@ AS (
                                                                     )
                                                                 AND (rtrim(ds.date_dayofweek)::TEXT <> ('Sunday'::CHARACTER VARYING)::TEXT)
                                                                 )
-                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                                            AND (((ds.date_key)::CHARACTER VARYING)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                                             )
                                                     GROUP BY 1,
                                                         ds.date_year,
@@ -4166,7 +4166,7 @@ AS (
                             )
                         WHERE (
                                 ((terr.sea_time_on_time_off)::TEXT = ('Time On'::CHARACTER VARYING)::TEXT)
-                                AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                                AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                                 )
                         GROUP BY terr.employee_key,
                             terr.country_key,
@@ -4293,7 +4293,7 @@ AS (
                         )
                     WHERE (
                             ((terr.sea_time_on_time_off)::TEXT = ('Time Off'::CHARACTER VARYING)::TEXT)
-                            AND ((terr.start_date_key)::TEXT < to_char(sysdate(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
+                            AND ((terr.start_date_key)::TEXT < to_char(current_timestamp(), ('YYYYMMDD'::CHARACTER VARYING)::TEXT))
                             )
                     GROUP BY terr.employee_key,
                         terr.country_key,
