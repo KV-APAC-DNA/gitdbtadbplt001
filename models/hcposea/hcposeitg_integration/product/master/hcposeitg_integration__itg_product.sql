@@ -72,7 +72,7 @@ select md5(country||product_source_id) as product_indication_key,
        shc_strategic_group,      
        shc_franchise,
        shc_brand,
-       sysdate() as inserted_date,
+       current_timestamp() as inserted_date,
        null as updated_date
 from sdl_hcp_osea_product)
 ,

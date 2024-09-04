@@ -253,7 +253,7 @@ AS (
         dimemp.organization_l5_name,
         CASE 
             WHEN ((date_part (year,fact.mid_date)||date_part (month,fact.mid_date)) 
-                = (date_part (year,sysdate()) || date_part (month,sysdate())))
+                = (date_part (year,current_timestamp()) || date_part (month,current_timestamp())))
                     
                 THEN emp1.current_mnth_emp_cnt
             ELSE actve_usr.total_active

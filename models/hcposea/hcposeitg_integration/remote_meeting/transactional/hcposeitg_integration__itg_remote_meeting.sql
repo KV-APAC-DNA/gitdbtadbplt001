@@ -49,8 +49,8 @@ SELECT remote_meeting_source_id,
        webinar_alternative_host_1,
        webinar_alternative_host_2,
        webinar_alternative_host_3,
-       sysdate() AS inserted_date,
-       sysdate() AS updated_date,
+       current_timestamp() AS inserted_date,
+       current_timestamp() AS updated_date,
        (CASE WHEN UPPER(Rating_Submitted) = 'TRUE' THEN 1 WHEN UPPER(Rating_Submitted) IS NULL THEN 0 WHEN UPPER(Rating_Submitted) = ' ' THEN 0 ELSE 0 END) AS Rating_Submitted
 FROM SDL_HCP_OSEA_REMOTE_MEETING)
 ,

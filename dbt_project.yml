@@ -603,7 +603,7 @@ models:
     hcposea:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'UTC';"
       hcposeedw_integration:
         +materialized: table
         +transient: false

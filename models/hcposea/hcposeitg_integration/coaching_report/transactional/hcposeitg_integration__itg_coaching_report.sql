@@ -105,8 +105,8 @@ AS (
     JJ_Second_Line_Manager__c,
     JJ_Submission_to_Date__c,
     RelatedCoachingReport__c,
-    sysdate() AS updated_date,
-    sysdate() AS inserted_date
+    current_timestamp() AS updated_date,
+    current_timestamp() AS inserted_date
   FROM sdl_hcp_osea_coaching_report ocr
   LEFT OUTER JOIN itg_recordtype ir ON ocr.RECORDTYPEID = ir.record_type_source_id
     AND ocr.jj_core_country_code__c = ir.country_code

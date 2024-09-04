@@ -140,7 +140,7 @@ AS (
     SCR.Second_Line_Manager,
     SCR.Submission_to_Date,
     SCR.RelatedCoachingReport,
-    sysdate() AS inserted_date
+    current_timestamp() AS inserted_date
   FROM SCR
   LEFT OUTER JOIN dim_country DC ON SCR.jj_core_country_code = DC.country_code
   INNER JOIN dim_date DD ON SUBSTRING(SCR.DATE, 1, 4) || substring(SCR.DATE, 6, 2) || substring(SCR.DATE, 9, 2) = CAST(DD.date_key AS TEXT)
