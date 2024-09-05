@@ -15,7 +15,6 @@ trans as
   base.so_qty,
   base.inv_qty,
   DATEDIFF(month, TO_DATE(CAST(base.month AS STRING), 'YYYYMM'), TO_DATE(CAST(latest_month AS STRING), 'YYYYMM')) AS diff_month,
-  --datediff(month, to_date(base.month, 'YYYYMM'), to_date(latest_month, 'YYYYMM')) diff_month,
   p_to.reason
 FROM (
   SELECT *,
@@ -77,6 +76,19 @@ FROM (
     ) base
 WHERE p_to.sap_parent_customer_key = base.sap_parent_customer_key
   AND base.month < p_to.month
-  AND datediff(month, to_date(base.month, 'YYYYMM'), to_date(latest_month, 'YYYYMM')) <= 2
-)
-select * from trans
+  AND DATEDIFF(month, TO_DATE(CAST(base.month AS STRING), 'YYYYMM'), TO_DATE(CAST(latest_month AS STRING), 'YYYYMM')) <= 2
+),
+final as
+  (
+    select
+        sap_parent_customer_key::varchar(50) as  sap_parent_customer_key,
+	    latest_month::number(38,0) as latest_month,
+	    propagate_to::number(38,0) as propagate_to,
+	    propagate_from::number(38,0) as propagate_from,
+	    so_qty::number(38,4) as so_qty,
+	    inv_qty::number(38,3) as inv_qty,
+	    diff_month::number(38,0) as diff_month,
+	    reason::varchar(29) as reason
+    from trans
+  )
+  select * from final
