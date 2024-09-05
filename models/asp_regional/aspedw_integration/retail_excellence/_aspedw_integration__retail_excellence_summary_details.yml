@@ -1,6 +1,936 @@
 version: 2
 
 models:
+  - name: aspedw_integration__edw_generic_customer_hierarchy
+    config:
+      alias: edw_generic_customer_hierarchy
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_generic_product_hierarchy
+    config:
+      alias: edw_generic_product_hierarchy
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_generic_product_key_attributes
+    config:
+      alias: edw_generic_product_key_attributes
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__wks_mds_reds_market_msl_target_final
+    config:
+      alias: wks_mds_reds_market_msl_target_final
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspitg_integration__itg_mds_reds_market_msl_target
+    config:
+      alias: itg_mds_reds_market_msl_target
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__v_edw_vw_cal_Retail_excellence_dim
+    config:
+      alias: v_edw_vw_cal_Retail_excellence_dim
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspitg_integration__itg_re_msl_input_definition
+    config:
+      alias: itg_re_msl_input_definition
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspitg_integration__itg_mds_master_mother_code_mapping
+    config:
+      alias: itg_mds_master_mother_code_mapping
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_base_retail_excellence
+    config:
+      alias: wks_cnsc_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_msl_target_final
+    config:
+      alias: wks_cnsc_msl_target_final
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_act_l12m
+    config:
+      alias: wks_cnsc_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_act_l3m
+    config:
+      alias: wks_cnsc_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_act_l6m
+    config:
+      alias: wks_cnsc_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_act_lm
+    config:
+      alias: wks_cnsc_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_actuals
+    config:
+      alias: wks_cnsc_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_cnsc_regional_sellout_allmonths
+    config:
+      alias: wks_cnsc_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_rpt_retail_excellence
+    config:
+      alias: wks_rpt_retail_excellence_cnsc
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_rpt_retail_excellence_sop
+    config:
+      alias: wks_rpt_retail_excellence_sop_cnsc
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnitg_integration__itg_cn_sc_re_msl_list
+    config:
+      alias: itg_cn_sc_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_base_retail_excellence
+    config:
+      alias: wks_china_personal_care_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_re_target_compliance
+    config:
+      alias: wks_china_personal_care_re_target_compliance
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_rebase_dim_values
+    config:
+      alias: wks_china_personal_care_rebase_dim_values
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_act_l12m
+    config:
+      alias: wks_china_personal_care_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_act_l3m
+    config:
+      alias: wks_china_personal_care_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_act_l6m
+    config:
+      alias: wks_china_personal_care_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_act_lm
+    config:
+      alias: wks_china_personal_care_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_actuals
+    config:
+      alias: wks_china_personal_care_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_allmonths
+    config:
+      alias: wks_china_personal_care_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_basedim
+    config:
+      alias: wks_china_personal_care_regional_sellout_basedim
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_ean
+    config:
+      alias: wks_china_personal_care_regional_sellout_ean
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_china_personal_care_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_rpt_retail_excellence
+    config:
+      alias: wks_china_personal_care_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnwks_integration__wks_china_personal_care_rpt_retail_excellence_sop
+    config:
+      alias: wks_china_personal_care_rpt_retail_excellence_sop
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnitg_integration__itg_cn_pc_re_msl_list
+    config:
+      alias: itg_cn_pc_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__th_wks_rpt_retail_excellence
+    config:
+      alias: th_wks_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__th_wks_rpt_retail_excellence_sop
+    config:
+      alias: th_wks_rpt_retail_excellence_sop
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__wks_retail_excellence_msl_target_final
+    config:
+      alias: wks_retail_excellence_msl_target_final_th
+      tags: ["retail_excellence_datamart","transformation"]	  
+
+  - name: thawks_integration__wks_th_base_retail_excellence
+    config:
+      alias: wks_th_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]	  
+
+  - name: thawks_integration__wks_th_regional_sellout_act_l12m
+    config:
+      alias: wks_th_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__wks_th_regional_sellout_act_l3m
+    config:
+      alias: wks_th_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__wks_th_regional_sellout_act_l6m
+    config:
+      alias: wks_th_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thawks_integration__wks_th_regional_sellout_act_lm
+    config:
+      alias: wks_th_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"] 
+ 
+  - name: thawks_integration__wks_th_regional_sellout_actuals
+    config:
+      alias: wks_th_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]	
+
+  - name: thawks_integration__wks_th_regional_sellout_allmonths
+    config:
+      alias: wks_th_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]	
+  
+  - name: thawks_integration__wks_th_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_th_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]	
+
+  - name: thaitg_integration__itg_th_re_msl_list
+    config:
+      alias: itg_th_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_base_retail_excellence
+    config:
+      alias: wks_korea_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_re_basedim_values
+    config:
+      alias: wks_korea_re_basedim_values
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_act_l12m
+    config:
+      alias: wks_korea_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_act_l3m
+    config:
+      alias: wks_korea_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+ 
+  - name: ntawks_integration__wks_korea_regional_sellout_act_l6m
+    config:
+      alias: wks_korea_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_act_lm
+    config:
+      alias: wks_korea_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_actuals
+    config:
+      alias: wks_korea_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_allmonths
+    config:
+      alias: wks_korea_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_basedim
+    config:
+      alias: wks_korea_regional_sellout_basedim
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_korea_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_korea_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_kr_rpt_retail_excellence
+    config:
+      alias: wks_kr_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]	
+
+  - name: ntawks_integration__wks_kr_rpt_retail_excellence_gcph
+    config:
+      alias: wks_kr_rpt_retail_excellence_gcph
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_msl_list
+    config:
+      alias: wks_msl_list
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntawks_integration__wks_retail_excellence_msl_target_final
+    config:
+      alias: wks_retail_excellence_msl_target_final_kr
+      tags: ["retail_excellence_datamart","transformation"]			  	  
+
+  - name: ntaitg_integration__wks_itg_kr_re_msl_list
+    config:
+      alias: kr_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_base_re
+    config:
+      alias: wks_id_base_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_c360_mapped_sku_cd
+    config:
+      alias: wks_id_c360_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_act_l12m
+    config:
+      alias: wks_id_re_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_act_l3m
+    config:
+      alias: wks_id_re_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_act_l6m
+    config:
+      alias: wks_id_re_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_act_lm
+    config:
+      alias: wks_id_re_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_actuals
+    config:
+      alias: wks_id_re_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_allmonths
+    config:
+      alias: wks_id_re_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_re_msl_targets
+    config:
+      alias: wks_id_re_msl_targets
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_rpt_re
+    config:
+      alias: wks_id_rpt_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnwks_integration__wks_id_rpt_re_gcph
+    config:
+      alias: wks_id_rpt_re_gcph
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnitg_integration__itg_id_re_msl_list
+    config:
+      alias: itg_id_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_base_retail_excellence
+    config:
+      alias: wks_anz_pos_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_c360_mapped_sku_cd
+    config:
+      alias: wks_anz_pos_c360_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_act_l12m
+    config:
+      alias: wks_anz_pos_re_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_act_l3m
+    config:
+      alias: wks_anz_pos_re_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_act_l6m
+    config:
+      alias: wks_anz_pos_re_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_act_lm
+    config:
+      alias: wks_anz_pos_re_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_actuals
+    config:
+      alias: wks_anz_pos_re_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_allmonths
+    config:
+      alias: wks_anz_pos_re_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_re_target_compliance
+    config:
+      alias: wks_anz_pos_re_target_compliance
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_pos_rpt_re
+    config:
+      alias: wks_anz_pos_rpt_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_base_retail_excellence
+    config:
+      alias: wks_anz_sellout_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_c360_mapped_sku_cd
+    config:
+      alias: wks_anz_sellout_c360_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_act_l12m
+    config:
+      alias: wks_anz_sellout_re_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_act_l3m
+    config:
+      alias: wks_anz_sellout_re_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_act_l6m
+    config:
+      alias: wks_anz_sellout_re_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_act_lm
+    config:
+      alias: wks_anz_sellout_re_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_actuals
+    config:
+      alias: wks_anz_sellout_re_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_allmonths
+    config:
+      alias: wks_anz_sellout_re_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_re_target_compliance
+    config:
+      alias: wks_anz_sellout_re_target_compliance
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_rpt_re
+    config:
+      alias: wks_anz_sellout_rpt_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfwks_integration__wks_anz_sellout_rpt_re_gcph
+    config:
+      alias: wks_anz_sellout_rpt_re_gcph
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfitg_integration__itg_anz_pos_re_msl_list
+    config:
+      alias: itg_anz_pos_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfitg_integration__itg_anz_sellout_re_msl_list
+    config:
+      alias: itg_anz_sellout_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_base_retail_excellence
+    config:
+      alias: wks_japan_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_act_l12m
+    config:
+      alias: wks_japan_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_act_l3m
+    config:
+      alias: wks_japan_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_act_l6m
+    config:
+      alias: wks_japan_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_act_lm
+    config:
+      alias: wks_japan_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_actuals
+    config:
+      alias: wks_japan_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_japan_regional_sellout_allmonths
+    config:
+      alias: wks_japan_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_retail_excellence_msl_target_final
+    config:
+      alias: wks_retail_excellence_msl_target_final_jp
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_rpt_retail_excellence
+    config:
+      alias: wks_rpt_retail_excellence_jp
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnwks_integration__wks_rpt_retail_excellence_sop
+    config:
+      alias: wks_rpt_retail_excellence_sop_jp
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnitg_integration__itg_jp_re_msl_list
+    config:
+      alias: itg_jp_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_base_retail_excellence
+    config:
+      alias: wks_india_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_re_basedim_values
+    config:
+      alias: wks_india_re_basedim_values
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_act_l12m
+    config:
+      alias: wks_india_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_act_l3m
+    config:
+      alias: wks_india_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_act_l6m
+    config:
+      alias: wks_india_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_act_lm
+    config:
+      alias: wks_india_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_actuals
+    config:
+      alias: wks_india_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_allmonths
+    config:
+      alias: wks_india_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_india_regional_sellout_basedim
+    config:
+      alias: wks_india_regional_sellout_basedim
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_mds_target_final
+    config:
+      alias: wks_mds_target_final
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_rpt_retail_excellence
+    config:
+      alias: wks_rpt_retail_excellence_in
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_rpt_retail_excellence_sop
+    config:
+      alias: wks_rpt_retail_excellence_sop_in
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indwks_integration__wks_sku_recom_msl_targets
+    config:
+      alias: wks_sku_recom_msl_targets
+      tags: ["retail_excellence_datamart","transformation"]	  
+
+  - name: phlwks_integration__wks_ph_re_target_compliance
+    config:
+      alias: wks_ph_re_target_compliance
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_ph_rpt_retail_excellence
+    config:
+      alias: wks_ph_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_ph_rpt_retail_excellence_sop
+    config:
+      alias: wks_ph_rpt_retail_excellence_sop
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_base_retail_excellence
+    config:
+      alias: wks_philippines_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_re_basedim_values
+    config:
+      alias: wks_philippines_re_basedim_values
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_act_l12m
+    config:
+      alias: wks_philippines_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_act_l6m
+    config:
+      alias: wks_philippines_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_act_l3m
+    config:
+      alias: wks_philippines_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_act_lm
+    config:
+      alias: wks_philippines_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_actuals
+    config:
+      alias: wks_philippines_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_allmonths
+    config:
+      alias: wks_philippines_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_basedim
+    config:
+      alias: wks_philippines_regional_sellout_basedim
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlwks_integration__wks_philippines_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_philippines_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phlitg_integration__itg_ph_re_msl_list
+    config:
+      alias: itg_ph_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_retail_excellence_msl_target_final
+    config:
+      alias: wks_retail_excellence_msl_target_final_sg
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_sg_rpt_retail_excellence
+    config:
+      alias: wks_sg_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_sg_rpt_retail_excellence_sop
+    config:
+      alias: wks_sg_rpt_retail_excellence_sop
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_base_retail_excellence
+    config:
+      alias: wks_singapore_base_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_re_basedim_values
+    config:
+      alias: wks_singapore_re_basedim_values
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_act_l12m
+    config:
+      alias: wks_singapore_regional_sellout_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_act_l6m
+    config:
+      alias: wks_singapore_regional_sellout_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_act_l3m
+    config:
+      alias: wks_singapore_regional_sellout_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_act_lm
+    config:
+      alias: wks_singapore_regional_sellout_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_actuals
+    config:
+      alias: wks_singapore_regional_sellout_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_allmonths
+    config:
+      alias: wks_singapore_regional_sellout_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_basedim
+    config:
+      alias: wks_singapore_regional_sellout_basedim
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpwks_integration__wks_singapore_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_singapore_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpitg_integration__wks_itg_sg_re_msl_list
+    config:
+      alias: wks_itg_sg_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_base_re
+    config:
+      alias: wks_my_base_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_base_re_raw
+    config:
+      alias: wks_my_base_re_raw
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_rpt_re
+    config:
+      alias: wks_my_rpt_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_rpt_re_gcph
+    config:
+      alias: wks_my_rpt_re_gcph
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_retail_excellence_msl_target_final
+    config:
+      alias: wks_retail_excellence_msl_target_final_my
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_act_l12m
+    config:
+      alias: wks_my_re_act_l12m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_act_l6m
+    config:
+      alias: wks_my_re_act_l6m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_act_l3m
+    config:
+      alias: wks_my_re_act_l3m
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_act_lm
+    config:
+      alias: wks_my_re_act_lm
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_actuals
+    config:
+      alias: wks_my_re_actuals
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_allmonths
+    config:
+      alias: wks_my_re_allmonths
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_re_msl_list
+    config:
+      alias: wks_my_re_msl_list
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_regional_sellout_mapped_sku_cd
+    config:
+      alias: wks_my_regional_sellout_mapped_sku_cd
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_regional_sellout_pos_ean_lookup
+    config:
+      alias: wks_my_regional_sellout_pos_ean_lookup
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: myswks_integration__wks_my_regional_sellout_pos_sku_ean_base
+    config:
+      alias: wks_my_regional_sellout_pos_sku_ean_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: thaedw_integration__edw_rpt_retail_excellence_th
+    config:
+      alias: edw_rpt_retail_excellence_th
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: sgpedw_integration__edw_sg_rpt_retail_excellence
+    config:
+      alias: edw_sg_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: phledw_integration__edw_ph_rpt_retail_excellence
+    config:
+      alias: edw_ph_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfedw_integration__edw_rpt_anz_pos_re
+    config:
+      alias: edw_rpt_anz_pos_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: pcfedw_integration__edw_rpt_anz_sellout_re
+    config:
+      alias: edw_rpt_anz_sellout_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: ntaedw_integration__edw_kr_rpt_retail_excellence
+    config:
+      alias: edw_kr_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: mysedw_integration__edw_rpt_my_re
+    config:
+      alias: edw_rpt_my_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: jpnedw_integration__edw_rpt_retail_excellence
+    config:
+      alias: edw_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: idnedw_integration__edw_rpt_id_re
+    config:
+      alias: edw_rpt_id_re
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: indedw_integration__ind_edw_rpt_retail_excellence
+    config:
+      alias: ind_edw_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnedw_integration__edw_cnpc_rpt_retail_excellence
+    config:
+      alias: edw_cnpc_rpt_retail_excellence
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: chnedw_integration__edw_rpt_retail_excellence_cnsc
+    config:
+      alias: edw_rpt_retail_excellence_cnsc
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_th_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_th_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_sg_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_sg_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_ph_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_ph_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_rpt_anz_re_summary_base
+    config:
+      alias: edw_rpt_anz_re_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_my_rpt_retail_excellence_summary_base
+    config:
+      alias: dw_my_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_kr_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_kr_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_jp_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_jp_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_id_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_id_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_in_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_in_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_cnsc_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_cnsc_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_cnpc_rpt_retail_excellence_summary_base
+    config:
+      alias: edw_cnpc_rpt_retail_excellence_summary_base
+      tags: ["retail_excellence_datamart","transformation"]
+
   - name: aspedw_integration__edw_id_rpt_retail_excellence_summary
     config:
       alias: edw_id_rpt_retail_excellence_summary
@@ -34,6 +964,16 @@ models:
   - name: aspedw_integration__edw_in_rpt_retail_excellence_summary
     config:
       alias: edw_in_rpt_retail_excellence_summary
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary_pos
+    config:
+      alias: edw_anz_rpt_retail_excellence_summary_pos
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary_sellout
+    config:
+      alias: edw_anz_rpt_retail_excellence_summary_sellout
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary
