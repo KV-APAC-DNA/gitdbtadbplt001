@@ -26,13 +26,13 @@ edw_code_descriptions as(
     select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
 edw_subchnl_retail_env_mapping as(
-    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
+    select * from {{ source('aspedw_integration', 'edw_subchnl_retail_env_mapping') }}
 ),
 itg_parameter_reg_inventory as(
-    select * from {{ ref('aspitg_integration__itg_parameter_reg_inventory') }}
+    select * from {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
 ),
 jp_inv_coverage_area_region_mapping as(
-    select * from {{ ref('jpnedw_integration__jp_inv_coverage_area_region_mapping') }}
+    select * from {{ source('jpnedw_integration', 'jp_inv_coverage_area_region_mapping') }}
 ),
 edi_cstm_m as(
     select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
