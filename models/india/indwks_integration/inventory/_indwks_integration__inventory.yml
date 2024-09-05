@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: indwks_integration__wks_india_sellout_for_inv_analysis
+    config:
+      alias: wks_india_sellout_for_inv_analysis
+      tags: ["J_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_base
+    config:
+      alias: wks_india_base
+      tags: ["J_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_allmonths_base
+    config:
+      alias: wks_india_allmonths_base
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_lastnmonths
+    config:
+      alias: wks_india_lastnmonths
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+  - name: indwks_integration__wks_india_base_detail
+    config:
+      alias: wks_india_lastnmonths
+      tags: ["j_ap_china_reg_data_refresh","transformation"] 
+  - name: indwks_integration__india_propagate_to
+    config:
+      alias: india_propagate_to
+      tags: ["j_ap_china_reg_data_refresh","transformation"]
+
+      
