@@ -1419,11 +1419,11 @@ AS (
               'TW' AS country
        FROM ITG_TW_AS_WATSONS_INVENTORY Inv,
               (
-                     SELECT YEAR,
+                     SELECT "year" as YEAR,
                             MNTH_ID,
                             WK
                      FROM EDW_VW_OS_TIME_DIM
-                     GROUP BY YEAR,
+                     GROUP BY "year",
                             MNTH_ID,
                             WK
                      ) AS TD
