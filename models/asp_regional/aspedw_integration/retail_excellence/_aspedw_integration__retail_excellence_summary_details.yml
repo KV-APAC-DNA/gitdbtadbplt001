@@ -36,6 +36,11 @@ models:
       alias: itg_re_msl_input_definition
       tags: ["retail_excellence_datamart","transformation"]
 
+  - name: aspitg_integration__itg_mds_master_mother_code_mapping
+    config:
+      alias: itg_mds_master_mother_code_mapping
+      tags: ["retail_excellence_datamart","transformation"]
+
   - name: chnwks_integration__wks_cnsc_base_retail_excellence
     config:
       alias: wks_cnsc_base_retail_excellence
@@ -959,6 +964,16 @@ models:
   - name: aspedw_integration__edw_in_rpt_retail_excellence_summary
     config:
       alias: edw_in_rpt_retail_excellence_summary
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary_pos
+    config:
+      alias: edw_anz_rpt_retail_excellence_summary_pos
+      tags: ["retail_excellence_datamart","transformation"]
+
+  - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary_sellout
+    config:
+      alias: edw_anz_rpt_retail_excellence_summary_sellout
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: aspedw_integration__edw_anz_rpt_retail_excellence_summary
