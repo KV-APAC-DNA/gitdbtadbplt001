@@ -78,8 +78,26 @@ general_audits as (
             ORDER BY run_id DESC
         ) rn
     FROM itg_pop6_general_audits
-    WHERE (UPPER(field_type) LIKE 'PHOTO%' or  UPPER(field_type) LIKE 'RIR%' ) --Added RIR for IR response for TH
+    WHERE UPPER(field_type) LIKE 'PHOTO%' 
         AND regexp_count(response, '[jpg]{3}') > 0
+    union all --Added RIR for IR response for TH
+    select distinct photo_key || '_' || rn as photo_key ,
+             response,
+             url_cnt,
+             run_id,
+             ROW_NUMBER() OVER (PARTITION BY visit_id,audit_form_id,section_id, response ORDER BY run_id DESC) rn 
+             from
+(SELECT DISTINCT 'general_audit' || '_' ||visit_id|| '_' ||audit_form_id|| '_' ||section_id AS PHOTO_KEY,
+             response,
+             visit_id,
+            audit_form_id,
+            section_id,
+             regexp_count(response,'[jpg]{3}') url_cnt,
+             run_id,
+             ROW_NUMBER() OVER (PARTITION BY visit_id,audit_form_id,section_id ORDER BY run_id DESC) rn
+      FROM  itg_pop6_general_audits
+      WHERE UPPER(field_type) LIKE 'RIR%'
+      AND   regexp_count(response,'[jpg]{3}') > 0)
 ),
 promotions as (
     SELECT DISTINCT 'promotions' || '_' || promotion_plan_id AS PHOTO_KEY,
