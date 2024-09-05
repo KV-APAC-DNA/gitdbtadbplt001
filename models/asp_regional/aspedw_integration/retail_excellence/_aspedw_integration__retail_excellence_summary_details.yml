@@ -78,12 +78,12 @@ models:
 
   - name: chnwks_integration__wks_rpt_retail_excellence
     config:
-      alias: wks_rpt_retail_excellence
+      alias: wks_rpt_retail_excellence_cnsc
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: chnwks_integration__wks_rpt_retail_excellence_sop
     config:
-      alias: wks_rpt_retail_excellence_sop
+      alias: wks_rpt_retail_excellence_sop_cnsc
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: chnitg_integration__itg_cn_sc_re_msl_list
@@ -178,7 +178,7 @@ models:
 
   - name: thawks_integration__wks_retail_excellence_msl_target_final
     config:
-      alias: wks_retail_excellence_msl_target_final
+      alias: wks_retail_excellence_msl_target_final_th
       tags: ["retail_excellence_datamart","transformation"]	  
 
   - name: thawks_integration__wks_th_base_retail_excellence
@@ -293,7 +293,7 @@ models:
 
   - name: ntawks_integration__wks_retail_excellence_msl_target_final
     config:
-      alias: wks_retail_excellence_msl_target_final
+      alias: wks_retail_excellence_msl_target_final_kr
       tags: ["retail_excellence_datamart","transformation"]			  	  
 
   - name: ntaitg_integration__wks_itg_kr_re_msl_list
@@ -513,17 +513,17 @@ models:
 
   - name: jpnwks_integration__wks_retail_excellence_msl_target_final
     config:
-      alias: wks_retail_excellence_msl_target_final
+      alias: wks_retail_excellence_msl_target_final_jp
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: jpnwks_integration__wks_rpt_retail_excellence
     config:
-      alias: wks_rpt_retail_excellence
+      alias: wks_rpt_retail_excellence_jp
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: jpnwks_integration__wks_rpt_retail_excellence_sop
     config:
-      alias: wks_rpt_retail_excellence_sop
+      alias: wks_rpt_retail_excellence_sop_jp
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: jpnitg_integration__itg_jp_re_msl_list
@@ -583,12 +583,12 @@ models:
 
   - name: indwks_integration__wks_rpt_retail_excellence
     config:
-      alias: wks_rpt_retail_excellence
+      alias: wks_rpt_retail_excellence_in
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: indwks_integration__wks_rpt_retail_excellence_sop
     config:
-      alias: wks_rpt_retail_excellence_sop
+      alias: wks_rpt_retail_excellence_sop_in
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: indwks_integration__wks_sku_recom_msl_targets
@@ -668,7 +668,7 @@ models:
 
   - name: sgpwks_integration__wks_retail_excellence_msl_target_final
     config:
-      alias: wks_retail_excellence_msl_target_final
+      alias: wks_retail_excellence_msl_target_final_sg
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: sgpwks_integration__wks_sg_rpt_retail_excellence
@@ -758,7 +758,7 @@ models:
 
   - name: myswks_integration__wks_retail_excellence_msl_target_final
     config:
-      alias: wks_retail_excellence_msl_target_final
+      alias: wks_retail_excellence_msl_target_final_my
       tags: ["retail_excellence_datamart","transformation"]
 
   - name: myswks_integration__wks_my_re_act_l12m
