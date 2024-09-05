@@ -1,7 +1,7 @@
 with 
 wks_otc_inv_si as 
 (
-    select * from asing012_workspace.wks_otc_inv_si
+    select * from {{ ref('ntawks_integration__wks_otc_inv_si') }}
 ),
 edw_material_sales_dim as 
 (
