@@ -390,8 +390,6 @@ models:
     config:
       alias: report_006_a
       tags: ["japan_dcl_views","transformation"]
-      
-  - name: jpndcledw_integration__report_006_a_newly_added
  
   - name: jpndcledw_integration__report__006_a_newly_added4
     config:
