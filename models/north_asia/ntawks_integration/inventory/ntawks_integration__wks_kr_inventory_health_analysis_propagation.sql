@@ -9,7 +9,7 @@ edw_vw_os_time_dim as
 ),
 wks_korea_siso_propagate_final as 
 (
-    select * from asing012_workspace.wks_korea_siso_propagate_final
+    select * from {{ ref('ntawks_integration__wks_korea_siso_propagate_final') }}
 ),
 edw_customer_dim as 
 (
