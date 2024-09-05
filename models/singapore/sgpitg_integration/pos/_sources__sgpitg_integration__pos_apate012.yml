@@ -13,4 +13,6 @@ sources:
       - name: TRATBL_sdl_sg_scan_data_dfi__null_test
       - name: TRATBL_sdl_sg_scan_data_amazon__null_test
       - name: TRATBL_sdl_sg_scan_data_ntuc__null_test
+      - name: TRATBL_sdl_sg_scan_data_watsons__null_test
+      - name: TRATBL_sdl_sg_scan_data_redmart__null_test
         

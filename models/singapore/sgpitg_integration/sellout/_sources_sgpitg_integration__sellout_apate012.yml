@@ -10,4 +10,7 @@ sources:
       identifier: false
     tables:
       - name: TRATBL_sdl_sg_zuellig_sellout__lookup_test
+      - name: TRATBL_sdl_sg_zuellig_customer_mapping__null_test
+      - name: TRATBL_sdl_sg_zuellig_customer_mapping__duplicate_test
+      - name: TRATBL_sdl_sg_zuellig_customer_mapping__lookup_test
         
