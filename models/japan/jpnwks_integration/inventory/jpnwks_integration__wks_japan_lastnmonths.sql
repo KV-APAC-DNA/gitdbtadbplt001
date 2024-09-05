@@ -1,8 +1,8 @@
-with WKS_japan_allmonths_base as(
+with wks_japan_allmonths_base as(
     select * from {{ ref('jpnwks_integration__wks_japan_allmonths_base') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-    select * from {{ ref('sgpedw_integration__EDW_VW_OS_TIME_DIM') }}
+edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 final as(
     select  sap_parent_customer_key ,  sap_parent_customer_desc, 
@@ -35,11 +35,11 @@ select  base.sap_parent_customer_key ,  base.sap_parent_customer_desc,
        , last_12_months. last_12months_so_matl     as last_12months_so
        , last_12_months. last_12months_so_value_matl as last_12months_so_value      
 from      
-        WKS_japan_allmonths_base  base
+        wks_japan_allmonths_base  base
         ,   (select base3.sap_parent_customer_key , base3.sap_parent_customer_desc, base3.matl_num, mnth_id 
                  , sum(so_qty)   as  last_3months_so_matl
                  , sum(so_value) as  last_3months_so_value_matl 
-            from  (select *  from WKS_japan_allmonths_base 
+            from  (select *  from wks_japan_allmonths_base 
                     where  left(month,4) >=(date_part(year, convert_timezone('UTC', current_timestamp())) -2) )  base3,
                   (select mnth_id, third_month
                      from
@@ -57,7 +57,7 @@ from
       ,   (select base6.sap_parent_customer_key , base6.sap_parent_customer_desc, base6.matl_num, mnth_id
                  , sum(so_qty)   as  last_6months_so_matl
                  , sum(so_value) as  last_6months_so_value_matl 
-            from  (select *  from WKS_japan_allmonths_base  
+            from  (select *  from wks_japan_allmonths_base  
                     where  left(month,4) >=(date_part(year, convert_timezone('UTC', current_timestamp())) -2) )  base6,
                   (select mnth_id, sixth_month
                      from
@@ -75,7 +75,7 @@ from
        ,(select base12.sap_parent_customer_key , base12.sap_parent_customer_desc, base12.matl_num, mnth_id
                  , sum(so_qty)   as  last_12months_so_matl
                  , sum(so_value) as  last_12months_so_value_matl 
-            from  (select *  from WKS_japan_allmonths_base  
+            from  (select *  from wks_japan_allmonths_base  
                     where  left(month,4) >=(date_part(year, convert_timezone('UTC', current_timestamp())) -2) ) base12,
                   (select mnth_id, twelfth_month
                      from

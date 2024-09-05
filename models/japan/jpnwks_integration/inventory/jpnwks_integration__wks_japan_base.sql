@@ -1,11 +1,11 @@
-with EDW_BILLING_FACT as(
-    select * from {{ ref('aspedw_integration__EDW_BILLING_FACT') }}
+with edw_billing_fact as(
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_parameter_reg_inventory as(
-    select * from {{ ref('aspitg_integration__itg_parameter_reg_inventory') }}
+    select * from {{ source('aspitg_integration', 'itg_parameter_reg_inventory') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-    select * from {{ ref('sgpedw_integration__EDW_VW_OS_TIME_DIM') }}
+edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 dw_iv_month_end as(
     select * from {{ ref('jpnedw_integration__dw_iv_month_end') }}
@@ -13,11 +13,11 @@ dw_iv_month_end as(
 edi_item_m as(
     select * from {{ ref('jpnedw_integration__edi_item_m') }}
 ),
-DM_INTEGRATION_DLY as(
-    select * from {{ ref('jpnedw_integration__DM_INTEGRATION_DLY') }}
+dm_integration_dly as(
+    select * from {{ ref('jpnedw_integration__dm_integration_dly') }}
 ),
-VW_JAN_CHANGE as(
-    select * from {{ ref('jpnedw_integration__VW_JAN_CHANGE') }}
+vw_jan_change as(
+    select * from {{ ref('jpnedw_integration__vw_jan_change') }}
 ),
 cstm_m as(
     select * from {{ ref('jpnedw_integration__cstm_m') }}   

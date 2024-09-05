@@ -4,8 +4,8 @@ with wks_japan_lastnmonths as(
 wks_japan_base as(
     select * from {{ ref('jpnwks_integration__wks_japan_base') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-    select * from {{ ref('sgpedw_integration__EDW_VW_OS_TIME_DIM') }}
+edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 final as(
     Select 

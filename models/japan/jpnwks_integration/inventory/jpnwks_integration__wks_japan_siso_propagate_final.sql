@@ -7,7 +7,7 @@ japan_propagate_from_to as(
 wks_japan_siso_propagate_to_existing_dtls as(
     select * from {{ ref('jpnwks_integration__wks_japan_siso_propagate_to_existing_dtls') }}
 ),
-WKS_JAPAN_SISO_PROPAGATE_TO_DETAILS as(
+wks_japan_siso_propagate_to_details as(
     select * from {{ ref('jpnwks_integration__wks_japan_siso_propagate_to_details') }}
 ),
 base1 as(
