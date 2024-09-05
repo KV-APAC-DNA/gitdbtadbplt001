@@ -13,6 +13,15 @@ final as (
         "cluster" as "cluster",
         obj_crncy_co_obj as "obj_crncy_co_obj",
         "b1 mega-brand",
+
+        BRAND as "brand",
+        SUBBRAND as "sub_brand",
+        BUSINESS_SEGMENT as "business_segment",
+        BUSINESS_SUBSEGMENT as "business_subsegment",
+        NEED_STATE as "need_state",
+        CATEGORY as "category",
+        SUBCATEGORY as "subcategory",
+
         "b2 brand",
         "b3 base product",
         "b4 variant",
@@ -43,7 +52,8 @@ final as (
         eq_qty as "eq_qty",
         ord_pc_qty as "ord_pc_qty",
         unspp_qty as "unspp_qty",
-        cust_num as "cust_num"
+        cust_num as "cust_num",
+        customer_segmentation as "customer_segmentation" 
     from source
 )
 select * from final
