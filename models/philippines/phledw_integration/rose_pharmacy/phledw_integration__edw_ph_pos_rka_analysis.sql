@@ -191,7 +191,7 @@ select
      left  join ph_rosepharma_customers cust on (pos.branch_code=cust.brnch_cd)
      left   join price_list price on (prod.sap_item_cd=price.item_cd and prod.mnth_id=price.jj_mnth_id and price.active='Y') 
      left join veomd on  (upper(ltrim(veomd.sap_matl_num, 0)) = upper(ltrim(prod.sap_item_cd,0)))
-     left join epmad on (upper(trim(epmad.item_cd)) = prod.sap_item_cd)
+     left join epmad on (upper(trim(epmad.item_cd)) = upper(ltrim(prod.sap_item_cd,0)))
   ),
 final as 
 (
