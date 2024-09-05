@@ -211,12 +211,26 @@
                     jcp_create_date
                     ) 
                     SELECT (SELECT MAX_VALUE::number as max_value FROM {{ ref('jpnedw_integration__mt_constant_seq') }} WHERE 
-                    IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (
-                                ORDER BY ID
-                                ),
+                    IDENTIFY_CD='SEQUENCE_NO') + ROW_NUMBER() OVER (ORDER BY ID ),
                     id, rcv_dt, test_flag, bgn_sndr_cd, ws_cd, rtl_type, rtl_cd, trade_type, shp_date, shp_num, trade_cd, dep_cd, chg_cd, person_in_charge, person_name, rtl_name, rtl_ho_cd, rtl_address_cd_01, data_type, opt_fld, item_nm, item_cd_typ, item_cd, qty, qty_type, price, price_type, bgn_sndr_cd_gln, rcv_cd_gln, ws_cd_gln, shp_ws_cd, shp_ws_cd_gln, rep_name_kanji, rep_info, trade_cd_gln, rtl_cd_gln, rtl_name_kanji, rtl_ho_cd_gln, item_cd_gtin, item_nm_kanji, unt_prc, net_prc, sales_chan_type, CURRENT_TIMESTAMP()::timestamp_ntz(9)
                     FROM  {{this}}
                     WHERE jcp_rec_seq IS NULL;
+
+
+                    UPDATE {{ ref('jpnwks_integration__wk_so_planet_no_dup') }} as target
+                    SET jcp_rec_seq = seq_value.max_seq_value + subquery.row_num
+                    FROM (
+                        SELECT id, 
+                            ROW_NUMBER() OVER (ORDER BY id) as row_num
+                        FROM {{this}}
+                        WHERE jcp_rec_seq IS NULL
+                    ) as subquery
+                    CROSS JOIN (
+                        SELECT MAX_VALUE::number as max_seq_value
+                        FROM {{ ref('jpnedw_integration__mt_constant_seq') }} 
+                        WHERE IDENTIFY_CD = 'SEQUENCE_NO'
+                    ) as seq_value
+                    WHERE target.id = subquery.id and target.jcp_rec_seq is null;
 
                     UPDATE {{ ref('jpnedw_integration__mt_constant_seq') }}
                     SET MAX_VALUE=(select max(JCP_REC_SEQ) from {{ ref('jpnwks_integration__wk_so_planet_no_dup') }});
