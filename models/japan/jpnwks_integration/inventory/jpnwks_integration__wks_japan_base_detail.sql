@@ -5,7 +5,7 @@ wks_japan_base as(
     select * from {{ ref('jpnwks_integration__wks_japan_base') }}
 ),
 EDW_VW_OS_TIME_DIM as(
-    select * from sgpedw_integration.EDW_VW_OS_TIME_DIM
+    select * from {{ ref('sgpedw_integration__EDW_VW_OS_TIME_DIM') }}
 ),
 final as(
     Select 

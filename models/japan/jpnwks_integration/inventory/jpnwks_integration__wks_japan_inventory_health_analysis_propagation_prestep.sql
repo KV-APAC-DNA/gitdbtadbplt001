@@ -1,53 +1,53 @@
-with EDW_VW_OS_TIME_DIM as(
-    select * from sgpedw_integration.EDW_VW_OS_TIME_DIM
+with edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 vw_edw_reg_exch_rate as(
-    select * from aspedw_integration.vw_edw_reg_exch_rate
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
-EDW_GCH_CUSTOMERHIERARCHY as(
-    select * from aspedw_integration.EDW_GCH_CUSTOMERHIERARCHY
+edw_gch_customerhierarchy as(
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
-EDW_CUSTOMER_SALES_DIM as(
-    select * from aspedw_integration.EDW_CUSTOMER_SALES_DIM
+edw_customer_sales_dim as(
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_CUSTOMER_BASE_DIM as(
-    select * from aspedw_integration.EDW_CUSTOMER_BASE_DIM
+edw_customer_base_dim as(
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-EDW_COMPANY_DIM as(
-    select * from aspedw_integration.EDW_COMPANY_DIM
+edw_company_dim as(
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
-EDW_DSTRBTN_CHNL as(
-    select * from aspedw_integration.EDW_DSTRBTN_CHNL
+edw_dstrbtn_chnl as(
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
-EDW_SALES_ORG_DIM as(
-    select * from aspedw_integration.EDW_SALES_ORG_DIM
+edw_sales_org_dim as(
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
-EDW_CODE_DESCRIPTIONS as(
-    select * from aspedw_integration.EDW_CODE_DESCRIPTIONS
+edw_code_descriptions as(
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
-EDW_SUBCHNL_RETAIL_ENV_MAPPING as(
-    select * from aspedw_integration.EDW_SUBCHNL_RETAIL_ENV_MAPPING
+edw_subchnl_retail_env_mapping as(
+    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
 ),
 itg_parameter_reg_inventory as(
-    select * from aspitg_integration.itg_parameter_reg_inventory
+    select * from {{ ref('aspitg_integration__itg_parameter_reg_inventory') }}
 ),
 jp_inv_coverage_area_region_mapping as(
-    select * from jpnedw_integration.jp_inv_coverage_area_region_mapping
+    select * from {{ ref('jpnedw_integration__jp_inv_coverage_area_region_mapping') }}
 ),
 edi_cstm_m as(
-    select * from jpnedw_integration.edi_cstm_m
+    select * from {{ ref('jpnedw_integration__edi_cstm_m') }}
 ),
 wks_japan_siso_propagate_final as(
     select * from {{ ref('jpnwks_integration__wks_japan_siso_propagate_final') }}
 ),
-CSTM_M as(
-    select * from jpnedw_integration.CSTM_M
+cstm_m as(
+    select * from {{ ref('jpnedw_integration__cstm_m') }}
 ),
-EDW_MATERIAL_DIM as(
-    select * from aspedw_integration.EDW_MATERIAL_DIM
+edw_material_dim as(
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-EDW_GCH_PRODUCTHIERARCHY as(
-    select * from aspedw_integration.EDW_GCH_PRODUCTHIERARCHY
+edw_gch_producthierarchy as(
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
 final as
 (
