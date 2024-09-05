@@ -233,4 +233,12 @@ sources:
                 config:
                   store_failures: true
                   schema: ntawks_integration
-     
+  - name: aspitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: aspitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: itg_mysls_prod_trnl

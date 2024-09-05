@@ -385,10 +385,12 @@ models:
     config:
       alias: odr_returnitem_detail
       tags: ["japan_dcl_views","transformation"]
-  - name: jpndcledw_integration__report__006_a_newly_added
+
+  - name: jpndcledw_integration__report_006_a
     config:
-      alias: report__006_a_newly_added
+      alias: report_006_a
       tags: ["japan_dcl_views","transformation"]
+ 
   - name: jpndcledw_integration__report__006_a_newly_added4
     config:
       alias: report__006_a_newly_added4
@@ -980,3 +982,13 @@ models:
     config:
       alias: kesai_m_data_mart_sub_old_chsi
       tags: ["japan_dcl_views","transformation"]
+    
+  - name: jpndcledw_integration__kr_frequency_1yn_900
+    config:
+      alias: kr_frequency_1yn_900
+      tags: ["japan_dcl_views","transformation"]
+    
+  - name: jpndcledw_integration__cewq028
+    config:
+      alias: '"cewq028破損商品"'
+      tags: ["japan_dcl_views","inactive"]

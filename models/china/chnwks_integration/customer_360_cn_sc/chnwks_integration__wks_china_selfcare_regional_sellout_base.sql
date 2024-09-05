@@ -39,7 +39,7 @@ final as
     BASE.so_sls_qty,
     BASE.so_sls_value,
     BASE.msl_product_code,
-    BASE.msl_product_desc,
+    --BASE.msl_product_desc,
     BASE.retail_env,
     convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
     convert_timezone('UTC',current_timestamp()) AS updt_dttm
@@ -76,7 +76,7 @@ final as
         qty as SO_SLS_QTY,
         amount as SO_SLS_VALUE,
         product_code as msl_product_code,
-        product_name as msl_product_desc,
+        --product_name as msl_product_desc,
         channel2||'-'||channel3 as retail_env
     FROM itg_cn_selfcare_sellout_fact sellout
     LEFT JOIN edw_vw_os_time_dim b 

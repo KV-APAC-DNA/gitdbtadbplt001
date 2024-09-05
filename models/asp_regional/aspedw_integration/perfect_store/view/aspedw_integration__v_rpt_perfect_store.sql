@@ -73,6 +73,10 @@ edw_rpt_th_perfect_store as (
 v_rpt_vn_perfect_store as (
     select * from {{ ref('vnmedw_integration__v_rpt_vn_perfect_store') }}
 ),
+edw_cn_perfect_store as (
+    select * from {{ ref('chnedw_integration__edw_cn_perfect_store') }}
+),
+
 rex as (
     SELECT UPPER(derived_table1.dataset)::CHARACTER VARYING AS dataset,
     derived_table1.merchandisingresponseid,
@@ -2639,6 +2643,86 @@ vnm as (
     NULL AS store_grade
 FROM v_rpt_vn_perfect_store
 ),
+
+chn as (
+SELECT UPPER(edw_cn_perfect_store.dataset::TEXT)::CHARACTER VARYING AS dataset,
+       NULL AS merchandisingresponseid,
+       NULL AS surveyresponseid,
+       edw_cn_perfect_store.customerid,
+       edw_cn_perfect_store.salespersonid,
+       NULL AS visitid,
+       edw_cn_perfect_store.mrch_resp_startdt::DATE AS mrch_resp_startdt,
+       edw_cn_perfect_store.mrch_resp_enddt::DATE AS mrch_resp_enddt,
+       NULL AS mrch_resp_status,
+       NULL AS mastersurveyid,
+       NULL AS survey_status,
+       edw_cn_perfect_store.survey_enddate,
+       NULL AS questionkey,
+       edw_cn_perfect_store.questiontext,
+       NULL AS valuekey,
+       edw_cn_perfect_store.value,
+       NULL AS productid,
+       UPPER(edw_cn_perfect_store.mustcarryitem::TEXT)::CHARACTER VARYING AS mustcarryitem,
+       NULL AS answerscore,
+       UPPER(edw_cn_perfect_store.presence::TEXT)::CHARACTER VARYING AS presence,
+       edw_cn_perfect_store.outofstock,
+       NULL AS mastersurveyname,
+       UPPER(edw_cn_perfect_store.kpi::TEXT)::CHARACTER VARYING AS kpi,
+       edw_cn_perfect_store.category,
+       edw_cn_perfect_store.segment,
+       NULL AS vst_visitid,
+       edw_cn_perfect_store.scheduleddate,
+       NULL AS scheduledtime,
+       NULL AS duration,
+       UPPER(edw_cn_perfect_store.vst_status::TEXT)::CHARACTER VARYING AS vst_status,
+       edw_cn_perfect_store.fisc_yr,
+       edw_cn_perfect_store.fisc_per,
+       edw_cn_perfect_store.firstname,
+       edw_cn_perfect_store.lastname,
+       NULL AS cust_remotekey,
+       edw_cn_perfect_store.customername,
+       edw_cn_perfect_store.country,
+       edw_cn_perfect_store.state,
+       NULL AS county,
+       NULL AS district,
+       NULL AS city,
+       edw_cn_perfect_store.storereference,
+       edw_cn_perfect_store.storetype,
+       edw_cn_perfect_store.channel,
+       edw_cn_perfect_store.salesgroup,
+       edw_cn_perfect_store.bu,
+       NULL AS soldtoparty,
+       NULL AS brand,
+       edw_cn_perfect_store.productname,
+       edw_cn_perfect_store.eannumber,
+       NULL AS matl_num,
+       edw_cn_perfect_store.prod_hier_l1,
+       NULL AS prod_hier_l2,
+       NULL AS prod_hier_l3,
+       edw_cn_perfect_store.prod_hier_l4,
+       edw_cn_perfect_store.prod_hier_l5,
+       edw_cn_perfect_store.prod_hier_l6,
+       NULL AS prod_hier_l7,
+       NULL AS prod_hier_l8,
+       edw_cn_perfect_store.prod_hier_l9,
+       edw_cn_perfect_store.kpi_chnl_wt,
+       edw_cn_perfect_store.mkt_share,
+       UPPER(edw_cn_perfect_store.ques_desc::TEXT)::CHARACTER VARYING AS ques_desc,
+       edw_cn_perfect_store."y/n_flag",
+       NULL AS posm_execution_flag,
+       '' AS rej_reason,
+       NULL AS response,
+       NULL AS response_score,
+       '' AS acc_rej_reason,
+       edw_cn_perfect_store.actual,
+       edw_cn_perfect_store.target,
+       'Y' AS priority_store_flag,
+       NULL AS photo_url,
+       NULL AS website_url,
+       NULL AS store_grade
+FROM edw_cn_perfect_store
+WHERE UPPER(edw_cn_perfect_store.storetype::TEXT) <> 'CASH&CARRY'::CHARACTER VARYING::TEXT
+),
 final as (
     select * from sgp
     union all
@@ -2667,5 +2751,7 @@ final as (
     select * from ind_2
     union all
     select * from vnm
+    union all
+    select * from chn
 )
 select * from final

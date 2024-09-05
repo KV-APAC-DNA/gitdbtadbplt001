@@ -2,84 +2,74 @@
     config
     (
         materialized="incremental",
-        incremental_strategy= "merge",
-        unique_key= ["saleno"]
+        incremental_strategy= "append",
+        pre_hook = "
+                    {% if is_incremental() %}
+                    UPDATE
+		            {{this}}
+                    SET
+                        RUIKAISU  = W08.RUIKAISU, RUIKINGAKU  = W08.RUIKINGAKU, RUIINDAYS  = W08.RUIINDAYS, LASTJUCHDATE  = W08.LASTJUCHDATE, JUCHUKEIKADAYS  = W08.JUCHUKEIKADAYS, LASTKONYUDATE  = W08.LASTKONYUDATE, KONYUKEIKADAYS  = W08.KONYUKEIKADAYS, NENKAISU  = W08.NENKAISU, NENKINGAKU  = W08.NENKINGAKU, NENINDAYS  = W08.NENINDAYS, NENGELRYO  = W08.NENGELRYO, TSUKIGELRYO  = W08.TSUKIGELRYO, JUCHURKBNCODE  = W08.JUCHURKBNCODE, KONYURKBNCODE  = W08.KONYURKBNCODE, RUIFKBNCODE  = W08.RUIFKBNCODE, NENFKBNCODE  = W08.NENFKBNCODE, RUIIKBNCODE  = W08.RUIIKBNCODE, NENIKBNCODE  = W08.NENIKBNCODE, RUIMKBNCODE  = W08.RUIMKBNCODE, NENMKBNCODE1  = W08.NENMKBNCODE1, NENMKBNCODE2  = W08.NENMKBNCODE2, NENMKBNCODE3  = W08.NENMKBNCODE3, NENMKBNCODE4  = W08.NENMKBNCODE4, NENMKBNCODE5  = W08.NENMKBNCODE5, TSUKIGKBNCODE  = W08.TSUKIGKBNCODE, SEGKBNCODE  = W08.SEGKBNCODE, UPDATEDATE  = CAST(TO_CHAR(current_timestamp(),'YYYYMMDD')as INTEGER), UPDATETIME  = CAST(TO_CHAR(current_timestamp(),'HH24MISS')as INTEGER), UPDATEID  = '090554', KOKYAKBNCODE  = W08.KOKYAKBNCODE, updated_date = GETDATE(), updated_by = 'ETL_Batch'
+                    FROM
+                        {{ ref('jpndcledw_integration__tw08_juchkokyasts') }} W08
+                    WHERE
+                        {{this}}.SALENO = W08.SALENO
+                    {% endif %}
+                    "
     )
 }}
 
 with tw08_juchkokyasts as (
     select * from {{ ref('jpndcledw_integration__tw08_juchkokyasts') }}
 ),
-transformed as (
-    select
-        trim(w08.saleno) as saleno,
-        w08.ruikaisu,
-        w08.ruikingaku,
-        w08.ruiindays,
-        w08.lastjuchdate,
-        w08.juchukeikadays,
-        w08.lastkonyudate,
-        w08.konyukeikadays,
-        w08.nenkaisu,
-        w08.nenkingaku,
-        w08.nenindays,
-        w08.nengelryo,
-        w08.tsukigelryo,
-        w08.juchurkbncode,
-        w08.konyurkbncode,
-        w08.ruifkbncode,
-        w08.nenfkbncode,
-        w08.ruiikbncode,
-        w08.nenikbncode,
-        w08.ruimkbncode,
-        w08.nenmkbncode1,
-        w08.nenmkbncode2,
-        w08.nenmkbncode3,
-        w08.nenmkbncode4,
-        w08.nenmkbncode5,
-        w08.tsukigkbncode,
-        w08.segkbncode,
-        {% if is_incremental() %}
-        case 
-            when t06.saleno is not null then t06.insertdate
-            else cast(to_char(current_timestamp(),'YYYYMMDD')as integer) 
-        end
-        {% else %}
-            cast(to_char(current_timestamp(),'YYYYMMDD')as integer) 
-        {% endif %} as insertdate,
-        {% if is_incremental() %}
-        case 
-            when t06.saleno is not null then t06.inserttime
-            else cast(to_char(current_timestamp(),'HH24MISS')as integer)
-        end 
-        {% else %}
-            cast(to_char(current_timestamp(),'HH24MISS')as integer)
-        {% endif %} as inserttime,
-        '090554' as insertid,
-        cast(to_char(current_timestamp(),'YYYYMMDD')as integer) as updatedate,
-        cast(to_char(current_timestamp(),'HH24MISS')as integer) as updatetime,
-        '090554' as updateid,
-        w08.kokyakbncode,
-        {% if is_incremental() %}
-        case 
-            when t06.saleno is not null then 'ETL_Batch'
-            else null
-        end 
-        {% else %}
-            null
-        {% endif %} as updated_by,
-        {% if is_incremental() %}
-            t06.bk_saleno
-        {% else %}
-            null as bk_saleno
-        {% endif %}
 
-    from
-        tw08_juchkokyasts w08
-    {% if is_incremental() %}
-    left join {{this}} t06
-	    on t06.saleno = w08.saleno
-    {% endif %}
+tt06juchkokyasts as
+(
+    select * from {{this}}
+),
+transformed as (
+    SELECT
+		       TRIM(W08.SALENO) as saleno,
+		       W08.RUIKAISU,
+		       W08.RUIKINGAKU,
+		       W08.RUIINDAYS,
+		       W08.LASTJUCHDATE,
+		       W08.JUCHUKEIKADAYS,
+		       W08.LASTKONYUDATE,
+		       W08.KONYUKEIKADAYS,
+		       W08.NENKAISU,
+		       W08.NENKINGAKU,
+		       W08.NENINDAYS,
+		       W08.NENGELRYO,
+		       W08.TSUKIGELRYO,
+		       W08.JUCHURKBNCODE,
+		       W08.KONYURKBNCODE,
+		       W08.RUIFKBNCODE,
+		       W08.NENFKBNCODE,
+		       W08.RUIIKBNCODE,
+		       W08.NENIKBNCODE,
+		       W08.RUIMKBNCODE,
+		       W08.NENMKBNCODE1,
+		       W08.NENMKBNCODE2,
+		       W08.NENMKBNCODE3,
+		       W08.NENMKBNCODE4,
+		       W08.NENMKBNCODE5,
+		       W08.TSUKIGKBNCODE,
+		       W08.SEGKBNCODE,
+		       CAST(TO_CHAR(current_timestamp(),'YYYYMMDD')as INTEGER) as insertdate,
+		       CAST(TO_CHAR(current_timestamp(),'HH24MISS')as INTEGER) as inserttime,
+		       '090554' as insertid,
+		       CAST(TO_CHAR(current_timestamp(),'YYYYMMDD')as INTEGER) as updatedate,
+		       CAST(TO_CHAR(current_timestamp(),'HH24MISS')as INTEGER) as updatetime,
+		       '090554' as updateid,
+		       W08.KOKYAKBNCODE
+		FROM
+		    TW08_JUCHKOKYASTS W08
+		LEFT JOIN
+		       TT06JUCHKOKYASTS T06
+		  ON
+		       T06.SALENO = W08.SALENO
+		WHERE 
+		    T06.SALENO IS NULL 
 
 ),
 final as (
@@ -118,11 +108,11 @@ final as (
         updatetime::number(18,0) as updatetime,
         updateid::varchar(9) as updateid,
         kokyakbncode::varchar(3) as kokyakbncode,
-        bk_saleno::varchar(18) as bk_saleno,
+        null::varchar(18) as bk_saleno,
         current_timestamp()::timestamp_ntz(9) as inserted_date,
         null::varchar(100) as inserted_by,
         current_timestamp()::timestamp_ntz(9) as updated_date,
-        updated_by::varchar(100) as updated_by
+        null::varchar(100) as updated_by
     from transformed
 )
 select * from final
