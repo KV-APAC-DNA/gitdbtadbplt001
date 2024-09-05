@@ -1,8 +1,8 @@
-with WKS_japan_allmonths_base as(
+with wks_japan_allmonths_base as(
     select * from {{ ref('jpnwks_integration__wks_japan_allmonths_base') }}
 ),
-EDW_VW_OS_TIME_DIM as(
-    select * from {{ ref('sgpedw_integration__EDW_VW_OS_TIME_DIM') }}
+edw_vw_os_time_dim as(
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 final as(
     select  sap_parent_customer_key ,  sap_parent_customer_desc, 

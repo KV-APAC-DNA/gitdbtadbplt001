@@ -1,5 +1,5 @@
-with EDW_BILLING_FACT as(
-    select * from {{ ref('aspedw_integration__EDW_BILLING_FACT') }}
+with edw_billing_fact as(
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 itg_parameter_reg_inventory as(
     select * from {{ ref('aspitg_integration__itg_parameter_reg_inventory') }}

@@ -20,4 +20,8 @@ models:
     config:
         alias: wk_iv_priority
         tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_base
+    config:
+        alias: wks_japan_base
+        tags: ["inventory_workflow","transformation"]
 
