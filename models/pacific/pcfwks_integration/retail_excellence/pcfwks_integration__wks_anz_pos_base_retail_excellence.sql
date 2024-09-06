@@ -2,6 +2,9 @@
 with edw_rpt_regional_sellout_offtake as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
+edw_vw_cal_retail_excellence_dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
+),
 --final cte
 anz_pos_base_retail_excellence as 
 (
@@ -63,7 +66,10 @@ FROM (SELECT country_code AS CNTRY_CD,
 			 row_number() over (partition by distributor_name,ean,mnth_id,country_code order by cal_date desc,nvl(store_count_where_scanned,0) desc,nvl(numeric_distribution,0) desc) as rno
       from  EDW_RPT_REGIONAL_SELLOUT_OFFTAKE base --rg_edw.edw_rpt_regional_sellout_offtake_AnZ_POS_bkp base
 	  WHERE COUNTRY_CODE in  ('AU','NZ') and data_source='POS' and upper(DISTRIBUTOR_NAME) in ('AU WOOLWORTHS SCAN' , 'AU COLES GROUP SCAN','NZ WOOLWORTHS SCAN','AU MY CHEMIST GROUP SCAN','NEW ZEALAND PHARMACY COMBINED (INCL CWH)','TOTAL SUBSCRIBED PHARMACY NZ')
-	  ) SELLOUT where rno=1
+	  AND   MNTH_ID >= (SELECT last_28mnths
+                  FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
+      AND   MNTH_ID <= (SELECT last_2mnths FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
+      ) SELLOUT where rno=1
 ),
 final as
 (

@@ -404,7 +404,7 @@ sell1 as
 sellin as
 (
 	SELECT 
-		RIGHT(a.cust_num::text, 6) AS cust_num, 
+		coalesce(RIGHT(a.cust_num::text, 6),'') AS cust_num, 
 		a.fisc_yr AS year, 
 		((a.fisc_yr::character varying || RIGHT(a.fisc_yr_per::text, 2))::character varying) AS mnth_id, 
 		RIGHT(a.fisc_yr_per::text, 2) AS mnth_no, 
@@ -432,7 +432,7 @@ sellin as
 	WHERE 
 		a.ctry_nm::text IN ('Indonesia'::text, 'Singapore'::text, 'Malaysia'::text, 'Philippines'::text)
 	GROUP BY 
-		RIGHT(a.cust_num::text, 6), 
+		coalesce(RIGHT(a.cust_num::text, 6),''), 
 		a.fisc_yr, 
 		((a.fisc_yr::character varying || RIGHT(a.fisc_yr_per::text, 2))::character varying), 
 		RIGHT(a.fisc_yr_per::text, 2), 
@@ -711,7 +711,7 @@ block1 as
 					 ELSE CASE WHEN ((bg.applicationid):: text = 'PH' :: text) THEN 'PHP' :: character varying 
 				ELSE sell.from_currency END END END END AS from_currency, 
 				'USD' :: character varying AS to_currecy, 
-				((cur.exch_rate / (cur.from_ratio * cur.to_ratio))):: numeric(15, 5) AS exchange_rate, 
+				trunc((cur.exch_rate / (cur.from_ratio * cur.to_ratio)),5) AS exchange_rate, 
 				cur.from_ratio AS exrt_from_ratio, 
 				cur.to_ratio AS exrt_to_ratio, 
 				((0):: numeric):: numeric(18, 0) AS sellout_sales_quantity, 
@@ -1132,7 +1132,7 @@ block2 as
 						ELSE CASE WHEN ((bg.applicationid):: text = 'PH' :: text) THEN 'PHP' :: character varying 
 				   ELSE sell.from_currency END END END END AS from_currency, 
 				   'USD' :: character varying AS to_currecy, 
-				   ((cur.exch_rate / (cur.from_ratio * cur.to_ratio))):: numeric(15, 5) AS exchange_rate, 
+				   trunc((cur.exch_rate / (cur.from_ratio * cur.to_ratio)),5) AS exchange_rate, 
 				   cur.from_ratio AS exrt_from_ratio, 
 				   cur.to_ratio AS exrt_to_ratio, 
 				   ((0):: numeric):: numeric(18, 0) AS sellout_sales_quantity, 
@@ -1551,7 +1551,7 @@ block3 as
 					 ELSE CASE WHEN ((bg.applicationid):: text = 'PH' :: text) THEN 'PHP' :: character varying 
 				ELSE sell.from_currency END END END END AS from_currency, 
 				'USD' :: character varying AS to_currecy, 
-				((cur.exch_rate / (cur.from_ratio * cur.to_ratio))):: numeric(15, 5) AS exchange_rate, 
+				trunc((cur.exch_rate / (cur.from_ratio * cur.to_ratio)),5) AS exchange_rate, 
 				cur.from_ratio AS exrt_from_ratio, 
 				cur.to_ratio AS exrt_to_ratio, 
 				((0):: numeric):: numeric(18, 0) AS sellout_sales_quantity, 
@@ -1974,7 +1974,7 @@ block4 as
 				   ELSE CASE WHEN ((bg.applicationid):: text = 'PH' :: text) THEN 'PHP' :: character varying 
 			  ELSE sell.from_currency END END END END AS from_currency, 
 			  'USD' :: character varying AS to_currecy, 
-			  ((cur.exch_rate / (cur.from_ratio * cur.to_ratio))):: numeric(15, 5) AS exchange_rate, 
+			  trunc((cur.exch_rate / (cur.from_ratio * cur.to_ratio)),5) AS exchange_rate, 
 			  cur.from_ratio AS exrt_from_ratio, 
 			  cur.to_ratio AS exrt_to_ratio, 
 			  ((0):: numeric):: numeric(18, 0) AS sellout_sales_quantity, 

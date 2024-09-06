@@ -20,4 +20,47 @@ models:
     config:
         alias: wk_iv_priority
         tags: ["inventory_workflow","transformation"]
-
+  - name: jpnwks_integration__wks_japan_base
+    config:
+        alias: wks_japan_base
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__japan_propagate_to
+    config:
+        alias: japan_propagate_to
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_allmonths_base
+    config:
+        alias: wks_japan_allmonths_base
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_base_detail
+    config:
+        alias: wks_japan_base_detail
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_inventory_health_analysis_propagation
+    config:
+        alias: wks_japan_inventory_health_analysis_propagation
+        tags: ["inventory_workflow","transformation"] 
+  - name: jpnwks_integration__wks_japan_inventory_health_analysis_propagation_prestep
+    config:
+        alias: wks_japan_inventory_health_analysis_propagation_prestep
+        tags: ["inventory_workflow","transformation"] 
+  - name: jpnwks_integration__wks_japan_lastnmonths
+    config:
+        alias: wks_japan_lastnmonths
+        tags: ["inventory_workflow","transformation"] 
+  - name: jpnwks_integration__wks_japan_siso_propagate_final
+    config:
+        alias: wks_japan_siso_propagate_final
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_siso_propagate_to_details
+    config:
+        alias: wks_japan_siso_propagate_to_details
+        tags: ["inventory_workflow","transformation"]
+  - name: jpnwks_integration__wks_japan_siso_propagate_to_existing_dtls
+    config:
+        alias: wks_japan_siso_propagate_to_existing_dtls
+        tags: ["inventory_workflow","transformation"]
+  - name: jpwks_integration__japan_propagate_from_to
+    config:
+        alias: japan_propagate_from_to
+        tags: ["inventory_workflow","transformation"]

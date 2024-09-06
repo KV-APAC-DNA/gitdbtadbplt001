@@ -600,22 +600,36 @@ models:
         +materialized: view
         +schema: HCPEDW_ACCESS
 
-    china:
+    hcposea:
       config:
         +enabled: true
-        +sql_header: "ALTER SESSION SET TIMEZONE = 'Asia/Singapore';"
-      chnitg_integration:
+        +sql_header: "ALTER SESSION SET TIMEZONE = 'UTC';"
+      hcposeedw_integration:
         +materialized: table
         +transient: false
-        +schema: CHNITG_INTEGRATION    
-      chnwks_integration:
+        +schema: HCPOSEEDW_INTEGRATION
+        call:
+          view:
+            +materialized: view
+        cycle:
+          view:
+            +materialized: view
+        employee:
+          view:
+            +materialized: view
+        time_off_territory:
+          view:
+            +materialized: view
+        user:
+          view:
+            +materialized: view
+      hcposeitg_integration:
         +materialized: table
         +transient: false
-        +schema: CHNWKS_INTEGRATION   
-      chnedw_integration:
-        +materialized: table
-        +transient: false
-        +schema: CHNEDW_INTEGRATION
+        +schema: HCPOSEITG_INTEGRATION
+      hcposeedw_access:
+        +materialized: view
+        +schema: HCPOSEEDW_ACCESS
 
     japan_dcl:
       config:
@@ -653,4 +667,3 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-    

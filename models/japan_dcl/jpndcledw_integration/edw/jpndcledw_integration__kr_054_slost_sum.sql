@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_SLOST_MEISAI as (
 select * from {{ ref('jpndcledw_integration__kr_054_slost_meisai') }}
 ),
@@ -26,3 +27,6 @@ lpoint::number(38,0) as lpoint
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

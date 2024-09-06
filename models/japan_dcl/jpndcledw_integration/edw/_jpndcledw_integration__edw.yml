@@ -615,7 +615,6 @@ models:
   - name: jpndcledw_integration__wqwt74tbl_new
     config:
       alias: '"wqwt74戦略商品別売上ｐ_tbl_new"'
-      tags: ["m_dcl_edw_job2","transformation"] 
       tags: ["m_dcl_edw_job2","inactive"] 
   - name: jpndcledw_integration__hanyo_attr
     config:
@@ -809,7 +808,7 @@ models:
   - name: jpndcledw_integration__tbecorder_rireki_log
     config:
       alias: tbecorder_rireki_log
-      tags: ["m_dcl_edw_job1","transformation"]
+      tags: ["m_dcl_edw_job1","inactive"]
   - name: jpndcledw_integration__cim01kokya
     config:
       alias: cim01kokya
@@ -1037,16 +1036,31 @@ models:
       alias: kesai_h_data_mart_sub_n_u_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
+  - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl_kizuna
+    config:
+      alias: kesai_h_data_mart_sub_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kesai_h_data_mart_sub_tbl
     config:
       alias: kesai_h_data_mart_sub_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
+  - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_mv_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kesai_m_data_mart_mv_tbl
     config:
       alias: kesai_m_data_mart_mv_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
-      
+
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_before_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kesai_m_data_mart_sub_before_tbl
     config:
       alias: kesai_m_data_mart_sub_before_tbl
@@ -1072,6 +1086,11 @@ models:
       alias: kesai_m_data_mart_sub_n_u_tbl
       tags: ["m_dcl_edw_job2", "transformation"]
       
+  - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl_kizuna
+    config:
+      alias: kesai_m_data_mart_sub_tbl_kizuna
+      tags: ["m_dcl_edw_job2", "transformation"]
+
   - name: jpndcledw_integration__kesai_m_data_mart_sub_tbl
     config:
       alias: kesai_m_data_mart_sub_tbl

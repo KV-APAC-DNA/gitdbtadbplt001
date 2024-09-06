@@ -12,24 +12,24 @@ as (
     ),
 cld_m
 as (
-    select * from {{ ref('jpndcledw_integration__cld_m') }}  
+    select * from {{ ref('jpndcledw_integration__cld_m') }}
     ),
 transformed
 as (
-    select 
+    select
         channel_name as channel_name,
         channel_id as channel_id,
         yymm as yymm,
         "ユニーク契約者数" as total,
-        cast(date_part(dow, convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()) - interval '7 day') as int) as day_of_week,
-        cast(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()) as date) - interval '7 day' as report_exec_date
+        cast(date_part(dow, convert_timezone('Asia/Tokyo', current_timestamp()) - interval '7 day') as int) as day_of_week,
+        cast(convert_timezone('Asia/Tokyo', current_timestamp()) as date) - interval '7 day' as report_exec_date
     from report_006_a
-    where yymm = 
+    where yymm =
         (
-            select 
+            select
                 year_445 || lpad(month_445, 2, 0)
             from cld_m
-            where to_date(ymd_dt) = to_date(dateadd(day, - 7, convert_timezone('UTC', 'Asia/Tokyo', '2024-06-24')))
+            where to_date(ymd_dt) = to_date(dateadd(day, - 7, convert_timezone('Asia/Tokyo', current_timestamp())))
         )
     ),
 

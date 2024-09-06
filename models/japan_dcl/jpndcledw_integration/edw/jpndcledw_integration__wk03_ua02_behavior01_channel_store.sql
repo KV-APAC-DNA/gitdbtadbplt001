@@ -8,13 +8,13 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store,
         sum(gts) AS Order_Amt_store,
         sum(ciw_point) AS Point_Usage_Amt_store,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store,
         sum(ciw_discount) AS Coupon_Usage_Amt_store,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
@@ -36,19 +36,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store_2y,
         sum(gts) AS Order_Amt_store_2y,
         sum(ciw_point) AS Point_Usage_Amt_store_2y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store_2y,
         sum(ciw_discount) AS Coupon_Usage_Amt_store_2y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_store_2y
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-24)
+    WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-24)
     --add_months(date_trunc('day', current_timestamp()), - 24)
     --date_trunc('day', sysdate) + interval '2 year ago'
         AND channel IN ('直営・百貨店')
@@ -66,19 +66,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store_1y,
         sum(gts) AS Order_Amt_store_1y,
         sum(ciw_point) AS Point_Usage_Amt_store_1y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store_1y,
         sum(ciw_discount) AS Coupon_Usage_Amt_store_1y,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_store_1y
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-12)
+    WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-12)
     --add_months(date_trunc('day', current_timestamp()), - 12)
     --date_trunc('day', sysdate) + interval '1 year ago'
         AND channel IN ('直営・百貨店')
@@ -96,19 +96,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store_6m,
         sum(gts) AS Order_Amt_store_6m,
         sum(ciw_point) AS Point_Usage_Amt_store_6m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store_6m,
         sum(ciw_discount) AS Coupon_Usage_Amt_store_6m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_store_6m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-6)
+    WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-6)
     --add_months(date_trunc('day', current_timestamp()), - 6)
     --date_trunc('day', sysdate) + interval '6 month ago'
         AND channel IN ('直営・百貨店')
@@ -126,19 +126,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store_3m,
         sum(gts) AS Order_Amt_store_3m,
         sum(ciw_point) AS Point_Usage_Amt_store_3m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store_3m,
         sum(ciw_discount) AS Coupon_Usage_Amt_store_3m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_store_3m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-3)
+    WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-3)
     --add_months(date_trunc('day', current_timestamp()), - 3)
     --date_trunc('day', sysdate) + interval '3 month ago'
         AND channel IN ('直営・百貨店')
@@ -156,19 +156,19 @@ AS (
         count(DISTINCT saleno) AS Order_Cnt_store_1m,
         sum(gts) AS Order_Amt_store_1m,
         sum(ciw_point) AS Point_Usage_Amt_store_1m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_point > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Point_Usage_Cnt_store_1m,
         sum(ciw_discount) AS Coupon_Usage_Amt_store_1m,
-        count(DISTINCT CASE 
+        count(DISTINCT CASE
                 WHEN ciw_discount > 0
                     THEN saleno
                 ELSE NULL
                 END) AS Coupon_Usage_Cnt_store_1m
     FROM dm_kesai_mart_dly_general
-    WHERE order_dt >= add_months( date_trunc('day', '2024-07-01'::date)::date,-1)
+    WHERE order_dt >= add_months( date_trunc('day', current_timestamp())::date,-1)
     --add_months(date_trunc('day', current_timestamp()), -1)
     --date_trunc('day', sysdate) + interval '1 month ago'
         AND channel IN ('直営・百貨店')

@@ -5,6 +5,8 @@
             {% else %}
                 {{schema}}.jpndcledw_integration__tbecorder_log_tmp
     {% endif %}
+    {% endset %}
+    {% set query %}
         CREATE TABLE if not exists
         {% if target.name=='prod' %}
                     jpdcledw_integration.tbecorder_log
