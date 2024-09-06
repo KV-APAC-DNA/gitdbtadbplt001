@@ -24,6 +24,8 @@ final as (
         branch_name,
         osa_flag,
         retailer_name,
+        sub_channel,
+        store_location,
         filename,
         run_id,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm
