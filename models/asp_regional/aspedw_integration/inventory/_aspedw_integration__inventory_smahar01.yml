@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: aspedw_integration__edw_reg_inventory_health_analysis_propagation
-    config:
-      alias: edw_reg_inventory_health_analysis_propagation
-      tags: ["J_ap_china_reg_data_refresh","transformation"]
