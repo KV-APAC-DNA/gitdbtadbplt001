@@ -667,4 +667,4 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-    
+
