@@ -12,7 +12,7 @@ edw_retailer_calendar_dim as
 ),
 v_pf_sales_stock_inventory_analysis as
 (
-    select * from {{source('indedw_integration', 'v_pf_sales_stock_inventory_analysis')}}
+    select * from ({{ ref('indedw_integration__v_pf_sales_stock_inventory_analysis') }})
 ),
 trans as
 (
