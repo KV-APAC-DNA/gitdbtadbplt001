@@ -26,6 +26,5 @@ select load_date::timestamp_ntz(9) as load_date,
     product_description::varchar(255) as product_description,
     brand::varchar(50) as brand,
     qty::float as qty,
-    gmv::float as gmv,
-    file_name:: varchar(255) as file_name
+    gmv::float as gmv
  from final

@@ -34,6 +34,5 @@ select load_date::timestamp_ntz(9) as load_date,
     total_sales::float as total_sales,
     sub_category::varchar(255) as sub_category,
     manufacturing_company::varchar(255) as manufacturing_company,
-    cost_price::float as cost_price,
-    file_name::varchar(255) as file_name
+    cost_price::float as cost_price
  from final
