@@ -1111,20 +1111,20 @@ AS (
               'Sell-Out' AS jcp_analysis_type,
               'Sell-Out' AS jcp_data_category,
               DATE_TRUNC('day',current_timestamp()) AS jcp_create_date,
-              to_date(so.month, 'YYYYMM') AS jcp_load_date,
+              to_date(so."month", 'YYYYMM') AS jcp_load_date,
               SUM(so.so_qty) AS jcp_qty_sum,
               SUM(so.so_value) AS jcp_amt_sum,
-              to_date(so.month, 'YYYYMM') AS transaction_date,
+              to_date(so."month", 'YYYYMM') AS transaction_date,
               'Distributors' AS subject_name,
               so.sap_prnt_cust_key AS account_cd,
               so.sap_prnt_cust_desc AS account_nm,
               NULL AS file_name,
               'AU' AS country
        FROM VW_PACIFIC_SELLOUT so
-       WHERE to_date(month, 'YYYYMM') >= CURRENT_DATE - INTERVAL '90 days'
+       WHERE to_date("month", 'YYYYMM') >= CURRENT_DATE - INTERVAL '90 days'
               AND sap_prnt_cust_desc = 'METCASH'
        GROUP BY DATE_TRUNC('day',current_timestamp()),
-              to_date(month, 'YYYYMM'),
+              to_date("month", 'YYYYMM'),
               sap_prnt_cust_key,
               sap_prnt_cust_desc
        ),
