@@ -37,5 +37,6 @@ final as
     FROM (
         itg_trax_fct_psd_kpis trax_fact JOIN itg_trax_md_store trax_store ON (((trax_fact.storeid)::TEXT = (trax_store.store_number)::TEXT))
         )
+    WHERE (to_char((trax_fact.visit_date):: timestamp without time zone,'YYYY' :: text) >= ((select year(current_timestamp())-2 AS "date_part")):: text)
 )
 select * from final
