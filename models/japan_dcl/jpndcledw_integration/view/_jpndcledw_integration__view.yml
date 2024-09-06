@@ -996,4 +996,4 @@ models:
   - name: jpndcledw_integration__tw05kokyarecalc
     config:
       alias: tw05kokyarecalc
-      tags: ["japan_dcl_views","inactive"]
+      tags: ["japan_dcl_views","transformation"]
