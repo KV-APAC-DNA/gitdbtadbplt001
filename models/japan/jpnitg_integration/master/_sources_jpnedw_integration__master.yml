@@ -10,6 +10,5 @@ sources:
       identifier: false
     tables:
       - name: m_area_master
-
       - name: m_ldw_store_local
-      
+      - name: cld_m

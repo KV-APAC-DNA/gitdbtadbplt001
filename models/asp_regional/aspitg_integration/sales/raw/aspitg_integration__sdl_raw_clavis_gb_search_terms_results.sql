@@ -15,7 +15,7 @@ final as
 	id::varchar(1000) as id,
 	type::varchar(30) as type,
 	report_date::date as report_date,
-	region::varchar(2) as region,
+	region::varchar(3) as region,
 	search_term::varchar(255) as search_term,
 	online_store::varchar(255) as online_store,
 	brand::varchar(500) as brand,

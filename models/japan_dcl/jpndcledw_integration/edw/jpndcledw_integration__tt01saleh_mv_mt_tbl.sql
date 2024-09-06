@@ -1,3 +1,7 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
+
 WITH tt01saleh_sum_mv_mt
 AS (
   SELECT *

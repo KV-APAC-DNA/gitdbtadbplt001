@@ -2,6 +2,9 @@
 with edw_rpt_regional_sellout_offtake as (
     select * from {{ source('aspedw_integration', 'edw_rpt_regional_sellout_offtake') }}
 ),
+edw_vw_cal_retail_excellence_dim as (
+    select * from {{ ref('aspedw_integration__v_edw_vw_cal_Retail_excellence_dim') }}
+),
 --final cte
 anz_sellout_base_retail_excellence as 
 (
@@ -104,9 +107,9 @@ FROM (SELECT country_code AS CNTRY_CD,
              SELLOUT_SALES_VALUE AS SO_SLS_VALUE
       from  EDW_RPT_REGIONAL_SELLOUT_OFFTAKE	
 	  WHERE COUNTRY_CODE in  ('AU','NZ') and data_source='SELL-OUT'  
-	  --and MNTH_ID >= (select last_37mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
-	  --and mnth_id <= (select last_2mnths from rg_edw.edw_vw_cal_Retail_excellence_Dim)::numeric
-	 
+	  AND   MNTH_ID >= (SELECT last_28mnths
+                  FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
+      AND   MNTH_ID <= (SELECT last_2mnths FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
 	  ) MAIN
 GROUP BY DISTRIBUTOR_CODE,
          DISTRIBUTOR_NAME,

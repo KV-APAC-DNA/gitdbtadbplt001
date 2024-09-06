@@ -1,6 +1,6 @@
 with sdl_ecc_standard_cost_history as
 (
-    select * from {{ source('aspsdl_raw', 'sdl_ecc_standard_cost_history') }}
+    select * from {{ ref('aspitg_integration__vw_stg_sdl_ecc_standard_cost_history') }}
 ),
 itg_ecc_standard_cost_history as
 (

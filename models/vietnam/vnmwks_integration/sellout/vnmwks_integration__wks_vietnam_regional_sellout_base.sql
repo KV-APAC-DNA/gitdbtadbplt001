@@ -46,6 +46,9 @@ edw_sales_org_dim as (
 edw_company_dim as (
     select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
+edw_material_dim as (
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
 transformed as (
 select
 base.data_src,
@@ -69,8 +72,8 @@ base.region,
 base.zone_or_area,
 base.so_sls_qty,
 base.so_sls_value,
-base.msl_product_code,
-base.msl_product_desc,
+nvl(base.msl_product_code,'NA') as msl_product_code,
+--base.msl_product_desc,
 upper(base.retail_env) as retail_env,
 base.channel,
 current_timestamp() as crtd_dttm,
@@ -92,15 +95,15 @@ select 'SELL-OUT' as data_src,
        so_fact.cust_cd as store_cd,
        'NA' as store_name,
 	   cust.shop_type as store_type,
-       'NA' as ean,
+       nvl(mat.prmry_upc_cd,matsls.matsls_ean) AS ean,
        so_fact.sap_matl_num as matl_num,
 	   prod_dim.product_name as customer_product_desc,
 	   d.region as region,
 	   d.province as zone_or_area,
-	   so_fact.sls_qty as so_sls_qty, 
+	   so_fact.quantity as so_sls_qty, 
 	   so_fact.jj_net_sls as so_sls_value,
-       'NA' as msl_product_code,
-       prod_dim.product_name as msl_product_desc,
+       nvl(mat.prmry_upc_cd,matsls.matsls_ean) as msl_product_code,
+       --prod_dim.product_name as msl_product_desc,
        cust.shop_type as retail_env,
        cust.shop_type as channel
       from edw_vw_vn_sellout_sales_fact so_fact
@@ -111,6 +114,16 @@ select 'SELL-OUT' as data_src,
 	  on so_fact.dstrbtr_grp_cd = cust.dstrbtr_id and so_fact.cust_cd = cust.outlet_id
 	left join edw_vw_os_time_dim time_dim on so_fact.bill_date::date = time_dim.cal_date
 	left join itg_vn_dms_product_dim prod_dim on prod_dim.product_code=so_fact.dstrbtr_matl_num
+        left join (select matl_num,ean_num as matsls_ean from (         
+                Select ltrim(matl_num,'0') as matl_num,ean_num,
+                row_number() over (partition by ltrim(matl_num,'0') order by ean_num desc,crt_dttm desc) as rn
+            from edw_material_sales_dim where sls_org in (select distinct sls_org from edw_sales_org_dim 
+            where sls_org_co_cd in (select distinct co_cd from edw_company_dim where ctry_group = 'Vietnam'))
+    and (ean_num != 'N/A' and lower(ean_num) != 'na' and lower(ean_num) != 'null' and (ean_num is not null and trim(ean_num) != '') and length(ean_num) >= 12 and length(ean_num) <= 15 )) where rn = 1) matsls on LTRIM(so_fact.dstrbtr_matl_num,'0') = LTRIM(matsls.matl_num,'0')
+    left join (select * from (SELECT DISTINCT prmry_upc_cd,LTRIM(MATL_NUM,'0') as MATL_NUM ,row_number() over
+    (PARTITION BY prmry_upc_cd order by crt_dttm desc) as RN FROM edw_material_dim where (nullif(prmry_upc_cd,'') is not null and prmry_upc_cd != 'N/A' and lower(prmry_upc_cd) != 'na' and lower(prmry_upc_cd) != 'null' and (prmry_upc_cd is not null and trim(prmry_upc_cd) != '') and length(prmry_upc_cd) >= 12 and length(prmry_upc_cd) <= 15)
+    )
+    where rn=1)mat on LTRIM(so_fact.dstrbtr_matl_num,'0')=LTRIM(mat.matl_num,'0')
 	where so_fact.sls_qty <> 0 OR so_fact.ret_qty <> 0 OR so_fact.grs_trd_sls <> 0 OR so_fact.ret_val <> 0 OR so_fact.trd_discnt <> 0 and so_fact.cntry_cd = 'VN'
 	
 union all
@@ -127,19 +140,19 @@ select 'SELL-OUT' as data_src,
 	   time_dim.cal_mnth_no::int as univ_month,
        iqp.parameter_value as soldto_code,
        'NA' as distributor_code,
-       cust.account as distributor_name,
+       cust."account" as distributor_name,
        so_fact.custcode as store_cd,
        so_fact.customer as store_name,
 	   cust.retail_environment as store_type,
-       prd.barcode as ean,
+       nvl(prd.barcode,'NA') AS ean,
        prd.jnj_sap_code as matl_num,
 	   so_fact.product as customer_product_desc,
-	   cust.region as region,
+	   cust."region" as region,
 	   cust.province as zone_or_area,
 	   qty_exclude_foc as so_sls_qty,    
 	   case when channel = 'ECOM' then gross_amount_wo_vat else net_amount_wo_vat end as so_sls_value,
-       'NA' as msl_product_code,
-       so_fact.product as msl_product_desc,
+       nvl(prd.barcode,'NA') as msl_product_code,
+       --so_fact.product as msl_product_desc,
        cust.retail_environment as retail_env,
        cust.retail_environment as channel 
   from (
@@ -176,15 +189,15 @@ SELECT 'POS' AS DATA_SRC,
     shopcode AS STORE_CD,
     shopname AS STORE_NAME,
      channelname AS store_type,
-    pos.barcode AS EAN,
+    nvl(pos.barcode,'NA') AS EAN,
     nvl(vtdp.jnj_sap_code,matsls.matl_num) AS MATL_NUM,
      productname AS Customer_Product_Desc,
      stt AS region,
      area AS zone_or_area,
      pos.quantity::numeric(38,23) as SO_SLS_QTY,
      pos.amount::numeric(38,23) as SO_SLS_VALUE,
-      pos.barcode as msl_product_code,
-      productname AS msl_product_desc,
+      nvl(pos.barcode,'NA') as msl_product_code,
+      --productname AS msl_product_desc,
       channelname as retail_env,
       'MT' as channel
    FROM (select * from itg_spiral_mti_offtake pos_inner,(select parameter_value from itg_query_parameters
@@ -227,7 +240,7 @@ zone_or_area::varchar(750) as zone_or_area,
 so_sls_qty::number(38,23) as so_sls_qty,
 so_sls_value::number(38,23) as so_sls_value,
 msl_product_code::Varchar(100) as msl_product_code,
-msl_product_desc::Varchar(255) as msl_product_desc,
+--msl_product_desc::Varchar(255) as msl_product_desc,
 retail_env::Varchar(450) as retail_env,
 channel::Varchar(300) as channel,
 crtd_dttm::timestamp_ntz(9) as crtd_dttm,

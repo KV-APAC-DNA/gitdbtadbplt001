@@ -77,7 +77,7 @@ tempa as
                   end
           END AS Speciality							
       ,HCP.CORE_NONCORE									
-      ,HCP.CLASSIFICATION 								
+      ,nullif(HCP.CLASSIFICATION,'') as CLASSIFICATION						
       ,SUBSTRING(HCP.TERRITORY,6,LENGTH(HCP.TERRITORY)) AS TERRITORY										
       ,SUBSTRING(HCP.REGION_HQ,6,LENGTH(HCP.REGION_HQ)) AS REGION		
       ,VW_MASTER.ORGANIZATION_L3_NAME  AS REGION_HQ 									
@@ -142,7 +142,7 @@ tempb as
       , TEMP.BRAND_CATEGORY	
       ,	TEMP.SPECIALITY
       ,	TEMP.CORE_NONCORE
-      ,	TEMP.CLASSIFICATION
+      ,	nullif(TEMP.CLASSIFICATION,'') as CLASSIFICATION
       ,	TEMP.TERRITORY
       ,	TEMP.REGION
       ,	TEMP.REGION_HQ

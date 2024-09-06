@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: hcposeitg_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: hcposeitg_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+
+    - name: itg_lookup_retention_period
+    - name: itg_lookup_eng_data

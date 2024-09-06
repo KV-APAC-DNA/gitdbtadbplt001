@@ -16,7 +16,7 @@ models:
   - name: ntaedw_integration__edw_pos_fact
     config:
       alias: edw_pos_fact
-      tags: ["pos_edw_load","transformation"]
+      tags: ["pos_edw_load","hk_pos","transformation"]
   - name: ntaedw_integration__v_rpt_pos_offtake_wkly_korea
     config:
       alias: v_rpt_pos_offtake_wkly_korea

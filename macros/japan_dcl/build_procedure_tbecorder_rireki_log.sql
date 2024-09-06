@@ -1,7 +1,7 @@
 {% macro build_procedure_tbecorder_rireki_log() %}
     {% set tablename %}
     {% if target.name=='prod' %}
-                jpdcledw_integration.tbecorder_log_rireki_tmp
+                jpdcledw_integration.tbecorder_rireki_log_tmp
             {% else %}
                 {{schema}}.jpndcledw_integration__tbecorder_rireki_log_tmp
     {% endif %}

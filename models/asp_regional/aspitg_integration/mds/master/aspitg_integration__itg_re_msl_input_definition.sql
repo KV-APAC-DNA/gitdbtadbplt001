@@ -21,7 +21,7 @@ itg_re_msl_input_definition as
        sku_description,
        sku_code,
        product_key,
-	   msl_final,
+	   'NA' AS msl_final,
 	   active_status_code,
 	   sourceexistenceflag_code
     FROM source

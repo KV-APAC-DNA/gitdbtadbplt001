@@ -12,7 +12,7 @@ final as(
     select 
         custcode::varchar(10) as custcode,
         slsperid::varchar(10) as slsperid,
-        branchcode::varchar(30) as branchcode,
+        branchcode::varchar(100) as branchcode,
         iseid::varchar(100) as iseid,
         quesno::number(18,0) as quesno,
         answerseq::number(18,0) as answerseq,

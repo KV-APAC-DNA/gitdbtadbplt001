@@ -1,0 +1,187 @@
+version: 2
+
+models:
+  - name: indedw_access__edw_customer_dim
+    config:
+      alias: edw_customer_dim
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_msl_spike_mi_msku_list
+    config:
+      alias: edw_msl_spike_mi_msku_list
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_product_dim
+    config:
+      alias: edw_product_dim
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_decision_cockpit_details
+    config:
+      alias: edw_rpt_decision_cockpit_details
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_finance_simulator
+    config:
+      alias: edw_rpt_finance_simulator
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_geotagg_tracker
+    config:
+      alias: edw_rpt_geotagg_tracker
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_mi_msl_dashboard
+    config:
+      alias: edw_rpt_mi_msl_dashboard
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_mi_psr_perf_tracker
+    config:
+      alias: edw_rpt_mi_psr_perf_tracker
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_mi_rt_sales_details
+    config:
+      alias: edw_rpt_mi_rt_sales_details
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_mt_sellin_vs_sellout_tbl
+    config:
+      alias: edw_rpt_mt_sellin_vs_sellout_tbl
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_sales_details
+    config:
+      alias: edw_rpt_sales_details
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_schemeutilize_cube
+    config:
+      alias: edw_rpt_schemeutilize_cube
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_skurecom_gt_sss
+    config:
+      alias: edw_rpt_skurecom_gt_sss
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_sku_recom_management
+    config:
+      alias: edw_rpt_sku_recom_management
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_sss_scorecard
+    config:
+      alias: edw_rpt_sss_scorecard
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_rpt_sss_zonal
+    config:
+      alias: edw_rpt_sss_zonal
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_sku_recom
+    config:
+      alias: edw_sku_recom
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_sku_recom_spike_msl
+    config:
+      alias: edw_sku_recom_spike_msl
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_sku_recom_spike_msl_analytics
+    config:
+      alias: edw_sku_recom_spike_msl_analytics
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__edw_sku_recom_spike_msl_mi
+    config:
+      alias: edw_sku_recom_spike_msl_mi
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__gtm_kpi_dasboard
+    config:
+      alias: gtm_kpi_dasboard
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__itg_mds_in_businessplan_brand_final
+    config:
+      alias: itg_mds_in_businessplan_brand_final
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__itg_mds_in_businessplan_channel_final
+    config:
+      alias: itg_mds_in_businessplan_channel_final
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__itg_mds_in_businessplan_zonewise_final
+    config:
+      alias: itg_mds_in_businessplan_zonewise_final
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_ecomm_sales_inv_acc_ch_grp
+    config:
+      alias: v_ecomm_sales_inv_acc_ch_grp
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_pf_sales_stock
+    config:
+      alias: v_pf_sales_stock
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_cust_mast_inv_tde
+    config:
+      alias: v_rpt_cust_mast_inv_tde
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_day_cls_stock
+    config:
+      alias: v_rpt_day_cls_stock
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_fran_chnl_actl
+    config:
+      alias: v_rpt_fran_chnl_actl
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_fran_chnl_actl_sales_by_channel
+    config:
+      alias: v_rpt_fran_chnl_actl_sales_by_channel
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_gt_target_vs_actuals
+    config:
+      alias: v_rpt_gt_target_vs_actuals
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_ka_sales
+    config:
+      alias: v_rpt_ka_sales
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_ka_sales_internal
+    config:
+      alias: v_rpt_ka_sales_internal
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_mon_cls_stock
+    config:
+      alias: v_rpt_mon_cls_stock
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_order_details
+    config:
+      alias: v_rpt_order_details
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_pos_offtake
+    config:
+      alias: v_rpt_pos_offtake
+      tags: ["india_views","transformation"]
+
+  - name: indedw_access__v_rpt_rt_sales
+    config:
+      alias: v_rpt_rt_sales
+      tags: ["india_views","transformation"]

@@ -12,7 +12,7 @@ final as(
     select 
         custcode::varchar(10) as custcode,
         slsperid::varchar(10) as slsperid,
-        branchcode::varchar(30) as branchcode,
+        branchcode::varchar(100) as branchcode,
         iseid::varchar(100) as iseid,
         visitdate::timestamp_ntz(9) as visitdate,
         createddate::timestamp_ntz(9) as createddate,

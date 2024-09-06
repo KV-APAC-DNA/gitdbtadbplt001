@@ -87,6 +87,9 @@ final as
                 AND ctry_cd = 'TW'
         ) TGT ON SRC.pos_date = TGT.pos_dt
         AND SRC.product_code = TGT.vend_prod_cd
-        where src.crt_dttm>tgt.upd_dttm
+       where src.pos_date not in (
+        select distinct pos_dt from itg_pos
+        WHERE src_sys_cd = 'EC' and ctry_cd = 'TW'
+        )
 )
 select * from final

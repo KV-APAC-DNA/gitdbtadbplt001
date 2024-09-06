@@ -194,6 +194,7 @@ sellout_value_list_price as sales_value_list_price
 from edw_rpt_regional_sellout_offtake
 where country_name = 'China Personal Care'
 and   data_source in ('SELL-OUT','POS')
+and (sellout_sales_value != 0 and sellout_sales_value is not null)
 and mnth_id >= (select last_28mnths from edw_vw_cal_retail_excellence_dim)::numeric
 						   and mnth_id <= (select last_2mnths from edw_vw_cal_retail_excellence_dim)::numeric  
 )main

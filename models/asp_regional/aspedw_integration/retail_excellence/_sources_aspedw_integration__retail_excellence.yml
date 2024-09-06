@@ -169,6 +169,7 @@ sources:
     tables:
       - name: sdl_mds_mds_reds_market_msl   
       - name : sdl_mds_mds_reds_market_msl_target
+      - name: sdl_mds_mds_mother_code
 
 
   - name: inditg_integration

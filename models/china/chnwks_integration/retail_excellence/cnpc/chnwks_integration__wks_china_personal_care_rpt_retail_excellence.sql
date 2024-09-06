@@ -152,6 +152,7 @@ from (select cast(target.fisc_yr as integer) as fisc_yr,
               and target.soldto_code = actual.soldto_code
               and target.store_code = actual.store_code
 			  and target.product_code = actual.product_code
+              and upper(target.retail_environment) = upper(actual.store_type)
 
       
         left join (select distinct edw_perfect_store_product_master.product_code,
@@ -309,6 +310,7 @@ from (select cast(actual."year" as numeric(18,0)) as fisc_yr,
                               and   a.distributor_code = t.distributor_code
                               and   a.store_code = t.store_code
 							  and   a.product_code = t.product_code
+                               and upper(a.store_type) = upper(t.retail_environment) 
                               --and   a.store_type = t.store_type
                               --and   a.pka_product_key_desc = t.product_code
                               --and   a.zone = t.zone
