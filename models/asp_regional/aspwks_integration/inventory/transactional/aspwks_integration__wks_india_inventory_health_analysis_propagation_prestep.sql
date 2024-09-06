@@ -1,58 +1,58 @@
-with VW_EDW_REG_EXCH_RATE as
+with vw_edw_reg_exch_rate as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.VW_EDW_REG_EXCH_RATE
+    select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
 edw_material_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_material_dim
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-EDW_GCH_PRODUCTHIERARCHY as
+edw_gch_producthierarchy as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-EDW_GCH_CUSTOMERHIERARCHY as
+edw_gch_customerhierarchy as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_CUSTOMERHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_customerhierarchy') }}
 ),
-EDW_CUSTOMER_SALES_DIM as
+edw_customer_sales_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_CUSTOMER_BASE_DIM as
+edw_customer_base_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_BASE_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_base_dim') }}
 ),
-EDW_COMPANY_DIM as
+edw_company_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_COMPANY_DIM
+    select * from {{ ref('aspedw_integration__edw_company_dim') }}
 ),
-EDW_DSTRBTN_CHNL as
+edw_dstrbtn_chnl as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_DSTRBTN_CHNL
+    select * from {{ ref('aspedw_integration__edw_dstrbtn_chnl') }}
 ),
-EDW_SALES_ORG_DIM as
+edw_sales_org_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_SALES_ORG_DIM
+    select * from {{ ref('aspedw_integration__edw_sales_org_dim') }}
 ),
-EDW_CODE_DESCRIPTIONS as
+edw_code_descriptions as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CODE_DESCRIPTIONS
+    select * from {{ ref('aspedw_integration__edw_code_descriptions') }}
 ),
-EDW_SUBCHNL_RETAIL_ENV_MAPPING as
+edw_subchnl_retail_env_mapping as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_SUBCHNL_RETAIL_ENV_MAPPING
+    select * from {{ ref('aspedw_integration__edw_subchnl_retail_env_mapping') }}
 ),
-EDW_CUSTOMER_SALES_DIM as
+edw_customer_sales_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CUSTOMER_SALES_DIM
+    select * from {{ ref('aspedw_integration__edw_customer_sales_dim') }}
 ),
-EDW_PRODUCT_DIM as
+edw_product_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_PRODUCT_DIM
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
-EDW_CUSTOMER_DIM as
+edw_customer_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_CUSTOMER_DIM
+    select * from {{ ref('indedw_integration__edw_customer_dim') }}
 ),
 wks_india_siso_propagate_final as
 (
@@ -60,8 +60,7 @@ wks_india_siso_propagate_final as
 ),
 edw_vw_os_time_dim
 as (
-  select *
-  from dev_dna_core.oseedw_integration.edw_vw_os_time_dim
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 trans as
 (
@@ -77,7 +76,7 @@ FROM (
                 WHERE cntry_key = 'IN'
                 ),
               cal AS (
-                SELECT DISTINCT YEAR AS CAL_YEAR,
+                SELECT DISTINCT "year" AS CAL_YEAR,
                   QRTR_NO AS cal_qrtr_no,
                   MNTH_ID AS cal_mnth_id,
                   MNTH_NO AS cal_mnth_no

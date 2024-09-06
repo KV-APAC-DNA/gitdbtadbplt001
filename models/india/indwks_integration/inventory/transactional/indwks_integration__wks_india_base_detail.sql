@@ -7,8 +7,7 @@ wks_india_base as
 ),
 edw_vw_os_time_dim
 as (
-  select *
-  from dev_dna_core.oseedw_integration.edw_vw_os_time_dim
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 trans as
 (

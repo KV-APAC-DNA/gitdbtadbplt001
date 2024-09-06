@@ -1,18 +1,18 @@
-with EDW_CALENDAR_DIM as
+with edw_calendar_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_CALENDAR_DIM
+    select * from {{ ref('aspedw_integration__edw_calendar_dim') }}
 ),
-EDW_BILLING_FACT as
+edw_billing_fact as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_BILLING_FACT
+    select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_RETAILER_CALENDAR_DIM
+    select * from {{ ref('indedw_integration__edw_retailer_calendar_dim') }}
 ),
 v_pf_sales_stock_inventory_analysis as
 (
-     select * from PROD_DNA_CORE.INDEDW_INTEGRATION.v_pf_sales_stock_inventory_analysis
+    select * from {{source('indedw_integration', 'v_pf_sales_stock_inventory_analysis')}}
 ),
 trans as
 (

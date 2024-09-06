@@ -5,8 +5,7 @@ as (
   ),
 edw_vw_os_time_dim
 as (
-  select *
-  from dev_dna_core.oseedw_integration.edw_vw_os_time_dim
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 trans
 AS (
@@ -68,7 +67,7 @@ AS (
                   ORDER BY mnth_id
                   ) third_month
               FROM (
-                SELECT DISTINCT cal_year AS year,
+                SELECT DISTINCT cal_year AS "year",
                   cal_mnth_id AS mnth_id
                 FROM edw_vw_os_time_dim
                 WHERE cal_year >= (date_part(year, convert_timezone('UTC', current_timestamp())) - 6)
@@ -102,7 +101,7 @@ AS (
                   ORDER BY mnth_id
                   ) sixth_month
               FROM (
-                SELECT DISTINCT cal_year AS year,
+                SELECT DISTINCT cal_year AS "year",
                   cal_mnth_id AS mnth_id
                 FROM edw_vw_os_time_dim
                 WHERE cal_year >= (date_part(year, convert_timezone('UTC', current_timestamp())) - 6)
@@ -136,7 +135,7 @@ AS (
                   ORDER BY mnth_id
                   ) twelfth_month
               FROM (
-                SELECT DISTINCT cal_year AS year,
+                SELECT DISTINCT cal_year AS "year",
                   cal_mnth_id AS mnth_id
                 FROM edw_vw_os_time_dim
                 WHERE cal_year >= (date_part(year, convert_timezone('UTC', current_timestamp())) - 6)
@@ -170,7 +169,7 @@ AS (
                   ORDER BY mnth_id
                   ) thirtysixth_month
               FROM (
-                SELECT DISTINCT cal_year AS year,
+                SELECT DISTINCT cal_year AS "year",
                   cal_mnth_id AS mnth_id
                 FROM edw_vw_os_time_dim
                 WHERE cal_year >= (date_part(year, convert_timezone('UTC', current_timestamp())) - 6)

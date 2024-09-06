@@ -1,10 +1,10 @@
-with WKS_INDIA_base as
+with wks_india_base as
 (
     select * from ({{ ref('indwks_integration__wks_india_base') }})
 ),
 edw_vw_os_time_dim as
 (
-    select * from DEV_DNA_CORE.OSEEDW_INTEGRATION.EDW_VW_OS_TIME_DIM
+    select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 trans as
 (
@@ -25,7 +25,7 @@ select
              (select  distinct sold_to as sap_prnt_cust_key, matl_num 
                 from WKS_INDIA_base)  a
                   
-            ,(select distinct cal_year as year,cal_mnth_id as month
+            ,(select distinct cal_year as "year",cal_mnth_id as month
                           from edw_vw_os_time_dim -- limit 100
                                   where cal_year >= (date_part(year, convert_timezone('UTC', current_timestamp())) -6) 
              ) b

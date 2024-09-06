@@ -1,22 +1,22 @@
-with EDW_PRODUCT_DIM as
+with edw_product_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.EDW_PRODUCT_DIM
+    select * from ({{ ref('indedw_integration__edw_product_dim') }})
 ),
 v_pf_sales_stock_inventory_analysis as
 (
-    select * from PROD_DNA_CORE.INDEDW_INTEGRATION.V_PF_SALES_STOCK_INVENTORY_ANALYSIS
+    select * from {{source('indedw_integration', 'v_pf_sales_stock_inventory_analysis')}}
 ),
 edw_retailer_calendar_dim as
 (
-    select * from DEV_DNA_CORE.INDEDW_INTEGRATION.edw_retailer_calendar_dim
+    select * from ({{ ref('indedw_integration__edw_retailer_calendar_dim') }})
 ),
 edw_material_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.edw_material_dim
+    select * from ({{ ref('aspedw_integration__edw_material_dim') }})
 ),
-EDW_GCH_PRODUCTHIERARCHY as
+edw_gch_producthierarchy as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from ({{ ref('aspedw_integration__edw_gch_producthierarchy') }})
 ),
 PRODUCT AS
           (

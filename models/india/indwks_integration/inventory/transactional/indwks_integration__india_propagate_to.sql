@@ -4,8 +4,7 @@ with wks_india_base_detail as
 ),
 edw_vw_os_time_dim
 as (
-  select *
-  from dev_dna_core.oseedw_integration.edw_vw_os_time_dim
+  select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
   ),
 trans as
 (
@@ -25,7 +24,7 @@ SELECT sap_parent_customer_key,
               ORDER BY mnth_id
               ) third_month
           FROM (
-            SELECT DISTINCT YEAR,
+            SELECT DISTINCT "year",
               mnth_id
             FROM EDW_VW_OS_TIME_DIM
             WHERE mnth_id <= (

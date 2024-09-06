@@ -11,7 +11,7 @@
 }}
 with wks_india_inventory_health_analysis_propagation_final AS
 (
-    select * from ({{ ref('indwks_integration__wks_india_inventory_health_analysis_propagation_final') }})
+    select * from ({{ ref('aspwks_integration__wks_india_inventory_health_analysis_propagation_final') }})
 ),
 final as
 (

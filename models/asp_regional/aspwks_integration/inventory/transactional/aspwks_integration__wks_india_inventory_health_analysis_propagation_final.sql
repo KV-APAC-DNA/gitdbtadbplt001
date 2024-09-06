@@ -1,6 +1,6 @@
 with wks_india_inventory_health_analysis_propagation as
 (
-    select * from ({{ ref('indwks_integration__wks_india_inventory_health_analysis_propagation') }})
+    select * from ({{ ref('aspwks_integration__wks_india_inventory_health_analysis_propagation') }})
 ),
 wks_india_sellout_for_inv_analysis as
 (

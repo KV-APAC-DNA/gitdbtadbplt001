@@ -1,14 +1,14 @@
 with edw_material_dim as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_MATERIAL_DIM
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
-EDW_GCH_PRODUCTHIERARCHY as
+edw_gch_producthierarchy as
 (
-    select * from DEV_DNA_CORE.ASPEDW_INTEGRATION.EDW_GCH_PRODUCTHIERARCHY
+    select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
 ),
-EDW_PRODUCT_DIM as
+edw_product_dim as
 ( 
-    select * from DEV_DNA_CORE.INdEDW_INTEGRATION.EDW_PRODUCT_DIM
+    select * from {{ ref('indedw_integration__edw_product_dim') }}
 ),
 wks_india_siso_propagate_final as
 (
