@@ -38,7 +38,8 @@ aeon as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt::VARCHAR(10) as upload_dt,
-	    upload_time::varchar(8) as upload_time
+	    upload_time::varchar(8) as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_aeon
     {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
@@ -56,7 +57,8 @@ csms as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_csms
      {% if is_incremental() %}   
         -- this filter will only be applied on an incremental run
@@ -74,7 +76,8 @@ dnki as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_dnki
       {% if is_incremental() %}  
         -- this filter will only be applied on an incremental run
@@ -92,7 +95,8 @@ otherss as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_others
        {% if is_incremental() %} 
         -- this filter will only be applied on an incremental run
@@ -110,7 +114,8 @@ tsur as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_tsur
        {% if is_incremental() %} 
         -- this filter will only be applied on an incremental run
@@ -128,7 +133,8 @@ sugi as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_sugi
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
@@ -146,7 +152,8 @@ wlca as(
         TRIM(account_key) as account_key,
         source_file_date as source_file_date,
         upload_dt as upload_dt,
-        upload_time as upload_time
+        upload_time as upload_time,
+        file_name::varchar(255) as file_name
     from jp_pos_daily_wlca
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
@@ -180,7 +187,8 @@ final as(
         account_key::varchar(10) as account_key,
         source_file_date::varchar(30) as source_file_date,
         upload_dt::VARCHAR(10) as upload_dt,
-	    upload_time::varchar(8) as upload_time    
+	    upload_time::varchar(8) as upload_time,
+        file_name::varchar(255) as file_name  
     from transformed
 )
 select * from final
