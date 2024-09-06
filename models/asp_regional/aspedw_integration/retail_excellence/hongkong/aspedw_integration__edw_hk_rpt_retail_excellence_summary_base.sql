@@ -224,5 +224,6 @@ hk_rpt_retail_excellence_summary_base as (
     from final
 )
 
+
 --Final select
 select * from hk_rpt_retail_excellence_summary_base
