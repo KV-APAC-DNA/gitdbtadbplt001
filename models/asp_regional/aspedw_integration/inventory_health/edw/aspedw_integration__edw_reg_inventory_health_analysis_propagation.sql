@@ -1,6 +1,6 @@
 
 with transformed as (
-    select * from {{ source('aspwks_integration', 'wks_my_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('aspwks_integration__wks_my_inventory_health_analysis_propagation_final') }}
     union all 
     select 
         year,
@@ -88,22 +88,22 @@ with transformed as (
     from {{ source('aspwks_integration', 'wks_china_reg_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('aspwks_integration', 'wks_hk_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('aspwks_integration__wks_hk_inventory_health_analysis_propagation_final') }}
 
     union all   
     select * from {{ source('aspwks_integration', 'wks_india_inventory_health_analysis_propagation_final') }}
 
     union all   
-    select * from {{ source('aspwks_integration', 'wks_indonesia_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('idnwks_integration__wks_indonesia_inventory_health_analysis_propagation_final') }}
 
     union all 
     select * from {{ source('aspwks_integration', 'wks_kr_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('aspwks_integration', 'wks_ph_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('phlwks_integration__wks_ph_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('aspwks_integration', 'wks_tw_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('aspwks_integration__wks_tw_inventory_health_analysis_propagation_final') }}
 
     union all 
     select  
@@ -127,13 +127,13 @@ with transformed as (
     from {{ source('jpnwks_integration', 'wks_japan_inventory_health_analysis_propagation') }}
 
     union all 
-    select * from {{ source('pcfwks_integration', 'pacific_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('pcfwks_integration__pacific_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('osewks_integration', 'wks_thailand_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('thawks_integration__wks_thailand_inventory_health_analysis_propagation_final') }}
 
     union all 
-    select * from {{ source('osewks_integration', 'wks_vietnam_inventory_health_analysis_propagation_final') }}
+    select * from {{ ref('vnmwks_integration__wks_vietnam_inventory_health_analysis_propagation_final') }}
 ),
 final as(
     select
