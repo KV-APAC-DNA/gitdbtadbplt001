@@ -6,7 +6,7 @@ with wks_korea_lastnmonths as (
     from {{ ref('ntawks_integration__wks_korea_base') }}
 ), edw_vw_os_time_dim as (
     select *
-    from { { ref('sgpedw_integration__edw_vw_os_time_dim') } }
+    from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 temp as (
     select agg.sap_parent_customer_key,
