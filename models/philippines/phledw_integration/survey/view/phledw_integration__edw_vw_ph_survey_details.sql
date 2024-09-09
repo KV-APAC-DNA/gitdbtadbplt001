@@ -182,8 +182,8 @@ AS (
             itg_ph_tbl_surveynotes.filename_dt,
             --need to change this in j&j as well to match answernotes as we have to add all cols used in left join in row_no function
             row_number() OVER (
-                PARTITION BY itg_ph_tbl_surveynotes.iseid,slsperid,custcode,branchcode,createddate,
-                itg_ph_tbl_surveynotes.answernotes ORDER BY itg_ph_tbl_surveynotes.filename_dt DESC
+                PARTITION BY iseid,slsperid,custcode,branchcode,createddate,
+                answernotes,questionno ORDER BY filename_dt DESC
                 ) AS rnk
             -- row_number() OVER (
             --     PARTITION BY itg_ph_tbl_surveynotes.iseid,
