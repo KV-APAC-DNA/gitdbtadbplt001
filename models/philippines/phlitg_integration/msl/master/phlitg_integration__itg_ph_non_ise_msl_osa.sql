@@ -127,7 +127,10 @@ landmark_ds as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_landmark_ds
 
@@ -183,7 +186,11 @@ SELECT ret_nm_prefix,
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_landmark_sm
 
@@ -238,7 +245,10 @@ puregold as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       diser_name
 
 FROM wks_ph_non_ise_puregold
 
@@ -290,7 +300,10 @@ robinsons_ds as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_robinsons_ds
 
@@ -344,7 +357,10 @@ SELECT ret_nm_prefix,
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_robinsons_sm
 
@@ -399,7 +415,10 @@ rustans as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_rustans
 
@@ -454,7 +473,10 @@ shm as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_shm
 
@@ -507,7 +529,10 @@ super_8 as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_super_8
 
@@ -561,7 +586,10 @@ SELECT ret_nm_prefix,
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       sub_channel,
+       store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_svi_smc
 
@@ -615,7 +643,10 @@ waltermart as (
 
        run_id,
 
-       crtd_dttm
+       crtd_dttm,
+       null as sub_channel,
+       null as store_location,
+       null as diser_name
 
 FROM wks_ph_non_ise_waltermart
 
@@ -668,7 +699,10 @@ select
     retailer_name::varchar(50) as retailer_name,
     filename::varchar(100) as filename,
     run_id::number(14,0) as run_id,
-    crtd_dttm::timestamp_ntz(9) as crtd_dttm
+    crtd_dttm::timestamp_ntz(9) as crtd_dttm,
+    sub_channel::varchar(200) as sub_channel,
+    store_location::varchar(200) as store_location,
+    diser_name::varchar(200) as diser_name
 from transformed
 )
 select * from final
