@@ -180,7 +180,7 @@ AS (
             ) LEFT JOIN edw_vw_pop6_products prd ON (((vst.sku_id)::TEXT = (prd.productdb_id)::TEXT))
         )
     WHERE (
-            (upper((vst.field_code)::TEXT) = 'PS_MSL'::TEXT)
+            (upper(rtrim(vst.field_code)::TEXT) = 'PS_MSL'::TEXT)
             AND (date_part(year, (vst.visit_date)::TIMESTAMP without TIME zone) >= (date_part(year, convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)) - (2)::DOUBLE PRECISION))
             )
     
@@ -378,10 +378,10 @@ AS (
                 )
         )
     WHERE (
-            (upper((vst.field_code)::TEXT) = 'PS_MSL_OOS'::TEXT)
+            (upper(rtrim(vst.field_code)::TEXT) = 'PS_MSL_OOS'::TEXT)
             AND (date_part(year, (vst.visit_date)::TIMESTAMP without TIME zone) >= (date_part(year, convert_timezone('UTC', current_timestamp())::timestamp_ntz(9)) - (2)::DOUBLE PRECISION))
             )),
-        ct2 AS (
+ct2 AS (
             SELECT 'Survey_Response' AS dataset,
                 NULL AS merchandisingresponseid,
                 NULL AS surveyresponseid,
@@ -514,13 +514,13 @@ AS (
                                             (
                                                 (upper((edw_vw_pop6_visits_display.cntry_cd)::TEXT) = 'JP'::TEXT)
                                                 AND (
-                                                    (upper((edw_vw_pop6_visits_display.field_code)::TEXT) LIKE '%PS_PROMO%'::TEXT)
-                                                    OR (upper((edw_vw_pop6_visits_display.field_code)::TEXT) LIKE '%PS_DISPLAY%'::TEXT)
+                                                    (upper(rtrim(edw_vw_pop6_visits_display.field_code)::TEXT) LIKE '%PS_PROMO%'::TEXT)
+                                                    OR (upper(rtrim(edw_vw_pop6_visits_display.field_code)::TEXT) LIKE '%PS_DISPLAY%'::TEXT)
                                                     )
                                                 )
                                             AND (
-                                                ((edw_vw_pop6_visits_display.field_type)::TEXT = 'Yes/No'::TEXT)
-                                                OR ((edw_vw_pop6_visits_display.field_type)::TEXT = 'Yes_No'::TEXT)
+                                                (rtrim(edw_vw_pop6_visits_display.field_type)::TEXT = 'Yes/No'::TEXT)
+                                                OR (rtrim(edw_vw_pop6_visits_display.field_type)::TEXT = 'Yes_No'::TEXT)
                                                 )
                                             )
                                     ) vst LEFT JOIN edw_vw_pop6_store pop ON (((vst.popdb_id)::TEXT = (pop.popdb_id)::TEXT))
@@ -760,15 +760,15 @@ AS (
                                                 (upper((edw_vw_pop6_visits_prod_attribute_audits.cntry_cd)::TEXT) = 'JP'::TEXT)
                                                 AND (
                                                     (
-                                                        (upper((edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_PROMO%'::TEXT)
-                                                        OR (upper((edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_DISPLAY%'::TEXT)
+                                                        (upper(rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_PROMO%'::TEXT)
+                                                        OR (upper(rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_DISPLAY%'::TEXT)
                                                         )
-                                                    OR (upper((edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_POG%'::TEXT)
+                                                    OR (upper(rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT) LIKE '%PS_POG%'::TEXT)
                                                     )
                                                 )
                                             AND (
-                                                ((edw_vw_pop6_visits_prod_attribute_audits.field_type)::TEXT = 'Yes/No'::TEXT)
-                                                OR ((edw_vw_pop6_visits_prod_attribute_audits.field_type)::TEXT = 'Yes_No'::TEXT)
+                                                (rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_type)::TEXT = 'Yes/No'::TEXT)
+                                                OR (rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_type)::TEXT = 'Yes_No'::TEXT)
                                                 )
                                             )
                                     ) vst LEFT JOIN edw_vw_pop6_store pop ON (((vst.popdb_id)::TEXT = (pop.popdb_id)::TEXT))
@@ -837,10 +837,10 @@ AS (
                         ) rej ON (
                             (
                                 (
-                                    ((vst.visit_id)::TEXT = (rej.visit_id)::TEXT)
+                                    (rtrim(vst.visit_id)::TEXT = (rej.visit_id)::TEXT)
                                     AND ((vst.product_attribute_value)::TEXT = (rej.product_attribute_value)::TEXT)
                                     )
-                                AND ((vst.field_id)::TEXT = (rej.dependent_on_field_id)::TEXT)
+                                AND (rtrim(vst.field_id)::TEXT = (rej.dependent_on_field_id)::TEXT)
                                 )
                             )
                     ) LEFT JOIN (
@@ -1004,14 +1004,14 @@ AS (
                                             AND (
                                                 (
                                                     upper("substring" (
-                                                            (edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT,
+                                                            rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT,
                                                             1,
                                                             6
                                                             )) = 'PS_SOS'::TEXT
                                                     )
                                                 OR (
                                                     upper("substring" (
-                                                            (edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT,
+                                                            rtrim(edw_vw_pop6_visits_prod_attribute_audits.field_code)::TEXT,
                                                             1,
                                                             6
                                                             )) = 'PS_SOA'::TEXT
