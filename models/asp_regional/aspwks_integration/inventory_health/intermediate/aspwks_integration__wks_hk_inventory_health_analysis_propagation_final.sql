@@ -48,5 +48,5 @@ SELECT inv.*,healthy_inv.healthy_inventory
             and inv.global_prod_segment                      = healthy_inv.segment          
             and inv.global_prod_category                = healthy_inv.prod_category    
 			and inv.pka_product_key              = healthy_inv.pka_product_key
-  ),
+  )
 select * from final
