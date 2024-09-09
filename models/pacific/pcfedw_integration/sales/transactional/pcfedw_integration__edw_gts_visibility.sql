@@ -320,7 +320,6 @@ from (select eif.co_cd,
 
              sum(eif.gros_trd_sls) as gros_trd_sls,
              sum(eif.ord_qty_pc) as ord_qty_pc,
-             sum(cnfrm_qty_pc) as cnfrm_qty_pc
 
       from (select a.co_cd,
 

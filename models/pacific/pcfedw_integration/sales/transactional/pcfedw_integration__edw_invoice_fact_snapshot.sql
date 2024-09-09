@@ -33,6 +33,7 @@ select snapshot_date,
 --NEW
        cnfrm_qty_pc,
                    
+
        ord_qty_pc
 
 from {{this}} eifs,
@@ -102,6 +103,7 @@ select convert_timezone ('Australia/Sydney',current_timestamp())::date as snapsh
        orders.cnfrm_qty_pc,
                    
        orders.ord_qty_pc
+
 
 from (select eif.co_cd,
 
