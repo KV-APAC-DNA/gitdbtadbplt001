@@ -12,14 +12,14 @@
         )||UPPER(TRIM(Format) )||UPPER(TRIM(Chain_Code) )||UPPER(TRIM(Chain) )||UPPER(TRIM(Store_Code) )||UPPER(TRIM(Store_Name) )||UPPER(TRIM(Category) )||UPPER(TRIM(Prod_Facings) )||UPPER(TRIM(Total_Facings) )|| UPPER(TRIM(Priority_Store))
         FROM 
         (SELECT CASE
-                WHEN REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') 
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-                WHEN REGEXP_LIKE (UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]')
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-                WHEN REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') 
-                THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-                ELSE TO_DATE(TRIM(Visit_DateTime),'YYYY-MM-DD')
-            END AS Visit_DateTime,
+                    WHEN REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') 
+                    THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
+                    WHEN REGEXP_LIKE (UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]')
+                    THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
+                    WHEN REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') 
+                    THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
+                    ELSE TO_DATE(TRIM(Visit_DateTime),'MM-DD-YYYY')
+                END AS Visit_DateTime,
             Region,
             JnJRKAM,
             JnJZM_Code,
@@ -51,12 +51,12 @@ final as
 (
     SELECT CASE
             WHEN REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9]') 
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
             WHEN REGEXP_LIKE (UPPER(TRIM(Visit_DateTime)),'[0-3][0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]') OR REGEXP_LIKE(UPPER(TRIM(Visit_DateTime)),'[0-9]-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-[1-2][0-9][0-9][0-9]')
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
             WHEN REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-3][0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-1][0-9]-[0-9]-[1-2][0-9]') OR REGEXP_LIKE(TRIM(Visit_DateTime),'[0-9]-[0-9]-[1-2][0-9]') 
-            THEN TO_DATE(Visit_DateTime,'YYYY-MM-DD')
-            ELSE TO_DATE(TRIM(Visit_DateTime),'YYYY-MM-DD')
+            THEN TO_DATE(Visit_DateTime,'MM-DD-YYYY')
+            ELSE TO_DATE(TRIM(Visit_DateTime),'MM-DD-YYYY')
         END AS Visit_DateTime,
         Region,
         JnJRKAM,
