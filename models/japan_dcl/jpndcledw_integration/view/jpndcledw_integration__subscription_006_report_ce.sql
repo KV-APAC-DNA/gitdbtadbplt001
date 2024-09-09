@@ -50,7 +50,7 @@ WHERE
           date_trunc(
             'month', 
             add_months(
-              sysdate(), 
+              current_timestamp(), 
               (
                 - (12):: bigint
               )
@@ -61,7 +61,7 @@ WHERE
       ) 
       AND (
         (tei.keiyakubi):: text <= to_char(
-          sysdate(), 
+          current_timestamp(), 
           ('YYYYMMDD' :: character varying):: text
         )
       )

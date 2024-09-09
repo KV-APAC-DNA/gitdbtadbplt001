@@ -1,4 +1,4 @@
-
+{% if build_month_end_job_models()  %}
 with
     kr_054_allhist as (
         select * from  {{ ref('jpndcledw_integration__kr_054_allhist') }}
@@ -203,5 +203,6 @@ with
 
 select *
 from final
-
-    
+{% else %}
+    select * from {{this}}
+{% endif %}   

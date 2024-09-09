@@ -8,4 +8,4 @@ models:
   - name: indedw_integration__v_rpt_pos_offtake
     config:
       alias: v_rpt_pos_offtake
-      tags: ["in_key_acct_offtake","transformation"]
+      tags: ["in_key_acct_offtake","in_edw_kasales","transformation"]

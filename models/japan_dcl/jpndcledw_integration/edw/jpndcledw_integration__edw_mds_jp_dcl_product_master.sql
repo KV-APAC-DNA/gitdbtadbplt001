@@ -15,7 +15,7 @@ final as
 		name::varchar(500) as name,
 		code::varchar(500) as code,
 		changetrackingmask::number(18,0) as changetrackingmask,
-		itemcode::varchar(200) as itemcode,
+		rtrim(itemcode)::varchar(200) as itemcode,
 		itemname::varchar(200) as itemname,
 		attr01::varchar(200) as attr01,
 		attr02::varchar(200) as attr02,
@@ -58,7 +58,7 @@ final as
 		lastchgversionnumber::number(18,0) as lastchgversionnumber,
 		validationstatus::varchar(500) as validationstatus,
 		current_timestamp()::timestamp_ntz(9) as inserted_date,
-		null::varchar(100) as inserted_by,
+		'ETL_Batch'::varchar(100) as inserted_by,
 		current_timestamp()::timestamp_ntz(9) as updated_date,
 		null::varchar(100) as updated_by
     from source
