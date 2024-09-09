@@ -378,5 +378,4 @@ from transformation
 
 )
 
-
 select * from final
