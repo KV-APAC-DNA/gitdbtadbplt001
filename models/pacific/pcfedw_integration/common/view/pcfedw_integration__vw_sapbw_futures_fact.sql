@@ -94,6 +94,7 @@ a as(
 		,eif.cust_num
 		,eif.matl_num
 		,sum(eif.fut_sls_qty) AS fut_sls_qty
+        ,sum(eif.ord_qty_pc) AS ord_qty_pc
 		,sum(eif.gros_trd_sls) AS gros_trd_sls
         ,sum(eif.cnfrm_qty_pc) AS cnfrm_qty_pc
 		,sum(eif.nts_bill) AS nts_bill
@@ -126,7 +127,7 @@ SELECT a.co_cd AS cmp_id
 	,a.cust_num AS cust_no
 	,a.matl_num AS matl_id
 	,a.fut_sls_qty AS future_sales_qty
-	,ZEROIFNULL((a.gros_trd_sls/NULLIF(a.fut_sls_qty,0))*a.cnfrm_qty_pc) AS future_gts_val
+    ,ZEROIFNULL((a.gros_trd_sls/NULLIF(a.ord_qty_pc,0))*a.cnfrm_qty_pc) AS future_gts_val
 	,0 AS future_trade_val
 	,a.nts_bill AS future_nts_val
 	,a.curr_key AS local_ccy

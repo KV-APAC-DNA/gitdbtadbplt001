@@ -17,7 +17,7 @@ v{% macro build_pcfedw_integration__edw_invoice_fact_snapshot() %}
                         curr_key varchar(10),
                         gros_trd_sls number(38,7),
                         cnfrm_qty_pc number(38,7),
-                        fut_sls_qty number(38,7)
+                        ord_qty_pc number(38,7)
         );
 
         
