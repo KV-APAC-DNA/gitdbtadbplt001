@@ -84,11 +84,11 @@ select
     cust.cust_cd as parent_customer,
    ltrim(veomd.sap_matl_num, '0') as sku,
 	veomd.sap_mat_desc as sku_desc,
-    POS.qty,
+    POS.qty::integer as pos_qty,
     coalesce(prod.jnj_pc_per_cust_unit,1) as jnj_pc_per_cust_unit,
-    price.Lst_Price_Unit as ListPriceUnit,
-    (pos.qty/prod.jnj_pc_per_cust_unit) as pos_qty,
-    (pos_qty*ListPriceUnit) as pos_gts
+    (price.Lst_Price_Unit)::decimal(38,3) as ListPriceUnit,
+    (pos.qty/prod.jnj_pc_per_cust_unit) ::decimal(38,3) as pos_qty,
+    (pos_qty*ListPriceUnit) ::decimal(38,3) as pos_gts
      ,null as jj_vat_amt
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
