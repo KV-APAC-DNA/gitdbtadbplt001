@@ -11,6 +11,14 @@ wks_korea_siso_propagate_to_existing_dtls as (
     select *
     from {{ ref('ntawks_integration__wks_korea_siso_propagate_to_existing_dtls') }}
 ),
+Korea_propagate_from_to as
+(
+    select * from {{ ref('ntawks_integration__korea_propagate_from_to') }}
+),
+wks_korea_siso_propagate_to_details as 
+(
+   select * from {{ ref('ntawks_integration__wks_korea_siso_propagate_to_details') }} 
+),
 temp_a as (
     SELECT sap_parent_customer_key,
         month,

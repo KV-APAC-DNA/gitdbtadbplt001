@@ -67,6 +67,10 @@ edw_billing_fact as
 (
     select * from {{ ref('aspedw_integration__edw_billing_fact') }}
 ),
+edw_material_dim as 
+(
+    select * from {{ ref('aspedw_integration__edw_material_dim') }}
+),
 final as (
     Select *
     from (
