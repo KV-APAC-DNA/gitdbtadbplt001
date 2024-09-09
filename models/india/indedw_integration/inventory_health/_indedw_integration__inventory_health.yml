@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: indedw_integration__v_pf_sales_stock_inventory_analysis
+    config:
+      alias: v_pf_sales_stock_inventory_analysis
+      tags: ["j_ap_in_reg_data_refresh","transformation"]
