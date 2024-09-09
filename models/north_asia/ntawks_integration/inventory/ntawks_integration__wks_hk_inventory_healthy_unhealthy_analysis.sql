@@ -5,8 +5,8 @@ select * from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 vw_edw_reg_exch_rate as (
 select * from {{ ref('aspedw_integration__vw_edw_reg_exch_rate') }}
 ),
-edw_vw_greenlight_skus as (
-select * from {{ ref('aspedw_integration__edw_vw_greenlight_skus') }}
+edw_material_dim as (
+select * from {{ ref('aspedw_integration__edw_material_dim') }}
 ),
 edw_gch_producthierarchy as (
 select * from {{ ref('aspedw_integration__edw_gch_producthierarchy') }}
@@ -145,22 +145,27 @@ SELECT month,
 FROM
 (Select * from wks_hk_siso_propagate_final) SISO,
 (
-          SELECT DISTINCT 
-          EMD.matl_num AS SAP_MATL_NUM,
-          EMD.pka_product_key as pka_product_key,
-		  EMD.pka_size_desc as pka_size_desc,
-		  EGPH.GCPH_BRAND AS GPH_PROD_BRND,
-          EGPH.GCPH_VARIANT AS GPH_PROD_VRNT,
-          EGPH.GCPH_CATEGORY AS GPH_PROD_CTGRY,
-          EGPH.GCPH_SEGMENT AS GPH_PROD_SGMNT        
-          FROM 
-          (Select * from edw_vw_greenlight_skus WHERE sls_org in ( '1110')) EMD,
-			EDW_GCH_PRODUCTHIERARCHY EGPH
-			WHERE EMD.MATL_NUM = ltrim(EGPH.MATERIALNUMBER(+),0)
-			AND   EMD.PROD_HIER_CD <> ''
-			AND   LTRIM(EMD.MATL_NUM,'0')  
-			IN  (SELECT DISTINCT LTRIM(MATL_NUM,'0') FROM edw_material_sales_dim WHERE sls_org ='1110')
-)T4,
+        SELECT DISTINCT EMD.matl_num AS SAP_MATL_NUM,
+            EMD.pka_product_key as pka_product_key,
+            EMD.pka_size_desc as pka_size_desc,
+            EGPH.GCPH_BRAND AS GPH_PROD_BRND,
+            EGPH.GCPH_VARIANT AS GPH_PROD_VRNT,
+            EGPH.GCPH_CATEGORY AS GPH_PROD_CTGRY,
+            EGPH.GCPH_SEGMENT AS GPH_PROD_SGMNT
+        FROM --(Select * from rg_edw.edw_vw_greenlight_skus WHERE sls_org in ( '1110')) EMD,
+            (
+                Select *
+                from edw_material_dim
+            ) EMD,
+            EDW_GCH_PRODUCTHIERARCHY EGPH
+        WHERE LTRIM(EMD.MATL_NUM, '0') = ltrim(EGPH.MATERIALNUMBER(+), 0)
+            AND EMD.PROD_HIER_CD <> ''
+            AND LTRIM(EMD.MATL_NUM, '0') IN (
+                SELECT DISTINCT LTRIM(MATL_NUM, '0')
+                FROM edw_material_sales_dim
+                WHERE sls_org = '1110'
+            )
+    )T4,
 (SELECT * FROM CUSTOMER WHERE RANK=1) T3
 WHERE LTRIM(T4.SAP_MATL_NUM(+),'0') = SISO.matl_num
 AND   LTRIM(T3.SAP_CUST_ID(+),'0') = SISO.sap_parent_customer_key
