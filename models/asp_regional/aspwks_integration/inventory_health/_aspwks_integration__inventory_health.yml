@@ -10,19 +10,19 @@ models:
   - name: aspwks_integration__wks_hk_inventory_health_analysis_propagation
     config: 
       alias: wks_hk_inventory_health_analysis_propagation
-      tags: ["j_ap_my_reg_data_refresh","transformation"]
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
   - name: aspwks_integration__wks_hk_inventory_health_analysis_propagation_final
     config: 
       alias: wks_hk_inventory_health_analysis_propagation_final
-      tags: ["j_ap_my_reg_data_refresh","transformation"]
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
   - name: aspwks_integration__wks_tw_inventory_health_analysis_propagation
     config: 
       alias: wks_tw_inventory_health_analysis_propagation
-      tags: ["j_ap_my_reg_data_refresh","transformation"]
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
   - name: aspwks_integration__wks_tw_inventory_health_analysis_propagation_final
     config: 
       alias: wks_tw_inventory_health_analysis_propagation_final
-      tags: ["j_ap_my_reg_data_refresh","transformation"]
+      tags: ["j_ap_ph_reg_data_refresh","transformation"]
   - name: aspwks_integration__wks_tw_inventory_health_analysis_propagation_prestep
     config: 
       alias: wks_tw_inventory_health_analysis_propagation_prestep
