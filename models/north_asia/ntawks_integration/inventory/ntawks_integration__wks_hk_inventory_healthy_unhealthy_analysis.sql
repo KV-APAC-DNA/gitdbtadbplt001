@@ -176,8 +176,8 @@ GPH_PROD_BRND ,
 GPH_PROD_VRNT ,
 GPH_PROD_SGMNT , 
 GPH_PROD_CTGRY ,
-pka_size_desc,
-pka_product_key,
+TRIM(NVL(NULLIF(T4.pka_size_desc, ''), 'NA')),
+TRIM(NVL(NULLIF(T4.pka_product_key, ''), 'NA')),
 sap_prnt_cust_key
 ),
 final as (
