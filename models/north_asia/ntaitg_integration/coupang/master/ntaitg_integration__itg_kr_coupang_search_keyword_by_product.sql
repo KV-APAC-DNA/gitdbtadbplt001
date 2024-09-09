@@ -3,12 +3,24 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= " {% if is_incremental() %}
-        delete from {{this}} where trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(product_name)||trim(ranking)||trim(search_keyword)||trim(yearmo)||trim(data_granularity) in (select distinct trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(product_name)||trim(ranking)||trim(search_keyword)||trim(yearmo)||trim(data_granularity) from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_product') }});
+        delete from {{this}} where trim(category_depth1)||trim(category_depth2)||trim(category_depth3)||trim(product_name)
+        ||trim(ranking)||trim(search_keyword)||trim(yearmo)||trim(data_granularity) in 
+        (select distinct trim(category_depth1)||trim(category_depth2)||trim(category_depth3)
+        ||trim(product_name)||trim(ranking)||trim(search_keyword)||trim(yearmo)||trim(data_granularity) from 
+        {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_product') }}
+         where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_search_keyword_by_product__null_test') }}
+         ));
         {% endif %}"
 )
 }}
 with sdl_kr_coupang_search_keyword_by_product as (
-select * from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_product') }}
+select *,dense_rank()over(partition by trim(category_depth1),trim(category_depth2),trim(category_depth3),trim(product_name)
+        ,trim(ranking),trim(search_keyword),trim(yearmo),trim(data_granularity)) 
+        from {{ source('ntasdl_raw', 'sdl_kr_coupang_search_keyword_by_product') }}
+         where file_name not in (
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_kr_coupang_search_keyword_by_product__null_test') }}
+    )
 ),
 final as (
 SELECT 

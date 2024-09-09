@@ -4,14 +4,21 @@
         incremental_strategy = "append",
         unique_key=["bu_version", "forecast_on_year", "forecast_on_month"],
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} using {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} bp_sdl where {{this}}.bp_version=bp_sdl.bp_version and {{this}}.forecast_on_year=bp_sdl.forecast_on_year and {{this}}.forecast_on_month=bp_sdl.forecast_on_month;
-        {% endif %}"
-    )
-}}
+        delete from {{this}} using where distinct file_name not in (select distinct file_name from 
+    {{ source('ntawks_integration', 'TRATBL_sdl_tw_bp_forecast__null_test') }})
+    ) 
+            bp_sdl where {{this}}.bp_version=bp_sdl.bp_version and {{this}}.forecast_on_year=bp_sdl.forecast_on_year 
+            and {{this}}.forecast_on_month=bp_sdl.forecast_on_month;
+            {% endif %}"
+        )
+    }}
 
 with source as(
-    select * from {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }}
-),
+    select *,dense_rank()over(partition by bp_version ,forecast_on_year,forecast_on_month order by file_name desc ) rnk from 
+    {{ source('ntasdl_raw', 'sdl_tw_bp_forecast') }} 
+    where distinct file_name not in (select distinct file_name from 
+    {{ source('ntawks_integration', 'TRATBL_sdl_tw_bp_forecast__null_test') }})
+) qualify rnk = 1,
 edw_customer_attr_hier_dim as (
     select * from {{ ref('aspedw_integration__edw_customer_attr_hier_dim') }}
 ),

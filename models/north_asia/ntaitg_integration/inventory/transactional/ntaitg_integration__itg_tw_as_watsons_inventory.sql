@@ -4,12 +4,23 @@
         materialized="incremental",
         incremental_strategy= "append",
         pre_hook= "{% if is_incremental() %}
-        delete from {{this}} where nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') in (select distinct nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') from  {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }});
+        delete from {{this}} where nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') in
+         (select distinct nvl(year,'#')||nvl(week_no,'#')||nvl(item_cd,'#') from  
+         {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }} where file_name not in
+        (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__null_test') }}
+        union all
+        select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__duplicate_test') }}
+        ));
         {% endif %}"
     )
 }}
 with sdl_tw_as_watsons_inventory as (
-    select * from {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }}
+    select *,dense_rank()over(nvl(year,'#'),nvl(week_no,'#'),nvl(item_cd,'#') order by file_name desc ) rnk from 
+    {{ source('ntasdl_raw', 'sdl_tw_as_watsons_inventory') }} where file_name not in
+     (select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__null_test') }}
+      union all
+      select distinct file_name from {{ source('ntawks_integration', 'TRATBL_sdl_tw_as_watsons_inventory__duplicate_test') }}
+     ) qualify rnk =1
 ),
 final as (
     select

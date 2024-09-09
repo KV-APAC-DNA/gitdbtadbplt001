@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: ntawks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: ntawks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_kr_dads_coupang_price__format_test
