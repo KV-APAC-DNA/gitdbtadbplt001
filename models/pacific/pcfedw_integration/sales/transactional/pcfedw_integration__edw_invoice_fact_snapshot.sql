@@ -33,7 +33,7 @@ select snapshot_date,
 --NEW
        cnfrm_qty_pc,
                    
-       fut_sls_qty
+       ord_qty_pc
 
 from {{this}} eifs,
 
@@ -74,7 +74,7 @@ select snapshot_date,
 --NEW
        cnfrm_qty_pc,
                    
-       fut_sls_qty
+       ord_qty_pc
 
 from wks_invoice_fact_snapshot
 ),
@@ -101,7 +101,7 @@ select convert_timezone ('Australia/Sydney',current_timestamp())::date as snapsh
     --NEW COLUMNS
        orders.cnfrm_qty_pc,
                    
-       orders.fut_sls_qty
+       orders.ord_qty_pc
 
 from (select eif.co_cd,
 
@@ -120,7 +120,7 @@ from (select eif.co_cd,
             --NEW SUM CALCULATION
              sum(eif.cnfrm_qty_pc) as cnfrm_qty_pc,
                    
-             sum(eif.fut_sls_qty) as fut_sls_qty
+             sum(eif.ord_qty_pc) as ord_qty_pc
 
       from (select a.co_cd,
 
@@ -131,7 +131,8 @@ from (select eif.co_cd,
                    a.gros_trd_sls,
 
                    -- NEW COLUMNS FOR CALCULATION
-                   a.cnfrm_qty_pc, 
+                   a.cnfrm_qty_pc,
+                   a.ord_qty_pc, 
 
 
                    ltrim(a.sls_doc,'0') as sls_doc,
@@ -198,7 +199,7 @@ sls_doc::varchar(50) as sls_doc,
 curr_key::varchar(10) as curr_key,
 gros_trd_sls::number(38,7) as gros_trd_sls,
 cnfrm_qty_pc::number(38,7) as cnfrm_qty_pc,
-fut_sls_qty::number(38,7) as fut_sls_qty
+ord_qty_pc::number(38,7) as ord_qty_pc
 from transformed
 )
 select * from final
