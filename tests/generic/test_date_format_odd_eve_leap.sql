@@ -30,8 +30,8 @@
 {% if date_column!=None %}
 FROM {{model}} AS A
 WHERE
-  (file_name,{{date_column}}) IN (
-    SELECT DISTINCT ODD_MON.file_name,
+  ({{date_column}}) IN (
+    SELECT DISTINCT 
       ODD_MON.{{date_column}}
     FROM (
       SELECT DISTINCT 
