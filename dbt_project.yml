@@ -39,6 +39,8 @@ tests:
   DNA_CORE_ASP:
     philippines:
       +severity: warn
+    asp_regional:
+      +severity: warn
 
 models:
   dbt_artifacts:

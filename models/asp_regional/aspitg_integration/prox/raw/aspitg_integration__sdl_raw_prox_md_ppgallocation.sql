@@ -1,5 +1,8 @@
 with sdl_PROX_MD_PPGAllocation as(
     select * from {{ source('aspsdl_raw', 'sdl_prox_md_ppgallocation') }}
+    where filename not in (
+        select distinct file_name from {{source('aspwks_integration','TRATBL_sdl_prox_md_ppgallocation____null_test')}}
+    )
 ),
 final as
 (SELECT 
