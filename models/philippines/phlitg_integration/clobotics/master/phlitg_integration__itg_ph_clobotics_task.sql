@@ -14,9 +14,15 @@
                 select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test2')}}
                 union all
                 select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test3')}}
-            )
+            ),
                 );
-        {%endif%}"
+        {%endif%}",
+    post_hook=
+    "update {{this}} a
+    set a.store_code = b.store_code
+    from {{ source('phlitg_integration', 'itg_ph_clobotics_store_mapping') }} b 
+    where trim(a.store_code) = trim(b.old_store_code)
+    and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1);"
     )
 }}
 
@@ -83,7 +89,7 @@ final as
     cast(a.plan_finish_time as timestamp_ntz(9)) as plan_finish_time,
     a.username::varchar(200) as username,
 	a.display_username::varchar(200) as display_username,
-    trim(b.store_code)::varchar(255) as store_code,
+    trim(a.store_code)::varchar(255) as store_code,
     a.store_name::varchar(255) as store_name,
 	a.city::varchar(255) as city,
 	a.shop_front_images::varchar(255) as shop_front_images,
@@ -107,8 +113,8 @@ final as
     current_timestamp()::timestamp_ntz(9) as crt_dttm,
     current_timestamp()::timestamp_ntz(9) as updt_dttm
 from trans as a 
-    left join itg_ph_clobotics_store_mapping b on 
-    trim(a.store_code) = trim(b.old_store_code)
-    and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1)
+    -- left join itg_ph_clobotics_store_mapping b on 
+    -- trim(a.store_code) = trim(b.old_store_code)
+    -- and split_part(trim(a.store_name), ' ', 1) = split_part(trim(b.store_name), ' ', 1)
 )
 select * from final
