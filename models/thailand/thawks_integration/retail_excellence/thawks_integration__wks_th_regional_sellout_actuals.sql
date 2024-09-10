@@ -1,3 +1,4 @@
+
 with WKS_TH_REGIONAL_SELLOUT_ACT_LM as (
     select * from {{ ref('thawks_integration__wks_th_regional_sellout_act_lm') }}
 ),
