@@ -14,7 +14,7 @@
                 select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test2')}}
                 union all
                 select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_clobotics_task_raw_data__format_test3')}}
-            ),
+            )
                 );
         {%endif%}",
     post_hook=
