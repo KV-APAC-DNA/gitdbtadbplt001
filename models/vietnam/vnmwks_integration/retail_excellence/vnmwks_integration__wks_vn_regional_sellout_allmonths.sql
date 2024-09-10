@@ -33,7 +33,7 @@ FROM (SELECT DISTINCT cntry_cd,
            (SELECT DISTINCT "year",
                    mnth_id AS MONTH
             FROM EDW_VW_OS_TIME_DIM
-			WHERE MNTH_ID >= (SELECT last_28mnths
+			WHERE MNTH_ID >= (SELECT last_27mnths
                  FROM EDW_VW_CAL_RETAIL_EXCELLENCE_DIM)
                  AND  MNTH_ID <= (select TO_CHAR((DATEADD(DAY, 90, sysdate()::DATE )), 'YYYYMM') )) b) all_months
   LEFT JOIN WKS_VN_BASE_RETAIL_EXCELLENCE base

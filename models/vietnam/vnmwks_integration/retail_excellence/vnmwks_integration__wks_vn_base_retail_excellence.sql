@@ -180,9 +180,9 @@ FROM (SELECT COUNTRY_CODE,
             FROM EDW_RPT_REGIONAL_SELLOUT_OFFTAKE
             WHERE COUNTRY_CODE = 'VN'
             AND   DATA_SOURCE in ('SELL-OUT', 'POS')
-            AND   MNTH_ID >= (SELECT last_28mnths
+            AND   MNTH_ID >= (SELECT last_27mnths
                   FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
-            AND   MNTH_ID <= (SELECT last_2mnths FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
+            AND   MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_retail_excellence_dim)::NUMERIC
             ) MAIN
             LEFT JOIN WKS_VN_REGIONAL_SELLOUT_MAPPED_SKU_CD MSCD ON LTRIM (MAIN.EAN,'0') = LTRIM (MSCD.EAN_NUM,'0')
             LEFT JOIN WKS_VN_REGIONAL_SELLOUT_REGION REG ON UPPER(LTRIM(MAIN.STORE_CODE, '0')) = UPPER(LTRIM(REG.STORE_CODE, '0')))

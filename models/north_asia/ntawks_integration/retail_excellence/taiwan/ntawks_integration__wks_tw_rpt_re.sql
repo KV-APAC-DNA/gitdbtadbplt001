@@ -20,7 +20,7 @@ edw_vw_pop6_products as (
 ),
 
 TW_RPT_RE_mdp  as (
-
+ 
 SELECT distinct Q.*,
        COM.*
 FROM (SELECT TARGET.jj_year,
@@ -28,15 +28,15 @@ FROM (SELECT TARGET.jj_year,
              --COM.CLUSTER,			 
              TARGET.market AS MARKET,
              COALESCE(ACTUAL.CHANNEL_NAME,TARGET.Sell_Out_Channel,'NA') as CHANNEL_NAME,
-             nvl(ACTUAL.SOLDTO_CODE, TARGET.SOLDTO_CODE) AS SOLDTO_CODE,
-             nvl(actual.DISTRIBUTOR_CODE,TARGET.DISTRIBUTOR_CODE) as DISTRIBUTOR_CODE,
-             nvl(actual.DISTRIBUTOR_NAME,TARGET.DISTRIBUTOR_NAME) as DISTRIBUTOR_NAME,
+             COALESCE(ACTUAL.SOLDTO_CODE, TARGET.SOLDTO_CODE) AS SOLDTO_CODE,
+             COALESCE(actual.DISTRIBUTOR_CODE,TARGET.DISTRIBUTOR_CODE,'NA') as DISTRIBUTOR_CODE,
+             COALESCE(actual.DISTRIBUTOR_NAME,TARGET.DISTRIBUTOR_NAME,'NA') as DISTRIBUTOR_NAME,
              COALESCE(actual.CHANNEL_NAME,TARGET.SELL_OUT_CHANNEL,'NA') as SELL_OUT_CHANNEL,
              nvl(actual.store_type,TARGET.STORE_TYPE) as store_type,
              NULL AS PRIORITIZATION_SEGMENTATION,
              NULL AS STORE_CATEGORY,
-             nvl(actual.store_code,TARGET.STORE_CODE) AS STORE_CODE,
-             nvl(actual.store_name,TARGET.STORE_NAME) as STORE_NAME,
+             COALESCE(actual.store_code,TARGET.STORE_CODE,'NA') AS STORE_CODE,
+             COALESCE(actual.store_name,TARGET.STORE_NAME,'NA') as STORE_NAME,
              TARGET.STORE_GRADE,
              'NA' as STORE_SIZE,
              nvl(actual.REGION,TARGET.REGION) as REGION,
@@ -59,7 +59,7 @@ FROM (SELECT TARGET.jj_year,
              TARGET.PROD_HIER_L9 AS PROD_HIER_L9,
              target.sku_code AS MAPPED_SKU_CD,
 			 actual.list_price,
-             actual.data_src as data_src,
+             'POS' as data_src,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_KEY,CUSTOMER.CUST_SEGMT_KEY,'NA') AS CUSTOMER_SEGMENT_KEY,
              COALESCE(ACTUAL.CUSTOMER_SEGMENT_DESCRIPTION,CUSTOMER.CUST_SEGMENT_DESC,'NA') AS CUSTOMER_SEGMENT_DESCRIPTION,
              COALESCE(ACTUAL.RETAIL_ENVIRONMENT,target.retail_environment,'NA') AS RETAIL_ENVIRONMENT,
@@ -143,14 +143,15 @@ FROM (SELECT TARGET.jj_year,
              COALESCE(ACTUAL.P6M_SALES_FLAG,'N') AS P6M_SALES_FLAG,
              COALESCE(ACTUAL.P12M_SALES_FLAG,'N') AS P12M_SALES_FLAG,
              'Y' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM wks_tw_re_msl_list TARGET
         LEFT JOIN (SELECT * FROM WKS_TW_RE_ACTUALS) ACTUAL
                ON TARGET.jj_mnth_id = ACTUAL.MNTH_ID
               AND TARGET.DISTRIBUTOR_NAME = ACTUAL.DISTRIBUTOR_NAME
               AND ltrim(TARGET.STORE_CODE,0) = ltrim(ACTUAL.STORE_CODE,0)
               AND UPPER (TRIM (TARGET.EAN)) = UPPER (TRIM (ACTUAL.EAN))
-			  and target.retail_environment=actual.retail_environment 
+			  and UPPER (target.retail_environment) = UPPER (actual.retail_environment) 
+              and UPPER (target.Sell_Out_Channel) = UPPER (actual.CHANNEL_NAME) 
 			  and target.market=actual.CNTRY_NM
      
       ----------------customer hierarchy------------------------------          
@@ -296,7 +297,7 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
              ACTUAL.P6M_SALES_FLAG,
              ACTUAL.P12M_SALES_FLAG,
              'N' AS MDP_FLAG,
-             100 AS TARGET_COMPLAINCE
+             1 AS TARGET_COMPLAINCE
       FROM (SELECT *
             FROM WKS_TW_RE_ACTUALS A
             WHERE NOT EXISTS (SELECT 1
@@ -305,7 +306,8 @@ FROM (SELECT LEFT (ACTUAL.MNTH_ID,4) AS YEAR,
               AND T.DISTRIBUTOR_NAME = A.DISTRIBUTOR_NAME
               AND ltrim(T.STORE_CODE,0) = ltrim(A.STORE_CODE,0)
               AND UPPER (TRIM (T.EAN)) = UPPER (TRIM (A.EAN))
-			  and T.retail_environment=A.retail_environment 
+              and UPPER (T.retail_environment) = UPPER (A.retail_environment) 
+              and UPPER (T.Sell_Out_Channel) = UPPER (A.CHANNEL_NAME) 
 			  and T.market=A.CNTRY_NM 
 							  )) ACTUAL
 left join (

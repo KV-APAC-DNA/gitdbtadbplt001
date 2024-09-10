@@ -103,9 +103,9 @@ as
              FROM WKS_VN_BASE_RETAIL_EXCELLENCE) offtake
          ON UPPER (offtake.retail_env) = UPPER (msl.Retail_Environment)
         AND LTRIM (offtake.EAN, '0') = LTRIM (msl.sku_unique_identifier, '0')
-WHERE MSL.JJ_MNTH_ID >= (SELECT last_17mnths
+WHERE MSL.JJ_MNTH_ID >= (SELECT last_16mnths
                          FROM edw_vw_cal_Retail_excellence_Dim)
-AND   MSL.JJ_MNTH_ID <= (SELECT last_2mnths FROM edw_vw_cal_Retail_excellence_Dim)
+AND   MSL.JJ_MNTH_ID <= (SELECT prev_mnth FROM edw_vw_cal_Retail_excellence_Dim)
 AND   STORE_CODE IS NOT NULL
 AND   DISTRIBUTOR_CODE IS NOT NULL
 ),
