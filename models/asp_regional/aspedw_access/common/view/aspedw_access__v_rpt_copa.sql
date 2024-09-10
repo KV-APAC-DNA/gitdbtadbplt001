@@ -22,7 +22,7 @@ final as (
         CATEGORY as "category",
         SUBCATEGORY as "subcategory",
 
-        "b2 brand",
+        /*"b2 brand",
         "b3 base product",
         "b4 variant",
         "b5 put-up",
@@ -31,7 +31,7 @@ final as (
         "prod h3 franchise",
         "prod h4 product franchise",
         "prod h5 product major",
-        "prod h6 product minor",
+        "prod h6 product minor",*/
         "parent customer",
         banner as "banner",
         "banner format",
