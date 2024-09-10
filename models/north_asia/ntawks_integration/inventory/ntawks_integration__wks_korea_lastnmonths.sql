@@ -4,7 +4,7 @@ with wks_korea_allmonths_base as (
 ),
 edw_vw_os_time_dim as (
     select *
-    from { { ref('sgpedw_integration__edw_vw_os_time_dim') } }
+    from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 last_3_months as (
     select base3.sap_parent_customer_key,

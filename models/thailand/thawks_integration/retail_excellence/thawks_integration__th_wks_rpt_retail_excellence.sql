@@ -1,3 +1,4 @@
+
 {{ 
     config(
     sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
@@ -681,6 +682,5 @@ target_complaince::integer AS target_complaince,
 cluster::varchar(100) AS cluster
 from transformation
 )
-
 
 select * from final

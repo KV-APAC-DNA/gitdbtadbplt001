@@ -1,6 +1,6 @@
 with edw_vw_os_time_dim as (
     select *
-    from { { ref('sgpedw_integration__edw_vw_os_time_dim') } }
+    from {{ ref('sgpedw_integration__edw_vw_os_time_dim') }}
 ),
 wks_korea_base_detail as (
     select *
