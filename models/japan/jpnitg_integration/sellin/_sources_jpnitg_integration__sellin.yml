@@ -10,3 +10,4 @@ sources:
       identifier: false
     tables:
       - name: EDI_ITEM_M
+      - name: dw_iv_year_end
