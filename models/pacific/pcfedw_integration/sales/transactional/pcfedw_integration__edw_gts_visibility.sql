@@ -129,7 +129,12 @@ select case
 
        currency.exch_rate as exch_rate,
 
-       ((zeroifnull((eifs.gros_trd_sls/nullif(eifs.ord_qty_pc,0))*eifs.cnfrm_qty_pc))*currency.exch_rate) as open_orders_val,
+       CASE 
+       WHEN eifs.ord_qty_pc IS NULL AND eifs.cnfrm_qty_pc IS NULL
+       THEN eifs.gros_trd_sls * currency.exch_rate
+       ELSE
+       ((zeroifnull((eifs.gros_trd_sls/nullif(eifs.ord_qty_pc,0))*eifs.cnfrm_qty_pc))*currency.exch_rate) 
+       END as open_orders_val,
 
        (ebf.subtotal_1*currency.exch_rate) as gts_landing_val
 
