@@ -64,7 +64,8 @@ transformed as(
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Selfcare' then 'China Selfcare DCL'	
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Personal Care' then 'China Personal Care DCL'
 	  when trim(mat.mega_brnd_desc)='Jupiter (PH to CH)' and main.ctry_nm='China Selfcare' then 'China Jupiter'
-	  else*/ main.ctry_nm end as ctry_nm,
+	  else main.ctry_nm end as ctry_nm*/ 
+  main.ctry_nm  as ctry_nm,
   main."cluster" as "cluster",
    /*case 
 	   when trim(mat.mega_brnd_desc)='Dr Ci Labo' and 	main.ctry_nm in ('APSC Regional','Japan','China Selfcare','China Personal Care') then 'One DCL' 
@@ -73,15 +74,15 @@ transformed as(
   main.obj_crncy_co_obj as obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc) as "b1 mega-brand",
 
-  /*nvl(gmc.B1_BRAND,'Not Available') as BRAND,
+  nvl(gmc.B1_BRAND,'Not Available') as BRAND,
   nvl(gmc.B2_SUBBRAND,'Not Available') as SUBBRAND,
   nvl(gmc.C1_BUSINESS_SEGMENT,'Not Available') as BUSINESS_SEGMENT,
   nvl(gmc.C2_BUSINESS_SUBSEGMENT,'Not Available') as BUSINESS_SUBSEGMENT,
   nvl(gmc.C3_NEED_STATE,'Not Available') as NEED_STATE,
   nvl(gmc.C4_CATEGORY,'Not Available') as CATEGORY,
-  nvl(gmc.C5_SUBCATEGORY,'Not Available') as SUBCATEGORY,*/
+  nvl(gmc.C5_SUBCATEGORY,'Not Available') as SUBCATEGORY,
 
-  IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
+  /*IFF(mat.brnd_desc='',null,mat.brnd_desc) as "b2 brand",
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc) as "b3 base product",
   IFF(mat.varnt_desc='',null,mat.varnt_desc) as "b4 variant",
   IFF(mat.put_up_desc='',null,mat.put_up_desc) as "b5 put-up",
@@ -90,7 +91,7 @@ transformed as(
   IFF(mat.prodh3_txtmd='',null,mat.prodh3_txtmd) as "prod h3 franchise",
   IFF(mat.prodh4_txtmd='',null,mat.prodh4_txtmd) as "prod h4 product franchise",
   IFF(mat.prodh5_txtmd='',null,mat.prodh5_txtmd) as "prod h5 product major",
-  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd) as "prod h6 product minor",
+  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd) as "prod h6 product minor",*/
   IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer") as "parent customer",
   IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner) as banner,
   IFF(cus_sales_extn."banner format"='',null,cus_sales_extn."banner format") as "banner format",
@@ -1006,12 +1007,7 @@ FROM (
                       )
                     )
               )
-              LEFT JOIN edw_company_reporting_dim AS cmp
-                ON ((cast((copa.co_cd) AS TEXT) = cast((cmp.co_cd) AS TEXT))
-                ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
-   when trim(mat.mega_brnd_desc) <> 'Dr Ci Labo' then 'NA' end )=cmp.mega_brnd_desc
-            )
-            LEFT JOIN edw_material_dim AS mat
+              LEFT JOIN edw_material_dim AS mat
               ON (
                 (
                   cast((
@@ -1022,6 +1018,12 @@ FROM (
                 )
               )
           )
+              LEFT JOIN edw_company_reporting_dim AS cmp
+                ON ((cast((copa.co_cd) AS TEXT) = cast((cmp.co_cd) AS TEXT))
+                ) and (case when trim(mat.mega_brnd_desc)='Dr Ci Labo' then 'Dr Ci Labo' 
+   when trim(mat.mega_brnd_desc) <> 'Dr Ci Labo' then 'NA' end )=cmp.mega_brnd_desc
+            )
+            
           LEFT JOIN v_intrm_reg_crncy_exch_fiscper AS exch_rate
             ON (
               (
@@ -1344,7 +1346,7 @@ FROM (
             (
                 (
               edw_invoice_fact AS invc
-              LEFT JOIN rg_edw.edw_material_dim mat ON invc.matl_num::text = mat.matl_num::text
+              LEFT JOIN edw_material_dim mat ON invc.matl_num::text = mat.matl_num::text
                 )
                 LEFT JOIN edw_company_reporting_dim AS cmp
                   ON ( ( cast((invc.co_cd ) AS TEXT) = cast((cmp.co_cd) AS TEXT) )
@@ -1486,7 +1488,9 @@ GROUP BY
   main.fisc_yr,
   main.fisc_yr_per,
   main.fisc_day,
-  case when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='APSC Regional' then 'Travel Retail'
+  main.ctry_nm,
+  main."cluster",
+  /*case when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='APSC Regional' then 'Travel Retail'
       when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='Japan' then 'Japan DCL'
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Selfcare' then 'China Selfcare DCL'	
 	  when trim(mat.mega_brnd_desc)='Dr Ci Labo' and main.ctry_nm='China Personal Care' then 'China Personal Care DCL'
@@ -1495,7 +1499,7 @@ GROUP BY
   case 
 	   when trim(mat.mega_brnd_desc)='Dr Ci Labo' and 	main.ctry_nm in ('APSC Regional','Japan','China Selfcare','China Personal Care') then 'One DCL' 
 	   when trim(main.ctry_nm) = 'APSC Regional' and trim(nvl(mat.mega_brnd_desc,'NA'))<>'Dr Ci Labo' then 'APSC Direct'
-	   else main."cluster" end,
+	   else main."cluster" end,*/
   main.obj_crncy_co_obj,
   IFF(mat.mega_brnd_desc='',null,mat.mega_brnd_desc),
 
@@ -1507,7 +1511,7 @@ GROUP BY
   nvl(gmc.C4_CATEGORY,'Not Available'),
   nvl(gmc.C5_SUBCATEGORY,'Not Available'), 
 
-  IFF(mat.brnd_desc='',null,mat.brnd_desc),
+  /*IFF(mat.brnd_desc='',null,mat.brnd_desc),
   IFF(mat.base_prod_desc='',null,mat.base_prod_desc),
   IFF(mat.varnt_desc='',null,mat.varnt_desc),
   IFF(mat.put_up_desc='',null,mat.put_up_desc),
@@ -1516,7 +1520,7 @@ GROUP BY
   IFF(mat.prodh3_txtmd='',null,mat.prodh3_txtmd),
   IFF(mat.prodh4_txtmd='',null,mat.prodh4_txtmd),
   IFF(mat.prodh5_txtmd='',null,mat.prodh5_txtmd),
-  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd),
+  IFF(mat.prodh6_txtmd='',null,mat.prodh6_txtmd),*/
   IFF(cus_sales_extn."parent customer"='',null,cus_sales_extn."parent customer"),
   IFF(cus_sales_extn.banner='',null,cus_sales_extn.banner),
   IFF(cus_sales_extn."banner format"='',null,cus_sales_extn."banner format"),
