@@ -8,7 +8,7 @@ models:
 
   - name: hcposeitg_integration__itg_cycle_plan_detail
     config:
-      alias: itg_cycle_plan_target_detail
+      alias: itg_cycle_plan_detail
       tags: ["iconnect_data_ingestion","ingestion"]
 
   - name: hcposeitg_integration__itg_cycle_plan
