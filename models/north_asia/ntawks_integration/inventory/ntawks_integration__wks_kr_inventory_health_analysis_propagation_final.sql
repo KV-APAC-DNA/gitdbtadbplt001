@@ -1,16 +1,21 @@
+{{
+    config(
+        sql_header = "alter session set week_start= 7;"
+    )
+}}
 with
 wks_kr_inventory_health_analysis_propagation as 
 (
     select * from {{ ref('ntawks_integration__wks_kr_inventory_health_analysis_propagation') }}
-)
+),
 wks_korea_sellout_for_inv_analysis as 
 (
     select * from {{ ref('ntawks_integration__wks_korea_sellout_for_inv_analysis') }}
-) 
+),
 wks_kr_inventory_healthy_unhealthy_analysis as 
 (
     select * from {{ ref('ntawks_integration__wks_kr_inventory_healthy_unhealthy_analysis') }}
-)
+),
 final as 
 (
 SELECT inv.*,
