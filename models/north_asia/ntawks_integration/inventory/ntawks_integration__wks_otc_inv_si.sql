@@ -97,8 +97,8 @@ FROM (SELECT 'KR' cntry_cd,
                                             edw_material_sales_dim t_msd
                                        WHERE t_msd.ean_num = t_ean.ean_num
                                        AND   t_msd.sls_org IN ('3200','320A','320S','321A')) T6
-                                   ON LTRIM (T1.product_code,0) = LTRIM (T6.matl_num (+),0)
-                                  AND LTRIM (T1.distributor_code,0) = LTRIM (T6.cust_sls (+),0)
+                                   ON LTRIM (T1.product_code,0) = LTRIM (T6.matl_num,0)
+                                  AND LTRIM (T1.distributor_code,0) = LTRIM (T6.cust_sls,0)
                             LEFT JOIN edw_vw_os_time_dim T2 ON to_date(T1.bill_dt) = to_date(T2.cal_date)
                           GROUP BY cntry_cd,
                                    data_type,

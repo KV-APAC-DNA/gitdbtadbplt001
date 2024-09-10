@@ -8,7 +8,7 @@ select * from {{ ref('ntawks_integration__wks_hk_sellout_for_inv_analysis') }}
 wks_hk_inventory_healthy_unhealthy_analysis as (
 select * from {{ ref('ntawks_integration__wks_hk_inventory_healthy_unhealthy_analysis') }}
 ),
-transformed as (
+final as (
 SELECT inv.*,healthy_inv.healthy_inventory
       ,wkly_avg.min_date
       ,datediff ( week,wkly_avg.min_date, last_day(to_date(left(cal_mnth_id,4)||right(cal_mnth_id,2),'yyyymm')) )diff_weeks
