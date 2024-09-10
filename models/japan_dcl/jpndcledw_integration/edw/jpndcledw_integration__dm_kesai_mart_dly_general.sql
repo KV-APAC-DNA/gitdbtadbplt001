@@ -382,7 +382,7 @@ bs AS (
                             OR kesai.meisaikbn <> '商品'
                             )
                         THEN 0
-                    ELSE kesai.warimaenukikingaku / kesai.warimaenukigokei
+                    ELSE trunc((kesai.warimaenukikingaku::number(38,20) / kesai.warimaenukigokei),11)
                     END
                 ), 1) AS RATIO2,
         i13.teikikeiyaku,
@@ -766,7 +766,7 @@ final as(
         z_item_hen_suryo::number(18,0) as z_item_hen_suryo,
         anbun_amount_tax110_ex::float as anbun_amount_tax110_ex,
         z_item_amount_tax_ex::float as z_item_amount_tax_ex,
-        ratio2::number(16,8) as ratio2,
+        trunc(ratio2,8)::number(16,8) as ratio2,
         anbun_soryo::float as anbun_soryo,
         anbun_point_tax_ex::float as anbun_point_tax_ex,
         anbun_tokuten::float as anbun_tokuten,
