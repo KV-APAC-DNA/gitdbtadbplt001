@@ -1,3 +1,4 @@
+
 with WKS_TH_BASE_RETAIL_EXCELLENCE as (
     select * from {{ ref('thawks_integration__wks_th_base_retail_excellence') }}
     ),
@@ -57,7 +58,5 @@ avg_qty::numeric(38,6) AS avg_qty,
 sales_value_list_price::numeric(38,12) AS sales_value_list_price
 from transformation
 )        
-
-
 
 select * from final

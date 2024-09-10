@@ -1,16 +1,19 @@
-{% if build_month_end_job_models()  %}
 {{
     config(
-        post_hook = ["update {{this}} set sum = b.sum from (
-    select usrid, rankdt, sum(price) as sum from {{ ref('jpndcledw_integration__wk_d22687_ruikei') }} group by usrid, rankdt order by usrid)b
-    where {{this}}.usrid = b.usrid and {{this}}.rankdt = b.rankdt;",
-    
-    "update {{this}} set point = b.point from (
-    select diecusrid as usrid,point as point from {{ ref('jpndcledw_integration__wk_d22687_2021nen_sumi') }}) b where {{this}}.usrid = b.usrid;",
-    
-    "update {{this}} set usrid = cast(ltrim({{encryption_1('usrid')}}, '0')as bigint);"]
+        post_hook = "   {% if build_month_end_job_models()  %}
+                        update {{this}} set sum = b.sum from (
+                        select usrid, rankdt, sum(price) as sum from {{ ref('jpndcledw_integration__wk_d22687_ruikei') }} group by usrid, rankdt order by usrid)b
+                        where {{this}}.usrid = b.usrid and {{this}}.rankdt = b.rankdt;
+                        
+                        update {{this}} set point = b.point from (
+                        select diecusrid as usrid,point as point from {{ ref('jpndcledw_integration__wk_d22687_2021nen_sumi') }}) b where {{this}}.usrid = b.usrid;
+
+                        update {{this}} set usrid = cast(ltrim({{encryption_1('usrid')}}, '0')as bigint);
+                        {% endif %}"
     )
 }}
+
+{% if build_month_end_job_models()  %}
 with wk_rankdt_tmp 
 as (
     select *

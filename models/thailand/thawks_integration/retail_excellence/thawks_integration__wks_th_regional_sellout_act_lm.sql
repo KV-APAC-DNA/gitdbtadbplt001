@@ -1,3 +1,4 @@
+
 with WKS_TH_REGIONAL_SELLOUT_ALLMONTHS as (
     select * from {{ ref('thawks_integration__wks_th_regional_sellout_allmonths') }}
 ),
@@ -32,5 +33,6 @@ lm_avg_sales_qty::numeric(38,6) AS lm_avg_sales_qty,
 lm_sales_lp::numeric(38,12) AS lm_sales_lp,
 from transformation
 )
+
 
 select * from final
