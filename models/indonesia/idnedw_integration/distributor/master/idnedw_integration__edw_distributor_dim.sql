@@ -28,13 +28,13 @@ final as
 	current_timestamp()::timestamp_ntz(9) as crtd_dttm,
 	current_timestamp()::timestamp_ntz(9) as uptd_dttm,
 	dstrbtr_grp_nm::varchar(255) as dstrbtr_grp_nm,
-	prov_nm::varchar(255) as prov_nm,
+	name::varchar(255) as prov_nm,
 	effective_from::varchar(10) as effective_from,
 	effective_to::varchar(10) as effective_to
 from source as idd,
 itg_distributor_province_dim as idpd,
 itg_distributor_group_dim as idgd
 where idd.dstrbtr_grp_cd=idgd.dstrbtr_grp_cd(+)
-and idd.prvnce_id=idpd.prov_id(+)
+and idd.prvnce_id=idpd.code(+)
 )
 select * from final
