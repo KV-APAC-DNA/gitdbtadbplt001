@@ -35,6 +35,7 @@ vars:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+
 tests:
   DNA_CORE_ASP:
     philippines:
