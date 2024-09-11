@@ -2257,28 +2257,28 @@ FROM (
                 )::CHARACTER VARYING AS rej_reason,
                 prmc.photopath AS photo_url
             FROM (
-                    SELECT itg_in_perfectstore_promo.store_code,
-                        itg_in_perfectstore_promo.store_name,
-                        itg_in_perfectstore_promo.isp_code,
-                        itg_in_perfectstore_promo.isp_name,
-                        ITG_IN_PERFECTSTORE_PROMO.region,
-                        ITG_IN_PERFECTSTORE_PROMO.chain,
-                        ITG_IN_PERFECTSTORE_PROMO.format,
-                        itg_in_perfectstore_promo.product_category,
-                        itg_in_perfectstore_promo.product_brand,
+                    SELECT trim(itg_in_perfectstore_promo.store_code) as store_code,
+                        trim(itg_in_perfectstore_promo.store_name) as store_name,
+                        trim(itg_in_perfectstore_promo.isp_code) as isp_code,
+                        trim(itg_in_perfectstore_promo.isp_name) as isp_name,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.region) as region,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.chain) as chain,
+                        trim(ITG_IN_PERFECTSTORE_PROMO.format) as format,
+                        trim(itg_in_perfectstore_promo.product_category) as product_category,
+                        trim(itg_in_perfectstore_promo.product_brand) as product_brand,
                         "max"(
                             to_date(itg_in_perfectstore_promo.visit_datetime)
                         ) AS visit_datetime
-                    FROM itg_in_perfectstore_promo
+                    FROM inditg_integration.itg_in_perfectstore_promo
                     GROUP BY itg_in_perfectstore_promo.store_code,
-                        itg_in_perfectstore_promo.store_name,
-                        itg_in_perfectstore_promo.isp_code,
-                        itg_in_perfectstore_promo.isp_name,
-                        ITG_IN_PERFECTSTORE_PROMO.region,
-                        ITG_IN_PERFECTSTORE_PROMO.chain,
-                        ITG_IN_PERFECTSTORE_PROMO.format,
-                        itg_in_perfectstore_promo.product_category,
-                        itg_in_perfectstore_promo.product_brand
+                        trim(itg_in_perfectstore_promo.store_name),
+                        trim(itg_in_perfectstore_promo.isp_code),
+                        trim(itg_in_perfectstore_promo.isp_name),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.region),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.chain),
+                        trim(ITG_IN_PERFECTSTORE_PROMO.format),
+                        trim(itg_in_perfectstore_promo.product_category),
+                        trim(itg_in_perfectstore_promo.product_brand)
                 ) prm,
                 itg_in_perfectstore_promo prmc,
                 (
@@ -2294,15 +2294,15 @@ FROM (
                 ) wt
             WHERE trim(UPPER(wt.retail_environment::TEXT)) = trim(UPPER(PRM.format::TEXT))
                 AND to_date(prm.visit_datetime::TIMESTAMP WITHOUT TIME ZONE)::TIMESTAMP WITHOUT TIME ZONE = prmc.visit_datetime
-                AND prm.store_code::TEXT = prmc.store_code::TEXT
-                AND prm.store_name::TEXT = prmc.store_name::TEXT
-                AND prm.isp_code::TEXT = prmc.isp_code::TEXT
-                AND prm.isp_name::TEXT = prmc.isp_name::TEXT
-                AND PRM.region::TEXT = PRMC.region::TEXT
-                AND PRM.chain::TEXT = PRMC.chain::TEXT
-                AND PRM.format::TEXT = PRMC.format::TEXT
-                AND prm.product_category::TEXT = prmc.product_category::TEXT
-                AND prm.product_brand::TEXT = prmc.product_brand::TEXT
+                AND trim(prm.store_code::TEXT) = trim(prmc.store_code::TEXT)
+                AND trim(prm.store_name)::TEXT = trim(prmc.store_name)::TEXT
+                AND trim(prm.isp_code::TEXT) = trim(prmc.isp_code::TEXT)
+                AND trim(prm.isp_name::TEXT) = trim(prmc.isp_name::TEXT)
+                AND trim(PRM.region::TEXT) = trim(PRMC.region::TEXT)
+                AND trim(PRM.chain::TEXT) = trim(PRMC.chain::TEXT)
+                AND trim(PRM.format::TEXT) = trim(PRMC.format::TEXT)
+                AND trim(prm.product_category::TEXT) = trim(prmc.product_category::TEXT)
+                AND trim(prm.product_brand::TEXT) = trim(prmc.product_brand::TEXT)
                 AND date_part(
                     year,
                     TO_DATE(

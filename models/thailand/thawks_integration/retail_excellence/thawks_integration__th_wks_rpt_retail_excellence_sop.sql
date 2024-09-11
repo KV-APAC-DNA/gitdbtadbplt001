@@ -1,3 +1,4 @@
+
 {{ 
     config(
     sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
@@ -523,4 +524,5 @@ product_agg_dim_key::varchar(32) AS product_agg_dim_key,
 created_date::timestamp AS created_date
 from transformation
 )
+
 select * from final 
