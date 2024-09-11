@@ -130,7 +130,9 @@ landmark_ds as (
        crtd_dttm,
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_landmark_ds
 
@@ -190,7 +192,9 @@ SELECT ret_nm_prefix,
        
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_landmark_sm
 
@@ -248,7 +252,9 @@ puregold as (
        crtd_dttm,
        sub_channel,
        null as store_location,
-       diser_name
+       diser_name,
+       msl_reseller,
+       msl_priceclub
 
 FROM wks_ph_non_ise_puregold
 
@@ -303,7 +309,9 @@ robinsons_ds as (
        crtd_dttm,
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_robinsons_ds
 
@@ -360,7 +368,9 @@ SELECT ret_nm_prefix,
        crtd_dttm,
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_robinsons_sm
 
@@ -418,7 +428,9 @@ rustans as (
        crtd_dttm,
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_rustans
 
@@ -476,7 +488,9 @@ shm as (
        crtd_dttm,
        sub_channel,
        store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_shm
 
@@ -532,7 +546,9 @@ super_8 as (
        crtd_dttm,
        sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_super_8
 
@@ -589,7 +605,9 @@ SELECT ret_nm_prefix,
        crtd_dttm,
        sub_channel,
        store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_svi_smc
 
@@ -646,7 +664,9 @@ waltermart as (
        crtd_dttm,
        null as sub_channel,
        null as store_location,
-       null as diser_name
+       null as diser_name,
+       null as msl_reseller,
+       null as msl_priceclub
 
 FROM wks_ph_non_ise_waltermart
 
@@ -702,7 +722,9 @@ select
     crtd_dttm::timestamp_ntz(9) as crtd_dttm,
     sub_channel::varchar(200) as sub_channel,
     store_location::varchar(200) as store_location,
-    diser_name::varchar(200) as diser_name
+    diser_name::varchar(200) as diser_name,
+    msl_reseller::varchar(10) as msl_reseller,
+    msl_priceclub::varchar(10) as msl_priceclub
 from transformed
 )
 select * from final
