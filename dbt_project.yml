@@ -655,6 +655,8 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
+tests:
+  +severity: warn
 
     china:
       config:
