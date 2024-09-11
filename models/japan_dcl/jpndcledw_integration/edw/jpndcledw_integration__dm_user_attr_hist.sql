@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        incremental_strategy = 'delete+insert',
+        incremental_strategy = 'append'
     )
 }}
 
@@ -12,7 +12,7 @@ as
 ),
 final as 
 (
-    select to_char(dateadd(day,-2,sysdate()), 'YYYYMM')::VARCHAR(60) AS yymm,
+    select to_char(dateadd(day,-2,current_timestamp()), 'YYYYMM')::VARCHAR(60) AS yymm,
         KOKYANO::VARCHAR(60) AS KOKYANO,
         ZIPCODE::VARCHAR(60) AS ZIPCODE,
         TODOFUKENNAME::VARCHAR(60) AS TODOFUKENNAME,

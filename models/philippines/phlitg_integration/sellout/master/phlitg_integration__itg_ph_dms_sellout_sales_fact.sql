@@ -99,7 +99,7 @@ final as(
             else  to_date(order_delivery_dt,'MM/DD/YYYY HH24:MI') 
         end as order_delivery_dt,
         order_status::varchar(50) as order_status,
-        file_name
+        file_name::varchar(255) as file_name
     from source
 )
 

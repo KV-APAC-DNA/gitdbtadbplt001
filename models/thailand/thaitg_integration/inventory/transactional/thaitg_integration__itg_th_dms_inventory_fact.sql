@@ -7,17 +7,8 @@
 }}
 
 with source as(
-        SELECT *,
-            dense_rank() OVER (
-                PARTITION BY distributorid,recdate,whcode,productcode
-                ORDER BY file_name DESC
-                ) AS rnk
-        FROM {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} source
-        WHERE file_name NOT IN (
-                SELECT DISTINCT file_name
-                FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
-                ) qualify rnk = 1
-        ),
+    select * from {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }}
+),
 final as(
     select
         case 

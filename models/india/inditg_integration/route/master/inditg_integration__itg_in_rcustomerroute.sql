@@ -12,6 +12,10 @@
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_in_retailer_route') }}
+    where filename not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer_route__null_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer_route__duplicate_test')}})
 ),
 final as 
 (
@@ -27,6 +31,7 @@ final as
         filename::varchar(100) as filename,
         run_id::varchar(50) as run_id,
         crt_dttm::timestamp_ntz(9) as crt_dttm
+        
     from source
 )
 select * from final

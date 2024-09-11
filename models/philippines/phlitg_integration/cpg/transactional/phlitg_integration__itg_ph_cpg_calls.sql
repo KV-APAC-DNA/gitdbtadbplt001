@@ -5,15 +5,6 @@
         unique_key=  ['dstrbtr_grp_cd', 'dstrbtr_cust_id', 'planned_visit', 'actual_visit', 'order_no'],
         pre_hook= [
             "{% if is_incremental() %}
-                delete from {{this}} itg where itg.filename  in (select sdl.filename from
-                {{ source('phlsdl_raw','sdl_ph_cpg_calls') }} sdl where filename not in
-                (
-                select distinct file_name from {{ source('phlwks_integration', 'TRATBL_sdl_ph_cpg_calls__null_test') }}
-                ));
-            {%endif%}",
-            
-            
-            "{% if is_incremental() %}
                         delete from {{this}} where nvl(dstrbtr_grp_cd,'#') || nvl(dstrbtr_cust_id,'#') || nvl(planned_visit,'9999-12-31') || nvl(actual_visit,'9999-12-31') || nvl(order_no,'#') in (select distinct nvl(dstrbtr_grp_cd,'#') || nvl(cust_id,'#') || nvl(to_date(planned_visit,'YYYYMMDD'),'9999-12-31') || nvl(to_date(actual_visit,'YYYYMMDD'),'9999-12-31') || nvl(order_no,'#') from {{ source('phlsdl_raw', 'sdl_ph_cpg_calls') }}
                         where filename not in (
                         select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_cpg_calls__null_test')}})
