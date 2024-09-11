@@ -8,18 +8,18 @@
 with sdl_ph_iop_trgt as (
     select *
     from {{ source('phlsdl_raw', 'sdl_ph_iop_trgt') }}
-    where file_name not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
+    where filename not in (
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__duplicate_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__format_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_brand')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_segment')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_iop_trgt__lookup_test_customer_code')}}
     )
 ),
 final as (

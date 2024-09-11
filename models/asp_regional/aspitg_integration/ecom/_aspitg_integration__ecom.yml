@@ -12,4 +12,4 @@ models:
   - name: aspitg_integration__itg_ecommerce_nts_regional
     config:
       alias: itg_ecommerce_nts_regional
-      tags: ["j_ecommerce_nts_mds_load","ingestion"]
+      tags: ["j_ecommerce_nts_mds_load","transformation"]

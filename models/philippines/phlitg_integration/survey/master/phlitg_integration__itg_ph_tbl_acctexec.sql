@@ -2,9 +2,9 @@ with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_ph_tbl_acctexec') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_acctexec__null_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_acctexec__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_acctexec__duplicate_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_acctexec__duplicate_test')}}
     )
 ),
 final as

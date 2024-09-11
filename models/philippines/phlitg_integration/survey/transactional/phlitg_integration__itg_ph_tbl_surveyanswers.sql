@@ -2,22 +2,23 @@
     config(
         materialized='incremental',
         incremental_strategy='append'
+
     )
 }}
 
 with source as(
     select * from {{ source('phlsdl_raw', 'sdl_ph_tbl_surveyanswers') }}
     where filename not in (
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__null_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__null_test')}}
         union all
-        select distinct file_name from {{SOURCE('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__duplicate_test')}}
+        select distinct file_name from {{source('phlwks_integration','TRATBL_sdl_ph_tbl_surveyanswers__duplicate_test')}}
     )
 ),
 final as(
     select 
         custcode::varchar(10) as custcode,
         slsperid::varchar(10) as slsperid,
-        branchcode::varchar(30) as branchcode,
+        branchcode::varchar(100) as branchcode,
         iseid::varchar(100) as iseid,
         quesno::number(18,0) as quesno,
         answerseq::number(18,0) as answerseq,
