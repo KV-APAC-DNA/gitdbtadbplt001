@@ -31,10 +31,10 @@ final as (
         branch_name,
         osa_flag,
         retailer_name,
-        sub_channel,
         filename,
         run_id,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
+        sub_channel
     from source 
 )
 select * from final
