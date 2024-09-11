@@ -32,8 +32,7 @@ final as
     CASE
     WHEN tgt.crt_dttm IS NULL THEN 'I'
     ELSE 'U'
-    END AS chng_flg,
-    file_name
+    END AS chng_flg
     FROM sdl_lks_plant src
     LEFT JOIN itg_plant tgt ON src.plantcode = tgt.plantcode and src.plantid = tgt.plantid
 )
