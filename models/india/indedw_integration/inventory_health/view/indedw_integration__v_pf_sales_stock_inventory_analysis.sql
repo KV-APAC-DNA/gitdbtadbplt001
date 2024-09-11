@@ -21,7 +21,7 @@ as (
 itg_query_parameters
 as (
     select *
-    from {{ source('inditg_integration', 'itg_query_parameters') }}
+    from {{ source('aspitg_integration', 'itg_query_parameters') }}
     ),
 itg_tblpf_sit
 as (
