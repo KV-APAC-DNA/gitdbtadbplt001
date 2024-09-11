@@ -30,6 +30,7 @@ final as
     suppliercode::varchar(100) as suppliercode,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm
+    
     FROM source
 )
 select * from final
