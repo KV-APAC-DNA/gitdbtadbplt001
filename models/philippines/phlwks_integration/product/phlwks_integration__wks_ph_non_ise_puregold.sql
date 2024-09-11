@@ -33,13 +33,14 @@ final as (
         branch_name,
         osa_flag,
         retailer_name,
-        filename,
-        run_id,
-        current_timestamp()::timestamp_ntz(9) as crtd_dttm,
         sub_channel as sub_channel,
         diser_name as diser_name,
         msl_reseller as msl_reseller,
-        msl_priceclub as msl_priceclub
+        msl_priceclub as msl_priceclub,
+        filename,
+        run_id,
+        current_timestamp()::timestamp_ntz(9) as crtd_dttm
+        
     from source 
 )
 select * from final
