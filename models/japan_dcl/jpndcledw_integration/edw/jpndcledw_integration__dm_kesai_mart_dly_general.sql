@@ -174,11 +174,11 @@ kesai AS (
     LEFT JOIN tbpromotion prom ON h.dipromid = prom.dipromid
     LEFT JOIN amount_header wh ON wh.saleno_key = h.saleno_key
     LEFT JOIN prev_ship ON h.kokyano = prev_ship.kokyano
-        AND to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
+        AND to_date(IFF(CAST(h.SHUKADATE AS STRING) = '0', NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = prev_ship.ship_dt --- ヘッダーテーブル
     LEFT JOIN prev_order ON h.kokyano = prev_order.kokyano
         AND to_date(IFF(CAST(h.juchdate AS STRING) = '0', NULL, CAST(h.juchdate AS STRING)),'YYYYMMDD') = prev_order.order_dt
     LEFT JOIN c_tbecclient client ON h.tenpocode = client.c_dstempocode
-    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE_P AS STRING) = '0', NULL, CAST(h.SHUKADATE_P AS STRING)),'YYYYMMDD') = x.ymd_dt
+    LEFT JOIN cld_m x ON to_date(IFF(CAST(h.SHUKADATE AS STRING) = '0', NULL, CAST(h.SHUKADATE AS STRING)),'YYYYMMDD') = x.ymd_dt
     LEFT JOIN TEIKIKEIYAKU_DATA_MART_UNI a ON h.kesaiid::varchar = a.c_dikesaiid::varchar
         AND h.ordercode = a.diordercode
         AND m.gyono = a.dimeisaiid
