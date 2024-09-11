@@ -13,7 +13,7 @@ with source as(
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_inventory_fact__test_format_recdate') }}
             union all
             select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_la_gt_inventory_fact__test_format_expirydate') }}
-            )
+            ) qualify rnk =1
 ),
 final as
 (
