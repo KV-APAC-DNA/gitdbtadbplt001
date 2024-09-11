@@ -1,7 +1,7 @@
 WITH tw05kokyarecalc
 AS (
   SELECT *
-  FROM {{ source('jpdcledw_integration', 'tw05kokyarecalc') }}
+  FROM {{ ref('jpndcledw_integration__tw05kokyarecalc') }}
   ),
  tm24_item
 AS (

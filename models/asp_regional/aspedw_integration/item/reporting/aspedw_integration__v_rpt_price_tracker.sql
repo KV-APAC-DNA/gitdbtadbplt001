@@ -131,7 +131,7 @@ pka as
         derived_table1.pka_skuiddesc, 
         row_number() OVER(PARTITION BY derived_table1.ctry_nm,derived_table1.ean_upc ORDER BY derived_table1.pka_rootcode DESC) AS row_number 
     FROM (SELECT CASE WHEN ((a.ctry_nm):: text = ('APSC Regional' :: character varying):: text) THEN 'China Personal Care' :: character varying ELSE a.ctry_nm END AS ctry_nm, 
-                (a.ean_upc):: character varying AS ean_upc, 
+                trim(a.ean_upc):: character varying AS ean_upc, 
                 a.gcph_franchise, 
                 a.pka_franchise_description, 
                 a.gcph_category, 
@@ -201,7 +201,7 @@ pka as
                 AND (b.latest_nts_date = a.nts_date))
                 AND (b.row_number = 1)))) 
     GROUP BY CASE WHEN ((a.ctry_nm):: text = ('APSC Regional' :: character varying):: text) THEN 'China Personal Care' :: character varying ELSE a.ctry_nm END, 
-            (a.ean_upc):: character varying, 
+            trim(a.ean_upc):: character varying, 
             a.gcph_franchise, 
             a.pka_franchise_description, 
             a.gcph_category, 
@@ -219,7 +219,7 @@ pka as
     UNION ALL 
 
     SELECT 'Japan DCL' :: character varying AS ctry_nm, 
-            (a.ean_upc):: character varying AS ean_upc, 
+            trim(a.ean_upc):: character varying AS ean_upc, 
             a.gcph_franchise, 
             a.pka_franchise_description, 
             a.gcph_category, 
@@ -292,7 +292,7 @@ pka as
                             AND (b.latest_nts_date = a.nts_date))
                             AND (b.row_number = 1)))) 
                             GROUP BY 1, 
-                            (a.ean_upc):: character varying, 
+                            trim(a.ean_upc):: character varying, 
                             a.gcph_franchise, 
                             a.pka_franchise_description, 
                             a.gcph_category, 

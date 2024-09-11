@@ -83,7 +83,7 @@ final AS
         CASE 
             WHEN cit85osalh.kakokbn = 1 THEN LEFT(cit86osalm.shimebi, 8)
             ELSE CASE 
-                    WHEN tm67.code = '90' THEN ssmt.nyk_yti_dt
+                    WHEN tm67.code = '90' THEN LEFT(ssmt.nyk_yti_dt, 8)
                     ELSE LEFT(cit86osalm.shimebi, 8)
                     END
             END AS nohindate,

@@ -1,0 +1,57 @@
+models:
+  - name: chnwks_integration__wks_china_sellout_for_inv_analysis
+    config: 
+      alias: wks_china_sellout_for_inv_analysis
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_base_inv
+    config: 
+      alias: wks_china_base_inv
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_allmonths_base_inv
+    config: 
+      alias: wks_china_allmonths_base_inv
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_lastnmonths_inv
+    config: 
+      alias: wks_china_lastnmonths_inv
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_base_detail_inv
+    config: 
+      alias: wks_china_base_detail_inv
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__china_propagate_to
+    config: 
+      alias: china_propagate_to
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__china_propagate_from_to
+    config: 
+      alias: china_propagate_from_to
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_siso_propagate_to_details
+    config: 
+      alias: wks_china_siso_propagate_to_details
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_siso_propagate_to_existing_dtls
+    config: 
+      alias: wks_china_siso_propagate_to_existing_dtls
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_siso_propagate_final
+    config: 
+      alias: wks_china_siso_propagate_final
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_reg_inventory_health_analysis_propagation_prestep
+    config: 
+      alias: wks_china_reg_inventory_health_analysis_propagation_prestep
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_reg_inventory_health_analysis_propagation
+    config: 
+      alias: wks_china_reg_inventory_health_analysis_propagation
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_inventory_healthy_unhealthy_analysis
+    config: 
+      alias: wks_china_inventory_healthy_unhealthy_analysis
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]
+  - name: chnwks_integration__wks_china_reg_inventory_health_analysis_propagation_final
+    config: 
+      alias: wks_china_reg_inventory_health_analysis_propagation_final
+      tags: ["j_ap_cn_reg_data_refresh","transformation"]

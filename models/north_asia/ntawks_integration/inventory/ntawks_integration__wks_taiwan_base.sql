@@ -365,7 +365,7 @@ AS (
             FROM itg_pos_prom_prc_map
             ) price
     WHERE inv.year >= (DATE_PART(YEAR, SYSDATE()) - 6)
-        AND INV.mnth_id + 15 = TD.cal_date_id
+        AND INV.mnth_id || 15 = TD.cal_date_id
         --AND   LTRIM(inv.inv_week,'0') = LTRIM(td.cal_date_id,'0')
         --AND   inv.year = td.cal_year
         AND inv.inv_dt::DATE >= price.prom_strt_dt

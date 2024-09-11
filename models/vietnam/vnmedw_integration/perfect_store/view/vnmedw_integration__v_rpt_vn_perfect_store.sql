@@ -206,7 +206,7 @@ union_1 as 		(
 													,store.STATE
 													,store.parent_cust_name AS parent_customer
 													,store.branch_code
-													,store.branch_name
+													,rtrim(store.branch_name) as branch_name
 													,store.store_prioritization
 												FROM (
 													itg_vn_interface_ise_header "header" JOIN itg_vn_interface_branch store ON (
@@ -222,7 +222,7 @@ union_1 as 		(
 													,store.STATE
 													,store.parent_cust_name
 													,store.branch_code
-													,store.branch_name
+													,rtrim(store.branch_name)
 													,store.store_prioritization
 												) survey_master JOIN (
 												SELECT itg_vn_interface_question.ise_id
@@ -623,7 +623,7 @@ union_1 as 		(
 													,store.STATE
 													,store.parent_cust_name AS parent_customer
 													,store.branch_code
-													,store.branch_name
+													,rtrim(store.branch_name) as branch_name
 													,store.store_prioritization
 												FROM (
 													itg_vn_interface_ise_header "header" JOIN itg_vn_interface_branch store ON (
@@ -639,7 +639,7 @@ union_1 as 		(
 													,store.STATE
 													,store.parent_cust_name
 													,store.branch_code
-													,store.branch_name
+													,rtrim(store.branch_name)
 													,store.store_prioritization
 												) survey_master JOIN (
 												SELECT itg_vn_interface_question.ise_id
@@ -1031,7 +1031,7 @@ union_2 as (SELECT 'Spiral' AS dataset
 											,store.STATE
 											,store.parent_cust_name AS parent_customer
 											,store.branch_code
-											,store.branch_name
+											,rtrim(store.branch_name) as branch_name
 											,store.store_prioritization
 										FROM (
 											itg_vn_interface_ise_header "header" JOIN itg_vn_interface_branch store ON (
@@ -1047,7 +1047,7 @@ union_2 as (SELECT 'Spiral' AS dataset
 											,store.STATE
 											,store.parent_cust_name
 											,store.branch_code
-											,store.branch_name
+											,rtrim(store.branch_name)
 											,store.store_prioritization
 										) survey_master JOIN (
 										SELECT itg_vn_interface_question.ise_id
@@ -1400,7 +1400,7 @@ FROM (
 									,store.STATE
 									,store.parent_cust_name AS parent_customer
 									,store.branch_code
-									,store.branch_name
+									,rtrim(store.branch_name) as branch_name
 									,store.store_prioritization
 								FROM (
 									itg_vn_interface_ise_header "header" JOIN itg_vn_interface_branch store ON (
@@ -1416,7 +1416,7 @@ FROM (
 									,store.STATE
 									,store.parent_cust_name
 									,store.branch_code
-									,store.branch_name
+									,rtrim(store.branch_name)
 									,store.store_prioritization
 								) survey_master JOIN (
 								SELECT itg_vn_interface_question.ise_id

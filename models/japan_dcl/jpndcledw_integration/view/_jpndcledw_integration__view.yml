@@ -385,6 +385,11 @@ models:
     config:
       alias: odr_returnitem_detail
       tags: ["japan_dcl_views","transformation"]
+
+  - name: jpndcledw_integration__report_006_a
+    config:
+      alias: report_006_a
+      tags: ["japan_dcl_views","transformation"]
  
   - name: jpndcledw_integration__report__006_a_newly_added4
     config:
@@ -987,3 +992,8 @@ models:
     config:
       alias: '"cewq028破損商品"'
       tags: ["japan_dcl_views","inactive"]
+
+  - name: jpndcledw_integration__tw05kokyarecalc
+    config:
+      alias: tw05kokyarecalc
+      tags: ["japan_dcl_views","transformation"]
