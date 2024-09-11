@@ -91,7 +91,7 @@ cte1 as
                     ,to_date(left(to_char(PRES.prescription_date, 'YYYY-MM'), 7) || '-01', 'YYYY-MM-DD') as prescription_date
                     ,min(PRES.prescription_id) as prescription_id
                     ,PRES.product as product
-                    ,avg(PRES.NO_OF_PRESCRIPTION_UNITS) * 4 as NO_OF_PRESCRIPTION_UNITS
+                    ,trunc(avg(PRES.NO_OF_PRESCRIPTION_UNITS),2) * 4 as NO_OF_PRESCRIPTION_UNITS
                     ,TEAM_BRAND_NAME as Brand 
               FROM EDW_HCP360_IN_VENTASYS_PRESCRIPTION_FACT PRES 
              WHERE TEAM_BRAND_NAME = 'ORSL' 

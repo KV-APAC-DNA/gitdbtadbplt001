@@ -39,7 +39,7 @@ SELECT
 		       C_TBECINQUIREMEISAI M
 		 WHERE   
 		       M.DIHENPINKUBUN <> 0 AND  
-		       M.DSREN >=  (Select dateadd(day,(select distinct(CAST(ATTR1 as INTEGER)) FROM HANYO_ATTR where HANYO_ATTR.KBNMEI = 'DAILYFROM'),CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE())::date))
+		       M.DSREN >=  (Select dateadd(day,(select distinct(CAST(ATTR1 as INTEGER)) FROM HANYO_ATTR where HANYO_ATTR.KBNMEI = 'DAILYFROM'),CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp())::date))
 		 GROUP BY
 		       M.DIINQUIREID ,
 		       M.DIINQUIREKESAIID ) mtp
@@ -47,7 +47,7 @@ SELECT
 		       mtp.DIINQUIREID = MEI.DIINQUIREID AND 
 		       mtp.maxprc = NVL(MEI.DITOTALPRC,0)
 		 WHERE 
-		       MEI.DSREN >= (Select dateadd(day,(select distinct(CAST(ATTR1 as INTEGER))  FROM HANYO_ATTR where HANYO_ATTR.KBNMEI = 'DAILYFROM'),CONVERT_TIMEZONE('UTC','Asia/Tokyo',SYSDATE())::date))
+		       MEI.DSREN >= (Select dateadd(day,(select distinct(CAST(ATTR1 as INTEGER))  FROM HANYO_ATTR where HANYO_ATTR.KBNMEI = 'DAILYFROM'),CONVERT_TIMEZONE('Asia/Tokyo',current_timestamp())::date))
 		 GROUP BY
 		       MEI.DIINQUIREID ,
 		       MEI.DIINQUIREKESAIID ) a

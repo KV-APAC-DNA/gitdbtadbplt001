@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_CAL_V as (
 select * from {{ ref('jpndcledw_integration__kr_054_cal_v') }}
 ),
@@ -42,3 +43,6 @@ upoint::number(38,0) as upoint
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}
