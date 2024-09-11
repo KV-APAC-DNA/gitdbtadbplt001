@@ -715,13 +715,20 @@ union_5 as 	(
 				,edw_vw_ph_survey_details.startdate
 				,edw_vw_ph_survey_details.enddate
 				,
-   CASE
-    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '( n\\.a| n/a| na| n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|-n\\.a|-n/a|-na|-n a|\\)n\\.a|\\)n/a|\\)na|\\)n a)' THEN 'na'
-    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '(n\\.a |n/a |na |n a |n\\.a\\.|n/a\\.|na\\.|n a\\.|n\\.a,|n/a,|na,|n a,|n\\.a-|n/a-|na-|n a-|n\\.a\\(|n/a\\(|na\\(|n a\\()' THEN 'na'
-    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP 'n\\.a|n/a|na|n a' THEN 'na'
-    WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP ' n/a |not applicable' THEN 'na'
-    ELSE edw_vw_ph_survey_details.answernotes
-END as answernotes
+                CASE
+                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '(n[. ]?a|n/a|na|n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|\\-n\\.a|\\-n/a|\\-na|\\-n a)') THEN 'na'
+                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.*\\b(n/a)\\b.*') THEN 'na'
+                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), 'n\\.a|n/a|na|n a') THEN 'na'
+                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '% n/a |not applicable%') THEN 'na'
+                    ELSE edw_vw_ph_survey_details.answernotes
+                END AS answernotes
+--    CASE
+--     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '( n\\.a| n/a| na| n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|-n\\.a|-n/a|-na|-n a|\\)n\\.a|\\)n/a|\\)na|\\)n a)' THEN 'na'
+--     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '(n\\.a |n/a |na |n a |n\\.a\\.|n/a\\.|na\\.|n a\\.|n\\.a,|n/a,|na,|n a,|n\\.a-|n/a-|na-|n a-|n\\.a\\(|n/a\\(|na\\(|n a\\()' THEN 'na'
+--     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP 'n\\.a|n/a|na|n a' THEN 'na'
+--     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP ' n/a |not applicable' THEN 'na'
+--     ELSE edw_vw_ph_survey_details.answernotes
+-- END as answernotes
 			FROM edw_vw_ph_survey_details
 			) srv_det
 		LEFT JOIN (

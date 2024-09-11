@@ -84,12 +84,12 @@ models:
   - name: jpndclitg_integration__sfmc_sent
     config:
       alias: sfmc_sent
-      tags: ["jp_m_dcl_itg","ingestion"]
+      tags: ["jp_m_dcl_itg","transformation"]
 
   - name: jpndclitg_integration__sfmc_unsubs
     config:
       alias: sfmc_unsubs
-      tags: ["jp_m_dcl_itg","ingestion"]
+      tags: ["jp_m_dcl_itg","transformation"]
 
   - name: jpndclitg_integration__tbechenpinriyu
     config:
@@ -278,17 +278,17 @@ models:
   - name: jpndclitg_integration__contact_hist
     config: 
       alias: contact_hist
-      tags: ["jp_m_dcl_itg","ingestion"]
+      tags: ["jp_m_dcl_itg","transformation"]
 
   - name: jpndclitg_integration__sfcc_product_category
     config: 
       alias: sfcc_product_category
-      tags: ["jp_m_dcl_itg","ingestion"]
+      tags: ["jp_m_dcl_itg","transformation"]
 
   - name: jpndclitg_integration__sfcc_product_mst
     config: 
       alias: sfcc_product_mst
-      tags: ["jp_m_dcl_itg","ingestion"]
+      tags: ["jp_m_dcl_itg","transformation"]
 
   - name: jpndclitg_integration__sfmc_bounces
     config: 

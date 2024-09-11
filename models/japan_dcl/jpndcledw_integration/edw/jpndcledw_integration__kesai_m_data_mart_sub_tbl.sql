@@ -1,7 +1,20 @@
-with KESAI_M_DATA_MART_SUB_BEFORE_kizuna as(
-    select * from {{ ref('jpndcledw_integration__kesai_m_data_mart_sub_before') }}
-),
-transformed as(
+WITH kesai_m_data_mart_sub_before
+AS (
+    SELECT *
+    FROM {{ref('jpndcledw_integration__kesai_m_data_mart_sub_before') }}
+    ),
+kesai_m_data_mart_sub_p
+AS (
+    SELECT *
+    FROM {{source('jpdcledw_integration', 'kesai_m_data_mart_sub_p') }}
+    ),
+kesai_h_data_mart_sub_n
+AS (
+    SELECT *
+    FROM {{ref('jpndcledw_integration__kesai_h_data_mart_sub_n') }}
+    ),
+final
+AS (
     SELECT SUB.SALENO,
         SUB.GYONO,
         SUB.MEISAIKBN,
@@ -39,90 +52,210 @@ transformed as(
         SUB.C_DIDISCOUNTMEISAI,
         SUB.DISETMEISAIID,
         SUB.C_DSSETITEMKBN,
-        SUB.MAKER
-    -- delete by Kizuna Project 2022/11/25 start --
-    -- , SUB.SALENO_P
-    -- , SUB.GYONO_P
-    -- , SUB.ITEMCODE_P
-    -- , SUB.ITEMCODE_HANBAI_P
-    -- , SUB.SURYO_P
-    -- , SUB.JYU_SURYO_P
-    -- , SUB.OYAFLG_P
-    -- , SUB.TANKA_P
-    -- , SUB.HENSU_P
-    -- , SUB.KINGAKU_P
-    -- , SUB.MEISAINUKIKINGAKU_P
-    -- , SUB.MEISAITAX_P
-    -- , SUB.JUCHGYONO_P
-    -- , SUB.DISPSALENO_P
-    -- , SUB.JUCH_SHUR_P
-    -- , SUB.TYOSEIKIKINGAKU_P
-    -- , SUB.ANBUNMEISAINUKIKINGAKU_P
-    -- , SUB.DEN_NEBIKI_ABN_KIN_P
-    -- , SUB.DEN_NB_AB_SZ_KIN_P
-    -- , SUB.DCLSM_HIN_HIN_NIBU_ID_P
-    -- , SUB.KKNG_KBN_P
-    -- , SUB.SHIMEBI_P
-    -- , SUB.TANKA_TUKA_P
-    -- , SUB.KINGAKU_TUKA_P
-    -- , SUB.MEISAINUKIKINGAKU_TUKA_P
-    -- , SUB.MEISAITAX_TUKA_P
-    -- , SUB.MARKER_P
-    -- , SUB.URI_HEN_KBN_P
-    -- , SUB.SAL_JISK_IMP_SNSH_NO_P
-    -- , SUB.DCLJUCH_ID_P
-    -- , SUB.MARKER_NP
-    ----BGN-ADD 20200108 D.YAMASHITA ***変更19855(JJ連携処理の追加におけるDWHデータの差分抽出実現化)****
-    ----DnA側でデータマートを作成するため廃止
-    ----, SUB.JOIN_REC_UPDDATE
-    ----END-ADD 20200108 D.YAMASHITA ***変更19855(JJ連携処理の追加におけるDWHデータの差分抽出実現化)****
-    -- delete by Kizuna Project 2022/11/25 end --
-    FROM KESAI_M_DATA_MART_SUB_BEFORE_kizuna SUB
-),
-final as(
-    select 
-        saleno::varchar(63) as saleno,
-        gyono::number(18,0) as gyono,
-        meisaikbn::varchar(36) as meisaikbn,
-        itemcode::varchar(60) as itemcode,
-        itemname::varchar(192) as itemname,
-        diid::varchar(60) as diid,
-        disetid::varchar(60) as disetid,
-        setitemcd::varchar(60) as setitemcd,
-        setitemnm::varchar(192) as setitemnm,
-        suryo::number(18,0) as suryo,
-        tanka::number(18,0) as tanka,
-        kingaku::number(18,0) as kingaku,
-        meisainukikingaku::number(18,0) as meisainukikingaku,
-        wariritu::number(18,0) as wariritu,
-        warimaekomitanka::number(18,0) as warimaekomitanka,
-        warimaenukikingaku::number(18,0) as warimaenukikingaku,
-        warimaekomikingaku::number(18,0) as warimaekomikingaku,
-        bun_tanka::number(18,0) as bun_tanka,
-        bun_kingaku::number(18,0) as bun_kingaku,
-        bun_meisainukikingaku::number(18,0) as bun_meisainukikingaku,
-        bun_wariritu::number(18,0) as bun_wariritu,
-        bun_warimaekomitanka::number(18,0) as bun_warimaekomitanka,
-        bun_warimaenukikingaku::number(18,0) as bun_warimaenukikingaku,
-        bun_warimaekomikingaku::number(18,0) as bun_warimaekomikingaku,
-        dispsaleno::varchar(63) as dispsaleno,
-        kesaiid::varchar(62) as kesaiid,
-        diorderid::number(18,0) as diorderid,
-        henpinsts::varchar(8) as henpinsts,
-        c_dspointitemflg::varchar(8) as c_dspointitemflg,
-        c_diitemtype::varchar(8) as c_diitemtype,
-        c_diadjustprc::number(18,0) as c_diadjustprc,
-        ditotalprc::number(18,0) as ditotalprc,
-        diitemtax::number(18,0) as diitemtax,
-        c_diitemtotalprc::number(18,0) as c_diitemtotalprc,
-        c_didiscountmeisai::number(18,0) as c_didiscountmeisai,
-        disetmeisaiid::number(18,0) as disetmeisaiid,
-        c_dssetitemkbn::varchar(8) as c_dssetitemkbn,
-        maker::number(18,0) as maker,
-        current_timestamp()::timestamp_ntz(9) as inserted_date,
-        null::varchar(100) as inserted_by ,
-        current_timestamp()::timestamp_ntz(9) as updated_date,
-        null::varchar(100) as updated_by
-    from transformed
-)
-select * from final
+        SUB.MAKER,
+        SUB.SALENO_P,
+        SUB.GYONO_P,
+        SUB.ITEMCODE_P,
+        SUB.ITEMCODE_HANBAI_P,
+        SUB.SURYO_P,
+        SUB.JYU_SURYO_P,
+        SUB.OYAFLG_P,
+        SUB.TANKA_P,
+        SUB.HENSU_P,
+        SUB.KINGAKU_P,
+        SUB.MEISAINUKIKINGAKU_P,
+        SUB.MEISAITAX_P,
+        SUB.JUCHGYONO_P,
+        SUB.DISPSALENO_P,
+        SUB.JUCH_SHUR_P,
+        SUB.TYOSEIKIKINGAKU_P,
+        SUB.ANBUNMEISAINUKIKINGAKU_P,
+        SUB.DEN_NEBIKI_ABN_KIN_P,
+        SUB.DEN_NB_AB_SZ_KIN_P,
+        SUB.DCLSM_HIN_HIN_NIBU_ID_P,
+        SUB.KKNG_KBN_P,
+        SUB.SHIMEBI_P,
+        SUB.TANKA_TUKA_P,
+        SUB.KINGAKU_TUKA_P,
+        SUB.MEISAINUKIKINGAKU_TUKA_P,
+        SUB.MEISAITAX_TUKA_P,
+        SUB.MARKER_P,
+        SUB.URI_HEN_KBN_P,
+        SUB.SAL_JISK_IMP_SNSH_NO_P,
+        SUB.DCLJUCH_ID_P,
+        SUB.MARKER_NP
+    FROM KESAI_M_DATA_MART_SUB_BEFORE SUB
+    
+    UNION ALL
+    
+    SELECT NVL(CN.SALENO, CP_M.SALENO) AS SALENO,
+        0 AS GYONO,
+        'DUMMY' AS MEISAIKBN,
+        'DUMMY' AS ITEMCODE,
+        'DUMMY' AS ITEMNAME,
+        'DUMMY' AS DIID,
+        'DUMMY' AS DISETID,
+        'DUMMY' AS SETITEMCD,
+        'DUMMY' AS SETITEMNM,
+        0 AS SURYO,
+        0 AS TANKA,
+        0 AS KINGAKU,
+        0 AS MEISAINUKIKINGAKU,
+        0 AS WARIRITU,
+        0 AS WARIMAEKOMITANKA,
+        0 AS WARIMAENUKIKINGAKU,
+        0 AS WARIMAEKOMIKINGAKU,
+        0 AS BUN_TANKA,
+        0 AS BUN_KINGAKU,
+        0 AS BUN_MEISAINUKIKINGAKU,
+        0 AS BUN_WARIRITU,
+        0 AS BUN_WARIMAEKOMITANKA,
+        0 AS BUN_WARIMAENUKIKINGAKU,
+        0 AS BUN_WARIMAEKOMIKINGAKU,
+        'DUMMY' AS DISPSALENO,
+        'DUMMY' AS KESAIID,
+        0 AS DIORDERID,
+        'DUMMY' AS HENPINSTS,
+        'DUMMY' AS C_DSPOINTITEMFLG,
+        'DUMMY' AS C_DIITEMTYPE,
+        0 AS C_DIADJUSTPRC,
+        0 AS DITOTALPRC,
+        0 AS DIITEMTAX,
+        0 AS C_DIITEMTOTALPRC,
+        0 AS C_DIDISCOUNTMEISAI,
+        0 AS DISETMEISAIID,
+        'DUMMY' AS C_DSSETITEMKBN,
+        0 AS MAKER,
+        CP_M.SALENO AS SALENO_P,
+        CP_M.GYONO AS GYONO_P,
+        CP_M.ITEMCODE AS ITEMCODE_P,
+        CP_M.ITEMCODE_HANBAI AS ITEMCODE_HANBAI_P,
+        CP_M.SURYO AS SURYO_P,
+        CP_M.JYU_SURYO AS JYU_SURYO_P,
+        CP_M.OYAFLG AS OYAFLG_P,
+        CP_M.TANKA AS TANKA_P,
+        CP_M.HENSU AS HENSU_P,
+        CP_M.KINGAKU AS KINGAKU_P,
+        CP_M.MEISAINUKIKINGAKU AS MEISAINUKIKINGAKU_P,
+        CP_M.MEISAITAX AS MEISAITAX_P,
+        CP_M.JUCHGYONO AS JUCHGYONO_P,
+        CP_M.DISPSALENO AS DISPSALENO_P,
+        CP_M.JUCH_SHUR AS JUCH_SHUR_P,
+        CP_M.TYOSEIKIKINGAKU AS TYOSEIKIKINGAKU_P,
+        CP_M.ANBUNMEISAINUKIKINGAKU AS ANBUNMEISAINUKIKINGAKU_P,
+        CP_M.DEN_NEBIKI_ABN_KIN AS DEN_NEBIKI_ABN_KIN_P,
+        CP_M.DEN_NB_AB_SZ_KIN AS DEN_NB_AB_SZ_KIN_P,
+        CP_M.DCLSM_HIN_HIN_NIBU_ID AS DCLSM_HIN_HIN_NIBU_ID_P,
+        CP_M.KKNG_KBN AS KKNG_KBN_P,
+        CP_M.SHIMEBI AS SHIMEBI_P,
+        CP_M.TANKA_TUKA AS TANKA_TUKA_P,
+        CP_M.KINGAKU_TUKA AS KINGAKU_TUKA_P,
+        CP_M.MEISAINUKIKINGAKU_TUKA AS MEISAINUKIKINGAKU_TUKA_P,
+        CP_M.MEISAITAX_TUKA AS MEISAITAX_TUKA_P,
+        CP_M.MARKER AS MARKER_P,
+        CP_M.URI_HEN_KBN AS URI_HEN_KBN_P,
+        CP_M.SAL_JISK_IMP_SNSH_NO AS SAL_JISK_IMP_SNSH_NO_P,
+        CP_M.DCLJUCH_ID AS DCLJUCH_ID_P,
+        9 AS MARKER_NP
+    FROM KESAI_M_DATA_MART_SUB_P CP_M
+    LEFT JOIN KESAI_H_DATA_MART_SUB_N CN ON CN.DISPSALENO = CP_M.SAL_JISK_IMP_SNSH_NO
+        AND CN.MAKER = 1
+    WHERE CP_M.ANBUNMEISAINUKIKINGAKU <> 0
+        AND CP_M.URI_HEN_KBN = 'U'
+        AND NOT EXISTS (
+            SELECT *
+            FROM KESAI_M_DATA_MART_SUB_BEFORE SUB
+            WHERE CP_M.SALENO = SUB.SALENO_P
+                AND CP_M.GYONO = SUB.GYONO_P
+            )
+    
+    UNION ALL
+    
+    SELECT NVL(CN.SALENO, CP_M.SALENO) AS SALENO,
+        0 AS GYONO,
+        'DUMMY' AS MEISAIKBN,
+        'DUMMY' AS ITEMCODE,
+        'DUMMY' AS ITEMNAME,
+        'DUMMY' AS DIID,
+        'DUMMY' AS DISETID,
+        'DUMMY' AS SETITEMCD,
+        'DUMMY' AS SETITEMNM,
+        0 AS SURYO,
+        0 AS TANKA,
+        0 AS KINGAKU,
+        0 AS MEISAINUKIKINGAKU,
+        0 AS WARIRITU,
+        0 AS WARIMAEKOMITANKA,
+        0 AS WARIMAENUKIKINGAKU,
+        0 AS WARIMAEKOMIKINGAKU,
+        0 AS BUN_TANKA,
+        0 AS BUN_KINGAKU,
+        0 AS BUN_MEISAINUKIKINGAKU,
+        0 AS BUN_WARIRITU,
+        0 AS BUN_WARIMAEKOMITANKA,
+        0 AS BUN_WARIMAENUKIKINGAKU,
+        0 AS BUN_WARIMAEKOMIKINGAKU,
+        'DUMMY' AS DISPSALENO,
+        'DUMMY' AS KESAIID,
+        0 AS DIORDERID,
+        'DUMMY' AS HENPINSTS,
+        'DUMMY' AS C_DSPOINTITEMFLG,
+        'DUMMY' AS C_DIITEMTYPE,
+        0 AS C_DIADJUSTPRC,
+        0 AS DITOTALPRC,
+        0 AS DIITEMTAX,
+        0 AS C_DIITEMTOTALPRC,
+        0 AS C_DIDISCOUNTMEISAI,
+        0 AS DISETMEISAIID,
+        'DUMMY' AS C_DSSETITEMKBN,
+        0 AS MAKER,
+        CP_M.SALENO AS SALENO_P,
+        CP_M.GYONO AS GYONO_P,
+        CP_M.ITEMCODE AS ITEMCODE_P,
+        CP_M.ITEMCODE_HANBAI AS ITEMCODE_HANBAI_P,
+        CP_M.SURYO AS SURYO_P,
+        CP_M.JYU_SURYO AS JYU_SURYO_P,
+        CP_M.OYAFLG AS OYAFLG_P,
+        CP_M.TANKA AS TANKA_P,
+        CP_M.HENSU AS HENSU_P,
+        CP_M.KINGAKU AS KINGAKU_P,
+        CP_M.MEISAINUKIKINGAKU AS MEISAINUKIKINGAKU_P,
+        CP_M.MEISAITAX AS MEISAITAX_P,
+        CP_M.JUCHGYONO AS JUCHGYONO_P,
+        CP_M.DISPSALENO AS DISPSALENO_P,
+        CP_M.JUCH_SHUR AS JUCH_SHUR_P,
+        CP_M.TYOSEIKIKINGAKU AS TYOSEIKIKINGAKU_P,
+        CP_M.ANBUNMEISAINUKIKINGAKU AS ANBUNMEISAINUKIKINGAKU_P,
+        CP_M.DEN_NEBIKI_ABN_KIN AS DEN_NEBIKI_ABN_KIN_P,
+        CP_M.DEN_NB_AB_SZ_KIN AS DEN_NB_AB_SZ_KIN_P,
+        CP_M.DCLSM_HIN_HIN_NIBU_ID AS DCLSM_HIN_HIN_NIBU_ID_P,
+        CP_M.KKNG_KBN AS KKNG_KBN_P,
+        CP_M.SHIMEBI AS SHIMEBI_P,
+        CP_M.TANKA_TUKA AS TANKA_TUKA_P,
+        CP_M.KINGAKU_TUKA AS KINGAKU_TUKA_P,
+        CP_M.MEISAINUKIKINGAKU_TUKA AS MEISAINUKIKINGAKU_TUKA_P,
+        CP_M.MEISAITAX_TUKA AS MEISAITAX_TUKA_P,
+        CP_M.MARKER AS MARKER_P,
+        CP_M.URI_HEN_KBN AS URI_HEN_KBN_P,
+        CP_M.SAL_JISK_IMP_SNSH_NO AS SAL_JISK_IMP_SNSH_NO_P,
+        CP_M.DCLJUCH_ID AS DCLJUCH_ID_P,
+        10 AS MARKER_NP
+    FROM KESAI_M_DATA_MART_SUB_P CP_M
+    LEFT JOIN (
+        SELECT MIN(SALENO) SALENO,
+            DISPSALENO
+        FROM KESAI_H_DATA_MART_SUB_N
+        WHERE MAKER = 2
+        GROUP BY DISPSALENO
+        ) CN ON CN.DISPSALENO = CP_M.SAL_JISK_IMP_SNSH_NO
+    WHERE CP_M.ANBUNMEISAINUKIKINGAKU <> 0
+        AND CP_M.URI_HEN_KBN = 'H'
+        AND NOT EXISTS (
+            SELECT *
+            FROM KESAI_M_DATA_MART_SUB_BEFORE SUB
+            WHERE CP_M.SALENO = SUB.SALENO_P
+                AND CP_M.GYONO = SUB.GYONO_P
+            )
+    )
+SELECT *
+FROM final

@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with C_TBECRANKSUMAMOUNT as (
 select * from {{ ref('jpndclitg_integration__c_tbecranksumamount') }}
 ),
@@ -73,3 +74,6 @@ point::number(38,18) as point
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

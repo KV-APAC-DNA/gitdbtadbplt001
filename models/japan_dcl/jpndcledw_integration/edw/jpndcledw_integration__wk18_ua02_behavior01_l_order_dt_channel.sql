@@ -2,7 +2,7 @@ with dm_kesai_mart_dly_general as (
 select * from {{ ref('jpndcledw_integration__dm_kesai_mart_dly_general') }}
 ),
 KESAI_H_DATA_MART_MV as (
-select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv') }}
+select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_kizuna') }}
 ),
 WEB as (
   select 
