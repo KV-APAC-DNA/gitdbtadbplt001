@@ -10,7 +10,8 @@ final as
         year::number(18,0) as year,
         week::varchar(50) as week,
         monthkey::number(18,0) as monthkey,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name:: varchar(225)
     FROM (select distinct * from sdl_lks_businesscalender) src
 )
 select * from final
