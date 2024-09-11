@@ -1,11 +1,4 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy="delete+insert",
-        unique_key=  ['sku','jj_month_id','branch_code']
-      
-    )
-}}
+
 with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_pos_rks_rose_pharma') }}

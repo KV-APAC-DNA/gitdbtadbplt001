@@ -1,11 +1,4 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy="delete+insert",
-        unique_key=  ['mnth_id','item_cd','sap_item_cd']
-      
-    )
-}}
+
 with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_product_mapping') }}

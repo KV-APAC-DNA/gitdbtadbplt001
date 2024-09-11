@@ -1,11 +1,3 @@
-{{
-    config(
-        materialized="incremental",
-        incremental_strategy="delete+insert",
-        unique_key=  ['code','cust_cd','brnch_cd']
-      
-    )
-}}
 with source as
 (
     select * from {{ source('phlsdl_raw', 'sdl_rosepharmacy_customer_mapping') }}
