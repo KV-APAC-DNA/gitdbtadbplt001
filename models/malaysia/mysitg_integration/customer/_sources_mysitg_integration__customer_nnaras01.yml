@@ -78,3 +78,6 @@ sources:
     - name: TRATBL_sdl_so_inv_108565__lookup_test
     - name: TRATBL_sdl_so_inv_130517__lookup_test
     - name: TRATBL_sdl_so_sales_133981__lookup_test
+    - name: TRATBL_sdl_my_ciw_map__null_test
+    - name: TRATBL_sdl_my_ciw_map__duplicate_test
+    - name: TRATBL_sdl_my_monthly_sellout_stock_fact__lookup_test

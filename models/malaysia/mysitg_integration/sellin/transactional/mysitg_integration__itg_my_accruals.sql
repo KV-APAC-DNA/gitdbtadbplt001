@@ -15,8 +15,9 @@ tbl1 as (
         ) as jj_mnth_id,
         file_type,
         cast(jan_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 
 ),
 tbl2 as (
@@ -29,8 +30,9 @@ tbl2 as (
         ) as jj_mnth_id,
         file_type,
         cast(feb_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl3 as (
     select
@@ -42,8 +44,9 @@ tbl3 as (
         ) as jj_mnth_id,
         file_type,
         cast(mar_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl4 as (
     select
@@ -55,8 +58,9 @@ tbl4 as (
         ) as jj_mnth_id,
         file_type,
         cast(apr_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl5 as (
     select
@@ -68,8 +72,9 @@ tbl5 as (
         ) as jj_mnth_id,
         file_type,
         cast(may_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl6 as (
     select
@@ -81,8 +86,9 @@ tbl6 as (
         ) as jj_mnth_id,
         file_type,
         cast(jun_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl7 as (
     select
@@ -94,8 +100,9 @@ tbl7 as (
         ) as jj_mnth_id,
         file_type,
         cast(jul_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl8 as (
     select
@@ -107,8 +114,9 @@ tbl8 as (
         ) as jj_mnth_id,
         file_type,
         cast(aug_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl9 as (
     select
@@ -120,8 +128,9 @@ tbl9 as (
         ) as jj_mnth_id,
         file_type,
         cast(sep_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl10 as (
     select
@@ -133,8 +142,9 @@ tbl10 as (
         ) as jj_mnth_id,
         file_type,
         cast(oct_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl11 as (
     select
@@ -146,8 +156,9 @@ tbl11 as (
         ) as jj_mnth_id,
         file_type,
         cast(nov_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 tbl12 as (
     select
@@ -159,8 +170,9 @@ tbl12 as (
         ) as jj_mnth_id,
         file_type,
         cast(dec_val as decimal(20, 6)) as accrual_val,
-        cdl_dttm
-    from source
+        cdl_dttm,
+        file_name
+        from source
 ),
 
 transformed as (
@@ -199,7 +211,8 @@ final as (
         accrual_val::number(20,6) as accrual_val,
         cdl_dttm::varchar(20) as cdl_dttm,
         current_timestamp()::timestamp_ntz(9) as crtd_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(255) as file_name
     from transformed
 )
 

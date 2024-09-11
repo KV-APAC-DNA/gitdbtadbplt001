@@ -3,19 +3,19 @@
         materialized="incremental",
         incremental_strategy= "delete+insert",
         unique_key=  ['year','mnth_id','matl_num'],
-        pre_hook =" delete from {{this}} itg where itg.file_name in in (select sdl.file_name from
-        {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }} sdl where file_name not in
+        pre_hook =" delete from {{this}} itg where itg.filename in (select sdl.filename from
+        {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }} sdl where filename not in
             ( 
             select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_as_watsons_inventory__duplicate_test') }}
             union all
             select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_as_watsons_inventory__null_test') }}
-            ) "
-    )
+            ) )"
+    ) 
 }}
 
 --import CTE
 with source as (
-    select *, dense_rank() over(partition by year,mnth_id,matl_num order by file_name desc) as rnk from {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }}  where filename not in
+    select *, dense_rank() over(partition by year,mnth_id,matl_num order by filename desc) as rnk from {{ source('myssdl_raw','sdl_my_as_watsons_inventory') }}  where filename not in
     ( 
       select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_as_watsons_inventory__duplicate_test') }}
       union all

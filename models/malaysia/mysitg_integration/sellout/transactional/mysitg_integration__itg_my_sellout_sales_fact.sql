@@ -6,7 +6,7 @@
     )
 }}
 with source as (
-  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }} where file_name not in
+  select * from {{ source('myssdl_raw', 'sdl_my_monthly_sellout_sales_fact') }} where filename not in
             ( 
             select distinct file_name from {{ source('myswks_integration', 'TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test') }}
             ) 
