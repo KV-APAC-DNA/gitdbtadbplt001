@@ -29,7 +29,7 @@ sources:
               store_failures: true
               schema: phlwks_integration
         - test_date_format_odd_eve_leap:
-            model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+            model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_ds') }}  WHERE ENCODED_REPORT = '1'"
             date_column: "osa_check_date"
             filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
             failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -67,7 +67,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_waltermart') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -105,7 +105,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_svi_smc') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -181,7 +181,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_robinsons_sm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -219,7 +219,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_sm') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -257,7 +257,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_super_8') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -295,7 +295,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_puregold') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -333,7 +333,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_landmark_ds') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
@@ -371,7 +371,7 @@ sources:
             store_failures: true
             schema: phlwks_integration
       - test_date_format_odd_eve_leap:
-          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_shm') }}  WHERE ENCODED_REPORT = '1'"
+          model_nm: "{{ source('phlsdl_raw', 'sdl_ph_non_ise_rustans') }}  WHERE ENCODED_REPORT = '1'"
           date_column: "osa_check_date"
           filter: "(odd_mon.osa_check_date) = (even_mon.osa_check_date) and (even_mon.osa_check_date) = (feb.osa_check_date) and (odd_mon.result) = (even_mon.result) and (even_mon.result) = (feb.result)"
           failure_reason: "'OSA CHECK DATE HAVING INCORRECT DATE-FORMAT. EXPECTED: MM/DD/YY'"
