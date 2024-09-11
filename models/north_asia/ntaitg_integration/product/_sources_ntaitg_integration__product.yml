@@ -135,9 +135,9 @@ sources:
             store_failures: true
             schema: ntawks_integration
     - name: sdl_mds_kr_product_hierarchy
-      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
     - name: sdl_mds_hk_product_hierarchy
-      tags: ["kr_master_mds_sdl_itg_load","ingestion"]
+      tags: ["kr_master_mds_sdl_itg_load","transformation"]
     - name: sdl_kr_gt_daiso_price
       tags: ["kr_gt_sellout","ingestion"]
     - name: sdl_mds_kr_retailer_price_master

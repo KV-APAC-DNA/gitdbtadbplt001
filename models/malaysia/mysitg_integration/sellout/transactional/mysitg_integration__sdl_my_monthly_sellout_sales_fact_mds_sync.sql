@@ -7,6 +7,7 @@
             ( 
             select distinct filename from {{ source('myswks_integration', 'TRATBL_sdl_my_monthly_sellout_sales_fact__lookup_test') }}
             ) );"
+
     )}}
 
 with source as (

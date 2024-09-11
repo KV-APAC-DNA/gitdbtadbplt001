@@ -2,9 +2,9 @@
 {{
     config(
         post_hook= "update {{this}} wks_edw_pos_fact_korea
-                    set ean_num = ltrim (b.ean_cd ,0)
+                    set ean_num = rtrim(ltrim (b.ean_cd ,0))
                     from {{ ref('ntaitg_integration__itg_sales_cust_prod_master') }} b 
-                    where  ltrim (wks_edw_pos_fact_korea.ean_num,0) = ltrim(b.cust_prod_cd,0) 
+                    where  rtrim(ltrim (wks_edw_pos_fact_korea.ean_num,0)) = rtrim(ltrim(b.cust_prod_cd,0))
                     and upper(trim(wks_edw_pos_fact_korea.src_sys_cd))= upper(trim(b.src_sys_cd)); "         
         )
 }}
@@ -181,7 +181,7 @@ FROM (
                  ---- p.sap_matl_num,  /* Need to remove the matl_num , old logic */
                 p.prod_hier_l4,p.prod_hier_l3 ,ctry_cd as cntry
                 from itg_sales_cust_prod_master m left outer join edw_product_attr_dim p
-                on ltrim(m.ean_cd,0 )= ltrim(p.ean,0 ) where m.ctry_cd = 'KR' and  p.cntry= 'KR'
+                on rtrim(ltrim(m.ean_cd,0 ))= rtrim(ltrim(p.ean,0 )) where m.ctry_cd = 'KR' and  p.cntry= 'KR'
                 ) d
                
 		ON rtrim(CAST (a.ean_num AS VARCHAR (40))) =rtrim( CAST (ltrim(d.ean,0) AS VARCHAR (40))) 
