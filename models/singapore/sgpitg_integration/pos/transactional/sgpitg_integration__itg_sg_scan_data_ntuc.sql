@@ -8,7 +8,13 @@
 
 --import CTE
 with source as (
-    select * from {{ source('sgpsdl_raw','sdl_sg_scan_data_ntuc') }}
+    select *,dense_rank() over(partition by trx_date order by file_name desc) as rnk 
+    from {{ source('sgpsdl_raw','sdl_sg_scan_data_ntuc') }}
+    where file_name not in 
+    (
+        select distinct file_name from 
+        {{ source('sgpwks_integration', 'TRATBL_sdl_sg_scan_data_ntuc__null_test') }}
+    )
 ),
 
 edw_calendar_dim as (
