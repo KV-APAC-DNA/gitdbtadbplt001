@@ -41,11 +41,11 @@ final as
         branch_name as branch_name,
         osa_flag as osa_flag,
         retailer_name as retailer_name,
-        sub_channel as sub_channel,
-        store_location as store_location,
         filename as filename,
         run_id as run_id,
-        crtd_dttm as crtd_dttm
+        crtd_dttm as crtd_dttm,
+        sub_channel as sub_channel,
+        store_location as store_location
     from source
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
