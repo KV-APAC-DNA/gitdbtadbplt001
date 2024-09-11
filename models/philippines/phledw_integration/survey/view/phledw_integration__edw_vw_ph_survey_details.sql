@@ -183,7 +183,7 @@ AS (
             --need to change this in j&j as well to match answernotes as we have to add all cols used in left join in row_no function
             row_number() OVER (
                 PARTITION BY iseid,slsperid,custcode,branchcode,createddate,
-                answernotes,questionno ORDER BY filename_dt DESC
+                answerseq,questionno ORDER BY filename_dt DESC
                 ) AS rnk
             -- row_number() OVER (
             --     PARTITION BY itg_ph_tbl_surveynotes.iseid,

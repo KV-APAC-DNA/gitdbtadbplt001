@@ -1,4 +1,3 @@
-{% if build_month_end_job_models()  %}
 {{
     config(
         post_hook = "   {% if build_month_end_job_models()  %}
@@ -13,6 +12,8 @@
                         {% endif %}"
     )
 }}
+
+{% if build_month_end_job_models()  %}
 with wk_rankdt_tmp 
 as (
     select *
