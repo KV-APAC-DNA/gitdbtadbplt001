@@ -716,12 +716,19 @@ union_5 as 	(
 				,edw_vw_ph_survey_details.enddate
 				,
                 CASE
-                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '(n[. ]?a|n/a|na|n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|\\-n\\.a|\\-n/a|\\-na|\\-n a)') THEN 'na'
-                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.*\\b(n/a)\\b.*') THEN 'na'
-                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), 'n\\.a|n/a|na|n a') THEN 'na'
-                    WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '% n/a |not applicable%') THEN 'na'
-                    ELSE edw_vw_ph_survey_details.answernotes
-                END AS answernotes
+                WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '(n[. ]?a|n/a|na|n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|\\-n\\.a|\\-n/a|\\-na|\\-n a)') THEN 'na'
+                
+                
+                WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.*\\b(n[./ ]?a)\\b.*') THEN 'na'
+                
+                
+                WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '.*\\b(n[./ ]?a).*') THEN 'na'
+                
+                
+                WHEN REGEXP_LIKE(lower(edw_vw_ph_survey_details.answernotes), '%not applicable%') THEN 'na'
+                
+                ELSE edw_vw_ph_survey_details.answernotes
+            END AS answernotes
 --    CASE
 --     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '( n\\.a| n/a| na| n a|\\.n\\.a|\\.n/a|\\.na|\\.n a|,n\\.a|,n/a|,na|,n a|-n\\.a|-n/a|-na|-n a|\\)n\\.a|\\)n/a|\\)na|\\)n a)' THEN 'na'
 --     WHEN lower(edw_vw_ph_survey_details.answernotes) REGEXP '(n\\.a |n/a |na |n a |n\\.a\\.|n/a\\.|na\\.|n a\\.|n\\.a,|n/a,|na,|n a,|n\\.a-|n/a-|na-|n a-|n\\.a\\(|n/a\\(|na\\(|n a\\()' THEN 'na'
