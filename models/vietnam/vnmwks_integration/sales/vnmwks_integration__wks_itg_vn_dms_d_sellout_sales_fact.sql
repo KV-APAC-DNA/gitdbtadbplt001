@@ -30,8 +30,7 @@ with sdl_vn_dms_d_sellout_sales_fact as(
     promotion_id, 
     status, 
     run_id,
-    curr_date,
-    file_name
+    curr_date
   from sdl_vn_dms_d_sellout_sales_fact 
   where 
     (
@@ -79,8 +78,7 @@ cte2 as(
       promotion_id, 
       status, 
       run_id,
-      curr_date,
-      file_name
+      curr_date
     from sdl_vn_dms_d_sellout_sales_fact minus 
     select 
       dstrbtr_id, 
@@ -107,8 +105,7 @@ cte2 as(
       promotion_id, 
       status, 
       run_id,
-      curr_date,
-      file_name
+      curr_date
     from cte
   ) 
   union all 
@@ -137,8 +134,7 @@ cte2 as(
     promotion_id, 
     status, 
     run_id,
-    curr_date,
-    file_name
+    curr_date
   from cte 
   where status = 'V'
 ) 
