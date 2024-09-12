@@ -1578,7 +1578,7 @@ FROM (
                                 pka.gcph_variant AS prod_hier_l6,
                                 NULL AS prod_hier_l7,
                                 NULL AS prod_hier_l8,
-                                msl.product_name AS prod_hier_l9,
+                                rtrim(msl.product_name) AS prod_hier_l9,
                                 wt.weight::DOUBLE precision AS kpi_chnl_wt,
                                 NULL AS ms_flag,
                                 NULL AS hit_ms_flag,
@@ -1723,7 +1723,7 @@ FROM (
                                 pka.gcph_brand,
                                 pka.gcph_subbrand,
                                 pka.gcph_variant,
-                                msl.product_name,
+                                rtrim(msl.product_name),
                                 wt.weight::DOUBLE precision,
                                 CASE
                                     WHEN UPPER(msl.priority_store::TEXT) = 'YES'::CHARACTER VARYING::TEXT THEN 'Y'::CHARACTER VARYING
