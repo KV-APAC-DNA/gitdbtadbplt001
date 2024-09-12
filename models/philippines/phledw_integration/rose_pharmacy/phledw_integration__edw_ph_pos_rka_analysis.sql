@@ -85,16 +85,16 @@ select distinct
    ltrim(veomd.sap_matl_num, '0') as sku,
 	veomd.sap_mat_desc as sku_desc,
     POS.qty::integer as qty,
-    coalesce(prod.jnj_pc_per_cust_unit,1) as jnj_pc_per_cust_unit,
-    (price.Lst_Price_Unit)::decimal(38,3) as ListPriceUnit,
-    (pos.qty/prod.jnj_pc_per_cust_unit) ::decimal(38,3) as pos_qty,
-    (pos_qty*ListPriceUnit) ::decimal(38,3) as pos_gts,
+    coalesce(prod.jnj_pc_per_cust_unit,1) as conv_factor,
+    (price.Lst_Price_Unit)::decimal(38,3) as jj_item_prc_per_pc,
+    (pos.qty/prod.jnj_pc_per_cust_unit) ::decimal(38,3) as jj_qty_pc,
+    (pos.qty*jj_item_prc_per_pc) ::decimal(38,3) as pos_gts,
     null as pos_item_prc,
     null as pos_tax,
     null as pos_nts,
-    null as jj_vat_amt,
-    null as jj_gts
- 
+    ((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(12.0 / 112.0) as jj_vat_amt, as jj_vat_amt,
+(cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)) as jj_gts,
+((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
 ,veomd.gph_prod_put_up_cd as global_prod_put_up_cd
