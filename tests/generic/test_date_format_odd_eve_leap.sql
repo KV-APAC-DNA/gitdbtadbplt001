@@ -7,6 +7,8 @@
             -- Get the actual columns in the model and convert to lowercase
             {% set actual_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|list  %}
             {% set reversed_columns = adapter.get_columns_in_relation(model) | map(attribute='name') | map('lower')|reverse  %}
+
+
             -- Loop through file_name_columns to find the first matching column in actual_columns
             {%- for col in reversed_columns %}
                 {% if col in file_name_columns%}
@@ -28,7 +30,6 @@
 {% if date_column!=None %}
 FROM {{model}} AS A
 WHERE
-
   ({{date_column}}) IN (
     SELECT DISTINCT 
       ODD_MON.{{date_column}}
