@@ -88,8 +88,13 @@ select distinct
     coalesce(prod.jnj_pc_per_cust_unit,1) as jnj_pc_per_cust_unit,
     (price.Lst_Price_Unit)::decimal(38,3) as ListPriceUnit,
     (pos.qty/prod.jnj_pc_per_cust_unit) ::decimal(38,3) as pos_qty,
-    (pos_qty*ListPriceUnit) ::decimal(38,3) as pos_gts
-     ,null as jj_vat_amt
+    (pos_qty*ListPriceUnit) ::decimal(38,3) as pos_gts,
+    null as pos_item_prc,
+    null as pos_tax,
+    null as pos_nts,
+    null as jj_vat_amt,
+    null as jj_gts,
+ 
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
 ,veomd.gph_prod_put_up_cd as global_prod_put_up_cd
