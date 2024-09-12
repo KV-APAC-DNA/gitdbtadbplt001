@@ -29,15 +29,5 @@ sources:
       - name: sdl_mds_in_geo_tracker_coordinates
         tags: ["in_mds_refresh","transformation"]
 
-  - name: indwks_integration
-    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
-    schema: indwks_integration
-
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-    tables:
-      - name: TRATBL_sdl_in_rretailergeoextension__null_test
-        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
-      - name: TRATBL_sdl_in_rretailergeoextension__duplicate_test
+  
+      
