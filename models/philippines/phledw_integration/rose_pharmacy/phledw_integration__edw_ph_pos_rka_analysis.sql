@@ -96,14 +96,13 @@ select distinct
 (cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)) as jj_gts,
 ((cast(pos.qty as numeric(20,4))*cast(prod.jnj_pc_per_cust_unit as numeric(20,4)))*cast(price.lst_price_unit as numeric(20,4)))*(100.0 / 112.0) as jj_nts
 
-
+,veomd.pka_productkey
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
 ,veomd.gph_prod_put_up_cd as global_prod_put_up_cd
 ,veomd.sap_prod_sgmt_desc as sap_prod_sgmt_desc
 ,veomd.sap_prchse_uom_cd as sap_prchse_uom_cd
 ,veomd.gph_prod_put_up_desc as global_put_up_desc
-,null as jj_nts
 ,veomd.sap_base_prod_cd as sap_base_prod_cd
 ,gph_prod_sub_brnd as global_prod_sub_brand
 ,null as account_grp
