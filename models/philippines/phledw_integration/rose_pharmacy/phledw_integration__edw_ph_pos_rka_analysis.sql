@@ -157,7 +157,6 @@ select distinct
 ,null as local_mat_npi_strt_period
 ,null as sap_sls_office_cd
 ,null as sap_prod_frnchse_desc
-,null as pka_productkey
 ,null as sap_sls_office_desc
 ,null as sap_prod_mjr_cd
 ,null as region_cd
