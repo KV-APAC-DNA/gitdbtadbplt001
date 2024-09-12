@@ -2,14 +2,21 @@
     config(
         materialized="incremental",
         incremental_strategy= "append",
-        pre_hook="delete from {{this}} where ((CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode) IN (select CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode
-                                       from {{ source('vnmsdl_raw','sdl_spiral_mti_offtake') }} ))"
+        pre_hook="{% if is_incremental() %}
+        delete from {{this}} where ((CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode) IN (select CustomerName,ShopCode,COALESCE(SupCode,''),Year,Month,BarCode
+                                       from {{ source('vnmsdl_raw','sdl_spiral_mti_offtake') }} 
+                                       where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_spiral_mti_offtake__null_test')}}));
+        {% endif %}"
     )
 }}
 
 with source as 
 (
     select * from {{ source('vnmsdl_raw','sdl_spiral_mti_offtake') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_spiral_mti_offtake__null_test')}}
+    )
 ),
 
 final as

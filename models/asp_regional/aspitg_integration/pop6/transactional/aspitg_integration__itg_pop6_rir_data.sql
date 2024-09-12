@@ -3,7 +3,8 @@
     (
         materialized ='incremental',
         incremental_strategy = 'append',
-        pre_hook = "{% if is_incremental() %}
+        pre_hook = 
+                    "{% if is_incremental() %}
                     DELETE
                     FROM {{this}}
                     WHERE visit_id IN (
@@ -18,6 +19,7 @@
 with source as
 (
     select * from {{ source('thasdl_raw', 'sdl_pop6_th_rir_data') }}
+    
 ),
 
 final as

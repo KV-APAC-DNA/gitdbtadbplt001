@@ -20,7 +20,7 @@ AS (
     JJ_NumOfAttendee,
     current_timestamp() AS inserted_date
   FROM itg_remote_meeting
-  WHERE is_deleted = 'false'
+  WHERE lower(is_deleted) = 'false'
   ),
 final
 AS (

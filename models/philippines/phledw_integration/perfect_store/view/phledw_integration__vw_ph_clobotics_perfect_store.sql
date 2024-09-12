@@ -299,10 +299,10 @@ final as (
                     (
                       upper(
                         trim(
-                          (task.store_code):: text
+                          rtrim(task.store_code):: text,'	'
                         )
                       ) = upper(
-                        (store.code):: text
+                        trim(rtrim(store.code),'	'):: text
                       )
                     )
                   )
@@ -646,17 +646,32 @@ final as (
                       (
                         (itg_mds_ph_gt_customer.active):: text = ('Y' :: character varying):: text
                       )
-                  ) store ON (
-                    (
-                      upper(
-                        trim(
-                          (store_trans.store_code):: text
-                        )
-                      ) = upper(
-                        (store.code):: text
-                      )
-                    )
-                  )
+                  ) store ON 
+                --   (
+                --                 (
+                --                     upper(
+                --                        replace(trim(
+                --                             (store_trans.store_code))::text,'	',''
+                --                         )
+                --                     ) = upper(
+                --                         replace(rtrim(store.code),'	','')::text
+                --                     )
+                --                 )
+                --             )
+
+                            (
+                                (
+                                    upper(
+                                       regexp_replace(trim(
+                                            (store_trans.store_code))::text,'\t',''
+                                        )
+                                    ) = upper(
+                                        regexp_replace(rtrim(store.code),'\t','')::text
+                                    )
+                                )
+                            )
+
+
                 ) 
                 LEFT JOIN (
                   SELECT 
@@ -992,11 +1007,11 @@ final as (
               ) store ON (
                 (
                   upper(
-                    trim(
+                    trim(rtrim(
                       (survey.store_code):: text
-                    )
+                    ),'	')
                   ) = upper(
-                    (store.code):: text
+                    trim(rtrim(store.code):: text,'	')
                   )
                 )
               )
