@@ -93,7 +93,7 @@ select distinct
     null as pos_tax,
     null as pos_nts,
     null as jj_vat_amt,
-    null as jj_gts,
+    null as jj_gts
  
 ,veomd.sap_prod_sgmt_cd as sap_prod_sgmt_cd
 ,veomd.sap_base_uom_cd as sap_base_uom_cd
