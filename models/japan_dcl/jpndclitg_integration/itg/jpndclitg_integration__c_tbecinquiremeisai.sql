@@ -56,8 +56,8 @@ final as(
         c_dikesailineno::number(38,0) as c_dikesailineno,
         c_dinondispflg::varchar(1) as c_dinondispflg,
         c_diusepoint::number(18,0) as c_diusepoint,
-        current_timestamp()::timestamp_ntz(9) as dsprep,
-        current_timestamp()::timestamp_ntz(9) as dsren,
+        dsprep::timestamp_ntz(9) as dsprep,
+        dsren::timestamp_ntz(9) as dsren,
         dselim::timestamp_ntz(9) as dselim,
         diprepusr::number(38,0) as diprepusr,
         direnusr::number(38,0) as direnusr,
@@ -68,11 +68,11 @@ final as(
         c_diexchangenum::number(38,0) as c_diexchangenum,
         c_dstaxkbn::varchar(3) as c_dstaxkbn,
         ditaxrate::number(38,0) as ditaxrate,
-        NULL::varchar(10) as source_file_date,
-        current_timestamp()::timestamp_ntz(9) as inserted_date,
-        NULL::varchar(10) as inserted_by,
-        current_timestamp()::timestamp_ntz(9) as updated_date,
-        NULL::varchar(100) as updated_by
+        source_file_date::varchar(10) as source_file_date,
+		current_timestamp()::timestamp_ntz(9) as inserted_date,
+		inserted_by::varchar(100) as inserted_by,
+		current_timestamp()::timestamp_ntz(9) as updated_date,
+		updated_by::varchar(100) as updated_by
     from source
 )
 select * from final

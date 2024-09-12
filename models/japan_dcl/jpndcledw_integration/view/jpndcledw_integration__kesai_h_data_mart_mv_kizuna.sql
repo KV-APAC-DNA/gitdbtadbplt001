@@ -1,5 +1,5 @@
 with kesai_h_data_mart_mv_tbl as(
-    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_tbl') }}
+    select * from {{ ref('jpndcledw_integration__kesai_h_data_mart_mv_tbl_kizuna') }}
 ),
 final as(
     SELECT kesai_h_data_mart_mv_tbl.saleno_key
@@ -80,12 +80,6 @@ final as(
                 END
             )::CHARACTER VARYING(1) AS port_uniq_flg
     FROM kesai_h_data_mart_mv_tbl kesai_h_data_mart_mv_tbl
-    WHERE (
-            "substring" (
-                (kesai_h_data_mart_mv_tbl.saleno)::TEXT
-                ,1
-                ,1
-                ) <> ('O'::CHARACTER VARYING)::TEXT
-            )
+    WHERE ("substring" ((kesai_h_data_mart_mv_tbl.saleno)::TEXT,1,1) <> ('O'::CHARACTER VARYING)::TEXT)
 )
 select * from final

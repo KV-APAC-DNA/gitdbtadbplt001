@@ -15,7 +15,7 @@ final as
             fisc_yr as fisc_yr_dt,
             fisc_yr_per as  fisc_yr_per_dt,
             fisc_day    as fisc_day_dt,
-            Concat((substring(fisc_yr_per,1,4) - 1),substring(fisc_yr_per,5,7)) AS fisc_previousyr_per_dt
+            Concat((substring(fisc_yr_per,1,4)::float - 1),substring(fisc_yr_per,5,7)) AS fisc_previousyr_per_dt
             from wks_rpt_customergp
         ) dt
 )

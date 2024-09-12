@@ -14,8 +14,8 @@
 {% set ty_exec_start_dt_1 = year_query.columns[0].values()[0] %}
 {% endif %}
 {{ log("------------------------------End Query-------------------------------------------------") }}
-{% set t_start_query = run_query("SELECT SUBSTRING(MIN(MAIN.YMD_DT),1,10) as ty_tounen_start_dt FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_CLD	MAIN WHERE	EXISTS
-(SELECT * FROM	DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_CLD SUB 
+{% set t_start_query = run_query("SELECT SUBSTRING(MIN(MAIN.YMD_DT),1,10) as ty_tounen_start_dt FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.MT_CLD	MAIN WHERE	EXISTS
+(SELECT * FROM	{{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.MT_CLD SUB 
 WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp()))") %}
 {% set ty_tounen_start_dt_1 = t_start_query.columns[0].values()[0] %}
 
@@ -76,8 +76,8 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
             NVL2(nullif(MAX(ITM.PC), ''), MAX(ITM.PC), NULL),
             NVL(SUM(SID.JCP_QTY * - 1), 0),
             NVL(SUM(SID.AMOCCC * - 1), 0)
-        FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY SID
-        INNER JOIN DEV_DNA_CORE.JPNEDW_INTEGRATION.EDI_ITEM_M ITM ON SID.MATERIAL = ITM.ITEM_CD
+        FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.DW_SI_SELL_IN_DLY SID
+        INNER JOIN {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.EDI_ITEM_M ITM ON SID.MATERIAL = ITM.ITEM_CD
         WHERE to_date(SID.CALDAY) >= LEAST('{{ty_exec_start_dt_1}}', '{{ty_tounen_start_dt_1}}', to_date( (substring('{{ty_exec_start_dt_1}}', 1, 4) || '-01-01')))
             AND SID.MATERIAL != 'REBATE'
             AND SID.ACCOUNT IN  ('402000', '402098')
@@ -120,8 +120,8 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
             NVL2(nullif(MAX(ITM.PC), ''), MAX(ITM.PC), NULL),
             NVL(SUM(SPF.QTY), 0),
             NVL(SUM(SPF.QTY * ITM.UNT_PRC), 0)
-        FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.DW_SO_SELL_OUT_DLY SPF
-        INNER JOIN DEV_DNA_CORE.JPNEDW_INTEGRATION.EDI_ITEM_M ITM ON SPF.ITEM_CD = ITM.JAN_CD_SO
+        FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.DW_SO_SELL_OUT_DLY SPF
+        INNER JOIN {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.EDI_ITEM_M ITM ON SPF.ITEM_CD = ITM.JAN_CD_SO
         GROUP BY SPF.SHP_DATE,
             SPF.JCP_SHP_TO_CD,
             SPF.ITEM_CD;
@@ -175,7 +175,7 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
                 PC,
                 QTY,
                 NET_PRC
-            FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.DM_IV_LOGICAL_DLY
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.DM_IV_LOGICAL_DLY
             WHERE to_date(CALDAY) = to_date(DATEADD(day, - 1, '{{ty_exec_start_dt_1}}'))
                 AND DATA_TYPE = 'INVT';
      {{ log("-----------------------------------------end of third insert--------------------------------------") }}
@@ -233,14 +233,14 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
                 MIN(MAIN.YEAR) YEARR,
                 MIN(MAIN.YMD_DT) BGN_YMD_DT,
                 MAX(MAIN.YMD_DT) END_YMD_DT
-            FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_CLD MAIN
-            INNER JOIN DEV_DNA_CORE.JPNEDW_INTEGRATION.MT_CLD SUB ON MAIN.YEAR_445 = SUB.YEAR_445
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.MT_CLD MAIN
+            INNER JOIN {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.MT_CLD SUB ON MAIN.YEAR_445 = SUB.YEAR_445
                 AND TO_CHAR(SUB.YMD_DT, 'YYYYMMDD') >= '{{ty_exec_start_dt_1}}'
             GROUP BY MAIN.YEAR_445
             ) CLD
         LEFT OUTER JOIN (
             SELECT (TO_NUMBER(TO_CHAR(INVT_DT, 'YYYY'), '9999') + 1)::varchar YEARR
-            FROM DEV_DNA_CORE.JPNEDW_INTEGRATION.DW_IV_YEAR_END
+            FROM {{ env_var('DBT_ENV_CORE_DB') }}.JPNEDW_INTEGRATION.DW_IV_YEAR_END
             GROUP BY  (TO_NUMBER(TO_CHAR(INVT_DT, 'YYYY'), '9999') + 1)::varchar
             ) YE ON CLD.YEAR_445 = YE.YEARR
         ORDER BY CLD.YEAR_445;
@@ -426,7 +426,7 @@ WHERE MAIN.YEAR_445 = SUB.YEAR_445	AND	SUB.YMD_DT = to_date(current_timestamp())
 					AND
 						INVT.JAN_CD = INOUT.JAN_CD
 					INNER JOIN
-							dev_dna_load.jpnsdl_raw.EDI_ITEM_M	ITM
+							{{ env_var('DBT_ENV_LOAD_DB') }}.jpnsdl_raw.EDI_ITEM_M	ITM
 						ON
 							INVT.JAN_CD = ITM.JAN_CD_SO	;
                     insert into {% if target.name=='prod' %}

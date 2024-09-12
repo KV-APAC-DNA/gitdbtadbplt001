@@ -40,7 +40,7 @@ FROM
                   SELECT 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
@@ -50,7 +50,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -62,7 +62,7 @@ FROM
                       ):: text || ('0401' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
@@ -72,7 +72,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -89,7 +89,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -102,22 +102,22 @@ FROM
                     ) END AS "累計金額計算_期間開始日付", 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0331' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0930' :: character varying):: text
                     ) ELSE (
@@ -127,7 +127,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -139,7 +139,7 @@ FROM
                       ):: text || ('0331' :: character varying):: text
                     ) END AS "集計金額計算_期間終了日付", 
                     to_char(
-                      sysdate(), 
+                      current_timestamp(), 
                       ('YYYYMMDD' :: character varying):: text
                     ) AS "累計金額計算_現時点終了日付"
                 ) calendar
@@ -159,7 +159,7 @@ FROM
                   SELECT 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
@@ -169,7 +169,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -181,7 +181,7 @@ FROM
                       ):: text || ('0401' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
@@ -191,7 +191,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -208,7 +208,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -221,22 +221,22 @@ FROM
                     ) END AS "累計金額計算_期間開始日付", 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0331' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0930' :: character varying):: text
                     ) ELSE (
@@ -246,7 +246,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -258,7 +258,7 @@ FROM
                       ):: text || ('0331' :: character varying):: text
                     ) END AS "集計金額計算_期間終了日付", 
                     to_char(
-                      sysdate(), 
+                      current_timestamp(), 
                       ('YYYYMMDD' :: character varying):: text
                     ) AS "累計金額計算_現時点終了日付"
                 ) calendar
@@ -290,7 +290,7 @@ FROM
                   SELECT 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
@@ -300,7 +300,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -312,7 +312,7 @@ FROM
                       ):: text || ('0401' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
@@ -322,7 +322,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -339,7 +339,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -352,22 +352,22 @@ FROM
                     ) END AS "累計金額計算_期間開始日付", 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0331' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0930' :: character varying):: text
                     ) ELSE (
@@ -377,7 +377,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -389,7 +389,7 @@ FROM
                       ):: text || ('0331' :: character varying):: text
                     ) END AS "集計金額計算_期間終了日付", 
                     to_char(
-                      sysdate(), 
+                      current_timestamp(), 
                       ('YYYYMMDD' :: character varying):: text
                     ) AS "累計金額計算_現時点終了日付"
                 ) calendar
@@ -407,7 +407,7 @@ FROM
                   SELECT 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
@@ -417,7 +417,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -429,7 +429,7 @@ FROM
                       ):: text || ('0401' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
@@ -439,7 +439,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -456,7 +456,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -469,22 +469,22 @@ FROM
                     ) END AS "累計金額計算_期間開始日付", 
                     CASE WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0331' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0331' :: character varying):: text
                     ) WHEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('MMDD' :: character varying):: text
                       ) <= ('0930' :: character varying):: text
                     ) THEN (
                       to_char(
-                        sysdate(), 
+                        current_timestamp(), 
                         ('YYYY' :: character varying):: text
                       ) || ('0930' :: character varying):: text
                     ) ELSE (
@@ -494,7 +494,7 @@ FROM
                             (
                               (
                                 to_char(
-                                  sysdate(), 
+                                  current_timestamp(), 
                                   ('YYYY' :: character varying):: text
                                 )
                               ):: numeric
@@ -506,7 +506,7 @@ FROM
                       ):: text || ('0331' :: character varying):: text
                     ) END AS "集計金額計算_期間終了日付", 
                     to_char(
-                      sysdate(), 
+                      current_timestamp(), 
                       ('YYYYMMDD' :: character varying):: text
                     ) AS "累計金額計算_現時点終了日付"
                 ) calendar

@@ -5,7 +5,7 @@ wks_indonesia_lastnmonths as
 ),
 wks_indonesia_base as 
 (
-    select * from {{ ref('idnwks_interation__wks_indonesia_base') }}
+    select * from {{ ref('idnwks_integration__wks_indonesia_base') }}
 ),
 edw_vw_os_time_dim as 
 (

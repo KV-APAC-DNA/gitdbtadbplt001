@@ -19,7 +19,8 @@ final as
     sku_name_in_file,
     brand_name,
     lakshya_sku_name,
-    ean 
+    ean
+    
     from sdl_ecommerce_offtake_master_mapping ) map where map.rownum = 1
 )
 select load_date::timestamp_ntz(9) as load_date,
@@ -30,4 +31,5 @@ select load_date::timestamp_ntz(9) as load_date,
     brand_name::varchar(255) as brand_name,
     lakshya_sku_name::varchar(255) as lakshya_sku_name,
     ean::varchar(255) as ean
+   
  from final

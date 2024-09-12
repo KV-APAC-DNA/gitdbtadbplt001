@@ -4,101 +4,70 @@ with itg_sg_pos_sales_fact as (
 itg_mds_ap_customer360_config as (
     select * from {{ ref('aspitg_integration__itg_mds_ap_customer360_config') }}
 ),
-base as 
-(
---POS
-select 'POS' as data_src,
-       'SG' as 	cntry_cd,
-       'Singapore' as cntry_nm,
-       year::int as year,
-       mnth_id::int as mnth_id,
-	   week::int as week_id,
-	   --case when nvl(cast(right(week,2) as varchar(2)),'na')<>'na'
-	   --then trunc(to_date(right(week,2)::integer||' '||year::integer,'ww yyyy'))
-	   ---(date_part(dow,trunc(to_date(right(week,2)::integer||' --'||year::integer,'ww yyyy'))))::integer+1 
-	   --else to_date(mnth_id|| '01','yyyymmdd') end 
-	   bill_date as day,
-	   sold_to_code as soldto_code,
-       sold_to_code as distributor_code,
-       cust_id as distributor_name,
-       store as store_cd,
-       store_name as store_name,
-	   store_type as store_type,
-	   --'na' as store_type,
-       product_barcode as ean,
-       sap_code as matl_num,
-       product_key as pka_product_key,
-       product_key_desc as pka_product_key_description,
-	   item_desc as customer_product_desc,
-	   'NA' as region,
-	   'NA' as zone_or_area,
-	   master_code as master_code,
-	   sales_qty as so_sls_qty, 
-	   net_sales as so_sls_value
-      from  itg_sg_pos_sales_fact
-      ),
-transformed as (
-select
-base.data_src,
-base.cntry_cd,
-base.cntry_nm,
-base.year,
-base.mnth_id,
-base.week_id,
-base.day,
-base.soldto_code,
-base.distributor_code,
-base.distributor_name,
-base.store_cd,
-base.store_name,
-base.store_type,
-base.ean,
-base.matl_num,
-base.pka_product_key,
-base.pka_product_key_description,
-base.customer_product_desc,
-base.region,
-base.zone_or_area,
------added master code ---
-base.master_code,
-base.so_sls_qty,
-base.so_sls_value,
-current_timestamp() as crtd_dttm,
-current_timestamp() as updt_dttm
-from
-base
-Where not (nvl(base.so_sls_value, 0) = 0 and nvl(base.so_sls_qty, 0) = 0) and base.day > (select to_date(param_value,'YYYY-MM-DD') from itg_mds_ap_customer360_config where code='min_date') 
-and base.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_sg')='ALL' then '190001' else to_char(add_months(to_date(current_date::varchar, 'YYYY-MM-DD'), -((select param_value from itg_mds_ap_customer360_config where code='base_load_sg')::integer)), 'YYYYMM')
-end)),
 final as 
 (
-SELECT
-data_src::varchar(3) as data_src,
-cntry_cd::varchar(2) as cntry_cd,
-cntry_nm::varchar(9) as cntry_nm,
-year::numeric(18,0) as year,
-mnth_id::numeric(18,0) as mnth_id,
-week_id::numeric(18,0) as week_id,
-day::date as day,
-soldto_code::varchar(200) as soldto_code,
-distributor_code::varchar(200) as distributor_code,
-distributor_name::varchar(10) as distributor_name,
-store_cd::varchar(300) as store_cd,
-store_name::varchar(300) as store_name,
-store_type::varchar(200) as store_type,
-ean::varchar(255) as ean,
-matl_num::varchar(255) as matl_num,
-pka_product_key::varchar(300) as pka_product_key,
-pka_product_key_description::varchar(500) as pka_product_key_description,
-so_sls_qty::numeric(9) as so_sls_qty,
-so_sls_value::numeric(9) as so_sls_value,
-customer_product_desc::varchar(500) as customer_product_desc,
-region::varchar(2) as region,
-zone_or_area::varchar(2) as zone_or_area,
------added master code ---
-master_code::varchar(255) as master_code,
-current_timestamp() as crtd_dttm,
-current_timestamp() as updt_dttm
-from transformed
+    SELECT
+    BASE.data_src,
+    BASE.cntry_cd,
+    BASE.cntry_nm,
+    BASE.year,
+    BASE.mnth_id,
+    BASE.week_id,
+    BASE.day,
+    BASE.soldto_code,
+    BASE.distributor_code,
+    BASE.distributor_name,
+    BASE.store_cd,
+    BASE.store_name,
+    BASE.store_type,
+    BASE.ean,
+    BASE.matl_num,
+    BASE.pka_product_key,
+    BASE.pka_product_key_description,
+    BASE.Customer_Product_Desc,
+    BASE.region,
+    BASE.zone_or_area,
+    BASE.master_code,
+    BASE.so_sls_qty,
+    BASE.so_sls_value,
+    BASE.msl_product_code,
+    --BASE.msl_product_desc,
+    BASE.retail_env,
+    convert_timezone('UTC',current_timestamp()) AS crtd_dttm,
+    convert_timezone('UTC',current_timestamp()) AS updt_dttm
+    FROM
+    (
+    --POS
+    SELECT 'POS' AS DATA_SRC,
+        'SG' AS 	CNTRY_CD,
+        'Singapore' AS CNTRY_NM,
+        year::INT AS YEAR,
+        mnth_id::INT AS MNTH_ID,
+        week::INT AS WEEK_ID,
+        bill_date AS DAY,
+        sold_to_code as SOLDTO_CODE,
+        sold_to_code AS DISTRIBUTOR_CODE,
+        cust_id AS DISTRIBUTOR_NAME,
+        store AS STORE_CD,
+        store_name AS STORE_NAME,
+        store_type AS store_type,
+        --'NA' AS store_type,
+        product_barcode AS EAN,
+        sap_code AS MATL_NUM,
+        product_key AS pka_product_key,
+        product_key_desc AS pka_product_key_description,
+        item_desc AS Customer_Product_Desc,
+        'NA' AS region,
+        'NA' AS zone_or_area,
+        master_code AS master_code,
+        sales_qty as SO_SLS_QTY, 
+        net_sales as SO_SLS_VALUE,
+        master_code as msl_product_code,
+            --item_desc as msl_product_desc,
+            store_type as retail_env
+        FROM  itg_sg_pos_sales_fact)BASE
+    WHERE NOT (nvl(BASE.so_sls_value, 0) = 0 and nvl(BASE.so_sls_qty, 0) = 0) AND BASE.day > (select to_date(param_value) from itg_mds_ap_customer360_config where code='min_date') 
+    AND BASE.mnth_id>= (case when (select param_value from itg_mds_ap_customer360_config where code='base_load_sg')='ALL' THEN '190001' ELSE to_char(add_months(to_date(current_timestamp()), -((select param_value from itg_mds_ap_customer360_config where code='base_load_sg')::integer)), 'YYYYMM')
+    END)
 )
 select * from final

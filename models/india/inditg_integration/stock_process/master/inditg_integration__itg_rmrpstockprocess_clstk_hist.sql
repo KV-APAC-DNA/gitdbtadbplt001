@@ -37,6 +37,7 @@ final as
         modifieddate::timestamp_ntz(9) as modifieddate,
         createddt::timestamp_ntz(9) as createddt,
         current_timestamp()::timestamp_ntz(9) as updt_dttm
+       
     from itg_rmrpstockprocess_clstk
 )
 select * from final

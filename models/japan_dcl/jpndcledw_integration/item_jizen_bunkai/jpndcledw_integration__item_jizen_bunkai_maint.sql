@@ -70,9 +70,9 @@ AS (
         kosecode::VARCHAR(45) AS kosecode,
         suryo::number(13, 4) AS suryo,
         koseritsu::number(16, 8) AS koseritsu,
-        sysdate()::timestamp_ntz(9) AS inserted_date,
+        current_timestamp()::timestamp_ntz(9) AS inserted_date,
         NULL::VARCHAR(100) AS inserted_by,
-        sysdate()::timestamp_ntz(9) AS updated_date,
+        current_timestamp()::timestamp_ntz(9) AS updated_date,
         NULL::VARCHAR(100) AS updated_by
     FROM t1
     )

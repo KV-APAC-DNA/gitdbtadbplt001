@@ -31,7 +31,7 @@ FROM (SELECT hcp.hcp_id,
                 ON REPLACE (hcp.prescription_date,'-','') = cal.day
       WHERE (UPPER(hcp.product) LIKE 'ORSL (CORE)%' OR UPPER(hcp.product) LIKE 'ORSL (PLUS)%' OR UPPER(hcp.product) LIKE 'ORSL (REHYDRATE)%')
         AND cal.fisc_yr > 2020                       
-        AND cal.fisc_yr||cal.mth_yyyymm <= 20224      
+        AND cal.fisc_yr||cal.mth_yyyymm <= '20224'      
         AND 'Y' = (SELECT parameter_value
                    FROM   itg_query_parameters
                    WHERE  UPPER(country_code) = 'IN'

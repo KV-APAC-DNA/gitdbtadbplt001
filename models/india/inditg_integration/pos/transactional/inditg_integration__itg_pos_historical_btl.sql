@@ -7,7 +7,8 @@
         DELETE FROM {{this}} WHERE (UPPER(TRIM(mother_sku_name)),UPPER(TRIM(account_name)),UPPER(TRIM(re)),pos_dt) IN (SELECT DISTINCT UPPER(TRIM(mother_sku_name)),UPPER(TRIM(account_name)),UPPER(TRIM(re)),pos_dt FROM {{ source('indsdl_raw', 'sdl_pos_historical_btl') }});
         {% endif %}"
     )
-}}
+}}  
+
 with sdl_pos_historical_btl as 
 (
     select * from {{ source('indsdl_raw', 'sdl_pos_historical_btl') }}

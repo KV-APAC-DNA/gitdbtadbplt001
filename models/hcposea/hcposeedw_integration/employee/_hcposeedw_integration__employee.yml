@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__dim_employee
+    config:
+      alias: dim_employee
+      tags: ["hcp_onesea_edw_load","transformation"]
+  - name: hcposeedw_integration__dim_employee_iconnect
+    config:
+      alias: dim_employee_iconnect
+      tags: ["hcp_onesea_edw_load","transformation"]
+  - name: hcposeedw_integration__vw_employee_hier
+    config:
+      alias: vw_employee_hier
+      tags: ["hcp_common_views","transformation"]
+
+  - name: hcposeedw_integration__edw_isight_dim_employee_snapshot_xref
+    config:
+      alias: edw_isight_dim_employee_snapshot_xref
+      tags: ["monthly_snapshot_data_ingestion","transformation"]
+    
+  - name: hcposeedw_integration__isight_dim_employee_snapshot_xref
+    config:
+      alias: isight_dim_employee_snapshot_xref
+      tags: ["monthly_snapshot_data_ingestion","transformation"]
+
+

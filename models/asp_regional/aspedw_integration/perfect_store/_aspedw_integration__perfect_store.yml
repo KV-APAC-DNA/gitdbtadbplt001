@@ -37,3 +37,7 @@ models:
     config:
       alias: v_rpt_rex_perfect_store
       tags: ["north_asia_views","transformation"]
+  - name: aspedw_integration__edw_perfect_store_rebase_wt_dbt
+    config:
+      alias: edw_perfect_store_rebase_wt_dbt
+      tags: ["pop6_edw_load","transformation"]

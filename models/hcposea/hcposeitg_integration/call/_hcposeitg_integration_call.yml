@@ -1,0 +1,25 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_call
+    config: 
+      alias: itg_call
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_call_detail
+    config:
+      alias: itg_call_detail
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_call_discussion
+    config:
+      alias: itg_call_discussion
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__itg_call_key_message
+    config:
+      alias: itg_call_key_message
+      tags: ["iconnect_data_ingestion","ingestion"]
+
+  

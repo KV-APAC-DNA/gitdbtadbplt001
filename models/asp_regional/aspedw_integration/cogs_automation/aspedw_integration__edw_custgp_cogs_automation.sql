@@ -39,20 +39,20 @@ copa as
         cogs.co_cd,
         prft_Ctr,
         (CASE 
-            WHEN sls_org IS NULL THEN 
+            WHEN nullif(sls_org,'') IS NULL THEN 
             (CASE 
                 WHEN cogs.co_cd = '4130' THEN '2100' 
                 WHEN cogs.co_cd = '8266' THEN '320S' 
                 WHEN cogs.co_cd = '4481' THEN '2210' 
-                ELSE sls_org 
+                ELSE nullif(sls_org,'')
                 END) 
-            WHEN sls_org = '2400' AND LTRIM(matl_num,'0') NOT IN ('41812332','41802332') 
+            WHEN nullif(sls_org,'') = '2400' AND ltrim(coalesce(cust_num,'0'),'0') NOT IN ('41812332','41802332') 
                 THEN '2500' 
-            ELSE sls_org 
+            ELSE nullif(sls_org,'')
             END) as sls_org,
         obj_crncy_co_obj,
-        LTRIM(cust_num,'0') AS cust_num,
-        LTRIM(matl_num,'0') AS matl_num,
+        LTRIM(nullif(cust_num,''),'0') AS cust_num,
+        LTRIM(nullif(matl_num,''),'0') AS matl_num,
         CASE
             WHEN cogs.acct_hier_shrt_desc = 'NTS' THEN SUM(amt_obj_crncy)
             ELSE 0
@@ -78,16 +78,27 @@ copa as
                                                         fgctl.active = 'Y'													   
 
     WHERE   cogs.fisc_yr::CHARACTER VARYING::TEXT >= 2023 and cogs.acct_hier_shrt_desc in ('NTS','FG')
-    and ltrim(cust_num,'0') not in ('140327','140328')
+    and ltrim(coalesce(cust_num,'0'),'0') not in ('140327','140328')
     GROUP BY fisc_yr,
             fisc_yr_per,
             cogs.co_cd,
             cmp.ctry_group,
             prft_ctr,
-            sls_org,
+            CASE 
+            WHEN nullif(sls_org,'') IS NULL THEN 
+            (CASE 
+                WHEN cogs.co_cd = '4130' THEN '2100' 
+                WHEN cogs.co_cd = '8266' THEN '320S' 
+                WHEN cogs.co_cd = '4481' THEN '2210' 
+                ELSE nullif(sls_org,'')
+                END) 
+            WHEN nullif(sls_org,'') = '2400' AND ltrim(coalesce(cust_num,'0'),'0') NOT IN ('41812332','41802332') 
+                THEN '2500' 
+            ELSE nullif(sls_org,'')
+            END,
             obj_crncy_co_obj,
-            LTRIM(cust_num,'0'),
-            LTRIM(matl_num,'0'),
+            LTRIM(nullif(cust_num,''),'0'),
+            LTRIM(nullif(matl_num,''),'0'),
             cogs.acct_hier_shrt_desc
 ),
 stdc as

@@ -58,6 +58,7 @@ trans as
        SUM(CASE WHEN src = 'SR' AND CAST(yr||lpad (mon,2,'0') AS INTEGER) < CAST(runyr||lpad (runmm,2,'0') AS INTEGER) THEN dbrestore_prdGrossAmt_current ELSE 0 END) AS dbrestore_Sec_Late_Gross_Amt_Ret_current,
        current_timestamp() as crt_dttm,
        current_timestamp() as updt_dttm
+      
 FROM itg_tblpf_secsalesm
 GROUP BY runmm,
          runyr,

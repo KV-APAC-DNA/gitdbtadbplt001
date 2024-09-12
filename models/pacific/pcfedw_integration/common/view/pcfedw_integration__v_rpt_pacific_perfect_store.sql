@@ -38,7 +38,7 @@ edw_iri_scan_sales_agg as(
 select * from {{ ref('pcfedw_integration__edw_iri_scan_sales_agg') }}
 ),
 itg_trax_md_store as(
-select * from {{ ref('pcfitg_integration__itg_trax_md_store') }}
+select * from {{ source('aspacshare_integration','trax_md_store') }}
 ),
 edw_pacific_perenso_ims_analysis as(
 select * from {{ ref('pcfedw_integration__edw_pacific_perenso_ims_analysis') }}

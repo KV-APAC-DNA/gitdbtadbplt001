@@ -54,7 +54,7 @@ sources:
             column: "jj_mnth_id,pos_prod_cd"
             lookup_column: "mnth_id,ITEM_CD"
             lookup_table: "{{ ref('phlitg_integration__itg_mds_ph_pos_product')}}"
-            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_robinsons')}}) AND UPPER(CUST_CD)='MDC'"
+            lookup_filter: "ACTIVE='Y' AND MNTH_ID IN (SELECT DISTINCT jj_mnth_id FROM {{source('phlsdl_raw','sdl_ph_pos_mercury')}}) AND UPPER(CUST_CD)='MDC'"
             name: TRATBL_sdl_ph_pos_mercury__lookup_test
             config:
               store_failures: true

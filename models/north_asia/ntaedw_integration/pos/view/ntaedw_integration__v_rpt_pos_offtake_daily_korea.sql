@@ -194,10 +194,12 @@ final as (
         sum(a.prom_sls_amt) AS sls_amt,
         CASE
             WHEN (
-                (a.str_cd IS NULL)
-                OR ((a.str_cd)::text = (''::character varying)::text)
+                (rtrim(a.str_cd) IS NULL)
+                OR (
+                    (rtrim(a.str_cd))::text = (''::character varying)::text
+                )
             ) THEN 'Not Available'::character varying
-            ELSE a.str_cd
+            ELSE rtrim(a.str_cd)
         END AS str_cd,
         CASE
             WHEN (
@@ -278,7 +280,7 @@ final as (
             ) THEN 'Not Available'::character varying
             ELSE a.matl_desc
         END AS matl_desc,
-        a.ean_num,
+        rtrim(a.ean_num) as ean_num,
         g.to_crncy,
         g.ex_rt_typ,
         g.ex_rt,
@@ -500,12 +502,12 @@ final as (
         g.to_crncy,
         g.ex_rt_typ,
         g.ex_rt,
-        a.str_cd,
+        rtrim(a.str_cd),
         a.str_nm,
         a.mysls_catg,
         a.matl_num,
         a.matl_desc,
-        a.ean_num,
+        rtrim(a.ean_num),
         a.vend_prod_cd,
         i.channel,
         i.store_typ,

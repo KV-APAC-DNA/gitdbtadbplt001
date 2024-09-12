@@ -22,7 +22,8 @@ final as
         modifieddate::timestamp_ntz(9) as modifieddate,
         udcstatus::number(18,0) as udcstatus,
         crt_dttm::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(225) as file_name
     from source
 )
 select * from final

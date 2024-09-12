@@ -50,7 +50,8 @@ transformed as
       WHEN tgt.crt_dttm IS NULL
         THEN 'I'
       ELSE 'U'
-      END AS chng_flg FROM (
+      END AS chng_flg,
+      file_name FROM (
     SELECT distcode,
       smid,
       smcode,
@@ -71,7 +72,8 @@ transformed as
       syncid,
       rdssmtype,
       uniquesalescode,
-      crt_dttm
+      crt_dttm,
+      file_name
     FROM (
       SELECT distcode,
         smid,
@@ -100,7 +102,8 @@ transformed as
           smname,
           rmname,
           rmcode ORDER BY createddate DESC
-          ) AS rn
+          ) AS rn,
+          file_name
       FROM SDL_CSL_SALESMANMASTER a
       ) b
     WHERE b.rn = 1
@@ -144,7 +147,8 @@ final as
         uniquesalescode::varchar(15) as uniquesalescode,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
         current_timestamp()::timestamp_ntz(9) as updt_dttm,
-        chng_flg::varchar(1) as chng_flg
+        chng_flg::varchar(1) as chng_flg,
+        file_name:: varchar(225)
     from transformed
 )
 select * from final

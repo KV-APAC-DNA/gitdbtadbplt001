@@ -1,0 +1,8 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_remote_meeting
+    config: 
+      alias: itg_remote_meeting
+      tags: ["iconnect_data_ingestion","ingestion"]

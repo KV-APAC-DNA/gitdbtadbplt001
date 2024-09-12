@@ -8,7 +8,11 @@
 }}
 with source as 
 (
-    select * from {{ source('indsdl_raw', 'sdl_rrl_retailercategory') }}
+    select *,dense_rank()over(partition by retailercategorycode order by filename ) as rnk  from {{ source('indsdl_raw', 'sdl_rrl_retailercategory') }}
+    where filename not in 
+    (select distinct file_name 
+    from 
+    {{ source('indwks_integration', 'TRATBL_sdl_rrl_retailercategory__null_test') }}) qualify rnk = 1
 ),
 trans as 
 (
@@ -27,6 +31,7 @@ trans as
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     row_number() over (partition by upper(sdl_rtc.retailercategorycode) order by sdl_rtc.crt_dttm desc) rnum
+   
     from source sdl_rtc)
 where rnum = '1'
 ),
@@ -43,7 +48,7 @@ final as
     rowid,
     filename,
     crt_dttm,
-    updt_dttm 
+    updt_dttm
 from trans
 )
 select * from final

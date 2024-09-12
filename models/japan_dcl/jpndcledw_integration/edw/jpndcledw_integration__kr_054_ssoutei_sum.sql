@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_SSOUTEI_MEISAI as (
 select * from {{ ref('jpndcledw_integration__kr_054_ssoutei_meisai') }}
 ),
@@ -24,3 +25,6 @@ point::number(38,0) as point
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

@@ -82,7 +82,8 @@ final as
             taxvalueother3,
             taxtype,
             createddt,
-            downloadflag
+            downloadflag,
+            file_name
         FROM sdl_rpurchasedetail
         WHERE (POSGrnNo IS NULL OR (TO_DATE(POSGrnDate) >(SELECT DISTINCT MAX(TO_DATE(caldate)) AS todate
                                                         FROM edw_retailer_calendar_dim

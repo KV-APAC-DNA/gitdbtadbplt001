@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 WITH WK_D22686_POINT_CALC_F_HIST_WK
 AS (
     SELECT *
@@ -59,3 +60,6 @@ AS (
     )
 SELECT *
 FROM final
+{% else %}
+    select * from {{this}}
+{% endif %}

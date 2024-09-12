@@ -73,5 +73,6 @@ final AS
     ) TGT ON SRC.start_date = TGT.pos_dt
     AND SRC.customer_product_code = TGT.vend_prod_cd
     ---AND SRC.ean_code=TGT. ean_num
+    qualify row_number() over(partition by  pos_dt,vend_cd,vend_prod_cd,vend_prod_nm,ean_num,sls_qty,sls_amt,invnt_qty,dept_cd,cat_small,dist_cd,crncy_cd,src_sys_cd,ctry_cd order by tgt_crt_dttm) = 1
 )    
 select * from final

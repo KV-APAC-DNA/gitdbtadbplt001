@@ -1,6 +1,6 @@
 with
 itg_trax_md_product as (
-select * from {{ ref('pcfitg_integration__itg_trax_md_product') }}
+select * from {{ source('aspacshare_integration','trax_md_product') }}
 ),
 final as (
 SELECT 

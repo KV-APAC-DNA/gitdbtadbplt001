@@ -38,8 +38,8 @@ transformed as (
 SELECT YM,
       KOKYANO,
       RANK,
-      SYSDATE() as insertdate,
-      SYSDATE() as updatedate
+      current_timestamp() as insertdate,
+      current_timestamp() as updatedate
 FROM TEMP_NAYOSE TEMP_NAYOSE
 ),
 final as (

@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hpcoseedw_integration__edw_isight_licenses
+    config:
+      alias: edw_isight_licenses
+      tags: ["master_file_data_ingestion","transformation"]

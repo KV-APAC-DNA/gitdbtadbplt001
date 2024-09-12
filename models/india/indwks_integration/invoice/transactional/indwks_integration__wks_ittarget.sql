@@ -20,7 +20,8 @@ final as
     octamount,
     novamount,
     decamount,
-    ytdamount
+    ytdamount,
+    file_name
     FROM sdl_ittarget
 )
 select * from final

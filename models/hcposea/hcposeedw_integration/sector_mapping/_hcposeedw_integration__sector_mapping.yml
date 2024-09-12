@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeedw_integration__edw_isight_sector_mapping
+    config:
+      alias: edw_isight_sector_mapping
+      tags: ["master_file_data_ingestion","transformation"]

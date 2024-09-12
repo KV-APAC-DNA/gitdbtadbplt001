@@ -40,7 +40,8 @@ trans as
         brand_focus,
         measure_type,
         sm_target as sm_tgt_amt,
-        CURRENT_TIMESTAMP() as crt_dttm
+        CURRENT_TIMESTAMP() as crt_dttm,
+        file_name
     from sdl_salesman_target
 ),
 
@@ -58,7 +59,8 @@ final as
 	brand_focus::varchar(50) as brand_focus,
 	measure_type::varchar(50) as measure_type,
 	sm_tgt_amt::number(38,6) as sm_tgt_amt,
-	current_timestamp()::timestamp_ntz(9) as crt_dttm
+	current_timestamp()::timestamp_ntz(9) as crt_dttm,
+    file_name::varchar(225) as file_name
     
     from trans
 )

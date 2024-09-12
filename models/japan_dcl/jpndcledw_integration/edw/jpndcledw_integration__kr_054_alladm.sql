@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with kr_054_pointadm
 as (
     select *
@@ -107,3 +108,6 @@ as (
     )
 select *
 from final
+{% else %}
+    select * from {{this}}
+{% endif %}

@@ -65,7 +65,7 @@ AS (
         )
     WHERE 
             ((u.base)::TEXT = ('ship445'::CHARACTER VARYING)::TEXT)
-            AND ("k".ship_dt >= (dateadd('day',-1095,sysdate()))
+            AND ("k".ship_dt >= (dateadd('day',-1095,current_timestamp()))
             )
     GROUP BY "k".ship_dt,
         "k".channel,

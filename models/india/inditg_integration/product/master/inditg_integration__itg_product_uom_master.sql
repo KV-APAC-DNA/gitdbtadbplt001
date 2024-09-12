@@ -23,7 +23,8 @@ final as
     volumeunit,
     width,
     convert_timezone('UTC',current_timestamp()) as crt_dttm,
-    convert_timezone('UTC',current_timestamp()) as updt_dttm 
+    convert_timezone('UTC',current_timestamp()) as updt_dttm
+    
     from source
 )
 select material::varchar(18) as material,
@@ -45,4 +46,5 @@ select material::varchar(18) as material,
     width::number(17,3) as width,
     crt_dttm::timestamp_ntz(9) as crt_dttm,
     updt_dttm::timestamp_ntz(9) as updt_dttm
+    
 from final

@@ -50,7 +50,7 @@ AS (
                 NULL AS SHUKADATE,
                 NULL AS JUCHKBN
             FROM WK_BIRTHDAY_HEADER_JOB
-            WHERE SHUKADATE >= CAST(TO_CHAR(DATEADD(DAY, - 181, SYSDATE()), 'YYYYMMDD') AS NUMERIC) --181日前～
+            WHERE SHUKADATE >= CAST(TO_CHAR(DATEADD(DAY, - 181, current_timestamp()), 'YYYYMMDD') AS NUMERIC) --181日前～
                 AND TENPOCODE IS NULL
             )
         GROUP BY KOKYANO
@@ -103,7 +103,7 @@ AS (
                 NULL AS SHUKADATE,
                 NULL AS JUCHKBN
             FROM WK_BIRTHDAY_HEADER_JOB
-            WHERE SHUKADATE >= CAST(TO_CHAR(DATEADD(DAY, - 181, SYSDATE()), 'YYYYMMDD') AS VARCHAR) --181日前～
+            WHERE SHUKADATE >= CAST(TO_CHAR(DATEADD(DAY, - 181, current_timestamp()), 'YYYYMMDD') AS VARCHAR) --181日前～
                 AND TENPOCODE IS NOT NULL
             )
         GROUP BY KOKYANO

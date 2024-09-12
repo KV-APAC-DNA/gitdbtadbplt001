@@ -38,6 +38,8 @@
 with source as 
 (
     select * from {{ source('indsdl_raw', 'sdl_sss_scorecard_data') }}
+    where filename not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_sss_scorecard_data__null_test')}})
 ),
 final as 
 (

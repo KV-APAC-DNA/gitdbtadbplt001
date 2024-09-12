@@ -60,15 +60,15 @@ AS (
         SELECT usrid,
             nvl(point, 0) point
         FROM kr_this_point_granted
-        
+
         UNION ALL
-        
+
         SELECT rsc.usrid,
             nvl(rsc.point_granted, 0) point
         FROM kr_this_stage_point_wk_rescue rsc
         JOIN dcl_calendar_sysdate cal1 ON cal1.is_active = true
             AND 1 = 1
-        WHERE rsc.yyyymm BETWEEN CASE 
+        WHERE rsc.yyyymm BETWEEN CASE
                         WHEN to_char(cal1.curr_date, 'dd') <= 20
                             THEN to_char(add_months(cal1.curr_date, - 1), 'yyyy') || '01'
                         WHEN to_char(cal1.curr_date, 'dd') > 20
@@ -82,25 +82,25 @@ base
 AS (
     SELECT to_char(cal.curr_date, 'yyyymm') AS yyyymm,
         nvl2(tp.usrid, tp.usrid, lp.usrid) AS usrid,
-        CASE 
+        CASE
             WHEN to_char(cal.curr_date, 'mm') = '12'
                 THEN 'レギュラー'
             ELSE nvl(nvl(stage_prv.stage, lp.stage), 'レギュラー')
             END AS lstage,
-        CASE 
+        CASE
             WHEN to_char(cal.curr_date, 'mm') = '12'
                 THEN '01'
             ELSE nvl(nvl(stage_prv.stage_cd, lp.stage_cd), '01')
             END AS lstage_cd,
         nvl(tp.tstage, 'レギュラー') AS tstage,
         nvl(tp.tstage_cd, '01') AS tstage_cd,
-        CASE 
+        CASE
             WHEN nvl(lstage_cd, '01') >= nvl(tstage_cd, '01')
                 THEN lstage
             WHEN nvl(lstage_cd, '01') < nvl(tstage_cd, '01')
                 THEN tstage
             END AS stage,
-        CASE 
+        CASE
             WHEN nvl(lstage_cd, '01') >= nvl(tstage_cd, '01')
                 THEN lstage_cd
             WHEN nvl(lstage_cd, '01') < nvl(tstage_cd, '01')
@@ -108,10 +108,10 @@ AS (
             END AS stage_cd,
         nvl(tp.thistotalprc, 0) AS thistotalprc,
         nvl(tp.goalp, 0) AS goalp,
-        CASE 
+        CASE
             WHEN to_char(cal.curr_date, 'mm') BETWEEN '02'
                     AND '12'
-                THEN CASE 
+                THEN CASE
                         WHEN to_char(cal.curr_date, 'dd') = '20'
                             THEN nvl(pgrnt.sump, 0) + nvl(prp_prv.point_confirmed, 0)
                         ELSE nvl(pgrnt.sump, 0)
@@ -120,7 +120,7 @@ AS (
             END AS point_granted_sum,
         greatest_ignore_nulls(goalp, point_granted_sum) - point_granted_sum AS point_tobe_granted,
         NULL::NUMERIC AS point_confirmed,
-        CASE 
+        CASE
             WHEN greatest(nvl(lstage_cd, '01'), nvl(tstage_cd, '01')) = '04'
                 THEN 'ダイヤモンド'
             WHEN greatest(nvl(lstage_cd, '01'), nvl(tstage_cd, '01')) = '03'
@@ -129,7 +129,7 @@ AS (
                 THEN 'プラチナ'
             ELSE 'ゴールド'
             END AS promo_stage_1,
-        CASE 
+        CASE
             WHEN greatest(nvl(lstage_cd, '01'), nvl(tstage_cd, '01')) = '04'
                 THEN '04'
             WHEN greatest(nvl(lstage_cd, '01'), nvl(tstage_cd, '01')) = '03'
@@ -138,7 +138,7 @@ AS (
                 THEN '03'
             ELSE '02'
             END AS promo_stage_cd_1,
-        CASE 
+        CASE
             WHEN greatest(goalp, point_granted_sum) >= 8500
                 THEN 'ダイヤモンド'
             WHEN greatest(goalp, point_granted_sum) >= 3500
@@ -147,7 +147,7 @@ AS (
                 THEN 'プラチナ'
             ELSE 'ゴールド'
             END AS promo_stage_2,
-        CASE 
+        CASE
             WHEN greatest(goalp, point_granted_sum) >= 8500
                 THEN '04'
             WHEN greatest(goalp, point_granted_sum) >= 3500
@@ -157,7 +157,7 @@ AS (
             ELSE '02'
             END AS promo_stage_cd_2,
         greatest((
-                CASE 
+                CASE
                     WHEN greatest(goalp, point_granted_sum) >= 8500
                         THEN 80000
                     WHEN greatest(goalp, point_granted_sum) >= 3500
@@ -167,7 +167,7 @@ AS (
                     ELSE 15000
                     END
                 ), nvl(tp.thistotalprc, 0)) - nvl(tp.thistotalprc, 0) AS next_promo_stage_amt,
-        CASE 
+        CASE
             WHEN greatest(goalp, point_granted_sum) >= 8500
                 THEN 8500 - greatest(goalp, point_granted_sum)
             WHEN greatest(goalp, point_granted_sum) >= 3500
@@ -175,9 +175,9 @@ AS (
             WHEN greatest(goalp, point_granted_sum) >= 500
                 THEN 3500 - greatest(goalp, point_granted_sum)
             ELSE 500
-            END 
+            END
             AS next_promo_stage_point,
-        to_char(convert_timezone('UTC', 'Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') AS upddate
+        to_char(convert_timezone('Asia/Tokyo', current_timestamp()), 'yyyymmdd hh24:mi:ss') AS upddate
     FROM kr_this_stage_point_wk_curr tp
     FULL OUTER JOIN kr_last_stage_point lp ON tp.usrid = lp.usrid
     LEFT JOIN stage_prv ON nvl2(tp.usrid, tp.usrid, lp.usrid) = stage_prv.usrid
@@ -201,13 +201,13 @@ AS (
         base.point_granted_sum,
         base.point_tobe_granted,
         base.point_confirmed,
-        CASE 
+        CASE
             WHEN base.promo_stage_cd_1 = base.promo_stage_cd_2
                 AND base.promo_stage_cd_1 <> base.stage_cd
                 THEN base.promo_stage_1
             ELSE NULL
             END AS promo_stage,
-        CASE 
+        CASE
             WHEN base.promo_stage_cd_1 = base.promo_stage_cd_2
                 AND base.promo_stage_cd_1 <> base.stage_cd
                 THEN base.promo_stage_cd_1

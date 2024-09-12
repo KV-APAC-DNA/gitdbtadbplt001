@@ -819,7 +819,7 @@ final as(
         warimaekomitanka::number(18,0) as warimaekomitanka,
         warimaenukikingaku::number(18,0) as warimaenukikingaku,
         warimaekomikingaku::number(18,0) as warimaekomikingaku,
-        bun_tanka::number(18,0) as bun_tanka,
+        trunc(bun_tanka,0)::number(18,0) as bun_tanka,
         bun_kingaku::number(18,0) as bun_kingaku,
         bun_meisainukikingaku::number(18,0) as bun_meisainukikingaku,
         bun_wariritu::number(18,0) as bun_wariritu,

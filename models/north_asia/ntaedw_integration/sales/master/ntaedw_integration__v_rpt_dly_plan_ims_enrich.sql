@@ -200,11 +200,11 @@ final as
                                                     (
                                                         (
                                                             ((pln.ctry_cd)::text = (txn.ctry_cd)::text)
-                                                            AND ((pln.dstr_cd)::text = (txn.dstr_cd)::text)
+                                                            AND (rtrim(pln.dstr_cd)::text = rtrim(txn.dstr_cd)::text)
                                                         )
-                                                        AND ((pln.store_cd)::text = (txn.store_cd)::text)
+                                                        AND (rtrim(pln.store_cd)::text = rtrim(txn.store_cd)::text)
                                                     )
-                                                    AND ((pln.sls_rep_cd)::text = (txn.sls_rep_cd)::text)
+                                                    AND (rtrim(pln.sls_rep_cd)::text = rtrim(txn.sls_rep_cd)::text)
                                                 )
                                                 AND (pln.cal_day = txn.ims_txn_dt)
                                             )
@@ -222,10 +222,10 @@ final as
                                 (
                                     (
                                         (
-                                            (k.dstr_cd)::text = (COALESCE(pln.dstr_cd, txn.dstr_cd))::text
+                                            rtrim(k.dstr_cd)::text = rtrim(COALESCE(pln.dstr_cd, txn.dstr_cd))::text
                                         )
                                         AND (
-                                            (k.store_cd)::text = (COALESCE(pln.store_cd, txn.store_cd))::text
+                                            rtrim(k.store_cd)::text = rtrim(COALESCE(pln.store_cd, txn.store_cd))::text
                                         )
                                     )
                                     AND (
@@ -259,7 +259,7 @@ final as
                                             (
                                                 (txn.ctry_cd)::text = ('HK'::character varying)::text
                                             )
-                                            AND ((f.ean_num)::text = (txn.ean_num)::text)
+                                            AND (rtrim(f.ean_num)::text = rtrim(txn.ean_num)::text)
                                         )
                                         AND ((f.cntry)::text = (txn.ctry_cd)::text)
                                     ) THEN 1
@@ -269,10 +269,10 @@ final as
                                                 (txn.ctry_cd)::text = ('TW'::character varying)::text
                                             )
                                             AND (
-                                                (f.ean_num)::text = ltrim(
+                                                rtrim(f.ean_num)::text = rtrim(ltrim(
                                                     (txn.ean_num)::text,
                                                     ('0'::character varying)::text
-                                                )
+                                                ))
                                             )
                                         )
                                         AND ((f.cntry)::text = (txn.ctry_cd)::text)
@@ -299,7 +299,7 @@ final as
                         FROM edw_product_attr_dim
                     ) f1 ON (
                         (
-                            ((f1.ean_num)::text = txn.prnt_ean_num)
+                            (rtrim(f1.ean_num)::text = rtrim(txn.prnt_ean_num))
                             AND ((f1.cntry)::text = (txn.ctry_cd)::text)
                         )
                     )
@@ -311,11 +311,11 @@ final as
                                 (COALESCE(pln.ctry_cd, txn.ctry_cd))::text = (sls.ctry_cd)::text
                             )
                             AND (
-                                (COALESCE(pln.dstr_cd, txn.dstr_cd))::text = (sls.dstr_cd)::text
+                                rtrim(COALESCE(pln.dstr_cd, txn.dstr_cd))::text = rtrim(sls.dstr_cd)::text
                             )
                         )
                         AND (
-                            (COALESCE(pln.sls_rep_cd, txn.sls_rep_cd))::text = (sls.sls_rep_cd)::text
+                            rtrim(COALESCE(pln.sls_rep_cd, txn.sls_rep_cd))::text = rtrim(sls.sls_rep_cd)::text
                         )
                     )
                 )

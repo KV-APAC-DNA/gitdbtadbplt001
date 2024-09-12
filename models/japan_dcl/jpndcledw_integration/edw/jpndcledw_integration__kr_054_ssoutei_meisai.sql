@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with KR_054_STOTAL_POINT as (
 select * from {{ ref('jpndcledw_integration__kr_054_stotal_point') }}
 ),
@@ -71,3 +72,6 @@ konyu_kingaku::number(38,0) as konyu_kingaku
 from transformed
 )
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

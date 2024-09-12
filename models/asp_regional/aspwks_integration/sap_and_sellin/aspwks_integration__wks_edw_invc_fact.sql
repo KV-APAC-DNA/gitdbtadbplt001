@@ -1,3 +1,7 @@
+{{ config(
+  sql_header="USE WAREHOUSE "+ env_var("DBT_ENV_CORE_DB_MEDIUM_WH")+ ";"
+) }}
+
 with source as (
     select * from {{ ref('aspitg_integration__itg_invc_sls') }}
 ),

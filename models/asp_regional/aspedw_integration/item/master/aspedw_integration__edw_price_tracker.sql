@@ -2,6 +2,7 @@
     config(
         materialized="incremental",
         incremental_strategy = "append",
+        sql_header = "alter session set week_start= 7;",
         pre_hook="{% if is_incremental() %}
         delete from {{this}} where kpi='PRICE TRACKER SKU DATA';
         {% endif %}"
@@ -71,7 +72,7 @@ select data_source::varchar(100) as data_source,
     mrp_lcy::number(15,2) as mrp_lcy,
     mrp_usd::number(25,7) as mrp_usd,
     mrp_type::varchar(100) as mrp_type,
-    asp_lcy::number(38,2) as asp_lcy,
+    trunc(asp_lcy,5)::number(38,5) as asp_lcy,
     asp_usd::number(38,7) as asp_usd,
     observed_price_lcy::number(15,2) as observed_price_lcy,
     observed_price_usd::number(25,7) as observed_price_usd,

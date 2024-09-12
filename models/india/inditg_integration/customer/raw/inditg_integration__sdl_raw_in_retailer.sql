@@ -1,12 +1,18 @@
 {{
     config(
         materialized="incremental",
-        incremental_strategy="append"
-    )
+        incremental_strategy="append",
+        )
+
 }}
 
 with source as(
-    select * from {{ source('indsdl_raw', 'sdl_in_retailer') }} 
+    select * from {{ source('indsdl_raw', 'sdl_in_retailer') }}
+    where filename not in (
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__null_test')}}
+        union all
+        select distinct file_name from {{source('indwks_integration','TRATBL_sdl_in_retailer__duplicate_test')}})
+
 ),
 final as(
     select 

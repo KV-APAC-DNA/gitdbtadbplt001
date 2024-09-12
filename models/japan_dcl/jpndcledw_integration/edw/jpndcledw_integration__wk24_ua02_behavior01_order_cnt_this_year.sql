@@ -8,8 +8,8 @@ this_yr_call AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt BETWEEN DATE_TRUNC('YEAR', SYSDATE()) 
-    AND SYSDATE() 
+    order_dt BETWEEN DATE_TRUNC('YEAR', current_timestamp()) 
+    AND current_timestamp() 
     AND channel IN ('通販') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 
@@ -27,8 +27,8 @@ this_yr_web AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt BETWEEN DATE_TRUNC('YEAR', SYSDATE()) 
-    AND SYSDATE() 
+    order_dt BETWEEN DATE_TRUNC('YEAR', current_timestamp()) 
+    AND current_timestamp() 
     AND channel IN ('Web') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 
@@ -46,8 +46,8 @@ this_yr_store AS (
   FROM 
     dm_kesai_mart_dly_general 
   WHERE 
-    order_dt BETWEEN DATE_TRUNC('YEAR', SYSDATE()) 
-    AND SYSDATE() 
+    order_dt BETWEEN DATE_TRUNC('YEAR', current_timestamp()) 
+    AND current_timestamp() 
     AND channel IN ('直営・百貨店') 
     AND (
       juchkbn :: text = 0 :: CHARACTER VARYING :: text 

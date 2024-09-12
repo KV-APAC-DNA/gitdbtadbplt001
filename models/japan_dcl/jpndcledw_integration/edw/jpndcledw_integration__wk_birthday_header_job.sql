@@ -26,8 +26,8 @@ AS (
     FROM CIT80SALEH_IKOU A
     WHERE A.TORIKEIKBN = '01'
         AND A.BK_JUCHKBN IN ('10', '13') --10:通常受注、13:輸送破損、18:定期購買
-        AND A.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC) --３年前～
-        AND A.JUCHDATE <= CAST(TO_CHAR(DATEADD(DAY,-1,SYSDATE()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
+        AND A.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC) --３年前～
+        AND A.JUCHDATE <= CAST(TO_CHAR(DATEADD(DAY,-1,current_timestamp()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
         AND A.CANCELFLG = 0
         AND A.SOGOKEI > 0 --送料抜きの商品金額のみ
         AND A.BK_HANROCODE NOT IN ('70') --41:職域FAX(OG・OB)、70:社販を除く
@@ -42,8 +42,8 @@ AS (
     FROM CIT80SALEH_IKOU A
     WHERE A.TORIKEIKBN = '01'
         AND A.BK_JUCHKBN IN ('18') --10:通常受注、13:輸送破損、18:定期購買
-        AND A.KIBOUDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC) --３年前～
-        AND A.KIBOUDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,SYSDATE()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
+        AND A.KIBOUDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC) --３年前～
+        AND A.KIBOUDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,current_timestamp()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
         AND A.CANCELFLG = 0
         AND A.SOGOKEI > 0
         AND A.BK_HANROCODE NOT IN ('70') --41:職域FAX(OG・OB)、70:社販を除く
@@ -57,8 +57,8 @@ AS (
         A.SOGOKEI AS URITOTAL
     FROM WORK_BIOPTRON A
     WHERE A.KUBUN IN ('通販') --通販、社販
-        AND A.INSERTDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC) --３年前～
-        AND A.INSERTDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,SYSDATE()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
+        AND A.INSERTDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC) --３年前～
+        AND A.INSERTDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,current_timestamp()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
         AND A.SOGOKEI > 0
     ),
 UNION_OF_A
@@ -97,7 +97,7 @@ AS (
                 AND A.SALENO = C.HENMOTOJUCHNO
                 AND C.TORIKEIKBN = '01' --01：通販
                 AND C.BK_JUCHKBN IN ('20', '21', '22', '23') --返品
-                AND C.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC)
+                AND C.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC)
                 AND C.CANCELFLG = 0
                 AND C.SOGOKEI < 0 --返品交換のような返金が発生していないレコードは除く(返品数量を正しくカウントしたいので邪魔なレコードは除く)
             )
@@ -132,7 +132,7 @@ AS (
                 FROM CIT80SALEH_IKOU A
                 WHERE A.TORIKEIKBN = '01' --01：通販
                     AND A.BK_JUCHKBN IN ('20', '21', '22', '23') --返品
-                    AND A.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC)
+                    AND A.JUCHDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC)
                     AND A.CANCELFLG = 0
                     AND A.SOGOKEI < 0 --返品交換のような返金が発生していないレコードは除く(返品数量を正しくカウントしたいので邪魔なレコードは除く)
                 ) B
@@ -169,8 +169,8 @@ AS (
         AND A.KOKYANO <> '00000000' -- 00000000以外
         AND A.KESSAIKBN <> '99' -- ポイント交換を除く
         AND A.SOUSAIPSALENO = '00000000000000000' -- 未訂正
-        AND A.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC) --３年前～
-        AND A.URIDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,SYSDATE()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
+        AND A.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC) --３年前～
+        AND A.URIDATE <= CAST(TO_CHAR(DATEADD(DAY,- 1,current_timestamp()), 'YYYYMMDD') AS NUMERIC) --DWHサーバの場合、前日までしかデータがない
         AND A.CANCELFLG = 0
         AND A.SOGOKEI > 0
     ),
@@ -197,7 +197,7 @@ AS (
                 AND C.KOKYANO <> '00000000' -- 00000000以外
                 AND C.KESSAIKBN <> '99' -- ポイント交換を除く
                 AND C.SOUSAIPSALENO = '00000000000000000' -- 未訂正
-                AND C.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC)
+                AND C.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC)
                 AND C.CANCELFLG = 0
                 AND C.SOGOKEI < 0 --返品交換のような返金が発生していないレコードは除く(返品数量を正しくカウントしたいので邪魔なレコードは除く)
             )
@@ -235,7 +235,7 @@ AS (
                     AND A.KOKYANO <> '00000000' -- 00000000以外
                     AND A.KESSAIKBN <> '99' -- ポイント交換を除く
                     AND A.SOUSAIPSALENO = '00000000000000000' -- 未訂正
-                    AND A.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),SYSDATE()), 'YYYYMMDD') AS NUMERIC)
+                    AND A.URIDATE >= CAST(TO_CHAR(DATEADD(DAY,- 1 - (365 * 3),current_timestamp()), 'YYYYMMDD') AS NUMERIC)
                     AND A.CANCELFLG = 0
                     AND A.SOGOKEI < 0 --返品交換のような返金が発生していないレコードは除く(返品数量を正しくカウントしたいので邪魔なレコードは除く)
                 ) B

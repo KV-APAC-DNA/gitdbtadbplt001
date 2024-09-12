@@ -1,0 +1,13 @@
+version: 2
+
+models:
+
+  - name: hcposeitg_integration__itg_holiday_list
+    config: 
+      alias: itg_holiday_list
+      tags: ["master_file_data_ingestion","ingestion"]
+
+  - name: hcposeitg_integration__sdl_raw_hcp_osea_holiday_list
+    config: 
+      alias: sdl_raw_hcp_osea_holiday_list
+      tags: ["master_file_data_ingestion","ingestion"]

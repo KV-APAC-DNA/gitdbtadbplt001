@@ -25,3 +25,15 @@ models:
     config: 
       alias: v_rpt_ims_inventory_analysis
       tags: ["north_asia_views","transformation"]
+  - name: ntaedw_integration__vw_edw_kr_ecom_dstr_sellout
+    config:
+      alias: vw_edw_kr_ecom_dstr_sellout
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntaedw_integration__vw_edw_kr_ecom_dstr_inventory
+    config:
+      alias: vw_edw_kr_ecom_dstr_inventory
+      tags: ["j_ap_th_reg_data_refresh","transformation"]
+  - name: ntaedw_integration__edw_otc_inv_si_so
+    config:
+      alias: edw_otc_inv_si_so
+      tags: ["j_ap_th_reg_data_refresh","transformation"]

@@ -164,8 +164,8 @@ final as
                                 row_number() over( partition by sls_org,cust_num
                                                 order by prnt_cust_key desc) rn 
         from v_edw_customer_sales_dim )where rn = 1) cus_sales_extn 
-            ON fact.sls_org::TEXT = cus_sales_extn.sls_org::TEXT
-            AND fact.cust_num::TEXT = cus_sales_extn.cust_num
+            ON case when ctry_nm = 'Thailand' then '2400' else fact.sls_org::TEXT end = cus_sales_extn.sls_org::TEXT
+        AND fact.cust_num::TEXT = cus_sales_extn.cust_num
 
         LEFT JOIN edw_gch_producthierarchy gph
             ON CASE WHEN fact.matl_num::TEXT = ''::CHARACTER VARYING::TEXT

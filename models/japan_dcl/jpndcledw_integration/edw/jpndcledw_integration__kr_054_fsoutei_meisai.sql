@@ -1,3 +1,4 @@
+{% if build_month_end_job_models()  %}
 with kr_comm_point_para as (
     select * from {{ source('jpdcledw_integration', 'kr_comm_point_para') }}
 ),
@@ -41,3 +42,6 @@ final as (
 )
 
 select * from final
+{% else %}
+    select * from {{this}}
+{% endif %}

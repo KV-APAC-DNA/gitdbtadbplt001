@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: hcposeitg_integration__itg_coaching_report
+    config:
+      alias: itg_coaching_report
+      tags: ["iconnect_data_ingestion","ingestion"]
