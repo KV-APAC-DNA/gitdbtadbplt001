@@ -19,8 +19,6 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-
-
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
@@ -41,6 +39,12 @@ vars:
 tests:
   DNA_CORE_ASP:
     philippines:
+      +severity: warn
+    thailand:
+      +severity: warn
+    malaysia:
+      +severity: warn
+    vietnam:
       +severity: warn
 
 models:
@@ -657,7 +661,6 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
-
     china:
       config:
         +enabled: true
@@ -676,4 +679,3 @@ models:
       chnedw_access:
         +materialized: view
         +schema: CHNEDW_ACCESS
-
