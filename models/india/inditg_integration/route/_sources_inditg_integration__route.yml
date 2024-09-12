@@ -26,3 +26,15 @@ sources:
               config:
                 store_failures: true
                 schema: indwks_integration
+  
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+    - name: TRATBL_sdl_in_retailer_route__null_test
+    - name: TRATBL_sdl_in_retailer_route__duplicate_test
+      

@@ -61,3 +61,19 @@ sources:
                 config:
                   store_failures: true
                   schema: indwks_integration
+
+  - name: indwks_integration
+    database: "{{ env_var('DBT_ENV_CORE_DB') }}"
+    schema: indwks_integration
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: TRATBL_sdl_in_rtlsalesman__null_test
+        # tags: ["in_etl_xdm_tlrsr_nielsen_load","ingestion"]
+      - name: TRATBL_sdl_in_rtlsalesman__duplicate_test  
+      - name: TRATBL_sdl_in_rtldistributor__null_test
+      - name: TRATBL_sdl_in_rtldistributor__duplicate_test
+      - name: TRATBL_sdl_in_rtlheader__null_test
+      - name: TRATBL_sdl_in_rtlheader__duplicate_test
