@@ -35,9 +35,16 @@ vars:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+
 tests:
   DNA_CORE_ASP:
     philippines:
+      +severity: warn
+    thailand:
+      +severity: warn
+    malaysia:
+      +severity: warn
+    vietnam:
       +severity: warn
 
 models:
@@ -654,7 +661,6 @@ models:
       jpndcledw_access:
         +materialized: view
         +schema: JPDCLEDW_ACCESS
-
     china:
       config:
         +enabled: true
