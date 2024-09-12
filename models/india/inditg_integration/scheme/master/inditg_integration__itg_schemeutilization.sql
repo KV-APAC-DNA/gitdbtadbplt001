@@ -56,7 +56,8 @@ final as
         servicecrnrefno::varchar(100) as servicecrnrefno,
         rtrurccode::varchar(100) as rtrurccode,
         current_timestamp()::timestamp_ntz(9) as crt_dttm,
-        current_timestamp()::timestamp_ntz(9) as updt_dttm
+        current_timestamp()::timestamp_ntz(9) as updt_dttm,
+        file_name::varchar(225) as file_name
     from source
 )
 select * from final

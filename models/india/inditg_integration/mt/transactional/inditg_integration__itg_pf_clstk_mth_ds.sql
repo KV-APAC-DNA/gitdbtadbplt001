@@ -14,10 +14,12 @@ final as
 	sum(nr)::number(18,3) as cl_stck_nr,
 	current_timestamp()::timestamp_ntz(9) as crt_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm
+    
     from itg_tblpf_clstkm
     group by mon,
              yr,
              distcode,
              prdcode
+             
 )
 select * from final

@@ -7,6 +7,11 @@
 
 with sdl_cbd_gt_inventory_report_fact as (
     select * from {{ source('thasdl_raw', 'sdl_cbd_gt_inventory_report_fact') }}
+    where filename not in (
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__null_test') }}
+            union all
+            select distinct file_name from {{ source('thawks_integration', 'TRATBL_sdl_cbd_gt_inventory_report_fact__duplicate_test') }}
+    )
 
 ),
 final as (

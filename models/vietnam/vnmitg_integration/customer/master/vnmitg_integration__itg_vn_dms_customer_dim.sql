@@ -7,7 +7,13 @@
 }}
 
 with source as (
-    select * from {{ source('vnmsdl_raw','sdl_vn_dms_customer_dim') }}
+    select *, dense_rank() over (partition by outlet_id order by file_name desc) rnk 
+    from {{ source('vnmsdl_raw','sdl_vn_dms_customer_dim') }}
+    where file_name not in (
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_customer_dim__null_test')}}
+        union all
+        select distinct file_name from {{source('vnmwks_integration','TRATBL_sdl_vn_dms_customer_dim__duplicate_test')}}
+    ) qualify rnk = 1
 ),
 
 final as
@@ -42,7 +48,8 @@ select
 	current_timestamp()::timestamp_ntz(9) as crtd_dttm,
 	current_timestamp()::timestamp_ntz(9) as updt_dttm,
     null::number(14,0) as run_id,
-    shop_type::varchar(100) as  shop_type  
+    shop_type::varchar(100) as  shop_type  ,
+    file_name::varchar(255) as file_name
 from source
 )
 select * from final

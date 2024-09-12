@@ -3,7 +3,8 @@
         materialized="incremental",
         incremental_strategy= "append",
         unique_key=  ['dstrbtr_id','outlet_id','order_no'],
-        pre_hook= "delete from {{this}} where (dstrbtr_id, outlet_id, order_no) in ( select dstrbtr_id, outlet_id, order_no from {{ ref('vnmwks_integration__wks_itg_vn_dms_h_sellout_sales_fact') }});"
+        pre_hook= "{%if is_incremental()%}
+        delete from {{this}} where (dstrbtr_id, outlet_id, order_no) in ( select dstrbtr_id, outlet_id, order_no from {{ ref('vnmwks_integration__wks_itg_vn_dms_h_sellout_sales_fact') }});{%endif%}"
     )
 }}
 
