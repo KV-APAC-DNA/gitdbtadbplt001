@@ -649,14 +649,14 @@ final as (
                   ) store ON (
                                 (
                                     upper(
-                                       replace(trim(
-                                            (store_trans.store_code))::text,'	',''
+                                       regexp_replace(trim(
+                                            (store_trans.store_code))::text,'\t',''
                                         )
                                     ) = upper(
-                                        replace(rtrim(store.code),'	','')::text
+                                        regexp_replace(rtrim(store.code),'\t','')::text
                                     )
                                 )
-                            )
+                            
                 ) 
                 LEFT JOIN (
                   SELECT 
