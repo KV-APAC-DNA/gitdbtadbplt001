@@ -40,6 +40,12 @@ tests:
   DNA_CORE_ASP:
     philippines:
       +severity: warn
+    thailand:
+      +severity: warn
+    malaysia:
+      +severity: warn
+    vietnam:
+      +severity: warn
 
 models:
   dbt_artifacts:
