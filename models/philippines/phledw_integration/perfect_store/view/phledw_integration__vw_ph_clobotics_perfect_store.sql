@@ -649,11 +649,11 @@ final as (
                   ) store ON (
                                 (
                                     upper(
-                                       trim(rtrim(
-                                            (store_trans.store_code))::text,'	'
+                                       replace(trim(
+                                            (store_trans.store_code))::text,'	',''
                                         )
                                     ) = upper(
-                                        trim(rtrim(store.code),'	')::text
+                                        replace(rtrim(store.code),'	','')::text
                                     )
                                 )
                             )
