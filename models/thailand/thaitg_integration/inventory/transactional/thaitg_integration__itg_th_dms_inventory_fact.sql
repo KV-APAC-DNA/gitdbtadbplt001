@@ -7,8 +7,17 @@
 }}
 
 with source as(
-    select * from {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }}
-),
+        SELECT *,
+            dense_rank() OVER (
+                PARTITION BY distributorid,recdate,whcode,productcode
+                ORDER BY SOURCE_FILE_NAME DESC
+                ) AS rnk
+        FROM {{ source('thasdl_raw', 'sdl_th_dms_inventory_fact') }} source
+        WHERE SOURCE_FILE_NAME NOT IN (
+                SELECT DISTINCT file_name
+                FROM {{ source('thawks_integration', 'TRATBL_sdl_th_dms_inventory_fact__test_date_format') }}
+                ) qualify rnk = 1
+        ),
 final as(
     select
         case 
@@ -23,7 +32,8 @@ final as(
         batchno::varchar(200) as batchno,
         to_date(expirydate, 'YYYYMMDD')::timestamp_ntz(9) as expirydate,
         current_timestamp()::timestamp_ntz(9) as curr_date,
-        run_id::number(18,0) as run_id
+        run_id::number(18,0) as run_id,
+        SOURCE_FILE_NAME::varchar(255) as file_name
     from source
 )
 select * from final
